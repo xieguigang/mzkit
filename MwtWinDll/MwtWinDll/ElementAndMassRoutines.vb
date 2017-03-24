@@ -1,7 +1,8 @@
-Option Strict On
+
 
 Imports System.Collections.Generic
 Imports System.Runtime.InteropServices
+Imports Microsoft.VisualBasic.Extensions
 
 Public Class MWElementAndMassRoutines
 
@@ -2279,9 +2280,7 @@ Public Class MWElementAndMassRoutines
     End Function
 
     Public Function GetElements() As List(Of udtElementStatsType)
-
-        Return ElementStats.ToList()
-
+        Return New List(Of udtElementStatsType)(ElementStats)
     End Function
 
     Public Function GetElementStatInternal(intElementID As Short, eElementStat As MolecularWeightCalculator.esElementStatsConstants) As Double

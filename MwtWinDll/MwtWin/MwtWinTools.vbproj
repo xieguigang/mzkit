@@ -158,6 +158,10 @@
     <Folder Include="My Project\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
+      <Project>{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}</Project>
+      <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MwtWinDll\MwtWinDll.vbproj">
       <Project>{78332537-7ecc-4b74-8aa9-ba66ab296af0}</Project>
       <Name>MwtWinDll</Name>

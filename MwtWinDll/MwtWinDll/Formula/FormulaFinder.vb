@@ -1,8 +1,6 @@
-﻿Option Strict On
-
-Imports System.Collections.Generic
-Imports System.Runtime.InteropServices
+﻿Imports System.Runtime.InteropServices
 Imports System.Text
+Imports Microsoft.VisualBasic.Language
 Imports MwtWinDll.MolecularWeightCalculator
 
 Public Class MWFormulaFinder
@@ -250,7 +248,7 @@ Public Class MWFormulaFinder
 
         Dim lstResults = FindMatchesByMass(targetMass, massToleranceDa, searchOptions, True)
 
-        Dim sortedResults = (From item In lstResults Order By item.SortKey Select item).ToList()
+        Dim sortedResults = LinqAPI.MakeList(Of FormulaFinderResult) <= From item In lstResults Order By item.SortKey Select item
         Return sortedResults
 
     End Function
@@ -283,7 +281,7 @@ Public Class MWFormulaFinder
 
         Dim lstResults = FindMatchesByMass(targetMass, massToleranceDa, searchOptions, False)
 
-        Dim sortedResults = (From item In lstResults Order By item.SortKey Select item).ToList()
+        Dim sortedResults = LinqAPI.MakeList(Of FormulaFinderResult) <= From item In lstResults Order By item.SortKey Select item
         Return sortedResults
 
     End Function
@@ -297,9 +295,8 @@ Public Class MWFormulaFinder
 
         Dim lstResults = FindMatchesByPercentCompositionWork(maximumFormulaMass, percentTolerance, searchOptions)
 
-        Dim sortedResults = (From item In lstResults Order By item.SortKey Select item).ToList()
+        Dim sortedResults = LinqAPI.MakeList(Of FormulaFinderResult) <= From item In lstResults Order By item.SortKey Select item
         Return sortedResults
-
     End Function
 
     ''' <summary>
@@ -318,7 +315,7 @@ Public Class MWFormulaFinder
         mAbortProcessing = False
 
         MaximumHits = DEFAULT_RESULTS_TO_FIND
-        
+
     End Sub
 
 #End Region
@@ -1021,7 +1018,7 @@ Public Class MWFormulaFinder
             Return New List(Of FormulaFinderResult)
         End If
 
-        Dim sortedElementStats = (From item In candidateElementsStats Order By item.Mass Descending Select item).ToList()
+        Dim sortedElementStats = LinqAPI.MakeList(Of FormulaFinderCandidateElement) <= From item In candidateElementsStats Order By item.Mass Descending Select item
 
         If searchOptions.SearchMode = FormulaFinderOptions.eSearchMode.Thorough Then
             ' Thorough search
@@ -1096,7 +1093,10 @@ Public Class MWFormulaFinder
             Return New List(Of FormulaFinderResult)
         End If
 
-        Dim sortedElementStats = (From item In candidateElementsStats Order By item.Mass Descending Select item).ToList()
+        Dim sortedElementStats = LinqAPI.MakeList(Of FormulaFinderCandidateElement) <=
+            From item In candidateElementsStats
+            Order By item.Mass Descending
+            Select item
 
         If searchOptions.SearchMode = FormulaFinderOptions.eSearchMode.Thorough Then
             ' Thorough search
@@ -1547,7 +1547,7 @@ Public Class MWFormulaFinder
                                                             End If
                                                         End If
                                                     End If
-                                                    
+
                                                     If calculationMode = eCalculationMode.MatchPercentComposition Then
                                                         ' Matching Percent Compositions
                                                         If totalMass > 0 And totalMass <= maximumFormulaMass Then
