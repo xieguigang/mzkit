@@ -8,6 +8,9 @@ Module Program
     End Function
 
     Sub Test()
-        Call Data.Load("G:\spectrum\SpectrumChart\Spectrum.json").Data(Scan0).Plot.SaveAs("G:\spectrum\spectrum\Plot.png")
+        Call Data.Load("G:\spectrum\SpectrumChart\Spectrum.json") _
+            .Data(Scan0) _
+            .Plot(title:="H<sub>2</sub>O<sub>5</sub>C<sub>3</sub>Ag</br><span style=""color:blue; font-size:20"">Test MS/MS spectra plot</span>") _
+            .SaveAs("G:\spectrum\spectrum\Plot.png")
     End Sub
 End Module

@@ -1,7 +1,10 @@
 ﻿Imports System.Drawing
+Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
@@ -24,10 +27,14 @@ Public Module Canvas
                          Optional size As Size = Nothing,
                          Optional padding$ = Canvas.Padding,
                          Optional bg$ = "white",
+                         Optional title$ = "<span style=""color:blue"">MS/MS spectra</span>",
                          Optional mzAxis$ = "(0,800),tick=100",
                          Optional signalStroke$ = "stroke: green; stroke-width: 3px; stroke-dash: solid;",
+                         Optional titleFontCSS$ = CSSFont.Win7Large,
                          Optional axisTickFont$ = CSSFont.Win10NormalLarger,
-                         Optional axisLabelFont$ = CSSFont.Win7Large) As Bitmap
+                         Optional axisLabelFont$ = CSSFont.Win7Large,
+                         Optional legendFontCSS$ = CSSFont.PlotSmallTitle) As Bitmap
+
         Dim plotInternal =
             Sub(ByRef g As Graphics, region As GraphicsRegion)
                 Dim y As AxisProvider = "(0,100),n=5"
@@ -57,7 +64,8 @@ Public Module Canvas
                              XAxisLayoutStyles.Bottom,
                              Nothing,
                              axisLabelFont,
-                             CSSFont.TryParse(axisTickFont))
+                             CSSFont.TryParse(axisTickFont),
+                             overridesTickLine:=20)
 
                 Dim signalPen As Pen = Stroke.TryParse(signalStroke)
                 Dim bottom! = region.Bottom
@@ -68,6 +76,30 @@ Public Module Canvas
 
                     Call g.DrawLine(signalPen, point, low)
                 Next
+
+                Dim legendFont As Font = CSSFont.TryParse(legendFontCSS)
+                Dim name$ = MS_spectrum.name.Trim
+                Dim legendShapeSize As New Size(60, 45)
+                Dim legendPoint As New Point(
+                    region.PlotRegion.Right - legendShapeSize.Width * 2 - g.MeasureString(name, legendFont).Width,
+                    region.Padding.Top * 1.5)
+                Dim legend As New Legend With {
+                    .color = signalPen.Color.RGBExpression,
+                    .fontstyle = legendFontCSS,
+                    .style = LegendStyles.RoundRectangle,
+                    .title = name
+                }
+
+                Call g.DrawLegends(
+                    legendPoint, {legend}, legendShapeSize,
+                    regionBorder:=New Stroke With {
+                        .dash = DashStyle.Solid,
+                        .fill = "black",
+                        .width = 2
+                    })
+
+                Dim titleImage As Image = Axis.DrawLabel(title, titleFontCSS)
+                Call g.DrawImageUnscaled(titleImage, region.TopCentra(titleImage.Size))
             End Sub
 
         If size.IsEmpty Then
