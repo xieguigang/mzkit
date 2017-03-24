@@ -147,10 +147,10 @@
     <Compile Include="ElementAndMassRoutines.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="FormulaFinder.vb" />
-    <Compile Include="FormulaFinderCandidateElement.vb" />
-    <Compile Include="FormulaFinderOptions.vb" />
-    <Compile Include="FormulaFinderResult.vb" />
+    <Compile Include="Formula\FormulaFinder.vb" />
+    <Compile Include="Formula\FormulaFinderCandidateElement.vb" />
+    <Compile Include="Formula\FormulaFinderOptions.vb" />
+    <Compile Include="Formula\FormulaFinderResult.vb" />
     <Compile Include="MoleMassDilutionClass.vb">
       <SubType>Code</SubType>
     </Compile>
