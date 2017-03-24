@@ -29,9 +29,4 @@ Module modMwtWinDllTest
 
     Public Declare Function GetTickCount Lib "kernel32" () As Integer
 
-    Public Sub Main()
-        Dim objMwtWinDllTest As New frmMwtWinDllTest
-        objMwtWinDllTest.ShowDialog()
-    End Sub
-
 End Module
