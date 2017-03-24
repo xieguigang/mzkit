@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Class Data
+
     Public Property url As String
     Public Property Data As spectrumData()
 
