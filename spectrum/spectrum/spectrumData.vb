@@ -4,6 +4,13 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Public Class Data
     Public Property url As String
     Public Property Data As spectrumData()
+
+    Public Shared Function Load(json$) As Data
+        Return New Data With {
+            .url = json,
+            .Data = json.ReadAllText.LoadObject(Of spectrumData())
+        }
+    End Function
 End Class
 
 Public Class spectrumData
