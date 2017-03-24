@@ -1,4 +1,4 @@
-﻿Friend Class clsFormulaFinderCandidateElement
+﻿Friend Class FormulaFinderCandidateElement
 
     ReadOnly mOriginalName As String
 
@@ -19,7 +19,7 @@
     End Property
 
     Public Property Symbol As String
-   
+
     Public Sub New(elementOrAbbrevSymbol As String)
         mOriginalName = String.Copy(elementOrAbbrevSymbol)
         Symbol = String.Copy(elementOrAbbrevSymbol)

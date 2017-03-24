@@ -138,29 +138,29 @@
     <Compile Include="AssemblyInfo.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="clsCapillaryFlowClass.vb">
+    <Compile Include="CapillaryFlowClass.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="clsCompound.vb">
+    <Compile Include="Compound.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="clsElementAndMassRoutines.vb">
+    <Compile Include="ElementAndMassRoutines.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="clsFormulaFinder.vb" />
-    <Compile Include="clsFormulaFinderCandidateElement.vb" />
-    <Compile Include="clsFormulaFinderOptions.vb" />
-    <Compile Include="clsFormulaFinderResult.vb" />
-    <Compile Include="clsMoleMassDilutionClass.vb">
+    <Compile Include="FormulaFinder.vb" />
+    <Compile Include="FormulaFinderCandidateElement.vb" />
+    <Compile Include="FormulaFinderOptions.vb" />
+    <Compile Include="FormulaFinderResult.vb" />
+    <Compile Include="MoleMassDilutionClass.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="clsMwtWin.vb">
+    <Compile Include="MwtWin.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="clsNumberConversionRoutines.vb">
+    <Compile Include="NumberConversionRoutines.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="clsPeptideClass.vb">
+    <Compile Include="PeptideClass.vb">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

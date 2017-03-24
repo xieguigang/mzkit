@@ -1028,7 +1028,7 @@ Friend Class frmMwtWinDllTest
         ' Abbreviations are supported, for example Serine
         oMwtWin.FormulaFinder.AddCandidateElement("Ser")
 
-        Dim searchOptions = New clsFormulaFinderOptions()
+        Dim searchOptions = New FormulaFinderOptions()
 
         searchOptions.LimitChargeRange = False
         searchOptions.ChargeMin = 1
@@ -1057,7 +1057,7 @@ Friend Class frmMwtWinDllTest
         End If
     End Sub
 
-    Private Sub FormulaFinderTest1(oMwtWin As MolecularWeightCalculator, searchOptions As clsFormulaFinderOptions, currentTask As String)
+    Private Sub FormulaFinderTest1(oMwtWin As MolecularWeightCalculator, searchOptions As FormulaFinderOptions, currentTask As String)
 
         ' Search for 200 Da, +/- 0.05 Da
         Dim lstResults = oMwtWin.FormulaFinder.FindMatchesByMass(200, 0.05, searchOptions)
@@ -1065,7 +1065,7 @@ Friend Class frmMwtWinDllTest
 
     End Sub
 
-    Private Sub FormulaFinderTest2(oMwtWin As MolecularWeightCalculator, searchOptions As clsFormulaFinderOptions, currentTask As String)
+    Private Sub FormulaFinderTest2(oMwtWin As MolecularWeightCalculator, searchOptions As FormulaFinderOptions, currentTask As String)
 
         ' Search for 200 Da, +/- 250 ppm
         Dim lstResults = oMwtWin.FormulaFinder.FindMatchesByMassPPM(200, 250, searchOptions)
@@ -1073,7 +1073,7 @@ Friend Class frmMwtWinDllTest
 
     End Sub
 
-    Private Sub FormulaFinderTest3(oMwtWin As MolecularWeightCalculator, searchOptions As clsFormulaFinderOptions, currentTask As String)
+    Private Sub FormulaFinderTest3(oMwtWin As MolecularWeightCalculator, searchOptions As FormulaFinderOptions, currentTask As String)
 
         searchOptions.LimitChargeRange = True
         searchOptions.ChargeMin = -4
@@ -1085,7 +1085,7 @@ Friend Class frmMwtWinDllTest
 
     End Sub
 
-    Private Sub FormulaFinderTest4(oMwtWin As MolecularWeightCalculator, searchOptions As clsFormulaFinderOptions, currentTask As String)
+    Private Sub FormulaFinderTest4(oMwtWin As MolecularWeightCalculator, searchOptions As FormulaFinderOptions, currentTask As String)
 
         searchOptions.LimitChargeRange = True
         searchOptions.ChargeMin = -4
@@ -1098,7 +1098,7 @@ Friend Class frmMwtWinDllTest
 
     End Sub
 
-    Private Sub FormulaFinderTest5(oMwtWin As MolecularWeightCalculator, searchOptions As clsFormulaFinderOptions, currentTask As String)
+    Private Sub FormulaFinderTest5(oMwtWin As MolecularWeightCalculator, searchOptions As FormulaFinderOptions, currentTask As String)
 
         oMwtWin.FormulaFinder.CandidateElements.Clear()
 
@@ -1113,9 +1113,9 @@ Friend Class frmMwtWinDllTest
 
     End Sub
 
-    Private Sub FormulaFinderTest6(oMwtWin As MolecularWeightCalculator, searchOptions As clsFormulaFinderOptions, currentTask As String)
+    Private Sub FormulaFinderTest6(oMwtWin As MolecularWeightCalculator, searchOptions As FormulaFinderOptions, currentTask As String)
 
-        searchOptions.SearchMode = clsFormulaFinderOptions.eSearchMode.Bounded
+        searchOptions.SearchMode = FormulaFinderOptions.eSearchMode.Bounded
 
         ' Search for 200 Da, +/- 250 ppm
         Dim lstResults = oMwtWin.FormulaFinder.FindMatchesByMassPPM(200, 250, searchOptions)
@@ -1125,8 +1125,8 @@ Friend Class frmMwtWinDllTest
 
     Private Sub ShowFormulaFinderResults(
       currentTask As String,
-      searchOptions As clsFormulaFinderOptions,
-      lstResults As List(Of clsFormulaFinderResult),
+      searchOptions As FormulaFinderOptions,
+      lstResults As List(Of FormulaFinderResult),
       Optional deltaMassIsPPM As Boolean = False,
       Optional percentCompositionSearch As Boolean = False)
 

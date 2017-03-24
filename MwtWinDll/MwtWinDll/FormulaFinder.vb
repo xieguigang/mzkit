@@ -227,7 +227,7 @@ Public Class MWFormulaFinder
     ''' <param name="massTolerancePPM"></param>
     ''' <returns></returns>
     ''' <remarks>Uses default search options</remarks>
-    Public Function FindMatchesByMassPPM(targetMass As Double, massTolerancePPM As Double) As List(Of clsFormulaFinderResult)
+    Public Function FindMatchesByMassPPM(targetMass As Double, massTolerancePPM As Double) As List(Of FormulaFinderResult)
 
         Dim lstResults = FindMatchesByMassPPM(targetMass, massTolerancePPM, Nothing)
 
@@ -244,9 +244,9 @@ Public Class MWFormulaFinder
     ''' <param name="searchOptions"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public Function FindMatchesByMassPPM(targetMass As Double, massTolerancePPM As Double, searchOptions As clsFormulaFinderOptions) As List(Of clsFormulaFinderResult)
+    Public Function FindMatchesByMassPPM(targetMass As Double, massTolerancePPM As Double, searchOptions As FormulaFinderOptions) As List(Of FormulaFinderResult)
         Dim massToleranceDa = massTolerancePPM * targetMass / 1000000.0
-        If searchOptions Is Nothing Then searchOptions = New clsFormulaFinderOptions()
+        If searchOptions Is Nothing Then searchOptions = New FormulaFinderOptions()
 
         Dim lstResults = FindMatchesByMass(targetMass, massToleranceDa, searchOptions, True)
 
@@ -262,7 +262,7 @@ Public Class MWFormulaFinder
     ''' <param name="massToleranceDa"></param>
     ''' <returns></returns>
     ''' <remarks>Uses default search options</remarks>
-    Public Function FindMatchesByMass(targetMass As Double, massToleranceDa As Double) As List(Of clsFormulaFinderResult)
+    Public Function FindMatchesByMass(targetMass As Double, massToleranceDa As Double) As List(Of FormulaFinderResult)
         Dim lstResults = FindMatchesByMass(targetMass, massToleranceDa, Nothing)
 
         ' No need to sort because FindMatchesByMassPPM has already done so
@@ -278,8 +278,8 @@ Public Class MWFormulaFinder
     ''' <param name="searchOptions"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public Function FindMatchesByMass(targetMass As Double, massToleranceDa As Double, searchOptions As clsFormulaFinderOptions) As List(Of clsFormulaFinderResult)
-        If searchOptions Is Nothing Then searchOptions = New clsFormulaFinderOptions()
+    Public Function FindMatchesByMass(targetMass As Double, massToleranceDa As Double, searchOptions As FormulaFinderOptions) As List(Of FormulaFinderResult)
+        If searchOptions Is Nothing Then searchOptions = New FormulaFinderOptions()
 
         Dim lstResults = FindMatchesByMass(targetMass, massToleranceDa, searchOptions, False)
 
@@ -291,9 +291,9 @@ Public Class MWFormulaFinder
     Public Function FindMatchesByPercentComposition(
      maximumFormulaMass As Double,
      percentTolerance As Double,
-     searchOptions As clsFormulaFinderOptions) As List(Of clsFormulaFinderResult)
+     searchOptions As FormulaFinderOptions) As List(Of FormulaFinderResult)
 
-        If searchOptions Is Nothing Then searchOptions = New clsFormulaFinderOptions()
+        If searchOptions Is Nothing Then searchOptions = New FormulaFinderOptions()
 
         Dim lstResults = FindMatchesByPercentCompositionWork(maximumFormulaMass, percentTolerance, searchOptions)
 
@@ -335,9 +335,9 @@ Public Class MWFormulaFinder
     End Sub
 
     Private Sub AppendPercentCompositionResult(
-       searchResult As clsFormulaFinderResult,
+       searchResult As FormulaFinderResult,
        elementcount As Integer,
-       sortedElementStats As IList(Of clsFormulaFinderCandidateElement),
+       sortedElementStats As IList(Of FormulaFinderCandidateElement),
        targetIndex As Integer,
        percentComposition As Double)
 
@@ -363,12 +363,12 @@ Public Class MWFormulaFinder
        targetMass As Double,
        massToleranceDa As Double,
        maximumFormulaMass As Double,
-       searchOptions As clsFormulaFinderOptions,
+       searchOptions As FormulaFinderOptions,
        ppmMode As Boolean,
        calculationMode As eCalculationMode,
-       sortedElementStats As List(Of clsFormulaFinderCandidateElement)) As List(Of clsFormulaFinderResult)
+       sortedElementStats As List(Of FormulaFinderCandidateElement)) As List(Of FormulaFinderResult)
 
-        Dim lstResults As List(Of clsFormulaFinderResult)
+        Dim lstResults As List(Of FormulaFinderResult)
 
         If searchOptions.FindTargetMZ Then
             ' Searching for target m/z rather than target mass
@@ -392,7 +392,7 @@ Public Class MWFormulaFinder
 
     End Function
 
-    Private Sub ComputeSortKeys(lstResults As IEnumerable(Of clsFormulaFinderResult))
+    Private Sub ComputeSortKeys(lstResults As IEnumerable(Of FormulaFinderResult))
 
         ' Compute the sort key for each result
         Dim sbCodeString = New StringBuilder()
@@ -558,10 +558,10 @@ Public Class MWFormulaFinder
     ''' <returns>False if compound has too many hydrogens AND hydrogen checking is on, otherwise returns true</returns>
     ''' <remarks>Common function to both molecular weight and percent composition matching</remarks>
     Private Function ConstructAndVerifyCompound(
-       searchOptions As clsFormulaFinderOptions,
+       searchOptions As FormulaFinderOptions,
        sbEmpiricalFormula As StringBuilder,
        count1 As Integer, count2 As Integer, count3 As Integer, count4 As Integer, count5 As Integer, count6 As Integer, count7 As Integer, count8 As Integer, count9 As Integer, count10 As Integer,
-       sortedElementStats As IList(Of clsFormulaFinderCandidateElement),
+       sortedElementStats As IList(Of FormulaFinderCandidateElement),
        totalMass As Double,
        targetMass As Double,
        massToleranceDa As Double,
@@ -607,7 +607,7 @@ Public Class MWFormulaFinder
     End Function
 
     Private Sub ConstructAndVerifyAddIfValid(
-       sortedElementStats As IList(Of clsFormulaFinderCandidateElement),
+       sortedElementStats As IList(Of FormulaFinderCandidateElement),
        empiricalResultSymbols As IDictionary(Of String, Integer),
        targetElementIndex As Integer,
        currentCount As Integer)
@@ -631,9 +631,9 @@ Public Class MWFormulaFinder
     ''' <returns>False if compound has too many hydrogens AND hydrogen checking is on, otherwise returns true</returns>
     ''' <remarks>Common function to both molecular weight and percent composition matching</remarks>
     Private Function ConstructAndVerifyCompoundRecursive(
-       searchOptions As clsFormulaFinderOptions,
+       searchOptions As FormulaFinderOptions,
        sbEmpiricalFormula As StringBuilder,
-       sortedElementStats As IList(Of clsFormulaFinderCandidateElement),
+       sortedElementStats As IList(Of FormulaFinderCandidateElement),
        lstPotentialElementPointers As IEnumerable(Of Integer),
        totalMass As Double,
        targetMass As Double,
@@ -690,7 +690,7 @@ Public Class MWFormulaFinder
     End Function
 
     Private Function ConstructAndVerifyCompoundWork(
-       searchOptions As clsFormulaFinderOptions,
+       searchOptions As FormulaFinderOptions,
        sbEmpiricalFormula As StringBuilder,
        totalMass As Double,
        targetMass As Double,
@@ -824,7 +824,7 @@ Public Class MWFormulaFinder
     End Function
 
     Private Function ConvertElementPointersToElementStats(
-       sortedElementStats As IList(Of clsFormulaFinderCandidateElement),
+       sortedElementStats As IList(Of FormulaFinderCandidateElement),
        lstPotentialElementPointers As IEnumerable(Of Integer)) As Dictionary(Of String, Integer)
 
         ' This dictionary tracks the elements and abbreviations of the found formula so that they can be properly ordered according to empirical formula conventions
@@ -853,7 +853,7 @@ Public Class MWFormulaFinder
     ''' <returns>Corrected charge</returns>
     ''' <remarks></remarks>
     Private Function CorrectChargeEmpirical(
-       searchOptions As clsFormulaFinderOptions,
+       searchOptions As FormulaFinderOptions,
        totalCharge As Double,
        udtElementNum As udtElementNumType,
        <Out> ByRef chargeOK As Boolean) As Double
@@ -997,33 +997,33 @@ Public Class MWFormulaFinder
     Private Function FindMatchesByMass(
        targetMass As Double,
        massToleranceDa As Double,
-       searchOptions As clsFormulaFinderOptions,
-       ppmMode As Boolean) As List(Of clsFormulaFinderResult)
+       searchOptions As FormulaFinderOptions,
+       ppmMode As Boolean) As List(Of FormulaFinderResult)
 
         ' Validate the Inputs
         If Not ValidateSettings(eCalculationMode.MatchMolecularWeight) Then
-            Return New List(Of clsFormulaFinderResult)
+            Return New List(Of FormulaFinderResult)
         End If
 
         If Val(targetMass) <= 0 Then
             ReportError("Target molecular weight must be greater than 0")
-            Return New List(Of clsFormulaFinderResult)
+            Return New List(Of FormulaFinderResult)
         End If
 
         If massToleranceDa < 0 Then
             ReportError("Mass tolerance cannot be negative")
-            Return New List(Of clsFormulaFinderResult)
+            Return New List(Of FormulaFinderResult)
         End If
 
         Dim candidateElementsStats = GetCandidateElements()
 
         If candidateElementsStats.Count = 0 Then
-            Return New List(Of clsFormulaFinderResult)
+            Return New List(Of FormulaFinderResult)
         End If
 
         Dim sortedElementStats = (From item In candidateElementsStats Order By item.Mass Descending Select item).ToList()
 
-        If searchOptions.SearchMode = clsFormulaFinderOptions.eSearchMode.Thorough Then
+        If searchOptions.SearchMode = FormulaFinderOptions.eSearchMode.Thorough Then
             ' Thorough search
 
             EstimateNumberOfOperations(sortedElementStats.Count)
@@ -1031,7 +1031,7 @@ Public Class MWFormulaFinder
             ' Pointers to the potential elements
             Dim lstPotentialElementPointers = New List(Of Integer)
 
-            Dim lstResults = New List(Of clsFormulaFinderResult)
+            Dim lstResults = New List(Of FormulaFinderResult)
 
             If searchOptions.FindTargetMZ Then
                 ' Searching for target m/z rather than target mass
@@ -1073,32 +1073,32 @@ Public Class MWFormulaFinder
     Private Function FindMatchesByPercentCompositionWork(
        maximumFormulaMass As Double,
        percentTolerance As Double,
-       searchOptions As clsFormulaFinderOptions) As List(Of clsFormulaFinderResult)
+       searchOptions As FormulaFinderOptions) As List(Of FormulaFinderResult)
 
         ' Validate the Inputs
         If Not ValidateSettings(eCalculationMode.MatchPercentComposition) Then
-            Return New List(Of clsFormulaFinderResult)
+            Return New List(Of FormulaFinderResult)
         End If
 
         If Val(maximumFormulaMass) <= 0 Then
             ReportError("Maximum molecular weight must be greater than 0")
-            Return New List(Of clsFormulaFinderResult)
+            Return New List(Of FormulaFinderResult)
         End If
 
         If percentTolerance < 0 Then
             ReportError("Percent tolerance cannot be negative")
-            Return New List(Of clsFormulaFinderResult)
+            Return New List(Of FormulaFinderResult)
         End If
 
         Dim candidateElementsStats = GetCandidateElements(percentTolerance)
 
         If candidateElementsStats.Count = 0 Then
-            Return New List(Of clsFormulaFinderResult)
+            Return New List(Of FormulaFinderResult)
         End If
 
         Dim sortedElementStats = (From item In candidateElementsStats Order By item.Mass Descending Select item).ToList()
 
-        If searchOptions.SearchMode = clsFormulaFinderOptions.eSearchMode.Thorough Then
+        If searchOptions.SearchMode = FormulaFinderOptions.eSearchMode.Thorough Then
             ' Thorough search
 
             EstimateNumberOfOperations(sortedElementStats.Count)
@@ -1106,7 +1106,7 @@ Public Class MWFormulaFinder
             ' Pointers to the potential elements
             Dim lstPotentialElementPointers = New List(Of Integer)
 
-            Dim lstResults = New List(Of clsFormulaFinderResult)
+            Dim lstResults = New List(Of FormulaFinderResult)
 
             RecursivePCompFinder(lstResults, searchOptions, sortedElementStats, 0, lstPotentialElementPointers, 0, maximumFormulaMass, 9)
 
@@ -1132,9 +1132,9 @@ Public Class MWFormulaFinder
 
     End Function
 
-    Private Function GetCandidateElements(Optional percentTolerance As Double = 0) As List(Of clsFormulaFinderCandidateElement)
+    Private Function GetCandidateElements(Optional percentTolerance As Double = 0) As List(Of FormulaFinderCandidateElement)
 
-        Dim candidateElementsStats = New List(Of clsFormulaFinderCandidateElement)
+        Dim candidateElementsStats = New List(Of FormulaFinderCandidateElement)
 
         Dim customElementCounter = 0
         Dim dblMass As Double
@@ -1142,7 +1142,7 @@ Public Class MWFormulaFinder
 
         For Each item In mCandidateElements
 
-            Dim candidateElement = New clsFormulaFinderCandidateElement(item.Key)
+            Dim candidateElement = New FormulaFinderCandidateElement(item.Key)
 
             candidateElement.CountMinimum = item.Value.MinimumCount
             candidateElement.CountMaximum = item.Value.MaximumCount
@@ -1178,21 +1178,21 @@ Public Class MWFormulaFinder
                     For Each currentChar In abbrevSymbol
                         If Not (Char.IsLetter(currentChar) OrElse currentChar = "+" OrElse currentChar = "_") Then
                             ReportError("Custom elemental weights must contain only numbers or only letters; if letters are used, they must be for a single valid elemental symbol or abbreviation")
-                            Return New List(Of clsFormulaFinderCandidateElement)
+                            Return New List(Of FormulaFinderCandidateElement)
                         End If
                     Next
 
                     If String.IsNullOrWhiteSpace(abbrevSymbol) Then
                         ' Too short
                         ReportError("Custom elemental weight is empty; if letters are used, they must be for a single valid elemental symbol or abbreviation")
-                        Return New List(Of clsFormulaFinderCandidateElement)
+                        Return New List(Of FormulaFinderCandidateElement)
                     End If
 
                     ' See if this is an abbreviation
                     Dim intSymbolReference = mElementAndMassRoutines.GetAbbreviationIDInternal(abbrevSymbol)
                     If intSymbolReference < 1 Then
                         ReportError("Unknown element or abbreviation for custom elemental weight: " & abbrevSymbol)
-                        Return New List(Of clsFormulaFinderCandidateElement)
+                        Return New List(Of FormulaFinderCandidateElement)
                     End If
 
                     ' Found a normal abbreviation
@@ -1361,17 +1361,17 @@ Public Class MWFormulaFinder
     ''' <param name="totalCharge"></param>
     ''' <remarks></remarks>
     Private Function GetSearchResult(
-       searchOptions As clsFormulaFinderOptions,
+       searchOptions As FormulaFinderOptions,
        ppmMode As Boolean,
        sbEmpiricalFormula As StringBuilder,
        totalMass As Double,
        targetMass As Double,
        totalCharge As Double,
-       empiricalResultSymbols As Dictionary(Of String, Integer)) As clsFormulaFinderResult
+       empiricalResultSymbols As Dictionary(Of String, Integer)) As FormulaFinderResult
 
         Try
 
-            Dim searchResult = New clsFormulaFinderResult(sbEmpiricalFormula.ToString(), empiricalResultSymbols)
+            Dim searchResult = New FormulaFinderResult(sbEmpiricalFormula.ToString(), empiricalResultSymbols)
 
             If searchOptions.FindCharge Then
                 searchResult.ChargeState = CInt(Math.Round(totalCharge))
@@ -1401,7 +1401,7 @@ Public Class MWFormulaFinder
 
         Catch ex As Exception
             mElementAndMassRoutines.GeneralErrorHandler("GetSearchResult", 0, ex.Message)
-            Return New clsFormulaFinderResult(String.Empty, New Dictionary(Of String, Integer))
+            Return New FormulaFinderResult(String.Empty, New Dictionary(Of String, Integer))
         End Try
 
     End Function
@@ -1420,7 +1420,7 @@ Public Class MWFormulaFinder
     ''' <remarks>searchOptions is passed ByRef because it is a value type and .MzChargeMin and .MzChargeMax are updated</remarks>
     Private Sub MultipleSearchMath(
        potentialElementCount As Integer,
-       searchOptions As clsFormulaFinderOptions,
+       searchOptions As FormulaFinderOptions,
        <Out()> ByRef mzSearchChargeMin As Integer,
        <Out()> ByRef mzSearchChargeMax As Integer)
 
@@ -1449,18 +1449,18 @@ Public Class MWFormulaFinder
     ''' <returns></returns>
     ''' <remarks></remarks>
     Private Function OldFormulaFinder(
-       searchOptions As clsFormulaFinderOptions,
+       searchOptions As FormulaFinderOptions,
        ppmMode As Boolean,
        calculationMode As eCalculationMode,
-       sortedElementStats As List(Of clsFormulaFinderCandidateElement),
+       sortedElementStats As List(Of FormulaFinderCandidateElement),
        targetMass As Double,
        massToleranceDa As Double,
-       maximumFormulaMass As Double) As List(Of clsFormulaFinderResult)
+       maximumFormulaMass As Double) As List(Of FormulaFinderResult)
 
         ' The calculated percentages for the specific compound
         Dim Percent(MAX_MATCHINGELEMENTS) As Double
 
-        Dim lstResults = New List(Of clsFormulaFinderResult)
+        Dim lstResults = New List(Of FormulaFinderResult)
 
         Try
 
@@ -1818,10 +1818,10 @@ Public Class MWFormulaFinder
     ''' <param name="intMultipleMtoZCharge">When searchOptions.FindTargetMZ is false, this will be 0; otherwise, the current charge being searched for</param>
     ''' <remarks></remarks>
     Private Sub RecursiveMWFinder(
-       lstResults As ICollection(Of clsFormulaFinderResult),
-       searchOptions As clsFormulaFinderOptions,
+       lstResults As ICollection(Of FormulaFinderResult),
+       searchOptions As FormulaFinderOptions,
        ppmMode As Boolean,
-       sortedElementStats As List(Of clsFormulaFinderCandidateElement),
+       sortedElementStats As List(Of FormulaFinderCandidateElement),
        intStartIndex As Integer,
        lstPotentialElementPointers As List(Of Integer),
        dblPotentialMassTotal As Double,
@@ -1942,9 +1942,9 @@ Public Class MWFormulaFinder
     ''' <param name="potentialChargeTotal"></param>
     ''' <remarks></remarks>
     Private Sub RecursivePCompFinder(
-       lstResults As ICollection(Of clsFormulaFinderResult),
-       searchOptions As clsFormulaFinderOptions,
-       sortedElementStats As IList(Of clsFormulaFinderCandidateElement),
+       lstResults As ICollection(Of FormulaFinderResult),
+       searchOptions As FormulaFinderOptions,
+       sortedElementStats As IList(Of FormulaFinderCandidateElement),
        intStartIndex As Integer,
        lstPotentialElementPointers As ICollection(Of Integer),
        dblPotentialMassTotal As Double,
