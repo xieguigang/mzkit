@@ -1,15 +1,9 @@
- //alert("molI: " + "81528");
-        //alert("molN: " + "PA(18:2(9Z,12Z)\/22:2(13Z,16Z))");
-        $(document).ready(function () {
-            //alert("molN: " + "PA(18:2(9Z,12Z)\/22:2(13Z,16Z))");
-            //	function resetchart() {
-            //	fireEvent(chart, 'selection', { resetSelection: true }, zoom);
-            // 	}
-            var count = 0;
-            //alert("molI: " + "81528");
-            //var mid = 81528;				// Pass MID here!
+$(document).ready(function () {
+           
+		   var count = 0;
+          
             var mid = "81528";				// Pass
-            var mole = "PA(18:2(9Z,12Z)\/22:2(13Z,16Z))";			// Pass molecule name here!
+            var mole = "PA(18:2(9Z,12Z)\/22:2(13Z,16Z))";	// Pass molecule name here!
 
 
             var chart = new Highcharts.Chart({

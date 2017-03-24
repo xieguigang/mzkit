@@ -1,14 +1,12 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Metabolite Chart</title>
 
     <!-- 1. Add these JavaScript inclusions in the head of your page -->
     <script type="text/javascript" src="lib/jquery-1.6.1.min.js"></script>
     <script type="text/javascript" src="lib/highcharts.src.delta.js"></script>
-    <!--<script type="text/javascript" src="/lib/highcharts.js"></script>-->
     <script type="text/javascript" src="lib/excanvas.compiled.js"></script>
     <!--
         <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -16,25 +14,48 @@
     -->
     <!-- 2. Add the JavaScript to initialize the chart on document ready -->
     <script type="text/javascript" src="./App.js"></script>
+	<style type="text/css">
+	body {
+		border:0;
+		overflow:visible
+	}
+	
+	.container {
+		width: 720px; 
+		height: 460px; 
+		margin: 0 auto
+	}
+	
+	.tip {
+		border-width:0; 
+		cellpadding:5; 
+		table-layout:fixed; 
+		bordercolor:'#00FF00'
+	}
+	
+	.tip-border {
+		border-style: solid; 
+		border-color:#FFF8C6
+	}
+</style>
 </head>
-<body style="border:0;overflow:visible">
+<body>
     <!-- 3. Add the container -->
-    <div id="container" style="width: 720px; height: 460px; margin: 0 auto">
+    <div id="container" class="container">
     </div>
-    <!-- <table align = "center" style="border-width:0; cellpadding:5; table-layout:fixed; bordercolor:'#00FF00'"> -->
-    <table align="center" style="border-width:0; cellpadding:5; table-layout:fixed; bordercolor:'#00FF00'">
+	
+    <table id="tip" class="tip" align="center">
         <tr>
-            <td style="border-style: solid; border-color:#FFF8C6">
-                <img src="./images/attn.png" align="top" alt="attention" title="how to use spectrum" />&nbsp;&nbsp;
+            <td id="tip-border", class="tip-border">
+                <img src="./images/attn.png" align="top" alt="attention" title="how to use spectrum" />
                 <font face="helvetica,arial" size="2" color="red">
                     <b>
                         Please mouse over the spectrum to view the detail information of each peak<br />
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use left mouse button to zoom in (click and drag) and zoom out (double-click)
+                        Use left mouse button to zoom in (click and drag) and zoom out (double-click)
                     </b>
                 </font>
             </td>
         </tr>
     </table>
-
 </body>
 </html>
