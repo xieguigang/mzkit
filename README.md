@@ -6,7 +6,7 @@ METLIN MS/MS spectrum data display
 ```vbnet
 ' Test code
 Call Data.Load("./SpectrumChart/Spectrum.json") _
-	.Data(Scan0) _
+    .Data(Scan0) _
     .Plot _
     .SaveAs("./spectrum/Plot.png")
 ```

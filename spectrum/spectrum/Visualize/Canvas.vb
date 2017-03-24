@@ -7,6 +7,8 @@ Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Public Module Canvas
 
+    Const Padding$ = "padding: 250px 100px 200px 200px"
+
     ''' <summary>
     ''' 
     ''' </summary>
@@ -20,13 +22,12 @@ Public Module Canvas
     <Extension>
     Public Function Plot(MS_spectrum As spectrumData,
                          Optional size As Size = Nothing,
-                         Optional padding$ = g.DefaultLargerPadding,
+                         Optional padding$ = Canvas.Padding,
                          Optional bg$ = "white",
                          Optional mzAxis$ = "(0,800),tick=100",
                          Optional signalStroke$ = "stroke: green; stroke-width: 3px; stroke-dash: solid;",
                          Optional axisTickFont$ = CSSFont.Win10NormalLarger,
                          Optional axisLabelFont$ = CSSFont.Win7Large) As Bitmap
-
         Dim plotInternal =
             Sub(ByRef g As Graphics, region As GraphicsRegion)
                 Dim y As AxisProvider = "(0,100),n=5"
@@ -68,6 +69,10 @@ Public Module Canvas
                     Call g.DrawLine(signalPen, point, low)
                 Next
             End Sub
+
+        If size.IsEmpty Then
+            size = New Size(2400, 1600)
+        End If
 
         Return g.GraphicsPlots(
             size, padding,

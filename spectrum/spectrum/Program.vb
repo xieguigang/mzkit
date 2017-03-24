@@ -8,6 +8,6 @@ Module Program
     End Function
 
     Sub Test()
-        Call Data.Load("G:\spectrum\SpectrumChart\Spectrum.json").Data(Scan0).Plot.SaveAs("x:\test.png")
+        Call Data.Load("G:\spectrum\SpectrumChart\Spectrum.json").Data(Scan0).Plot.SaveAs("G:\spectrum\spectrum\Plot.png")
     End Sub
 End Module
