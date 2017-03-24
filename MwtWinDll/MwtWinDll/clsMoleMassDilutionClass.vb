@@ -424,7 +424,7 @@ Public Class MWMoleMassDilutionClass
     ' Multiplication factor for converting from eUnits to M
     ' dblSampleMass is required for mass-based units
     ' Duplicated function, in both MWCapillaryFlowClass and MWMoleMassDilutionClass
-    Private Function FactorConcentration(ByRef eUnits As ummcUnitsMoleMassConcentrationConstants, Optional ByVal dblSampleMass As Double = 0) As Double
+    Private Function FactorConcentration(ByRef eUnits As ummcUnitsMoleMassConcentrationConstants, Optional dblSampleMass As Double = 0) As Double
         Dim dblFactor As Double
 
         If dblSampleMass = 0 Then

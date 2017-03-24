@@ -2,7 +2,7 @@ Option Strict On
 
 Class clsNumberConversionRoutines
 
-	Public Shared Function CDblSafe(ByVal strWork As String) As Double
+	Public Shared Function CDblSafe(strWork As String) As Double
 		Dim dblValue As Double = 0
 		If Double.TryParse(strWork, dblValue) Then
 			Return dblValue
@@ -11,7 +11,7 @@ Class clsNumberConversionRoutines
 		End If
 	End Function
 
-	Public Shared Function CShortSafe(ByVal dblWork As Double) As Int16
+	Public Shared Function CShortSafe(dblWork As Double) As Int16
 		If dblWork <= 32767 And dblWork >= -32767 Then
 			Return CShort(dblWork)
 		Else
@@ -23,7 +23,7 @@ Class clsNumberConversionRoutines
 		End If
 	End Function
 
-	Public Shared Function CShortSafe(ByVal strWork As String) As Int16
+	Public Shared Function CShortSafe(strWork As String) As Int16
 
 		Dim dblValue As Double = 0
 
@@ -37,7 +37,7 @@ Class clsNumberConversionRoutines
 
 	End Function
 
-	Public Shared Function CIntSafe(ByVal dblWork As Double) As Int32
+	Public Shared Function CIntSafe(dblWork As Double) As Int32
 		If dblWork <= Integer.MaxValue And dblWork >= Integer.MinValue Then
 			Return CInt(dblWork)
 		Else
@@ -49,7 +49,7 @@ Class clsNumberConversionRoutines
 		End If
 	End Function
 
-	Public Shared Function CIntSafe(ByVal strWork As String) As Int32
+	Public Shared Function CIntSafe(strWork As String) As Int32
 
 		Dim dblValue As Double = 0
 
@@ -63,7 +63,7 @@ Class clsNumberConversionRoutines
 
 	End Function
 
-	Public Shared Function CStrSafe(ByVal Item As Object) As String
+	Public Shared Function CStrSafe(Item As Object) As String
 		Try
 			If Item Is Nothing Then
 				Return String.Empty
@@ -77,7 +77,7 @@ Class clsNumberConversionRoutines
 		End Try
 	End Function
 
-    Public Shared Function IsNumber(ByVal strValue As String) As Boolean        
+    Public Shared Function IsNumber(strValue As String) As Boolean        
         Try
 			Return Double.TryParse(strValue, 0)
         Catch ex As Exception

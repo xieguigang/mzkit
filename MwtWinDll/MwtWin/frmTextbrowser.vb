@@ -35,7 +35,7 @@ Public Class frmTextbrowser
     End Sub
 
     'Form overrides dispose to clean up the component list.
-    Protected Overloads Overrides Sub Dispose(ByVal disposing As Boolean)
+    Protected Overloads Overrides Sub Dispose(disposing As Boolean)
         If disposing Then
             If Not (components Is Nothing) Then
                 components.Dispose()
@@ -161,7 +161,7 @@ Public Class frmTextbrowser
         Get
             Return txtData.ReadOnly
         End Get
-        Set(ByVal Value As Boolean)
+        Set(Value As Boolean)
             txtData.ReadOnly = Value
         End Set
     End Property
@@ -173,7 +173,7 @@ Public Class frmTextbrowser
     End Property
 
     Public WriteOnly Property SetText() As String
-        Set(ByVal Value As String)
+        Set(Value As String)
             txtData.Text = Value
             txtData.SelectionStart = 1
             txtData.ScrollToCaret()
@@ -184,7 +184,7 @@ Public Class frmTextbrowser
         Get
             Return txtData.Font.SizeInPoints
         End Get
-        Set(ByVal Value As Single)
+        Set(Value As Single)
             If Value < 6 Then
                 Value = 6
             ElseIf Value > 72 Then
@@ -203,7 +203,7 @@ Public Class frmTextbrowser
 
 #Region "Procedures"
 
-    Public Sub AppendText(ByVal Value As String)
+    Public Sub AppendText(Value As String)
         txtData.Text &= Value & ControlChars.NewLine
         txtData.SelectionStart = txtData.TextLength
         txtData.ScrollToCaret()
@@ -235,21 +235,21 @@ Public Class frmTextbrowser
 
 #Region "Menu Handlers"
 
-    Private Sub mnuFileExit_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuFileExit.Click
+    Private Sub mnuFileExit_Click(sender As System.Object, e As System.EventArgs) Handles mnuFileExit.Click
         Me.Close()
     End Sub
 
-    Private Sub mnuEditCut_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuEditCut.Click
+    Private Sub mnuEditCut_Click(sender As System.Object, e As System.EventArgs) Handles mnuEditCut.Click
         CutText()
     End Sub
-    Private Sub mnuEditCopy_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles mnuEditCopy.Click
+    Private Sub mnuEditCopy_Click(sender As Object, e As System.EventArgs) Handles mnuEditCopy.Click
         CopyText()
     End Sub
-    Private Sub mnuEditPaste_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles mnuEditPaste.Click
+    Private Sub mnuEditPaste_Click(sender As Object, e As System.EventArgs) Handles mnuEditPaste.Click
         PasteText()
     End Sub
 
-    Private Sub mnuEditFontSizeDecrease_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuEditFontSizeDecrease.Click
+    Private Sub mnuEditFontSizeDecrease_Click(sender As System.Object, e As System.EventArgs) Handles mnuEditFontSizeDecrease.Click
         If Me.TextFontSize > 14 Then
             Me.TextFontSize = Me.TextFontSize - 2
         Else
@@ -257,7 +257,7 @@ Public Class frmTextbrowser
         End If
     End Sub
 
-    Private Sub mnuEditFontSizeIncrease_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuEditFontSizeIncrease.Click
+    Private Sub mnuEditFontSizeIncrease_Click(sender As System.Object, e As System.EventArgs) Handles mnuEditFontSizeIncrease.Click
         If Me.TextFontSize >= 14 Then
             Me.TextFontSize = Me.TextFontSize + 2
         Else

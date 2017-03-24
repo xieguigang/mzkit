@@ -36,7 +36,7 @@ Friend Class frmMwtWinDllTest
         InitializeControls()
     End Sub
     'Form overrides dispose to clean up the component list.
-    Protected Overloads Overrides Sub Dispose(ByVal Disposing As Boolean)
+    Protected Overloads Overrides Sub Dispose(Disposing As Boolean)
         If Disposing Then
             If Not components Is Nothing Then
                 components.Dispose()
@@ -503,7 +503,7 @@ Friend Class frmMwtWinDllTest
     Private mMDIDListDataView As System.Data.DataView
     Private myDataSet As System.Data.DataSet
 
-    Private Sub AppendColumnToTableStyle(ByRef tsTableStyle As System.Windows.Forms.DataGridTableStyle, ByVal strMappingName As String, ByVal strHeaderText As String, Optional ByVal intWidth As Integer = 75, Optional ByVal blnIsReadOnly As Boolean = False, Optional ByVal blnIsDateTime As Boolean = False, Optional ByVal intDecimalPlaces As Integer = -1)
+    Private Sub AppendColumnToTableStyle(ByRef tsTableStyle As System.Windows.Forms.DataGridTableStyle, strMappingName As String, strHeaderText As String, Optional intWidth As Integer = 75, Optional blnIsReadOnly As Boolean = False, Optional blnIsDateTime As Boolean = False, Optional intDecimalPlaces As Integer = -1)
         ' If intDecimalPlaces is >=0, then a format string is constructed to show the specified number of decimal places
         Dim TextCol As New DataGridTextBoxColumn
         Dim i As Integer
@@ -527,7 +527,7 @@ Friend Class frmMwtWinDllTest
 
     End Sub
 
-    Private Sub AppendBoolColumnToTableStyle(ByRef tsTableStyle As System.Windows.Forms.DataGridTableStyle, ByVal strMappingName As String, ByVal strHeaderText As String, Optional ByVal intWidth As Integer = 75, Optional ByVal blnIsReadOnly As Boolean = False, Optional ByVal blnSourceIsTrueFalse As Boolean = True)
+    Private Sub AppendBoolColumnToTableStyle(ByRef tsTableStyle As System.Windows.Forms.DataGridTableStyle, strMappingName As String, strHeaderText As String, Optional intWidth As Integer = 75, Optional blnIsReadOnly As Boolean = False, Optional blnSourceIsTrueFalse As Boolean = True)
         ' If intDecimalPlaces is >=0, then a format string is constructed to show the specified number of decimal places
         Dim BoolCol As New DataGridBoolColumn
 
@@ -612,7 +612,7 @@ Friend Class frmMwtWinDllTest
         PopulateComboBoxes()
     End Sub
 
-    Private Sub MakeDataSet(ByVal lngIonCount As Integer, ByVal udtFragSpectrum() As MwtWinDll.MWPeptideClass.udtFragmentationSpectrumDataType)
+    Private Sub MakeDataSet(lngIonCount As Integer, udtFragSpectrum() As MwtWinDll.MWPeptideClass.udtFragmentationSpectrumDataType)
         ' Create a DataSet.
         myDataSet = New DataSet("myDataSet")
 
@@ -646,7 +646,7 @@ Friend Class frmMwtWinDllTest
 
     End Sub
 
-    Private Sub MakePercentCompositionDataSet(ByVal intElementCount As Short, ByVal strPctCompositions() As String)
+    Private Sub MakePercentCompositionDataSet(intElementCount As Short, strPctCompositions() As String)
 
         Dim strSymbol As String = String.Empty
 
@@ -1404,7 +1404,7 @@ Friend Class frmMwtWinDllTest
 
     End Sub
 
-    Private Sub cboStdDevMode_SelectedIndexChanged(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles cboStdDevMode.SelectedIndexChanged
+    Private Sub cboStdDevMode_SelectedIndexChanged(eventSender As System.Object, eventArgs As System.EventArgs) Handles cboStdDevMode.SelectedIndexChanged
         Select Case cboStdDevMode.SelectedIndex
             Case 1
                 mMwtWin.StdDevMode = MwtWinDll.MWElementAndMassRoutines.smStdDevModeConstants.smScientific
@@ -1416,7 +1416,7 @@ Friend Class frmMwtWinDllTest
 
     End Sub
 
-    Private Sub cboWeightMode_SelectedIndexChanged(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles cboWeightMode.SelectedIndexChanged
+    Private Sub cboWeightMode_SelectedIndexChanged(eventSender As System.Object, eventArgs As System.EventArgs) Handles cboWeightMode.SelectedIndexChanged
         Select Case cboWeightMode.SelectedIndex
             Case 1
                 mMwtWin.SetElementMode(MwtWinDll.MWElementAndMassRoutines.emElementModeConstants.emIsotopicMass)
@@ -1428,13 +1428,13 @@ Friend Class frmMwtWinDllTest
 
     End Sub
 
-    Private Sub cmdClose_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles cmdClose.Click
+    Private Sub cmdClose_Click(eventSender As System.Object, eventArgs As System.EventArgs) Handles cmdClose.Click
         mMwtWin = Nothing
         Me.Close()
         End
     End Sub
 
-    Private Sub cmdConvertToEmpirical_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles cmdConvertToEmpirical.Click
+    Private Sub cmdConvertToEmpirical_Click(eventSender As System.Object, eventArgs As System.EventArgs) Handles cmdConvertToEmpirical.Click
 
         lblProgress.Text = String.Empty
 
@@ -1447,7 +1447,7 @@ Friend Class frmMwtWinDllTest
 
     End Sub
 
-    Private Sub cmdExpandAbbreviations_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles cmdExpandAbbreviations.Click
+    Private Sub cmdExpandAbbreviations_Click(eventSender As System.Object, eventArgs As System.EventArgs) Handles cmdExpandAbbreviations.Click
 
         lblProgress.Text = String.Empty
 
@@ -1459,28 +1459,28 @@ Friend Class frmMwtWinDllTest
         UpdateResultsForCompound(mMwtWin.Compound)
     End Sub
 
-    Private Sub cmdFindMass_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles cmdFindMass.Click
+    Private Sub cmdFindMass_Click(eventSender As System.Object, eventArgs As System.EventArgs) Handles cmdFindMass.Click
         FindMass()
         FindPercentComposition()
     End Sub
 
-    Private Sub cmdTestFunctions_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles cmdTestFunctions.Click
+    Private Sub cmdTestFunctions_Click(eventSender As System.Object, eventArgs As System.EventArgs) Handles cmdTestFunctions.Click
         TestAccessFunctions()
     End Sub
 
-    Private Sub cmdTestGetTrypticName_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles cmdTestGetTrypticName.Click
+    Private Sub cmdTestGetTrypticName_Click(eventSender As System.Object, eventArgs As System.EventArgs) Handles cmdTestGetTrypticName.Click
         TestTrypticName()
     End Sub
 
-    Private Sub rtfFormula_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles rtfFormula.TextChanged
+    Private Sub rtfFormula_TextChanged(sender As System.Object, e As System.EventArgs) Handles rtfFormula.TextChanged
         txtRTFSource.Text = rtfFormula.Rtf
     End Sub
 
-    Private Sub chkShowRTFSource_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkShowRTFSource.CheckedChanged
+    Private Sub chkShowRTFSource_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles chkShowRTFSource.CheckedChanged
         txtRTFSource.Visible = chkShowRTFSource.Checked
     End Sub
 
-    Private Sub mMwtWin_ProgressChanged(ByVal taskDescription As String, ByVal percentComplete As Single) Handles mMwtWin.ProgressChanged
+    Private Sub mMwtWin_ProgressChanged(taskDescription As String, percentComplete As Single) Handles mMwtWin.ProgressChanged
         Static dtLastUpdate As System.DateTime
 
         lblProgress.Text = mMwtWin.ProgressStepDescription & "; " & percentComplete.ToString("0.0") & "% complete"
