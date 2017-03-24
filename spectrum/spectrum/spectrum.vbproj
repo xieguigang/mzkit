@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{F2147043-7C16-48F8-838B-3D2CF14B0A7B}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>spectrum.Program</StartupObject>
-    <RootNamespace>spectrum</RootNamespace>
+    <StartupObject>SMRUCC.proteomics.MS_Spectrum.Program</StartupObject>
+    <RootNamespace>SMRUCC.proteomics.MS_Spectrum</RootNamespace>
     <AssemblyName>spectrum</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Console</MyType>
@@ -50,6 +50,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -69,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Canvas.vb" />
+    <Compile Include="mzXML\XML.vb" />
     <Compile Include="spectrumData.vb" />
     <Compile Include="Program.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
