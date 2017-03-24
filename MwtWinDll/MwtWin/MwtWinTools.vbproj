@@ -155,13 +155,13 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MwtWindll.vbproj">
-      <Project>{78332537-7ecc-4b74-8aa9-ba66ab296af0}</Project>
-      <Name>MwtWindll</Name>
-    </ProjectReference>
+    <Folder Include="My Project\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="My Project\" />
+    <ProjectReference Include="..\MwtWinDll\MwtWinDll.vbproj">
+      <Project>{78332537-7ecc-4b74-8aa9-ba66ab296af0}</Project>
+      <Name>MwtWinDll</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
