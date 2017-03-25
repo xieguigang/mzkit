@@ -7,20 +7,43 @@ Public Module IFormulaFinder
 
     Public Structure AtomProfiles
 
+        ''' <summary>
+        ''' Values值的和必须要等于100或者全部为零！
+        ''' </summary>
         Dim Atoms As Dictionary(Of String, Integer)
 
+        Sub New(atoms As IEnumerable(Of String))
+            Me.Atoms = atoms.ToDictionary(Function(atom) atom, Function(null) 0%)
+        End Sub
+
         Public Sub SetAtoms(ByRef finder As MolecularWeightCalculator)
-            If Atoms.Values.Sum <> 100% Then
+            Dim sum% = Atoms.Values.Sum
+
+            If sum = 100% Then
+                For Each atom In Atoms
+                    Call finder.FormulaFinder.AddCandidateElement(atom.Key, atom.Value)
+                Next
+            ElseIf sum = 0% Then
+                For Each atom$ In Atoms.Keys
+                    Call finder.FormulaFinder.AddCandidateElement(atom)
+                Next
+            Else
                 Dim ex As New Exception(Atoms.GetJson)
-                ex = New ArgumentException($"SUM({Atoms.Values.Sum}) <> 100!", ex)
+                ex = New ArgumentException($"Atom composition neither SUM({Atoms.Values.ToArray.GetJson}) <> 100 or ALL_SUM should equals to ZERO!", ex)
                 Throw ex
             End If
-
-            For Each atom In Atoms
-                Call finder.FormulaFinder.AddCandidateElement(atom.Key, atom.Value)
-            Next
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return Atoms.GetJson
+        End Function
     End Structure
+
+    ''' <summary>
+    ''' 比较常见的有机化合物的元素构成列表
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property CommonAtoms As New AtomProfiles({"C", "H", "O", "N"})
 
     Private Function FormulaFinderOptions() As (mwt As MolecularWeightCalculator, opts As FormulaFinderOptions)
         Dim mwtWin As New MolecularWeightCalculator()
