@@ -1,7 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports MwtWinDll.FormulaFinderOptions
+Imports SMRUCC.proteomics.PNL.OMICS.MwtWinDll.FormulaFinderOptions
 
 Public Module IFormulaFinder
 
