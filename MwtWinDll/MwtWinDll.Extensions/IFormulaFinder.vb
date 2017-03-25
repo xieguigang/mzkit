@@ -1,189 +1,153 @@
-﻿Imports System.Text
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.Serialization.JSON
+Imports MwtWinDll.FormulaFinderOptions
 
 Public Module IFormulaFinder
 
+    Public Structure AtomProfiles
 
-    Public Function FormulaFinder()
+        Dim Atoms As Dictionary(Of String, Integer)
 
-        Dim oMwtWin = New MolecularWeightCalculator()
+        Public Sub SetAtoms(ByRef finder As MolecularWeightCalculator)
+            If Atoms.Values.Sum <> 100% Then
+                Dim ex As New Exception(Atoms.GetJson)
+                ex = New ArgumentException($"SUM({Atoms.Values.Sum}) <> 100!", ex)
+                Throw ex
+            End If
 
-        oMwtWin.SetElementMode(MWElementAndMassRoutines.emElementModeConstants.emIsotopicMass)
+            For Each atom In Atoms
+                Call finder.FormulaFinder.AddCandidateElement(atom.Key, atom.Value)
+            Next
+        End Sub
+    End Structure
 
-        oMwtWin.FormulaFinder.CandidateElements.Clear()
+    Private Function FormulaFinderOptions() As (mwt As MolecularWeightCalculator, opts As FormulaFinderOptions)
+        Dim mwtWin As New MolecularWeightCalculator()
 
-        oMwtWin.FormulaFinder.AddCandidateElement("C")
-        oMwtWin.FormulaFinder.AddCandidateElement("H")
-        oMwtWin.FormulaFinder.AddCandidateElement("N")
-        oMwtWin.FormulaFinder.AddCandidateElement("O")
+        Call mwtWin.SetElementMode(MWElementAndMassRoutines.emElementModeConstants.emIsotopicMass)
+        Call mwtWin.FormulaFinder.CandidateElements.Clear()
 
-        ' Abbreviations are supported, for example Serine
-        oMwtWin.FormulaFinder.AddCandidateElement("Ser")
-
-        Dim searchOptions = New FormulaFinderOptions()
+        Dim searchOptions As New FormulaFinderOptions()
 
         searchOptions.LimitChargeRange = False
         searchOptions.ChargeMin = 1
         searchOptions.ChargeMax = 1
         searchOptions.FindTargetMZ = False
 
-        If cboFormulaFinderTestMode.SelectedIndex = 0 Then FormulaFinderTest1(oMwtWin, searchOptions)
-
-        If cboFormulaFinderTestMode.SelectedIndex = 1 Then FormulaFinderTest2(oMwtWin, searchOptions)
-
-        If cboFormulaFinderTestMode.SelectedIndex = 2 Then FormulaFinderTest3(oMwtWin, searchOptions)
-
-        If cboFormulaFinderTestMode.SelectedIndex = 3 Then FormulaFinderTest4(oMwtWin, searchOptions)
-
-        If cboFormulaFinderTestMode.SelectedIndex = 4 Then FormulaFinderTest5(oMwtWin, searchOptions)
-
-        If cboFormulaFinderTestMode.SelectedIndex = 5 Then FormulaFinderTest6(oMwtWin, searchOptions)
+        Return (mwtWin, searchOptions)
     End Function
 
-    Private Sub FormulaFinderTest1(oMwtWin As MolecularWeightCalculator, searchOptions As FormulaFinderOptions)
+    ''' <summary>
+    ''' Example as ``Search for 200 Da, +/- 0.05 Da``
+    ''' </summary>
+    ''' <param name="candidateAtoms"></param>
+    ''' <param name="Da!"></param>
+    ''' <param name="deltaDa!"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function SearchByLimitDaMassDelta(candidateAtoms As AtomProfiles, Da!, Optional deltaDa! = 0.05) As FormulaFinderResult()
+        With FormulaFinderOptions()
+            ' Search for 200 Da, +/- 0.05 Da
+            Call candidateAtoms.SetAtoms(.mwt)
+            Return .mwt.FormulaFinder.FindMatchesByMass(Da, deltaDa, .opts)
+        End With
+    End Function
 
-        ' Search for 200 Da, +/- 0.05 Da
-        Dim lstResults = oMwtWin.FormulaFinder.FindMatchesByMass(200, 0.05, searchOptions)
-        ShowFormulaFinderResults(searchOptions, lstResults)
+    ''' <summary>
+    ''' Example as ``Search for 200 Da, +/- 250 ppm``
+    ''' </summary>
+    ''' <param name="Da">Target mass</param>
+    ''' <returns></returns>
+    ''' 
+    <Extension>
+    Public Function SearchByLimitDaMass(candidateAtoms As AtomProfiles, Da!, Optional deltaPPM! = 250) As FormulaFinderResult()
+        With FormulaFinderOptions()
+            Call candidateAtoms.SetAtoms(.mwt)
+            Return .mwt.FormulaFinder.FindMatchesByMassPPM(Da, deltaPPM, .opts)
+        End With
+    End Function
 
-    End Sub
+    ''' <summary>
+    ''' Example as ``Search for 200 Da, +/- 250 ppm``
+    ''' </summary>
+    ''' <param name="candidateAtoms"></param>
+    ''' <param name="chargeRange"></param>
+    ''' <param name="Da!"></param>
+    ''' <param name="deltaPPM!"></param>
+    ''' <returns></returns>
+    ''' 
+    <Extension>
+    Public Function SearchByLimitChargeLimits(candidateAtoms As AtomProfiles, chargeRange As IntRange, Da!, Optional deltaPPM! = 250) As FormulaFinderResult()
+        With FormulaFinderOptions()
+            Call candidateAtoms.SetAtoms(.mwt)
 
-    Private Sub FormulaFinderTest2(oMwtWin As MolecularWeightCalculator, searchOptions As FormulaFinderOptions)
+            With .opts
+                .LimitChargeRange = True
+                .ChargeMin = chargeRange.Min
+                .ChargeMax = chargeRange.Max
+            End With
 
-        ' Search for 200 Da, +/- 250 ppm
-        Dim lstResults = oMwtWin.FormulaFinder.FindMatchesByMassPPM(200, 250, searchOptions)
-        ShowFormulaFinderResults(searchOptions, lstResults, True)
+            Return .mwt.FormulaFinder.FindMatchesByMassPPM(Da, deltaPPM, .opts)
+        End With
+    End Function
 
-    End Sub
+    ''' <summary>
+    ''' Example as ``Search for 100 m/z, +/- 250 ppm``
+    ''' </summary>
+    ''' <param name="candidateAtoms"></param>
+    ''' <param name="chargeRange"></param>
+    ''' <param name="mz!">m/z</param>
+    ''' <param name="deltaPPM!"></param>
+    ''' <returns></returns>
+    ''' 
+    <Extension>
+    Public Function SearchByMZAndLimitCharges(candidateAtoms As AtomProfiles, chargeRange As IntRange, mz!, Optional deltaPPM! = 250) As FormulaFinderResult()
+        With FormulaFinderOptions()
+            Call candidateAtoms.SetAtoms(.mwt)
 
-    Private Sub FormulaFinderTest3(oMwtWin As MolecularWeightCalculator, searchOptions As FormulaFinderOptions)
+            With .opts
+                .LimitChargeRange = True
+                .ChargeMin = chargeRange.Min
+                .ChargeMax = chargeRange.Max
+                .FindTargetMZ = True
+            End With
 
-        searchOptions.LimitChargeRange = True
-        searchOptions.ChargeMin = -4
-        searchOptions.ChargeMax = 6
+            ' Search for 100 m/z, +/- 250 ppm
+            Return .mwt.FormulaFinder.FindMatchesByMassPPM(mz, deltaPPM, .opts)
+        End With
+    End Function
 
-        ' Search for 200 Da, +/- 250 ppm
-        Dim lstResults = oMwtWin.FormulaFinder.FindMatchesByMassPPM(200, 250, searchOptions)
-        ShowFormulaFinderResults(searchOptions, lstResults, True)
+    ''' <summary>
+    ''' Example as ``Search for percent composition results, maximum mass 400 Da``
+    ''' </summary>
+    ''' <param name="candidateAtoms"></param>
+    ''' <param name="Da!"></param>
+    ''' <param name="deltaPPM!"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function SearchByLimitMaxMass(candidateAtoms As AtomProfiles, Da!, Optional deltaPPM! = 1)
+        With FormulaFinderOptions()
+            Call candidateAtoms.SetAtoms(.mwt)
+            ' Search for percent composition results, maximum mass 400 Da
+            Return .mwt.FormulaFinder.FindMatchesByPercentComposition(Da, deltaPPM, .opts)
+        End With
+    End Function
 
-    End Sub
-
-    Private Sub FormulaFinderTest4(oMwtWin As MolecularWeightCalculator, searchOptions As FormulaFinderOptions)
-
-        searchOptions.LimitChargeRange = True
-        searchOptions.ChargeMin = -4
-        searchOptions.ChargeMax = 6
-        searchOptions.FindTargetMZ = True
-
-        ' Search for 100 m/z, +/- 250 ppm
-        Dim lstResults = oMwtWin.FormulaFinder.FindMatchesByMassPPM(100, 250, searchOptions)
-        ShowFormulaFinderResults(searchOptions, lstResults, True)
-
-    End Sub
-
-    Private Sub FormulaFinderTest5(oMwtWin As MolecularWeightCalculator, searchOptions As FormulaFinderOptions)
-
-        oMwtWin.FormulaFinder.CandidateElements.Clear()
-
-        oMwtWin.FormulaFinder.AddCandidateElement("C", 70)
-        oMwtWin.FormulaFinder.AddCandidateElement("H", 10)
-        oMwtWin.FormulaFinder.AddCandidateElement("N", 10)
-        oMwtWin.FormulaFinder.AddCandidateElement("O", 10)
-
-        ' Search for percent composition results, maximum mass 400 Da
-        Dim lstResults = oMwtWin.FormulaFinder.FindMatchesByPercentComposition(400, 1, searchOptions)
-        ShowFormulaFinderResults(searchOptions, lstResults, False, True)
-
-    End Sub
-
-    Private Sub FormulaFinderTest6(oMwtWin As MolecularWeightCalculator, searchOptions As FormulaFinderOptions)
-
-        searchOptions.SearchMode = FormulaFinderOptions.eSearchMode.Bounded
-
-        ' Search for 200 Da, +/- 250 ppm
-        Dim lstResults = oMwtWin.FormulaFinder.FindMatchesByMassPPM(200, 250, searchOptions)
-        ShowFormulaFinderResults(searchOptions, lstResults, True)
-
-    End Sub
-
-    Private Sub ShowFormulaFinderResults(
-      searchOptions As FormulaFinderOptions,
-      lstResults As List(Of FormulaFinderResult),
-      Optional deltaMassIsPPM As Boolean = False,
-      Optional percentCompositionSearch As Boolean = False)
-
-        myDataSet = New DataSet("myDataSet")
-
-        ' Create a DataTable.
-        Dim tDataTable As New DataTable("DataTable1")
-
-        Dim massColumnName As String
-        If deltaMassIsPPM Then
-            massColumnName = "DeltaPPM"
-        Else
-            massColumnName = "DeltaMass"
-        End If
-
-        ' Add coluns to the table
-        Dim cFormula As New DataColumn("Formula", GetType(String))
-        Dim cMass As New DataColumn("Mass", GetType(Double))
-        Dim cDeltaMass As New DataColumn(massColumnName, GetType(Double))
-        Dim cCharge As New DataColumn("Charge", GetType(Integer))
-        Dim cMZ As New DataColumn("M/Z", GetType(Double))
-        Dim cPercentComp As New DataColumn("PercentCompInfo", GetType(String))
-
-        tDataTable.Columns.Add(cFormula)
-        tDataTable.Columns.Add(cMass)
-        tDataTable.Columns.Add(cDeltaMass)
-        tDataTable.Columns.Add(cCharge)
-        tDataTable.Columns.Add(cMZ)
-        tDataTable.Columns.Add(cPercentComp)
-
-        If myDataSet.Tables.Count > 0 Then
-            myDataSet.Tables.Clear()
-        End If
-
-        ' Add the table to the DataSet.
-        myDataSet.Tables.Add(tDataTable)
-
-        ' Populates the table. 
-        Dim newRow As DataRow
-
-        Dim sbPercentCompInfo = New StringBuilder()
-
-        For Each result In lstResults
-            newRow = tDataTable.NewRow()
-            newRow("Formula") = result.EmpiricalFormula
-            newRow("Mass") = Math.Round(result.Mass, 4)
-
-            If deltaMassIsPPM Then
-                newRow(massColumnName) = result.DeltaMass.ToString("0.0")
-            Else
-                newRow(massColumnName) = result.DeltaMass.ToString("0.000")
-            End If
-
-            newRow("Charge") = result.ChargeState
-
-            If searchOptions.FindCharge Then
-                newRow("M/Z") = Math.Round(result.MZ, 3)
-            End If
-
-            If percentCompositionSearch Then
-
-                sbPercentCompInfo.Clear()
-
-                For Each percentCompValue In result.PercentComposition
-                    sbPercentCompInfo.Append(" " & percentCompValue.Key & "=" & percentCompValue.Value.ToString("0.00") & "%")
-                Next
-                newRow("PercentCompInfo") = sbPercentCompInfo.ToString().TrimStart()
-            Else
-                newRow("PercentCompInfo") = String.Empty
-            End If
-
-            tDataTable.Rows.Add(newRow)
-        Next
-
-        dgDataGrid.SetDataBinding(myDataSet, "DataTable1")
-
-    End Sub
-
+    ''' <summary>
+    ''' Example as ``Search for 200 Da, +/- 250 ppm``
+    ''' </summary>
+    ''' <param name="candidateAtoms"></param>
+    ''' <param name="Da!"></param>
+    ''' <param name="deltaPPM!"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function SearchByLimitDaMassAndBounded(candidateAtoms As AtomProfiles, Da!, Optional deltaPPM! = 250) As FormulaFinderResult()
+        With FormulaFinderOptions()
+            Call candidateAtoms.SetAtoms(.mwt)
+            .opts.SearchMode = eSearchMode.Bounded
+            ' Search for 200 Da, +/- 250 ppm
+            Return .mwt.FormulaFinder.FindMatchesByMassPPM(Da, deltaPPM, .opts)
+        End With
+    End Function
 End Module
