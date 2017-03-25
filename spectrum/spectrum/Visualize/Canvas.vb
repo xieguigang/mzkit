@@ -7,10 +7,18 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports SMRUCC.proteomics.PNL.OMICS.MwtWinDll
+Imports SMRUCC.proteomics.PNL.OMICS.MwtWinDll.Extensions
 
 Public Module Canvas
 
     Const Padding$ = "padding: 250px 100px 200px 200px"
+
+    <Extension> Private Function __possibleFormula(mz#) As String
+        Dim candidates As FormulaFinderResult() = IFormulaFinder.CommonAtoms.SearchByMZAndLimitCharges("-4,6", mz, 20)
+        candidates = candidates.OrderBy(Function(m) Math.Abs(m.ChargeState)).ToArray
+        Return candidates.FirstOrDefault?.EmpiricalFormula
+    End Function
 
     ''' <summary>
     ''' 
@@ -33,7 +41,8 @@ Public Module Canvas
                          Optional titleFontCSS$ = CSSFont.Win7Large,
                          Optional axisTickFont$ = CSSFont.Win10NormalLarger,
                          Optional axisLabelFont$ = CSSFont.Win7Large,
-                         Optional legendFontCSS$ = CSSFont.PlotSmallTitle) As Bitmap
+                         Optional legendFontCSS$ = CSSFont.PlotSmallTitle,
+                         Optional showPossibleFormula As Boolean = False) As Bitmap
 
         Dim plotInternal =
             Sub(ByRef g As Graphics, region As GraphicsRegion)
@@ -75,6 +84,20 @@ Public Module Canvas
                     Dim low As New PointF(point.X, bottom)
 
                     Call g.DrawLine(signalPen, point, low)
+
+                    If showPossibleFormula Then
+                        Dim formula$ = hit.x.__possibleFormula
+
+                        If Not formula.StringEmpty Then
+                            Dim formulaLabel As Image = Axis _
+                                .DrawLabel(formula, CSSFont.Win10Normal,) _
+                                .RotateImage(-90)
+
+                            point = New PointF(point.X - formulaLabel.Width / 2,
+                                               point.Y - formulaLabel.Height)
+                            g.DrawImageUnscaled(formulaLabel, point.ToPoint)
+                        End If
+                    End If
                 Next
 
                 Dim legendFont As Font = CSSFont.TryParse(legendFontCSS)
