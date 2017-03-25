@@ -1,4 +1,6 @@
-﻿Imports Microsoft.VisualBasic.Imaging
+﻿Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Imaging
+Imports SMRUCC.proteomics.PNL.OMICS.MwtWinDll.Extensions.IFormulaFinder
 
 Module Program
 
@@ -8,6 +10,10 @@ Module Program
     End Function
 
     Sub Test()
+
+        Call CommonAtoms.SearchByMZAndLimitCharges("-4,6", 200).SaveTo("x:\test.csv")
+
+
         Call Data.Load("G:\spectrum\SpectrumChart\Spectrum.json") _
             .Data(Scan0) _
             .Plot(title:="H<sub>2</sub>O<sub>5</sub>C<sub>3</sub>Ag</br><span style=""color:blue; font-size:20"">Test MS/MS spectra plot</span>") _

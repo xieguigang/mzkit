@@ -7,7 +7,7 @@ Public Class FormulaFinderResult
 
     Protected Friend SortKey As String
 
-    Public ReadOnly EmpiricalFormula As String
+    Public ReadOnly Property EmpiricalFormula As String
     Public ReadOnly Property CountsByElement As Dictionary(Of String, Integer)
     Public Property Mass As Double
     Public Property DeltaMass As Double
@@ -20,7 +20,9 @@ Public Class FormulaFinderResult
     ''' <summary>
     ''' Percent composition results (only valid if matching percent compositions)
     ''' </summary>
-    ''' <remarks>Keys are element or abbreviation symbols, values are percent composition, between 0 and 100</remarks>
+    ''' <remarks>
+    ''' Keys are element or abbreviation symbols, values are percent composition, between 0 and 100
+    ''' </remarks>
     Public Property PercentComposition As Dictionary(Of String, Double)
 
     Public Sub New(newEmpiricalFormula As String, empiricalResultSymbols As Dictionary(Of String, Integer))
