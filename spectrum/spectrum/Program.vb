@@ -11,6 +11,22 @@ Module Program
 
     Sub Test()
 
+        Dim fff = BitConverter.GetBytes(3.0!)
+
+        Dim bbb = "eJxz8G3jvr1KodJh0RcGEHCIbfU5Zs5nCefHs+x0KF/0G84vLKyr8l5o4bAJyi9qWBQ0WzUTLl8cMHuD4LbpDnvyIPwSJ79pR0TfweVLkkrDGYU+wvmlQl6G0+dEw/llHyPf/V2zAm5+ZdOSs+oXHsDlax4FBekH74fLNxQXPXFZ+A8u33DQrdBB4y1C/qRbjNqPHgT/omP1uXhhhPqbdg1bxZvg/GbBmijlV+tgfACowGHJ"
+        Call Convert.FromBase64String(bbb).FlushStream("x:\test.zip")
+
+        Dim bytes As Byte() = Convert.FromBase64String(bbb)
+        Dim dataaa = bytes.Split(4)
+        Dim mzInts = dataaa.Select(Function(b) BitConverter.ToInt32(b, Scan0)).Split(2).Select(Function(pair) (mz:=pair(0), intensity:=pair(1))).ToArray
+
+
+
+
+        Dim mms = bbb.UnzipBase64
+
+        Call mms.ToArray.FlushStream("x:\ddd.xml")
+
         Dim scans = mzXML.XML.LoadScans("X:\Test.Xml").ToArray
 
 
