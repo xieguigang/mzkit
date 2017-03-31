@@ -93,6 +93,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CLI\CLI.vb" />
+    <Compile Include="mzXML\MSData.vb" />
+    <Compile Include="mzXML\Info.vb" />
     <Compile Include="Visualize\Canvas.vb" />
     <Compile Include="mzXML\XML.vb" />
     <Compile Include="Visualize\spectrumData.vb" />
