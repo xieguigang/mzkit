@@ -11,6 +11,9 @@ Module Program
 
     Sub Test()
 
+        Dim scans = mzXML.XML.LoadScans("X:\Test.Xml").ToArray
+
+
         Call CommonAtoms.SearchByMZAndLimitCharges("-4,6", 100).SaveTo("x:\test.csv")
 
 
