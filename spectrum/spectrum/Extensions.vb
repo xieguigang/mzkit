@@ -1,7 +1,6 @@
 ﻿Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.proteomics.MS_Spectrum.mzXML
 Imports ZLibNet
 
@@ -36,8 +35,6 @@ Public Module Extensions
     End Function
 
     <Extension> Private Function __getName(scan As scan) As String
-        'Dim table As New Dictionary(Of String, String)
-        'Return table.GetJson
         Dim level$ = If(scan.msLevel = 1, "MS1", "MS/MS")
         Return $"[{level}] {scan.scanType} Scan, ({scan.polarity}) mz={scan.precursorMz} / retentionTime={scan.retentionTime}"
     End Function
