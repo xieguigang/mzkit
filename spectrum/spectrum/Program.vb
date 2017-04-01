@@ -11,7 +11,7 @@ Module Program
 
     Sub Test()
 
-        'Dim fsdfsdf = mzXML.XML.LoadScans("D:\smartnucl_integrative\DATA\METLIN\1.mzXML").Select(AddressOf ExtractMzI).ToArray
+        Dim fsdfsdf = mzXML.XML.LoadScans("G:\30STD_mix 330ppb-2.mz.XML").Select(AddressOf ExtractMzI).ToArray
 
 
         'Dim fff = BitConverter.GetBytes(3.0!)

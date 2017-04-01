@@ -1,8 +1,8 @@
 ﻿Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
+Imports sciBASIC.ZIP
 Imports SMRUCC.proteomics.MS_Spectrum.mzXML
-Imports ZLibNet
 
 Public Module Extensions
 

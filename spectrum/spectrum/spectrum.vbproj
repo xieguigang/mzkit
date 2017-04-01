@@ -83,9 +83,6 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="zlibnet">
-      <HintPath>..\..\..\tmp\zlibnet.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -168,6 +165,10 @@
     <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\mime\MIME_Markups\MIME_Markups.vbproj">
       <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
       <Name>MIME_Markups</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\zlibnet\src\zlibnet.vbproj">
+      <Project>{075e1da3-54ac-4d7c-9d4e-e34aa13910a8}</Project>
+      <Name>zlibnet</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\zlibnet\src\zlibnet.vbproj">
       <Project>{075e1da3-54ac-4d7c-9d4e-e34aa13910a8}</Project>
