@@ -1,7 +1,7 @@
 ﻿Imports System.Runtime.InteropServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Language
-Imports MwtWinDll.MolecularWeightCalculator
+Imports SMRUCC.proteomics.PNL.OMICS.MwtWinDll.MolecularWeightCalculator
 
 Public Class MWFormulaFinder
 

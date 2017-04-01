@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Class Data
+
     Public Property url As String
     Public Property Data As spectrumData()
 
@@ -23,7 +24,16 @@ Public Class spectrumData
 End Class
 
 Public Class MSSignal
+
+    ''' <summary>
+    ''' m/z
+    ''' </summary>
+    ''' <returns></returns>
     <XmlAttribute> Public Property x As Double
+    ''' <summary>
+    ''' 相对强度
+    ''' </summary>
+    ''' <returns></returns>
     <XmlAttribute> Public Property y As Double
     <XmlAttribute> Public Property fragment As Boolean
 
