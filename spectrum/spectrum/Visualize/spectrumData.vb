@@ -15,6 +15,7 @@ Public Class Data
 End Class
 
 Public Class spectrumData
+
     Public Property name As String
     Public Property data As MSSignal()
 

@@ -15,7 +15,7 @@ Public Module Canvas
     Const Padding$ = "padding: 250px 100px 200px 200px"
 
     <Extension> Private Function __possibleFormula(mz#) As String
-        Dim candidates As FormulaFinderResult() = IFormulaFinder.CommonAtoms.SearchByMZAndLimitCharges("-4,6", mz, 20)
+        Dim candidates As FormulaFinderResult() = IFormulaFinder.CommonAtoms.SearchByMZAndLimitCharges("-3,4", mz, 20)
         candidates = candidates.OrderBy(Function(m) Math.Abs(m.ChargeState)).ToArray
         Return candidates.FirstOrDefault?.EmpiricalFormula
     End Function
@@ -85,9 +85,11 @@ Public Module Canvas
 
                     Call g.DrawLine(signalPen, point, low)
 
-                    If showPossibleFormula Then
+                    If showPossibleFormula AndAlso hit.y >= 70 Then
                         Dim formula$ = hit.x.__possibleFormula
-
+#If DEBUG Then
+                        Call formula.__DEBUG_ECHO
+#End If
                         If Not formula.StringEmpty Then
                             Dim formulaLabel As Image = Axis _
                                 .DrawLabel(formula, CSSFont.Win10Normal,) _
