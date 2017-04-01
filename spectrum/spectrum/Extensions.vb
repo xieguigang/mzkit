@@ -7,7 +7,7 @@ Imports SMRUCC.proteomics.MS_Spectrum.mzXML
 Public Module Extensions
 
     ''' <summary>
-    ''' 从mzXML文件之中解析出色谱峰数据
+    ''' 解析出色谱峰数据
     ''' </summary>
     ''' <param name="peaks"></param>
     ''' <returns></returns>
@@ -17,8 +17,8 @@ Public Module Extensions
 
         For Each signal As Double() In floats.Split(2)
             data += New MSSignal With {
-                .x = signal(Scan0),
-                .y = signal(1)
+                .x = signal(Scan0),   'm/z质核比数据
+                .y = signal(1)        ' 信号强度, 归一化为 0-100 之间的数值
             }
         Next
 
@@ -28,6 +28,16 @@ Public Module Extensions
         }
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="scan">
+    ''' 可以依据扫描信号结果数据<see cref="scan.msLevel"/>来获取相应的质谱信号数据
+    ''' 
+    ''' + 1, MS1   一级质谱信号数据
+    ''' + 2, MS/MS 二级质谱信号数据
+    ''' </param>
+    ''' <returns></returns>
     <Extension> Public Function ExtractMzI(scan As scan) As spectrumData
         Dim name$ = scan.__getName
         Dim signals As spectrumData = scan.peaks.ExtractMzI(name)
