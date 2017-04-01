@@ -96,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CLI\CLI.vb" />
+    <Compile Include="Extensions.vb" />
     <Compile Include="mzXML\MSData.vb" />
     <Compile Include="mzXML\Info.vb" />
     <Compile Include="Visualize\Canvas.vb" />
