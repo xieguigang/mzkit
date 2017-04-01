@@ -11,6 +11,9 @@ Module Program
 
     Sub Test()
 
+        Dim fsdfsdf = mzXML.XML.LoadScans("D:\smartnucl_integrative\DATA\METLIN\1.mzXML").Select(AddressOf ExtractMzI).ToArray
+
+
         Dim fff = BitConverter.GetBytes(3.0!)
 
         Dim bbb = "eJxz8G3jvr1KodJh0RcGEHCIbfU5Zs5nCefHs+x0KF/0G84vLKyr8l5o4bAJyi9qWBQ0WzUTLl8cMHuD4LbpDnvyIPwSJ79pR0TfweVLkkrDGYU+wvmlQl6G0+dEw/llHyPf/V2zAm5+ZdOSs+oXHsDlax4FBekH74fLNxQXPXFZ+A8u33DQrdBB4y1C/qRbjNqPHgT/omP1uXhhhPqbdg1bxZvg/GbBmijlV+tgfACowGHJ"
