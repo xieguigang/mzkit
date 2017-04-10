@@ -26,7 +26,7 @@ Public Class Record : Implements INamedValue
 
 End Class
 
-Public Structure CH
+Public Class CH
 
     Public Property NAME As String()
     Public Property COMPOUND_CLASS As String
@@ -36,32 +36,48 @@ Public Structure CH
     Public Property IUPAC As String
     Public Property LINK As String()
 
-End Structure
+    Public Overrides Function ToString() As String
+        Return Me.GetJson
+    End Function
 
-Public Structure AC
+End Class
+
+Public Class AC
 
     Public Property INSTRUMENT As String
     Public Property INSTRUMENT_TYPE As String
     Public Property MASS_SPECTROMETRY As String()
     Public Property CHROMATOGRAPHY As String()
 
-End Structure
+    Public Overrides Function ToString() As String
+        Return Me.GetJson
+    End Function
 
-Public Structure MS
+End Class
+
+Public Class MS
 
     Public Property FOCUSED_ION As String()
     Public Property DATA_PROCESSING As String()
 
-End Structure
+    Public Overrides Function ToString() As String
+        Return Me.GetJson
+    End Function
 
-Public Structure PK
+End Class
+
+Public Class PK
 
     Public Property SPLASH As String
     Public Property ANNOTATION As AnnotationData()
     Public Property NUM_PEAK As String
     Public Property PEAK As PeakData()
 
-End Structure
+    Public Overrides Function ToString() As String
+        Return Me.GetJson
+    End Function
+
+End Class
 
 Public Structure AnnotationData
 
