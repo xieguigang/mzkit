@@ -1,12 +1,23 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Node =
     System.Collections.Generic.Dictionary(Of
         String,
         Microsoft.VisualBasic.Language.List(Of String))
 
 Public Module RecordIO
+
+    Public Function ScanLoad(DIR$) As Record()
+        Dim out As New List(Of Record)
+
+        For Each record$ In ls - l - r - "*.txt" <= DIR
+            out += RecordIO.LoadFile(txt:=record)
+        Next
+
+        Return out
+    End Function
 
     Public Function LoadFile(txt$) As Record()
         Dim out As New List(Of Record)
@@ -50,7 +61,7 @@ Public Module RecordIO
                             .tentative_formula = t(++i),
                             .formula_count = t(++i),
                             .mass = t(++i),
-                            .delta_ppm = t(++i)
+                            .delta_ppm = t.Get(++i)
                         }
                     End Function) _
             .ToArray
@@ -112,7 +123,7 @@ Public Module RecordIO
             Dim value As NamedValue(Of String) = line.GetTagValue(":", trim:=True)
 
             If readTable Then
-                If line.First = " "c Then
+                If line.First = " "c OrElse Not (line.Contains("$") OrElse line.Contains(":")) Then
                     Call appendNodeData(table, value:=line.Trim)
                     Continue For
                 Else

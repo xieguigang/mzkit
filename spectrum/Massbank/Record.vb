@@ -21,7 +21,7 @@ Public Class Record : Implements INamedValue
     Public Property PK As PK
 
     Public Overrides Function ToString() As String
-        Return Me.GetJson
+        Return RECORD_TITLE
     End Function
 
 End Class
