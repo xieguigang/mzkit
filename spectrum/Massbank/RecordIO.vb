@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
+Imports SMRUCC.proteomics.MS_Spectrum.DATA.Massbank.DATA
 Imports Node =
     System.Collections.Generic.Dictionary(Of
         String,
@@ -39,7 +40,8 @@ Public Module RecordIO
 
         out.AC = DirectCast(GetType(AC).__createObject(nodes(NameOf(Record.AC))), AC)
         out.CH = DirectCast(GetType(CH).__createObject(nodes(NameOf(Record.CH))), CH)
-        out.MS = DirectCast(GetType(MS).__createObject(nodes(NameOf(Record.MS))), MS)
+        out.MS = DirectCast(GetType(DATA.MS).__createObject(nodes(NameOf(Record.MS))), DATA.MS)
+        out.SP = DirectCast(GetType(SP).__createObject(nodes.TryGetValue(NameOf(Record.SP))), SP)
         out.PK = nodes(NameOf(Record.PK)).__createPeaksData
 
         Return out
@@ -86,6 +88,10 @@ Public Module RecordIO
         Dim o As Object = Activator.CreateInstance(type)
         Dim schema = type.Schema(PropertyAccess.Writeable,, True)
 
+        If node Is Nothing Then
+            Return o
+        End If
+
         For Each name$ In node.Keys
             If schema(name).PropertyType Is GetType(String) Then
                 Call schema(name).SetValue(o, node(name).FirstOrDefault)
@@ -104,7 +110,8 @@ Public Module RecordIO
             {"CH", New Node},
             {"AC", New Node},
             {"MS", New Node},
-            {"PK", New Node}
+            {"PK", New Node},
+            {"SP", New Node}
         }
         Dim table$ = ""
         Dim readTable As Boolean = False
@@ -144,8 +151,8 @@ Public Module RecordIO
                         value:= .Value)
                 End With
             Else
-                If Not Nodes("$_").ContainsKey(value.Name) Then
-                    Nodes("$_")(value.Name) = New List(Of String)
+                If Not nodes("$_").ContainsKey(value.Name) Then
+                    nodes("$_")(value.Name) = New List(Of String)
                 End If
                 nodes("$_")(value.Name) += value.Value
             End If
