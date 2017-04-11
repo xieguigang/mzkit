@@ -35,6 +35,7 @@ Namespace DATA
         Public Property NAME As String
         Public Property LINEAGE As String
         Public Property LINK As String
+        Public Property SAMPLE As String
 
     End Class
 
