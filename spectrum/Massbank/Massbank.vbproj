@@ -86,6 +86,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model.vb" />
     <Compile Include="RecordIO.vb" />
     <Compile Include="Record.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
