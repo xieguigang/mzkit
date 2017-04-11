@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -87,7 +88,7 @@ Namespace DATA
     Public Class PK
 
         Public Property SPLASH As String
-        Public Property ANNOTATION As AnnotationData()
+        Public Property ANNOTATION As EntityObject()
         Public Property NUM_PEAK As String
         Public Property PEAK As PeakData()
 
@@ -96,18 +97,6 @@ Namespace DATA
         End Function
 
     End Class
-
-    Public Structure AnnotationData
-
-        <Column("m/z")>
-        Public Property mz As Double
-        Public Property tentative_formula As String
-        Public Property formula_count As String
-        Public Property mass As String
-        <Column("error(ppm)")>
-        Public Property delta_ppm As String
-
-    End Structure
 
     Public Structure PeakData
 

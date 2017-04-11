@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
@@ -25,9 +26,10 @@ Public Module RecordIO
         Dim out As New List(Of Record)
 
         For Each data As String() In txt.ReadAllLines.Split("//")
-            Dim nodes As Dictionary(Of String, Node) = data.__loadSection
+            Dim annotationHeaders$() = Nothing
+            Dim nodes As Dictionary(Of String, Node) = data.__loadSection(annotationHeaders)
             ' 文件区段读取完毕，开始生成数据对象
-            Dim r As Record = nodes.__createObject
+            Dim r As Record = nodes.__createObject(annotationHeaders)
 
             out += r
         Next
@@ -36,36 +38,39 @@ Public Module RecordIO
     End Function
 
     <Extension>
-    Private Function __createObject(nodes As Dictionary(Of String, Node)) As Record
+    Private Function __createObject(nodes As Dictionary(Of String, Node), annotationHeaders$()) As Record
         Dim out As Record = DirectCast(GetType(Record).__createObject(nodes("$_")), Record)
 
         out.AC = DirectCast(GetType(AC).__createObject(nodes(NameOf(Record.AC))), AC)
         out.CH = DirectCast(GetType(CH).__createObject(nodes(NameOf(Record.CH))), CH)
         out.MS = DirectCast(GetType(DATA.MS).__createObject(nodes(NameOf(Record.MS))), DATA.MS)
         out.SP = DirectCast(GetType(SP).__createObject(nodes.TryGetValue(NameOf(Record.SP))), SP)
-        out.PK = nodes(NameOf(Record.PK)).__createPeaksData
+        out.PK = nodes(NameOf(Record.PK)).__createPeaksData(annotationHeaders)
 
         Return out
     End Function
 
     <Extension>
-    Private Function __createPeaksData(node As Node) As PK
+    Private Function __createPeaksData(node As Node, annotationHeaders$()) As PK
         Dim pk As New PK
 
         pk.NUM_PEAK = node.TryGetValue(NameOf(pk.NUM_PEAK)).DefaultFirst
         pk.SPLASH = node.TryGetValue(NameOf(pk.SPLASH)).DefaultFirst
         pk.ANNOTATION = node.TryGetValue(NameOf(pk.ANNOTATION)) _
             .SafeQuery _
-            .Select(Function(s$)
-                        Dim t$() = s.Split
-                        Dim i As int = Scan0
+            .SeqIterator _
+            .Select(Function(s)
+                        Dim t$() = (+s).Split
+                        Dim table As Dictionary(Of String, String) =
+                            t _
+                            .Where(Function(ss) Not ss.StringEmpty) _
+                            .SeqIterator _
+                            .ToDictionary(Function(k) annotationHeaders(k),
+                                          Function(v) +v)
 
-                        Return New AnnotationData With {
-                            .mz = t(++i),
-                            .tentative_formula = t(++i),
-                            .formula_count = t(++i),
-                            .mass = t(++i),
-                            .delta_ppm = t.Get(++i)
+                        Return New EntityObject With {
+                            .ID = s.i,
+                            .Properties = table
                         }
                     End Function) _
             .ToArray
@@ -106,7 +111,7 @@ Public Module RecordIO
     End Function
 
     <Extension>
-    Private Function __loadSection(data$()) As Dictionary(Of String, Node)
+    Private Function __loadSection(data$(), ByRef annotationHeaders$()) As Dictionary(Of String, Node)
         Dim nodes As New Dictionary(Of String, Node) From {
             {"$_", New Node},
             {"CH", New Node},
@@ -143,6 +148,11 @@ Public Module RecordIO
             If value.Name = "PK$ANNOTATION" OrElse value.Name = "PK$PEAK" Then
                 table = value.Name
                 readTable = True
+
+                If value.Name = "PK$ANNOTATION" Then
+                    annotationHeaders = value.Value.Split
+                End If
+
                 Continue For
             End If
 
