@@ -86,9 +86,10 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DATA\Model.vb" />
     <Compile Include="Model.vb" />
     <Compile Include="RecordIO.vb" />
-    <Compile Include="Record.vb" />
+    <Compile Include="DATA\Record.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
