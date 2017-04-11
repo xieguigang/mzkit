@@ -29,7 +29,7 @@ Namespace DATA
         Public Property FLOW_RATE As String
         Public Property RETENTION_TIME As String
         Public Property SAMPLING_CONE As String
-        Public Property SOLVENT As String
+        Public Property SOLVENT As String()
 
         Public Overrides Function ToString() As String
             Return Me.GetJson

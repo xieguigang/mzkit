@@ -50,7 +50,7 @@ Public Module Model
                 .FLOW_RATE = getValue(NameOf(.FLOW_RATE)).FirstOrDefault,
                 .RETENTION_TIME = getValue(NameOf(.RETENTION_TIME)).FirstOrDefault,
                 .SAMPLING_CONE = getValue(NameOf(.SAMPLING_CONE)).FirstOrDefault,
-                .SOLVENT = getValue(NameOf(.SOLVENT)).FirstOrDefault
+                .SOLVENT = getValue(NameOf(.SOLVENT))
             }
 
             Return chr
@@ -99,8 +99,9 @@ Public Module Model
             .Select(Function(l) l.GetTagValue(" ", trim:=True)) _
             .ToArray
         Dim table As Dictionary(Of String, String()) = data _
-            .ToDictionary(Function(l) l.Name,
-                          Function(l) l.Value.StringSplit("\s+"))
+            .GroupBy(Function(k) k.Name) _
+            .ToDictionary(Function(l) l.Key,
+                          Function(l) l.Values)
         Return table
     End Function
 End Module
