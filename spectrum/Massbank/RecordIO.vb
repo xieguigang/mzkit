@@ -1,9 +1,11 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Text.Xml.Linq
 Imports SMRUCC.proteomics.MS_Spectrum.DATA.Massbank.DATA
 Imports Node =
     System.Collections.Generic.Dictionary(Of
@@ -61,14 +63,20 @@ Public Module RecordIO
             .SeqIterator _
             .Select(Function(s)
                         Dim t$() = (+s).Split
-                        Dim table As Dictionary(Of String, String) =
+                        Dim table As PropertyValue() =
                             t _
                             .Where(Function(ss) Not ss.StringEmpty) _
                             .SeqIterator _
-                            .ToDictionary(Function(k) annotationHeaders(k),
-                                          Function(v) +v)
+                            .Select(Function(k)
+                                        Return New PropertyValue With {
+                                            .Key = k.i,
+                                            .Property = annotationHeaders(k),
+                                            .Value = +k
+                                        }
+                                    End Function) _
+                            .ToArray
 
-                        Return New EntityObject With {
+                        Return New Entity With {
                             .ID = s.i,
                             .Properties = table
                         }

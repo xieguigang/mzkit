@@ -1,7 +1,8 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.Data.csv.IO
+﻿Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text.Xml.Linq
 
 Namespace DATA
 
@@ -88,7 +89,7 @@ Namespace DATA
     Public Class PK
 
         Public Property SPLASH As String
-        Public Property ANNOTATION As EntityObject()
+        Public Property ANNOTATION As Entity()
         Public Property NUM_PEAK As String
         Public Property PEAK As PeakData()
 
@@ -100,9 +101,9 @@ Namespace DATA
 
     Public Structure PeakData
 
-        <Column("m/z")> Public Property mz As Double
-        <Column("int.")> Public Property int As Double
-        <Column("rel.int.")>
+        <XmlAttribute, Column("m/z")> Public Property mz As Double
+        <XmlAttribute, Column("int.")> Public Property int As Double
+        <XmlAttribute, Column("rel.int.")>
         Public Property relint As Double
 
     End Structure
