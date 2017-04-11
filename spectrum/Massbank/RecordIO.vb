@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.proteomics.MS_Spectrum.DATA.Massbank.DATA
 Imports Node =
     System.Collections.Generic.Dictionary(Of
@@ -51,9 +52,10 @@ Public Module RecordIO
     Private Function __createPeaksData(node As Node) As PK
         Dim pk As New PK
 
-        pk.NUM_PEAK = node(NameOf(pk.NUM_PEAK)).FirstOrDefault
-        pk.SPLASH = node(NameOf(pk.SPLASH)).FirstOrDefault
-        pk.ANNOTATION = node(NameOf(pk.ANNOTATION)) _
+        pk.NUM_PEAK = node.TryGetValue(NameOf(pk.NUM_PEAK)).DefaultFirst
+        pk.SPLASH = node.TryGetValue(NameOf(pk.SPLASH)).DefaultFirst
+        pk.ANNOTATION = node.TryGetValue(NameOf(pk.ANNOTATION)) _
+            .SafeQuery _
             .Select(Function(s$)
                         Dim t$() = s.Split
                         Dim i As int = Scan0
