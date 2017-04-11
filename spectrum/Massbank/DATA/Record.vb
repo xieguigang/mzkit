@@ -45,6 +45,11 @@ Namespace DATA
         Public Property FORMULA As String
         Public Property EXACT_MASS As String
         Public Property SMILES As String
+
+        ''' <summary>
+        ''' ``InChI``
+        ''' </summary>
+        ''' <returns></returns>
         Public Property IUPAC As String
         Public Property LINK As String()
 

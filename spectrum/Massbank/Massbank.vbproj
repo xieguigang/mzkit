@@ -86,6 +86,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PeakDataHelper.vb" />
     <Compile Include="DATA\Model.vb" />
     <Compile Include="Model.vb" />
     <Compile Include="RecordIO.vb" />
