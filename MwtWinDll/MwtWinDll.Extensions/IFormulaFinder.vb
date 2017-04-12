@@ -3,6 +3,8 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.proteomics.PNL.OMICS.MwtWinDll.FormulaFinderOptions
 
+#Disable Warning
+
 Public Module IFormulaFinder
 
     Public Structure AtomProfiles
