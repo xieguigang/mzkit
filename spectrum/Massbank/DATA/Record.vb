@@ -101,8 +101,17 @@ Namespace DATA
 
     Public Structure PeakData
 
+        ''' <summary>
+        ''' 碎片的质核比数据
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute, Column("m/z")> Public Property mz As Double
         <XmlAttribute, Column("int.")> Public Property int As Double
+
+        ''' <summary>
+        ''' 相对信号强度
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute, Column("rel.int.")>
         Public Property relint As Double
 
