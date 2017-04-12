@@ -43,6 +43,6 @@ Module Program
             .Data(Scan0) _
             .Plot(title:="H<sub>2</sub>O<sub>5</sub>C<sub>3</sub>Ag</br><span style=""color:blue; font-size:20"">Test MS/MS spectra plot</span>",
                   showPossibleFormula:=True) _
-            .SaveAs("./Plot.png")
+            .Save("./Plot.png")
     End Sub
 End Module

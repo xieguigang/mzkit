@@ -6,6 +6,8 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Vector.Text
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports SMRUCC.proteomics.PNL.OMICS.MwtWinDll
 Imports SMRUCC.proteomics.PNL.OMICS.MwtWinDll.Extensions
@@ -42,10 +44,10 @@ Public Module Canvas
                          Optional axisTickFont$ = CSSFont.Win10NormalLarger,
                          Optional axisLabelFont$ = CSSFont.Win7Large,
                          Optional legendFontCSS$ = CSSFont.PlotSmallTitle,
-                         Optional showPossibleFormula As Boolean = False) As Bitmap
+                         Optional showPossibleFormula As Boolean = False) As GraphicsData
 
         Dim plotInternal =
-            Sub(ByRef g As Graphics, region As GraphicsRegion)
+            Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 Dim y As AxisProvider = "(0,100),n=5"
                 Dim x As AxisProvider
 
@@ -91,9 +93,9 @@ Public Module Canvas
                         Call formula.__DEBUG_ECHO
 #End If
                         If Not formula.StringEmpty Then
-                            Dim formulaLabel As Image = Axis _
-                                .DrawLabel(formula, CSSFont.Win10Normal,) _
-                                .RotateImage(-90)
+                            Dim formulaLabel As Image = TextRender _
+                                .DrawHtmlText(formula, CSSFont.Win10Normal,) _
+                                .RotateImage(-90.0!)
 
                             point = New PointF(point.X - formulaLabel.Width / 2,
                                                point.Y - formulaLabel.Height)
@@ -123,7 +125,7 @@ Public Module Canvas
                         .width = 2
                     })
 
-                Dim titleImage As Image = Axis.DrawLabel(title, titleFontCSS)
+                Dim titleImage As Image = TextRender.DrawHtmlText(title, titleFontCSS)
                 Call g.DrawImageUnscaled(titleImage, region.TopCentra(titleImage.Size))
             End Sub
 
