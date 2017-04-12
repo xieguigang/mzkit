@@ -1,0 +1,6 @@
+﻿zip64 bool
+UTF8 filnavn + comment (PS: støtt ved decompress oxo!)
+passord?
+zipwriter vil legge til hvis destfil fins?
+not use tempfile as def?
+ha kun en type exception?
