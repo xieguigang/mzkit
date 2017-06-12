@@ -24,6 +24,9 @@ Public Class spectrumData
     End Function
 End Class
 
+''' <summary>
+''' ``m/z -> into``
+''' </summary>
 Public Class MSSignal
 
     ''' <summary>
