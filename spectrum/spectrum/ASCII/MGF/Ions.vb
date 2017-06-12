@@ -29,6 +29,8 @@ Namespace ASCII.MGF
             Return $"{Title} ({Peaks.SafeQuery.Count} peaks)"
         End Function
 
+        Const regexp_META$ = "((,\s*)?\S+[:]"".*?"")+"
+
         Public Shared Iterator Function StreamParser(path$) As IEnumerable(Of Ions)
             Dim lines$() = path.ReadAllLines
 
@@ -63,14 +65,12 @@ Namespace ASCII.MGF
                 Dim title$ = getValue("TITLE")
                 Dim meta As Dictionary(Of String, String)
 
-                Const regexp_META$ = "((,\s*)?\S+[:]"".*?"")+"
-
                 With r.Match(title, regexp_META, RegexICSng).Value
                     title = title.Replace(.ref, "")
                     meta = .ref _
                         .StringSplit(",\s+") _
                         .Select(Function(s) s.GetTagValue(":")) _
-                        .ToDictionary(Function(key) key.Name, 
+                        .ToDictionary(Function(key) key.Name,
                                       Function(val) val.Value.Trim(""""c))
                 End With
 
