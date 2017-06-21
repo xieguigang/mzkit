@@ -58,30 +58,34 @@ Public Module RecordIO
 
         pk.NUM_PEAK = node.TryGetValue(NameOf(pk.NUM_PEAK)).DefaultFirst
         pk.SPLASH = node.TryGetValue(NameOf(pk.SPLASH)).DefaultFirst
-        pk.ANNOTATION = node.TryGetValue(NameOf(pk.ANNOTATION)) _
-            .SafeQuery _
-            .SeqIterator _
-            .Select(Function(s)
-                        Dim t$() = (+s).Split
-                        Dim table As PropertyValue() =
-                            t _
-                            .Where(Function(ss) Not ss.StringEmpty) _
-                            .SeqIterator _
-                            .Select(Function(k)
-                                        Return New PropertyValue With {
-                                            .Key = k.i,
-                                            .Property = annotationHeaders(k),
-                                            .Value = +k
-                                        }
-                                    End Function) _
-                            .ToArray
+        Try
+            pk.ANNOTATION = node.TryGetValue(NameOf(pk.ANNOTATION)) _
+                .SafeQuery _
+                .SeqIterator _
+                .Select(Function(s)
+                            Dim t$() = (+s).Split
+                            Dim table As PropertyValue() =
+                                t _
+                                .Where(Function(ss) Not ss.StringEmpty) _
+                                .SeqIterator _
+                                .Select(Function(k)
+                                            Return New PropertyValue With {
+                                                .Key = k.i,
+                                                .Property = annotationHeaders(k),
+                                                .Value = +k
+                                            }
+                                        End Function) _
+                                .ToArray
 
-                        Return New Entity With {
-                            .ID = s.i,
-                            .Properties = table
-                        }
-                    End Function) _
-            .ToArray
+                            Return New Entity With {
+                                .ID = s.i,
+                                .Properties = table
+                            }
+                        End Function) _
+                .ToArray
+        Catch ex As Exception
+
+        End Try
         pk.PEAK = node(NameOf(pk.PEAK)) _
             .Select(Function(s$)
                         Dim t$() = s.Split

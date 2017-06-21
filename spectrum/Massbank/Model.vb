@@ -7,7 +7,7 @@ Public Module Model
     <Extension>
     Public Function DBLinks(record As Record) As Dictionary(Of String, String())
         If record.CH Is Nothing OrElse record.CH.LINK.IsNullOrEmpty Then
-            Return Nothing
+            Return New Dictionary(Of String, String())
         Else
             Dim links$() = record.CH.LINK
             Dim table = links.__internalTable
@@ -18,7 +18,7 @@ Public Module Model
     <Extension>
     Public Function FOCUSED_ION(record As Record) As FOCUSED_ION
         If record.MS Is Nothing OrElse record.MS.FOCUSED_ION.IsNullOrEmpty Then
-            Return Nothing
+            Return New FOCUSED_ION
         Else
             Dim values$() = record.MS.FOCUSED_ION
             Dim table = values.__internalTable
@@ -38,7 +38,7 @@ Public Module Model
     <Extension>
     Public Function CHROMATOGRAPHY(record As Record) As CHROMATOGRAPHY
         If record.AC Is Nothing OrElse record.AC.CHROMATOGRAPHY.IsNullOrEmpty Then
-            Return Nothing
+            Return New CHROMATOGRAPHY
         Else
             Dim values$() = record.AC.CHROMATOGRAPHY
             Dim table = values.__internalTable
@@ -60,7 +60,7 @@ Public Module Model
     <Extension>
     Public Function MASS_SPECTROMETRY(record As Record) As MASS_SPECTROMETRY
         If record.AC Is Nothing OrElse record.AC.MASS_SPECTROMETRY.IsNullOrEmpty Then
-            Return Nothing
+            Return New MASS_SPECTROMETRY
         Else
             Dim values$() = record.AC.MASS_SPECTROMETRY
             Dim table = values.__internalTable

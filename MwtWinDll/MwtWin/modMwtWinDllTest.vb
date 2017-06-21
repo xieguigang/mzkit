@@ -1,9 +1,6 @@
 Option Strict On
 Option Explicit On
 
-Imports System.Collections.Generic
-Imports MwtWinDll
-
 Module modMwtWinDllTest
 
     ' Molecular Weight Calculator Dll test program
