@@ -26,5 +26,25 @@ Namespace ASCII.MSP
         Public Overrides Function ToString() As String
             Return Name
         End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="msp$">``*.msp``代谢组参考库文件路径</param>
+        ''' <returns></returns>
+        Public Shared Iterator Function Load(msp$) As IEnumerable(Of MspData)
+            Dim file$() = msp.ReadAllLines
+            Dim libs = file _
+                .Split(AddressOf StringEmpty, DelimiterLocation.NotIncludes) _
+                .Where(Function(c) c.Length = 0) _
+                .ToArray
+
+            For Each metabolite In libs
+                Dim parts = metabolite.Split(Function(s) s.MatchPattern("Num Peaks[:]\s*\d+", RegexICSng))
+                Dim metadata = parts.First
+                Dim peaksdata = parts.Last
+
+            Next
+        End Function
     End Class
 End Namespace
