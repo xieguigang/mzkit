@@ -3,6 +3,7 @@ Imports System.Data.Linq.Mapping
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Parsers
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 
 Namespace ASCII.MSP
 
@@ -34,26 +35,7 @@ Namespace ASCII.MSP
         ReadOnly names As Dictionary(Of String, String)
 
         Sub New()
-            names = New Dictionary(Of String, String)
-
-            With New MetaData
-                names(NameOf(.accession)) = NameOf(.accession)
-                names(NameOf(.author)) = NameOf(.author)
-                names(NameOf(.exact_mass)) = "exact mass"
-                names(NameOf(.InChI)) = NameOf(.InChI)
-                names(NameOf(.InChIKey)) = NameOf(.InChIKey)
-                names(NameOf(.instrument)) = NameOf(.instrument)
-                names(NameOf(.instrument_type)) = "instrument type"
-                names(NameOf(.ionization_energy)) = "ionization energy"
-                names(NameOf(.ionization_mode)) = "ionization mode"
-                names(NameOf(.ion_type)) = "ion type"
-                names(NameOf(.Last_AutoCuration)) = "Last Auto-Curation"
-                names(NameOf(.license)) = NameOf(.license)
-                names(NameOf(.molecular_formula)) = "molecular formula"
-                names(NameOf(.ms_level)) = "ms level"
-                names(NameOf(.SMILES)) = NameOf(.SMILES)
-                names(NameOf(.total_exact_mass)) = "total exact mass"
-            End With
+            names = Mappings.FieldNameMappings(Of MetaData)(explict:=True)
         End Sub
 
         <Extension> Public Function FillData(comments$) As MetaData
