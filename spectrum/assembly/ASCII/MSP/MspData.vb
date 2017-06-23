@@ -1,15 +1,19 @@
-﻿Imports System.Data.Linq.Mapping
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+﻿Imports System.Collections.Specialized
+Imports System.Data.Linq.Mapping
 
 Namespace ASCII.MSP
 
     Public Class MspData
 
         Public Property Name As String
-        Public Property Synonym As String
+        Public Property Synonyms As String()
 
+        ''' <summary>
+        ''' ``DB#``
+        ''' </summary>
+        ''' <returns></returns>
         <Column(Name:="DB#")>
-        Public Property DBId As String
+        Public Property DB_id As String
         Public Property InChIKey As String
         Public Property MW As Double
         Public Property Formula As String
@@ -46,11 +50,12 @@ Namespace ASCII.MSP
                                Return s.MatchPattern("Num Peaks[:]\s*\d+", RegexICSng)
                            End Function) _
                     .ToArray
-                Dim metadata As Dictionary(Of NamedValue(Of String)) =
+                Dim metadata As NameValueCollection =
                     parts _
                     .First _
                     .Select(Function(s) s.GetTagValue(":", trim:=True)) _
-                    .ToDictionary
+                    .NameValueCollection
+
                 Dim peaksdata As MSMSPeak() =
                     parts _
                     .Last _
@@ -64,19 +69,19 @@ Namespace ASCII.MSP
                             End Function) _
                     .ToArray
                 Dim getValue = Function(key$)
-                                   Return metadata.TryGetValue(key).Value
+                                   Return metadata(key)
                                End Function
 
                 Dim msp As New MspData With {
                     .Peaks = peaksdata,
                     .Comments = getValue(NameOf(MspData.Comments)),
-                    .DBId = getValue("DB#"),
+                    .DB_id = getValue("DB#"),
                     .Formula = getValue(NameOf(MspData.Formula)),
                     .InChIKey = getValue(NameOf(MspData.InChIKey)),
                     .MW = getValue(NameOf(MspData.MW)),
                     .Name = getValue(NameOf(MspData.Name)),
                     .PrecursorMZ = getValue(NameOf(MspData.PrecursorMZ)),
-                    .Synonym = getValue(NameOf(MspData.Synonym))
+                    .Synonyms = metadata.GetValues("Synonyms")
                 }
 
                 Yield msp
