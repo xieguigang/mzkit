@@ -54,6 +54,7 @@ Namespace ASCII.MSP
                 Dim peaksdata As MSMSPeak() =
                     parts _
                     .Last _
+                    .Skip(1) _
                     .Select(Function(s)
                                 With s.Split(" "c)
                                     Return New MSMSPeak(
