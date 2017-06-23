@@ -2,7 +2,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports sciBASIC.ZIP
-Imports SMRUCC.proteomics.MS_Spectrum.mzXML
+Imports SMRUCC.MassSpectrum.Assembly.mzXML
 
 Public Module Extensions
 
@@ -11,21 +11,18 @@ Public Module Extensions
     ''' </summary>
     ''' <param name="peaks"></param>
     ''' <returns></returns>
-    <Extension> Public Function ExtractMzI(peaks As peaks, Optional name$ = "") As spectrumData
+    <Extension> Public Function ExtractMzI(peaks As peaks) As List(Of MSMSPeak)
         Dim floats#() = peaks.value.__decode
-        Dim data As New List(Of MSSignal)
+        Dim data As New List(Of MSMSPeak)
 
         For Each signal As Double() In floats.Split(2)
-            data += New MSSignal With {
-                .x = signal(Scan0),   'm/z质核比数据
-                .y = signal(1)        ' 信号强度, 归一化为 0-100 之间的数值
+            data += New MSMSPeak With {
+                .mz = signal(Scan0),   'm/z质核比数据
+                .intensity = signal(1)        ' 信号强度, 归一化为 0-100 之间的数值
             }
         Next
 
-        Return New spectrumData With {
-            .data = data,
-            .name = name
-        }
+        Return data
     End Function
 
     ''' <summary>
@@ -38,10 +35,10 @@ Public Module Extensions
     ''' + 2, MS/MS 二级质谱信号数据
     ''' </param>
     ''' <returns></returns>
-    <Extension> Public Function ExtractMzI(scan As scan) As spectrumData
+    <Extension> Public Function ExtractMzI(scan As scan) As (name$, peaks As MSMSPeak())
         Dim name$ = scan.__getName
-        Dim signals As spectrumData = scan.peaks.ExtractMzI(name)
-        Return signals
+        Dim peaks As MSMSPeak() = scan.peaks.ExtractMzI(name)
+        Return (name, peaks)
     End Function
 
     <Extension> Private Function __getName(scan As scan) As String

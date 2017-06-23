@@ -1,7 +1,7 @@
-﻿Imports Microsoft.VisualBasic.Text.Xml.Models
+﻿Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports r = System.Text.RegularExpressions.Regex
-Imports Microsoft.VisualBasic.Language
 
 Namespace ASCII.MGF
 
@@ -23,7 +23,7 @@ Namespace ASCII.MGF
         ''' MS/MS peaks
         ''' </summary>
         ''' <returns></returns>
-        Public Property Peaks As MSSignal()
+        Public Property Peaks As MSMSPeak()
 
         Public Overrides Function ToString() As String
             Return $"{Title} ({Peaks.SafeQuery.Count} peaks)"
@@ -45,9 +45,9 @@ Namespace ASCII.MGF
                     .Skip(properties.Count + 1) _
                     .Select(Function(s) s.StringSplit("\s+")) _
                     .Select(Function(l)
-                                Return New MSSignal With {
-                                    .x = l(0),
-                                    .y = l(1)
+                                Return New MSMSPeak With {
+                                    .mz = l(0),
+                                    .intensity = l(1)
                                 }
                             End Function) _
                     .ToArray

@@ -1,4 +1,4 @@
-﻿Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
+﻿Imports System.Data.Linq.Mapping
 
 Namespace ASCII.MSP
 
@@ -7,7 +7,7 @@ Namespace ASCII.MSP
         Public Property Name As String
         Public Property Synonym As String
 
-        <Column("DB#")>
+        <Column(Name:="DB#")>
         Public Property DBId As String
         Public Property InChIKey As String
         Public Property MW As Double
@@ -21,7 +21,7 @@ Namespace ASCII.MSP
             End Get
         End Property
 
-        Public Property Peaks As MSSignal()
+        Public Property Peaks As MSMSPeak()
 
         Public Overrides Function ToString() As String
             Return Name
