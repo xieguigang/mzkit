@@ -31,12 +31,53 @@ Namespace ASCII.MSP
             Return table
         End Function
 
+        ReadOnly names As Dictionary(Of String, String)
+
+        Sub New()
+            names = New Dictionary(Of String, String)
+
+            With New MetaData
+                names(NameOf(.accession)) = NameOf(.accession)
+                names(NameOf(.author)) = NameOf(.author)
+                names(NameOf(.exact_mass)) = "exact mass"
+                names(NameOf(.InChI)) = NameOf(.InChI)
+                names(NameOf(.InChIKey)) = NameOf(.InChIKey)
+                names(NameOf(.instrument)) = NameOf(.instrument)
+                names(NameOf(.instrument_type)) = "instrument type"
+                names(NameOf(.ionization_energy)) = "ionization energy"
+                names(NameOf(.ionization_mode)) = "ionization mode"
+                names(NameOf(.ion_type)) = "ion type"
+                names(NameOf(.Last_AutoCuration)) = "Last Auto-Curation"
+                names(NameOf(.license)) = NameOf(.license)
+                names(NameOf(.molecular_formula)) = "molecular formula"
+                names(NameOf(.ms_level)) = "ms level"
+                names(NameOf(.SMILES)) = NameOf(.SMILES)
+                names(NameOf(.total_exact_mass)) = "total exact mass"
+            End With
+        End Sub
+
         <Extension> Public Function FillData(comments$) As MetaData
             Dim table As NameValueCollection = comments.ToTable
+            Dim meta As New MetaData With {
+                .total_exact_mass = Val(table(names(NameOf(.total_exact_mass)))),
+                .SMILES = table.GetValues(NameOf(.SMILES)),
+                .accession = table(NameOf(.accession)),
+                .author = table(NameOf(.author)),
+                .exact_mass = table(names(NameOf(.exact_mass))),
+                .InChI = table(NameOf(.InChI)),
+                .InChIKey = table(NameOf(.InChIKey)),
+                .instrument = table(NameOf(.instrument)),
+                .instrument_type = table(names(NameOf(.instrument_type))),
+                .ionization_energy = table(names(NameOf(.ionization_energy))),
+                .ionization_mode = table(names(NameOf(.ionization_mode))),
+                .ion_type = table(names(NameOf(.ion_type))),
+                .Last_AutoCuration = table(names(NameOf(.Last_AutoCuration))),
+                .license = table(NameOf(.license)),
+                .molecular_formula = table(names(NameOf(.molecular_formula))),
+                .ms_level = table(names(NameOf(.ms_level)))
+            }
 
-
-
-            Return New MetaData
+            Return meta
         End Function
     End Module
 
