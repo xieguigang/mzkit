@@ -38,11 +38,10 @@ Namespace ASCII.MSP
         ''' <param name="path">``*.msp``代谢组参考库文件路径</param>
         ''' <returns></returns>
         Public Shared Iterator Function Load(path$) As IEnumerable(Of MspData)
-            Dim file$() = path.ReadAllLines
-            Dim libs = file _
-                .Split(AddressOf StringEmpty, DelimiterLocation.NotIncludes) _
-                .Where(Function(c) c.Length > 0) _
-                .ToArray
+            Dim libs = path _
+                .IterateAllLines _
+                .Split(AddressOf StringEmpty, includes:=False) _
+                .Where(Function(c) c.Length > 0)
 
             For Each reference As String() In libs
                 Dim parts = reference _
@@ -81,7 +80,7 @@ Namespace ASCII.MSP
                     .MW = getValue(NameOf(MspData.MW)),
                     .Name = getValue(NameOf(MspData.Name)),
                     .PrecursorMZ = getValue(NameOf(MspData.PrecursorMZ)),
-                    .Synonyms = metadata.GetValues("Synonyms")
+                    .Synonyms = metadata.GetValues("Synonym")
                 }
 
                 Yield msp

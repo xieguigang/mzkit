@@ -108,6 +108,44 @@ Namespace ASCII.MSP
         <Column(Name:="total exact mass")>
         Dim total_exact_mass As Double
         Dim InChIKey As String
+        Dim copyright As String
+        Dim ionization As String
+        <Column(Name:="fragmentation mode")>
+        Dim fragmentation_mode As String
+        Dim resolution As String
+        Dim column As String
+        <Column(Name:="flow gradient")>
+        Dim flow_gradient As String
+        <Column(Name:="flow rate")>
+        Dim flow_rate As String
+        <Column(Name:="retention time")>
+        Dim retention_time As String
+        <Column(Name:="solvent a")>
+        Dim solvent_a As String
+        <Column(Name:="solvent b")>
+        Dim solvent_b As String
+        <Column(Name:="precursor m/z")>
+        Dim precursor_mz As String
+        <Column(Name:="precursor type")>
+        Dim precursor_type As String
+        <Column(Name:="mass accuracy")>
+        Dim mass_accuracy As Double
+        <Column(Name:="mass error")>
+        Dim mass_error As Double
+        Dim cas As String
+        <Column(Name:="pubchem cid")>
+        Dim pubchem_cid As String
+        Dim chemspider As String
+        <Column(Name:="charge state")>
+        Dim charge_state As Integer
+        <Column(Name:="compound source")>
+        Dim compound_source As String
+        <Column(Name:="source file")>
+        Dim source_file As String
+        Dim origin As String
+        Dim adduct As String
+        <Column(Name:="ion source")>
+        Dim ion_source As String
 
         Public Overrides Function ToString() As String
             Return accession
