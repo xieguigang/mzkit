@@ -267,6 +267,11 @@ Namespace ASCII.MSP
         Public Property sample As String
         <Column(Name:="ion spray voltage")>
         Public Property ion_spray_voltage As String
+        <Column(Name:="fragmentation method")>
+        Public Property fragmentation_method As String
+        <Column(Name:="spectrum type")>
+        Public Property spectrum_type As String
+        Public Property source_temperature As String
 
         Public Overrides Function ToString() As String
             Return accession

@@ -32,6 +32,16 @@ Namespace ASCII.MSP
             Return Name
         End Function
 
+        Private Shared Function incorrects(metadata As NameValueCollection) As Boolean
+            With metadata("PrecursorMZ")
+                If .MatchPattern("(\.)?\d+/\d+") OrElse .Count(" "c) >= 1 Then
+                    Return True
+                Else
+                    Return False
+                End If
+            End With
+        End Function
+
         ''' <summary>
         ''' 
         ''' </summary>
@@ -55,7 +65,7 @@ Namespace ASCII.MSP
                     .Select(Function(s) s.GetTagValue(":", trim:=True)) _
                     .NameValueCollection
 
-                If metadata("PrecursorMZ").MatchPattern("(\.)?\d+/\d+") Then
+                If incorrects(metadata) Then
                     ' 这个数据是MS3结果，可能需要丢弃掉
                     If ms2 Then
                         Continue For
