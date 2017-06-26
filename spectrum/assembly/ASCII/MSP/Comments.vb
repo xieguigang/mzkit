@@ -71,74 +71,74 @@ Namespace ASCII.MSP
         End Function
     End Module
 
-    Public Structure MetaData
+    Public Class MetaData
 
-        Dim accession As String
-        Dim author As String
-        Dim license As String
+        Public Property accession As String
+        Public Property author As String
+        Public Property license As String
         <Column(Name:="exact mass")>
-        Dim exact_mass As Double
-        Dim instrument As String
+        Public Property exact_mass As Double
+        Public Property instrument As String
         <Column(Name:="instrument type")>
-        Dim instrument_type As String
+        Public Property instrument_type As String
         <Column(Name:="ms level")>
-        Dim ms_level As String
+        Public Property ms_level As String
         <Column(Name:="ionization energy")>
-        Dim ionization_energy As String
+        Public Property ionization_energy As String
         <Column(Name:="ion type")>
-        Dim ion_type As String
+        Public Property ion_type As String
         <Column(Name:="ionization mode")>
-        Dim ionization_mode As String
+        Public Property ionization_mode As String
         <Column(Name:="Last Auto-Curation")>
-        Dim Last_AutoCuration As String
-        Dim SMILES As String()
-        Dim InChI As String
+        Public Property Last_AutoCuration As String
+        Public Property SMILES As String()
+        Public Property InChI As String
         <Column(Name:="molecular formula")>
-        Dim molecular_formula As String
+        Public Property molecular_formula As String
         <Column(Name:="total exact mass")>
-        Dim total_exact_mass As Double
-        Dim InChIKey As String
-        Dim copyright As String
-        Dim ionization As String
+        Public Property total_exact_mass As Double
+        Public Property InChIKey As String
+        Public Property copyright As String
+        Public Property ionization As String
         <Column(Name:="fragmentation mode")>
-        Dim fragmentation_mode As String
-        Dim resolution As String
-        Dim column As String
+        Public Property fragmentation_mode As String
+        Public Property resolution As String
+        Public Property column As String
         <Column(Name:="flow gradient")>
-        Dim flow_gradient As String
+        Public Property flow_gradient As String
         <Column(Name:="flow rate")>
-        Dim flow_rate As String
+        Public Property flow_rate As String
         <Column(Name:="retention time")>
-        Dim retention_time As String
+        Public Property retention_time As String
         <Column(Name:="solvent a")>
-        Dim solvent_a As String
+        Public Property solvent_a As String
         <Column(Name:="solvent b")>
-        Dim solvent_b As String
+        Public Property solvent_b As String
         <Column(Name:="precursor m/z")>
-        Dim precursor_mz As String
+        Public Property precursor_mz As String
         <Column(Name:="precursor type")>
-        Dim precursor_type As String
+        Public Property precursor_type As String
         <Column(Name:="mass accuracy")>
-        Dim mass_accuracy As Double
+        Public Property mass_accuracy As Double
         <Column(Name:="mass error")>
-        Dim mass_error As Double
-        Dim cas As String
+        Public Property mass_error As Double
+        Public Property cas As String
         <Column(Name:="pubchem cid")>
-        Dim pubchem_cid As String
-        Dim chemspider As String
+        Public Property pubchem_cid As String
+        Public Property chemspider As String
         <Column(Name:="charge state")>
-        Dim charge_state As Integer
+        Public Property charge_state As Integer
         <Column(Name:="compound source")>
-        Dim compound_source As String
+        Public Property compound_source As String
         <Column(Name:="source file")>
-        Dim source_file As String
-        Dim origin As String
-        Dim adduct As String
+        Public Property source_file As String
+        Public Property origin As String
+        Public Property adduct As String
         <Column(Name:="ion source")>
-        Dim ion_source As String
+        Public Property ion_source As String
 
         Public Overrides Function ToString() As String
             Return accession
         End Function
-    End Structure
+    End Class
 End Namespace
