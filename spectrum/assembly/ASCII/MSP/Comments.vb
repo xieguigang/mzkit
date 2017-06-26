@@ -40,26 +40,34 @@ Namespace ASCII.MSP
 
         <Extension> Public Function FillData(comments$) As MetaData
             Dim table As NameValueCollection = comments.ToTable
-            Dim meta As New MetaData With {
-                .total_exact_mass = Val(table(names(NameOf(.total_exact_mass)))),
-                .SMILES = table.GetValues(NameOf(.SMILES)),
-                .accession = table(NameOf(.accession)),
-                .author = table(NameOf(.author)),
-                .exact_mass = table(names(NameOf(.exact_mass))),
-                .InChI = table(NameOf(.InChI)),
-                .InChIKey = table(NameOf(.InChIKey)),
-                .instrument = table(NameOf(.instrument)),
-                .instrument_type = table(names(NameOf(.instrument_type))),
-                .ionization_energy = table(names(NameOf(.ionization_energy))),
-                .ionization_mode = table(names(NameOf(.ionization_mode))),
-                .ion_type = table(names(NameOf(.ion_type))),
-                .Last_AutoCuration = table(names(NameOf(.Last_AutoCuration))),
-                .license = table(NameOf(.license)),
-                .molecular_formula = table(names(NameOf(.molecular_formula))),
-                .ms_level = table(names(NameOf(.ms_level)))
-            }
+            Dim meta As Object = New MetaData
+            Dim fields = Mappings.GetFields(Of MetaData)
 
-            Return meta
+            For Each field As BindProperty(Of ColumnAttribute) In fields
+                Dim name$ = field.Identity
+
+                If field.Type.IsInheritsFrom(GetType(Array)) Then
+                    Dim value As String()
+
+                    value = table.GetValues(name)
+                    If value.IsNullOrEmpty Then
+                        value = table.GetValues(names(name))
+                    End If
+
+                    Call field.SetValue(meta, value)
+                Else
+                    Dim value As String
+
+                    value = table(name)
+                    If value.StringEmpty Then
+                        value = table(names(name))
+                    End If
+
+                    Call field.SetValue(meta, Scripting.CTypeDynamic(value, field.Type))
+                End If
+            Next
+
+            Return DirectCast(meta, MetaData)
         End Function
     End Module
 
