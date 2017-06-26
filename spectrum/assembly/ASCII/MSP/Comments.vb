@@ -185,8 +185,12 @@ Namespace ASCII.MSP
         <Column(Name:="mass error")>
         Public Property mass_error As Double
         Public Property cas As String
+        <Column(Name:="cas number")>
+        Public Property cas_number As String
         <Column(Name:="pubchem cid")>
         Public Property pubchem_cid As String
+        <Column(Name:="pubmed id")>
+        Public Property pubmed_id As String
         Public Property chemspider As String
         <Column(Name:="charge state")>
         Public Property charge_state As Integer
@@ -198,6 +202,18 @@ Namespace ASCII.MSP
         Public Property adduct As String
         <Column(Name:="ion source")>
         Public Property ion_source As String
+        Public Property exactmass As Double
+        <Column(Name:="collision energy")>
+        Public Property collision_energy As String
+        Public Property kegg As String
+        <Column(Name:="capillary temperature")>
+        Public Property capillary_temperature As String
+        <Column(Name:="source voltage")>
+        Public Property source_voltage As String
+        <Column(Name:="sample introduction")>
+        Public Property sample_introduction As String
+        <Column(Name:="raw data file")>
+        Public Property raw_data_file As String
 
         Public Overrides Function ToString() As String
             Return accession
