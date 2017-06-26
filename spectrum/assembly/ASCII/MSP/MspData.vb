@@ -17,7 +17,7 @@ Namespace ASCII.MSP
         Public Property InChIKey As String
         Public Property MW As Double
         Public Property Formula As String
-        Public Property PrecursorMZ As Double
+        Public Property PrecursorMZ As String
         Public Property Comments As String
 
         Public ReadOnly Property MetaDB As MetaData
@@ -37,7 +37,7 @@ Namespace ASCII.MSP
         ''' </summary>
         ''' <param name="path">``*.msp``代谢组参考库文件路径</param>
         ''' <returns></returns>
-        Public Shared Iterator Function Load(path$) As IEnumerable(Of MspData)
+        Public Shared Iterator Function Load(path$, Optional ms2 As Boolean = True) As IEnumerable(Of MspData)
             Dim libs = path _
                 .IterateAllLines _
                 .Split(AddressOf StringEmpty, includes:=False) _
@@ -54,6 +54,13 @@ Namespace ASCII.MSP
                     .First _
                     .Select(Function(s) s.GetTagValue(":", trim:=True)) _
                     .NameValueCollection
+
+                If metadata("PrecursorMZ").MatchPattern("(\.)?\d+/\d+") Then
+                    ' 这个数据是MS3结果，可能需要丢弃掉
+                    If ms2 Then
+                        Continue For
+                    End If
+                End If
 
                 Dim peaksdata As MSMSPeak() =
                     parts _

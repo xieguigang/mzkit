@@ -238,6 +238,8 @@ Namespace ASCII.MSP
         Public Property charge_state As Integer
         <Column(Name:="compound source")>
         Public Property compound_source As String
+        <Column(Name:="compound class")>
+        Public Property compound_class As String
         <Column(Name:="source file")>
         Public Property source_file As String
         Public Property origin As String
@@ -256,6 +258,15 @@ Namespace ASCII.MSP
         Public Property sample_introduction As String
         <Column(Name:="raw data file")>
         Public Property raw_data_file As String
+        Public Property publication As String
+        <Column(Name:="scientific name")>
+        Public Property scientific_name As String
+        Public Property name As String
+        Public Property lineage As String
+        Public Property link As String
+        Public Property sample As String
+        <Column(Name:="ion spray voltage")>
+        Public Property ion_spray_voltage As String
 
         Public Overrides Function ToString() As String
             Return accession
