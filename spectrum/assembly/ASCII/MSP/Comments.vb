@@ -73,6 +73,33 @@ Namespace ASCII.MSP
 #Region "Reader Views"
 
         <Extension>
+        Public Function Read_compound_source(meta As MetaData) As String
+            With meta
+                Return .ReadStringMultiple({NameOf(.compound_class), NameOf(.compound_source)})
+            End With
+        End Function
+
+        <Extension>
+        Public Function Read_collision_energy(meta As MetaData) As String
+            With meta
+                Return .ReadStringMultiple(
+                    {
+                        NameOf(.collision_energy),
+                        NameOf(.collision_energy_voltage),
+                        NameOf(.source_voltage),
+                        NameOf(.ionization_energy)
+                    })
+            End With
+        End Function
+
+        <Extension>
+        Public Function Read_instrument_type(meta As MetaData) As String
+            With meta
+                Return .ReadStringMultiple({NameOf(.ion_source), NameOf(.instrument_type)})
+            End With
+        End Function
+
+        <Extension>
         Public Function Read_retention_time(meta As MetaData) As Double
             With meta
                 Dim s$ = .ReadStringMultiple({NameOf(.retention_time)})
@@ -114,7 +141,10 @@ Namespace ASCII.MSP
         <Extension>
         Public Function Read_exact_mass(meta As MetaData) As Double
             With meta
-                Return .ReadDoubleMultiple({NameOf(.exact_mass), NameOf(.exactmass)})
+                Dim mw = .ReadDoubleMultiple({NameOf(.exact_mass), NameOf(.exactmass)})
+                If mw = 0R Then
+                    Return .ReadDoubleMultiple({NameOf(.total_exact_mass)})
+                End If
             End With
         End Function
 
@@ -249,6 +279,8 @@ Namespace ASCII.MSP
         Public Property exactmass As Double
         <Column(Name:="collision energy")>
         Public Property collision_energy As String
+        <Column(Name:="collision energy voltage")>
+        Public Property collision_energy_voltage As String
         Public Property kegg As String
         <Column(Name:="capillary temperature")>
         Public Property capillary_temperature As String
