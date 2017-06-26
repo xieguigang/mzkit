@@ -1,0 +1,18 @@
+Name: DL-alpha-Hydroxybutyric acid
+Synonym: DL-alpha-Hydroxybutyric acid
+Synonym: 2-hydroxybutyrate
+DB#: MT000034
+InChIKey: AFENDNXGAFYKQO-UHFFFAOYSA-N
+MW: 104.04734411599999
+Formula: C4H8O3
+PrecursorMZ: 103.1
+Comments: "accession=MT000034" "author=Evans A M, Mitchell M, DeHaven C D, Barrett T, Milgram E, Metabolon Inc." "license=CC BY-NC-ND" "copyright=Copyright (C) 2003-2009 Metabolon, Inc." "exact mass=104.04734" "instrument=LTQ XL, Thermo Finnigan" "instrument type=LC-ESI-IT" "ms level=MS2" "collision energy=40" "ionization=ESI" "precursor m/z=103.1" "precursor type=[M-H]-" "ionization mode=negative" "mass accuracy=581.2985838992051" "mass error=0.05993188400000804" "Last Auto-Curation=1495211060288" "compound class=Natural Product; Fatty Acyls; Fatty Acids and Conjugates; Hydroxy fatty acids" "SMILES=CCC(O)C(O)=O" "cas=565-70-8" "hmdb=HMDB00008" "kegg=C05984" "lipidmaps=LMFA01050342" "InChI=InChI=1S/C4H8O3/c1-2-3(5)4(6)7/h3,5H,2H2,1H3,(H,6,7)" "molecular formula=C4H8O3" "total exact mass=104.04734411599999" "SMILES=[H]OC(=O)C([H])(O[H])C([H])([H])C([H])([H])[H]" "InChIKey=AFENDNXGAFYKQO-UHFFFAOYSA-N"
+Num Peaks: 8
+57.1 21.9
+59.2 0.3
+71.2 0.3
+75.1 1.5
+85.2 0.8
+102.3 1.3
+103.1 100.0
+104.1 0.2

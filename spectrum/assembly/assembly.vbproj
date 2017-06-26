@@ -90,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ASCII\MGF\Ions.vb" />
+    <Compile Include="ASCII\MSP\MetaData.vb" />
     <Compile Include="ASCII\Peaks.vb" />
     <Compile Include="ASCII\MSP\Comments.vb" />
     <Compile Include="ASCII\MSP\MspData.vb" />
