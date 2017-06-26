@@ -33,6 +33,7 @@ Namespace ASCII.MSP
         End Function
 
         ReadOnly names As Dictionary(Of String, String)
+        ReadOnly fields As Dictionary(Of BindProperty(Of ColumnAttribute)) = Mappings.GetFields(Of MetaData).ToDictionary
 
         Sub New()
             names = Mappings.FieldNameMappings(Of MetaData)(explict:=True)
@@ -41,9 +42,8 @@ Namespace ASCII.MSP
         <Extension> Public Function FillData(comments$) As MetaData
             Dim table As NameValueCollection = comments.ToTable
             Dim meta As Object = New MetaData
-            Dim fields = Mappings.GetFields(Of MetaData)
 
-            For Each field As BindProperty(Of ColumnAttribute) In fields
+            For Each field As BindProperty(Of ColumnAttribute) In fields.Values
                 Dim name$ = field.Identity
 
                 If field.Type.IsInheritsFrom(GetType(Array)) Then
@@ -69,6 +69,68 @@ Namespace ASCII.MSP
 
             Return DirectCast(meta, MetaData)
         End Function
+
+#Region "Reader Views"
+
+        <Extension>
+        Public Function precursor_type(meta As MetaData) As String
+            With meta
+                Return .ReadStringMultiple(
+                    {
+                        NameOf(.precursor_type),
+                        NameOf(.adduct)
+                    })
+            End With
+        End Function
+
+        <Extension>
+        Private Function ReadStringMultiple(meta As MetaData, names$()) As String
+            Dim value As Object = meta.ReadMultiple(names)
+            Return Scripting.ToString(value)
+        End Function
+
+        <Extension>
+        Public Function ReadDoubleMultiple(meta As MetaData, names$()) As Double
+            Dim s$ = meta.ReadStringMultiple(names)
+            Return Val(s)
+        End Function
+
+        <Extension>
+        Private Function ReadMultiple(meta As MetaData, names$()) As Object
+            Dim value As Object = Nothing
+
+            For Each name$ In names
+                Dim field As BindProperty(Of ColumnAttribute) = fields(name)
+
+                value = field.GetValue(meta)
+                If Not value Is Nothing Then
+                    Return value
+                End If
+            Next
+
+            Return Nothing
+        End Function
+
+        <Extension>
+        Private Function ReadStringsMultiple(meta As MetaData, names$()) As String()
+            Dim value = meta.ReadMultiple(names)
+            If value Is Nothing Then
+                Return value
+            Else
+                Return DirectCast(value, String())
+            End If
+        End Function
+
+        <Extension>
+        Private Function ReadDoublesMultiple(meta As MetaData, names$()) As Double()
+            Dim value = meta.ReadMultiple(names)
+            If value Is Nothing Then
+                Return value
+            Else
+                Return DirectCast(value, Double())
+            End If
+        End Function
+#End Region
     End Module
 
     Public Class MetaData
