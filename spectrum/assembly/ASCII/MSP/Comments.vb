@@ -73,13 +73,55 @@ Namespace ASCII.MSP
 #Region "Reader Views"
 
         <Extension>
-        Public Function precursor_type(meta As MetaData) As String
+        Public Function Read_retention_time(meta As MetaData) As Double
+            With meta
+                Dim s$ = .ReadStringMultiple({NameOf(.retention_time)})
+
+                If s.StringEmpty Then
+                    Return 0
+                ElseIf InStr(s, "min", CompareMethod.Text) Then
+                    Return Val(s) * 60
+                Else
+                    Return Val(s)
+                End If
+            End With
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="meta"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function Read_precursor_type(meta As MetaData) As String
             With meta
                 Return .ReadStringMultiple(
                     {
                         NameOf(.precursor_type),
-                        NameOf(.adduct)
+                        NameOf(.adduct),
+                        NameOf(.ion_type)
                     })
+            End With
+        End Function
+
+        <Extension>
+        Public Function Read_source_file(meta As MetaData) As String
+            With meta
+                Return .ReadStringMultiple({NameOf(.raw_data_file), NameOf(.source_file)})
+            End With
+        End Function
+
+        <Extension>
+        Public Function Read_exact_mass(meta As MetaData) As Double
+            With meta
+                Return .ReadDoubleMultiple({NameOf(.exact_mass), NameOf(.exactmass)})
+            End With
+        End Function
+
+        <Extension>
+        Public Function Read_CAS(meta As MetaData) As String
+            With meta
+                Return .ReadStringMultiple({NameOf(.cas), NameOf(.cas_number)})
             End With
         End Function
 
