@@ -137,11 +137,11 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PeakDataHelper.vb" />
-    <Compile Include="DATA\Model.vb" />
-    <Compile Include="Model.vb" />
-    <Compile Include="RecordIO.vb" />
-    <Compile Include="DATA\Record.vb" />
+    <Compile Include="Massbank\PeakDataHelper.vb" />
+    <Compile Include="Massbank\DATA\Model.vb" />
+    <Compile Include="Massbank\Model.vb" />
+    <Compile Include="Massbank\RecordIO.vb" />
+    <Compile Include="Massbank\DATA\Record.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -186,6 +186,9 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="HMDB\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
