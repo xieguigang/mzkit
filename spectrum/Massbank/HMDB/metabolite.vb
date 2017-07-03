@@ -1,5 +1,6 @@
 ﻿Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text.Xml.Linq
 
 Public Class metabolite
 
@@ -21,6 +22,14 @@ Public Class metabolite
     Public Property inchi As String
     Public Property inchikey As String
     Public Property taxonomy As taxonomy
+
+    Public Overrides Function ToString() As String
+        Return name
+    End Function
+
+    Public Shared Function Load(path$) As IEnumerable(Of metabolite)
+        Return path.LoadXmlDataSet(Of metabolite)(NameOf(metabolite), xmlns:="http://www.hmdb.ca")
+    End Function
 End Class
 
 Public Structure secondary_accessions
