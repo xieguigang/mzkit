@@ -20,6 +20,10 @@ Namespace mzXML
 
     Public Class scan
 
+        ''' <summary>
+        ''' The scan number
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property num As Integer
         <XmlAttribute> Public Property scanType As String
         <XmlAttribute> Public Property centroided As String
@@ -30,6 +34,10 @@ Namespace mzXML
         <XmlAttribute> Public Property basePeakMz As Double
         <XmlAttribute> Public Property basePeakIntensity As Double
         <XmlAttribute> Public Property totIonCurrent As Double
+        <XmlAttribute> Public Property collisionEnergy As String
+        <XmlAttribute> Public Property lowMz As Double
+        <XmlAttribute> Public Property highMz As Double
+        <XmlAttribute> Public Property msInstrumentID As String
 
         Public Property precursorMz As precursorMz
         Public Property peaks As peaks
@@ -57,14 +65,16 @@ Namespace mzXML
 
     Public Structure precursorMz
 
+        <XmlAttribute> Public Property windowWideness As String
+        <XmlAttribute> Public Property precursorCharge As Double
+        <XmlAttribute> Public Property precursorScanNum As String
         <XmlAttribute> Public Property precursorIntensity As Double
         <XmlAttribute> Public Property activationMethod As String
-        <XmlText> Public Property value As Double
+        <XmlText>
+        Public Property value As Double
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
         End Function
-
     End Structure
-
 End Namespace

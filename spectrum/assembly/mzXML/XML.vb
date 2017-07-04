@@ -1,5 +1,6 @@
 ﻿Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Text.Xml.Linq
+Imports Microsoft.VisualBasic.Language
 
 Namespace mzXML
 
@@ -16,6 +17,31 @@ Namespace mzXML
 
         Public Shared Function LoadScans(mzXML$) As IEnumerable(Of scan)
             Return mzXML.LoadXmlDataSet(Of scan)(, xmlns:="http://sashimi.sourceforge.net/schema_revision/mzXML_3.2")
+        End Function
+
+        Public Shared Function ExportPeaktable(mzXML$) As Peaktable()
+            Dim ms1 As New List(Of scan)   ' peaktable
+            Dim msms As New List(Of scan)  ' ms1 scan为msms scan的母离子
+            Dim sample$ = mzXML.BaseName
+
+            For Each scan As scan In LoadScans(mzXML)
+                If scan.msLevel = "ms1" Then
+                    ms1 += scan
+                ElseIf scan.msLevel = "ms2" Then
+                    msms += scan
+                End If
+            Next
+
+            Dim ms1Peaktable As Peaktable() = ms1 _
+                .Select(Function(s)
+                            Return New Peaktable With {
+                                .scan = s.num,
+                                .rt = s.retentionTime.Replace("PT", ""),
+                                .sample = sample
+                            }
+                        End Function) _
+                .ToArray
+
         End Function
     End Class
 End Namespace
