@@ -1,9 +1,14 @@
 ﻿Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text.Xml.Linq
 Imports SMRUCC.genomics.ComponentModel.DBLinkBuilder
 
-Public Class metabolite
+''' <summary>
+''' 当前这个对象类型的<see cref="INamedValue.Key"/>接口主键为<see cref="accession"/>属性
+''' </summary>
+Public Class metabolite : Implements INamedValue
 
     Public Property version As String
     Public Property creation_date As String
@@ -12,7 +17,7 @@ Public Class metabolite
     ''' hmdb的主编号
     ''' </summary>
     ''' <returns></returns>
-    Public Property accession As String
+    Public Property accession As String Implements IKeyedEntity(Of String).Key
     Public Property secondary_accessions As secondary_accessions
     Public Property name As String
     Public Property description As String
@@ -61,8 +66,13 @@ Public Class metabolite
     End Function
 End Class
 
+''' <summary>
+''' 次级编号
+''' </summary>
 Public Structure secondary_accessions
-    <XmlElement> Public Property accession As String()
+
+    <XmlElement>
+    Public Property accession As String()
 
     Public Overrides Function ToString() As String
         Return Me.accession.GetJson
@@ -70,7 +80,9 @@ Public Structure secondary_accessions
 End Structure
 
 Public Structure synonyms
-    <XmlElement> Public Property synonym As String()
+
+    <XmlElement>
+    Public Property synonym As String()
 
     Public Overrides Function ToString() As String
         Return Me.synonym.GetJson
