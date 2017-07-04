@@ -1,5 +1,8 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports SMRUCC.genomics.ComponentModel.DBLinkBuilder
+Imports Microsoft.VisualBasic.Language.UnixBash
+Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Public Module Statistics
 
@@ -7,10 +10,30 @@ Public Module Statistics
     ''' 
     ''' </summary>
     ''' <param name="cpd">KEGG compounds id list.</param>
+    ''' <param name="br08901">The KEGG reference map data directory</param>
     ''' <returns></returns>
     <Extension>
-    Public Function KEGGPathwayCoverages(cpd As IEnumerable(Of String)) As Dictionary(Of String, (cover%, ALL%))
+    Public Function KEGGPathwayCoverages(cpd As IEnumerable(Of String), br08901$) As Dictionary(Of String, (cover%, ALL%))
+        Dim coverages As New Dictionary(Of String, (cover%, ALL%))
+        Dim list As Index(Of String) = cpd.Indexing
+        Dim unknown% = 0
 
+        For Each file$ In ls - l - r - "*.XML" <= br08901
+            Dim refMap As PathwayMap = file.LoadXml(Of PathwayMap)
+
+            If refMap.KEGGCompound.IsNullOrEmpty Then
+                coverages(refMap.EntryId) = (0, 0)
+            Else
+                With refMap.KEGGCompound
+                    coverages(refMap.EntryId) = (
+                        .Where(Function(id) list(id.Key) > -1) _
+                        .Count,
+                        .Length)
+                End With
+            End If
+        Next
+
+        Return coverages
     End Function
 
     ''' <summary>
