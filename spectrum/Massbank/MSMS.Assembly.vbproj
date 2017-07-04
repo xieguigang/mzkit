@@ -119,6 +119,9 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.4.0-preview1-25305-02\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -137,11 +140,14 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PeakDataHelper.vb" />
-    <Compile Include="DATA\Model.vb" />
-    <Compile Include="Model.vb" />
-    <Compile Include="RecordIO.vb" />
-    <Compile Include="DATA\Record.vb" />
+    <Compile Include="HMDB\Extensions.vb" />
+    <Compile Include="HMDB\taxonomy.vb" />
+    <Compile Include="HMDB\metabolite.vb" />
+    <Compile Include="Massbank\PeakDataHelper.vb" />
+    <Compile Include="Massbank\DATA\Model.vb" />
+    <Compile Include="Massbank\Model.vb" />
+    <Compile Include="Massbank\RecordIO.vb" />
+    <Compile Include="Massbank\DATA\Record.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -176,6 +182,7 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\+VB_DataFrame.vbproj">
@@ -187,5 +194,6 @@
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
