@@ -1,4 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Language.UnixBash
+Imports SMRUCC.genomics.Assembly.EBI.ChEBI.XML
 Imports SMRUCC.genomics.ComponentModel.DBLinkBuilder
 
 ''' <summary>
@@ -40,6 +42,18 @@ Public Class XrefEngine
                         .Properties = getXref(m)
                     })
             End With
+        Next
+
+        For Each xml As String In (ls - l - r - "*.XML" <= chebi.cache)
+            Dim entity = xml.LoadXml(Of ChEBIEntity())
+
+            For Each chebiData As ChEBIEntity In entity
+                With chebiData
+                    Call chebi2ndMapSolver.Add(
+                        .chebiId,
+                        .SecondaryChEBIIds)
+                End With
+            Next
         Next
     End Sub
 
