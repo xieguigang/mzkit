@@ -52,7 +52,7 @@ Public Module Statistics
                 Call secondary2Main.Add(
                     .accession,
                     .secondary_accessions.accession)
-                Call metabolites.Add(.accession.ToLower, m)
+                Call metabolites.Add(.accession, m)
             End With
         Next
 
@@ -61,7 +61,7 @@ Public Module Statistics
             .Values _
             .Where(Function(m) Not m.taxonomy Is Nothing) _
             .Select(Function(id)
-                        Return (id.accession, id.taxonomy.class)
+                        Return (id.accession, id.taxonomy.super_class)
                     End Function) _
             .GroupBy(Function(t) t.Item2) _
             .ToDictionary(Function(name) name.Key,
@@ -75,7 +75,14 @@ Public Module Statistics
 
         For Each id As String In list
             id = secondary2Main(id)
-            classKey = metabolites(id).taxonomy?.class
+
+            If id.StringEmpty Then
+                counts!unknown += 1
+                Continue For
+            Else
+                id = UCase(id)
+                classKey = metabolites(id).taxonomy?.super_class
+            End If
 
             If classKey.StringEmpty Then
                 counts!unknown += 1
