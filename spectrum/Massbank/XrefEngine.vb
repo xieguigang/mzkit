@@ -18,6 +18,7 @@ Public Class XrefEngine
     ''' </summary>
     Dim hmdb2ndMapSolver As New SecondaryIDSolver
     Dim chebi2ndMapSolver As New SecondaryIDSolver
+    Dim chebi As Dictionary(Of ChEBIEntity)
 
     ''' <summary>
     ''' 
@@ -52,6 +53,8 @@ Public Class XrefEngine
                     Call chebi2ndMapSolver.Add(
                         .chebiId,
                         .SecondaryChEBIIds)
+
+                    Me.chebi(.chebiId) = chebiData
                 End With
             Next
         Next
