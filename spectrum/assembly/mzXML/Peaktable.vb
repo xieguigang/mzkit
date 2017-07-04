@@ -12,5 +12,19 @@
     Public Property sn As Double
     Public Property sample As Double
     Public Property index As Double
+    ''' <summary>
+    ''' The scan number
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property scan As Integer
+    ''' <summary>
+    ''' CID/HCD
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property ionization As String
+    Public Property energy As String
 
+    Public Overrides Function ToString() As String
+        Return $"{mz}@{rt}#{scan}-{ionization}-{energy}"
+    End Function
 End Class
