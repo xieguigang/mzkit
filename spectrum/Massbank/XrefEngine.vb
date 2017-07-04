@@ -18,7 +18,8 @@ Public Class XrefEngine
     ''' </summary>
     Dim hmdb2ndMapSolver As New SecondaryIDSolver
     Dim chebi2ndMapSolver As New SecondaryIDSolver
-    Dim chebi As Dictionary(Of ChEBIEntity)
+    Dim chebi As New Dictionary(Of ChEBIEntity)
+    Dim metlin2Hmdb As New Dictionary(Of String, String)
 
     ''' <summary>
     ''' 
@@ -42,6 +43,12 @@ Public Class XrefEngine
                         .ID = m.accession,
                         .Properties = getXref(m)
                     })
+
+                If Not .metlin_id.StringEmpty AndAlso
+                    Not metlin2Hmdb.ContainsKey(.metlin_id) Then
+
+                    Call metlin2Hmdb.Add(.metlin_id, .accession)
+                End If
             End With
         Next
 
@@ -73,6 +80,14 @@ Public Class XrefEngine
         Else
             chebi = chebi2ndMapSolver.SolveIDMapping(chebi)
             Return chebi
+        End If
+    End Function
+
+    Public Function Metlin2ChEBI(mid$) As String
+        If metlin2Hmdb.ContainsKey(mid) Then
+            Return HMDB2ChEBI(metlin2Hmdb(mid))
+        Else
+            Return Nothing
         End If
     End Function
 End Class

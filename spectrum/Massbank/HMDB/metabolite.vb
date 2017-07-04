@@ -18,8 +18,12 @@ Public Class metabolite
     Public Property description As String
     Public Property synonyms As synonyms
     Public Property chemical_formula As String
-    Public Property average_molecular_weight As Double
-    Public Property monisotopic_molecular_weight As Double
+
+#Region "有些代谢物的分子质量的值空字符串，在进行XML反序列化的时候会出错，所以在这里改成字符串来避免出错"
+    Public Property average_molecular_weight As String
+    Public Property monisotopic_molecular_weight As String
+#End Region
+
     Public Property iupac_name As String
     Public Property traditional_iupac As String
     Public Property cas_registry_number As String
