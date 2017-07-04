@@ -67,6 +67,10 @@ Namespace mzXML
 
         <XmlAttribute> Public Property windowWideness As String
         <XmlAttribute> Public Property precursorCharge As Double
+        ''' <summary>
+        ''' 母离子可以从这个属性指向的ms1 scan获取，这个属性对应着<see cref="scan.num"/>属性
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property precursorScanNum As String
         <XmlAttribute> Public Property precursorIntensity As Double
         <XmlAttribute> Public Property activationMethod As String

@@ -10,7 +10,7 @@
     Public Property intb As Double
     Public Property maxo As Double
     Public Property sn As Double
-    Public Property sample As Double
+    Public Property sample As String
     Public Property index As Double
     ''' <summary>
     ''' The scan number

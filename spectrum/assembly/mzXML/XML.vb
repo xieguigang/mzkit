@@ -25,22 +25,22 @@ Namespace mzXML
             Dim sample$ = mzXML.BaseName
 
             For Each scan As scan In LoadScans(mzXML)
-                If scan.msLevel = "ms1" Then
+                If scan.msLevel = "1" Then
                     ms1 += scan
-                ElseIf scan.msLevel = "ms2" Then
+                ElseIf scan.msLevel = "2" Then
                     msms += scan
                 End If
             Next
 
-            Dim ms1Peaktable As Peaktable() = ms1 _
+            Dim ms1Peaktable As Dictionary(Of Integer, Peaktable) = ms1 _
                 .Select(Function(s)
                             Return New Peaktable With {
                                 .scan = s.num,
-                                .rt = s.retentionTime.Replace("PT", ""),
+                                .rt = Val(s.retentionTime.Replace("PT", "")),
                                 .sample = sample
                             }
                         End Function) _
-                .ToArray
+                .ToDictionary(Function(peak) peak.scan)
 
         End Function
     End Class
