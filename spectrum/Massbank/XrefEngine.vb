@@ -15,6 +15,7 @@ Public Class XrefEngine
     ''' hmdb数据库之中，次级编号转换为主编号
     ''' </summary>
     Dim hmdb2ndMapSolver As New SecondaryIDSolver
+    Dim chebi2ndMapSolver As New SecondaryIDSolver
 
     ''' <summary>
     ''' 
@@ -26,11 +27,18 @@ Public Class XrefEngine
     ''' 包含有两种数据：从chebi下载的在线数据以及从chebi ftp服务器上面所下载的tsv文件的文件夹
     ''' </param>
     Sub New(hmdb$, chebi As (cache$, tsv$))
+        Dim getXref = Xref.CreateDictionary(Of metabolite)
+
         For Each m As metabolite In metabolite.Load(hmdb)
             With m
                 Call hmdb2ndMapSolver.Add(
                     .accession,
                     .secondary_accessions.accession)
+                Call hmdbXrefs.Add(
+                    New EntityObject With {
+                        .ID = m.accession,
+                        .Properties = getXref(m)
+                    })
             End With
         Next
     End Sub
@@ -41,6 +49,13 @@ Public Class XrefEngine
     ''' <param name="hmdb"></param>
     ''' <returns></returns>
     Public Function HMDB2ChEBI(hmdb$) As String
+        Dim chebi$ = hmdbXrefs(hmdb)(NameOf(metabolite.chebi_id))
 
+        If chebi.StringEmpty Then
+            Return Nothing
+        Else
+            chebi = chebi2ndMapSolver.SolveIDMapping(chebi)
+            Return chebi
+        End If
     End Function
 End Class

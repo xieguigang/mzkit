@@ -1,12 +1,17 @@
 ﻿Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text.Xml.Linq
+Imports SMRUCC.genomics.ComponentModel.DBLinkBuilder
 
 Public Class metabolite
 
     Public Property version As String
     Public Property creation_date As String
     Public Property update_date As String
+    ''' <summary>
+    ''' hmdb的主编号
+    ''' </summary>
+    ''' <returns></returns>
     Public Property accession As String
     Public Property secondary_accessions As secondary_accessions
     Public Property name As String
@@ -22,6 +27,26 @@ Public Class metabolite
     Public Property inchi As String
     Public Property inchikey As String
     Public Property taxonomy As taxonomy
+
+#Region "xref"
+    <Xref> Public Property drugbank_id As String
+    <Xref> Public Property drugbank_metabolite_id As String
+    <Xref> Public Property phenol_explorer_compound_id As String
+    <Xref> Public Property phenol_explorer_metabolite_id As String
+    <Xref> Public Property foodb_id As String
+    <Xref> Public Property knapsack_id As String
+    <Xref> Public Property chemspider_id As String
+    <Xref> Public Property kegg_id As String
+    <Xref> Public Property biocyc_id As String
+    <Xref> Public Property bigg_id As String
+    <Xref> Public Property wikipidia As String
+    <Xref> Public Property nugowiki As String
+    <Xref> Public Property metagene As String
+    <Xref> Public Property metlin_id As String
+    <Xref> Public Property pubchem_compound_id As String
+    <Xref> Public Property het_id As String
+    <Xref> Public Property chebi_id As String
+#End Region
 
     Public Overrides Function ToString() As String
         Return name
