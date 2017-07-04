@@ -29,6 +29,11 @@ Public Class XrefEngine
 
 #End Region
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="id">纯数字的ChEBI编号类型</param>
+    ''' <returns></returns>
     Default Public Overloads ReadOnly Property GetDATA(id&) As ChEBIEntity
         Get
             Dim chebiID$ = UCase(chebi2ndMapSolver("CHEBI:" & id))
@@ -109,6 +114,14 @@ Public Class XrefEngine
     ''' <param name="hmdb"></param>
     ''' <returns></returns>
     Public Function HMDB2ChEBI(hmdb$) As String
+        Dim id = UCase(hmdb2ndMapSolver(hmdb))
+
+        If Not hmdbXrefs.ContainsKey(id) Then
+            Return Nothing
+        Else
+            hmdb = id
+        End If
+
         Dim chebi$ = hmdbXrefs(hmdb)(NameOf(metabolite.chebi_id))
 
         If chebi.StringEmpty Then
@@ -122,6 +135,14 @@ Public Class XrefEngine
     Public Function Metlin2ChEBI(mid$) As String
         If metlin2Hmdb.ContainsKey(mid) Then
             Return HMDB2ChEBI(metlin2Hmdb(mid))
+        Else
+            Return Nothing
+        End If
+    End Function
+
+    Public Function CAS_toHMDB(cas$) As String
+        If CAS2hmdb.ContainsKey(cas) Then
+            Return CAS2hmdb(cas)
         Else
             Return Nothing
         End If
