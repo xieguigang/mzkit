@@ -149,6 +149,7 @@
     <Compile Include="Massbank\Model.vb" />
     <Compile Include="Massbank\RecordIO.vb" />
     <Compile Include="Massbank\DATA\Record.vb" />
+    <Compile Include="Statistics.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
