@@ -64,9 +64,9 @@ Namespace My
     Friend Module MySettingsProperty
         
         <Global.System.ComponentModel.Design.HelpKeywordAttribute("My.Settings")>  _
-        Friend ReadOnly Property Settings() As Global.SMRUCC.proteomics.MS_Spectrum.DATA.Massbank.My.MySettings
+        Friend ReadOnly Property Settings() As Global.SMRUCC.proteomics.MS_Spectrum.DATA.My.MySettings
             Get
-                Return Global.SMRUCC.proteomics.MS_Spectrum.DATA.Massbank.My.MySettings.Default
+                Return Global.SMRUCC.proteomics.MS_Spectrum.DATA.My.MySettings.Default
             End Get
         End Property
     End Module

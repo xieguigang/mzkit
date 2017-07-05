@@ -1,15 +1,17 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 
-Public Module Extensions
+Namespace HMDB
 
-    ''' <summary>
-    ''' Build hmdb metabolite classify table.
-    ''' </summary>
-    ''' <param name="path$"></param>
-    ''' <returns></returns>
-    <Extension> Public Function LoadHMDBTaxonomy(path$) As Dictionary(Of String, taxonomy)
-        Return metabolite.Load(path) _
+    Public Module Extensions
+
+        ''' <summary>
+        ''' Build hmdb metabolite classify table.
+        ''' </summary>
+        ''' <param name="path$"></param>
+        ''' <returns></returns>
+        <Extension> Public Function LoadHMDBTaxonomy(path$) As Dictionary(Of String, taxonomy)
+            Return metabolite.Load(path) _
             .Where(Function(x) Not x.taxonomy Is Nothing) _
             .Select(Function(metabolite)
                         Return metabolite.secondary_accessions _
@@ -26,5 +28,6 @@ Public Module Extensions
                           Function(taxonomy)
                               Return taxonomy.First.Item2
                           End Function)
-    End Function
-End Module
+        End Function
+    End Module
+End Namespace

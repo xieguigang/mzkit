@@ -1,8 +1,8 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports SMRUCC.genomics.ComponentModel.DBLinkBuilder
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
-Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports SMRUCC.genomics.ComponentModel.DBLinkBuilder
 
 Public Module Statistics
 

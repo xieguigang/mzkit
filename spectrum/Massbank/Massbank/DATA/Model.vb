@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace DATA
+Namespace Massbank.DATA
 
     Public Class MASS_SPECTROMETRY
 
