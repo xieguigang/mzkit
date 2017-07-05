@@ -7,7 +7,7 @@ Module Module1
         Call SMRUCC.proteomics.MS_Spectrum.DATA.Massbank.Statistics.KEGGPathwayCoverages("C:\Users\xieguigang\OneDrive\文档\New folder\metlin.kegg.txt".ReadAllLines, "X:\br08901\br08901")
 
         Dim unknown As Integer = 0
-        Dim result = SMRUCC.proteomics.MS_Spectrum.DATA.Massbank.Statistics.HMDBCoverages("C:\Users\xieguigang\Desktop\New folder\metlin.hmdb.txt".ReadAllLines, "C:\Users\xieguigang\Desktop\hmdb_metabolites.xml", unknown)
+        Dim result = SMRUCC.proteomics.MS_Spectrum.DATA.Statistics.HMDBCoverages("C:\Users\xieguigang\Desktop\New folder\metlin.hmdb.txt".ReadAllLines, "C:\Users\xieguigang\Desktop\hmdb_metabolites.xml", unknown)
 
         Dim pie = result.Where(Function(item) Not item.Key.StringEmpty).Where(Function(n) n.Value.cover > 0).ToArray
         Dim csv As New File
@@ -22,7 +22,7 @@ Module Module1
 
         Pause()
 
-        For Each m In SMRUCC.proteomics.MS_Spectrum.DATA.Massbank.metabolite.Load("C:\Users\xieguigang\Desktop\hmdb_metabolites.xml")
+        For Each m In SMRUCC.proteomics.MS_Spectrum.DATA.HMDB.metabolite.Load("C:\Users\xieguigang\Desktop\hmdb_metabolites.xml")
 
             m.name.__DEBUG_ECHO
 

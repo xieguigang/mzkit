@@ -4,7 +4,7 @@ Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text.Xml.Linq
 
-Namespace DATA
+Namespace Massbank.DATA
 
     ''' <summary>
     ''' The massbank data records

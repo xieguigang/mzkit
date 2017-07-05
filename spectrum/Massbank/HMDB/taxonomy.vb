@@ -1,23 +1,26 @@
 ﻿Imports System.Xml.Serialization
 
-Public Class taxonomy
+Namespace HMDB
 
-    Public Property description As String
-    Public Property direct_parent As String
-    Public Property kingdom As String
-    Public Property super_class As String
-    Public Property [class] As String
-    Public Property sub_class As String
-    Public Property molecular_framework As String
-    Public Property alternative_parents As alternative_parents
-    Public Property substituents As substituents
+    Public Class taxonomy
 
-End Class
+        Public Property description As String
+        Public Property direct_parent As String
+        Public Property kingdom As String
+        Public Property super_class As String
+        Public Property [class] As String
+        Public Property sub_class As String
+        Public Property molecular_framework As String
+        Public Property alternative_parents As alternative_parents
+        Public Property substituents As substituents
 
-Public Structure alternative_parents
-    <XmlElement> Public Property alternative_parent As String()
-End Structure
+    End Class
 
-Public Structure substituents
-    <XmlElement> Public Property substituent As String()
-End Structure
+    Public Structure alternative_parents
+        <XmlElement> Public Property alternative_parent As String()
+    End Structure
+
+    Public Structure substituents
+        <XmlElement> Public Property substituent As String()
+    End Structure
+End Namespace

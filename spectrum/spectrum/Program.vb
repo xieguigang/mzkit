@@ -12,6 +12,14 @@ Module Program
 
     Sub Test()
 
+
+        For Each ttt In "D:\smartnucl_integrative\20170705_library_mzXML\output\C18-_standards\lib.neg.csv".LoadCsv(Of LibraryMatrix).SpectrumFromMatrix
+            Call ttt.Plot(title:=ttt.name,
+                  showPossibleFormula:=True, mzAxis:=Nothing) _
+            .Save("./test/" & ttt.name.NormalizePathString(True) & ".png")
+        Next
+
+
         Dim fsdfsdf = mzXML.XML.LoadScans("G:\30STD_mix 330ppb-2.mz.XML").Select(AddressOf ExtractMzI).ToArray
 
 
