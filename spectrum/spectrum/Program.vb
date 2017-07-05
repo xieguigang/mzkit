@@ -15,8 +15,8 @@ Module Program
 
         For Each ttt In "D:\smartnucl_integrative\20170705_library_mzXML\output\C18-_standards\lib.neg.csv".LoadCsv(Of LibraryMatrix).SpectrumFromMatrix
             Call ttt.Plot(title:=ttt.name,
-                  showPossibleFormula:=True) _
-            .Save(ttt.name.NormalizePathString(True) & ".png")
+                  showPossibleFormula:=True, mzAxis:=Nothing) _
+            .Save("./test/" & ttt.name.NormalizePathString(True) & ".png")
         Next
 
 

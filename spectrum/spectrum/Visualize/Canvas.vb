@@ -45,10 +45,13 @@ Public Module Canvas
                          Optional axisLabelFont$ = CSSFont.Win7Large,
                          Optional legendFontCSS$ = CSSFont.PlotSmallTitle,
                          Optional showPossibleFormula As Boolean = False) As GraphicsData
-
+        Dim maxInto# = MS_spectrum _
+            .data _
+            .Select(Function(l) l.y) _
+            .Max
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
-                Dim y As AxisProvider = "(0,100),n=5"
+                Dim y As AxisProvider = $"(0,{maxInto}),n=5"
                 Dim x As AxisProvider
 
                 If mzAxis.StringEmpty Then
@@ -87,7 +90,7 @@ Public Module Canvas
 
                     Call g.DrawLine(signalPen, point, low)
 
-                    If showPossibleFormula AndAlso hit.y >= 70 Then
+                    If showPossibleFormula AndAlso hit.y / maxInto >= 0.7 Then
                         Dim formula$ = hit.x.__possibleFormula
 #If DEBUG Then
                         Call formula.__DEBUG_ECHO
