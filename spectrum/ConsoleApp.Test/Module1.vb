@@ -4,6 +4,8 @@ Module Module1
 
     Sub Main()
 
+        Call SMRUCC.proteomics.MS_Spectrum.DATA.Massbank.Statistics.KEGGPathwayCoverages("C:\Users\xieguigang\OneDrive\文档\New folder\metlin.kegg.txt".ReadAllLines, "X:\br08901\br08901")
+
         Dim unknown As Integer = 0
         Dim result = SMRUCC.proteomics.MS_Spectrum.DATA.Massbank.Statistics.HMDBCoverages("C:\Users\xieguigang\Desktop\New folder\metlin.hmdb.txt".ReadAllLines, "C:\Users\xieguigang\Desktop\hmdb_metabolites.xml", unknown)
 
