@@ -98,6 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CLI\CLI.vb" />
+    <Compile Include="Extensions.vb" />
     <Compile Include="Visualize\Canvas.vb" />
     <Compile Include="Visualize\spectrumData.vb" />
     <Compile Include="Program.vb" />
