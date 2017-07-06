@@ -1,10 +1,23 @@
 ﻿Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Text
 
 Module Module1
 
     Sub Main()
 
-        Call SMRUCC.proteomics.MS_Spectrum.DATA.Massbank.Statistics.KEGGPathwayCoverages("C:\Users\xieguigang\OneDrive\文档\New folder\metlin.kegg.txt".ReadAllLines, "X:\br08901\br08901")
+        Dim ddd = SMRUCC.proteomics.MS_Spectrum.DATA.Statistics.KEGGPathwayCoverages("C:\Users\gg.xie\Desktop\KEGG_ALL.csv".ReadAllLines, "D:\smartnucl_integrative\DATA\KEGG\br08901")
+        Dim ff As New File
+
+        ff += {"pathway", "cover", "ALL", "coverage%"}
+
+        For Each row In ddd
+            ff += New String() {row.Key, row.Value.cover, row.Value.ALL, If(row.Value.ALL = 0, 0, (row.Value.cover / row.Value.ALL) * 100%)}
+        Next
+
+        Call ff.Save("eeeee.csv", Encodings.ASCII)
+
+
+        Pause()
 
         Dim unknown As Integer = 0
         Dim result = SMRUCC.proteomics.MS_Spectrum.DATA.Statistics.HMDBCoverages("C:\Users\xieguigang\Desktop\New folder\metlin.hmdb.txt".ReadAllLines, "C:\Users\xieguigang\Desktop\hmdb_metabolites.xml", unknown)
