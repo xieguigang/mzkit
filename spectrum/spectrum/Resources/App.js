@@ -1,9 +1,15 @@
+var names = Object.keys(msms);  // 获取得到了所有的谱图的名称
+
 $(document).ready(function () {
+	var name = names[0];
+	show(name);
+});
 
-    var count = 0;
-
-    var mid = "81528";				// Pass
-    var mole = "PA(18:2(9Z,12Z)\/22:2(13Z,16Z))";	// Pass molecule name here!
+function show(name) {
+	var data = msms[name];
+	var count = 0;	
+    var mid = "";				// Pass
+    var mole = name;	// Pass molecule name here!
     var chart = new Highcharts.Chart({
         chart: {
             renderTo: 'container',
@@ -15,7 +21,7 @@ $(document).ready(function () {
             text: '' + mole
         },
         subtitle: {
-            text: "MID: 81528&nbsp;&nbsp;&nbsp;&nbsp;<font color='blue'><b>Insilico predicted spectra<\/b><\/font>"
+            text: ""// "MID: 81528&nbsp;&nbsp;&nbsp;&nbsp;<font color='blue'><b>Insilico predicted spectra<\/b><\/font>"
         },
         credits: {
             enabled: false
@@ -103,7 +109,6 @@ $(document).ready(function () {
                 // borderColor: '#000000'
             }
         },
-        series: [{ name: '&nbsp;&nbsp;&nbsp;&nbsp; (+) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10 V &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [M+H]+ &nbsp;&nbsp;', data: [{ x: 753.543, y: 100, fragment: false }, { x: 735.532, y: 7.6923076923077, fragment: false }, { x: 735.532, y: 7.6923076923077, fragment: false }, { x: 735.532, y: 0, fragment: false }, { x: 667.433, y: 0, fragment: false }, { x: 655.566, y: 15.384615384615, fragment: false }, { x: 629.418, y: 0, fragment: false }, { x: 627.402, y: 0, fragment: false }, { x: 491.313, y: 7.6923076923077, fragment: false }, { x: 473.303, y: 30.769230769231, fragment: false }, { x: 471.287, y: 7.6923076923077, fragment: false }, { x: 435.251, y: 38.461538461538, fragment: false }, { x: 419.256, y: 7.6923076923077, fragment: false }, { x: 417.24, y: 92.307692307692, fragment: false }, { x: 415.224, y: 15.384615384615, fragment: false }, { x: 413.209, y: 7.6923076923077, fragment: false }, { x: 337.31, y: 53.846153846154, fragment: false }, { x: 321.279, y: 7.6923076923077, fragment: false }, { x: 319.3, y: 53.846153846154, fragment: false }, { x: 291.305, y: 7.6923076923077, fragment: false }, { x: 281.247, y: 7.6923076923077, fragment: false }, { x: 277.289, y: 7.6923076923077, fragment: false }, { x: 263.237, y: 84.615384615385, fragment: false }, { x: 261.221, y: 7.6923076923077, fragment: false }, { x: 245.226, y: 0, fragment: false }, { x: 235.242, y: 7.6923076923077, fragment: false }, { x: 221.226, y: 7.6923076923077, fragment: false }, { x: 155.01, y: 0, fragment: false }, { x: 139.015, y: 7.6923076923077, fragment: false }, { x: 98.9842, y: 23.076923076923, fragment: false }, { x: 96.9685, y: 7.6923076923077, fragment: false }] }, { name: '&nbsp;&nbsp;&nbsp;&nbsp; (+) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 20 V &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [M+H]+ &nbsp;&nbsp;', data: [{ x: 735.532, y: 10, fragment: false }, { x: 655.566, y: 10, fragment: false }, { x: 639.571, y: 10, fragment: false }, { x: 491.313, y: 10, fragment: false }, { x: 473.303, y: 10, fragment: false }, { x: 471.287, y: 10, fragment: false }, { x: 435.251, y: 20, fragment: false }, { x: 419.256, y: 10, fragment: false }, { x: 417.24, y: 30, fragment: false }, { x: 415.224, y: 10, fragment: false }, { x: 413.209, y: 10, fragment: false }, { x: 337.31, y: 40, fragment: false }, { x: 321.279, y: 20, fragment: false }, { x: 319.3, y: 100, fragment: false }, { x: 319.263, y: 20, fragment: false }, { x: 301.289, y: 10, fragment: false }, { x: 291.305, y: 60, fragment: false }, { x: 289.289, y: 10, fragment: false }, { x: 281.247, y: 10, fragment: false }, { x: 277.289, y: 40, fragment: false }, { x: 263.237, y: 80, fragment: false }, { x: 261.221, y: 20, fragment: false }, { x: 245.226, y: 10, fragment: false }, { x: 235.242, y: 50, fragment: false }, { x: 221.226, y: 50, fragment: false }, { x: 219.211, y: 10, fragment: false }, { x: 155.01, y: 20, fragment: false }, { x: 139.015, y: 20, fragment: false }, { x: 98.9842, y: 60, fragment: false }, { x: 96.9685, y: 30, fragment: false }, { x: 80.9736, y: 10, fragment: false }] }, { name: '&nbsp;&nbsp;&nbsp;&nbsp; (+) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 40 V &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [M+H]+ &nbsp;&nbsp;', data: [{ x: 667.433, y: 7.1428571428571, fragment: false }, { x: 639.571, y: 21.428571428571, fragment: false }, { x: 627.402, y: 7.1428571428571, fragment: false }, { x: 471.287, y: 7.1428571428571, fragment: false }, { x: 419.256, y: 7.1428571428571, fragment: false }, { x: 413.209, y: 7.1428571428571, fragment: false }, { x: 337.274, y: 7.1428571428571, fragment: false }, { x: 321.279, y: 14.285714285714, fragment: false }, { x: 319.3, y: 7.1428571428571, fragment: false }, { x: 319.263, y: 14.285714285714, fragment: false }, { x: 317.284, y: 7.1428571428571, fragment: false }, { x: 301.289, y: 14.285714285714, fragment: false }, { x: 293.32, y: 7.1428571428571, fragment: false }, { x: 291.305, y: 100, fragment: false }, { x: 289.289, y: 28.571428571429, fragment: false }, { x: 277.289, y: 50, fragment: false }, { x: 275.273, y: 7.1428571428571, fragment: false }, { x: 261.221, y: 14.285714285714, fragment: false }, { x: 245.226, y: 14.285714285714, fragment: false }, { x: 235.242, y: 64.285714285714, fragment: false }, { x: 233.226, y: 14.285714285714, fragment: false }, { x: 221.226, y: 42.857142857143, fragment: false }, { x: 219.211, y: 14.285714285714, fragment: false }, { x: 207.211, y: 7.1428571428571, fragment: false }, { x: 193.195, y: 7.1428571428571, fragment: false }, { x: 179.179, y: 7.1428571428571, fragment: false }, { x: 155.01, y: 21.428571428571, fragment: false }, { x: 139.015, y: 21.428571428571, fragment: false }, { x: 98.9842, y: 35.714285714286, fragment: false }, { x: 96.9685, y: 21.428571428571, fragment: false }, { x: 80.9736, y: 14.285714285714, fragment: false }] }]
+        series: data
     });
-
-});
+}
