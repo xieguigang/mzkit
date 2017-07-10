@@ -106,7 +106,7 @@ Public Module Canvas
 
                     If percentage >= 0.4 Then
 
-                        label = hit.x & $"({(percentage * 100).ToString("F2")}%)"
+                        label = hit.x.ToString("F2") & $"({(percentage * 100).ToString("F2")}%)"
 
                         ' Call g.DrawString(hit.x, labelFont, Brushes.Black, point)
 

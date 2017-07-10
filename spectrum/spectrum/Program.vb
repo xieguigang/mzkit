@@ -15,7 +15,7 @@ Module Program
 
         For Each ttt In "D:\smartnucl_integrative\20170705_library_mzXML\output\C18-_standards\lib.neg.csv".LoadCsv(Of LibraryMatrix).SpectrumFromMatrix
             Call ttt.Plot(title:=ttt.name,
-                          showPossibleFormula:=False,
+                          showPossibleFormula:=True,
                           mzAxis:=Nothing,
                           showLegend:=False) _
             .Save("./test/" & ttt.name.NormalizePathString(True) & ".png")
@@ -50,7 +50,7 @@ Module Program
         'Call CommonAtoms.SearchByMZAndLimitCharges("-4,6", 100).SaveTo("x:\test.csv")
 
 
-        Call Data.Load("../../SpectrumChart/Spectrum.json") _
+        Call MetlinData.Load("../../SpectrumChart/Spectrum.json") _
             .Data(Scan0) _
             .Plot(title:="H<sub>2</sub>O<sub>5</sub>C<sub>3</sub>Ag</br><span style=""color:blue; font-size:20"">Test MS/MS spectra plot</span>",
                   showPossibleFormula:=True) _

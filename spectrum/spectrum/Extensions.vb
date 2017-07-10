@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging
 Imports SMRUCC.MassSpectrum.Assembly
 
 Public Module Extensions
@@ -25,5 +26,23 @@ Public Module Extensions
                     .ToArray
             }
         Next
+    End Function
+
+    <Extension>
+    Public Function ReleaseD3js(out$, data$) As Boolean
+        Try
+            Call My.Resources.App.SaveTo(out & "/App.js")
+            Call My.Resources.data.Replace("$data", data).SaveTo(out & "/data.js")
+            Call My.Resources.index.SaveTo(out & "/index.html")
+            Call My.Resources.highcharts_src_delta.SaveTo(out & "/lib/highcharts.src.delta.js")
+            Call My.Resources.excanvas_compiled.SaveTo(out & "/lib/excanvas.compiled.js")
+            Call My.Resources.jquery_1_6_1_min.SaveTo(out & "/jquery-1.6.1.min.js")
+            Call My.Resources.attn.SaveAs(out & "/images/attn.png")
+        Catch ex As Exception
+            Call App.LogException(ex)
+            Return False
+        End Try
+
+        Return True
     End Function
 End Module

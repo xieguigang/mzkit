@@ -59,5 +59,148 @@ Namespace My.Resources
                 resourceCulture = value
             End Set
         End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to $(document).ready(function () {
+        '''
+        '''    var count = 0;
+        '''
+        '''    var mid = &quot;81528&quot;;				// Pass
+        '''    var mole = &quot;PA(18:2(9Z,12Z)\/22:2(13Z,16Z))&quot;;	// Pass molecule name here!
+        '''    var chart = new Highcharts.Chart({
+        '''        chart: {
+        '''            renderTo: &apos;container&apos;,
+        '''            defaultSeriesType: &apos;column&apos;,
+        '''            zoomType: &apos;xy&apos;,
+        '''            margin: [50, 50, 200, 80]
+        '''        },
+        '''        title: {
+        '''            text: &apos;&apos; + mole
+        '''        },
+        '''        subtitle: {
+        '''            text: &quot;MID: 81528&amp;nbsp;&amp;nbsp;&amp;nbs [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property App() As String
+            Get
+                Return ResourceManager.GetString("App", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property attn() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("attn", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to var msms = $data;.
+        '''</summary>
+        Friend ReadOnly Property data() As String
+            Get
+                Return ResourceManager.GetString("data", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to // Copyright 2006 Google Inc.
+        '''//
+        '''// Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+        '''// you may not use this file except in compliance with the License.
+        '''// You may obtain a copy of the License at
+        '''//
+        '''//   http://www.apache.org/licenses/LICENSE-2.0
+        '''//
+        '''// Unless required by applicable law or agreed to in writing, software
+        '''// distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+        '''// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+        '''// See the License f [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property excanvas_compiled() As String
+            Get
+                Return ResourceManager.GetString("excanvas_compiled", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to ///////// DELTA BUILD ///////////
+        '''/**
+        ''' * Contains selection functionality
+        ''' *
+        ''' * Uses HC 1.2.4 and works with
+        ''' *  fragment_chart.php
+        ''' *  metabo_chart.php
+        ''' *  neutral_chart.php
+        ''' */
+        '''
+        '''
+        '''// ==ClosureCompiler==
+        '''// @compilation_level SIMPLE_OPTIMIZATIONS
+        '''
+        '''/** 
+        ''' * @license Name:    Highcharts
+        ''' * Version: 1.1.3 (2010-02-03)
+        ''' * Author:  Vevstein Web
+        ''' * Support: www.highcharts.com/support
+        ''' * License: www.highcharts.com/license
+        ''' */
+        '''
+        '''/* Bookmarks (Huu)
+        ''' *
+        ''' * 0: Global variables
+        ''' * 1: Scaling of c [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property highcharts_src_delta() As String
+            Get
+                Return ResourceManager.GetString("highcharts_src_delta", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;!DOCTYPE html&gt;
+        '''&lt;html&gt;
+        '''&lt;head&gt;
+        '''    &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;
+        '''    &lt;title&gt;Metabolite Chart&lt;/title&gt;
+        '''
+        '''    &lt;!-- 1. Add these JavaScript inclusions in the head of your page --&gt;
+        '''    &lt;script type=&quot;text/javascript&quot; src=&quot;lib/jquery-1.6.1.min.js&quot;&gt;&lt;/script&gt;
+        '''    &lt;script type=&quot;text/javascript&quot; src=&quot;lib/highcharts.src.delta.js&quot;&gt;&lt;/script&gt;
+        '''    &lt;script type=&quot;text/javascript&quot; src=&quot;lib/excanvas.compiled.js&quot;&gt;&lt;/script&gt;
+        '''    &lt;!--
+        '''        &lt;script src=&quot;https://code.highcharts.com/h [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property index() As String
+            Get
+                Return ResourceManager.GetString("index", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to /*!
+        ''' * jQuery JavaScript Library v1.6.1
+        ''' * http://jquery.com/
+        ''' *
+        ''' * Copyright 2011, John Resig
+        ''' * Dual licensed under the MIT or GPL Version 2 licenses.
+        ''' * http://jquery.org/license
+        ''' *
+        ''' * Includes Sizzle.js
+        ''' * http://sizzlejs.com/
+        ''' * Copyright 2011, The Dojo Foundation
+        ''' * Released under the MIT, BSD, and GPL Licenses.
+        ''' *
+        ''' * Date: Thu May 12 15:04:36 2011 -0400
+        ''' */
+        '''(function(a,b){function cy(a){return f.isWindow(a)?a:a.nodeType===9?a.defaultView||a.parentWindow:!1}function cv(a){if(!cj[a]){var [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property jquery_1_6_1_min() As String
+            Get
+                Return ResourceManager.GetString("jquery_1_6_1_min", resourceCulture)
+            End Get
+        End Property
     End Module
 End Namespace

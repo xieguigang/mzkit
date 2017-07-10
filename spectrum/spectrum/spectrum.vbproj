@@ -189,6 +189,26 @@
       <Name>MSMS.Assembly</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\index.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\App.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\data.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\images\attn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lib\excanvas.compiled.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lib\highcharts.src.delta.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lib\jquery-1.6.1.min.js" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
