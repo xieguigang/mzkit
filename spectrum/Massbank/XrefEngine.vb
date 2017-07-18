@@ -31,7 +31,7 @@ Public Class XrefEngine
 #End Region
 
     ''' <summary>
-    ''' 
+    ''' Get ``chebi`` metabolite data
     ''' </summary>
     ''' <param name="id">纯数字的ChEBI编号类型</param>
     ''' <returns></returns>
@@ -47,6 +47,11 @@ Public Class XrefEngine
         End Get
     End Property
 
+    ''' <summary>
+    ''' Get ``hmdb`` metabolite data
+    ''' </summary>
+    ''' <param name="id$"></param>
+    ''' <returns></returns>
     Default Public Overloads ReadOnly Property GetDATA(id$) As metabolite
         Get
             id = UCase(hmdb2ndMapSolver(id))
@@ -112,6 +117,25 @@ Public Class XrefEngine
             End With
         Next
     End Sub
+
+    Public Function GetHMDBFromChEBI(chebi$) As metabolite
+        Dim chebiData As ChEBIEntity = GetDATA(CLng(Val(chebi.Split(":"c).Last)))
+
+        If chebiData Is Nothing Then
+            Return Nothing
+        End If
+
+        Dim hmdbID = chebiData.DatabaseLinks _
+            .Where(Function(link) link.type = DatabaseLinks.HMDB_accession) _
+            .FirstOrDefault _
+           ?.data
+
+        If hmdbID.StringEmpty Then
+            Return Nothing
+        Else
+            Return GetDATA(hmdbID)
+        End If
+    End Function
 
     ''' <summary>
     ''' 从hmdb编号mapping到chebi的主编号
