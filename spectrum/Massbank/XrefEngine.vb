@@ -22,6 +22,7 @@ Public Class XrefEngine
 
     Dim metlin2Hmdb As New Dictionary(Of String, String)
     Dim CAS2hmdb As New Dictionary(Of String, String)
+    Dim KEGG2ChEBI As New Dictionary(Of String, Long)
 
 #Region "ChEBI注释和hmdb注释都是使用数据库主编号来作为唯一标识符的"
 
@@ -88,6 +89,19 @@ Public Class XrefEngine
                         .SecondaryChEBIIds)
 
                     chebi(.chebiId) = chebiData
+
+                    Dim KEGG = chebiData.DatabaseLinks _
+                        .Where(Function(x)
+                                   Return x.type = DatabaseLinks.KEGG_COMPOUND_accession OrElse
+                                          x.type = DatabaseLinks.KEGG_DRUG_accession
+                               End Function) _
+                        .ToArray
+
+                    If KEGG.Length > 0 Then
+                        For Each id As DatabaseLinks In KEGG
+                            KEGG2ChEBI(id.data) = CLng(Val(.chebiId.Split(":"c).Last))
+                        Next
+                    End If
                 End With
             Next
         Next
@@ -158,6 +172,14 @@ Public Class XrefEngine
         Else
             chebi = chebi2ndMapSolver.SolveIDMapping(chebi)
             Return chebi
+        End If
+    End Function
+
+    Public Function KEGGtoChEBI(KEGG$) As String
+        If KEGG2ChEBI.ContainsKey(KEGG) Then
+            Return KEGG2ChEBI(KEGG)
+        Else
+            Return Nothing
         End If
     End Function
 
