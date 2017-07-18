@@ -1,8 +1,5 @@
-
-
-Imports System.Collections.Generic
 Imports System.Runtime.InteropServices
-Imports Microsoft.VisualBasic.Extensions
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Public Class MWElementAndMassRoutines
 

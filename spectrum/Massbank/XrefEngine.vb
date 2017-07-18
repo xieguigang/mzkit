@@ -71,6 +71,8 @@ Public Class XrefEngine
     Sub New(hmdb$, chebiRepo As (cache$, tsv$))
         Dim getXref = Xref.CreateDictionary(Of metabolite)
 
+        Call "Scaning ChEBI local cache repository...".__DEBUG_ECHO
+
         For Each xml As String In (ls - l - r - "*.XML" <= chebiRepo.cache)
             Dim entity = xml.LoadXml(Of ChEBIEntity())
 
@@ -84,6 +86,8 @@ Public Class XrefEngine
                 End With
             Next
         Next
+
+        Call "Indexing of the HMDB data...".__DEBUG_ECHO
 
         For Each m As metabolite In metabolite.Load(hmdb)
             With m
