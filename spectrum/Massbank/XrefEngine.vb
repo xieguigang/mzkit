@@ -90,17 +90,19 @@ Public Class XrefEngine
 
                     chebi(.chebiId) = chebiData
 
-                    Dim KEGG = chebiData.DatabaseLinks _
-                        .Where(Function(x)
-                                   Return x.type = DatabaseLinks.KEGG_COMPOUND_accession OrElse
-                                          x.type = DatabaseLinks.KEGG_DRUG_accession
-                               End Function) _
-                        .ToArray
+                    If Not .DatabaseLinks Is Nothing Then
+                        Dim KEGG = .DatabaseLinks _
+                            .Where(Function(x)
+                                       Return x.type = DatabaseLinks.KEGG_COMPOUND_accession OrElse
+                                              x.type = DatabaseLinks.KEGG_DRUG_accession
+                                   End Function) _
+                            .ToArray
 
-                    If KEGG.Length > 0 Then
-                        For Each id As DatabaseLinks In KEGG
-                            KEGG2ChEBI(id.data) = CLng(Val(.chebiId.Split(":"c).Last))
-                        Next
+                        If KEGG.Length > 0 Then
+                            For Each id As DatabaseLinks In KEGG
+                                KEGG2ChEBI(id.data) = CLng(Val(.chebiId.Split(":"c).Last))
+                            Next
+                        End If
                     End If
                 End With
             Next
@@ -135,7 +137,7 @@ Public Class XrefEngine
     Public Function GetHMDBFromChEBI(chebi$) As metabolite
         Dim chebiData As ChEBIEntity = GetDATA(CLng(Val(chebi.Split(":"c).Last)))
 
-        If chebiData Is Nothing Then
+        If chebiData Is Nothing OrElse chebiData.DatabaseLinks Is Nothing Then
             Return Nothing
         End If
 
