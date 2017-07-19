@@ -154,7 +154,7 @@ Public Module PrecursorType
         Return (neg)
     End Function
 
-    Const no_result$ = "Unknown"
+    Public Const no_result$ = "Unknown"
 
     ''' <summary>
     ''' 分子量差值
@@ -209,7 +209,8 @@ Public Module PrecursorType
                                       Optional minError_ppm# = 100,
                                       Optional debugEcho As Boolean = True) As (ppm#, type#)
         If (charge = 0) Then
-            Print("I can't calculate the ionization mode for no charge(charge = 0)!")
+            println("I can't calculate the ionization mode for no charge(charge = 0)!")
+            Return (Double.NaN, no_result)
         End If
 
         If (mass.IsNaNImaginary OrElse precursorMZ.IsNaNImaginary) Then
