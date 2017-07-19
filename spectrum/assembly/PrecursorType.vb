@@ -25,7 +25,6 @@ Public Module PrecursorType
         Return ((precursorMZ - adduct) * Math.Abs(charge) / M)
     End Function
 
-
     '# http://fiehnlab.ucdavis.edu/staff/kind/Metabolomics/MS-Adduct-Calculator
     '#
     '# Example: 
@@ -171,12 +170,44 @@ Public Module PrecursorType
         Return ppmd
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="chargeMode$">+/-</param>
+    ''' <param name="charge%"></param>
+    ''' <param name="PrecursorType$"></param>
+    ''' <returns></returns>
+    Public Function CalcMass(chargeMode$, charge%, PrecursorType$) As Func(Of Double, Double)
+        If (PrecursorType = "[M]+" OrElse PrecursorType = "[M]-") Then
+            Return (Function(x) x)
+        End If
+
+        Dim mode As Dictionary(Of String, Calculator) = calculator(chargeMode)
+        Dim found As Calculator = Nothing
+
+        For Each cacl In mode.Values
+            If (cacl.Name = PrecursorType) Then
+                found = cacl
+                Exit For
+            End If
+        Next
+
+        If found.Name.StringEmpty Then
+            Return Nothing
+        Else
+            Return AddressOf found.CalcMass
+        End If
+    End Function
+
     ReadOnly calculator As New Dictionary(Of String, Dictionary(Of String, Calculator)) From {
         {"+", Positive()},
         {"-", Negative()}
     }
 
-    Public Function FindPrecursorType(mass#, precursorMZ#, charge%, Optional chargeMode$ = "+", Optional minError_ppm# = 100, Optional debugEcho As Boolean = True) As (ppm#, type#)
+    Public Function FindPrecursorType(mass#, precursorMZ#, charge%,
+                                      Optional chargeMode$ = "+",
+                                      Optional minError_ppm# = 100,
+                                      Optional debugEcho As Boolean = True) As (ppm#, type#)
         If (charge = 0) Then
             Print("I can't calculate the ionization mode for no charge(charge = 0)!")
         End If
@@ -273,7 +304,7 @@ Public Structure Calculator
         Return (ReverseMass(precursorMZ, M, charge, adducts))
     End Function
 
-    Public Function CalcMZ(mass#) As Double
+    Public Function CalcPrecursorMZ(mass#) As Double
         Return (AdductMass(mass, adducts, charge))
     End Function
 End Structure
