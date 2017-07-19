@@ -204,10 +204,20 @@ Public Module PrecursorType
         {"-", Negative()}
     }
 
+    ''' <summary>
+    ''' 计算出前体离子的加和模式
+    ''' </summary>
+    ''' <param name="mass#">分子质量</param>
+    ''' <param name="precursorMZ#">前体的m/z</param>
+    ''' <param name="charge%">电荷量</param>
+    ''' <param name="chargeMode$">极性</param>
+    ''' <param name="minError_ppm#">所能够容忍的质量误差</param>
+    ''' <param name="debugEcho"></param>
+    ''' <returns></returns>
     Public Function FindPrecursorType(mass#, precursorMZ#, charge%,
                                       Optional chargeMode$ = "+",
                                       Optional minError_ppm# = 100,
-                                      Optional debugEcho As Boolean = True) As (ppm#, type#)
+                                      Optional debugEcho As Boolean = True) As (ppm#, type$)
         If (charge = 0) Then
             println("I can't calculate the ionization mode for no charge(charge = 0)!")
             Return (Double.NaN, no_result)
