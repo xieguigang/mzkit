@@ -12,7 +12,7 @@ Namespace LipidMaps
 
         Public Property ID As String Implements IKeyedEntity(Of String).Key
         Public Property [Class] As String
-        Public Property Molecule
+        Public Property Molecule As String
         Public Property MetaData As MetaData
 
         Public Shared Iterator Function IterateParser(path$) As IEnumerable(Of SDF)
@@ -27,14 +27,24 @@ Namespace LipidMaps
             Next
         End Function
 
+        Const molEnds$ = "M  END"
+
         Private Shared Function StreamParser(block$()) As SDF
             Dim ID$ = block(0), class$ = block(1)
-            Dim metas = block _
-                .Split(Function(s) s = "M  END", includes:=False) _
-                .Last
+            Dim metas$()
+            Dim mol$
+
+            With block _
+                .Skip(2) _
+                .Split(Function(s) s = molEnds, includes:=False)
+
+                metas = .Last
+                mol = .First.Join({molEnds}).JoinBy(vbLf)
+            End With
 
             Return New SDF With {
                 .ID = ID.Trim,
+                .Molecule = mol,
                 .Class = [class].Trim,
                 .MetaData = MetaData.Data(metas)
             }
@@ -63,16 +73,23 @@ Namespace LipidMaps
         Public Property INCHI_KEY As String
         Public Property INCHI As String
         Public Property STATUS As String
+        Public Property CLASS_LEVEL4 As String
+        Public Property METABOLOMICS_ID As String
 
         Shared ReadOnly properties As Dictionary(Of String, PropertyInfo) =
             DataFramework.Schema(Of MetaData)(PropertyAccess.Writeable, True)
+
+        Public Overrides Function ToString() As String
+            Return COMMON_NAME
+        End Function
 
         Friend Shared Function Data(metaData$()) As MetaData
             Dim table As Dictionary(Of String, String) =
                 metaData _
                 .Split(Function(s) s.StringEmpty, includes:=False) _
-                .ToDictionary(Function(t) Mid(t(0), 4, t(0).Length - 5),
-                              Function(t) t(1))
+                .Where(Function(t) Not t.IsNullOrEmpty) _
+                .ToDictionary(Function(t) Mid(t(0), 4, t(0).Length - 4),
+                              Function(t) If(t.Length = 1, "", t(1)))
             Dim meta As Object = New MetaData
 
             For Each key As String In table.Keys
