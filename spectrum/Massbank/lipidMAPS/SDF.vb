@@ -51,6 +51,9 @@ Namespace LipidMaps
         End Function
     End Class
 
+    ''' <summary>
+    ''' 物质的注释信息
+    ''' </summary>
     Public Class MetaData
 
         Public Property PUBCHEM_SUBSTANCE_URL As String
@@ -87,6 +90,18 @@ Namespace LipidMaps
         Shared ReadOnly properties As Dictionary(Of String, PropertyInfo) =
             DataFramework.Schema(Of MetaData)(PropertyAccess.Writeable, True)
 
+        ''' <summary>
+        ''' 只要任意一个编号对象相等，就认为两个对象是同一种物质？
+        ''' </summary>
+        ''' <param name="name$"></param>
+        ''' <param name="systematicName$"></param>
+        ''' <param name="kegg$"></param>
+        ''' <param name="chebi$"></param>
+        ''' <param name="hmdb$"></param>
+        ''' <param name="inchiKey$"></param>
+        ''' <param name="inchi$"></param>
+        ''' <param name="metabolomicsID$"></param>
+        ''' <returns></returns>
         Public Function EqualsAny(Optional name$ = Nothing,
                                   Optional systematicName$ = Nothing,
                                   Optional kegg$ = Nothing,
@@ -95,6 +110,7 @@ Namespace LipidMaps
                                   Optional inchiKey$ = Nothing,
                                   Optional inchi$ = Nothing,
                                   Optional metabolomicsID$ = Nothing) As Boolean
+
             If Not name.StringEmpty AndAlso name.TextEquals(COMMON_NAME) Then
                 Return True
             End If
@@ -123,6 +139,10 @@ Namespace LipidMaps
             Return False
         End Function
 
+        ''' <summary>
+        ''' <see cref="COMMON_NAME"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function ToString() As String
             Return COMMON_NAME
         End Function
