@@ -140,6 +140,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="lipidMAPS\SDF.vb" />
     <Compile Include="XrefEngine.vb" />
     <Compile Include="HMDB\Extensions.vb" />
     <Compile Include="HMDB\taxonomy.vb" />
