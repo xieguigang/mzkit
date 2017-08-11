@@ -102,7 +102,7 @@ Namespace ASCII.MSP
         <Extension>
         Public Function Read_retention_time(meta As MetaData) As Double
             With meta
-                Dim s$ = .ReadStringMultiple({NameOf(.retention_time)})
+                Dim s$ = Trim(.ReadStringMultiple({NameOf(.retention_time)}))
 
                 If s.StringEmpty Then
                     Return 0

@@ -76,6 +76,9 @@ Namespace HMDB
         <Xref> Public Property chebi_id As String
 #End Region
 
+        Public Property biofluid_locations As biofluid_locations
+        Public Property tissue_locations As tissue_locations
+
         Public Overrides Function ToString() As String
             Return name
         End Function
@@ -84,6 +87,26 @@ Namespace HMDB
             Return path.LoadXmlDataSet(Of metabolite)(NameOf(metabolite), xmlns:="http://www.hmdb.ca")
         End Function
     End Class
+
+    Public Structure biofluid_locations
+
+        <XmlElement>
+        Public Property biofluid As String()
+
+        Public Overrides Function ToString() As String
+            Return biofluid.GetJson
+        End Function
+    End Structure
+
+    Public Structure tissue_locations
+
+        <XmlElement>
+        Public Property tissue As String()
+
+        Public Overrides Function ToString() As String
+            Return tissue.GetJson
+        End Function
+    End Structure
 
     ''' <summary>
     ''' 次级编号

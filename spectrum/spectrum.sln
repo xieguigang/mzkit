@@ -9,11 +9,11 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "+Microsoft.VisualBasic.Arch
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MIME-htmls", "..\..\GCModeller\src\runtime\sciBASIC#\mime\text%html\MIME-htmls.vbproj", "{2DD4BE80-DDC3-4767-94A7-10F1C3395716}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.Mathematical", "..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\Math\Microsoft.VisualBasic.Mathematical.vbproj", "{E3367B88-5D0C-495A-8273-331656D4B5AA}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Math-core", "..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math-core.vbproj", "{E3367B88-5D0C-495A-8273-331656D4B5AA}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.Imaging", "..\..\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Microsoft.VisualBasic.Imaging.vbproj", "{85E71B4B-9276-4EC8-AADC-C849205F1EA8}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Plots", "..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\Plots\Plots.vbproj", "{17F8E821-0A01-4975-9CAA-AC95251226D5}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Plots", "..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Plot\Plots\Plots.vbproj", "{17F8E821-0A01-4975-9CAA-AC95251226D5}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "+VB_DataFrame", "..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\+VB_DataFrame.vbproj", "{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}"
 EndProject
