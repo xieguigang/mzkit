@@ -65,7 +65,15 @@ Namespace LipidMaps
         Public Property EXACT_MASS As String
         Public Property FORMULA As String
         Public Property LIPIDBANK_ID As String
+        ''' <summary>
+        ''' PubChem Substance accession identifier (SID)
+        ''' </summary>
+        ''' <returns></returns>
         Public Property PUBCHEM_SID As String
+        ''' <summary>
+        ''' PubChem Compound accession identifier (CID)
+        ''' </summary>
+        ''' <returns></returns>
         Public Property PUBCHEM_CID As String
         Public Property KEGG_ID As String
         Public Property HMDBID As String
@@ -78,6 +86,42 @@ Namespace LipidMaps
 
         Shared ReadOnly properties As Dictionary(Of String, PropertyInfo) =
             DataFramework.Schema(Of MetaData)(PropertyAccess.Writeable, True)
+
+        Public Function EqualsAny(Optional name$ = Nothing,
+                                  Optional systematicName$ = Nothing,
+                                  Optional kegg$ = Nothing,
+                                  Optional chebi$ = Nothing,
+                                  Optional hmdb$ = Nothing,
+                                  Optional inchiKey$ = Nothing,
+                                  Optional inchi$ = Nothing,
+                                  Optional metabolomicsID$ = Nothing) As Boolean
+            If Not name.StringEmpty AndAlso name.TextEquals(COMMON_NAME) Then
+                Return True
+            End If
+            If Not systematicName.StringEmpty AndAlso SYSTEMATIC_NAME.TextEquals(systematicName) Then
+                Return True
+            End If
+            If Not kegg.StringEmpty AndAlso KEGG_ID.TextEquals(kegg) Then
+                Return True
+            End If
+            If Not chebi.StringEmpty AndAlso CHEBI_ID.Split(":"c).Last = chebi.Split(":"c).Last Then
+                Return True
+            End If
+            If Not hmdb.StringEmpty AndAlso hmdb.TextEquals(HMDBID) Then
+                Return True
+            End If
+            If Not inchiKey.StringEmpty AndAlso inchiKey.TextEquals(INCHI_KEY) Then
+                Return True
+            End If
+            If Not inchi.StringEmpty AndAlso inchi.TextEquals(Me.INCHI) Then
+                Return True
+            End If
+            If Not metabolomicsID.StringEmpty AndAlso metabolomicsID.TextEquals(METABOLOMICS_ID) Then
+                Return True
+            End If
+
+            Return False
+        End Function
 
         Public Overrides Function ToString() As String
             Return COMMON_NAME
