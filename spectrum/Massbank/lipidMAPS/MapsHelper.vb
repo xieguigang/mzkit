@@ -1,12 +1,37 @@
 ﻿Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Emit.Delegates
+Imports Microsoft.VisualBasic.Language
 
 Namespace LipidMaps
 
     Public Module MapsHelper
+
+        Public Const chebi$ = NameOf(chebi)
+        Public Const hmdb$ = NameOf(hmdb)
+        Public Const inchi$ = NameOf(inchi)
+        Public Const inchi_key$ = NameOf(inchi_key)
+        Public Const kegg$ = NameOf(kegg)
+        Public Const lipidbank$ = NameOf(lipidbank)
+        Public Const lipidmap$ = NameOf(lipidmap)
+        Public Const pubchem$ = NameOf(pubchem)
+
+        <Extension>
+        Public Function AssertMap(maps As NamedValue(Of Dictionary(Of String, MetaData()))(), xref As Dictionary(Of String, String)) As Boolean
+            For Each map In maps
+                With map
+                    If xref.ContainsKey(.Name) Then
+                        Dim id$ = xref(.Name)
+                        If .Value.ContainsKey(id) Then
+                            Return True
+                        End If
+                    End If
+                End With
+            Next
+
+            Return False
+        End Function
 
         <Extension> Public Function CreateMaps(lipidMaps As IEnumerable(Of SDF)) As NamedValue(Of Dictionary(Of String, MetaData()))()
             Dim out As New List(Of NamedValue(Of Dictionary(Of String, MetaData())))
@@ -26,14 +51,14 @@ Namespace LipidMaps
                               }
                           End Sub
 
-                Call map(NameOf(MetaData.CHEBI_ID), "chebi")
-                Call map(NameOf(MetaData.HMDBID), "hmdb")
-                Call map(NameOf(MetaData.INCHI), "inchi")
-                Call map(NameOf(MetaData.INCHI_KEY), "inchi_key")
-                Call map(NameOf(MetaData.KEGG_ID), "kegg")
-                Call map(NameOf(MetaData.LIPIDBANK_ID), "lipidbank")
-                Call map(NameOf(MetaData.LM_ID), "lipidmap")
-                Call map(NameOf(MetaData.PUBCHEM_CID), "pubchem")
+                Call map(NameOf(MetaData.CHEBI_ID), chebi)
+                Call map(NameOf(MetaData.HMDBID), hmdb)
+                Call map(NameOf(MetaData.INCHI), inchi)
+                Call map(NameOf(MetaData.INCHI_KEY), inchi_key)
+                Call map(NameOf(MetaData.KEGG_ID), kegg)
+                Call map(NameOf(MetaData.LIPIDBANK_ID), lipidbank)
+                Call map(NameOf(MetaData.LM_ID), lipidmap)
+                Call map(NameOf(MetaData.PUBCHEM_CID), pubchem)
             End With
 
             Return out
