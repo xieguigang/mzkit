@@ -2,18 +2,21 @@
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
+Imports Microsoft.VisualBasic.Language
 
 Namespace LipidMaps
 
     ''' <summary>
     ''' http://www.lipidmaps.org/resources/downloads/index.html
     ''' </summary>
-    Public Class SDF : Implements INamedValue
+    Public Class SDF
+        Implements INamedValue
+        Implements Value(Of MetaData).IValueOf
 
         Public Property ID As String Implements IKeyedEntity(Of String).Key
         Public Property [Class] As String
         Public Property Molecule As String
-        Public Property MetaData As MetaData
+        Public Property MetaData As MetaData Implements Value(Of MetaData).IValueOf.Value
 
         Public Shared Iterator Function IterateParser(path$) As IEnumerable(Of SDF)
             Dim o As SDF
