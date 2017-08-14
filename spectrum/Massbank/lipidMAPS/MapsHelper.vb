@@ -18,19 +18,22 @@ Namespace LipidMaps
         Public Const pubchem$ = NameOf(pubchem)
 
         <Extension>
-        Public Function AssertMap(maps As NamedValue(Of Dictionary(Of String, MetaData()))(), xref As Dictionary(Of String, String)) As Boolean
+        Public Function AssertMap(maps As NamedValue(Of Dictionary(Of String, MetaData()))(), xref As Dictionary(Of String, String)) As String
             For Each map In maps
                 With map
                     If xref.ContainsKey(.Name) Then
                         Dim id$ = xref(.Name)
                         If .Value.ContainsKey(id) Then
-                            Return True
+                            Return .Value(id) _
+                                .Select(Function(x) x.LM_ID) _
+                                .Distinct _
+                                .JoinBy(", ")
                         End If
                     End If
                 End With
             Next
 
-            Return False
+            Return Nothing
         End Function
 
         <Extension> Public Function CreateMaps(lipidMaps As IEnumerable(Of SDF)) As NamedValue(Of Dictionary(Of String, MetaData()))()
