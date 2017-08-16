@@ -78,6 +78,7 @@ Namespace HMDB
 
         Public Property biofluid_locations As biofluid_locations
         Public Property tissue_locations As tissue_locations
+        Public Property diseases As disease()
 
         Public Overrides Function ToString() As String
             Return name
