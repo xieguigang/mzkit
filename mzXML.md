@@ -1,7 +1,6 @@
 > http://www.mail-archive.com/spctools-discuss@googlegroups.com/msg04769.html
 
-The script below extracts the following correct-looking m/z intensity 
-values from the base64 string on stock perl v5.10.1 on ScientificLinux 6.3 
+The script below extracts the following correct-looking ``m/z`` intensity values from the ``base64`` string on stock perl v5.10.1 on ScientificLinux 6.3 
 64-bit.
 
 ```
