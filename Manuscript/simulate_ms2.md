@@ -18,3 +18,5 @@
 2. 如何将断裂能量转换为断裂的概率高低？即如何从键的断裂能量转换为相应所产生的``m/z``的分子碎片的``intensity``响应度值？
 
 + http://www2.chemistry.msu.edu/faculty/reusch/VirtTxtJml/react2.htm
++ https://courses.lumenlearning.com/boundless-chemistry/chapter/activation-energy-and-temperature-dependence/
++ https://en.wikipedia.org/wiki/Collision_theory
