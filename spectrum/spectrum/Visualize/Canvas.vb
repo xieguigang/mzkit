@@ -9,6 +9,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Text
 Imports SMRUCC.proteomics.PNL.OMICS.MwtWinDll
 Imports SMRUCC.proteomics.PNL.OMICS.MwtWinDll.Extensions
@@ -55,29 +56,21 @@ Public Module Canvas
             .Max
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
-                Dim y As AxisProvider = $"(0,{maxInto}),n=5"
-                Dim x As AxisProvider
+                Dim plotRect As Rectangle = region.PlotRegion
+                Dim ticks = (
+                    x:=MS_spectrum.data.Select(Function(mz) mz.x).Range.CreateAxisTicks,
+                    y:={0R, 100.0R}.Range.CreateAxisTicks)
+                Dim y As d3js.scale.LinearScale = d3js.scale.linear().domain(ticks.y).range(New Integer() {plotRect.Top, plotRect.Bottom})
+                Dim x As d3js.scale.LinearScale = d3js.scale.linear().domain(ticks.x).range(New Integer() {plotRect.Left, plotRect.Right})
+                Dim mapper As New DataScaler With {
+                    .AxisTicks = ticks,
+                    .ChartRegion = plotRect,
+                    .X = x,
+                    .Y = y
+                }
 
-                If mzAxis.StringEmpty Then
-                    Dim mzAxisData#() = MS_spectrum.data _
-                        .Select(Function(mz) mz.x) _
-                        .ToArray
-                    x = New AxisProvider(mzAxisData)
-                Else
-                    x = mzAxis
-                End If
-
-                Dim mapper As New Mapper(x, y)
-                Dim scaler = mapper.PointScaler(region.Size, region.Padding)
-                Dim getPoint = Function(xi!, yi!)
-                                   Return scaler(New PointF(xi, yi))
-                               End Function
-
-                Call mapper.DrawYGrid(g, region,
-                                      New Pen(Color.Black, 2),
-                                      "Intensity (%)",)
-                Call g.DrawX(size, padding, New Pen(Color.Black, 2),
-                             "Mass (m/z)",
+                Call mapper.DrawYGrid(g, region, New Pen(Color.Black, 2), "Intensity (%)",)
+                Call g.DrawX(New Pen(Color.Black, 2), "Mass (m/z)",
                              mapper,
                              XAxisLayoutStyles.Bottom,
                              Nothing,
@@ -92,7 +85,7 @@ Public Module Canvas
                 Dim linkPen As New Pen(Color.Black) With {.Width = 2, .DashStyle = DashStyle.Dot}
 
                 For Each hit As MSSignal In MS_spectrum.data
-                    Dim point As PointF = getPoint(xi:=hit.x, yi:=hit.y)
+                    Dim point As PointF = mapper.Translate(x:=hit.x, y:=hit.y)
                     Dim low As New PointF(point.X, bottom)
                     Dim percentage# = hit.y / maxInto
                     Dim label$ = Nothing
@@ -166,7 +159,7 @@ Public Module Canvas
                     }
 
                     Call g.DrawLegends(
-                        legendPoint, {legend}, legendShapeSize,
+                        legendPoint, {legend}, legendShapeSize.ScriptValue,
                         regionBorder:=New Stroke With {
                             .dash = DashStyle.Solid,
                             .fill = "black",
