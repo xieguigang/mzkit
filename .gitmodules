@@ -1,3 +1,5 @@
-[submodule "spectrumProteoWizard.dhttpd"]
-	path = spectrumProteoWizard.dhttpd
+[submodule "httpd"]
+	path = spectrum/ProteoWizard.d/httpd
 	url = https://github.com/xieguigang/SMRUCC.WebCloud.git
+	branch = master
+
