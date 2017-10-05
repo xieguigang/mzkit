@@ -1,0 +1,230 @@
+﻿fromNode,toNode,value,interaction_type
+Maltose,"2,4,6-Tri-tert.-butylbenzenethiol",0,#666
+Caffeic acid,3-trans-Caffeoylquinic acid,0,#666
+Arabinose,4-amino Butyric acid,0,#666
+Gluconic acid,4-amino Butyric acid,0,#666
+Asparagine,4-amino Butyric acid,0,#666
+Leucine,4-amino Butyric acid,0,#666
+Eicosanoic acid,9-(Z)-Octadecenoic acid,0,#666
+Docosanol,9-(Z)-Octadecenoic acid,0,#666
+Octadecanoic acid,9-(Z)-Octadecenoic acid,0,#666
+Heptadecanoic acid,9-(Z)-Octadecenoic acid,0,#666
+Docosanoic acid,9-(Z)-Octadecenoic acid,0,#666
+Nonadecanoic acid,9-(Z)-Octadecenoic acid,0,#666
+Tetracosanoic acid,9-(Z)-Octadecenoic acid,0,#666
+Shikimic acid,9-(Z)-Octadecenoic acid,0,#666
+Glutaric acid,Adipic acid,0,#666
+Phosphoric acid,Adipic acid,0,#666
+Glucaric acid,Adipic acid,0,#666
+Serine,Alanine,0,#666
+Threonine,Alanine,0,#666
+Succinic acid,Alanine,0,#666
+Citric acid,Alanine,0,#666
+Glycine,Alanine,0,#666
+Isoleucine,Arabinose,0,#666
+Leucine,Arabinose,0,#666
+Pyroglutamate,Arabinose,0,#666
+Asparagine,Arabinose,0,#666
+Pyroglutamate,Asparagine,0,#666
+Isoleucine,Asparagine,0,#666
+Leucine,Asparagine,0,#666
+Phosphoric acid,Aspartic acid,0,#666
+Fumaric acid,Aspartic acid,0,#666
+Glutaric acid,Aspartic acid,0,#666
+Serine,Citric acid,0,#666
+Succinic acid,Citric acid,0,#666
+Quinic acid,Dehydroascorbic acid dimer,0,#666
+Fumaric acid,Docosanoic acid,0,#666
+Eicosanoic acid,Docosanoic acid,0,#666
+Shikimic acid,Docosanoic acid,0,#666
+Glutaric acid,Docosanoic acid,0,#666
+Octadecanoic acid,Docosanoic acid,0,#666
+Phosphoric acid,Docosanoic acid,0,#666
+Heptadecanoic acid,Docosanoic acid,0,#666
+Adipic acid,Docosanoic acid,0,#666
+Docosanol,Docosanoic acid,0,#666
+Glucaric acid,Docosanoic acid,0,#666
+Aspartic acid,Docosanoic acid,0,#666
+Ethanolamine,Docosanoic acid,0,#666
+Glucaric acid,Docosanol,0,#666
+Phosphoric acid,Docosanol,0,#666
+Fumaric acid,Docosanol,0,#666
+Eicosanoic acid,Docosanol,0,#666
+Octadecanoic acid,Docosanol,0,#666
+Aspartic acid,Docosanol,0,#666
+Adipic acid,Docosanol,0,#666
+Heptadecanoic acid,Docosanol,0,#666
+Ethanolamine,Docosanol,0,#666
+Glutaric acid,Docosanol,0,#666
+Heptadecanoic acid,Eicosanoic acid,0,#666
+Shikimic acid,Eicosanoic acid,0,#666
+Octadecanoic acid,Eicosanoic acid,0,#666
+Phosphoric acid,Eicosanoic acid,0,#666
+Glutaric acid,Eicosanoic acid,0,#666
+Fumaric acid,Eicosanoic acid,0,#666
+Aspartic acid,Eicosanoic acid,0,#666
+Ethanolamine,Eicosanoic acid,0,#666
+Glucaric acid,Eicosanoic acid,0,#666
+Aspartic acid,Ethanolamine,0,#666
+Phosphoric acid,Ethanolamine,0,#666
+Glucaric acid,Ethanolamine,0,#666
+Glutamate,Ethanolamine,0,#666
+Glutaric acid,Ethanolamine,0,#666
+Ribonic acid ,Fructose,0,#666
+Phosphoric acid,Fumaric acid,0,#666
+Glutaric acid,Fumaric acid,0,#666
+Fructose,Galactose,0,#666
+Glucose,Galactose,0,#666
+Citric acid,Galactose,0,#666
+Aspartic acid,Glucaric acid,0,#666
+Glutaric acid,Glucaric acid,0,#666
+Fumaric acid,Glucaric acid,0,#666
+Phosphoric acid,Glucaric acid,0,#666
+Threonine,Glucaric acid,0,#666
+Glutamate,Glucaric acid,0,#666
+Ribonic acid ,Glucaric acid,0,#666
+Leucine,Gluconic acid,0,#666
+Glutamine,Gluconic acid,0,#666
+Arabinose,Gluconic acid,0,#666
+Lysine,Gluconic acid,0,#666
+Asparagine,Gluconic acid,0,#666
+Citric acid,Glucose,0,#666
+Fructose,Glucose,0,#666
+Glutaric acid,Glutamate,0,#666
+Threonine,Glutamate,0,#666
+Fumaric acid,Glutamate,0,#666
+Aspartic acid,Glutamate,0,#666
+Pyroglutamate,Glutamine,0,#666
+Isoleucine,Glutamine,0,#666
+Leucine,Glutamine,0,#666
+Asparagine,Glutamine,0,#666
+Arabinose,Glutamine,0,#666
+Glutamate,Glyceric acid,0,#666
+Glucaric acid,Glyceric acid,0,#666
+Fumaric acid,Glyceric acid,0,#666
+Ethanolamine,Glyceric acid,0,#666
+Aspartic acid,Glyceric acid,0,#666
+Glycine,Glycolic acid,0,#666
+Fumaric acid,Heptadecanoic acid,0,#666
+Phosphoric acid,Heptadecanoic acid,0,#666
+Ethanolamine,Heptadecanoic acid,0,#666
+Glucaric acid,Heptadecanoic acid,0,#666
+Glutaric acid,Heptadecanoic acid,0,#666
+Aspartic acid,Heptadecanoic acid,0,#666
+Fumaric acid,Heptanoic acid,0,#666
+Ribonic acid ,Heptanoic acid,0,#666
+Glutamate,Heptanoic acid,0,#666
+Glucaric acid,Heptanoic acid,0,#666
+Aspartic acid,Heptanoic acid,0,#666
+Phosphoric acid,Heptanoic acid,0,#666
+Citric acid,Heptanoic acid,0,#666
+Docosanol,Hexadecanoic acid,0,#666
+Glucaric acid,Hexadecanoic acid,0,#666
+Tetracosanoic acid,Hexadecanoic acid,0,#666
+Glutaric acid,Hexadecanoic acid,0,#666
+Glycerol,Hexadecanoic acid,0,#666
+Docosanoic acid,Hexadecanoic acid,0,#666
+Eicosanoic acid,Hexadecanoic acid,0,#666
+Octadecanoic acid,Hexadecanoic acid,0,#666
+Phosphoric acid,Hexadecanoic acid,0,#666
+Fumaric acid,Hexadecanoic acid,0,#666
+Aspartic acid,Hexadecanoic acid,0,#666
+Heptadecanoic acid,Hexadecanoic acid,0,#666
+Glutaric acid,Hydroxylamine,0,#666
+Glyceric acid,IS,0,#666
+Ethanolamine,IS,0,#666
+Leucine,Isoleucine,0,#666
+Glutamine,Lysine,0,#666
+Leucine,Lysine,0,#666
+Arabinose,Lysine,0,#666
+Asparagine,Lysine,0,#666
+Pyroglutamate,Lysine,0,#666
+Isoleucine,Lysine,0,#666
+Citric acid,Maleic acid,0,#666
+9-(Z)-Octadecenoic acid,Malic acid,0,#666
+Quinic acid,Malic acid,0,#666
+Glyceric acid,Monomethyl phosphate,0,#666
+Aspartic acid,Monomethyl phosphate,0,#666
+Adipic acid,Monomethyl phosphate,0,#666
+Glucaric acid,Monomethyl phosphate,0,#666
+Glutamate,Monomethyl phosphate,0,#666
+Ethanolamine,Monomethyl phosphate,0,#666
+Glycerol,Monomethyl phosphate,0,#666
+Fumaric acid,Monomethyl phosphate,0,#666
+Phosphoric acid,Monomethyl phosphate,0,#666
+Glutaric acid,Monomethyl phosphate,0,#666
+Glutaric acid,Nonadecanoic acid,0,#666
+Eicosanoic acid,Nonadecanoic acid,0,#666
+Octadecanoic acid,Nonadecanoic acid,0,#666
+Docosanol,Nonadecanoic acid,0,#666
+Docosanoic acid,Nonadecanoic acid,0,#666
+Hexadecanoic acid,Nonadecanoic acid,0,#666
+Tetracosanoic acid,Nonadecanoic acid,0,#666
+Heptadecanoic acid,Nonadecanoic acid,0,#666
+beta-Alanine,Nonanoic acid,0,#666
+Heptadecanoic acid,Octadecanoic acid,0,#666
+Glutaric acid,Octadecanoic acid,0,#666
+Fumaric acid,Octadecanoic acid,0,#666
+Aspartic acid,Octadecanoic acid,0,#666
+Ethanolamine,Octadecanoic acid,0,#666
+Phosphoric acid,Octadecanoic acid,0,#666
+Glucaric acid,Octadecanoic acid,0,#666
+Adipic acid,Octadecanoic acid,0,#666
+Glutaric acid,Phosphoric acid,0,#666
+Glucose,Proline,0,#666
+Sucrose,Proline,0,#666
+Galactose,Proline,0,#666
+Fructose,Proline,0,#666
+beta-Alanine,Putrescine,0,#666
+Isoleucine,Pyroglutamate,0,#666
+Leucine,Pyroglutamate,0,#666
+Citric acid,Pyroglutamate,0,#666
+Aspartic acid,Ribonic acid ,0,#666
+Glutamate,Ribonic acid ,0,#666
+Citric acid,Ribonic acid ,0,#666
+Fumaric acid,Ribonic acid ,0,#666
+Succinic acid,Serine,0,#666
+Glycine,Serine,0,#666
+Glucaric acid,Shikimic acid,0,#666
+Ethanolamine,Shikimic acid,0,#666
+Glutaric acid,Shikimic acid,0,#666
+Glyceric acid,Shikimic acid,0,#666
+IS,Shikimic acid,0,#666
+Glycine,Succinic acid,0,#666
+Fructose,Sucrose,0,#666
+Glucose,Sucrose,0,#666
+Galactose,Sucrose,0,#666
+Docosanoic acid,Tetracosanoic acid,0,#666
+Glutaric acid,Tetracosanoic acid,0,#666
+Eicosanoic acid,Tetracosanoic acid,0,#666
+Ethanolamine,Tetracosanoic acid,0,#666
+Adipic acid,Tetracosanoic acid,0,#666
+Phosphoric acid,Tetracosanoic acid,0,#666
+Octadecanoic acid,Tetracosanoic acid,0,#666
+Heptadecanoic acid,Tetracosanoic acid,0,#666
+Docosanol,Tetracosanoic acid,0,#666
+Glucaric acid,Tetracosanoic acid,0,#666
+Aspartic acid,Tetracosanoic acid,0,#666
+Glycine,Threonine,0,#666
+Serine,Threonine,0,#666
+Succinic acid,Threonine,0,#666
+Arabinose,Tyrosine,0,#666
+Leucine,Tyrosine,0,#666
+Pyroglutamate,Tyrosine,0,#666
+Asparagine,Tyrosine,0,#666
+Isoleucine,Tyrosine,0,#666
+Glutamine,Tyrosine,0,#666
+Lysine,Tyrosine,0,#666
+3-trans-Caffeoylquinic acid,Urea,0,#666
+Caffeic acid,Urea,0,#666
+Glutamine,Valine,0,#666
+Isoleucine,Valine,0,#666
+Citric acid,Valine,0,#666
+Serine,Valine,0,#666
+Lysine,Valine,0,#666
+Leucine,Valine,0,#666
+Tyrosine,Valine,0,#666
+Asparagine,Valine,0,#666
+Gluconic acid,Valine,0,#666
+Arabinose,Valine,0,#666
+Pyroglutamate,Valine,0,#666
