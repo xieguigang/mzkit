@@ -73,18 +73,18 @@ Public Module Canvas
                                    Return scaler(New PointF(xi, yi))
                                End Function
 
-                Call mapper.DrawYGrid(g, region,
-                                      New Pen(Color.Black, 2),
-                                      "Intensity (%)",)
-                Call g.DrawX(size, padding, New Pen(Color.Black, 2),
-                             "Mass (m/z)",
-                             mapper,
-                             XAxisLayoutStyles.Bottom,
-                             Nothing,
-                             axisLabelFont,
-                             CSSFont.TryParse(axisTickFont),
-                             overridesTickLine:=20,
-                             noTicks:=True)
+                'Call mapper.DrawYGrid(g, region,
+                '                      New Pen(Color.Black, 2),
+                '                      "Intensity (%)",)
+                'Call g.DrawX(size, padding, New Pen(Color.Black, 2),
+                '             "Mass (m/z)",
+                '             mapper,
+                '             XAxisLayoutStyles.Bottom,
+                '             Nothing,
+                '             axisLabelFont,
+                '             CSSFont.TryParse(axisTickFont),
+                '             overridesTickLine:=20,
+                '             noTicks:=True)
 
                 Dim signalPen As Pen = Stroke.TryParse(signalStroke)
                 Dim bottom! = region.Bottom

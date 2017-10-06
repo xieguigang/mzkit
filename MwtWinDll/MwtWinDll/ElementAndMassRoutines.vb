@@ -4186,7 +4186,7 @@ Public Class MWElementAndMassRoutines
                     Select Case Asc(strChar1)
                         Case 40, 123 ' (    Record its position
                             ' See if a number is present just after the opening parenthesis
-                            If IsNumeric(strChar2) Or strChar2 = "." Then
+                            If Information.IsNumeric(strChar2) Or strChar2 = "." Then
                                 ' Misplaced number
                                 ErrorParams.ErrorID = 14 : ErrorParams.ErrorPosition = intCharIndex
                             End If
@@ -4715,7 +4715,7 @@ Public Class MWElementAndMassRoutines
             ' Start of string is a number or a decimal point, or (if allowed) a negative sign
             For intIndex = 1 To CShort(Len(strWork))
                 strWorking = Mid(strWork, intIndex, 1)
-                If IsNumeric(strWorking) Or strWorking = gComputationOptions.DecimalSeparator Or (blnAllowNegative = True And strWorking = "-") Then
+                If Information.IsNumeric(strWorking) Or strWorking = gComputationOptions.DecimalSeparator Or (blnAllowNegative = True And strWorking = "-") Then
                     strFoundNum &= strWorking
                 Else
                     Exit For
@@ -4845,7 +4845,7 @@ Public Class MWElementAndMassRoutines
             ElseIf strWorkChar = EMPTY_STRINGCHAR Then
                 ' skip it, the tilde sign is used to add additional height to the formula line when isotopes are used
                 ' If it's here from a previous time, we ignore it, adding it at the end if needed (if blnSuperFound = true)
-            ElseIf IsNumeric(strWorkChar) Or strWorkChar = gComputationOptions.DecimalSeparator Then
+            ElseIf Information.IsNumeric(strWorkChar) Or strWorkChar = gComputationOptions.DecimalSeparator Then
                 ' Number or period, so super or subscript it if needed
                 If intCharIndex = 1 Then
                     ' at beginning of line, so leave it alone. Probably out of place
