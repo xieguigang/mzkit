@@ -4715,7 +4715,10 @@ Public Class MWElementAndMassRoutines
             ' Start of string is a number or a decimal point, or (if allowed) a negative sign
             For intIndex = 1 To CShort(Len(strWork))
                 strWorking = Mid(strWork, intIndex, 1)
-                If Information.IsNumeric(strWorking) Or strWorking = gComputationOptions.DecimalSeparator Or (blnAllowNegative = True And strWorking = "-") Then
+                If Information.IsNumeric(strWorking) Or
+                    strWorking = gComputationOptions.DecimalSeparator Or
+                    (blnAllowNegative = True And strWorking = "-") Then
+
                     strFoundNum &= strWorking
                 Else
                     Exit For
