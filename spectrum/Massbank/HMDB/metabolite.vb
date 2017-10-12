@@ -56,7 +56,7 @@ Namespace HMDB
         Public Property inchikey As String
         Public Property taxonomy As taxonomy
 
-#Region "xref"
+#Region "和其他的外部数据库的编号映射关系: xref"
         <Xref> Public Property drugbank_id As String
         <Xref> Public Property drugbank_metabolite_id As String
         <Xref> Public Property phenol_explorer_compound_id As String
@@ -76,6 +76,14 @@ Namespace HMDB
         <Xref> Public Property chebi_id As String
 #End Region
 
+        ''' <summary>
+        ''' 固态还是液态？
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property state As String
+
+        Public Property experimental_properties As Properties
+        Public Property predicted_properties As Properties
         Public Property biofluid_locations As biofluid_locations
         Public Property tissue_locations As tissue_locations
         Public Property diseases As disease()

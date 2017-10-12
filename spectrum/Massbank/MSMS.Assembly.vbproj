@@ -170,6 +170,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HMDB\property.vb" />
     <Compile Include="HMDB\disease.vb" />
     <Compile Include="lipidMAPS\MapsHelper.vb" />
     <Compile Include="lipidMAPS\SDF.vb" />
