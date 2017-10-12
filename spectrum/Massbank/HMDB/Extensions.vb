@@ -97,18 +97,21 @@ Namespace HMDB
                     .MW = metabolite.average_molecular_weight,
                     .water_solubility = metabolite.experimental_properties.water_solubility,
                     .disease = disease,
-                    .name = name,
-                    .NewbornConcentrationNormal = metabolite.normal_concentrations.ConcentrationDisplay(PeopleAgeTypes.Newborn),
-                    .NewbornConcentrationAbnormal = metabolite.abnormal_concentrations.ConcentrationDisplay(PeopleAgeTypes.Newborn),
-                    .AdultConcentrationAbnormal = metabolite.abnormal_concentrations.ConcentrationDisplay(PeopleAgeTypes.Adult),
-                    .AdultConcentrationNormal = metabolite.normal_concentrations.ConcentrationDisplay(PeopleAgeTypes.Adult),
-                    .ChildrenConcentrationAbnormal = metabolite.abnormal_concentrations.ConcentrationDisplay(PeopleAgeTypes.Children),
-                    .ChildrenConcentrationNormal = metabolite.normal_concentrations.ConcentrationDisplay(PeopleAgeTypes.Children)
+                    .name = name
                 }
 
                 For Each sampleName As String In samples
                     Dim data = DirectCast(table.Clone, BriefTable)
-                    data.Sample = sampleName
+
+                    With data
+                        .Sample = sampleName
+                        .NewbornConcentrationNormal = metabolite.normal_concentrations.ConcentrationDisplay(PeopleAgeTypes.Newborn, sampleName)
+                        .NewbornConcentrationAbnormal = metabolite.abnormal_concentrations.ConcentrationDisplay(PeopleAgeTypes.Newborn, sampleName)
+                        .AdultConcentrationAbnormal = metabolite.abnormal_concentrations.ConcentrationDisplay(PeopleAgeTypes.Adult, sampleName)
+                        .AdultConcentrationNormal = metabolite.normal_concentrations.ConcentrationDisplay(PeopleAgeTypes.Adult, sampleName)
+                        .ChildrenConcentrationAbnormal = metabolite.abnormal_concentrations.ConcentrationDisplay(PeopleAgeTypes.Children, sampleName)
+                        .ChildrenConcentrationNormal = metabolite.normal_concentrations.ConcentrationDisplay(PeopleAgeTypes.Children, sampleName)
+                    End With
 
                     Yield data
                 Next
@@ -117,11 +120,29 @@ Namespace HMDB
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function ConcentrationDisplay(concentrations As IEnumerable(Of concentration), type As PeopleAgeTypes) As String()
+        Public Function ConcentrationDisplay(concentrations As IEnumerable(Of concentration), type As PeopleAgeTypes, Optional sample$ = "*") As String()
             Return concentrations _
-                .Where(Function(c) c.AgeType = type) _
-                .Select(Function(c) $"[{c.biofluid}] {c.concentration_value}({c.concentration_units})") _
+                .Where(Function(c) c.AgeType = type AndAlso c.matchSampleType(type:=sample)) _
+                .Select(Function(c)
+                            Dim value$ = c.concentration_value
+
+                            If Not c.concentration_units.StringEmpty Then
+                                value &= $" ({c.concentration_units})"
+                            End If
+
+                            If sample.StringEmpty OrElse sample = "*" Then
+                                Return $"[{c.biofluid}] {value}"
+                            Else
+                                Return value
+                            End If
+                        End Function) _
                 .ToArray
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Private Function matchSampleType(c As concentration, type$) As Boolean
+            Return type = "*" OrElse c.biofluid.TextEquals(type)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
