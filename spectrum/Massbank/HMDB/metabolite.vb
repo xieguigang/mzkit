@@ -88,6 +88,9 @@ Namespace HMDB
         Public Property tissue_locations As tissue_locations
         Public Property diseases As disease()
 
+        Public Property normal_concentrations As concentration()
+        Public Property abnormal_concentrations As concentration()
+
         Public Overrides Function ToString() As String
             Return name
         End Function
