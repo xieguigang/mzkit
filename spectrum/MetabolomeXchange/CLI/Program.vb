@@ -30,8 +30,8 @@ Module Program
     Public Function DumpTable(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim out$ = (args <= "/out") Or ([in].TrimSuffix & ".csv").AsDefault
-        Dim json As response = [in].ReadAllText.LoadObject(Of response)
-        Return json.datasets _
+        Dim json = [in].ReadAllText.LoadObject(Of Dictionary(Of String, DataSet))
+        Return json _
             .Values _
             .ToTable _
             .SaveTo(out, encoding:=Encoding.UTF8) _
