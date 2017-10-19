@@ -1,11 +1,14 @@
-﻿Imports System.Text
+﻿Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports MetabolomeXchange
 Imports MetabolomeXchange.Json
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.application.json
+Imports Microsoft.VisualBasic.MIME.application.json.Parser
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module Program
@@ -55,7 +58,11 @@ Module Program
         Dim out$ = (args <= "/out") Or ([in].TrimSuffix & ".csv").AsDefault
 
         Dim model = [in].ReadAllText.ParseJsonStr
-
+        Return model _
+            .ToTable() _
+            .ToArray _
+            .SaveTo(out, encoding:=Encoding.UTF8) _
+            .CLICode
 
         Dim json = [in].ReadAllText.LoadObject(Of Dictionary(Of String, DataSet))
         Return json _
@@ -63,5 +70,18 @@ Module Program
             .ToTable _
             .SaveTo(out, encoding:=Encoding.UTF8) _
             .CLICode
+    End Function
+
+    <Extension>
+    Public Iterator Function ToTable(json As JsonElement) As IEnumerable(Of DataTable)
+        Dim datasets As JsonObject = DirectCast(json, JsonObject)!datasets
+
+        For Each node As JsonObject In datasets.Values
+            Dim meta As JsonObject = node!meta
+
+            Yield New DataTable With {
+                .analysis = DirectCast(node!analysis, JsonValue).GetStripString
+            }
+        Next
     End Function
 End Module
