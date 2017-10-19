@@ -4,7 +4,6 @@ Imports MetabolomeXchange
 Imports MetabolomeXchange.Json
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.application.json
@@ -80,7 +79,7 @@ Module Program
             Dim meta As JsonObject = node!meta
 
             Yield New DataTable With {
-                .analysis = DirectCast(node!analysis, JsonValue).GetStripString
+                .analysis = meta!analysis.AsString
             }
         Next
     End Function
