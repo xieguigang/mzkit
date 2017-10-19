@@ -39,7 +39,15 @@ Namespace Json
         Public Property pubmed As String
 
         Public Overrides Function ToString() As String
-            Return title
+            If doi.StringEmpty And pubmed.StringEmpty Then
+                Return title
+            ElseIf doi.StringEmpty Then
+                Return $"{title} ({pubmed})"
+            ElseIf pubmed.StringEmpty Then
+                Return $"{title} (doi:{doi})"
+            Else
+                Return $"{title} (doi:{doi}, {pubmed})"
+            End If
         End Function
     End Structure
 
@@ -48,7 +56,7 @@ Namespace Json
         Public Property name As String
         Public Property url As String
         Public Property description As String
-        Public Property datasets As DataSet()
+        Public Property datasets As Dictionary(Of String, DataSet)
 
         Public Overrides Function ToString() As String
             Return url
