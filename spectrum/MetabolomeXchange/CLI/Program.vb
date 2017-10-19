@@ -77,9 +77,38 @@ Module Program
 
         For Each node As JsonObject In datasets.Values
             Dim meta As JsonObject = node!meta
+            Dim metabolites$()() = meta!metabolites.AsStringVector().Split(100)
+            Dim i As int = 0
 
             Yield New DataTable With {
-                .analysis = meta!analysis.AsString
+                .analysis = meta!analysis.AsString,
+                .ID = node!accession.AsString,
+                .date = Date.Parse(node!date.AsString),
+                .metabolites1 = metabolites.ElementAtOrDefault(++i),
+                .metabolites2 = metabolites.ElementAtOrDefault(++i),
+                .metabolites3 = metabolites.ElementAtOrDefault(++i),
+                .metabolites4 = metabolites.ElementAtOrDefault(++i),
+                .metabolites5 = metabolites.ElementAtOrDefault(++i),
+                .metabolites6 = metabolites.ElementAtOrDefault(++i),
+                .metabolites7 = metabolites.ElementAtOrDefault(++i),
+                .metabolites8 = metabolites.ElementAtOrDefault(++i),
+                .metabolites9 = metabolites.ElementAtOrDefault(++i),
+                .metabolites10 = metabolites.ElementAtOrDefault(++i),
+                .metabolites11 = metabolites.ElementAtOrDefault(++i),
+                .metabolites12 = metabolites.ElementAtOrDefault(++i),
+                .metabolites13 = metabolites.ElementAtOrDefault(++i),
+                .metabolites14 = metabolites.ElementAtOrDefault(++i),
+                .metabolites15 = metabolites.ElementAtOrDefault(++i),
+                .metabolites16 = metabolites.ElementAtOrDefault(++i),
+                .metabolites17 = metabolites.ElementAtOrDefault(++i),
+                .metabolites18 = metabolites.ElementAtOrDefault(++i),
+                .metabolites19 = metabolites.ElementAtOrDefault(++i),
+                .metabolites20 = metabolites.ElementAtOrDefault(++i),
+                .platform = meta!platform.AsString,
+                .submitter = node!submitter.AsStringVector,
+                .organism = meta!organism.AsStringVector,
+                .organism_parts = meta!organism_parts.AsStringVector,
+                .title = node!title.AsString
             }
         Next
     End Function

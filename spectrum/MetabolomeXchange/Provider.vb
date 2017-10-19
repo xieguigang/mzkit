@@ -38,10 +38,8 @@ Public Module Provider
     Private Function ToTable(data As DataSet) As DataTable
         Return New DataTable With {
             .analysis = data.meta.analysis,
-            .date = Date.Parse(data.date),
-            .description = data.description,
-            .ID = data.accession,
-            .metabolites = data.meta.metabolites,
+            .date = Date.Parse(data.date),           ' .description = data.description,
+            .ID = data.accession,            ' .metabolites = data.meta.metabolites,
             .organism = ensureStringArray(data.meta.organism),
             .organism_parts = ensureStringArray(data.meta.organism_parts),
             .platform = data.meta.platform,
@@ -50,8 +48,7 @@ Public Module Provider
                 .Select(Function(pub) pub.ToString) _
                 .ToArray,
             .submitter = data.submitter,
-            .title = data.title,
-            .url = data.url
+            .title = data.title            ' .url = data.url
         }
     End Function
 
