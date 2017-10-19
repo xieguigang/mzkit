@@ -1,16 +1,15 @@
 Namespace Json
 
-Public Structure DataSet
+    Public Structure DataSet
 
-Public Property description As String()
-Public Property accession As String 
-Public property url  as  string 
-Public property title  as string 
-Public Property date  as string 
-Public Property timestamp As string 
-Public Property submitter As String ()
-Pub
+        Public Property description As String()
+        Public Property accession As String
+        Public Property url As String
+        Public Property title As String
+        Public Property [date] As String
+        Public Property timestamp As String
+        Public Property submitter As String()
 
-End Structure
+    End Structure
 
 End Namespace
