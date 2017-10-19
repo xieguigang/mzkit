@@ -9,6 +9,28 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module Program
 
+    Sub New()
+        Dim data As New DataSet With {
+            .accession = "123",
+            .date = Now.ToString,
+            .description = {"AAAA"},
+            .publications = {New publication With {.pubmed = "444444", .doi = "doi_string", .title = "ffffffffffff"}},
+            .title = "AAAAAAsd",
+            .submitter = {"QQQQQ", "DDDDDD"},
+            .timestamp = 1234567,
+            .url = "ASDFFFFFFF",
+            .meta = New meta With {
+                .analysis = "AAAAA",
+                .metabolites = {"X", "FGFFFF"},
+                .organism = {"PPPP", "OOOO"},
+                .organism_parts = {"DDCCCC", "KKKKKK"},
+                .platform = "XXXXXXXXXXXXXXXXXXX"
+            }
+        }
+
+        Call data.GetJson.SaveTo("./test.json")
+    End Sub
+
     Public Function Main() As Integer
         Return GetType(Program).RunCLI(App.CommandLine)
     End Function

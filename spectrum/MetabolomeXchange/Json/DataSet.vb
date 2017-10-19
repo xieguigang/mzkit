@@ -5,8 +5,6 @@ Namespace Json
 
     Public Class DataSet
 
-        <DataMember(Name:="@context")>
-        Public Property context As String
         Public Property description As String()
         Public Property accession As String
         Public Property url As String
@@ -22,12 +20,14 @@ Namespace Json
         End Function
     End Class
 
+    <KnownType(GetType(String()))>
+    <KnownType(GetType(String))>
     Public Class meta
 
         Public Property analysis As String
         Public Property platform As String
-        Public Property organism As String()
-        Public Property organism_parts As String()
+        Public Property organism As Object
+        Public Property organism_parts As Object
         Public Property metabolites As String()
 
         Public Overrides Function ToString() As String
