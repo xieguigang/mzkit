@@ -20,3 +20,11 @@
 + http://www2.chemistry.msu.edu/faculty/reusch/VirtTxtJml/react2.htm
 + https://courses.lumenlearning.com/boundless-chemistry/chapter/activation-energy-and-temperature-dependence/
 + https://en.wikipedia.org/wiki/Collision_theory
+
+##
+
+由于在分子碎片的生成的过程之中，单独的分子会得到不同的能量（可能是正太分布）。对于获得较低的断裂能量的分子而言，其将不会产生分子碎片。故而在质谱结果之中，完整的分子和分子碎片通常会混合在一起而被检测出来，相应的表现在质谱信号图之中，则是最右边的信号的mz比对等于完整的分子的mz比值：
+
+![](./3252_428.0344@78_METLIN034522_POS_10V_[M+H]+.png)
+
+例如ADP物质的质谱图所示：ADP的分子质量约为428.0344，由于在进行质谱碎片化的过程之中，部分ADP分子获取得到的能量要低于断裂能量，故而这部分ADP分子并没有发生碎片化，所以最右边的分子的质谱信号的mz比值约等于其分子质量428.04
