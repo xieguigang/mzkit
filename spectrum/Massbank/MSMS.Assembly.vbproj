@@ -170,7 +170,26 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TMIC\FooDB\FoodTable.vb" />
+    <Compile Include="TMIC\FooDB\compounds.vb" />
+    <Compile Include="TMIC\FooDB\compounds_enzymes.vb" />
+    <Compile Include="TMIC\FooDB\compounds_flavors.vb" />
+    <Compile Include="TMIC\FooDB\compounds_health_effects.vb" />
+    <Compile Include="TMIC\FooDB\compounds_pathways.vb" />
+    <Compile Include="TMIC\FooDB\compound_alternate_parents.vb" />
+    <Compile Include="TMIC\FooDB\compound_external_descriptors.vb" />
+    <Compile Include="TMIC\FooDB\compound_substituents.vb" />
+    <Compile Include="TMIC\FooDB\compound_synonyms.vb" />
+    <Compile Include="TMIC\FooDB\contents.vb" />
+    <Compile Include="TMIC\FooDB\enzymes.vb" />
+    <Compile Include="TMIC\FooDB\flavors.vb" />
+    <Compile Include="TMIC\FooDB\foodcomex_compounds.vb" />
+    <Compile Include="TMIC\FooDB\foodcomex_compound_providers.vb" />
+    <Compile Include="TMIC\FooDB\foods.vb" />
+    <Compile Include="TMIC\FooDB\food_taxonomies.vb" />
+    <Compile Include="TMIC\FooDB\health_effects.vb" />
+    <Compile Include="TMIC\FooDB\nutrients.vb" />
+    <Compile Include="TMIC\FooDB\pathways.vb" />
+    <Compile Include="TMIC\FooDB\references.vb" />
     <Compile Include="TMIC\HMDB\BriefTable.vb" />
     <Compile Include="TMIC\HMDB\property.vb" />
     <Compile Include="TMIC\HMDB\disease.vb" />
@@ -226,6 +245,10 @@
     <ProjectReference Include="..\..\..\GCModeller\src\GCModeller\core\Bio.Assembly\Bio.Assembly.vbproj">
       <Project>{c699d311-9923-4c19-bf70-5048d0e2cf5d}</Project>
       <Name>Bio.Assembly</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\GCModeller\src\runtime\mysqli\LibMySQL\LibMySQL.vbproj">
+      <Project>{2c34a044-1bde-44e8-a86e-e9971c87da21}</Project>
+      <Name>LibMySQL</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\+VB_DataFrame.vbproj">
       <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
