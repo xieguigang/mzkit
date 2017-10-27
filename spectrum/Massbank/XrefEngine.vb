@@ -1,5 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.Language.UnixBash
+﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports SMRUCC.genomics.Assembly.EBI.ChEBI.XML
 Imports SMRUCC.genomics.ComponentModel.DBLinkBuilder
 Imports SMRUCC.proteomics.MS_Spectrum.DATA.HMDB
@@ -79,33 +79,29 @@ Public Class XrefEngine
 
         Call "Scaning ChEBI local cache repository...".__DEBUG_ECHO
 
-        For Each xml As String In (ls - l - r - "*.XML" <= chebiRepo.cache)
-            Dim entity = xml.LoadXml(Of ChEBIEntity())
+        For Each chebiData As ChEBIEntity In chebiRepo.cache.LoadXml(Of EntityList).DataSet
+            With chebiData
+                Call chebi2ndMapSolver.Add(
+                    .chebiId,
+                    .SecondaryChEBIIds)
 
-            For Each chebiData As ChEBIEntity In entity
-                With chebiData
-                    Call chebi2ndMapSolver.Add(
-                        .chebiId,
-                        .SecondaryChEBIIds)
+                chebi(.chebiId) = chebiData
 
-                    chebi(.chebiId) = chebiData
+                If Not .DatabaseLinks Is Nothing Then
+                    Dim KEGG = .DatabaseLinks _
+                        .Where(Function(x)
+                                   Return x.type = DatabaseLinks.KEGG_COMPOUND_accession OrElse
+                                          x.type = DatabaseLinks.KEGG_DRUG_accession
+                               End Function) _
+                        .ToArray
 
-                    If Not .DatabaseLinks Is Nothing Then
-                        Dim KEGG = .DatabaseLinks _
-                            .Where(Function(x)
-                                       Return x.type = DatabaseLinks.KEGG_COMPOUND_accession OrElse
-                                              x.type = DatabaseLinks.KEGG_DRUG_accession
-                                   End Function) _
-                            .ToArray
-
-                        If KEGG.Length > 0 Then
-                            For Each id As DatabaseLinks In KEGG
-                                KEGG2ChEBI(id.data) = CLng(Val(.chebiId.Split(":"c).Last))
-                            Next
-                        End If
+                    If KEGG.Length > 0 Then
+                        For Each id As DatabaseLinks In KEGG
+                            KEGG2ChEBI(id.data) = CLng(Val(.chebiId.Split(":"c).Last))
+                        Next
                     End If
-                End With
-            Next
+                End If
+            End With
         Next
 
         Call "Indexing of the HMDB data...".__DEBUG_ECHO
