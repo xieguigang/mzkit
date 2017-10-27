@@ -50,6 +50,15 @@
 
 ### 10V 碰撞电压
 
+![](./images/molecule-10V.png)
+![](./images/spectrum_10V.png)
+
 ### 20V 碰撞电压
 
+![](./images/molecule-20V.png)
+![](./images/spectrum_20V.png)
+
 ### 30V 碰撞电压
+
+![](./images/molecule-30V.png)
+![](./images/spectrum_30V.png)
