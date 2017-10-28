@@ -193,10 +193,19 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\mime\application%25netcdf\application.netCDF.vbproj">
+      <Project>{6ff317ff-1a81-4272-a894-bfbffb202b41}</Project>
+      <Name>application.netCDF</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\zlibnet\src\zlibnet.vbproj">
       <Project>{075e1da3-54ac-4d7c-9d4e-e34aa13910a8}</Project>
       <Name>zlibnet</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="mzData\" />
+    <Folder Include="mzML\" />
+    <Folder Include="netCDF\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
