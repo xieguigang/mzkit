@@ -6,8 +6,11 @@ Imports SMRUCC.WebCloud.HTTPInternal.AppEngine.APIMethods
 Imports SMRUCC.WebCloud.HTTPInternal.AppEngine.APIMethods.Arguments
 Imports SMRUCC.WebCloud.HTTPInternal.Platform
 
+''' <summary>
+''' VB server script
+''' </summary>
 <[Namespace]("ProteoWizard.d")>
-Public Class Server : Inherits WebApp
+Public Class VBServer : Inherits WebApp
 
     ''' <summary>
     ''' + msconvert
@@ -20,11 +23,17 @@ Public Class Server : Inherits WebApp
     ''' </summary>
     ReadOnly OSS_ROOT$
 
+    Dim taskPool As New taskpool
+
     Sub New(main As PlatformEngine)
         Call MyBase.New(main)
 
         BIN = App.GetVariable("bin")
         OSS_ROOT = App.GetVariable("oss")
+
+        If Not OSS_ROOT.DirectoryExists Then
+            Throw New Exception("OSS file system should be mounted at first!")
+        End If
     End Sub
 
     <ExportAPI("/ProteoWizard.d/mzXML.vbs")>
@@ -37,5 +46,12 @@ Public Class Server : Inherits WebApp
         Call New IORedirectFile(BIN, args).Run()
 
         Return True
+    End Function
+
+    <ExportAPI("/ProteoWizard.d/mzXML.task.vbs")>
+    <Usage("/ProteoWizard.d/mzXML.task.vbs?path=<path>")>
+    <[GET](GetType(String))>
+    Public Function ConvertTomzXMLTask(request As HttpRequest, response As HttpResponse) As Boolean
+
     End Function
 End Class
