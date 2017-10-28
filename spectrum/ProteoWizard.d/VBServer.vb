@@ -1,6 +1,8 @@
 ﻿Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Parallel.Threads
+Imports SMRUCC.WebCloud.HTTPInternal
 Imports SMRUCC.WebCloud.HTTPInternal.AppEngine
 Imports SMRUCC.WebCloud.HTTPInternal.AppEngine.APIMethods
 Imports SMRUCC.WebCloud.HTTPInternal.AppEngine.APIMethods.Arguments
@@ -23,7 +25,7 @@ Public Class VBServer : Inherits WebApp
     ''' </summary>
     ReadOnly OSS_ROOT$
 
-    Dim taskPool As New taskpool
+    Dim taskPool As New ThreadPool
 
     Sub New(main As PlatformEngine)
         Call MyBase.New(main)
@@ -45,6 +47,10 @@ Public Class VBServer : Inherits WebApp
 
         Call New IORedirectFile(BIN, args).Run()
 
+        If Not response Is Nothing Then
+            Call response.SuccessMsg("Task complete!")
+        End If
+
         Return True
     End Function
 
@@ -52,6 +58,11 @@ Public Class VBServer : Inherits WebApp
     <Usage("/ProteoWizard.d/mzXML.task.vbs?path=<path>")>
     <[GET](GetType(String))>
     Public Function ConvertTomzXMLTask(request As HttpRequest, response As HttpResponse) As Boolean
+        Dim task = Sub() ConvertTomzXML(request, Nothing)
 
+        Call taskPool.RunTask(task)
+        Call response.SuccessMsg("Task pending...")
+
+        Return True
     End Function
 End Class
