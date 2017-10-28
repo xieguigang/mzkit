@@ -1,21 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.12
+VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "spectrum", "spectrum\spectrum.vbproj", "{F2147043-7C16-48F8-838B-3D2CF14B0A7B}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "spectrum-plot", "plot\spectrum-plot.vbproj", "{F2147043-7C16-48F8-838B-3D2CF14B0A7B}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "+Microsoft.VisualBasic.Architecture.Framework", "..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj", "{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "+Microsoft.VisualBasic.Architecture.Framework", "..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj", "{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MIME-htmls", "..\..\GCModeller\src\runtime\sciBASIC#\mime\text%html\MIME-htmls.vbproj", "{2DD4BE80-DDC3-4767-94A7-10F1C3395716}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MIME-htmls", "..\GCModeller\src\runtime\sciBASIC#\mime\text%html\MIME-htmls.vbproj", "{2DD4BE80-DDC3-4767-94A7-10F1C3395716}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Math-core", "..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math-core.vbproj", "{E3367B88-5D0C-495A-8273-331656D4B5AA}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Math-core", "..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math-core.vbproj", "{E3367B88-5D0C-495A-8273-331656D4B5AA}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.Imaging", "..\..\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Microsoft.VisualBasic.Imaging.vbproj", "{85E71B4B-9276-4EC8-AADC-C849205F1EA8}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.Imaging", "..\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Microsoft.VisualBasic.Imaging.vbproj", "{85E71B4B-9276-4EC8-AADC-C849205F1EA8}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Plots", "..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Plot\Plots\Plots.vbproj", "{17F8E821-0A01-4975-9CAA-AC95251226D5}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Plots", "..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Plot\Plots\Plots.vbproj", "{17F8E821-0A01-4975-9CAA-AC95251226D5}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "+VB_DataFrame", "..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\+VB_DataFrame.vbproj", "{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "+VB_DataFrame", "..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\+VB_DataFrame.vbproj", "{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "runtime", "runtime", "{8411BC65-D873-4A4B-A364-75E6A73F8205}"
 EndProject
@@ -29,13 +29,11 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MwtWinDll.Extensions", "..\
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MSMS.Assembly", "Massbank\MSMS.Assembly.vbproj", "{A686BDF5-077F-47F5-A8DD-C73E6E88363C}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ConsoleApp.Test", "ConsoleApp.Test\ConsoleApp.Test.vbproj", "{B1752FF3-8943-41F5-8C83-88E48A86AD67}"
-EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "zlibnet", "..\zlibnet\src\zlibnet.vbproj", "{075E1DA3-54AC-4D7C-9D4E-E34AA13910A8}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "assembly", "assembly\assembly.vbproj", "{95F7D65E-9DB1-4605-9FD3-25433277AF88}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Bio.Assembly", "..\..\GCModeller\src\GCModeller\core\Bio.Assembly\Bio.Assembly.vbproj", "{C699D311-9923-4C19-BF70-5048D0E2CF5D}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Bio.Assembly", "..\GCModeller\src\GCModeller\core\Bio.Assembly\Bio.Assembly.vbproj", "{C699D311-9923-4C19-BF70-5048D0E2CF5D}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ProteoWizard.d", "ProteoWizard.d\ProteoWizard.d.vbproj", "{A70CE8FD-3AFE-47B8-9958-CED1ACD720D9}"
 EndProject
@@ -677,66 +675,6 @@ Global
 		{A686BDF5-077F-47F5-A8DD-C73E6E88363C}.Release2|x64.Build.0 = Release|Any CPU
 		{A686BDF5-077F-47F5-A8DD-C73E6E88363C}.Release2|x86.ActiveCfg = Release|Any CPU
 		{A686BDF5-077F-47F5-A8DD-C73E6E88363C}.Release2|x86.Build.0 = Release|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.Biodeep|Any CPU.ActiveCfg = Release|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.Biodeep|Any CPU.Build.0 = Release|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.Biodeep|x64.ActiveCfg = Release|x64
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.Biodeep|x64.Build.0 = Release|x64
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.Biodeep|x86.ActiveCfg = Release|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.Biodeep|x86.Build.0 = Release|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.Debug|x64.ActiveCfg = Debug|x64
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.Debug|x64.Build.0 = Debug|x64
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.Debug|x86.Build.0 = Debug|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.DEMO|Any CPU.ActiveCfg = Debug|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.DEMO|Any CPU.Build.0 = Debug|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.DEMO|x64.ActiveCfg = Debug|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.DEMO|x64.Build.0 = Debug|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.DEMO|x86.ActiveCfg = Debug|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.DEMO|x86.Build.0 = Debug|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.docs|Any CPU.ActiveCfg = Debug|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.docs|Any CPU.Build.0 = Debug|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.docs|x64.ActiveCfg = Debug|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.docs|x64.Build.0 = Debug|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.docs|x86.ActiveCfg = Debug|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.docs|x86.Build.0 = Debug|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.GCModeller(Release_X64)|Any CPU.ActiveCfg = Release|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.GCModeller(Release_X64)|Any CPU.Build.0 = Release|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.GCModeller(Release_X64)|x64.ActiveCfg = Release|x64
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.GCModeller(Release_X64)|x64.Build.0 = Release|x64
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.GCModeller(Release_X64)|x86.ActiveCfg = Release|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.GCModeller(Release_X64)|x86.Build.0 = Release|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.installer_x64|Any CPU.ActiveCfg = Release|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.installer_x64|Any CPU.Build.0 = Release|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.installer_x64|x64.ActiveCfg = Release|x64
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.installer_x64|x64.Build.0 = Release|x64
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.installer_x64|x86.ActiveCfg = Release|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.installer_x64|x86.Build.0 = Release|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.mysqli_X64_release|Any CPU.ActiveCfg = Release|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.mysqli_X64_release|Any CPU.Build.0 = Release|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.mysqli_X64_release|x64.ActiveCfg = Release|x64
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.mysqli_X64_release|x64.Build.0 = Release|x64
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.mysqli_X64_release|x86.ActiveCfg = Release|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.mysqli_X64_release|x86.Build.0 = Release|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.Publish|Any CPU.ActiveCfg = Release|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.Publish|Any CPU.Build.0 = Release|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.Publish|x64.ActiveCfg = Release|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.Publish|x64.Build.0 = Release|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.Publish|x86.ActiveCfg = Release|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.Publish|x86.Build.0 = Release|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.Release|x64.ActiveCfg = Release|x64
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.Release|x64.Build.0 = Release|x64
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.Release|x86.ActiveCfg = Release|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.Release|x86.Build.0 = Release|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.Release2|Any CPU.ActiveCfg = Release|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.Release2|Any CPU.Build.0 = Release|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.Release2|x64.ActiveCfg = Release|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.Release2|x64.Build.0 = Release|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.Release2|x86.ActiveCfg = Release|Any CPU
-		{B1752FF3-8943-41F5-8C83-88E48A86AD67}.Release2|x86.Build.0 = Release|Any CPU
 		{075E1DA3-54AC-4D7C-9D4E-E34AA13910A8}.Biodeep|Any CPU.ActiveCfg = Biodeep|Any CPU
 		{075E1DA3-54AC-4D7C-9D4E-E34AA13910A8}.Biodeep|Any CPU.Build.0 = Biodeep|Any CPU
 		{075E1DA3-54AC-4D7C-9D4E-E34AA13910A8}.Biodeep|x64.ActiveCfg = Biodeep|x64
