@@ -12,7 +12,7 @@ Imports SMRUCC.WebCloud.HTTPInternal.Platform
 ''' VB server script
 ''' </summary>
 <[Namespace]("ProteoWizard.d")>
-Public Class VBServer : Inherits WebApp
+Public Class VBServerScript : Inherits WebApp
 
     ''' <summary>
     ''' + msconvert
