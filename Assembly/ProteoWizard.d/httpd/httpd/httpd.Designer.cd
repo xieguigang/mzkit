@@ -1,0 +1,291 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="SMRUCC.REST.HttpInternal.HttpFileSystem">
+    <Position X="11.25" Y="11.5" Width="4.75" />
+    <TypeIdentifier>
+      <HashCode>ACAIBBAAABAAICAAAQgAAAAAAEgAgAAAAAQAAAAACEA=</HashCode>
+      <FileName>E:\REST_Framework\HTTPServer\HttpFileSystem.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMRUCC.REST.HttpInternal.HttpProcessor" Collapsed="true">
+    <Position X="42.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>UwAAMAAIAAAAAAAUggAAAAABAAADMgAAAAEIASAAAEA=</HashCode>
+      <FileName>E:\REST_Framework\HTTPServer\HttpProcessor.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMRUCC.REST.HttpInternal.HttpServer">
+    <Position X="11.25" Y="6.5" Width="4.75" />
+    <TypeIdentifier>
+      <HashCode>ACAAABAIACABAQgAAAAAQQAAAQAAAAAAAAAAAgAAAEI=</HashCode>
+      <FileName>E:\REST_Framework\HTTPServer\HttpServer.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SMRUCC.REST.AppEngine.__API_Invoker" Collapsed="true">
+    <Position X="42.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAIQAAEEBAgAEQABAAAEAAAAAABAAAAAAA=</HashCode>
+      <FileName>AppEngine\__API_Invoker.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMRUCC.REST.AppEngine.APPEngine" Collapsed="true">
+    <Position X="44.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAABAIQAAAAAAAAAEgAAAAAEAAAAAAAAAACAA=</HashCode>
+      <FileName>AppEngine\APPEngine.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMRUCC.REST.AppEngine.APPManager">
+    <Position X="4.75" Y="13.5" Width="5.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAIQBAAAAIAAAAAAAABAAAEAAAIAAAgEAA=</HashCode>
+      <FileName>AppEngine\APPManager.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SMRUCC.REST.AppEngine.WebApp">
+    <Position X="6.25" Y="8.75" Width="2.25" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Delegate Name="SMRUCC.REST.AppEngine.WebApp.GET_API">
+        <TypeIdentifier>
+          <NewMemberFileName>AppEngine\WebApp.vb</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="SMRUCC.REST.AppEngine.WebApp.POST_API">
+        <TypeIdentifier>
+          <NewMemberFileName>AppEngine\WebApp.vb</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>AppEngine\WebApp.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMRUCC.REST.AppEngine.APIMethods.APIMethod">
+    <Position X="19.25" Y="0.5" Width="5.5" />
+    <TypeIdentifier>
+      <HashCode>AAIBAAAAAABgBAAAAAAAAAAAAAAAAAAQADAAAAAAAAA=</HashCode>
+      <FileName>AppEngine\API\APIMethod.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMRUCC.REST.AppEngine.APIMethods.[GET]">
+    <Position X="2" Y="4.25" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AppEngine\API\Methods.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMRUCC.REST.AppEngine.APIMethods.POST">
+    <Position X="11" Y="4.25" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AppEngine\API\Methods.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMRUCC.REST.AppEngine.APIMethods.HEAD">
+    <Position X="20" Y="4.25" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AppEngine\API\Methods.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMRUCC.REST.AppEngine.APIMethods.PUT">
+    <Position X="29" Y="4.25" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AppEngine\API\Methods.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMRUCC.REST.AppEngine.APIMethods.DELETE">
+    <Position X="33.5" Y="4.25" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AppEngine\API\Methods.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMRUCC.REST.AppEngine.APIMethods.TRACE">
+    <Position X="38" Y="4.25" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AppEngine\API\Methods.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMRUCC.REST.AppEngine.APIMethods.OPTIONS">
+    <Position X="6.5" Y="4.25" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AppEngine\API\Methods.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMRUCC.REST.AppEngine.APIMethods.CONNECT">
+    <Position X="15.5" Y="4.25" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AppEngine\API\Methods.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMRUCC.REST.AppEngine.APIMethods.PATCH">
+    <Position X="24.5" Y="4.25" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AppEngine\API\Methods.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMRUCC.REST.My.MySettings" Collapsed="true">
+    <Position X="44.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMRUCC.REST.Platform.PlatformEngine">
+    <Position X="11.25" Y="17" Width="4.75" />
+    <TypeIdentifier>
+      <HashCode>ACAIAAAAADIAAAgAAAAAAAAAAAAAAAAAAgAIAAAAAAA=</HashCode>
+      <FileName>Platform\PlatformEngine.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMRUCC.REST.Platform.PlatformSub">
+    <Position X="4" Y="6.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Platform\PlatformSub.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMRUCC.REST.Platform.Task" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="42.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAkAAAAAACAAEAIEAAAAAAABAAAAAAAQAAAAAgAAAAA=</HashCode>
+      <FileName>Platform\Task\Task.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SMRUCC.REST.Platform.TaskPool" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="44.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAACAAAAgUgAAACAAAQAAAEAAEAAgAAgAAAAA=</HashCode>
+      <FileName>Platform\Task\TaskPool.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SMRUCC.REST.Platform.Plugins.PluginBase">
+    <Position X="0.5" Y="8.75" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAgAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Platform\Plugin\PluginBase.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SMRUCC.REST.HttpInternal.POSTReader.HttpMultipart" Collapsed="true">
+    <Position X="46.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>sABEAAAgAAAAAAAiAACAAQAAAACAAIBAAABQAIgCAAA=</HashCode>
+      <FileName>E:\REST_Framework\HTTPServer\POSTReader\HttpMultipart.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMRUCC.REST.HttpInternal.POSTReader.HttpPostedFile" Collapsed="true">
+    <Position X="48" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAGABAACBAQAABAEAA=</HashCode>
+      <FileName>E:\REST_Framework\HTTPServer\POSTReader\HttpPostedFile.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMRUCC.REST.HttpInternal.POSTReader.PostReader" Collapsed="true">
+    <Position X="46.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAQAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAQAAEAEKA=</HashCode>
+      <FileName>E:\REST_Framework\HTTPServer\POSTReader\PostReader.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMRUCC.REST.HttpInternal.POSTReader.ReadSubStream" Collapsed="true">
+    <Position X="48" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAACAAQAAgGAAAAABgAAAAAEAAAIgAAAEIACA=</HashCode>
+      <FileName>E:\REST_Framework\HTTPServer\POSTReader\ReadSubStream.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMRUCC.WebCloud.httpd.My.MySettings" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Module Name="SMRUCC.REST.AppEngine.APIName" Collapsed="true">
+    <Position X="42.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AppEngine\APIName.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="SMRUCC.REST.AppEngine.ExternalCall" Collapsed="true">
+    <Position X="46.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AppEngine\ExternalCall.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="SMRUCC.REST.CLI" Collapsed="true">
+    <Position X="44.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>CLI.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="SMRUCC.REST.Program" Collapsed="true">
+    <Position X="44.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="SMRUCC.REST.My.Resources.Resources" Collapsed="true">
+    <Position X="46.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="SMRUCC.REST.My.MySettingsProperty" Collapsed="true">
+    <Position X="42.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="SMRUCC.REST.Platform.Plugins.ExternalCall" Collapsed="true">
+    <Position X="48" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Platform\Plugin\ExternalCall.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="SMRUCC.WebCloud.httpd.My.Resources.Resources" Collapsed="true">
+    <Position X="2.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="SMRUCC.WebCloud.httpd.My.MySettingsProperty" Collapsed="true">
+    <Position X="2.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="SMRUCC.WebCloud.httpd.CLI" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IABAAAAAACAAAAAAAAAAAAAAAgAAAEAACAAAAAAAAAA=</HashCode>
+      <FileName>Program\CLI.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="SMRUCC.WebCloud.httpd.Program" Collapsed="true">
+    <Position X="0.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program\Program.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

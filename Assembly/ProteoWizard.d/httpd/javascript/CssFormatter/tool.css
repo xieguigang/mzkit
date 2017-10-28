@@ -1,0 +1,46 @@
+/* ÀÁÈË¹¤¾ßÏä */
+.title{width:100%;border:0;padding:4px 0;}
+.icon img{width:72px;height:72px;float:left;margin-right:15px}
+h2{font:22px "Î¢ÈíÑÅºÚ","Microsoft YaHei";color:#333;border-left:3px solid #5FA924;padding-left:12px;line-height:34px}
+h3{font-size:12px;font-weight:lighter;color:#666}
+
+/* ÁÐ±í */
+.toollist{width:1200px;clear:both;display:inline-table}
+.toollist dt{font:26px "Î¢ÈíÑÅºÚ";height:30px;margin:20px 0 10px 0}
+.toollist dd{font:18px "Î¢ÈíÑÅºÚ";width:280px;height:70px;float:left;border:1px solid #DDD;margin:8px}
+.toollist dd:hover{border:1px solid #5cc2d0;}
+.toollist dd img{width:50px;height:50px;float:left;margin-right:10px}
+.toollist dd a{color:#333;display:block;padding:10px 8px}
+.toollist dd a:hover{color:#390;text-decoration:none}
+.toollist dd span{display:block;font-size:12px;color:#999;margin-top:4px}
+
+/* ÎÄ±¾Óò */
+.tooltext{padding:4px;margin:10px 0;font-size:18px;width:720px;height:24px;line-height:24px;color:#333}
+.toolarea{padding:4px;margin:8px 0;width:720px;height:250px;color:#333;display:block}
+
+
+/* °´Å¥ */
+.bt-blue{font-size:14px;border:none;line-height:33px;background:#4899E0;font-weight:bold;color:#FFF;cursor:pointer;padding:0 18px;margin-right:12px}
+.bt-blue:hover{background:#368DD9;text-decoration:none}
+.bt-green {font-size:14px;border:none;line-height:33px;background:#6FB934;font-weight:bold;color:#FFF;cursor:pointer;padding:0 18px;margin-right:12px}
+.bt-green:hover{background:#5FA924;text-decoration:none}
+.bt-grey {font-size:14px;border:none;line-height:33px;background:#DDD;font-weight:bold;color:#666;cursor:pointer;padding:0 18px;margin-right:12px}
+.bt-grey:hover{background:#CCC;text-decoration:none}
+
+
+.toolcode{margin:0 8px 26px}
+
+.tool {float:left;margin:12px 0 40px 0;}
+.tool dd{width:82px;height:132px;margin:12px 38px 0 0;float:left;display:inline}
+.tool dd a{color:#666;line-height:30px;text-align:center;display:block}
+.tool dd a:hover{color:#390;text-decoration:none}
+.tool dd img{width:80px;height:80px;border:1px solid #FFF;}
+
+.nav-tool{}
+.nav-tool img{width:50px;height:50px;border:1px solid #EEE}
+.nav-tool dd{width:90px;height:120px;float:left;text-align:center;}
+.nav-tool dd a{color:#666;border-bottom:3px solid #EEE;display:block}
+.nav-tool dd a.on{color:#390}
+.nav-tool dd a:hover{color:#390}
+
+.wenzi{font-size:18px;color:#666;margin-bottom:20px;padding:6px 6px 6px 18px;letter-spacing:2px;}
