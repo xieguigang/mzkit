@@ -1,3 +1,7 @@
 [submodule "ProteoWizard.d/httpd"]
 	path = Assembly/ProteoWizard.d/httpd
 	url = https://github.com/xieguigang/SMRUCC.WebCloud.git
+
+[submodule "KEGG KCF"]
+	path = KCF/
+	url = https://github.com/xieguigang/KEGG.molDraw.git
