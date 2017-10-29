@@ -26,8 +26,8 @@ Module GA
     ''' <param name="ref"></param>
     ''' <returns></returns>
     Public Function Align(query As ms2(), ref As ms2(), method As AlignMethod) As Double
-        Dim q As Vector = query.AlignMatrix(ref, method).VectorShadows.intensity
-        Dim s As Vector = ref.VectorShadows.intensity
+        Dim q As Vector = query.AlignMatrix(ref, method).Shadows!intensity
+        Dim s As Vector = ref.Shadows!intensity
 
         Return SSM(q / q.Max, s / s.Max)
     End Function
