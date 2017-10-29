@@ -36,11 +36,16 @@ Module GA
     Public Function AlignMatrix(query As ms2(), ref As ms2(), method As AlignMethod) As ms2()
         Return ref _
             .Select(Function(mz)
+
+                        ' 2017-10-29
+                        '
+                        ' 当找不到的时候，会返回一个空的structure对象，这个时候intensity为零
+                        ' 所以在这个Linq表达式中，后面不需要使用Where来删除对象了
+
                         Return query _
                             .Where(Function(q) method.Assert(q.mz, mz.mz)) _
                             .FirstOrDefault
                     End Function) _
-            .Where(Function(mz) mz.intensity > 0) _
             .ToArray
     End Function
 
@@ -51,7 +56,7 @@ Module GA
     ''' <param name="actualValue#"></param>
     ''' <returns></returns>
     Public Function ppm(measured#, actualValue#) As Double
-        ' （测量值-实际分子量）/实际分子量
+        ' （测量值-实际分子量）/ 实际分子量
         ' |(实验数据 - 数据库结果)| / 实验数据 * 1000000
         Dim ppmd# = Math.Abs(measured - actualValue) / actualValue
         ppmd = ppmd * 1000000
