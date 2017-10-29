@@ -3,3 +3,6 @@
 	url = https://github.com/xieguigang/SMRUCC.WebCloud.git
 
 
+[submodule "KCF"]
+	path = KCF
+	url = https://github.com/xieguigang/KEGG.molDraw.git
