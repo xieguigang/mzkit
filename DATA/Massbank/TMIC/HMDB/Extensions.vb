@@ -31,8 +31,14 @@ Namespace HMDB
                               End Function)
         End Function
 
+        ''' <summary>
+        ''' 返回一个函数指针，指示目标代谢物是否被匹配上？
+        ''' 如果被匹配上则会返回HMDB之中的化合物的名称，否则返回空字符串
+        ''' </summary>
+        ''' <param name="names$"></param>
+        ''' <returns></returns>
         <Extension> Public Function NameMatch(names$()) As Func(Of metabolite, String)
-            If names.Length = 0 Then
+            If names.IsNullOrEmpty = 0 Then
                 Return Function(metabolite)
                            Return metabolite.name
                        End Function
@@ -55,6 +61,19 @@ Namespace HMDB
                            End With
                        End Function
             End If
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function MatchMetabolites(source As IEnumerable(Of metabolite), list$()) As IEnumerable(Of metabolite)
+            With list.NameMatch
+                Return source.Where(Function(m) Not .ref(m).StringEmpty)
+            End With
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function LoadXML(path$) As IEnumerable(Of metabolite)
+            Return metabolite.Load(path)
         End Function
 
         ''' <summary>
