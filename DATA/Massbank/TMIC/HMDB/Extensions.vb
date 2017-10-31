@@ -1,6 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Namespace HMDB
 
@@ -37,22 +38,22 @@ Namespace HMDB
         ''' </summary>
         ''' <param name="names$"></param>
         ''' <returns></returns>
-        <Extension> Public Function NameMatch(names$()) As Func(Of metabolite, String)
+        <Extension> Public Function NameMatch(names$()) As Func(Of metabolite, (match$, type$))
             If names.IsNullOrEmpty Then
                 Return Function(metabolite)
-                           Return metabolite.name
+                           Return (metabolite.name, NameOf(names))
                        End Function
             Else
                 Return Function(metabolite)
                            With metabolite
                                For Each name As String In names
                                    If .name.TextEquals(name) Then
-                                       Return .name
+                                       Return (.name, NameOf(.name))
                                    End If
 
                                    For Each synonym As String In .synonyms.synonym.SafeQuery
                                        If synonym.TextEquals(name) Then
-                                           Return synonym
+                                           Return (synonym, NameOf(.synonyms))
                                        End If
                                    Next
                                Next
@@ -63,11 +64,40 @@ Namespace HMDB
             End If
         End Function
 
+        Public Structure NameValue
+            Public Property name As String
+            Public Property match As String
+            Public Property type As String
+            Public Property metabolite As String
+        End Structure
+
+        <Extension>
+        Public Iterator Function CheckNames(metabolites As IEnumerable(Of metabolite), names$()) As IEnumerable(Of NameValue)
+            Dim list = metabolites.ToArray
+
+            For Each name As String In names
+                Dim handle = NameMatch(names:={name})
+
+                For Each metabolite In list
+                    Dim match = handle(metabolite)
+
+                    If Not match.match.StringEmpty Then
+                        Yield New NameValue With {
+                            .name = name,
+                            .match = match.match,
+                            .metabolite = metabolite.name,
+                            .type = match.type
+                        }
+                    End If
+                Next
+            Next
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function MatchMetabolites(source As IEnumerable(Of metabolite), list$()) As IEnumerable(Of metabolite)
             With list.NameMatch
-                Return source.Where(Function(m) Not .ref(m).StringEmpty)
+                Return source.AsParallel.Where(Function(m) Not .ref(m).match.StringEmpty)
             End With
         End Function
 
@@ -101,7 +131,7 @@ Namespace HMDB
                     samples = {"not_specific"}
                 End If
 
-                Dim name$ = matchName(metabolite)
+                Dim name$ = matchName(metabolite).match
 
                 If name.StringEmpty Then
                     Continue For
