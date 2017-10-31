@@ -38,7 +38,7 @@ Namespace HMDB
         ''' <param name="names$"></param>
         ''' <returns></returns>
         <Extension> Public Function NameMatch(names$()) As Func(Of metabolite, String)
-            If names.IsNullOrEmpty = 0 Then
+            If names.IsNullOrEmpty Then
                 Return Function(metabolite)
                            Return metabolite.name
                        End Function
