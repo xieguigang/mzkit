@@ -229,5 +229,28 @@ Namespace HMDB
                 .FirstOrDefault _
                 .value
         End Function
+
+        <Extension>
+        Public Function water_solubility(metabolite As metabolite) As String
+            Dim ws = metabolite _
+                .experimental_properties _
+                .water_solubility
+
+            If ws Is Nothing Then
+                ws = metabolite _
+                    .predicted_properties _
+                    .water_solubility
+
+                If Not ws Is Nothing Then
+                    ws = ws & " (predicted)"
+                End If
+            End If
+
+            If ws Is Nothing Then
+                ws = "NA"
+            End If
+
+            Return ws
+        End Function
     End Module
 End Namespace
