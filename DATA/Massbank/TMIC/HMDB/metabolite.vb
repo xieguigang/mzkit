@@ -91,6 +91,7 @@ Namespace HMDB
 
         Public Property normal_concentrations As concentration()
         Public Property abnormal_concentrations As concentration()
+        Public Property ontology As ontology
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
