@@ -248,6 +248,8 @@ Namespace HMDB
 
             If ws Is Nothing Then
                 ws = "NA"
+            Else
+                ws = ws.Replace("°C", "Centigrade")
             End If
 
             Return ws
