@@ -1,6 +1,8 @@
 ﻿Imports System.Collections.Specialized
 Imports System.Data.Linq.Mapping
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Language
 
 Namespace ASCII.MSP
 
@@ -21,7 +23,12 @@ Namespace ASCII.MSP
         Public Property PrecursorMZ As String
         Public Property Comments As String
 
+        ''' <summary>
+        ''' 物质的注释信息主要是放在这个结构体之中
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property MetaDB As MetaData
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Comments.FillData
             End Get
@@ -80,12 +87,10 @@ Namespace ASCII.MSP
                     .Select(Function(s)
                                 With Tokenizer.CharsParser(s:=s, delimiter:=" "c)
                                     Dim mz$ = .First
-                                    Dim into$ = .SecondOrNull
+                                    Dim into$ = .Second
+                                    Dim comment$ = .ElementAtOrDefault(2)
 
-                                    Return New MSMSPeak(
-                                        mz:= .First,
-                                        intensity:= .SecondOrNull,
-                                        comment:= .ElementAtOrDefault(2))
+                                    Return New MSMSPeak(mz:=mz, intensity:=into, comment:=comment)
                                 End With
                             End Function) _
                     .ToArray
@@ -95,7 +100,7 @@ Namespace ASCII.MSP
 
                 Dim msp As New MspData With {
                     .Peaks = peaksdata,
-                    .Comments = getValue(NameOf(MspData.Comments)),
+                    .Comments = getValue(NameOf(MspData.Comments)) Or getValue("Comment").AsDefault,
                     .DB_id = getValue("DB#"),
                     .Formula = getValue(NameOf(MspData.Formula)),
                     .InChIKey = getValue(NameOf(MspData.InChIKey)),

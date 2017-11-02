@@ -40,6 +40,11 @@ Namespace ASCII.MSP
             names = Mappings.FieldNameMappings(Of MetaData)(explict:=True)
         End Sub
 
+        ''' <summary>
+        ''' 从头部的<see cref="MspData.Comments"/>字符串之中解析出具体的物质注释信息
+        ''' </summary>
+        ''' <param name="comments$"></param>
+        ''' <returns></returns>
         <Extension> Public Function FillData(comments$) As MetaData
             Dim table As NameValueCollection = comments.ToTable
             Dim meta As Object = New MetaData
