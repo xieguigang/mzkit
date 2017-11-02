@@ -61,7 +61,7 @@ Namespace ASCII.MSP
                 .Split(AddressOf StringEmpty, includes:=False) _
                 .Where(Function(c) c.Length > 0)
 
-            For Each reference As String() In libs
+            For Each reference As String() In libs.Where(Function(r) Not r.IsNullOrEmpty AndAlso r.Length > 2)
                 Dim parts = reference _
                     .Split(Function(s)
                                Return s.MatchPattern("Num Peaks[:]\s*\d+", RegexICSng)
