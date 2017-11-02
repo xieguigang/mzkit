@@ -1,5 +1,6 @@
 ﻿Imports System.Collections.Specialized
 Imports System.Data.Linq.Mapping
+Imports Microsoft.VisualBasic.Data.csv.IO
 
 Namespace ASCII.MSP
 
@@ -77,10 +78,14 @@ Namespace ASCII.MSP
                     .Last _
                     .Skip(1) _
                     .Select(Function(s)
-                                With s.Split(" "c)
+                                With Tokenizer.CharsParser(s:=s, delimiter:=" "c)
+                                    Dim mz$ = .First
+                                    Dim into$ = .SecondOrNull
+
                                     Return New MSMSPeak(
                                         mz:= .First,
-                                        intensity:= .Last)
+                                        intensity:= .SecondOrNull,
+                                        comment:= .ElementAtOrDefault(2))
                                 End With
                             End Function) _
                     .ToArray
