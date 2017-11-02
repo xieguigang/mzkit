@@ -10,7 +10,7 @@ Module Module1
 
         Dim lysoPC = MspData.Load("D:\MassSpectrum-toolkits\Assembly\test\custom-lysoPC+Hpos.msp")
 
-        Dim meta = lysoPC.First.MetaDB
+        Dim meta = lysoPC.First.Comments.LipidBlastParser
 
         Call meta.GetJson.__DEBUG_ECHO
 

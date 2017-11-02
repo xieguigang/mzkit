@@ -41,6 +41,24 @@ Namespace ASCII.MSP
         End Sub
 
         ''' <summary>
+        ''' Annotation comments text parser for lipidBlast database.
+        ''' </summary>
+        ''' <param name="comments$"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function LipidBlastParser(comments$) As MetaData
+            Dim meta As MetaData = comments.FillData
+            Dim tokens$() = comments.Split(";"c).Skip(1).ToArray
+
+            meta.name = Strings.Trim(tokens(0))
+            meta.precursor_type = Strings.Trim(tokens(1))
+            meta.scientific_name = Strings.Trim(tokens(2))
+            meta.molecular_formula = Strings.Trim(tokens(3))
+
+            Return meta
+        End Function
+
+        ''' <summary>
         ''' 从头部的<see cref="MspData.Comments"/>字符串之中解析出具体的物质注释信息
         ''' </summary>
         ''' <param name="comments$"></param>
