@@ -12,10 +12,10 @@ Public Class EnergyModel
 
     Sub New()
 
-        ODE.RK4(3000, 0, 100)
+        Dim resulkt = ODE.RK4(3000, 0, 100)
 
-        Dim X = {"X"}.JoinIterates(ODE.x.Select(Function(n) CStr(n))).ToArray
-        Dim Y = {"Y"}.JoinIterates(ODE.y.Select(Function(n) CStr(n))).ToArray
+        Dim X = {"X"}.JoinIterates(resulkt.X.ToArray.Select(Function(n) CStr(n))).ToArray
+        Dim Y = {"Y"}.JoinIterates(resulkt.Y.Vector.Select(Function(n) CStr(n))).ToArray
         Dim csv = {X, Y}.JoinColumns
 
         Call csv.Save("./test.csv")
