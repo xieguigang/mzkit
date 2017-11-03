@@ -170,6 +170,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MoNA\MoNAJson.vb" />
     <Compile Include="TMIC\FooDB\compounds.vb" />
     <Compile Include="TMIC\FooDB\compounds_enzymes.vb" />
     <Compile Include="TMIC\FooDB\compounds_flavors.vb" />

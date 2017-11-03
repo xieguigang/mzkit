@@ -14,6 +14,7 @@ Namespace HMDB
     End Structure
 
     Public Structure Properties
+
         <XmlElement("property")>
         Public Property PropertyList As [property]()
 

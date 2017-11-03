@@ -1,6 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Namespace HMDB
 
@@ -31,22 +32,28 @@ Namespace HMDB
                               End Function)
         End Function
 
-        <Extension> Public Function NameMatch(names$()) As Func(Of metabolite, String)
-            If names.Length = 0 Then
+        ''' <summary>
+        ''' 返回一个函数指针，指示目标代谢物是否被匹配上？
+        ''' 如果被匹配上则会返回HMDB之中的化合物的名称，否则返回空字符串
+        ''' </summary>
+        ''' <param name="names$"></param>
+        ''' <returns></returns>
+        <Extension> Public Function NameMatch(names$()) As Func(Of metabolite, (match$, type$))
+            If names.IsNullOrEmpty Then
                 Return Function(metabolite)
-                           Return metabolite.name
+                           Return (metabolite.name, NameOf(names))
                        End Function
             Else
                 Return Function(metabolite)
                            With metabolite
                                For Each name As String In names
                                    If .name.TextEquals(name) Then
-                                       Return .name
+                                       Return (.name, NameOf(.name))
                                    End If
 
                                    For Each synonym As String In .synonyms.synonym.SafeQuery
                                        If synonym.TextEquals(name) Then
-                                           Return synonym
+                                           Return (synonym, NameOf(.synonyms))
                                        End If
                                    Next
                                Next
@@ -55,6 +62,74 @@ Namespace HMDB
                            End With
                        End Function
             End If
+        End Function
+
+        Public Structure NameValue : Implements IEquatable(Of NameValue)
+
+            Public Property name As String
+            Public Property match As String
+            Public Property type As String
+            Public Property metabolite As String
+
+            Public Overrides Function ToString() As String
+                Return $"name={name}, match={match}, metabolite={metabolite}, type={type}"
+            End Function
+
+            Public Overloads Function Equals(other As NameValue) As Boolean Implements IEquatable(Of NameValue).Equals
+                Return other.ToString = Me.ToString
+            End Function
+
+            Public Overrides Function Equals(obj As Object) As Boolean
+                If obj Is Nothing Then
+                    Return False
+                ElseIf Not obj.GetType Is GetType(NameValue) Then
+                    Return False
+                End If
+
+                Return Equals(other:=DirectCast(obj, NameValue))
+            End Function
+        End Structure
+
+        <Extension>
+        Public Iterator Function CheckNames(metabolites As IEnumerable(Of metabolite), names$()) As IEnumerable(Of NameValue)
+            Dim list = metabolites.ToArray
+
+            For Each name As String In names
+                Dim handle = NameMatch(names:={name})
+
+                For Each metabolite In list
+                    Dim match = handle(metabolite)
+
+                    If Not match.match.StringEmpty Then
+                        Yield New NameValue With {
+                            .name = name,
+                            .match = match.match,
+                            .metabolite = metabolite.name,
+                            .type = match.type
+                        }
+                    Else
+                        Yield New NameValue With {
+                            .name = name,
+                            .match = "NA",
+                            .metabolite = "NA",
+                            .type = "NULL"
+                        }
+                    End If
+                Next
+            Next
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function MatchMetabolites(source As IEnumerable(Of metabolite), list$()) As IEnumerable(Of metabolite)
+            With list.NameMatch
+                Return source.AsParallel.Where(Function(m) Not .ref(m).match.StringEmpty)
+            End With
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function LoadXML(path$) As IEnumerable(Of metabolite)
+            Return metabolite.Load(path)
         End Function
 
         ''' <summary>
@@ -82,7 +157,7 @@ Namespace HMDB
                     samples = {"not_specific"}
                 End If
 
-                Dim name$ = matchName(metabolite)
+                Dim name$ = matchName(metabolite).match
 
                 If name.StringEmpty Then
                     Continue For
@@ -153,6 +228,31 @@ Namespace HMDB
                 .Where(Function(prop) prop.kind = NameOf(water_solubility)) _
                 .FirstOrDefault _
                 .value
+        End Function
+
+        <Extension>
+        Public Function water_solubility(metabolite As metabolite) As String
+            Dim ws = metabolite _
+                .experimental_properties _
+                .water_solubility
+
+            If ws Is Nothing Then
+                ws = metabolite _
+                    .predicted_properties _
+                    .water_solubility
+
+                If Not ws Is Nothing Then
+                    ws = ws & " (predicted)"
+                End If
+            End If
+
+            If ws Is Nothing Then
+                ws = "NA"
+            Else
+                ws = ws.Replace("°C", "Centigrade")
+            End If
+
+            Return ws
         End Function
     End Module
 End Namespace

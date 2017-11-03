@@ -1,4 +1,5 @@
-﻿Imports System.Xml.Serialization
+﻿Imports System.Runtime.CompilerServices
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -90,13 +91,22 @@ Namespace HMDB
 
         Public Property normal_concentrations As concentration()
         Public Property abnormal_concentrations As concentration()
+        Public Property ontology As ontology
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return name
         End Function
 
+        ''' <summary>
+        ''' Iterates of the HMDB dataset
+        ''' </summary>
+        ''' <param name="path$"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Load(path$) As IEnumerable(Of metabolite)
-            Return path.LoadXmlDataSet(Of metabolite)(NameOf(metabolite), xmlns:="http://www.hmdb.ca")
+            Return path.LoadUltraLargeXMLDataSet(Of metabolite)(NameOf(metabolite), xmlns:="http://www.hmdb.ca")
         End Function
     End Class
 

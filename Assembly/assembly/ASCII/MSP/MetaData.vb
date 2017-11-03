@@ -7,6 +7,9 @@ Namespace ASCII.MSP
     ''' </summary>
     Public Class MetaData
 
+        Public Property Mz_exact As Double
+        Public Property Parent As Double
+
         Public Property accession As String
         Public Property author As String
         Public Property license As String

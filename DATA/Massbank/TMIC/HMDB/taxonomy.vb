@@ -1,4 +1,5 @@
 ﻿Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace HMDB
 
@@ -22,5 +23,58 @@ Namespace HMDB
 
     Public Structure substituents
         <XmlElement> Public Property substituent As String()
+    End Structure
+
+    Public Class ontology
+
+        Public Property status As String
+        Public Property origins As origins
+        Public Property biofunctions As biofunctions
+        Public Property applications As applications
+        Public Property cellular_locations As cellular_locations
+
+        Public Overrides Function ToString() As String
+            Return status
+        End Function
+    End Class
+
+    Public Structure origins
+
+        <XmlElement(NameOf(origin))>
+        Public Property origin As String()
+
+        Public Overrides Function ToString() As String
+            Return origin.GetJson
+        End Function
+    End Structure
+
+    Public Structure biofunctions
+
+        <XmlElement(NameOf(biofunction))>
+        Public Property biofunction As String()
+
+        Public Overrides Function ToString() As String
+            Return biofunction.GetJson
+        End Function
+    End Structure
+
+    Public Structure applications
+
+        <XmlElement(NameOf(application))>
+        Public Property application As String()
+
+        Public Overrides Function ToString() As String
+            Return application.GetJson
+        End Function
+    End Structure
+
+    Public Structure cellular_locations
+
+        <XmlElement(NameOf(cellular_location))>
+        Public Property cellular_location As String()
+
+        Public Overrides Function ToString() As String
+            Return cellular_location.GetJson
+        End Function
     End Structure
 End Namespace
