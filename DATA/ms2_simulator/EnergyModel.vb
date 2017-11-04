@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Math.Calculus
+Imports Microsoft.VisualBasic.Text
 
 ''' <summary>
 ''' 分子的能量分布模型
@@ -45,6 +46,8 @@ Public Class EnergyModel
             .Y _
             .Vector _
             .Last
+
+        Call integrate.DataFrame.Save($"./{energy}.csv", Encodings.ASCII)
 
         Return area / totalArea
     End Function
