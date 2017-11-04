@@ -36,12 +36,8 @@ Public Class EnergyModel
     ''' <param name="energy#"></param>
     ''' <returns></returns>
     Public Function Percentage(energy#) As Double
-        Dim y0 As Double = model.df(energy, 0)
-        Dim integrate = New ODE With {
-            .df = model.df,
-            .y0 = y0
-        }.RK4(Me.energy.n, energy, Me.energy.Max)
-
+        Dim integrate As ODEOutput = model _
+            .RK4(Me.energy.n, energy, Me.energy.Max)
         Dim area = integrate _
             .Y _
             .Vector _
