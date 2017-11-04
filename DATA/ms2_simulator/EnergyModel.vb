@@ -15,10 +15,18 @@ Public Class EnergyModel
     Dim totalArea#
 
     Sub New(dist As df, lower#, upper#, Optional n% = 10000, Optional y0# = 0)
-        model = New ODE With {.df = dist, .y0 = y0}
         energy = New Sequence(lower, upper, n)
+        model = New ODE With {
+            .df = dist,
+            .y0 = y0
+        }
+
         ' 积分的最后一个值就是总面积，因为积分的过程就是一个求面积的过程
-        totalArea = model.RK4(n, lower, upper).Y.Vector.Last
+        totalArea = model _
+            .RK4(n, lower, upper) _
+            .Y _
+            .Vector _
+            .Last
     End Sub
 
     ''' <summary>
@@ -27,11 +35,14 @@ Public Class EnergyModel
     ''' <param name="energy#"></param>
     ''' <returns></returns>
     Public Function Percentage(energy#) As Double
-        Dim y0 = model.df(energy, 0)
+        Dim y0 As Double = model.df(energy, 0)
         Dim area# = New ODE With {
             .df = model.df,
             .y0 = y0
-        }.RK4(Me.energy.n, energy, Me.energy.Max).Y.Vector.Last
+        }.RK4(Me.energy.n, energy, Me.energy.Max) _
+         .Y _
+         .Vector _
+         .Last
 
         Return area / totalArea
     End Function
