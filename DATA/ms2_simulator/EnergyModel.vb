@@ -31,7 +31,7 @@ Public Class EnergyModel
         Dim area# = New ODE With {
             .df = model.df,
             .y0 = y0
-        }.RK4(energy, Me.energy.Max, Me.energy.n).Y.Vector.Last
+        }.RK4(Me.energy.n, energy, Me.energy.Max).Y.Vector.Last
 
         Return area / totalArea
     End Function
