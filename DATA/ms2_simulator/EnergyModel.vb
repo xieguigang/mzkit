@@ -14,7 +14,7 @@ Public Class EnergyModel
     ''' </summary>
     Dim totalArea#
 
-    Sub New(dist As df, lower#, upper#, Optional n% = 10000, Optional y0# = 0)
+    Sub New(dist As df, lower#, upper#, Optional n% = 50000, Optional y0# = 0)
         energy = New Sequence(lower, upper, n)
         model = New ODE With {
             .df = dist,
@@ -36,13 +36,15 @@ Public Class EnergyModel
     ''' <returns></returns>
     Public Function Percentage(energy#) As Double
         Dim y0 As Double = model.df(energy, 0)
-        Dim area# = New ODE With {
+        Dim integrate = New ODE With {
             .df = model.df,
             .y0 = y0
-        }.RK4(Me.energy.n, energy, Me.energy.Max) _
-         .Y _
-         .Vector _
-         .Last
+        }.RK4(Me.energy.n, energy, Me.energy.Max)
+
+        Dim area = integrate _
+            .Y _
+            .Vector _
+            .Last
 
         Return area / totalArea
     End Function
