@@ -1,6 +1,5 @@
 ﻿Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Text
 Imports SMRUCC.proteomics.MS_Spectrum.DATA.File
 
 Namespace LipidMaps
@@ -43,6 +42,10 @@ Namespace LipidMaps
 
         Shared ReadOnly properties As Dictionary(Of String, PropertyInfo) =
             DataFramework.Schema(Of MetaData)(PropertyAccess.Writeable, True)
+
+        Public Shared Function Data(sdf As SDF) As MetaData
+            Return sdf.Data(Of MetaData)(properties)
+        End Function
 
         ''' <summary>
         ''' 只要任意一个编号对象相等，就认为两个对象是同一种物质？

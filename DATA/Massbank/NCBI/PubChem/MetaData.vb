@@ -1,4 +1,8 @@
-﻿Namespace NCBI.PubChem
+﻿Imports System.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports SMRUCC.proteomics.MS_Spectrum.DATA.File
+
+Namespace NCBI.PubChem
 
     ''' <summary>
     ''' NCBI compound annotation meta data.
@@ -39,5 +43,11 @@
         Public Property PUBCHEM_COORDINATE_TYPE As String
         Public Property PUBCHEM_BONDANNOTATIONS As String
 
+        Shared ReadOnly properties As Dictionary(Of String, PropertyInfo) =
+            DataFramework.Schema(Of MetaData)(PropertyAccess.Writeable, True)
+
+        Public Shared Function Data(sdf As SDF) As MetaData
+            Return sdf.Data(Of MetaData)(properties)
+        End Function
     End Class
 End Namespace

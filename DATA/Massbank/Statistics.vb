@@ -19,7 +19,7 @@ Public Module Statistics
         Dim list As Index(Of String) = cpd.Indexing
         Dim unknown% = 0
 
-        For Each file$ In ls - l - r - "*.XML" <= br08901
+        For Each file As String In ls - l - r - "*.XML" <= br08901
             Dim refMap As PathwayMap = file.LoadXml(Of PathwayMap)
 
             If refMap.KEGGCompound.IsNullOrEmpty Then
