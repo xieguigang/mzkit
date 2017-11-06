@@ -6,6 +6,13 @@ Namespace File
 
     Public Module Extensions
 
+        ''' <summary>
+        ''' Generic method for parsing the SDF meta annotation data.
+        ''' </summary>
+        ''' <typeparam name="MetaData"></typeparam>
+        ''' <param name="sdf"></param>
+        ''' <param name="properties"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function Data(Of MetaData As {New, Class})(sdf As SDF, properties As Dictionary(Of String, PropertyInfo)) As MetaData
             Dim table As Dictionary(Of String, String()) = sdf.MetaData
