@@ -1,4 +1,4 @@
-﻿Namespace HMDB
+﻿Namespace TMIC.HMDB
 
     Public Class disease
 

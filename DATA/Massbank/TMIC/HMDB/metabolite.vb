@@ -7,7 +7,7 @@ Imports Microsoft.VisualBasic.Text.Xml.Linq
 Imports SMRUCC.genomics.ComponentModel
 Imports SMRUCC.genomics.ComponentModel.DBLinkBuilder
 
-Namespace HMDB
+Namespace TMIC.HMDB
 
     ''' <summary>
     ''' 当前这个对象类型的<see cref="INamedValue.Key"/>接口主键为<see cref="accession"/>属性

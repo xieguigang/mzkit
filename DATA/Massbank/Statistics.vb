@@ -3,7 +3,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports SMRUCC.genomics.ComponentModel.DBLinkBuilder
-Imports SMRUCC.proteomics.MS_Spectrum.DATA.HMDB
+Imports SMRUCC.proteomics.MS_Spectrum.DATA.TMIC.HMDB
 
 Public Module Statistics
 

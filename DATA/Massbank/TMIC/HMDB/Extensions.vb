@@ -4,7 +4,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
-Namespace HMDB
+Namespace TMIC.HMDB
 
     Public Module Extensions
 

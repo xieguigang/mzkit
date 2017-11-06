@@ -1,6 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 
-Namespace HMDB
+Namespace TMIC.HMDB
 
     Public Class BriefTable : Implements ICloneable
 
