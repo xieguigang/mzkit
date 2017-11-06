@@ -13,6 +13,6 @@ Public Class ms1 : Implements INamedValue
     Public Property rt As Double
 
     Public Overrides Function ToString() As String
-        Return $"{mz}@{rt}"
+        Return $"{Math.Round(mz, 4)}@{rt}"
     End Function
 End Class
