@@ -170,6 +170,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="lipidMAPS\SDF.vb" />
     <Compile Include="MoNA\MoNAJson.vb" />
     <Compile Include="TMIC\FooDB\compounds.vb" />
     <Compile Include="TMIC\FooDB\compounds_enzymes.vb" />
@@ -195,7 +196,7 @@
     <Compile Include="TMIC\HMDB\property.vb" />
     <Compile Include="TMIC\HMDB\disease.vb" />
     <Compile Include="lipidMAPS\MapsHelper.vb" />
-    <Compile Include="lipidMAPS\SDF.vb" />
+    <Compile Include="SDF\SDF.vb" />
     <Compile Include="XrefEngine.vb" />
     <Compile Include="TMIC\HMDB\Extensions.vb" />
     <Compile Include="TMIC\HMDB\taxonomy.vb" />
