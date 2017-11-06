@@ -1,6 +1,7 @@
 ﻿Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Text
+Imports SMRUCC.proteomics.MS_Spectrum.DATA.File
 
 Namespace LipidMaps
 
@@ -98,17 +99,6 @@ Namespace LipidMaps
         ''' <returns></returns>
         Public Overrides Function ToString() As String
             Return COMMON_NAME
-        End Function
-
-        Friend Shared Function Data(sdf As SDF) As MetaData
-            Dim table = sdf.MetaData
-            Dim meta As Object = New MetaData
-
-            For Each key As String In table.Keys
-                Call properties(key).SetValue(meta, table(key).JoinBy(ASCII.LF))
-            Next
-
-            Return DirectCast(meta, MetaData)
         End Function
     End Class
 End Namespace

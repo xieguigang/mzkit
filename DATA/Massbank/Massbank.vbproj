@@ -172,6 +172,8 @@
   <ItemGroup>
     <Compile Include="lipidMAPS\SDF.vb" />
     <Compile Include="MoNA\MoNAJson.vb" />
+    <Compile Include="NCBI\PubChem\MetaData.vb" />
+    <Compile Include="SDF\Extensions.vb" />
     <Compile Include="TMIC\FooDB\compounds.vb" />
     <Compile Include="TMIC\FooDB\compounds_enzymes.vb" />
     <Compile Include="TMIC\FooDB\compounds_flavors.vb" />
