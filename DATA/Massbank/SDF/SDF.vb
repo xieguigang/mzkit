@@ -1,6 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
-Imports Microsoft.VisualBasic.Language
 
 ''' <summary>
 ''' #### Structure-data file

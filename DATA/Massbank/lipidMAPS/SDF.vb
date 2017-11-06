@@ -1,5 +1,6 @@
 ﻿Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Text
 
 Namespace LipidMaps
 
@@ -99,17 +100,12 @@ Namespace LipidMaps
             Return COMMON_NAME
         End Function
 
-        Friend Shared Function Data(metaData$()) As MetaData
-            Dim table As Dictionary(Of String, String) =
-                metaData _
-                .Split(Function(s) s.StringEmpty, includes:=False) _
-                .Where(Function(t) Not t.IsNullOrEmpty) _
-                .ToDictionary(Function(t) Mid(t(0), 4, t(0).Length - 4),
-                              Function(t) If(t.Length = 1, "", t(1)))
+        Friend Shared Function Data(sdf As SDF) As MetaData
+            Dim table = sdf.MetaData
             Dim meta As Object = New MetaData
 
             For Each key As String In table.Keys
-                Call properties(key).SetValue(meta, table(key))
+                Call properties(key).SetValue(meta, table(key).JoinBy(ASCII.LF))
             Next
 
             Return DirectCast(meta, MetaData)
