@@ -1,9 +1,10 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
-Namespace HMDB
+Namespace TMIC.HMDB
 
     Public Module Extensions
 
@@ -70,6 +71,7 @@ Namespace HMDB
             Public Property match As String
             Public Property type As String
             Public Property metabolite As String
+            Public Property ID As String
 
             Public Overrides Function ToString() As String
                 Return $"name={name}, match={match}, metabolite={metabolite}, type={type}"
@@ -90,29 +92,48 @@ Namespace HMDB
             End Function
         End Structure
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="metabolites">HMDB subset from <see cref="MatchMetabolites"/></param>
+        ''' <param name="names$"></param>
+        ''' <returns></returns>
         <Extension>
-        Public Iterator Function CheckNames(metabolites As IEnumerable(Of metabolite), names$()) As IEnumerable(Of NameValue)
-            Dim list = metabolites.ToArray
+        Public Function CheckNames(metabolites As IEnumerable(Of metabolite), names$()) As IEnumerable(Of NameValue)
+            Return CheckNames(metabolites, names.SafeQuery.Select(Function(name, i) New NamedValue(Of String)(i, name)))
+        End Function
 
-            For Each name As String In names
-                Dim handle = NameMatch(names:={name})
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="metabolites">HMDB subset from <see cref="MatchMetabolites"/></param>
+        ''' <param name="names"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Iterator Function CheckNames(metabolites As IEnumerable(Of metabolite), names As IEnumerable(Of NamedValue(Of String))) As IEnumerable(Of NameValue)
+            Dim list As metabolite() = metabolites.ToArray
 
-                For Each metabolite In list
-                    Dim match = handle(metabolite)
+            For Each name As NamedValue(Of String) In names
+                Dim handle = NameMatch(names:={name.Value})
+
+                For Each metabolite As metabolite In list
+                    Dim match As (match$, type$) = handle(metabolite)
 
                     If Not match.match.StringEmpty Then
                         Yield New NameValue With {
-                            .name = name,
+                            .name = name.Value,
                             .match = match.match,
                             .metabolite = metabolite.name,
-                            .type = match.type
+                            .type = match.type,
+                            .ID = name.Name
                         }
                     Else
                         Yield New NameValue With {
-                            .name = name,
+                            .name = name.Value,
                             .match = "NA",
                             .metabolite = "NA",
-                            .type = "NULL"
+                            .type = "NULL",
+                            .ID = name.Name
                         }
                     End If
                 Next

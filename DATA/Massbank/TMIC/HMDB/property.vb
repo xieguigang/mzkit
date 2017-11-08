@@ -1,6 +1,6 @@
 ﻿Imports System.Xml.Serialization
 
-Namespace HMDB
+Namespace TMIC.HMDB
 
     Public Structure [property]
 

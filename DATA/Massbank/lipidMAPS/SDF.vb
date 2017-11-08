@@ -1,58 +1,8 @@
 ﻿Imports System.Reflection
-Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
-Imports Microsoft.VisualBasic.Language
+Imports SMRUCC.proteomics.MS_Spectrum.DATA.File
 
 Namespace LipidMaps
-
-    ''' <summary>
-    ''' http://www.lipidmaps.org/resources/downloads/index.html
-    ''' </summary>
-    Public Class SDF
-        Implements INamedValue
-        Implements Value(Of MetaData).IValueOf
-
-        Public Property ID As String Implements IKeyedEntity(Of String).Key
-        Public Property [Class] As String
-        Public Property Molecule As String
-        Public Property MetaData As MetaData Implements Value(Of MetaData).IValueOf.Value
-
-        Public Shared Iterator Function IterateParser(path$) As IEnumerable(Of SDF)
-            Dim o As SDF
-
-            For Each block As String() In path _
-                .IterateAllLines _
-                .Split(Function(s) s = "$$$$", includes:=False)
-
-                o = SDF.StreamParser(block)
-                Yield o
-            Next
-        End Function
-
-        Const molEnds$ = "M  END"
-
-        Private Shared Function StreamParser(block$()) As SDF
-            Dim ID$ = block(0), class$ = block(1)
-            Dim metas$()
-            Dim mol$
-
-            With block _
-                .Skip(2) _
-                .Split(Function(s) s = molEnds, includes:=False)
-
-                metas = .Last
-                mol = .First.Join({molEnds}).JoinBy(vbLf)
-            End With
-
-            Return New SDF With {
-                .ID = ID.Trim,
-                .Molecule = mol,
-                .Class = [class].Trim,
-                .MetaData = MetaData.Data(metas)
-            }
-        End Function
-    End Class
 
     ''' <summary>
     ''' 物质的注释信息
@@ -92,6 +42,10 @@ Namespace LipidMaps
 
         Shared ReadOnly properties As Dictionary(Of String, PropertyInfo) =
             DataFramework.Schema(Of MetaData)(PropertyAccess.Writeable, True)
+
+        Public Shared Function Data(sdf As SDF) As MetaData
+            Return sdf.Data(Of MetaData)(properties)
+        End Function
 
         ''' <summary>
         ''' 只要任意一个编号对象相等，就认为两个对象是同一种物质？
@@ -148,22 +102,6 @@ Namespace LipidMaps
         ''' <returns></returns>
         Public Overrides Function ToString() As String
             Return COMMON_NAME
-        End Function
-
-        Friend Shared Function Data(metaData$()) As MetaData
-            Dim table As Dictionary(Of String, String) =
-                metaData _
-                .Split(Function(s) s.StringEmpty, includes:=False) _
-                .Where(Function(t) Not t.IsNullOrEmpty) _
-                .ToDictionary(Function(t) Mid(t(0), 4, t(0).Length - 4),
-                              Function(t) If(t.Length = 1, "", t(1)))
-            Dim meta As Object = New MetaData
-
-            For Each key As String In table.Keys
-                Call properties(key).SetValue(meta, table(key))
-            Next
-
-            Return DirectCast(meta, MetaData)
         End Function
     End Class
 End Namespace

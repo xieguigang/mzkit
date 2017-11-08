@@ -1,7 +1,7 @@
 ﻿Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace HMDB
+Namespace TMIC.HMDB
 
     Public Class taxonomy
 

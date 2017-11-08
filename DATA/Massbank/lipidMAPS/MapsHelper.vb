@@ -3,6 +3,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Language
+Imports SMRUCC.proteomics.MS_Spectrum.DATA.File
 
 Namespace LipidMaps
 
@@ -43,7 +44,7 @@ Namespace LipidMaps
 
             With lipidMaps _
                 .Where(Function(sdf) Not sdf.MetaData Is Nothing) _
-                .Select(Function(sdf) sdf.MetaData) _
+                .Select(Function(sdf) MetaData.Data(sdf)) _
                 .ToArray
 
                 Dim map = Sub(field$, mapName$)

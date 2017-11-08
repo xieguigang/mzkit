@@ -2,7 +2,7 @@
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports SMRUCC.genomics.Assembly.EBI.ChEBI.XML
 Imports SMRUCC.genomics.ComponentModel.DBLinkBuilder
-Imports SMRUCC.proteomics.MS_Spectrum.DATA.HMDB
+Imports SMRUCC.proteomics.MS_Spectrum.DATA.TMIC.HMDB
 
 ''' <summary>
 ''' 基于hmdb和chebi数据库所构建的代谢物的注释数据的查询引擎
