@@ -52,8 +52,10 @@ Public Module Emulator
         Dim matrix As New LibraryMatrix With {
             .ms2 = quantity _
                 .Select(Function(frag)
+                            Dim mz# = mzlist(frag.Key).Average
+
                             Return New ms2 With {
-                                .mz = frag.Key,
+                                .mz = mz,
                                 .quantity = frag.Value
                             }
                         End Function) _
