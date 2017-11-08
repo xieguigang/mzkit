@@ -39,6 +39,10 @@ End Class
 
 Public Class LibraryMatrix
 
+    ''' <summary>
+    ''' The list of molecular fragment
+    ''' </summary>
+    ''' <returns></returns>
     Public Property ms2 As ms2()
 
     Public Shared Operator /(matrix As LibraryMatrix, x#) As LibraryMatrix
@@ -69,6 +73,9 @@ Public Class LibraryMatrix
     End Operator
 End Class
 
+''' <summary>
+''' Library matrix math
+''' </summary>
 Public Module LibraryMatrixExtensions
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
