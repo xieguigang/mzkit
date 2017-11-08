@@ -83,6 +83,12 @@ Public Module Emulator
         Return molecule.Graph.MolecularFragment(energy, [step])
     End Function
 
+    ''' <summary>
+    ''' 将所有的断裂能量值小于<paramref name="energy"/>的边连接都删除掉
+    ''' </summary>
+    ''' <param name="molecule"></param>
+    ''' <param name="energy#"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function BreakBonds(molecule As NetworkGraph, energy#) As NetworkGraph
 
