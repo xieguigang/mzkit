@@ -15,6 +15,20 @@ Public Class EnergyModel
     ''' </summary>
     Dim totalArea#
 
+    Public ReadOnly Property MinEnergy As Double
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Get
+            Return energy.Min
+        End Get
+    End Property
+
+    Public ReadOnly Property MaxEnergy As Double
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Get
+            Return energy.Max
+        End Get
+    End Property
+
     Sub New(dist As df, lower#, upper#, Optional n% = 50000, Optional y0# = 0)
         energy = New Sequence(lower, upper, n)
         model = New ODE With {

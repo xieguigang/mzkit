@@ -15,8 +15,26 @@ Public Class Library
 End Class
 
 Public Class ms2
+
+    ''' <summary>
+    ''' Molecular fragment m/z
+    ''' </summary>
+    ''' <returns></returns>
     Public Property mz As Double
+    ''' <summary>
+    ''' quantity
+    ''' </summary>
+    ''' <returns></returns>
     Public Property intensity As Double
+    ''' <summary>
+    ''' Relative intensity.(percentage) 
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property into As Double
+
+    Public Overrides Function ToString() As String
+        Return MyBase.ToString()
+    End Function
 End Class
 
 Public Class LibraryMatrix
