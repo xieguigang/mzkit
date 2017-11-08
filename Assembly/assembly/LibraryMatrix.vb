@@ -25,15 +25,15 @@ Public Class ms2
     ''' quantity
     ''' </summary>
     ''' <returns></returns>
-    Public Property intensity As Double
+    Public Property quantity As Double
     ''' <summary>
     ''' Relative intensity.(percentage) 
     ''' </summary>
     ''' <returns></returns>
-    Public Property into As Double
+    Public Property intensity As Double
 
     Public Overrides Function ToString() As String
-        Return MyBase.ToString()
+        Return $"{mz} ({intensity * 100%}%)"
     End Function
 End Class
 
@@ -43,7 +43,7 @@ Public Class LibraryMatrix
 
     Public Shared Operator /(matrix As LibraryMatrix, x#) As LibraryMatrix
         For Each ms2 As ms2 In matrix.ms2
-            ms2.intensity /= x
+            ms2.intensity = ms2.quantity / x
         Next
 
         Return matrix
@@ -73,6 +73,6 @@ Public Module LibraryMatrixExtensions
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Max(matrix As LibraryMatrix) As Double
-        Return matrix.ms2.Max(Function(r) r.intensity)
+        Return matrix.ms2.Max(Function(r) r.quantity)
     End Function
 End Module
