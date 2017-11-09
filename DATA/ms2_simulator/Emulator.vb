@@ -62,6 +62,7 @@ Public Module Emulator
                 .ToArray
         }
 
+        ' 进行归一化计算出每一个分子碎片的相对响应度百分比
         Return (matrix / Max(matrix)) * 100
     End Function
 
@@ -91,6 +92,16 @@ Public Module Emulator
     ''' <returns></returns>
     <Extension>
     Public Function BreakBonds(molecule As NetworkGraph, energy#) As NetworkGraph
+        Dim copy As NetworkGraph = molecule.Copy  ' 需要做一次复制，因为class是按内存地址引用的，否则后面的计算都会乱的
 
+        ' 将键能低于能量值的边链接都删除掉
+        ' 因为他们都被打断了
+        For Each edge As Edge In copy.edges.ToArray
+            If edge.Data.weight <= energy Then
+                Call copy.RemoveEdge(edge)
+            End If
+        Next
+
+        Return copy
     End Function
 End Module
