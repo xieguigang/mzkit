@@ -1,6 +1,6 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Ranges
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Math.Calculus
-Imports Microsoft.VisualBasic.Text
 
 ''' <summary>
 ''' 分子的能量分布模型
@@ -14,6 +14,20 @@ Public Class EnergyModel
     ''' 分布函数积分总面积 
     ''' </summary>
     Dim totalArea#
+
+    Public ReadOnly Property MinEnergy As Double
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Get
+            Return energy.Min
+        End Get
+    End Property
+
+    Public ReadOnly Property MaxEnergy As Double
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Get
+            Return energy.Max
+        End Get
+    End Property
 
     Sub New(dist As df, lower#, upper#, Optional n% = 50000, Optional y0# = 0)
         energy = New Sequence(lower, upper, n)
@@ -30,12 +44,16 @@ Public Class EnergyModel
             .Last
     End Sub
 
+    Public Overrides Function ToString() As String
+        Return energy.ToString
+    End Function
+
     ''' <summary>
     ''' 求出大于或者等于指定的能量值的概率的百分比
     ''' </summary>
     ''' <param name="energy#"></param>
     ''' <returns></returns>
-    Public Function Percentage(energy#) As Double
+    Public Function PercentageGreater(energy#) As Double
         Dim integrate As ODEOutput = model _
             .RK4(Me.energy.n, energy, Me.energy.Max)
         Dim area = integrate _
@@ -43,8 +61,18 @@ Public Class EnergyModel
             .Vector _
             .Last
 
-        Call integrate.DataFrame.Save($"./{energy}.csv", Encodings.ASCII)
+        ' Call integrate.DataFrame.Save($"./{energy}.csv", Encodings.ASCII)
 
         Return area / totalArea
+    End Function
+
+    ''' <summary>
+    ''' 求出小于或者等于指定的能量值的概率的百分比
+    ''' </summary>
+    ''' <param name="energy#"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function PercentageLess(energy#) As Double
+        Return 1 - PercentageGreater(energy)
     End Function
 End Class

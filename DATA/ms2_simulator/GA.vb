@@ -1,6 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math
+Imports SMRUCC.MassSpectrum.Assembly
 
 ''' <summary>
 ''' The genetic algorithm core for the simulator.
@@ -86,14 +87,3 @@ Public Class DAmethod : Inherits AlignMethod
         Return Math.Abs(mz1 - mz2) <= da
     End Function
 End Class
-
-Public Structure ms2
-
-    Public Property mz As Double
-    Public Property quantity As Double
-    Public Property intensity As Double
-
-    Public Overrides Function ToString() As String
-        Return $"{mz} ({intensity * 100%}%)"
-    End Function
-End Structure
