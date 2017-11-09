@@ -55,11 +55,8 @@ Namespace ASCII.MGF
                                    Dim s$ = properties _
                                       .TryGetValue(key, [default]:=Nothing) _
                                       .Value
-                                   If s Is Nothing Then
-                                       s = ""
-                                   End If
 
-                                   Return s
+                                   Return s Or EmptyString
                                End Function
                 Dim mass As NamedValue
                 Dim title$ = getValue("TITLE")
