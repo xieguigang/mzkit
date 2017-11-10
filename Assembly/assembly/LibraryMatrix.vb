@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Class Library
@@ -37,13 +38,24 @@ Public Class ms2
     End Function
 End Class
 
-Public Class LibraryMatrix
+Public Class LibraryMatrix : Inherits VectorModel(Of ms2)
 
     ''' <summary>
     ''' The list of molecular fragment
     ''' </summary>
     ''' <returns></returns>
     Public Property ms2 As ms2()
+        Get
+            Return buffer
+        End Get
+        Set(value As ms2())
+            buffer = value
+        End Set
+    End Property
+
+    Sub New()
+        Call MyBase.New({})
+    End Sub
 
     Public Shared Operator /(matrix As LibraryMatrix, x#) As LibraryMatrix
         For Each ms2 As ms2 In matrix.ms2
@@ -68,7 +80,11 @@ Public Class LibraryMatrix
         }
     End Operator
 
-    Public Shared Narrowing Operator CType(matrix As LibraryMatrix) As (mz#, into#)()
+    'Public Shared Widening Operator CType(ms2 As VectorModel(Of ms2)) As LibraryMatrix
+
+    'End Operator
+
+    Public Overloads Shared Narrowing Operator CType(matrix As LibraryMatrix) As (mz#, into#)()
         Return matrix.ms2.Select(Function(r) (r.mz, r.intensity)).ToArray
     End Operator
 End Class

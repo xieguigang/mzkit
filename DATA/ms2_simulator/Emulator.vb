@@ -18,9 +18,10 @@ Public Module Emulator
     ''' <param name="energy"></param>
     ''' <param name="step%"></param>
     ''' <param name="precision%"></param>
+    ''' <param name="intoCutoff">``[0, 1]``, zero or negative value means no cutoff.</param>
     ''' <returns></returns>
     <Extension>
-    Public Function MolecularFragment(molecule As NetworkGraph, energy As EnergyModel, Optional step% = 100, Optional precision% = 4) As LibraryMatrix
+    Public Function MolecularFragment(molecule As NetworkGraph, energy As EnergyModel, Optional step% = 100, Optional precision% = 4, Optional intoCutoff# = -1) As LibraryMatrix
         Dim de# = (energy.MaxEnergy - energy.MinEnergy) / [step]
         Dim quantity As New Dictionary(Of Double, Double) ' {mz, quantity}
         Dim mzlist As New Dictionary(Of String, List(Of Double))
@@ -63,7 +64,13 @@ Public Module Emulator
         }
 
         ' 进行归一化计算出每一个分子碎片的相对响应度百分比
-        Return (matrix / Max(matrix)) * 100
+        matrix = (matrix / Max(matrix)) * 100
+
+        If intoCutoff > 0 Then
+            matrix = matrix(matrix!intensity >= intoCutoff).ToArray
+        End If
+
+        Return matrix
     End Function
 
     ''' <summary>
