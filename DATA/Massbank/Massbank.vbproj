@@ -170,6 +170,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MetaLib.vb" />
     <Compile Include="lipidMAPS\SDF.vb" />
     <Compile Include="MoNA\MoNAJson.vb" />
     <Compile Include="NCBI\PubChem\MetaData.vb" />
