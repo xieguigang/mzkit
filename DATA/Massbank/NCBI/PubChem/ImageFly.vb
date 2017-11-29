@@ -11,9 +11,10 @@ Public Module ImageFly
             Return Nothing
         End If
 
+        Dim white As Color = Color.FromArgb(245, 245, 245)
         Dim bitmap As Bitmap = New Bitmap(tmp) _
-            .CorpBlank(margin:=5, blankColor:=Color.White) _
-            .ColorReplace(Color.White, Color.Transparent)
+            .CorpBlank(margin:=5, blankColor:=white) _
+            .ColorReplace(white, Color.Transparent)
         Return bitmap
     End Function
 End Module
