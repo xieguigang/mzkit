@@ -4,7 +4,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Language
 Imports SMRUCC.Chemistry
 Imports SMRUCC.Chemistry.Model.Graph
-Imports SMRUCC.MassSpectrum.Assembly
+Imports SMRUCC.MassSpectrum.Math
 
 ''' <summary>
 ''' Generate insilicon MS/MS data based on the GA and graph theory.

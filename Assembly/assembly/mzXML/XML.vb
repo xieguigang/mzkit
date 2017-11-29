@@ -1,6 +1,7 @@
 ﻿Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.Text.Xml.Linq
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Text.Xml.Linq
+Imports SMRUCC.MassSpectrum.Math
 
 Namespace mzXML
 
@@ -19,7 +20,7 @@ Namespace mzXML
             Return mzXML.LoadXmlDataSet(Of scan)(, xmlns:="http://sashimi.sourceforge.net/schema_revision/mzXML_3.2")
         End Function
 
-        Public Shared Function ExportPeaktable(mzXML$) As Peaktable()
+        Public Shared Function ExportPeaktable(mzXML As String) As Peaktable()
             Dim ms1 As New List(Of scan)   ' peaktable
             Dim msms As New List(Of scan)  ' ms1 scan为msms scan的母离子
             Dim sample$ = mzXML.BaseName

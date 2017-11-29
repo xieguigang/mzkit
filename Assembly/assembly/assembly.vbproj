@@ -202,6 +202,10 @@
       <Project>{6ff317ff-1a81-4272-a894-bfbffb202b41}</Project>
       <Name>application.netCDF</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\DATA\ms2_math-core\ms2_math-core.vbproj">
+      <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
+      <Name>ms2_math-core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\zlibnet\src\zlibnet.vbproj">
       <Project>{075e1da3-54ac-4d7c-9d4e-e34aa13910a8}</Project>
       <Name>zlibnet</Name>

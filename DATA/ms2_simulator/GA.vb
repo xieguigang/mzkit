@@ -1,7 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math
-Imports SMRUCC.MassSpectrum.Assembly
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports SMRUCC.MassSpectrum.Math
 
 ''' <summary>
 ''' The genetic algorithm core for the simulator.
