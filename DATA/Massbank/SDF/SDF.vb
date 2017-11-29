@@ -3,6 +3,8 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 
 Namespace File
 
+    ' https://pubchemdocs.ncbi.nlm.nih.gov/data-specification
+
     ''' <summary>
     ''' #### Structure-data file
     ''' 

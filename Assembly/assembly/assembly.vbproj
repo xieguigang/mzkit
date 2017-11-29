@@ -145,9 +145,6 @@
     <Compile Include="ASCII\Peaks.vb" />
     <Compile Include="ASCII\MSP\Comments.vb" />
     <Compile Include="ASCII\MSP\MspData.vb" />
-    <Compile Include="LibraryMatrix.vb" />
-    <Compile Include="ms1.vb" />
-    <Compile Include="PrecursorType.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -163,7 +160,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="mzXML\Peaktable.vb" />
     <Compile Include="mzXML\Extensions.vb" />
     <Compile Include="mzXML\Info.vb" />
     <Compile Include="mzXML\MSData.vb" />

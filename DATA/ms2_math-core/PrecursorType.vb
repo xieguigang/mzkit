@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.Language.C
+Imports sys = System.Math
 
 ''' <summary>
 ''' 质谱前体离子计算器
@@ -13,7 +14,7 @@ Public Module PrecursorType
     ''' <param name="charge%"></param>
     ''' <returns></returns>
     Public Function AdductMass(mass#, adduct#, charge%) As Double
-        Return (mass / Math.Abs(charge) + adduct)
+        Return (mass / sys.Abs(charge) + adduct)
     End Function
 
     ''' <summary>
@@ -25,7 +26,7 @@ Public Module PrecursorType
     ''' <param name="adduct#"></param>
     ''' <returns></returns>
     Public Function ReverseMass(precursorMZ#, M#, charge%, adduct#) As Double
-        Return ((precursorMZ - adduct) * Math.Abs(charge) / M)
+        Return ((precursorMZ - adduct) * sys.Abs(charge) / M)
     End Function
 
     '# http://fiehnlab.ucdavis.edu/staff/kind/Metabolomics/MS-Adduct-Calculator
@@ -168,7 +169,7 @@ Public Module PrecursorType
     Public Function ppm(measured#, actualValue#) As Double
         ' （测量值-实际分子量）/实际分子量
         ' |(实验数据 - 数据库结果)| / 实验数据 * 1000000
-        Dim ppmd# = Math.Abs(measured - actualValue) / actualValue
+        Dim ppmd# = sys.Abs(measured - actualValue) / actualValue
         ppmd = ppmd * 1000000
         Return ppmd
     End Function
@@ -231,11 +232,11 @@ Public Module PrecursorType
             Return (Double.NaN, no_result)
         End If
 
-        Dim ppm = PrecursorType.ppm(precursorMZ, mass / Math.Abs(charge))
+        Dim ppm = PrecursorType.ppm(precursorMZ, mass / sys.Abs(charge))
 
         If (ppm <= 500) Then
             ' 本身的分子质量和前体的mz一样，说明为[M]类型
-            If (Math.Abs(charge) = 1) Then
+            If (sys.Abs(charge) = 1) Then
                 Return (ppm, "[M]" & chargeMode)
             Else
                 Return (ppm, sprintf("[M]%s%s", charge, chargeMode))
