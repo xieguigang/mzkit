@@ -1,6 +1,7 @@
 ﻿Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace MetaLib
 
@@ -40,5 +41,8 @@ Namespace MetaLib
         Public Property InChIkey As String
         Public Property InChI As String
 
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
     End Class
 End Namespace
