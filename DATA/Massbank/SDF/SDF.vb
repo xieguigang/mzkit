@@ -24,6 +24,9 @@ Namespace File
     ''' Description of several chemical-structure file formats used by computer-programs developed at Molecular Design Limited. 
     ''' Journal of Chemical Information and Computer Sciences 
     ''' 32:(3) 244-255, May-Jun 1992.
+    ''' 
+    ''' http://www.nonlinear.com/progenesis/sdf-studio/v0.9/faq/sdf-file-format-guidance.aspx
+    ''' https://en.wikipedia.org/wiki/Chemical_table_file#SDF
     ''' </remarks>
     Public Class SDF : Implements INamedValue
 
