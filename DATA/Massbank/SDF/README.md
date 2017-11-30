@@ -66,9 +66,9 @@ After the counts line comes the atoms block. For each atom mentioned in the firs
 
 The first three fields, 10 characters long each, describe the atom's position in the X, Y, and Z dimensions. After that there is a space, and three characters for an atomic symbol (O for oxygen, in this instance).
 
-After the symbol, there are two characters for the mass difference from the monoisotope. This field only supports values between -3 and +4, however - the  M  ISO  property can be used for values outside this range.
+After the symbol, there are two characters for the mass difference from the monoisotope. This field only supports values between ``-3`` and ``+4``, however - the ``M  ISO`` property can be used for values outside this range.
 
-Next you have three characters for the charge. The values are a little confusing - see the conversion table. Alternatively, use the  M  CHG  property instead, which is much less confusing and also supports a wider range of values.
+Next you have three characters for the charge. The values are a little confusing - see the conversion table. Alternatively, use the ``M  CHG`` property instead, which is much less confusing and also supports a wider range of values.
 
 ```
              |----------- Charge ----------|	
@@ -90,21 +90,21 @@ The first two fields are the indexes of the atoms included in this bond (startin
 
 #### Bond type		
 
-|Value|Meaning|		
-|-----|-------|
-|1|Single|		
-|2|Double|		
-|3|Triple|	
-|4|Aromatic|		
+|Value|Meaning                |		
+|-----|-----------------------|
+|1    |Single                 |		
+|2    |Double                 |		
+|3    |Triple                 |	
+|4    |Aromatic               |		
 |Other|See specification (zip)|
 
 #### Bond stereo
 
-|Value|Meaning|
-|-----|-------|
-|0|Not stereo|
-|1|Up|
-|6|Down|
+|Value|Meaning                |
+|-----|-----------------------|
+|0    |Not stereo             |
+|1    |Up                     |
+|6    |Down                   |
 |Other|See specification (zip)|
 
 So the example means, "between the first and second atoms, add a single, non-stereo bond". There are a further three fields, with 3 characters each, but these are rarely used and can be left blank.
@@ -117,7 +117,7 @@ So the example means, "between the first and second atoms, add a single, non-ste
 M  CHG  1   1   2
 ```
 
-After the  M  CHG , the first number defines the number of charges defined on this line (up to 8). If the compound has more than this, they can go on additional  M  CHG  lines. Each charge entry consists of two four-character fields - the first is the index of the charged atom (starting from one), and the second is the charge. The above means "add a charge to the first atom of +2".
+After the ``M  CHG``, the first number defines the number of charges defined on this line (up to 8). If the compound has more than this, they can go on additional ``M  CHG`` lines. Each charge entry consists of two four-character fields - the first is the index of the charged atom (starting from one), and the second is the charge. The above means "add a charge to the first atom of +2".
 
 #### Isotope
 
@@ -138,7 +138,7 @@ A number of other properties are defined in the specification (zip), and several
 
 ## Data fields
 
-A wide variety of custom metadata about a compound can be stored in data fields. Data fields start with a header, which begins with a >. On the same line, the name of the data field is written in angular brackets. The header line can contain other text too, though it is generally ignored.
+A wide variety of custom metadata about a compound can be stored in data fields. Data fields start with a header, which begins with a ``>``. On the same line, the name of the data field is written in angular brackets. The header line can contain other text too, though it is generally ignored.
 
 ```
 > <ID>
@@ -150,18 +150,30 @@ After the header, a data field contains one or more lines of up to 200 character
 Progenesis SDF Studio will use any of the following fields as an identifier:
 
 ```
-PUBCHEM_COMPOUND_CIDpubchem_compound_idPUBCHEM_SIDPUBCHEM.external_idpubchem.external_idPUBCHEM_SUBSTANCE_IDLM_IDPdbIdDATABASE_IDDRUGBANK_IDHMDB_IDhmdb_idHMDB.external_idDRUGBANK_IDDRUGBANK.external_iddrugbank.external_idKEGGCASCASNOCAS_RNChEBI IDCAT_NOMDL_NOID
+PUBCHEM_COMPOUND_CID pubchem_compound_id PUBCHEM_SID
+PUBCHEM.external_id  pubchem.external_id PUBCHEM_SUBSTANCE_ID
+LM_ID                PdbId               DATABASE_ID
+DRUGBANK_ID          HMDB_ID             hmdb_id 
+HMDB.external_id     DRUGBANK_ID         DRUGBANK.external_id
+drugbank.external_id KEGG                CAS 
+CASNO                CAS_RN              ChEBI ID
+CAT_NO               MDL_NO              ID
 ```
 
 and any of the following fields as a description:
 
 ```
-COMMON_NAMEDRUGBANK_GENERIC_NAMELONGNAMENameGENERIC_NAMENAMEHMDB_NameSYSTEMATIC_NAMEIUPAC_NAMEPUBCHEM_IUPAC_NAMEJCHEM_IUPACDRUGBANK_IUPAC_NAMETRADITIONAL_IUPAC_NAMEiupacSMILESChEBI NameDESCRIPTION
+COMMON_NAME            DRUGBANK_GENERIC_NAME LONGNAME
+Name                   GENERIC_NAME          NAME
+HMDB_Name              SYSTEMATIC_NAME       IUPAC_NAME
+PUBCHEM_IUPAC_NAME     JCHEM_IUPAC           DRUGBANK_IUPAC_NAME
+TRADITIONAL_IUPAC_NAME iupac                 SMILES
+ChEBI                  Name                  DESCRIPTION
 ```
 
-## SDF separator ($$$$)
+## SDF separator ``($$$$)``
 
-While it's not required in molfiles, the final line of each record in an SDF database contains only 4 dollar symbols ($$$$).
+While it's not required in molfiles, the final line of each record in an SDF database contains only 4 dollar symbols ``($$$$)``.
 
 ```
 $$$$
