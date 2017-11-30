@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (c) 2003 MDL Information Systems, Inc. All rights reserved.
+-->
+<xs:schema targetNamespace="http://my-company.com/xdfile" xmlns="http://my-company.com/xdfile" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="XDfile">
+		<xs:annotation>
+			<xs:documentation>The root of the XDfile</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Dataset" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:all>
+							<xs:element name="Source" minOccurs="0">
+								<xs:complexType>
+									<xs:all minOccurs="0">
+										<xs:element name="DataSource" type="xs:string" minOccurs="0"/>
+										<xs:element name="ProgramSource" type="xs:string" minOccurs="0"/>
+										<xs:element name="CreatorName" type="xs:string" minOccurs="0"/>
+										<xs:element name="CreateTime" minOccurs="0">
+											<xs:complexType>
+												<xs:simpleContent>
+													<xs:extension base="xs:string">
+														<xs:attribute name="timeFormat" use="optional" default="24">
+															<xs:simpleType>
+																<xs:restriction base="xs:string">
+																	<xs:enumeration value="12"/>
+																	<xs:enumeration value="24"/>
+																</xs:restriction>
+															</xs:simpleType>
+														</xs:attribute>
+													</xs:extension>
+												</xs:simpleContent>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="Description" type="xs:string" minOccurs="0"/>
+										<xs:element name="CreateDate" minOccurs="0">
+											<xs:complexType>
+												<xs:simpleContent>
+													<xs:extension base="xs:string">
+														<xs:attribute name="dateOrder" type="xs:string" use="optional" default="M-D-Y"/>
+													</xs:extension>
+												</xs:simpleContent>
+											</xs:complexType>
+										</xs:element>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Metadata">
+								<xs:complexType>
+									<xs:choice minOccurs="0" maxOccurs="unbounded">
+										<xs:element ref="FieldDef"/>
+										<xs:element name="ParentDef" type="ParentDefType"/>
+									</xs:choice>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Data">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Record" type="RecordType" minOccurs="0" maxOccurs="unbounded"/>
+									</xs:sequence>
+									<xs:attribute name="totalRecords" type="xs:integer" use="optional"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:all>
+						<xs:attribute name="name" type="xs:string" use="optional"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="VERSION" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="FieldDef">
+		<xs:complexType>
+			<xs:attribute name="name" type="xs:string" use="required"/>
+			<xs:attribute name="nativeName" type="xs:string" use="optional"/>
+			<xs:attribute name="encoding" type="xs:string" use="optional"/>
+			<xs:attribute name="type" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Reaction"/>
+						<xs:enumeration value="Structure"/>
+						<xs:enumeration value="Integer"/>
+						<xs:enumeration value="Double"/>
+						<xs:enumeration value="FixedText"/>
+						<xs:enumeration value="VariableText"/>
+						<xs:enumeration value="Date"/>
+						<xs:enumeration value="Time"/>
+						<xs:enumeration value="DateTime"/>
+						<xs:enumeration value="Binary"/>
+						<xs:enumeration value="Unknown"/>
+						<xs:enumeration value="Parent"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="molFormat" use="optional" default="Molfile">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Chime"/>
+						<xs:enumeration value="Molfile"/>
+						<xs:enumeration value="Smiles"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="rxnFormat" use="optional" default="Rxnfile">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Chime"/>
+						<xs:enumeration value="Rxnfile"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="decimalSeparator" use="optional" default="Period">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Period"/>
+						<xs:enumeration value="Comma"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="molVersion" use="optional">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="V2000"/>
+						<xs:enumeration value="V3000"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="dateOrder" use="optional" default="M-D-Y">
+				<xs:simpleType>
+					<xs:restriction base="xs:string"/>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="timeOrder" use="optional" default="H:M">
+				<xs:simpleType>
+					<xs:restriction base="xs:string"/>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="timeFormat" use="optional" default="24">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="12"/>
+						<xs:enumeration value="24"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="maxLength" type="xs:integer" use="optional"/>
+			<xs:attribute name="units" type="xs:string" use="optional"/>
+			<xs:attribute name="precision" type="xs:integer" use="optional"/>
+			<xs:attribute name="scale" type="xs:integer" use="optional"/>
+			<xs:attribute name="nullsAllowed" type="xs:boolean" use="optional" default="true"/>
+			<xs:attribute name="isIndexed" type="xs:boolean" use="optional" default="false"/>
+			<xs:attribute name="isPrimaryKey" type="xs:boolean" use="optional" default="false"/>
+			<xs:attribute name="isKey" type="xs:boolean" use="optional" default="false"/>
+			<xs:attribute name="length" type="xs:integer" use="optional"/>
+			<xs:attribute name="javaFormat" type="xs:string" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="ParentDefType">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element ref="FieldDef"/>
+			<xs:element name="ParentDef" type="ParentDefType"/>
+		</xs:choice>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:element name="Field">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="name" type="xs:string" use="required"/>
+					<xs:attribute name="molFormat" use="optional" default="Molfile">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="Chime"/>
+								<xs:enumeration value="Molfile"/>
+								<xs:enumeration value="Smiles"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+					<xs:attribute name="rxnFormat" use="optional" default="Rxnfile">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="Chime"/>
+								<xs:enumeration value="Rxnfile"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+					<xs:attribute name="molVersion" use="optional">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="V2000"/>
+								<xs:enumeration value="V3000"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="RecordType">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element ref="Field"/>
+			<xs:element ref="Parent"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:element name="Parent">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Record" type="RecordType" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:string" use="required"/>
+			<xs:attribute name="totalRecords" type="xs:integer" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

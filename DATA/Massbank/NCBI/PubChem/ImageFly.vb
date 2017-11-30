@@ -3,7 +3,7 @@ Imports Microsoft.VisualBasic.Imaging.BitmapImage
 
 Public Module ImageFly
 
-    Public Function GetImage(cid$, Optional width% = 500, Optional height% = 500) As Bitmap
+    Public Function GetImage(cid$, Optional width% = 300, Optional height% = 300) As Bitmap
         Dim url$ = $"https://pubchem.ncbi.nlm.nih.gov/image/imagefly.cgi?cid={cid}&width={width}&height={height}"
         Dim tmp$ = App.GetAppSysTempFile(".png", sessionID:=App.PID)
 

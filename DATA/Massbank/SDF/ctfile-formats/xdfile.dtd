@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (c) 2003 MDL Information Systems, Inc. All rights reserved.
+-->
+<!--
+DTD for MDL XDfile format
+  
+NOTE: Due to limitations in the capabilities of DTDs, 
+an XDfile that is validated by this DTD is not guaranteed to be correct. 
+For example, it is possible to create a record with duplicate field values. 
+This DTD only provides a low level of validation. 
+Applications which process XDfiles must provide high level checks 
+on the consistency of the data. 
+-->
+<!-- Element section -->
+<!ELEMENT XDfile (Dataset+)>
+<!ELEMENT Dataset (Source?, Metadata?, Data)>
+<!ELEMENT Source (DataSource?, ProgramSource?, CreatorName?, CreateDate?, CreateTime?, Description?)*>
+<!ELEMENT Metadata (ParentDef | FieldDef)*>
+<!ELEMENT Data (Record*)>
+<!ELEMENT DataSource (#PCDATA)>
+<!ELEMENT ProgramSource (#PCDATA)>
+<!ELEMENT CreatorName (#PCDATA)>
+<!ELEMENT CreateDate (#PCDATA)>
+<!ELEMENT CreateTime (#PCDATA)>
+<!ELEMENT Description (#PCDATA)>
+<!ELEMENT ParentDef (ParentDef | FieldDef)*>
+<!ELEMENT FieldDef EMPTY>
+<!ELEMENT Parent (Record*)>
+<!ELEMENT Record (Parent | Field)*>
+<!ELEMENT Field (#PCDATA)>
+<!-- Attribute section -->
+<!ATTLIST XDfile
+	version CDATA #REQUIRED
+>
+<!ATTLIST Dataset
+	name CDATA #IMPLIED
+>
+<!ATTLIST Data
+	totalRecords CDATA #IMPLIED
+>
+<!-- Source attributes section -->
+<!ATTLIST CreateDate
+	dateOrder CDATA #IMPLIED
+>
+<!ATTLIST CreateTime
+	timeFormat (24 | 12) "24"
+>
+<!-- Metadata attributes section -->
+<!ATTLIST ParentDef
+	name CDATA #REQUIRED
+>
+<!ATTLIST FieldDef
+	name CDATA #REQUIRED
+	nativeName CDATA #IMPLIED
+	encoding CDATA #IMPLIED
+	decimalSeparator (Period | Comma) "Period"
+	type (Reaction | Structure | Integer | Double | FixedText | VariableText | Date | Time | DateTime | Binary | Unknown) #REQUIRED
+	molFormat (Chime | Molfile | Smiles) "Molfile"
+	rxnFormat (Chime | Rxnfile) "Rxnfile"
+	molVersion (V2000 | V3000) #IMPLIED
+	dateOrder CDATA #IMPLIED
+	timeOrder CDATA #IMPLIED
+	timeFormat (24 | 12) #IMPLIED
+	maxLength CDATA #IMPLIED
+	units CDATA #IMPLIED
+	precision CDATA #IMPLIED
+	scale CDATA #IMPLIED
+	nullsAllowed (true | false) "true"
+	isIndexed (true | false) "false"
+	isPrimaryKey (true | false) "false"
+	isKey (true | false) "false"
+>
+<!-- Data attributes section -->
+<!ATTLIST Parent
+	name CDATA #REQUIRED
+	totalRecords CDATA #IMPLIED
+>
+<!ATTLIST Field
+	name CDATA #REQUIRED
+	molFormat (Chime | Molfile | Smiles) "Molfile"
+	rxnFormat (Chime | Rxnfile) "Rxnfile"
+	molVersion (V2000 | V3000) #IMPLIED
+>
