@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{A686BDF5-077F-47F5-A8DD-C73E6E88363C}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>SMRUCC.proteomics.MS_Spectrum.DATA</RootNamespace>
-    <AssemblyName>SMRUCC.proteomics.MS_Spectrum.DATA</AssemblyName>
+    <RootNamespace>SMRUCC.MassSpectrum.DATA</RootNamespace>
+    <AssemblyName>SMRUCC.MassSpectrum.DATA</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
@@ -19,7 +19,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>SMRUCC.proteomics.MS_Spectrum.DATA.xml</DocumentationFile>
+    <DocumentationFile>SMRUCC.MassSpectrum.DATA.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -28,7 +28,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>SMRUCC.proteomics.MS_Spectrum.DATA.xml</DocumentationFile>
+    <DocumentationFile>SMRUCC.MassSpectrum.DATA.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -48,7 +48,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Debug\</OutputPath>
-    <DocumentationFile>SMRUCC.proteomics.MS_Spectrum.DATA.xml</DocumentationFile>
+    <DocumentationFile>SMRUCC.MassSpectrum.DATA.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -57,7 +57,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Release\</OutputPath>
-    <DocumentationFile>SMRUCC.proteomics.MS_Spectrum.DATA.xml</DocumentationFile>
+    <DocumentationFile>SMRUCC.MassSpectrum.DATA.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -67,7 +67,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Publish\</OutputPath>
-    <DocumentationFile>SMRUCC.proteomics.MS_Spectrum.DATA.xml</DocumentationFile>
+    <DocumentationFile>SMRUCC.MassSpectrum.DATA.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -77,7 +77,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Publish\</OutputPath>
-    <DocumentationFile>SMRUCC.proteomics.MS_Spectrum.DATA.xml</DocumentationFile>
+    <DocumentationFile>SMRUCC.MassSpectrum.DATA.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -89,7 +89,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\Debug\</OutputPath>
-    <DocumentationFile>SMRUCC.proteomics.MS_Spectrum.DATA.xml</DocumentationFile>
+    <DocumentationFile>SMRUCC.MassSpectrum.DATA.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
@@ -98,7 +98,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\Release\</OutputPath>
-    <DocumentationFile>SMRUCC.proteomics.MS_Spectrum.DATA.xml</DocumentationFile>
+    <DocumentationFile>SMRUCC.MassSpectrum.DATA.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -108,7 +108,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\Publish\</OutputPath>
-    <DocumentationFile>SMRUCC.proteomics.MS_Spectrum.DATA.xml</DocumentationFile>
+    <DocumentationFile>SMRUCC.MassSpectrum.DATA.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -118,7 +118,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Biodeep\</OutputPath>
-    <DocumentationFile>SMRUCC.proteomics.MS_Spectrum.DATA.xml</DocumentationFile>
+    <DocumentationFile>SMRUCC.MassSpectrum.DATA.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -128,7 +128,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Biodeep\</OutputPath>
-    <DocumentationFile>SMRUCC.proteomics.MS_Spectrum.DATA.xml</DocumentationFile>
+    <DocumentationFile>SMRUCC.MassSpectrum.DATA.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -138,7 +138,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\smartnucl_integrative\biodeepDB\METLINApp\plot\bin\x86\Biodeep\</OutputPath>
-    <DocumentationFile>SMRUCC.proteomics.MS_Spectrum.DATA.xml</DocumentationFile>
+    <DocumentationFile>SMRUCC.MassSpectrum.DATA.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -171,47 +171,47 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MetaLib.vb" />
-    <Compile Include="lipidMAPS\SDF.vb" />
-    <Compile Include="MoNA\MoNAJson.vb" />
-    <Compile Include="NCBI\PubChem\MetaData.vb" />
-    <Compile Include="NCBI\PubChem\ImageFly.vb" />
+    <Compile Include="MetaLib\MetaLib.vb" />
+    <Compile Include="Public\lipidMAPS\SDF.vb" />
+    <Compile Include="Public\MoNA\MoNAJson.vb" />
+    <Compile Include="Public\NCBI\PubChem\MetaData.vb" />
+    <Compile Include="Public\NCBI\PubChem\ImageFly.vb" />
     <Compile Include="SDF\Extensions.vb" />
-    <Compile Include="TMIC\FooDB\compounds.vb" />
-    <Compile Include="TMIC\FooDB\compounds_enzymes.vb" />
-    <Compile Include="TMIC\FooDB\compounds_flavors.vb" />
-    <Compile Include="TMIC\FooDB\compounds_health_effects.vb" />
-    <Compile Include="TMIC\FooDB\compounds_pathways.vb" />
-    <Compile Include="TMIC\FooDB\compound_alternate_parents.vb" />
-    <Compile Include="TMIC\FooDB\compound_external_descriptors.vb" />
-    <Compile Include="TMIC\FooDB\compound_substituents.vb" />
-    <Compile Include="TMIC\FooDB\compound_synonyms.vb" />
-    <Compile Include="TMIC\FooDB\contents.vb" />
-    <Compile Include="TMIC\FooDB\enzymes.vb" />
-    <Compile Include="TMIC\FooDB\flavors.vb" />
-    <Compile Include="TMIC\FooDB\foodcomex_compounds.vb" />
-    <Compile Include="TMIC\FooDB\foodcomex_compound_providers.vb" />
-    <Compile Include="TMIC\FooDB\foods.vb" />
-    <Compile Include="TMIC\FooDB\food_taxonomies.vb" />
-    <Compile Include="TMIC\FooDB\health_effects.vb" />
-    <Compile Include="TMIC\FooDB\nutrients.vb" />
-    <Compile Include="TMIC\FooDB\pathways.vb" />
-    <Compile Include="TMIC\FooDB\references.vb" />
-    <Compile Include="TMIC\HMDB\BriefTable.vb" />
-    <Compile Include="TMIC\HMDB\Assembly\property.vb" />
-    <Compile Include="TMIC\HMDB\Assembly\disease.vb" />
-    <Compile Include="lipidMAPS\MapsHelper.vb" />
+    <Compile Include="Public\TMIC\FooDB\compounds.vb" />
+    <Compile Include="Public\TMIC\FooDB\compounds_enzymes.vb" />
+    <Compile Include="Public\TMIC\FooDB\compounds_flavors.vb" />
+    <Compile Include="Public\TMIC\FooDB\compounds_health_effects.vb" />
+    <Compile Include="Public\TMIC\FooDB\compounds_pathways.vb" />
+    <Compile Include="Public\TMIC\FooDB\compound_alternate_parents.vb" />
+    <Compile Include="Public\TMIC\FooDB\compound_external_descriptors.vb" />
+    <Compile Include="Public\TMIC\FooDB\compound_substituents.vb" />
+    <Compile Include="Public\TMIC\FooDB\compound_synonyms.vb" />
+    <Compile Include="Public\TMIC\FooDB\contents.vb" />
+    <Compile Include="Public\TMIC\FooDB\enzymes.vb" />
+    <Compile Include="Public\TMIC\FooDB\flavors.vb" />
+    <Compile Include="Public\TMIC\FooDB\foodcomex_compounds.vb" />
+    <Compile Include="Public\TMIC\FooDB\foodcomex_compound_providers.vb" />
+    <Compile Include="Public\TMIC\FooDB\foods.vb" />
+    <Compile Include="Public\TMIC\FooDB\food_taxonomies.vb" />
+    <Compile Include="Public\TMIC\FooDB\health_effects.vb" />
+    <Compile Include="Public\TMIC\FooDB\nutrients.vb" />
+    <Compile Include="Public\TMIC\FooDB\pathways.vb" />
+    <Compile Include="Public\TMIC\FooDB\references.vb" />
+    <Compile Include="Public\TMIC\HMDB\BriefTable.vb" />
+    <Compile Include="Public\TMIC\HMDB\Assembly\property.vb" />
+    <Compile Include="Public\TMIC\HMDB\Assembly\disease.vb" />
+    <Compile Include="Public\lipidMAPS\MapsHelper.vb" />
     <Compile Include="SDF\SDF.vb" />
-    <Compile Include="TMIC\HMDB\NameValue.vb" />
+    <Compile Include="Public\TMIC\HMDB\NameValue.vb" />
     <Compile Include="XrefEngine.vb" />
-    <Compile Include="TMIC\HMDB\Extensions.vb" />
-    <Compile Include="TMIC\HMDB\Assembly\taxonomy.vb" />
-    <Compile Include="TMIC\HMDB\Assembly\metabolite.vb" />
-    <Compile Include="Massbank\PeakDataHelper.vb" />
-    <Compile Include="Massbank\DATA\Model.vb" />
-    <Compile Include="Massbank\Model.vb" />
-    <Compile Include="Massbank\RecordIO.vb" />
-    <Compile Include="Massbank\DATA\Record.vb" />
+    <Compile Include="Public\TMIC\HMDB\Extensions.vb" />
+    <Compile Include="Public\TMIC\HMDB\Assembly\taxonomy.vb" />
+    <Compile Include="Public\TMIC\HMDB\Assembly\metabolite.vb" />
+    <Compile Include="Public\Massbank\PeakDataHelper.vb" />
+    <Compile Include="Public\Massbank\DATA\Model.vb" />
+    <Compile Include="Public\Massbank\Model.vb" />
+    <Compile Include="Public\Massbank\RecordIO.vb" />
+    <Compile Include="Public\Massbank\DATA\Record.vb" />
     <Compile Include="Statistics.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
