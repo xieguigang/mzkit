@@ -85,18 +85,19 @@ Namespace MetaLib
             For Each chebiData As ChEBIEntity In chebiRepo.cache.LoadXml(Of EntityList).DataSet
                 With chebiData
                     Call chebi2ndMapSolver.Add(
-                    .chebiId,
-                    .SecondaryChEBIIds)
+                        .chebiId,
+                        .SecondaryChEBIIds)
 
                     chebi(.chebiId) = chebiData
 
                     If Not .DatabaseLinks Is Nothing Then
-                        Dim KEGG = .DatabaseLinks _
-                        .Where(Function(x)
-                                   Return x.type = DatabaseLinks.KEGG_COMPOUND_accession OrElse
-                                          x.type = DatabaseLinks.KEGG_DRUG_accession
-                               End Function) _
-                        .ToArray
+                        Dim KEGG =
+                            .DatabaseLinks _
+                            .Where(Function(x)
+                                       Return x.type = DatabaseLinks.KEGG_COMPOUND_accession OrElse
+                                              x.type = DatabaseLinks.KEGG_DRUG_accession
+                                   End Function) _
+                            .ToArray
 
                         If KEGG.Length > 0 Then
                             For Each id As DatabaseLinks In KEGG
@@ -112,21 +113,24 @@ Namespace MetaLib
             For Each m As metabolite In metabolite.Load(hmdb)
                 With m
                     Call hmdb2ndMapSolver.Add(
-                    .accession,
-                    .secondary_accessions.accession)
+                        .accession,
+                        .secondary_accessions.accession)
                     Call hmdbXrefs.Add(
-                    New EntityObject With {
-                        .ID = m.accession,
-                        .Properties = getXref(m)
+                        New EntityObject With {
+                            .ID = m.accession,
+                            .Properties = getXref(m)
                     })
                     Call Me.hmdb.Add(m)
 
                     If Not .metlin_id.StringEmpty AndAlso
-                    Not metlin2Hmdb.ContainsKey(.metlin_id) Then
+                        Not metlin2Hmdb.ContainsKey(.metlin_id) Then
+
                         Call metlin2Hmdb.Add(.metlin_id, .accession)
                     End If
+
                     If Not .cas_registry_number.StringEmpty AndAlso
-                    Not CAS2hmdb.ContainsKey(.cas_registry_number) Then
+                        Not CAS2hmdb.ContainsKey(.cas_registry_number) Then
+
                         Call CAS2hmdb.Add(.cas_registry_number, .accession)
                     End If
                 End With
@@ -140,10 +144,11 @@ Namespace MetaLib
                 Return Nothing
             End If
 
-            Dim hmdbID = chebiData.DatabaseLinks _
-            .Where(Function(link) link.type = DatabaseLinks.HMDB_accession) _
-            .FirstOrDefault _
-           ?.data
+            Dim hmdbID = chebiData _
+                .DatabaseLinks _
+                .Where(Function(link) link.type = DatabaseLinks.HMDB_accession) _
+                .FirstOrDefault _
+               ?.data
 
             If hmdbID.StringEmpty Then
                 Return Nothing
