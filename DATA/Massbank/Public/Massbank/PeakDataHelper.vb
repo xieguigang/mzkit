@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.TagData
-Imports SMRUCC.proteomics.MS_Spectrum.DATA.Massbank.DATA
+Imports SMRUCC.MassSpectrum.DATA.Massbank.DATA
 
 Namespace Massbank
 

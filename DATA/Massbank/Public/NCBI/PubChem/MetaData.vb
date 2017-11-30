@@ -1,6 +1,6 @@
 ﻿Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports SMRUCC.proteomics.MS_Spectrum.DATA.File
+Imports SMRUCC.MassSpectrum.DATA.File
 
 Namespace NCBI.PubChem
 

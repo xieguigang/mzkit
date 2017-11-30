@@ -5,7 +5,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Xml.Linq
-Imports SMRUCC.proteomics.MS_Spectrum.DATA.Massbank.DATA
+Imports SMRUCC.MassSpectrum.DATA.Massbank.DATA
 Imports Node =
     System.Collections.Generic.Dictionary(Of
         String,

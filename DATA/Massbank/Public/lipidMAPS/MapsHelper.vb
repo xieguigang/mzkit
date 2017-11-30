@@ -3,7 +3,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Language
-Imports SMRUCC.proteomics.MS_Spectrum.DATA.File
+Imports SMRUCC.MassSpectrum.DATA.File
 
 Namespace LipidMaps
 

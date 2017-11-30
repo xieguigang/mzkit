@@ -203,7 +203,7 @@
     <Compile Include="Public\lipidMAPS\MapsHelper.vb" />
     <Compile Include="SDF\SDF.vb" />
     <Compile Include="Public\TMIC\HMDB\NameValue.vb" />
-    <Compile Include="XrefEngine.vb" />
+    <Compile Include="MetaLib\XrefEngine.vb" />
     <Compile Include="Public\TMIC\HMDB\Extensions.vb" />
     <Compile Include="Public\TMIC\HMDB\Assembly\taxonomy.vb" />
     <Compile Include="Public\TMIC\HMDB\Assembly\metabolite.vb" />

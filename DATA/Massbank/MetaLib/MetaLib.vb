@@ -13,7 +13,8 @@ Namespace MetaLib
         ''' 该物质在整合库之中的唯一标识符
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property ID As String Implements IKeyedEntity(Of String).Key
+        <XmlAttribute>
+        Public Property ID As String Implements IKeyedEntity(Of String).Key
         Public Property xref As xref
         Public Property name As String
         Public Property formula As String
