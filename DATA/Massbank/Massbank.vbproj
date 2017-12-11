@@ -117,7 +117,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|AnyCPU'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\Biodeep\</OutputPath>
+    <OutputPath>..\..\..\smartnucl_integrative\biodeepDB\smartnucl_integrative\16s_contents\App\</OutputPath>
     <DocumentationFile>SMRUCC.MassSpectrum.DATA.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
