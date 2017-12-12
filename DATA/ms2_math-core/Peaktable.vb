@@ -1,5 +1,10 @@
 ﻿Public Class Peaktable
 
+    ''' <summary>
+    ''' 可以是差异代谢物的编号
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property name As String
     Public Property mz As Double
     Public Property mzmin As Double
     Public Property mzmax As Double
