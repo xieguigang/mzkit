@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2006
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "+Microsoft.VisualBasic.Architecture.Framework", "..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj", "{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}"
 EndProject
@@ -16,6 +16,8 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "LibMySQL", "..\..\GCModeller\src\runtime\mysqli\LibMySQL\LibMySQL.vbproj", "{2C34A044-1BDE-44E8-A86E-E9971C87DA21}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Bio.Assembly", "..\..\GCModeller\src\GCModeller\core\Bio.Assembly\Bio.Assembly.vbproj", "{C699D311-9923-4C19-BF70-5048D0E2CF5D}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "KCF.IO", "..\KCF\KCF.IO\KCF.IO.vbproj", "{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -318,6 +320,60 @@ Global
 		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.Release2|x64.Build.0 = Release|x64
 		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.Release2|x86.ActiveCfg = Release|x86
 		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.Release2|x86.Build.0 = Release|x86
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.Biodeep|Any CPU.ActiveCfg = Biodeep|Any CPU
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.Biodeep|Any CPU.Build.0 = Biodeep|Any CPU
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.Biodeep|x64.ActiveCfg = Biodeep|x64
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.Biodeep|x64.Build.0 = Biodeep|x64
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.Biodeep|x86.ActiveCfg = Biodeep|x86
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.Biodeep|x86.Build.0 = Biodeep|x86
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.Debug|x64.ActiveCfg = Debug|x64
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.Debug|x64.Build.0 = Debug|x64
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.Debug|x86.ActiveCfg = Debug|x86
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.Debug|x86.Build.0 = Debug|x86
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.DEMO|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.DEMO|Any CPU.Build.0 = Debug|Any CPU
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.DEMO|x64.ActiveCfg = Debug|x64
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.DEMO|x64.Build.0 = Debug|x64
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.DEMO|x86.ActiveCfg = Debug|x86
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.DEMO|x86.Build.0 = Debug|x86
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.docs|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.docs|Any CPU.Build.0 = Debug|Any CPU
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.docs|x64.ActiveCfg = Debug|x64
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.docs|x64.Build.0 = Debug|x64
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.docs|x86.ActiveCfg = Debug|x86
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.docs|x86.Build.0 = Debug|x86
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.GCModeller(Release_X64)|Any CPU.ActiveCfg = Release|Any CPU
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.GCModeller(Release_X64)|Any CPU.Build.0 = Release|Any CPU
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.GCModeller(Release_X64)|x64.ActiveCfg = Release|x64
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.GCModeller(Release_X64)|x64.Build.0 = Release|x64
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.GCModeller(Release_X64)|x86.ActiveCfg = Release|x86
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.GCModeller(Release_X64)|x86.Build.0 = Release|x86
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.mysqli_X64_release|Any CPU.ActiveCfg = Biodeep|Any CPU
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.mysqli_X64_release|Any CPU.Build.0 = Biodeep|Any CPU
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.mysqli_X64_release|x64.ActiveCfg = Biodeep|x64
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.mysqli_X64_release|x64.Build.0 = Biodeep|x64
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.mysqli_X64_release|x86.ActiveCfg = Biodeep|x86
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.mysqli_X64_release|x86.Build.0 = Biodeep|x86
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.Publish|Any CPU.ActiveCfg = Biodeep|Any CPU
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.Publish|Any CPU.Build.0 = Biodeep|Any CPU
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.Publish|x64.ActiveCfg = Biodeep|x64
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.Publish|x64.Build.0 = Biodeep|x64
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.Publish|x86.ActiveCfg = Biodeep|x86
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.Publish|x86.Build.0 = Biodeep|x86
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.Release|x64.ActiveCfg = Release|x64
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.Release|x64.Build.0 = Release|x64
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.Release|x86.ActiveCfg = Release|x86
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.Release|x86.Build.0 = Release|x86
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.Release2|Any CPU.ActiveCfg = Release|Any CPU
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.Release2|Any CPU.Build.0 = Release|Any CPU
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.Release2|x64.ActiveCfg = Release|x64
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.Release2|x64.Build.0 = Release|x64
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.Release2|x86.ActiveCfg = Release|x86
+		{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}.Release2|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
