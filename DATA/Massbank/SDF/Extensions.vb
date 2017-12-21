@@ -89,13 +89,27 @@ Namespace File
                         .Properties = molecule _
                             .MetaData _
                             .ToDictionary(Function(map) map.Key,
-                                          Function(map) map.Value.GetJson)
+                                          Function(map) MetaValue(map.Key, map.Value))
                     }
                     writer.Flush(write)
                 Next
             End Using
 
             Return 0
+        End Function
+
+        Private Function MetaValue(key As String, value$()) As String
+            Select Case key
+                Case "PUBCHEM_COORDINATE_TYPE", "PUBCHEM_BONDANNOTATIONS", "PUBCHEM_NONSTANDARDBOND"
+                    Return value.GetJson
+
+                Case Else
+                    If value.Length > 1 Then
+                        Throw New NotImplementedException($"{key} => {value.GetJson}")
+                    Else
+                        Return value(Scan0)
+                    End If
+            End Select
         End Function
     End Module
 End Namespace
