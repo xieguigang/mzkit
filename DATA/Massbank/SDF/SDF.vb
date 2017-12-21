@@ -1,8 +1,10 @@
 ﻿Imports System.Windows.Media.Media3D
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Text
 
 Namespace File
 
@@ -37,17 +39,20 @@ Namespace File
         ''' The name of the molecule
         ''' </summary>
         ''' <returns></returns>
+        <XmlAttribute>
         Public Property ID As String Implements IKeyedEntity(Of String).Key
         ''' <summary>
         ''' Details of the software used to generate the compound structure
         ''' </summary>
         ''' <returns></returns>
-        Public Property Software As String
+        <XmlAttribute> Public Property Software As String
+
+        <XmlText>
         Public Property Comment As String
         Public Property [Structure] As [Structure]
         Public Property MetaData As Dictionary(Of String, String())
 
-        Public Shared Iterator Function MoleculePopulator(directory As String, Optional takes% = -1) As IEnumerable(Of SDF)
+        Public Shared Iterator Function MoleculePopulator(directory$, Optional takes% = -1, Optional echo As Boolean = True) As IEnumerable(Of SDF)
             Dim list = ls - l - r - "*.sdf" <= directory
 
             If takes > 0 Then
@@ -55,6 +60,11 @@ Namespace File
             End If
 
             For Each path As String In list
+
+                If echo Then
+                    Call path.__INFO_ECHO
+                End If
+
                 For Each model As SDF In IterateParser(path)
                     Yield model
                 Next
@@ -145,12 +155,57 @@ Namespace File
         Public Property Atoms As Atom()
         Public Property Bounds As Bound()
 
+        ''' <summary>
+        ''' Next comes the so-called "counts" line. This line is made up of twelve fixed-length fields 
+        ''' 
+        ''' + the first eleven are three characters long, 
+        ''' + and the last six characters long. 
+        ''' 
+        ''' The first two fields are the most critical, and give the number of atoms and bonds 
+        ''' described in the compound.
+        ''' 
+        ''' ```
+        '''   9  8  0     0  0  0  0  0  0999 V2000
+        ''' ```
+        ''' 
+        ''' So this compound will have 9 atoms And 8 bonds described. Often, hydrogens - especially 
+        ''' those attached To elements such As carbon Or oxygen - are left implicit (And will be 
+        ''' included based On the available valences) rather than being included In the file.
+        ''' </summary>
+        ''' <param name="line"></param>
+        ''' <returns></returns>
+        Private Shared Function parseCounter(line As String) As (counts As String(), version$)
+            Dim version$ = Mid(line, line.Length - 6 + 1).Trim
+            Dim t$()
+
+            line = Mid(line, 1, line.Length - 6)
+            t = line _
+                .Split(parTokens:=3, echo:=False) _
+                .Select(Function(b) New String(b).Trim) _
+                .ToArray
+
+            Return (t, version)
+        End Function
+
         Public Shared Function Parse(mol As String) As [Structure]
-            Dim lines$() = mol.Trim.lTokens.Select(AddressOf Trim).ToArray
-            Dim countLine$() = lines(Scan0).StringSplit("\s+")
-            Dim [dim] = (atoms:=CInt(countLine(0)), bounds:=CInt(countLine(1)))
-            Dim atoms = lines.Skip(1).Take([dim].atoms).Select(AddressOf Atom.Parse).ToArray
-            Dim bounds = lines.Skip(1 + [dim].atoms).Select(AddressOf Bound.Parse).ToArray
+            Dim lines$() = mol.Trim(ASCII.CR, ASCII.LF).lTokens
+            Dim countLine = parseCounter(lines(Scan0))
+            Dim [dim] = (
+                atoms:=CInt(countLine.counts(0)),
+                bounds:=CInt(countLine.counts(1))
+            )
+            Dim atoms = lines _
+                .Skip(1) _
+                .Take([dim].atoms) _
+                .Select(AddressOf Trim) _
+                .Select(AddressOf Atom.Parse) _
+                .ToArray
+            Dim bounds = lines _
+                .Skip(1 + [dim].atoms) _
+                .Take([dim].bounds) _
+                .Select(AddressOf Trim) _
+                .Select(AddressOf Bound.Parse) _
+                .ToArray
 
             Return New [Structure] With {
                 .Atoms = atoms,
@@ -161,8 +216,13 @@ Namespace File
 
     Public Class Atom
 
-        Public Property Atom As String
+        <XmlAttribute> Public Property Atom As String
+        <XmlElement("xyz")>
         Public Property Coordination As Point3D
+
+        Public Overrides Function ToString() As String
+            Return $"({Coordination}) {Atom}"
+        End Function
 
         Public Shared Function Parse(line As String) As Atom
             Dim t$() = line.StringSplit("\s+")
@@ -182,10 +242,14 @@ Namespace File
 
     Public Class Bound
 
-        Public Property i As Integer
-        Public Property j As Integer
-        Public Property Type As BoundTypes
-        Public Property Stereo As BoundStereos
+        <XmlAttribute> Public Property i As Integer
+        <XmlAttribute> Public Property j As Integer
+        <XmlAttribute> Public Property Type As BoundTypes
+        <XmlAttribute> Public Property Stereo As BoundStereos
+
+        Public Overrides Function ToString() As String
+            Return $"[{i}, {j}] {Type} AND {Stereo}"
+        End Function
 
         Public Shared Function Parse(line As String) As Bound
             Dim t$() = line.StringSplit("\s+")
