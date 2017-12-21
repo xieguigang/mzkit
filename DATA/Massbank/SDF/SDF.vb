@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+﻿Imports System.Windows.Media.Media3D
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 
 Namespace File
@@ -30,19 +31,29 @@ Namespace File
     ''' </remarks>
     Public Class SDF : Implements INamedValue
 
+        ''' <summary>
+        ''' The name of the molecule
+        ''' </summary>
+        ''' <returns></returns>
         Public Property ID As String Implements IKeyedEntity(Of String).Key
-        Public Property [Class] As String
-        Public Property Molecule As String
+        ''' <summary>
+        ''' Details of the software used to generate the compound structure
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Software As String
+        Public Property Comment As String
+        Public Property [Structure] As [Structure]
         Public Property MetaData As Dictionary(Of String, String())
 
         Public Shared Iterator Function IterateParser(path$) As IEnumerable(Of SDF)
             Dim o As SDF
 
             For Each block As String() In path _
-            .IterateAllLines _
-            .Split(Function(s) s = "$$$$", includes:=False)
+                .IterateAllLines _
+                .Split(Function(s) s = "$$$$", includes:=False)
 
                 o = SDF.StreamParser(block)
+
                 Yield o
             Next
         End Function
@@ -50,20 +61,23 @@ Namespace File
         Const molEnds$ = "M  END"
 
         Private Shared Function StreamParser(block$()) As SDF
-            Dim ID$ = block(0), class$ = block(1)
+            Dim ID$ = block(0), program$ = block(1)
+            Dim comment$ = block(2)
             Dim metas$()
             Dim mol$
 
             With block _
-            .Skip(2) _
-            .Split(Function(s) s = molEnds, includes:=False)
+                .Skip(2) _
+                .Split(Function(s) s = molEnds, includes:=False)
 
                 metas = .Last
-                mol = .First.Join({molEnds}).JoinBy(vbLf)
+                mol = .First _
+                    .Join({molEnds}) _
+                    .JoinBy(vbLf)
             End With
 
             Dim metaData As Dictionary(Of String, String()) =
-            metas _
+                metas _
                 .Split(Function(s) s.StringEmpty, includes:=False) _
                 .Where(Function(t) Not t.IsNullOrEmpty) _
                 .ToDictionary(Function(t)
@@ -74,13 +88,93 @@ Namespace File
                                       .Skip(1) _
                                       .ToArray
                               End Function)
+            Dim struct As [Structure] = [Structure].Parse(mol)
 
             Return New SDF With {
-            .ID = ID.Trim,
-            .Molecule = mol,
-            .Class = [class].Trim,
-            .MetaData = metaData
-        }
+                .ID = ID.Trim,
+                .[Structure] = struct,
+                .Software = program.Trim,
+                .Comment = comment.Trim,
+                .MetaData = metaData
+            }
         End Function
     End Class
+
+    Public Class [Structure]
+
+        Public Property Atoms As Atom()
+        Public Property Bounds As Bound()
+
+        Public Shared Function Parse(mol As String) As [Structure]
+            Dim lines$() = mol.Trim.lTokens.Select(AddressOf Trim).ToArray
+            Dim countLine$() = lines(Scan0).StringSplit("\s+")
+            Dim [dim] = (atoms:=CInt(countLine(0)), Bounds:=CInt(countLine(1)))
+            Dim atoms = lines.Skip(1).Take([dim].atoms).Select(AddressOf Atom.Parse).ToArray
+            Dim bounds = lines.Skip(1 + [dim].atoms).Select(AddressOf Bound.Parse).ToArray
+
+            Return New [Structure] With {
+                .Atoms = atoms,
+                .Bounds = bounds
+            }
+        End Function
+    End Class
+
+    Public Class Atom
+
+        Public Property Atom As String
+        Public Property Coordination As Point3D
+
+        Public Shared Function Parse(line As String) As Atom
+            Dim t$() = line.StringSplit("\s+")
+            Dim xyz As New Point3D With {
+                .X = t(0),
+                .Y = t(1),
+                .Z = t(2)
+            }
+            Dim name$ = t(3)
+
+            Return New Atom With {
+                .Atom = name,
+                .Coordination = xyz
+            }
+        End Function
+    End Class
+
+    Public Class Bound
+
+        Public Property i As Integer
+        Public Property j As Integer
+        Public Property Type As BoundTypes
+        Public Property Stereo As BoundStereos
+
+        Public Shared Function Parse(line As String) As Bound
+            Dim t$() = line.StringSplit("\s+")
+            Dim i% = t(0)
+            Dim j = t(1)
+            Dim type As BoundTypes = CInt(t(2))
+            Dim stereo As BoundStereos = CInt(t(3))
+
+            Return New Bound With {
+                .i = i,
+                .j = j,
+                .Type = type,
+                .Stereo = stereo
+            }
+        End Function
+    End Class
+
+    Public Enum BoundTypes As Integer
+        [Other] = 0
+        [Single] = 1
+        [Double] = 2
+        [Triple] = 3
+        [Aromatic] = 4
+    End Enum
+
+    Public Enum BoundStereos As Integer
+        NotStereo = 0
+        Up = 1
+        Down = 6
+        Other
+    End Enum
 End Namespace

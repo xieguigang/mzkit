@@ -71,7 +71,7 @@ After the symbol, there are two characters for the mass difference from the mono
 Next you have three characters for the charge. The values are a little confusing - see the conversion table. Alternatively, use the ``M  CHG`` property instead, which is much less confusing and also supports a wider range of values.
 
 ```
-             |----------- Charge ----------|	
+                 |--------- Charge ----------|	
 You have a...	-3	-2	-1	Neutral	+1	+2	+3	Doublet radical
 Written as...	 7	 6	 5 	   0	   3	 2	 1	      4
 ```
