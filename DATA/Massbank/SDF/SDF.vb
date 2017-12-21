@@ -52,6 +52,13 @@ Namespace File
         Public Property [Structure] As [Structure]
         Public Property MetaData As Dictionary(Of String, String())
 
+        ''' <summary>
+        ''' Scan and parsing all of the ``*.sdf`` model file in the target <paramref name="directory"/>
+        ''' </summary>
+        ''' <param name="directory$"></param>
+        ''' <param name="takes%"></param>
+        ''' <param name="echo"></param>
+        ''' <returns></returns>
         Public Shared Iterator Function MoleculePopulator(directory$, Optional takes% = -1, Optional echo As Boolean = True) As IEnumerable(Of SDF)
             Dim list = ls - l - r - "*.sdf" <= directory
 
