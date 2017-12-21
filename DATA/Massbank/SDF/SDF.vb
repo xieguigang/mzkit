@@ -1,6 +1,7 @@
 ﻿Imports System.Windows.Media.Media3D
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
+Imports Microsoft.VisualBasic.Language.UnixBash
 
 Namespace File
 
@@ -45,7 +46,20 @@ Namespace File
         Public Property [Structure] As [Structure]
         Public Property MetaData As Dictionary(Of String, String())
 
-        Public Shared Iterator Function IterateParser(path$) As IEnumerable(Of SDF)
+        Public Shared Iterator Function MoleculePopulator(directory As String) As IEnumerable(Of SDF)
+            For Each path As String In ls - l - r - "*.sdf" <= directory
+                For Each model As SDF In IterateParser(path)
+                    Yield model
+                Next
+            Next
+        End Function
+
+        ''' <summary>
+        ''' 解析单个的SDF文件
+        ''' </summary>
+        ''' <param name="path$"></param>
+        ''' <returns></returns>
+        Public Shared Iterator Function IterateParser(path As String) As IEnumerable(Of SDF)
             Dim o As SDF
 
             For Each block As String() In path _
@@ -108,7 +122,7 @@ Namespace File
         Public Shared Function Parse(mol As String) As [Structure]
             Dim lines$() = mol.Trim.lTokens.Select(AddressOf Trim).ToArray
             Dim countLine$() = lines(Scan0).StringSplit("\s+")
-            Dim [dim] = (atoms:=CInt(countLine(0)), Bounds:=CInt(countLine(1)))
+            Dim [dim] = (atoms:=CInt(countLine(0)), bounds:=CInt(countLine(1)))
             Dim atoms = lines.Skip(1).Take([dim].atoms).Select(AddressOf Atom.Parse).ToArray
             Dim bounds = lines.Skip(1 + [dim].atoms).Select(AddressOf Bound.Parse).ToArray
 
