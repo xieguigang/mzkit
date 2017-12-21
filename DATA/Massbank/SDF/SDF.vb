@@ -138,7 +138,7 @@ Namespace File
         Public Shared Function ScanKeys(directory As String) As String()
             Dim keys As New Index(Of String)
 
-            For Each model As SDF In MoleculePopulator(directory, takes:=2)
+            For Each model As SDF In MoleculePopulator(directory, takes:=20)
                 For Each key As String In model.MetaData.Keys
                     If keys.IndexOf(key) = -1 Then
                         Call keys.Add(key)
