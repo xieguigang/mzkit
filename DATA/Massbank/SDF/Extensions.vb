@@ -8,7 +8,7 @@ Imports Microsoft.VisualBasic.Text
 
 Namespace File
 
-    Public Module Extensions
+    Public Module SDFExtensions
 
         ''' <summary>
         ''' Generic method for parsing the SDF meta annotation data.
