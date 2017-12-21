@@ -1,4 +1,5 @@
 ﻿Imports System.Windows.Media.Media3D
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Language.UnixBash
@@ -46,8 +47,14 @@ Namespace File
         Public Property [Structure] As [Structure]
         Public Property MetaData As Dictionary(Of String, String())
 
-        Public Shared Iterator Function MoleculePopulator(directory As String) As IEnumerable(Of SDF)
-            For Each path As String In ls - l - r - "*.sdf" <= directory
+        Public Shared Iterator Function MoleculePopulator(directory As String, Optional takes% = -1) As IEnumerable(Of SDF)
+            Dim list = ls - l - r - "*.sdf" <= directory
+
+            If takes > 0 Then
+                list = list.Take(takes)
+            End If
+
+            For Each path As String In list
                 For Each model As SDF In IterateParser(path)
                     Yield model
                 Next
@@ -111,6 +118,25 @@ Namespace File
                 .Comment = comment.Trim,
                 .MetaData = metaData
             }
+        End Function
+
+        ''' <summary>
+        ''' 这个函数可能在构建csv文件进行数据存储的时候回有用
+        ''' </summary>
+        ''' <param name="directory"></param>
+        ''' <returns></returns>
+        Public Shared Function ScanKeys(directory As String) As String()
+            Dim keys As New Index(Of String)
+
+            For Each model As SDF In MoleculePopulator(directory, takes:=2)
+                For Each key As String In model.MetaData.Keys
+                    If keys.IndexOf(key) = -1 Then
+                        Call keys.Add(key)
+                    End If
+                Next
+            Next
+
+            Return keys.Objects
         End Function
     End Class
 
