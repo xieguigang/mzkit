@@ -10,14 +10,10 @@ Imports SMRUCC.genomics.ComponentModel.DBLinkBuilder
 Namespace TMIC.HMDB
 
     ''' <summary>
-    ''' 当前这个对象类型的<see cref="INamedValue.Key"/>接口主键为<see cref="accession"/>属性
+    ''' 主要是为了简化数据额存储
     ''' </summary>
-    Public Class metabolite : Implements INamedValue
-        Implements IMolecule
+    Public Class MetaReference : Implements INamedValue, IMolecule
 
-        Public Property version As String
-        Public Property creation_date As String
-        Public Property update_date As String
         ''' <summary>
         ''' hmdb的主编号
         ''' </summary>
@@ -77,6 +73,19 @@ Namespace TMIC.HMDB
         <Xref> Public Property chebi_id As String
 #End Region
 
+        Public Property biofluid_locations As biofluid_locations
+        Public Property tissue_locations As tissue_locations
+    End Class
+
+    ''' <summary>
+    ''' 当前这个对象类型的<see cref="INamedValue.Key"/>接口主键为<see cref="accession"/>属性
+    ''' </summary>
+    Public Class metabolite : Inherits MetaReference
+
+        Public Property version As String
+        Public Property creation_date As String
+        Public Property update_date As String
+
         ''' <summary>
         ''' 固态还是液态？
         ''' </summary>
@@ -85,8 +94,6 @@ Namespace TMIC.HMDB
 
         Public Property experimental_properties As Properties
         Public Property predicted_properties As Properties
-        Public Property biofluid_locations As biofluid_locations
-        Public Property tissue_locations As tissue_locations
         Public Property diseases As disease()
 
         Public Property normal_concentrations As concentration()
