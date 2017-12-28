@@ -50,6 +50,15 @@ Public Class ChemicalNameEquality : Implements IEqualityComparer(Of String)
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overloads Function GetHashCode(obj As String) As Integer Implements IEqualityComparer(Of String).GetHashCode
-        Return obj.GetHashCode
+        Return Strings.LCase(obj).GetHashCode
+    End Function
+
+    ''' <summary>
+    ''' 这个函数是为了将大小写不同的名字给去除掉重复
+    ''' </summary>
+    ''' <param name="names"></param>
+    ''' <returns></returns>
+    Public Function Distinct(names As IEnumerable(Of String)) As IEnumerable(Of String)
+        Return names.DistinctIgnoreCase
     End Function
 End Class
