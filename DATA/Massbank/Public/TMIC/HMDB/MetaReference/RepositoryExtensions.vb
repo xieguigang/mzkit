@@ -1,7 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports XmlLinq = Microsoft.VisualBasic.Text.Xml.Linq.Data
 
-Namespace TMIC.HMDB
+Namespace TMIC.HMDB.Repository
 
     Public Module RepositoryExtensions
 
