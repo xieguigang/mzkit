@@ -45,8 +45,8 @@ Namespace File
                 Return chemical _
                     .ChemicalStructures _
                     .Where(Function(struct)
-                               Return struct.type.TextEquals("mol") AndAlso
-                                      struct.dimension.TextEquals("2D")
+                               Return struct.type.TextEquals(type) AndAlso
+                                      struct.dimension.TextEquals([dim])
                            End Function) _
                     .FirstOrDefault _
                     .structure
