@@ -49,7 +49,7 @@ Namespace File
                                       struct.dimension.TextEquals([dim])
                            End Function) _
                     .FirstOrDefault _
-                    .structure
+                   ?.structure
             End If
         End Function
 

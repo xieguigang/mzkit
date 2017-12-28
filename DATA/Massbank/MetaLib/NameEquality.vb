@@ -50,6 +50,6 @@ Public Class ChemicalNameEquality : Implements IEqualityComparer(Of String)
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overloads Function GetHashCode(obj As String) As Integer Implements IEqualityComparer(Of String).GetHashCode
-        Return obj.StringHashCode
+        Return obj.GetHashCode
     End Function
 End Class
