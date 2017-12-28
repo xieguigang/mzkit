@@ -204,6 +204,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MetaLib\NameEquality.vb" />
     <Compile Include="MetaLib\MetaLib.vb" />
     <Compile Include="Public\lipidMAPS\SDF.vb" />
     <Compile Include="Public\MoNA\MoNAJson.vb" />
