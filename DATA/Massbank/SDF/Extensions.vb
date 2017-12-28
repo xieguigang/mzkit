@@ -2,6 +2,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.csv.IO.Linq
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
@@ -13,7 +14,43 @@ Namespace File
 
         <Extension>
         Public Function Get2DMolStruct(chemical As ChEBIEntity) As [Structure]
+            With chemical.GetStructure("mol", "2D")
+                If .StringEmpty Then
+                    Return Nothing
+                Else
+                    Return [Structure].Parse(.ref)
+                End If
+            End With
+        End Function
 
+        <Extension>
+        Public Function Get3DMolStruct(chemical As ChEBIEntity) As [Structure]
+            With chemical.GetStructure("mol", "3D")
+                If .StringEmpty Then
+                    Return Nothing
+                Else
+                    Return [Structure].Parse(.ref)
+                End If
+            End With
+        End Function
+
+        <Extension>
+        Public Function GetStructure(chemical As ChEBIEntity, type$, dim$) As String
+            If chemical _
+                .ChemicalStructures _
+                .IsNullOrEmpty Then
+
+                Return Nothing
+            Else
+                Return chemical _
+                    .ChemicalStructures _
+                    .Where(Function(struct)
+                               Return struct.type.TextEquals("mol") AndAlso
+                                      struct.dimension.TextEquals("2D")
+                           End Function) _
+                    .FirstOrDefault _
+                    .structure
+            End If
         End Function
 
         ''' <summary>
