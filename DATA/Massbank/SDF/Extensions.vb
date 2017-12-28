@@ -5,10 +5,16 @@ Imports Microsoft.VisualBasic.Data.csv.IO.Linq
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
+Imports SMRUCC.genomics.Assembly.EBI.ChEBI.XML
 
 Namespace File
 
     Public Module SDFExtensions
+
+        <Extension>
+        Public Function Get2DMolStruct(chemical As ChEBIEntity) As [Structure]
+
+        End Function
 
         ''' <summary>
         ''' Generic method for parsing the SDF meta annotation data.

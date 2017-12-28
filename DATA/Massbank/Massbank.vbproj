@@ -236,6 +236,7 @@
     <Compile Include="Public\TMIC\HMDB\Assembly\property.vb" />
     <Compile Include="Public\TMIC\HMDB\Assembly\disease.vb" />
     <Compile Include="Public\lipidMAPS\MapsHelper.vb" />
+    <Compile Include="SDF\Mol.vb" />
     <Compile Include="SDF\SDF.vb" />
     <Compile Include="Public\TMIC\HMDB\NameValue.vb" />
     <Compile Include="MetaLib\XrefEngine.vb" />
