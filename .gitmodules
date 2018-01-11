@@ -6,3 +6,6 @@
 [submodule "KCF"]
 	path = KCF
 	url = https://github.com/xieguigang/KEGG.molDraw.git
+[submodule "KEGG_canvas"]
+	path = KEGG_canvas
+	url = https://github.com/GCModeller-Cloud/KEGG-metabolite-network.git
