@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "spectrum-plot", "plot\spectrum-plot.vbproj", "{F2147043-7C16-48F8-838B-3D2CF14B0A7B}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "+Microsoft.VisualBasic.Architecture.Framework", "..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj", "{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "47-dotnet_Microsoft.VisualBasic", "..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj", "{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MIME-htmls", "..\GCModeller\src\runtime\sciBASIC#\mime\text%html\MIME-htmls.vbproj", "{2DD4BE80-DDC3-4767-94A7-10F1C3395716}"
 EndProject
@@ -15,7 +15,7 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.Imagi
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Plots", "..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Plot\Plots\Plots.vbproj", "{17F8E821-0A01-4975-9CAA-AC95251226D5}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "+VB_DataFrame", "..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\+VB_DataFrame.vbproj", "{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "+VB_DataFrame", "..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj", "{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "runtime", "runtime", "{8411BC65-D873-4A4B-A364-75E6A73F8205}"
 EndProject
@@ -421,12 +421,12 @@ Global
 		{17F8E821-0A01-4975-9CAA-AC95251226D5}.Release|x64.Build.0 = Release|x64
 		{17F8E821-0A01-4975-9CAA-AC95251226D5}.Release|x86.ActiveCfg = Release|x86
 		{17F8E821-0A01-4975-9CAA-AC95251226D5}.Release|x86.Build.0 = Release|x86
-		{17F8E821-0A01-4975-9CAA-AC95251226D5}.Release2|Any CPU.ActiveCfg = Release2|Any CPU
-		{17F8E821-0A01-4975-9CAA-AC95251226D5}.Release2|Any CPU.Build.0 = Release2|Any CPU
-		{17F8E821-0A01-4975-9CAA-AC95251226D5}.Release2|x64.ActiveCfg = Release2|x64
-		{17F8E821-0A01-4975-9CAA-AC95251226D5}.Release2|x64.Build.0 = Release2|x64
-		{17F8E821-0A01-4975-9CAA-AC95251226D5}.Release2|x86.ActiveCfg = Release2|x86
-		{17F8E821-0A01-4975-9CAA-AC95251226D5}.Release2|x86.Build.0 = Release2|x86
+		{17F8E821-0A01-4975-9CAA-AC95251226D5}.Release2|Any CPU.ActiveCfg = Release|Any CPU
+		{17F8E821-0A01-4975-9CAA-AC95251226D5}.Release2|Any CPU.Build.0 = Release|Any CPU
+		{17F8E821-0A01-4975-9CAA-AC95251226D5}.Release2|x64.ActiveCfg = Release|x64
+		{17F8E821-0A01-4975-9CAA-AC95251226D5}.Release2|x64.Build.0 = Release|x64
+		{17F8E821-0A01-4975-9CAA-AC95251226D5}.Release2|x86.ActiveCfg = Release|x86
+		{17F8E821-0A01-4975-9CAA-AC95251226D5}.Release2|x86.Build.0 = Release|x86
 		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.Biodeep|Any CPU.ActiveCfg = Biodeep|Any CPU
 		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.Biodeep|Any CPU.Build.0 = Biodeep|Any CPU
 		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.Biodeep|x64.ActiveCfg = Biodeep|x64
