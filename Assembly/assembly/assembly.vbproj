@@ -160,6 +160,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="mzML\Extensions.vb" />
+    <Compile Include="mzML\XML.vb" />
     <Compile Include="mzXML\Extensions.vb" />
     <Compile Include="mzXML\Info.vb" />
     <Compile Include="mzXML\MSData.vb" />
@@ -213,7 +215,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="mzData\" />
-    <Folder Include="mzML\" />
     <Folder Include="netCDF\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
