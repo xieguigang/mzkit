@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "+Microsoft.VisualBasic.Architecture.Framework", "..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj", "{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "47-dotnet_Microsoft.VisualBasic", "..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj", "{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "runtime", "runtime", "{8411BC65-D873-4A4B-A364-75E6A73F8205}"
 EndProject
@@ -15,7 +15,7 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "application.netCDF", "..\..
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "test", "test\test\test.vbproj", "{EE77E974-0120-4D75-BCA5-953B4F56D6E3}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "+VB_DataFrame", "..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\+VB_DataFrame.vbproj", "{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "47_dotnet_ms-vb_data.framework", "..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj", "{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -108,12 +108,12 @@ Global
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Release|x64.Build.0 = Release|x64
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Release|x86.ActiveCfg = Release|x86
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Release|x86.Build.0 = Release|x86
-		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Release2|Any CPU.ActiveCfg = Release2|Any CPU
-		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Release2|Any CPU.Build.0 = Release2|Any CPU
-		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Release2|x64.ActiveCfg = Release2|x64
-		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Release2|x64.Build.0 = Release2|x64
-		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Release2|x86.ActiveCfg = Release2|x86
-		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Release2|x86.Build.0 = Release2|x86
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Release2|Any CPU.ActiveCfg = Release|Any CPU
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Release2|Any CPU.Build.0 = Release|Any CPU
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Release2|x64.ActiveCfg = Release|x64
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Release2|x64.Build.0 = Release|x64
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Release2|x86.ActiveCfg = Release|x86
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Release2|x86.Build.0 = Release|x86
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.sciBASIC.NET-test-release|Any CPU.ActiveCfg = sciBASIC.NET-test-release|Any CPU
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.sciBASIC.NET-test-release|Any CPU.Build.0 = sciBASIC.NET-test-release|Any CPU
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.sciBASIC.NET-test-release|x64.ActiveCfg = sciBASIC.NET-test-release|x64
@@ -438,12 +438,12 @@ Global
 		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.Release|x64.Build.0 = Release|x64
 		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.Release|x86.ActiveCfg = Release|x86
 		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.Release|x86.Build.0 = Release|x86
-		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.Release2|Any CPU.ActiveCfg = Release2|Any CPU
-		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.Release2|Any CPU.Build.0 = Release2|Any CPU
-		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.Release2|x64.ActiveCfg = Release2|x64
-		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.Release2|x64.Build.0 = Release2|x64
-		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.Release2|x86.ActiveCfg = Release2|x86
-		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.Release2|x86.Build.0 = Release2|x86
+		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.Release2|Any CPU.ActiveCfg = Release|Any CPU
+		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.Release2|Any CPU.Build.0 = Release|Any CPU
+		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.Release2|x64.ActiveCfg = Release|x64
+		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.Release2|x64.Build.0 = Release|x64
+		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.Release2|x86.ActiveCfg = Release|x86
+		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.Release2|x86.Build.0 = Release|x86
 		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.sciBASIC.NET-test-release|Any CPU.ActiveCfg = installer_x64|Any CPU
 		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.sciBASIC.NET-test-release|Any CPU.Build.0 = installer_x64|Any CPU
 		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.sciBASIC.NET-test-release|x64.ActiveCfg = installer_x64|x64
