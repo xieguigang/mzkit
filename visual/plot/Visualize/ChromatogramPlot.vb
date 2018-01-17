@@ -39,6 +39,13 @@ Public Module ChromatogramPlot
                 }
                 Dim ZERO = scaler.TranslateY(0)
 
+                Call g.DrawAxis(
+                    region, scaler, showGrid:=False,
+                    xlabel:="Time (s)",
+                    ylabel:="Intensity",
+                    htmlLabel:=False
+                )
+
                 For Each signal In chromatogram.SlideWindows(slideWindowSize:=2)
                     Dim A = scaler.Translate(signal.First)
                     Dim B = scaler.Translate(signal.Last)
