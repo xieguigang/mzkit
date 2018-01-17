@@ -86,16 +86,28 @@ Public Module ChromatogramPlot
                     Dim vector = chromatogram.Shadows
                     Dim MRM_ROI As DoubleRange = vector.MRMPeak
                     Dim maxIntensity# = vector!Intensity.Max
+                    Dim canvas = g
+                    Dim drawLine =
+                        Sub(x1, x2)
+                            x1 = scaler.Translate(x1)
+                            x2 = scaler.Translate(x2)
 
-                    A = scaler.Translate(New PointF(MRM_ROI.Min, 0))
-                    B = scaler.Translate(New PointF(MRM_ROI.Min, maxIntensity))
+                            Call canvas.DrawLine(ROIpen, x1, x2)
+                        End Sub
 
-                    g.DrawLine(ROIpen, A, B)
+                    A = New PointF(MRM_ROI.Min, 0)
+                    B = New PointF(MRM_ROI.Min, maxIntensity)
+                    drawLine(A, B)
 
-                    A = scaler.Translate(New PointF(MRM_ROI.Max, 0))
-                    B = scaler.Translate(New PointF(MRM_ROI.Max, maxIntensity))
+                    A = New PointF(MRM_ROI.Max, 0)
+                    B = New PointF(MRM_ROI.Max, maxIntensity)
+                    drawLine(A, B)
 
-                    g.DrawLine(ROIpen, A, B)
+                    Dim base = chromatogram.Base
+
+                    A = New PointF(timeTicks.Min, base)
+                    B = New PointF(timeTicks.Max, base)
+                    drawLine(A, B)
                 End If
 
                 Dim left = rect.Left + (rect.Width - g.MeasureString(title, titleFont).Width) / 2
