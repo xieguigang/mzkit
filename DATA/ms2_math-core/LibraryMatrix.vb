@@ -1,4 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -39,12 +41,14 @@ Public Class ms2
 End Class
 
 Public Class LibraryMatrix : Inherits VectorModel(Of ms2)
+    Implements INamedValue
 
     ''' <summary>
     ''' The list of molecular fragment
     ''' </summary>
     ''' <returns></returns>
     Public Property ms2 As ms2()
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return buffer
         End Get
@@ -52,6 +56,8 @@ Public Class LibraryMatrix : Inherits VectorModel(Of ms2)
             buffer = value
         End Set
     End Property
+
+    Public Property Name As String Implements IKeyedEntity(Of String).Key
 
     Sub New()
         Call MyBase.New({})

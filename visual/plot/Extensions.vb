@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
-Imports SMRUCC.MassSpectrum.Assembly
+Imports SMRUCC.MassSpectrum.Math
 
 Public Module Extensions
 
@@ -11,16 +11,14 @@ Public Module Extensions
     ''' <returns></returns>
     <Extension>
     Public Iterator Function SpectrumFromMatrix(matrix As IEnumerable(Of LibraryMatrix)) As IEnumerable(Of spectrumData)
-        Dim groups = matrix.GroupBy(Function(l) l.Name)
-
-        For Each group As IGrouping(Of String, LibraryMatrix) In groups
+        For Each group As LibraryMatrix In matrix
             Yield New spectrumData With {
-                .name = group.Key,
+                .name = group.Name,
                 .data = group _
                     .Select(Function(l)
                                 Return New MSSignal With {
-                                    .x = l.ProductMz,
-                                    .y = l.LibraryIntensity
+                                    .x = l.mz,
+                                    .y = l.intensity
                                 }
                             End Function) _
                     .ToArray

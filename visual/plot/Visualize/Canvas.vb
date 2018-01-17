@@ -64,7 +64,7 @@ Public Module Canvas
                 Dim x As d3js.scale.LinearScale = d3js.scale.linear().domain(ticks.x).range(New Integer() {plotRect.Left, plotRect.Right})
                 Dim mapper As New DataScaler With {
                     .AxisTicks = ticks,
-                    .ChartRegion = plotRect,
+                    .Region = plotRect,
                     .X = x,
                     .Y = y
                 }
