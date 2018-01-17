@@ -1,4 +1,6 @@
 ﻿Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 
 Namespace mzML
 
@@ -11,7 +13,7 @@ Namespace mzML
 
     Public Class indexList : Inherits List
         <XmlElement(NameOf(index))>
-        Public Property index As Index()
+        Public Property index As index()
     End Class
 
     Public Class index
@@ -28,10 +30,14 @@ Namespace mzML
         Public Property value As Long
     End Class
 
-    <XmlType(NameOf(mzML), [Namespace]:="")>
+    <XmlType(NameOf(mzML), [Namespace]:=mzML.Xmlns)>
     Public Class mzML
+
+        Public Const Xmlns$ = Extensions.Xmlns
+
         Public Property cvList As cvList
         Public Property run As run
+
     End Class
 
     Public Class cvList : Inherits List
@@ -70,15 +76,23 @@ Namespace mzML
 
     End Class
 
-    Public Class precursor
-        Public Property isolationWindow As Params
+    Public Class precursor : Implements IMRMSelector
+
+        Public Property isolationWindow As Params Implements IMRMSelector.isolationWindow
         Public Property activation As Params
+
     End Class
 
-    Public Class product
-        Public Property isolationWindow As Params
+    Public Class product : Implements IMRMSelector
+
+        Public Property isolationWindow As Params Implements IMRMSelector.isolationWindow
         Public Property activation As Params
+
     End Class
+
+    Public Interface IMRMSelector
+        Property isolationWindow As Params
+    End Interface
 
     Public Class Params
         <XmlElement(NameOf(cvParam))>
@@ -87,10 +101,15 @@ Namespace mzML
         Public Property userParams As userParam()
     End Class
 
-    Public Class userParam
-        <XmlAttribute> Public Property name As String
+    Public Class userParam : Implements INamedValue
+
+        <XmlAttribute> Public Property name As String Implements IKeyedEntity(Of String).Key
         <XmlAttribute> Public Property value As String
         <XmlAttribute> Public Property type As String
+
+        Public Overrides Function ToString() As String
+            Return $"Dim {name} As {type} = {value}"
+        End Function
     End Class
 
     Public Class binaryDataArrayList : Inherits List
@@ -105,11 +124,16 @@ Namespace mzML
         Public Property binary As String
     End Class
 
-    Public Class cvParam
+    Public Class cvParam : Implements INamedValue
+
         <XmlAttribute> Public Property cvRef As String
         <XmlAttribute> Public Property accession As String
-        <XmlAttribute> Public Property name As String
+        <XmlAttribute> Public Property name As String Implements IKeyedEntity(Of String).Key
         <XmlAttribute> Public Property value As String
+
+        Public Overrides Function ToString() As String
+            Return $"[{accession}] Dim {name} = {value}"
+        End Function
     End Class
 
     Public Class run
