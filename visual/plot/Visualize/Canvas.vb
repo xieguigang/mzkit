@@ -14,6 +14,9 @@ Imports Microsoft.VisualBasic.Text
 Imports SMRUCC.proteomics.PNL.OMICS.MwtWinDll
 Imports SMRUCC.proteomics.PNL.OMICS.MwtWinDll.Extensions
 
+''' <summary>
+''' m/z -> into
+''' </summary>
 Public Module Canvas
 
     Const Padding$ = "padding: 250px 100px 200px 200px"
@@ -36,7 +39,7 @@ Public Module Canvas
     ''' 
     <Extension>
     Public Function Plot(MS_spectrum As spectrumData,
-                         Optional size As Size = Nothing,
+                         Optional size$ = "2000,1600",
                          Optional padding$ = Canvas.Padding,
                          Optional bg$ = "white",
                          Optional title$ = "<span style=""color:blue"">MS/MS spectra</span>",
@@ -171,12 +174,8 @@ Public Module Canvas
                 Call g.DrawImageUnscaled(titleImage, region.TopCentra(titleImage.Size))
             End Sub
 
-        If size.IsEmpty Then
-            size = New Size(2000, 1440)
-        End If
-
         Return g.GraphicsPlots(
-            size, padding,
+            size.SizeParser, padding,
             bg,
             plotInternal)
     End Function

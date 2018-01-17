@@ -5,12 +5,13 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{F2147043-7C16-48F8-838B-3D2CF14B0A7B}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <StartupObject>SMRUCC.proteomics.MS_Spectrum.Program</StartupObject>
+    <OutputType>Library</OutputType>
+    <StartupObject>
+    </StartupObject>
     <RootNamespace>SMRUCC.proteomics.MS_Spectrum</RootNamespace>
     <AssemblyName>spectrum</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <MyType>Console</MyType>
+    <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
@@ -153,9 +154,9 @@
     <Compile Include="CLI\CLI.vb" />
     <Compile Include="Extensions.vb" />
     <Compile Include="Visualize\Canvas.vb" />
+    <Compile Include="Visualize\ChromatogramPlot.vb" />
     <Compile Include="Visualize\PeakAssign.vb" />
     <Compile Include="Visualize\spectrumData.vb" />
-    <Compile Include="Program.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
