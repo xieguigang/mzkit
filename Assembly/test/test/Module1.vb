@@ -1,14 +1,27 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports SMRUCC.MassSpectrum.Assembly
 Imports SMRUCC.MassSpectrum.Assembly.ASCII.MSP
+Imports SMRUCC.MassSpectrum.Assembly.mzML
 
 Module Module1
 
     Sub Main()
 
+        Dim ions = "D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\build_tools\CVD_kb\smartnucl.CVD_kb\ion_pair.csv".LoadCsv(Of IonPair)
+        Dim ionData = LoadChromatogramList("D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\build_tools\CVD_kb\smartnucl.CVD_kb\test\Data20180111-L1.mzML") _
+            .MRMSelector(ions) _
+            .Select(Function(ion)
+                        Return New NamedValue(Of Double) With {
+                            .Name = ion.ion.name,
+                            .Description = ion.ion.ToString,
+                            .Value = ion.chromatogram.PeakArea
+                        }
+                    End Function) _
+            .ToArray
 
-
-
+        Pause()
 
 
         Dim testMsp = MspData.Load("D:\MassSpectrum-toolkits\Assembly\test\HMDB00008.msp").ToArray
