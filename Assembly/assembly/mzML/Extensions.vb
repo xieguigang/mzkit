@@ -1,4 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Text.Xml.Linq
 Imports sys = System.Math
 
@@ -56,10 +58,11 @@ Namespace mzML
         End Function
     End Module
 
-    Public Structure IonPair
+    Public Class IonPair : Implements INamedValue
 
-        Dim precursor#, product#
-        Dim name$
+        Public Property name As String Implements IKeyedEntity(Of String).Key
+        Public Property precursor As Double
+        Public Property product As Double
 
         Public Overrides Function ToString() As String
             If name.StringEmpty Then
@@ -80,5 +83,5 @@ Namespace mzML
                 Return False
             End If
         End Function
-    End Structure
+    End Class
 End Namespace
