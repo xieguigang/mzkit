@@ -41,7 +41,7 @@ Public Module ChromatogramPlot
                          Optional curveStyle$ = Stroke.AxisStroke,
                          Optional titleFontCSS$ = CSSFont.Win7VeryLarge,
                          Optional showMRMRegion As Boolean = False,
-                         Optional ROI_styleCSS$ = Stroke.StrongHighlightStroke) As GraphicsData
+                         Optional ROI_styleCSS$ = "stroke: red; stroke-width: 2px; stroke-dash: dash;") As GraphicsData
 
         Dim timeTicks#() = chromatogram.TimeArray.CreateAxisTicks
         Dim intoTicks#() = chromatogram.IntensityArray.CreateAxisTicks

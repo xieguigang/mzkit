@@ -27,22 +27,12 @@ Public Module Chromatogram
     ''' <param name="threshold">Unit in degree</param>
     ''' <returns></returns>
     <Extension>
-    Public Function MRMPeak(chromatogram As VectorModel(Of ChromatogramTick), Optional threshold# = 3, Optional winSize% = 3) As DoubleRange
+    Public Function MRMPeak(chromatogram As VectorModel(Of ChromatogramTick), Optional threshold# = 45, Optional winSize% = 5) As DoubleRange
 
         ' 先找到最高的信号，然后逐步分别往两边延伸
         ' 直到下降的速率小于阈值
         ' 因为MRM方法只出一个峰
 
-        '      A
-        '     /|
-        '    / |
-        '   /  |
-        '  /   |
-        ' ------
-        ' t0   t1
-        ' 
-        ' cos(threshold) = (t1 - t0) / ( distance((t0, 0), (t1, A)) )
-        '
         Dim maxIndex = Which.Max(chromatogram!Intensity)
         Dim timeRange#()
 
@@ -68,20 +58,42 @@ Public Module Chromatogram
     ''' <returns></returns>
     <Extension>
     Private Function MakeExtension(chromatogram As ChromatogramTick(), threshold#, winSize%) As Double
-        Dim windows = chromatogram.SlideWindows(winSize).ToArray
+        Dim vector = chromatogram.Shadows
+        Dim timeRange As DoubleRange = vector!Time
+        Dim normInto As Vector = vector!Intensity.RangeTransform(timeRange).AsVector
+        Dim windows = chromatogram _
+            .Select(Function(c, i)
+                        Return New ChromatogramTick With {
+                            .Time = c.Time,
+                            .Intensity = normInto(i)
+                        }
+                    End Function) _
+            .SlideWindows(winSize) _
+            .ToArray
 
         For Each block As SlideWindow(Of ChromatogramTick) In windows
 
+            '      A
+            '     /|
+            '    / |
+            '   /  |
+            '  /   |
+            ' ------
+            ' t0   t1
+            ' 
+            ' cos(threshold) = (t1 - t0) / ( distance((t0, 0), (t1, A)) )
+            '
+
             Dim t10 = block.Shadows!Time.Range.Length
-            Dim t1 = block.Last
-            Dim t0 = block.First
+            Dim t1 = block.First
+            Dim t0 = block.Last
             Dim A = Abs(t0.Intensity - t1.Intensity)
 
-            Dim C = (t0.Time, A).Distance(t1.Time, 0R)
+            Dim C = (t1.Time, A).Distance(t0.Time, 0R)
             Dim cos# = t10 / C
 
-            If cos <= threshold Then
-                Return t1.Time
+            If threshold <= cos Then
+                Return t0.Time
             End If
         Next
 

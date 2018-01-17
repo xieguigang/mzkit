@@ -59,6 +59,11 @@ Module Module1
     End Sub
 
     Sub ChromatogramPlotTest()
+
+        Dim c90 = Math.Cos(0.5 * Math.PI)
+        Dim c0 = Math.Cos(0)
+
+
         Dim ions = "D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\build_tools\CVD_kb\smartnucl.CVD_kb\ion_pair.csv".LoadCsv(Of IonPair)
         Dim ionData = LoadChromatogramList("D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\build_tools\CVD_kb\smartnucl.CVD_kb\test\Data20180111-L1.mzML") _
             .MRMSelector(ions) _
