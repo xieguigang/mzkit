@@ -73,7 +73,11 @@ Module Module1
             .ToArray
 
         For Each ion In ionData
-            Call ion.Value.Plot(title:=ion.Name).AsGDIImage.SaveAs($"./{ion.Name.NormalizePathString}_chromatogram.png")
+            Call ion _
+                .Value _
+                .Plot(title:=ion.Name, showMRMRegion:=True) _
+                .AsGDIImage _
+                .SaveAs($"./{ion.Name.NormalizePathString}_chromatogram.png")
         Next
 
         Pause()
