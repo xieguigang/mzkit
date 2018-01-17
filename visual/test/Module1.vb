@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Text
 Imports SMRUCC.MassSpectrum.Assembly
 Imports SMRUCC.MassSpectrum.Assembly.mzML
@@ -76,6 +77,18 @@ Module Module1
                         }
                     End Function) _
             .ToArray
+
+
+
+        For Each ion In ionData
+
+            Dim base = ion.Value.Base(quantile:=0.9)
+            Dim max = ion.Value.Shadows!Intensity.Max
+
+            Call $"{ion.Name}:  {base}/{max} = {(100 * base / max).ToString("F2")}%".__DEBUG_ECHO
+
+        Next
+
 
         For Each ion In ionData
             Call ion _

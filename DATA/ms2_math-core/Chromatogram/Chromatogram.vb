@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.Math.Scripting
 
 Public Module Chromatogram
@@ -18,6 +19,14 @@ Public Module Chromatogram
     <Extension>
     Public Function IntensityArray(chromatogram As IEnumerable(Of ChromatogramTick)) As Vector
         Return chromatogram.Select(Function(c) c.Intensity).AsVector
+    End Function
+
+    <Extension>
+    Public Function Base(chromatogram As IEnumerable(Of ChromatogramTick), Optional quantile# = 0.8) As Double
+        Dim q As QuantileEstimationGK = chromatogram.Shadows!Intensity.GKQuantile
+        Dim baseValue = q.Query(quantile)
+
+        Return baseValue
     End Function
 
     ''' <summary>
@@ -102,21 +111,3 @@ Public Module Chromatogram
         Return chromatogram.Last.Time
     End Function
 End Module
-
-Public Class ChromatogramTick
-
-    Public Property Time As Double
-    Public Property Intensity As Double
-
-    Sub New()
-    End Sub
-
-    Sub New(time#, into#)
-        Me.Time = time
-        Me.Intensity = into
-    End Sub
-
-    Public Overrides Function ToString() As String
-        Return $"{Intensity}@{Time}s"
-    End Function
-End Class
