@@ -60,7 +60,9 @@ Public Module Chromatogram
     Private Function MakeExtension(chromatogram As ChromatogramTick(), threshold#, winSize%) As Double
         Dim vector = chromatogram.Shadows
         Dim timeRange As DoubleRange = vector!Time
-        Dim normInto As Vector = vector!Intensity.RangeTransform(timeRange).AsVector
+        Dim normInto As Vector = vector!Intensity _
+            .RangeTransform(timeRange) _
+            .AsVector
         Dim windows = chromatogram _
             .Select(Function(c, i)
                         Return New ChromatogramTick With {
