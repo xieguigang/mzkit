@@ -13,6 +13,7 @@ Module Module1
         Dim ions = "D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\build_tools\CVD_kb\smartnucl.CVD_kb\ion_pair.csv".LoadCsv(Of IonPair)
         Dim ionData = LoadChromatogramList("D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\build_tools\CVD_kb\smartnucl.CVD_kb\test\Data20180111-L1.mzML") _
             .MRMSelector(ions) _
+            .Where(Function(ion) Not ion.chromatogram Is Nothing) _
             .Select(Function(ion)
                         Return New NamedValue(Of PointF()) With {
                             .Name = ion.ion.name,

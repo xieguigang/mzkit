@@ -2,6 +2,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Text.Xml.Linq
 Imports sys = System.Math
 
@@ -48,14 +49,24 @@ Namespace mzML
             Return chromatogram.binaryDataArrayList.list.Where(Function(a) Not a.cvParams.KeyItem(type) Is Nothing).FirstOrDefault
         End Function
 
+        ''' <summary>
+        ''' 返回来的时间的单位都统一为秒
+        ''' </summary>
+        ''' <param name="chromatogram"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function PeakArea(chromatogram As chromatogram) As PointF()
             Dim time = chromatogram.ByteArray("time array")
             Dim into = chromatogram.ByteArray("intensity array")
             Dim timeUnit = time.cvParams.KeyItem("time array").unitName
             Dim intoUnit = into.cvParams.KeyItem("intensity array").unitName
-            Dim time_array = time.Base64Decode
+            Dim time_array = time.Base64Decode.AsVector
             Dim intensity_array = into.Base64Decode
+
+            If timeUnit.TextEquals("minute") Then
+                time_array = time_array * 60
+            End If
+
             Dim data = time_array _
                 .Select(Function(t, i)
                             Return New PointF(t, intensity_array(i))
