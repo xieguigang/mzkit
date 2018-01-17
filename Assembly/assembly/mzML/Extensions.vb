@@ -1,4 +1,5 @@
-﻿Imports System.Runtime.CompilerServices
+﻿Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Text.Xml.Linq
@@ -48,15 +49,20 @@ Namespace mzML
         End Function
 
         <Extension>
-        Public Function PeakArea(chromatogram As chromatogram) As Double
+        Public Function PeakArea(chromatogram As chromatogram) As PointF()
             Dim time = chromatogram.ByteArray("time array")
             Dim into = chromatogram.ByteArray("intensity array")
             Dim timeUnit = time.cvParams.KeyItem("time array").unitName
             Dim intoUnit = into.cvParams.KeyItem("intensity array").unitName
             Dim time_array = time.Base64Decode
             Dim intensity_array = into.Base64Decode
+            Dim data = time_array _
+                .Select(Function(t, i)
+                            Return New PointF(t, intensity_array(i))
+                        End Function) _
+                .ToArray
 
-
+            Return data
         End Function
     End Module
 

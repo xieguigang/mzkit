@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+﻿Imports System.Drawing
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.MassSpectrum.Assembly
@@ -13,7 +14,7 @@ Module Module1
         Dim ionData = LoadChromatogramList("D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\build_tools\CVD_kb\smartnucl.CVD_kb\test\Data20180111-L1.mzML") _
             .MRMSelector(ions) _
             .Select(Function(ion)
-                        Return New NamedValue(Of Double) With {
+                        Return New NamedValue(Of PointF()) With {
                             .Name = ion.ion.name,
                             .Description = ion.ion.ToString,
                             .Value = ion.chromatogram.PeakArea
