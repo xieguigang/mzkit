@@ -49,7 +49,7 @@ Public Module Extensions
     ''' <summary>
     ''' 对质谱扫描信号结果进行解码操作
     ''' </summary>
-    ''' <param name="peaks$"></param>
+    ''' <param name="stream">Container for the binary base64 string data.</param>
     ''' <returns></returns>
     <Extension> Public Function Base64Decode(stream As IBase64Container) As Double()
         Dim bytes As Byte() = Convert.FromBase64String(stream.BinaryArray)

@@ -138,10 +138,6 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Massbank\MSMS.Assembly.vbproj">
-      <Project>{a686bdf5-077f-47f5-a8dd-c73e6e88363c}</Project>
-      <Name>MSMS.Assembly</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
