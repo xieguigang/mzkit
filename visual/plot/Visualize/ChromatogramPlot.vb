@@ -46,7 +46,7 @@ Public Module ChromatogramPlot
                     htmlLabel:=False
                 )
 
-                For Each signal In chromatogram.SlideWindows(slideWindowSize:=2)
+                For Each signal As SlideWindow(Of PointF) In chromatogram.SlideWindows(slideWindowSize:=2)
                     Dim A = scaler.Translate(signal.First)
                     Dim B = scaler.Translate(signal.Last)
 

@@ -1,12 +1,19 @@
-﻿Imports Microsoft.VisualBasic.Data.csv
+﻿Imports System.Drawing
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Text
 Imports SMRUCC.MassSpectrum.Assembly
+Imports SMRUCC.MassSpectrum.Assembly.mzML
 Imports SMRUCC.MassSpectrum.Math
 Imports SMRUCC.proteomics.MS_Spectrum
 
 Module Module1
 
     Sub Main()
+
+        Call ChromatogramPlotTest()
+
 
         Call Test()
 
@@ -50,6 +57,24 @@ Module Module1
 
         'Pause()
     End Sub
+
+    Sub ChromatogramPlotTest()
+        Dim ions = "D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\build_tools\CVD_kb\smartnucl.CVD_kb\ion_pair.csv".LoadCsv(Of IonPair)
+        Dim ionData = LoadChromatogramList("D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\build_tools\CVD_kb\smartnucl.CVD_kb\test\Data20180111-L1.mzML") _
+            .MRMSelector(ions) _
+            .Where(Function(ion) Not ion.chromatogram Is Nothing) _
+            .Select(Function(ion)
+                        Return New NamedValue(Of PointF()) With {
+                            .Name = ion.ion.name,
+                            .Description = ion.ion.ToString,
+                            .Value = ion.chromatogram.PeakArea
+                        }
+                    End Function) _
+            .ToArray
+
+        Call ionData.First.Value.Plot(title:=ionData.First.Name).AsGDIImage.SaveAs("./test.png")
+    End Sub
+
 
     Sub Test()
 
