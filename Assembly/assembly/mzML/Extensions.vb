@@ -17,9 +17,15 @@ Namespace mzML
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function LoadChromatogramList(path As String) As IEnumerable(Of chromatogram)
-            Return path.LoadXmlDataSet(Of chromatogram)(, xmlns:=mzML.xmlns)
+            Return path.LoadXmlDataSet(Of chromatogram)(, xmlns:=mzML.Xmlns)
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="chromatograms"></param>
+        ''' <param name="ionPairs"></param>
+        ''' <returns>Nothing for ion not found</returns>
         <Extension>
         Public Function MRMSelector(chromatograms As IEnumerable(Of chromatogram), ionPairs As IEnumerable(Of IonPair)) As IEnumerable(Of (ion As IonPair, chromatogram As chromatogram))
             With chromatograms.ToArray
@@ -31,6 +37,22 @@ Namespace mzML
         <Extension>
         Public Function MRMTargetMz(selector As IMRMSelector) As Double
             Return selector.isolationWindow.cvParams.KeyItem("isolation window target m/z").value
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function ByteArray(chromatogram As chromatogram, type$) As binaryDataArray
+            Return chromatogram.binaryDataArrayList.list.Where(Function(a) Not a.cvParams.KeyItem(type) Is Nothing).FirstOrDefault
+        End Function
+
+        <Extension>
+        Public Function PeakArea(chromatogram As chromatogram) As Double
+            Dim time = chromatogram.ByteArray("time array")
+            Dim into = chromatogram.ByteArray("intensity array")
+            Dim timeUnit = time.cvParams.KeyItem("time array").unitName
+            Dim intoUnit = into.cvParams.KeyItem("intensity array").unitName
+
+
         End Function
     End Module
 

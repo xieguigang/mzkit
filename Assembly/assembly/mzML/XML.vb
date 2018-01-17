@@ -130,6 +130,7 @@ Namespace mzML
         <XmlAttribute> Public Property accession As String
         <XmlAttribute> Public Property name As String Implements IKeyedEntity(Of String).Key
         <XmlAttribute> Public Property value As String
+        <XmlAttribute> Public Property unitName As String
 
         Public Overrides Function ToString() As String
             Return $"[{accession}] Dim {name} = {value}"
