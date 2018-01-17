@@ -53,8 +53,8 @@ Namespace mzML
             Dim into = chromatogram.ByteArray("intensity array")
             Dim timeUnit = time.cvParams.KeyItem("time array").unitName
             Dim intoUnit = into.cvParams.KeyItem("intensity array").unitName
-            Dim time_array = time.binary
-            Dim intensity_array = into.binary
+            Dim time_array = time.Base64Decode
+            Dim intensity_array = into.Base64Decode
 
 
         End Function
