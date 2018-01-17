@@ -6,9 +6,9 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
-Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports SMRUCC.MassSpectrum.Math
 
 ''' <summary>
 ''' time -> into
@@ -18,7 +18,7 @@ Public Module ChromatogramPlot
     Public Const DefaultPadding$ = "padding: 350px 100px 250px 200px"
 
     <Extension>
-    Public Function Plot(chromatogram As PointF(),
+    Public Function Plot(chromatogram As ChromatogramTick(),
                          Optional size$ = "2100,1600",
                          Optional padding$ = DefaultPadding,
                          Optional bg$ = "white",
@@ -26,8 +26,8 @@ Public Module ChromatogramPlot
                          Optional curveStyle$ = Stroke.AxisStroke,
                          Optional titleFontCSS$ = CSSFont.Win7VeryLarge) As GraphicsData
 
-        Dim timeTicks#() = chromatogram.X.CreateAxisTicks
-        Dim intoTicks#() = chromatogram.Y.CreateAxisTicks
+        Dim timeTicks#() = chromatogram.TimeArray.CreateAxisTicks
+        Dim intoTicks#() = chromatogram.IntensityArray.CreateAxisTicks
         Dim curvePen As Pen = Stroke.TryParse(curveStyle).GDIObject
         Dim titleFont As Font = CSSFont.TryParse(titleFontCSS)
         Dim plotInternal =
@@ -50,7 +50,12 @@ Public Module ChromatogramPlot
                     htmlLabel:=False
                 )
 
-                For Each signal As SlideWindow(Of PointF) In chromatogram.SlideWindows(slideWindowSize:=2)
+                For Each signal As SlideWindow(Of PointF) In chromatogram _
+                    .Select(Function(c)
+                                Return New PointF(c.Time, c.Intensity)
+                            End Function) _
+                    .SlideWindows(slideWindowSize:=2)
+
                     Dim A = scaler.Translate(signal.First)
                     Dim B = scaler.Translate(signal.Last)
 

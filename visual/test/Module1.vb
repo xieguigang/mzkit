@@ -64,7 +64,7 @@ Module Module1
             .MRMSelector(ions) _
             .Where(Function(ion) Not ion.chromatogram Is Nothing) _
             .Select(Function(ion)
-                        Return New NamedValue(Of PointF()) With {
+                        Return New NamedValue(Of ChromatogramTick()) With {
                             .Name = ion.ion.name,
                             .Description = ion.ion.ToString,
                             .Value = ion.chromatogram.PeakArea

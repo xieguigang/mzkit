@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Text.Xml.Linq
+Imports SMRUCC.MassSpectrum.Math
 Imports sys = System.Math
 
 Namespace mzML
@@ -55,7 +56,7 @@ Namespace mzML
         ''' <param name="chromatogram"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function PeakArea(chromatogram As chromatogram) As PointF()
+        Public Function PeakArea(chromatogram As chromatogram) As ChromatogramTick()
             Dim time = chromatogram.ByteArray("time array")
             Dim into = chromatogram.ByteArray("intensity array")
             Dim timeUnit = time.cvParams.KeyItem("time array").unitName
@@ -69,7 +70,7 @@ Namespace mzML
 
             Dim data = time_array _
                 .Select(Function(t, i)
-                            Return New PointF(t, intensity_array(i))
+                            Return New ChromatogramTick(t, intensity_array(i))
                         End Function) _
                 .ToArray
 

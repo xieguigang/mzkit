@@ -136,6 +136,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Chromatogram.vb" />
     <Compile Include="ms2AlignMatrix.vb" />
     <Compile Include="LibraryMatrix.vb" />
     <Compile Include="ms1.vb" />
