@@ -6,14 +6,14 @@ Over the years chromatography has gained an enviable position in analytical labo
 
 The chromatogram makes little sense to the layman as the peaks provide no information on the identity of the mixture components nor any information on the amount present.
 
-First of all it is necessary to understand what a chromatogram depicts. The chromatogram is a two-dimensional plot with the ordinate axis giving concentration in terms of detector response and the abscissa represents the time. The detector gives response as a peak whose height should be ideally dependent on concentration of the particular component.
+First of all it is necessary to understand what a chromatogram depicts. The chromatogram is a two-dimensional plot with the ordinate axis giving concentration in terms of detector response and the abscissa represents the time. **The detector gives response as a peak whose height should be ideally dependent on concentration of the particular component.**
 
 ![Retention Time](Time-Retention.jpg) 
 > Retention Time (tr)
 
 However, due to analysis conditions peaks may deviate from ideal shape and peak height can no longer be a true measure of the concentration and instead the area under the peak is considered as a measure of component concentration.
 
-Each peak represents a component present in the sample. Retention time is time interval between sample injection and the maximum of the peak. It is characteristic of the identity of the component under the operating conditions. Identity of the component can be confirmed by making injections of reference material under the same operational conditions. The matching of retention time of reference material and the component peak confirms the identity of the unknown sample component.
+Each peak represents a component present in the sample. **Retention time is time interval between sample injection and the maximum of the peak.** It is characteristic of the identity of the component under the operating conditions. Identity of the component can be confirmed by making injections of reference material under the same operational conditions. The matching of retention time of reference material and the component peak confirms the identity of the unknown sample component.
 
 Now let us consider a sample which contains more than one sample component. Likewise each component will be eluted at different retention times depending upon solute – stationary phase interactions and mobile phase flow characteristics.
 
