@@ -75,6 +75,8 @@ Module Module1
         For Each ion In ionData
             Call ion.Value.Plot(title:=ion.Name).AsGDIImage.SaveAs($"./{ion.Name.NormalizePathString}_chromatogram.png")
         Next
+
+        Pause()
     End Sub
 
 

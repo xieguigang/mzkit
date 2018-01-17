@@ -15,17 +15,21 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 ''' </summary>
 Public Module ChromatogramPlot
 
+    Public Const DefaultPadding$ = "padding: 350px 100px 250px 200px"
+
     <Extension>
     Public Function Plot(chromatogram As PointF(),
-                         Optional size$ = "2000,1800",
-                         Optional padding$ = g.DefaultPadding,
+                         Optional size$ = "2100,1600",
+                         Optional padding$ = DefaultPadding,
                          Optional bg$ = "white",
                          Optional title$ = "NULL",
-                         Optional curveStyle$ = Stroke.AxisStroke) As GraphicsData
+                         Optional curveStyle$ = Stroke.AxisStroke,
+                         Optional titleFontCSS$ = CSSFont.Win7VeryLarge) As GraphicsData
 
         Dim timeTicks#() = chromatogram.X.CreateAxisTicks
         Dim intoTicks#() = chromatogram.Y.CreateAxisTicks
         Dim curvePen As Pen = Stroke.TryParse(curveStyle).GDIObject
+        Dim titleFont As Font = CSSFont.TryParse(titleFontCSS)
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 Dim rect As Rectangle = region.PlotRegion
@@ -52,6 +56,11 @@ Public Module ChromatogramPlot
 
                     Call g.DrawLine(curvePen, A, B)
                 Next
+
+                Dim left = rect.Left + (rect.Width - g.MeasureString(title, titleFont).Width) / 2
+                Dim top = rect.Top + 10
+
+                Call g.DrawString(title, titleFont, Brushes.Black, left, top)
             End Sub
 
         Return g.GraphicsPlots(

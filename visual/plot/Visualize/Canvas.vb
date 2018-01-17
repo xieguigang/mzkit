@@ -19,7 +19,7 @@ Imports SMRUCC.proteomics.PNL.OMICS.MwtWinDll.Extensions
 ''' </summary>
 Public Module Canvas
 
-    Const Padding$ = "padding: 250px 100px 200px 200px"
+    Public Const Padding$ = "padding: 250px 100px 200px 200px"
 
     <Extension> Private Function __possibleFormula(mz#, Optional chargeRange$ = "-1,1") As String
         Dim candidates As FormulaFinderResult() = IFormulaFinder.CommonAtoms.SearchByMZAndLimitCharges(chargeRange, mz, 20)
