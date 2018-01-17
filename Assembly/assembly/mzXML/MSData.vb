@@ -48,20 +48,25 @@ Namespace mzXML
 
     End Class
 
-    Public Class peaks
+    Public Class peaks : Implements IBase64Container
 
         <XmlAttribute> Public Property compressionType As String
         <XmlAttribute> Public Property compressedLen As Integer
         <XmlAttribute> Public Property precision As Double
         <XmlAttribute> Public Property byteOrder As String
         <XmlAttribute> Public Property contentType As String
-        <XmlText> Public Property value As String
+
+        <XmlText>
+        Public Property value As String Implements IBase64Container.BinaryArray
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
         End Function
-
     End Class
+
+    Public Interface IBase64Container
+        Property BinaryArray As String
+    End Interface
 
     Public Structure precursorMz
 

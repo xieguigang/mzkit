@@ -31,7 +31,7 @@ Namespace mzML
         <Extension>
         Public Function MRMSelector(chromatograms As IEnumerable(Of chromatogram), ionPairs As IEnumerable(Of IonPair)) As IEnumerable(Of (ion As IonPair, chromatogram As chromatogram))
             With chromatograms.ToArray
-                Return ionPairs.Select(Function(ion) (ion, .Where(Function(c) ion.Assert(c)).FirstOrDefault))
+                Return ionPairs.Select(Function(ion) (ion, .Where(Function(c) Not c.id = "TIC" AndAlso ion.Assert(c)).FirstOrDefault))
             End With
         End Function
 
@@ -53,6 +53,8 @@ Namespace mzML
             Dim into = chromatogram.ByteArray("intensity array")
             Dim timeUnit = time.cvParams.KeyItem("time array").unitName
             Dim intoUnit = into.cvParams.KeyItem("intensity array").unitName
+            Dim time_array = time.binary
+            Dim intensity_array = into.binary
 
 
         End Function

@@ -1,6 +1,7 @@
 ﻿Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
+Imports SMRUCC.MassSpectrum.Assembly.mzXML
 
 Namespace mzML
 
@@ -117,11 +118,16 @@ Namespace mzML
         Public Property list As binaryDataArray()
     End Class
 
-    Public Class binaryDataArray
+    Public Class binaryDataArray : Implements IBase64Container
+
         Public Property encodedLength As Integer
         <XmlElement(NameOf(cvParam))>
         Public Property cvParams As cvParam()
-        Public Property binary As String
+        Public Property binary As String Implements IBase64Container.BinaryArray
+
+        Public Overrides Function ToString() As String
+            Return binary
+        End Function
     End Class
 
     Public Class cvParam : Implements INamedValue

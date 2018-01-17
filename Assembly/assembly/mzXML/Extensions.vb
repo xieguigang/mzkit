@@ -12,7 +12,7 @@ Public Module Extensions
     ''' <param name="peaks"></param>
     ''' <returns></returns>
     <Extension> Public Function ExtractMzI(peaks As peaks) As List(Of MSMSPeak)
-        Dim floats#() = peaks.value.__decode
+        Dim floats#() = peaks.Base64Decode
         Dim data As New List(Of MSMSPeak)
 
         For Each signal As Double() In floats.Split(2)
@@ -51,8 +51,8 @@ Public Module Extensions
     ''' </summary>
     ''' <param name="peaks$"></param>
     ''' <returns></returns>
-    <Extension> Private Function __decode(peaks$) As Double()
-        Dim bytes As Byte() = Convert.FromBase64String(peaks)
+    <Extension> Public Function Base64Decode(stream As IBase64Container) As Double()
+        Dim bytes As Byte() = Convert.FromBase64String(stream.BinaryArray)
         Dim ms As New MemoryStream
         Dim gz As New ZLibStream(New MemoryStream(bytes), CompressionMode.Decompress)
 
@@ -63,6 +63,7 @@ Public Module Extensions
             .Split(8) _
             .Select(Function(b) BitConverter.ToDouble(b, Scan0)) _
             .ToArray
+
         Return floats
     End Function
 End Module
