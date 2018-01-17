@@ -72,7 +72,9 @@ Module Module1
                     End Function) _
             .ToArray
 
-        Call ionData.First.Value.Plot(title:=ionData.First.Name).AsGDIImage.SaveAs("./test.png")
+        For Each ion In ionData
+            Call ion.Value.Plot(title:=ion.Name).AsGDIImage.SaveAs($"./{ion.Name.NormalizePathString}_chromatogram.png")
+        Next
     End Sub
 
 
