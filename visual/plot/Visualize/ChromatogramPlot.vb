@@ -41,13 +41,16 @@ Public Module ChromatogramPlot
                          Optional curveStyle$ = Stroke.AxisStroke,
                          Optional titleFontCSS$ = CSSFont.Win7VeryLarge,
                          Optional showMRMRegion As Boolean = False,
-                         Optional ROI_styleCSS$ = "stroke: red; stroke-width: 2px; stroke-dash: dash;") As GraphicsData
+                         Optional ROI_styleCSS$ = "stroke: red; stroke-width: 2px; stroke-dash: dash;",
+                         Optional baseLine_styleCSS$ = "stroke: green; stroke-width: 2px; stroke-dash: dash;",
+                         Optional debug As Boolean = False) As GraphicsData
 
         Dim timeTicks#() = chromatogram.TimeArray.CreateAxisTicks
         Dim intoTicks#() = chromatogram.IntensityArray.CreateAxisTicks
         Dim curvePen As Pen = Stroke.TryParse(curveStyle).GDIObject
         Dim titleFont As Font = CSSFont.TryParse(titleFontCSS)
         Dim ROIpen As Pen = Stroke.TryParse(ROI_styleCSS).GDIObject
+        Dim baselinePen As Pen = Stroke.TryParse(baseLine_styleCSS).GDIObject
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 Dim rect As Rectangle = region.PlotRegion
@@ -107,6 +110,8 @@ Public Module ChromatogramPlot
 
                     A = New PointF(timeTicks.Min, base)
                     B = New PointF(timeTicks.Max, base)
+                    ROIpen = baselinePen
+
                     drawLine(A, B)
                 End If
 

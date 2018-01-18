@@ -93,9 +93,9 @@ Module Module1
         For Each ion In ionData
             Call ion _
                 .Value _
-                .Plot(title:=ion.Name, showMRMRegion:=True) _
+                .Plot(title:=ion.Name, showMRMRegion:=True, debug:=True) _
                 .AsGDIImage _
-                .SaveAs($"./{ion.Name.NormalizePathString}_chromatogram.png")
+                .SaveAs($"./{ion.Name.NormalizePathString.Replace(" ", "-")}_chromatogram.png")
         Next
 
         Pause()
