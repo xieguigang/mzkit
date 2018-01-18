@@ -15,6 +15,8 @@ Public Module PeakArea
     ''' 
     <Extension>
     Public Function PeakArea(chromatogram As VectorModel(Of ChromatogramTick), peak As DoubleRange, Optional baseline# = 0.65) As Double
+        ' gets all signals that its chromatogram time inside the peak time range
+        ' time >= time range min andalso time <= time range max 
         Dim S = chromatogram((chromatogram!Time >= peak.Min) & (chromatogram!Time <= peak.Max))  ' TPA
         Dim B = chromatogram.Base(quantile:=baseline)
 
