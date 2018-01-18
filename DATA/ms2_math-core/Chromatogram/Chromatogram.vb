@@ -45,6 +45,7 @@ Public Module Chromatogram
         Dim maxIndex = Which.Max(chromatogram!Intensity)
         Dim timeRange#()
 
+        ' removes all of the ticks that intensity value less than baseline.
         chromatogram = chromatogram(chromatogram!Intensity >= chromatogram.Base(baselineQuantile))
 
         With chromatogram.ToArray
@@ -110,6 +111,7 @@ Public Module Chromatogram
             End If
         Next
 
+        ' using the entire area???
         Return chromatogram.Last.Time
     End Function
 End Module
