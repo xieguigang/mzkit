@@ -36,7 +36,7 @@ Public Module Chromatogram
     ''' <param name="threshold">Unit in degree</param>
     ''' <returns></returns>
     <Extension>
-    Public Function MRMPeak(chromatogram As VectorModel(Of ChromatogramTick), Optional threshold# = 45, Optional winSize% = 5, Optional baselineQuantile# = 0.8) As DoubleRange
+    Public Function MRMPeak(chromatogram As VectorModel(Of ChromatogramTick), Optional threshold# = 45, Optional winSize% = 5) As DoubleRange
 
         ' 先找到最高的信号，然后逐步分别往两边延伸
         ' 直到下降的速率小于阈值
