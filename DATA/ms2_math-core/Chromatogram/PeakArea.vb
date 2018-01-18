@@ -1,6 +1,29 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Scripting
 
 Public Module PeakArea
+
+    ''' <summary>
+    ''' ``B + A = S``
+    ''' </summary>
+    ''' <param name="chromatogram"></param>
+    ''' <param name="peak">The time range of the peak</param>
+    ''' <param name="baseline">The quantile threshold of the baseline</param>
+    ''' <returns></returns>
+    ''' 
+    <Extension>
+    Public Function PeakArea(chromatogram As VectorModel(Of ChromatogramTick), peak As DoubleRange, Optional baseline# = 0.65) As Double
+        Dim S = chromatogram((chromatogram!Time >= peak.Min) & (chromatogram!Time <= peak.Max))  ' TPA
+        Dim B = chromatogram.Base(quantile:=baseline)
+        Dim A = Aggregate signal As ChromatogramTick
+                In S
+                Let PA = signal.Intensity - B
+                Into Sum(PA)
+
+        Return A
+    End Function
 
     ''' <summary>
     ''' 只是返回peak的顶点坐标和顶点值
