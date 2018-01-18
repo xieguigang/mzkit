@@ -2,7 +2,7 @@
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 
-<Assembly: AssemblyTitle("sciBASIC zip stream library")>
+<Assembly: AssemblyTitle("zip stream library")>
 <Assembly: AssemblyDescription("zlibnet")>
 <Assembly: AssemblyConfiguration("")>
 <Assembly: AssemblyCompany("http://zlibnet.codeplex.com")>

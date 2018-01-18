@@ -8,7 +8,7 @@
     <ProjectGuid>{075E1DA3-54AC-4D7C-9D4E-E34AA13910A8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>sciBASIC.ZIP</RootNamespace>
+    <RootNamespace>zlibnet</RootNamespace>
     <AssemblyName>zlibnet</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
