@@ -82,7 +82,7 @@ Module Module1
 
         For Each ion In ionData
 
-            Dim base = ion.Value.Base(quantile:=0.9)
+            Dim base = ion.Value.Base(quantile:=0.65)
             Dim max = ion.Value.Shadows!Intensity.Max
 
             Call $"{ion.Name}:  {base}/{max} = {(100 * base / max).ToString("F2")}%".__DEBUG_ECHO

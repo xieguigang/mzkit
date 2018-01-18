@@ -22,7 +22,7 @@ Public Module Chromatogram
     End Function
 
     <Extension>
-    Public Function Base(chromatogram As IEnumerable(Of ChromatogramTick), Optional quantile# = 0.8) As Double
+    Public Function Base(chromatogram As IEnumerable(Of ChromatogramTick), Optional quantile# = 0.65) As Double
         Dim q As QuantileEstimationGK = chromatogram.Shadows!Intensity.GKQuantile
         Dim baseValue = q.Query(quantile)
 
@@ -42,11 +42,14 @@ Public Module Chromatogram
         ' 直到下降的速率小于阈值
         ' 因为MRM方法在一个色谱之中只出一个峰，所以在这里仅仅实现一个非常简单的峰的边界检测的算法
 
-        Dim maxIndex = Which.Max(chromatogram!Intensity)
+        Dim maxIndex
         Dim timeRange#()
 
+        ' 2018-1-18 如果事先将基线移除的话，或导致峰的范围扩大
+        ' 取消掉
         ' removes all of the ticks that intensity value less than baseline.
-        chromatogram = chromatogram(chromatogram!Intensity >= chromatogram.Base(baselineQuantile))
+        ' chromatogram = chromatogram(chromatogram!Intensity >= chromatogram.Base(baselineQuantile))
+        maxIndex = Which.Max(chromatogram!Intensity)
 
         With chromatogram.ToArray
 
