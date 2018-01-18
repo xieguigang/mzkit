@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.Drawing.Drawing2D
+Imports System.Math
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
@@ -23,7 +24,7 @@ Public Module Canvas
 
     <Extension> Private Function __possibleFormula(mz#, Optional chargeRange$ = "-1,1") As String
         Dim candidates As FormulaFinderResult() = IFormulaFinder.CommonAtoms.SearchByMZAndLimitCharges(chargeRange, mz, 20)
-        candidates = candidates.OrderBy(Function(m) Math.Abs(m.DeltaMass)).ToArray
+        candidates = candidates.OrderBy(Function(m) Abs(m.DeltaMass)).ToArray
         Return candidates.FirstOrDefault?.EmpiricalFormula
     End Function
 

@@ -7,6 +7,7 @@ Imports Microsoft.VisualBasic.Text
 Imports SMRUCC.MassSpectrum.Assembly
 Imports SMRUCC.MassSpectrum.Assembly.mzML
 Imports SMRUCC.MassSpectrum.Math
+Imports SMRUCC.MassSpectrum.Visualization
 Imports SMRUCC.proteomics.MS_Spectrum
 
 Module Module1
