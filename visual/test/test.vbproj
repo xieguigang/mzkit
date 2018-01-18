@@ -175,7 +175,7 @@
       <Project>{075e1da3-54ac-4d7c-9d4e-e34aa13910a8}</Project>
       <Name>zlibnet</Name>
     </ProjectReference>
-    <ProjectReference Include="..\plot\plots.vbproj">
+    <ProjectReference Include="..\plot\msData-visualize.vbproj">
       <Project>{f2147043-7c16-48f8-838b-3d2cf14b0a7b}</Project>
       <Name>plots</Name>
     </ProjectReference>
