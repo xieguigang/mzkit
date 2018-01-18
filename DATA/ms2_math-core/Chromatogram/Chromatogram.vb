@@ -33,7 +33,7 @@ Public Module Chromatogram
     ''' Returns time range for the peak
     ''' </summary>
     ''' <param name="chromatogram">应该是按照时间升序排序了的</param>
-    ''' <param name="threshold">Unit in degree</param>
+    ''' <param name="threshold">Unit in degree, values in range ``[0-90]``</param>
     ''' <returns></returns>
     <Extension>
     Public Function MRMPeak(chromatogram As VectorModel(Of ChromatogramTick), Optional threshold# = 45, Optional winSize% = 5) As DoubleRange
