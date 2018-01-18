@@ -17,9 +17,16 @@ Public Module PeakArea
     Public Function PeakArea(chromatogram As VectorModel(Of ChromatogramTick), peak As DoubleRange, Optional baseline# = 0.65) As Double
         Dim S = chromatogram((chromatogram!Time >= peak.Min) & (chromatogram!Time <= peak.Max))  ' TPA
         Dim B = chromatogram.Base(quantile:=baseline)
+
+        ' 2018-1-18 
+        ' 下面的聚合表达式只会计算去除本底之后的信号量大于零的信号量的和
+        ' 取大于零是为了解决类似于 Homocysteine_chromatogram.png 这类基线过高的问题
+        ' 因为可能峰检测可能会将本底的部分也计算在内，在这些额外被计算在内的基线信号之中，由于有些信号量低于baseline基线的，所以会出现负值
+        ' 很明显这个是不需要的
         Dim A = Aggregate signal As ChromatogramTick
                 In S
                 Let PA = signal.Intensity - B
+                Where PA > 0
                 Into Sum(PA)
 
         Return A
