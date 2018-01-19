@@ -223,10 +223,6 @@
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
       <Name>ms2_math-core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\zlibnet\src\zlibnet.vbproj">
-      <Project>{075e1da3-54ac-4d7c-9d4e-e34aa13910a8}</Project>
-      <Name>zlibnet</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\MwtWinDll\MwtWinDll.Extensions\MwtWinDll.Extensions.vbproj">
       <Project>{1b7c8c1b-b794-4f0a-8d6c-0f32f6d4e927}</Project>
       <Name>MwtWinDll.Extensions</Name>
@@ -235,7 +231,7 @@
       <Project>{78332537-7ecc-4b74-8aa9-ba66ab296af0}</Project>
       <Name>MwtWinDll</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\zlibnet\src\zlibnet.vbproj">
+    <ProjectReference Include="..\..\runtime\zlibnet\src\zlibnet.vbproj">
       <Project>{075e1da3-54ac-4d7c-9d4e-e34aa13910a8}</Project>
       <Name>zlibnet</Name>
     </ProjectReference>

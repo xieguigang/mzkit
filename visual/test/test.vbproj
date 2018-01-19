@@ -171,7 +171,7 @@
       <Project>{78332537-7ecc-4b74-8aa9-ba66ab296af0}</Project>
       <Name>MwtWinDll</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\zlibnet\src\zlibnet.vbproj">
+    <ProjectReference Include="..\..\runtime\zlibnet\src\zlibnet.vbproj">
       <Project>{075e1da3-54ac-4d7c-9d4e-e34aa13910a8}</Project>
       <Name>zlibnet</Name>
     </ProjectReference>

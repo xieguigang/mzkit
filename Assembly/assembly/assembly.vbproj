@@ -207,7 +207,7 @@
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
       <Name>ms2_math-core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\zlibnet\src\zlibnet.vbproj">
+    <ProjectReference Include="..\..\runtime\zlibnet\src\zlibnet.vbproj">
       <Project>{075e1da3-54ac-4d7c-9d4e-e34aa13910a8}</Project>
       <Name>zlibnet</Name>
     </ProjectReference>

@@ -27,7 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MwtWinDll", "MwtWinDll", "{
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MwtWinDll.Extensions", "..\MwtWinDll\MwtWinDll.Extensions\MwtWinDll.Extensions.vbproj", "{1B7C8C1B-B794-4F0A-8D6C-0F32F6D4E927}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "zlibnet", "..\zlibnet\src\zlibnet.vbproj", "{075E1DA3-54AC-4D7C-9D4E-E34AA13910A8}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "zlibnet", "..\runtime\zlibnet\src\zlibnet.vbproj", "{075E1DA3-54AC-4D7C-9D4E-E34AA13910A8}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "assembly", "..\Assembly\assembly\assembly.vbproj", "{95F7D65E-9DB1-4605-9FD3-25433277AF88}"
 EndProject
