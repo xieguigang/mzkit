@@ -1,14 +1,13 @@
-﻿Imports System.Drawing
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Math
-Imports Microsoft.VisualBasic.Text
-Imports SMRUCC.MassSpectrum.Assembly
-Imports SMRUCC.MassSpectrum.Assembly.mzML
+Imports SMRUCC.MassSpectrum.Assembly.MarkupData
+Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
+Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzXML
 Imports SMRUCC.MassSpectrum.Math
 Imports SMRUCC.MassSpectrum.Visualization
-Imports SMRUCC.proteomics.MS_Spectrum
+Imports SMRUCC.MassSpectrum.Visualization.DATA.SpectrumJSON
 
 Module Module1
 
@@ -144,10 +143,15 @@ Module Module1
 
         'Call CommonAtoms.SearchByMZAndLimitCharges("-4,6", 100).SaveTo("x:\test.csv")
 
+        Dim title = <p>
+                        H<sub>2</sub>O<sub>5</sub>C<sub>3</sub>Ag
+                        <br/>
+                        <span style="color:blue; font-size:20">Test MS/MS spectra plot</span>
+                    </p>
 
         Call MetlinData.Load("../../SpectrumChart/Spectrum.json") _
             .Data(Scan0) _
-            .Plot(title:="H<sub>2</sub>O<sub>5</sub>C<sub>3</sub>Ag</br><span style=""color:blue; font-size:20"">Test MS/MS spectra plot</span>",
+            .Plot(title:=title.ToString,
                   showPossibleFormula:=True) _
             .Save("./Plot.png")
     End Sub
