@@ -72,13 +72,6 @@ Namespace mzXML
         End Function
     End Class
 
-    Public Interface IBase64Container
-        Property BinaryArray As String
-
-        Function GetPrecision() As Integer
-        Function GetCompressionType() As String
-    End Interface
-
     Public Structure precursorMz
 
         <XmlAttribute> Public Property windowWideness As String

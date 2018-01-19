@@ -143,6 +143,7 @@
     <Compile Include="ASCII\Peaks.vb" />
     <Compile Include="ASCII\MSP\Comments.vb" />
     <Compile Include="ASCII\MSP\MspData.vb" />
+    <Compile Include="MarkupData\Class1.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -158,13 +159,13 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="mzML\IonPair.vb" />
-    <Compile Include="mzML\Extensions.vb" />
-    <Compile Include="mzML\XML.vb" />
-    <Compile Include="mzXML\Extensions.vb" />
-    <Compile Include="mzXML\Info.vb" />
-    <Compile Include="mzXML\MSData.vb" />
-    <Compile Include="mzXML\XML.vb" />
+    <Compile Include="MarkupData\mzML\IonPair.vb" />
+    <Compile Include="MarkupData\mzML\Extensions.vb" />
+    <Compile Include="MarkupData\mzML\XML.vb" />
+    <Compile Include="MarkupData\mzXML\Extensions.vb" />
+    <Compile Include="MarkupData\mzXML\Info.vb" />
+    <Compile Include="MarkupData\mzXML\MSData.vb" />
+    <Compile Include="MarkupData\mzXML\XML.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
