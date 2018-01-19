@@ -20,7 +20,7 @@ Public Module ChromatogramPeakPlot
     Public Const DefaultPadding$ = "padding: 350px 100px 250px 200px"
 
     ''' <summary>
-    ''' 
+    ''' 绘制一个单独的峰
     ''' </summary>
     ''' <param name="chromatogram"></param>
     ''' <param name="size$"></param>

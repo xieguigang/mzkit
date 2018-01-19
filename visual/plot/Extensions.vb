@@ -1,6 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports SMRUCC.MassSpectrum.Math
+Imports SMRUCC.MassSpectrum.Visualization.DATA.SpectrumJSON
 
 Public Module Extensions
 
@@ -10,13 +11,13 @@ Public Module Extensions
     ''' <param name="matrix"></param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function SpectrumFromMatrix(matrix As IEnumerable(Of LibraryMatrix)) As IEnumerable(Of spectrumData)
+    Public Iterator Function SpectrumFromMatrix(matrix As IEnumerable(Of LibraryMatrix)) As IEnumerable(Of SpectrumData)
         For Each group As LibraryMatrix In matrix
-            Yield New spectrumData With {
+            Yield New SpectrumData With {
                 .name = group.Name,
                 .data = group _
                     .Select(Function(l)
-                                Return New MSSignal With {
+                                Return New IntensityCoordinate With {
                                     .x = l.mz,
                                     .y = l.intensity
                                 }

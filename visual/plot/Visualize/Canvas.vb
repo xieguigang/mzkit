@@ -12,6 +12,7 @@ Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Text
+Imports SMRUCC.MassSpectrum.Visualization.DATA.SpectrumJSON
 Imports SMRUCC.proteomics.PNL.OMICS.MwtWinDll
 Imports SMRUCC.proteomics.PNL.OMICS.MwtWinDll.Extensions
 
@@ -39,7 +40,7 @@ Public Module Canvas
     ''' <returns></returns>
     ''' 
     <Extension>
-    Public Function Plot(MS_spectrum As spectrumData,
+    Public Function Plot(MS_spectrum As SpectrumData,
                          Optional size$ = "2000,1600",
                          Optional padding$ = Canvas.Padding,
                          Optional bg$ = "white",
@@ -88,7 +89,7 @@ Public Module Canvas
                 Dim labelFont As Font = CSSFont.TryParse(labelCSS).GDIObject
                 Dim linkPen As New Pen(Color.Black) With {.Width = 2, .DashStyle = DashStyle.Dot}
 
-                For Each hit As MSSignal In MS_spectrum.data
+                For Each hit As IntensityCoordinate In MS_spectrum.data
                     Dim point As PointF = mapper.Translate(x:=hit.x, y:=hit.y)
                     Dim low As New PointF(point.X, bottom)
                     Dim percentage# = hit.y / maxInto

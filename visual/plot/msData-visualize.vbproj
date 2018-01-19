@@ -151,12 +151,13 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DATA\SpectrumJSON\IntensityCoordinate.vb" />
     <Compile Include="Extensions.vb" />
     <Compile Include="Visualize\Canvas.vb" />
     <Compile Include="Visualize\ChromatogramPeakPlot.vb" />
     <Compile Include="Visualize\ChromatogramPlot.vb" />
     <Compile Include="Visualize\PeakAssign.vb" />
-    <Compile Include="Visualize\spectrumData.vb" />
+    <Compile Include="DATA\SpectrumJSON\SpectrumData.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

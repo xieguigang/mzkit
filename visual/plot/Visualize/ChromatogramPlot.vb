@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Public Module ChromatogramPlot
 
@@ -14,7 +15,9 @@ Public Module ChromatogramPlot
     Public Function Plot(mzML$,
                          Optional size$ = "2100,1600",
                          Optional margin$ = g.DefaultPadding,
-                         Optional bg$ = "white") As GraphicsData
+                         Optional bg$ = "white",
+                         Optional colors$ = "",
+                         Optional penStyle$ = Stroke.AxisStroke) As GraphicsData
 
     End Function
 End Module
