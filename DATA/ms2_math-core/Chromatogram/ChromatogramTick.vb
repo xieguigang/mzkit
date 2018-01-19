@@ -1,4 +1,6 @@
-﻿''' <summary>
+﻿Imports System.Drawing
+Imports System.Runtime.CompilerServices
+''' <summary>
 ''' The chromatogram signal ticks
 ''' </summary>
 Public Class ChromatogramTick
@@ -25,4 +27,9 @@ Public Class ChromatogramTick
     Public Overrides Function ToString() As String
         Return $"{Intensity}@{Time}s"
     End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Narrowing Operator CType(tick As ChromatogramTick) As PointF
+        Return New PointF(tick.Time, tick.Intensity)
+    End Operator
 End Class
