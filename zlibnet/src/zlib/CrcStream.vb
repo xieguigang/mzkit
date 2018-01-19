@@ -1,11 +1,9 @@
-Imports System.Collections.Generic
-Imports System.Linq
-Imports System.Text
 Imports System.IO
 
 Public Class CrcStream
-	Inherits Stream
-	Private pCrcValue As UInteger = 0
+    Inherits Stream
+
+    Private pCrcValue As UInteger = 0
 	Private pStream As Stream
 
 	Public Sub New(stream As Stream)
@@ -84,7 +82,6 @@ Public Class CrcStream
 		End Set
 	End Property
 End Class
-
 
 Public NotInheritable Class CrcCalculator
 	Private Sub New()

@@ -1,6 +1,7 @@
 Imports System.Collections
 Imports System.IO
 Imports System.Text
+Imports Microsoft.VisualBasic.Language
 
 Public Class ZipReader
     Implements IEnumerable(Of ZipEntry)
@@ -170,9 +171,10 @@ Public Class ZipReader
     End Function
 
     Public Sub Read(writer As Stream)
-        Dim i As Integer
+        Dim i As int = 0
         Dim buff As Byte() = New Byte(4095) {}
-        While (InlineAssignHelper(i, Me.Read(buff, 0, buff.Length))) > 0
+
+        While (i = Me.Read(buff, 0, buff.Length)) > 0
             writer.Write(buff, 0, i)
         End While
     End Sub
@@ -190,7 +192,6 @@ Public Class ZipReader
             End Try
         End If
     End Sub
-
 
     Private Class ZipEntryEnumerator
         Implements IEnumerator(Of ZipEntry)
@@ -218,10 +219,6 @@ Public Class ZipReader
             pReader.Reset()
         End Sub
     End Class
-    Private Shared Function InlineAssignHelper(Of T)(ByRef target As T, value As T) As T
-        target = value
-        Return value
-    End Function
 End Class
 
 'public class ZipEntryCollection : List<ZipEntry>

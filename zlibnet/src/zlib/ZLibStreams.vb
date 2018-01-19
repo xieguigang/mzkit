@@ -1,6 +1,4 @@
 Imports System.IO
-Imports System.Runtime.InteropServices
-Imports System.Runtime.Serialization
 
 ''' <summary>Provides methods and properties used to compress and decompress streams.</summary>
 Public Class DeflateStream
