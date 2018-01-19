@@ -1,7 +1,7 @@
 ﻿Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace mzXML
+Namespace MarkupData.mzXML
 
     <XmlType("msRun")> Public Class MSData
 

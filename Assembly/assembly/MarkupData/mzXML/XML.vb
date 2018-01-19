@@ -3,7 +3,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text.Xml.Linq
 Imports SMRUCC.MassSpectrum.Math
 
-Namespace mzXML
+Namespace MarkupData.mzXML
 
     ''' <summary>
     ''' ``*.mzXML`` raw data
@@ -12,7 +12,7 @@ Namespace mzXML
     <XmlType("mzXML", [Namespace]:="http://sashimi.sourceforge.net/schema_revision/mzXML_3.2")> Public Class XML
 
         Public Property msRun As MSData
-        Public Property index As index
+        Public Property index As Index
         Public Property indexOffset As Long
         Public Property shal As String
 

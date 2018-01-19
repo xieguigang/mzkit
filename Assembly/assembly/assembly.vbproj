@@ -143,7 +143,7 @@
     <Compile Include="ASCII\Peaks.vb" />
     <Compile Include="ASCII\MSP\Comments.vb" />
     <Compile Include="ASCII\MSP\MspData.vb" />
-    <Compile Include="MarkupData\Class1.vb" />
+    <Compile Include="MarkupData\IBase64Container.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
