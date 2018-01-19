@@ -7,7 +7,10 @@ Dim xlsx$ = "./ion-pairs.xlsx"
 Dim ionPairs = Extensions.LoadIonPairs(xlsx, "ion pairs")
 
 For Each file As String In ls - l - r - "*.mzML" <= directory
-    Call ionPairs.Plot(file).AsGDIImage.SaveAs($"./{file.BaseName}.png")
+    Call ionPairs _
+		.Plot(file) _
+		.AsGDIImage _
+		.SaveAs($"./{file.BaseName}.png")
 Next
 ```
 

@@ -1,10 +1,22 @@
 # MassSpectrum-toolkits
 
 ![](./Manuscript/3252_428.0344@78_METLIN034522_POS_10V_[M+H]+.png)
+> MS/MS alignment for metabolite identification
 
-METLIN MS/MS spectrum data display
+```vbnet
+Dim xlsx$ = "./ion-pairs.xlsx"
+Dim ionPairs = Extensions.LoadIonPairs(xlsx, "ion pairs")
 
-![](./Plot.png)
+For Each file As String In ls - l - r - "*.mzML" <= directory
+    Call ionPairs _
+		.Plot(file) _
+		.AsGDIImage _
+		.SaveAs($"./{file.BaseName}.png")
+Next
+```
+
+![](./DATA/Data20180111-L7-40(4).png)
+![](./DATA/Data20180111-WASH.png)
 
 ```vbnet
 ' Test code
