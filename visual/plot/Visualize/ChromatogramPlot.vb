@@ -32,12 +32,12 @@ Public Module ChromatogramPlot
     <Extension>
     Public Function Plot(ions As IonPair(),
                          mzML$,
-                         Optional size$ = "1500,800",
+                         Optional size$ = "1600,900",
                          Optional margin$ = g.DefaultPadding,
                          Optional bg$ = "white",
                          Optional colorsSchema$ = "scibasic.category31()",
                          Optional penStyle$ = Stroke.ScatterLineStroke,
-                         Optional labelFontStyle$ = CSSFont.Win7LargerBold,
+                         Optional labelFontStyle$ = CSSFont.Win7Normal,
                          Optional labelConnectorStroke$ = Stroke.StrongHighlightStroke) As GraphicsData
 
         Dim labelFont As Font = CSSFont.TryParse(labelFontStyle)
@@ -161,7 +161,7 @@ Public Module ChromatogramPlot
                     .Anchors(anchors) _
                     .Width(rect.Width) _
                     .Height(rect.Height) _
-                    .Start()
+                    .Start(showProgress:=False)
 
                 For Each i As SeqValue(Of Label) In labels.SeqIterator
                     Call g.DrawLine(labelConnector, i.value, anchors(i))
