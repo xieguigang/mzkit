@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 
 Namespace MarkupData.mzML
 
+    <XmlType("indexedmzML", [Namespace]:="http://psi.hupo.org/ms/mzml")>
     Public Class Xml
         Public Property mzML As mzML
         Public Property indexList As indexList
