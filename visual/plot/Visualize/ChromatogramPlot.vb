@@ -17,7 +17,7 @@ Public Module ChromatogramPlot
                          Optional margin$ = g.DefaultPadding,
                          Optional bg$ = "white",
                          Optional colors$ = "",
-                         Optional penStyle$ = Stroke.AxisStroke) As GraphicsData
+                         Optional penStyle$ = Stroke.ScatterLineStroke) As GraphicsData
 
     End Function
 End Module

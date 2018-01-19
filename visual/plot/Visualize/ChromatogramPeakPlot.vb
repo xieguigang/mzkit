@@ -38,7 +38,7 @@ Public Module ChromatogramPeakPlot
                          Optional padding$ = DefaultPadding,
                          Optional bg$ = "white",
                          Optional title$ = "NULL",
-                         Optional curveStyle$ = Stroke.AxisStroke,
+                         Optional curveStyle$ = Stroke.ScatterLineStroke,
                          Optional titleFontCSS$ = CSSFont.Win7VeryLarge,
                          Optional showMRMRegion As Boolean = False,
                          Optional ROI_styleCSS$ = "stroke: red; stroke-width: 2px; stroke-dash: dash;",
