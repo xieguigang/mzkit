@@ -153,6 +153,7 @@
   <ItemGroup>
     <Compile Include="Extensions.vb" />
     <Compile Include="Visualize\Canvas.vb" />
+    <Compile Include="Visualize\ChromatogramPeakPlot.vb" />
     <Compile Include="Visualize\ChromatogramPlot.vb" />
     <Compile Include="Visualize\PeakAssign.vb" />
     <Compile Include="Visualize\spectrumData.vb" />
