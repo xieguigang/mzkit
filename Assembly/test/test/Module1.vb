@@ -2,9 +2,8 @@
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports SMRUCC.MassSpectrum.Assembly
 Imports SMRUCC.MassSpectrum.Assembly.ASCII.MSP
-Imports SMRUCC.MassSpectrum.Assembly.mzML
+Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
 
 Module Module1
 
@@ -18,7 +17,7 @@ Module Module1
                         Return New NamedValue(Of PointF()) With {
                             .Name = ion.ion.name,
                             .Description = ion.ion.ToString,
-                            .Value = ion.chromatogram.PeakArea
+                            .Value = ion.chromatogram.PeakArea.Select(Function(tick) CType(tick, PointF)).ToArray
                         }
                     End Function) _
             .ToArray

@@ -138,6 +138,10 @@
       <Project>{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}</Project>
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\DATA\ms2_math-core\ms2_math-core.vbproj">
+      <Project>{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}</Project>
+      <Name>ms2_math-core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\assembly\assembly.vbproj">
       <Project>{95F7D65E-9DB1-4605-9FD3-25433277AF88}</Project>
       <Name>assembly</Name>
