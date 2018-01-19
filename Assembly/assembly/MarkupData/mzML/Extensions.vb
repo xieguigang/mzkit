@@ -3,7 +3,7 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Text.Xml.Linq
 Imports SMRUCC.MassSpectrum.Math
 
-Namespace mzML
+Namespace MarkupData.mzML
 
     Public Module Extensions
 

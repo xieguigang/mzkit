@@ -3,7 +3,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports sys = System.Math
 
-Namespace mzML
+Namespace MarkupData.mzML
 
     Public Class IonPair : Implements INamedValue
 

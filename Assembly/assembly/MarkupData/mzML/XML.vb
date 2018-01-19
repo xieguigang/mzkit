@@ -1,9 +1,8 @@
 ﻿Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
-Imports SMRUCC.MassSpectrum.Assembly.mzXML
 
-Namespace mzML
+Namespace MarkupData.mzML
 
     Public Class Xml
         Public Property mzML As mzML
