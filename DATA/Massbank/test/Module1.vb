@@ -18,7 +18,7 @@ Module Module1
 
     Sub dumpPubChem()
 
-        Call SMRUCC.MassSpectrum.DATA.File.Extensions.DumpingPubChemAnnotations("D:\smartnucl_integrative\DATA\NCBI\SDF", "./ddddd.csv")
+        Call SMRUCC.MassSpectrum.DATA.File.DumpingPubChemAnnotations("D:\smartnucl_integrative\DATA\NCBI\SDF", "./ddddd.csv")
 
 
         Pause()
