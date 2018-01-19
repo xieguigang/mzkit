@@ -62,10 +62,21 @@ Namespace mzXML
         Public Overrides Function ToString() As String
             Return Me.GetJson
         End Function
+
+        Public Function GetPrecision() As Integer Implements IBase64Container.GetPrecision
+            Return precision
+        End Function
+
+        Public Function GetCompressionType() As String Implements IBase64Container.GetCompressionType
+            Return compressionType
+        End Function
     End Class
 
     Public Interface IBase64Container
         Property BinaryArray As String
+
+        Function GetPrecision() As Integer
+        Function GetCompressionType() As String
     End Interface
 
     Public Structure precursorMz

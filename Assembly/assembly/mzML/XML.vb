@@ -128,6 +128,24 @@ Namespace mzML
         Public Overrides Function ToString() As String
             Return binary
         End Function
+
+        Public Function GetPrecision() As Integer Implements IBase64Container.GetPrecision
+            If Not cvParams.KeyItem("64-bit float") Is Nothing Then
+                Return 64
+            ElseIf Not cvParams.KeyItem("32-bit float") Is Nothing Then
+                Return 32
+            Else
+                Throw New NotImplementedException
+            End If
+        End Function
+
+        Public Function GetCompressionType() As String Implements IBase64Container.GetCompressionType
+            If Not cvParams.KeyItem("zlib compression") Is Nothing Then
+                Return "zlib"
+            Else
+                Throw New NotImplementedException
+            End If
+        End Function
     End Class
 
     Public Class cvParam : Implements INamedValue
