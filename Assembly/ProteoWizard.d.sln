@@ -340,8 +340,8 @@ Global
 		{CE825E49-0386-4AB1-B452-B104ED3F7DEB}.mysqli_X64_release|x86.Build.0 = GCModeller(UNIX-Release_X64)|x86
 		{CE825E49-0386-4AB1-B452-B104ED3F7DEB}.ProteoWizard.d|Any CPU.ActiveCfg = Release|Any CPU
 		{CE825E49-0386-4AB1-B452-B104ED3F7DEB}.ProteoWizard.d|Any CPU.Build.0 = Release|Any CPU
-		{CE825E49-0386-4AB1-B452-B104ED3F7DEB}.ProteoWizard.d|x64.ActiveCfg = ProteoWizard.d|x64
-		{CE825E49-0386-4AB1-B452-B104ED3F7DEB}.ProteoWizard.d|x64.Build.0 = ProteoWizard.d|x64
+		{CE825E49-0386-4AB1-B452-B104ED3F7DEB}.ProteoWizard.d|x64.ActiveCfg = Publish|x64
+		{CE825E49-0386-4AB1-B452-B104ED3F7DEB}.ProteoWizard.d|x64.Build.0 = Publish|x64
 		{CE825E49-0386-4AB1-B452-B104ED3F7DEB}.ProteoWizard.d|x86.ActiveCfg = Release|x86
 		{CE825E49-0386-4AB1-B452-B104ED3F7DEB}.ProteoWizard.d|x86.Build.0 = Release|x86
 		{CE825E49-0386-4AB1-B452-B104ED3F7DEB}.Publish|Any CPU.ActiveCfg = Publish|Any CPU
