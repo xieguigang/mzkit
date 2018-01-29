@@ -11,6 +11,160 @@ Imports SMRUCC.WebCloud.HTTPInternal.Platform
 ''' <summary>
 ''' VB server script
 ''' </summary>
+''' <remarks>
+''' Usage: msconvert [options] [filemasks]
+''' Convert mass spec data file formats.
+'''
+''' Return value :  # of failed files.
+'''
+''' Options:
+'''  -f [ --filelist ] arg            : specify text file containing filenames
+'''  -o [ --outdir ] arg (=.)         : Set output directory ('-' for stdout) [.]
+'''  -c [ --config ] arg              : configuration file(optionName = value)
+'''  --outfile arg                    : Override the name Of output file.
+'''  -e [ --ext ] arg                 : Set extension For output files [mzML|mzXML|mgf|txt|mz5]
+'''  --mzML                           : write mzML format [default]
+'''  --mzXML                          : write mzXML format
+'''  --mz5                            : write mz5 format
+'''  --mgf                            : write Mascot generic format
+'''  --text                           : write ProteoWizard internal text format
+'''  --ms1                            : write MS1 format
+'''  --cms1                           : write CMS1 format
+'''  --ms2                            : write MS2 format
+'''  --cms2                           : write CMS2 format
+'''  -v [ --verbose ]                 : display detailed progress information
+'''  --64                             : Set Default binary encoding To 64-bit precision [default]
+'''  --32                             : Set Default binary encoding To 32-bit precision
+'''  --mz64                           : encode m/z values In 64-bit precision [default]
+'''  --mz32                           : encode m/z values In 32-bit precision
+'''  --inten64                        : encode intensity values In 64-bit precision
+'''  --inten32                        : encode intensity values In 32-bit precision [default]
+'''  --noindex                        : Do Not write index
+'''  -i [ --contactInfo ] arg         : filename for contact info
+'''  -z [ --zlib ]                    : use zlib compression For binary data
+'''  --numpressLinear [=arg(=2e-009)] : use numpress linear prediction compression For binary mz And rt data (relative accuracy loss will Not exceed given tolerance arg, unless Set To 0)
+'''  --numpressPic                    : use numpress positive Integer compression For binary intensities (absolute accuracy loss will Not exceed 0.5)
+'''  --numpressSlof [=arg(=0.0002)]   : use numpress Short logged float compression For binary intensities (relative accuracy loss will Not exceed given tolerance arg, unless Set To 0)
+'''  -n [ --numpressAll ]             : same as --numpressLinear --numpressSlof (see https://github.com/fickludd/ms-numpress for more info)
+'''  -g [ --gzip ]                    : gzip entire output file (adds .gz To filename)
+'''  --filter arg                     : add a spectrum list filter
+'''  --merge                          : create a Single output file from multiple input files by merging file-level metadata And concatenating spectrum lists
+'''  --simAsSpectra                   : write selected ion monitoring As spectra, Not chromatograms
+'''  --srmAsSpectra                   : write selected reaction monitoring As spectra, Not chromatograms
+'''  --combineIonMobilitySpectra      : write all drift bins/scans In a frame/block As one spectrum instead Of individual spectra
+'''  --acceptZeroLengthSpectra        : some vendor readers have an efficient way Of filtering out empty spectra, but it takes more time To open the file
+'''  --ignoreUnknownInstrumentError   : If True, If an instrument cannot be determined from a vendor file, it will Not be an Error
+'''  --help                           : show this message, With extra detail On filter options
+'''
+''' FILTER OPTIONS
+''' run this command With --help To see more detail
+''' index <index_value_set>
+''' msLevel <mslevels>
+''' chargeState <charge_states>
+''' precursorRecalculation
+''' mzRefiner input1.pepXML input2.mzid [msLevels=<1->] [thresholdScore=<CV_Score_Name>] [thresholdValue=<floatset>] [thresholdStep=<float>] [maxSteps=<count>]
+''' lockmassRefiner mz=<real> mzNegIons=<real (mz)> tol=<real (1.0 Daltons)>
+''' precursorRefine
+''' peakPicking [<PickerType> [snr=<minimum signal-to-noise ratio>] [peakSpace=<minimum peak spacing>] [msLevel=<ms_levels>]]
+''' scanNumber <scan_numbers>
+''' scanEvent <scan_event_set>
+''' scanTime <scan_time_range>
+''' sortByScanTime
+''' stripIT
+''' metadataFixer
+''' titleMaker <format_string>
+''' threshold <type><threshold><orientation> [<mslevels>]
+''' mzWindow <mzrange>
+''' mzPrecursors <precursor_mz_list> [mzTol=<mzTol (10 ppm)>] [mode=<include|exclude (include)>]
+''' defaultArrayLength <peak_count_range>
+''' zeroSamples <mode> [<MS_levels>]
+''' mzPresent <mz_list> [mzTol=<tolerance> (0.5 mz)] [type=<type> (count)] [threshold=<threshold> (10000)] [orientation=<orientation> (most-intense)] [mode=<include|exclude (include)>]
+''' scanSumming [precursorTol=<precursor tolerance>] [scanTimeTol=<scan time tolerance>]
+''' thermoScanFilter <exact|contains><include|exclude><match string>
+''' MS2Denoise [<peaks_in_window> [<window_width_Da> [multicharge_fragment_relaxation]]]
+''' MS2Deisotope [hi_res [mzTol=<mzTol>]] [Poisson [minCharge=<minCharge>] [maxCharge=<maxCharge>]]
+''' ETDFilter [<removePrecursor> [<removeChargeReduced> [<removeNeutralLoss> [<blanketRemoval> [<matchingTolerance> ]]]]]
+''' demultiplex massError=<tolerance and units, eg 0.5Da (default 10ppm)> nnlsMaxIter=<int (50)> nnlsEps=<real (1e-10)> noWeighting=<bool (false)> demuxBlockExtra=<real (0)> variableFill=<bool (false)> noSumNormalize=<bool (false)> optimization=<(none)|overlap_only
+''' chargeStatePredictor [overrideExistingCharge=<true|false (false)>] [maxMultipleCharge=<int (3)>] [minMultipleCharge=<int (2)>] [singleChargeFractionTIC=<real (0.9)>] [maxKnownCharge=<int (0)>] [makeMS2=<true|false (false)>]
+''' turbocharger [minCharge=<minCharge>] [maxCharge=<maxCharge>] [precursorsBefore=<before>] [precursorsAfter=<after>] [halfIsoWidth=<half-width of isolation window>] [defaultMinCharge=<defaultMinCharge>] [defaultMaxCharge=<defaultMaxCharge>] [useVendorPeaks=<useVe
+'''                                                                                                                                                                                                                                                                   activation <precursor_activation_type>
+''' analyzer <analyzer>
+''' analyzerType <analyzer>
+''' polarity <polarity>
+'''
+'''
+''' Examples:
+'''
+''' # convert data.RAW to data.mzML
+''' msconvert data.RAW
+'''
+''' # convert data.RAW to data.mzXML
+''' msconvert data.RAW --mzXML
+'''
+''' # put output file in my_output_dir
+''' msconvert data.RAW -o my_output_dir
+'''
+''' # combining options to create a smaller mzML file, much like the old ReAdW converter program
+''' msconvert data.RAW --32 --zlib --filter "peakPicking true 1-" --filter "zeroSamples removeExtra"
+'''
+''' # extract scan indices 5...10 and 20...25
+''' msconvert data.RAW --filter "index [5,10] [20,25]"
+'''
+''' # extract MS1 scans only
+''' msconvert data.RAW --filter "msLevel 1"
+'''
+''' # extract MS2 and MS3 scans only
+''' msconvert data.RAW --filter "msLevel 2-3"
+'''
+''' # extract MSn scans for n>1
+''' msconvert data.RAW --filter "msLevel 2-"
+'''
+''' # apply ETD precursor mass filter
+''' msconvert data.RAW --filter ETDFilter
+'''
+''' # remove non-flanking zero value samples
+''' msconvert data.RAW --filter "zeroSamples removeExtra"
+'''
+''' # remove non-flanking zero value samples in MS2 and MS3 only
+''' msconvert data.RAW --filter "zeroSamples removeExtra 2 3"
+'''
+''' # add missing zero value samples (with 5 flanking zeros) in MS2 and MS3 only
+''' msconvert data.RAW --filter "zeroSamples addMissing=5 2 3"
+'''
+''' # keep only HCD spectra from a decision tree data file
+''' msconvert data.RAW --filter "activation HCD"
+'''
+''' # keep the top 42 peaks or samples (depending on whether spectra are centroid or profile):
+''' msconvert data.RAW --filter "threshold count 42 most-intense"
+'''
+''' # multiple filters: select scan numbers and recalculate precursors
+''' msconvert data.RAW --filter "scanNumber [500,1000]" --filter "precursorRecalculation"
+'''
+''' # multiple filters: apply peak picking and then keep the bottom 100 peaks:
+''' msconvert data.RAW --filter "peakPicking true 1-" --filter "threshold count 100 least-intense"
+'''
+''' # multiple filters: apply peak picking and then keep all peaks that are at least 50% of the intensity of the base peak:
+''' msconvert data.RAW --filter "peakPicking true 1-" --filter "threshold bpi-relative .5 most-intense"
+'''
+''' # use a configuration file
+''' msconvert data.RAW -c config.txt
+'''
+''' # example configuration file
+''' mzXML=true
+''' zlib=true
+''' filter="index [3,7]"
+''' filter="precursorRecalculation"
+'''
+'''
+''' Questions, comments, and bug reports:
+''' http://proteowizard.sourceforge.net
+''' support@proteowizard.org
+'''
+''' ProteoWizard release: 3.0.10650 (2017-3-27)
+''' ProteoWizard MSData: 3.0.10577 (2017-3-6)
+''' ProteoWizard Analysis: 3.0.10650 (2017-3-27)
+''' Build date: Mar 28 2017 00:21:42
+''' </remarks>
 <[Namespace]("ProteoWizard.d")>
 Public Class VBServerScript : Inherits WebApp
 
