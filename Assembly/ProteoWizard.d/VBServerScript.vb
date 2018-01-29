@@ -65,4 +65,20 @@ Public Class VBServerScript : Inherits WebApp
 
         Return True
     End Function
+
+    <ExportAPI("/ProteoWizard.d/MRM.vbs")>
+    <Usage("/ProteoWizard.d/MRM.vbs?path=<path>")>
+    <[GET](GetType(String))>
+    Public Function MRMTask(request As HttpRequest, response As HttpResponse) As Boolean
+        Dim path$ = OSS_ROOT & "/" & request.URLParameters("path")
+        Dim args$ = $"{path.CLIPath} --mz64 --mzML --filter ""msLevel 1-2"" --ignoreUnknownInstrumentError"
+
+        Call New IORedirectFile(BIN, args).Run()
+
+        If Not response Is Nothing Then
+            Call response.SuccessMsg("Task complete!")
+        End If
+
+        Return True
+    End Function
 End Class
