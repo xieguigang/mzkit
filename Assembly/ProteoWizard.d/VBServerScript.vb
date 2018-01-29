@@ -73,6 +73,7 @@ Public Class VBServerScript : Inherits WebApp
         Dim path$ = OSS_ROOT & "/" & request.URLParameters("path")
         Dim args$ = $"{path.CLIPath} --mz64 --mzML --filter ""msLevel 1-2"" --ignoreUnknownInstrumentError"
 
+        Call path.__INFO_ECHO
         Call New IORedirectFile(BIN, args).Run()
 
         If Not response Is Nothing Then
