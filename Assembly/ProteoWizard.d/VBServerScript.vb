@@ -58,39 +58,39 @@ Imports SMRUCC.WebCloud.HTTPInternal.Platform
 '''
 ''' FILTER OPTIONS
 ''' run this command With --help To see more detail
-''' index <index_value_set>
-''' msLevel <mslevels>
-''' chargeState <charge_states>
+''' index &lt;index_value_set>
+''' msLevel &lt;mslevels>
+''' chargeState &lt;charge_states>
 ''' precursorRecalculation
-''' mzRefiner input1.pepXML input2.mzid [msLevels=<1->] [thresholdScore=<CV_Score_Name>] [thresholdValue=<floatset>] [thresholdStep=<float>] [maxSteps=<count>]
-''' lockmassRefiner mz=<real> mzNegIons=<real (mz)> tol=<real (1.0 Daltons)>
+''' mzRefiner input1.pepXML input2.mzid [msLevels=&lt;1->] [thresholdScore=&lt;CV_Score_Name>] [thresholdValue=&lt;floatset>] [thresholdStep=&lt;float>] [maxSteps=&lt;count>]
+''' lockmassRefiner mz=&lt;real> mzNegIons=&lt;real (mz)> tol=&lt;real (1.0 Daltons)>
 ''' precursorRefine
-''' peakPicking [<PickerType> [snr=<minimum signal-to-noise ratio>] [peakSpace=<minimum peak spacing>] [msLevel=<ms_levels>]]
-''' scanNumber <scan_numbers>
-''' scanEvent <scan_event_set>
-''' scanTime <scan_time_range>
+''' peakPicking [&lt;PickerType> [snr=&lt;minimum signal-to-noise ratio>] [peakSpace=&lt;minimum peak spacing>] [msLevel=&lt;ms_levels>]]
+''' scanNumber &lt;scan_numbers>
+''' scanEvent &lt;scan_event_set>
+''' scanTime &lt;scan_time_range>
 ''' sortByScanTime
 ''' stripIT
 ''' metadataFixer
-''' titleMaker <format_string>
-''' threshold <type><threshold><orientation> [<mslevels>]
-''' mzWindow <mzrange>
-''' mzPrecursors <precursor_mz_list> [mzTol=<mzTol (10 ppm)>] [mode=<include|exclude (include)>]
-''' defaultArrayLength <peak_count_range>
-''' zeroSamples <mode> [<MS_levels>]
-''' mzPresent <mz_list> [mzTol=<tolerance> (0.5 mz)] [type=<type> (count)] [threshold=<threshold> (10000)] [orientation=<orientation> (most-intense)] [mode=<include|exclude (include)>]
-''' scanSumming [precursorTol=<precursor tolerance>] [scanTimeTol=<scan time tolerance>]
-''' thermoScanFilter <exact|contains><include|exclude><match string>
-''' MS2Denoise [<peaks_in_window> [<window_width_Da> [multicharge_fragment_relaxation]]]
-''' MS2Deisotope [hi_res [mzTol=<mzTol>]] [Poisson [minCharge=<minCharge>] [maxCharge=<maxCharge>]]
-''' ETDFilter [<removePrecursor> [<removeChargeReduced> [<removeNeutralLoss> [<blanketRemoval> [<matchingTolerance> ]]]]]
-''' demultiplex massError=<tolerance and units, eg 0.5Da (default 10ppm)> nnlsMaxIter=<int (50)> nnlsEps=<real (1e-10)> noWeighting=<bool (false)> demuxBlockExtra=<real (0)> variableFill=<bool (false)> noSumNormalize=<bool (false)> optimization=<(none)|overlap_only
-''' chargeStatePredictor [overrideExistingCharge=<true|false (false)>] [maxMultipleCharge=<int (3)>] [minMultipleCharge=<int (2)>] [singleChargeFractionTIC=<real (0.9)>] [maxKnownCharge=<int (0)>] [makeMS2=<true|false (false)>]
-''' turbocharger [minCharge=<minCharge>] [maxCharge=<maxCharge>] [precursorsBefore=<before>] [precursorsAfter=<after>] [halfIsoWidth=<half-width of isolation window>] [defaultMinCharge=<defaultMinCharge>] [defaultMaxCharge=<defaultMaxCharge>] [useVendorPeaks=<useVe
-'''                                                                                                                                                                                                                                                                   activation <precursor_activation_type>
-''' analyzer <analyzer>
-''' analyzerType <analyzer>
-''' polarity <polarity>
+''' titleMaker &lt;format_string>
+''' threshold &lt;type>&lt;threshold>&lt;orientation> [&lt;mslevels>]
+''' mzWindow &lt;mzrange>
+''' mzPrecursors &lt;precursor_mz_list> [mzTol=&lt;mzTol (10 ppm)>] [mode=&lt;include|exclude (include)>]
+''' defaultArrayLength &lt;peak_count_range>
+''' zeroSamples &lt;mode> [&lt;MS_levels>]
+''' mzPresent &lt;mz_list> [mzTol=&lt;tolerance> (0.5 mz)] [type=&lt;type> (count)] [threshold=&lt;threshold> (10000)] [orientation=&lt;orientation> (most-intense)] [mode=&lt;include|exclude (include)>]
+''' scanSumming [precursorTol=&lt;precursor tolerance>] [scanTimeTol=&lt;scan time tolerance>]
+''' thermoScanFilter &lt;exact|contains>&lt;include|exclude>&lt;match string>
+''' MS2Denoise [&lt;peaks_in_window> [&lt;window_width_Da> [multicharge_fragment_relaxation]]]
+''' MS2Deisotope [hi_res [mzTol=&lt;mzTol>]] [Poisson [minCharge=&lt;minCharge>] [maxCharge=&lt;maxCharge>]]
+''' ETDFilter [&lt;removePrecursor> [&lt;removeChargeReduced> [&lt;removeNeutralLoss> [&lt;blanketRemoval> [&lt;matchingTolerance> ]]]]]
+''' demultiplex massError=&lt;tolerance and units, eg 0.5Da (default 10ppm)> nnlsMaxIter=&lt;int (50)> nnlsEps=&lt;real (1e-10)> noWeighting=&lt;bool (false)> demuxBlockExtra=&lt;real (0)> variableFill=&lt;bool (false)> noSumNormalize=&lt;bool (false)> optimization=&lt;(none)|overlap_only
+''' chargeStatePredictor [overrideExistingCharge=&lt;true|false (false)>] [maxMultipleCharge=&lt;int (3)>] [minMultipleCharge=&lt;int (2)>] [singleChargeFractionTIC=&lt;real (0.9)>] [maxKnownCharge=&lt;int (0)>] [makeMS2=&lt;true|false (false)>]
+''' turbocharger [minCharge=&lt;minCharge>] [maxCharge=&lt;maxCharge>] [precursorsBefore=&lt;before>] [precursorsAfter=&lt;after>] [halfIsoWidth=&lt;half-width of isolation window>] [defaultMinCharge=&lt;defaultMinCharge>] [defaultMaxCharge=&lt;defaultMaxCharge>] [useVendorPeaks=&lt;useVe
+'''                                                                                                                                                                                                                                                                   activation &lt;precursor_activation_type>
+''' analyzer &lt;analyzer>
+''' analyzerType &lt;analyzer>
+''' polarity &lt;polarity>
 '''
 '''
 ''' Examples:
