@@ -1,6 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Parallel.Threads
 Imports SMRUCC.WebCloud.HTTPInternal
 Imports SMRUCC.WebCloud.HTTPInternal.AppEngine
@@ -187,6 +188,9 @@ Public Class VBServerScript : Inherits WebApp
         BIN = App.GetVariable("bin")
         OSS_ROOT = App.GetVariable("oss")
 
+        Call $"msconvert={BIN}".__INFO_ECHO
+        Call $"OSS_ROOT={OSS_ROOT}".__INFO_ECHO
+
         If Not OSS_ROOT.DirectoryExists Then
             Throw New Exception("OSS file system should be mounted at first!")
         End If
@@ -226,8 +230,13 @@ Public Class VBServerScript : Inherits WebApp
     <[GET](GetType(String))>
     Public Function MRMTask(request As HttpRequest, response As HttpResponse) As Boolean
         Dim path$ = OSS_ROOT & "/" & request.URLParameters("path")
-        Dim out$ = path.ParentPath & "/msconvert"
-        Dim args$ = $"{path.CLIPath} --mz64 --mzML --filter ""msLevel 1-2"" --ignoreUnknownInstrumentError -o {out.CLIPath}"
+        Dim out$ = request.URLParameters("to") Or $"{path.ParentPath}/msconvert".AsDefault
+
+        If InStr(out, ":\") = 0 Then
+            out = OSS_ROOT & "/" & out
+        End If
+
+        Dim args$ = $"{path.GetFullPath.CLIPath} --mz64 --mzML --filter ""msLevel 1-2"" --ignoreUnknownInstrumentError -o {out.GetDirectoryFullPath.CLIPath}"
 
         Call path.__INFO_ECHO
         Call New IORedirectFile(BIN, args).Run()
