@@ -10,7 +10,7 @@ Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports SMRUCC.MassSpectrum.Math
+Imports SMRUCC.MassSpectrum.Math.Chromatogram
 
 ''' <summary>
 ''' time -> into

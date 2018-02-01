@@ -1,7 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Text.Xml.Linq
-Imports SMRUCC.MassSpectrum.Math
+Imports SMRUCC.MassSpectrum.Math.Chromatogram
 
 Namespace MarkupData.mzML
 
