@@ -20,7 +20,7 @@ Namespace Chromatogram
             ' gets all signals that its chromatogram time inside the peak time range
             ' time >= time range min andalso time <= time range max 
             Dim S = chromatogram((chromatogram!Time >= peak.Min) & (chromatogram!Time <= peak.Max))  ' TPA
-            Dim B = chromatogram.Base(quantile:=baseline)
+            Dim B = chromatogram.Baseline(quantile:=baseline)
 
             ' 2018-1-18 
             ' 下面的聚合表达式只会计算去除本底之后的信号量大于零的信号量的和

@@ -23,8 +23,14 @@ Namespace Chromatogram
             Return chromatogram.Select(Function(c) c.Intensity).AsVector
         End Function
 
+        ''' <summary>
+        ''' Detection of the signal base line based on the quantile method.
+        ''' </summary>
+        ''' <param name="chromatogram"></param>
+        ''' <param name="quantile#"></param>
+        ''' <returns></returns>
         <Extension>
-        Public Function Base(chromatogram As IEnumerable(Of ChromatogramTick), Optional quantile# = 0.65) As Double
+        Public Function Baseline(chromatogram As IEnumerable(Of ChromatogramTick), Optional quantile# = 0.65) As Double
             Dim q As QuantileEstimationGK = chromatogram.Shadows!Intensity.GKQuantile
             Dim baseValue = q.Query(quantile)
 
@@ -32,9 +38,9 @@ Namespace Chromatogram
         End Function
 
         ''' <summary>
-        ''' Returns time range for the peak
+        ''' Returns time range for the peak where the max intensity was represented.
         ''' </summary>
-        ''' <param name="chromatogram">应该是按照时间升序排序了的</param>
+        ''' <param name="chromatogram">Should be order by time asceding.(应该是按照时间升序排序了的)</param>
         ''' <param name="threshold">Unit in degree, values in range ``[0-90]``</param>
         ''' <returns></returns>
         <Extension>

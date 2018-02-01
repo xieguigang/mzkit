@@ -55,7 +55,7 @@ Public Module ChromatogramPlot
             .ToArray
 
         For Each ion As NamedCollection(Of ChromatogramTick) In ionData
-            Dim base = ion.Value.Base(quantile:=0.65)
+            Dim base = ion.Value.Baseline(quantile:=0.65)
             Dim max# = ion.Value.Shadows!Intensity.Max
 
             Call $"{ion.Name}: {base}/{max} = {(100 * base / max).ToString("F2")}%".__DEBUG_ECHO

@@ -106,7 +106,7 @@ Public Module ChromatogramPeakPlot
                     B = New PointF(MRM_ROI.Max, maxIntensity)
                     drawLine(A, B)
 
-                    Dim base = chromatogram.Base
+                    Dim base = chromatogram.Baseline
 
                     A = New PointF(timeTicks.Min, base)
                     B = New PointF(timeTicks.Max, base)
