@@ -202,7 +202,7 @@ Public Class VBServerScript : Inherits WebApp
     Public Function ConvertTomzXML(request As HttpRequest, response As HttpResponse) As Boolean
         Dim path$ = OSS_ROOT & "/" & request.URLParameters("path")
         Dim out$ = path.ParentPath & "/msconvert"
-        Dim args$ = $"{path.CLIPath} --mz64 --mzXML --filter ""msLevel 1-2"" --ignoreUnknownInstrumentError -o {out.CLIPath}"
+        Dim args$ = $"{path.CLIPath} --mz64 --mzXML --zlib --filter ""msLevel 1-2"" --ignoreUnknownInstrumentError -o {out.CLIPath}"
 
         Call New IORedirectFile(BIN, args).Run()
 
@@ -236,7 +236,7 @@ Public Class VBServerScript : Inherits WebApp
             out = OSS_ROOT & "/" & out
         End If
 
-        Dim args$ = $"{path.GetFullPath.CLIPath} --mz64 --mzML --filter ""msLevel 1-2"" --ignoreUnknownInstrumentError -o {out.GetDirectoryFullPath.CLIPath}"
+        Dim args$ = $"{path.GetFullPath.CLIPath} --mz64 --mzML --zlib --filter ""msLevel 1-2"" --ignoreUnknownInstrumentError -o {out.GetDirectoryFullPath.CLIPath}"
 
         Call path.__INFO_ECHO
         Call New IORedirectFile(BIN, args).Run()
