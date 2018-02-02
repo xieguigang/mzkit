@@ -1,10 +1,15 @@
 ﻿Imports System.Drawing
+Imports System.Reflection
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
-Imports Microsoft.VisualBasic.Language.Vectorization
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Calculus
 Imports Microsoft.VisualBasic.Math.Interpolation
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
+Imports Microsoft.VisualBasic.Math.Statistics.Linq
 
 Namespace Chromatogram
 
@@ -55,7 +60,10 @@ Namespace Chromatogram
         ''' <param name="baselineQuantile#"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function PeakAreaIntegrator(chromatogram As IVector(Of ChromatogramTick), peak As DoubleRange, Optional baselineQuantile# = 0.65) As Double
+        Public Function PeakAreaIntegrator(chromatogram As IVector(Of ChromatogramTick),
+                                           peak As DoubleRange,
+                                           Optional baselineQuantile# = 0.65,
+                                           Optional n% = 1000) As Double
             Dim time = chromatogram!Time
             Dim points As PointF() =
                 chromatogram((time >= peak.Min) & (time <= peak.Max)) _
@@ -68,8 +76,42 @@ Namespace Chromatogram
                 .CubicSpline _
                 .ToArray
             Dim baseline# = chromatogram.Baseline(baselineQuantile)
-            Dim windows = points.
+            Dim windows = points _
+                .SlideWindows(2) _
+                .ToArray
+            Dim p As int = 0
+            Dim current As DoubleRange = windows(p).X.Range
+            Dim tangent As fx = windows(++p).Tangent
 
+            ' 积分函数
+            Dim ft As df = Function(x#, y#) As Double
+                               ' 先根据x找出time range
+                               ' 然后计算出Y
+                               ' 最后减去基线值，既得最终的Y结果值
+                               If Not current.IsInside(x) Then
+                                   current = windows(p).X.Range
+                                   tangent = windows(++p).Tangent
+                               End If
+
+                               y = tangent(x) - baseline
+
+                               Return y
+                           End Function
+
+            ' 面积积分器
+            Dim integrator As New ODE With {
+                .df = ft,
+                .ID = MethodBase.GetCurrentMethod.Name,
+                .y0 = points.First.Y
+            }
+
+            Dim area As ODEOutput = integrator.RK4(
+                n:=n,
+                a:=points.First.X,
+                b:=points.Last.X)
+            Dim areaValue = area.Y.Vector.Last
+
+            Return areaValue
         End Function
     End Module
 End Namespace
