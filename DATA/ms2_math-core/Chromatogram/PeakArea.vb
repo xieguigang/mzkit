@@ -63,9 +63,11 @@ Namespace Chromatogram
         Public Function PeakAreaIntegrator(chromatogram As IVector(Of ChromatogramTick),
                                            peak As DoubleRange,
                                            Optional baselineQuantile# = 0.65,
-                                           Optional n% = 1000) As Double
+                                           Optional n% = 1000,
+                                           ByRef Optional peakRaw As PointF() = Nothing,
+                                           ByRef Optional curve As PointF() = Nothing) As Double
             Dim time = chromatogram!Time
-            Dim points As PointF() =
+            Dim rawPoints =
                 chromatogram((time >= peak.Min) & (time <= peak.Max)) _
                 .Select(Function(c)
                             Return New PointF With {
@@ -73,6 +75,8 @@ Namespace Chromatogram
                                 .Y = c.Intensity
                             }
                         End Function) _
+                .ToArray
+            Dim points As PointF() = rawPoints _
                 .CubicSpline _
                 .ToArray
             Dim baseline# = chromatogram.Baseline(baselineQuantile)
@@ -80,8 +84,19 @@ Namespace Chromatogram
                 .SlideWindows(2) _
                 .ToArray
             Dim p As int = 0
-            Dim current As DoubleRange = windows(p).X.Range
-            Dim tangent As fx = windows(++p).Tangent
+            Dim current As DoubleRange = Nothing
+            Dim tangent As fx = Nothing
+            Dim moveNext = Sub()
+                               With windows(++p)
+                                   current = .X.Range
+                                   tangent = .Tangent
+                               End With
+                           End Sub
+
+            Call moveNext()
+
+            curve = points
+            peakRaw = rawPoints
 
             ' 积分函数
             Dim ft As df = Function(x#, y#) As Double
@@ -89,8 +104,7 @@ Namespace Chromatogram
                                ' 然后计算出Y
                                ' 最后减去基线值，既得最终的Y结果值
                                If Not current.IsInside(x) Then
-                                   current = windows(p).X.Range
-                                   tangent = windows(++p).Tangent
+                                   Call moveNext()
                                End If
 
                                y = tangent(x) - baseline
