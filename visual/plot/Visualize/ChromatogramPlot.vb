@@ -32,8 +32,8 @@ Public Module ChromatogramPlot
     <Extension>
     Public Function Plot(ions As IonPair(),
                          mzML$,
-                         Optional size$ = "1600,900",
-                         Optional margin$ = g.DefaultPadding,
+                         Optional size$ = "1600,1000",
+                         Optional margin$ = g.DefaultLargerPadding,
                          Optional bg$ = "white",
                          Optional colorsSchema$ = "scibasic.category31()",
                          Optional penStyle$ = Stroke.ScatterLineStroke,
