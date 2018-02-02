@@ -41,10 +41,19 @@ Namespace Chromatogram
         ''' Returns time range for the peak where the max intensity was represented.
         ''' </summary>
         ''' <param name="chromatogram">Should be order by time asceding.(应该是按照时间升序排序了的)</param>
-        ''' <param name="threshold">Unit in degree, values in range ``[0-90]``</param>
+        ''' <param name="threshold">
+        ''' Meaning changes base on the <paramref name="method"/> value:
+        ''' 
+        ''' + <see cref="MRMPeakExtensionMethods.TriangleMatch"/>: Unit in degree, values in range ``[0-90]``
+        ''' + <see cref="MRMPeakExtensionMethods.BaselineMatch"/>: Unit in percentage, value in range ``[0%-100%]``
+        ''' </param>
         ''' <returns></returns>
         <Extension>
-        Public Function MRMPeak(chromatogram As VectorModel(Of ChromatogramTick), Optional threshold# = 45, Optional winSize% = 5) As DoubleRange
+        Public Function MRMPeak(chromatogram As VectorModel(Of ChromatogramTick),
+                                Optional threshold# = 30%,
+                                Optional winSize% = 5,
+                                Optional baselineQuantile# = 0.65,
+                                Optional method As MRMPeakExtensionMethods = MRMPeakExtensionMethods.BaselineMatch) As DoubleRange
 
             ' 先找到最高的信号，然后逐步分别往两边延伸
             ' 直到下降的速率小于阈值
@@ -61,19 +70,71 @@ Namespace Chromatogram
 
             With chromatogram.ToArray
 
-                threshold = Cos(threshold.ToRadians)
-                ' split
-                timeRange = {
-                    .Take(maxIndex).Reverse.ToArray.MakeExtension(threshold, winSize),   ' left
-                    .Skip(maxIndex).ToArray.MakeExtension(threshold, winSize)            ' right
-                }
+                If method = MRMPeakExtensionMethods.BaselineMatch Then
+                    Dim baselineRange As DoubleRange
+
+                    If threshold > 1 Then
+                        ' normalize to 0-1
+                        threshold /= 100
+                    End If
+
+                    baselineQuantile = chromatogram.Baseline(baselineQuantile)
+                    baselineRange = {
+                        baselineQuantile - baselineQuantile * threshold,
+                        baselineQuantile + baselineQuantile * threshold
+                    }
+                    ' split
+                    timeRange = {
+                        .Take(maxIndex).Reverse.ToArray.MakeBaselineExtension(baselineRange, winSize),   ' left
+                        .Skip(maxIndex).ToArray.MakeBaselineExtension(baselineRange, winSize)            ' right
+                    }
+                Else
+                    threshold = Cos(threshold.ToRadians)
+                    ' split
+                    timeRange = {
+                        .Take(maxIndex).Reverse.ToArray.MakeExtension(threshold, winSize),   ' left
+                        .Skip(maxIndex).ToArray.MakeExtension(threshold, winSize)            ' right
+                    }
+                End If
             End With
 
             Return New DoubleRange(timeRange)
         End Function
 
+        Public Enum MRMPeakExtensionMethods As Integer
+            BaselineMatch
+            TriangleMatch
+        End Enum
+
         ''' <summary>
-        ''' t1 -> t2
+        ''' Detect a peak by using a slide window, when the average signal intensity is approximately equals to the <paramref name="baseline"/>,
+        ''' Then found a peak boundary.
+        ''' </summary>
+        ''' <param name="chromatogram"></param>
+        ''' <param name="baseline#"></param>
+        ''' <returns></returns>
+        <Extension>
+        Private Function MakeBaselineExtension(chromatogram As ChromatogramTick(), baseline As DoubleRange, winSize%) As Double
+            ' 构建一个滑窗，如果滑窗的信号量平均值接近于baseline，则认为到达了峰的边界
+            Dim windows = chromatogram _
+                .SlideWindows(winSize) _
+                .ToArray
+
+            For Each block As SlideWindow(Of ChromatogramTick) In windows
+                Dim average# = block.IntensityArray.Average
+
+                If average <= baseline.Min OrElse baseline.IsInside(average) Then
+                    ' 已经到达边界了，返回时间点
+                    Return block.First.Time
+                End If
+            Next
+
+            ' using the entire area???
+            Return chromatogram.Last.Time
+        End Function
+
+        ''' <summary>
+        ''' Returns the MRM signal peaks' time range boundary: ``t1 -> t2``
         ''' </summary>
         ''' <param name="chromatogram"></param>
         ''' <param name="threshold#">cos value</param>
@@ -119,7 +180,7 @@ Namespace Chromatogram
                 Dim cos# = t10 / C
 
                 If threshold <= cos Then
-                    Return t0.Time
+                    Return t1.Time
                 End If
             Next
 
