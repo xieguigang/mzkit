@@ -64,6 +64,7 @@ Namespace Chromatogram
                                            peak As DoubleRange,
                                            Optional baselineQuantile# = 0.65,
                                            Optional n% = 1000,
+                                           Optional cubicSplineDensity% = 10,
                                            ByRef Optional peakRaw As PointF() = Nothing,
                                            ByRef Optional curve As PointF() = Nothing) As Double
             Dim time = chromatogram!Time
@@ -77,7 +78,7 @@ Namespace Chromatogram
                         End Function) _
                 .ToArray
             Dim points As PointF() = rawPoints _
-                .CubicSpline _
+                .CubicSpline(cubicSplineDensity) _
                 .ToArray
             Dim baseline# = chromatogram.Baseline(baselineQuantile)
             Dim windows = points _
