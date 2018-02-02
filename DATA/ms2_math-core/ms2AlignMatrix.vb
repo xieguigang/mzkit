@@ -42,7 +42,7 @@ Public Class SSM2MatrixFragment
     End Function
 End Class
 
-Public Class Ms2AlignMatrix : Inherits VectorModel(Of SSM2MatrixFragment)
+Public Class Ms2AlignMatrix : Inherits IVector(Of SSM2MatrixFragment)
 
     ''' <summary>
     ''' 计算两个色谱矩阵之间的余弦相似度

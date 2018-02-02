@@ -22,7 +22,7 @@ Namespace MarkupData.mzML
         End Function
 
         ''' <summary>
-        ''' 
+        ''' MRM ion selector based on the precursor ion m/z and the product ion m/z value.
         ''' </summary>
         ''' <param name="chromatograms"></param>
         ''' <param name="ionPairs"></param>
@@ -30,20 +30,38 @@ Namespace MarkupData.mzML
         <Extension>
         Public Function MRMSelector(chromatograms As IEnumerable(Of chromatogram), ionPairs As IEnumerable(Of IonPair)) As IEnumerable(Of (ion As IonPair, chromatogram As chromatogram))
             With chromatograms.ToArray
-                Return ionPairs.Select(Function(ion) (ion, .Where(Function(c) Not c.id = "TIC" AndAlso ion.Assert(c)).FirstOrDefault))
+                Return ionPairs _
+                    .Select(Function(ion)
+                                Dim chromatogram =
+                                    .Where(Function(c)
+                                               Return Not c.id = "TIC" AndAlso ion.Assert(c)
+                                           End Function) _
+                                    .FirstOrDefault
+                                Return (ion, chromatogram)
+                            End Function)
             End With
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function MRMTargetMz(selector As IMRMSelector) As Double
-            Return selector.isolationWindow.cvParams.KeyItem("isolation window target m/z").value
+            Return selector _
+                .isolationWindow _
+                .cvParams _
+                .KeyItem("isolation window target m/z") _
+                .value
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function ByteArray(chromatogram As chromatogram, type$) As binaryDataArray
-            Return chromatogram.binaryDataArrayList.list.Where(Function(a) Not a.cvParams.KeyItem(type) Is Nothing).FirstOrDefault
+            Return chromatogram _
+                .binaryDataArrayList _
+                .list _
+                .Where(Function(a)
+                           Return Not a.cvParams.KeyItem(type) Is Nothing
+                       End Function) _
+                .FirstOrDefault
         End Function
 
         ''' <summary>

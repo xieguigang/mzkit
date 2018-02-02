@@ -40,7 +40,7 @@ Public Class ms2
     End Function
 End Class
 
-Public Class LibraryMatrix : Inherits VectorModel(Of ms2)
+Public Class LibraryMatrix : Inherits IVector(Of ms2)
     Implements INamedValue
 
     ''' <summary>

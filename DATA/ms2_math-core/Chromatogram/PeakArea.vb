@@ -1,6 +1,9 @@
-﻿Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.Ranges
+﻿Imports System.Drawing
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.Math.Scripting
 
 Namespace Chromatogram
@@ -14,12 +17,15 @@ Namespace Chromatogram
         ''' <param name="peak">The time range of the peak</param>
         ''' <param name="baseline">The quantile threshold of the baseline</param>
         ''' <returns></returns>
-        ''' 
+        ''' <remarks>
+        ''' 简单的净峰法计算出峰面积
+        ''' </remarks>
         <Extension>
-        Public Function PeakArea(chromatogram As VectorModel(Of ChromatogramTick), peak As DoubleRange, Optional baseline# = 0.65) As Double
+        Public Function PeakArea(chromatogram As IVector(Of ChromatogramTick), peak As DoubleRange, Optional baseline# = 0.65) As Double
             ' gets all signals that its chromatogram time inside the peak time range
             ' time >= time range min andalso time <= time range max 
-            Dim S = chromatogram((chromatogram!Time >= peak.Min) & (chromatogram!Time <= peak.Max))  ' TPA
+            Dim time = chromatogram!Time
+            Dim S = chromatogram((time >= peak.Min) & (time <= peak.Max))  ' TPA
             Dim B = chromatogram.Baseline(quantile:=baseline)
 
             ' 2018-1-18 
@@ -37,56 +43,33 @@ Namespace Chromatogram
         End Function
 
         ''' <summary>
-        ''' 只是返回peak的顶点坐标和顶点值
+        ''' 使用积分器来进行峰面积的精确计算：
+        ''' 
+        ''' 1. 首先对峰的线条进行插值计算
+        ''' 2. 然后进行定积分计算，计算值的时候也是使用 A = S - B 净峰法来计算出面积。
+        ''' 
+        ''' 最后的积分计算结果就是峰面积
         ''' </summary>
-        ''' <param name="problem#"></param>
-        ''' <param name="left%"></param>
-        ''' <param name="right%"></param>
+        ''' <param name="chromatogram"></param>
+        ''' <param name="peak"></param>
+        ''' <param name="baselineQuantile#"></param>
         ''' <returns></returns>
-        ''' <remarks>
-        ''' https://github.com/fekberg/Algorithms/blob/master/Peak%20Finding/Peak%20Finding/Program.cs
-        ''' </remarks>
         <Extension>
-        Public Function FindPeak(problem#()(), Optional left% = 0, Optional right% = -1) As Double
-            If problem.Length <= 0 Then
-                Return 0
-            End If
-            If right = -1 Then
-                right = problem(0).Length
-            End If
+        Public Function PeakAreaIntegrator(chromatogram As IVector(Of ChromatogramTick), peak As DoubleRange, Optional baselineQuantile# = 0.65) As Double
+            Dim time = chromatogram!Time
+            Dim points As PointF() =
+                chromatogram((time >= peak.Min) & (time <= peak.Max)) _
+                .Select(Function(c)
+                            Return New PointF With {
+                                .X = c.Time,
+                                .Y = c.Intensity
+                            }
+                        End Function) _
+                .CubicSpline _
+                .ToArray
+            Dim baseline# = chromatogram.Baseline(baselineQuantile)
+            Dim windows = points.
 
-            Dim j% = (left + right) / 2
-            Dim globalMax = problem.FindGlobalMax(j)
-
-            If (globalMax - 1 > 0 AndAlso problem(globalMax)(j) >= problem(globalMax - 1)(j)) AndAlso
-               (globalMax + 1 < problem.Length AndAlso problem(globalMax)(j) >= problem(globalMax + 1)(j)) AndAlso
-               (j - 1 > 0 AndAlso problem(globalMax)(j) >= problem(globalMax)(j - 1)) AndAlso
-               (j + 1 < problem(globalMax).Length AndAlso problem(globalMax)(j) >= problem(globalMax)(j + 1)) Then
-
-                Return problem(globalMax)(j)
-            ElseIf j > 0 AndAlso problem(globalMax)(j - 1) > problem(globalMax)(j) Then
-                right = j
-                Return FindPeak(problem, left, right)
-            ElseIf j + 1 < problem(globalMax).Length AndAlso problem(globalMax)(j + 1) > problem(globalMax)(j) Then
-                left = j
-                Return FindPeak(problem, left, right)
-            End If
-
-            Return problem(globalMax)(j)
-        End Function
-
-        <Extension>
-        Public Function FindGlobalMax(problem#()(), column%) As Integer
-            Dim max#, index%
-
-            For i As Integer = 0 To problem.Length - 1
-                If max < problem(i)(column) Then
-                    max = problem(i)(column)
-                    index = i
-                End If
-            Next
-
-            Return index
         End Function
     End Module
 End Namespace

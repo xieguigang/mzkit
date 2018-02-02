@@ -1,6 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
@@ -49,7 +50,7 @@ Namespace Chromatogram
         ''' </param>
         ''' <returns></returns>
         <Extension>
-        Public Function MRMPeak(chromatogram As VectorModel(Of ChromatogramTick),
+        Public Function MRMPeak(chromatogram As IVector(Of ChromatogramTick),
                                 Optional threshold# = 30%,
                                 Optional winSize% = 5,
                                 Optional baselineQuantile# = 0.65,
