@@ -11,6 +11,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
 Imports SMRUCC.MassSpectrum.Math.MRM
+Imports SMRUCC.MassSpectrum.Math.MRM.Models
 
 ''' <summary>
 ''' 对当前批次的标准曲线进行回归建模
@@ -70,14 +71,11 @@ Public Module StandardCurve
     ''' 根据扫描出来的TPA峰面积进行对标准曲线的回归建模
     ''' </summary>
     ''' <param name="ionTPA"></param>
-    ''' <param name="Xlsx$"></param>
+    ''' <param name="coordinates"></param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function Regression(ionTPA As Dictionary(Of DataSet), Xlsx$) As IEnumerable(Of NamedValue(Of FitResult))
-        Dim coordinates As Coordinate() = Extensions.Read_Range_Table(Xlsx, "coordinates")
-        Dim [IS] As Dictionary(Of String, [IS]) = Extensions _
-            .Read_IS_Table(Xlsx, "IS") _
-            .ToDictionary(Function(i) i.ID)
+    Public Iterator Function Regression(ionTPA As Dictionary(Of DataSet), coordinates As Coordinate(), [ISvector] As [IS]()) As IEnumerable(Of NamedValue(Of FitResult))
+        Dim [IS] As Dictionary(Of String, [IS]) = ISvector.ToDictionary(Function(i) i.ID)
 
         For Each ion As Coordinate In coordinates _
             .Where(Function(i)
@@ -127,12 +125,10 @@ Public Module StandardCurve
     ''' 从原始数据之中扫描峰面积数据，返回来的数据集之中的<see cref="DataSet.ID"/>是HMDB代谢物编号
     ''' </summary>
     ''' <param name="raw$">``*.wiff``，转换之后的结果文件夹，其中标准曲线的数据都是使用``L数字``标记的。</param>
-    ''' <param name="Xlsx$">包括离子对的定义数据以及浓度区间</param>
+    ''' <param name="ions$">包括离子对的定义数据以及浓度区间</param>
     ''' <returns></returns>
-    Public Function Scan(raw$, Xlsx$, Optional ByRef refName$() = Nothing) As DataSet()
+    Public Function Scan(raw$, ions As IonPair(), coordinates As Coordinate(), Optional ByRef refName$() = Nothing) As DataSet()
         Dim rawName$ = raw.BaseName
-        Dim ions As IonPair() = Extensions.LoadIonPairs(Xlsx, "ion pairs")
-        Dim coordinates As Coordinate() = Extensions.Read_Range_Table(Xlsx, "coordinates")
         Dim names = coordinates(Scan0) _
             .C _
             .Keys _

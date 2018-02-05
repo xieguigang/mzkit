@@ -1,6 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace MRM
+Namespace Models
 
     Public Class Coordinate
 

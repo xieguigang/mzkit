@@ -6,6 +6,7 @@ Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
+Imports SMRUCC.MassSpectrum.Math.MRM.Models
 
 Public Module Samples
 
@@ -13,25 +14,23 @@ Public Module Samples
     ''' 通过标准曲线对样品进行定量结果数据的获取
     ''' </summary>
     ''' <param name="wiff$"></param>
-    ''' <param name="Xlsx$"></param>
     ''' <param name="model">标准曲线线性回归模型</param>
     ''' <param name="X">标准曲线之中的``AIS/A``峰面积比数据，即线性回归模型之中的X样本点</param>
     ''' <returns>经过定量计算得到的浓度数据</returns>
-    Public Function QuantitativeAnalysis(wiff$, Xlsx$,
+    Public Function QuantitativeAnalysis(wiff$, ions As IonPair(), coordinates As Coordinate(), [IS] As [IS](),
                                          <Out> Optional ByRef model As NamedValue(Of FitResult)() = Nothing,
                                          <Out> Optional ByRef X As List(Of DataSet) = Nothing) As IEnumerable(Of DataSet)
         Dim standardNames$() = Nothing
         Dim detections As NamedValue(Of FitResult)() =
             StandardCurve _
-            .Scan(wiff, Xlsx, refName:=standardNames) _
+            .Scan(wiff, ions, coordinates, refName:=standardNames) _
             .ToDictionary _
-            .Regression(Xlsx) _
+            .Regression(coordinates, ISvector:=[IS]) _
             .ToArray
 
         X = New List(Of DataSet)
         model = detections
 
-        Dim ions As IonPair() = Extensions.LoadIonPairs(Xlsx, "ion pairs")
         Dim nameIndex As Index(Of String) = standardNames.Indexing
         Dim out As New List(Of DataSet)
 

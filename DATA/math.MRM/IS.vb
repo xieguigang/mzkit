@@ -1,4 +1,4 @@
-﻿Namespace MRM
+﻿Namespace Models
 
     Public Class [IS]
 
