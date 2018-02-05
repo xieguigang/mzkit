@@ -8,7 +8,7 @@ Imports Microsoft.VisualBasic.Language.UnixBash
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
 Imports SMRUCC.MassSpectrum.Math.MRM.Models
 
-Public Module Samples
+Public Module MRMSamples
 
     ''' <summary>
     ''' 通过标准曲线对样品进行定量结果数据的获取

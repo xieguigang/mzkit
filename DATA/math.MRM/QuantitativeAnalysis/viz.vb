@@ -4,7 +4,7 @@ Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics
 Imports Microsoft.VisualBasic.Imaging.Driver
 
-Module viz
+Public Module viz
 
     <Extension>
     Public Function StandardCurves(model As NamedValue(Of FitResult), Optional samples As IEnumerable(Of NamedValue(Of Double)) = Nothing) As GraphicsData
