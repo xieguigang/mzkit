@@ -49,7 +49,7 @@ Public Module ChromatogramPlot
                         Return New NamedCollection(Of ChromatogramTick) With {
                             .Name = ion.ion.name,
                             .Description = ion.ion.ToString,
-                            .Value = ion.chromatogram.PeakArea
+                            .Value = ion.chromatogram.Ticks
                         }
                     End Function) _
             .ToArray

@@ -65,12 +65,12 @@ Namespace MarkupData.mzML
         End Function
 
         ''' <summary>
-        ''' 返回来的时间的单位都统一为秒
+        ''' Get this chromatogram signal ticks.(返回来的时间的单位都统一为秒)
         ''' </summary>
         ''' <param name="chromatogram"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function PeakArea(chromatogram As chromatogram) As ChromatogramTick()
+        Public Function Ticks(chromatogram As chromatogram) As ChromatogramTick()
             Dim time = chromatogram.ByteArray("time array")
             Dim into = chromatogram.ByteArray("intensity array")
             Dim timeUnit = time.cvParams.KeyItem("time array").unitName

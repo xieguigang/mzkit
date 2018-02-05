@@ -174,7 +174,10 @@ Public Module StandardCurve
     ''' <param name="ionpairs"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function ScanTPA(raw$, ionpairs As IonPair(), Optional baselineQuantile# = 0.65) As NamedValue(Of Double)()
+    Public Function ScanTPA(raw$, ionpairs As IonPair(),
+                            Optional baselineQuantile# = 0.65,
+                            Optional integratorTicks% = 5000) As NamedValue(Of Double)()
+
         Dim ionData = LoadChromatogramList(path:=raw) _
             .MRMSelector(ionpairs) _
             .Where(Function(ion) Not ion.chromatogram Is Nothing) _
@@ -182,7 +185,7 @@ Public Module StandardCurve
                         Return New NamedValue(Of ChromatogramTick()) With {
                             .Name = ion.ion.AccID,
                             .Description = ion.ion.ToString,
-                            .Value = ion.chromatogram.PeakArea
+                            .Value = ion.chromatogram.Ticks
                         }
                     End Function) _
             .ToArray
@@ -192,7 +195,11 @@ Public Module StandardCurve
             .Select(Function(ion)
                         Dim vector As IVector(Of ChromatogramTick) = ion.Value.Shadows
                         Dim peak = vector.MRMPeak(baselineQuantile:=baselineQuantile)
-                        Dim area As Double = vector.PeakAreaIntegrator(peak:=peak, baselineQuantile:=baselineQuantile)
+                        Dim area# = vector.PeakAreaIntegrator(
+                            peak:=peak,
+                            baselineQuantile:=baselineQuantile,
+                            n:=integratorTicks
+                        )
 
                         Return New NamedValue(Of Double) With {
                             .Name = ion.Name,
