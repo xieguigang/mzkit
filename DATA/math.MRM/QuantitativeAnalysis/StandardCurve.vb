@@ -138,7 +138,7 @@ Public Module StandardCurve
 
         refName = names.Objects
 
-        For Each ion In ions
+        For Each ion As IonPair In ions
             ionTPAs(ion.AccID) = New Dictionary(Of String, Double)
         Next
 
@@ -147,7 +147,7 @@ Public Module StandardCurve
                        Return path.BaseName.IsOneOfA(names)
                    End Function)
 
-            Dim TPA = file.ScanTPA(ionpairs:=ions)
+            Dim TPA As NamedValue(Of Double)() = file.ScanTPA(ionpairs:=ions)
             Dim level$ = file.BaseName.Replace(rawName & "-", "")
 
             ' level = level.Match("[-]L\d+", RegexICSng).Trim("-"c)
