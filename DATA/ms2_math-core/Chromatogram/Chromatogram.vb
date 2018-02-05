@@ -48,7 +48,7 @@ Namespace Chromatogram
         ''' + <see cref="MRMPeakExtensionMethods.TriangleMatch"/>: Unit in degree, values in range ``[0-90]``
         ''' + <see cref="MRMPeakExtensionMethods.BaselineMatch"/>: Unit in percentage, value in range ``[0%-100%]``
         ''' </param>
-        ''' <returns></returns>
+        ''' <returns>The retention time range: ``[rtmin, rtmax]``</returns>
         <Extension>
         Public Function MRMPeak(chromatogram As IVector(Of ChromatogramTick),
                                 Optional threshold# = 30%,
