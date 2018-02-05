@@ -9,7 +9,7 @@ Imports Microsoft.VisualBasic.Math.Calculus
 Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
-Imports Microsoft.VisualBasic.Math.Statistics.Linq
+Imports sys = System.Math
 
 Namespace Chromatogram
 
@@ -68,7 +68,7 @@ Namespace Chromatogram
                                            ByRef Optional peakRaw As PointF() = Nothing,
                                            ByRef Optional curve As PointF() = Nothing) As Double
             Dim time = chromatogram!Time
-            Dim rawPoints =
+            Dim rawPoints As List(Of PointF) =
                 chromatogram((time >= peak.Min) & (time <= peak.Max)) _
                 .Select(Function(c)
                             Return New PointF With {
@@ -76,7 +76,37 @@ Namespace Chromatogram
                                 .Y = c.Intensity
                             }
                         End Function) _
-                .ToArray
+                .AsList
+
+            ' CubicSpline required at least 3 points
+            If rawPoints = 2 Then
+                If rawPoints(0).Y > rawPoints(1).Y Then
+                    ' \
+                    Dim t0 = rawPoints(0)
+                    Dim i% = chromatogram _
+                        .Which(Function(t)
+                                   Return sys.Abs(t0.X - t.Time) <= 0.1
+                               End Function) _
+                        (0)
+
+                    With chromatogram(i - 1)
+                        rawPoints = New PointF(.Time, .Intensity) + rawPoints
+                    End With
+                Else
+                    ' /
+                    Dim t1 = rawPoints(1)
+                    Dim i% = chromatogram _
+                        .Which(Function(t)
+                                   Return sys.Abs(t1.X - t.Time) <= 0.1
+                               End Function) _
+                        (0)
+
+                    With chromatogram(i + 1)
+                        rawPoints += New Point(.Time, .Intensity)
+                    End With
+                End If
+            End If
+
             Dim points As PointF() = rawPoints _
                 .CubicSpline(cubicSplineDensity) _
                 .ToArray
