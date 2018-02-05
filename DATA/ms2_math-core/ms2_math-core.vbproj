@@ -142,6 +142,9 @@
     <Compile Include="Chromatogram\PeakArea.vb" />
     <Compile Include="MRM\Coordinate.vb" />
     <Compile Include="MRM\IS.vb" />
+    <Compile Include="MRM\QuantitativeAnalysis\Samples.vb" />
+    <Compile Include="MRM\QuantitativeAnalysis\StandardCurve.vb" />
+    <Compile Include="MRM\QuantitativeAnalysis\viz.vb" />
     <Compile Include="ms2AlignMatrix.vb" />
     <Compile Include="LibraryMatrix.vb" />
     <Compile Include="ms1.vb" />
