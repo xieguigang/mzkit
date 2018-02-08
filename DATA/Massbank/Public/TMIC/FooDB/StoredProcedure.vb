@@ -1,5 +1,4 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Oracle.LinuxCompatibility.MySQL
 Imports SMRUCC.MassSpectrum.DATA.TMIC.HMDB
 
@@ -15,10 +14,8 @@ Namespace TMIC.FooDB
 
         <Extension>
         Public Iterator Function GetAssociatedFoods(HMDB As metabolite, mysql As MySqli) As IEnumerable(Of FoodSource)
-            Dim list$ = (HMDB.accession + HMDB.secondary_accessions.accession.AsList) _
-                .Select(Function(id) $"'{id}'") _
-                .JoinBy(", ")
-            Dim SQL$ = $"SELECT * FROM foodb.compounds WHERE `hmdb_id` IN ({list}) LIMIT 1;"
+            Dim list$
+            Dim SQL$ = $"SELECT * FROM foodb.compounds WHERE lower(`public_id`) = lower('{HMDB.foodb_id}') LIMIT 1;"
             Dim compound = mysql.ExecuteScalar(Of mysql.compounds)(SQL)
             Dim contents = mysql.Query(Of mysql.contents)($"SELECT * FROM foodb.contents WHERE `source_id` = {compound.id};")
 

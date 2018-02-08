@@ -12,7 +12,7 @@ Module foodbQuery
 
         For Each metabolite In tests
             Dim foods = metabolite.GetAssociatedFoods(mysql).ToArray
-            Call foods.SaveTo("./ffffff.csv")
+            Call foods.SaveTo($"./foods/{metabolite.accession}.csv")
         Next
 
         Pause()
