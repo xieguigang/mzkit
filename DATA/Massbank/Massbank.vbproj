@@ -210,6 +210,7 @@
     <Compile Include="Public\MoNA\MoNAJson.vb" />
     <Compile Include="Public\NCBI\PubChem\MetaData.vb" />
     <Compile Include="Public\NCBI\PubChem\ImageFly.vb" />
+    <Compile Include="Public\TMIC\FooDB\StoredProcedure.vb" />
     <Compile Include="Public\TMIC\HMDB\MetaReference\RepositoryExtensions.vb" />
     <Compile Include="SDF\Extensions.vb" />
     <Compile Include="Public\TMIC\FooDB\mysql\compounds.vb" />
