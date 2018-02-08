@@ -1,4 +1,3 @@
-[DEBUG 2018/2/8 13:27:35] "/MySQL.Markdown" "/sql" ./FooDB.sql              @RunCLIInternal
 # MySQL development docs
 Mysql database field attributes notes:
 
@@ -136,7 +135,7 @@ CREATE TABLE `compound_synonyms` (
 |type|VarChar (255)|``NN``||
 |public_id|VarChar (9)|``NN``||
 |name|VarChar (255)|``NN``||
-|export|Int64 (1)|||
+|export|Boolean (1)|||
 |state|VarChar (255)|||
 |annotation_quality|VarChar (255)|||
 |description|Text|||
@@ -235,7 +234,7 @@ CREATE TABLE `compound_synonyms` (
 |chembl_id|VarChar (255)|||
 |chemspider_id|VarChar (255)|||
 |meta_cyc_id|VarChar (255)|||
-|foodcomex|Int64 (1)|||
+|foodcomex|Boolean (1)|||
 |phytohub_id|VarChar (255)|||
 
 ```SQL
@@ -750,7 +749,7 @@ CREATE TABLE `foodcomex_compound_providers` (
 |contact_email|VarChar (255)|||
 |created_at|DateTime|``NN``||
 |updated_at|DateTime|``NN``||
-|export|Int64 (1)|||
+|export|Boolean (1)|||
 |purity|Text|||
 |description|Text|||
 |spectra_details|VarChar (255)|||
@@ -845,10 +844,10 @@ CREATE TABLE `foodcomex_compounds` (
 |updated_at|DateTime|||
 |creator_id|Int64 (11)|||
 |updater_id|Int64 (11)|||
-|export_to_afcdb|Int64 (1)|``NN``||
+|export_to_afcdb|Boolean (1)|``NN``||
 |category|VarChar (255)|||
 |ncbi_taxonomy_id|Int64 (11)|||
-|export_to_foodb|Int64 (1)|||
+|export_to_foodb|Boolean (1)|||
 
 ```SQL
 CREATE TABLE `foods` (
@@ -930,7 +929,7 @@ CREATE TABLE `health_effects` (
 |type|VarChar (255)|``NN``||
 |public_id|VarChar (9)|``NN``||
 |name|VarChar (255)|``NN``||
-|export|Int64 (1)|||
+|export|Boolean (1)|||
 |state|VarChar (255)|||
 |annotation_quality|VarChar (255)|||
 |description|Text|||
@@ -1043,6 +1042,5 @@ CREATE TABLE `references` (
   `source_type` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_references_on_source_type_and_source_id` (`source_type`,`source_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31792
+) ENGINE=InnoDB AUTO_INC
 
-Press any key to continute...
