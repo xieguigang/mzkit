@@ -1,4 +1,4 @@
-[DEBUG 2018/2/8 13:25:23] "/MySQL.Markdown" "/sql" ./FooDB.sql              @RunCLIInternal
+[DEBUG 2018/2/8 13:27:35] "/MySQL.Markdown" "/sql" ./FooDB.sql              @RunCLIInternal
 # MySQL development docs
 Mysql database field attributes notes:
 
