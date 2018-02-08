@@ -1,4 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Language
 Imports Oracle.LinuxCompatibility.MySQL
 Imports SMRUCC.MassSpectrum.DATA.TMIC.HMDB
 
@@ -11,6 +13,11 @@ Namespace TMIC.FooDB
 
         ' compound <--> food associations
         ' HMDB -> [hmdb_id] compounds [id] -> [source_id] contents [food_id] -> foods
+
+        '<Extension>
+        'Public Iterator Function GetAssociatedFoods(HMDB$, mysql As MySqli) As IEnumerable(Of FoodSource)
+
+        'End Function
 
         <Extension>
         Public Iterator Function GetAssociatedFoods(HMDB As metabolite, mysql As MySqli) As IEnumerable(Of FoodSource)
@@ -41,10 +48,13 @@ Namespace TMIC.FooDB
                 .Query(Of mysql.foods)(SQL) _
                 .ToDictionary(Function(food) food.id)
 
+            Dim out As New List(Of FoodSource)
+
             For Each content As mysql.contents In contents
                 Dim food As mysql.foods = foods.TryGetValue(content.food_id)
                 Dim asso As New FoodSource With {
                     .HMDB = HMDB.accession,
+                    .foodb_id = compound.public_id,
                     .content = content.orig_content,
                     .food_id = content.food_id,
                     .food_name = food?.name_scientific,
@@ -54,16 +64,30 @@ Namespace TMIC.FooDB
                     .unit = content.orig_unit
                 }
 
+                out += asso
+
                 Yield asso
+            Next
+
+            Dim foodGroup = out.GroupBy(Function(f) f.food_id).ToArray
+
+            For Each food In foodGroup
+                Dim range As DoubleRange = food.Select(Function(f) f.content).ToArray
+
+                For Each f In food
+                    f.range = range
+                Next
             Next
         End Function
     End Module
 
     Public Class FoodSource
 
+        Public Property foodb_id As String
         Public Property HMDB As String
         Public Property name As String
         Public Property content As Double
+        Public Property range As DoubleRange
         Public Property unit As String
         Public Property food_id As String
         Public Property food_name As String
