@@ -661,6 +661,14 @@ CREATE TABLE `references` (
   KEY `index_references_on_source_type_and_source_id` (`source_type`,`source_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=31792 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping events for database 'foodb'
+--
+
+--
+-- Dumping routines for database 'foodb'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -671,4 +679,4 @@ CREATE TABLE `references` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-10-24  9:52:35
+-- Dump completed on 2018-02-08 13:24:46

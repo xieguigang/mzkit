@@ -1,4 +1,5 @@
-﻿# MySQL development docs
+[DEBUG 2018/2/8 13:25:23] "/MySQL.Markdown" "/sql" ./FooDB.sql              @RunCLIInternal
+# MySQL development docs
 Mysql database field attributes notes:
 
 > AI: Auto Increment; B: Binary; NN: Not Null; PK: Primary Key; UQ: Unique; UN: Unsigned; ZF: Zero Fill
@@ -1044,3 +1045,4 @@ CREATE TABLE `references` (
   KEY `index_references_on_source_type_and_source_id` (`source_type`,`source_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=31792
 
+Press any key to continute...
