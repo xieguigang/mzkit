@@ -1,6 +1,8 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Oracle.LinuxCompatibility.MySQL
 Imports SMRUCC.MassSpectrum.DATA.TMIC.HMDB
 
@@ -61,22 +63,24 @@ Namespace TMIC.FooDB
                     .food_general_name = food?.name,
                     .name = compound.name,
                     .reference = content.citation,
-                    .unit = content.orig_unit
+                    .unit = content.orig_unit,
+                    .range = {content.orig_min, content.orig_max}
                 }
+
+                If asso.content = 0R Then
+                    With asso.range
+                        asso.content = { .Min, .Max}.Average
+                    End With
+                End If
+
+                ' 如果min = max，也会出现length为零的情况，在这判断一下min是否为零就好了
+                If asso.range.Length = 0R AndAlso asso.range.Min = 0R Then
+                    asso.range = {asso.content, asso.content}
+                End If
 
                 out += asso
 
                 Yield asso
-            Next
-
-            Dim foodGroup = out.GroupBy(Function(f) f.food_id).ToArray
-
-            For Each food In foodGroup
-                Dim range As DoubleRange = food.Select(Function(f) f.content).ToArray
-
-                For Each f In food
-                    f.range = range
-                Next
             Next
         End Function
     End Module
@@ -87,6 +91,7 @@ Namespace TMIC.FooDB
         Public Property HMDB As String
         Public Property name As String
         Public Property content As Double
+        <Column("range", GetType(parser))>
         Public Property range As DoubleRange
         Public Property unit As String
         Public Property food_id As String
@@ -97,5 +102,18 @@ Namespace TMIC.FooDB
         Public Overrides Function ToString() As String
             Return $"{name} @ {food_general_name} ({food_name}) = {content} ({unit})"
         End Function
+
+        Private Class parser : Implements IParser
+
+            Public Function ToString(obj As Object) As String Implements IParser.ToString
+                With DirectCast(obj, DoubleRange)
+                    Return $"{ .Min}~{ .Max}"
+                End With
+            End Function
+
+            Public Function TryParse(cell As String) As Object Implements IParser.TryParse
+                Return CType(cell, DoubleRange)
+            End Function
+        End Class
     End Class
 End Namespace
