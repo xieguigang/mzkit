@@ -40,7 +40,8 @@ Namespace TMIC.FooDB
                     .HMDB = HMDB.accession,
                     .content = content.orig_content,
                     .food_id = content.food_id,
-                    .food_name = foods(.food_id).name,
+                    .food_name = foods(.food_id).name_scientific,
+                    .food_general_name = foods(.food_id).name,
                     .name = compound.name,
                     .reference = content.citation,
                     .unit = content.orig_unit
@@ -59,10 +60,11 @@ Namespace TMIC.FooDB
         Public Property unit As String
         Public Property food_id As String
         Public Property food_name As String
+        Public Property food_general_name As String
         Public Property reference As String
 
         Public Overrides Function ToString() As String
-            Return $"{name} @ {food_name} = {content} ({unit})"
+            Return $"{name} @ {food_general_name} ({food_name}) = {content} ({unit})"
         End Function
     End Class
 End Namespace

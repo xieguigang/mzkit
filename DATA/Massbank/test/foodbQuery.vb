@@ -11,7 +11,7 @@ Module foodbQuery
         Dim tests As metabolite() = "D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\build_tools\CVD_kb\heart failure-hmdb.XML".LoadXml(Of metabolite())
 
         For Each metabolite In tests
-            Dim foods = metabolite.GetAssociatedFoods(mysql)
+            Dim foods = metabolite.GetAssociatedFoods(mysql).ToArray
             Call foods.SaveTo("./ffffff.csv")
         Next
 
