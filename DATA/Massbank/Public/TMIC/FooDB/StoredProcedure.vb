@@ -17,7 +17,16 @@ Namespace TMIC.FooDB
             Dim list$
             Dim SQL$ = $"SELECT * FROM foodb.compounds WHERE lower(`public_id`) = lower('{HMDB.foodb_id}') LIMIT 1;"
             Dim compound = mysql.ExecuteScalar(Of mysql.compounds)(SQL)
+
+            If compound Is Nothing Then
+                Return
+            End If
+
             Dim contents = mysql.Query(Of mysql.contents)($"SELECT * FROM foodb.contents WHERE `source_id` = {compound.id};")
+
+            If contents.IsNullOrEmpty Then
+                Return
+            End If
 
             ' get food informations
             Dim foods As Dictionary(Of Long, mysql.foods)
@@ -33,12 +42,13 @@ Namespace TMIC.FooDB
                 .ToDictionary(Function(food) food.id)
 
             For Each content As mysql.contents In contents
+                Dim food As mysql.foods = foods.TryGetValue(content.food_id)
                 Dim asso As New FoodSource With {
                     .HMDB = HMDB.accession,
                     .content = content.orig_content,
                     .food_id = content.food_id,
-                    .food_name = foods(.food_id).name_scientific,
-                    .food_general_name = foods(.food_id).name,
+                    .food_name = food?.name_scientific,
+                    .food_general_name = food?.name,
                     .name = compound.name,
                     .reference = content.citation,
                     .unit = content.orig_unit
