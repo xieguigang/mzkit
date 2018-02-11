@@ -49,41 +49,4 @@ Module GA
                     End Function) _
             .ToArray
     End Function
-
-    ''' <summary>
-    ''' 分子量差值
-    ''' </summary>
-    ''' <param name="measured#"></param>
-    ''' <param name="actualValue#"></param>
-    ''' <returns></returns>
-    Public Function ppm(measured#, actualValue#) As Double
-        ' （测量值-实际分子量）/ 实际分子量
-        ' |(实验数据 - 数据库结果)| / 实验数据 * 1000000
-        Dim ppmd# = Math.Abs(measured - actualValue) / actualValue
-        ppmd = ppmd * 1000000
-        Return ppmd
-    End Function
 End Module
-
-Public MustInherit Class AlignMethod
-
-    Public MustOverride Function Assert(mz1#, mz2#) As Boolean
-End Class
-
-Public Class PPMmethod : Inherits AlignMethod
-
-    Public Property ppm As Double
-
-    Public Overrides Function Assert(mz1 As Double, mz2 As Double) As Boolean
-        Return GA.ppm(mz1, mz2) <= ppm
-    End Function
-End Class
-
-Public Class DAmethod : Inherits AlignMethod
-
-    Public Property da As Double
-
-    Public Overrides Function Assert(mz1 As Double, mz2 As Double) As Boolean
-        Return Math.Abs(mz1 - mz2) <= da
-    End Function
-End Class

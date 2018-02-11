@@ -140,6 +140,7 @@
     <Compile Include="Chromatogram\Chromatogram.vb" />
     <Compile Include="Chromatogram\ChromatogramTick.vb" />
     <Compile Include="Chromatogram\PeakArea.vb" />
+    <Compile Include="Tolerance.vb" />
     <Compile Include="ms2AlignMatrix.vb" />
     <Compile Include="LibraryMatrix.vb" />
     <Compile Include="ms1.vb" />

@@ -11,7 +11,7 @@ Namespace MarkupData
         ''' <returns></returns>
         ''' 
         <Extension>
-        Public Function Ms1Chromatogram(data As IEnumerable(Of (scan_time#, mz#, intensity#))) As (mz#, chromatogram As ChromatogramTick())
+        Public Function Ms1Chromatogram(data As IEnumerable(Of (scan_time#, mz#, intensity#)), ) As (mz#, chromatogram As ChromatogramTick())
 
         End Function
     End Module
