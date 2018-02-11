@@ -15,7 +15,7 @@ Module Module1
 
     Sub ms1Visual()
 
-        Dim matrix = "D:\Resources\40\40.mzML".PopulateMS1.Ms1Chromatogram.ToArray
+        Dim matrix = "D:\Resources\40\40.mzML".PopulateMS1.Ms1Chromatogram().ToArray
         Dim scans = matrix _
             .Select(Function(mzGroup)
                         Return mzGroup.chromatogram.Select(Function(c) New ms1_scan With {.mz = mzGroup.mz, .intensity = c.Intensity, .scan_time = c.Time})
