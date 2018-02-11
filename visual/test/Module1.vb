@@ -1,9 +1,9 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Data.csv
-Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzXML
@@ -19,9 +19,16 @@ Module Module1
         Dim matrix = "D:\Resources\40\40.mzML" _
             .PopulateMS1 _
             .Ms1Chromatogram(New DAmethod With {.da = 0.3}) _
-            .QuantileBaseline(0.95) _
-            .Select(Function(mz) New NamedCollection(Of ChromatogramTick)(Math.Round(mz.mz, 4).ToString, mz.chromatogram)) _
+            .Select(Function(mz)
+                        Dim table = mz.chromatogram.GroupBy(Function(t) t.Time).Select(Function(c) New ChromatogramTick With {.Time = c.Key, .Intensity = c.Select(Function(s) s.Intensity).Max}).ToArray
+                        Return New NamedCollection(Of ChromatogramTick) With {.Name = mz.mz, .Value = table}
+                    End Function) _
+            .Where(Function(m) m.Value.Length > 50) _
             .ToArray
+
+
+        ' Call Contour.Plot(matrix, unit:=10, size:="20000,8000").Save("./ms1-contour.png")
+
         'Dim scans = matrix _
         '    .Select(Function(mzGroup)
         '                Return mzGroup.chromatogram.Select(Function(c) New ms1_scan With {.mz = mzGroup.mz, .intensity = c.Intensity, .scan_time = c.Time})
@@ -37,22 +44,22 @@ Module Module1
         ' |
         ' ----> rt
         '
-        Dim times = matrix.Select(Function(mz) mz.Value.Select(Function(c) c.Time)).IteratesALL.Distinct.OrderBy(Function(s) s).Indexing
-        Dim into_matrix = matrix.Select(Function(mz)
-                                            Dim row = New Double(times.Count - 1) {}
+        'Dim times = matrix.Select(Function(mz) mz.Value.Select(Function(c) c.Time)).IteratesALL.Distinct.OrderBy(Function(s) s).Indexing
+        'Dim into_matrix = matrix.Select(Function(mz)
+        '                                    Dim row = New Double(times.Count - 1) {}
 
-                                            For Each time In mz.Value
-                                                Dim i = times.IndexOf(time.Time)
-                                                row(i) = time.Intensity
-                                            Next
+        '                                    For Each time In mz.Value
+        '                                        Dim i = times.IndexOf(time.Time)
+        '                                        row(i) = time.Intensity
+        '                                    Next
 
-                                            Return row
-                                        End Function).ToArray
+        '                                    Return row
+        '                                End Function).ToArray
 
-        Call into_matrix.MatrixJson.SaveTo("./into.json")
+        'Call into_matrix.MatrixJson.SaveTo("./into.json")
 
         'Call scans.SaveTo("./test_ms1_scan.csv")
-        ' Call matrix.Plot("8000,3000", labelTicks:=5, showLabels:=False).Save("./ms1.plot.png")
+        Call matrix.Plot("8000,3000", labelTicks:=5, showLabels:=False, fillCurve:=False).Save("./ms1.plot.png")
 
         Pause()
     End Sub
@@ -138,13 +145,13 @@ Module Module1
         Next
 
 
-        For Each ion In ionData
-            Call ion _
-                .Value _
-                .Plot(title:=ion.Name, showMRMRegion:=True, debug:=True) _
-                .AsGDIImage _
-                .SaveAs($"./{ion.Name.NormalizePathString.Replace(" ", "-")}_chromatogram.png")
-        Next
+        'For Each ion In ionData
+        '    Call ion _
+        '        .Value _
+        '        .Plot(title:=ion.Name, showMRMRegion:=True, debug:=True) _
+        '        .AsGDIImage _
+        '        .SaveAs($"./{ion.Name.NormalizePathString.Replace(" ", "-")}_chromatogram.png")
+        'Next
 
         Pause()
     End Sub

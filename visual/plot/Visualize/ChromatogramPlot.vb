@@ -74,7 +74,8 @@ Public Module ChromatogramPlot
                          Optional labelFontStyle$ = CSSFont.Win7Normal,
                          Optional labelConnectorStroke$ = Stroke.StrongHighlightStroke,
                          Optional labelTicks% = 500,
-                         Optional showLabels As Boolean = True) As GraphicsData
+                         Optional showLabels As Boolean = True,
+                         Optional fillCurve As Boolean = False) As GraphicsData
 
         Dim labelFont As Font = CSSFont.TryParse(labelFontStyle)
         Dim labelConnector As Pen = Stroke.TryParse(labelConnectorStroke)
@@ -149,6 +150,7 @@ Public Module ChromatogramPlot
                     }
 
                     Dim A, B As PointF
+                    Dim polygon As New List(Of PointF)
 
                     For Each signal As SlideWindow(Of PointF) In chromatogram _
                         .Select(Function(c)
@@ -160,7 +162,21 @@ Public Module ChromatogramPlot
                         B = scaler.Translate(signal.Last)
 
                         Call g.DrawLine(curvePen, A, B)
+
+                        If polygon = 0 Then
+                            polygon.Add(A)
+                        End If
+                        polygon.Add(B)
                     Next
+
+                    polygon.Insert(0, New PointF(polygon(0).X, 0))
+                    polygon.Add(New PointF(polygon.Last.X, 0))
+
+                    If fillCurve Then
+                        Dim color As Color = Color.FromArgb(200, curvePen.Color)
+
+                        Call g.FillPolygon(New SolidBrush(color), polygon)
+                    End If
                 Next
 
                 If showLabels Then
