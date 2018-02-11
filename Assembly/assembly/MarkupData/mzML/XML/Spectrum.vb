@@ -10,7 +10,7 @@ Namespace MarkupData.mzML
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetAllMs1() As IEnumerable(Of spectrum)
-            Return spectrums.Where(Function(s) s.ms_level = "1")
+            Return spectrums.GetAllMs1
         End Function
     End Class
 

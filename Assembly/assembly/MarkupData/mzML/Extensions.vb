@@ -12,10 +12,15 @@ Namespace MarkupData.mzML
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function PopulateMS1(file As Xml) As IEnumerable(Of (scan_time#, mz#, intensity#))
-            Return file.mzML _
-                .run _
-                .spectrumList _
+        Public Function GetAllMs1(spectrums As IEnumerable(Of spectrum)) As IEnumerable(Of spectrum)
+            Return spectrums.Where(Function(s) s.ms_level = "1")
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function PopulateMS1(filePath As String) As IEnumerable(Of (scan_time#, mz#, intensity#))
+            Return filePath _
+                .LoadXmlDataSet(Of spectrum)(, xmlns:=mzML.Xmlns) _
                 .GetAllMs1 _
                 .Select(Function(ms1)
                             Dim time# = ms1.scan_time
@@ -27,7 +32,9 @@ Namespace MarkupData.mzML
                                 .Select(Function(index)
                                             Return (time, mz(index), intensity(index))
                                         End Function)
-                        End Function)
+                        End Function) _
+                .IteratesALL _
+                .ToArray
         End Function
 
         ''' <summary>

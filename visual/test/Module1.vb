@@ -12,7 +12,17 @@ Imports SMRUCC.MassSpectrum.Visualization.DATA.SpectrumJSON
 
 Module Module1
 
+    Sub ms1Visual()
+
+        Dim matrix = "D:\Resources\40\40.mzML".PopulateMS1
+
+
+        Pause()
+    End Sub
+
     Sub Main()
+
+        Call ms1Visual()
 
         Call ChromatogramPlotTest()
 
