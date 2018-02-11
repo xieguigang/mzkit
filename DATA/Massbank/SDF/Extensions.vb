@@ -18,7 +18,7 @@ Namespace File
                 If .StringEmpty Then
                     Return Nothing
                 Else
-                    Return [Structure].Parse(.ref)
+                    Return [Structure].Parse(.ByRef)
                 End If
             End With
         End Function
@@ -29,7 +29,7 @@ Namespace File
                 If .StringEmpty Then
                     Return Nothing
                 Else
-                    Return [Structure].Parse(.ref)
+                    Return [Structure].Parse(.ByRef)
                 End If
             End With
         End Function

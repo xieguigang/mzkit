@@ -38,7 +38,7 @@ Public Class ChemicalNameEquality : Implements IEqualityComparer(Of String)
     ''' <returns></returns>
     Private Shared Function OxoName(name As String) As String
         With Strings.Split(name, "Oxo", Compare:=CompareMethod.Text)
-            If InStr(.ref(1), "-L-", CompareMethod.Text) > 0 Then
+            If InStr(.ByRef(1), "-L-", CompareMethod.Text) > 0 Then
                 ' 不需要再拓展了
                 ' 5-Oxo-L-proline;
                 Return name
