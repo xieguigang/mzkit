@@ -17,3 +17,11 @@ Public Class ms1 : Implements INamedValue
         Return $"{sys.Round(mz, 4)}@{rt}"
     End Function
 End Class
+
+Public Class ms1_scan
+
+    Public Property mz As Double
+    Public Property scan_time As Double
+    Public Property intensity As Double
+
+End Class

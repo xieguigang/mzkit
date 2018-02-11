@@ -1,6 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
@@ -15,7 +16,14 @@ Module Module1
     Sub ms1Visual()
 
         Dim matrix = "D:\Resources\40\40.mzML".PopulateMS1.Ms1Chromatogram.ToArray
+        Dim scans = matrix _
+            .Select(Function(mzGroup)
+                        Return mzGroup.chromatogram.Select(Function(c) New ms1_scan With {.mz = mzGroup.mz, .intensity = c.Intensity, .scan_time = c.Time})
+                    End Function) _
+            .IteratesALL _
+            .ToArray
 
+        Call scans.SaveTo("./test_ms1_scan.csv")
 
         Pause()
     End Sub
