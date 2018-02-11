@@ -13,6 +13,7 @@ Public MustInherit Class Tolerance
     End Property
 
     Public MustOverride Function Assert(mz1#, mz2#) As Boolean
+
 End Class
 
 Public Class PPMmethod : Inherits Tolerance
@@ -25,6 +26,10 @@ Public Class PPMmethod : Inherits Tolerance
     Sub New(ppm#)
         ppmValue = ppm
     End Sub
+
+    Public Overrides Function ToString() As String
+        Return $"ppm(mz1, mz2) <= {ppmValue}"
+    End Function
 
     ''' <summary>
     ''' 分子量差值
@@ -53,5 +58,9 @@ Public Class DAmethod : Inherits Tolerance
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function Assert(mz1 As Double, mz2 As Double) As Boolean
         Return sys.Abs(mz1 - mz2) <= da
+    End Function
+
+    Public Overrides Function ToString() As String
+        Return $"|mz1 - mz2| <= {da}"
     End Function
 End Class
