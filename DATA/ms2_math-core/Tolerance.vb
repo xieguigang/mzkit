@@ -5,12 +5,26 @@ Imports sys = System.Math
 ''' The m/z tolerance methods
 ''' </summary>
 Public MustInherit Class Tolerance
+
+    Public ReadOnly Property [Interface] As Tolerance
+        Get
+            Return Me
+        End Get
+    End Property
+
     Public MustOverride Function Assert(mz1#, mz2#) As Boolean
 End Class
 
 Public Class PPMmethod : Inherits Tolerance
 
     Public Property ppmValue As Double
+
+    Sub New()
+    End Sub
+
+    Sub New(ppm#)
+        ppmValue = ppm
+    End Sub
 
     ''' <summary>
     ''' 分子量差值
