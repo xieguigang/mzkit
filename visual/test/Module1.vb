@@ -14,7 +14,7 @@ Module Module1
 
     Sub ms1Visual()
 
-        Dim matrix = "D:\Resources\40\40.mzML".PopulateMS1
+        Dim matrix = "D:\Resources\40\40.mzML".PopulateMS1.Ms1Chromatogram.ToArray
 
 
         Pause()

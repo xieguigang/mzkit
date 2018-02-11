@@ -18,7 +18,7 @@ Namespace MarkupData
         ''' 
         <Extension>
         Public Iterator Function Ms1Chromatogram(data As IEnumerable(Of (scan_time#, mz#, intensity#)), Optional tolerance As Tolerance = Nothing) As IEnumerable(Of (mz#, chromatogram As ChromatogramTick()))
-            Dim mzGroup = data.GroupBy(Function(d) d.mz, AddressOf (tolerance Or ppm20).Assert)
+            Dim mzGroup = data.GroupBy(Function(d) d.mz, equals:=AddressOf (tolerance Or ppm20).Assert)
 
             For Each mz As NamedCollection(Of (scan_time#, mz#, intensity#)) In mzGroup
                 Dim ticks = mz _
