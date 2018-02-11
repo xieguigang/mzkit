@@ -3,6 +3,7 @@ Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzXML
@@ -15,7 +16,12 @@ Module Module1
 
     Sub ms1Visual()
 
-        Dim matrix = "D:\Resources\40\40.mzML".PopulateMS1.Ms1Chromatogram(New DAmethod With {.da = 0.3}).Select(Function(mz) New NamedCollection(Of ChromatogramTick)(Math.Round(mz.mz, 4).ToString, mz.chromatogram)).ToArray
+        Dim matrix = "D:\Resources\40\40.mzML" _
+            .PopulateMS1 _
+            .Ms1Chromatogram(New DAmethod With {.da = 0.3}) _
+            .QuantileBaseline(0.95) _
+            .Select(Function(mz) New NamedCollection(Of ChromatogramTick)(Math.Round(mz.mz, 4).ToString, mz.chromatogram)) _
+            .ToArray
         'Dim scans = matrix _
         '    .Select(Function(mzGroup)
         '                Return mzGroup.chromatogram.Select(Function(c) New ms1_scan With {.mz = mzGroup.mz, .intensity = c.Intensity, .scan_time = c.Time})
@@ -23,8 +29,30 @@ Module Module1
         '    .IteratesALL _
         '    .ToArray
 
+        ' 生成矩阵进行web可视化
+        '
+        ' mz
+        ' ^
+        ' |
+        ' |
+        ' ----> rt
+        '
+        Dim times = matrix.Select(Function(mz) mz.Value.Select(Function(c) c.Time)).IteratesALL.Distinct.OrderBy(Function(s) s).Indexing
+        Dim into_matrix = matrix.Select(Function(mz)
+                                            Dim row = New Double(times.Count - 1) {}
+
+                                            For Each time In mz.Value
+                                                Dim i = times.IndexOf(time.Time)
+                                                row(i) = time.Intensity
+                                            Next
+
+                                            Return row
+                                        End Function).ToArray
+
+        Call into_matrix.MatrixJson.SaveTo("./into.json")
+
         'Call scans.SaveTo("./test_ms1_scan.csv")
-        Call matrix.Plot("3000,2500").Save("./ms1.plot")
+        ' Call matrix.Plot("8000,3000", labelTicks:=5, showLabels:=False).Save("./ms1.plot.png")
 
         Pause()
     End Sub

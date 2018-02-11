@@ -72,7 +72,9 @@ Public Module ChromatogramPlot
                          Optional colorsSchema$ = "scibasic.category31()",
                          Optional penStyle$ = Stroke.ScatterLineStroke,
                          Optional labelFontStyle$ = CSSFont.Win7Normal,
-                         Optional labelConnectorStroke$ = Stroke.StrongHighlightStroke) As GraphicsData
+                         Optional labelConnectorStroke$ = Stroke.StrongHighlightStroke,
+                         Optional labelTicks% = 500,
+                         Optional showLabels As Boolean = True) As GraphicsData
 
         Dim labelFont As Font = CSSFont.TryParse(labelFontStyle)
         Dim labelConnector As Pen = Stroke.TryParse(labelConnectorStroke)
@@ -161,35 +163,37 @@ Public Module ChromatogramPlot
                     Next
                 Next
 
-                ' labeling 
-                Dim canvas = g
-                Dim labels As Label() = peakTimes _
-                    .Select(Function(ion)
-                                Dim labelSize As SizeF = canvas.MeasureString(ion.Name, labelFont)
-                                Dim location As PointF = scaler.Translate(ion.Value)
+                If showLabels Then
+                    ' labeling 
+                    Dim canvas = g
+                    Dim labels As Label() = peakTimes _
+                        .Select(Function(ion)
+                                    Dim labelSize As SizeF = canvas.MeasureString(ion.Name, labelFont)
+                                    Dim location As PointF = scaler.Translate(ion.Value)
 
-                                Return New Label With {
-                                    .height = labelSize.Height,
-                                    .width = labelSize.Width,
-                                    .text = ion.Name,
-                                    .X = location.X,
-                                    .Y = location.Y
-                                }
-                            End Function) _
-                    .ToArray
-                Dim anchors As Anchor() = labels.GetLabelAnchors(r:=3)
+                                    Return New Label With {
+                                        .height = labelSize.Height,
+                                        .width = labelSize.Width,
+                                        .text = ion.Name,
+                                        .X = location.X,
+                                        .Y = location.Y
+                                    }
+                                End Function) _
+                        .ToArray
+                    Dim anchors As Anchor() = labels.GetLabelAnchors(r:=3)
 
-                Call d3js.labeler _
-                    .Labels(labels) _
-                    .Anchors(anchors) _
-                    .Width(rect.Width) _
-                    .Height(rect.Height) _
-                    .Start(showProgress:=False)
+                    Call d3js.labeler _
+                        .Labels(labels) _
+                        .Anchors(anchors) _
+                        .Width(rect.Width) _
+                        .Height(rect.Height) _
+                        .Start(showProgress:=False, nsweeps:=labelTicks)
 
-                For Each i As SeqValue(Of Label) In labels.SeqIterator
-                    Call g.DrawLine(labelConnector, i.value, anchors(i))
-                    Call g.DrawString(i.value.text, labelFont, Brushes.Black, i.value)
-                Next
+                    For Each i As SeqValue(Of Label) In labels.SeqIterator
+                        Call g.DrawLine(labelConnector, i.value, anchors(i))
+                        Call g.DrawString(i.value.text, labelFont, Brushes.Black, i.value)
+                    Next
+                End If
             End Sub
 
         Return g.GraphicsPlots(
