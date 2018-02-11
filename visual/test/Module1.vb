@@ -6,6 +6,7 @@ Imports SMRUCC.MassSpectrum.Assembly.MarkupData
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzXML
 Imports SMRUCC.MassSpectrum.Math
+Imports SMRUCC.MassSpectrum.Math.Chromatogram
 Imports SMRUCC.MassSpectrum.Visualization
 Imports SMRUCC.MassSpectrum.Visualization.DATA.SpectrumJSON
 
@@ -73,7 +74,7 @@ Module Module1
                         Return New NamedValue(Of ChromatogramTick()) With {
                             .Name = ion.ion.name,
                             .Description = ion.ion.ToString,
-                            .Value = ion.chromatogram.PeakArea
+                            .Value = ion.chromatogram.Ticks
                         }
                     End Function) _
             .ToArray
@@ -82,7 +83,7 @@ Module Module1
 
         For Each ion In ionData
 
-            Dim base = ion.Value.Base(quantile:=0.65)
+            Dim base = ion.Value.Baseline(quantile:=0.65)
             Dim max = ion.Value.Shadows!Intensity.Max
 
             Call $"{ion.Name}:  {base}/{max} = {(100 * base / max).ToString("F2")}%".__DEBUG_ECHO
