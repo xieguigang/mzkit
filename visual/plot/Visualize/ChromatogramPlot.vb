@@ -2,6 +2,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Imaging
@@ -20,28 +21,17 @@ Imports SMRUCC.MassSpectrum.Math.Chromatogram
 
 Public Module ChromatogramPlot
 
-    ''' <summary>
-    ''' 从mzML文件之中解析出色谱数据之后，将所有的色谱峰都绘制在一张图之中进行可视化
-    ''' </summary>
-    ''' <param name="mzML$"></param>
-    ''' <param name="size$"></param>
-    ''' <param name="margin$"></param>
-    ''' <param name="bg$"></param>
-    ''' <returns></returns>
-    ''' 
     <Extension>
-    Public Function Plot(ions As IonPair(),
-                         mzML$,
-                         Optional size$ = "1600,1000",
-                         Optional margin$ = g.DefaultLargerPadding,
-                         Optional bg$ = "white",
-                         Optional colorsSchema$ = "scibasic.category31()",
-                         Optional penStyle$ = Stroke.ScatterLineStroke,
-                         Optional labelFontStyle$ = CSSFont.Win7Normal,
-                         Optional labelConnectorStroke$ = Stroke.StrongHighlightStroke) As GraphicsData
+    Public Function MRMChromatogramPlot(ions As IonPair(),
+                                        mzML$,
+                                        Optional size$ = "1600,1000",
+                                        Optional margin$ = g.DefaultLargerPadding,
+                                        Optional bg$ = "white",
+                                        Optional colorsSchema$ = "scibasic.category31()",
+                                        Optional penStyle$ = Stroke.ScatterLineStroke,
+                                        Optional labelFontStyle$ = CSSFont.Win7Normal,
+                                        Optional labelConnectorStroke$ = Stroke.StrongHighlightStroke) As GraphicsData
 
-        Dim labelFont As Font = CSSFont.TryParse(labelFontStyle)
-        Dim labelConnector As Pen = Stroke.TryParse(labelConnectorStroke)
         Dim ionData = LoadChromatogramList(mzML) _
             .MRMSelector(ions) _
             .Where(Function(ion) Not ion.chromatogram Is Nothing) _
@@ -54,6 +44,39 @@ Public Module ChromatogramPlot
                     End Function) _
             .ToArray
 
+        Return ionData.Plot(
+            size:=size,
+            bg:=bg,
+            colorsSchema:=colorsSchema,
+            labelConnectorStroke:=labelConnectorStroke,
+            labelFontStyle:=labelFontStyle,
+            margin:=margin,
+            penStyle:=penStyle
+        )
+    End Function
+
+    ''' <summary>
+    ''' 从mzML文件之中解析出色谱数据之后，将所有的色谱峰都绘制在一张图之中进行可视化
+    ''' </summary>
+    ''' <param name="mzML$"></param>
+    ''' <param name="size$"></param>
+    ''' <param name="margin$"></param>
+    ''' <param name="bg$"></param>
+    ''' <returns></returns>
+    ''' 
+    <Extension>
+    Public Function Plot(ionData As NamedCollection(Of ChromatogramTick)(),
+                         Optional size$ = "1600,1000",
+                         Optional margin$ = g.DefaultLargerPadding,
+                         Optional bg$ = "white",
+                         Optional colorsSchema$ = "scibasic.category31()",
+                         Optional penStyle$ = Stroke.ScatterLineStroke,
+                         Optional labelFontStyle$ = CSSFont.Win7Normal,
+                         Optional labelConnectorStroke$ = Stroke.StrongHighlightStroke) As GraphicsData
+
+        Dim labelFont As Font = CSSFont.TryParse(labelFontStyle)
+        Dim labelConnector As Pen = Stroke.TryParse(labelConnectorStroke)
+
         For Each ion As NamedCollection(Of ChromatogramTick) In ionData
             Dim base = ion.Value.Baseline(quantile:=0.65)
             Dim max# = ion.Value.Shadows!Intensity.Max
@@ -61,7 +84,7 @@ Public Module ChromatogramPlot
             Call $"{ion.Name}: {base}/{max} = {(100 * base / max).ToString("F2")}%".__DEBUG_ECHO
         Next
 
-        Dim colors As Pen() = Designer _
+        Dim colors As LoopArray(Of Pen) = Designer _
             .GetColors(colorsSchema) _
             .Select(Function(c)
                         Dim style As Stroke = Stroke.TryParse(penStyle)
@@ -110,7 +133,7 @@ Public Module ChromatogramPlot
                 Dim peakTimes As New List(Of NamedValue(Of ChromatogramTick))
 
                 For i As Integer = 0 To ionData.Length - 1
-                    Dim curvePen As Pen = colors(i)
+                    Dim curvePen As Pen = colors.Next
                     Dim line = ionData(i)
                     Dim chromatogram = line.Value
 

@@ -15,15 +15,16 @@ Module Module1
 
     Sub ms1Visual()
 
-        Dim matrix = "D:\Resources\40\40.mzML".PopulateMS1.Ms1Chromatogram().ToArray
-        Dim scans = matrix _
-            .Select(Function(mzGroup)
-                        Return mzGroup.chromatogram.Select(Function(c) New ms1_scan With {.mz = mzGroup.mz, .intensity = c.Intensity, .scan_time = c.Time})
-                    End Function) _
-            .IteratesALL _
-            .ToArray
+        Dim matrix = "D:\Resources\40\40.mzML".PopulateMS1.Ms1Chromatogram(New DAmethod With {.da = 0.3}).Select(Function(mz) New NamedCollection(Of ChromatogramTick)(Math.Round(mz.mz, 4).ToString, mz.chromatogram)).ToArray
+        'Dim scans = matrix _
+        '    .Select(Function(mzGroup)
+        '                Return mzGroup.chromatogram.Select(Function(c) New ms1_scan With {.mz = mzGroup.mz, .intensity = c.Intensity, .scan_time = c.Time})
+        '            End Function) _
+        '    .IteratesALL _
+        '    .ToArray
 
-        Call scans.SaveTo("./test_ms1_scan.csv")
+        'Call scans.SaveTo("./test_ms1_scan.csv")
+        Call matrix.Plot("3000,2500").Save("./ms1.plot")
 
         Pause()
     End Sub
