@@ -105,7 +105,7 @@ Namespace TMIC.FooDB
 
         Private Class parser : Implements IParser
 
-            Public Function ToString(obj As Object) As String Implements IParser.ToString
+            Public Overloads Function ToString(obj As Object) As String Implements IParser.ToString
                 With DirectCast(obj, DoubleRange)
                     Return $"{ .Min}~{ .Max}"
                 End With
