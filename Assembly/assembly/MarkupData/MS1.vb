@@ -1,5 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.Math
 Imports SMRUCC.MassSpectrum.Math
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
 
@@ -15,8 +17,22 @@ Namespace MarkupData
         ''' <returns></returns>
         ''' 
         <Extension>
-        Public Function Ms1Chromatogram(data As IEnumerable(Of (scan_time#, mz#, intensity#)), Optional tolerance As Tolerance = Nothing) As (mz#, chromatogram As ChromatogramTick())
+        Public Iterator Function Ms1Chromatogram(data As IEnumerable(Of (scan_time#, mz#, intensity#)), Optional tolerance As Tolerance = Nothing) As IEnumerable(Of (mz#, chromatogram As ChromatogramTick()))
+            Dim mzGroup = data.GroupBy(Function(d) d.mz, AddressOf (tolerance Or ppm20).Assert)
 
+            For Each mz As NamedCollection(Of (scan_time#, mz#, intensity#)) In mzGroup
+                Dim ticks = mz _
+                    .Select(Function(tick)
+                                Return New ChromatogramTick With {
+                                    .Time = tick.scan_time,
+                                    .Intensity = tick.intensity
+                                }
+                            End Function) _
+                    .OrderBy(Function(tick) tick.Time) _
+                    .ToArray
+
+                Yield (Val(mz.Name), ticks)
+            Next
         End Function
     End Module
 End Namespace
