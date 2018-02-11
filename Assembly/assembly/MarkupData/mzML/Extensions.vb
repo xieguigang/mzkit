@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Text.Xml.Linq
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
@@ -8,6 +9,26 @@ Namespace MarkupData.mzML
     Public Module Extensions
 
         Public Const Xmlns$ = "http://psi.hupo.org/ms/mzml"
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function PopulateMS1(file As Xml) As IEnumerable(Of (scan_time#, mz#, intensity#))
+            Return file.mzML _
+                .run _
+                .spectrumList _
+                .GetAllMs1 _
+                .Select(Function(ms1)
+                            Dim time# = ms1.scan_time
+                            Dim mz = ms1.ByteArray("m/z array").Base64Decode
+                            Dim intensity = ms1.ByteArray("intensity array").Base64Decode
+
+                            Return CInt(ms1.defaultArrayLength) _
+                                .Sequence _
+                                .Select(Function(index)
+                                            Return (time, mz(index), intensity(index))
+                                        End Function)
+                        End Function)
+        End Function
 
         ''' <summary>
         ''' Working for MRM method
@@ -52,10 +73,20 @@ Namespace MarkupData.mzML
                 .value
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="type$">
+        ''' + ``m/z`` array
+        ''' + intensity array
+        ''' + time array
+        ''' </param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function ByteArray(chromatogram As chromatogram, type$) As binaryDataArray
-            Return chromatogram _
+        Public Function ByteArray(data As BinaryData, type$) As binaryDataArray
+            Return data _
                 .binaryDataArrayList _
                 .list _
                 .Where(Function(a)

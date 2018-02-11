@@ -144,6 +144,9 @@
     <Compile Include="ASCII\MSP\Comments.vb" />
     <Compile Include="ASCII\MSP\MspData.vb" />
     <Compile Include="MarkupData\IBase64Container.vb" />
+    <Compile Include="MarkupData\MS1.vb" />
+    <Compile Include="MarkupData\mzML\XML\Spectrum.vb" />
+    <Compile Include="MarkupData\mzML\XML\Chromatogram.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -161,7 +164,7 @@
     </Compile>
     <Compile Include="MarkupData\mzML\IonPair.vb" />
     <Compile Include="MarkupData\mzML\Extensions.vb" />
-    <Compile Include="MarkupData\mzML\XML.vb" />
+    <Compile Include="MarkupData\mzML\XML\XML.vb" />
     <Compile Include="MarkupData\mzXML\Extensions.vb" />
     <Compile Include="MarkupData\mzXML\Info.vb" />
     <Compile Include="MarkupData\mzXML\MSData.vb" />

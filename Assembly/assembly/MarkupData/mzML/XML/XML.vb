@@ -51,31 +51,27 @@ Namespace MarkupData.mzML
         <XmlAttribute> Public Property count As Integer
     End Class
 
-    Public Structure cv
-        <XmlAttribute> Public Property id As String
-        <XmlAttribute> Public Property fullName As String
-        <XmlAttribute> Public Property version As String
-        <XmlAttribute> Public Property URI As String
-    End Structure
-
-    Public Class chromatogramList : Inherits List
+    Public Class DataList : Inherits List
         <XmlAttribute>
         Public Property defaultDataProcessingRef As String
-        <XmlElement(NameOf(chromatogram))>
-        Public Property list As chromatogram()
     End Class
 
-    Public Class chromatogram : Inherits Params
+    Public Class BinaryData : Inherits Params
 
         <XmlAttribute> Public Property index As String
         <XmlAttribute> Public Property id As String
         <XmlAttribute> Public Property defaultArrayLength As String
 
         Public Property binaryDataArrayList As binaryDataArrayList
-        Public Property precursor As precursor
-        Public Property product As product
 
     End Class
+
+    Public Structure cv
+        <XmlAttribute> Public Property id As String
+        <XmlAttribute> Public Property fullName As String
+        <XmlAttribute> Public Property version As String
+        <XmlAttribute> Public Property URI As String
+    End Structure
 
     Public Class precursor : Implements IMRMSelector
 
@@ -90,10 +86,6 @@ Namespace MarkupData.mzML
         Public Property activation As Params
 
     End Class
-
-    Public Interface IMRMSelector
-        Property isolationWindow As Params
-    End Interface
 
     Public Class Params
         <XmlElement(NameOf(cvParam))>
@@ -168,5 +160,6 @@ Namespace MarkupData.mzML
         <XmlAttribute> Public Property defaultSourceFileRef As String
 
         Public Property chromatogramList As chromatogramList
+        Public Property spectrumList As spectrumList
     End Class
 End Namespace
