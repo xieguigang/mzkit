@@ -17,7 +17,7 @@ Module Module1
                         Return New NamedValue(Of PointF()) With {
                             .Name = ion.ion.name,
                             .Description = ion.ion.ToString,
-                            .Value = ion.chromatogram.PeakArea.Select(Function(tick) CType(tick, PointF)).ToArray
+                            .Value = ion.chromatogram.Ticks.Select(Function(tick) CType(tick, PointF)).ToArray
                         }
                     End Function) _
             .ToArray
