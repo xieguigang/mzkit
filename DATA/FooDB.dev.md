@@ -1,20 +1,30 @@
-# MySQL development docs
+﻿# MySQL development docs
+
 Mysql database field attributes notes:
 
-> AI: Auto Increment; B: Binary; NN: Not Null; PK: Primary Key; UQ: Unique; UN: Unsigned; ZF: Zero Fill
+> **AI**: Auto Increment;
+> **B**:  Binary;
+> **G**:  Generated
+> **NN**: Not Null;
+> **PK**: Primary Key;
+> **UQ**: Unique;
+> **UN**: Unsigned;
+> **ZF**: Zero Fill
+
 
 ## compound_alternate_parents
 
 
+
 |field|type|attributes|description|
 |-----|----|----------|-----------|
-|id|Int64 (11)|``AI``, ``NN``||
+|id|Int64 (11)|``AI``, ``NN``, ``PK``||
 |name|VarChar (255)|||
 |compound_id|Int64 (11)|||
 |creator_id|Int64 (11)|||
 |updater_id|Int64 (11)|||
-|created_at|DateTime|``NN``||
-|updated_at|DateTime|``NN``||
+|created_at|DateTime ()|``NN``||
+|updated_at|DateTime ()|``NN``||
 
 ```SQL
 CREATE TABLE `compound_alternate_parents` (
@@ -32,20 +42,20 @@ CREATE TABLE `compound_alternate_parents` (
 ```
 
 
-
 ## compound_external_descriptors
+
 
 
 |field|type|attributes|description|
 |-----|----|----------|-----------|
-|id|Int64 (11)|``AI``, ``NN``||
+|id|Int64 (11)|``AI``, ``NN``, ``PK``||
 |external_id|VarChar (255)|||
 |annotations|VarChar (255)|||
 |compound_id|Int64 (11)|||
 |creator_id|Int64 (11)|||
 |updater_id|Int64 (11)|||
-|created_at|DateTime|``NN``||
-|updated_at|DateTime|``NN``||
+|created_at|DateTime ()|``NN``||
+|updated_at|DateTime ()|``NN``||
 
 ```SQL
 CREATE TABLE `compound_external_descriptors` (
@@ -64,19 +74,19 @@ CREATE TABLE `compound_external_descriptors` (
 ```
 
 
-
 ## compound_substituents
+
 
 
 |field|type|attributes|description|
 |-----|----|----------|-----------|
-|id|Int64 (11)|``AI``, ``NN``||
+|id|Int64 (11)|``AI``, ``NN``, ``PK``||
 |name|VarChar (255)|||
 |compound_id|Int64 (11)|||
 |creator_id|Int64 (11)|||
 |updater_id|Int64 (11)|||
-|created_at|DateTime|``NN``||
-|updated_at|DateTime|``NN``||
+|created_at|DateTime ()|``NN``||
+|updated_at|DateTime ()|``NN``||
 
 ```SQL
 CREATE TABLE `compound_substituents` (
@@ -94,17 +104,17 @@ CREATE TABLE `compound_substituents` (
 ```
 
 
-
 ## compound_synonyms
+
 
 
 |field|type|attributes|description|
 |-----|----|----------|-----------|
-|id|Int64 (11)|``AI``, ``NN``||
+|id|Int64 (11)|``AI``, ``NN``, ``PK``||
 |synonym|VarChar (255)|``NN``||
 |synonym_source|VarChar (255)|``NN``||
-|created_at|DateTime|||
-|updated_at|DateTime|||
+|created_at|DateTime ()|||
+|updated_at|DateTime ()|||
 |source_id|Int64 (11)|||
 |source_type|VarChar (255)|||
 
@@ -124,13 +134,13 @@ CREATE TABLE `compound_synonyms` (
 ```
 
 
-
 ## compounds
+
 
 
 |field|type|attributes|description|
 |-----|----|----------|-----------|
-|id|Int64 (11)|``AI``, ``NN``||
+|id|Int64 (11)|``AI``, ``NN``, ``PK``||
 |legacy_id|Int64 (11)|||
 |type|VarChar (255)|``NN``||
 |public_id|VarChar (9)|``NN``||
@@ -138,16 +148,16 @@ CREATE TABLE `compound_synonyms` (
 |export|Boolean (1)|||
 |state|VarChar (255)|||
 |annotation_quality|VarChar (255)|||
-|description|Text|||
+|description|Text ()|||
 |cas_number|VarChar (255)|||
-|melting_point|Text|||
+|melting_point|Text ()|||
 |protein_formula|VarChar (255)|||
 |protein_weight|VarChar (255)|||
 |experimental_solubility|VarChar (255)|||
 |experimental_logp|VarChar (255)|||
 |hydrophobicity|VarChar (255)|||
 |isoelectric_point|VarChar (255)|||
-|metabolism|Text|||
+|metabolism|Text ()|||
 |kegg_compound_id|VarChar (255)|||
 |pubchem_compound_id|VarChar (255)|||
 |pubchem_substance_id|VarChar (255)|||
@@ -157,21 +167,21 @@ CREATE TABLE `compound_synonyms` (
 |uniprot_name|VarChar (255)|||
 |genbank_id|VarChar (255)|||
 |wikipedia_id|VarChar (255)|||
-|synthesis_citations|Text|||
-|general_citations|Text|||
-|comments|Text|||
+|synthesis_citations|Text ()|||
+|general_citations|Text ()|||
+|comments|Text ()|||
 |protein_structure_file_name|VarChar (255)|||
 |protein_structure_content_type|VarChar (255)|||
 |protein_structure_file_size|Int64 (11)|||
-|protein_structure_updated_at|DateTime|||
+|protein_structure_updated_at|DateTime ()|||
 |msds_file_name|VarChar (255)|||
 |msds_content_type|VarChar (255)|||
 |msds_file_size|Int64 (11)|||
-|msds_updated_at|DateTime|||
+|msds_updated_at|DateTime ()|||
 |creator_id|Int64 (11)|||
 |updater_id|Int64 (11)|||
-|created_at|DateTime|||
-|updated_at|DateTime|||
+|created_at|DateTime ()|||
+|updated_at|DateTime ()|||
 |phenolexplorer_id|Int64 (11)|||
 |dfc_id|VarChar (255)|||
 |hmdb_id|VarChar (255)|||
@@ -190,8 +200,8 @@ CREATE TABLE `compound_synonyms` (
 |optical_rotation_reference|VarChar (255)|||
 |percent_composition|VarChar (255)|||
 |percent_composition_reference|VarChar (255)|||
-|physical_description|Text|||
-|physical_description_reference|Text|||
+|physical_description|Text ()|||
+|physical_description_reference|Text ()|||
 |refractive_index|VarChar (255)|||
 |refractive_index_reference|VarChar (255)|||
 |uv_index|VarChar (255)|||
@@ -206,20 +216,20 @@ CREATE TABLE `compound_synonyms` (
 |moldb_alogps_logp|VarChar (255)|||
 |moldb_logp|VarChar (255)|||
 |moldb_alogps_logs|VarChar (255)|||
-|moldb_smiles|Text|||
+|moldb_smiles|Text ()|||
 |moldb_pka|VarChar (255)|||
 |moldb_formula|VarChar (255)|||
 |moldb_average_mass|VarChar (255)|||
-|moldb_inchi|Text|||
+|moldb_inchi|Text ()|||
 |moldb_mono_mass|VarChar (255)|||
 |moldb_inchikey|VarChar (255)|||
 |moldb_alogps_solubility|VarChar (255)|||
 |moldb_id|Int64 (11)|||
-|moldb_iupac|Text|||
+|moldb_iupac|Text ()|||
 |structure_source|VarChar (255)|||
 |duplicate_id|VarChar (255)|||
 |old_dfc_id|VarChar (255)|||
-|dfc_name|Text|||
+|dfc_name|Text ()|||
 |compound_source|VarChar (255)|||
 |flavornet_id|VarChar (255)|||
 |goodscent_id|VarChar (255)|||
@@ -353,18 +363,18 @@ CREATE TABLE `compounds` (
 ```
 
 
-
 ## compounds_enzymes
+
 
 
 |field|type|attributes|description|
 |-----|----|----------|-----------|
-|id|Int64 (11)|``AI``, ``NN``||
+|id|Int64 (11)|``AI``, ``NN``, ``PK``||
 |compound_id|Int64 (11)|``NN``||
 |enzyme_id|Int64 (11)|``NN``||
-|citations|Text|``NN``||
-|created_at|DateTime|||
-|updated_at|DateTime|||
+|citations|Text ()|``NN``||
+|created_at|DateTime ()|||
+|updated_at|DateTime ()|||
 |creator_id|Int64 (11)|||
 |updater_id|Int64 (11)|||
 
@@ -384,18 +394,18 @@ CREATE TABLE `compounds_enzymes` (
 ```
 
 
-
 ## compounds_flavors
+
 
 
 |field|type|attributes|description|
 |-----|----|----------|-----------|
-|id|Int64 (11)|``AI``, ``NN``||
+|id|Int64 (11)|``AI``, ``NN``, ``PK``||
 |compound_id|Int64 (11)|``NN``||
 |flavor_id|Int64 (11)|``NN``||
-|citations|Text|``NN``||
-|created_at|DateTime|||
-|updated_at|DateTime|||
+|citations|Text ()|``NN``||
+|created_at|DateTime ()|||
+|updated_at|DateTime ()|||
 |creator_id|Int64 (11)|||
 |updater_id|Int64 (11)|||
 |source_id|Int64 (11)|||
@@ -420,22 +430,22 @@ CREATE TABLE `compounds_flavors` (
 ```
 
 
-
 ## compounds_health_effects
+
 
 
 |field|type|attributes|description|
 |-----|----|----------|-----------|
-|id|Int64 (11)|``AI``, ``NN``||
+|id|Int64 (11)|``AI``, ``NN``, ``PK``||
 |compound_id|Int64 (11)|``NN``||
 |health_effect_id|Int64 (11)|``NN``||
 |orig_health_effect_name|VarChar (255)|||
 |orig_compound_name|VarChar (255)|||
-|orig_citation|Text|||
-|citation|Text|``NN``||
+|orig_citation|Text ()|||
+|citation|Text ()|``NN``||
 |citation_type|VarChar (255)|``NN``||
-|created_at|DateTime|||
-|updated_at|DateTime|||
+|created_at|DateTime ()|||
+|updated_at|DateTime ()|||
 |creator_id|Int64 (11)|||
 |updater_id|Int64 (11)|||
 |source_id|Int64 (11)|||
@@ -463,19 +473,19 @@ CREATE TABLE `compounds_health_effects` (
 ```
 
 
-
 ## compounds_pathways
+
 
 
 |field|type|attributes|description|
 |-----|----|----------|-----------|
-|id|Int64 (11)|``AI``, ``NN``||
+|id|Int64 (11)|``AI``, ``NN``, ``PK``||
 |compound_id|Int64 (11)|||
 |pathway_id|Int64 (11)|||
 |creator_id|Int64 (11)|||
 |updater_id|Int64 (11)|||
-|created_at|DateTime|``NN``||
-|updated_at|DateTime|``NN``||
+|created_at|DateTime ()|``NN``||
+|updated_at|DateTime ()|``NN``||
 
 ```SQL
 CREATE TABLE `compounds_pathways` (
@@ -495,13 +505,13 @@ CREATE TABLE `compounds_pathways` (
 ```
 
 
-
 ## contents
+
 
 
 |field|type|attributes|description|
 |-----|----|----------|-----------|
-|id|Int64 (11)|``AI``, ``NN``||
+|id|Int64 (11)|``AI``, ``NN``, ``PK``||
 |source_id|Int64 (11)|||
 |source_type|VarChar (255)|||
 |food_id|Int64 (11)|``NN``||
@@ -511,20 +521,20 @@ CREATE TABLE `compounds_pathways` (
 |orig_food_part|VarChar (255)|||
 |orig_source_id|VarChar (255)|||
 |orig_source_name|VarChar (255)|||
-|orig_content|Decimal|||
-|orig_min|Decimal|||
-|orig_max|Decimal|||
+|orig_content|Decimal ()|||
+|orig_min|Decimal ()|||
+|orig_max|Decimal ()|||
 |orig_unit|VarChar (255)|||
-|orig_citation|Text|||
-|citation|Text|``NN``||
+|orig_citation|Text ()|||
+|citation|Text ()|``NN``||
 |citation_type|VarChar (255)|``NN``||
 |creator_id|Int64 (11)|||
 |updater_id|Int64 (11)|||
-|created_at|DateTime|||
-|updated_at|DateTime|||
+|created_at|DateTime ()|||
+|updated_at|DateTime ()|||
 |orig_method|VarChar (255)|||
 |orig_unit_expression|VarChar (255)|||
-|standard_content|Decimal|||
+|standard_content|Decimal ()|||
 
 ```SQL
 CREATE TABLE `contents` (
@@ -558,26 +568,26 @@ CREATE TABLE `contents` (
 ```
 
 
-
 ## enzymes
+
 
 
 |field|type|attributes|description|
 |-----|----|----------|-----------|
-|id|Int64 (11)|``AI``, ``NN``||
+|id|Int64 (11)|``AI``, ``NN``, ``PK``||
 |name|VarChar (255)|``NN``||
 |gene_name|VarChar (255)|||
-|description|Text|||
-|go_classification|Text|||
-|general_function|Text|||
-|specific_function|Text|||
-|pathway|Text|||
-|reaction|Text|||
+|description|Text ()|||
+|go_classification|Text ()|||
+|general_function|Text ()|||
+|specific_function|Text ()|||
+|pathway|Text ()|||
+|reaction|Text ()|||
 |cellular_location|VarChar (255)|||
-|signals|Text|||
-|transmembrane_regions|Text|||
-|molecular_weight|Decimal|||
-|theoretical_pi|Decimal|||
+|signals|Text ()|||
+|transmembrane_regions|Text ()|||
+|molecular_weight|Decimal ()|||
+|theoretical_pi|Decimal ()|||
 |locus|VarChar (255)|||
 |chromosome|VarChar (255)|||
 |uniprot_name|VarChar (255)|||
@@ -590,12 +600,12 @@ CREATE TABLE `contents` (
 |hgnc_id|VarChar (20)|||
 |hprd_id|VarChar (255)|||
 |organism|VarChar (255)|||
-|general_citations|Text|||
-|comments|Text|||
+|general_citations|Text ()|||
+|comments|Text ()|||
 |creator_id|Int64 (11)|||
 |updater_id|Int64 (11)|||
-|created_at|DateTime|||
-|updated_at|DateTime|||
+|created_at|DateTime ()|||
+|updated_at|DateTime ()|||
 
 ```SQL
 CREATE TABLE `enzymes` (
@@ -647,18 +657,18 @@ CREATE TABLE `enzymes` (
 ```
 
 
-
 ## flavors
+
 
 
 |field|type|attributes|description|
 |-----|----|----------|-----------|
-|id|Int64 (11)|``AI``, ``NN``||
+|id|Int64 (11)|``AI``, ``NN``, ``PK``||
 |name|VarChar (255)|``NN``||
 |flavor_group|VarChar (255)|||
 |category|VarChar (255)|||
-|created_at|DateTime|||
-|updated_at|DateTime|||
+|created_at|DateTime ()|||
+|updated_at|DateTime ()|||
 |creator_id|Int64 (11)|||
 |updater_id|Int64 (11)|||
 
@@ -678,19 +688,19 @@ CREATE TABLE `flavors` (
 ```
 
 
-
 ## food_taxonomies
+
 
 
 |field|type|attributes|description|
 |-----|----|----------|-----------|
-|id|Int64 (11)|``AI``, ``NN``||
+|id|Int64 (11)|``AI``, ``NN``, ``PK``||
 |food_id|Int64 (11)|||
 |ncbi_taxonomy_id|Int64 (11)|||
 |classification_name|VarChar (255)|||
 |classification_order|Int64 (11)|||
-|created_at|DateTime|``NN``||
-|updated_at|DateTime|``NN``||
+|created_at|DateTime ()|``NN``||
+|updated_at|DateTime ()|``NN``||
 
 ```SQL
 CREATE TABLE `food_taxonomies` (
@@ -706,17 +716,17 @@ CREATE TABLE `food_taxonomies` (
 ```
 
 
-
 ## foodcomex_compound_providers
+
 
 
 |field|type|attributes|description|
 |-----|----|----------|-----------|
-|id|Int64 (11)|``AI``, ``NN``||
+|id|Int64 (11)|``AI``, ``NN``, ``PK``||
 |foodcomex_compound_id|Int64 (11)|``NN``||
 |provider_id|Int64 (11)|``NN``||
-|created_at|DateTime|||
-|updated_at|DateTime|||
+|created_at|DateTime ()|||
+|updated_at|DateTime ()|||
 
 ```SQL
 CREATE TABLE `foodcomex_compound_providers` (
@@ -732,26 +742,26 @@ CREATE TABLE `foodcomex_compound_providers` (
 ```
 
 
-
 ## foodcomex_compounds
+
 
 
 |field|type|attributes|description|
 |-----|----|----------|-----------|
-|id|Int64 (11)|``AI``, ``NN``||
+|id|Int64 (11)|``AI``, ``NN``, ``PK``||
 |compound_id|Int64 (11)|``NN``||
 |origin|VarChar (255)|||
 |storage_form|VarChar (255)|||
 |maximum_quantity|VarChar (255)|||
 |storage_condition|VarChar (255)|||
 |contact_name|VarChar (255)|||
-|contact_address|Text|||
+|contact_address|Text ()|||
 |contact_email|VarChar (255)|||
-|created_at|DateTime|``NN``||
-|updated_at|DateTime|``NN``||
+|created_at|DateTime ()|``NN``||
+|updated_at|DateTime ()|``NN``||
 |export|Boolean (1)|||
-|purity|Text|||
-|description|Text|||
+|purity|Text ()|||
+|description|Text ()|||
 |spectra_details|VarChar (255)|||
 |delivery_time|VarChar (255)|||
 |stability|VarChar (255)|||
@@ -764,16 +774,16 @@ CREATE TABLE `foodcomex_compound_providers` (
 |experimental_solubility|VarChar (255)|||
 |melting_point|VarChar (255)|||
 |food_of_origin|VarChar (255)|||
-|production_method_reference_text|Text|||
+|production_method_reference_text|Text ()|||
 |production_method_reference_file_name|VarChar (255)|||
 |production_method_reference_content_type|VarChar (255)|||
 |production_method_reference_file_size|Int64 (11)|||
-|production_method_reference_updated_at|DateTime|||
+|production_method_reference_updated_at|DateTime ()|||
 |elemental_formula|VarChar (255)|||
 |minimum_quantity|VarChar (255)|||
 |quantity_units|VarChar (255)|||
-|available_spectra|Text|||
-|storage_conditions|Text|||
+|available_spectra|Text ()|||
+|storage_conditions|Text ()|||
 
 ```SQL
 CREATE TABLE `foodcomex_compounds` (
@@ -820,28 +830,28 @@ CREATE TABLE `foodcomex_compounds` (
 ```
 
 
-
 ## foods
+
 
 
 |field|type|attributes|description|
 |-----|----|----------|-----------|
-|id|Int64 (11)|``AI``, ``NN``||
+|id|Int64 (11)|``AI``, ``NN``, ``PK``||
 |name|VarChar (255)|``NN``||
 |name_scientific|VarChar (255)|||
-|description|Text|||
+|description|Text ()|||
 |itis_id|VarChar (255)|||
 |wikipedia_id|VarChar (255)|||
 |picture_file_name|VarChar (255)|||
 |picture_content_type|VarChar (255)|||
 |picture_file_size|Int64 (11)|||
-|picture_updated_at|DateTime|||
+|picture_updated_at|DateTime ()|||
 |legacy_id|Int64 (11)|||
 |food_group|VarChar (255)|||
 |food_subgroup|VarChar (255)|||
 |food_type|VarChar (255)|``NN``||
-|created_at|DateTime|||
-|updated_at|DateTime|||
+|created_at|DateTime ()|||
+|updated_at|DateTime ()|||
 |creator_id|Int64 (11)|||
 |updater_id|Int64 (11)|||
 |export_to_afcdb|Boolean (1)|``NN``||
@@ -881,22 +891,22 @@ CREATE TABLE `foods` (
 ```
 
 
-
 ## health_effects
+
 
 
 |field|type|attributes|description|
 |-----|----|----------|-----------|
-|id|Int64 (11)|``AI``, ``NN``||
+|id|Int64 (11)|``AI``, ``NN``, ``PK``||
 |name|VarChar (255)|``NN``||
-|description|Text|||
+|description|Text ()|||
 |chebi_name|VarChar (255)|||
 |chebi_id|VarChar (255)|||
-|created_at|DateTime|||
-|updated_at|DateTime|||
+|created_at|DateTime ()|||
+|updated_at|DateTime ()|||
 |creator_id|Int64 (11)|||
 |updater_id|Int64 (11)|||
-|chebi_definition|Text|||
+|chebi_definition|Text ()|||
 
 ```SQL
 CREATE TABLE `health_effects` (
@@ -918,13 +928,13 @@ CREATE TABLE `health_effects` (
 ```
 
 
-
 ## nutrients
+
 
 
 |field|type|attributes|description|
 |-----|----|----------|-----------|
-|id|Int64 (11)|``AI``, ``NN``||
+|id|Int64 (11)|``AI``, ``NN``, ``PK``||
 |legacy_id|Int64 (11)|||
 |type|VarChar (255)|``NN``||
 |public_id|VarChar (9)|``NN``||
@@ -932,21 +942,21 @@ CREATE TABLE `health_effects` (
 |export|Boolean (1)|||
 |state|VarChar (255)|||
 |annotation_quality|VarChar (255)|||
-|description|Text|||
+|description|Text ()|||
 |wikipedia_id|VarChar (255)|||
-|comments|Text|||
+|comments|Text ()|||
 |dfc_id|VarChar (255)|||
 |duke_id|VarChar (255)|||
 |eafus_id|VarChar (255)|||
-|dfc_name|Text|||
+|dfc_name|Text ()|||
 |compound_source|VarChar (255)|||
-|metabolism|Text|||
-|synthesis_citations|Text|||
-|general_citations|Text|||
+|metabolism|Text ()|||
+|synthesis_citations|Text ()|||
+|general_citations|Text ()|||
 |creator_id|Int64 (11)|||
 |updater_id|Int64 (11)|||
-|created_at|DateTime|||
-|updated_at|DateTime|||
+|created_at|DateTime ()|||
+|updated_at|DateTime ()|||
 
 ```SQL
 CREATE TABLE `nutrients` (
@@ -981,18 +991,18 @@ CREATE TABLE `nutrients` (
 ```
 
 
-
 ## pathways
+
 
 
 |field|type|attributes|description|
 |-----|----|----------|-----------|
-|id|Int64 (11)|``AI``, ``NN``||
+|id|Int64 (11)|``AI``, ``NN``, ``PK``||
 |smpdb_id|VarChar (255)|||
 |kegg_map_id|VarChar (255)|||
 |name|VarChar (255)|||
-|created_at|DateTime|||
-|updated_at|DateTime|||
+|created_at|DateTime ()|||
+|updated_at|DateTime ()|||
 
 ```SQL
 CREATE TABLE `pathways` (
@@ -1007,22 +1017,22 @@ CREATE TABLE `pathways` (
 ```
 
 
-
 ## references
+
 
 
 |field|type|attributes|description|
 |-----|----|----------|-----------|
-|id|Int64 (11)|``AI``, ``NN``||
+|id|Int64 (11)|``AI``, ``NN``, ``PK``||
 |ref_type|VarChar (255)|||
-|text|Text|||
+|text|Text ()|||
 |pubmed_id|VarChar (255)|||
 |link|VarChar (255)|||
 |title|VarChar (255)|||
 |creator_id|Int64 (11)|||
 |updater_id|Int64 (11)|||
-|created_at|DateTime|``NN``||
-|updated_at|DateTime|``NN``||
+|created_at|DateTime ()|``NN``||
+|updated_at|DateTime ()|``NN``||
 |source_id|Int64 (11)|||
 |source_type|VarChar (255)|||
 
@@ -1042,5 +1052,10 @@ CREATE TABLE `references` (
   `source_type` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_references_on_source_type_and_source_id` (`source_type`,`source_id`)
-) ENGINE=InnoDB AUTO_INC
+) ENGINE=InnoDB AUTO_INCREMENT=31792 DEFAULT CHARSET=utf8;
+```
+
+
+
+
 
