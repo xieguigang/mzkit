@@ -5,9 +5,20 @@ Imports MathCore = Microsoft.VisualBasic.Math
 
 Public Class SSM2MatrixFragment
 
+    ''' <summary>
+    ''' The m/z value of the query fragment
+    ''' </summary>
+    ''' <returns></returns>
     Public Property mz As Double
+#Region "Fragment intensity"
     Public Property query As Double
     Public Property ref As Double
+#End Region
+
+    ''' <summary>
+    ''' Mass delta between the query and reference fragment in unit ``da``
+    ''' </summary>
+    ''' <returns></returns>
     Public Property da As String
 
     Public Shared Function FromXml(node As XmlNode, nodeName$) As SSM2MatrixFragment()

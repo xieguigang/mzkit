@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Language.Default
 
 Namespace MarkupData.mzML
 
@@ -48,6 +49,11 @@ Namespace MarkupData.mzML
                 End With
             End Get
         End Property
+
+        Public Overrides Function ToString() As String
+            Static noTitle As DefaultValue(Of String) = "Unknown title"
+            Return cvParams.KeyItem("spectrum title")?.value Or noTitle
+        End Function
     End Class
 
     Public Class scanList : Inherits List

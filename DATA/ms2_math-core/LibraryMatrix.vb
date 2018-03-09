@@ -40,6 +40,9 @@ Public Class ms2
     End Function
 End Class
 
+''' <summary>
+''' The ms2 library matrix
+''' </summary>
 Public Class LibraryMatrix : Inherits IVector(Of ms2)
     Implements INamedValue
 
@@ -90,8 +93,16 @@ Public Class LibraryMatrix : Inherits IVector(Of ms2)
 
     'End Operator
 
+    ''' <summary>
+    ''' Library matrix to ``&lt;m/z, intensity>`` tuples.
+    ''' </summary>
+    ''' <param name="matrix"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overloads Shared Narrowing Operator CType(matrix As LibraryMatrix) As (mz#, into#)()
-        Return matrix.ms2.Select(Function(r) (r.mz, r.intensity)).ToArray
+        Return matrix.ms2 _
+            .Select(Function(r) (r.mz, r.intensity)) _
+            .ToArray
     End Operator
 End Class
 

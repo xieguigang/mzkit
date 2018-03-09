@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Text.Xml.Linq
+Imports SMRUCC.MassSpectrum.Math
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
 
 Namespace MarkupData.mzML
@@ -50,13 +51,29 @@ Namespace MarkupData.mzML
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function PopulateMS2(filePath As String)
+        Public Function PopulateMS2(filePath As String) As IEnumerable(Of LibraryMatrix)
             Return filePath _
                 .LoadUltraLargeXMLDataSet(Of spectrum)(, xmlns:=mzML.Xmlns) _
                 .GetAllMs2 _
                 .Select(Function(ms2)
+                            Dim mz = ms2.ByteArray("m/z array").Base64Decode
+                            Dim intensity = ms2.ByteArray("intensity array").Base64Decode.AsVector
+                            Dim relInto As Vector = intensity / intensity.Max
+                            Dim matrix = CInt(ms2.defaultArrayLength) _
+                                .Sequence _
+                                .Select(Function(i)
+                                            Return New ms2 With {
+                                                .mz = mz(i),
+                                                .quantity = intensity(i),
+                                                .intensity = relInto(i)
+                                            }
+                                        End Function) _
+                                .ToArray
 
-                            Pause()
+                            Return New LibraryMatrix With {
+                                .ms2 = matrix,
+                                .Name = ms2.id
+                            }
                         End Function)
         End Function
 
