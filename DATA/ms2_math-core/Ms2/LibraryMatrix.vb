@@ -89,9 +89,24 @@ Public Class LibraryMatrix : Inherits IVector(Of ms2)
         }
     End Operator
 
-    'Public Shared Widening Operator CType(ms2 As VectorModel(Of ms2)) As LibraryMatrix
-
-    'End Operator
+    ''' <summary>
+    ''' 将一个整形数列表转换为mz向量，这个转换函数为调试用的
+    ''' </summary>
+    ''' <param name="mzlist"></param>
+    ''' <returns></returns>
+    Public Shared Widening Operator CType(mzlist As Integer()) As LibraryMatrix
+        Return New LibraryMatrix With {
+            .ms2 = mzlist _
+                .Select(Function(mz)
+                            Return New ms2 With {
+                                .mz = mz,
+                                .intensity = 1,
+                                .quantity = 1
+                            }
+                        End Function) _
+                .ToArray
+        }
+    End Operator
 
     ''' <summary>
     ''' Library matrix to ``&lt;m/z, intensity>`` tuples.

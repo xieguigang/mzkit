@@ -141,6 +141,7 @@
     <Compile Include="Chromatogram\ChromatogramTick.vb" />
     <Compile Include="Chromatogram\PeakArea.vb" />
     <Compile Include="Ms1\Tolerance.vb" />
+    <Compile Include="Ms2\GlobalAlignment.vb" />
     <Compile Include="Ms2\ms2AlignMatrix.vb" />
     <Compile Include="Ms2\LibraryMatrix.vb" />
     <Compile Include="Ms1\ms1.vb" />
@@ -182,6 +183,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\DynamicProgramming\DynamicProgramming.vbproj">
+      <Project>{a903b744-c08d-4869-bc35-3dd25e36aa16}</Project>
+      <Name>DynamicProgramming</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\runtime\sciBASIC\Data_science\Mathematica\Math\Math\math-core.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
       <Name>math-core</Name>

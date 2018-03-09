@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2020
+VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ms2_simulator", "ms2_simulator\ms2_simulator.vbproj", "{77683884-EDF0-4C48-9D7C-B4343A561FD7}"
 EndProject
@@ -38,6 +38,8 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "physics", "..\runtime\sciBASIC\gr\physics\physics.vbproj", "{3291389C-EA87-4B33-A9A5-65A2D60BA3E2}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ms2_math-core", "ms2_math-core\ms2_math-core.vbproj", "{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DynamicProgramming", "..\..\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\DynamicProgramming\DynamicProgramming.vbproj", "{A903B744-C08D-4869-BC35-3DD25E36AA16}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1435,6 +1437,102 @@ Global
 		{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}.Yilia-Release_x64|x64.Build.0 = Release|x64
 		{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}.Yilia-Release_x64|x86.ActiveCfg = Release|x86
 		{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}.Yilia-Release_x64|x86.Build.0 = Release|x86
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Biodeep_UNIX_x64|Any CPU.ActiveCfg = Biodeep|Any CPU
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Biodeep_UNIX_x64|Any CPU.Build.0 = Biodeep|Any CPU
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Biodeep_UNIX_x64|x64.ActiveCfg = Biodeep|x64
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Biodeep_UNIX_x64|x64.Build.0 = Biodeep|x64
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Biodeep_UNIX_x64|x86.ActiveCfg = Biodeep|x86
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Biodeep_UNIX_x64|x86.Build.0 = Biodeep|x86
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Biodeep|Any CPU.ActiveCfg = Biodeep|Any CPU
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Biodeep|Any CPU.Build.0 = Biodeep|Any CPU
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Biodeep|x64.ActiveCfg = Biodeep|x64
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Biodeep|x64.Build.0 = Biodeep|x64
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Biodeep|x86.ActiveCfg = Biodeep|x86
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Biodeep|x86.Build.0 = Biodeep|x86
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Debug|x64.ActiveCfg = Debug|x64
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Debug|x64.Build.0 = Debug|x64
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Debug|x86.ActiveCfg = Debug|x86
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Debug|x86.Build.0 = Debug|x86
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.DEMO|Any CPU.ActiveCfg = Debug|Any CPU
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.DEMO|Any CPU.Build.0 = Debug|Any CPU
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.DEMO|x64.ActiveCfg = Debug|x64
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.DEMO|x64.Build.0 = Debug|x64
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.DEMO|x86.ActiveCfg = Debug|x86
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.DEMO|x86.Build.0 = Debug|x86
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.docs|Any CPU.ActiveCfg = docs|Any CPU
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.docs|Any CPU.Build.0 = docs|Any CPU
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.docs|x64.ActiveCfg = docs|x64
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.docs|x64.Build.0 = docs|x64
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.docs|x86.ActiveCfg = docs|x86
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.docs|x86.Build.0 = docs|x86
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.GCModeller(Release_X64)|Any CPU.ActiveCfg = GCModeller(Release_X64)|Any CPU
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.GCModeller(Release_X64)|Any CPU.Build.0 = GCModeller(Release_X64)|Any CPU
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.GCModeller(Release_X64)|x64.ActiveCfg = GCModeller(Release_X64)|x64
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.GCModeller(Release_X64)|x64.Build.0 = GCModeller(Release_X64)|x64
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.GCModeller(Release_X64)|x86.ActiveCfg = GCModeller(Release_X64)|x86
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.GCModeller(Release_X64)|x86.Build.0 = GCModeller(Release_X64)|x86
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.GCModeller(UNIX-Release_X64)|Any CPU.ActiveCfg = GCModeller(UNIX-Release_X64)|Any CPU
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.GCModeller(UNIX-Release_X64)|Any CPU.Build.0 = GCModeller(UNIX-Release_X64)|Any CPU
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.GCModeller(UNIX-Release_X64)|x64.ActiveCfg = GCModeller(UNIX-Release_X64)|x64
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.GCModeller(UNIX-Release_X64)|x64.Build.0 = GCModeller(UNIX-Release_X64)|x64
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.GCModeller(UNIX-Release_X64)|x86.ActiveCfg = GCModeller(UNIX-Release_X64)|x86
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.GCModeller(UNIX-Release_X64)|x86.Build.0 = GCModeller(UNIX-Release_X64)|x86
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.installer_x64|Any CPU.ActiveCfg = installer_x64|Any CPU
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.installer_x64|Any CPU.Build.0 = installer_x64|Any CPU
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.installer_x64|x64.ActiveCfg = installer_x64|x64
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.installer_x64|x64.Build.0 = installer_x64|x64
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.installer_x64|x86.ActiveCfg = installer_x64|x86
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.installer_x64|x86.Build.0 = installer_x64|x86
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.mysqli_X64_release|Any CPU.ActiveCfg = Biodeep|Any CPU
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.mysqli_X64_release|Any CPU.Build.0 = Biodeep|Any CPU
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.mysqli_X64_release|x64.ActiveCfg = Biodeep|x64
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.mysqli_X64_release|x64.Build.0 = Biodeep|x64
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.mysqli_X64_release|x86.ActiveCfg = Biodeep|x86
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.mysqli_X64_release|x86.Build.0 = Biodeep|x86
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.ProteoWizard.d|Any CPU.ActiveCfg = Publish|Any CPU
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.ProteoWizard.d|Any CPU.Build.0 = Publish|Any CPU
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.ProteoWizard.d|x64.ActiveCfg = Publish|x64
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.ProteoWizard.d|x64.Build.0 = Publish|x64
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.ProteoWizard.d|x86.ActiveCfg = Publish|x86
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.ProteoWizard.d|x86.Build.0 = Publish|x86
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Publish|Any CPU.ActiveCfg = Publish|Any CPU
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Publish|Any CPU.Build.0 = Publish|Any CPU
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Publish|x64.ActiveCfg = Publish|x64
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Publish|x64.Build.0 = Publish|x64
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Publish|x86.ActiveCfg = Publish|x86
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Publish|x86.Build.0 = Publish|x86
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Release|x64.ActiveCfg = Release|x64
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Release|x64.Build.0 = Release|x64
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Release|x86.ActiveCfg = Release|x86
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Release|x86.Build.0 = Release|x86
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Release2|Any CPU.ActiveCfg = Release|Any CPU
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Release2|Any CPU.Build.0 = Release|Any CPU
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Release2|x64.ActiveCfg = Release|x64
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Release2|x64.Build.0 = Release|x64
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Release2|x86.ActiveCfg = Release|x86
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Release2|x86.Build.0 = Release|x86
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.sciBASIC.NET-test-release|Any CPU.ActiveCfg = Biodeep|Any CPU
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.sciBASIC.NET-test-release|Any CPU.Build.0 = Biodeep|Any CPU
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.sciBASIC.NET-test-release|x64.ActiveCfg = Biodeep|x64
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.sciBASIC.NET-test-release|x64.Build.0 = Biodeep|x64
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.sciBASIC.NET-test-release|x86.ActiveCfg = Biodeep|x86
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.sciBASIC.NET-test-release|x86.Build.0 = Biodeep|x86
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Surveillance-of-infectious-diseases|Any CPU.ActiveCfg = Biodeep|Any CPU
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Surveillance-of-infectious-diseases|Any CPU.Build.0 = Biodeep|Any CPU
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Surveillance-of-infectious-diseases|x64.ActiveCfg = Biodeep|x64
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Surveillance-of-infectious-diseases|x64.Build.0 = Biodeep|x64
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Surveillance-of-infectious-diseases|x86.ActiveCfg = Biodeep|x86
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Surveillance-of-infectious-diseases|x86.Build.0 = Biodeep|x86
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Yilia-Release_x64|Any CPU.ActiveCfg = Release|Any CPU
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Yilia-Release_x64|Any CPU.Build.0 = Release|Any CPU
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Yilia-Release_x64|x64.ActiveCfg = Release|x64
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Yilia-Release_x64|x64.Build.0 = Release|x64
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Yilia-Release_x64|x86.ActiveCfg = Release|x86
+		{A903B744-C08D-4869-BC35-3DD25E36AA16}.Yilia-Release_x64|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1452,6 +1550,7 @@ Global
 		{E3367B88-5D0C-495A-8273-331656D4B5AA} = {D15174FF-365D-4CC3-A6D3-8ED0361CA215}
 		{14E0B048-3A0D-4FD6-AA79-9B815D6F1B30} = {D15174FF-365D-4CC3-A6D3-8ED0361CA215}
 		{3291389C-EA87-4B33-A9A5-65A2D60BA3E2} = {AD324D7D-4095-41AA-9B77-9CA2DBD52F8B}
+		{A903B744-C08D-4869-BC35-3DD25E36AA16} = {D15174FF-365D-4CC3-A6D3-8ED0361CA215}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D29307FB-66F6-43CF-ABB9-F1EA723DF790}
