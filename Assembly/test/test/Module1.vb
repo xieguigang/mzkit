@@ -12,6 +12,9 @@ Module Module1
 
         For Each x In mzML.PopulateMS2
 
+
+
+            Pause()
         Next
 
     End Sub
