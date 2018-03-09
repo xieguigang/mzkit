@@ -7,7 +7,19 @@ Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
 
 Module Module1
 
+    Sub populateMS2()
+        Dim mzML = "D:\XT-ZWA-1.mzML"
+
+        For Each x In mzML.PopulateMS2
+
+        Next
+
+    End Sub
+
     Sub Main()
+
+        Call populateMS2()
+
 
         Dim ions = "D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\build_tools\CVD_kb\smartnucl.CVD_kb\ion_pair.csv".LoadCsv(Of IonPair)
         Dim ionData = LoadChromatogramList("D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\build_tools\CVD_kb\smartnucl.CVD_kb\test\Data20180111-L1.mzML") _

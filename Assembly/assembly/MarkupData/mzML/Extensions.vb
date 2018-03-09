@@ -13,7 +13,19 @@ Namespace MarkupData.mzML
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function GetAllMs1(spectrums As IEnumerable(Of spectrum)) As IEnumerable(Of spectrum)
-            Return spectrums.Where(Function(s) s.ms_level = "1")
+            Return spectrums.FilterAllSpectrum(msLevel:=1)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function GetAllMs2(spectrums As IEnumerable(Of spectrum)) As IEnumerable(Of spectrum)
+            Return spectrums.FilterAllSpectrum(msLevel:=2)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function FilterAllSpectrum(spectrums As IEnumerable(Of spectrum), msLevel$) As IEnumerable(Of spectrum)
+            Return spectrums.Where(Function(s) s.ms_level = msLevel)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -33,8 +45,19 @@ Namespace MarkupData.mzML
                                             Return (time, mz(index), intensity(index))
                                         End Function)
                         End Function) _
-                .IteratesALL _
-                .ToArray
+                .IteratesALL
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function PopulateMS2(filePath As String)
+            Return filePath _
+                .LoadUltraLargeXMLDataSet(Of spectrum)(, xmlns:=mzML.Xmlns) _
+                .GetAllMs2 _
+                .Select(Function(ms2)
+
+                            Pause()
+                        End Function)
         End Function
 
         ''' <summary>

@@ -1,6 +1,7 @@
 ﻿Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
+Imports Microsoft.VisualBasic.Language.Default
 
 Namespace MarkupData.mzML
 
@@ -29,6 +30,10 @@ Namespace MarkupData.mzML
         Public Property idRef As String
         <XmlText>
         Public Property value As Long
+
+        Public Overrides Function ToString() As String
+            Return $"{idRef}: {value}"
+        End Function
     End Class
 
     <XmlType(NameOf(mzML), [Namespace]:=mzML.Xmlns)>
@@ -106,6 +111,7 @@ Namespace MarkupData.mzML
     End Class
 
     Public Class binaryDataArrayList : Inherits List
+
         <XmlElement(NameOf(binaryDataArray))>
         Public Property list As binaryDataArray()
     End Class
@@ -147,9 +153,13 @@ Namespace MarkupData.mzML
         <XmlAttribute> Public Property name As String Implements IKeyedEntity(Of String).Key
         <XmlAttribute> Public Property value As String
         <XmlAttribute> Public Property unitName As String
+        <XmlAttribute> Public Property unitCvRef As String
+        <XmlAttribute> Public Property unitAccession As String
+
+        Shared ReadOnly Unknown As DefaultValue(Of String) = NameOf(Unknown)
 
         Public Overrides Function ToString() As String
-            Return $"[{accession}] Dim {name} = {value}"
+            Return $"[{accession}] Dim {name} As <{unitName Or Unknown}> = {value}"
         End Function
     End Class
 

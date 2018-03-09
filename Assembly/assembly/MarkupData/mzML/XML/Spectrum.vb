@@ -16,6 +16,10 @@ Namespace MarkupData.mzML
 
     Public Class spectrum : Inherits BinaryData
 
+        <XmlAttribute> Public Property controllerType As String
+        <XmlAttribute> Public Property controllerNumber As String
+        <XmlAttribute> Public Property scan As String
+
         Public Property scanList As scanList
 
         Public ReadOnly Property ms_level As String
@@ -59,5 +63,13 @@ Namespace MarkupData.mzML
 
         <XmlAttribute>
         Public Property instrumentConfigurationRef As String
+    End Class
+
+    Public Class scanWindowList : Inherits List
+        <XmlElement(NameOf(scanWindow))>
+        Public Property scanWindows As scanWindow()
+    End Class
+
+    Public Class scanWindow : Inherits Params
     End Class
 End Namespace
