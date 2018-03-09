@@ -140,10 +140,10 @@
     <Compile Include="Chromatogram\Chromatogram.vb" />
     <Compile Include="Chromatogram\ChromatogramTick.vb" />
     <Compile Include="Chromatogram\PeakArea.vb" />
-    <Compile Include="Tolerance.vb" />
-    <Compile Include="ms2AlignMatrix.vb" />
-    <Compile Include="LibraryMatrix.vb" />
-    <Compile Include="ms1.vb" />
+    <Compile Include="Ms1\Tolerance.vb" />
+    <Compile Include="Ms2\ms2AlignMatrix.vb" />
+    <Compile Include="Ms2\LibraryMatrix.vb" />
+    <Compile Include="Ms1\ms1.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -159,8 +159,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Peaktable.vb" />
-    <Compile Include="PrecursorType.vb" />
+    <Compile Include="Ms1\Peaktable.vb" />
+    <Compile Include="Ms1\PrecursorType.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
