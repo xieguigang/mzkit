@@ -26,7 +26,7 @@ Public Module GlobalAlignment
     ''' <param name="query"></param>
     ''' <param name="subject"></param>
     ''' <returns></returns>
-    Public Function NWGlobalAlign(query As LibraryMatrix, subject As LibraryMatrix, Optional tolerance As Tolerance = Nothing) As Double
+    Public Function NWGlobalAlign(query As LibraryMatrix, subject As LibraryMatrix, Optional tolerance As Tolerance = Nothing) As GlobalAlign(Of ms2)()
         Dim massEquals As Equals(Of ms2)
         Dim empty As New ms2 With {
             .mz = -1,
@@ -43,8 +43,6 @@ Public Module GlobalAlignment
         Dim nw As New NeedlemanWunsch(Of ms2)(query, subject, massEquals, empty, Function(ms2) ms2.ToString.First)
         Call nw.compute()
 
-        Dim aligns = nw.PopulateAlignments.ToArray
-
-        Pause()
+        Return nw.PopulateAlignments.ToArray
     End Function
 End Module
