@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Oracle.LinuxCompatibility.MySQL
+Imports Oracle.LinuxCompatibility.MySQL.Expressions
 Imports SMRUCC.MassSpectrum.DATA.TMIC.HMDB
 
 Namespace TMIC.FooDB
@@ -23,31 +24,31 @@ Namespace TMIC.FooDB
 
         <Extension>
         Public Iterator Function GetAssociatedFoods(HMDB As metabolite, mysql As MySqli) As IEnumerable(Of FoodSource)
-            Dim list$
-            Dim SQL$ = $"SELECT * FROM foodb.compounds WHERE lower(`public_id`) = lower('{HMDB.foodb_id}') LIMIT 1;"
-            Dim compound = mysql.ExecuteScalar(Of mysql.compounds)(SQL)
+            Dim compound = New Table(Of mysql.compounds)(mysql) _
+                .Where($"lower(`public_id`) = lower('{HMDB.foodb_id}')") _
+                .Find
 
             If compound Is Nothing Then
                 Return
             End If
 
-            Dim contents = mysql.Query(Of mysql.contents)($"SELECT * FROM foodb.contents WHERE `source_id` = {compound.id};")
+            Dim contents = New Table(Of mysql.contents)(mysql) _
+                .Where($"`source_id` = {compound.id}") _
+                .SelectALL
 
             If contents.IsNullOrEmpty Then
                 Return
             End If
 
             ' get food informations
-            Dim foods As Dictionary(Of Long, mysql.foods)
-
-            list = contents _
+            Dim list$ = contents _
                 .Select(Function(c) c.food_id) _
                 .Distinct _
                 .Select(Function(id) $"'{id}'") _
                 .JoinBy(", ")
-            SQL = $"SELECT * FROM foodb.foods WHERE `id` IN ({list});"
-            foods = mysql _
-                .Query(Of mysql.foods)(SQL) _
+            Dim foods As Dictionary(Of Long, mysql.foods) = New Table(Of mysql.foods)(mysql) _
+                .Where($"`id` IN ({list})") _
+                .SelectALL _
                 .ToDictionary(Function(food) food.id)
 
             Dim out As New List(Of FoodSource)
