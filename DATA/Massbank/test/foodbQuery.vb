@@ -23,8 +23,9 @@ Module foodbQuery
 
     Sub subset()
         Dim hmdb = metabolite.Load("D:\smartnucl_integrative\DATA\2017-12-22.MetaReference\hmdb_metabolites.xml")
-        Dim index As Index(Of String) = {"HMDB0000043",
-"HMDB0000097",
+        Dim index As Index(Of String) = {
+            "HMDB0000043",
+            "HMDB0000097",
             "HMDB0000925",
             "HMDB0000562",
             "HMDB0000062",
@@ -36,6 +37,8 @@ Module foodbQuery
             "HMDB0000158",
             "HMDB0000929"
 }
+
+        index = {"HMDB0000906"}.Indexing
 
         For Each m In hmdb
             If m.accession.IsOneOfA(index) Then
@@ -51,7 +54,7 @@ Module foodbQuery
     End Sub
 
     Sub queryByContent()
-        For Each xml As String In "D:\MassSpectrum-toolkits\DATA\Massbank\test\bin\x64\Debug\hmdb".EnumerateFiles("*.Xml")
+        For Each xml As String In "D:\MassSpectrum-toolkits\DATA\Massbank\test\bin\x64\Release\hmdb".EnumerateFiles("*.Xml")
             Dim tests As metabolite() = xml.LoadXml(Of metabolite())
 
             For Each metabolite In tests
