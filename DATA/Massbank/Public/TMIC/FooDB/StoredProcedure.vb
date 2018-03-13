@@ -96,7 +96,15 @@ Namespace TMIC.FooDB
         Public Property range As DoubleRange
         Public Property unit As String
         Public Property food_id As String
+        ''' <summary>
+        ''' 学名
+        ''' </summary>
+        ''' <returns></returns>
         Public Property food_name As String
+        ''' <summary>
+        ''' 俗名
+        ''' </summary>
+        ''' <returns></returns>
         Public Property food_general_name As String
         Public Property reference As String
 
