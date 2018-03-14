@@ -11,6 +11,33 @@ Namespace TMIC.FooDB
     ''' </summary>
     Public Module StoredProcedure
 
+        ''' <summary>
+        ''' 将单位都统一转换为``mg/100g``
+        ''' </summary>
+        ''' <param name="value#"></param>
+        ''' <param name="unit$"></param>
+        ''' <param name="mw">摩尔分子量</param>
+        ''' <returns></returns>
+        Public Function UnitConversion(value#, unit$, mw#) As Double
+            Select Case LCase(unit)
+                Case "g"
+                    Return value * 1000
+                Case "mg"
+                    Return value * 1
+                Case "mg/100g"
+                    Return value * 1
+                Case "ppm"
+                    Return value * 0.000001
+                Case "um"
+                    ' 分子量是165.19，就是1mol有165.19g；
+                    ' 一微摩尔的该物质当然等于165.19毫克
+                    ' 三微摩尔的该物质相当于3 * 165.19毫克
+                    Return value * mw
+                Case Else
+                    Throw New NotImplementedException(unit)
+            End Select
+        End Function
+
         ' compound <--> food associations
         ' HMDB -> [hmdb_id] compounds [id] -> [source_id] contents [food_id] -> foods
 
