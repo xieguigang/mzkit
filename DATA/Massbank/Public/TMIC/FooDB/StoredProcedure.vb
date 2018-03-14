@@ -27,12 +27,16 @@ Namespace TMIC.FooDB
                 Case "mg/100g"
                     Return value * 1
                 Case "ppm"
-                    Return value * 0.000001
+                    Return value * (10 ^ -6)
                 Case "um"
                     ' 分子量是165.19，就是1mol有165.19g；
                     ' 一微摩尔的该物质当然等于165.19毫克
                     ' 三微摩尔的该物质相当于3 * 165.19毫克
                     Return value * mw
+                Case "ug"
+                    Return value * (10 ^ -3)
+                Case ""
+                    Return 0
                 Case Else
                     Throw New NotImplementedException(unit)
             End Select
