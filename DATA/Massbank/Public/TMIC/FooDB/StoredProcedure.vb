@@ -38,7 +38,9 @@ Namespace TMIC.FooDB
                 Case ""
                     Return 0
                 Case Else
-                    Throw New NotImplementedException(unit)
+                    ' Throw New NotImplementedException(unit)
+                    Call $"not_implemented_for: {value} ({unit})".PrintException
+                    Return 0
             End Select
         End Function
 
