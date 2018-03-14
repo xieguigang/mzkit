@@ -206,6 +206,7 @@
   <ItemGroup>
     <Compile Include="MetaLib\NameEquality.vb" />
     <Compile Include="MetaLib\MetaLib.vb" />
+    <Compile Include="Concentration.vb" />
     <Compile Include="Public\lipidMAPS\SDF.vb" />
     <Compile Include="Public\MoNA\MoNAJson.vb" />
     <Compile Include="Public\NCBI\PubChem\MetaData.vb" />
