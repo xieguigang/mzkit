@@ -1,4 +1,6 @@
-﻿Public Module Concentration
+﻿Imports System.ComponentModel
+
+Public Module Concentration
 
 End Module
 
@@ -7,91 +9,94 @@ Public Enum Units As Integer
     ''' <summary>
     ''' 百分之一``[%]``
     ''' </summary>
-    percent = 1
+    <Description("%")> percent = 1
     ''' <summary>
     ''' 千分之一``[‰]``
     ''' </summary>
-    permil
+    <Description("‰")> permil
     ''' <summary>
     ''' ``液量盎司/加仑``(UK)
     ''' </summary>
-    floz_gallon_UK
+    <Description("fl.oz/gallon(UK)")> floz_gallon_UK
     ''' <summary>
     ''' ``液量盎司/加仑``(US)
     ''' </summary>
-    floz_gallon_US
+    <Description("fl.oz/gallon(US)")> floz_gallon_US
     ''' <summary>
     ''' ``立方英寸/立方英尺``
     ''' </summary>
-    cuin_cuft
+    <Description("cu.in/cu.ft")> cuin_cuft
     ''' <summary>
     ''' ``立方英寸/立方码``
     ''' </summary>
-    cuin_cuyard
+    <Description("cu.in/cu.yard")> cuin_cuyard
     ''' <summary>
     ''' ``滴/加仑``(UK)
     ''' </summary>
-    drops_gallon_UK
+    <Description("drops/gallon(UK)")> drops_gallon_UK
     ''' <summary>
     ''' ``滴/加仑``(US)
     ''' </summary>
-    drops_gallon_US
+    <Description("drops/gallon(US)")> drops_gallon_US
     ''' <summary>
     ''' ``滴/立方英尺``
     ''' </summary>
-    drops_cuft
+    <Description("drops/cu.ft")> drops_cuft
     ''' <summary>
     ''' ``盎司/镑``
     ''' </summary>
-    oz_pound
+    <Description("oz/pound")> oz_pound
     ''' <summary>
     ''' ``盎司/吨``(UK)
     ''' </summary>
-    oz_ton_UK
+    <Description("oz/ton(UK)")> oz_ton_UK
     ''' <summary>
     ''' ``盎司/吨``(US)
     ''' </summary>
-    oz_ton_US
-    ppm
+    <Description("oz/ton(US)")> oz_ton_US
+    ''' <summary>
+    ''' Parts per million
+    ''' </summary>
+    <Description("ppm")> ppm
     ''' <summary>
     ''' 十亿分之一
     ''' </summary>
-    parts_billion
+    <Description("parts/billion")> parts_billion
     ''' <summary>
     ''' ``毫升/升``
     ''' </summary>
-    mL_litre
+    <Description("mL/litre")> mL_litre
     ''' <summary>
     ''' ``毫升/兆升``
     ''' </summary>
-    mL_megalitre
+    <Description("mL/megalitre")> mL_megalitre
     ''' <summary>
     ''' ``毫升/立方米``
     ''' </summary>
-    mL_cumetre
+    <Description("mL/cu.metre")> mL_cumetre
     ''' <summary>
     ''' ``滴/毫升``
     ''' </summary>
-    drops_mL
+    <Description("drops/mL")> drops_mL
     ''' <summary>
     ''' ``滴/升``
     ''' </summary>
-    drops_litre
+    <Description("drops/litre")> drops_litre
     ''' <summary>
     ''' ``滴/立方米``
     ''' </summary>
-    drops_cumetre
+    <Description("drops/cu.metre")> drops_cumetre
     ''' <summary>
     ''' ``毫克/公斤`` 
     ''' </summary>
-    milligrams_kg
+    <Description("milligrams/kg")> milligrams_kg
     ''' <summary>
     ''' ``克/公斤``
     ''' </summary>
-    grams_kg
+    <Description("grams/kg")> grams_kg
     ''' <summary>
     ''' ``克/吨`` 
     ''' </summary>
-    grams_tonne
+    <Description("grams/tonne")> grams_tonne
 
 End Enum
