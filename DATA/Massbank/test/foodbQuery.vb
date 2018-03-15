@@ -35,10 +35,8 @@ Module foodbQuery
             "HMDB0000687",
             "HMDB0000159",
             "HMDB0000158",
-            "HMDB0000929"
-}
-
-        index = {"HMDB0000906"}.Indexing
+            "HMDB0000929",
+"HMDB0000906"}.Indexing
 
         For Each m In hmdb
             If m.accession.IsOneOfA(index) Then
