@@ -14,6 +14,7 @@ Namespace TMIC.FooDB
         Public Property range As DoubleRange
         Public Property unit As String
         Public Property food_id As String
+        Public Property group As String
         ''' <summary>
         ''' 学名
         ''' </summary>

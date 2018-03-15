@@ -95,7 +95,8 @@ Namespace TMIC.FooDB
                     .name = compound.name,
                     .reference = content.citation,
                     .unit = content.orig_unit,
-                    .range = {content.orig_min, content.orig_max}
+                    .range = {content.orig_min, content.orig_max},
+                    .group = food?.food_group
                 }
 
                 If asso.content = 0R Then
