@@ -1,16 +1,22 @@
-﻿# MySQL development docs
+# MySql Development Docs #
 
-Mysql database field attributes notes:
+MySql database field attributes notes in this development document:
 
-> **AI**: Auto Increment;
-> **B**:  Binary;
-> **G**:  Generated
-> **NN**: Not Null;
-> **PK**: Primary Key;
-> **UQ**: Unique;
-> **UN**: Unsigned;
-> **ZF**: Zero Fill
+> + **AI**: Auto Increment;
+> + **B**:  Binary;
+> + **G**:  Generated
+> + **NN**: Not Null;
+> + **PK**: Primary Key;
+> + **UQ**: Unique;
+> + **UN**: Unsigned;
+> + **ZF**: Zero Fill
 
+Generate time: 2018/3/16 13:47:47<br />
+By: ``mysqli.vb`` reflector tool ([https://github.com/xieguigang/mysqli.vb](https://github.com/xieguigang/mysqli.vb))
+
+<div style="page-break-after: always;"></div>
+
+***
 
 ## compound_alternate_parents
 
@@ -41,6 +47,10 @@ CREATE TABLE `compound_alternate_parents` (
 ) ENGINE=InnoDB AUTO_INCREMENT=50721 DEFAULT CHARSET=utf8;
 ```
 
+
+<div style="page-break-after: always;"></div>
+
+***
 
 ## compound_external_descriptors
 
@@ -74,6 +84,10 @@ CREATE TABLE `compound_external_descriptors` (
 ```
 
 
+<div style="page-break-after: always;"></div>
+
+***
+
 ## compound_substituents
 
 
@@ -104,6 +118,10 @@ CREATE TABLE `compound_substituents` (
 ```
 
 
+<div style="page-break-after: always;"></div>
+
+***
+
 ## compound_synonyms
 
 
@@ -133,6 +151,10 @@ CREATE TABLE `compound_synonyms` (
 ) ENGINE=InnoDB AUTO_INCREMENT=251049 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 ```
 
+
+<div style="page-break-after: always;"></div>
+
+***
 
 ## compounds
 
@@ -363,6 +385,10 @@ CREATE TABLE `compounds` (
 ```
 
 
+<div style="page-break-after: always;"></div>
+
+***
+
 ## compounds_enzymes
 
 
@@ -393,6 +419,10 @@ CREATE TABLE `compounds_enzymes` (
 ) ENGINE=InnoDB AUTO_INCREMENT=105090 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 ```
 
+
+<div style="page-break-after: always;"></div>
+
+***
 
 ## compounds_flavors
 
@@ -429,6 +459,10 @@ CREATE TABLE `compounds_flavors` (
 ) ENGINE=InnoDB AUTO_INCREMENT=11632 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 ```
 
+
+<div style="page-break-after: always;"></div>
+
+***
 
 ## compounds_health_effects
 
@@ -473,6 +507,10 @@ CREATE TABLE `compounds_health_effects` (
 ```
 
 
+<div style="page-break-after: always;"></div>
+
+***
+
 ## compounds_pathways
 
 
@@ -504,6 +542,10 @@ CREATE TABLE `compounds_pathways` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1605 DEFAULT CHARSET=utf8;
 ```
 
+
+<div style="page-break-after: always;"></div>
+
+***
 
 ## contents
 
@@ -567,6 +609,10 @@ CREATE TABLE `contents` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1682258 DEFAULT CHARSET=utf8;
 ```
 
+
+<div style="page-break-after: always;"></div>
+
+***
 
 ## enzymes
 
@@ -657,6 +703,10 @@ CREATE TABLE `enzymes` (
 ```
 
 
+<div style="page-break-after: always;"></div>
+
+***
+
 ## flavors
 
 
@@ -688,6 +738,10 @@ CREATE TABLE `flavors` (
 ```
 
 
+<div style="page-break-after: always;"></div>
+
+***
+
 ## food_taxonomies
 
 
@@ -716,6 +770,10 @@ CREATE TABLE `food_taxonomies` (
 ```
 
 
+<div style="page-break-after: always;"></div>
+
+***
+
 ## foodcomex_compound_providers
 
 
@@ -741,6 +799,10 @@ CREATE TABLE `foodcomex_compound_providers` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1090 DEFAULT CHARSET=utf8;
 ```
 
+
+<div style="page-break-after: always;"></div>
+
+***
 
 ## foodcomex_compounds
 
@@ -830,6 +892,10 @@ CREATE TABLE `foodcomex_compounds` (
 ```
 
 
+<div style="page-break-after: always;"></div>
+
+***
+
 ## foods
 
 
@@ -891,6 +957,10 @@ CREATE TABLE `foods` (
 ```
 
 
+<div style="page-break-after: always;"></div>
+
+***
+
 ## health_effects
 
 
@@ -927,6 +997,10 @@ CREATE TABLE `health_effects` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1436 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 ```
 
+
+<div style="page-break-after: always;"></div>
+
+***
 
 ## nutrients
 
@@ -991,6 +1065,10 @@ CREATE TABLE `nutrients` (
 ```
 
 
+<div style="page-break-after: always;"></div>
+
+***
+
 ## pathways
 
 
@@ -1016,6 +1094,10 @@ CREATE TABLE `pathways` (
 ) ENGINE=InnoDB AUTO_INCREMENT=98 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 ```
 
+
+<div style="page-break-after: always;"></div>
+
+***
 
 ## references
 
@@ -1055,6 +1137,8 @@ CREATE TABLE `references` (
 ) ENGINE=InnoDB AUTO_INCREMENT=31792 DEFAULT CHARSET=utf8;
 ```
 
+
+<div style="page-break-after: always;"></div>
 
 
 
