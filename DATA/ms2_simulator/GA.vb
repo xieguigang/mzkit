@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports SMRUCC.MassSpectrum.Math
@@ -16,9 +17,11 @@ Module GA
     ''' <returns></returns>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function ms2Alignment(x As ms2(), y As ms2(), method As AlignMethod) As (forward#, reverse#)
+    Public Function ms2Alignment(x As ms2(), y As ms2(), method As Tolerance) As (forward#, reverse#)
         Return (GA.Align(x, y, method), GA.Align(y, x, method))
     End Function
+
+    ReadOnly ppm20 As DefaultValue(Of Tolerance) = New PPMmethod(20).Interface
 
     ''' <summary>
     ''' 以<paramref name="ref"/>为基准，从<paramref name="query"/>之中选择出对应的<see cref="ms2.mz"/>信号响应信息，完成对齐操作
@@ -26,15 +29,15 @@ Module GA
     ''' <param name="query"></param>
     ''' <param name="ref"></param>
     ''' <returns></returns>
-    Public Function Align(query As ms2(), ref As ms2(), method As AlignMethod) As Double
-        Dim q As Vector = query.AlignMatrix(ref, method).Shadows!intensity
+    Public Function Align(query As ms2(), ref As ms2(), Optional method As Tolerance = Nothing) As Double
+        Dim q As Vector = query.AlignMatrix(ref, method Or ppm20).Shadows!intensity
         Dim s As Vector = ref.Shadows!intensity
 
         Return SSM(q / q.Max, s / s.Max)
     End Function
 
     <Extension>
-    Public Function AlignMatrix(query As ms2(), ref As ms2(), method As AlignMethod) As ms2()
+    Public Function AlignMatrix(query As ms2(), ref As ms2(), method As Tolerance) As ms2()
         Return ref _
             .Select(Function(mz)
 
@@ -49,41 +52,4 @@ Module GA
                     End Function) _
             .ToArray
     End Function
-
-    ''' <summary>
-    ''' 分子量差值
-    ''' </summary>
-    ''' <param name="measured#"></param>
-    ''' <param name="actualValue#"></param>
-    ''' <returns></returns>
-    Public Function ppm(measured#, actualValue#) As Double
-        ' （测量值-实际分子量）/ 实际分子量
-        ' |(实验数据 - 数据库结果)| / 实验数据 * 1000000
-        Dim ppmd# = Math.Abs(measured - actualValue) / actualValue
-        ppmd = ppmd * 1000000
-        Return ppmd
-    End Function
 End Module
-
-Public MustInherit Class AlignMethod
-
-    Public MustOverride Function Assert(mz1#, mz2#) As Boolean
-End Class
-
-Public Class PPMmethod : Inherits AlignMethod
-
-    Public Property ppm As Double
-
-    Public Overrides Function Assert(mz1 As Double, mz2 As Double) As Boolean
-        Return GA.ppm(mz1, mz2) <= ppm
-    End Function
-End Class
-
-Public Class DAmethod : Inherits AlignMethod
-
-    Public Property da As Double
-
-    Public Overrides Function Assert(mz1 As Double, mz2 As Double) As Boolean
-        Return Math.Abs(mz1 - mz2) <= da
-    End Function
-End Class

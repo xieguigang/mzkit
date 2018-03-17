@@ -63,9 +63,8 @@ Namespace ASCII.MGF
                 Dim meta As Dictionary(Of String, String)
 
                 With r.Match(title, regexp_META, RegexICSng).Value
-                    title = title.Replace(.ref, "")
-                    meta = .ref _
-                        .StringSplit(",\s+") _
+                    title = title.Replace(.ByRef, "")
+                    meta = .StringSplit(",\s+") _
                         .Select(Function(s) s.GetTagValue(":")) _
                         .ToDictionary(Function(key) key.Name,
                                       Function(val) val.Value.Trim(""""c))

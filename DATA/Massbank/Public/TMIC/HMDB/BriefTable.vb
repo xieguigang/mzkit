@@ -2,16 +2,19 @@
 
 Namespace TMIC.HMDB
 
-    Public Class BriefTable : Implements ICloneable
+    Public Class MetaInfo : Inherits MetaLib.MetaInfo
 
-        Public Property Sample As String
         Public Property HMDB As String
         Public Property KEGG As String
         Public Property chebi As String
         Public Property CAS As String
-        Public Property MW As String
-        Public Property name As String
-        Public Property formula As String
+
+    End Class
+
+    Public Class BriefTable : Inherits MetaInfo
+        Implements ICloneable
+
+        Public Property Sample As String
         Public Property disease As String()
         Public Property water_solubility As String
 

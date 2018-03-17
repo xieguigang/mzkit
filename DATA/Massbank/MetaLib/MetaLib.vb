@@ -5,10 +5,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace MetaLib
 
-    ''' <summary>
-    ''' 对``chebi/kegg/pubchem/HMDB/metlin``的物质注释信息整合库，这个数据库只要为了生成编号，名称之类的注释信息而构建的
-    ''' </summary>
-    Public Class MetaLib : Implements INamedValue
+    Public Class MetaInfo : Implements INamedValue
 
         ''' <summary>
         ''' 该物质在整合库之中的唯一标识符
@@ -16,10 +13,18 @@ Namespace MetaLib
         ''' <returns></returns>
         <XmlAttribute>
         Public Property ID As String Implements IKeyedEntity(Of String).Key
-        Public Property xref As xref
         Public Property name As String
         Public Property formula As String
         Public Property mass As Double
+
+    End Class
+
+    ''' <summary>
+    ''' 对``chebi/kegg/pubchem/HMDB/metlin``的物质注释信息整合库，这个数据库只要为了生成编号，名称之类的注释信息而构建的
+    ''' </summary>
+    Public Class MetaLib : Inherits MetaInfo
+
+        Public Property xref As xref
 
         ''' <summary>
         ''' 化合物分类

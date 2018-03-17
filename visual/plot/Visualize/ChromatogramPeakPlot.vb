@@ -1,7 +1,7 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
-Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Imaging
@@ -10,7 +10,7 @@ Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports SMRUCC.MassSpectrum.Math
+Imports SMRUCC.MassSpectrum.Math.Chromatogram
 
 ''' <summary>
 ''' time -> into
@@ -106,7 +106,7 @@ Public Module ChromatogramPeakPlot
                     B = New PointF(MRM_ROI.Max, maxIntensity)
                     drawLine(A, B)
 
-                    Dim base = chromatogram.Base
+                    Dim base = chromatogram.Baseline
 
                     A = New PointF(timeTicks.Min, base)
                     B = New PointF(timeTicks.Max, base)

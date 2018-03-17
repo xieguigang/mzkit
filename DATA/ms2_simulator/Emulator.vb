@@ -39,13 +39,13 @@ Public Module Emulator
                 Dim mz# = fragment.CalculateMZ
 
                 With Math.Round(mz, precision).ToString
-                    If Not quantity.ContainsKey(.ref) Then
-                        quantity.Add(.ref, 0)
-                        mzlist.Add(.ref, New List(Of Double))
+                    If Not quantity.ContainsKey(.ByRef) Then
+                        quantity.Add(.ByRef, 0)
+                        mzlist.Add(.ByRef, New List(Of Double))
                     End If
 
-                    quantity(.ref) = quantity(.ref) + percentage
-                    mzlist(.ref).Add(mz)
+                    quantity(.ByRef) = quantity(.ByRef) + percentage
+                    mzlist(.ByRef).Add(mz)
                 End With
             Next
         Next

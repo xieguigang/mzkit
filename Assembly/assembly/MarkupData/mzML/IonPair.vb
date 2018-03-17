@@ -1,6 +1,6 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+﻿Imports System.Data.Linq.Mapping
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports sys = System.Math
 
 Namespace MarkupData.mzML
@@ -11,7 +11,7 @@ Namespace MarkupData.mzML
         ''' The database accession ID
         ''' </summary>
         ''' <returns></returns>
-        <Column("ID")>
+        <Column(Name:="ID")>
         Public Property AccID As String
         ''' <summary>
         ''' The display title name

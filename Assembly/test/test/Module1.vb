@@ -7,7 +7,22 @@ Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
 
 Module Module1
 
+    Sub populateMS2()
+        Dim mzML = "D:\XT-ZWA-1.mzML"
+
+        For Each x In mzML.PopulateMS2
+
+
+
+            Pause()
+        Next
+
+    End Sub
+
     Sub Main()
+
+        Call populateMS2()
+
 
         Dim ions = "D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\build_tools\CVD_kb\smartnucl.CVD_kb\ion_pair.csv".LoadCsv(Of IonPair)
         Dim ionData = LoadChromatogramList("D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\build_tools\CVD_kb\smartnucl.CVD_kb\test\Data20180111-L1.mzML") _
@@ -17,7 +32,7 @@ Module Module1
                         Return New NamedValue(Of PointF()) With {
                             .Name = ion.ion.name,
                             .Description = ion.ion.ToString,
-                            .Value = ion.chromatogram.PeakArea.Select(Function(tick) CType(tick, PointF)).ToArray
+                            .Value = ion.chromatogram.Ticks.Select(Function(tick) CType(tick, PointF)).ToArray
                         }
                     End Function) _
             .ToArray

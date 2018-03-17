@@ -1,9 +1,12 @@
-﻿Imports Microsoft.VisualBasic.Serialization.JSON
+﻿Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.Serialization.JSON
+Imports SMRUCC.MassSpectrum.DATA
 
 Module Module1
 
     Sub Main()
 
+        Call convertorTest()
         '  Call dumpPubChem()
 
 
@@ -15,6 +18,21 @@ Module Module1
         Pause()
     End Sub
 
+    Sub convertorTest()
+
+        Dim a As New UnitValue(Of Units)(100, Units.cuin_cuft)
+        Dim b = a.ConvertTo(Units.milligrams_kg)
+        Dim c = a.ConvertTo(Units.cuin_cuft)
+        Dim d = a.ConvertTo(Units.drops_gallon_US)
+        Dim e = a.ConvertTo(Units.ppm)
+
+        Call $"{a} = {b}".__DEBUG_ECHO
+        Call $"{a} = {c}".__DEBUG_ECHO
+        Call $"{a} = {d}".__DEBUG_ECHO
+        Call $"{a} = {e}".__DEBUG_ECHO
+
+        Pause()
+    End Sub
 
     Sub dumpPubChem()
 
