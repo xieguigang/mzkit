@@ -116,7 +116,7 @@ Namespace TMIC.HMDB
         <Extension>
         Public Function MatchMetabolites(source As IEnumerable(Of metabolite), list$()) As IEnumerable(Of metabolite)
             With list.NameMatch
-                Return source.AsParallel.Where(Function(m) Not .ref(m).match.StringEmpty)
+                Return source.AsParallel.Where(Function(m) Not .ByRef(m).match.StringEmpty)
             End With
         End Function
 
