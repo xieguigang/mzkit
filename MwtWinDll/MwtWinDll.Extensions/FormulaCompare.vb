@@ -38,6 +38,8 @@ Public Module FormulaCompare
                            Call composition(buf.CharString).Add(digits.Val)
                        End If
 
+                       formula += buf
+                       formula += digits
                        buf *= 0
                        buf += c
                        digits *= 0
