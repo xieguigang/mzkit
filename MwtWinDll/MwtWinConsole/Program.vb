@@ -24,7 +24,7 @@ Module Program
     Sub test2()
         Dim mz = 477.0631
         Dim profile As New AtomProfiles({"C", "H", "N", "O", "S", "P"})
-        Dim list = profile.SearchByMZAndLimitCharges(New IntRange(-2, 2), mz, 20)
+        Dim list = profile.SearchByMZAndLimitCharges(New IntRange(2, 2), mz, 20).OrderBy(Function(f) f.CountsByElement("C"))
 
         For Each formual As FormulaFinderResult In list
             Call Console.WriteLine(formual.ToString)
