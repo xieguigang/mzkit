@@ -92,7 +92,7 @@ Public Module FormulaCompare
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function Val(digits As List(Of Char)) As Double
+    Private Function Val(digits As List(Of Char)) As Double
         Return Conversion.Val(digits.CharString)
     End Function
 End Module

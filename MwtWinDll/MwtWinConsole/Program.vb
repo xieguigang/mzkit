@@ -16,9 +16,19 @@ Module Program
         'Next
 
         'Pause()
+        Call testSplit()
 
         Call test2()
 
+    End Sub
+
+    Sub testSplit()
+
+        Dim formula$ = "H2O"
+        Dim composition = FormulaCompare.SplitFormula(formula)
+
+
+        Pause()
     End Sub
 
     Sub test2()
