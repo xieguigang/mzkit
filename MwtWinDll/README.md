@@ -74,3 +74,15 @@ Table 2: Common element ratios obtained from 45.000 formulas comprising the Wile
 |    Si/C      |             0–0.5           |               0–1              |         > 0.5               |
 
 ### Rule #6 – element probability check
+
+additional constraint "multiple element count"
+
+Table 3: Multiple element count restriction for compounds ``< 2000 Da``, based on the examination of the Beilstein database and the Dictionary of Natural Products
+
+|Element counts|      Heuristic Rule        |       DB examples for maximum values        |
+|--------------|----------------------------|---------------------------------------------|
+| NOPS all > 1 |N < 10, O < 20, P < 4, S < 3|C15H34N9O8PS, C22H44N4O14P2S2, C24H38N7O19P3S|
+|  NOP all > 3 |N < 11, O < 22, P < 6       |C20H28N10O21P4, C10H18N5O20P5                |
+|  OPS all > 1 |O < 14, P < 3,  S < 3       |C22H44N4O14P2S2, C16H36N4O4P2S2              |
+|  PSN all > 1 |P < 3,  S < 3,  N < 4       |C22H44N4O14P2S2, C16H36N4O4P2S2              |
+|  NOS all > 6 |N < 19, O < 14, S < 8       |C59H64N18O14S7                               |
