@@ -29,6 +29,8 @@ Module Program
 
         '   composition = FormulaCompare.SplitFormula("CO2")
         composition = FormulaCompare.SplitFormula("(CH3)3CH")
+        composition = FormulaCompare.SplitFormula("(CH3)4C")
+        composition = FormulaCompare.SplitFormula("(NH3)10C22H44N4O14P2Si2")
 
         Pause()
     End Sub
