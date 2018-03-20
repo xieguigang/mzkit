@@ -25,8 +25,10 @@ Module Program
     Sub testSplit()
 
         Dim formula$ = "H2O"
-        Dim composition = FormulaCompare.SplitFormula(formula)
+        Dim composition As FormulaComposition ' = FormulaCompare.SplitFormula(formula)
 
+        '   composition = FormulaCompare.SplitFormula("CO2")
+        composition = FormulaCompare.SplitFormula("(CH3)3CH")
 
         Pause()
     End Sub

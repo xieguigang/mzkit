@@ -77,16 +77,26 @@ Public Module FormulaCompare
                     digits += c
                 End If
 
-                Do While Char.IsDigit(c)
-                    digits += ++scaner
-                    c = digits(-1)
+                Do While Not scaner.EndRead
+                    c = ++scaner
+
+                    If Char.IsDigit(c) Then
+                        digits += c
+                    Else
+                        Exit Do
+                    End If
                 Loop
 
                 c = --scaner
                 group *= digits.Val
+                digits *= 0
 
                 Call group.CountsByElement _
                           .DoEach(Sub(e)
+                                      If Not composition.ContainsKey(e.Key) Then
+                                          composition(e.Key) = New Counter
+                                      End If
+
                                       Call composition(e.Key).Add(e.Value)
                                   End Sub)
 
