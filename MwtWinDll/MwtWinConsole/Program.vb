@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
-Imports SMRUCC.proteomics.PNL.OMICS.MwtWinDll.Extensions.IFormulaFinder
+Imports SMRUCC.proteomics.PNL.OMICS.MwtWinDll
+Imports SMRUCC.proteomics.PNL.OMICS.MwtWinDll.Extensions
 
 Module Program
 
@@ -25,8 +26,8 @@ Module Program
         Dim profile As New AtomProfiles({"C", "H", "N", "O", "S", "P"})
         Dim list = profile.SearchByMZAndLimitCharges(New IntRange(-2, 2), mz, 20)
 
-        For Each formual In list
-            Call Console.WriteLine(formual)
+        For Each formual As FormulaFinderResult In list
+            Call Console.WriteLine(formual.ToString)
         Next
 
         Pause()

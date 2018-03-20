@@ -142,6 +142,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AtomProfiles.vb" />
     <Compile Include="IFormulaFinder.vb" />
     <Compile Include="FormulaCompare.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
