@@ -22,6 +22,15 @@ Public Module FormulaCompare
         Dim c As Char
         Dim formula As New List(Of Char)
         Dim push = Sub()
+                       Dim element$ = buf.CharString
+
+                       If element.Length = 0 Then
+                           Return
+                       End If
+                       If Not composition.ContainsKey(element) Then
+                           composition(element) = New Counter
+                       End If
+
                        ' 结束上一个元素
                        If digits = 0 Then
                            Call composition(buf.CharString).Hit()
@@ -86,6 +95,9 @@ Public Module FormulaCompare
                 Exit Do
             End If
         Loop
+
+        ' 把剩余的也添加进去
+        Call push()
 
         Return New FormulaComposition(composition.AsInteger, formula.CharString)
     End Function
