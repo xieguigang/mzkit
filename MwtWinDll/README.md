@@ -86,3 +86,6 @@ Table 3: Multiple element count restriction for compounds ``< 2000 Da``, based o
 |  OPS all > 1 |O < 14, P < 3,  S < 3       |C22H44N4O14P2S2, C16H36N4O4P2S2              |
 |  PSN all > 1 |P < 3,  S < 3,  N < 4       |C22H44N4O14P2S2, C16H36N4O4P2S2              |
 |  NOS all > 6 |N < 19, O < 14, S < 8       |C59H64N18O14S7                               |
+
+### Rule #7 – TMS check
+
