@@ -54,3 +54,23 @@ iii) The sum of valences is greater than or equal to twice the number of atoms m
 + However, a number of chemical classes fall out of this range, and we have hence enabled the user to select 'extended ranges' covering 99.99% of all formulas in this development database (``H/C 0.1–6``).
 
 ![](./HC_ratio.PNG)
+
+### Rule #5 – heteroatom ratio check
+
+heteroatom ratios distributions are even more skewed than H/C ratios, because many formulas comprise no heteroatom at all (such as alkanes) or very few, **and rare cases exist with high ratios of heteroatoms to carbon numbers.**
+
+Table 2: Common element ratios obtained from 45.000 formulas comprising the Wiley mass spectral database for the mass range 30 Da – 1500 Da 
+
+|Element ratios|Common range (covering 99.7%)|Extended range (covering 99.99%)|Extreme range (beyond 99.99%)|
+|--------------|-----------------------------|--------------------------------|-----------------------------|
+|     H/C      |           0.2–3.1           |             0.1–6              |         < 0.1 and 6–9       |
+|     F/C      |             0–1.5           |               0–6              |         > 1.5               |
+|    Cl/C      |             0–0.8           |               0–2              |         > 0.8               |
+|    Br/C      |             0–0.8           |               0–2              |         > 0.8               |
+|     N/C      |             0–1.3           |               0–4              |         > 1.3               |
+|     O/C      |             0–1.2           |               0–3              |         > 1.2               |
+|     P/C      |             0–0.3           |               0–2              |         > 0.3               |
+|     S/C      |             0–0.8           |               0–3              |         > 0.8               |
+|    Si/C      |             0–0.5           |               0–1              |         > 0.5               |
+
+### Rule #6 – element probability check
