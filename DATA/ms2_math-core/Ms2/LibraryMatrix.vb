@@ -41,7 +41,7 @@ Public Class ms2
 End Class
 
 ''' <summary>
-''' The ms2 library matrix
+''' The <see cref="ms2"/> library matrix
 ''' </summary>
 Public Class LibraryMatrix : Inherits IVector(Of ms2)
     Implements INamedValue
