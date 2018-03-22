@@ -89,3 +89,9 @@ Table 3: Multiple element count restriction for compounds ``< 2000 Da``, based o
 
 ### Rule #7 – TMS check
 
+
+上面是黄金7法则应用在的基于分子质量的分子式的产生的打分算法原理
+
+# 基于二级质谱的分子式的产生
+
+利用 KCF 分子模型可以产生不同的分子碎片基团
