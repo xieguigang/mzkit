@@ -3,6 +3,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.DynamicProgramming
 Imports Microsoft.VisualBasic.DataMining.DynamicProgramming.NeedlemanWunsch
 Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Text.Levenshtein
@@ -12,9 +13,7 @@ Imports Microsoft.VisualBasic.Text.Levenshtein
 ''' </summary>
 Public Module GlobalAlignment
 
-    ReadOnly da3 As DefaultValue(Of Tolerance) = New DAmethod() With {
-        .da = 0.3
-    }.Interface
+    ReadOnly da3 As DefaultValue(Of Tolerance) = New DAmethod(0.3).Interface
 
     ''' <summary>
     ''' ### shared peak count
@@ -47,6 +46,23 @@ Public Module GlobalAlignment
         Call nw.compute()
 
         Return nw.PopulateAlignments.ToArray
+    End Function
+
+    Public Function SharedPeakCount(query As LibraryMatrix, subject As LibraryMatrix, Optional tolerance As Tolerance = Nothing, Optional top% = 10) As Integer
+        Dim q = query.OrderByDescending(Function(mz) mz.quantity).Take(top).ToArray
+        Dim s = subject.OrderByDescending(Function(mz) mz.quantity).Take(top).ToArray
+
+        With tolerance Or da3
+            Dim share = s.Where(Function(mz)
+                                    Dim find = q.Where(Function(frag)
+                                                           Return .Assert(frag.mz, mz.mz)
+                                                       End Function) _
+                                                .FirstOrDefault
+                                    Return Not find Is Nothing
+                                End Function) _
+                         .Count
+            Return share
+        End With
     End Function
 
     ''' <summary>
@@ -86,9 +102,19 @@ Public Module GlobalAlignment
                         ' 当找不到的时候，会返回一个空的structure对象，这个时候intensity为零
                         ' 所以在这个Linq表达式中，后面不需要使用Where来删除对象了
 
-                        Return query _
+                        Dim subject = query _
                             .Where(Function(q) method.Assert(q.mz, mz.mz)) _
-                            .FirstOrDefault
+                            .Shadows
+
+                        If subject.Length = 0 Then
+                            ' With single intensity ZERO
+                            Return New ms2 With {
+                                .mz = mz.mz
+                            }
+                        Else
+                            ' 返回响应值最大的
+                            Return subject(Which.Max(subject!intensity))
+                        End If
                     End Function) _
             .ToArray
     End Function
