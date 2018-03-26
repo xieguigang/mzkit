@@ -3,12 +3,44 @@ Imports System.Text
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
 
-Public Class FormulaFinderResult
+Public Class FormulaComposition
+
+    Public ReadOnly Property CountsByElement As Dictionary(Of String, Integer)
+    Public ReadOnly Property EmpiricalFormula As String
+
+    Sub New(counts As IDictionary(Of String, Integer), Optional formula$ = Nothing)
+        CountsByElement = New Dictionary(Of String, Integer)(counts)
+
+        If formula.StringEmpty Then
+            EmpiricalFormula = CountsByElement _
+                .Select(Function(e) If(e.Value = 1, e.Key, e.Key & e.Value)) _
+                .JoinBy("")
+        Else
+            EmpiricalFormula = formula
+        End If
+    End Sub
+
+    Public Overrides Function ToString() As String
+        Return EmpiricalFormula
+    End Function
+
+    Public Shared Operator *(composition As FormulaComposition, n%) As FormulaComposition
+        Dim newFormula$ = $"({composition}){n}"
+        Dim newComposition = composition _
+            .CountsByElement _
+            .ToDictionary(Function(e) e.Key,
+                          Function(e)
+                              Return e.Value * n
+                          End Function)
+
+        Return New FormulaComposition(newComposition, newFormula)
+    End Operator
+End Class
+
+Public Class FormulaFinderResult : Inherits FormulaComposition
 
     Protected Friend SortKey As String
 
-    Public ReadOnly Property EmpiricalFormula As String
-    Public ReadOnly Property CountsByElement As Dictionary(Of String, Integer)
     Public Property Mass As Double
     Public Property DeltaMass As Double
     Public Property DeltaMassIsPPM As Boolean
@@ -25,9 +57,9 @@ Public Class FormulaFinderResult
     ''' </remarks>
     Public Property PercentComposition As Dictionary(Of String, Double)
 
-    Public Sub New(newEmpiricalFormula As String, empiricalResultSymbols As Dictionary(Of String, Integer))
-        EmpiricalFormula = newEmpiricalFormula
-        CountsByElement = empiricalResultSymbols
+    Public Sub New(newEmpiricalFormula$, empiricalResultSymbols As Dictionary(Of String, Integer))
+        Call MyBase.New(counts:=empiricalResultSymbols, formula:=newEmpiricalFormula$)
+
         SortKey = String.Empty
         PercentComposition = New Dictionary(Of String, Double)
     End Sub

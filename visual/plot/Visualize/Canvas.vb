@@ -128,7 +128,7 @@ Public Module Canvas
 
                     If Not label.StringEmpty Then
                         Dim position As Point
-                        Dim s = label.lTokens
+                        Dim s = label.LineTokens
                         Dim maxlen = g.MeasureString(s.MaxLengthString, labelFont)
 
                         If percentage >= 0.95 Then

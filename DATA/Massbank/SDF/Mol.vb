@@ -50,7 +50,7 @@ Namespace File
             Dim lines$() = mol _
                 .SolveStream _
                 .Trim(ASCII.CR, ASCII.LF) _
-                .lTokens
+                .LineTokens
             Dim countLine = parseCounter(lines(Scan0))
             Dim [dim] = (
                 atoms:=CInt(countLine.counts(0)),

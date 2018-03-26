@@ -1,6 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -23,16 +24,19 @@ Public Class ms2
     ''' Molecular fragment m/z
     ''' </summary>
     ''' <returns></returns>
+    <DataFrameColumn(NameOf(mz))>
     Public Property mz As Double
     ''' <summary>
     ''' quantity
     ''' </summary>
     ''' <returns></returns>
+    <DataFrameColumn(NameOf(quantity))>
     Public Property quantity As Double
     ''' <summary>
     ''' Relative intensity.(percentage) 
     ''' </summary>
     ''' <returns></returns>
+    <DataFrameColumn(NameOf(intensity))>
     Public Property intensity As Double
 
     Public Overrides Function ToString() As String
@@ -41,7 +45,7 @@ Public Class ms2
 End Class
 
 ''' <summary>
-''' The ms2 library matrix
+''' The <see cref="ms2"/> library matrix
 ''' </summary>
 Public Class LibraryMatrix : Inherits IVector(Of ms2)
     Implements INamedValue
@@ -56,11 +60,23 @@ Public Class LibraryMatrix : Inherits IVector(Of ms2)
             Return buffer
         End Get
         Set(value As ms2())
-            buffer = value
+            Call writeBuffer(value)
         End Set
     End Property
 
     Public Property Name As String Implements IKeyedEntity(Of String).Key
+
+    Default Public Overloads ReadOnly Property Item(booleans As IEnumerable(Of Boolean)) As LibraryMatrix
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Get
+            Return New LibraryMatrix() With {
+                .ms2 = MyBase _
+                    .Item(booleans) _
+                    .ToArray,
+                .Name = Name
+            }
+        End Get
+    End Property
 
     Sub New()
         Call MyBase.New({})
@@ -127,6 +143,7 @@ End Class
 Public Module LibraryMatrixExtensions
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
     Public Function Max(matrix As LibraryMatrix) As Double
         Return matrix.ms2.Max(Function(r) r.quantity)
     End Function
