@@ -35,19 +35,19 @@ Public Module Emulator
             Dim percentage# = energy.PercentageLess(e)
             Dim fragmentModel As NetworkGraph = molecule.BreakBonds(energy:=e)
 
-            For Each fragment As NetworkGraph In fragmentModel.IteratesSubNetworks
-                Dim mz# = fragment.CalculateMZ
+            'For Each fragment As NetworkGraph In fragmentModel.IteratesSubNetworks
+            '    Dim mz# = fragment.CalculateMZ
 
-                With Math.Round(mz, precision).ToString
-                    If Not quantity.ContainsKey(.ByRef) Then
-                        quantity.Add(.ByRef, 0)
-                        mzlist.Add(.ByRef, New List(Of Double))
-                    End If
+            '    With Math.Round(mz, precision).ToString
+            '        If Not quantity.ContainsKey(.ByRef) Then
+            '            quantity.Add(.ByRef, 0)
+            '            mzlist.Add(.ByRef, New List(Of Double))
+            '        End If
 
-                    quantity(.ByRef) = quantity(.ByRef) + percentage
-                    mzlist(.ByRef).Add(mz)
-                End With
-            Next
+            '        quantity(.ByRef) = quantity(.ByRef) + percentage
+            '        mzlist(.ByRef).Add(mz)
+            '    End With
+            'Next
         Next
 
         Dim matrix As New LibraryMatrix With {
