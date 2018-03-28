@@ -13,10 +13,17 @@
 #   Check Package:             'Ctrl + Shift + E'
 #   Test Package:              'Ctrl + Shift + T'
 
-Enumerate.Formula.mass <- function(mass, charges = NULL, tolerance = function(m1, m2) abs(m1 - m2) <= 0.3) {
+ppm <- function(a, b) {
 
 }
 
-Enumerate.Formula.MZ <- function(mz, tolerance = function(mz1, mz2) ppm(mz1 - mz2) <= 20) {
+`%||%` <- function(x, default) {
 
-}
+    require(VisualBasic.R);
+
+    if (IsNothing(x)) {
+        default;
+    } else {
+        x;
+    }
+} 
