@@ -1,12 +1,12 @@
 ﻿
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming
 Imports Microsoft.VisualBasic.DataMining.DynamicProgramming
 Imports Microsoft.VisualBasic.DataMining.DynamicProgramming.NeedlemanWunsch
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports Microsoft.VisualBasic.Text.Levenshtein
 
 ''' <summary>
 ''' Global alignment of two MS/MS matrix.
@@ -42,10 +42,9 @@ Public Module GlobalAlignment
                          End Function
         End With
 
-        Dim nw As New NeedlemanWunsch(Of ms2)(query, subject, massEquals, empty, Function(ms2) ms2.ToString.First)
-        Call nw.compute()
-
-        Return nw.PopulateAlignments.ToArray
+        With New NeedlemanWunsch(Of ms2)(query, subject, massEquals, empty, Function(ms2) ms2.ToString.First).Compute()
+            Return .PopulateAlignments.ToArray
+        End With
     End Function
 
     Public Function SharedPeakCount(query As LibraryMatrix, subject As LibraryMatrix, Optional tolerance As Tolerance = Nothing, Optional top% = 10) As Integer
