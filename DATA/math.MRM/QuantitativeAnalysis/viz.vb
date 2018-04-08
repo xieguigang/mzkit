@@ -16,7 +16,7 @@ Public Module viz
                   predictedX:=samples,
                   xAxisTickDecimal:=-1,
                   yAxisTickDecimal:=-1,
-                  showErrorBand:=True
+                  showErrorBand:=False
              )
     End Function
 End Module
