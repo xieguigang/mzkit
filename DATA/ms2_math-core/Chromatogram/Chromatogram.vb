@@ -60,7 +60,7 @@ Namespace Chromatogram
             ' 直到下降的速率小于阈值
             ' 因为MRM方法在一个色谱之中只出一个峰，所以在这里仅仅实现一个非常简单的峰的边界检测的算法
 
-            Dim maxIndex
+            Dim maxIndex%
             Dim timeRange#()
 
             ' 2018-1-18 如果事先将基线移除的话，或导致峰的范围扩大
