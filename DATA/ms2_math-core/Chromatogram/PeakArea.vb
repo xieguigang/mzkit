@@ -27,10 +27,7 @@ Namespace Chromatogram
         ''' </remarks>
         <Extension>
         Public Function PeakArea(chromatogram As IVector(Of ChromatogramTick), peak As DoubleRange, Optional baseline# = 0.65) As Double
-            ' gets all signals that its chromatogram time inside the peak time range
-            ' time >= time range min andalso time <= time range max 
-            Dim time = chromatogram!Time
-            Dim S = chromatogram((time >= peak.Min) & (time <= peak.Max))  ' TPA
+            Dim S = chromatogram.PickArea(range:=peak) ' TPA
             Dim B = chromatogram.Baseline(quantile:=baseline)
 
             ' 2018-1-18 
@@ -48,10 +45,23 @@ Namespace Chromatogram
         End Function
 
         ''' <summary>
+        ''' Gets all signals that its chromatogram time inside the peak time range
+        ''' time >= time range min andalso time &lt;= time range max 
+        ''' </summary>
+        ''' <param name="chromatogram"></param>
+        ''' <param name="range"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function PickArea(chromatogram As IVector(Of ChromatogramTick), range As DoubleRange) As IEnumerable(Of ChromatogramTick)
+            Dim time As Vector = chromatogram!Time
+            Return chromatogram((time >= range.Min) & (time <= range.Max))
+        End Function
+
+        ''' <summary>
         ''' 使用积分器来进行峰面积的精确计算：
         ''' 
         ''' 1. 首先对峰的线条进行插值计算
-        ''' 2. 然后进行定积分计算，计算值的时候也是使用 A = S - B 净峰法来计算出面积。
+        ''' 2. 然后进行定积分计算，计算值的时候也是使用``A = S - B``净峰法来计算出面积。
         ''' 
         ''' 最后的积分计算结果就是峰面积
         ''' </summary>
@@ -67,9 +77,9 @@ Namespace Chromatogram
                                            Optional cubicSplineDensity% = 10,
                                            ByRef Optional peakRaw As PointF() = Nothing,
                                            ByRef Optional curve As PointF() = Nothing) As Double
-            Dim time = chromatogram!Time
-            Dim rawPoints As List(Of PointF) =
-                chromatogram((time >= peak.Min) & (time <= peak.Max)) _
+
+            Dim rawPoints As List(Of PointF) = chromatogram _
+                .PickArea(range:=peak) _
                 .Select(Function(c)
                             Return New PointF With {
                                 .X = c.Time,

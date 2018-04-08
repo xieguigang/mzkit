@@ -35,6 +35,11 @@ Namespace Dumping
         Public Property PeakHeight As Double
         <XmlAttribute("baseline")>
         Public Property Base As Double
+
+        ''' <summary>
+        ''' 在<see cref="Window"/>范围内的色谱信号数据
+        ''' </summary>
+        ''' <returns></returns>
         <XmlArray("ticks")>
         Public Property Ticks As ChromatogramTick()
 
