@@ -4,7 +4,10 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Models
 
-    Public Class Coordinate
+    ''' <summary>
+    ''' The standard curve
+    ''' </summary>
+    Public Class Standards
 
         Public Property HMDB As String
         Public Property Name As String

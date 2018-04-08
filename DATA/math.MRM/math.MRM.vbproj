@@ -105,7 +105,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Coordinate.vb" />
+    <Compile Include="Dumping\TargetQuantification.vb" />
+    <Compile Include="Standards.vb" />
     <Compile Include="IS.vb" />
     <Compile Include="QuantitativeAnalysis\Samples.vb" />
     <Compile Include="QuantitativeAnalysis\StandardCurve.vb" />

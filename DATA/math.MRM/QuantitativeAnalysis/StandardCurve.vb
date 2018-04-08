@@ -75,10 +75,10 @@ Public Module StandardCurve
     ''' <param name="coordinates"></param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function Regression(ionTPA As Dictionary(Of DataSet), coordinates As Coordinate(), [ISvector] As [IS]()) As IEnumerable(Of NamedValue(Of FitResult))
+    Public Iterator Function Regression(ionTPA As Dictionary(Of DataSet), coordinates As Standards(), [ISvector] As [IS]()) As IEnumerable(Of NamedValue(Of FitResult))
         Dim [IS] As Dictionary(Of String, [IS]) = ISvector.ToDictionary(Function(i) i.ID)
 
-        For Each ion As Coordinate In coordinates _
+        For Each ion As Standards In coordinates _
             .Where(Function(i)
                        Return Not i.IS.StringEmpty AndAlso
                               Not ionTPA(i.IS) Is Nothing AndAlso
@@ -130,7 +130,7 @@ Public Module StandardCurve
     ''' <returns></returns>
     Public Function Scan(raw$,
                          ions As IonPair(),
-                         coordinates As Coordinate(),
+                         coordinates As Standards(),
                          Optional ByRef refName$() = Nothing,
                          Optional calibrationNamedPattern$ = ".+[-]L\d+",
                          Optional levelPattern$ = "[-]L\d+") As DataSet()
