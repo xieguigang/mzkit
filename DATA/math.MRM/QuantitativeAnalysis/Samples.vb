@@ -19,11 +19,17 @@ Public Module MRMSamples
     ''' <returns>经过定量计算得到的浓度数据</returns>
     Public Function QuantitativeAnalysis(wiff$, ions As IonPair(), coordinates As Coordinate(), [IS] As [IS](),
                                          <Out> Optional ByRef model As NamedValue(Of FitResult)() = Nothing,
-                                         <Out> Optional ByRef X As List(Of DataSet) = Nothing) As IEnumerable(Of DataSet)
+                                         <Out> Optional ByRef X As List(Of DataSet) = Nothing,
+                                         Optional calibrationNamedPattern$ = ".+[-]L\d+",
+                                         Optional levelPattern$ = "[-]L\d+") As IEnumerable(Of DataSet)
         Dim standardNames$() = Nothing
         Dim detections As NamedValue(Of FitResult)() =
             StandardCurve _
-            .Scan(wiff, ions, coordinates, refName:=standardNames) _
+            .Scan(wiff, ions, coordinates,
+                  refName:=standardNames,
+                  calibrationNamedPattern:=calibrationNamedPattern,
+                  levelPattern:=levelPattern
+            ) _
             .ToDictionary _
             .Regression(coordinates, ISvector:=[IS]) _
             .ToArray

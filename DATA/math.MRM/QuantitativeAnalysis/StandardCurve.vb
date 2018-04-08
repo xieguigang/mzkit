@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Scripting
@@ -124,19 +125,19 @@ Public Module StandardCurve
     ''' <summary>
     ''' 从原始数据之中扫描峰面积数据，返回来的数据集之中的<see cref="DataSet.ID"/>是HMDB代谢物编号
     ''' </summary>
-    ''' <param name="raw$">``*.wiff``，转换之后的结果文件夹，其中标准曲线的数据都是使用``L数字``标记的。</param>
+    ''' <param name="raw$">``*.wiff``，转换之后的结果文件夹，其中标准曲线的数据都是默认使用``L数字``标记的。</param>
     ''' <param name="ions$">包括离子对的定义数据以及浓度区间</param>
     ''' <returns></returns>
-    Public Function Scan(raw$, ions As IonPair(), coordinates As Coordinate(), Optional ByRef refName$() = Nothing) As DataSet()
-        Dim rawName$ = raw.BaseName
-        Dim names = coordinates(Scan0) _
-            .C _
-            .Keys _
-            .Select(Function(key) rawName & "-" & key) _
-            .Indexing
-        Dim ionTPAs As New Dictionary(Of String, Dictionary(Of String, Double))
+    Public Function Scan(raw$,
+                         ions As IonPair(),
+                         coordinates As Coordinate(),
+                         Optional ByRef refName$() = Nothing,
+                         Optional calibrationNamedPattern$ = ".+[-]L\d+",
+                         Optional levelPattern$ = "[-]L\d+") As DataSet()
 
-        refName = names.Objects
+        Dim rawName$ = raw.BaseName
+        Dim ionTPAs As New Dictionary(Of String, Dictionary(Of String, Double))
+        Dim refNames As New List(Of String)
 
         For Each ion As IonPair In ions
             ionTPAs(ion.AccID) = New Dictionary(Of String, Double)
@@ -144,11 +145,17 @@ Public Module StandardCurve
 
         For Each file As String In (ls - l - r - "*.mzML" <= raw.ParentPath) _
             .Where(Function(path)
-                       Return path.BaseName.IsOneOfA(names)
+                       Return path _
+                           .BaseName _
+                           .IsPattern(calibrationNamedPattern, RegexICSng)
                    End Function)
 
             Dim TPA As NamedValue(Of Double)() = file.ScanTPA(ionpairs:=ions)
-            Dim level$ = file.BaseName.Replace(rawName & "-", "")
+            Dim level$ = file.BaseName _
+                             .Match(levelPattern, RegexICSng) _
+                             .Trim("-"c)
+
+            refNames += file.BaseName
 
             ' level = level.Match("[-]L\d+", RegexICSng).Trim("-"c)
 
