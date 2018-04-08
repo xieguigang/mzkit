@@ -164,6 +164,8 @@ Public Module StandardCurve
             Next
         Next
 
+        refName = refNames
+
         Return ionTPAs _
             .Select(Function(ion)
                         Return New DataSet With {
