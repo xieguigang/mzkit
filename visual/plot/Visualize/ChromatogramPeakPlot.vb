@@ -1,12 +1,14 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
@@ -47,6 +49,7 @@ Public Module ChromatogramPeakPlot
                          Optional title$ = "NULL",
                          Optional curveStyle$ = Stroke.ScatterLineStroke,
                          Optional titleFontCSS$ = CSSFont.Win7VeryLarge,
+                         Optional legendFontCSS$ = CSSFont.Win7LittleLarge,
                          Optional showMRMRegion As Boolean = False,
                          Optional ROI_styleCSS$ = "stroke: red; stroke-width: 2px; stroke-dash: dash;",
                          Optional baseLine_styleCSS$ = "stroke: green; stroke-width: 2px; stroke-dash: dash;",
@@ -69,9 +72,11 @@ Public Module ChromatogramPeakPlot
                  End Function
         Dim curvePen As Pen = Stroke.TryParse(curveStyle).GDIObject
         Dim titleFont As Font = CSSFont.TryParse(titleFontCSS)
+        Dim legendFont As Font = CSSFont.TryParse(legendFontCSS)
         Dim ROIpen As Pen = Stroke.TryParse(ROI_styleCSS).GDIObject
         Dim baselinePen As Pen = Stroke.TryParse(baseLine_styleCSS).GDIObject
         Dim accumulateLine As Pen = Stroke.TryParse(accumulateLineStyleCss).GDIObject
+        Dim legends As New List(Of NamedValue(Of Pen))
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 Dim rect As Rectangle = region.PlotRegion
@@ -156,6 +161,32 @@ Public Module ChromatogramPeakPlot
                 Dim top = (rect.Top - titleFont.Height) / 2 - 10
 
                 Call g.DrawString(title, titleFont, Brushes.Black, left, top)
+
+                If showAccumulateLine Then
+                    legends += New NamedValue(Of Pen) With {.Name = "Area Integration", .Value = accumulateLine}
+                End If
+                If showMRMRegion Then
+                    legends += New NamedValue(Of Pen) With {.Name = "MRM ROI", .Value = Stroke.TryParse(ROI_styleCSS).GDIObject}
+                    legends += New NamedValue(Of Pen) With {.Name = "Baseline", .Value = baselinePen}
+                End If
+
+                If legends > 0 Then
+                    legends += New NamedValue(Of Pen) With {.Name = "Chromatogram", .Value = curvePen}
+
+                    Dim lineWidth% = 100
+                    Dim maxLegend As SizeF = g.MeasureString(legends.Keys.MaxLengthString, legendFont)
+                    Dim offset = maxLegend.Height / 2
+
+                    left = rect.Right - lineWidth * 1.25 - maxLegend.Width
+                    top = rect.Top + 10
+
+                    For Each legend As NamedValue(Of Pen) In legends
+                        Call g.DrawString(legend.Name, legendFont, Brushes.Black, New PointF(left, top))
+                        Call g.DrawLine(legend.Value, New PointF(left + maxLegend.Width, top + offset), New PointF(rect.Right - 5.0!, top + offset))
+
+                        top += maxLegend.Height + 5
+                    Next
+                End If
             End Sub
 
         Return g.GraphicsPlots(
