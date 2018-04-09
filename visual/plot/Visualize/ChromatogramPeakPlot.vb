@@ -20,7 +20,7 @@ Imports SMRUCC.MassSpectrum.Math.MRM
 ''' </summary>
 Public Module ChromatogramPeakPlot
 
-    Public Const DefaultPadding$ = "padding: 350px 100px 250px 200px"
+    Public Const DefaultPadding$ = "padding: 200px 80px 150px 150px"
 
     ''' <summary>
     ''' 绘制一个单独的峰
@@ -49,7 +49,7 @@ Public Module ChromatogramPeakPlot
                          Optional title$ = "NULL",
                          Optional curveStyle$ = Stroke.ScatterLineStroke,
                          Optional titleFontCSS$ = CSSFont.Win7VeryLarge,
-                         Optional legendFontCSS$ = CSSFont.Win7LittleLarge,
+                         Optional legendFontCSS$ = CSSFont.Win7LargerNormal,
                          Optional showMRMRegion As Boolean = False,
                          Optional ROI_styleCSS$ = "stroke: red; stroke-width: 2px; stroke-dash: dash;",
                          Optional baseLine_styleCSS$ = "stroke: green; stroke-width: 2px; stroke-dash: dash;",
@@ -182,7 +182,7 @@ Public Module ChromatogramPeakPlot
 
                     For Each legend As NamedValue(Of Pen) In legends
                         Call g.DrawString(legend.Name, legendFont, Brushes.Black, New PointF(left, top))
-                        Call g.DrawLine(legend.Value, New PointF(left + maxLegend.Width, top + offset), New PointF(rect.Right - 5.0!, top + offset))
+                        Call g.DrawLine(legend.Value, New PointF(left + maxLegend.Width, top + offset), New PointF(rect.Right - 20.0!, top + offset))
 
                         top += maxLegend.Height + 5
                     Next
