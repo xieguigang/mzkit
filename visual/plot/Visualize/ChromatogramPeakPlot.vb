@@ -31,6 +31,9 @@ Public Module ChromatogramPeakPlot
     ''' <param name="titleFontCSS$"></param>
     ''' <param name="showMRMRegion">Debug usage</param>
     ''' <param name="ROI_styleCSS$"></param>
+    ''' <param name="baselineQuantile">
+    ''' 如果基线过高的话，显示累加线会在基线处出现斜边的情况，会需要这个参数来计算基线然后减去基线值来修正累加曲线
+    ''' </param>
     ''' <returns></returns>
     <Extension>
     Public Function Plot(chromatogram As ChromatogramTick(),
@@ -44,15 +47,18 @@ Public Module ChromatogramPeakPlot
                          Optional ROI_styleCSS$ = "stroke: red; stroke-width: 2px; stroke-dash: dash;",
                          Optional baseLine_styleCSS$ = "stroke: green; stroke-width: 2px; stroke-dash: dash;",
                          Optional accumulateLineStyleCss$ = "stroke: blue; stroke-width: 2px; stroke-dash: dash;",
-                         Optional showAccumulateLine As Boolean = False) As GraphicsData
+                         Optional showAccumulateLine As Boolean = False,
+                         Optional baselineQuantile# = 0.65) As GraphicsData
 
         Dim timeTicks#() = chromatogram.TimeArray.CreateAxisTicks
         Dim intoTicks#() = chromatogram.IntensityArray.CreateAxisTicks
-        Dim sumAll = chromatogram.IntensityArray.Sum
-        Dim maxInto = intoTicks.Max
         Dim accumulate# = 0
+        Dim base = chromatogram.Baseline(baselineQuantile)
+        Dim sumAll = (chromatogram.IntensityArray.AsVector - base).Sum()
+        Dim maxInto = intoTicks.Max - base
         Dim ay = Function(into As Double) As Double
-                     accumulate += into
+                     into = into - base
+                     accumulate += If(into < 0, 0, into)
                      Return (accumulate / sumAll) * maxInto
                  End Function
         Dim curvePen As Pen = Stroke.TryParse(curveStyle).GDIObject
@@ -77,7 +83,9 @@ Public Module ChromatogramPeakPlot
                     region, scaler, showGrid:=False,
                     xlabel:="Time (s)",
                     ylabel:="Intensity",
-                    htmlLabel:=False
+                    htmlLabel:=False,
+                    XtickFormat:="G3",
+                    YtickFormat:="G3"
                 )
 
                 Dim A, B As PointF
@@ -125,8 +133,6 @@ Public Module ChromatogramPeakPlot
                     B = New PointF(MRM_ROI.Max, maxIntensity)
                     drawLine(A, B)
 
-                    Dim base = chromatogram.Baseline
-
                     A = New PointF(timeTicks.Min, base)
                     B = New PointF(timeTicks.Max, base)
                     ROIpen = baselinePen
@@ -135,7 +141,7 @@ Public Module ChromatogramPeakPlot
                 End If
 
                 Dim left = rect.Left + (rect.Width - g.MeasureString(title, titleFont).Width) / 2
-                Dim top = rect.Top + 10
+                Dim top = (rect.Top - titleFont.Height) / 2 - 10
 
                 Call g.DrawString(title, titleFont, Brushes.Black, left, top)
             End Sub
