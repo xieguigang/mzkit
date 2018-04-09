@@ -119,34 +119,37 @@ Public Module ChromatogramPeakPlot
                 Next
 
                 If showMRMRegion Then
+
                     ' 取出最大的ROI就是MRM色谱峰的保留时间范围
                     Dim MRM_ROI As DoubleRange = chromatogram.Shadows _
                                                              .PopulateROI _
                                                              .OrderByDescending(Function(ROI) ROI.Integration) _
-                                                             .First _
-                                                             .Time
-                    Dim maxIntensity# = intoTicks.Max
-                    Dim canvas = g
-                    Dim drawLine = Sub(x1, x2)
-                                       x1 = scaler.Translate(x1)
-                                       x2 = scaler.Translate(x2)
+                                                             .FirstOrDefault _
+                                                            ?.Time
+                    If Not MRM_ROI Is Nothing Then
+                        Dim maxIntensity# = intoTicks.Max
+                        Dim canvas = g
+                        Dim drawLine = Sub(x1, x2)
+                                           x1 = scaler.Translate(x1)
+                                           x2 = scaler.Translate(x2)
 
-                                       Call canvas.DrawLine(ROIpen, x1, x2)
-                                   End Sub
+                                           Call canvas.DrawLine(ROIpen, x1, x2)
+                                       End Sub
 
-                    A = New PointF(MRM_ROI.Min, 0)
-                    B = New PointF(MRM_ROI.Min, maxIntensity)
-                    drawLine(A, B)
+                        A = New PointF(MRM_ROI.Min, 0)
+                        B = New PointF(MRM_ROI.Min, maxIntensity)
+                        drawLine(A, B)
 
-                    A = New PointF(MRM_ROI.Max, 0)
-                    B = New PointF(MRM_ROI.Max, maxIntensity)
-                    drawLine(A, B)
+                        A = New PointF(MRM_ROI.Max, 0)
+                        B = New PointF(MRM_ROI.Max, maxIntensity)
+                        drawLine(A, B)
 
-                    A = New PointF(timeTicks.Min, base)
-                    B = New PointF(timeTicks.Max, base)
-                    ROIpen = baselinePen
+                        A = New PointF(timeTicks.Min, base)
+                        B = New PointF(timeTicks.Max, base)
+                        ROIpen = baselinePen
 
-                    drawLine(A, B)
+                        drawLine(A, B)
+                    End If
                 End If
 
                 Dim left = rect.Left + (rect.Width - g.MeasureString(title, titleFont).Width) / 2
