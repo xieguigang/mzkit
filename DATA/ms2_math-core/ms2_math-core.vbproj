@@ -139,6 +139,7 @@
   <ItemGroup>
     <Compile Include="Chromatogram\Chromatogram.vb" />
     <Compile Include="Chromatogram\ChromatogramTick.vb" />
+    <Compile Include="Chromatogram\ROI.vb" />
     <Compile Include="Chromatogram\PeakArea.vb" />
     <Compile Include="Ms1\Tolerance.vb" />
     <Compile Include="Ms2\GlobalAlignment.vb" />

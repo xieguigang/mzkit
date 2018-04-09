@@ -214,6 +214,10 @@ Public Module StandardCurve
                         Select Case peakAreaMethod
                             Case Methods.NetPeakSum
                                 area = vector.PeakArea(peak, baseline:=baselineQuantile)
+                            Case Methods.SumAll
+                                area = vector.SumAll
+                            Case Methods.MaxPeakHeight
+                                area = vector.MaxPeakHeight
                             Case Else
                                 ' 默认是使用积分器方法
                                 area = vector.PeakAreaIntegrator(

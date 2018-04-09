@@ -18,13 +18,15 @@ Module test
         Dim [IS] As [IS]() = "D:\ProteoWizard.d\MRM_Test\IS.csv".LoadCsv(Of [IS])
         Dim ion_pairs = "D:\ProteoWizard.d\MRM_Test\ion_pairs.csv".LoadCsv(Of IonPair)
 
-        Call ROIvizTest(ion_pairs)
+        '  Call ROIvizTest(ion_pairs)
 
 
         Dim fits As NamedValue(Of FitResult)() = Nothing
         Dim X As List(Of DataSet) = Nothing
         Dim result = MRMSamples.QuantitativeAnalysis("D:\ProteoWizard.d\Data20180313\Data20180313.wiff", ion_pairs, std, [IS], fits, X, calibrationNamedPattern:=".+M1[-]L\d+", peakAreaMethod:=PeakArea.Methods.NetPeakSum).ToArray
 
+
+        Call fits.Select(Function(f) f.ToString).JoinBy(vbCrLf).__DEBUG_ECHO
 
         Pause()
     End Sub
@@ -61,7 +63,7 @@ Module test
             For Each ion In ionData
                 Dim path = $"{dir}/{ion.Name}.png"
 
-                Call ion.Value.Plot.AsGDIImage.SaveAs(path)
+                Call ion.Value.Plot(showMRMRegion:=True, debug:=True).AsGDIImage.SaveAs(path)
                 Call path.__INFO_ECHO
             Next
         Next

@@ -57,6 +57,18 @@ Namespace Chromatogram
             Return chromatogram((time >= range.Min) & (time <= range.Max))
         End Function
 
+        <Extension>
+        Public Function SumAll(chromatogram As IVector(Of ChromatogramTick)) As Double
+            Return Aggregate t As ChromatogramTick
+                   In chromatogram
+                   Into Sum(t.Intensity)
+        End Function
+
+        <Extension>
+        Public Function MaxPeakHeight(chromatogram As IVector(Of ChromatogramTick)) As Double
+            Return chromatogram!intensity.Max
+        End Function
+
         Public Enum Methods
             ''' <summary>
             ''' 使用积分器来进行峰面积的计算
@@ -66,6 +78,11 @@ Namespace Chromatogram
             ''' 使用简单的信号相加净峰法来计算峰面积
             ''' </summary>
             NetPeakSum
+            ''' <summary>
+            ''' No peak finding, sum all chromatogram ticks signal intensity directly.
+            ''' </summary>
+            SumAll
+            MaxPeakHeight
         End Enum
 
         ''' <summary>
