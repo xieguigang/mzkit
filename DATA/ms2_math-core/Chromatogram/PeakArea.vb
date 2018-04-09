@@ -57,6 +57,17 @@ Namespace Chromatogram
             Return chromatogram((time >= range.Min) & (time <= range.Max))
         End Function
 
+        Public Enum Methods
+            ''' <summary>
+            ''' 使用积分器来进行峰面积的计算
+            ''' </summary>
+            Integrator = 0
+            ''' <summary>
+            ''' 使用简单的信号相加净峰法来计算峰面积
+            ''' </summary>
+            NetPeakSum
+        End Enum
+
         ''' <summary>
         ''' 使用积分器来进行峰面积的精确计算：
         ''' 
