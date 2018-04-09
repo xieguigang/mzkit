@@ -19,6 +19,11 @@ Namespace Chromatogram
         Public Property MaxInto As Double
         Public Property Ticks As ChromatogramTick()
         Public Property Baseline As Double
+        ''' <summary>
+        ''' 当前的这个ROI的峰面积积分值
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Integration As Double
 
         Public Overrides Function ToString() As String
             Return Time.ToString

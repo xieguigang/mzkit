@@ -119,17 +119,20 @@ Public Module ChromatogramPeakPlot
                 Next
 
                 If showMRMRegion Then
-                    Dim vector = chromatogram.Shadows
-                    Dim MRM_ROI As DoubleRange = vector.MRMPeak
-                    Dim maxIntensity# = vector!Intensity.Max
+                    ' 取出最大的ROI就是MRM色谱峰的保留时间范围
+                    Dim MRM_ROI As DoubleRange = chromatogram.Shadows _
+                                                             .PopulateROI _
+                                                             .OrderByDescending(Function(ROI) ROI.Integration) _
+                                                             .First _
+                                                             .Time
+                    Dim maxIntensity# = intoTicks.Max
                     Dim canvas = g
-                    Dim drawLine =
-                        Sub(x1, x2)
-                            x1 = scaler.Translate(x1)
-                            x2 = scaler.Translate(x2)
+                    Dim drawLine = Sub(x1, x2)
+                                       x1 = scaler.Translate(x1)
+                                       x2 = scaler.Translate(x2)
 
-                            Call canvas.DrawLine(ROIpen, x1, x2)
-                        End Sub
+                                       Call canvas.DrawLine(ROIpen, x1, x2)
+                                   End Sub
 
                     A = New PointF(MRM_ROI.Min, 0)
                     B = New PointF(MRM_ROI.Min, maxIntensity)

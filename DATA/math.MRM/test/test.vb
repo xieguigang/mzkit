@@ -64,12 +64,11 @@ Module test
                         End Function) _
                 .ToArray
 
-            Dim test = ionData(0).Value.Shadows.PopulateROI.ToArray
-
             Dim dir = file.TrimSuffix
 
             For Each ion In ionData
                 Dim path = $"{dir}/{ion.Name}.png"
+                Dim ROI_list = ion.Value.Shadows.PopulateROI.ToArray
 
                 Call ion.Value.Plot(title:=ion.Description, showMRMRegion:=True, showAccumulateLine:=True).AsGDIImage.SaveAs(path)
                 Call path.__INFO_ECHO

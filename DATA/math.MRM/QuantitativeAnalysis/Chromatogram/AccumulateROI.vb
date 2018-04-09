@@ -24,17 +24,22 @@ Public Module AccumulateROI
     ''' <returns></returns>
     ''' 
     <Extension>
-    Public Iterator Function PopulateROI(chromatogram As IVector(Of ChromatogramTick), Optional angleThreshold# = 5, Optional baselineQuantile# = 0.65) As IEnumerable(Of ROI)
+    Public Iterator Function PopulateROI(chromatogram As IVector(Of ChromatogramTick),
+                                         Optional angleThreshold# = 5,
+                                         Optional baselineQuantile# = 0.65) As IEnumerable(Of ROI)
         ' 先计算出基线和累加线
         Dim baseline# = chromatogram.Baseline(baselineQuantile)
+        Dim time As Vector = chromatogram!time
         Dim intensity As Vector = chromatogram!intensity
         ' Dim maxInto# = intensity.Max - baseline
         Dim accumulate#
-        Dim sumALL# = (chromatogram!intensity - baseline).Where(Function(x) x > 0).Sum
+        Dim sumALL# = (chromatogram!intensity - baseline) _
+            .Where(Function(x) x > 0) _
+            .Sum
         Dim ay = Function(into As Double) As Double
                      into -= baseline
                      accumulate += If(into < 0, 0, into)
-                     Return (accumulate / sumALL) ' * maxInto
+                     Return (accumulate / sumALL) * 100 ' * maxInto
                  End Function
         Dim accumulateLine = chromatogram _
             .Select(Function(tick)
@@ -43,8 +48,35 @@ Public Module AccumulateROI
             .ToArray
 
         ' 使用滑窗计算出切线的斜率
-        Dim windows = accumulateLine.SlideWindows(winSize:=2).ToArray
-        Dim peaks = windows.Split(Function(tangent) (tangent.First, tangent.Last).Angle <= angleThreshold).ToArray
+        Dim windows = accumulateLine _
+            .SlideWindows(winSize:=2) _
+            .ToArray
+        Dim peaks = windows _
+            .Split(Function(tangent)
+                       Return (tangent.First, tangent.Last).Angle <= angleThreshold
+                   End Function) _
+            .Where(Function(p) p.Length > 1)
 
+        For Each window As SlideWindow(Of PointF)() In peaks
+            Dim rtmin# = Fix(window.First()(0).X)
+            Dim rtmax# = window.Last()(-1).X + 1
+            Dim peak = chromatogram((time >= rtmin) & (time <= rtmax))
+            Dim max# = If(
+                peak.Length = 1,
+                peak.First.Intensity,
+                peak!intensity.Max
+            )
+            ' 因为Y是累加曲线的值，所以可以近似的看作为峰面积积分值
+            ' 在这里将区间的上限的积分值减去区间的下限的积分值即可得到当前的这个区间的积分值（近似于定积分）
+            Dim integration = window.Last.Last.Y - window.First.First.Y
+
+            Yield New ROI With {
+                .Ticks = peak.ToArray,
+                .MaxInto = max,
+                .Baseline = baseline,
+                .Time = {rtmin, rtmax},
+                .Integration = integration
+            }
+        Next
     End Function
 End Module
