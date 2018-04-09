@@ -19,7 +19,7 @@ Module test
         Dim [IS] As [IS]() = "D:\ProteoWizard.d\MRM_Test\IS.csv".LoadCsv(Of [IS])
         Dim ion_pairs = "D:\ProteoWizard.d\MRM_Test\ion_pairs.csv".LoadCsv(Of IonPair)
 
-        Call ROIvizTest(ion_pairs)
+        '   Call ROIvizTest(ion_pairs)
 
 
         Dim fits As NamedValue(Of FitResult)() = Nothing
