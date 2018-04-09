@@ -27,9 +27,9 @@ Public Module StandardCurve
     ''' <param name="ions"></param>
     ''' <returns><see cref="NamedValue(Of Double).Value"/>是指定的代谢物的浓度结果数据，<see cref="NamedValue(Of Double).Description"/>则是AIS/A的结果，即X轴的数据</returns>
     <Extension>
-    Public Iterator Function ScanContent(model As NamedValue(Of FitResult)(), raw$, ions As IonPair()) As IEnumerable(Of NamedValue(Of Double))
+    Public Iterator Function ScanContent(model As NamedValue(Of FitResult)(), raw$, ions As IonPair(), peakAreaMethod As PeakArea.Methods) As IEnumerable(Of NamedValue(Of Double))
         Dim TPA As Dictionary(Of String, Double) = raw _
-            .ScanTPA(ionpairs:=ions) _
+            .ScanTPA(ionpairs:=ions, peakAreaMethod:=peakAreaMethod) _
             .ToDictionary(Function(ion) ion.Name,
                           Function(A) A.Value)
 
@@ -131,6 +131,7 @@ Public Module StandardCurve
     Public Function Scan(raw$,
                          ions As IonPair(),
                          coordinates As Standards(),
+                         peakAreaMethod As PeakArea.Methods,
                          Optional ByRef refName$() = Nothing,
                          Optional calibrationNamedPattern$ = ".+[-]L\d+",
                          Optional levelPattern$ = "[-]L\d+") As DataSet()
@@ -150,7 +151,10 @@ Public Module StandardCurve
                            .IsPattern(calibrationNamedPattern, RegexICSng)
                    End Function)
 
-            Dim TPA As NamedValue(Of Double)() = file.ScanTPA(ionpairs:=ions)
+            Dim TPA As NamedValue(Of Double)() = file.ScanTPA(
+                ionpairs:=ions,
+                peakAreaMethod:=peakAreaMethod
+            )
             Dim level$ = file.BaseName _
                              .Match(levelPattern, RegexICSng) _
                              .Trim("-"c)

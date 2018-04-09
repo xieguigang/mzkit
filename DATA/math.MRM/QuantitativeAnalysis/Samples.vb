@@ -6,6 +6,7 @@ Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
+Imports SMRUCC.MassSpectrum.Math.Chromatogram
 Imports SMRUCC.MassSpectrum.Math.MRM.Models
 
 Public Module MRMSamples
@@ -21,14 +22,16 @@ Public Module MRMSamples
                                          <Out> Optional ByRef model As NamedValue(Of FitResult)() = Nothing,
                                          <Out> Optional ByRef X As List(Of DataSet) = Nothing,
                                          Optional calibrationNamedPattern$ = ".+[-]L\d+",
-                                         Optional levelPattern$ = "[-]L\d+") As IEnumerable(Of DataSet)
+                                         Optional levelPattern$ = "[-]L\d+",
+                                         Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum) As IEnumerable(Of DataSet)
         Dim standardNames$() = Nothing
         Dim detections As NamedValue(Of FitResult)() =
             StandardCurve _
             .Scan(wiff, ions, coordinates,
                   refName:=standardNames,
                   calibrationNamedPattern:=calibrationNamedPattern,
-                  levelPattern:=levelPattern
+                  levelPattern:=levelPattern,
+                  peakAreaMethod:=peakAreaMethod
             ) _
             .ToDictionary _
             .Regression(coordinates, ISvector:=[IS]) _
@@ -52,7 +55,11 @@ Public Module MRMSamples
             Call file.ToFileURL.__INFO_ECHO
 
             Dim result = detections _
-                .ScanContent(raw:=file, ions:=ions) _
+                .ScanContent(
+                    raw:=file,
+                    ions:=ions,
+                    peakAreaMethod:=peakAreaMethod
+                ) _
                 .ToArray
 
             If result.Length = 0 Then

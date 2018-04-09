@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
+Imports SMRUCC.MassSpectrum.Math.Chromatogram
 Imports SMRUCC.MassSpectrum.Math.MRM
 Imports SMRUCC.MassSpectrum.Math.MRM.Models
 
@@ -17,7 +18,7 @@ Module test
 
         Dim fits As NamedValue(Of FitResult)() = Nothing
         Dim X As List(Of DataSet) = Nothing
-        Dim result = MRMSamples.QuantitativeAnalysis("D:\ProteoWizard.d\Data20180313\Data20180313.wiff", ion_pairs, std, [IS], fits, X, calibrationNamedPattern:=".+M1[-]L\d+").ToArray
+        Dim result = MRMSamples.QuantitativeAnalysis("D:\ProteoWizard.d\Data20180313\Data20180313.wiff", ion_pairs, std, [IS], fits, X, calibrationNamedPattern:=".+M1[-]L\d+", peakAreaMethod:=PeakArea.Methods.NetPeakSum).ToArray
 
 
         Pause()
