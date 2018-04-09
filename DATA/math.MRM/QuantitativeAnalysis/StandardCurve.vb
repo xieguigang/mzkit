@@ -13,6 +13,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
 Imports SMRUCC.MassSpectrum.Math.MRM
+Imports SMRUCC.MassSpectrum.Math.MRM.Dumping
 Imports SMRUCC.MassSpectrum.Math.MRM.Models
 
 ''' <summary>
@@ -28,11 +29,15 @@ Public Module StandardCurve
     ''' <param name="ions"></param>
     ''' <returns><see cref="NamedValue(Of Double).Value"/>是指定的代谢物的浓度结果数据，<see cref="NamedValue(Of Double).Description"/>则是AIS/A的结果，即X轴的数据</returns>
     <Extension>
-    Public Iterator Function ScanContent(model As NamedValue(Of FitResult)(), raw$, ions As IonPair(), peakAreaMethod As PeakArea.Methods) As IEnumerable(Of NamedValue(Of Double))
-        Dim TPA As Dictionary(Of String, Double) = raw _
+    Public Iterator Function ScanContent(model As NamedValue(Of FitResult)(), raw$, ions As IonPair(), peakAreaMethod As PeakArea.Methods) As IEnumerable(Of (MRMPeakTable, NamedValue(Of Double)))
+        Dim baseline# = 0
+        Dim TPA = raw _
             .ScanTPA(ionpairs:=ions, peakAreaMethod:=peakAreaMethod) _
             .ToDictionary(Function(ion) ion.Name,
                           Function(A) A.Value)
+        Dim names = ions.ToDictionary(Function(i) i.AccID)
+
+        raw = raw.FileName
 
         For Each metabolite In model.Where(Function(m) TPA.ContainsKey(m.Name))
             Dim info = metabolite.Description.LoadObject(Of Dictionary(Of String, String))
@@ -42,18 +47,35 @@ Public Module StandardCurve
                 Continue For
             End If
 
-            Dim A = TPA(metabolite.Name)   ' 得到样品之中的峰面积
-            Dim AIS = TPA(info!IS)         ' 得到与样品混在一起的内标的峰面积
-            Dim C = line(x:=AIS / A)       ' 利用峰面积比计算出浓度结果数据
+            Dim A = TPA(metabolite.Name)     ' 得到样品之中的峰面积
+            Dim AIS = TPA(info!IS)           ' 得到与样品混在一起的内标的峰面积
+            Dim C = line(x:=AIS.TPA / A.TPA) ' 利用峰面积比计算出浓度结果数据
 
             ' 这里的C是相当于 cIS/ct = C，则样品的浓度结果应该为 ct = cIS/C
             C = Val(info!cIS) / C
 
-            Yield New NamedValue(Of Double) With {
+            Dim [IS] = names(info!IS)
+            Dim peaktable As New MRMPeakTable With {
+                .content = C,
+                .ID = metabolite.Name,
+                .raw = raw,
+                .rtmax = A.ROI.Max,
+                .rtmin = A.ROI.Min,
+                .Name = names(metabolite.Name).name,
+                .TPA = A.TPA,
+                .TPA_IS = AIS.TPA,
+                .base = A.baseline,
+                .IS = $"{[IS].AccID} ({[IS].name})",
+                .maxinto = A.maxinto,
+                .maxinto_IS = AIS.maxinto
+            }
+            Dim result As New NamedValue(Of Double) With {
                 .Name = metabolite.Name,
                 .Value = C,
-                .Description = AIS / A
+                .Description = AIS.TPA / A.TPA
             }
+
+            Yield (peaktable, result)
         Next
     End Function
 
@@ -76,7 +98,7 @@ Public Module StandardCurve
     ''' <param name="coordinates"></param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function Regression(ionTPA As Dictionary(Of DataSet), coordinates As Standards(), [ISvector] As [IS]()) As IEnumerable(Of NamedValue(Of FitResult))
+    Public Iterator Function Regression(ionTPA As Dictionary(Of DataSet), coordinates As Standards(), [ISvector] As [IS]()) As IEnumerable(Of NamedValue(Of (FitResult, MRMStandards())))
         Dim [IS] As Dictionary(Of String, [IS]) = ISvector.ToDictionary(Function(i) i.ID)
 
         For Each ion As Standards In coordinates _
@@ -89,18 +111,29 @@ Public Module StandardCurve
             Dim TPA As DataSet = ionTPA(ion.HMDB)  ' 得到标准曲线实验数据
             Dim ISA As DataSet = ionTPA(ion.IS)    ' 得到内标的实验数据
             Dim CIS# = [IS](ion.IS).CIS            ' 内标的浓度，是不变的，所以就只有一个值
+            Dim points As New List(Of MRMStandards)
 
             ' 标准曲线数据
             Dim line As PointF() = ion _
                 .C _
                 .Select(Function(level)
-                            Dim A = TPA(level.Key)   ' 得到峰面积Ati
-                            Dim C = level.Value      ' 得到已知的浓度数据
-                            Dim AIS = ISA(level.Key) ' 内标的峰面积
+                            Dim At_i = TPA(level.Key)   ' 得到峰面积Ati
+                            Dim Ct_i = level.Value      ' 得到已知的浓度数据
+                            Dim AIS = ISA(level.Key)    ' 内标的峰面积
 
                             ' X 为峰面积，这样子在后面计算的时候就可以直接将离子对的峰面积带入方程计算出浓度结果了
-                            Dim X = AIS / A
-                            Dim Y = CIS / C
+                            Dim X = AIS / At_i
+                            Dim Y = CIS / Ct_i
+
+                            points += New MRMStandards With {
+                                .AIS = AIS,
+                                .Ati = At_i,
+                                .cIS = CIS,
+                                .Cti = Ct_i,
+                                .ID = ion.HMDB,
+                                .Name = ion.Name,
+                                .level = level.Key
+                            }
 
                             ' 得到标准曲线之中的一个点
                             Return New PointF(X, Y)
@@ -113,9 +146,9 @@ Public Module StandardCurve
                 {"IS", ion.IS},
                 {"cIS", CIS}
             }
-            Dim out As New NamedValue(Of FitResult) With {
+            Dim out As New NamedValue(Of (FitResult, MRMStandards())) With {
                 .Name = ion.HMDB,
-                .Value = fit,
+                .Value = (fit, points.ToArray),
                 .Description = info.GetJson
             }
 
@@ -152,7 +185,7 @@ Public Module StandardCurve
                            .IsPattern(calibrationNamedPattern, RegexICSng)
                    End Function)
 
-            Dim TPA As NamedValue(Of Double)() = file.ScanTPA(
+            Dim TPA() = file.ScanTPA(
                 ionpairs:=ions,
                 peakAreaMethod:=peakAreaMethod
             )
@@ -164,8 +197,8 @@ Public Module StandardCurve
 
             ' level = level.Match("[-]L\d+", RegexICSng).Trim("-"c)
 
-            For Each ion As NamedValue(Of Double) In TPA
-                ionTPAs(ion.Name).Add(level, ion.Value)
+            For Each ion In TPA
+                ionTPAs(ion.Name).Add(level, ion.Value.TPA)
             Next
         Next
 
@@ -191,7 +224,7 @@ Public Module StandardCurve
     Public Function ScanTPA(raw$, ionpairs As IonPair(),
                             Optional baselineQuantile# = 0.65,
                             Optional integratorTicks% = 5000,
-                            Optional peakAreaMethod As PeakArea.Methods = Methods.Integrator) As NamedValue(Of Double)()
+                            Optional peakAreaMethod As PeakArea.Methods = Methods.Integrator) As NamedValue(Of (ROI As DoubleRange, TPA#, baseline#, maxinto#))()
 
         ' 从原始文件之中读取出所有指定的离子对数据
         Dim ionData = ionpairs.ExtractIonData(
@@ -199,7 +232,7 @@ Public Module StandardCurve
             assignName:=Function(ion) ion.AccID
         )
         ' 进行最大峰的查找，然后计算出净峰面积，用于回归建模
-        Dim TPA As NamedValue(Of Double)() = ionData _
+        Dim TPA = ionData _
             .Select(Function(ion)
                         Dim vector As IVector(Of ChromatogramTick) = ion.Value.Shadows
                         Dim peak As DoubleRange = vector _
@@ -209,6 +242,7 @@ Public Module StandardCurve
                             .Time ' .MRMPeak(baselineQuantile:=baselineQuantile)
 
                         Dim area#
+                        Dim baseline# = vector.Baseline(quantile:=baselineQuantile)
 
                         Select Case peakAreaMethod
                             Case Methods.NetPeakSum
@@ -226,9 +260,9 @@ Public Module StandardCurve
                                 )
                         End Select
 
-                        Return New NamedValue(Of Double) With {
+                        Return New NamedValue(Of (DoubleRange, Double, Double, Double)) With {
                             .Name = ion.Name,
-                            .Value = area
+                            .Value = (peak, area, baseline, vector.MaxPeakHeight)
                         }
                     End Function) _
             .ToArray

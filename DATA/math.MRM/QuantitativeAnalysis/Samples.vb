@@ -8,6 +8,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
+Imports SMRUCC.MassSpectrum.Math.MRM.Dumping
 Imports SMRUCC.MassSpectrum.Math.MRM.Models
 
 Public Module MRMSamples
@@ -44,12 +45,14 @@ Public Module MRMSamples
     ''' <returns>经过定量计算得到的浓度数据</returns>
     Public Function QuantitativeAnalysis(wiff$, ions As IonPair(), coordinates As Standards(), [IS] As [IS](),
                                          <Out> Optional ByRef model As NamedValue(Of FitResult)() = Nothing,
+                                         <Out> Optional ByRef standardPoints As NamedValue(Of MRMStandards())() = Nothing,
                                          <Out> Optional ByRef X As List(Of DataSet) = Nothing,
+                                         <Out> Optional ByRef peaktable As MRMPeakTable() = Nothing,
                                          Optional calibrationNamedPattern$ = ".+[-]L\d+",
                                          Optional levelPattern$ = "[-]L\d+",
                                          Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum) As IEnumerable(Of DataSet)
         Dim standardNames$() = Nothing
-        Dim detections As NamedValue(Of FitResult)() =
+        Dim detections As NamedValue(Of (FitResult, MRMStandards()))() =
             StandardCurve _
             .Scan(wiff, ions, coordinates,
                   refName:=standardNames,
@@ -62,10 +65,18 @@ Public Module MRMSamples
             .ToArray
 
         X = New List(Of DataSet)
-        model = detections
+        model = detections _
+            .Select(Function(i) New NamedValue(Of FitResult)(i.Name, i.Value.Item1, i.Description)) _
+            .ToArray
+        standardPoints = detections _
+            .Select(Function(i)
+                        Return New NamedValue(Of MRMStandards())(i.Name, i.Value.Item2)
+                    End Function) _
+            .ToArray
 
         Dim nameIndex As Index(Of String) = standardNames.Indexing
         Dim out As New List(Of DataSet)
+        Dim mrmpeaktable As New List(Of MRMPeakTable)
 
         ' 在上面获取得到了目标物质的回归模型以及离子对信息
         ' 在这个循环之中扫描每一个原始文件，进行物质的浓度定量计算
@@ -78,13 +89,17 @@ Public Module MRMSamples
 
             Call file.ToFileURL.__INFO_ECHO
 
-            Dim result = detections _
+            Dim result = model _
                 .ScanContent(
                     raw:=file,
                     ions:=ions,
                     peakAreaMethod:=peakAreaMethod
                 ) _
                 .ToArray
+
+            For Each metabolite In result
+                mrmpeaktable += metabolite.Item1
+            Next
 
             If result.Length = 0 Then
                 Call $"[NO_DATA] {file.ToFileURL} found nothing!".Warning
@@ -93,18 +108,22 @@ Public Module MRMSamples
                 out += New DataSet With {
                     .ID = file.BaseName,
                     .Properties = result _
-                        .ToDictionary(Function(i) i.Name,
-                                      Function(i) i.Value)
+                        .ToDictionary(Function(i) i.Item2.Name,
+                                      Function(i) i.Item2.Value)
                 }
                 ' 这个是峰面积比 AIS/At 数据
                 X += New DataSet With {
                     .ID = file.BaseName,
                     .Properties = result _
-                        .ToDictionary(Function(i) i.Name,
-                                      Function(i) Val(i.Description))
+                        .ToDictionary(Function(i) i.Item2.Name,
+                                      Function(i)
+                                          Return Val(i.Item2.Description)
+                                      End Function)
                 }
             End If
         Next
+
+        peaktable = mrmpeaktable
 
         Return out
     End Function

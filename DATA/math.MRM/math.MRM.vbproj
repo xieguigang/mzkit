@@ -105,6 +105,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dumping\MRMPeakTable.vb" />
     <Compile Include="Dumping\Extensions.vb" />
     <Compile Include="Dumping\TargetQuantification.vb" />
     <Compile Include="Extensions.vb" />
