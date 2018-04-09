@@ -2,6 +2,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
@@ -192,6 +193,7 @@ Public Module StandardCurve
                             Optional integratorTicks% = 5000,
                             Optional peakAreaMethod As PeakArea.Methods = Methods.Integrator) As NamedValue(Of Double)()
 
+        ' 从原始文件之中读取出所有指定的离子对数据
         Dim ionData = LoadChromatogramList(path:=raw) _
             .MRMSelector(ionpairs) _
             .Where(Function(ion) Not ion.chromatogram Is Nothing) _
@@ -208,7 +210,12 @@ Public Module StandardCurve
         Dim TPA = ionData _
             .Select(Function(ion)
                         Dim vector As IVector(Of ChromatogramTick) = ion.Value.Shadows
-                        Dim peak = vector.MRMPeak(baselineQuantile:=baselineQuantile)
+                        Dim peak As DoubleRange = vector _
+                            .PopulateROI _
+                            .OrderByDescending(Function(ROI) ROI.Integration) _
+                            .First _
+                            .Time ' .MRMPeak(baselineQuantile:=baselineQuantile)
+
                         Dim area#
 
                         Select Case peakAreaMethod
