@@ -68,7 +68,7 @@ Module test
             For Each ion In ionData
                 Dim path = $"{dir}/{ion.Name}.png"
 
-                Call ion.Value.Plot(showMRMRegion:=True, showAccumulateLine:=True).AsGDIImage.SaveAs(path)
+                Call ion.Value.Plot(title:=ion.Description, showMRMRegion:=True, showAccumulateLine:=True).AsGDIImage.SaveAs(path)
                 Call path.__INFO_ECHO
             Next
         Next
