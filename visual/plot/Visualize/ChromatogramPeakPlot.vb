@@ -34,6 +34,9 @@ Public Module ChromatogramPeakPlot
     ''' <param name="baselineQuantile">
     ''' 如果基线过高的话，显示累加线会在基线处出现斜边的情况，会需要这个参数来计算基线然后减去基线值来修正累加曲线
     ''' </param>
+    ''' <param name="showAccumulateLine">
+    ''' 这个类似于对峰面积积分的结果
+    ''' </param>
     ''' <returns></returns>
     <Extension>
     Public Function Plot(chromatogram As ChromatogramTick(),
