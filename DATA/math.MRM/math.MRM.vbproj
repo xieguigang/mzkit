@@ -108,6 +108,7 @@
     <Compile Include="Dumping\Extensions.vb" />
     <Compile Include="Dumping\TargetQuantification.vb" />
     <Compile Include="Extensions.vb" />
+    <Compile Include="QuantitativeAnalysis\Chromatogram\MRMPeak.vb" />
     <Compile Include="Standards.vb" />
     <Compile Include="IS.vb" />
     <Compile Include="QuantitativeAnalysis\Samples.vb" />
