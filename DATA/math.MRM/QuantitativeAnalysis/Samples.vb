@@ -1,4 +1,5 @@
-﻿Imports System.Runtime.InteropServices
+﻿Imports System.Runtime.CompilerServices
+Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Bootstrapping
@@ -10,6 +11,28 @@ Imports SMRUCC.MassSpectrum.Math.Chromatogram
 Imports SMRUCC.MassSpectrum.Math.MRM.Models
 
 Public Module MRMSamples
+
+    ''' <summary>
+    ''' 从mzML原始数据文件之中取出每一个离子对所对应的色谱数据
+    ''' </summary>
+    ''' <param name="ion_pairs"></param>
+    ''' <param name="mzML$"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function ExtractIonData(ion_pairs As IonPair(), mzML$) As NamedCollection(Of ChromatogramTick)()
+        Return LoadChromatogramList(mzML) _
+            .MRMSelector(ion_pairs) _
+            .Where(Function(ion) Not ion.chromatogram Is Nothing) _
+            .Select(Function(ion)
+                        Return New NamedCollection(Of ChromatogramTick) With {
+                            .Name = ion.ion.name,
+                            .Description = ion.ion.name,
+                            .Value = ion.chromatogram.Ticks
+                        }
+                    End Function) _
+            .ToArray
+    End Function
 
     ''' <summary>
     ''' 通过标准曲线对样品进行定量结果数据的获取

@@ -194,20 +194,9 @@ Public Module StandardCurve
                             Optional peakAreaMethod As PeakArea.Methods = Methods.Integrator) As NamedValue(Of Double)()
 
         ' 从原始文件之中读取出所有指定的离子对数据
-        Dim ionData = LoadChromatogramList(path:=raw) _
-            .MRMSelector(ionpairs) _
-            .Where(Function(ion) Not ion.chromatogram Is Nothing) _
-            .Select(Function(ion)
-                        Return New NamedValue(Of ChromatogramTick()) With {
-                            .Name = ion.ion.AccID,
-                            .Description = ion.ion.ToString,
-                            .Value = ion.chromatogram.Ticks
-                        }
-                    End Function) _
-            .ToArray
-
+        Dim ionData = ionpairs.ExtractIonData(mzML:=raw)
         ' 进行最大峰的查找，然后计算出净峰面积，用于回归建模
-        Dim TPA = ionData _
+        Dim TPA As NamedValue(Of Double)() = ionData _
             .Select(Function(ion)
                         Dim vector As IVector(Of ChromatogramTick) = ion.Value.Shadows
                         Dim peak As DoubleRange = vector _

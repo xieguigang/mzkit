@@ -18,9 +18,23 @@ Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
+Imports SMRUCC.MassSpectrum.Math.MRM
 
 Public Module ChromatogramPlot
 
+    ''' <summary>
+    ''' 将所有离子对所捕获的色谱曲线数据都绘制在同一张图上面
+    ''' </summary>
+    ''' <param name="ions"></param>
+    ''' <param name="mzML$"></param>
+    ''' <param name="size$"></param>
+    ''' <param name="margin$"></param>
+    ''' <param name="bg$"></param>
+    ''' <param name="colorsSchema$"></param>
+    ''' <param name="penStyle$"></param>
+    ''' <param name="labelFontStyle$"></param>
+    ''' <param name="labelConnectorStroke$"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function MRMChromatogramPlot(ions As IonPair(),
                                         mzML$,
@@ -31,20 +45,8 @@ Public Module ChromatogramPlot
                                         Optional penStyle$ = Stroke.ScatterLineStroke,
                                         Optional labelFontStyle$ = CSSFont.Win7Normal,
                                         Optional labelConnectorStroke$ = Stroke.StrongHighlightStroke) As GraphicsData
-
-        Dim ionData = LoadChromatogramList(mzML) _
-            .MRMSelector(ions) _
-            .Where(Function(ion) Not ion.chromatogram Is Nothing) _
-            .Select(Function(ion)
-                        Return New NamedCollection(Of ChromatogramTick) With {
-                            .Name = ion.ion.name,
-                            .Description = ion.ion.ToString,
-                            .Value = ion.chromatogram.Ticks
-                        }
-                    End Function) _
-            .ToArray
-
-        Return ionData.Plot(
+        Return ions.ExtractIonData(mzML) _
+                   .Plot(
             size:=size,
             bg:=bg,
             colorsSchema:=colorsSchema,
@@ -216,6 +218,7 @@ Public Module ChromatogramPlot
             size.SizeParser,
             margin,
             bg,
-            plotInternal)
+            plotInternal
+        )
     End Function
 End Module
