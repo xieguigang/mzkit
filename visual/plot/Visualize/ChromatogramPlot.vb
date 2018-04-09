@@ -45,7 +45,7 @@ Public Module ChromatogramPlot
                                         Optional penStyle$ = Stroke.ScatterLineStroke,
                                         Optional labelFontStyle$ = CSSFont.Win7Normal,
                                         Optional labelConnectorStroke$ = Stroke.StrongHighlightStroke) As GraphicsData
-        Return ions.ExtractIonData(mzML) _
+        Return ions.ExtractIonData(mzML, Function(ion) ion.name) _
                    .Plot(
             size:=size,
             bg:=bg,

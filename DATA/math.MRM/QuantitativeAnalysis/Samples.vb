@@ -20,15 +20,16 @@ Public Module MRMSamples
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function ExtractIonData(ion_pairs As IonPair(), mzML$) As NamedCollection(Of ChromatogramTick)()
+    Public Function ExtractIonData(ion_pairs As IonPair(), mzML$, assignName As Func(Of IonPair, String)) As NamedCollection(Of ChromatogramTick)()
         Return LoadChromatogramList(mzML) _
             .MRMSelector(ion_pairs) _
             .Where(Function(ion) Not ion.chromatogram Is Nothing) _
-            .Select(Function(ion)
+            .Select(Function(ionData)
+                        Dim ion = ionData.ion
                         Return New NamedCollection(Of ChromatogramTick) With {
-                            .Name = ion.ion.name,
-                            .Description = ion.ion.name,
-                            .Value = ion.chromatogram.Ticks
+                            .Name = assignName(ion),
+                            .Description = ion.name & $" [{ion.precursor}/{ion.product}]",
+                            .Value = ionData.chromatogram.Ticks
                         }
                     End Function) _
             .ToArray

@@ -164,7 +164,7 @@ Public Module StandardCurve
 
             ' level = level.Match("[-]L\d+", RegexICSng).Trim("-"c)
 
-            For Each ion In TPA
+            For Each ion As NamedValue(Of Double) In TPA
                 ionTPAs(ion.Name).Add(level, ion.Value)
             Next
         Next
@@ -194,7 +194,10 @@ Public Module StandardCurve
                             Optional peakAreaMethod As PeakArea.Methods = Methods.Integrator) As NamedValue(Of Double)()
 
         ' 从原始文件之中读取出所有指定的离子对数据
-        Dim ionData = ionpairs.ExtractIonData(mzML:=raw)
+        Dim ionData = ionpairs.ExtractIonData(
+            mzML:=raw,
+            assignName:=Function(ion) ion.AccID
+        )
         ' 进行最大峰的查找，然后计算出净峰面积，用于回归建模
         Dim TPA As NamedValue(Of Double)() = ionData _
             .Select(Function(ion)
