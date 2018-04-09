@@ -58,7 +58,9 @@ Public Module ChromatogramPeakPlot
         Dim intoTicks#() = chromatogram.IntensityArray.CreateAxisTicks
         Dim accumulate# = 0
         Dim base = chromatogram.Baseline(baselineQuantile)
-        Dim sumAll = (chromatogram.IntensityArray.AsVector - base).Sum()
+        Dim sumAll = (chromatogram.IntensityArray.AsVector - base) _
+            .Where(Function(x) x > 0) _
+            .Sum()
         Dim maxInto = intoTicks.Max - base
         Dim ay = Function(into As Double) As Double
                      into = into - base
@@ -102,7 +104,7 @@ Public Module ChromatogramPeakPlot
                     .Select(Function(c)
                                 Return New PointF(c.Time, c.Intensity)
                             End Function) _
-                    .SlideWindows(slideWindowSize:=2)
+                    .SlideWindows(winSize:=2)
 
                     A = scaler.Translate(signal.First)
                     B = scaler.Translate(signal.Last)

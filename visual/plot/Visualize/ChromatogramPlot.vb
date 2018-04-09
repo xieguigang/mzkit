@@ -155,7 +155,7 @@ Public Module ChromatogramPlot
                         .Select(Function(c)
                                     Return New PointF(c.Time, c.Intensity)
                                 End Function) _
-                        .SlideWindows(slideWindowSize:=2)
+                        .SlideWindows(winSize:=2)
 
                         A = scaler.Translate(signal.First)
                         B = scaler.Translate(signal.Last)
@@ -165,6 +165,7 @@ Public Module ChromatogramPlot
                         If polygon = 0 Then
                             polygon.Add(A)
                         End If
+
                         polygon.Add(B)
                     Next
 

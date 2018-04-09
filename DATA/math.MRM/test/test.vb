@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Math
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
 Imports SMRUCC.MassSpectrum.Math.MRM
@@ -62,6 +63,8 @@ Module test
                             }
                         End Function) _
                 .ToArray
+
+            Dim test = ionData(0).Value.Shadows.PopulateROI.ToArray
 
             Dim dir = file.TrimSuffix
 
