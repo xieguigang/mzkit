@@ -18,6 +18,11 @@ Namespace Chromatogram
             Return chromatogram.Select(Function(c) c.Time).AsVector
         End Function
 
+        ''' <summary>
+        ''' <see cref="ChromatogramTick.Intensity"/>
+        ''' </summary>
+        ''' <param name="chromatogram"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function IntensityArray(chromatogram As IEnumerable(Of ChromatogramTick)) As Vector

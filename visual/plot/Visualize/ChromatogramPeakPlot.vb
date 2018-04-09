@@ -43,14 +43,23 @@ Public Module ChromatogramPeakPlot
                          Optional showMRMRegion As Boolean = False,
                          Optional ROI_styleCSS$ = "stroke: red; stroke-width: 2px; stroke-dash: dash;",
                          Optional baseLine_styleCSS$ = "stroke: green; stroke-width: 2px; stroke-dash: dash;",
-                         Optional debug As Boolean = False) As GraphicsData
+                         Optional accumulateLineStyleCss$ = "stroke: blue; stroke-width: 2px; stroke-dash: dash;",
+                         Optional showAccumulateLine As Boolean = False) As GraphicsData
 
         Dim timeTicks#() = chromatogram.TimeArray.CreateAxisTicks
         Dim intoTicks#() = chromatogram.IntensityArray.CreateAxisTicks
+        Dim sumAll = chromatogram.IntensityArray.Sum
+        Dim maxInto = intoTicks.Max
+        Dim accumulate# = 0
+        Dim ay = Function(into As Double) As Double
+                     accumulate += into
+                     Return (accumulate / sumAll) * maxInto
+                 End Function
         Dim curvePen As Pen = Stroke.TryParse(curveStyle).GDIObject
         Dim titleFont As Font = CSSFont.TryParse(titleFontCSS)
         Dim ROIpen As Pen = Stroke.TryParse(ROI_styleCSS).GDIObject
         Dim baselinePen As Pen = Stroke.TryParse(baseLine_styleCSS).GDIObject
+        Dim accumulateLine As Pen = Stroke.TryParse(accumulateLineStyleCss).GDIObject
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 Dim rect As Rectangle = region.PlotRegion
@@ -72,7 +81,11 @@ Public Module ChromatogramPeakPlot
                 )
 
                 Dim A, B As PointF
+                ' 累加线
+                Dim ac1 As New PointF
+                Dim ac2 As PointF
 
+                ' 在这里绘制色谱曲线
                 For Each signal As SlideWindow(Of PointF) In chromatogram _
                     .Select(Function(c)
                                 Return New PointF(c.Time, c.Intensity)
@@ -83,6 +96,12 @@ Public Module ChromatogramPeakPlot
                     B = scaler.Translate(signal.Last)
 
                     Call g.DrawLine(curvePen, A, B)
+
+                    If showAccumulateLine Then
+                        ac2 = New PointF(signal.First.X, ay(signal.First.Y))
+                        g.DrawLine(accumulateLine, scaler.Translate(ac1), scaler.Translate(ac2))
+                        ac1 = ac2
+                    End If
                 Next
 
                 If showMRMRegion Then
