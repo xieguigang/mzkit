@@ -9,6 +9,3 @@
 [submodule "KEGG_canvas"]
 	path = KEGG_canvas
 	url = https://github.com/GCModeller-Cloud/KEGG-metabolite-network.git
-[submodule "runtime/sciBASIC"]
-	path = runtime/sciBASIC
-	url = https://github.com/xieguigang/sciBASIC.git
