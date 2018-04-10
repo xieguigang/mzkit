@@ -52,7 +52,7 @@ Public Module MRMSamples
                                          Optional levelPattern$ = "[-]L\d+",
                                          Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum) As IEnumerable(Of DataSet)
         Dim standardNames$() = Nothing
-        Dim detections As NamedValue(Of (FitResult, MRMStandards()))() =
+        Dim detections As NamedValue(Of (IFitted, MRMStandards()))() =
             StandardCurve _
             .Scan(wiff, ions, coordinates,
                   refName:=standardNames,

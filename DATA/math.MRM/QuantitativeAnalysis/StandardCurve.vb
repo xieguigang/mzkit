@@ -98,7 +98,7 @@ Public Module StandardCurve
     ''' <param name="coordinates"></param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function Regression(ionTPA As Dictionary(Of DataSet), coordinates As Standards(), [ISvector] As [IS]()) As IEnumerable(Of NamedValue(Of (FitResult, MRMStandards())))
+    Public Iterator Function Regression(ionTPA As Dictionary(Of DataSet), coordinates As Standards(), [ISvector] As [IS]()) As IEnumerable(Of NamedValue(Of (IFitted, MRMStandards())))
         Dim [IS] As Dictionary(Of String, [IS]) = ISvector.ToDictionary(Function(i) i.ID)
 
         For Each ion As Standards In coordinates _
@@ -122,8 +122,8 @@ Public Module StandardCurve
                             Dim AIS = ISA(level.Key)    ' 内标的峰面积
 
                             ' X 为峰面积，这样子在后面计算的时候就可以直接将离子对的峰面积带入方程计算出浓度结果了
-                            Dim X = AIS / At_i
-                            Dim Y = CIS / Ct_i
+                            Dim pX = At_i / AIS
+                            Dim pY = Ct_i / CIS
 
                             points += New MRMStandards With {
                                 .AIS = AIS,
@@ -136,17 +136,20 @@ Public Module StandardCurve
                             }
 
                             ' 得到标准曲线之中的一个点
-                            Return New PointF(X, Y)
+                            Return New PointF(pX, pY)
                         End Function) _
                 .ToArray
 
             ' 对标准曲线进行线性回归建模
-            Dim fit = LeastSquares.LinearFit(line.X, line.Y)
+            Dim X = line.X.AsVector
+            Dim Y = line.Y.AsVector
+            Dim W = 1 / X ^ 2
+            Dim fit As WeightedFit = WeightedLinearRegression.Regress(X, Y, W, 1)
             Dim info As New Dictionary(Of String, String) From {
                 {"IS", ion.IS},
                 {"cIS", CIS}
             }
-            Dim out As New NamedValue(Of (FitResult, MRMStandards())) With {
+            Dim out As New NamedValue(Of (IFitted, MRMStandards())) With {
                 .Name = ion.HMDB,
                 .Value = (fit, points.ToArray),
                 .Description = info.GetJson
