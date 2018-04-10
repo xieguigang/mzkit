@@ -7,7 +7,7 @@ Imports Microsoft.VisualBasic.Imaging.Driver
 Public Module viz
 
     <Extension>
-    Public Function StandardCurves(model As NamedValue(Of FitResult), Optional samples As IEnumerable(Of NamedValue(Of Double)) = Nothing, Optional name$ = "") As GraphicsData
+    Public Function StandardCurves(model As NamedValue(Of IFitted), Optional samples As IEnumerable(Of NamedValue(Of Double)) = Nothing, Optional name$ = "") As GraphicsData
         Return model _
             .Value _
             .Plot(xLabel:="Peak area ratio (AIS/Ati)",

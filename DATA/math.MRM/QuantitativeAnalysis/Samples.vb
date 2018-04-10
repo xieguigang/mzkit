@@ -44,7 +44,7 @@ Public Module MRMSamples
     ''' <param name="X">标准曲线之中的``AIS/A``峰面积比数据，即线性回归模型之中的X样本点</param>
     ''' <returns>经过定量计算得到的浓度数据</returns>
     Public Function QuantitativeAnalysis(wiff$, ions As IonPair(), coordinates As Standards(), [IS] As [IS](),
-                                         <Out> Optional ByRef model As NamedValue(Of FitResult)() = Nothing,
+                                         <Out> Optional ByRef model As NamedValue(Of IFitted)() = Nothing,
                                          <Out> Optional ByRef standardPoints As NamedValue(Of MRMStandards())() = Nothing,
                                          <Out> Optional ByRef X As List(Of DataSet) = Nothing,
                                          <Out> Optional ByRef peaktable As MRMPeakTable() = Nothing,
@@ -66,7 +66,7 @@ Public Module MRMSamples
 
         X = New List(Of DataSet)
         model = detections _
-            .Select(Function(i) New NamedValue(Of FitResult)(i.Name, i.Value.Item1, i.Description)) _
+            .Select(Function(i) New NamedValue(Of IFitted)(i.Name, i.Value.Item1, i.Description)) _
             .ToArray
         standardPoints = detections _
             .Select(Function(i)

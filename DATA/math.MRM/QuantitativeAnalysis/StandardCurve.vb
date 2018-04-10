@@ -29,7 +29,7 @@ Public Module StandardCurve
     ''' <param name="ions"></param>
     ''' <returns><see cref="NamedValue(Of Double).Value"/>是指定的代谢物的浓度结果数据，<see cref="NamedValue(Of Double).Description"/>则是AIS/A的结果，即X轴的数据</returns>
     <Extension>
-    Public Iterator Function ScanContent(model As NamedValue(Of FitResult)(), raw$, ions As IonPair(), peakAreaMethod As PeakArea.Methods) As IEnumerable(Of (MRMPeakTable, NamedValue(Of Double)))
+    Public Iterator Function ScanContent(model As NamedValue(Of IFitted)(), raw$, ions As IonPair(), peakAreaMethod As PeakArea.Methods) As IEnumerable(Of (MRMPeakTable, NamedValue(Of Double)))
         Dim baseline# = 0
         Dim TPA = raw _
             .ScanTPA(ionpairs:=ions, peakAreaMethod:=peakAreaMethod) _
