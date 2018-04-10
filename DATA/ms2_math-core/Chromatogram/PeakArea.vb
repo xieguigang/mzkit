@@ -30,6 +30,9 @@ Namespace Chromatogram
             Dim S = chromatogram.PickArea(range:=peak) ' TPA
             Dim B = chromatogram.Baseline(quantile:=baseline)
 
+            ' 2018-4-10 不需要减去基线？？？
+            ' B = 0
+
             ' 2018-1-18 
             ' 下面的聚合表达式只会计算去除本底之后的信号量大于零的信号量的和
             ' 取大于零是为了解决类似于 Homocysteine_chromatogram.png 这类基线过高的问题
@@ -178,6 +181,9 @@ Namespace Chromatogram
             curve = points
             peakRaw = rawPoints
 
+            ' 2018-4-10 不需要减去基线？？
+            ' baseline = 0
+
             ' 积分函数
             Dim ft As df = Function(x#, y#) As Double
                                ' 先根据x找出time range
@@ -212,6 +218,8 @@ Namespace Chromatogram
         ''' https://en.wikipedia.org/wiki/Simpson%27s_rule
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <Extension>
         Public Function Simpson(a#, b#, f As fx) As Double
             Return (b - a) / 6 * (f(a) + 4 * f((a + b) / 2) + f(b))
         End Function
