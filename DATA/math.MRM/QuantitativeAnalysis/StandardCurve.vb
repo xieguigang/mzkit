@@ -105,7 +105,7 @@ Public Module StandardCurve
             .Where(Function(i)
                        Return Not i.IS.StringEmpty AndAlso
                               Not ionTPA(i.IS) Is Nothing AndAlso
-                              Not ionTPA(i.IS).Properties.Count <> i.C.Count
+                              Not ionTPA(i.IS).Properties.Count < i.C.Count ' 标曲文件之中只有7个点，但是实际上打了10个点，剩下的三个点可以不要了
                    End Function)
 
             Dim TPA As DataSet = ionTPA(ion.HMDB)  ' 得到标准曲线实验数据
