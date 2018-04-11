@@ -24,7 +24,7 @@ Public Module StandardCurve
     ''' <summary>
     ''' 根据建立起来的线性回归模型进行样品数据的扫描，根据曲线的结果得到浓度数据
     ''' </summary>
-    ''' <param name="model">X为峰面积</param>
+    ''' <param name="model">标准曲线线性回归模型，X为峰面积</param>
     ''' <param name="raw$"></param>
     ''' <param name="ions"></param>
     ''' <returns><see cref="NamedValue(Of Double).Value"/>是指定的代谢物的浓度结果数据，<see cref="NamedValue(Of Double).Description"/>则是AIS/A的结果，即X轴的数据</returns>
@@ -49,10 +49,11 @@ Public Module StandardCurve
 
             Dim A = TPA(metabolite.Name)     ' 得到样品之中的峰面积
             Dim AIS = TPA(info!IS)           ' 得到与样品混在一起的内标的峰面积
-            Dim C = line(x:=AIS.TPA / A.TPA) ' 利用峰面积比计算出浓度结果数据
+            Dim X# = A.TPA / AIS.TPA
+            Dim C = line(X)                  ' 利用峰面积比计算出浓度结果数据
 
             ' 这里的C是相当于 cIS/ct = C，则样品的浓度结果应该为 ct = cIS/C
-            C = Val(info!cIS) / C
+            ' C = Val(info!cIS) / C
 
             Dim [IS] = names(info!IS)
             Dim peaktable As New MRMPeakTable With {
@@ -72,7 +73,7 @@ Public Module StandardCurve
             Dim result As New NamedValue(Of Double) With {
                 .Name = metabolite.Name,
                 .Value = C,
-                .Description = AIS.TPA / A.TPA
+                .Description = X
             }
 
             Yield (peaktable, result)
@@ -123,7 +124,11 @@ Public Module StandardCurve
 
                             ' X 为峰面积，这样子在后面计算的时候就可以直接将离子对的峰面积带入方程计算出浓度结果了
                             Dim pX = At_i / AIS
-                            Dim pY = Ct_i / CIS
+                            Dim pY = Ct_i ' / CIS   ' 因为CIS是假设恒定不变的，所以在这里就直接使用标准曲线的点的浓度来作为Y轴的值了
+
+                            ' C = f(A/AIS) = a * X + b
+                            ' 在进行计算的时候，直接将 样本的峰面积除以内标的峰面积 作为X
+                            ' 然后代入标准曲线公式即可得到Y，即样本的浓度
 
                             points += New MRMStandards With {
                                 .AIS = AIS,
