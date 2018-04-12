@@ -182,6 +182,10 @@ Public Class VBServerScript : Inherits WebApp
 
     Dim taskPool As New ThreadPool
 
+    ''' <summary>
+    ''' 在这个模块之中只负责调用格式转换程序的命令行接口
+    ''' </summary>
+    ''' <param name="main"></param>
     Sub New(main As PlatformEngine)
         Call MyBase.New(main)
 
@@ -226,7 +230,7 @@ Public Class VBServerScript : Inherits WebApp
     End Function
 
     <ExportAPI("/ProteoWizard.d/MRM.vbs")>
-    <Usage("/ProteoWizard.d/MRM.vbs?path=<path>")>
+    <Usage("/ProteoWizard.d/MRM.vbs?path=<path>&to=<path>")>
     <[GET](GetType(String))>
     Public Function MRMTask(request As HttpRequest, response As HttpResponse) As Boolean
         Dim path$ = OSS_ROOT & "/" & request.URLParameters("path")
