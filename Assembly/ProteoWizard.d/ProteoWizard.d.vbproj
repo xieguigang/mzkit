@@ -168,7 +168,7 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
-    <ProjectReference Include="httpd\WebCloud\SMRUCC.HTTPInternal\SMRUCC.WebCloud.HTTPInternal.vbproj">
+    <ProjectReference Include="..\..\..\GCModeller\src\runtime\httpd\WebCloud\SMRUCC.HTTPInternal\SMRUCC.WebCloud.HTTPInternal.vbproj">
       <Project>{fbfc1455-b232-4f16-afc7-4054a8b864ab}</Project>
       <Name>SMRUCC.WebCloud.HTTPInternal</Name>
     </ProjectReference>

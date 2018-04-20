@@ -204,11 +204,14 @@ Public Class VBServerScript : Inherits WebApp
     <Usage("/ProteoWizard.d/mzXML.vbs?path=<path>")>
     <[GET](GetType(String))>
     Public Function ConvertTomzXML(request As HttpRequest, response As HttpResponse) As Boolean
-        Dim path$ = OSS_ROOT & "/" & request.URLParameters("path")
+        ' Deal with the space in file path by url encoding
+        ' url decoding for restore the original file path value
+        Dim path$ = normalizePath(request.URLParameters("path"))
         Dim out$ = path.ParentPath & "/msconvert"
         Dim args$ = $"{path.CLIPath} --mz64 --mzXML --zlib --filter ""msLevel 1-2"" --ignoreUnknownInstrumentError -o {out.CLIPath}"
 
         Call New IORedirectFile(BIN, args).Run()
+        Call "Task complete!".__INFO_ECHO
 
         If Not response Is Nothing Then
             Call response.SuccessMsg("Task complete!")
@@ -229,21 +232,30 @@ Public Class VBServerScript : Inherits WebApp
         Return True
     End Function
 
+    Private Function normalizePath(path As String) As String
+        path = path.UrlDecode
+
+        ' Add OSS drive location if the given path is a relative path
+        If InStr(path, ":\") = 0 AndAlso InStr(path, ":/") = 0 Then
+            path = OSS_ROOT & "/" & path
+        End If
+
+        Return path
+    End Function
+
     <ExportAPI("/ProteoWizard.d/MRM.vbs")>
     <Usage("/ProteoWizard.d/MRM.vbs?path=<path>&to=<path>")>
     <[GET](GetType(String))>
     Public Function MRMTask(request As HttpRequest, response As HttpResponse) As Boolean
-        Dim path$ = OSS_ROOT & "/" & request.URLParameters("path")
-        Dim out$ = request.URLParameters("to") Or $"{path.ParentPath}/msconvert".AsDefault
-
-        If InStr(out, ":\") = 0 Then
-            out = OSS_ROOT & "/" & out
-        End If
-
+        ' Deal with the space in file path by url encoding
+        ' url decoding for restore the original file path value
+        Dim path$ = normalizePath(request.URLParameters("path"))
+        Dim out$ = normalizePath(request.URLParameters("to")) Or $"{path.ParentPath}/msconvert".AsDefault
         Dim args$ = $"{path.GetFullPath.CLIPath} --mz64 --mzML --zlib --filter ""msLevel 1-2"" --ignoreUnknownInstrumentError -o {out.GetDirectoryFullPath.CLIPath}"
 
         Call path.__INFO_ECHO
         Call New IORedirectFile(BIN, args).Run()
+        Call "Task complete!".__INFO_ECHO
 
         If Not response Is Nothing Then
             Call response.SuccessMsg("Task complete!")
