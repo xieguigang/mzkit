@@ -242,39 +242,54 @@ Public Module StandardCurve
         ' 进行最大峰的查找，然后计算出净峰面积，用于回归建模
         Dim TPA = ionData _
             .Select(Function(ion)
-                        Dim vector As IVector(Of ChromatogramTick) = ion.Value.Shadows
-                        Dim peak As DoubleRange = vector _
-                            .PopulateROI _
-                            .OrderByDescending(Function(ROI) ROI.Integration) _
-                            .First _
-                            .Time ' .MRMPeak(baselineQuantile:=baselineQuantile)
-
-                        Dim area#
-                        Dim baseline# = vector.Baseline(quantile:=baselineQuantile)
-
-                        Select Case peakAreaMethod
-                            Case Methods.NetPeakSum
-                                area = vector.PeakArea(peak, baseline:=baselineQuantile)
-                            Case Methods.SumAll
-                                area = vector.SumAll
-                            Case Methods.MaxPeakHeight
-                                area = vector.MaxPeakHeight
-                            Case Else
-                                ' 默认是使用积分器方法
-                                area = vector.PeakAreaIntegrator(
-                                    peak:=peak,
-                                    baselineQuantile:=baselineQuantile,
-                                    n:=integratorTicks
-                                )
-                        End Select
-
-                        Return New NamedValue(Of (DoubleRange, Double, Double, Double)) With {
-                            .Name = ion.Name,
-                            .Value = (peak, area, baseline, vector.MaxPeakHeight)
-                        }
+                        Return ion.ionTPA(baselineQuantile, peakAreaMethod, integratorTicks)
                     End Function) _
             .ToArray
 
         Return TPA
+    End Function
+
+    <Extension>
+    Private Function ionTPA(ion As NamedCollection(Of ChromatogramTick), baselineQuantile#, peakAreaMethod As PeakArea.Methods, integratorTicks%) As NamedValue(Of (DoubleRange, Double, Double, Double))
+        Dim vector As IVector(Of ChromatogramTick) = ion.Value.Shadows
+        Dim ROIData = vector _
+            .PopulateROI _
+            .OrderByDescending(Function(ROI) ROI.Integration) _
+            .ToArray
+
+        If ROIData.Length = 0 Then
+            Return New NamedValue(Of (DoubleRange, Double, Double, Double)) With {
+                .Name = ion.Name,
+                .Value = (New DoubleRange(0, 0), 0, 0, 0)
+            }
+        End If
+
+        Dim peak As DoubleRange = ROIData _
+            .First _
+            .Time ' .MRMPeak(baselineQuantile:=baselineQuantile)
+
+        Dim area#
+        Dim baseline# = vector.Baseline(quantile:=baselineQuantile)
+
+        Select Case peakAreaMethod
+            Case Methods.NetPeakSum
+                area = vector.PeakArea(peak, baseline:=baselineQuantile)
+            Case Methods.SumAll
+                area = vector.SumAll
+            Case Methods.MaxPeakHeight
+                area = vector.MaxPeakHeight
+            Case Else
+                ' 默认是使用积分器方法
+                area = vector.PeakAreaIntegrator(
+                    peak:=peak,
+                    baselineQuantile:=baselineQuantile,
+                    n:=integratorTicks
+                )
+        End Select
+
+        Return New NamedValue(Of (DoubleRange, Double, Double, Double)) With {
+            .Name = ion.Name,
+            .Value = (peak, area, baseline, vector.MaxPeakHeight)
+        }
     End Function
 End Module
