@@ -6,6 +6,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Scripting
@@ -29,10 +30,17 @@ Public Module StandardCurve
     ''' <param name="ions"></param>
     ''' <returns><see cref="NamedValue(Of Double).Value"/>是指定的代谢物的浓度结果数据，<see cref="NamedValue(Of Double).Description"/>则是AIS/A的结果，即X轴的数据</returns>
     <Extension>
-    Public Iterator Function ScanContent(model As NamedValue(Of IFitted)(), raw$, ions As IonPair(), peakAreaMethod As PeakArea.Methods) As IEnumerable(Of (MRMPeakTable, NamedValue(Of Double)))
+    Public Iterator Function ScanContent(model As NamedValue(Of IFitted)(),
+                                         raw$,
+                                         ions As IonPair(),
+                                         peakAreaMethod As PeakArea.Methods,
+                                         TPAFactors As Dictionary(Of String, Double)) As IEnumerable(Of (MRMPeakTable, NamedValue(Of Double)))
         Dim baseline# = 0
         Dim TPA = raw _
-            .ScanTPA(ionpairs:=ions, peakAreaMethod:=peakAreaMethod) _
+            .ScanTPA(ionpairs:=ions,
+                     peakAreaMethod:=peakAreaMethod,
+                     TPAFactors:=TPAFactors
+            ) _
             .ToDictionary(Function(ion) ion.Name,
                           Function(A) A.Value)
         Dim names = ions.ToDictionary(Function(i) i.AccID)
@@ -92,17 +100,22 @@ Public Module StandardCurve
     ' 样品中加人与标准中相等质量的内标物，进样分析后得到待测组分与内标峰面积比，根据标准曲线即可求得
     ' 质量比，而内标质量已知，可得待测组分质量。
 
+    ' 在计算峰面积的时候，对于亮氨酸和异亮氨酸，会需要乘以一个系数
+    ' 这个Factor参数默认为1
+
+    ReadOnly NoChange As DefaultValue(Of Double) = 1.0R
+
     ''' <summary>
     ''' 根据扫描出来的TPA峰面积进行对标准曲线的回归建模
     ''' </summary>
     ''' <param name="ionTPA"></param>
-    ''' <param name="coordinates"></param>
+    ''' <param name="calibrates"></param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function Regression(ionTPA As Dictionary(Of DataSet), coordinates As Standards(), [ISvector] As [IS]()) As IEnumerable(Of NamedValue(Of (IFitted, MRMStandards())))
+    Public Iterator Function Regression(ionTPA As Dictionary(Of DataSet), calibrates As Standards(), [ISvector] As [IS]()) As IEnumerable(Of NamedValue(Of (IFitted, MRMStandards())))
         Dim [IS] As Dictionary(Of String, [IS]) = ISvector.ToDictionary(Function(i) i.ID)
 
-        For Each ion As Standards In coordinates _
+        For Each ion As Standards In calibrates _
             .Where(Function(i)
                        Return Not i.IS.StringEmpty AndAlso
                               Not ionTPA(i.IS) Is Nothing AndAlso
@@ -118,6 +131,7 @@ Public Module StandardCurve
             Dim line As PointF() = ion _
                 .C _
                 .Select(Function(level)
+
                             Dim At_i = TPA(level.Key)   ' 得到峰面积Ati
                             Dim Ct_i = level.Value      ' 得到已知的浓度数据
                             Dim AIS = ISA(level.Key)    ' 内标的峰面积
@@ -169,11 +183,15 @@ Public Module StandardCurve
     ''' </summary>
     ''' <param name="raw$">``*.wiff``，转换之后的结果文件夹，其中标准曲线的数据都是默认使用``L数字``标记的。</param>
     ''' <param name="ions$">包括离子对的定义数据以及浓度区间</param>
+    ''' <param name="TPAFactors">
+    ''' ``{<see cref="Standards.HMDB"/>, <see cref="Standards.Factor"/>}``，这个是为了计算亮氨酸和异亮氨酸这类无法被区分的物质的峰面积所需要的
+    ''' </param>
     ''' <returns></returns>
     Public Function Scan(raw$,
                          ions As IonPair(),
-                         coordinates As Standards(),
+                         calibrates As Standards(),
                          peakAreaMethod As PeakArea.Methods,
+                         TPAFactors As Dictionary(Of String, Double),
                          Optional ByRef refName$() = Nothing,
                          Optional calibrationNamedPattern$ = ".+[-]L\d+",
                          Optional levelPattern$ = "[-]L\d+") As DataSet()
@@ -186,6 +204,8 @@ Public Module StandardCurve
             ionTPAs(ion.AccID) = New Dictionary(Of String, Double)
         Next
 
+        ' 扫描所有的符合命名规则要求的原始文件
+        ' 假设这些符合命名规则的文件都是标准曲线文件
         For Each file As String In (ls - l - r - "*.mzML" <= raw.ParentPath) _
             .Where(Function(path)
                        Return path _
@@ -193,10 +213,14 @@ Public Module StandardCurve
                            .IsPattern(calibrationNamedPattern, RegexICSng)
                    End Function)
 
+            ' 得到当前的这个原始文件之中的峰面积数据
             Dim TPA() = file.ScanTPA(
                 ionpairs:=ions,
-                peakAreaMethod:=peakAreaMethod
+                peakAreaMethod:=peakAreaMethod,
+                TPAFactors:=TPAFactors
             )
+
+            ' 从文件名之中得到浓度的等级，以方便查找出相应的浓度数据
             Dim level$ = file.BaseName _
                              .Match(levelPattern, RegexICSng) _
                              .Trim("-"c)
@@ -227,9 +251,12 @@ Public Module StandardCurve
     ''' </summary>
     ''' <param name="raw$"></param>
     ''' <param name="ionpairs"></param>
+    ''' <param name="TPAFactors">
+    ''' ``{<see cref="Standards.HMDB"/>, <see cref="Standards.Factor"/>}``，这个是为了计算亮氨酸和异亮氨酸这类无法被区分的物质的峰面积所需要的
+    ''' </param>
     ''' <returns></returns>
     <Extension>
-    Public Function ScanTPA(raw$, ionpairs As IonPair(),
+    Public Function ScanTPA(raw$, ionpairs As IonPair(), TPAFactors As Dictionary(Of String, Double),
                             Optional baselineQuantile# = 0.65,
                             Optional integratorTicks% = 5000,
                             Optional peakAreaMethod As PeakArea.Methods = Methods.Integrator) As NamedValue(Of (ROI As DoubleRange, TPA#, baseline#, maxinto#))()
@@ -242,20 +269,55 @@ Public Module StandardCurve
         ' 进行最大峰的查找，然后计算出净峰面积，用于回归建模
         Dim TPA = ionData _
             .Select(Function(ion)
-                        Return ion.ionTPA(baselineQuantile, peakAreaMethod, integratorTicks)
+                        Return ion.ionTPA(
+                            baselineQuantile,
+                            peakAreaMethod,
+                            integratorTicks,
+                            TPAFactors
+                        )
                     End Function) _
             .ToArray
 
         Return TPA
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="ion"></param>
+    ''' <param name="baselineQuantile#"></param>
+    ''' <param name="peakAreaMethod"></param>
+    ''' <param name="integratorTicks%"></param>
+    ''' <param name="TPAFactors">
+    ''' ``{<see cref="Standards.HMDB"/>, <see cref="Standards.Factor"/>}``，这个是为了计算亮氨酸和异亮氨酸这类无法被区分的物质的峰面积所需要的
+    ''' </param>
+    ''' <returns></returns>
     <Extension>
-    Private Function ionTPA(ion As NamedCollection(Of ChromatogramTick), baselineQuantile#, peakAreaMethod As PeakArea.Methods, integratorTicks%) As NamedValue(Of (DoubleRange, Double, Double, Double))
+    Private Function ionTPA(ion As NamedCollection(Of ChromatogramTick),
+                            baselineQuantile#,
+                            peakAreaMethod As PeakArea.Methods,
+                            integratorTicks%,
+                            TPAFactors As Dictionary(Of String, Double)) As NamedValue(Of (DoubleRange, Double, Double, Double))
+
         Dim vector As IVector(Of ChromatogramTick) = ion.Value.Shadows
         Dim ROIData = vector _
             .PopulateROI _
             .OrderByDescending(Function(ROI) ROI.Integration) _
             .ToArray
+        Dim factor#
+
+        If TPAFactors.ContainsKey(ion.Name) Then
+            factor = TPAFactors(ion.Name)
+
+            ' factor列可能没有设置值，则加载之后会被默认转换为零
+            ' 在这里将其设置为默认值1
+            If factor = 0 Then
+                factor = 1
+            End If
+        Else
+            ' 没有值的时候，默认是1，即不做处理
+            factor = 1
+        End If
 
         If ROIData.Length = 0 Then
             Return New NamedValue(Of (DoubleRange, Double, Double, Double)) With {
@@ -286,6 +348,8 @@ Public Module StandardCurve
                     n:=integratorTicks
                 )
         End Select
+
+        area *= factor
 
         Return New NamedValue(Of (DoubleRange, Double, Double, Double)) With {
             .Name = ion.Name,
