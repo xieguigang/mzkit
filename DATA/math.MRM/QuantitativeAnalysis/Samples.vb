@@ -43,7 +43,7 @@ Public Module MRMSamples
     ''' <param name="model">标准曲线线性回归模型</param>
     ''' <param name="X">标准曲线之中的``AIS/A``峰面积比数据，即线性回归模型之中的X样本点</param>
     ''' <returns>经过定量计算得到的浓度数据</returns>
-    Public Function QuantitativeAnalysis(wiff$, ions As IonPair(), coordinates As Standards(), [IS] As [IS](),
+    Public Function QuantitativeAnalysis(wiff$, ions As IonPair(), calibrates As Standards(), [IS] As [IS](),
                                          <Out> Optional ByRef model As NamedValue(Of IFitted)() = Nothing,
                                          <Out> Optional ByRef standardPoints As NamedValue(Of MRMStandards())() = Nothing,
                                          <Out> Optional ByRef X As List(Of DataSet) = Nothing,
@@ -52,16 +52,18 @@ Public Module MRMSamples
                                          Optional levelPattern$ = "[-]L\d+",
                                          Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum) As IEnumerable(Of DataSet)
         Dim standardNames$() = Nothing
+        Dim TPAFactors = calibrates.ToDictionary(Function(ion) ion.HMDB, Function(ion) ion.Factor)
         Dim detections As NamedValue(Of (IFitted, MRMStandards()))() =
             StandardCurve _
-            .Scan(wiff, ions, coordinates,
+            .Scan(wiff, ions, calibrates,
                   refName:=standardNames,
                   calibrationNamedPattern:=calibrationNamedPattern,
                   levelPattern:=levelPattern,
-                  peakAreaMethod:=peakAreaMethod
+                  peakAreaMethod:=peakAreaMethod,
+                  TPAFactors:=TPAFactors
             ) _
             .ToDictionary _
-            .Regression(coordinates, ISvector:=[IS]) _
+            .Regression(calibrates, ISvector:=[IS]) _
             .ToArray
 
         X = New List(Of DataSet)
@@ -89,11 +91,14 @@ Public Module MRMSamples
 
             Call file.ToFileURL.__INFO_ECHO
 
+            ' 使用离子对信息扫面当前的这个原始数据文件
+            ' 得到峰面积等定量计算所需要的结果信息
             Dim result = model _
                 .ScanContent(
                     raw:=file,
                     ions:=ions,
-                    peakAreaMethod:=peakAreaMethod
+                    peakAreaMethod:=peakAreaMethod,
+                    TPAFactors:=TPAFactors
                 ) _
                 .ToArray
 
