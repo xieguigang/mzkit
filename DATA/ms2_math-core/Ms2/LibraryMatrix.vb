@@ -136,15 +136,3 @@ Public Class LibraryMatrix : Inherits IVector(Of ms2)
             .ToArray
     End Operator
 End Class
-
-''' <summary>
-''' Library matrix math
-''' </summary>
-Public Module LibraryMatrixExtensions
-
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension>
-    Public Function Max(matrix As LibraryMatrix) As Double
-        Return matrix.ms2.Max(Function(r) r.quantity)
-    End Function
-End Module
