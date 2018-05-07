@@ -14,6 +14,14 @@ Public MustInherit Class Tolerance
 
     Public MustOverride Function Assert(mz1#, mz2#) As Boolean
 
+    Public Shared Function DeltaMass(da#) As DAmethod
+        Return New DAmethod(da)
+    End Function
+
+    Public Shared Function PPM(value#) As PPMmethod
+        Return New PPMmethod(value)
+    End Function
+
 End Class
 
 Public Class PPMmethod : Inherits Tolerance
@@ -37,7 +45,7 @@ Public Class PPMmethod : Inherits Tolerance
     ''' <param name="measured#"></param>
     ''' <param name="actualValue#"></param>
     ''' <returns></returns>
-    Public Shared Function ppm(measured#, actualValue#) As Double
+    Public Overloads Shared Function ppm(measured#, actualValue#) As Double
         ' （测量值-实际分子量）/ 实际分子量
         ' |(实验数据 - 数据库结果)| / 实验数据 * 1000000
         Dim ppmd# = sys.Abs(measured - actualValue) / actualValue

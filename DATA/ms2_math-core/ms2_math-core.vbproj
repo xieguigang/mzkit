@@ -142,6 +142,7 @@
     <Compile Include="Chromatogram\ROI.vb" />
     <Compile Include="Chromatogram\PeakArea.vb" />
     <Compile Include="Ms1\Tolerance.vb" />
+    <Compile Include="Ms2\LibraryMatrixExtensions.vb" />
     <Compile Include="Ms2\GlobalAlignment.vb" />
     <Compile Include="Ms2\ms2AlignMatrix.vb" />
     <Compile Include="Ms2\LibraryMatrix.vb" />

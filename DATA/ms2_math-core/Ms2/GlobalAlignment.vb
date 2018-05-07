@@ -7,6 +7,7 @@ Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.Extensions
 
 ''' <summary>
 ''' Global alignment of two MS/MS matrix.
@@ -72,7 +73,7 @@ Public Module GlobalAlignment
     ''' <returns></returns>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function ms2Alignment(x As ms2(), y As ms2(), method As Tolerance) As (forward#, reverse#)
+    Public Function TwoDirectionSSM(x As ms2(), y As ms2(), method As Tolerance) As (forward#, reverse#)
         Return (GlobalAlignment.Align(x, y, method), GlobalAlignment.Align(y, x, method))
     End Function
 
