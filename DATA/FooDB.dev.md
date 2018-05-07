@@ -11,7 +11,7 @@ MySql database field attributes notes in this development document:
 > + **UN**: Unsigned;
 > + **ZF**: Zero Fill
 
-Generate time: 2018/3/16 13:47:47<br />
+Generate time: 2018/5/7 17:30:54<br />
 By: ``mysqli.vb`` reflector tool ([https://github.com/xieguigang/mysqli.vb](https://github.com/xieguigang/mysqli.vb))
 
 <div style="page-break-after: always;"></div>
@@ -31,6 +31,9 @@ By: ``mysqli.vb`` reflector tool ([https://github.com/xieguigang/mysqli.vb](http
 |updater_id|Int64 (11)|||
 |created_at|DateTime ()|``NN``||
 |updated_at|DateTime ()|``NN``||
+
+
+#### SQL Declare
 
 ```SQL
 CREATE TABLE `compound_alternate_parents` (
@@ -67,6 +70,9 @@ CREATE TABLE `compound_alternate_parents` (
 |created_at|DateTime ()|``NN``||
 |updated_at|DateTime ()|``NN``||
 
+
+#### SQL Declare
+
 ```SQL
 CREATE TABLE `compound_external_descriptors` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -102,6 +108,9 @@ CREATE TABLE `compound_external_descriptors` (
 |created_at|DateTime ()|``NN``||
 |updated_at|DateTime ()|``NN``||
 
+
+#### SQL Declare
+
 ```SQL
 CREATE TABLE `compound_substituents` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -135,6 +144,9 @@ CREATE TABLE `compound_substituents` (
 |updated_at|DateTime ()|||
 |source_id|Int64 (11)|||
 |source_type|VarChar (255)|||
+
+
+#### SQL Declare
 
 ```SQL
 CREATE TABLE `compound_synonyms` (
@@ -268,6 +280,11 @@ CREATE TABLE `compound_synonyms` (
 |meta_cyc_id|VarChar (255)|||
 |foodcomex|Boolean (1)|||
 |phytohub_id|VarChar (255)|||
+
+<div style="page-break-after: always;"></div>
+
+
+#### SQL Declare
 
 ```SQL
 CREATE TABLE `compounds` (
@@ -404,6 +421,9 @@ CREATE TABLE `compounds` (
 |creator_id|Int64 (11)|||
 |updater_id|Int64 (11)|||
 
+
+#### SQL Declare
+
 ```SQL
 CREATE TABLE `compounds_enzymes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -440,6 +460,11 @@ CREATE TABLE `compounds_enzymes` (
 |updater_id|Int64 (11)|||
 |source_id|Int64 (11)|||
 |source_type|VarChar (255)|||
+
+<div style="page-break-after: always;"></div>
+
+
+#### SQL Declare
 
 ```SQL
 CREATE TABLE `compounds_flavors` (
@@ -485,6 +510,11 @@ CREATE TABLE `compounds_flavors` (
 |source_id|Int64 (11)|||
 |source_type|VarChar (255)|||
 
+<div style="page-break-after: always;"></div>
+
+
+#### SQL Declare
+
 ```SQL
 CREATE TABLE `compounds_health_effects` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -524,6 +554,9 @@ CREATE TABLE `compounds_health_effects` (
 |updater_id|Int64 (11)|||
 |created_at|DateTime ()|``NN``||
 |updated_at|DateTime ()|``NN``||
+
+
+#### SQL Declare
 
 ```SQL
 CREATE TABLE `compounds_pathways` (
@@ -577,6 +610,11 @@ CREATE TABLE `compounds_pathways` (
 |orig_method|VarChar (255)|||
 |orig_unit_expression|VarChar (255)|||
 |standard_content|Decimal ()|||
+
+<div style="page-break-after: always;"></div>
+
+
+#### SQL Declare
 
 ```SQL
 CREATE TABLE `contents` (
@@ -653,6 +691,11 @@ CREATE TABLE `contents` (
 |created_at|DateTime ()|||
 |updated_at|DateTime ()|||
 
+<div style="page-break-after: always;"></div>
+
+
+#### SQL Declare
+
 ```SQL
 CREATE TABLE `enzymes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -722,6 +765,9 @@ CREATE TABLE `enzymes` (
 |creator_id|Int64 (11)|||
 |updater_id|Int64 (11)|||
 
+
+#### SQL Declare
+
 ```SQL
 CREATE TABLE `flavors` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -756,6 +802,9 @@ CREATE TABLE `flavors` (
 |created_at|DateTime ()|``NN``||
 |updated_at|DateTime ()|``NN``||
 
+
+#### SQL Declare
+
 ```SQL
 CREATE TABLE `food_taxonomies` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -785,6 +834,9 @@ CREATE TABLE `food_taxonomies` (
 |provider_id|Int64 (11)|``NN``||
 |created_at|DateTime ()|||
 |updated_at|DateTime ()|||
+
+
+#### SQL Declare
 
 ```SQL
 CREATE TABLE `foodcomex_compound_providers` (
@@ -846,6 +898,11 @@ CREATE TABLE `foodcomex_compound_providers` (
 |quantity_units|VarChar (255)|||
 |available_spectra|Text ()|||
 |storage_conditions|Text ()|||
+
+<div style="page-break-after: always;"></div>
+
+
+#### SQL Declare
 
 ```SQL
 CREATE TABLE `foodcomex_compounds` (
@@ -925,6 +982,11 @@ CREATE TABLE `foodcomex_compounds` (
 |ncbi_taxonomy_id|Int64 (11)|||
 |export_to_foodb|Boolean (1)|||
 
+<div style="page-break-after: always;"></div>
+
+
+#### SQL Declare
+
 ```SQL
 CREATE TABLE `foods` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -977,6 +1039,11 @@ CREATE TABLE `foods` (
 |creator_id|Int64 (11)|||
 |updater_id|Int64 (11)|||
 |chebi_definition|Text ()|||
+
+<div style="page-break-after: always;"></div>
+
+
+#### SQL Declare
 
 ```SQL
 CREATE TABLE `health_effects` (
@@ -1032,6 +1099,11 @@ CREATE TABLE `health_effects` (
 |created_at|DateTime ()|||
 |updated_at|DateTime ()|||
 
+<div style="page-break-after: always;"></div>
+
+
+#### SQL Declare
+
 ```SQL
 CREATE TABLE `nutrients` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1082,6 +1154,9 @@ CREATE TABLE `nutrients` (
 |created_at|DateTime ()|||
 |updated_at|DateTime ()|||
 
+
+#### SQL Declare
+
 ```SQL
 CREATE TABLE `pathways` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1117,6 +1192,11 @@ CREATE TABLE `pathways` (
 |updated_at|DateTime ()|``NN``||
 |source_id|Int64 (11)|||
 |source_type|VarChar (255)|||
+
+<div style="page-break-after: always;"></div>
+
+
+#### SQL Declare
 
 ```SQL
 CREATE TABLE `references` (
