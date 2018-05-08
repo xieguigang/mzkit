@@ -1,12 +1,3 @@
-# 假设二级质谱的相似度的比对函数的接口形式为：
-# ms2.alignment <- function(q, s) { score }
-
-# q,s为二级矩阵：
-#
-# mz, into
-#
-#
-
 require(VisualBasic);
 
 tolerance.deltaMass <- function(da = 0.3) {
@@ -43,4 +34,49 @@ find.KEGG <- function(precursor, KEGG, tolerance = tolerance.ppm(), precursor_ty
 
     # 从一级质谱信息只能够从质量上找出一系列符合误差要求的化合物
     KEGG[index];
+}
+
+# 进行KEGG辅助注释的前提是必须要从实验数据之中已经注释出了一个非常确定的KEGG代谢物
+# 假设这个代谢物的数据结构为
+# [KEGGID, ms2, ms1]
+# 
+# 假设代谢过程的数据结构为
+# [RXNID, reactants, products]
+# 其中reactants和products都是化合物的KEGG编号
+
+# 使用KEGG的代谢物数据库和代谢反应过程数据库找出和目标已经鉴定出的代谢物的所有代谢过程相关的未鉴定代谢物的KEGG注释信息
+#
+# @param ms2.similar 比较两个二级质谱矩阵是否相似，函数返回逻辑值
+# 
+# 假设二级质谱的相似度的比对函数的接口形式为：
+# ms2.alignment <- function(q, s) { score = SSM(q, s)； score >= threshold; }
+
+# q,s为二级矩阵：
+#
+# mz, into
+#
+#
+#
+KEGG.rxnNetwork <- function(identified, sample, KEGG, RXN, ms2.similar, tolerance = tolerance.ppm(), precursor_type = "[M+H]+") {
+    KEGGID <- identified[["KEGGID"]];
+    RXN <- lapply(names(RXN), function(RXNID) {
+        # 找出所有相关的代谢过程
+        r <- RXN[[RXNID]];
+
+        if (sum(r[["reactants"]] == KEGGID) > 0) {
+            # 已经鉴定出来的代谢物在底物侧，则返回产物侧
+            list(RXNID = RXNID, connector = r[["products"]]);
+        } else if (sum(r[["products"]] == KEGGID) > 0) {
+            # 已鉴定代谢物在产物侧，则返回底物侧
+            list(RXNID = RXNID, connector = r[["reactants"]]);
+        } else {
+            # 不是这个代谢过程的成员，则返回空值
+            NULL;
+        }
+    });
+
+    ## 删除集合之中的空值 
+    RXN <- %NOT% (RXN %IS_NOTHING%);
+
+
 }
