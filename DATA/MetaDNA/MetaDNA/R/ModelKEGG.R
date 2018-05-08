@@ -78,5 +78,61 @@ KEGG.rxnNetwork <- function(identified, sample, KEGG, RXN, ms2.similar, toleranc
     ## 删除集合之中的空值 
     RXN <- %NOT% (RXN %IS_NOTHING%);
 
+    # 在partner里面找出一级匹配的，并且二级和identified相似的即很有可能是目标代谢物
+    # 
+    # 首先将所有二级相似的都找出来
+    query.ms2 <- identified[["ms2"]];
+    sample <- lapply(names(sample), function(index) {
+        unknown <- sample[[index]];
+        ms2 <- unknown[["ms2"]];
 
-}
+        if (ms2.similar(ms2, query.ms2)) {
+            # 找到了一个目标物质
+            unknown;
+        } else {
+            NULL;
+        }
+    });
+
+    sample <- %NOT% (sample %IS_NOTHING%);
+
+    # 然后对sample的subset进行KEGG的一级质谱结果搜索
+    sample <- lapply(names(sample), function(index) {
+        unknown <- sample[[index]];
+        ms1 <- unknown[["ms1"]];
+        KEGG.list <- find.KEGG(ms1, KEGG, tolerance, precursor_type);
+
+        if (length(KEGG.list) == 0) {
+            NULL;
+        } else {
+
+            ID.list <- names(KEGG.list);
+            connection = list();
+
+            # 而且能够通过ms1找到相应的KEGG代谢物
+            # 则判断KEGG代谢物是否在代谢网络的connector里面
+            for(r in RXN) {
+                intersection <- intersect(r$connector, ID.list); 
+
+                if (length(intersection) > 0) {
+                    # 找到了一个
+                    # 尝试将未知代谢物鉴定为目标KEGG代谢物
+                    connection[r$RXNID] = list(KEGG = intersection, metabolite = unknown);
+                }
+            }
+
+            if（length(connection) > 0） {
+                # 候选鉴定列表
+                connection;
+            } else {
+                NULL;
+            }
+        }
+    });
+
+    sample <- %NOT% (sample %IS_NOTHING%);
+
+    # 返回候选列表
+    # 这个候选列表都是在代谢过程上面和identified有关联的，并且ms1能够在KEGG之中找到结果，ms2与identieid相似
+    sample;
+} 
