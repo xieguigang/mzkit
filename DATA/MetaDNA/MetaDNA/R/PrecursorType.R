@@ -209,7 +209,7 @@ get.mass <- function(chargeMode, charge, PrecursorType) {
 	return(found$calc);
 }
 
-#函数返回-1值表示没有找到目标类型的前体离子
+# 函数返回-1值表示没有找到目标类型的前体离子
 get.PrecursorMZ <- function(M, precursorType) {
 	mode        <- getPolarity(precursorType);
 	mode        <- Calculator[[mode]];
