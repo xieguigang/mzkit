@@ -30,7 +30,7 @@ Public Module GlobalAlignment
     ''' <param name="subject"></param>
     ''' <returns></returns>
     Public Function NWGlobalAlign(query As LibraryMatrix, subject As LibraryMatrix, Optional tolerance As Tolerance = Nothing) As GlobalAlign(Of ms2)()
-        Dim massEquals As Equals(Of ms2)
+        Dim massEquals As IEquals(Of ms2)
         Dim empty As New ms2 With {
             .mz = -1,
             .intensity = -1,

@@ -1,5 +1,4 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data.visualize.Network.FindPath
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Language
 Imports SMRUCC.Chemistry
@@ -35,7 +34,7 @@ Public Module Emulator
             Dim percentage# = energy.PercentageLess(e)
             Dim fragmentModel As NetworkGraph = molecule.BreakBonds(energy:=e)
 
-            For Each fragment As NetworkGraph In fragmentModel.IteratesSubNetworks
+            For Each fragment As NetworkGraph In {} ' fragmentModel.IteratesSubNetworks
                 Dim mz# = fragment.CalculateMZ
 
                 With Math.Round(mz, precision).ToString
