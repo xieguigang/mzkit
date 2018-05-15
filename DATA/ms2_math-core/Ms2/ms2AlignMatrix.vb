@@ -33,8 +33,8 @@ Public Class SSM2MatrixFragment
 
                         With data
                             mz = !mz.Value
-                            query = !query.Value
-                            ref = !ref.Value
+                            query = !query.Value.ParseDouble
+                            ref = !ref.Value.ParseDouble
                             da = !da.Value
                         End With
 
