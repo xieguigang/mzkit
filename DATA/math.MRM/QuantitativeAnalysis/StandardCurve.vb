@@ -160,8 +160,16 @@ Public Module StandardCurve
                 .ToArray
 
             ' 对标准曲线进行线性回归建模
+            ' X是实验值，可能会因为标准曲线溶液配制的问题出现，所以这个可能会需要使用异常点检测
             Dim X = line.X.AsVector
+            ' Y是从文件之中读取出来的浓度梯度信息，认为这个除非文件录入有错，否则将不会出现异常点
             Dim Y = line.Y.AsVector
+
+            With X.OutlierIndex.RemovesOutlier(X, Y)
+                X = .X
+                Y = .Y
+            End With
+
             Dim W = 1 / X ^ 2
             Dim fit As WeightedFit = WeightedLinearRegression.Regress(X, Y, W, 1)
             Dim info As New Dictionary(Of String, String) From {
