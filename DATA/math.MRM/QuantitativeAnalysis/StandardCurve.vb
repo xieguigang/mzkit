@@ -130,6 +130,10 @@ Public Module StandardCurve
             ' 标准曲线数据
             Dim line As PointF() = ion _
                 .C _
+                .OrderBy(Function(l)
+                             ' 按照标曲编号从小到大进行排序
+                             Return Val(l.Key.Match("\d+"))
+                         End Function) _
                 .Select(Function(level)
 
                             Dim At_i = TPA(level.Key)   ' 得到峰面积Ati
@@ -165,7 +169,7 @@ Public Module StandardCurve
             ' Y是从文件之中读取出来的浓度梯度信息，认为这个除非文件录入有错，否则将不会出现异常点
             Dim Y = line.Y.AsVector
 
-            With X.OutlierIndex.RemovesOutlier(X, Y)
+            With X.OrderSequenceOutlierIndex.RemovesOutlier(X, Y)
                 X = .X
                 Y = .Y
             End With
