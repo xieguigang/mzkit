@@ -11,7 +11,7 @@ MySql database field attributes notes in this development document:
 > + **UN**: Unsigned;
 > + **ZF**: Zero Fill
 
-Generate time: 2018/5/7 17:30:54<br />
+Generate time: 2018/5/23 11:01:41<br />
 By: ``mysqli.vb`` reflector tool ([https://github.com/xieguigang/mysqli.vb](https://github.com/xieguigang/mysqli.vb))
 
 <div style="page-break-after: always;"></div>
@@ -47,7 +47,7 @@ CREATE TABLE `compound_alternate_parents` (
   PRIMARY KEY (`id`),
   KEY `index_compound_alternate_parents_on_compound_id` (`compound_id`),
   CONSTRAINT `fk_rails_0aefaa1014` FOREIGN KEY (`compound_id`) REFERENCES `compounds` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=50721 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=50721 DEFAULT CHARSET=utf8;
 ```
 
 
@@ -86,7 +86,7 @@ CREATE TABLE `compound_external_descriptors` (
   PRIMARY KEY (`id`),
   KEY `index_compound_external_descriptors_on_compound_id` (`compound_id`),
   CONSTRAINT `fk_rails_2395524b9a` FOREIGN KEY (`compound_id`) REFERENCES `compounds` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4011 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4011 DEFAULT CHARSET=utf8;
 ```
 
 
@@ -123,7 +123,7 @@ CREATE TABLE `compound_substituents` (
   PRIMARY KEY (`id`),
   KEY `index_compound_substituents_on_compound_id` (`compound_id`),
   CONSTRAINT `fk_rails_1e68999a98` FOREIGN KEY (`compound_id`) REFERENCES `compounds` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=95356 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=95356 DEFAULT CHARSET=utf8;
 ```
 
 
@@ -160,7 +160,7 @@ CREATE TABLE `compound_synonyms` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_compound_synonyms_on_synonym` (`synonym`),
   KEY `index_compound_synonyms_on_source_id_and_source_type` (`source_id`,`source_type`)
-) ENGINE=InnoDB AUTO_INCREMENT=251049 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=251049 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 ```
 
 
@@ -398,7 +398,7 @@ CREATE TABLE `compounds` (
   UNIQUE KEY `index_compounds_on_public_id` (`public_id`),
   UNIQUE KEY `index_compounds_on_name` (`name`),
   UNIQUE KEY `index_compounds_on_name_and_public_id` (`name`,`public_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31528 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=31528 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 ```
 
 
@@ -436,7 +436,7 @@ CREATE TABLE `compounds_enzymes` (
   `updater_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_compounds_enzymes_on_compound_id_and_enzyme_id` (`compound_id`,`enzyme_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=105090 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=105090 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 ```
 
 
@@ -481,7 +481,7 @@ CREATE TABLE `compounds_flavors` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_compounds_flavors_on_compound_id_and_flavor_id` (`compound_id`,`flavor_id`),
   KEY `index_compounds_flavors_on_source_id_and_source_type` (`source_id`,`source_type`)
-) ENGINE=InnoDB AUTO_INCREMENT=11632 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11632 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 ```
 
 
@@ -533,7 +533,7 @@ CREATE TABLE `compounds_health_effects` (
   `source_type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_compounds_health_effects_on_source_id_and_source_type` (`source_id`,`source_type`)
-) ENGINE=InnoDB AUTO_INCREMENT=11093 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11093 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 ```
 
 
@@ -572,7 +572,7 @@ CREATE TABLE `compounds_pathways` (
   KEY `index_compounds_pathways_on_pathway_id` (`pathway_id`),
   CONSTRAINT `fk_rails_14c02acb79` FOREIGN KEY (`pathway_id`) REFERENCES `pathways` (`id`),
   CONSTRAINT `fk_rails_34b0bf14de` FOREIGN KEY (`compound_id`) REFERENCES `compounds` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1605 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1605 DEFAULT CHARSET=utf8;
 ```
 
 
@@ -644,7 +644,7 @@ CREATE TABLE `contents` (
   `standard_content` decimal(15,9) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `content_source_and_food_index` (`source_id`,`source_type`,`food_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1682258 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1682258 DEFAULT CHARSET=utf8;
 ```
 
 
@@ -742,7 +742,7 @@ CREATE TABLE `enzymes` (
   UNIQUE KEY `index_enzymes_on_genatlas_id` (`genatlas_id`),
   UNIQUE KEY `index_enzymes_on_hgnc_id` (`hgnc_id`),
   UNIQUE KEY `index_enzymes_on_hprd_id` (`hprd_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1745 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1745 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 ```
 
 
@@ -780,7 +780,7 @@ CREATE TABLE `flavors` (
   `updater_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_flavors_on_name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=857 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=857 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 ```
 
 
@@ -815,7 +815,7 @@ CREATE TABLE `food_taxonomies` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=920 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=920 DEFAULT CHARSET=utf8;
 ```
 
 
@@ -848,7 +848,7 @@ CREATE TABLE `foodcomex_compound_providers` (
   PRIMARY KEY (`id`),
   KEY `index_foodcomex_compound_providers_on_foodcomex_compound_id` (`foodcomex_compound_id`),
   KEY `index_foodcomex_compound_providers_on_provider_id` (`provider_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1090 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1090 DEFAULT CHARSET=utf8;
 ```
 
 
@@ -945,7 +945,7 @@ CREATE TABLE `foodcomex_compounds` (
   PRIMARY KEY (`id`),
   KEY `index_foodcomex_compounds_on_compound_id` (`compound_id`),
   KEY `index_foodcomex_compounds_on_admin_user_id` (`admin_user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1048 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1048 DEFAULT CHARSET=utf8;
 ```
 
 
@@ -1015,7 +1015,7 @@ CREATE TABLE `foods` (
   UNIQUE KEY `index_foods_on_name` (`name`),
   KEY `index_foods_on_name_scientific` (`name_scientific`),
   KEY `index_foods_on_export_to_afcdb` (`export_to_afcdb`)
-) ENGINE=InnoDB AUTO_INCREMENT=925 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=925 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 ```
 
 
@@ -1061,7 +1061,7 @@ CREATE TABLE `health_effects` (
   UNIQUE KEY `index_health_effects_on_name` (`name`),
   KEY `index_health_effects_on_chebi_name` (`chebi_name`),
   KEY `index_health_effects_on_chebi_id` (`chebi_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1436 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1436 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 ```
 
 
@@ -1133,7 +1133,7 @@ CREATE TABLE `nutrients` (
   UNIQUE KEY `index_nutrients_on_name` (`name`),
   UNIQUE KEY `index_nutrients_on_public_id` (`public_id`),
   UNIQUE KEY `index_nutrients_on_name_and_public_id` (`name`,`public_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
 ```
 
 
@@ -1166,7 +1166,7 @@ CREATE TABLE `pathways` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=98 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=98 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 ```
 
 
@@ -1214,7 +1214,7 @@ CREATE TABLE `references` (
   `source_type` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_references_on_source_type_and_source_id` (`source_type`,`source_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31792 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=31792 DEFAULT CHARSET=utf8;
 ```
 
 
