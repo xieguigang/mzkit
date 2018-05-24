@@ -1,4 +1,5 @@
 ﻿Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel
 
 Namespace TMIC.HMDB.Spectra
 
@@ -22,7 +23,7 @@ Namespace TMIC.HMDB.Spectra
         End Operator
     End Class
 
-    <XmlType("c-ms")> Public Class CMS
+    <XmlType("c-ms")> Public Class CMS : Inherits XmlDataModel
 
         Public Property id As String
         Public Property notes As NullableValue
