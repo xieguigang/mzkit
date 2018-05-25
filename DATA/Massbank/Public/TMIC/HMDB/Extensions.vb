@@ -7,6 +7,12 @@ Namespace TMIC.HMDB
 
     Public Module HMDBExtensions
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function BioSamples(metabolite As metabolite) As String()
+            Return metabolite.biofluid_locations.biofluid.AsList + metabolite.tissue_locations.tissue
+        End Function
+
         ''' <summary>
         ''' Build hmdb metabolite classify table.
         ''' </summary>
