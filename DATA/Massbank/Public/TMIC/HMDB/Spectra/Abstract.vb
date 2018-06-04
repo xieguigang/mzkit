@@ -79,8 +79,8 @@ Namespace TMIC.HMDB.Spectra
 
     Public MustInherit Class Peak
 
-        Public Property id As String
-        Public Property intensity As Double
+        Public Overridable Property id As String
+        Public Overridable Property intensity As Double
 
         Public Overrides Function ToString() As String
             Return $"[{id} => {intensity}]"
