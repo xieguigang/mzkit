@@ -3,30 +3,8 @@ Imports Microsoft.VisualBasic.ComponentModel
 
 Namespace TMIC.HMDB.Spectra
 
-    Public Class NullableValue
+    <XmlType("c-ms")> Public Class CMS : Inherits SpectraFile(Of c_ms_peak)
 
-        <XmlAttribute>
-        Public Property nil As Boolean
-        <XmlText>
-        Public Property value As String
-
-        Public Overrides Function ToString() As String
-            If nil Then
-                Return "null"
-            Else
-                Return value
-            End If
-        End Function
-
-        Public Shared Narrowing Operator CType(value As NullableValue) As String
-            Return value.value
-        End Operator
-    End Class
-
-    <XmlType("c-ms")> Public Class CMS : Inherits XmlDataModel
-
-        Public Property id As String
-        Public Property notes As NullableValue
         Public Property predicted As Boolean
 
         <XmlElement("sample-concentration")> Public Property sample_concentration As NullableValue
@@ -37,9 +15,6 @@ Namespace TMIC.HMDB.Spectra
         <XmlElement("sample-source")> Public Property sample_source As NullableValue
         <XmlElement("collection-date")> Public Property collection_date As NullableValue
         <XmlElement("instrument-type")> Public Property instrument_type As NullableValue
-        <XmlElement("peak-counter")> Public Property peak_counter As NullableValue
-        <XmlElement("created-at")> Public Property created_at As NullableValue
-        <XmlElement("updated-at")> Public Property updated_at As NullableValue
         <XmlElement("chromatography-type")> Public Property chromatography_type As NullableValue
         <XmlElement("retention-index")> Public Property retention_index As NullableValue
         <XmlElement("retention-time")> Public Property retention_time As NullableValue
@@ -56,29 +31,16 @@ Namespace TMIC.HMDB.Spectra
         <XmlElement("splash-key")> Public Property splash_key As NullableValue
         <XmlElement("derivative-smiles")> Public Property derivative_smiles As NullableValue
         <XmlElement("derivative-exact-mass")> Public Property derivative_exact_mass As NullableValue
-        <XmlElement("database-id")> Public Property database_id As NullableValue
 
-        Public Property references As reference()
         <XmlElement("c-ms-peaks")>
         Public Property c_ms_peaks As c_ms_peak()
 
     End Class
 
-    <XmlType("c-ms-peak")> Public Class c_ms_peak
-        Public Property id As String
+    <XmlType("c-ms-peak")> Public Class c_ms_peak : Inherits Peak
+
         Public Property c_ms_id As String
         Public Property mass_charge As Double
-        Public Property intensity As Double
-    End Class
 
-    Public Class reference
-        Public Property id As String
-
-        <XmlElement("spectra-id")> Public Property spectra_id As String
-        <XmlElement("spectra-type")> Public Property spectra_type As String
-        <XmlElement("pubmed-id")> Public Property pubmed_id As String
-        <XmlElement("ref-text")> Public Property ref_text As String
-        <XmlElement("database")> Public Property database As String
-        <XmlElement("database-id")> Public Property database_id As String
     End Class
 End Namespace
