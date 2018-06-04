@@ -1,9 +1,9 @@
 ﻿Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.ComponentModel
 
 Namespace TMIC.HMDB.Spectra
 
-    <XmlType("c-ms")> Public Class CMS : Inherits SpectraFile(Of c_ms_peak)
+    <XmlType("c-ms")> Public Class CMS : Inherits SpectraFile
+        Implements IPeakList(Of c_ms_peak)
 
         Public Property predicted As Boolean
 
@@ -33,14 +33,14 @@ Namespace TMIC.HMDB.Spectra
         <XmlElement("derivative-exact-mass")> Public Property derivative_exact_mass As NullableValue
 
         <XmlElement("c-ms-peaks")>
-        Public Property c_ms_peaks As c_ms_peak()
+        Public Property peakList As c_ms_peak() Implements IPeakList(Of c_ms_peak).peakList
 
     End Class
 
-    <XmlType("c-ms-peak")> Public Class c_ms_peak : Inherits Peak
+    <XmlType("c-ms-peak")> Public Class c_ms_peak : Inherits MSPeak
 
+        <XmlElement("c-ms-id")>
         Public Property c_ms_id As String
-        Public Property mass_charge As Double
 
     End Class
 End Namespace

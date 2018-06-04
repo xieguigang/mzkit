@@ -34,7 +34,7 @@ Namespace TMIC.HMDB.Spectra
         <XmlElement("database-id")> Public Property database_id As String
     End Class
 
-    Public MustInherit Class SpectraFile(Of T As Peak) : Inherits XmlDataModel
+    Public MustInherit Class SpectraFile : Inherits XmlDataModel
 
         Public Property id As String
         Public Property notes As NullableValue
@@ -49,6 +49,10 @@ Namespace TMIC.HMDB.Spectra
 
     End Class
 
+    Public Interface IPeakList(Of T As Peak)
+        Property peakList As T()
+    End Interface
+
     Public MustInherit Class Peak
 
         Public Property id As String
@@ -57,5 +61,10 @@ Namespace TMIC.HMDB.Spectra
         Public Overrides Function ToString() As String
             Return $"[{id} => {intensity}]"
         End Function
+    End Class
+
+    Public Class MSPeak : Inherits Peak
+        <XmlElement("mass-charge")>
+        Public Property mass_charge As Double
     End Class
 End Namespace
