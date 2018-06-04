@@ -214,7 +214,12 @@
     <Compile Include="Public\TMIC\FooDB\Food.vb" />
     <Compile Include="Public\TMIC\FooDB\StoredProcedure.vb" />
     <Compile Include="Public\TMIC\HMDB\MetaReference\RepositoryExtensions.vb" />
-    <Compile Include="Public\TMIC\HMDB\CMS.vb" />
+    <Compile Include="Public\TMIC\HMDB\Spectra\Abstract.vb" />
+    <Compile Include="Public\TMIC\HMDB\Spectra\EIMS.vb" />
+    <Compile Include="Public\TMIC\HMDB\Spectra\NMR2D.vb" />
+    <Compile Include="Public\TMIC\HMDB\Spectra\NMR1D.vb" />
+    <Compile Include="Public\TMIC\HMDB\Spectra\MSMS.vb" />
+    <Compile Include="Public\TMIC\HMDB\Spectra\CMS.vb" />
     <Compile Include="SDF\Elements.vb" />
     <Compile Include="SDF\Extensions.vb" />
     <Compile Include="Public\TMIC\FooDB\mysql\compounds.vb" />
