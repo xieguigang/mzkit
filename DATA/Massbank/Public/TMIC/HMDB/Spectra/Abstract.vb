@@ -41,6 +41,10 @@ Namespace TMIC.HMDB.Spectra
         Public Property notes As NullableValue
         Public Property predicted As Boolean
 
+        ''' <summary>
+        ''' HMDB ID
+        ''' </summary>
+        ''' <returns></returns>
         <XmlElement("database-id")> Public Property database_id As NullableValue
         <XmlElement("peak-counter")> Public Property peak_counter As NullableValue
 
