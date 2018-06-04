@@ -7,7 +7,9 @@ Imports Microsoft.VisualBasic.Text
 ''' </summary>
 Public Module SpectraEncoder
 
-    Public Function GetEncoder(Of T)(getX As Func(Of T, Double), getY As Func(Of T, Double)) As Func(Of T(), String)
+    Public Delegate Function Encoder(Of T)(mzData As T()) As String
+
+    Public Function GetEncoder(Of T)(getX As Func(Of T, Double), getY As Func(Of T, Double)) As Encoder(Of T)
         Return Function(matrix As T()) As String
                    Dim table$ = matrix _
                        .Select(Function(m)
