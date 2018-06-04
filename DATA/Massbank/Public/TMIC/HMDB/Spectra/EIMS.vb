@@ -2,13 +2,14 @@
 
 Namespace TMIC.HMDB.Spectra
 
-    Public Class EIMS : Inherits SpectraFile
-        Implements IPeakList(Of EIPeak)
+    <XmlType("ei-ms")> Public Class EIMS : Inherits SpectraFile
+        Implements IPeakList(Of EIMSPeak)
 
-        Public Property peakList As EIPeak() Implements IPeakList(Of EIPeak).peakList
+        <XmlArray("ei-ms-peaks")>
+        Public Property peakList As EIMSPeak() Implements IPeakList(Of EIMSPeak).peakList
     End Class
 
-    Public Class EIPeak : Inherits MSPeak
+    <XmlType("ei-ms-peak")> Public Class EIMSPeak : Inherits MSPeak
 
         <XmlElement("ei-ms-id")>
         Public Property EImsId As String
