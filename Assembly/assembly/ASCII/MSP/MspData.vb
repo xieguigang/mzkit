@@ -24,7 +24,9 @@ Namespace ASCII.MSP
         Public Property Comments As String
 
         ''' <summary>
-        ''' 物质的注释信息主要是放在这个结构体之中
+        ''' MoNA里面都主要是讲注释的信息放在<see cref="Comments"/>字段里面的。
+        ''' 物质的注释信息主要是放在这个结构体之中，这个属性是对<see cref="Comments"/>
+        ''' 属性的解析结果
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property MetaDB As MetaData

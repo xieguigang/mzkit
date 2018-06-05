@@ -1,9 +1,10 @@
-﻿Imports System.Xml.Serialization
+﻿Imports System.Runtime.CompilerServices
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 
 Namespace TMIC.HMDB.Spectra
 
-    Public Class NullableValue
+    Public Structure NullableValue
 
         <XmlAttribute>
         Public Property nil As Boolean
@@ -18,10 +19,11 @@ Namespace TMIC.HMDB.Spectra
             End If
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(value As NullableValue) As String
             Return value.value
         End Operator
-    End Class
+    End Structure
 
     Public Class reference
         Public Property id As String

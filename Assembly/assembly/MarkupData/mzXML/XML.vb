@@ -43,6 +43,10 @@ Namespace MarkupData.mzXML
                         End Function) _
                 .ToDictionary(Function(peak) peak.scan)
 
+            ' 需要从ms1 scan里面进行解卷积得到分子的响应度信息
+            ' 而后就可以导出peaktable了
+
+            Throw New NotImplementedException
         End Function
     End Class
 End Namespace
