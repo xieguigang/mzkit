@@ -34,10 +34,17 @@ Namespace ASCII.MSP
         End Function
 
         ReadOnly names As Dictionary(Of String, String)
-        ReadOnly fields As Dictionary(Of BindProperty(Of ColumnAttribute)) = Mappings.GetFields(Of MetaData).ToDictionary
+        ReadOnly fields As Dictionary(Of BindProperty(Of ColumnAttribute))
 
         Sub New()
             names = Mappings.FieldNameMappings(Of MetaData)(explict:=True)
+            fields = Mappings.GetFields(Of MetaData).ToDictionary
+
+            For Each field In fields.Values
+                If Not fields.ContainsKey(field.member.Name) Then
+                    fields.Add(field.member.Name, field)
+                End If
+            Next
         End Sub
 
         ''' <summary>
@@ -66,6 +73,7 @@ Namespace ASCII.MSP
         <Extension> Public Function FillData(comments$) As MetaData
             Dim table As NameValueCollection = comments.ToTable
             Dim meta As Object = New MetaData
+            Dim castValue As Object
 
             For Each field As BindProperty(Of ColumnAttribute) In fields.Values
                 Dim name$ = field.Identity
@@ -74,20 +82,22 @@ Namespace ASCII.MSP
                     Dim value As String()
 
                     value = table.GetValues(name)
+
                     If value.IsNullOrEmpty Then
                         value = table.GetValues(names(name))
                     End If
 
                     Call field.SetValue(meta, value)
                 Else
-                    Dim value As String
+                    Dim value$ = table(name)
 
-                    value = table(name)
                     If value.StringEmpty Then
                         value = table(names(name))
                     End If
 
-                    Call field.SetValue(meta, Scripting.CTypeDynamic(value, field.Type))
+                    castValue = Scripting.CTypeDynamic(value, field.Type)
+
+                    Call field.SetValue(meta, castValue)
                 End If
             Next
 
