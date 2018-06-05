@@ -123,6 +123,11 @@ Namespace ASCII.MSP
             End With
         End Function
 
+        ''' <summary>
+        ''' 这个函数会自动对保留时间进行单位的转换，返回结果的单位为秒
+        ''' </summary>
+        ''' <param name="meta"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function Read_retention_time(meta As MetaData) As Double
             With meta
