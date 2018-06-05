@@ -37,10 +37,10 @@ Namespace ASCII.MSP
         ReadOnly fields As Dictionary(Of BindProperty(Of ColumnAttribute))
 
         Sub New()
-            names = Mappings.FieldNameMappings(Of MetaData)(explict:=True)
+            names = Mappings.FieldNameMappings(Of MetaData)(explict:=True, reversed:=True)
             fields = Mappings.GetFields(Of MetaData).ToDictionary
 
-            For Each field In fields.Values
+            For Each field As BindProperty(Of ColumnAttribute) In fields.Values.ToArray
                 If Not fields.ContainsKey(field.member.Name) Then
                     fields.Add(field.member.Name, field)
                 End If
