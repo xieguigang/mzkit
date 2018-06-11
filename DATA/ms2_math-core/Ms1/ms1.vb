@@ -6,7 +6,7 @@ Imports sys = System.Math
 ''' <summary>
 ''' The ms1 peak
 ''' </summary>
-Public Class ms1 : Implements INamedValue
+Public Class Ms1Feature : Implements INamedValue
 
     <Column(Name:="#ID")>
     Public Property ID As String Implements IKeyedEntity(Of String).Key

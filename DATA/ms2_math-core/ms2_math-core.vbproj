@@ -141,6 +141,7 @@
     <Compile Include="Chromatogram\ChromatogramTick.vb" />
     <Compile Include="Chromatogram\ROI.vb" />
     <Compile Include="Chromatogram\PeakArea.vb" />
+    <Compile Include="Ms1\PrecursorType\MzCalculator.vb" />
     <Compile Include="Ms1\Tolerance.vb" />
     <Compile Include="Ms2\LibraryMatrixExtensions.vb" />
     <Compile Include="Ms2\GlobalAlignment.vb" />
@@ -163,7 +164,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Ms1\Peaktable.vb" />
-    <Compile Include="Ms1\PrecursorType.vb" />
+    <Compile Include="Ms1\PrecursorType\PrecursorType.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
