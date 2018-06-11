@@ -73,7 +73,7 @@ Namespace TMIC.HMDB
         <Xref> Public Property chebi_id As String
 #End Region
 
-        Public Property biofluid_locations As biofluid_locations
+        Public Property biospecimen_locations As biospecimen_locations
         Public Property tissue_locations As tissue_locations
     End Class
 
@@ -117,13 +117,13 @@ Namespace TMIC.HMDB
         End Function
     End Class
 
-    Public Structure biofluid_locations
+    Public Structure biospecimen_locations
 
         <XmlElement>
-        Public Property biofluid As String()
+        Public Property biospecimen As String()
 
         Public Overrides Function ToString() As String
-            Return biofluid.GetJson
+            Return biospecimen.GetJson
         End Function
     End Structure
 

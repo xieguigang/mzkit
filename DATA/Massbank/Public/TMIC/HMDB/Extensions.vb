@@ -10,7 +10,7 @@ Namespace TMIC.HMDB
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function BioSamples(metabolite As metabolite) As String()
-            Return metabolite.biofluid_locations.biofluid.AsList + metabolite.tissue_locations.tissue
+            Return metabolite.biospecimen_locations.biospecimen.AsList + metabolite.tissue_locations.tissue
         End Function
 
         ''' <summary>
@@ -142,8 +142,8 @@ Namespace TMIC.HMDB
 
             For Each metabolite As metabolite In metabolite.Load(path)
                 Dim samples$() = metabolite _
-                    .biofluid_locations _
-                    .biofluid _
+                    .biospecimen_locations _
+                    .biospecimen _
                     .SafeQuery _
                     .ToArray
                 Dim disease$() = metabolite _
