@@ -21,7 +21,7 @@ Namespace Ms1.PrecursorType
                 charge = 1
             End If
 
-            Dim M% = Val(type.Matches("\d*M[+-]+"))
+            Dim M% = Val(type.Matches("\d*M[+-]+").FirstOrDefault)
 
             If M = 0 Then
                 M = 1
