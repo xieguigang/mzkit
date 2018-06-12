@@ -34,7 +34,7 @@ Public Class MassWolf : Inherits WebApp
     <Usage("/MassWolf.d/mzXML.vbs?path=<path>")>
     <[GET](GetType(String))>
     Public Function ConvertWatersRaw(request As HttpRequest, response As HttpResponse) As Boolean
-        Dim path$ = ensureZipExtract(normalizePath(request.URLParameters("path")))
+        Dim path$ = EnsureZipExtract(normalizePath(request.URLParameters("path")))
         Dim out$ = normalizePath(request.URLParameters("to")) Or $"{path.ParentPath}/msconvert".AsDefault
 
         For Each part In SplitDirectory(waters:=path)
