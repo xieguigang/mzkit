@@ -1,8 +1,10 @@
 ﻿Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Parallel.Threads
+Imports Microsoft.VisualBasic.Scripting.SymbolBuilder
 Imports SMRUCC.WebCloud.HTTPInternal
 Imports SMRUCC.WebCloud.HTTPInternal.AppEngine
 Imports SMRUCC.WebCloud.HTTPInternal.AppEngine.APIMethods
@@ -175,10 +177,6 @@ Public Class VBServerScript : Inherits WebApp
     ''' ProteoWizard命令行程序的位置
     ''' </summary>
     ReadOnly BIN$
-    ''' <summary>
-    ''' OSS存储的文件系统位置
-    ''' </summary>
-    ReadOnly OSS_ROOT$
 
     Dim taskPool As New ThreadPool
 
@@ -190,13 +188,10 @@ Public Class VBServerScript : Inherits WebApp
         Call MyBase.New(main)
 
         BIN = App.GetVariable("bin")
-        OSS_ROOT = App.GetVariable("oss")
-
         Call $"msconvert={BIN}".__INFO_ECHO
-        Call $"OSS_ROOT={OSS_ROOT}".__INFO_ECHO
 
-        If Not OSS_ROOT.DirectoryExists Then
-            Throw New Exception("OSS file system should be mounted at first!")
+        If Not BIN.FileExists Then
+            Call $"ProteoWizard is missing, this web app will not working unless you put ProteoWizard to the location {BIN}".Warning
         End If
     End Sub
 
@@ -226,23 +221,6 @@ Public Class VBServerScript : Inherits WebApp
         Return True
     End Function
 
-    ''' <summary>
-    ''' 确保输入的源文件不是zip文件压缩包，如果目标文件是zip压缩包，则进行解压缩
-    ''' </summary>
-    ''' <param name="path"></param>
-    ''' <returns></returns>
-    Private Shared Function ensureZipExtract(path As String) As String
-        If path.ExtensionSuffix.TextEquals("zip") Then
-            ' 对zip文件进行解压缩
-            Dim zipFolder$ = path.ParentPath & "/" & path.BaseName
-
-            GZip.ImprovedExtractToDirectory(path, zipFolder, Overwrite.Always, extractToFlat:=True)
-            path.SetValue(zipFolder)
-        End If
-
-        Return path
-    End Function
-
     <ExportAPI("/ProteoWizard.d/mzXML.task.vbs")>
     <Usage("/ProteoWizard.d/mzXML.task.vbs?path=<path>")>
     <[GET](GetType(String))>
@@ -255,29 +233,54 @@ Public Class VBServerScript : Inherits WebApp
         Return True
     End Function
 
-    Private Function normalizePath(path As String) As String
-        path = path.UrlDecode
-
-        ' Add OSS drive location if the given path is a relative path
-        If InStr(path, ":\") = 0 AndAlso InStr(path, ":/") = 0 Then
-            path = OSS_ROOT & "/" & path
-        End If
-
-        Return path
-    End Function
-
     <ExportAPI("/ProteoWizard.d/MRM.vbs")>
     <Usage("/ProteoWizard.d/MRM.vbs?path=<path>&to=<path>")>
     <[GET](GetType(String))>
     Public Function MRMTask(request As HttpRequest, response As HttpResponse) As Boolean
         ' Deal with the space in file path by url encoding
         ' url decoding for restore the original file path value
-        Dim path$ = ensureZipExtract(normalizePath(request.URLParameters("path")))
+        Dim normalPath$ = normalizePath(request.URLParameters("path"))
+        Dim path$ = ensureZipExtract(normalPath)
         Dim out$ = normalizePath(request.URLParameters("to")) Or $"{path.ParentPath}/msconvert".AsDefault
-        Dim args$ = $"{path.GetFullPath.CLIPath} --mz64 --mzML --zlib --filter ""msLevel 1-2"" --ignoreUnknownInstrumentError -o {out.GetDirectoryFullPath.CLIPath}"
 
-        Call path.__INFO_ECHO
-        Call New IORedirectFile(BIN, args).Run()
+        If Strings.LCase(normalPath).EndsWith(".raw.zip") Then
+            For Each part In MassWolf.SplitDirectory(waters:=path)
+                Dim args$ = New ScriptBuilder(part.In.GetFullPath.CLIPath) +
+                    " " +
+                    "--mz64" +
+                    "--mzML" +
+                    "--zlib" +
+                    "--filter" +
+                    """msLevel 1-2""" +
+                    "--ignoreUnknownInstrumentError" +
+                   $"-o {out.GetDirectoryFullPath.CLIPath}"
+
+                Call part.Out.__INFO_ECHO
+                Call New IORedirectFile(BIN, args).Run()
+
+                ' cleanup filesystem for avoid file system crash
+                Try
+                    Call FileIO.FileSystem.DeleteDirectory(part.In.GetFullPath, DeleteDirectoryOption.DeleteAllContents)
+                Catch ex As Exception
+
+                End Try
+            Next
+        Else
+            Dim input$ = path.GetFullPath.CLIPath
+            Dim args$ = New ScriptBuilder(input) +
+                " " +
+                "--mz64" +
+                "--mzML" +
+                "--zlib" +
+                "--filter" +
+                """msLevel 1-2""" +
+                "--ignoreUnknownInstrumentError" +
+               $"-o {out.GetDirectoryFullPath.CLIPath}"
+
+            Call path.__INFO_ECHO
+            Call New IORedirectFile(BIN, args).Run()
+        End If
+
         Call "Task complete!".__INFO_ECHO
 
         If Not response Is Nothing Then
