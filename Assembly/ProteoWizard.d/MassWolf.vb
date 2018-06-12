@@ -55,7 +55,7 @@ Public Class MassWolf : Inherits WebApp
                         .ToArray
 
         For Each idxName As String In idx
-            Dim dir$ = App.GetAppSysTempFile(, App.PID) & $"/{idxName}.RAW"
+            Dim dir$ = App.GetAppSysTempFile(, App.PID) & $"/{idxName}.RAW/"
             Dim files = waters.EnumerateFiles() _
                               .Where(Function(file)
                                          Return file.BaseName.TextEquals(idxName)
@@ -68,7 +68,7 @@ Public Class MassWolf : Inherits WebApp
                          Call $"{waters}/{path}".FileCopy(dir)
                      End Sub)
 
-            Yield (dir, $"{idxName}.mzXML")
+            Yield (dir.Trim("/"c), $"{idxName}.mzXML")
         Next
     End Function
 End Class
