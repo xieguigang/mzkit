@@ -239,48 +239,11 @@ Public Class VBServerScript : Inherits WebApp
     Public Function MRMTask(request As HttpRequest, response As HttpResponse) As Boolean
         ' Deal with the space in file path by url encoding
         ' url decoding for restore the original file path value
-        Dim normalPath$ = normalizePath(request.URLParameters("path"))
+        Dim normalPath$ = normalizePath(request.URLParameters("path").UrlDecode)
         Dim path$ = ensureZipExtract(normalPath)
-        Dim out$ = normalizePath(request.URLParameters("to")) Or $"{path.ParentPath}/msconvert".AsDefault
+        Dim out$ = normalizePath(request.URLParameters("to").UrlDecode) Or $"{path.ParentPath}/msconvert".AsDefault
 
-        If Strings.LCase(normalPath).EndsWith(".raw.zip") Then
-            For Each part In MassWolf.SplitDirectory(waters:=path)
-                Dim args$ = New ScriptBuilder(part.In.GetFullPath.CLIPath) +
-                    " " +
-                    "--mz64" +
-                    "--mzML" +
-                    "--zlib" +
-                    "--filter" +
-                    """msLevel 1-2""" +
-                    "--ignoreUnknownInstrumentError" +
-                   $"-o {out.GetDirectoryFullPath.CLIPath}"
-
-                Call part.Out.__INFO_ECHO
-                Call New IORedirectFile(BIN, args).Run()
-
-                ' cleanup filesystem for avoid file system crash
-                Try
-                    Call FileIO.FileSystem.DeleteDirectory(part.In.GetFullPath, DeleteDirectoryOption.DeleteAllContents)
-                Catch ex As Exception
-
-                End Try
-            Next
-        Else
-            Dim input$ = path.GetFullPath.CLIPath
-            Dim args$ = New ScriptBuilder(input) +
-                " " +
-                "--mz64" +
-                "--mzML" +
-                "--zlib" +
-                "--filter" +
-                """msLevel 1-2""" +
-                "--ignoreUnknownInstrumentError" +
-               $"-o {out.GetDirectoryFullPath.CLIPath}"
-
-            Call path.__INFO_ECHO
-            Call New IORedirectFile(BIN, args).Run()
-        End If
-
+        Call New ProteoWizardCLI(BIN).Convert2mzML(path, out)
         Call "Task complete!".__INFO_ECHO
 
         If Not response Is Nothing Then

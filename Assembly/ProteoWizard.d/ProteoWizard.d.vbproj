@@ -127,6 +127,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ProteoWizardCLI.vb" />
     <Compile Include="MassWolf.vb" />
     <Compile Include="Extensions.vb" />
     <Compile Include="VBServerScript.vb" />

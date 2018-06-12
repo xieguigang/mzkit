@@ -35,8 +35,6 @@ Module Extensions
     End Function
 
     Friend Function normalizePath(path As String) As String
-        path = path.UrlDecode
-
         ' Add OSS drive location if the given path is a relative path
         If InStr(path, ":\") = 0 AndAlso InStr(path, ":/") = 0 Then
             path = OSS_ROOT & "/" & path
