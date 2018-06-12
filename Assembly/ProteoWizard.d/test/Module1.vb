@@ -16,7 +16,7 @@ Module Module1
         Dim zip2 = "C:\Users\administrator\Desktop\95-1.D-flat.zip"
         Dim test2 = GZip.IsSourceFolderZip(zip2)
 
-        Call GZip.ImprovedExtractToDirectory(zip1, "./", extractToFlat:=True)
+        Call GZip.ImprovedExtractToDirectory(zip1, "./ddddddd", extractToFlat:=True)
 
 
     End Sub
