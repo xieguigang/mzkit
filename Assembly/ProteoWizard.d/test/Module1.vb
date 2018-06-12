@@ -18,7 +18,13 @@ Module Module1
 
         Call GZip.ImprovedExtractToDirectory(zip1, "./ddddddd", extractToFlat:=True)
 
+        Call GZip.ImprovedExtractToDirectory(zip1, "./eeeeee/", extractToFlat:=False)
 
+
+        Call GZip.ImprovedExtractToDirectory(zip2, "./xxxxxx", extractToFlat:=True)
+        Call GZip.ImprovedExtractToDirectory(zip2, "./ZZZZZZZZZ", extractToFlat:=False)
+
+        Pause()
     End Sub
 
 End Module
