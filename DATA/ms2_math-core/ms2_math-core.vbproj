@@ -141,6 +141,7 @@
     <Compile Include="Chromatogram\ChromatogramTick.vb" />
     <Compile Include="Chromatogram\ROI.vb" />
     <Compile Include="Chromatogram\PeakArea.vb" />
+    <Compile Include="Ms1\PrecursorType\Extensions.vb" />
     <Compile Include="Ms1\PrecursorType\MzCalculator.vb" />
     <Compile Include="Ms1\Tolerance.vb" />
     <Compile Include="Ms2\LibraryMatrixExtensions.vb" />

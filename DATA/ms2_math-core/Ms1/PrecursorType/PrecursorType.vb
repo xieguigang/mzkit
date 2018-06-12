@@ -8,29 +8,6 @@ Namespace Ms1.PrecursorType
     ''' </summary>
     Public Module PrecursorType
 
-        ''' <summary>
-        ''' 返回加和物的m/z数据
-        ''' </summary>
-        ''' <param name="mass#"></param>
-        ''' <param name="adduct#"></param>
-        ''' <param name="charge%"></param>
-        ''' <returns></returns>
-        Public Function AdductMass(mass#, adduct#, charge%) As Double
-            Return (mass / sys.Abs(charge) + adduct)
-        End Function
-
-        ''' <summary>
-        ''' 从质谱的MS/MS的前体的m/z结果反推目标分子的mass结果
-        ''' </summary>
-        ''' <param name="precursorMZ#"></param>
-        ''' <param name="M#"></param>
-        ''' <param name="charge%"></param>
-        ''' <param name="adduct#"></param>
-        ''' <returns></returns>
-        Public Function ReverseMass(precursorMZ#, M#, charge%, adduct#) As Double
-            Return ((precursorMZ - adduct) * sys.Abs(charge) / M)
-        End Function
-
         '# http://fiehnlab.ucdavis.edu/staff/kind/Metabolomics/MS-Adduct-Calculator
         '#
         '# Example: 
