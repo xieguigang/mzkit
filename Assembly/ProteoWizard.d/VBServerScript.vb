@@ -207,7 +207,7 @@ Public Class VBServerScript : Inherits WebApp
     Public Function ConvertTomzXML(request As HttpRequest, response As HttpResponse) As Boolean
         ' Deal with the space in file path by url encoding
         ' url decoding for restore the original file path value
-        Dim path$ = ensureZipExtract(normalizePath(request.URLParameters("path")))
+        Dim path$ = EnsureZipExtract(normalizePath(request.URLParameters("path")))
         Dim out$ = path.ParentPath & "/msconvert"
         Dim args$ = $"{path.CLIPath} --mz64 --mzXML --zlib --filter ""msLevel 1-2"" --ignoreUnknownInstrumentError -o {out.CLIPath}"
 
@@ -240,7 +240,7 @@ Public Class VBServerScript : Inherits WebApp
         ' Deal with the space in file path by url encoding
         ' url decoding for restore the original file path value
         Dim normalPath$ = normalizePath(request.URLParameters("path").UrlDecode)
-        Dim path$ = ensureZipExtract(normalPath)
+        Dim path$ = EnsureZipExtract(normalPath)
         Dim out$ = normalizePath(request.URLParameters("to").UrlDecode) Or $"{path.ParentPath}/msconvert".AsDefault
 
         Call New ProteoWizardCLI(BIN).Convert2mzML(path, out)

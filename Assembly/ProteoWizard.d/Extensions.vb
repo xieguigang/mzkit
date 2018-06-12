@@ -1,6 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.ApplicationServices
 
-Module Extensions
+Public Module Extensions
 
     ''' <summary>
     ''' OSS存储的文件系统位置
@@ -22,7 +22,7 @@ Module Extensions
     ''' </summary>
     ''' <param name="path"></param>
     ''' <returns></returns>
-    Friend Function ensureZipExtract(path As String) As String
+    Public Function EnsureZipExtract(path As String) As String
         If path.ExtensionSuffix.TextEquals("zip") Then
             ' 对zip文件进行解压缩
             Dim zipFolder$ = path.ParentPath & "/" & path.BaseName
