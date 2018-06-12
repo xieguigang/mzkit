@@ -1,6 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Parallel.Threads
 Imports Microsoft.VisualBasic.Scripting.SymbolBuilder
@@ -232,10 +233,6 @@ Public Class VBServerScript : Inherits WebApp
         Return True
     End Function
 
-    Private Function convertWaters(waters As String) As Integer
-
-    End Function
-
     <ExportAPI("/ProteoWizard.d/MRM.vbs")>
     <Usage("/ProteoWizard.d/MRM.vbs?path=<path>&to=<path>")>
     <[GET](GetType(String))>
@@ -260,6 +257,13 @@ Public Class VBServerScript : Inherits WebApp
 
                 Call part.Out.__INFO_ECHO
                 Call New IORedirectFile(BIN, args).Run()
+
+                ' cleanup filesystem for avoid file system crash
+                Try
+                    Call FileIO.FileSystem.DeleteDirectory(part.In.GetFullPath, DeleteDirectoryOption.DeleteAllContents)
+                Catch ex As Exception
+
+                End Try
             Next
         Else
             Dim input$ = path.GetFullPath.CLIPath
