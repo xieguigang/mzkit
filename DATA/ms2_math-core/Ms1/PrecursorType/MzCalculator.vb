@@ -4,13 +4,14 @@ Namespace Ms1.PrecursorType
 
     Public Structure MzCalculator
 
-        Dim Name$
+        Dim name$
         Dim charge%
         Dim M%
         Dim adducts#
+        Dim mode As Char
 
         Sub New(type$, charge%, M#, adducts#)
-            Me.Name = type
+            Me.name = type
             Me.charge = charge
             Me.M = M
             Me.adducts = adducts
@@ -25,7 +26,7 @@ Namespace Ms1.PrecursorType
         End Function
 
         Public Overrides Function ToString() As String
-            Return Name
+            Return name
         End Function
 
         ''' <summary>

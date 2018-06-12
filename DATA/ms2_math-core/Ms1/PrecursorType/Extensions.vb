@@ -59,8 +59,9 @@ Namespace Ms1.PrecursorType
             Return New MzCalculator With {
                 .M = M,
                 .charge = charge,
-                .Name = precursorType,
-                .adducts = adducts
+                .name = precursorType,
+                .adducts = adducts,
+                .mode = mode
             }
         End Function
     End Module
