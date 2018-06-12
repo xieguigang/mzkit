@@ -3,6 +3,7 @@ Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Parallel.Threads
+Imports Microsoft.VisualBasic.Scripting.SymbolBuilder
 Imports SMRUCC.WebCloud.HTTPInternal
 Imports SMRUCC.WebCloud.HTTPInternal.AppEngine
 Imports SMRUCC.WebCloud.HTTPInternal.AppEngine.APIMethods
@@ -231,18 +232,51 @@ Public Class VBServerScript : Inherits WebApp
         Return True
     End Function
 
+    Private Function convertWaters(waters As String) As Integer
+
+    End Function
+
     <ExportAPI("/ProteoWizard.d/MRM.vbs")>
     <Usage("/ProteoWizard.d/MRM.vbs?path=<path>&to=<path>")>
     <[GET](GetType(String))>
     Public Function MRMTask(request As HttpRequest, response As HttpResponse) As Boolean
         ' Deal with the space in file path by url encoding
         ' url decoding for restore the original file path value
-        Dim path$ = ensureZipExtract(normalizePath(request.URLParameters("path")))
+        Dim normalPath$ = normalizePath(request.URLParameters("path"))
+        Dim path$ = ensureZipExtract(normalPath)
         Dim out$ = normalizePath(request.URLParameters("to")) Or $"{path.ParentPath}/msconvert".AsDefault
-        Dim args$ = $"{path.GetFullPath.CLIPath} --mz64 --mzML --zlib --filter ""msLevel 1-2"" --ignoreUnknownInstrumentError -o {out.GetDirectoryFullPath.CLIPath}"
 
-        Call path.__INFO_ECHO
-        Call New IORedirectFile(BIN, args).Run()
+        If Strings.LCase(normalPath).EndsWith(".raw.zip") Then
+            For Each part In MassWolf.SplitDirectory(waters:=path)
+                Dim args$ = New ScriptBuilder(part.In.GetFullPath.CLIPath) +
+                    " " +
+                    "--mz64" +
+                    "--mzML" +
+                    "--zlib" +
+                    "--filter" +
+                    """msLevel 1-2""" +
+                    "--ignoreUnknownInstrumentError" +
+                   $"-o {out.GetDirectoryFullPath.CLIPath}"
+
+                Call part.Out.__INFO_ECHO
+                Call New IORedirectFile(BIN, args).Run()
+            Next
+        Else
+            Dim input$ = path.GetFullPath.CLIPath
+            Dim args$ = New ScriptBuilder(input) +
+                " " +
+                "--mz64" +
+                "--mzML" +
+                "--zlib" +
+                "--filter" +
+                """msLevel 1-2""" +
+                "--ignoreUnknownInstrumentError" +
+               $"-o {out.GetDirectoryFullPath.CLIPath}"
+
+            Call path.__INFO_ECHO
+            Call New IORedirectFile(BIN, args).Run()
+        End If
+
         Call "Task complete!".__INFO_ECHO
 
         If Not response Is Nothing Then
