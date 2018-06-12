@@ -200,13 +200,19 @@ Public Class VBServerScript : Inherits WebApp
         End If
     End Sub
 
+    ''' <summary>
+    ''' 如果源文件是``.D``文件夹，则在这个函数的输入文件必须是一个zip文件
+    ''' </summary>
+    ''' <param name="request"></param>
+    ''' <param name="response"></param>
+    ''' <returns></returns>
     <ExportAPI("/ProteoWizard.d/mzXML.vbs")>
     <Usage("/ProteoWizard.d/mzXML.vbs?path=<path>")>
     <[GET](GetType(String))>
     Public Function ConvertTomzXML(request As HttpRequest, response As HttpResponse) As Boolean
         ' Deal with the space in file path by url encoding
         ' url decoding for restore the original file path value
-        Dim path$ = normalizePath(request.URLParameters("path"))
+        Dim path$ = ensureZipExtract(normalizePath(request.URLParameters("path")))
         Dim out$ = path.ParentPath & "/msconvert"
         Dim args$ = $"{path.CLIPath} --mz64 --mzXML --zlib --filter ""msLevel 1-2"" --ignoreUnknownInstrumentError -o {out.CLIPath}"
 
@@ -218,6 +224,23 @@ Public Class VBServerScript : Inherits WebApp
         End If
 
         Return True
+    End Function
+
+    ''' <summary>
+    ''' 确保输入的源文件不是zip文件压缩包，如果目标文件是zip压缩包，则进行解压缩
+    ''' </summary>
+    ''' <param name="path"></param>
+    ''' <returns></returns>
+    Private Shared Function ensureZipExtract(path As String) As String
+        If path.ExtensionSuffix.TextEquals("zip") Then
+            ' 对zip文件进行解压缩
+            Dim zipFolder$ = path.ParentPath & "/" & path.BaseName
+
+            GZip.ImprovedExtractToDirectory(path, zipFolder, Overwrite.Always, extractToFlat:=True)
+            path.SetValue(zipFolder)
+        End If
+
+        Return path
     End Function
 
     <ExportAPI("/ProteoWizard.d/mzXML.task.vbs")>
@@ -249,7 +272,7 @@ Public Class VBServerScript : Inherits WebApp
     Public Function MRMTask(request As HttpRequest, response As HttpResponse) As Boolean
         ' Deal with the space in file path by url encoding
         ' url decoding for restore the original file path value
-        Dim path$ = normalizePath(request.URLParameters("path"))
+        Dim path$ = ensureZipExtract(normalizePath(request.URLParameters("path")))
         Dim out$ = normalizePath(request.URLParameters("to")) Or $"{path.ParentPath}/msconvert".AsDefault
         Dim args$ = $"{path.GetFullPath.CLIPath} --mz64 --mzML --zlib --filter ""msLevel 1-2"" --ignoreUnknownInstrumentError -o {out.GetDirectoryFullPath.CLIPath}"
 
