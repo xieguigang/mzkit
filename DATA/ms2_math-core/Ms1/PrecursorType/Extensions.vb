@@ -40,9 +40,9 @@ Namespace Ms1.PrecursorType
                     If buffer > 0 Then
                         formulas += (sign, buffer.CharString)
                         buffer *= 0
-                    Else
-                        sign = If(c = "+"c, 1, -1)
                     End If
+
+                    sign = If(c = "+"c, 1, -1)
                 Else
                     buffer += c
                 End If

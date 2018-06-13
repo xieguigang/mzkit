@@ -7,6 +7,10 @@ Namespace Ms1.PrecursorType
         Dim name$
         Dim charge%
         Dim M%
+
+        ''' <summary>
+        ''' 是可能会出现负数的加和结果，例如[M-H2O]的adducts为-18
+        ''' </summary>
         Dim adducts#
         Dim mode As Char
 
@@ -26,7 +30,11 @@ Namespace Ms1.PrecursorType
         End Function
 
         Public Overrides Function ToString() As String
-            Return name
+            If InStr(name, "[") < InStr(name, "]") AndAlso InStr(name, "[") > 0 Then
+                Return name
+            Else
+                Return $"[{name}]{If(charge = 1, "", charge)}{mode}"
+            End If
         End Function
 
         ''' <summary>
