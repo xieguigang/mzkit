@@ -42,6 +42,10 @@ Public Module MRMSamples
     ''' <param name="wiff$"></param>
     ''' <param name="model">标准曲线线性回归模型</param>
     ''' <param name="X">标准曲线之中的``AIS/A``峰面积比数据，即线性回归模型之中的X样本点</param>
+    ''' <param name="externalStandardsWiff">
+    ''' 如果定量参考用的标准曲线不是和样本数据在一个批次内的，而是分别在一个外部wiff文件之中的话，
+    ''' 可以对这个函数参数进行赋值
+    ''' </param>
     ''' <returns>经过定量计算得到的浓度数据</returns>
     Public Function QuantitativeAnalysis(wiff$, ions As IonPair(), calibrates As Standards(), [IS] As [IS](),
                                          <Out> Optional ByRef model As NamedValue(Of IFitted)() = Nothing,
@@ -50,12 +54,13 @@ Public Module MRMSamples
                                          <Out> Optional ByRef peaktable As MRMPeakTable() = Nothing,
                                          Optional calibrationNamedPattern$ = ".+[-]L\d+",
                                          Optional levelPattern$ = "[-]L\d+",
-                                         Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum) As IEnumerable(Of DataSet)
+                                         Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum,
+                                         Optional externalStandardsWiff$ = Nothing) As IEnumerable(Of DataSet)
         Dim standardNames$() = Nothing
         Dim TPAFactors = calibrates.ToDictionary(Function(ion) ion.HMDB, Function(ion) ion.Factor)
         Dim detections As NamedValue(Of (IFitted, MRMStandards()))() =
             StandardCurve _
-            .Scan(wiff, ions, calibrates,
+            .Scan(externalStandardsWiff Or wiff.AsDefault, ions, calibrates,
                   refName:=standardNames,
                   calibrationNamedPattern:=calibrationNamedPattern,
                   levelPattern:=levelPattern,
@@ -68,7 +73,13 @@ Public Module MRMSamples
 
         X = New List(Of DataSet)
         model = detections _
-            .Select(Function(i) New NamedValue(Of IFitted)(i.Name, i.Value.Item1, i.Description)) _
+            .Select(Function(i)
+                        Return New NamedValue(Of IFitted) With {
+                            .Name = i.Name,
+                            .Value = i.Value.Item1,
+                            .Description = i.Description
+                        }
+                    End Function) _
             .ToArray
         standardPoints = detections _
             .Select(Function(i)
