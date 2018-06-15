@@ -13,17 +13,24 @@ mz.calculator <- function(mass, mode = 1) {
     # 枚举计算器之中的所有的前体离子的类型，然后计算完成之后返回数据框
     out <- c();
     
+    print(names(calc));
+
     for(name in names(calc)) {
         type <- calc[[name]];
-        out  <- rbind(out, list(
-            precursor_type = type$Name, 
-            charge         = type$charge, 
-            M              = type$M, 
-            adduct         = type$adduct, 
-            "m/z"          = type$calc.mz(mass)
-        )); 
+        cal  <- type$calc.mz;
+
+        print(cal);
+
+        r <- c(type$Name, 
+               type$charge, 
+               type$M, 
+               type$adduct, 
+               cal(mass)
+        );
+        out <- rbind(out, r); 
     }
 
     rownames(out) <- names(calc);
+    colnames(out) <- c("precursor_type", "charge", "M", "adduct", "m/z");
     out;
 }
