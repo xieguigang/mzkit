@@ -76,7 +76,7 @@ KEGG.rxnNetwork <- function(identified, sample, KEGG, RXN, ms2.similar, toleranc
     });
 
     ## 删除集合之中的空值 
-    RXN <- %NOT% (RXN %IS_NOTHING%);
+    RXN <- NOT(RXN, IS_NOTHING);
 
     # 在partner里面找出一级匹配的，并且二级和identified相似的即很有可能是目标代谢物
     # 
@@ -94,7 +94,7 @@ KEGG.rxnNetwork <- function(identified, sample, KEGG, RXN, ms2.similar, toleranc
         }
     });
 
-    sample <- %NOT% (sample %IS_NOTHING%);
+    sample <- NOT(sample, IS_NOTHING);
 
     # 然后对sample的subset进行KEGG的一级质谱结果搜索
     sample <- lapply(names(sample), function(index) {
@@ -130,9 +130,19 @@ KEGG.rxnNetwork <- function(identified, sample, KEGG, RXN, ms2.similar, toleranc
         }
     });
 
-    sample <- %NOT% (sample %IS_NOTHING%);
+    sample <- NOT(sample, IS_NOTHING);
 
     # 返回候选列表
     # 这个候选列表都是在代谢过程上面和identified有关联的，并且ms1能够在KEGG之中找到结果，ms2与identieid相似
     sample;
 } 
+
+NOT <- function(list, assert) {
+    index <- lapply(names(list), function(name) {
+        a <- list[[name]];
+        assert(a);
+    });
+    index <- which(as.vector(index));
+
+    list[index];
+}
