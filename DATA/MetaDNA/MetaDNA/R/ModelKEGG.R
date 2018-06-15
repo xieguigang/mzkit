@@ -121,7 +121,7 @@ KEGG.rxnNetwork <- function(identified, sample, KEGG, RXN, ms2.similar, toleranc
                 }
             }
 
-            if（length(connection) > 0） {
+            if (length(connection) > 0) {
                 # 候选鉴定列表
                 connection;
             } else {
