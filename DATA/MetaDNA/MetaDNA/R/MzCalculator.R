@@ -19,6 +19,7 @@ mz.calculator <- function(mass, mode = 1) {
         type <- calc[[name]];
         cal  <- type$calc.mz;
 
+        print(type);
         print(cal);
 
         r <- c(type$Name, 
