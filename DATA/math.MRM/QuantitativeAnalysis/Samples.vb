@@ -58,6 +58,8 @@ Public Module MRMSamples
                                          Optional externalStandardsWiff$ = Nothing) As IEnumerable(Of DataSet)
         Dim standardNames$() = Nothing
         Dim TPAFactors = calibrates.ToDictionary(Function(ion) ion.HMDB, Function(ion) ion.Factor)
+
+        ' 扫描标准曲线的样本，然后进行回归建模 
         Dim detections As NamedValue(Of (IFitted, MRMStandards()))() =
             StandardCurve _
             .Scan(externalStandardsWiff Or wiff.AsDefault, ions, calibrates,
@@ -90,14 +92,18 @@ Public Module MRMSamples
         Dim nameIndex As Index(Of String) = standardNames.Indexing
         Dim out As New List(Of DataSet)
         Dim mrmpeaktable As New List(Of MRMPeakTable)
+        Dim allSamples As List(Of String) = (ls - l - r - "*.mzML" <= wiff.ParentPath).AsList
+
+        If externalStandardsWiff.ParentPath.DirectoryExists Then
+            allSamples += (ls - l - r - "*.mzML" <= externalStandardsWiff.ParentPath)
+        End If
 
         ' 在上面获取得到了目标物质的回归模型以及离子对信息
         ' 在这个循环之中扫描每一个原始文件，进行物质的浓度定量计算
-        For Each file As String In (ls - l - r - "*.mzML" <= wiff.ParentPath) _
+        For Each file As String In allSamples _
             .Where(Function(path)
                        Dim basename$ = path.BaseName
-                       Return Not basename.IsOneOfA(nameIndex) AndAlso
-                                  InStr(basename, "-KB") = 0
+                       Return Not basename.IsOneOfA(nameIndex) AndAlso InStr(basename, "-KB") = 0
                    End Function)
 
             Call file.ToFileURL.__INFO_ECHO
