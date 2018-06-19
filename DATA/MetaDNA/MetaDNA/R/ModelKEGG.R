@@ -18,8 +18,9 @@ PPM <- function(measured, actualValue) {
 
 ## 通过一级质谱信息搜索KEGG数据库
 ##
-## @param KEGG 数据结构为：
+## @param KEGG 为一个list列表，其数据结构为：
 ##        DB[KEGGID] = [KEGGID, mass, formula, name]
+## @
 find.KEGG <- function(precursor, KEGG, tolerance = tolerance.ppm(), precursor_type = "[M+H]+") {
     # binarysearch
     get.MS1 <- function(compound) {
@@ -27,13 +28,24 @@ find.KEGG <- function(precursor, KEGG, tolerance = tolerance.ppm(), precursor_ty
         mz   <- get.PrecursorMZ(mass, precursor_type);
         mz;
     }
-    get.index <- function(compound) {
-        compound[["KEGGID"]];
-    }
-    index <- binarysearch(KEGG, get.MS1, precursor, tolerance, get.index);
+
+    # 因为binary search只会返回一个index，所以需要对KEGG数据进行事先分组处理
+    result <- binarySearch.list(
+        list = KEGG, 
+        find = precursor, 
+        key  = get.MS1,
+        compares = function(a, b) {
+            if (tolerance(a, b)) {
+                0;
+            } else if (a < b) {
+                -1; 
+            } else {
+                1;
+            }
+        });
 
     # 从一级质谱信息只能够从质量上找出一系列符合误差要求的化合物
-    KEGG[index];
+    KEGG[[index]];
 }
 
 # 进行KEGG辅助注释的前提是必须要从实验数据之中已经注释出了一个非常确定的KEGG代谢物
