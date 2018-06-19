@@ -54,7 +54,10 @@ ms2.similar.fn <- function(threshold) {
 		s   <- s[, 2];
 		SSM <- sum(q * s) / sqrt(sum(q ^ 2) * sum(s ^ 2));
 
-        SSM >= threshold;
+        list(similar       = SSM >= threshold, 
+			 score.forward = SSM, 
+			 score.reverse = SSM
+		);
     }
 }
 
@@ -78,7 +81,7 @@ ms2.similar.fn <- function(threshold) {
 # 
 # @param sample 一般是未鉴定的代谢物结果，peak_ms2？?
 # @param RXN KEGG数据库之中的代谢过程的集合
-# @param KEGG KEGG的代谢物注释信息库
+# @param KEGG KEGG的代谢物注释信息库，可以将metadb之中的含有KEGG编号的物质注释信息取子集
 # @param identified 通过SSM算法得到的已经被视为鉴定结果的已知物质，这个数据集之中必须要包含有KEGG编号列
 # @param ms2.similar 比较两个二级质谱矩阵是否相似，函数返回逻辑值
 # 
@@ -92,95 +95,123 @@ ms2.similar.fn <- function(threshold) {
 # mz, into
 # mz, into
 #
-KEGG.rxnNetwork <- function(identified, sample, KEGG, RXN, 
+KEGG.rxnNetwork <- function(identified, sample, KEGG, KEGG.rxn, 
     ms2.similar    = ms2.similar.fn(0.65), 
     tolerance      = tolerance.ppm(), 
     precursor_type = "[M+H]+") {
 
-    # 获取得到本已鉴定代谢物物质的KEGG编号
-    KEGGID <- identified[["KEGGID"]];
-
-    # 这个函数之中的算法仅应用于KEGG代谢物
-    if (IsNothing(KEGGID)) {
-        return(NA);
+	identified.uid <- as.vector(identified[, "uid"]);
+	identified <- GroupBy(identified, "KEGG");
+	identify.KEGG <- names(identified);
+		
+    KEGG.rxnTuple <- function(unknown.mz, unknwon.ms2) {
+		# 2. 对未鉴定代谢物进行遍历，通过未鉴定的代谢物的mz进行KEGG代谢物的一级查找，找出所有的可能结果
+        KEGG.list <- find.KEGG(unknown.mz, KEGG, tolerance, precursor_type);
+		KEGG.list <- as.vector(KEGG.list[, "KEGG"]);
+		# 3. 将查找到的KEGG编号从已鉴定代谢物之中取补集，即取出已鉴定代谢物之中不存在的KEGG编号
+		KEGG.list <- KEGG.list(!(KEGG.list %in% identify.KEGG));
+		
+		metaDNA.identify <- c();
+		
+		# 通过KEGG代谢反应过程的模型找出相对应的KEGG编号
+		for (rxn in KEGG.rxn) {
+			for (kegg_id in KEGG.list) {
+				identify_kegg <- NULL;
+				
+				if (kegg_id %in% rxn$reactants) {
+					# 这个未鉴定代谢物的可能的KEGG编号出现在了这个反应过程的底物之中
+					# 则需要通过反应的产物的二级结果来进行辅助鉴定
+					identify_kegg <- rxn$products;
+				} else if (kegg_id %in% rxn$products) {
+					identify_kegg <- rxn$reactants;
+				} else {
+					identify_kegg <- NULL;
+				}
+				
+				if (!IsNothing(identify_kegg)) {
+				
+					# 找到了匹配的结果
+					# 开始进行二级比对
+					
+					for (id in identify_kegg) {
+						# 为了得到已鉴定代谢物的二级信息，需要查找这个id编号是否存在与已鉴定化合物列表之中
+						.identify <- identified[[id]];
+						
+						if (!IsNothing(.identify)) {
+							# id编号存在
+							# 取出二级信息
+							# 和unknwon.ms2进行相似度比较
+							ms2 <- .identify$ms2;
+							
+							# 5. 进行二级比较，如果二级相似度较高，则确认该未鉴定代谢物可能为某一个KEGG编号
+							align <- ms2.similar(ms2, unknwon.ms2);
+							
+							if (align.similar) {
+							
+								# 2018-6-19 
+								# 注意：
+								# 从metaDB之中取出结果应该是通过这个kegg_id编号来完成，而不应该是.identify$libname
+							
+								append <- c(
+									kegg_id,                         # 可能确定为目标代谢物的kegg编号
+									sprintf("%s@%s", id, rxn$rxnID), # 利用metaDNA算法进行计算的调试traceback
+									.identify$libname,               # 用于获取ms2信息作为进行比对作图所需要ref的二级质谱矩阵数据
+									align$score.forward,             # 得分信息
+									align$score.reverse              # 得分信息，这两个得分信息用来计算出当前的这个未鉴定代谢物的最佳的匹配结果
+								);
+								metaDNA.identify <- rbind(metaDNA.identify, append);
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		# 取出平均得分最高的作为最终的可能的注释结果
+		top       <- null;
+		top.score <- -100;
+		
+		colnames(metaDNA.identify) <- c(
+			"kegg_id", 
+			"traceback", 
+			"ref.libname", 
+			"forward", 
+			"reverse"
+		);
+		metaDNA.identify <- .as.list(metaDNA.identify);
+		
+		for (identify in metaDNA.identify) {
+			s <- identify$forward + identify$reverse;
+			
+			if (s > top) {
+				top.score <- s;
+				top <- identify;
+			}
+		}
+		
+		top;
     }
-    
-    RXN <- lapply(names(RXN), function(RXNID) {
-        # 根据这个已鉴定代谢物的KEGG编号找出所有相关的代谢过程
-        r <- RXN[[RXNID]];
 
-        if (sum(r[["reactants"]] == KEGGID) > 0) {
-            # 已经鉴定出来的代谢物在底物侧，则返回产物侧
-            list(RXNID = RXNID, connector = r[["products"]]);
-        } else if (sum(r[["products"]] == KEGGID) > 0) {
-            # 已鉴定代谢物在产物侧，则返回底物侧
-            list(RXNID = RXNID, connector = r[["reactants"]]);
-        } else {
-            # 不是这个代谢过程的成员，则返回空值
-            NULL;
-        }
-    });
+	metaDNA.result <- list();
+	
+	for (unknown in sample) {
+		if (unknown$uid %in% identified.uid) {
+			# 这是一个已鉴定代谢物，跳过
+			next;
+		}
+		
+		unknown.mz  <- unknown$mz;
+		unknwon.ms2 <- unknown$ms2;
+		unknown.candidate <- KEGG.rxnTuple(unknown.mz, unknown.ms2);
 
-    ## 删除集合之中的空值 
-    RXN <- NOT(RXN, IS_NOTHING);
-
-    # 在partner里面找出一级匹配的，并且二级和identified相似的即很有可能是目标代谢物
-    # 
-    # 首先将所有二级相似的都找出来
-    query.ms2 <- identified[["ms2"]];
-    sample <- lapply(names(sample), function(index) {
-        unknown <- sample[[index]];
-        ms2 <- unknown[["ms2"]];
-
-        if (ms2.similar(ms2, query.ms2)) {
-            # 找到了一个目标物质
-            unknown;
-        } else {
-            NULL;
-        }
-    });
-
-    sample <- NOT(sample, IS_NOTHING);
-
-    # 然后对sample的subset进行KEGG的一级质谱结果搜索
-    sample <- lapply(names(sample), function(index) {
-        unknown <- sample[[index]];
-        ms1 <- unknown[["ms1"]];
-        KEGG.list <- find.KEGG(ms1, KEGG, tolerance, precursor_type);
-
-        if (length(KEGG.list) == 0) {
-            NULL;
-        } else {
-
-            ID.list <- names(KEGG.list);
-            connection = list();
-
-            # 而且能够通过ms1找到相应的KEGG代谢物
-            # 则判断KEGG代谢物是否在代谢网络的connector里面
-            for(r in RXN) {
-                intersection <- intersect(r$connector, ID.list); 
-
-                if (length(intersection) > 0) {
-                    # 找到了一个
-                    # 尝试将未知代谢物鉴定为目标KEGG代谢物
-                    connection[r$RXNID] = list(KEGG = intersection, metabolite = unknown);
-                }
-            }
-
-            if (length(connection) > 0) {
-                # 候选鉴定列表
-                connection;
-            } else {
-                NULL;
-            }
-        }
-    });
-
-    sample <- NOT(sample, IS_NOTHING);
-
-    # 返回候选列表
-    # 这个候选列表都是在代谢过程上面和identified有关联的，并且ms1能够在KEGG之中找到结果，ms2与identieid相似
-    sample;
+		metaDNA.result[[unknown$uid]] <- list(
+			metaInfo.candidate = unknown.candidate, 
+			uid = unknown$uid, 
+			query = unknown
+		);
+	}
+	
+	metaDNA.result;
 } 
 
 NOT <- function(list, assert) {
