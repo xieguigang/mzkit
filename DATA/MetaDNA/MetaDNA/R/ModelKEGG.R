@@ -60,17 +60,19 @@ find.KEGG <- function(precursor, KEGG, tolerance = tolerance.ppm(), precursor_ty
 #
 # @param ms2.similar 比较两个二级质谱矩阵是否相似，函数返回逻辑值
 # 
-# 假设二级质谱的相似度的比对函数的接口形式为：
-# ms2.alignment <- function(q, s) { score = SSM(q, s)； score >= threshold; }
-
+#   假设二级质谱的相似度的比对函数的接口形式为：
+#   ms2.alignment <- function(q, s) { score = SSM(q, s)； score >= threshold; }
+#
 # q,s为二级矩阵：
 #
 # mz, into
-#
-#
+# mz, into
+# mz, into
+# mz, into
 #
 KEGG.rxnNetwork <- function(identified, sample, KEGG, RXN, ms2.similar, tolerance = tolerance.ppm(), precursor_type = "[M+H]+") {
     KEGGID <- identified[["KEGGID"]];
+
     RXN <- lapply(names(RXN), function(RXNID) {
         # 找出所有相关的代谢过程
         r <- RXN[[RXNID]];
@@ -156,5 +158,10 @@ NOT <- function(list, assert) {
     });
     index <- which(as.vector(index));
 
-    list[index];
+    sub.names <- names(list);
+    sub.names <- sub.names[index]; 
+    sub.list  <- list[index];
+    names(sub.list) <- sub.names;
+
+    sub.list;
 }
