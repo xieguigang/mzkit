@@ -58,6 +58,7 @@ find.KEGG <- function(precursor, KEGG, tolerance = tolerance.ppm(), precursor_ty
 
 # 使用KEGG的代谢物数据库和代谢反应过程数据库找出和目标已经鉴定出的代谢物的所有代谢过程相关的未鉴定代谢物的KEGG注释信息
 #
+# @param identified 通过SSM算法得到的已经被视为鉴定结果的已知物质，这个数据集之中必须要包含有KEGG编号列
 # @param ms2.similar 比较两个二级质谱矩阵是否相似，函数返回逻辑值
 # 
 #   假设二级质谱的相似度的比对函数的接口形式为：
@@ -71,10 +72,16 @@ find.KEGG <- function(precursor, KEGG, tolerance = tolerance.ppm(), precursor_ty
 # mz, into
 #
 KEGG.rxnNetwork <- function(identified, sample, KEGG, RXN, ms2.similar, tolerance = tolerance.ppm(), precursor_type = "[M+H]+") {
+    # 获取得到本已鉴定代谢物物质的KEGG编号
     KEGGID <- identified[["KEGGID"]];
 
+    # 这个函数之中的算法仅应用于KEGG代谢物
+    if (IsNothing(KEGGID)) {
+        return(NA);
+    }
+    
     RXN <- lapply(names(RXN), function(RXNID) {
-        # 找出所有相关的代谢过程
+        # 根据这个已鉴定代谢物的KEGG编号找出所有相关的代谢过程
         r <- RXN[[RXNID]];
 
         if (sum(r[["reactants"]] == KEGGID) > 0) {
