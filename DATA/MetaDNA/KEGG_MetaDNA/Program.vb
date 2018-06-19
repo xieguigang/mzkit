@@ -45,10 +45,13 @@ Module Program
                                     !products = Rbase.c(model.Products.Keys, stringVector:=True)
                                  )
                              End Function)
-
                 End With
+
+                !network = network
 
             End With
         End SyncLock
+
+        Call Rbase.save({"network"}, rda)
     End Sub
 End Module
