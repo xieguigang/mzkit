@@ -103,7 +103,7 @@ KEGG.rxnNetwork <- function(identified, sample, KEGG, KEGG.rxn,
 	identified.uid <- as.vector(identified[, "uid"]);
 	identified <- GroupBy(identified, "KEGG");
 	identify.KEGG <- names(identified);
-		
+			
     KEGG.rxnTuple <- function(unknown.mz, unknwon.ms2) {
 		# 2. 对未鉴定代谢物进行遍历，通过未鉴定的代谢物的mz进行KEGG代谢物的一级查找，找出所有的可能结果
         KEGG.list <- find.KEGG(unknown.mz, KEGG, tolerance, precursor_type);
@@ -146,7 +146,7 @@ KEGG.rxnNetwork <- function(identified, sample, KEGG, KEGG.rxn,
 							# 5. 进行二级比较，如果二级相似度较高，则确认该未鉴定代谢物可能为某一个KEGG编号
 							align <- ms2.similar(ms2, unknwon.ms2);
 							
-							if (align.similar) {
+							if (align$similar) {
 							
 								# 2018-6-19 
 								# 注意：
