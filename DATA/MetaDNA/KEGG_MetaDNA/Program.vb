@@ -22,7 +22,8 @@ Module Program
                               Return g.First
                           End Function)
 
-        ' network <- list(rxnID, reactants, products);
+        ' network <- list(rxnID, define, reactants, products);
+        ' reactants和products都是KEGG的代谢物编号
         Dim network = Rbase.list()
 
         SyncLock R_server.R
@@ -35,6 +36,8 @@ Module Program
                         FUN:=Function(reaction)
                                  Dim model = reaction.ReactionModel
 
+                                 ' 生成一个列表之中的反应过程的摘要模型
+                                 ' 相当于网络之中的一个节点
                                  Return Rbase.list(
                                     !rxnID = reaction.ID,
                                     !define = reaction.Definition,
