@@ -11,10 +11,15 @@ Module Program
     ''' </summary>
     Sub Main()
 
+        Call BuildNetwork(("D:\Resources\GCModeller-CAD-blueprint\KGML\br08201", "D:\smartnucl_integrative\DATA\2017-12-22.MetaReference\KEGG_cpd"), "../../metaDNA_kegg.rda")
+
     End Sub
 
     Sub BuildNetwork(repository As (reaction$, compound$), rda$)
-        Dim reactions = (ls - l - r - "*.Xml" <= repository.reaction).Select(AddressOf LoadXml(Of Reaction))
+        Dim reactions = (ls - l - r - "*.Xml" <= repository.reaction) _
+            .Select(Function(path)
+                        Return path.LoadXml(Of Reaction)(stripInvalidsCharacter:=True)
+                    End Function)
         Dim compounds = ScanLoad(repository.compound) _
             .GroupBy(Function(c) c.Entry) _
             .ToDictionary(Function(c) c.Key,
