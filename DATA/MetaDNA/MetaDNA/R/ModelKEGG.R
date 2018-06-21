@@ -1,4 +1,4 @@
-require(VisualBasic);
+require(VisualBasic.R);
 
 tolerance.deltaMass <- function(da = 0.3) {
     function(a, b) abs(a - b) <= da;
