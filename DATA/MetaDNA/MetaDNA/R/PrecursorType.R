@@ -1,12 +1,14 @@
 # https://github.com/xieguigang/MassSpectrum-toolkits/blob/6f4284a0d537d86c112877243d9e3b8d9d35563f/DATA/ms2_math-core/Ms1/PrecursorType.vb
 
-## @param mass 分子的质量
-## @param adduct 离子的质量
-## @param charge 加和物的电荷数量
-##
-## @return 返回加和物的m/z数据
-Adduct.mass <- function(mass, adduct, charge) {
-    return(mass / abs(charge) + adduct);
+#' Calculate m/z
+#'
+#' @param mass Molecule weight
+#' @param adduct adduct mass
+#' @param charge precursor charge value
+#'
+#' @return Returns the m/z value of the precursor ion
+Adduct.mz <- function(mass, adduct, charge) {
+    mass / abs(charge) + adduct;
 }
 
 ## 从质谱的MS/MS的前体的m/z结果反推目标分子的mass结果
@@ -14,7 +16,7 @@ Adduct.mass <- function(mass, adduct, charge) {
 ## @param charge 离子的电荷数量
 ## @param adduct 加和物的离子模式的mass
 Reverse.mass <- function(precursorMZ, M, charge, adduct) {
-    return((precursorMZ - adduct) * abs(charge) / M);
+    (precursorMZ - adduct) * abs(charge) / M;
 }
 
 ## @param charge 电荷数，这里只需要绝对值就行了，不需要带有符号
@@ -23,7 +25,7 @@ Reverse.mass <- function(precursorMZ, M, charge, adduct) {
 AddKey <- function(type, charge, M, adducts) {
 
     out <- list();
-	
+
     out$Name   <- type;
     out$calc   <- function(precursorMZ) {
         return(Reverse.mass(precursorMZ, M, charge, adducts));
@@ -32,7 +34,7 @@ AddKey <- function(type, charge, M, adducts) {
     out$M      <- M;
 	out$adduct <- adducts;
 	out$cal.mz <- function(mass) {
-		return(Adduct.mass(mass, adducts, charge));
+		return(Adduct.mz(mass, adducts, charge));
 	}
 
     return(out);
@@ -40,20 +42,20 @@ AddKey <- function(type, charge, M, adducts) {
 
 # http://fiehnlab.ucdavis.edu/staff/kind/Metabolomics/MS-Adduct-Calculator
 #
-# Example: 
-# 1) Find Adduct: Taxol, C47H51NO14, M=853.33089 
-#    Enter 853.33089 in green box read M+22.9, m/z=876.320108 
+# Example:
+# 1) Find Adduct: Taxol, C47H51NO14, M=853.33089
+#    Enter 853.33089 in green box read M+22.9, m/z=876.320108
 #
 # 2) Reverse: take 12 Tesla-FT-MS result out of MS m/z=876.330
-#    suspect M+Na adduct, read M=853.340782, enter this value into formula finder 
-#    with 2 ppm mass accuracy (CHNSOP enabled) get some thousand results, 
+#    suspect M+Na adduct, read M=853.340782, enter this value into formula finder
+#    with 2 ppm mass accuracy (CHNSOP enabled) get some thousand results,
 #    compare isotopic pattern, get happy.
 
 # Table 1. Monoisotopic exact masses of molecular ion adducts often observed in ESI mass spectra
 #  	 	 	 	 	                                           Your M here:	Your M+X or M-X
 #  	 	 	 	 	                                            853.33089	876.32
 # Ion name	        Ion mass	    Charge	Mult	Mass	    Result:	    Reverse:
-# 1. Positive ion mode	 	 	 	 	 	 
+# 1. Positive ion mode
 # M+3H	            M/3 + 1.007276	    3+	0.33	1.007276	285.450906	291.099391
 # M+2H+Na	        M/3 + 8.334590	    3+	0.33	8.334590	292.778220	283.772077
 # M+H+2Na	        M/3 + 15.7661904	3+	0.33	15.766190	300.209820	276.340476
@@ -85,8 +87,8 @@ AddKey <- function(type, charge, M, adducts) {
 # 2M+K	            2M + 38.963158	    1+	2.00	38.963158	1745.624938	1713.676842
 # 2M+ACN+H	        2M + 42.033823	    1+	2.00	42.033823	1748.695603	1710.606177
 # 2M+ACN+Na	        2M + 64.015765	    1+	2.00	64.015765	1770.677545	1688.624235
-  	 	 	 
-# 2. Negative ion mode	 	 	 	 	 
+
+# 2. Negative ion mode
 # M-3H	            M/3 - 1.007276	    3-	0.33	-1.007276	283.436354	293.113943
 # M-2H	            M/2 - 1.007276	    2-	0.50	-1.007276	425.658169	439.167276
 # M-H2O-H	        M- 19.01839	        1-	1.00	-19.01839	834.312500	895.338390
@@ -103,12 +105,14 @@ AddKey <- function(type, charge, M, adducts) {
 # 2M+Hac-H	        2M + 59.013851	    1-	2.00	59.013851	1765.675631	1693.626149
 # 3M-H	            3M - 1.007276	    1-	3.00	1.007276	2560.999946	2627.952724
 
+#' Precursor types in positive mode
+#'
 positive <- function() {
     pos <- list();
 
     # AddKey <- function(type, charge, M, adducts)
 
-    pos$"M+3H"	         <- AddKey("[M+3H]3+",          charge = 3, M = 1, adducts = 1.007276);  # M/3 + 1.007276	    3+	0.33	1.007276	285.450906	291.099391 
+    pos$"M+3H"	         <- AddKey("[M+3H]3+",          charge = 3, M = 1, adducts = 1.007276);  # M/3 + 1.007276	    3+	0.33	1.007276	285.450906	291.099391
     pos$"M+2H+Na"	     <- AddKey("[M+2H+Na]3+",       charge = 3, M = 1, adducts = 8.334590);  # M/3 + 8.334590	    3+	0.33	8.334590	292.778220	283.772077
     pos$"M+H+2Na"	     <- AddKey("[M+H+2Na]3+",       charge = 3, M = 1, adducts = 15.766190); # M/3 + 15.7661904	    3+	0.33	15.766190	300.209820	276.340476
     pos$"M+3Na"	         <- AddKey("[M+3Na]3+",         charge = 3, M = 1, adducts = 22.989218); # M/3 + 22.989218	    3+	0.33	22.989218	307.432848	269.117449
@@ -143,6 +147,7 @@ positive <- function() {
     return(pos);
 }
 
+#' Precursor types in negative mode
 negative <- function() {
     neg <- list();
 
@@ -165,15 +170,8 @@ negative <- function() {
     return(neg);
 }
 
-init_calc <- function() {
-
-    Calculator <- list();
-
-    Calculator$"+" <- positive();
-    Calculator$"-" <- negative(); 
-
-    return(Calculator);
-}
+#' Get precursor ion calculator
+init_calc <- function() list("+" = positive(), "-" = negative());
 
 ### 获取前体离子的电荷极性
 ### 函数返回+或者-
@@ -189,7 +187,9 @@ Calculator                   <- init_calc();
 find.PrecursorType.no_result <- "Unknown";
 debug.echo                   <- TRUE;
 
-## @param chargeMode +/-
+#' Get mass calculator
+#'
+#' @param chargeMode Character value of \code{+/-}.
 get.mass <- function(chargeMode, charge, PrecursorType) {
 
 	if (PrecursorType %in% c("[M]+", "[M]-")) {
@@ -198,7 +198,7 @@ get.mass <- function(chargeMode, charge, PrecursorType) {
 
 	mode <- Calculator[[chargeMode]];
 	found <- NULL;
-	
+
 	for (name in names(mode)) {
 		calc <- mode[[name]];
 		if (calc$Name == PrecursorType) {
@@ -206,37 +206,44 @@ get.mass <- function(chargeMode, charge, PrecursorType) {
 			break;
 		}
 	}
-	
+
 	return(found$calc);
 }
 
-# 函数返回-1值表示没有找到目标类型的前体离子
+#' Calculate m/z for M by given precursor type
+#'
+#' @return -1 means target precursor type is not found.
 get.PrecursorMZ <- function(M, precursorType) {
 	mode        <- getPolarity(precursorType);
 	mode        <- Calculator[[mode]];
 	precursorMZ <- -1;
-	
+
 	# calc <- mode[[precursorType]];
 	for (name in names(mode)) {
-	
+
 		calc <- mode[[name]];
-		
+
 		if (precursorType == calc$Name) {
 			precursorMZ   <- calc$cal.mz(M);
 			break;
 		}
 	}
-		
+
+	if (precursorMZ == -1) {
+	  warning(sprintf("\"%s\" is not found...", precursorType));
+	}
+
 	precursorMZ;
 }
 
 ## 通过计算出最小的质量差来获取前体离子的类型信息
+
 ## @param charge 离子的电荷数量
 ## @param mass 分子质量
 ## @param precursorMZ MS/MS之中的MS1匹配上的前体离子质核比
-## 
+##
 ## 计算的公式为：
-## 
+##
 ## (mass/charge + precursor_ion_mass) = precursorMZ
 ##
 ## 算法的原理是使用数据库之中的质量分别遍历当前计算器内的前体离子的质量的和除以电荷数量
@@ -244,7 +251,7 @@ get.PrecursorMZ <- function(M, precursorType) {
 ## 得到的最小的差值所对应的前体离子即为我们所需要查找的离子化模式
 ##
 ## test
-## 
+##
 ## mass = 853.33089
 ##
 ## pos "[M+3Na]3+" charge = 3,  307.432848	find.PrecursorType(853.33089, 307.432848,  charge = 3)
@@ -287,15 +294,15 @@ find.PrecursorType <- function(mass, precursorMZ, charge, chargeMode = "+", minE
 
     ## 得到某一个离子模式下的计算程序
     mode    <- Calculator[[chargeMode]];
-	
+
 	if (chargeMode == "-") {
 		## 对于负离子模式而言，虽然电荷量是负数的，但是使用xcms解析出来的却是一个电荷数的绝对值
-		## 所以需要判断一次，乘以-1 
+		## 所以需要判断一次，乘以-1
 		if (charge > 0) {
 			charge = -1 * charge;
 		}
 	}
-	
+
     ## 然后遍历这个模式下的所有离子前体计算
     for (i in 1:length(mode)) {
 
@@ -307,8 +314,8 @@ find.PrecursorType <- function(mass, precursorMZ, charge, chargeMode = "+", minE
             next;
         } else {
             calc <- calc$calc;
-        }	
-		
+        }
+
         ## 这里实际上是根据数据库之中的分子质量，通过前体离子的质量计算出mz结果
         ## 然后计算mz计算结果和precursorMZ的ppm信息
         mass.reverse <- calc(precursorMZ);
@@ -332,11 +339,11 @@ find.PrecursorType <- function(mass, precursorMZ, charge, chargeMode = "+", minE
     if (min <= minError.ppm) {
         return(minType);
     } else {
-		
+
 		if (debug.echo) {
 			print(sprintf("But the '%s' ionization mode its ppm error (%s ppm) is ", minType, min));
 			print(sprintf("not satisfy the minError requirement(%s), returns Unknown!", minError.ppm));
-		}	
+		}
         return(find.PrecursorType.no_result);
     }
 }

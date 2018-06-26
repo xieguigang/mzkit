@@ -253,3 +253,4 @@ paket-files/
 /Assembly/ProteoWizard.d/App
 .Rproj.user
 *.gz
+*.zip
