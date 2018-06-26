@@ -13,6 +13,7 @@ Public Class KEGGMetaDB
     ''' </summary>
     ''' <returns></returns>
     Public Property libname As String
+    Public Property [class] As String
 
     Public Overrides Function ToString() As String
         Return $"[{libname}] {keggID}={name}"
