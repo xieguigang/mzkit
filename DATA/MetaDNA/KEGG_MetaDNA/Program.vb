@@ -11,7 +11,7 @@ Module Program
     ''' </summary>
     Sub Main()
 
-        Call BuildNetwork(("D:\Resources\GCModeller-CAD-blueprint\KGML\br08201", "D:\smartnucl_integrative\DATA\2017-12-22.MetaReference\KEGG_cpd"), "../../metaDNA_kegg.rda")
+        Call BuildNetwork(("D:\Resources\GCModeller-CAD-blueprint\KGML\br08201", "D:\smartnucl_integrative\DATA\2017-12-22.MetaReference\KEGG_cpd"), "D:\MassSpectrum-toolkits\DATA\MetaDNA\MetaDNA\data\metaDNA_kegg.rda")
 
     End Sub
 
