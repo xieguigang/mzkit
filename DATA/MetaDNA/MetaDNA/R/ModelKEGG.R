@@ -1,35 +1,3 @@
-require(VisualBasic.R);
-
-#' Tolerance in Mass delta mode
-#'
-#' @param da The mass delta value. By default if two mass value which
-#'           their delta value is less than \code{0.3da}, then
-#'           the predicate will be true.
-#'
-#' @return Function returns a lambda function that can be using for
-#'         tolerance predication.
-tolerance.deltaMass <- function(da = 0.3) {
-    function(a, b) abs(a - b) <= da;
-}
-
-#' Tolerance in PPM mode
-#'
-#' @param ppm The mass ppm value. By default if two mass value which
-#'            their ppm delta value is less than \code{20ppm}, then
-#'            the predicate will be true.
-#'
-#' @return Function returns a lambda function that can be using for
-#'         tolerance predication.
-tolerance.ppm <- function(ppm = 20) {
-    function(a, b) PPM(a, b) <= ppm;
-}
-
-#' PPM value between two mass value
-PPM <- function(measured, actualValue) {
-    # |(实验数据 - 数据库结果)| / 实验数据 * 1000000
-    (abs(measured - actualValue) / actualValue) * 1000000;
-}
-
 # KEGG注释原理：假设在某一些特定类型的代谢过程而言，其反应底物和反应产物的区别仅仅在于一些基团的加减，
 # 则二级结构应该是比较相似的
 # 故而，对于一个反应过程 A <=> B ，假若数据库之中没有找B的二级数据，但是却找到了A的二级数据，
