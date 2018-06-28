@@ -104,24 +104,26 @@ ms2.similar.fn <- function(threshold = 0.8) {
 # 4. 利用KEGG代谢反应过程找出和未鉴定代谢物的KEGG编号相匹配的同过程内的KEGG代谢物对应的已鉴定代谢物的二级质谱信息
 # 5. 进行二级比较，如果二级相似度较高，则确认该未鉴定代谢物可能为某一个KEGG编号
 
-# 使用KEGG的代谢物数据库和代谢反应过程数据库找出和目标已经鉴定出的代谢物的所有代谢过程相关的未鉴定代谢物的KEGG注释信息
-#
-# @param sample 一般是未鉴定的代谢物结果，peak_ms2？?
-# @param RXN KEGG数据库之中的代谢过程的集合
-# @param KEGG KEGG的代谢物注释信息库，可以将metadb之中的含有KEGG编号的物质注释信息取子集
-# @param identified 通过SSM算法得到的已经被视为鉴定结果的已知物质，这个数据集之中必须要包含有KEGG编号列
-# @param ms2.similar 比较两个二级质谱矩阵是否相似，函数返回逻辑值
-#
-#   假设二级质谱的相似度的比对函数的接口形式为：
-#   ms2.alignment <- function(q, s) { score = SSM(q, s)； score >= threshold; }
-#
-# q,s为二级矩阵：
-#
-# mz, into
-# mz, into
-# mz, into
-# mz, into
-#
+#' 使用KEGG的代谢物数据库和代谢反应过程数据库找出和目标已经鉴定出的代谢物的所有代谢过程相关的未鉴定代谢物的KEGG注释信息
+#'
+#' @param sample 一般是未鉴定的代谢物结果，peak_ms2？?
+#' @param RXN KEGG数据库之中的代谢过程的集合
+#' @param KEGG KEGG的代谢物注释信息库，可以将metadb之中的含有KEGG编号的物质注释信息取子集
+#' @param identified The identified metabolite annotation \code{data.frame} 
+#'     result set. This result set should contains a column data which is 
+#'     named \code{KEGG}.
+#' @param ms2.similar 比较两个二级质谱矩阵是否相似，函数返回逻辑值
+#'
+#'   假设二级质谱的相似度的比对函数的接口形式为：
+#'   ms2.alignment <- function(q, s) { score = SSM(q, s)； score >= threshold; }
+#'
+#' q,s为二级矩阵：
+#'
+#' mz, into
+#' mz, into
+#' mz, into
+#' mz, into
+#'
 KEGG.rxnNetwork <- function(identified, sample, KEGG, KEGG.rxn,
     ms2.similar    = ms2.similar.fn(0.65),
     tolerance      = tolerance.ppm(),
