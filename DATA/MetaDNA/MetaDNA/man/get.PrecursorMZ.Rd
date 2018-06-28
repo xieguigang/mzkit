@@ -2,14 +2,17 @@
 % Please edit documentation in R/PrecursorType.R
 \name{get.PrecursorMZ}
 \alias{get.PrecursorMZ}
-\title{Calculate m/z for M by given precursor type}
+\title{Calculate \code{m/z} for mass by given precursor type}
 \usage{
 get.PrecursorMZ(M, precursorType)
+}
+\arguments{
+\item{M}{Molecule mass}
 }
 \value{
 -1 means target precursor type is not found.
 }
 \description{
-Calculate m/z for M by given precursor type
+Calculate \code{m/z} for mass by given precursor type
 }
 

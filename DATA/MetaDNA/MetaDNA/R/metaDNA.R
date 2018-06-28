@@ -98,6 +98,6 @@ kegg.partner <- function(kegg_id) {
   }) %=>% unlist %=>% as.character;
 }
 
-metaDNA.impl <- function(KEGG.partners, identify.ms2, unknown, meta.KEGG, ms2.align, ) {
+metaDNA.impl <- function(KEGG.partners, identify.ms2, unknown, ms2.align) {
 
 }

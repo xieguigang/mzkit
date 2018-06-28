@@ -4,7 +4,8 @@
 \alias{metaDNA}
 \title{Identify unknown metabolite by metaDNA algorithm}
 \usage{
-metaDNA(identify, unknown, meta.KEGG, precursor_type = "[M+H]+")
+metaDNA(identify, unknown, meta.KEGG, ms2.align, precursor_type = "[M+H]+",
+  tolerance = tolerance.ppm(20))
 }
 \arguments{
 \item{identify}{A \code{list} object with two members:
@@ -42,6 +43,6 @@ A \code{identify} parameter data structure like metabolite identify
 }
 \description{
 How to: The basic idea of the \code{MetaDNA} algorightm is
-     using identify ms2 data to align the unknown ms2 data.
+     using the identified ms2 data to align the unknown ms2 data.
 }
 
