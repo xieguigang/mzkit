@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Language.UnixBash
+﻿Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.Language.UnixBash
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports R_server = RDotNet.Extensions.VisualBasic.RSystem
 Imports Rbase = RDotNet.Extensions.VisualBasic.API.base
@@ -11,7 +12,7 @@ Module Program
     ''' </summary>
     Sub Main()
 
-        Call BuildNetwork(("D:\Resources\GCModeller-CAD-blueprint\KGML\br08201", "D:\smartnucl_integrative\DATA\2017-12-22.MetaReference\KEGG_cpd"), "../../metaDNA_kegg.rda")
+        Call BuildNetwork(("D:\Resources\GCModeller-CAD-blueprint\KGML\br08201", "D:\smartnucl_integrative\DATA\2017-12-22.MetaReference\KEGG_cpd"), "D:\MassSpectrum-toolkits\DATA\MetaDNA\MetaDNA\data\metaDNA_kegg.rda")
 
     End Sub
 
@@ -26,13 +27,14 @@ Module Program
                           Function(g)
                               Return g.First
                           End Function)
-
-        ' network <- list(rxnID, define, reactants, products);
-        ' reactants和products都是KEGG的代谢物编号
-        Dim network = Rbase.list()
+        Dim NA As New DefaultValue(Of String)("NA", Function(exp) CStr(exp) = "NULL")
 
         SyncLock R_server.R
             With R_server.R
+
+                ' network <- list(rxnID, define, reactants, products);
+                ' reactants和products都是KEGG的代谢物编号
+                Dim network = Rbase.list()
 
                 With New VisualBasic
 
@@ -40,11 +42,13 @@ Module Program
                         x:=reactions,
                         FUN:=Function(reaction)
                                  Dim model = reaction.ReactionModel
+                                 Dim name$ = Rbase.c(reaction.CommonNames, stringVector:=True) Or NA
 
                                  ' 生成一个列表之中的反应过程的摘要模型
                                  ' 相当于网络之中的一个节点
                                  Return Rbase.list(
                                     !rxnID = reaction.ID,
+                                    !name = (name),
                                     !define = reaction.Definition,
                                     !reactants = Rbase.c(model.Reactants.Keys, stringVector:=True),
                                     !products = Rbase.c(model.Products.Keys, stringVector:=True)

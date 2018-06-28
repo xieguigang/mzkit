@@ -3,23 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "KEGG_MetaDNA", "KEGG_MetaDNA.vbproj", "{F556DBA2-70EE-4AE4-A79C-BF3DEAF6DC68}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "KEGG_MetaDNA", "KEGG_MetaDNA\KEGG_MetaDNA.vbproj", "{F556DBA2-70EE-4AE4-A79C-BF3DEAF6DC68}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "47-dotnet_Microsoft.VisualBasic", "..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj", "{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "47-dotnet_Microsoft.VisualBasic", "..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj", "{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "runtime", "runtime", "{2179372B-1D9C-40B8-862E-50E70195A46C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "vb", "vb", "{4A058C19-F4CF-4026-86A6-25DF9BDF8F79}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "47_dotnet_ms-vb_data.framework", "..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj", "{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "47_dotnet_ms-vb_data.framework", "..\..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj", "{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "R", "R", "{E7820923-08D6-4289-86AD-BF3561283DE5}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "RDotNET", "..\..\..\..\GCModeller\src\R.Bioconductor\RDotNET\RDotNET.vbproj", "{57D5EA2B-F718-4FD8-9504-B4C0293FA4B9}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "RDotNET", "..\..\..\GCModeller\src\R.Bioconductor\RDotNET\RDotNET.vbproj", "{57D5EA2B-F718-4FD8-9504-B4C0293FA4B9}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "RDotNET.Extensions.VisualBasic", "..\..\..\..\GCModeller\src\R.Bioconductor\RDotNET.Extensions.VisualBasic\RDotNET.Extensions.VisualBasic.vbproj", "{AB6E71B0-1BE2-4418-AB4B-91D5554CF5A1}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "RDotNET.Extensions.VisualBasic", "..\..\..\GCModeller\src\R.Bioconductor\RDotNET.Extensions.VisualBasic\RDotNET.Extensions.VisualBasic.vbproj", "{AB6E71B0-1BE2-4418-AB4B-91D5554CF5A1}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Bio.Assembly", "..\..\..\..\GCModeller\src\GCModeller\core\Bio.Assembly\Bio.Assembly.vbproj", "{C699D311-9923-4C19-BF70-5048D0E2CF5D}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Bio.Assembly", "..\..\..\GCModeller\src\GCModeller\core\Bio.Assembly\Bio.Assembly.vbproj", "{C699D311-9923-4C19-BF70-5048D0E2CF5D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +29,12 @@ Global
 		Biodeep|Any CPU = Biodeep|Any CPU
 		Biodeep|x64 = Biodeep|x64
 		Biodeep|x86 = Biodeep|x86
+		Biostack|Any CPU = Biostack|Any CPU
+		Biostack|x64 = Biostack|x64
+		Biostack|x86 = Biostack|x86
+		Biostack-Debug|Any CPU = Biostack-Debug|Any CPU
+		Biostack-Debug|x64 = Biostack-Debug|x64
+		Biostack-Debug|x86 = Biostack-Debug|x86
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
@@ -82,6 +88,18 @@ Global
 		{F556DBA2-70EE-4AE4-A79C-BF3DEAF6DC68}.Biodeep|x64.Build.0 = Release|Any CPU
 		{F556DBA2-70EE-4AE4-A79C-BF3DEAF6DC68}.Biodeep|x86.ActiveCfg = Release|Any CPU
 		{F556DBA2-70EE-4AE4-A79C-BF3DEAF6DC68}.Biodeep|x86.Build.0 = Release|Any CPU
+		{F556DBA2-70EE-4AE4-A79C-BF3DEAF6DC68}.Biostack|Any CPU.ActiveCfg = Debug|Any CPU
+		{F556DBA2-70EE-4AE4-A79C-BF3DEAF6DC68}.Biostack|Any CPU.Build.0 = Debug|Any CPU
+		{F556DBA2-70EE-4AE4-A79C-BF3DEAF6DC68}.Biostack|x64.ActiveCfg = Release|x64
+		{F556DBA2-70EE-4AE4-A79C-BF3DEAF6DC68}.Biostack|x64.Build.0 = Release|x64
+		{F556DBA2-70EE-4AE4-A79C-BF3DEAF6DC68}.Biostack|x86.ActiveCfg = Debug|Any CPU
+		{F556DBA2-70EE-4AE4-A79C-BF3DEAF6DC68}.Biostack|x86.Build.0 = Debug|Any CPU
+		{F556DBA2-70EE-4AE4-A79C-BF3DEAF6DC68}.Biostack-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F556DBA2-70EE-4AE4-A79C-BF3DEAF6DC68}.Biostack-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F556DBA2-70EE-4AE4-A79C-BF3DEAF6DC68}.Biostack-Debug|x64.ActiveCfg = Debug|x64
+		{F556DBA2-70EE-4AE4-A79C-BF3DEAF6DC68}.Biostack-Debug|x64.Build.0 = Debug|x64
+		{F556DBA2-70EE-4AE4-A79C-BF3DEAF6DC68}.Biostack-Debug|x86.ActiveCfg = Debug|Any CPU
+		{F556DBA2-70EE-4AE4-A79C-BF3DEAF6DC68}.Biostack-Debug|x86.Build.0 = Debug|Any CPU
 		{F556DBA2-70EE-4AE4-A79C-BF3DEAF6DC68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F556DBA2-70EE-4AE4-A79C-BF3DEAF6DC68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F556DBA2-70EE-4AE4-A79C-BF3DEAF6DC68}.Debug|x64.ActiveCfg = Debug|x64
@@ -172,6 +190,18 @@ Global
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Biodeep|x64.Build.0 = Biodeep|x64
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Biodeep|x86.ActiveCfg = Biodeep|x86
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Biodeep|x86.Build.0 = Biodeep|x86
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Biostack|Any CPU.ActiveCfg = Biostack|Any CPU
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Biostack|Any CPU.Build.0 = Biostack|Any CPU
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Biostack|x64.ActiveCfg = Biostack|x64
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Biostack|x64.Build.0 = Biostack|x64
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Biostack|x86.ActiveCfg = Biostack|x86
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Biostack|x86.Build.0 = Biostack|x86
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Biostack-Debug|Any CPU.ActiveCfg = Biostack-Debug|Any CPU
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Biostack-Debug|Any CPU.Build.0 = Biostack-Debug|Any CPU
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Biostack-Debug|x64.ActiveCfg = Biostack-Debug|x64
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Biostack-Debug|x64.Build.0 = Biostack-Debug|x64
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Biostack-Debug|x86.ActiveCfg = Biostack-Debug|x86
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Biostack-Debug|x86.Build.0 = Biostack-Debug|x86
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Debug|x64.ActiveCfg = Debug|x64
@@ -262,6 +292,18 @@ Global
 		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.Biodeep|x64.Build.0 = Biodeep|x64
 		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.Biodeep|x86.ActiveCfg = Biodeep|x86
 		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.Biodeep|x86.Build.0 = Biodeep|x86
+		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.Biostack|Any CPU.ActiveCfg = Biostack|Any CPU
+		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.Biostack|Any CPU.Build.0 = Biostack|Any CPU
+		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.Biostack|x64.ActiveCfg = Biostack|x64
+		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.Biostack|x64.Build.0 = Biostack|x64
+		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.Biostack|x86.ActiveCfg = Biostack|x86
+		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.Biostack|x86.Build.0 = Biostack|x86
+		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.Biostack-Debug|Any CPU.ActiveCfg = Biostack-Debug|Any CPU
+		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.Biostack-Debug|Any CPU.Build.0 = Biostack-Debug|Any CPU
+		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.Biostack-Debug|x64.ActiveCfg = Biostack-Debug|x64
+		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.Biostack-Debug|x64.Build.0 = Biostack-Debug|x64
+		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.Biostack-Debug|x86.ActiveCfg = Biostack-Debug|x86
+		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.Biostack-Debug|x86.Build.0 = Biostack-Debug|x86
 		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.Debug|x64.ActiveCfg = Debug|x64
@@ -352,6 +394,18 @@ Global
 		{57D5EA2B-F718-4FD8-9504-B4C0293FA4B9}.Biodeep|x64.Build.0 = Biodeep|x64
 		{57D5EA2B-F718-4FD8-9504-B4C0293FA4B9}.Biodeep|x86.ActiveCfg = Biodeep|x86
 		{57D5EA2B-F718-4FD8-9504-B4C0293FA4B9}.Biodeep|x86.Build.0 = Biodeep|x86
+		{57D5EA2B-F718-4FD8-9504-B4C0293FA4B9}.Biostack|Any CPU.ActiveCfg = Biodeep|Any CPU
+		{57D5EA2B-F718-4FD8-9504-B4C0293FA4B9}.Biostack|Any CPU.Build.0 = Biodeep|Any CPU
+		{57D5EA2B-F718-4FD8-9504-B4C0293FA4B9}.Biostack|x64.ActiveCfg = Biodeep|x64
+		{57D5EA2B-F718-4FD8-9504-B4C0293FA4B9}.Biostack|x64.Build.0 = Biodeep|x64
+		{57D5EA2B-F718-4FD8-9504-B4C0293FA4B9}.Biostack|x86.ActiveCfg = Biodeep|x86
+		{57D5EA2B-F718-4FD8-9504-B4C0293FA4B9}.Biostack|x86.Build.0 = Biodeep|x86
+		{57D5EA2B-F718-4FD8-9504-B4C0293FA4B9}.Biostack-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57D5EA2B-F718-4FD8-9504-B4C0293FA4B9}.Biostack-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57D5EA2B-F718-4FD8-9504-B4C0293FA4B9}.Biostack-Debug|x64.ActiveCfg = Debug|x64
+		{57D5EA2B-F718-4FD8-9504-B4C0293FA4B9}.Biostack-Debug|x64.Build.0 = Debug|x64
+		{57D5EA2B-F718-4FD8-9504-B4C0293FA4B9}.Biostack-Debug|x86.ActiveCfg = Debug|x86
+		{57D5EA2B-F718-4FD8-9504-B4C0293FA4B9}.Biostack-Debug|x86.Build.0 = Debug|x86
 		{57D5EA2B-F718-4FD8-9504-B4C0293FA4B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{57D5EA2B-F718-4FD8-9504-B4C0293FA4B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57D5EA2B-F718-4FD8-9504-B4C0293FA4B9}.Debug|x64.ActiveCfg = Debug|x64
@@ -442,6 +496,18 @@ Global
 		{AB6E71B0-1BE2-4418-AB4B-91D5554CF5A1}.Biodeep|x64.Build.0 = Biodeep|x64
 		{AB6E71B0-1BE2-4418-AB4B-91D5554CF5A1}.Biodeep|x86.ActiveCfg = Biodeep|x86
 		{AB6E71B0-1BE2-4418-AB4B-91D5554CF5A1}.Biodeep|x86.Build.0 = Biodeep|x86
+		{AB6E71B0-1BE2-4418-AB4B-91D5554CF5A1}.Biostack|Any CPU.ActiveCfg = Biodeep|Any CPU
+		{AB6E71B0-1BE2-4418-AB4B-91D5554CF5A1}.Biostack|Any CPU.Build.0 = Biodeep|Any CPU
+		{AB6E71B0-1BE2-4418-AB4B-91D5554CF5A1}.Biostack|x64.ActiveCfg = Biodeep|x64
+		{AB6E71B0-1BE2-4418-AB4B-91D5554CF5A1}.Biostack|x64.Build.0 = Biodeep|x64
+		{AB6E71B0-1BE2-4418-AB4B-91D5554CF5A1}.Biostack|x86.ActiveCfg = Biodeep|x86
+		{AB6E71B0-1BE2-4418-AB4B-91D5554CF5A1}.Biostack|x86.Build.0 = Biodeep|x86
+		{AB6E71B0-1BE2-4418-AB4B-91D5554CF5A1}.Biostack-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB6E71B0-1BE2-4418-AB4B-91D5554CF5A1}.Biostack-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB6E71B0-1BE2-4418-AB4B-91D5554CF5A1}.Biostack-Debug|x64.ActiveCfg = Debug|x64
+		{AB6E71B0-1BE2-4418-AB4B-91D5554CF5A1}.Biostack-Debug|x64.Build.0 = Debug|x64
+		{AB6E71B0-1BE2-4418-AB4B-91D5554CF5A1}.Biostack-Debug|x86.ActiveCfg = Debug|x86
+		{AB6E71B0-1BE2-4418-AB4B-91D5554CF5A1}.Biostack-Debug|x86.Build.0 = Debug|x86
 		{AB6E71B0-1BE2-4418-AB4B-91D5554CF5A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AB6E71B0-1BE2-4418-AB4B-91D5554CF5A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB6E71B0-1BE2-4418-AB4B-91D5554CF5A1}.Debug|x64.ActiveCfg = Debug|x64
@@ -532,6 +598,18 @@ Global
 		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.Biodeep|x64.Build.0 = Biodeep|x64
 		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.Biodeep|x86.ActiveCfg = Biodeep|x86
 		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.Biodeep|x86.Build.0 = Biodeep|x86
+		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.Biostack|Any CPU.ActiveCfg = Biodeep|Any CPU
+		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.Biostack|Any CPU.Build.0 = Biodeep|Any CPU
+		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.Biostack|x64.ActiveCfg = Biodeep|x64
+		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.Biostack|x64.Build.0 = Biodeep|x64
+		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.Biostack|x86.ActiveCfg = Biodeep|x86
+		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.Biostack|x86.Build.0 = Biodeep|x86
+		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.Biostack-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.Biostack-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.Biostack-Debug|x64.ActiveCfg = Debug|x64
+		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.Biostack-Debug|x64.Build.0 = Debug|x64
+		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.Biostack-Debug|x86.ActiveCfg = Debug|x86
+		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.Biostack-Debug|x86.Build.0 = Debug|x86
 		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.Debug|x64.ActiveCfg = Debug|x64
