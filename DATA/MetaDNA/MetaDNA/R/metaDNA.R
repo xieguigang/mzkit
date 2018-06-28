@@ -54,27 +54,41 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
   # data/metaDNA_kegg.rda
   xLoad("metaDNA_kegg.rda");
 
+  match.kegg <- kegg.match.handler(
+    meta.KEGG,
+    unknown$peaktable[, "mz"],
+    precursor_type,
+    tolerance
+  );
   lapply(identify$meta.KEGG %=>% .as.list, function(identify) {
-  	partners <- identify$KEGG %=>% kegg.partners;
-  	ms2      <- peak_ms2[[identify$peak_ms2.i]];
+  	partners  <- identify$KEGG %=>% kegg.partners;
+  	ms2       <- peak_ms2[[identify$peak_ms2.i]];
 
-
+    metaDNA.impl(partners, ms2, unknown, ms2.align, match.kegg);
   });
 }
 
 #' Match unknown by mass
 #'
-kegg.match.handler <- function(meta.KEGG, precursor_type = "[M+H]+", tolerance = tolerance.ppm(20)) {
+#' @param unknown.mz This mz parameter is a \code{m/z} vector from the \code{unknown$peaktable}
+#'
+#' @return Returns the index vector in \code{unknown.mz} vector.
+kegg.match.handler <- function(meta.KEGG, unknown.mz,
+                               precursor_type = "[M+H]+",
+                               tolerance = tolerance.ppm(20)) {
+
   kegg.mass <- meta.KEGG[, "mass"] %=>% as.numeric;
+  kegg.ids  <- meta.KEGG[, "KEGG"] %=>% as.character;
   kegg.mz   <- get.PrecursorMZ(kegg.mass, precursor_type);
   kegg.list <- meta.KEGG %=>% .as.list;
 
-  function(mz) {
-    # mz parameter is a mz vector from the unknown peaktable
-    sapply(mz, function(ms1) {
-      i <- tolerance(kegg.mz, ms1) %=>% which;
-      kegg.list[i];
-    })
+  function(kegg_id) {
+    mzi <- sapply(kegg.ids, function(id) id %in% kegg_id) %=>% as.logical %=>% which;
+    mz  <- kegg.mz[mzi];
+
+    sapply(unknown.mz, function(ms1) {
+      From(mz)$Any(function(x) tolerance(x, ms1));
+    }) %=>% as.logical %=>% which;
   }
 }
 
@@ -98,6 +112,19 @@ kegg.partner <- function(kegg_id) {
   }) %=>% unlist %=>% as.character;
 }
 
-metaDNA.impl <- function(KEGG.partners, identify.ms2, unknown, ms2.align) {
+#'
+#' @param KEGG.partners Related to the identified KEGG id based on the kegg reaction definitions.
+#'     Using for find unknown metabolite ms2 data.
+#' @param identify.ms2 The identify metabolite's MS/MS matrix data.
+#' @param unknown Unknown metabolite's peaktable and peak_ms2 data.
+#'
+#' @details KEGG.partners -> kegg.match.handler -> unknown index -> unknown ms2 -> identify.ms2 alignment -> is similar?
+#'
+#'              yes, identify the unknown as KEGG.partner
+#'              no, returns NULL
+metaDNA.impl <- function(KEGG.partners, identify.ms2, unknown, ms2.align, unknow.matches) {
+  unknown.i <- KEGG.partners %=>% unknown.matches;
+  peaktable <- unknown$peaktable[unknown.i, ];
+  peak_ms2  <- unknown$peak_ms2[peaktable[, "peak_ms2.i"]];
 
 }

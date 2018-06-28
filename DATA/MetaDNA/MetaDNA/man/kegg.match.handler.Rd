@@ -4,8 +4,14 @@
 \alias{kegg.match.handler}
 \title{Match unknown by mass}
 \usage{
-kegg.match.handler(meta.KEGG, precursor_type = "[M+H]+",
+kegg.match.handler(meta.KEGG, unknown.mz, precursor_type = "[M+H]+",
   tolerance = tolerance.ppm(20))
+}
+\arguments{
+\item{unknown.mz}{This mz parameter is a \code{m/z} vector from the \code{unknown$peaktable}}
+}
+\value{
+Returns the index vector in \code{unknown.mz} vector.
 }
 \description{
 Match unknown by mass
