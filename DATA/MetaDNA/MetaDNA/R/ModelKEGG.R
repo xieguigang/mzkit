@@ -30,8 +30,10 @@ PPM <- function(measured, actualValue) {
     (abs(measured - actualValue) / actualValue) * 1000000;
 }
 
-# KEGG注释原理：假设在某一些特定类型的代谢过程而言，其反应底物和反应产物的区别仅仅在于一些基团的加减，则二级结构应该是比较相似的
-# 故而，对于一个反应过程 A <=> B ，假若数据库之中没有找B的二级数据，但是却找到了A的二级数据，那么就可以通过这个原理来进行B的注释
+# KEGG注释原理：假设在某一些特定类型的代谢过程而言，其反应底物和反应产物的区别仅仅在于一些基团的加减，
+# 则二级结构应该是比较相似的
+# 故而，对于一个反应过程 A <=> B ，假若数据库之中没有找B的二级数据，但是却找到了A的二级数据，
+# 那么就可以通过这个原理来进行B的注释
 
 #' Search KEGG meta database by MS1
 #'
@@ -109,8 +111,8 @@ ms2.similar.fn <- function(threshold = 0.8) {
 #' @param sample 一般是未鉴定的代谢物结果，peak_ms2？?
 #' @param RXN KEGG数据库之中的代谢过程的集合
 #' @param KEGG KEGG的代谢物注释信息库，可以将metadb之中的含有KEGG编号的物质注释信息取子集
-#' @param identified The identified metabolite annotation \code{data.frame} 
-#'     result set. This result set should contains a column data which is 
+#' @param identified The identified metabolite annotation \code{data.frame}
+#'     result set. This result set should contains a column data which is
 #'     named \code{KEGG}.
 #' @param ms2.similar 比较两个二级质谱矩阵是否相似，函数返回逻辑值
 #'

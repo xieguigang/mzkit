@@ -9,8 +9,8 @@ KEGG.rxnNetwork(identified, sample, KEGG, KEGG.rxn,
   precursor_type = "[M+H]+")
 }
 \arguments{
-\item{identified}{The identified metabolite annotation \code{data.frame} 
-result set. This result set should contains a column data which is 
+\item{identified}{The identified metabolite annotation \code{data.frame}
+result set. This result set should contains a column data which is
 named \code{KEGG}.}
 
 \item{sample}{一般是未鉴定的代谢物结果，peak_ms2�<U+FFFD>?}
