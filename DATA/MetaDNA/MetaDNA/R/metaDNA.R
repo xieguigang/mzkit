@@ -36,10 +36,44 @@
 #'      result for \code{unknown} parameter input data
 #'
 metaDNA <- function(identify, unknown, meta.KEGG, ms2.align, precursor_type = "[M+H]+") {
+
   # 1. Find all of the related KEGG compound by KEGG reaction link for
   #    identify metabolites
   # 2. Search for unknown by using ms1 precursor_m/z compare with the
   #    KEGG compound molecule weight in a given precursor_type mode.
 
+  # load kegg reaction database
+  # data/metaDNA_kegg.rda
+  xLoad("metaDNA_kegg.rda");
+
+  lapply(identify$meta.KEGG %=>% .as.list, function(identify) {
+  	partners <- identify$KEGG %=>% kegg.partners;
+  	ms2      <- peak_ms2[[identify$peak_ms2.i]];
+
+
+  });
+}
+
+#' Find kegg reaction partner
+#'
+#' @description Find KEGG reaction partner compound based on the kegg
+#'     reaction definition.
+#'
+#' @param kegg_id The kegg compound id of the identified compound.
+#'
+#' @return A kegg id vector which is related to the given \code{kegg_id}.
+kegg.partner <- function(kegg_id) {
+  sapply(network, function(reaction) {
+    if (kegg_id %in% reaction$reactants) {
+      reaction$products;
+    } else if (kegg_id %in% reaction$products) {
+      reaction$reactants;
+    } else {
+      NULL;
+    }
+  }) %=>% unlist %=>% as.character;
+}
+
+metaDNA.impl <- function(KEGG.partners, identify.ms2, unknown, meta.KEGG, ms2.align, ) {
 
 }
