@@ -10,8 +10,6 @@
 #' @return A subset of the input \code{dataframe} with all KEGG column
 #'     value non-empty.
 removes.empty_KEGG <- function(d) {
-	KEGG <- as.vector(d[, "KEGG"]);
-	KEGG <- Strings.Empty(KEGG, TRUE);
-
-	d[!KEGG, ];
+	KEGG <- d[, "KEGG"] %=>% as.vector;
+	d[!Strings.Empty(KEGG, TRUE), ];
 }
