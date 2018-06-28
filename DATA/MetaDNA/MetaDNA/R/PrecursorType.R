@@ -219,7 +219,9 @@ get.mass <- function(chargeMode, charge, PrecursorType) {
 	return(found$calc);
 }
 
-#' Calculate m/z for M by given precursor type
+#' Calculate \code{m/z} for mass by given precursor type
+#'
+#' @param M Molecule mass
 #'
 #' @return -1 means target precursor type is not found.
 get.PrecursorMZ <- function(M, precursorType) {

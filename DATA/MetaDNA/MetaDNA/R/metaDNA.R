@@ -1,3 +1,9 @@
+require(VisualBasic.R);
+
+Imports("Microsoft.VisualBasic.Data");
+Imports("Microsoft.VisualBasic.Data.Linq");
+Imports("Microsoft.VisualBasic.Language");
+
 #' Identify unknown metabolite by metaDNA algorithm
 #'
 #' @description How to: The basic idea of the \code{MetaDNA} algorightm is
@@ -35,7 +41,9 @@
 #' @return A \code{identify} parameter data structure like metabolite identify
 #'      result for \code{unknown} parameter input data
 #'
-metaDNA <- function(identify, unknown, meta.KEGG, ms2.align, precursor_type = "[M+H]+") {
+metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
+                    precursor_type = "[M+H]+",
+                    tolerance = tolerance.ppm(20)) {
 
   # 1. Find all of the related KEGG compound by KEGG reaction link for
   #    identify metabolites
@@ -52,6 +60,22 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align, precursor_type = "[
 
 
   });
+}
+
+#' Match unknown by mass
+#'
+kegg.match.handler <- function(meta.KEGG, precursor_type = "[M+H]+", tolerance = tolerance.ppm(20)) {
+  kegg.mass <- meta.KEGG[, "mass"] %=>% as.numeric;
+  kegg.mz   <- get.PrecursorMZ(kegg.mass, precursor_type);
+  kegg.list <- meta.KEGG %=>% .as.list;
+
+  function(mz) {
+    # mz parameter is a mz vector from the unknown peaktable
+    sapply(mz, function(ms1) {
+      i <- tolerance(kegg.mz, ms1) %=>% which;
+      kegg.list[i];
+    })
+  }
 }
 
 #' Find kegg reaction partner
