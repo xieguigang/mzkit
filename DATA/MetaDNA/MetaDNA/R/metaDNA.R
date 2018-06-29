@@ -59,7 +59,8 @@ Imports("Microsoft.VisualBasic.Language");
 #'
 metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
                     precursor_type = "[M+H]+",
-                    tolerance = tolerance.ppm(20)) {
+                    tolerance      = tolerance.ppm(20),
+                    score.cutoff   = 0.8) {
 
   # 1. Find all of the related KEGG compound by KEGG reaction link for
   #    identify metabolites
@@ -71,8 +72,8 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
   xLoad("metaDNA_kegg.rda");
 
   kegg_id.col <- meta.KEGG$kegg_id;
-  meta.KEGG <- meta.KEGG$data;
-  match.kegg <- kegg.match.handler(
+  meta.KEGG   <- meta.KEGG$data;
+  match.kegg  <- kegg.match.handler(
     meta.KEGG,
     unknown$peaktable[, "mz"],
     precursor_type = precursor_type,
@@ -81,21 +82,24 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
   );
   identify.peak_ms2 <- identify$peak_ms2;
 
-  lapply(identify$meta.KEGG %=>% .as.list, function(identified) {
+  # tick.each
+  # lapply
+  tick.each(identify$meta.KEGG %=>% .as.list, function(identified) {
   	partners  <- identified$KEGG %=>% kegg.partners;
   	ms2       <- identify.peak_ms2[[identified$peak_ms2.i]];
 
 	if (IsNothing(partners)) {
 		return(NULL);
 	}
-	
+
 	# KEGG.partners, identify.ms2, unknown, ms2.align, unknow.matches
     metaDNA.impl(
   		KEGG.partners  = partners,
   		identify.ms2   = ms2,
   		unknown        = unknown,
   		ms2.align      = ms2.align,
-  		unknow.matches = match.kegg
+  		unknow.matches = match.kegg,
+  		score.cutoff   = score.cutoff
   	);
   });
 }
@@ -129,20 +133,20 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
   	}) %=>% as.logical %=>% which;
     mz   <- kegg.mz[mzi];
 	  kegg <- kegg.list[mzi];
-	  
+
     unknown.query <- sapply(1:length(unknown.mz), function(j) {
 		ms1   <- unknown.mz[j];
 		# print(ms1)
 		# print(mz)
 		# print("----")
 		query <- sapply(1:length(mz), function(i) {
-		
+
 		if (tolerance(ms1, mz[i])) {
 				kegg[i];
 			} else {
 				NULL;
 			}
-			
+
 		});
 		nulls <- sapply(query, is.null) %=>% unlist;
 		query <- query[!nulls];
@@ -241,7 +245,7 @@ metaDNA.impl <- function(KEGG.partners, identify.ms2,
   # unknown.i integer index of the peaktable
   unknown.i <- sapply(unknown.query, function(x) x$unknown.index) %=>% unlist;
   peaktable <- ensure.dataframe(
-	unknown$peaktable[unknown.i, ], 
+	unknown$peaktable[unknown.i, ],
 	colnames(unknown$peaktable)
   );
   # rownames of peaktable is the list names for the peak_ms2
