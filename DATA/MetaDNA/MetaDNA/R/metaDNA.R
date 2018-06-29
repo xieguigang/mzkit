@@ -233,15 +233,36 @@ metaDNA.impl <- function(KEGG.partners, identify.ms2,
   	name <- peak_ms2.index[i];
   	peak <- peak_ms2[[name]];
   	ms1.feature <- peaktable[[i]];
+    best.score  <- -10000;
+    best <- NULL;
 
+    # Loop each identify and using its ms2 as reference
   	for(fileName in names(identify.ms2)) {
   	  file <- identify.ms2[[fileName]];
   	  for (scan in names(file)) {
-  	    ref <- file[[scan]];
+  	    result <- align_best.internal(
+  	      ref          = file[[scan]],
+  	      peak         = peak,
+  	      ms2.align    = ms2.align,
+  	      score.cutoff = score.cutoff
+  	    );
 
-
+        if (!is.null(result)) {
+          if (mean(result$score) > best.score) {
+            best.score <- mean(result$score);
+            best <- result;
+          }
+        }
   	  }
   	}
+
+    if (!is.null(best)) {
+      # name is the peaktable rownames
+      query.result[[name]] <- list(
+        ms2.alignment = best,
+        ms1.feature   = ms1.feature
+      );
+    }
   }
 
   query.result;
@@ -267,6 +288,7 @@ align_best.internal <- function(ref, peak, ms2.align, score.cutoff = 0.8) {
   score      <- c();
   candidate  <- NULL;
 
+  # loop each unknown for alignment best result
   for (fileName in names(peak)) {
     file <- peak[[name]];
 
@@ -274,8 +296,8 @@ align_best.internal <- function(ref, peak, ms2.align, score.cutoff = 0.8) {
       unknown <- file[[scan]];
       align.scores <- ms2.align(unknown, ref);
 
-      if (sum(align.scores) > best.score) {
-        best.score <- align.scores %=>% sum;
+      if (mean(align.scores) > best.score) {
+        best.score <- mean(align.scores);
         score      <- align.scores;
         candidate  <- unknown;
       }
