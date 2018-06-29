@@ -1,7 +1,7 @@
 Package: MetaDNA
 Type: Package
 Title: Identify unknown metabolite by metaDNA algorithm
-Version: 0.1.4
+Version: 0.1.5
 Author: xieguigang
 Maintainer: xieguigang <xie.guigang@gcmodeller.org>
 Description: Identify unknown metabolite by metaDNA algorithm.
