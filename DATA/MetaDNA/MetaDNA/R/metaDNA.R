@@ -85,6 +85,10 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
   	partners  <- identified$KEGG %=>% kegg.partners;
   	ms2       <- identify.peak_ms2[[identified$peak_ms2.i]];
 
+	if (IsNothing(partners)) {
+		return(NULL);
+	}
+	
 	# KEGG.partners, identify.ms2, unknown, ms2.align, unknow.matches
     metaDNA.impl(
   		KEGG.partners  = partners,
@@ -125,15 +129,20 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
   	}) %=>% as.logical %=>% which;
     mz   <- kegg.mz[mzi];
 	  kegg <- kegg.list[mzi];
-
+	  
     unknown.query <- sapply(1:length(unknown.mz), function(j) {
 		ms1   <- unknown.mz[j];
+		# print(ms1)
+		# print(mz)
+		# print("----")
 		query <- sapply(1:length(mz), function(i) {
-			if (tolerance(ms1, mz[i])) {
+		
+		if (tolerance(ms1, mz[i])) {
 				kegg[i];
 			} else {
 				NULL;
 			}
+			
 		});
 		nulls <- sapply(query, is.null) %=>% unlist;
 		query <- query[!nulls];
