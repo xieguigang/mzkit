@@ -76,7 +76,7 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
     meta.KEGG,
     unknown$peaktable[, "mz"],
     precursor_type = precursor_type,
-	kegg_id        = kegg_id.col,
+	  kegg_id        = kegg_id.col,
     tolerance      = tolerance
   );
   identify.peak_ms2 <- identify$peak_ms2;
@@ -87,12 +87,12 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
 
 	# KEGG.partners, identify.ms2, unknown, ms2.align, unknow.matches
     metaDNA.impl(
-		KEGG.partners  = partners,
-		identify.ms2   = ms2,
-		unknown        = unknown,
-		ms2.align      = ms2.align,
-		unknow.matches = match.kegg
-	);
+  		KEGG.partners  = partners,
+  		identify.ms2   = ms2,
+  		unknown        = unknown,
+  		ms2.align      = ms2.align,
+  		unknow.matches = match.kegg
+  	);
   });
 }
 
@@ -104,7 +104,7 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
 #' @return Returns the index vector in \code{unknown.mz} vector.
 kegg.match.handler <- function(meta.KEGG, unknown.mz,
                                precursor_type = "[M+H]+",
-							   kegg_id        = "KEGG",
+							                 kegg_id        = "KEGG",
                                tolerance      = tolerance.ppm(20)) {
 
   kegg.mass <- meta.KEGG[,  "mass"] %=>% as.numeric;
@@ -121,10 +121,10 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
 
 	# Get kegg m/z for a given kegg_id set
     mzi  <- sapply(kegg.ids, function(id) {
-		id %in% kegg_id;
-	}) %=>% as.logical %=>% which;
+  		id %in% kegg_id;
+  	}) %=>% as.logical %=>% which;
     mz   <- kegg.mz[mzi];
-	kegg <- kegg.list[mzi];
+	  kegg <- kegg.list[mzi];
 
     unknown.query <- sapply(1:length(unknown.mz), function(j) {
 		ms1   <- unknown.mz[j];
@@ -148,8 +148,8 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
 		}
     });
 
-	nulls <- sapply(unknown.query, is.null) %=>% unlist;
-	unknown.query[!nulls];
+  	nulls <- sapply(unknown.query, is.null) %=>% unlist;
+  	unknown.query[!nulls];
   }
 }
 
@@ -244,6 +244,7 @@ metaDNA.impl <- function(KEGG.partners, identify.ms2,
 
   for (i in 1:length(peak_ms2.index)) {
   	# identify for each unknown metabolite
+	kegg.query <- unknown.query[i];
   	name <- peak_ms2.index[i];
   	peak <- peak_ms2[[name]];
   	ms1.feature <- peaktable[[i]];
@@ -274,7 +275,8 @@ metaDNA.impl <- function(KEGG.partners, identify.ms2,
       # name is the peaktable rownames
       query.result[[name]] <- list(
         ms2.alignment = best,
-        ms1.feature   = ms1.feature
+        ms1.feature   = ms1.feature,
+		    kegg.info     = kegg.query
       );
     }
   }
@@ -302,12 +304,14 @@ align_best.internal <- function(ref, peak, ms2.align, score.cutoff = 0.8) {
   score      <- c();
   candidate  <- NULL;
 
+  colnames(ref) <- c("ProductMz", "LibraryIntensity");
+
   # loop each unknown for alignment best result
   for (fileName in names(peak)) {
     file <- peak[[name]];
 
     for (scan in names(file)) {
-      unknown <- file[[scan]];
+      unknown      <- file[[scan]];
       align.scores <- ms2.align(unknown, ref);
 
       if (mean(align.scores) > best.score) {
