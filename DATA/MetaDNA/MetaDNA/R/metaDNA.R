@@ -320,7 +320,7 @@ align_best.internal <- function(ref, peak, ms2.align, score.cutoff = 0.8) {
 
   # loop each unknown for alignment best result
   for (fileName in names(peak)) {
-    file <- peak[[name]];
+    file <- peak[[fileName]];
 
     for (scan in names(file)) {
       unknown      <- file[[scan]];
