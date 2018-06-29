@@ -63,17 +63,27 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
 	kegg_id        = kegg_id.col,
     tolerance      = tolerance
   );
+  identify.peak_ms2 <- identify$peak_ms2;
+  
   lapply(identify$meta.KEGG %=>% .as.list, function(identified) {
   	partners  <- identified$KEGG %=>% kegg.partners;
-  	ms2       <- peak_ms2[[identified$peak_ms2.i]];
+  	ms2       <- identify.peak_ms2[[identified$peak_ms2.i]];
 
-    metaDNA.impl(partners, ms2, unknown, ms2.align, match.kegg);
+	# KEGG.partners, identify.ms2, unknown, ms2.align, unknow.matches
+    metaDNA.impl(
+		KEGG.partners  = partners, 
+		identify.ms2   = ms2, 
+		unknown        = unknown, 
+		ms2.align      = ms2.align, 
+		unknow.matches = match.kegg
+	);
   });
 }
 
 #' Match unknown by mass
 #'
-#' @param unknown.mz This mz parameter is a \code{m/z} vector from the \code{unknown$peaktable}
+#' @param unknown.mz This mz parameter is a \code{m/z} vector from the 
+#'         \code{unknown$peaktable}
 #'
 #' @return Returns the index vector in \code{unknown.mz} vector.
 kegg.match.handler <- function(meta.KEGG, unknown.mz,
@@ -94,7 +104,9 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
   function(kegg_id) {
 	
 	# Get kegg m/z for a given kegg_id set
-    mzi  <- sapply(kegg.ids, function(id) id %in% kegg_id) %=>% as.logical %=>% which;
+    mzi  <- sapply(kegg.ids, function(id) {
+		id %in% kegg_id;
+	}) %=>% as.logical %=>% which;
     mz   <- kegg.mz[mzi];
 	kegg <- kegg.list[mzi];
 
@@ -113,7 +125,10 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
 		if (length(query) == 0) {
 			NULL;
 		} else {
-			list(unknown.index = j, unknown.mz = ms1, kegg = query);
+			list(unknown.index = j, 
+				 unknown.mz    = ms1, 
+				 kegg          = query
+			);
 		}
     });
 	
@@ -153,8 +168,9 @@ kegg.partners <- function(kegg_id) {
 #'              yes, identify the unknown as KEGG.partner
 #'              no, returns NULL
 metaDNA.impl <- function(KEGG.partners, identify.ms2, unknown, ms2.align, unknow.matches) {
-  unknown.i <- KEGG.partners %=>% unknown.matches;
+  unknown.query <- KEGG.partners %=>% unknow.matches;
+  unknown.i <- sapply(unknown.query, function(x) x$unknown.index) %=>% unlist;
   peaktable <- unknown$peaktable[unknown.i, ];
-  peak_ms2  <- unknown$peak_ms2[peaktable[, "peak_ms2.i"]];
+  peak_ms2  <- unknown$peak_ms2[peaktable %=>% rownames];
 
 }
