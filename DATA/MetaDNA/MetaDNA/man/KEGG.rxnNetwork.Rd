@@ -2,7 +2,7 @@
 % Please edit documentation in R/ModelKEGG.R
 \name{KEGG.rxnNetwork}
 \alias{KEGG.rxnNetwork}
-\title{<U+4F7F><U+7528>KEGG<U+7684><U+4EE3><U+8C22><U+7269><U+6570><U+636E><U+5E93><U+548C><U+4EE3><U+8C22><U+53CD><U+5E94><U+8FC7><U+7A0B><U+6570><U+636E><U+5E93><U+627E><U+51FA><U+548C><U+76EE><U+6807><U+5DF2><U+7ECF><U+9274><U+5B9A><U+51FA><U+7684><U+4EE3><U+8C22><U+7269><U+7684><U+6240><U+6709><U+4EE3><U+8C22><U+8FC7><U+7A0B><U+76F8><U+5173><U+7684><U+672A><U+9274><U+5B9A><U+4EE3><U+8C22><U+7269><U+7684>KEGG<U+6CE8><U+91CA><U+4FE1><U+606F>}
+\title{使用KEGG的代谢物数据库和代谢反应过程数据库找出和目标已经鉴定出的代谢物的所有代谢过程相关的未鉴定代谢物的KEGG注释信息}
 \usage{
 KEGG.rxnNetwork(identified, sample, KEGG, KEGG.rxn,
   ms2.similar = ms2.similar.fn(0.65), tolerance = tolerance.ppm(),
@@ -13,25 +13,25 @@ KEGG.rxnNetwork(identified, sample, KEGG, KEGG.rxn,
 result set. This result set should contains a column data which is
 named \code{KEGG}.}
 
-\item{sample}{<U+4E00><U+822C><U+662F><U+672A><U+9274><U+5B9A><U+7684><U+4EE3><U+8C22><U+7269><U+7ED3><U+679C>,peak_ms2<U+FF1F>?}
+\item{sample}{一般是未鉴定的代谢物结果，peak_ms2�<U+FFFD>?}
 
-\item{KEGG}{KEGG<U+7684><U+4EE3><U+8C22><U+7269><U+6CE8><U+91CA><U+4FE1><U+606F><U+5E93>,<U+53EF><U+4EE5><U+5C06>metadb<U+4E4B><U+4E2D><U+7684><U+542B><U+6709>KEGG<U+7F16><U+53F7><U+7684><U+7269><U+8D28><U+6CE8><U+91CA><U+4FE1><U+606F><U+53D6><U+5B50><U+96C6>}
+\item{KEGG}{KEGG的代谢物注释信息库，可以将metadb之中的含有KEGG编号的物质注释信息取子集}
 
-\item{ms2.similar}{<U+6BD4><U+8F83><U+4E24><U+4E2A><U+4E8C><U+7EA7><U+8D28><U+8C31><U+77E9><U+9635><U+662F><U+5426><U+76F8><U+4F3C>,<U+51FD><U+6570><U+8FD4><U+56DE><U+903B><U+8F91><U+503C>
+\item{ms2.similar}{比较两个二级质谱矩阵是否相似，函数返回逻辑�<U+FFFD>
 
-  <U+5047><U+8BBE><U+4E8C><U+7EA7><U+8D28><U+8C31><U+7684><U+76F8><U+4F3C><U+5EA6><U+7684><U+6BD4><U+5BF9><U+51FD><U+6570><U+7684><U+63A5><U+53E3><U+5F62><U+5F0F><U+4E3A>:
-  ms2.alignment <- function(q, s) { score = SSM(q, s); score >= threshold; }
+  假设二级质谱的相似度的比对函数的接口形式为：
+  ms2.alignment <- function(q, s) { score = SSM(q, s)�<U+FFFD> score >= threshold; }
 
-q,s<U+4E3A><U+4E8C><U+7EA7><U+77E9><U+9635>:
+q,s为二级矩阵：
 
 mz, into
 mz, into
 mz, into
 mz, into}
 
-\item{RXN}{KEGG<U+6570><U+636E><U+5E93><U+4E4B><U+4E2D><U+7684><U+4EE3><U+8C22><U+8FC7><U+7A0B><U+7684><U+96C6><U+5408>}
+\item{RXN}{KEGG数据库之中的代谢过程的集�<U+FFFD>}
 }
 \description{
-<U+4F7F><U+7528>KEGG<U+7684><U+4EE3><U+8C22><U+7269><U+6570><U+636E><U+5E93><U+548C><U+4EE3><U+8C22><U+53CD><U+5E94><U+8FC7><U+7A0B><U+6570><U+636E><U+5E93><U+627E><U+51FA><U+548C><U+76EE><U+6807><U+5DF2><U+7ECF><U+9274><U+5B9A><U+51FA><U+7684><U+4EE3><U+8C22><U+7269><U+7684><U+6240><U+6709><U+4EE3><U+8C22><U+8FC7><U+7A0B><U+76F8><U+5173><U+7684><U+672A><U+9274><U+5B9A><U+4EE3><U+8C22><U+7269><U+7684>KEGG<U+6CE8><U+91CA><U+4FE1><U+606F>
+使用KEGG的代谢物数据库和代谢反应过程数据库找出和目标已经鉴定出的代谢物的所有代谢过程相关的未鉴定代谢物的KEGG注释信息
 }
 

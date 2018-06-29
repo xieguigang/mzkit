@@ -2,6 +2,7 @@
 % Please edit documentation in R/metaDNA.R
 \name{metaDNA.impl}
 \alias{metaDNA.impl}
+\title{Try to annotate unknown metabolite}
 \usage{
 metaDNA.impl(KEGG.partners, identify.ms2, unknown, ms2.align, unknow.matches)
 }
@@ -12,11 +13,34 @@ Using for find unknown metabolite ms2 data.}
 \item{identify.ms2}{The identify metabolite's MS/MS matrix data.}
 
 \item{unknown}{Unknown metabolite's peaktable and peak_ms2 data.}
+
+\item{ms2.align}{The ms2 alignment method, this function method should returns \code{forward}
+     and \code{reverse} alignment score result list which its data structure in format like:
+
+     \code{list(forward = score1, reverse = score2)}.}
+
+\item{unknow.matches}{function evaluate result of \code{\link{kegg.match.handler}}, this function
+descript that how to find out the unknown metabolite from a given set of identify related kegg
+partners compound id set.}
+}
+\description{
+Try to annotate the unknown metabolite as a given set of
+    kegg metabolite candidates. The ms2 alignment is based on the identified
+    metabolite ms2 data.
 }
 \details{
-KEGG.partners -> kegg.match.handler -> unknown index -> unknown ms2 -> identify.ms2 alignment -> is similar?
+Algorithm routine:
 
-             yes, identify the unknown as KEGG.partner
-             no, returns NULL
+   \code{KEGG.partners -> kegg.match.handler
+                       -> unknown index
+                       -> unknown ms2
+                       -> identify.ms2 alignment
+                       -> is similar?
+   }
+
+   \enumerate{
+       \item yes, identify the unknown as \code{\link{kegg.partners}}
+       \item no, returns \code{NULL}
+   }
 }
 

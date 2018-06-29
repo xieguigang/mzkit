@@ -64,17 +64,17 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
     tolerance      = tolerance
   );
   identify.peak_ms2 <- identify$peak_ms2;
-  
+
   lapply(identify$meta.KEGG %=>% .as.list, function(identified) {
   	partners  <- identified$KEGG %=>% kegg.partners;
   	ms2       <- identify.peak_ms2[[identified$peak_ms2.i]];
 
 	# KEGG.partners, identify.ms2, unknown, ms2.align, unknow.matches
     metaDNA.impl(
-		KEGG.partners  = partners, 
-		identify.ms2   = ms2, 
-		unknown        = unknown, 
-		ms2.align      = ms2.align, 
+		KEGG.partners  = partners,
+		identify.ms2   = ms2,
+		unknown        = unknown,
+		ms2.align      = ms2.align,
 		unknow.matches = match.kegg
 	);
   });
@@ -82,7 +82,7 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
 
 #' Match unknown by mass
 #'
-#' @param unknown.mz This mz parameter is a \code{m/z} vector from the 
+#' @param unknown.mz This mz parameter is a \code{m/z} vector from the
 #'         \code{unknown$peaktable}
 #'
 #' @return Returns the index vector in \code{unknown.mz} vector.
@@ -96,13 +96,13 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
   kegg.mz   <- get.PrecursorMZ(kegg.mass, precursor_type);
   kegg.list <- meta.KEGG %=>% .as.list;
 
-  # identify kegg partners 
-  #   => kegg m/z 
-  #   => unknown mz with tolerance 
-  #   => unknown index 
+  # identify kegg partners
+  #   => kegg m/z
+  #   => unknown mz with tolerance
+  #   => unknown index
   #   => unknown peak and ms2 for align
   function(kegg_id) {
-	
+
 	# Get kegg m/z for a given kegg_id set
     mzi  <- sapply(kegg.ids, function(id) {
 		id %in% kegg_id;
@@ -112,7 +112,7 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
 
     unknown.query <- sapply(1:length(unknown.mz), function(j) {
 		ms1   <- unknown.mz[j];
-		query <- sapply(1:length(mz), function(i) {		
+		query <- sapply(1:length(mz), function(i) {
 			if (tolerance(ms1, mz[i])) {
 				kegg[i];
 			} else {
@@ -121,17 +121,17 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
 		});
 		nulls <- sapply(query, is.null) %=>% unlist;
 		query <- query[!nulls];
-		
+
 		if (length(query) == 0) {
 			NULL;
 		} else {
-			list(unknown.index = j, 
-				 unknown.mz    = ms1, 
+			list(unknown.index = j,
+				 unknown.mz    = ms1,
 				 kegg          = query
 			);
 		}
     });
-	
+
 	nulls <- sapply(unknown.query, is.null) %=>% unlist;
 	unknown.query[!nulls];
   }
@@ -157,20 +157,47 @@ kegg.partners <- function(kegg_id) {
   }) %=>% unlist %=>% as.character;
 }
 
+#' Try to annotate unknown metabolite
+#'
+#' @description Try to annotate the unknown metabolite as a given set of
+#'     kegg metabolite candidates. The ms2 alignment is based on the identified
+#'     metabolite ms2 data.
 #'
 #' @param KEGG.partners Related to the identified KEGG id based on the kegg reaction definitions.
 #'     Using for find unknown metabolite ms2 data.
 #' @param identify.ms2 The identify metabolite's MS/MS matrix data.
 #' @param unknown Unknown metabolite's peaktable and peak_ms2 data.
+#' @param ms2.align The ms2 alignment method, this function method should returns \code{forward}
+#'      and \code{reverse} alignment score result list which its data structure in format like:
 #'
-#' @details KEGG.partners -> kegg.match.handler -> unknown index -> unknown ms2 -> identify.ms2 alignment -> is similar?
+#'      \code{list(forward = score1, reverse = score2)}.
 #'
-#'              yes, identify the unknown as KEGG.partner
-#'              no, returns NULL
+#' @param unknow.matches function evaluate result of \code{\link{kegg.match.handler}}, this function
+#'      descript that how to find out the unknown metabolite from a given set of identify related kegg
+#'      partners compound id set.
+#'
+#' @details Algorithm routine:
+#'
+#'    \code{KEGG.partners -> kegg.match.handler
+#'                        -> unknown index
+#'                        -> unknown ms2
+#'                        -> identify.ms2 alignment
+#'                        -> is similar?
+#'    }
+#'
+#'    \enumerate{
+#'        \item yes, identify the unknown as \code{\link{kegg.partners}}
+#'        \item no, returns \code{NULL}
+#'    }
+#'
 metaDNA.impl <- function(KEGG.partners, identify.ms2, unknown, ms2.align, unknow.matches) {
   unknown.query <- KEGG.partners %=>% unknow.matches;
   unknown.i <- sapply(unknown.query, function(x) x$unknown.index) %=>% unlist;
   peaktable <- unknown$peaktable[unknown.i, ];
   peak_ms2  <- unknown$peak_ms2[peaktable %=>% rownames];
+
+  # alignment of the ms2 between the identify and unknown
+  # The unknown will identified as identify.ms2 when ms2.align
+  # pass the threshold cutoff.
 
 }
