@@ -322,7 +322,7 @@ align_best.internal <- function(ref, peak, ms2.align, score.cutoff = 0.8) {
     }
   }
 
-  if (all(score >= score.cutoff)) {
+  if (!IsNothing(score) && all(score >= score.cutoff)) {
     list(ref       = ref,
          candidate = candidate,
          score     = score
