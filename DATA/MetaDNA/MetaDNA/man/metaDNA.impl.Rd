@@ -4,7 +4,8 @@
 \alias{metaDNA.impl}
 \title{Try to annotate unknown metabolite}
 \usage{
-metaDNA.impl(KEGG.partners, identify.ms2, unknown, ms2.align, unknow.matches)
+metaDNA.impl(KEGG.partners, identify.ms2, unknown, ms2.align, unknow.matches,
+  score.cutoff = 0.8)
 }
 \arguments{
 \item{KEGG.partners}{Related to the identified KEGG id based on the kegg reaction definitions.
@@ -22,6 +23,13 @@ Using for find unknown metabolite ms2 data.}
 \item{unknow.matches}{function evaluate result of \code{\link{kegg.match.handler}}, this function
 descript that how to find out the unknown metabolite from a given set of identify related kegg
 partners compound id set.}
+
+\item{score.cutoff}{SSM algorithm alignment score cutoff, by default is \code{0.8}. The unknown
+metabolite which its forward and reverse alignment score greater than this cutoff value both,
+will be picked as the candidate result.}
+}
+\value{
+A set of unknown identify result based on the given related kegg partners id set.
 }
 \description{
 Try to annotate the unknown metabolite as a given set of
@@ -31,7 +39,8 @@ Try to annotate the unknown metabolite as a given set of
 \details{
 Algorithm routine:
 
-   \code{KEGG.partners -> kegg.match.handler
+   \code{
+         KEGG.partners -> kegg.match.handler
                        -> unknown index
                        -> unknown ms2
                        -> identify.ms2 alignment
@@ -42,5 +51,9 @@ Algorithm routine:
        \item yes, identify the unknown as \code{\link{kegg.partners}}
        \item no, returns \code{NULL}
    }
+
+   One identify metabolite have sevral kegg partners based on the metabolism network definition
+   So, this function find every partner in unknown, and returns a set of unknown identify result
+   But each unknown identify only have one best identify ms2 alignment result.
 }
 

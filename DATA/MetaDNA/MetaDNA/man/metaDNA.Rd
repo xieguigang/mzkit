@@ -45,4 +45,7 @@ A \code{identify} parameter data structure like metabolite identify
 How to: The basic idea of the \code{MetaDNA} algorightm is
      using the identified ms2 data to align the unknown ms2 data.
 }
+\details{
+Algorithm implementation and details see: \code{\link{metaDNA.impl}}.
+}
 

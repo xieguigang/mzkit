@@ -41,6 +41,8 @@ Imports("Microsoft.VisualBasic.Language");
 #' @return A \code{identify} parameter data structure like metabolite identify
 #'      result for \code{unknown} parameter input data
 #'
+#' @details Algorithm implementation and details see: \code{\link{metaDNA.impl}}.
+#'
 metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
                     precursor_type = "[M+H]+",
                     tolerance = tolerance.ppm(20)) {
@@ -176,9 +178,14 @@ kegg.partners <- function(kegg_id) {
 #'      descript that how to find out the unknown metabolite from a given set of identify related kegg
 #'      partners compound id set.
 #'
+#' @param score.cutoff SSM algorithm alignment score cutoff, by default is \code{0.8}. The unknown
+#'      metabolite which its forward and reverse alignment score greater than this cutoff value both,
+#'      will be picked as the candidate result.
+#'
 #' @details Algorithm routine:
 #'
-#'    \code{KEGG.partners -> kegg.match.handler
+#'    \code{
+#'          KEGG.partners -> kegg.match.handler
 #'                        -> unknown index
 #'                        -> unknown ms2
 #'                        -> identify.ms2 alignment
@@ -190,7 +197,18 @@ kegg.partners <- function(kegg_id) {
 #'        \item no, returns \code{NULL}
 #'    }
 #'
-metaDNA.impl <- function(KEGG.partners, identify.ms2, unknown, ms2.align, unknow.matches) {
+#'    One identify metabolite have sevral kegg partners based on the metabolism network definition
+#'    So, this function find every partner in unknown, and returns a set of unknown identify result
+#'    But each unknown identify only have one best identify ms2 alignment result.
+#'
+#' @return A set of unknown identify result based on the given related kegg partners id set.
+#'
+metaDNA.impl <- function(KEGG.partners, identify.ms2,
+                         unknown,
+                         ms2.align,
+                         unknow.matches,
+                         score.cutoff = 0.8) {
+
   unknown.query <- KEGG.partners %=>% unknow.matches;
   unknown.i <- sapply(unknown.query, function(x) x$unknown.index) %=>% unlist;
   peaktable <- unknown$peaktable[unknown.i, ];
