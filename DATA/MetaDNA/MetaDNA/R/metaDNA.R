@@ -55,10 +55,11 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
   xLoad("metaDNA_kegg.rda");
 
   match.kegg <- kegg.match.handler(
-    meta.KEGG,
+    meta.KEGG$data,
     unknown$peaktable[, "mz"],
-    precursor_type,
-    tolerance
+    precursor_type = precursor_type,
+	kegg_id        = meta.KEGG$kegg_id,
+    tolerance      = tolerance
   );
   lapply(identify$meta.KEGG %=>% .as.list, function(identify) {
   	partners  <- identify$KEGG %=>% kegg.partners;
@@ -75,20 +76,41 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
 #' @return Returns the index vector in \code{unknown.mz} vector.
 kegg.match.handler <- function(meta.KEGG, unknown.mz,
                                precursor_type = "[M+H]+",
-                               tolerance = tolerance.ppm(20)) {
+							   kegg_id        = "KEGG",
+                               tolerance      = tolerance.ppm(20)) {
 
-  kegg.mass <- meta.KEGG[, "mass"] %=>% as.numeric;
-  kegg.ids  <- meta.KEGG[, "KEGG"] %=>% as.character;
+  kegg.mass <- meta.KEGG[,  "mass"] %=>% as.numeric;
+  kegg.ids  <- meta.KEGG[, kegg_id] %=>% as.character;
   kegg.mz   <- get.PrecursorMZ(kegg.mass, precursor_type);
   kegg.list <- meta.KEGG %=>% .as.list;
 
+  # identify kegg partners => kegg m/z => unknown mz with tolerance => unknown index => unknown peak and ms2 for align
   function(kegg_id) {
-    mzi <- sapply(kegg.ids, function(id) id %in% kegg_id) %=>% as.logical %=>% which;
-    mz  <- kegg.mz[mzi];
+	
+	# Get kegg m/z for a given kegg_id set
+    mzi  <- sapply(kegg.ids, function(id) id %in% kegg_id) %=>% as.logical %=>% which;
+    mz   <- kegg.mz[mzi];
+	kegg <- kegg.list[mzi];
 
-    sapply(unknown.mz, function(ms1) {
-      From(mz)$Any(function(x) tolerance(x, ms1));
-    }) %=>% as.logical %=>% which;
+    sapply(1:length(unknown.mz), function(j) {
+		ms1   <- unknown.mz[j];
+		query <- sapply(1:length(mz), function(i) {
+			mz.x <- mz[i];
+			kegg.x <- kegg[i];
+			
+			if (tolerance(ms1, mz.x)) {
+				kegg.x;
+			} else {
+				NULL;
+			}
+		});
+		
+		if (From(query)$Select(IsNothing)$ToArray() %=>% all) {
+			query <- NA;
+		}
+		
+		list(unknown.index = j, unknown.mz = ms1, kegg = query);
+    });
   }
 }
 
