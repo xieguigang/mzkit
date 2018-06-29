@@ -240,7 +240,7 @@ get.PrecursorMZ <- function(M, precursorType) {
 		}
 	}
 
-	if ((length(precursorMZ) == 1 && precursorMZ == -1) || (sum(precursorMZ == -1) = length(precursorMZ))) {
+	if ((length(precursorMZ) == 1 && precursorMZ == -1) || ((precursorMZ == -1) %=>% all)) {
 		warnMsg <- "\"%s\" is not found... Precursor m/z is set to -1.";
 		warning(sprintf(warnMsg, precursorType));
 	}

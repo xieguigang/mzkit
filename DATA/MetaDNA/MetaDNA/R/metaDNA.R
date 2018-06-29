@@ -54,16 +54,18 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
   # data/metaDNA_kegg.rda
   xLoad("metaDNA_kegg.rda");
 
+  kegg_id.col <- meta.KEGG$kegg_id;
+  meta.KEGG <- meta.KEGG$data;
   match.kegg <- kegg.match.handler(
-    meta.KEGG$data,
+    meta.KEGG,
     unknown$peaktable[, "mz"],
     precursor_type = precursor_type,
-	kegg_id        = meta.KEGG$kegg_id,
+	kegg_id        = kegg_id.col,
     tolerance      = tolerance
   );
-  lapply(identify$meta.KEGG %=>% .as.list, function(identify) {
-  	partners  <- identify$KEGG %=>% kegg.partners;
-  	ms2       <- peak_ms2[[identify$peak_ms2.i]];
+  lapply(identify$meta.KEGG %=>% .as.list, function(identified) {
+  	partners  <- identified$KEGG %=>% kegg.partners;
+  	ms2       <- peak_ms2[[identified$peak_ms2.i]];
 
     metaDNA.impl(partners, ms2, unknown, ms2.align, match.kegg);
   });
@@ -84,7 +86,11 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
   kegg.mz   <- get.PrecursorMZ(kegg.mass, precursor_type);
   kegg.list <- meta.KEGG %=>% .as.list;
 
-  # identify kegg partners => kegg m/z => unknown mz with tolerance => unknown index => unknown peak and ms2 for align
+  # identify kegg partners 
+  #   => kegg m/z 
+  #   => unknown mz with tolerance 
+  #   => unknown index 
+  #   => unknown peak and ms2 for align
   function(kegg_id) {
 	
 	# Get kegg m/z for a given kegg_id set
@@ -92,25 +98,27 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
     mz   <- kegg.mz[mzi];
 	kegg <- kegg.list[mzi];
 
-    sapply(1:length(unknown.mz), function(j) {
+    unknown.query <- sapply(1:length(unknown.mz), function(j) {
 		ms1   <- unknown.mz[j];
-		query <- sapply(1:length(mz), function(i) {
-			mz.x <- mz[i];
-			kegg.x <- kegg[i];
-			
-			if (tolerance(ms1, mz.x)) {
-				kegg.x;
+		query <- sapply(1:length(mz), function(i) {		
+			if (tolerance(ms1, mz[i])) {
+				kegg[i];
 			} else {
 				NULL;
 			}
 		});
+		nulls <- sapply(query, is.null) %=>% unlist;
+		query <- query[!nulls];
 		
-		if (From(query)$Select(IsNothing)$ToArray() %=>% all) {
-			query <- NA;
+		if (length(query) == 0) {
+			NULL;
+		} else {
+			list(unknown.index = j, unknown.mz = ms1, kegg = query);
 		}
-		
-		list(unknown.index = j, unknown.mz = ms1, kegg = query);
     });
+	
+	nulls <- sapply(unknown.query, is.null) %=>% unlist;
+	unknown.query[!nulls];
   }
 }
 
@@ -122,7 +130,7 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
 #' @param kegg_id The kegg compound id of the identified compound.
 #'
 #' @return A kegg id vector which is related to the given \code{kegg_id}.
-kegg.partner <- function(kegg_id) {
+kegg.partners <- function(kegg_id) {
   sapply(network, function(reaction) {
     if (kegg_id %in% reaction$reactants) {
       reaction$products;
