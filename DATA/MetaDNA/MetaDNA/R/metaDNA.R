@@ -240,7 +240,10 @@ metaDNA.impl <- function(KEGG.partners, identify.ms2,
 
   # unknown.i integer index of the peaktable
   unknown.i <- sapply(unknown.query, function(x) x$unknown.index) %=>% unlist;
-  peaktable <- unknown$peaktable[unknown.i, ];
+  peaktable <- ensure.dataframe(
+	unknown$peaktable[unknown.i, ], 
+	colnames(unknown$peaktable)
+  );
   # rownames of peaktable is the list names for the peak_ms2
   peak_ms2.index <- peaktable %=>% rownames;
   peak_ms2       <- unknown$peak_ms2[peak_ms2.index];
