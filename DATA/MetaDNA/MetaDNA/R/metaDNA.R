@@ -15,10 +15,10 @@ Imports("Microsoft.VisualBasic.Language");
 #'
 #'      where:
 #'
-#'      \enumerate{
-#'         \item \code{meta.KEGG} is a data.frame object that should contains
+#'         \code{meta.KEGG} is a data.frame object that should contains
 #'               a KEGG id column, and a index column to read \code{peak_ms2} list.
-#'         \item \code{peak_ms2} is a MS/MS list, MS/MS matrix should contains at
+#'
+#'         \code{peak_ms2} is a MS/MS list, MS/MS matrix should contains at
 #'               least two column: \code{mz} and \code{into}
 #'      }
 #'
@@ -184,12 +184,12 @@ kegg.partners <- function(kegg_id) {
 #'
 #' @details Algorithm routine:
 #'
-#'    \code{
-#'          KEGG.partners -> kegg.match.handler
-#'                        -> unknown index
-#'                        -> unknown ms2
-#'                        -> identify.ms2 alignment
-#'                        -> is similar?
+#'    \code{\cr
+#'          KEGG.partners -> kegg.match.handler\cr
+#'                        -> unknown index\cr
+#'                        -> unknown ms2\cr
+#'                        -> identify.ms2 alignment\cr
+#'                        -> is similar?\cr
 #'    }
 #'
 #'    \enumerate{
@@ -210,12 +210,81 @@ metaDNA.impl <- function(KEGG.partners, identify.ms2,
                          score.cutoff = 0.8) {
 
   unknown.query <- KEGG.partners %=>% unknow.matches;
+
+  if (IsNothing(unknown.query)) {
+	  return(NULL);
+  }
+
+  # unknown.i integer index of the peaktable
   unknown.i <- sapply(unknown.query, function(x) x$unknown.index) %=>% unlist;
   peaktable <- unknown$peaktable[unknown.i, ];
-  peak_ms2  <- unknown$peak_ms2[peaktable %=>% rownames];
+  # rownames of peaktable is the list names for the peak_ms2
+  peak_ms2.index <- peaktable %=>% rownames;
+  peak_ms2       <- unknown$peak_ms2[peak_ms2.index];
+  peaktable      <- peaktable %=>% .as.list;
 
   # alignment of the ms2 between the identify and unknown
   # The unknown will identified as identify.ms2 when ms2.align
   # pass the threshold cutoff.
+  query.result <- list();
 
+  for (i in 1:length(peak_ms2.index)) {
+  	# identify for each unknown metabolite
+  	name <- peak_ms2.index[i];
+  	peak <- peak_ms2[[name]];
+  	ms1.feature <- peaktable[[i]];
+
+  	for(fileName in names(identify.ms2)) {
+  	  file <- identify.ms2[[fileName]];
+  	  for (scan in names(file)) {
+  	    ref <- file[[scan]];
+
+
+  	  }
+  	}
+  }
+
+  query.result;
 }
+
+#' @param ref The identify metabolite ms2 matrix
+#' @param peak The unknown metabolite ms2 matrix set
+#' @param ms2.align Method for alignment of the ms2 matrix
+#'
+#' @return Returns the alignment result, which is a R list object with members:
+#'
+#'     \code{list((ms2.matrix)ref, (ms2.matrix)candidate, score = [forward, reverse])}
+#'
+#'     If the forward and reverse score cutoff less than score.cutoff, then this
+#'     function will returns nothing.
+#'
+.align_best.internal <- function(ref, peak, ms2.align, score.cutoff = 0.8) {
+  best.score <- -10000
+  score      <- c();
+  candidate  <- NULL;
+
+  for (fileName in names(peak)) {
+    file <- peak[[name]];
+
+    for (scan in names(file)) {
+      unknown <- file[[scan]];
+      align.scores <- ms2.align(unknown, ref);
+
+      if (sum(align.scores) > best.score) {
+        best.score <- align.scores %=>% sum;
+        score      <- align.scores;
+        candidate  <- unknown;
+      }
+    }
+  }
+
+  if (all(score >= score.cutoff)) {
+    list(ref       = ref,
+         candidate = candidate,
+         score     = score
+    );
+  } else {
+    NULL;
+  }
+}
+

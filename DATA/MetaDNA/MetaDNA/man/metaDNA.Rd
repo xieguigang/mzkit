@@ -8,19 +8,6 @@ metaDNA(identify, unknown, meta.KEGG, ms2.align, precursor_type = "[M+H]+",
   tolerance = tolerance.ppm(20))
 }
 \arguments{
-\item{identify}{A \code{list} object with two members:
-
-     \code{identify = list((data.frame) meta.KEGG, (list) peak_ms2)}
-
-     where:
-
-     \enumerate{
-        \item \code{meta.KEGG} is a data.frame object that should contains
-              a KEGG id column, and a index column to read \code{peak_ms2} list.
-        \item \code{peak_ms2} is a MS/MS list, MS/MS matrix should contains at
-              least two column: \code{mz} and \code{into}
-     }}
-
 \item{unknown}{A \code{list} object with two members:
 
      \code{unknown = list((data.frame) peaktable, (list) peak_ms2)}

@@ -39,12 +39,12 @@ Try to annotate the unknown metabolite as a given set of
 \details{
 Algorithm routine:
 
-   \code{
-         KEGG.partners -> kegg.match.handler
-                       -> unknown index
-                       -> unknown ms2
-                       -> identify.ms2 alignment
-                       -> is similar?
+   \code{\cr
+         KEGG.partners -> kegg.match.handler\cr
+                       -> unknown index\cr
+                       -> unknown ms2\cr
+                       -> identify.ms2 alignment\cr
+                       -> is similar?\cr
    }
 
    \enumerate{
