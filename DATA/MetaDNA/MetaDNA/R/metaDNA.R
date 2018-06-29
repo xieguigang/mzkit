@@ -23,7 +23,7 @@ Imports("Microsoft.VisualBasic.Language");
 #' @description How to: The basic idea of the \code{MetaDNA} algorightm is
 #'      using the identified ms2 data to align the unknown ms2 data.
 #'
-#' @param identify A \code{list} object with two members:
+#' @param identify A \code{list} object with two members
 #'
 #'      \code{identify = list((data.frame) meta.KEGG, (list) peak_ms2)}
 #'
@@ -34,7 +34,6 @@ Imports("Microsoft.VisualBasic.Language");
 #'
 #'         \code{peak_ms2} is a MS/MS list, MS/MS matrix should contains at
 #'               least two column: \code{mz} and \code{into}
-#'      }
 #'
 #' @param unknown A \code{list} object with two members:
 #'
@@ -52,10 +51,25 @@ Imports("Microsoft.VisualBasic.Language");
 #' @param precursor_type By default is positive mode with the \code{H+} adduct for
 #'      search unknown metabolites.
 #'
+#' @param tolerance m/z equalient compares tolerance, by default is less than ppm 20.
+#'
+#' @param score.cutoff MS/MS similarity cutoff for identify ms2 alignment with unknown ms2
+#'
+#' @param ms2.align The MS/MS alignment method, which is in format like: \code{function(q, s)}
+#'      Where \code{q} and \code{s} is a matrix.
+#'
 #' @return A \code{identify} parameter data structure like metabolite identify
 #'      result for \code{unknown} parameter input data
 #'
 #' @details Algorithm implementation and details see: \code{\link{metaDNA.impl}}.
+#'    The ms2 matrix should be in format like:
+#'
+#'     \code{
+#'         mz into\cr
+#'         xxx xxx\cr
+#'         xxx xxx\cr
+#'         xxx xxx\cr
+#'     }
 #'
 metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
                     precursor_type = "[M+H]+",

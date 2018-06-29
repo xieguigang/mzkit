@@ -8,6 +8,18 @@ metaDNA(identify, unknown, meta.KEGG, ms2.align, precursor_type = "[M+H]+",
   tolerance = tolerance.ppm(20), score.cutoff = 0.8)
 }
 \arguments{
+\item{identify}{A \code{list} object with two members
+
+     \code{identify = list((data.frame) meta.KEGG, (list) peak_ms2)}
+
+     where:
+
+        \code{meta.KEGG} is a data.frame object that should contains
+              a KEGG id column, and a index column to read \code{peak_ms2} list.
+
+        \code{peak_ms2} is a MS/MS list, MS/MS matrix should contains at
+              least two column: \code{mz} and \code{into}}
+
 \item{unknown}{A \code{list} object with two members:
 
      \code{unknown = list((data.frame) peaktable, (list) peak_ms2)}
@@ -21,8 +33,15 @@ metaDNA(identify, unknown, meta.KEGG, ms2.align, precursor_type = "[M+H]+",
      \code{peak_ms2} is a MS/MS list, MS/MS matrix should contains at
      least two column: \code{mz} and \code{into}}
 
+\item{ms2.align}{The MS/MS alignment method, which is in format like: \code{function(q, s)}
+Where \code{q} and \code{s} is a matrix.}
+
 \item{precursor_type}{By default is positive mode with the \code{H+} adduct for
 search unknown metabolites.}
+
+\item{tolerance}{m/z equalient compares tolerance, by default is less than ppm 20.}
+
+\item{score.cutoff}{MS/MS similarity cutoff for identify ms2 alignment with unknown ms2}
 }
 \value{
 A \code{identify} parameter data structure like metabolite identify
@@ -34,5 +53,13 @@ How to: The basic idea of the \code{MetaDNA} algorightm is
 }
 \details{
 Algorithm implementation and details see: \code{\link{metaDNA.impl}}.
+   The ms2 matrix should be in format like:
+
+    \code{
+        mz into\cr
+        xxx xxx\cr
+        xxx xxx\cr
+        xxx xxx\cr
+    }
 }
 
