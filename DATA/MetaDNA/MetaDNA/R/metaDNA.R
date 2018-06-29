@@ -247,6 +247,10 @@ metaDNA.impl <- function(KEGG.partners, identify.ms2,
   query.result;
 }
 
+#' Pick the best alignment result
+#'
+#' @description Pick the best alignment result for unknown metabolite.
+#'
 #' @param ref The identify metabolite ms2 matrix
 #' @param peak The unknown metabolite ms2 matrix set
 #' @param ms2.align Method for alignment of the ms2 matrix
@@ -258,7 +262,7 @@ metaDNA.impl <- function(KEGG.partners, identify.ms2,
 #'     If the forward and reverse score cutoff less than score.cutoff, then this
 #'     function will returns nothing.
 #'
-.align_best.internal <- function(ref, peak, ms2.align, score.cutoff = 0.8) {
+align_best.internal <- function(ref, peak, ms2.align, score.cutoff = 0.8) {
   best.score <- -10000
   score      <- c();
   candidate  <- NULL;
