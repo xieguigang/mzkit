@@ -142,10 +142,11 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
   #   => unknown mz with tolerance
   #   => unknown index
   #   => unknown peak and ms2 for align
-  function(kegg_id) {
+  function(kegg_id) {    
 
 	  # Get kegg m/z for a given kegg_id set
-    mzi  <- sapply(kegg.ids, function(id) {
+    kegg_id <- unique(kegg_id);
+    mzi     <- sapply(kegg.ids, function(id) {
   		id %in% kegg_id;
   	}) %=>% as.logical %=>% which;
     # Get corresponding kegg mz and annotation meta data
@@ -157,14 +158,14 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
 	  # get possible kegg meta annotation data.
     unknown.query <- sapply(1:length(unknown.mz), function(j) {
   		ms1   <- unknown.mz[j];
-  		query <- sapply(1:length(mz), function(i) {
+  		query <- lapply(1:length(mz), function(i) {
         # unknown metabolite ms1 m/z match
   		  # kegg mz with a given tolerance
     		if (tolerance(ms1, mz[i])) {
     		  # If these two m/z value meet the tolerance condition
     		  # then we match a possible KEGG annotation data.
     		  # also returns with ppm value
-    			list(kegg = kegg[i], ppm = PPM(ms1, mz[i]));
+    			list(kegg = kegg[[i]], ppm = PPM(ms1, mz[i]));
     		} else {
     			NULL;
     		}
@@ -180,21 +181,11 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
 
   		if (length(query) > 1 && is.null(names(query))) {
   		  # returns with min ppm?
-  		  min_ppm.i <- tryCatch({
-  		     sapply(query, function(q) q$ppm) %=>% which.min;
-
-  		  }, error = function(e) {
-  		    print(query);
-  		    stop(e);
-  		  })
-
+  		  min_ppm.i <- sapply(query, function(q) q$ppm) %=>% which.min;
   		  query     <- query[min_ppm.i];
-  		  query     <- query[[1]];
-  		} else {
-
   		}
 
-  		# print(query);
+  		query <- query[[1]];
 
 			list(
 			   unknown.index = j,
