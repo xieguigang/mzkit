@@ -174,24 +174,25 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
   		nulls <- sapply(query, is.null) %=>% unlist;
   		query <- query[!nulls];
 
-  		# returns with min ppm?
-      min_ppm.i <- sapply(query, function(q) q$ppm) %=>% which.min;
-      query     <- query[min_ppm.i];
-      query     <- query[[1]];
-
   		if (length(query) == 0) {
-  			NULL;
-  		} else {
-  			list(
-  			   unknown.index = j,
-  				 unknown.mz    = ms1,
-  				 # current unknown metabolite could have
-  				 # multiple kegg annotation result, based on the ms1
-  				 # tolerance.
-  				 kegg = query$kegg,
-  				 ppm  = query$ppm
-  			);
+  			return(NULL);
   		}
+
+  		# returns with min ppm?
+  		min_ppm.i <- sapply(query, function(q) q$ppm) %=>% which.min;
+  		query     <- query[min_ppm.i];
+  		query     <- query[[1]];
+
+			list(
+			   unknown.index = j,
+				 unknown.mz    = ms1,
+				 # current unknown metabolite could have
+				 # multiple kegg annotation result, based on the ms1
+				 # tolerance.
+				 kegg = query$kegg,
+				 ppm  = query$ppm
+			);
+
     });
 
     # removes null result
