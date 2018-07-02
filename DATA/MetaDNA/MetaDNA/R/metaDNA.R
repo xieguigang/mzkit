@@ -102,11 +102,14 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
   	partners  <- identified$KEGG %=>% kegg.partners;
   	ms2       <- identify.peak_ms2[[identified$peak_ms2.i]];
 
-	if (IsNothing(partners)) {
-		return(NULL);
-	}
+  	# current identify metabolite KEGG id didnt found any
+  	# reaction related partner compounds
+  	# Skip current identify metabolite.
+  	if (IsNothing(partners)) {
+  		return(NULL);
+  	}
 
-	# KEGG.partners, identify.ms2, unknown, ms2.align, unknow.matches
+  	# KEGG.partners, identify.ms2, unknown, ms2.align, unknow.matches
     metaDNA.impl(
   		KEGG.partners  = partners,
   		identify.ms2   = ms2,
@@ -129,7 +132,7 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
 							                 kegg_id        = "KEGG",
                                tolerance      = tolerance.ppm(20)) {
 
-  kegg.mass <- meta.KEGG[,  "mass"] %=>% as.numeric;
+  kegg.mass <- meta.KEGG[,  "exact_mass"] %=>% as.numeric;
   kegg.ids  <- meta.KEGG[, kegg_id] %=>% as.character;
   kegg.mz   <- get.PrecursorMZ(kegg.mass, precursor_type);
   kegg.list <- meta.KEGG %=>% .as.list;
@@ -141,40 +144,49 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
   #   => unknown peak and ms2 for align
   function(kegg_id) {
 
-	# Get kegg m/z for a given kegg_id set
+	  # Get kegg m/z for a given kegg_id set
     mzi  <- sapply(kegg.ids, function(id) {
   		id %in% kegg_id;
   	}) %=>% as.logical %=>% which;
+    # Get corresponding kegg mz and annotation meta data
     mz   <- kegg.mz[mzi];
 	  kegg <- kegg.list[mzi];
 
+	  # Loop on each unknown metabolite ms1 m/z
+	  # And using this m/z for match kegg m/z to
+	  # get possible kegg meta annotation data.
     unknown.query <- sapply(1:length(unknown.mz), function(j) {
-		ms1   <- unknown.mz[j];
-		# print(ms1)
-		# print(mz)
-		# print("----")
-		query <- sapply(1:length(mz), function(i) {
+  		ms1   <- unknown.mz[j];
+  		query <- sapply(1:length(mz), function(i) {
+        # unknown metabolite ms1 m/z match
+  		  # kegg mz with a given tolerance
+    		if (tolerance(ms1, mz[i])) {
+    		  # If these two m/z value meet the tolerance condition
+    		  # then we match a possible KEGG annotation data.
+    			kegg[i];
+    		} else {
+    			NULL;
+    		}
+  		});
 
-		if (tolerance(ms1, mz[i])) {
-				kegg[i];
-			} else {
-				NULL;
-			}
+  		# removes all null result
+  		nulls <- sapply(query, is.null) %=>% unlist;
+  		query <- query[!nulls];
 
-		});
-		nulls <- sapply(query, is.null) %=>% unlist;
-		query <- query[!nulls];
-
-		if (length(query) == 0) {
-			NULL;
-		} else {
-			list(unknown.index = j,
-				 unknown.mz    = ms1,
-				 kegg          = query
-			);
-		}
+  		if (length(query) == 0) {
+  			NULL;
+  		} else {
+  			list(unknown.index = j,
+  				 unknown.mz    = ms1,
+  				 # current unknown metabolite could have
+  				 # multiple kegg annotation result, based on the ms1
+  				 # tolerance.
+  				 kegg          = query
+  			);
+  		}
     });
 
+    # removes null result
   	nulls <- sapply(unknown.query, is.null) %=>% unlist;
   	unknown.query[!nulls];
   }
@@ -250,6 +262,8 @@ metaDNA.impl <- function(KEGG.partners, identify.ms2,
                          unknow.matches,
                          score.cutoff = 0.8) {
 
+  # Current set of KEGG.partners which comes from the identify KEGG metabolite
+  # can have multiple unknown metabolite match result
   unknown.query <- KEGG.partners %=>% unknow.matches;
 
   if (IsNothing(unknown.query)) {
@@ -258,12 +272,15 @@ metaDNA.impl <- function(KEGG.partners, identify.ms2,
 
   # unknown.i integer index of the peaktable
   unknown.i <- sapply(unknown.query, function(x) x$unknown.index) %=>% unlist;
+  # subset of the peaktable by using the unknown index value
   peaktable <- ensure.dataframe(
-	unknown$peaktable[unknown.i, ],
-	colnames(unknown$peaktable)
+  	unknown$peaktable[unknown.i, ],
+  	colnames(unknown$peaktable)
   );
   # rownames of peaktable is the list names for the peak_ms2
   peak_ms2.index <- peaktable %=>% rownames;
+
+  # peak_ms2 and peaktable is corresponding to each other
   peak_ms2       <- unknown$peak_ms2[peak_ms2.index];
   peaktable      <- peaktable %=>% .as.list;
 
@@ -272,18 +289,21 @@ metaDNA.impl <- function(KEGG.partners, identify.ms2,
   # pass the threshold cutoff.
   query.result <- list();
 
+  # loop on current unknown match list from the identify kegg partners
   for (i in 1:length(peak_ms2.index)) {
   	# identify for each unknown metabolite
-	kegg.query <- unknown.query[i];
-  	name <- peak_ms2.index[i];
-  	peak <- peak_ms2[[name]];
+	  kegg.query  <- unknown.query[i];
+  	name        <- peak_ms2.index[i];
+  	peak        <- peak_ms2[[name]];
   	ms1.feature <- peaktable[[i]];
     best.score  <- -10000;
-    best <- NULL;
+    best        <- NULL;
 
     # Loop each identify and using its ms2 as reference
   	for(fileName in names(identify.ms2)) {
+
   	  file <- identify.ms2[[fileName]];
+
   	  for (scan in names(file)) {
   	    result <- align_best.internal(
   	      ref          = file[[scan]],
