@@ -178,10 +178,23 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
   			return(NULL);
   		}
 
-  		# returns with min ppm?
-  		min_ppm.i <- sapply(query, function(q) q$ppm) %=>% which.min;
-  		query     <- query[min_ppm.i];
-  		query     <- query[[1]];
+  		if (length(query) > 1 && is.null(names(query))) {
+  		  # returns with min ppm?
+  		  min_ppm.i <- tryCatch({
+  		     sapply(query, function(q) q$ppm) %=>% which.min;
+
+  		  }, error = function(e) {
+  		    print(query);
+  		    stop(e);
+  		  })
+
+  		  query     <- query[min_ppm.i];
+  		  query     <- query[[1]];
+  		} else {
+
+  		}
+
+  		# print(query);
 
 			list(
 			   unknown.index = j,
