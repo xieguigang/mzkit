@@ -163,7 +163,8 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
     		if (tolerance(ms1, mz[i])) {
     		  # If these two m/z value meet the tolerance condition
     		  # then we match a possible KEGG annotation data.
-    			kegg[i];
+    		  # also returns with ppm value
+    			list(kegg = kegg[i], ppm = PPM(ms1, mz[i]));
     		} else {
     			NULL;
     		}
@@ -173,15 +174,22 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
   		nulls <- sapply(query, is.null) %=>% unlist;
   		query <- query[!nulls];
 
+  		# returns with min ppm?
+      min_ppm.i <- sapply(query, function(q) q$ppm) %=>% which.min;
+      query     <- query[min_ppm.i];
+      query     <- query[[1]];
+
   		if (length(query) == 0) {
   			NULL;
   		} else {
-  			list(unknown.index = j,
+  			list(
+  			   unknown.index = j,
   				 unknown.mz    = ms1,
   				 # current unknown metabolite could have
   				 # multiple kegg annotation result, based on the ms1
   				 # tolerance.
-  				 kegg          = query
+  				 kegg = query$kegg,
+  				 ppm  = query$ppm
   			);
   		}
     });
@@ -350,6 +358,7 @@ metaDNA.impl <- function(KEGG.partners, identify.ms2,
 #'     function will returns nothing.
 #'
 align_best.internal <- function(ref, peak, ms2.align, score.cutoff = 0.8) {
+
   best.score <- -10000
   score      <- c();
   candidate  <- NULL;
