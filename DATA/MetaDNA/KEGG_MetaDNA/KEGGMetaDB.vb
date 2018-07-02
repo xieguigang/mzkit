@@ -6,7 +6,13 @@ Public Class KEGGMetaDB
     Public Property keggID As String
     Public Property name As String
     Public Property formula As String
-    Public Property mass As Double
+    Public Property exact_mass As Double
+
+    ''' <summary>
+    ''' 与其他的数据库的编号的外键连接
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property xref As Dictionary(Of String, String)
 
     ''' <summary>
     ''' 指向来源的数据集的唯一编号
