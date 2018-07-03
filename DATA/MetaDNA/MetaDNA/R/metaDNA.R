@@ -142,7 +142,7 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
   #   => unknown mz with tolerance
   #   => unknown index
   #   => unknown peak and ms2 for align
-  function(kegg_id) {    
+  function(kegg_id) {
 
 	  # Get kegg m/z for a given kegg_id set
     kegg_id <- unique(kegg_id);
@@ -188,8 +188,10 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
   		query <- query[[1]];
 
 			list(
-			   unknown.index = j,
-				 unknown.mz    = ms1,
+			   unknown.index  = j,
+				 unknown.mz     = ms1,
+				 precursor_type = precursor_type,
+
 				 # current unknown metabolite could have
 				 # multiple kegg annotation result, based on the ms1
 				 # tolerance.
@@ -200,6 +202,7 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
     });
 
     # removes null result
+    # Get null index and then removes null subset
   	nulls <- sapply(unknown.query, is.null) %=>% unlist;
   	unknown.query[!nulls];
   }
