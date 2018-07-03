@@ -192,7 +192,6 @@ getPolarity <- function(type) {
     return(substr.Right(type, n=1));
 }
 
-Calculator                   <- init_calc();
 find.PrecursorType.no_result <- "Unknown";
 debug.echo                   <- TRUE;
 
