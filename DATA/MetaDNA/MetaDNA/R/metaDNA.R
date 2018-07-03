@@ -107,7 +107,9 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
   	# Skip current identify metabolite.
   	if (IsNothing(partners)) {
   		return(NULL);
-  	}
+  	} else {
+		printf(" -> %s", identified$KEGG);
+	}
 
   	# KEGG.partners, identify.ms2, unknown, ms2.align, unknow.matches
     metaDNA.impl(
@@ -308,7 +310,7 @@ metaDNA.impl <- function(KEGG.partners, identify.ms2,
   # loop on current unknown match list from the identify kegg partners
   for (i in 1:length(peak_ms2.index)) {
   	# identify for each unknown metabolite
-	  kegg.query  <- unknown.query[i];
+	kegg.query  <- unknown.query[i];
   	name        <- peak_ms2.index[i];
   	peak        <- peak_ms2[[name]];
   	ms1.feature <- peaktable[[i]];
@@ -342,7 +344,7 @@ metaDNA.impl <- function(KEGG.partners, identify.ms2,
       query.result[[name]] <- list(
         ms2.alignment = best,
         ms1.feature   = ms1.feature,
-		    kegg.info     = kegg.query
+		kegg.info     = kegg.query
       );
     }
   }
@@ -370,7 +372,8 @@ align_best.internal <- function(ref, peak, ms2.align, score.cutoff = 0.8) {
   best.score <- -10000
   score      <- c();
   candidate  <- NULL;
-
+  ms2.name   <- list();
+  
   colnames(ref) <- c("ProductMz", "LibraryIntensity");
 
   # loop each unknown for alignment best result
@@ -385,6 +388,10 @@ align_best.internal <- function(ref, peak, ms2.align, score.cutoff = 0.8) {
         best.score <- mean(align.scores);
         score      <- align.scores;
         candidate  <- unknown;
+		ms2.name   <- list(
+			file = fileName, 
+			scan = scan
+		);
       }
     }
   }
@@ -392,7 +399,8 @@ align_best.internal <- function(ref, peak, ms2.align, score.cutoff = 0.8) {
   if (!IsNothing(score) && all(score >= score.cutoff)) {
     list(ref       = ref,
          candidate = candidate,
-         score     = score
+         score     = score,
+		 ms2.name  = ms2.name
     );
   } else {
     NULL;
