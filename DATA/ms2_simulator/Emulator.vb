@@ -20,7 +20,11 @@ Public Module Emulator
     ''' <param name="intoCutoff">``[0, 1]``, zero or negative value means no cutoff.</param>
     ''' <returns></returns>
     <Extension>
-    Public Function MolecularFragment(molecule As NetworkGraph, energy As EnergyModel, Optional step% = 100, Optional precision% = 4, Optional intoCutoff# = -1) As LibraryMatrix
+    Public Function MolecularFragment(molecule As NetworkGraph, energy As EnergyModel,
+                                      Optional step% = 100,
+                                      Optional precision% = 4,
+                                      Optional intoCutoff# = -1) As LibraryMatrix
+
         Dim de# = (energy.MaxEnergy - energy.MinEnergy) / [step]
         Dim quantity As New Dictionary(Of Double, Double) ' {mz, quantity}
         Dim mzlist As New Dictionary(Of String, List(Of Double))
@@ -79,7 +83,9 @@ Public Module Emulator
     ''' <returns></returns>
     <Extension>
     Public Function CalculateMZ(fragment As NetworkGraph) As Double
-        Dim mass# = Aggregate atom As Node In fragment.nodes Into Sum(atom.Data.mass)
+        Dim mass# = Aggregate atom As Node
+                    In fragment.nodes
+                    Into Sum(atom.Data.mass)
         Dim charge#
 
         Return mass / charge
