@@ -93,10 +93,14 @@ Public Module RTPrediction
 
                        Return a AndAlso b AndAlso c
                    End Function) _
+            .GroupBy(Function(m) m.xref!KEGG) _
+            .Select(Function(mg) mg.First) _
             .ToArray
         Dim inputs = valids _
             .Select(Function(meta)
-                        Dim compound As Compound = kegg.GetByKey(meta.xref!KEGG).Entity
+                        Dim compound As Compound = kegg _
+                            .GetByKey(meta.xref!KEGG) _
+                            .Entity
                         Dim KCF As KCF = IO.LoadKCF(stream:=compound.KCF)
 
                         Return (KCF, meta.rt)
