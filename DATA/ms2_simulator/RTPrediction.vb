@@ -5,6 +5,9 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Matrix
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports SMRUCC.Chemistry.Model
+Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
+Imports SMRUCC.genomics.Data
+Imports SMRUCC.MassSpectrum.Math
 
 ''' <summary>
 ''' Prediciton of the relative LC-MS retention time for measuring ``rt.error``
@@ -69,5 +72,35 @@ Public Module RTPrediction
         Dim fit = MLRFit.LinearFitting(matrix, RT)
 
         Return fit
+    End Function
+
+    ''' <summary>
+    ''' 通过扫描标准品库之中的注释信息结合KEGG分子结构信息构建出RT的预测模型
+    ''' </summary>
+    ''' <param name="metadb">标准品库MS1注释信息</param>
+    ''' <param name="kegg">KEGG代谢物数据库</param>
+    ''' <returns></returns>
+    ''' 
+    <Extension>
+    Public Function ScanMLRModel(metadb As IEnumerable(Of MetaInfo), kegg As CompoundRepository) As MLRFit
+        ' 无效数据过滤
+        Dim valids = metadb _
+            .Where(Function(m)
+                       Dim a = Not m.xref!KEGG.StringEmpty AndAlso kegg.Exists(key:=m.xref!KEGG)
+                       Dim b = m.rt >= 0
+                       Dim c = Not m.rt.IsNaNImaginary
+
+                       Return a AndAlso b AndAlso c
+                   End Function) _
+            .ToArray
+        Dim inputs = valids _
+            .Select(Function(meta)
+                        Dim compound As Compound = kegg.GetByKey(meta.xref!KEGG).Entity
+                        Dim KCF As KCF = IO.LoadKCF(stream:=compound.KCF)
+
+                        Return (KCF, meta.rt)
+                    End Function)
+
+        Return inputs.RtRegression
     End Function
 End Module
