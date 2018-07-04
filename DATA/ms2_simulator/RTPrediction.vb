@@ -37,14 +37,15 @@ Public Module RTPrediction
         Dim elements = KegAtomType.KEGGAtomTypes _
             .Values _
             .IteratesALL _
-            .Where(Function(a)
-                       Return a.type = KegAtomType.Types.Carbon OrElse
-                              a.type = KegAtomType.Types.Nitrogen OrElse
-                              a.type = KegAtomType.Types.Oxygen
-                   End Function) _
             .Select(Function(a) a.code) _
             .OrderBy(Function(s) s) _
             .ToArray
+
+        '.Where(Function(a)
+        '           Return a.type = KegAtomType.Types.Carbon OrElse
+        '                      a.type = KegAtomType.Types.Nitrogen OrElse
+        '                      a.type = KegAtomType.Types.Oxygen
+        '       End Function)
 
         namedVector = New NamedVectorFactory(factors:=elements)
     End Sub
@@ -60,14 +61,14 @@ Public Module RTPrediction
     ''' 
     <Extension>
     Public Function RtRegression(experimental As IEnumerable(Of (metabolite As KCF, rt#))) As MLRFit
-        Dim values As (Vector, Double)() = experimental _
+        Dim values() = experimental _
             .Select(Function(m)
                         Dim factors = m.metabolite.KCFComposition
-                        Dim v = namedVector.AsVector(factors)
+                        Dim v = {1.0R}.Join(namedVector.AsVector(factors))
                         Return (v, m.rt)
                     End Function) _
             .ToArray
-        Dim matrix As New GeneralMatrix(values.Select(Function(m) m.Item1))
+        Dim matrix As New GeneralMatrix(values.Select(Function(m) m.Item1.AsVector))
         Dim RT As Vector = values.Select(Function(m) m.Item2).AsVector
         Dim fit = MLRFit.LinearFitting(matrix, RT)
 
@@ -99,7 +100,8 @@ Public Module RTPrediction
                         Dim KCF As KCF = IO.LoadKCF(stream:=compound.KCF)
 
                         Return (KCF, meta.rt)
-                    End Function)
+                    End Function) _
+            .ToArray
 
         Return inputs.RtRegression
     End Function
