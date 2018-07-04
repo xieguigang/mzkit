@@ -1,5 +1,9 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.Bootstrapping
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.Matrix
+Imports Microsoft.VisualBasic.Math.Scripting
 Imports SMRUCC.Chemistry.Model
 
 ''' <summary>
@@ -17,10 +21,30 @@ Public Module RTPrediction
     <Extension>
     Public Function KCFComposition(KCF As KCF) As Dictionary(Of String, Double)
         Return KCF.Atoms _
-            .GroupBy(Function(a) a.KEGGAtom) _
+            .GroupBy(Function(a)
+                         Return a.KEGGAtom.code
+                     End Function) _
             .ToDictionary(Function(a) a.Key,
                           Function(a) CDbl(a.Count))
     End Function
+
+    ReadOnly namedVector As NamedVectorFactory
+
+    Sub New()
+        Dim elements = KegAtomType.KEGGAtomTypes _
+            .Values _
+            .IteratesALL _
+            .Where(Function(a)
+                       Return a.type = KegAtomType.Types.Carbon OrElse
+                              a.type = KegAtomType.Types.Nitrogen OrElse
+                              a.type = KegAtomType.Types.Oxygen
+                   End Function) _
+            .Select(Function(a) a.code) _
+            .OrderBy(Function(s) s) _
+            .ToArray
+
+        namedVector = New NamedVectorFactory(factors:=elements)
+    End Sub
 
     ''' <summary>
     ''' This algorithm only works for a specific LC-MS experiment condition.
@@ -32,15 +56,18 @@ Public Module RTPrediction
     ''' </returns>
     ''' 
     <Extension>
-    Public Function RtRegression(experimental As IEnumerable(Of (metabolite As KCF, rt#))) As FitResult
-        Dim matrix = experimental _
+    Public Function RtRegression(experimental As IEnumerable(Of (metabolite As KCF, rt#))) As MLRFit
+        Dim values As (Vector, Double)() = experimental _
             .Select(Function(m)
-                        Return New LMA.FitInput With {
-                            .factors = m.metabolite.KCFComposition,
-                            .y = m.rt
-                        }
-                    End Function)
-        Dim fit = matrix.NonLinearFit
+                        Dim factors = m.metabolite.KCFComposition
+                        Dim v = namedVector.AsVector(factors)
+                        Return (v, m.rt)
+                    End Function) _
+            .ToArray
+        Dim matrix As New GeneralMatrix(values.Select(Function(m) m.Item1))
+        Dim RT As Vector = values.Select(Function(m) m.Item2).AsVector
+        Dim fit = MLRFit.LinearFitting(matrix, RT)
 
+        Return fit
     End Function
 End Module
