@@ -53,6 +53,13 @@ Namespace ASCII.MSP
             End With
         End Function
 
+        <Extension>
+        Public Function Read_pubchemID(meta As MetaData) As String
+            With meta
+                Return .ReadStringMultiple({NameOf(.pubchem), NameOf(.pubchem_cid)})
+            End With
+        End Function
+
         ''' <summary>
         ''' 
         ''' </summary>
@@ -118,9 +125,26 @@ Namespace ASCII.MSP
                 Dim field As BindProperty(Of ColumnAttribute) = fields(name)
 
                 value = field.GetValue(meta)
-                If Not value Is Nothing Then
-                    Return value
+
+                If value Is Nothing Then
+                    Continue For
                 End If
+
+                Select Case value.GetType
+                    Case GetType(String)
+                        If Not DirectCast(value, String).StringEmpty Then
+                            Return value
+                        End If
+                    Case GetType(Double), GetType(Integer), GetType(Long), GetType(Short), GetType(Byte)
+                        If Not CDbl(value) = 0R Then
+                            Return value
+                        End If
+                    Case Else
+
+                        ' object 肯定有值，则直接返回
+                        Return value
+
+                End Select
             Next
 
             Return Nothing

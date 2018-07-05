@@ -44,6 +44,12 @@
             End Get
         End Property
 
+        Public ReadOnly Property PubChem As String
+            Get
+                Return meta.Read_pubchemID
+            End Get
+        End Property
+
         Sub New(meta As MetaData)
             Me.meta = meta
         End Sub
