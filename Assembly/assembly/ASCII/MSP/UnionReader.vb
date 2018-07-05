@@ -38,6 +38,12 @@
             End Get
         End Property
 
+        Public ReadOnly Property exact_mass As Double
+            Get
+                Return meta.Read_exact_mass
+            End Get
+        End Property
+
         Sub New(meta As MetaData)
             Me.meta = meta
         End Sub
