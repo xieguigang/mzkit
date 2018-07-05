@@ -3,6 +3,9 @@
     Public Class UnionReader
 
         ReadOnly meta As MetaData
+        ReadOnly msp As MspData
+
+#Region "Reader Properties"
 
         Public ReadOnly Property collision_energy As String
             Get
@@ -49,9 +52,11 @@
                 Return meta.Read_pubchemID
             End Get
         End Property
+#End Region
 
-        Sub New(meta As MetaData)
+        Sub New(meta As MetaData, Optional msp As MspData = Nothing)
             Me.meta = meta
+            Me.msp = msp
         End Sub
 
         Public Overrides Function ToString() As String

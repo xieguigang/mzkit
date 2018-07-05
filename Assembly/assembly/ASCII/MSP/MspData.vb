@@ -39,6 +39,13 @@ Namespace ASCII.MSP
             End Get
         End Property
 
+        Public ReadOnly Property MetaReader As UnionReader
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return New UnionReader(MetaDB, msp:=Me)
+            End Get
+        End Property
+
         Public Property Peaks As MSMSPeak()
 
         Public Overrides Function ToString() As String

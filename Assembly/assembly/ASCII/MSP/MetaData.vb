@@ -1,5 +1,4 @@
 ﻿Imports System.Data.Linq.Mapping
-Imports System.Runtime.CompilerServices
 
 Namespace ASCII.MSP
 
@@ -185,15 +184,15 @@ Namespace ASCII.MSP
         Public Property orifice_voltage As String
         <Column(Name:="orifice temperature")>
         Public Property orifice_temperature As String
+        <Column(Name:="ion guide voltage")>
+        Public Property ion_guide_voltage As String
 
-        ' ion guide voltage":"1500 V","mass range m\/z":"100-1000","orifice temp":"80 C","ring voltage":
-
-        Public ReadOnly Property Reader As UnionReader
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return New UnionReader(Me)
-            End Get
-        End Property
+        <Column(Name:="mass range m/z")>
+        Public Property mass_range_mz As String
+        <Column(Name:="orifice temp")>
+        Public Property orifice_temp As String
+        <Column(Name:="ring voltage")>
+        Public Property ring_voltage As String
 
         Public Overrides Function ToString() As String
             Return accession

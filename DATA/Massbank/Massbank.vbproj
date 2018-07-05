@@ -204,6 +204,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MetaLib\NaturalLanguageTerm.vb" />
     <Compile Include="MetaLib\SpectraEncoder.vb" />
     <Compile Include="MetaLib\NameEquality.vb" />
     <Compile Include="MetaLib\MetaLib.vb" />
