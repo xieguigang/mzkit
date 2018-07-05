@@ -37,15 +37,14 @@ Public Module RTPrediction
         Dim elements = KegAtomType.KEGGAtomTypes _
             .Values _
             .IteratesALL _
+            .Where(Function(a)
+                       Return a.type = KegAtomType.Types.Carbon OrElse
+                              a.type = KegAtomType.Types.Nitrogen OrElse
+                              a.type = KegAtomType.Types.Oxygen
+                   End Function) _
             .Select(Function(a) a.code) _
             .OrderBy(Function(s) s) _
             .ToArray
-
-        '.Where(Function(a)
-        '           Return a.type = KegAtomType.Types.Carbon OrElse
-        '                      a.type = KegAtomType.Types.Nitrogen OrElse
-        '                      a.type = KegAtomType.Types.Oxygen
-        '       End Function)
 
         namedVector = New NamedVectorFactory(factors:=elements)
     End Sub
@@ -61,18 +60,34 @@ Public Module RTPrediction
     ''' 
     <Extension>
     Public Function RtRegression(experimental As IEnumerable(Of (metabolite As KCF, rt#))) As MLRFit
+        ' 对于大部分都是零的稀疏矩阵，QR分解将无法正常工作
+        ' 所以会在这里+1s
         Dim values() = experimental _
             .Select(Function(m)
                         Dim factors = m.metabolite.KCFComposition
-                        Dim v = {1.0R}.Join(namedVector.AsVector(factors))
+                        Dim v = namedVector.AsVector(factors) + 1S
                         Return (v, m.rt)
                     End Function) _
             .ToArray
-        Dim matrix As New GeneralMatrix(values.Select(Function(m) m.Item1.AsVector))
+        Dim rowVectors = values _
+            .Select(Function(m) As Vector
+                        Return {1.0#}.Join(m.Item1)
+                    End Function) _
+            .ToArray
+        Dim matrix As New GeneralMatrix(rowVectors)
         Dim RT As Vector = values.Select(Function(m) m.Item2).AsVector
-        Dim fit = MLRFit.LinearFitting(matrix, RT)
+        Dim test As MLRFit.Error() = Nothing
+        Dim fit = MLRFit.LinearFitting(matrix, RT, errors:=test)
 
         Return fit
+    End Function
+
+    Public Function RtPredict(MLR As MLRFit, metabolite As KCF) As Double
+        Dim atoms = metabolite.KCFComposition
+        Dim X As Vector = namedVector.AsVector(atoms) + 1
+        Dim rt# = MLR.Fx({1.0#}.Join(X))
+
+        Return rt
     End Function
 
     ''' <summary>
