@@ -115,13 +115,13 @@ Namespace ASCII.MSP
                     Call field.SetValue(meta, castValue)
                 End If
 
-                table.Remove(name)
-                table.Remove(names(name))
+                'table.Remove(name)
+                'table.Remove(names(name))
             Next
 
-            If table.Count > 0 Then
-                Throw New NotImplementedException(table.ToDictionary.GetJson)
-            End If
+            'If table.Count > 0 Then
+            '    Throw New NotImplementedException(table.ToDictionary.GetJson)
+            'End If
 
             Return DirectCast(meta, MetaData)
         End Function

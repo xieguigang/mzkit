@@ -72,7 +72,7 @@ Namespace ASCII.MSP
             Dim getValue = Function(key$)
                                If metadata.ContainsKey(key) Then
                                    Dim value = metadata(key)
-                                   metadata.Remove(key)
+                                   ' metadata.Remove(key)
                                    Return value
                                Else
                                    Return ""
@@ -97,15 +97,23 @@ Namespace ASCII.MSP
                 .Ion_mode = getValue("Ion_mode")
             }
 
-            If metadata.ContainsKey("Synonym") Then
-                metadata.Remove("Synonym")
-            End If
+            'If metadata.ContainsKey("Synonym") Then
+            '    metadata.Remove("Synonym")
+            'End If
+
+            Return msp
+        End Function
+
+        ''' <summary>
+        ''' 测试是否还存在没有添加的字段值
+        ''' </summary>
+        ''' <param name="metadata"></param>
+        <Extension>
+        Public Sub TestMissingFields(metadata As NameValueCollection)
 
             If metadata.Count > 0 Then
                 Throw New NotImplementedException(metadata.ToDictionary.GetJson)
             End If
-
-            Return msp
-        End Function
+        End Sub
     End Module
 End Namespace
