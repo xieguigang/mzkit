@@ -34,6 +34,11 @@ Namespace ASCII.MSP
         Public Property ms_level As String
         <Column(Name:="ionization energy")>
         Public Property ionization_energy As String
+
+        ''' <summary>
+        ''' precursor type的另一种别称
+        ''' </summary>
+        ''' <returns></returns>
         <Column(Name:="ion type")>
         Public Property ion_type As String
         <Column(Name:="ionization mode")>
@@ -49,6 +54,11 @@ Namespace ASCII.MSP
 
         Public Property InChIKey As String
         Public Property copyright As String
+
+        ''' <summary>
+        ''' 电离模式，通常是ESI
+        ''' </summary>
+        ''' <returns></returns>
         Public Property ionization As String
         <Column(Name:="fragmentation mode")>
         Public Property fragmentation_mode As String

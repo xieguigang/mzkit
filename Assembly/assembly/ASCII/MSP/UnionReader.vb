@@ -52,6 +52,18 @@
                 Return meta.Read_pubchemID
             End Get
         End Property
+
+        Public ReadOnly Property ionMode As String
+            Get
+                If msp.Ion_mode.StringEmpty Then
+                    Return meta.ionization_mode _
+                        ?.Split(","c) _
+                        ?.FirstOrDefault
+                Else
+                    Return msp.Ion_mode
+                End If
+            End Get
+        End Property
 #End Region
 
         Sub New(meta As MetaData, Optional msp As MspData = Nothing)
