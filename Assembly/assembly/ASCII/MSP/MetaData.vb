@@ -1,4 +1,5 @@
 ﻿Imports System.Data.Linq.Mapping
+Imports System.Runtime.CompilerServices
 
 Namespace ASCII.MSP
 
@@ -15,6 +16,17 @@ Namespace ASCII.MSP
         Public Property license As String
         <Column(Name:="exact mass")>
         Public Property exact_mass As Double
+
+        <Column(Name:="collision gas")>
+        Public Property collision_gas As String
+        <Column(Name:="desolvation gas flow")>
+        Public Property desolvation_gas_flow As String
+        <Column(Name:="desolvation temperature")>
+        Public Property desolvation_temperature As String
+        Public Property nebulizer As String
+        <Column(Name:="column temperature")>
+        Public Property column_temperature As String
+        Public Property solvent As String
 
         Public Property instrument As String
         <Column(Name:="instrument type")>
@@ -43,6 +55,9 @@ Namespace ASCII.MSP
         Public Property fragmentation_mode As String
         Public Property resolution As String
         Public Property column As String
+        <Column(Name:="column pressure")>
+        Public Property column_pressure As String
+
         <Column(Name:="flow gradient")>
         Public Property flow_gradient As String
         <Column(Name:="flow rate")>
@@ -66,8 +81,16 @@ Namespace ASCII.MSP
         Public Property cas_number As String
         <Column(Name:="pubchem cid")>
         Public Property pubchem_cid As String
+        <Column(Name:="pubchem sid")>
+        Public Property pubchem_sid As String
+
         <Column(Name:="pubmed id")>
         Public Property pubmed_id As String
+        Public Property pubchem As String
+
+        Public Property knapsack As String
+        Public Property lipidbank As String
+
         Public Property chemspider As String
         <Column(Name:="charge state")>
         Public Property charge_state As Integer
@@ -89,6 +112,9 @@ Namespace ASCII.MSP
         Public Property kegg As String
         <Column(Name:="capillary temperature")>
         Public Property capillary_temperature As String
+        <Column(Name:="capillary voltage")>
+        Public Property capillary_voltage As String
+
         <Column(Name:="source voltage")>
         Public Property source_voltage As String
         <Column(Name:="sample introduction")>
@@ -108,10 +134,66 @@ Namespace ASCII.MSP
         Public Property fragmentation_method As String
         <Column(Name:="spectrum type")>
         Public Property spectrum_type As String
+
+        <Column(Name:="source temperature")>
         Public Property source_temperature As String
         Public Property chebi As String
         Public Property hmdb As String
         Public Property lipidmaps As String
+
+        Public Property scanning As String
+        <Column(Name:="sampling cone")>
+        Public Property sampling_cone As String
+        <Column(Name:="derivative formula")>
+        Public Property derivative_formula As String
+        <Column(Name:="derivative mass")>
+        Public Property derivative_mass As String
+        <Column(Name:="derivatization type")>
+        Public Property derivatization_type As String
+        <Column(Name:="data format")>
+        Public Property data_format As String
+
+        <Column(Name:="activation parameter")>
+        Public Property activation_parameter As String
+        <Column(Name:="activation time")>
+        Public Property activation_time As String
+        <Column(Name:="automatic gain control")>
+        Public Property automatic_gain_control As String
+        <Column(Name:="resolution setting")>
+        Public Property resolution_setting As String
+        <Column(Name:="spray voltage")>
+        Public Property spray_voltage As String
+        <Column(Name:="tube lens voltage")>
+        Public Property tube_lens_voltage As String
+        <Column(Name:="cdl temperature")>
+        Public Property cdl_temperature As String
+        <Column(Name:="scanning range")>
+        Public Property scanning_range As String
+
+        <Column(Name:="solvent acetonitrile")>
+        Public Property solvent_acetonitrile As String
+        <Column(Name:="ion guide peak voltage")>
+        Public Property ion_guide_peak_voltage As String
+
+        <Column(Name:="lens voltage")>
+        Public Property lens_voltage As String
+        <Column(Name:="needle voltage")>
+        Public Property needle_voltage As String
+        <Column(Name:="nebulizing gas")>
+        Public Property nebulizing_gas As String
+        <Column(Name:="orifice voltage")>
+        Public Property orifice_voltage As String
+        <Column(Name:="orifice temperature")>
+        Public Property orifice_temperature As String
+
+        ' ion guide voltage":"1500 V","mass range m\/z":"100-1000","orifice temp":"80 C","ring voltage":
+
+        Public ReadOnly Property Reader As UnionReader
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return New UnionReader(Me)
+            End Get
+        End Property
 
         Public Overrides Function ToString() As String
             Return accession
