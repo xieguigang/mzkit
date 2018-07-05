@@ -23,6 +23,8 @@ Namespace ASCII.MSP
         Public Property Spectrum_type As String
         Public Property Instrument_type As String
         Public Property Instrument As String
+        Public Property Ion_mode As String
+        Public Property Collision_energy As String
 
         ''' <summary>
         ''' MoNA里面都主要是讲注释的信息放在<see cref="Comments"/>字段里面的。

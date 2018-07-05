@@ -85,14 +85,16 @@ Namespace ASCII.MSP
                 .DB_id = getValue("DB#"),
                 .Formula = getValue(NameOf(MspData.Formula)),
                 .InChIKey = getValue(NameOf(MspData.InChIKey)),
-                .MW = getValue(NameOf(MspData.MW)),
+                .MW = Val(getValue(NameOf(MspData.MW)) Or getValue("ExactMass").AsDefault),
                 .Name = getValue(NameOf(MspData.Name)),
                 .PrecursorMZ = getValue(NameOf(MspData.PrecursorMZ)),
                 .Synonyms = metadata.GetValues("Synonym") Or {getValue("Synon")}.AsDefault,
                 .Precursor_type = getValue("Precursor_type"),
                 .Spectrum_type = getValue("Spectrum_type"),
                 .Instrument_type = getValue("Instrument_type"),
-                .Instrument = getValue("Instrument")
+                .Instrument = getValue("Instrument"),
+                .Collision_energy = getValue("Collision_energy"),
+                .Ion_mode = getValue("Ion_mode")
             }
 
             If metadata.ContainsKey("Synonym") Then
