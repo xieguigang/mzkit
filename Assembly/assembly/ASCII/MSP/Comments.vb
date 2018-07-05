@@ -5,6 +5,7 @@ Imports Microsoft.VisualBasic.CommandLine.Parsers
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+Imports Microsoft.VisualBasic.Data.csv.IO
 
 Namespace ASCII.MSP
 
@@ -31,6 +32,19 @@ Namespace ASCII.MSP
             Next
 
             Return table
+        End Function
+
+        <Extension>
+        Public Iterator Function AsDataFrame(msp As IEnumerable(Of MspData)) As IEnumerable(Of EntityObject)
+            For Each mspValue As MspData In msp
+                Yield New EntityObject With {
+                    .ID = mspValue.DB_id,
+                    .Properties = mspValue _
+                        .DictionaryTable(primitiveType:=True) _
+                        .Join(mspValue.MetaDB.DictionaryTable) _
+                        .ToDictionary
+                }
+            Next
         End Function
 
         ReadOnly names As Dictionary(Of String, String)

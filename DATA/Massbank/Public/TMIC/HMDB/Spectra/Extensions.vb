@@ -29,6 +29,10 @@ Namespace TMIC.HMDB.Spectra
         End Function
 
         Public Function ParseIonizationMode(mode As String) As IonizationModes
+            If mode.StringEmpty OrElse mode = vbNullChar OrElse mode = "NA" OrElse mode = "N/A" Then
+                Return IonizationModes.NA
+            End If
+
             Select Case Strings.LCase(mode)
                 Case "positive", "pos", "+", "1", "+1", "p"
                     Return IonizationModes.Positive
@@ -41,6 +45,7 @@ Namespace TMIC.HMDB.Spectra
     End Module
 
     Public Enum IonizationModes As Integer
+        NA = 0
         Negative = -1
         Positive = 1
     End Enum
