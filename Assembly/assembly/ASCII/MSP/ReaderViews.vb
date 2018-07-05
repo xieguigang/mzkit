@@ -88,6 +88,7 @@ Namespace ASCII.MSP
         Public Function Read_exact_mass(meta As MetaData) As Double
             With meta
                 Dim mw = .ReadDoubleMultiple({NameOf(.exact_mass), NameOf(.exactmass)})
+
                 If mw = 0R Then
                     Return .ReadDoubleMultiple({NameOf(.total_exact_mass)})
                 Else

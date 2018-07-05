@@ -43,11 +43,27 @@
 
         Public ReadOnly Property exact_mass As Double
             Get
-                Return meta.Read_exact_mass
+                Dim mass# = meta.Read_exact_mass
+
+                If mass = 0R Then
+                    Return msp.MW
+                Else
+                    Return mass
+                End If
             End Get
         End Property
 
-        Public ReadOnly Property PubChem As String
+        Public ReadOnly Property formula As String
+            Get
+                If msp.Formula.StringEmpty Then
+                    Return meta.molecular_formula
+                Else
+                    Return msp.Formula
+                End If
+            End Get
+        End Property
+
+        Public ReadOnly Property pubchem As String
             Get
                 Return meta.Read_pubchemID
             End Get
