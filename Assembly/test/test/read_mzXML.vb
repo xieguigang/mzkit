@@ -14,6 +14,8 @@ Module read_mzXML
             Dim ms2Peaks = scan.ExtractMzI
 
             Call file.WriteLine(ms2Peaks.name)
+            Call file.WriteLine($"mz range: [{scan.lowMz}, {scan.highMz}]")
+            Call file.WriteLine($"peaks: {scan.peaksCount}")
             Call file.WriteLine(ms2Peaks.peaks.Print)
             Call file.WriteLine()
         Next

@@ -12,16 +12,18 @@ Namespace MarkupData.mzXML
         ''' <returns></returns>
         <Extension> Public Function ExtractMzI(peaks As peaks) As MSMSPeak()
             Dim floats#() = peaks.Base64Decode(True)
-            Dim data As New List(Of MSMSPeak)
+            Dim peaksData = floats _
+                .Split(2) _
+                .Select(Function(buffer, i)
+                            Return New MSMSPeak With {
+                                .comment = i,
+                                .intensity = buffer(Scan0), ' 信号强度, 归一化为 0-100 之间的数值
+                                .mz = buffer(1)             ' m/z质核比数据
+                            }
+                        End Function) _
+                .ToArray
 
-            For Each signal As Double() In floats.Split(2)
-                data += New MSMSPeak With {
-                    .mz = signal(Scan0),   'm/z质核比数据
-                    .intensity = signal(1)        ' 信号强度, 归一化为 0-100 之间的数值
-                }
-            Next
-
-            Return data.ToArray
+            Return peaksData
         End Function
 
         ''' <summary>
