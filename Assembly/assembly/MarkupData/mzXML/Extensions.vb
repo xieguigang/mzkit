@@ -16,7 +16,7 @@ Namespace MarkupData.mzXML
                 .Split(2) _
                 .Select(Function(buffer, i)
                             Return New MSMSPeak With {
-                                .comment = i,
+                                .comment = i + 1S,
                                 .intensity = buffer(Scan0), ' 信号强度, 归一化为 0-100 之间的数值
                                 .mz = buffer(1)             ' m/z质核比数据
                             }
@@ -51,7 +51,7 @@ Namespace MarkupData.mzXML
 
         <Extension> Private Function __getName(scan As scan) As String
             Dim level$ = If(scan.msLevel = 1, "MS1", "MS/MS")
-            Return $"[{level}] {scan.scanType} Scan, ({scan.polarity}) mz={scan.precursorMz.value} / retentionTime={scan.retentionTime}"
+            Return $"[{level}] {scan.scanType} Scan, ({scan.polarity}) mz={scan.precursorMz.value}, into={scan.precursorMz.precursorIntensity} / retentionTime={scan.retentionTime}"
         End Function
     End Module
 End Namespace

@@ -8,7 +8,7 @@ Module read_mzXML
     Sub Main()
         Dim mzXML = "E:\smartnucl_integrative\biodeepDB\protocols\biodeepMSMS1\biodeepMSMS\test\lxy-CID30.mzXML"
         Dim scanes = MarkupData.mzXML.XML.LoadScans(mzXML).ToArray
-        Dim file As New StreamWriter("./test_ms2_dump.txt")
+        Dim file As New StreamWriter("./lxy-CID30.txt")
 
         For Each scan In scanes.Where(Function(s) s.msLevel <> "1")
             Dim ms2Peaks = scan.ExtractMzI
@@ -16,7 +16,8 @@ Module read_mzXML
             Call file.WriteLine(ms2Peaks.name)
             Call file.WriteLine($"mz range: [{scan.lowMz}, {scan.highMz}]")
             Call file.WriteLine($"peaks: {scan.peaksCount}")
-            Call file.WriteLine(ms2Peaks.peaks.Print)
+            Call file.WriteLine($"activation: {scan.precursorMz.activationMethod} @ {scan.collisionEnergy}V")
+            Call file.WriteLine(ms2Peaks.peaks.Print(addBorder:=False))
             Call file.WriteLine()
         Next
 
