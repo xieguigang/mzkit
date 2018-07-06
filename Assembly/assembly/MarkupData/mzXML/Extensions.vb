@@ -10,8 +10,8 @@ Namespace MarkupData.mzXML
         ''' </summary>
         ''' <param name="peaks"></param>
         ''' <returns></returns>
-        <Extension> Public Function ExtractMzI(peaks As peaks) As List(Of MSMSPeak)
-            Dim floats#() = peaks.Base64Decode
+        <Extension> Public Function ExtractMzI(peaks As peaks) As MSMSPeak()
+            Dim floats#() = peaks.Base64Decode(True)
             Dim data As New List(Of MSMSPeak)
 
             For Each signal As Double() In floats.Split(2)
@@ -21,7 +21,7 @@ Namespace MarkupData.mzXML
                 }
             Next
 
-            Return data
+            Return data.ToArray
         End Function
 
         ''' <summary>
@@ -36,13 +36,20 @@ Namespace MarkupData.mzXML
         ''' <returns></returns>
         <Extension> Public Function ExtractMzI(scan As scan) As (name$, peaks As MSMSPeak())
             Dim name$ = scan.__getName
-            Dim peaks As MSMSPeak() = scan.peaks.ExtractMzI(name)
+            Dim peaks As MSMSPeak()
+
+            If scan.peaksCount = 0 Then
+                peaks = {}
+            Else
+                peaks = scan.peaks.ExtractMzI
+            End If
+
             Return (name, peaks)
         End Function
 
         <Extension> Private Function __getName(scan As scan) As String
             Dim level$ = If(scan.msLevel = 1, "MS1", "MS/MS")
-            Return $"[{level}] {scan.scanType} Scan, ({scan.polarity}) mz={scan.precursorMz} / retentionTime={scan.retentionTime}"
+            Return $"[{level}] {scan.scanType} Scan, ({scan.polarity}) mz={scan.precursorMz.value} / retentionTime={scan.retentionTime}"
         End Function
     End Module
 End Namespace
