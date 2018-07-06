@@ -5,16 +5,39 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.Serialization.JSON
 
+''' <summary>
+''' MS2 fragment matrix
+''' </summary>
 Public Class Library
 
+    ''' <summary>
+    ''' Fragment ID in this matrix.
+    ''' </summary>
+    ''' <returns></returns>
     Public Property ID As String
+    ''' <summary>
+    ''' 前体离子的m/z
+    ''' </summary>
+    ''' <returns></returns>
     Public Property PrecursorMz As String
+    ''' <summary>
+    ''' 碎片的m/z
+    ''' </summary>
+    ''' <returns></returns>
     Public Property ProductMz As String
+    ''' <summary>
+    ''' 当前的这个碎片的信号强度
+    ''' </summary>
+    ''' <returns></returns>
     Public Property LibraryIntensity As String
+    ''' <summary>
+    ''' library name
+    ''' </summary>
+    ''' <returns></returns>
     Public Property Name As String
 
     Public Overrides Function ToString() As String
-        Return Me.GetJson
+        Return $"[{ProductMz}, {LibraryIntensity}]"
     End Function
 End Class
 
