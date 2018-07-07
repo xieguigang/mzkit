@@ -111,6 +111,9 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
             printf(" -> %s", identified$KEGG);
         }
 
+		# Each metaDNA.impl result is a list that identify of
+		# unknowns
+		
         # KEGG.partners, identify.ms2, unknown, ms2.align, unknow.matches
         metaDNA.impl(
       KEGG.partners = partners,
@@ -344,7 +347,8 @@ metaDNA.impl <- function(KEGG.partners, identify.ms2,
             query.result[[name]] <- list(
         ms2.alignment = best,
         ms1.feature = ms1.feature,
-        kegg.info = kegg.query
+        kegg.info = kegg.query,
+		peak_ms2.i = peak_ms2.index[i]
       );
         }
     }
