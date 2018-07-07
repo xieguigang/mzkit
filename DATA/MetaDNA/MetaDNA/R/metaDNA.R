@@ -89,16 +89,17 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
     meta.KEGG <- meta.KEGG$data;
     match.kegg <- kegg.match.handler(
     meta.KEGG,
-    unknown$peaktable[, "mz"],
+    unknown.mz = unknown$peaktable[, "mz"],
     precursor_type = precursor_type,
       kegg_id = kegg_id.col,
     tolerance = tolerance
   );
     identify.peak_ms2 <- identify$peak_ms2;
-
+	
     # tick.each
     # lapply
     tick.each(identify$meta.KEGG %=>% .as.list, function(identified) {
+			
         partners <- identified$KEGG %=>% kegg.partners;
         ms2 <- identify.peak_ms2[[identified$peak_ms2.i]];
 
@@ -111,6 +112,8 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
             printf(" -> %s", identified$KEGG);
         }
 
+		partners <- unique(partners);
+		
         # Each metaDNA.impl result is a list that identify of
         # unknowns
 
@@ -163,6 +166,12 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
         # get possible kegg meta annotation data.
         unknown.query <- sapply(1:length(unknown.mz), function(j) {
             ms1 <- unknown.mz[j];
+			
+			# 2018-7-8 why NA value happened???
+			if (is.na(ms1)) {
+				return(NULL);
+			}
+			
             query <- lapply(1:length(mz), function(i) {
                 # unknown metabolite ms1 m/z match
                 # kegg mz with a given tolerance
