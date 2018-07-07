@@ -10,8 +10,8 @@
 #' @return A subset of the input \code{dataframe} with all KEGG column
 #'     value non-empty.
 removes.empty_KEGG <- function(d) {
-	KEGG <- d[, "KEGG"] %=>% as.vector;
-	d[!Strings.Empty(KEGG, TRUE), ];
+    KEGG <- d[, "KEGG"] %=>% as.vector;
+    d[!Strings.Empty(KEGG, TRUE),];
 }
 
 #' Tolerance in Mass delta mode
@@ -23,7 +23,7 @@ removes.empty_KEGG <- function(d) {
 #' @return Function returns a lambda function that can be using for
 #'         tolerance predication.
 tolerance.deltaMass <- function(da = 0.3) {
-  function(a, b) abs(a - b) <= da;
+    function(a, b) abs(a - b) <= da;
 }
 
 #' Tolerance in PPM mode
@@ -35,11 +35,11 @@ tolerance.deltaMass <- function(da = 0.3) {
 #' @return Function returns a lambda function that can be using for
 #'         tolerance predication.
 tolerance.ppm <- function(ppm = 20) {
-  function(a, b) PPM(a, b) <= ppm;
+    function(a, b) PPM(a, b) <= ppm;
 }
 
 #' PPM value between two mass value
 PPM <- function(measured, actualValue) {
-  # |(measure - reference)| / measure * 1000000
-  (abs(measured - actualValue) / actualValue) * 1000000;
+    # |(measure - reference)| / measure * 1000000
+    (abs(measured - actualValue) / actualValue) * 1000000;
 }

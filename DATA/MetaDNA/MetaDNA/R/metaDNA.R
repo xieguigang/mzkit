@@ -111,9 +111,9 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
             printf(" -> %s", identified$KEGG);
         }
 
-		# Each metaDNA.impl result is a list that identify of
-		# unknowns
-		
+        # Each metaDNA.impl result is a list that identify of
+        # unknowns
+
         # KEGG.partners, identify.ms2, unknown, ms2.align, unknow.matches
         metaDNA.impl(
       KEGG.partners = partners,
@@ -134,7 +134,7 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
 #' @return Returns the index vector in \code{unknown.mz} vector.
 kegg.match.handler <- function(meta.KEGG, unknown.mz,
                                precursor_type = "[M+H]+",
-                                             kegg_id = "KEGG",
+                               kegg_id = "KEGG",
                                tolerance = tolerance.ppm(20)) {
 
     kegg.mass <- meta.KEGG[, "exact_mass"] %=>% as.numeric;
@@ -348,7 +348,7 @@ metaDNA.impl <- function(KEGG.partners, identify.ms2,
         ms2.alignment = best,
         ms1.feature = ms1.feature,
         kegg.info = kegg.query,
-		peak_ms2.i = peak_ms2.index[i]
+        peak_ms2.i = peak_ms2.index[i]
       );
         }
     }

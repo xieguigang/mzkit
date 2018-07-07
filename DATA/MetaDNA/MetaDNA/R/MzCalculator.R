@@ -25,16 +25,16 @@ mz.calculator <- function(mass, mode = c(1, -1), debug = FALSE) {
     out <- c();
 
     if (debug) {
-      print(names(calc));
+        print(names(calc));
     }
 
-    for(name in names(calc)) {
+    for (name in names(calc)) {
         type <- calc[[name]];
-        cal  <- type$calc.mz;
+        cal <- type$calc.mz;
 
         if (debug) {
-          print(type);
-          print(cal);
+            print(type);
+            print(cal);
         }
 
         r <- c(type$Name,
