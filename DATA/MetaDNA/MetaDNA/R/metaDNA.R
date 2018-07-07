@@ -109,10 +109,8 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
         if (IsNothing(partners)) {
             return(NULL);
         } else {
-            printf(" -> %s", identified$KEGG);
+            # printf(" -> %s", identified$KEGG);
         }
-
-		partners <- unique(partners);
 		
         # Each metaDNA.impl result is a list that identify of
         # unknowns
