@@ -80,6 +80,18 @@
                 End If
             End Get
         End Property
+
+        Public ReadOnly Property sourcefile As String
+            Get
+                Return meta.Read_source_file
+            End Get
+        End Property
+
+        Public ReadOnly Property compound_source As String
+            Get
+                Return meta.Read_compound_source
+            End Get
+        End Property
 #End Region
 
         Sub New(meta As MetaData, Optional msp As MspData = Nothing)
