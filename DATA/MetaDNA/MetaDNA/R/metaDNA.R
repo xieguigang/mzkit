@@ -95,11 +95,10 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
     tolerance = tolerance
   );
     identify.peak_ms2 <- identify$peak_ms2;
-	
+			
     # tick.each
     # lapply
-    tick.each(identify$meta.KEGG %=>% .as.list, function(identified) {
-			
+    tick.each(identify$meta.KEGG %=>% .as.list, function(identified) {			
         partners <- identified$KEGG %=>% kegg.partners;
         ms2 <- identify.peak_ms2[[identified$peak_ms2.i]];
 
