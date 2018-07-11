@@ -23,6 +23,20 @@ Public Module LibraryMatrixExtensions
         Return matrix.ms2.Max(Function(r) r.quantity)
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function AsMatrix(lib_ms2 As IEnumerable(Of Library)) As LibraryMatrix
+        Return lib_ms2 _
+            .Select(Function(l)
+                        Return New ms2 With {
+                            .mz = l.ProductMz,
+                            .quantity = l.LibraryIntensity,
+                            .intensity = l.LibraryIntensity
+                        }
+                    End Function) _
+            .ToArray
+    End Function
+
     ''' <summary>
     ''' 将符合误差范围的二级碎片合并在一起
     ''' </summary>
