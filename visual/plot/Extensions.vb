@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
-Imports SMRUCC.MassSpectrum.Math
+Imports SMRUCC.MassSpectrum.Math.MSMS
 Imports SMRUCC.MassSpectrum.Visualization.DATA.SpectrumJSON
 
 Public Module Extensions

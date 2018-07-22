@@ -254,3 +254,4 @@ paket-files/
 .Rproj.user
 *.gz
 *.zip
+/DATA/MetaDNA/MetaDNA/%APPDATA%/Microsoft/Windows/IETldCache
