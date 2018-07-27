@@ -30,7 +30,7 @@ mz.calculator <- function(mass, mode = c(1, -1), debug = FALSE) {
 
     for (name in names(calc)) {
         type <- calc[[name]];
-        cal <- type$calc.mz;
+        cal <- type$cal.mz;
 
         if (debug) {
             print(type);
