@@ -286,9 +286,10 @@ find.PrecursorType <- function(mass, precursorMZ, charge, chargeMode = "+", minE
 		if(is.null(precursorMZ)) {
 			precursorMZ = NA;
 		}
-		print(sprintf("  ****** mass='%s' or precursor_M/Z='%s' is an invalid value!", mass, precursorMZ));
-        return(find.PrecursorType.no_result);
-    }
+
+		printf("  ****** mass='%s' or precursor_M/Z='%s' is an invalid value!", mass, precursorMZ);
+    return(find.PrecursorType.no_result);
+  }
 
 	if (calc.PPM(precursorMZ, mass / abs(charge)) <= 500) {
 		# 本身的分子质量和前体的mz一样，说明为[M]类型
@@ -333,7 +334,12 @@ find.PrecursorType <- function(mass, precursorMZ, charge, chargeMode = "+", minE
         delta.ppm    <- calc.PPM(mass.reverse, actualValue = mass);
 
         if(debug.echo) {
-            print(sprintf("%s - %s = %s(ppm), type=%s", mass, mass.reverse, delta.ppm, ptype));
+            printf("%s - %s = %s(ppm), type=%s",
+                   mass,
+                   mass.reverse,
+                   delta.ppm,
+                   ptype
+            );
         }
 
         ## 根据质量计算出前体质量，然后计算出差值
@@ -345,16 +351,18 @@ find.PrecursorType <- function(mass, precursorMZ, charge, chargeMode = "+", minE
 
     ## 假若这个最小的ppm差值符合误差范围，则认为找到了一个前体模式
     if (debug.echo) {
-        print(sprintf("  ==> %s", minType));
+        printf("  ==> %s", minType);
     }
+
     if (min <= minError.ppm) {
-        return(minType);
+      return(minType);
     } else {
 
-		if (debug.echo) {
-			print(sprintf("But the '%s' ionization mode its ppm error (%s ppm) is ", minType, min));
-			print(sprintf("not satisfy the minError requirement(%s), returns Unknown!", minError.ppm));
-		}
-        return(find.PrecursorType.no_result);
+  		if (debug.echo) {
+  			printf("But the '%s' ionization mode its ppm error (%s ppm) is ", minType, min);
+  			printf("not satisfy the minError requirement(%s), returns Unknown!", minError.ppm);
+  		}
+
+      return(find.PrecursorType.no_result);
     }
 }

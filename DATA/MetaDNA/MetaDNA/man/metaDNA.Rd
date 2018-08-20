@@ -5,7 +5,7 @@
 \title{Identify unknown metabolite by metaDNA algorithm}
 \usage{
 metaDNA(identify, unknown, meta.KEGG, ms2.align, precursor_type = "[M+H]+",
-  tolerance = tolerance.ppm(20), score.cutoff = 0.8)
+  tolerance = tolerance.ppm(20), score.cutoff = 0.8, kegg_id.skips = NULL)
 }
 \arguments{
 \item{identify}{A \code{list} object with two members
@@ -42,6 +42,10 @@ search unknown metabolites.}
 \item{tolerance}{m/z equalient compares tolerance, by default is less than ppm 20.}
 
 \item{score.cutoff}{MS/MS similarity cutoff for identify ms2 alignment with unknown ms2}
+
+\item{kegg_id.skips}{You can put the kegg compound ids in this character vector
+If you don't want some specific metabolite was indeified from this
+metaDNA algorithm function.}
 }
 \value{
 A \code{identify} parameter data structure like metabolite identify
