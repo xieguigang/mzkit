@@ -58,6 +58,10 @@ Imports("Microsoft.VisualBasic.Language");
 #' @param ms2.align The MS/MS alignment method, which is in format like: \code{function(q, s)}
 #'      Where \code{q} and \code{s} is a matrix.
 #'
+#' @param kegg_id.skips You can put the kegg compound ids in this character vector
+#'       If you don't want some specific metabolite was indeified from this
+#'       metaDNA algorithm function.
+#'
 #' @return A \code{identify} parameter data structure like metabolite identify
 #'      result for \code{unknown} parameter input data
 #'
@@ -74,7 +78,8 @@ Imports("Microsoft.VisualBasic.Language");
 metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
                     precursor_type = "[M+H]+",
                     tolerance = tolerance.ppm(20),
-                    score.cutoff = 0.8) {
+                    score.cutoff = 0.8,
+                    kegg_id.skips = NULL) {
 
     # 1. Find all of the related KEGG compound by KEGG reaction link for
     #    identify metabolites
@@ -96,16 +101,48 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
     );
     identify.peak_ms2 <- identify$peak_ms2;
 
+    if (kegg_id.skips %=>% IsNothing) {
+      kegg_id.skips = "NA";
+    } else {
+      cat("\nThese KEGG compound will not be identified from metaDNA\n\n");
+      print(kegg_id.skips);
+      cat("\n");
+    }
+
+    # return the kegg id vector which is not in
+    # kegg_id.skips
+    filter.skips <- function(partners) {
+      if (partners %=>% IsNothing) {
+        return(NULL);
+      } else {
+
+        # if the partner id is in the skip list
+        # then it will be replaced as string "NA"
+        partners = sapply(partners, function(id) {
+          if (id %in% kegg_id.skips) {
+            "NA";
+          } else {
+            id;
+          }
+        }) %=>% as.character;
+
+        # Removes those NA string in the partner id list
+        partners[which(partners != "NA")];
+      }
+    }
+
     # tick.each
     # lapply
     tick.each(identify$meta.KEGG %=>% .as.list, function(identified) {
-        partners <- identified$KEGG %=>% kegg.partners;
+        # Get all of the kegg reaction partner metabolite id
+        # for current identified kegg metabolite id
+        partners <- identified$KEGG %=>% kegg.partners %=>% filter.skips;
         ms2 <- identify.peak_ms2[[identified$peak_ms2.i]];
 
         # current identify metabolite KEGG id didnt found any
         # reaction related partner compounds
         # Skip current identify metabolite.
-        if (IsNothing(partners)) {
+        if (partners %=>% IsNothing) {
             return(NULL);
         } else {
             # printf(" -> %s", identified$KEGG);
@@ -229,6 +266,7 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
 #' @param kegg_id The kegg compound id of the identified compound.
 #'
 #' @return A kegg id vector which is related to the given \code{kegg_id}.
+#'
 kegg.partners <- function(kegg_id) {
     sapply(network, function(reaction) {
 
