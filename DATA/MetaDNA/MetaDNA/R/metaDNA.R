@@ -95,10 +95,10 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
     tolerance = tolerance
   );
     identify.peak_ms2 <- identify$peak_ms2;
-			
+
     # tick.each
     # lapply
-    tick.each(identify$meta.KEGG %=>% .as.list, function(identified) {			
+    tick.each(identify$meta.KEGG %=>% .as.list, function(identified) {
         partners <- identified$KEGG %=>% kegg.partners;
         ms2 <- identify.peak_ms2[[identified$peak_ms2.i]];
 
@@ -110,7 +110,7 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
         } else {
             # printf(" -> %s", identified$KEGG);
         }
-		
+
         # Each metaDNA.impl result is a list that identify of
         # unknowns
 
@@ -130,6 +130,8 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
 #'
 #' @param unknown.mz This mz parameter is a \code{m/z} vector from the
 #'         \code{unknown$peaktable}
+#' @param precursor_type precursor type that using for calculate m/z from
+#'         KEGG metabolite mass value.
 #'
 #' @return Returns the index vector in \code{unknown.mz} vector.
 kegg.match.handler <- function(meta.KEGG, unknown.mz,
@@ -163,12 +165,12 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
         # get possible kegg meta annotation data.
         unknown.query <- sapply(1:length(unknown.mz), function(j) {
             ms1 <- unknown.mz[j];
-			
-			# 2018-7-8 why NA value happened???
-			if (is.na(ms1)) {
-				return(NULL);
-			}
-			
+
+    			  # 2018-7-8 why NA value happened???
+    			  if (is.na(ms1)) {
+    				  return(NULL);
+    			  }
+
             query <- lapply(1:length(mz), function(i) {
                 # unknown metabolite ms1 m/z match
                 # kegg mz with a given tolerance
@@ -301,9 +303,9 @@ metaDNA.impl <- function(KEGG.partners, identify.ms2,
     unknown.i <- sapply(unknown.query, function(x) x$unknown.index) %=>% unlist;
     # subset of the peaktable by using the unknown index value
     peaktable <- ensure.dataframe(
-    unknown$peaktable[unknown.i,],
-    colnames(unknown$peaktable)
-  );
+      unknown$peaktable[unknown.i,],
+      colnames(unknown$peaktable)
+    );
     # rownames of peaktable is the list names for the peak_ms2
     peak_ms2.index <- peaktable %=>% rownames;
 
