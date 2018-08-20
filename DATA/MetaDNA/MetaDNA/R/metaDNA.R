@@ -88,12 +88,12 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
     kegg_id.col <- meta.KEGG$kegg_id;
     meta.KEGG <- meta.KEGG$data;
     match.kegg <- kegg.match.handler(
-    meta.KEGG,
-    unknown.mz = unknown$peaktable[, "mz"],
-    precursor_type = precursor_type,
+      meta.KEGG,
+      unknown.mz = unknown$peaktable[, "mz"],
+      precursor_type = precursor_type,
       kegg_id = kegg_id.col,
-    tolerance = tolerance
-  );
+      tolerance = tolerance
+    );
     identify.peak_ms2 <- identify$peak_ms2;
 
     # tick.each
@@ -116,13 +116,13 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
 
         # KEGG.partners, identify.ms2, unknown, ms2.align, unknow.matches
         metaDNA.impl(
-      KEGG.partners = partners,
-      identify.ms2 = ms2,
-      unknown = unknown,
-      ms2.align = ms2.align,
-      unknow.matches = match.kegg,
-      score.cutoff = score.cutoff
-    );
+          KEGG.partners = partners,
+          identify.ms2 = ms2,
+          unknown = unknown,
+          ms2.align = ms2.align,
+          unknow.matches = match.kegg,
+          score.cutoff = score.cutoff
+        );
     });
 }
 
@@ -201,15 +201,15 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
             query <- query[[1]];
 
             list(
-               unknown.index = j,
-                 unknown.mz = ms1,
-                 precursor_type = precursor_type,
+                unknown.index = j,
+                unknown.mz = ms1,
+                precursor_type = precursor_type,
 
-            # current unknown metabolite could have
-            # multiple kegg annotation result, based on the ms1
-            # tolerance.
-                 kegg = query$kegg,
-                 ppm = query$ppm
+                # current unknown metabolite could have
+                # multiple kegg annotation result, based on the ms1
+                # tolerance.
+                kegg = query$kegg,
+                ppm = query$ppm
             );
 
         });
@@ -231,6 +231,7 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
 #' @return A kegg id vector which is related to the given \code{kegg_id}.
 kegg.partners <- function(kegg_id) {
     sapply(network, function(reaction) {
+
         if (kegg_id %in% reaction$reactants) {
             reaction$products;
         } else if (kegg_id %in% reaction$products) {
@@ -238,6 +239,7 @@ kegg.partners <- function(kegg_id) {
         } else {
             NULL;
         }
+
     }) %=>% unlist %=>% as.character;
 }
 
@@ -335,11 +337,11 @@ metaDNA.impl <- function(KEGG.partners, identify.ms2,
 
             for (scan in names(file)) {
                 result <- align_best.internal(
-          ref = file[[scan]],
-          peak = peak,
-          ms2.align = ms2.align,
-          score.cutoff = score.cutoff
-        );
+                  ref = file[[scan]],
+                  peak = peak,
+                  ms2.align = ms2.align,
+                  score.cutoff = score.cutoff
+                );
 
                 if (!is.null(result)) {
                     if (mean(result$score) > best.score) {
@@ -353,11 +355,11 @@ metaDNA.impl <- function(KEGG.partners, identify.ms2,
         if (!is.null(best)) {
             # name is the peaktable rownames
             query.result[[name]] <- list(
-        ms2.alignment = best,
-        ms1.feature = ms1.feature,
-        kegg.info = kegg.query,
-        peak_ms2.i = peak_ms2.index[i]
-      );
+              ms2.alignment = best,
+              ms1.feature = ms1.feature,
+              kegg.info = kegg.query,
+              peak_ms2.i = peak_ms2.index[i]
+            );
         }
     }
 
@@ -401,19 +403,19 @@ align_best.internal <- function(ref, peak, ms2.align, score.cutoff = 0.8) {
                 score <- align.scores;
                 candidate <- unknown;
                 ms2.name <- list(
-            file = fileName,
-            scan = scan
-        );
+                    file = fileName,
+                    scan = scan
+                );
             }
         }
     }
 
     if (!IsNothing(score) && all(score >= score.cutoff)) {
         list(ref = ref,
-         candidate = candidate,
-         score = score,
-         ms2.name = ms2.name
-    );
+             candidate = candidate,
+             score = score,
+             ms2.name = ms2.name
+        );
     } else {
         NULL;
     }
