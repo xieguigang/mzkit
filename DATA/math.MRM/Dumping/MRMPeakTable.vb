@@ -1,4 +1,6 @@
-﻿Namespace Dumping
+﻿Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
+
+Namespace Dumping
 
     Public Class MRMPeakTable
 
@@ -52,6 +54,7 @@
         ''' 内标编号
         ''' </summary>
         ''' <returns></returns>
+        <Column("IS")>
         Public Property [IS] As String
         ''' <summary>
         ''' 信号基线水平
