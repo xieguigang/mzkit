@@ -252,3 +252,6 @@ paket-files/
 *.sln.iml
 /Assembly/ProteoWizard.d/App
 .Rproj.user
+*.gz
+*.zip
+/DATA/MetaDNA/MetaDNA/%APPDATA%/Microsoft/Windows/IETldCache

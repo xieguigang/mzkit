@@ -18,7 +18,7 @@ Namespace MarkupData
         ''' </summary>
         ''' <param name="stream">Container for the binary base64 string data.</param>
         ''' <returns></returns>
-        <Extension> Public Function Base64Decode(stream As IBase64Container) As Double()
+        <Extension> Public Function Base64Decode(stream As IBase64Container, Optional networkByteOrder As Boolean = False) As Double()
             Dim bytes As Byte() = Convert.FromBase64String(stream.BinaryArray)
             Dim floats#()
 
@@ -31,6 +31,10 @@ Namespace MarkupData
                 Case Else
                     Throw New NotImplementedException
             End Select
+
+            If networkByteOrder AndAlso BitConverter.IsLittleEndian Then
+                Call Array.Reverse(bytes)
+            End If
 
             Select Case stream.GetPrecision
                 Case 64

@@ -18,6 +18,21 @@ Public Class Ms1Feature : Implements INamedValue
     End Function
 End Class
 
+''' <summary>
+''' 质谱标准品基本注释信息
+''' </summary>
+Public Class MetaInfo : Inherits Ms1Feature
+
+    Public Property name As String
+
+    ''' <summary>
+    ''' 这个ms1信息所对应的物质在数据库之中的编号信息列表
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property xref As Dictionary(Of String, String)
+
+End Class
+
 Public Class ms1_scan
 
     Public Property mz As Double

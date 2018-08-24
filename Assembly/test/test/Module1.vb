@@ -47,19 +47,19 @@ Module Module1
 
         Dim meta = lysoPC.First.Comments.LipidBlastParser
 
-        Call meta.DictionaryTable(Function(x)
-                                      If x Is Nothing Then
-                                          Return False
-                                      ElseIf {GetType(Integer), GetType(Double), GetType(Long)}.IndexOf(x.GetType) > -1 Then
-                                          If Val(x) = 0R Then
-                                              Return False
-                                          Else
-                                              Return True
-                                          End If
-                                      Else
-                                          Return True
-                                      End If
-                                  End Function).GetJson.__DEBUG_ECHO
+        Call meta.DictionaryTable(where:=Function(x)
+                                             If x Is Nothing Then
+                                                 Return False
+                                             ElseIf {GetType(Integer), GetType(Double), GetType(Long)}.IndexOf(x.GetType) > -1 Then
+                                                 If Val(x) = 0R Then
+                                                     Return False
+                                                 Else
+                                                     Return True
+                                                 End If
+                                             Else
+                                                 Return True
+                                             End If
+                                         End Function).GetJson.__DEBUG_ECHO
 
 
         Pause()

@@ -6,8 +6,9 @@ Imports Microsoft.VisualBasic.DataMining.DynamicProgramming.NeedlemanWunsch
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Extensions
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports SMRUCC.MassSpectrum.Math.MSMS
 
 ''' <summary>
 ''' Global alignment of two MS/MS matrix.

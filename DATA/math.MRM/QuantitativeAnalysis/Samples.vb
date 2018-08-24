@@ -42,6 +42,10 @@ Public Module MRMSamples
     ''' <param name="wiff$"></param>
     ''' <param name="model">标准曲线线性回归模型</param>
     ''' <param name="X">标准曲线之中的``AIS/A``峰面积比数据，即线性回归模型之中的X样本点</param>
+    ''' <param name="externalStandardsWiff">
+    ''' 如果定量参考用的标准曲线不是和样本数据在一个批次内的，而是分别在一个外部wiff文件之中的话，
+    ''' 可以对这个函数参数进行赋值
+    ''' </param>
     ''' <returns>经过定量计算得到的浓度数据</returns>
     Public Function QuantitativeAnalysis(wiff$, ions As IonPair(), calibrates As Standards(), [IS] As [IS](),
                                          <Out> Optional ByRef model As NamedValue(Of IFitted)() = Nothing,
@@ -50,12 +54,15 @@ Public Module MRMSamples
                                          <Out> Optional ByRef peaktable As MRMPeakTable() = Nothing,
                                          Optional calibrationNamedPattern$ = ".+[-]L\d+",
                                          Optional levelPattern$ = "[-]L\d+",
-                                         Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum) As IEnumerable(Of DataSet)
+                                         Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum,
+                                         Optional externalStandardsWiff$ = Nothing) As IEnumerable(Of DataSet)
         Dim standardNames$() = Nothing
         Dim TPAFactors = calibrates.ToDictionary(Function(ion) ion.HMDB, Function(ion) ion.Factor)
+
+        ' 扫描标准曲线的样本，然后进行回归建模 
         Dim detections As NamedValue(Of (IFitted, MRMStandards()))() =
             StandardCurve _
-            .Scan(wiff, ions, calibrates,
+            .Scan(externalStandardsWiff Or wiff.AsDefault, ions, calibrates,
                   refName:=standardNames,
                   calibrationNamedPattern:=calibrationNamedPattern,
                   levelPattern:=levelPattern,
@@ -68,7 +75,13 @@ Public Module MRMSamples
 
         X = New List(Of DataSet)
         model = detections _
-            .Select(Function(i) New NamedValue(Of IFitted)(i.Name, i.Value.Item1, i.Description)) _
+            .Select(Function(i)
+                        Return New NamedValue(Of IFitted) With {
+                            .Name = i.Name,
+                            .Value = i.Value.Item1,
+                            .Description = i.Description
+                        }
+                    End Function) _
             .ToArray
         standardPoints = detections _
             .Select(Function(i)
@@ -79,14 +92,18 @@ Public Module MRMSamples
         Dim nameIndex As Index(Of String) = standardNames.Indexing
         Dim out As New List(Of DataSet)
         Dim mrmpeaktable As New List(Of MRMPeakTable)
+        Dim allSamples As List(Of String) = (ls - l - r - "*.mzML" <= wiff.ParentPath).AsList
+
+        If externalStandardsWiff.ParentPath.DirectoryExists Then
+            allSamples += (ls - l - r - "*.mzML" <= externalStandardsWiff.ParentPath)
+        End If
 
         ' 在上面获取得到了目标物质的回归模型以及离子对信息
         ' 在这个循环之中扫描每一个原始文件，进行物质的浓度定量计算
-        For Each file As String In (ls - l - r - "*.mzML" <= wiff.ParentPath) _
+        For Each file As String In allSamples _
             .Where(Function(path)
                        Dim basename$ = path.BaseName
-                       Return Not basename.IsOneOfA(nameIndex) AndAlso
-                                  InStr(basename, "-KB") = 0
+                       Return Not basename.IsOneOfA(nameIndex) AndAlso InStr(basename, "-KB") = 0
                    End Function)
 
             Call file.ToFileURL.__INFO_ECHO
