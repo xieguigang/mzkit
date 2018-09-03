@@ -9,7 +9,9 @@ Public Class ProteoWizardCLI : Inherits InteropService
         Me._executableAssembly = bin
     End Sub
 
-    Public Function Convert2mzML(input$, output$) As Integer
+    Public Function Convert2mzML(input$, output$) As String
+        Dim std$ = ""
+
         If Strings.LCase(input).EndsWith(".raw.zip") Then
             For Each part In MassWolf.SplitDirectory(waters:=input)
                 Dim args$ = New ScriptBuilder(part.In.GetFullPath.CLIPath) +
@@ -24,7 +26,10 @@ Public Class ProteoWizardCLI : Inherits InteropService
 
                 Call part.Out.__INFO_ECHO
                 Call args.SetValue(args.TrimNewLine(" "))
-                Call Me.RunProgram(args,).Run()
+
+                Dim proc = Me.RunProgram(args,)
+                proc.Run()
+                std = std & vbCrLf & proc.StandardOutput
 
                 ' cleanup filesystem for avoid file system crash
                 Try
@@ -33,8 +38,6 @@ Public Class ProteoWizardCLI : Inherits InteropService
 
                 End Try
             Next
-
-            Return 0
         Else
             Dim args$ = New ScriptBuilder(input.GetFullPath.CLIPath) +
                 " " +
@@ -49,7 +52,11 @@ Public Class ProteoWizardCLI : Inherits InteropService
             Call input.__INFO_ECHO
             Call args.SetValue(args.TrimNewLine(" "))
 
-            Return Me.RunProgram(args, ).Run
+            Dim proc = Me.RunProgram(args, )
+            proc.Run()
+            std = proc.StandardOutput
         End If
+
+        Return std
     End Function
 End Class
