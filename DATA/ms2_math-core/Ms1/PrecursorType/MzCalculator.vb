@@ -4,15 +4,15 @@ Namespace Ms1.PrecursorType
 
     Public Structure MzCalculator
 
-        Dim name$
-        Dim charge%
-        Dim M%
+        Public Property name As String
+        Public Property charge As Integer
+        Public Property M As Integer
 
         ''' <summary>
         ''' 是可能会出现负数的加和结果，例如[M-H2O]的adducts为-18
         ''' </summary>
-        Dim adducts#
-        Dim mode As Char
+        Public Property adducts As Double
+        Public Property mode As Char
 
         Sub New(type$, charge%, M#, adducts#)
             Me.name = type
