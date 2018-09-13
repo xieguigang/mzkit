@@ -1,4 +1,8 @@
-﻿Public Class Peaktable
+﻿
+''' <summary>
+''' 一级信息表
+''' </summary>
+Public Class Peaktable
 
     ''' <summary>
     ''' 可以是差异代谢物的编号

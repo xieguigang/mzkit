@@ -1,12 +1,24 @@
 ﻿Imports System.IO
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
+Imports Microsoft.VisualBasic.Data.csv
 Imports SMRUCC.MassSpectrum.Assembly
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzXML
 
 Module read_mzXML
 
+    Dim mzXML = "D:\smartnucl_integrative\biodeepDB\protocols\biodeepMSMS1\biodeepMSMS\test\lxy-CID30.mzXML"
+
     Sub Main()
-        Dim mzXML = "E:\smartnucl_integrative\biodeepDB\protocols\biodeepMSMS1\biodeepMSMS\test\lxy-CID30.mzXML"
+        Call exportMs1()
+    End Sub
+
+    Sub exportMs1()
+        Dim table = MarkupData.mzXML.XML.ExportPeaktable(mzXML).ToArray
+
+        Call table.SaveTo("./ms1_peaktable.csv")
+    End Sub
+
+    Sub exportMs2()
         Dim scanes = MarkupData.mzXML.XML.LoadScans(mzXML).ToArray
         Dim file As New StreamWriter("./lxy-CID30.txt")
 
