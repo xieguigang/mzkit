@@ -113,7 +113,7 @@ Namespace File
             ]
             </json>
         ).Value _
-         .LoadObject(Of String())
+         .LoadJSON(Of String())
 
         ''' <summary>
         ''' 

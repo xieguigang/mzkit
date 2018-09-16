@@ -48,7 +48,7 @@ Public Module StandardCurve
         raw = raw.FileName
 
         For Each metabolite In model.Where(Function(m) TPA.ContainsKey(m.Name))
-            Dim info = metabolite.Description.LoadObject(Of Dictionary(Of String, String))
+            Dim info = metabolite.Description.LoadJSON(Of Dictionary(Of String, String))
             Dim line = metabolite.Value    ' 该代谢物的线性回归模型
 
             If Not TPA.ContainsKey(info!IS) Then

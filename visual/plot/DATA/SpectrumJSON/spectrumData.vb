@@ -11,7 +11,7 @@ Namespace DATA.SpectrumJSON
         Public Shared Function Load(json$) As MetlinData
             Return New MetlinData With {
                 .url = json,
-                .Data = json.ReadAllText.LoadObject(Of SpectrumData())
+                .Data = json.ReadAllText.LoadJSON(Of SpectrumData())
             }
         End Function
     End Class
