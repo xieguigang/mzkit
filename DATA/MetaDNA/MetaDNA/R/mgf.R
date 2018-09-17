@@ -64,19 +64,21 @@ read.mgf <- function(fileName) {
 	lines  <- fileName %=>% ReadAllLines;
 	ions   <- list();
 	buffer <- c();
+	index  <- 1;
 	
 	for(i in 1:length(lines)) {
 		line   <- lines[i];
 		buffer <- append(buffer, line);
 		
 		if (line == "END IONS") {
-			ions   <- append(ions, buffer %=>% parse.mgf);
-			buffer <- c();
+			ions[[index]] <- buffer %=>% parse.mgf;
+			buffer        <- c();
+			index         <- index + 1;
 		}
 	}
 	
 	if (length(buffer) > 0) {
-		ions <- append(ions, buffer %=>% parse.mgf);
+		ions[[index]] <- buffer %=>% parse.mgf;
 	}
 	
 	ions;
@@ -95,8 +97,8 @@ parse.mgf <- function(buffer) {
 		p <- InStr(buffer[i], "=");
 		
 		if (p > 0) {
-			name  <- Mid(buffer[i], 1, p);
-			value <- Mid(buffer[i], p);
+			name  <- substr(buffer[i], 1, p - 1);
+			value <- substring(buffer[i], p + 1);
 			meta[[name]] <- value;
 			
 			i <- i + 1;
@@ -111,22 +113,22 @@ parse.mgf <- function(buffer) {
 	# The last line of the buffer is END IONS
 	# so end before reach the last line
 	for (j in i:(length(buffer) - 1)) {
-		tokens <- strsplit(buffer[j] %=>% Trim, "\s+");
+		tokens <- strsplit(buffer[j] %=>% Trim, "\\s+")[[1]];
 		
 		if (length(tokens) != 2) {
 		    stop("Incorrect file format!");
 		} else {
-			mz   <- append(mz, tokens[j]);
-			into <- append(into, tokens[j]);
+			mz   <- append(mz, tokens[1]);
+			into <- append(into, tokens[2]);
 		}
 	}
 	
 	ms2 <- data.frame(mz = mz, into = into);
-	mz  <- strsplit(meta[["PEPMASS"]], "\s+");
+	mz  <- strsplit(meta[["PEPMASS"]], "\\s+")[[1]];
 	
-	list(mz1      = mz[1], 
-		 ms1.into = mz[2], 
-		 rt       = meta[["RTINSECONDS"]], 
+	list(mz1      = mz[1]                 %=>% as.numeric, 
+		 ms1.into = mz[2]                 %=>% as.numeric, 
+		 rt       = meta[["RTINSECONDS"]] %=>% as.numeric, 
 		 title    = meta[["TITLE"]], 
 		 charge   = meta[["CHARGE"]], 
 		 ms2      = ms2
