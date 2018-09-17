@@ -1,8 +1,7 @@
 #' Write ms2 data as a mgf spectrum data file.
 #'
-write.mgf <- function(AnnoDataSet, isotope) {
+write.mgf <- function(AnnoDataSet, isotope, path) {
 
-	path <- sprintf("%s/sirius/%s.mgf", AnnoDataSet$outputdir, paste(isotope, collapse = "-"));
 	peaktable <- AnnoDataSet$peaktable;
 
 	# 生成头部的MS1信息

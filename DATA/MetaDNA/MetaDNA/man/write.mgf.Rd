@@ -4,7 +4,7 @@
 \alias{write.mgf}
 \title{Write ms2 data as a mgf spectrum data file.}
 \usage{
-write.mgf(AnnoDataSet, isotope)
+write.mgf(AnnoDataSet, isotope, path)
 }
 \description{
 Write ms2 data as a mgf spectrum data file.
