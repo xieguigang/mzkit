@@ -6,9 +6,11 @@
     Imports("Microsoft.VisualBasic.Data", frame = globalenv());
     Imports("Microsoft.VisualBasic.Data.Linq", frame = globalenv());
 
-    list(Calculator = init_calc()) %=>% Set;
-    lockBinding(sym = "Calculator", env = globalenv());
-
+	try({
+		list(Calculator = init_calc()) %=>% Set;
+		lockBinding(sym = "Calculator", env = globalenv());
+	});
+    
     print("Pre-defined m/z calculator:");
     cat("\n");
     cat(" [m/z]+\n\n");
