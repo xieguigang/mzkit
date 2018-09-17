@@ -60,3 +60,9 @@ file.mgf <- function(AnnoDataSet, isotope) {
 		
 	return(path);
 }
+
+read.mgf <- function(fileName) {
+	lines <- fileName %=>% ReadAllLines;
+	
+	
+}
