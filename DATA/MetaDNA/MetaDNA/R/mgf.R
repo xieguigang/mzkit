@@ -1,6 +1,6 @@
 #' Write ms2 data as a mgf spectrum data file.
 #'
-file.mgf <- function(AnnoDataSet, isotope) {
+write.mgf <- function(AnnoDataSet, isotope) {
 
 	path <- sprintf("%s/sirius/%s.mgf", AnnoDataSet$outputdir, paste(isotope, collapse = "-"));
 	peaktable <- AnnoDataSet$peaktable;
@@ -56,6 +56,36 @@ file.mgf <- function(AnnoDataSet, isotope) {
 	close(file);
 
 	return(path);
+}
+
+#' Generate mgf ion from data.
+#'
+#' @param ms2 \enumerate{
+#' \item \code{list} ms2 data is consist with element sequence, each element must have property \code{mz} and \code{into}.
+#' \item \code{data.frame} The data frame object should have \code{mz} and \code{into} column.
+#' }
+mgf.ion <- function(mz, rt, ms2, charge = "1", title = "Unknown name ion", ms1.into = 100) {
+  lines    <- c();
+  lines[1] <- "BEGIN IONS";
+  lines[2] <- sprintf("PEPMASS=%s %s", mz, ms1.into);
+  lines[3] <- sprintf("TITLE=%s", title);
+  lines[4] <- sprintf("RTINSECONDS=%s", rt);
+  lines[5] <- sprintf("CHARGE=%s%s", charge, if(charge>0) "+" else "-") ;
+
+  ms2_type   <- ms2 %=>% GetType;
+  type_enums <- primitiveTypes();
+
+  if (ms2_type == type_enums$list) {
+    for(mz in ms2) {
+      lines <- append(lines, sprintf("%s %s", mz[["mz"]], mz[["into"]]));
+    }
+  } else if (ms2_type == type_enums$data.frame) {
+    lines <- append(lines, sprintf("%s %s", ms2[, "mz"], ms2[, "into"]));
+  } else {
+    stop("The ms2 data should be a list or a data.frame");
+  }
+
+  append(lines, "END IONS");
 }
 
 #' Read a given mgf file
