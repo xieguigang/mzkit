@@ -1,8 +1,4 @@
-# 函数生成sirius预处理计算所需要的mgf文件
-# 函数的返回值为生成的mgf文件的文件路径
-# @param isotope 经过peaktable计算所认为的可能的同位素峰的列表，即peaktable之中的行编号向量
-#                要求的格式为：第一个元素为正常的分子，剩下的都是递增的同位素分子
-#                isotope所获取得到的行数据之中的rt应该都是一样的，但是每一个元素的mz都相差1
+#' Write ms2 data as a mgf spectrum data file.
 file.mgf <- function(AnnoDataSet, isotope) {
 
 	path <- sprintf("%s/sirius/%s.mgf", AnnoDataSet$outputdir, paste(isotope, collapse = "-"));
@@ -61,8 +57,78 @@ file.mgf <- function(AnnoDataSet, isotope) {
 	return(path);
 }
 
+#' Read a given mgf file
+#'
+#' @return Returns a list of mgf ions that parsed from the given mgf spectrum data file.
 read.mgf <- function(fileName) {
-	lines <- fileName %=>% ReadAllLines;
+	lines  <- fileName %=>% ReadAllLines;
+	ions   <- list();
+	buffer <- c();
 	
+	for(i in 1:length(lines)) {
+		line   <- lines[i];
+		buffer <- append(buffer, line);
+		
+		if (line == "END IONS") {
+			ions   <- append(ions, buffer %=>% parse.mgf);
+			buffer <- c();
+		}
+	}
 	
+	if (length(buffer) > 0) {
+		ions <- append(ions, buffer %=>% parse.mgf);
+	}
+	
+	ions;
+}
+
+#' Parse mgf ion data from text buffer.
+#' 
+parse.mgf <- function(buffer) {	
+
+	# The first line of the buffer is BEGIN IONS
+	# so start from the second line
+	i    <- 2;
+	meta <- list();
+	
+	while(TRUE) {
+		p <- InStr(buffer[i], "=");
+		
+		if (p > 0) {
+			name  <- Mid(buffer[i], 1, p);
+			value <- Mid(buffer[i], p);
+			meta[[name]] <- value;
+			
+			i <- i + 1;
+		} else {
+			break;
+		}
+	}
+	
+	mz   <- c();
+	into <- c();
+	
+	# The last line of the buffer is END IONS
+	# so end before reach the last line
+	for (j in i:(length(buffer) - 1)) {
+		tokens <- strsplit(buffer[j] %=>% Trim, "\s+");
+		
+		if (length(tokens) != 2) {
+		    stop("Incorrect file format!");
+		} else {
+			mz   <- append(mz, tokens[j]);
+			into <- append(into, tokens[j]);
+		}
+	}
+	
+	ms2 <- data.frame(mz = mz, into = into);
+	mz  <- strsplit(meta[["PEPMASS"]], "\s+");
+	
+	list(mz1      = mz[1], 
+		 ms1.into = mz[2], 
+		 rt       = meta[["RTINSECONDS"]], 
+		 title    = meta[["TITLE"]], 
+		 charge   = meta[["CHARGE"]], 
+		 ms2      = ms2
+	);
 }
