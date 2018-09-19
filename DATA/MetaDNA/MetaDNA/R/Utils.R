@@ -1,3 +1,14 @@
+#Region "Microsoft.ROpen::ec55980edef2a9a05e746abfebfd8bfe, Utils.R"
+
+    # Summaries:
+
+    # removes.empty_KEGG <- function(d) {...
+    # tolerance.deltaMass <- function(da = 0.3) {...
+    # tolerance.ppm <- function(ppm = 20) {...
+    # PPM <- function(measured, actualValue) {...
+
+#End Region
+
 #' Removes empty \code{KEGG} row
 #'
 #' @description Removes all of the rows in a given \code{dataframe}

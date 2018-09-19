@@ -1,3 +1,14 @@
+#Region "Microsoft.ROpen::b0041204a3a8d839706443bba1028ea0, mgf.R"
+
+    # Summaries:
+
+    # write.mgf <- function(AnnoDataSet, isotope, path) {...
+    # mgf.ion <- function(mz, rt, ms2, charge = "1", title = "Unknown name ion", ms1.into = 100) {...
+    # read.mgf <- function(fileName) {...
+    # parse.mgf <- function(buffer) {...
+
+#End Region
+
 #' Write ms2 data as a mgf spectrum data file.
 #'
 write.mgf <- function(AnnoDataSet, isotope, path) {
@@ -90,6 +101,7 @@ mgf.ion <- function(mz, rt, ms2, charge = "1", title = "Unknown name ion", ms1.i
 #' Read a given mgf file
 #'
 #' @return Returns a list of mgf ions that parsed from the given mgf spectrum data file.
+#'
 read.mgf <- function(fileName) {
 	lines  <- fileName %=>% ReadAllLines;
 	ions   <- list();

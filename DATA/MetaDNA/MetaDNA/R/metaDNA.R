@@ -1,3 +1,16 @@
+#Region "Microsoft.ROpen::2fa25bedba4e3d5bc133cd796f1f52c9, metaDNA.R"
+
+    # Summaries:
+
+    # metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,precursor_type = "[M+H]+",tolerance = tolerance.ppm(20),score.cutoff = 0.8,kegg_id.skips = NULL) {...
+    # filter.skips <- function(partners) {if (partners %=>% IsNothing) {...
+    # kegg.match.handler <- function(meta.KEGG, unknown.mz,precursor_type = "[M+H]+",kegg_id = "KEGG",tolerance = tolerance.ppm(20)) {...
+    # kegg.partners <- function(kegg_id) {sapply(network, function(reaction) {if (kegg_id %in% reaction$reactants) {...
+    # metaDNA.impl <- function(KEGG.partners, identify.ms2,unknown,ms2.align,unknow.matches,score.cutoff = 0.8) {...
+    # align_best.internal <- function(ref, peak, ms2.align, score.cutoff = 0.8) {...
+
+#End Region
+
 require(VisualBasic.R);
 
 Imports("Microsoft.VisualBasic.Data");
@@ -458,4 +471,3 @@ align_best.internal <- function(ref, peak, ms2.align, score.cutoff = 0.8) {
         NULL;
     }
 }
-

@@ -1,3 +1,11 @@
+#Region "Microsoft.ROpen::edd43f505309ed00d55d3a0c985d1921, MzCalculator.R"
+
+    # Summaries:
+
+    # mz.calculator <- function(mass, mode = c(1, -1), debug = FALSE) {...
+
+#End Region
+
 #' Calculate m/z matrix
 #'
 #' @description Calculate all of the m/z value by enumerate all of the precursor types.

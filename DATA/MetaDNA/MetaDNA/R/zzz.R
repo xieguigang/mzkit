@@ -1,3 +1,11 @@
+#Region "Microsoft.ROpen::0afb6e2c67fd35dd806134f829dfab57, zzz.R"
+
+    # Summaries:
+
+    # .onLoad <- function(libname, pkgname) {...
+
+#End Region
+
 .onLoad <- function(libname, pkgname) {
 
     require(VisualBasic.R);
@@ -32,4 +40,3 @@
 }
 
 .flashLoad <- function() .onLoad(NULL, NULL);
-
