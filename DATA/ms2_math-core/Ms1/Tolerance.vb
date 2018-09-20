@@ -22,6 +22,35 @@ Public MustInherit Class Tolerance
         Return New PPMmethod(value)
     End Function
 
+    ''' <summary>
+    ''' 将当前的质量值减去给定的ppm质量差
+    ''' </summary>
+    ''' <param name="mass#"></param>
+    ''' <param name="ppm#"></param>
+    ''' <returns></returns>
+    Public Shared Function SubPPM(mass#, ppm#) As Double
+        Dim ppmd As Double = ppm / 1000000
+        ' sys.Abs(measured - actualValue) 
+        ppmd = ppmd * mass
+        mass = mass - ppmd
+
+        Return mass
+    End Function
+
+    ''' <summary>
+    ''' 将当前的质量值加上给定的ppm质量差
+    ''' </summary>
+    ''' <param name="mass#"></param>
+    ''' <param name="ppm#"></param>
+    ''' <returns></returns>
+    Public Shared Function AddPPM(mass#, ppm#) As Double
+        Dim ppmd As Double = ppm / 1000000
+        ' sys.Abs(measured - actualValue) 
+        ppmd = ppmd * mass
+        mass = mass + ppmd
+
+        Return mass
+    End Function
 End Class
 
 Public Class PPMmethod : Inherits Tolerance
