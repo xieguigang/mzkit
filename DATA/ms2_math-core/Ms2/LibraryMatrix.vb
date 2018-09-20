@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
 
 Namespace MSMS
@@ -101,6 +102,13 @@ Namespace MSMS
                         .ToArray,
                     .Name = Name
                 }
+            End Get
+        End Property
+
+        Public ReadOnly Property intensity As Vector
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return Me!intensity
             End Get
         End Property
 
