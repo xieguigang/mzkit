@@ -116,6 +116,11 @@ Namespace MSMS
             Call MyBase.New({})
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function AlignMatrix(data As ms2(), tolerance As Tolerance) As ms2()
+            Return ms2.AlignMatrix(data, tolerance)
+        End Function
+
         ''' <summary>
         ''' ``<see cref="ms2.intensity"/> = <see cref="ms2.quantity"/> / x``
         ''' </summary>
