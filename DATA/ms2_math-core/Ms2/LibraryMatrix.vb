@@ -149,6 +149,18 @@ Namespace MSMS
         End Operator
 
         ''' <summary>
+        ''' Convert the ms2 data collection to <see cref="LibraryMatrix"/>
+        ''' </summary>
+        ''' <param name="ms2"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(ms2 As List(Of ms2)) As LibraryMatrix
+            Return New LibraryMatrix With {
+                .ms2 = ms2.ToArray
+            }
+        End Operator
+
+        ''' <summary>
         ''' 将一个整形数列表转换为mz向量，这个转换函数为调试用的
         ''' </summary>
         ''' <param name="mzlist"></param>

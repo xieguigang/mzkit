@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzXML
+Imports SMRUCC.MassSpectrum.Math.MSMS
 
 Module Program
 
@@ -31,6 +32,21 @@ Module Program
             Call file.WriteLine($"activation: {ms2Scan.precursorMz.activationMethod} @ {ms2Scan.collisionEnergy}V")
             Call file.WriteLine(ms2Peaks.peaks.Print(addBorder:=False))
             Call file.WriteLine()
+
+            Dim mzinto As LibraryMatrix = ms2Peaks _
+                .peaks _
+                .Select(Function(x)
+                            Return New ms2 With {
+                                .mz = x.mz,
+                                .intensity = x.intensity,
+                                .quantity = x.intensity
+                            }
+                        End Function) _
+                .ToArray
+            mzinto = mzinto / mzinto.Max
+            mzinto = mzinto(mzinto!intensity >= (5 / 100))
+
+            Call file.WriteLine(mzinto.Print(addBorder:=False))
         End Using
 
         Return 0
