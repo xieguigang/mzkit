@@ -21,17 +21,17 @@ Namespace MSMS
         ''' 前体离子的m/z
         ''' </summary>
         ''' <returns></returns>
-        Public Property PrecursorMz As String
+        Public Property PrecursorMz As Double
         ''' <summary>
         ''' 碎片的m/z
         ''' </summary>
         ''' <returns></returns>
-        Public Property ProductMz As String
+        Public Property ProductMz As Double
         ''' <summary>
         ''' 当前的这个碎片的信号强度
         ''' </summary>
         ''' <returns></returns>
-        Public Property LibraryIntensity As String
+        Public Property LibraryIntensity As Double
         ''' <summary>
         ''' library name
         ''' </summary>
