@@ -45,6 +45,15 @@ Module Program
                 .ToArray
             mzinto = mzinto / mzinto.Max
             mzinto = mzinto(mzinto!intensity >= (5 / 100))
+            mzinto = mzinto _
+                .Select(Function(m)
+                            Return New ms2 With {
+                                .mz = m.mz,
+                                .quantity = m.quantity,
+                                .intensity = Math.Round(m.intensity * 100)
+                            }
+                        End Function) _
+                .ToArray
 
             Call file.WriteLine(mzinto.Print(addBorder:=False))
         End Using
