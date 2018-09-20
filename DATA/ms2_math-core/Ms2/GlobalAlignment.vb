@@ -90,6 +90,13 @@ Public Module GlobalAlignment
         Return SSM(q / q.Max, s / s.Max)
     End Function
 
+    ''' <summary>
+    ''' 在ref之中找不到对应的mz，则into为零
+    ''' </summary>
+    ''' <param name="query"></param>
+    ''' <param name="ref"></param>
+    ''' <param name="method"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function AlignMatrix(query As ms2(), ref As ms2(), method As Tolerance) As ms2()
         Return ref _
