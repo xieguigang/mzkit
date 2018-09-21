@@ -3,16 +3,17 @@
 ''' 一级信息表
 ''' </summary>
 Public Class Peaktable
+    Implements IMs1
 
     ''' <summary>
     ''' 可以是差异代谢物的编号
     ''' </summary>
     ''' <returns></returns>
     Public Property name As String
-    Public Property mz As Double
+    Public Property mz As Double Implements IMs1.mz
     Public Property mzmin As Double
     Public Property mzmax As Double
-    Public Property rt As Double
+    Public Property rt As Double Implements IMs1.rt
     Public Property rtmin As Double
     Public Property rtmax As Double
     Public Property into As Double
