@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports SMRUCC.MassSpectrum.Math
 
@@ -20,12 +21,14 @@ Public Module MzrtPlot
     ''' <param name="ptSize!"></param>
     ''' <returns></returns>
     Public Function Plot(samples As IEnumerable(Of NamedValue(Of IMs1())),
-                         Optional size$ = "3300,2700",
+                         Optional size$ = "3600,2700",
                          Optional bg$ = "white",
                          Optional margin$ = Resolution2K.PaddingWithTopTitleAndRightLegend,
-                         Optional ptSize! = 15) As GraphicsData
+                         Optional ptSize! = 15,
+                         Optional sampleColors$ = "Set1:c8") As GraphicsData
 
         ' 先转换为散点图的数据系列
+        Dim colors = Designer.GetColors(sampleColors).AsLoop
         Dim serials = samples _
             .Select(Function(sample)
                         Dim points = sample.Value _
@@ -38,7 +41,8 @@ Public Module MzrtPlot
                         Return New SerialData With {
                             .title = sample.Name,
                             .pts = points,
-                            .PointSize = ptSize
+                            .PointSize = ptSize,
+                            .color = colors.Next
                         }
                     End Function) _
             .ToArray

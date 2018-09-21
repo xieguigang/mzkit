@@ -16,10 +16,14 @@ Imports SMRUCC.MassSpectrum.Visualization.DATA.SpectrumJSON
 Module Module1
 
     Sub mzrtPlotTest()
-        Dim sample1 = "D:\smartnucl_integrative\biodeepDB\protocols\biodeepMSMS1\biodeepMSMS\test\doMSMSalignment.report1.csv".LoadCsv(Of Ms1Feature)
-        Dim sample2 = "D:\smartnucl_integrative\biodeepDB\protocols\biodeepMSMS1\biodeepMSMS\test\peaktable.csv".LoadCsv(Of Ms1Feature)
+        Dim sample1 = "C:\Users\gg.xie\Desktop\peak_tablenew.csv".LoadCsv(Of Ms1Feature)
+        Dim sample2 = "C:\Users\gg.xie\Desktop\doMSMSalignment.report1_back.csv".LoadCsv(Of Ms1Feature)
+        Dim samples = {
+            New NamedValue(Of IMs1())("peak_tablenew", sample1),
+            New NamedValue(Of IMs1())("doMSMSalignment.report1", sample2)
+        }
 
-        Call MzrtPlot.Plot({New NamedValue(Of IMs1())("sample1", sample1), New NamedValue(Of IMs1())("sample2", sample2)}).Save("./test.png")
+        Call MzrtPlot.Plot(samples, size:="5000,3000").Save("./test.png")
 
         Pause()
     End Sub
