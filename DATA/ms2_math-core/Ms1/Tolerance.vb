@@ -92,7 +92,7 @@ Public Class DAmethod : Inherits Tolerance
 
     Public Property da As Double
 
-    Sub New(da#)
+    Sub New(Optional da# = 0.3)
         Me.da = da
     End Sub
 

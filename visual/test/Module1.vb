@@ -9,6 +9,7 @@ Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzXML
 Imports SMRUCC.MassSpectrum.Math
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
+Imports SMRUCC.MassSpectrum.Math.MSMS
 Imports SMRUCC.MassSpectrum.Visualization
 Imports SMRUCC.MassSpectrum.Visualization.DATA.SpectrumJSON
 
