@@ -1,4 +1,6 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+﻿Imports System.Drawing
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports SMRUCC.MassSpectrum.Math
@@ -8,10 +10,47 @@ Imports SMRUCC.MassSpectrum.Math
 ''' </summary>
 Public Module MzrtPlot
 
+    ''' <summary>
+    ''' The scatter plots of the samples ``m/z`` and ``rt``.
+    ''' </summary>
+    ''' <param name="samples"></param>
+    ''' <param name="size$"></param>
+    ''' <param name="bg$"></param>
+    ''' <param name="margin$"></param>
+    ''' <param name="ptSize!"></param>
+    ''' <returns></returns>
     Public Function Plot(samples As IEnumerable(Of NamedValue(Of IMs1())),
                          Optional size$ = "3300,2700",
                          Optional bg$ = "white",
-                         Optional margin$ = Resolution2K.PaddingWithTopTitleAndRightLegend) As GraphicsData
+                         Optional margin$ = Resolution2K.PaddingWithTopTitleAndRightLegend,
+                         Optional ptSize! = 15) As GraphicsData
 
+        ' 先转换为散点图的数据系列
+        Dim serials = samples _
+            .Select(Function(sample)
+                        Dim points = sample.Value _
+                            .Select(Function(compound)
+                                        Return New PointData() With {
+                                            .pt = New PointF(compound.rt, compound.mz)
+                                        }
+                                    End Function) _
+                            .ToArray
+                        Return New SerialData With {
+                            .title = sample.Name,
+                            .pts = points,
+                            .PointSize = ptSize
+                        }
+                    End Function) _
+            .ToArray
+
+        Return Scatter.Plot(
+            serials,
+            size:=size, padding:=margin, bg:=bg,
+            showGrid:=True,
+            drawLine:=False,
+            Xlabel:="rt in seconds",
+            Ylabel:="m/z",
+            htmlLabel:=False
+        )
     End Function
 End Module
