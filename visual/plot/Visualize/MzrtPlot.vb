@@ -21,10 +21,10 @@ Public Module MzrtPlot
     ''' <param name="ptSize!"></param>
     ''' <returns></returns>
     Public Function Plot(samples As IEnumerable(Of NamedValue(Of IMs1())),
-                         Optional size$ = "3600,2700",
+                         Optional size$ = "8000,3000",
                          Optional bg$ = "white",
                          Optional margin$ = Resolution2K.PaddingWithTopTitleAndRightLegend,
-                         Optional ptSize! = 15,
+                         Optional ptSize! = 8,
                          Optional sampleColors$ = "Set1:c8") As GraphicsData
 
         ' 先转换为散点图的数据系列

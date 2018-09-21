@@ -18,12 +18,14 @@ Module Module1
     Sub mzrtPlotTest()
         Dim sample1 = "C:\Users\gg.xie\Desktop\peak_tablenew.csv".LoadCsv(Of Ms1Feature)
         Dim sample2 = "C:\Users\gg.xie\Desktop\doMSMSalignment.report1_back.csv".LoadCsv(Of Ms1Feature)
+        Dim hits = "C:\Users\gg.xie\Desktop\doMSMSalignment.report1.csv".LoadCsv(Of Ms1Feature)
         Dim samples = {
             New NamedValue(Of IMs1())("peak_tablenew", sample1),
-            New NamedValue(Of IMs1())("doMSMSalignment.report1", sample2)
+            New NamedValue(Of IMs1())("doMSMSalignment.report1", sample2),
+            New NamedValue(Of IMs1())("peaktable match ms2", hits)
         }
 
-        Call MzrtPlot.Plot(samples, size:="5000,3000").Save("./test.png")
+        Call MzrtPlot.Plot(samples, size:="8000,3000", sampleColors:="blue,green,red").Save("C:\Users\gg.xie\Desktop\ms1_compares_ms2.png")
 
         Pause()
     End Sub
