@@ -18,6 +18,17 @@ Public Class Ms1Feature : Implements INamedValue
     End Function
 End Class
 
+Public Interface IMs1
+
+    Property mz As Double
+    ''' <summary>
+    ''' Rt in seconds
+    ''' </summary>
+    ''' <returns></returns>
+    Property rt As Double
+
+End Interface
+
 ''' <summary>
 ''' 质谱标准品基本注释信息
 ''' </summary>
