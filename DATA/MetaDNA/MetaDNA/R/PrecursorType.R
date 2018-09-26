@@ -61,7 +61,7 @@ PrecursorType <- function() {
 			 charge = charge,
 			 M      = M,
 			 adduct = adducts,
-			 cal.mz = function(mass) adduct.mz(mass, adducts, charge)
+			 cal.mz = function(mass) adduct.mz(mass * M, adducts, charge)
 		);
 	}
 
