@@ -18,51 +18,57 @@
 
 # https://github.com/xieguigang/MassSpectrum-toolkits/blob/6f4284a0d537d86c112877243d9e3b8d9d35563f/DATA/ms2_math-core/Ms1/PrecursorType.vb
 
-#' Calculate m/z
-#'
-#' @param mass Molecule weight
-#' @param adduct adduct mass
-#' @param charge precursor charge value
-#'
-#' @return Returns the m/z value of the precursor ion
-Adduct.mz <- function(mass, adduct, charge) {
-    mass / abs(charge) + adduct;
-}
+PrecursorType <- function() {
 
-#' Calculate mass from m/z
-#'
-#' @description Calculate the molecule mass from precursor adduct ion m/z
-#'
-#' @param precursorMZ MS/MS precursor adduct ion m/z
-#' @param charge Net charge of the ion
-#' @param adduct Adduct mass
-#' @param M The number of the molecule for formula a precursor adduct ion.
-#'
-#' @return The molecule mass.
-Reverse.mass <- function(precursorMZ, M, charge, adduct) {
-    (precursorMZ - adduct) * abs(charge) / M;
-}
+	#' Calculate m/z
+	#'
+	#' @param mass Molecule weight
+	#' @param adduct adduct mass
+	#' @param charge precursor charge value
+	#'
+	#' @return Returns the m/z value of the precursor ion
+	adduct.mz <- function(mass, adduct, charge) {
+		(mass + adduct) / abs(charge);
+	}
 
-# @param charge 电荷数，这里只需要绝对值就行了，不需要带有符号
-# @param type 前体离子的类型名称
-# @param calc 从MS/MS之中的加和物离子的m/z结果 precursorMZ 反推回mass结果的计算过程
-.addKey <- function(type, charge, M, adducts) {
+	#' Calculate mass from m/z
+	#'
+	#' @description Calculate the molecule mass from precursor adduct ion m/z
+	#'
+	#' @param precursorMZ MS/MS precursor adduct ion m/z
+	#' @param charge Net charge of the ion
+	#' @param adduct Adduct mass
+	#' @param M The number of the molecule for formula a precursor adduct ion.
+	#'
+	#' @return The molecule mass.
+	reverse.mass <- function(precursorMZ, M, charge, adduct) {
+		(precursorMZ * abs(charge) - adduct) / M;
+	}
 
-    out <- list();
-
-    out$Name   <- type;
-    out$calc   <- function(precursorMZ) {
-        Reverse.mass(precursorMZ, M, charge, adducts);
-    };
-
-    out$charge <- charge;
-    out$M      <- M;
-	  out$adduct <- adducts;
-	  out$cal.mz <- function(mass) {
-		  Adduct.mz(mass, adducts, charge);
-	  }
-
-    out;
+	#' Construct a \code{precursor_type} model 
+	#'
+	#' @param charge The ion charge value, no sign required.
+	#' @param type Full name of the precursor type
+	#' @param M The number of the target molecule
+	#' @param adducts The precursor adducts formula expression
+	#'
+	.addKey <- function(type, charge, M, adducts) {
+		# Evaluate the formula expression to weights
+		adducts <- MolWeight$Eval(adducts);
+		
+		list(Name   = type,
+			 calc   = function(precursorMZ) reverse.mass(precursorMZ, M, charge, adducts),
+			 charge = charge,
+			 M      = M,
+			 adduct = adducts,
+			 cal.mz = function(mass) adduct.mz(mass, adducts, charge)
+		);
+	}
+	
+	list(mz   = adduct.mz, 
+		 mass = reverse.mass, 
+		 new  = .addKey
+	);
 }
 
 # http://fiehnlab.ucdavis.edu/staff/kind/Metabolomics/MS-Adduct-Calculator

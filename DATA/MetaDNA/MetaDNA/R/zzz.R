@@ -10,13 +10,19 @@
 
     require(VisualBasic.R);
 
+	global <- globalenv();
+	
     # enable additional language feature
-    Imports("Microsoft.VisualBasic.Data", frame = globalenv());
-    Imports("Microsoft.VisualBasic.Data.Linq", frame = globalenv());
+    Imports("Microsoft.VisualBasic.Data", frame = global);
+    Imports("Microsoft.VisualBasic.Data.Linq", frame = global);
 
 	try({
-		list(Calculator = init_calc()) %=>% Set;
-		lockBinding(sym = "Calculator", env = globalenv());
+		list(
+			Calculator = init_calc(),
+			MolWeight  = MolWeight()
+		) %=>% Set;
+		
+		lockBinding(sym = "Calculator", env = global);
 	});
     
     print("Pre-defined m/z calculator:");
