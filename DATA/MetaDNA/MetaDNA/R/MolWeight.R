@@ -31,12 +31,12 @@ MolWeight <- function() {
 	}
 
 	.Eval <- function(formula) {		
-		if ((Strings.Split(formula, ""))[1] %in% ionSymbols) {
+		if ((tokens = Strings.Split(formula, ""))[1] %in% ionSymbols) {
 			formula <- sprintf("0H%s", formula);
 		}
 		
 		mt      <- strsplit(formula, "[+-]")[[1]];
-		op      <- grep("[+-]", formula, perl = TRUE, value = FALSE);
+		op      <- tokens[tokens %in% ionSymbols];
 		x       <- 0;
 		next_op <- "+";
 		
@@ -89,9 +89,9 @@ MolWeight <- function() {
 			M    <- 1;
 		} else {
 			# substr(x, start, stop)
-			token <- substr(token, length(n), length(token));
+			token <- substr(token, length(n)+1, length(xt));
 			name  <- token;
-			M     <- Strings.Join(n, "") %=>% as.numeric;
+			M     <- Strings.Join(Chr(n), "") %=>% as.numeric;
 		}
 		
 		list(name = name, M = M);
