@@ -6,6 +6,8 @@
 
 #End Region
 
+#' Package loader
+#'
 .onLoad <- function(libname, pkgname) {
 
     require(VisualBasic.R);
@@ -18,7 +20,8 @@
 
 	try({
 		list(
-			Calculator    = init_calc(),
+			#' Get precursor ion calculator
+			Calculator    = list("+" = positive(), "-" = negative()),
 			MolWeight     = MolWeight(),
 			PrecursorType = PrecursorType()
 		) %=>% Set;
