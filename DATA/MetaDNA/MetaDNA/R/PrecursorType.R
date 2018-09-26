@@ -45,7 +45,7 @@ PrecursorType <- function() {
 		(precursorMZ * abs(charge) - adduct) / M;
 	}
 
-	#' Construct a \code{precursor_type} model 
+	#' Construct a \code{precursor_type} model
 	#'
 	#' @param charge The ion charge value, no sign required.
 	#' @param type Full name of the precursor type
@@ -55,9 +55,9 @@ PrecursorType <- function() {
 	.addKey <- function(type, charge, M, adducts) {
 		# Evaluate the formula expression to weights
 		if (!is.numeric(adducts)) {
-			adducts <- MolWeight$Eval(adducts);
-		}		
-		
+			adducts <- Eval(MolWeight)$Eval(adducts);
+		}
+
 		list(Name   = type,
 			 calc   = function(precursorMZ) reverse.mass(precursorMZ, M, charge, adducts),
 			 charge = charge,
@@ -66,9 +66,9 @@ PrecursorType <- function() {
 			 cal.mz = function(mass) adduct.mz(mass, adducts, charge)
 		);
 	}
-	
-	list(mz   = adduct.mz, 
-		 mass = reverse.mass, 
+
+	list(mz   = adduct.mz,
+		 mass = reverse.mass,
 		 new  = .addKey
 	);
 }
@@ -144,8 +144,8 @@ positive <- function() {
     pos <- list();
 
     # AddKey <- function(type, charge, M, adducts)
-	.addKey <- PrecursorType$new;
-	
+	.addKey <- Eval(PrecursorType)$new;
+
     pos$"M+3H"	         <- .addKey("[M+3H]3+",          charge = 3, M = 1, adducts = "M+3H"          ); # M/3 + 1.007276	    3+	0.33	1.007276	285.450906	291.099391
     pos$"M+2H+Na"	     <- .addKey("[M+2H+Na]3+",       charge = 3, M = 1, adducts = "M+2H+Na"       ); # M/3 + 8.334590	    3+	0.33	8.334590	292.778220	283.772077
     pos$"M+H+2Na"	     <- .addKey("[M+H+2Na]3+",       charge = 3, M = 1, adducts = "M+H+2Na"       ); # M/3 + 15.7661904	    3+	0.33	15.766190	300.209820	276.340476
@@ -185,7 +185,7 @@ positive <- function() {
 #'
 negative <- function() {
     neg     <- list();
-	.addKey <- PrecursorType$new;
+	.addKey <- Eval(PrecursorType)$new;
 
     neg$"M-3H"	         <- .addKey("[M-3H]3-",          charge = -3, M = 1, adducts = "M-3H"    ); # M/3 -   1.007276	 3-	0.33	-1.007276	283.436354	293.113943
     neg$"M-2H"	         <- .addKey("[M-2H]2-",          charge = -2, M = 1, adducts = "M-2H"    ); # M/2 -   1.007276	 2-	0.50	-1.007276	425.658169	439.167276
