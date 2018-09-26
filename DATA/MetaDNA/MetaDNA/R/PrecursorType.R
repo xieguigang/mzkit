@@ -283,17 +283,17 @@ get.PrecursorMZ <- function(M, precursorType) {
 #' @param mass Molecular mass
 #' @param precursorMZ Precursor m/z value of the ion.
 #'
-#' test
+#' @examples
 #'
 #' mass = 853.33089
 #'
-#' pos "[M+3Na]3+" charge = 3,  307.432848	find.PrecursorType(853.33089, 307.432848,  charge = 3)
-#' pos "[2M+K]+"   charge = 1,  1745.624938	find.PrecursorType(853.33089, 1745.624938, charge = 1)
-#' pos "[M+H]+"    charge = 1,  854.338166	find.PrecursorType(853.33089, 854.338166,  charge = 1)
+#' find.PrecursorType(853.33089, 307.432848,  charge = 3) # pos "[M+3Na]3+" charge = 3,  307.432848
+#' find.PrecursorType(853.33089, 1745.624938, charge = 1) # pos "[2M+K]+"   charge = 1,  1745.624938
+#' find.PrecursorType(853.33089, 854.338166,  charge = 1) # pos "[M+H]+"    charge = 1,  854.338166
 #'
-#' neg "[M-3H]3-"  charge = -3, 283.436354	find.PrecursorType(853.33089, 283.436354,  charge = -3, chargeMode = "-")
-#' neg "[3M-H]-"   charge = -1, 2560.999946	find.PrecursorType(853.33089, 2560.999946, charge = -1, chargeMode = "-")
-#' neg "[M-H]-"    charge = -1, 852.323614  find.PrecursorType(853.33089, 852.323614,  charge = -1, chargeMode = "-")
+#' find.PrecursorType(853.33089, 283.436354,  charge = -3, chargeMode = "-") # neg "[M-3H]3-"  charge = -3, 283.436354
+#' find.PrecursorType(853.33089, 2560.999946, charge = -1, chargeMode = "-") # neg "[3M-H]-"   charge = -1, 2560.999946
+#' find.PrecursorType(853.33089, 852.323614,  charge = -1, chargeMode = "-") # neg "[M-H]-"    charge = -1, 852.323614
 #'
 PrecursorType.Match <- function(
   mass, precursorMZ, charge,
