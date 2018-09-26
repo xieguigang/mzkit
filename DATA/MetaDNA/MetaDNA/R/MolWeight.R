@@ -55,7 +55,10 @@ MolWeight <- function() {
 			token <- token[["name"]];
 			w     <- .Weight(token);
 
-			if (w <= 0) {
+			# due to the reason of M symbol equals to ZERO
+			# And -1 for not found
+			# So change the assert expression <= 0 to < 0
+			if (w < 0) {
 				msg <- "Unknown symbol in: '%s', where symbol=%s";
 				msg <- sprintf(msg, formula, token);
                 stop(msg);
@@ -107,6 +110,7 @@ MolWeight <- function() {
 	}
 
 	list(Weight = .Weight,
+	     weights = weights,
 		 Eval   = .Eval
 	);
 }
