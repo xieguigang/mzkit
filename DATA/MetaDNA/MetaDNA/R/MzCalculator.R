@@ -54,7 +54,17 @@ mz.calculator <- function(mass, mode = c(1, -1), debug = FALSE) {
         out <- rbind(out, r);
     }
 
+    # change data type of each column from character mode
+    out <- data.frame(
+      "precursor_type" = out[, 1] %=>% as.character,
+      "charge"         = out[, 2] %=>% as.numeric,
+      "M"              = out[, 3] %=>% as.numeric,
+      "adduct"         = out[, 4] %=>% as.numeric,
+      "m/z"            = out[, 5] %=>% as.numeric
+    );
+
     rownames(out) <- names(calc);
     colnames(out) <- c("precursor_type", "charge", "M", "adduct", "m/z");
+
     out;
 }
