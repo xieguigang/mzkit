@@ -18,8 +18,9 @@
 
 	try({
 		list(
-			Calculator = init_calc(),
-			MolWeight  = MolWeight()
+			Calculator    = init_calc(),
+			MolWeight     = MolWeight(),
+			PrecursorType = PrecursorType()
 		) %=>% Set;
 		
 		lockBinding(sym = "Calculator", env = global);

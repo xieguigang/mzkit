@@ -54,7 +54,9 @@ PrecursorType <- function() {
 	#'
 	.addKey <- function(type, charge, M, adducts) {
 		# Evaluate the formula expression to weights
-		adducts <- MolWeight$Eval(adducts);
+		if (!is.numeric(adducts)) {
+			adducts <- MolWeight$Eval(adducts);
+		}		
 		
 		list(Name   = type,
 			 calc   = function(precursorMZ) reverse.mass(precursorMZ, M, charge, adducts),
@@ -142,7 +144,8 @@ positive <- function() {
     pos <- list();
 
     # AddKey <- function(type, charge, M, adducts)
-
+	.addKey <- PrecursorType$new;
+	
     pos$"M+3H"	         <- .addKey("[M+3H]3+",          charge = 3, M = 1, adducts = 1.007276);  # M/3 + 1.007276	    3+	0.33	1.007276	285.450906	291.099391
     pos$"M+2H+Na"	     <- .addKey("[M+2H+Na]3+",       charge = 3, M = 1, adducts = 8.334590);  # M/3 + 8.334590	    3+	0.33	8.334590	292.778220	283.772077
     pos$"M+H+2Na"	     <- .addKey("[M+H+2Na]3+",       charge = 3, M = 1, adducts = 15.766190); # M/3 + 15.7661904	    3+	0.33	15.766190	300.209820	276.340476
@@ -175,31 +178,32 @@ positive <- function() {
     pos$"2M+ACN+H"	     <- .addKey("[2M+ACN+H]+",       charge = 1, M = 2, adducts = 42.033823); # 2M + 42.033823	    1+	2.00	42.033823	1748.695603	1710.606177
     pos$"2M+ACN+Na"	     <- .addKey("[2M+ACN+Na]+",      charge = 1, M = 2, adducts = 64.015765); # 2M + 64.015765	    1+	2.00	64.015765	1770.677545	1688.624235
 
-    return(pos);
+    pos;
 }
 
 #' Precursor types in negative mode
 #'
 negative <- function() {
-    neg <- list();
+    neg     <- list();
+	.addKey <- PrecursorType$new;
 
-    neg$"M-3H"	         <- .addKey("[M-3H]3-",          charge = -3, M = 1, adducts = -1.007276);  # M/3 -   1.007276	 3-	0.33	-1.007276	283.436354	293.113943
-    neg$"M-2H"	         <- .addKey("[M-2H]2-",          charge = -2, M = 1, adducts = -1.007276);  # M/2 -   1.007276	 2-	0.50	-1.007276	425.658169	439.167276
-    neg$"M-H2O-H"	     <- .addKey("[M-H2O-H]-",        charge = -1, M = 1, adducts = -19.01839);  # M   -  19.01839	 1-	1.00	-19.01839	834.312500	895.338390
-    neg$"M-H"	         <- .addKey("[M-H]-",            charge = -1, M = 1, adducts = -1.007276);  # M   -   1.007276	 1-	1.00	-1.007276	852.323614	877.327276
-    neg$"M+Na-2H"	     <- .addKey("[M+Na-2H]-",        charge = -1, M = 1, adducts = 20.974666);  # M   +  20.974666	 1-	1.00	20.974666	874.305556	855.345334
-    neg$"M+Cl"	         <- .addKey("[M+Cl]-",           charge = -1, M = 1, adducts = 34.969402);  # M   +  34.969402	 1-	1.00	34.969402	888.300292	841.350598
-    neg$"M+K-2H"	     <- .addKey("[M+K-2H]-",         charge = -1, M = 1, adducts = 36.948606);  # M   +  36.948606	 1-	1.00	36.948606	890.279496	839.371394
-    neg$"M+FA-H"	     <- .addKey("[M+FA-H]-",         charge = -1, M = 1, adducts = 44.998201);  # M   +  44.998201	 1-	1.00	44.998201	898.329091	831.321799
-    neg$"M+Hac-H"	     <- .addKey("[M+Hac-H]-",        charge = -1, M = 1, adducts = 59.013851);  # M   +  59.013851	 1-	1.00	59.013851	912.344741	817.306149
-    neg$"M+Br"	         <- .addKey("[M+Br]-",           charge = -1, M = 1, adducts = 78.918885);  # M   +  78.918885	 1-	1.00	78.918885	932.249775	797.401115
-    neg$"M+TFA-H"	     <- .addKey("[M+TFA-H]-",        charge = -1, M = 1, adducts = 112.985586); # M   + 112.985586	 1-	1.00	112.985586	966.316476	763.334414
-    neg$"2M-H"	         <- .addKey("[2M-H]-",           charge = -1, M = 2, adducts = -1.007276);  # 2M  -   1.007276	 1-	2.00	-1.007276	1705.654504	1753.647276
-    neg$"2M+FA-H"	     <- .addKey("[2M+FA-H]-",        charge = -1, M = 2, adducts = 44.998201);  # 2M  +  44.998201	 1-	2.00	44.998201	1751.659981	1707.641799
-    neg$"2M+Hac-H"	     <- .addKey("[2M+Hac-H]-",       charge = -1, M = 2, adducts = 59.013851);  # 2M  +  59.013851	 1-	2.00	59.013851	1765.675631	1693.626149
-    neg$"3M-H"	         <- .addKey("[3M-H]-",           charge = -1, M = 3, adducts = -1.007276);  # 3M  -   1.007276	 1-	3.00	1.007276	2560.999946	2627.952724
+    neg$"M-3H"	         <- .addKey("[M-3H]3-",          charge = -3, M = 1, adducts = "M-3H"    ); # M/3 -   1.007276	 3-	0.33	-1.007276	283.436354	293.113943
+    neg$"M-2H"	         <- .addKey("[M-2H]2-",          charge = -2, M = 1, adducts = "M-2H"    ); # M/2 -   1.007276	 2-	0.50	-1.007276	425.658169	439.167276
+    neg$"M-H2O-H"	     <- .addKey("[M-H2O-H]-",        charge = -1, M = 1, adducts = "M-H2O-H" ); # M   -  19.01839	 1-	1.00	-19.01839	834.312500	895.338390
+    neg$"M-H"	         <- .addKey("[M-H]-",            charge = -1, M = 1, adducts = "M-H"     ); # M   -   1.007276	 1-	1.00	-1.007276	852.323614	877.327276
+    neg$"M+Na-2H"	     <- .addKey("[M+Na-2H]-",        charge = -1, M = 1, adducts = "M+Na-2H" ); # M   +  20.974666	 1-	1.00	20.974666	874.305556	855.345334
+    neg$"M+Cl"	         <- .addKey("[M+Cl]-",           charge = -1, M = 1, adducts = "M+Cl"    ); # M   +  34.969402	 1-	1.00	34.969402	888.300292	841.350598
+    neg$"M+K-2H"	     <- .addKey("[M+K-2H]-",         charge = -1, M = 1, adducts = "M+K-2H"  ); # M   +  36.948606	 1-	1.00	36.948606	890.279496	839.371394
+    neg$"M+FA-H"	     <- .addKey("[M+FA-H]-",         charge = -1, M = 1, adducts = "M+FA-H"  ); # M   +  44.998201	 1-	1.00	44.998201	898.329091	831.321799
+    neg$"M+Hac-H"	     <- .addKey("[M+Hac-H]-",        charge = -1, M = 1, adducts = "M+Hac-H" ); # M   +  59.013851	 1-	1.00	59.013851	912.344741	817.306149
+    neg$"M+Br"	         <- .addKey("[M+Br]-",           charge = -1, M = 1, adducts = "M+Br"    ); # M   +  78.918885	 1-	1.00	78.918885	932.249775	797.401115
+    neg$"M+TFA-H"	     <- .addKey("[M+TFA-H]-",        charge = -1, M = 1, adducts = "M+TFA-H" ); # M   + 112.985586	 1-	1.00	112.985586	966.316476	763.334414
+    neg$"2M-H"	         <- .addKey("[2M-H]-",           charge = -1, M = 2, adducts = "2M-H"    ); # 2M  -   1.007276	 1-	2.00	-1.007276	1705.654504	1753.647276
+    neg$"2M+FA-H"	     <- .addKey("[2M+FA-H]-",        charge = -1, M = 2, adducts = "2M+FA-H" ); # 2M  +  44.998201	 1-	2.00	44.998201	1751.659981	1707.641799
+    neg$"2M+Hac-H"	     <- .addKey("[2M+Hac-H]-",       charge = -1, M = 2, adducts = "2M+Hac-H"); # 2M  +  59.013851	 1-	2.00	59.013851	1765.675631	1693.626149
+    neg$"3M-H"	         <- .addKey("[3M-H]-",           charge = -1, M = 3, adducts = "3M-H"    ); # 3M  -   1.007276	 1-	3.00	1.007276	2560.999946	2627.952724
 
-    return(neg);
+    neg;
 }
 
 #' Get precursor ion calculator
