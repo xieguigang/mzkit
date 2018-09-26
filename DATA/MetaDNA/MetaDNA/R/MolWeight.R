@@ -1,3 +1,14 @@
+#Region "Microsoft.ROpen::ee57dce680a8f976dfb21cd2fec576c9, MolWeight.R"
+
+    # Summaries:
+
+    # MolWeight <- function() {...
+    # .Weight <- function(symbol) {...
+    # .Eval <- function(formula) {if ((tokens = Strings.Split(formula, ""))[1] %in% ionSymbols) {...
+    # Mul <- function(token) {...
+
+#End Region
+
 #' Molecule weight calculate helper
 #'
 #' @return A list module that contains member function:
