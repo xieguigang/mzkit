@@ -16,6 +16,8 @@
 
 # https://github.com/xieguigang/MassSpectrum-toolkits/blob/6f4284a0d537d86c112877243d9e3b8d9d35563f/DATA/ms2_math-core/Ms1/PrecursorType.vb
 
+#' The precursor type data model
+#'
 PrecursorType <- function() {
 
 	#' Calculate m/z
@@ -215,30 +217,33 @@ getPolarity <- function(type) {
     return(substr.Right(type, n=1));
 }
 
-find.PrecursorType.no_result <- "Unknown";
-debug.echo                   <- TRUE;
-
 #' Get mass calculator
 #'
 #' @param chargeMode Character value of \code{+/-}.
-get.mass <- function(chargeMode, charge, PrecursorType) {
-
+#' @param PrecursorType The precursor type full name or brief name.
+#'
+#' @return Returns a function for calculate mass from \code{m/z} value.
+#'
+get.mass <- function(chargeMode, PrecursorType) {
 	if (PrecursorType %in% c("[M]+", "[M]-")) {
 		return(function(x) x);
 	}
 
 	mode <- Calculator[[chargeMode]];
-	found <- NULL;
+	found <- mode[[PrecursorType]];
 
-	for (name in names(mode)) {
-		calc <- mode[[name]];
-		if (calc$Name == PrecursorType) {
-			found <- calc;
-			break;
-		}
+	if (found %=>% IsNothing) {
+	  # Is the precursor type full name.
+	  for (name in names(mode)) {
+	    calc <- mode[[name]];
+	    if (calc$Name == PrecursorType) {
+	      found <- calc;
+	      break;
+	    }
+	  }
 	}
 
-	return(found$calc);
+	found$calc;
 }
 
 #' Calculate \code{m/z} for mass by given precursor type
@@ -246,6 +251,7 @@ get.mass <- function(chargeMode, charge, PrecursorType) {
 #' @param M Molecule mass
 #'
 #' @return -1 means target precursor type is not found.
+#'
 get.PrecursorMZ <- function(M, precursorType) {
 	mode        <- getPolarity(precursorType);
 	mode        <- Calculator[[mode]];
@@ -264,45 +270,41 @@ get.PrecursorMZ <- function(M, precursorType) {
 
 	if ((length(precursorMZ) == 1 && precursorMZ == -1) || ((precursorMZ == -1) %=>% all)) {
 		warnMsg <- "\"%s\" is not found... Precursor m/z is set to -1.";
-		warning(sprintf(warnMsg, precursorType));
+		warnMsg <- sprintf(warnMsg, precursorType);
+		warning(warnMsg);
 	}
 
 	precursorMZ;
 }
 
-## 通过计算出最小的质量差来获取前体离子的类型信息
-
-## @param charge 离子的电荷数量
-## @param mass 分子质量
-## @param precursorMZ MS/MS之中的MS1匹配上的前体离子质核比
-##
-## 计算的公式为：
-##
-## (mass/charge + precursor_ion_mass) = precursorMZ
-##
-## 算法的原理是使用数据库之中的质量分别遍历当前计算器内的前体离子的质量的和除以电荷数量
-## 得到的结果与MS1的质核比结果进行比较
-## 得到的最小的差值所对应的前体离子即为我们所需要查找的离子化模式
-##
-## test
-##
-## mass = 853.33089
-##
-## pos "[M+3Na]3+" charge = 3,  307.432848	find.PrecursorType(853.33089, 307.432848,  charge = 3)
-## pos "[2M+K]+"   charge = 1,  1745.624938	find.PrecursorType(853.33089, 1745.624938, charge = 1)
-## pos "[M+H]+"    charge = 1,  854.338166	find.PrecursorType(853.33089, 854.338166,  charge = 1)
-##
-## neg "[M-3H]3-"  charge = -3, 283.436354	find.PrecursorType(853.33089, 283.436354,  charge = -3, chargeMode = "-")
-## neg "[3M-H]-"   charge = -1, 2560.999946	find.PrecursorType(853.33089, 2560.999946, charge = -1, chargeMode = "-")
-## neg "[M-H]-"    charge = -1, 852.323614  find.PrecursorType(853.33089, 852.323614,  charge = -1, chargeMode = "-")
-##
-find.PrecursorType <- function(mass, precursorMZ, charge, chargeMode = "+", minError.ppm = 100, debug.echo = TRUE) {
+#' Match the precursor type through min ppm value match.
+#'
+#' @param charge The charge value of the ion
+#' @param mass Molecular mass
+#' @param precursorMZ Precursor m/z value of the ion.
+#'
+#' test
+#'
+#' mass = 853.33089
+#'
+#' pos "[M+3Na]3+" charge = 3,  307.432848	find.PrecursorType(853.33089, 307.432848,  charge = 3)
+#' pos "[2M+K]+"   charge = 1,  1745.624938	find.PrecursorType(853.33089, 1745.624938, charge = 1)
+#' pos "[M+H]+"    charge = 1,  854.338166	find.PrecursorType(853.33089, 854.338166,  charge = 1)
+#'
+#' neg "[M-3H]3-"  charge = -3, 283.436354	find.PrecursorType(853.33089, 283.436354,  charge = -3, chargeMode = "-")
+#' neg "[3M-H]-"   charge = -1, 2560.999946	find.PrecursorType(853.33089, 2560.999946, charge = -1, chargeMode = "-")
+#' neg "[M-H]-"    charge = -1, 852.323614  find.PrecursorType(853.33089, 852.323614,  charge = -1, chargeMode = "-")
+#'
+PrecursorType.Match <- function(
+  mass, precursorMZ, charge,
+  chargeMode   = "+",
+  minError.ppm = 100,
+  debug.echo   = TRUE) {
 
 	if (charge == 0) {
-		print("I can't calculate the ionization mode for no charge(charge = 0)!")
-	}
-
-	if (is.null(mass) || is.na(mass) || is.null(precursorMZ) || is.na(precursorMZ)) {
+		warning("Can't calculate the ionization mode for no charge(charge = 0)!");
+	  NA;
+	} else if ((mass %=>% IsNothing) || (precursorMZ %=>% IsNothing)) {
 		if(is.null(mass)) {
 			mass = NA;
 		}
@@ -310,82 +312,93 @@ find.PrecursorType <- function(mass, precursorMZ, charge, chargeMode = "+", minE
 			precursorMZ = NA;
 		}
 
-		printf("  ****** mass='%s' or precursor_M/Z='%s' is an invalid value!", mass, precursorMZ);
-    return(find.PrecursorType.no_result);
+	  msg <- "  ****** mass='%s' or precursor_M/Z='%s' is an invalid value!";
+	  msg <- sprintf(msg, mass, precursorMZ);
+		warning(msg);
+
+    NA;
+	} else if (calc.PPM(precursorMZ, mass / abs(charge)) <= max(minError.ppm, 500)) {
+	  # 本身的分子质量和前体的mz一样，说明为[M]类型
+	  if(abs(charge) == 1) {
+	    sprintf("[M]%s", chargeMode);
+	  } else {
+	    sprintf("[M]%s%s", charge, chargeMode);
+	  }
+	} else {
+	  .PrecursorType.MatchImpl(
+	    mass, precursorMZ, charge,
+	    chargeMode, minError.ppm,
+	    debug.echo
+	  );
+	}
+}
+
+.PrecursorType.MatchImpl <- function(
+  mass, precursorMZ, charge,
+  chargeMode, minError.ppm,
+  debug.echo) {
+
+  ### 每一个模式都计算一遍，然后返回最小的ppm差值结果
+  min     <- 999999;
+  minType <- NULL;
+
+  ## 得到某一个离子模式下的计算程序
+  mode    <- Calculator[[chargeMode]];
+
+  if (chargeMode == "-") {
+    ## 对于负离子模式而言，虽然电荷量是负数的，但是使用xcms解析出来的却是一个电荷数的绝对值
+    ## 所以需要判断一次，乘以-1
+    if (charge > 0) {
+      charge = -1 * charge;
+    }
   }
 
-	if (calc.PPM(precursorMZ, mass / abs(charge)) <= 500) {
-		# 本身的分子质量和前体的mz一样，说明为[M]类型
-		if(abs(charge) == 1) {
-			return(sprintf("[M]%s", chargeMode));
-		} else {
-			return(sprintf("[M]%s%s", charge, chargeMode));
-		}
-	}
+  ## 然后遍历这个模式下的所有离子前体计算
+  for (i in 1:length(mode)) {
+    calc  <- mode[[i]];
+    ptype <- calc$Name;
 
-    ### 每一个模式都计算一遍，然后返回最小的ppm差值结果
-    min     <- 999999;
-    minType <- NULL;
-
-    ## 得到某一个离子模式下的计算程序
-    mode    <- Calculator[[chargeMode]];
-
-	if (chargeMode == "-") {
-		## 对于负离子模式而言，虽然电荷量是负数的，但是使用xcms解析出来的却是一个电荷数的绝对值
-		## 所以需要判断一次，乘以-1
-		if (charge > 0) {
-			charge = -1 * charge;
-		}
-	}
-
-    ## 然后遍历这个模式下的所有离子前体计算
-    for (i in 1:length(mode)) {
-
-        calc  <- mode[[i]];
-        ptype <- calc$Name;
-
-        ## 跳过电荷数不匹配的离子模式计算表达式
-        if (charge != calc$charge) {
-            next;
-        } else {
-            calc <- calc$calc;
-        }
-
-        ## 这里实际上是根据数据库之中的分子质量，通过前体离子的质量计算出mz结果
-        ## 然后计算mz计算结果和precursorMZ的ppm信息
-        mass.reverse <- calc(precursorMZ);
-        delta.ppm    <- calc.PPM(mass.reverse, actualValue = mass);
-
-        if(debug.echo) {
-            printf("%s - %s = %s(ppm), type=%s",
-                   mass,
-                   mass.reverse,
-                   delta.ppm,
-                   ptype
-            );
-        }
-
-        ## 根据质量计算出前体质量，然后计算出差值
-        if (delta.ppm < min) {
-            min     <- delta.ppm;
-            minType <- ptype;
-        }
-    }
-
-    ## 假若这个最小的ppm差值符合误差范围，则认为找到了一个前体模式
-    if (debug.echo) {
-        printf("  ==> %s", minType);
-    }
-
-    if (min <= minError.ppm) {
-      return(minType);
+    ## 跳过电荷数不匹配的离子模式计算表达式
+    if (charge != calc$charge) {
+      next;
     } else {
-
-  		if (debug.echo) {
-  			printf("But the '%s' ionization mode its ppm error (%s ppm) is ", minType, min);
-  			printf("not satisfy the minError requirement(%s), returns Unknown!", minError.ppm);
-  		}
-
-      return(find.PrecursorType.no_result);
+      calc <- calc$calc;
     }
+
+    ## 这里实际上是根据数据库之中的分子质量，通过前体离子的质量计算出mz结果
+    ## 然后计算mz计算结果和precursorMZ的ppm信息
+    mass.reverse <- calc(precursorMZ);
+    delta.ppm    <- calc.PPM(mass.reverse, actualValue = mass);
+
+    if(debug.echo) {
+      printf("%s - %s = %s(ppm), type=%s",
+             mass,
+             mass.reverse,
+             delta.ppm,
+             ptype
+      );
+    }
+
+    ## 根据质量计算出前体质量，然后计算出差值
+    if (delta.ppm < min) {
+      min     <- delta.ppm;
+      minType <- ptype;
+    }
+  }
+
+  ## 假若这个最小的ppm差值符合误差范围，则认为找到了一个前体模式
+  if (debug.echo) {
+    printf("  ==> %s", minType);
+  }
+
+  if (min <= minError.ppm) {
+    # we found it!
+    minType;
+  } else {
+    msg <- "The minimal ppm '%s' ionization mode its ppm error (%s ppm) is not satisfy the minError requirement(%s)";
+    msg <- sprintf(minType, min, minError.ppm);
+    warning(msg);
+
+    NA;
+  }
 }

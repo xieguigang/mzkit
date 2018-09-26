@@ -2,7 +2,7 @@
 % Please edit documentation in R/PrecursorType.R
 \name{PrecursorType}
 \alias{PrecursorType}
-\title{Calculate m/z}
+\title{The precursor type data model}
 \usage{
 PrecursorType()
 }
@@ -38,5 +38,8 @@ Construct a \code{precursor_type} model
 }
 \description{
 Calculate the molecule mass from precursor adduct ion m/z
+}
+\details{
+Calculate m/z
 }
 

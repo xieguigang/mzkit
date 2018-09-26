@@ -4,10 +4,15 @@
 \alias{get.mass}
 \title{Get mass calculator}
 \usage{
-get.mass(chargeMode, charge, PrecursorType)
+get.mass(chargeMode, PrecursorType)
 }
 \arguments{
 \item{chargeMode}{Character value of \code{+/-}.}
+
+\item{PrecursorType}{The precursor type full name or brief name.}
+}
+\value{
+Returns a function for calculate mass from \code{m/z} value.
 }
 \description{
 Get mass calculator
