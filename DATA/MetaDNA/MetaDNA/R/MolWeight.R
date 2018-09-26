@@ -35,10 +35,10 @@ MolWeight <- function() {
 			formula <- sprintf("0H%s", formula);
 		}
 		
-		mt   <- strsplit(formula, "[+-]")[[1]];
-		op   <- grep("[+-]", formula, perl = TRUE, value = FALSE);
-		x    <- 0;
-		next <- "+";
+		mt      <- strsplit(formula, "[+-]")[[1]];
+		op      <- grep("[+-]", formula, perl = TRUE, value = FALSE);
+		x       <- 0;
+		next_op <- "+";
 		
 		for(i in 1:length(mt)) {
 			token <- Mul(mt[i]);
@@ -52,14 +52,14 @@ MolWeight <- function() {
                 stop(msg);
 			}
 			
-			if (next == "+") {
+			if (next_op == "+") {
 				x <- x + (M * w);
 			} else {
 				x <- x - (M * w); 
 			}
 			
 			if (!IsNothing(op) && (op != FALSE) && (i <= length(op))) {
-				next <- op[i];
+				next_op <- op[i];
 			}
 		}
 		
