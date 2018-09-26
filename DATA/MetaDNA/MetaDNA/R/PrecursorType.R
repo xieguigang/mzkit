@@ -246,7 +246,9 @@ get.mass <- function(chargeMode, PrecursorType) {
 	found$calc;
 }
 
-#' Calculate \code{m/z} for mass by given precursor type
+#' Calculate m/z
+#'
+#' @description Calculate \code{m/z} for mass by given precursor type
 #'
 #' @param M Molecule mass
 #'
@@ -277,15 +279,15 @@ get.PrecursorMZ <- function(M, precursorType) {
 	precursorMZ;
 }
 
-#' Match the precursor type through min ppm value match.
+#' Match the precursor type
+#'
+#' @description Match the precursor type through min ppm value match.
 #'
 #' @param charge The charge value of the ion
 #' @param mass Molecular mass
 #' @param precursorMZ Precursor m/z value of the ion.
 #'
-#' @examples
-#'
-#' mass = 853.33089
+#' @examples mass = 853.33089
 #'
 #' find.PrecursorType(853.33089, 307.432848,  charge = 3) # pos "[M+3Na]3+" charge = 3,  307.432848
 #' find.PrecursorType(853.33089, 1745.624938, charge = 1) # pos "[2M+K]+"   charge = 1,  1745.624938

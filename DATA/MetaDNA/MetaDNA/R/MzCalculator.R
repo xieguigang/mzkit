@@ -20,6 +20,7 @@
 #'              output debug info onto the console screen?
 #'
 #' @return \code{m/z} dataframe for all precursor types.
+#'
 mz.calculator <- function(mass, mode = c(1, -1), debug = FALSE) {
     calc <- NA;
 

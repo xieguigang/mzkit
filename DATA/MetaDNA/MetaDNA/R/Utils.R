@@ -50,6 +50,7 @@ tolerance.ppm <- function(ppm = 20) {
 }
 
 #' PPM value between two mass value
+#'
 PPM <- function(measured, actualValue) {
 	# 2018-7-8 without abs function for entir value, this may cause bugs in metaDNA
 	# for unknown query when actualValue is negative

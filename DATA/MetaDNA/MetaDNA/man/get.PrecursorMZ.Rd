@@ -2,7 +2,7 @@
 % Please edit documentation in R/PrecursorType.R
 \name{get.PrecursorMZ}
 \alias{get.PrecursorMZ}
-\title{Calculate \code{m/z} for mass by given precursor type}
+\title{Calculate m/z}
 \usage{
 get.PrecursorMZ(M, precursorType)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/PrecursorType.R
 \name{PrecursorType.Match}
 \alias{PrecursorType.Match}
-\title{Match the precursor type through min ppm value match.}
+\title{Match the precursor type}
 \usage{
 PrecursorType.Match(mass, precursorMZ, charge, chargeMode = "+",
   minError.ppm = 100, debug.echo = TRUE)
@@ -18,7 +18,6 @@ PrecursorType.Match(mass, precursorMZ, charge, chargeMode = "+",
 Match the precursor type through min ppm value match.
 }
 \examples{
-
 mass = 853.33089
 
 find.PrecursorType(853.33089, 307.432848,  charge = 3) # pos "[M+3Na]3+" charge = 3,  307.432848
