@@ -437,6 +437,10 @@ PrecursorType.Match <- function(
 	warning(msg);
 	NA;
   } else {
+	if (debug.echo) {
+		printf("  ==> %s\n", match[min, ]$Name);
+	}
+	
 	# we found it!
 	match[min, ]$Name;
   }
