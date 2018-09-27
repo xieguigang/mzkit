@@ -301,7 +301,7 @@ get.PrecursorMZ <- function(M, precursorType) {
 PrecursorType.Match <- function(
   mass, precursorMZ, charge,
   chargeMode   = "+",
-  minError.ppm = 100,
+  tolerance    = tolerance.deltaMass(0.3),
   debug.echo   = TRUE) {
 
 	if (charge == 0) {
