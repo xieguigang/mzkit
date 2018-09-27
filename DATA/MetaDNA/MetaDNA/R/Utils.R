@@ -20,9 +20,11 @@
 #'
 #' @return A subset of the input \code{dataframe} with all KEGG column
 #'     value non-empty.
-removes.empty_KEGG <- function(d) {
-    KEGG <- d[, "KEGG"] %=>% as.vector;
-    d[!Strings.Empty(KEGG, TRUE),];
+Delete.EmptyKEGG <- function(dataframe, col.name = "KEGG") {
+    KEGG <- dataframe[, col.name] %=>% as.vector;
+	test <- !Strings.Empty(KEGG, TRUE);
+	
+    dataframe[test, ];
 }
 
 #' Tolerance in Mass delta mode
