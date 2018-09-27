@@ -1,4 +1,4 @@
-#Region "Microsoft.ROpen::008859bebd3c976f69953df66567915c, zzz.R"
+#Region "Microsoft.ROpen::ebf5b129d2ec5b80d336acda5693d9b6, zzz.R"
 
     # Summaries:
 
@@ -39,12 +39,12 @@
     print(sapply(Calculator$`-`, function(type) type$Name) %=>% as.character);
     cat("\n");
 
-	  cat(" [Symbol Weights]\n\n");
-	  print(data.frame(
-	    symbols = names(Eval(MolWeight)$weights),
-	    weights = Eval(MolWeight)$weights %=>% as.numeric
-	  ));
-	  cat("\n");
+    cat(" [Symbol Weights]\n\n");
+    print(data.frame(
+        symbols = names(Eval(MolWeight)$weights),
+        weights = Eval(MolWeight)$weights %=>% as.numeric
+    ));
+	cat("\n");
 
     cat("You can acquire the toolkit's source code from github:");
     cat("\n\n");

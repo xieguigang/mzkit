@@ -1,4 +1,4 @@
-#Region "Microsoft.ROpen::ee57dce680a8f976dfb21cd2fec576c9, MolWeight.R"
+#Region "Microsoft.ROpen::11841f79caf7f7db440cbab8d74c5f1d, MolWeight.R"
 
     # Summaries:
 
@@ -44,7 +44,8 @@ MolWeight <- function() {
 		if (!IsNothing(w)) {
 			w;
 		} else {
-			msg <- sprintf("Symbol '%s' is not exists in table!", symbol);
+		    msg <- "Symbol '%s' is not exists in table!";
+			msg <- sprintf(msg, symbol);
 			warning(msg);
 			-1;
 		}

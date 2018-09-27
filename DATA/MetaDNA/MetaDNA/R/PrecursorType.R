@@ -1,4 +1,4 @@
-#Region "Microsoft.ROpen::1bf362ba9ae48bb9faa7b80c20c67376, PrecursorType.R"
+#Region "Microsoft.ROpen::60253895cd11588dd5928566132b37d7, PrecursorType.R"
 
     # Summaries:
 
@@ -319,8 +319,8 @@ PrecursorType.Match <- function(
 	  msg <- sprintf(msg, mass, precursorMZ);
 		warning(msg);
 
-    NA;
-	} else if (calc.PPM(precursorMZ, mass / abs(charge)) <= max(minError.ppm, 500)) {
+        NA;
+	} else if (PPM(precursorMZ, mass / abs(charge)) <= max(minError.ppm, 500)) {
 	  # 本身的分子质量和前体的mz一样，说明为[M]类型
 	  if(abs(charge) == 1) {
 	    sprintf("[M]%s", chargeMode);
@@ -371,7 +371,7 @@ PrecursorType.Match <- function(
     ## 这里实际上是根据数据库之中的分子质量，通过前体离子的质量计算出mz结果
     ## 然后计算mz计算结果和precursorMZ的ppm信息
     mass.reverse <- calc(precursorMZ);
-    delta.ppm    <- calc.PPM(mass.reverse, actualValue = mass);
+    delta.ppm    <- PPM(mass.reverse, actualValue = mass);
 
     if(debug.echo) {
       printf("%s - %s = %s(ppm), type=%s",

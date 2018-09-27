@@ -1,4 +1,4 @@
-#Region "Microsoft.ROpen::4ca7209dcbaa198840bfacdeac8b39a4, MzCalculator.R"
+#Region "Microsoft.ROpen::e2daf55e7223206e9fbf45ea4c98d726, MzCalculator.R"
 
     # Summaries:
 
@@ -39,7 +39,7 @@ mz.calculator <- function(mass, mode = c(1, -1), debug = FALSE) {
 
     for (name in names(calc)) {
         type <- calc[[name]];
-        cal <- type$cal.mz;
+        cal  <- type$cal.mz;
 
         if (debug) {
             print(type);
