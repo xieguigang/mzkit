@@ -1,4 +1,4 @@
-#Region "Microsoft.ROpen::ebf5b129d2ec5b80d336acda5693d9b6, zzz.R"
+#Region "Microsoft.ROpen::a50f44575e5301d7c4c9d8b9f4d89bcd, zzz.R"
 
     # Summaries:
 
@@ -20,14 +20,15 @@
 
 	try({
 		list(
-		  #' The molweight module is the very basic function for other modules
-		  MolWeight     = MolWeight(),
-		  PrecursorType = PrecursorType(),
+		    #' The molweight module is the very basic function for other modules
+		    MolWeight     = MolWeight(),
+		    PrecursorType = PrecursorType(),
 			#' Get precursor ion calculator
 			Calculator    = list("+" = positive(), "-" = negative())
 		) %=>% Set;
 
 		lockBinding(sym = "Calculator", env = global);
+		lockBinding(sym = "MolWeight",  env = global);		
 	});
 
     print("Pre-defined m/z calculator:");
