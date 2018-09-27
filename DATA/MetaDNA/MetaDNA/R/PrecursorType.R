@@ -293,8 +293,8 @@ get.PrecursorMZ <- function(M, precursorType) {
 #'    There are two pre-defined tolerance function:
 #'
 #'    \enumerate{
-#'        \item \link{\code{tolerance.deltaMass}}
-#'        \item \link{\code{tolerance.ppm}}
+#'        \item \code{\link{tolerance.deltaMass}}
+#'        \item \code{\link{tolerance.ppm}}
 #'    }
 #'
 #' @examples mass = 853.33089
