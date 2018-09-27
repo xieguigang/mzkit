@@ -5,7 +5,7 @@
 \title{Match the precursor type}
 \usage{
 PrecursorType.Match(mass, precursorMZ, charge, chargeMode = "+",
-  minError.ppm = 100, debug.echo = TRUE)
+  tolerance = tolerance.deltaMass(0.3), debug.echo = TRUE)
 }
 \arguments{
 \item{mass}{Molecular mass}
@@ -13,6 +13,15 @@ PrecursorType.Match(mass, precursorMZ, charge, chargeMode = "+",
 \item{precursorMZ}{Precursor m/z value of the ion.}
 
 \item{charge}{The charge value of the ion}
+
+\item{tolerance}{Tolerance between two mass value, by default is 0.3 da,
+   if this parameter is a numeric value, then means tolerance by ppm value.
+   There are two pre-defined tolerance function:
+
+   \enumerate{
+       \item \link{\code{tolerance.deltaMass}}
+       \item \link{\code{tolerance.ppm}}
+   }}
 }
 \description{
 Match the precursor type through min ppm value match.
