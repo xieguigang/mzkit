@@ -348,19 +348,15 @@ PrecursorType.Match <- function(
 	}
 }
 
+#' 每一个模式都计算一遍，然后返回最小的ppm差值结果
 .PrecursorType.MatchImpl <- function(
   mass, precursorMZ, charge,
   chargeMode, tolerance,
   debug.echo) {
 
-  ### 每一个模式都计算一遍，然后返回最小的ppm差值结果
-  min       <- 999999;
-  minType   <- NULL;
-  min.valid <- FALSE;
-
   ## 得到某一个离子模式下的计算程序
-  mode    <- Calculator[[chargeMode]];
-
+  mode <- Calculator[[chargeMode]];
+  
   if (chargeMode == "-") {
     ## 对于负离子模式而言，虽然电荷量是负数的，但是使用xcms解析出来的却是一个电荷数的绝对值
     ## 所以需要判断一次，乘以-1
@@ -369,53 +365,79 @@ PrecursorType.Match <- function(
     }
   }
 
-  ## 然后遍历这个模式下的所有离子前体计算
-  for (i in 1:length(mode)) {
-    calc  <- mode[[i]];
-    ptype <- calc$Name;
-
-    ## 跳过电荷数不匹配的离子模式计算表达式
+  match <- function(keyName) {
+	calc <- mode[[keyName]];
+	
+	## 跳过电荷数不匹配的离子模式计算表达式
     if (charge != calc$charge) {
-      next;
-    } else {
-      calc <- calc$calc;
-    }
-
-    ## 这里实际上是根据数据库之中的分子质量，通过前体离子的质量计算出mz结果
-    ## 然后计算mz计算结果和precursorMZ的ppm信息
-    mass.reverse <- calc(precursorMZ);
-    validate     <- tolerance(mass.reverse, mass);
-
-    if(debug.echo) {
-      printf("tolerance(%s, %s) = %s, type=%s",
-             mass,
-             mass.reverse,
-             validate$error,
-             ptype
-      );
-    }
-
-    ## 根据质量计算出前体质量，然后计算出差值
-    if (validate$error < min) {
-      min       <- validate$error;
-      minType   <- ptype;
-      min.valid <- validate$valid;
-    }
+		note  <- "charge mismatched!";
+		error <- NA;
+		valid <- FALSE
+	} else {
+		## 这里实际上是根据数据库之中的分子质量，通过前体离子的质量计算出mz结果
+		## 然后计算mz计算结果和precursorMZ的ppm信息
+		mass.reverse <- calc$calc(precursorMZ);
+		validate     <- tolerance(mass.reverse, mass);
+		
+		if (validate$valid) {
+			note <- "Mass tolerance not satisfied!";
+		} else {
+			note <- NA;
+		}
+		
+		error <- validate$error;
+		valid <- validate$valid;
+	}
+	
+	calc$error  <- error;
+	calc$valid  <- valid;
+	calc$calc   <- NULL;
+	calc$cal.mz <- NULL;
+	
+	calc;
   }
-
-  ## 假若这个最小的ppm差值符合误差范围，则认为找到了一个前体模式
+  
+  ## 遍历这个模式下的所有离子前体计算
+  match <- lapply(mode %=>% names, match);
+  match <- match %=>% as.dataframe;
+  
+  # > head(match)
+  #   Name          charge M adduct   error valid
+  # 1 "[M+3H]3+"    3      1 3.021828 NA    FALSE
+  # 2 "[M+2H+Na]3+" 3      1 25.00432 NA    FALSE
+  # 3 "[M+H+2Na]3+" 3      1 46.98681 NA    FALSE
+  # 4 "[M+3Na]3+"   3      1 68.96931 NA    FALSE
+  # 5 "[M+2H]2+"    2      1 2.014552 NA    FALSE
+  # 6 "[M+H+NH4]2+" 2      1 19.04281 NA    FALSE
   if (debug.echo) {
-    printf("  ==> %s", minType);
+	print(match);
   }
-
-  if (min.valid) {
-    # we found it!
-    minType;
+  
+  # 查找valid的结果
+  valids <- (match[, "valid"] == TRUE) %=>% as.logical %=>% which;
+  
+  if (length(valids) == 0) {
+	# 没有结果
+	min <- NA;
+  } else if (length(valids) > 1) {
+	# 取最小的误差结果
+	min <- match[, "error"] %=>% as.numeric %=>% which.min;
   } else {
-    msg <- "Minimal tolerance '%s' ionization mode its tolerance_error='%s' is not satisfy the tolerance requirement(%s)";
-    msg <- sprintf(minType, min, tolerance(0, 0)$describ);
-    warning(msg);
-
-    NA;
+	# 直接取结果出来
+	min <- valids;
+  }
+  
+  if (min %=>% IsNothing) {
+	msg <- "No precursor_type: [mass=%s, m/z=%s] charge=%s(%s) with tolerance=%s";
+	msg <- sprintf(msg, 
+		mass, precursorMZ, 
+		charge, chargeMode, 
+		tolerance(0, 0)$describ
+	);
+	warning(msg);
+	NA;
+  } else {
+	# we found it!
+	match[min, ]$Name;
   }
 }
