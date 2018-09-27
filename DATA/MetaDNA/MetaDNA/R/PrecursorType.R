@@ -1,4 +1,4 @@
-#Region "Microsoft.ROpen::9caef9733995a3aa970ef69842fbbc67, PrecursorType.R"
+#Region "Microsoft.ROpen::3f105641483665331fcf900f09516358, PrecursorType.R"
 
     # Summaries:
 
@@ -381,9 +381,9 @@ PrecursorType.Match <- function(
 		validate     <- tolerance(mass.reverse, mass);
 		
 		if (validate$valid) {
-			note <- "Mass tolerance not satisfied!";
-		} else {
 			note <- NA;
+		} else {			
+			note <- "Tolerance not satisfied!";
 		}
 		
 		error <- validate$error;
@@ -394,6 +394,7 @@ PrecursorType.Match <- function(
 	calc$valid  <- valid;
 	calc$calc   <- NULL;
 	calc$cal.mz <- NULL;
+	calc$note   <- note;
 	
 	calc;
   }
