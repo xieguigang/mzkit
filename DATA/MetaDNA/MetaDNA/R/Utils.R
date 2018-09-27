@@ -33,8 +33,20 @@ removes.empty_KEGG <- function(d) {
 #'
 #' @return Function returns a lambda function that can be using for
 #'         tolerance predication.
+#'
 tolerance.deltaMass <- function(da = 0.3) {
-    function(a, b) abs(a - b) <= da;
+    describ <- sprintf("%s(da)", da);
+
+    function(a, b) {
+        err  <- abs(a - b);
+        test <- err <= da;
+
+        list(error     = err,
+             valid     = test,
+             describ   = describ,
+             threshold = da
+        );
+    }
 }
 
 #' Tolerance in PPM mode
@@ -45,8 +57,20 @@ tolerance.deltaMass <- function(da = 0.3) {
 #'
 #' @return Function returns a lambda function that can be using for
 #'         tolerance predication.
+#'
 tolerance.ppm <- function(ppm = 20) {
-    function(a, b) PPM(a, b) <= ppm;
+    describ <- sprintf("%s(ppm)", ppm);
+
+    function(a, b) {
+        err  <- PPM(a, b);
+        test <- err <= ppm;
+
+        list(error     = err,
+             valid     = test,
+             describ   = describ,
+             threshold = ppm
+        );
+    }
 }
 
 #' PPM value between two mass value

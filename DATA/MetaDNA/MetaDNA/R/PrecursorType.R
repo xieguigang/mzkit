@@ -287,6 +287,14 @@ get.PrecursorMZ <- function(M, precursorType) {
 #' @param charge The charge value of the ion
 #' @param mass Molecular mass
 #' @param precursorMZ Precursor m/z value of the ion.
+#' @param tolerance Tolerance between two mass value, by default is 0.3 da,
+#'    if this parameter is a numeric value, then means tolerance by ppm value.
+#'    There are two pre-defined tolerance function:
+#'
+#'    \enumerate{
+#'        \item \link{\code{tolerance.deltaMass}}
+#'        \item \link{\code{tolerance.ppm}}
+#'    }
 #'
 #' @examples mass = 853.33089
 #'
@@ -299,14 +307,18 @@ get.PrecursorMZ <- function(M, precursorType) {
 #' find.PrecursorType(853.33089, 852.323614,  charge = -1, chargeMode = "-") # neg "[M-H]-"    charge = -1, 852.323614
 #'
 PrecursorType.Match <- function(
-  mass, precursorMZ, charge,
-  chargeMode   = "+",
-  tolerance    = tolerance.deltaMass(0.3),
-  debug.echo   = TRUE) {
+    mass, precursorMZ, charge,
+    chargeMode   = "+",
+    tolerance    = tolerance.deltaMass(0.3),
+    debug.echo   = TRUE) {
+
+    if (tolerance %=>% is.numeric) {
+        tolerance <- tolerance.ppm(tolerance);
+    }
 
 	if (charge == 0) {
 		warning("Can't calculate the ionization mode for no charge(charge = 0)!");
-	  NA;
+	    NA;
 	} else if ((mass %=>% IsNothing) || (precursorMZ %=>% IsNothing)) {
 		if(is.null(mass)) {
 			mass = NA;
@@ -315,12 +327,12 @@ PrecursorType.Match <- function(
 			precursorMZ = NA;
 		}
 
-	  msg <- "  ****** mass='%s' or precursor_M/Z='%s' is an invalid value!";
-	  msg <- sprintf(msg, mass, precursorMZ);
+	    msg <- "  ****** mass='%s' or precursor_M/Z='%s' is an invalid value!";
+	    msg <- sprintf(msg, mass, precursorMZ);
 		warning(msg);
 
         NA;
-	} else if (PPM(precursorMZ, mass / abs(charge)) <= max(minError.ppm, 500)) {
+	} else if (tolerance(precursorMZ, mass / abs(charge))$valid) {
 	  # 本身的分子质量和前体的mz一样，说明为[M]类型
 	  if(abs(charge) == 1) {
 	    sprintf("[M]%s", chargeMode);
@@ -330,7 +342,7 @@ PrecursorType.Match <- function(
 	} else {
 	  .PrecursorType.MatchImpl(
 	    mass, precursorMZ, charge,
-	    chargeMode, minError.ppm,
+	    chargeMode, tolerance,
 	    debug.echo
 	  );
 	}
@@ -338,12 +350,13 @@ PrecursorType.Match <- function(
 
 .PrecursorType.MatchImpl <- function(
   mass, precursorMZ, charge,
-  chargeMode, minError.ppm,
+  chargeMode, tolerance,
   debug.echo) {
 
   ### 每一个模式都计算一遍，然后返回最小的ppm差值结果
-  min     <- 999999;
-  minType <- NULL;
+  min       <- 999999;
+  minType   <- NULL;
+  min.valid <- FALSE;
 
   ## 得到某一个离子模式下的计算程序
   mode    <- Calculator[[chargeMode]];
@@ -371,21 +384,22 @@ PrecursorType.Match <- function(
     ## 这里实际上是根据数据库之中的分子质量，通过前体离子的质量计算出mz结果
     ## 然后计算mz计算结果和precursorMZ的ppm信息
     mass.reverse <- calc(precursorMZ);
-    delta.ppm    <- PPM(mass.reverse, actualValue = mass);
+    validate     <- tolerance(mass.reverse, mass);
 
     if(debug.echo) {
-      printf("%s - %s = %s(ppm), type=%s",
+      printf("tolerance(%s, %s) = %s, type=%s",
              mass,
              mass.reverse,
-             delta.ppm,
+             validate$error,
              ptype
       );
     }
 
     ## 根据质量计算出前体质量，然后计算出差值
-    if (delta.ppm < min) {
-      min     <- delta.ppm;
-      minType <- ptype;
+    if (validate$error < min) {
+      min       <- validate$error;
+      minType   <- ptype;
+      min.valid <- validate$valid;
     }
   }
 
@@ -394,12 +408,12 @@ PrecursorType.Match <- function(
     printf("  ==> %s", minType);
   }
 
-  if (min <= minError.ppm) {
+  if (min.valid) {
     # we found it!
     minType;
   } else {
-    msg <- "The minimal ppm '%s' ionization mode its ppm error (%s ppm) is not satisfy the minError requirement(%s)";
-    msg <- sprintf(minType, min, minError.ppm);
+    msg <- "Minimal tolerance '%s' ionization mode its tolerance_error='%s' is not satisfy the tolerance requirement(%s)";
+    msg <- sprintf(minType, min, tolerance(0, 0)$describ);
     warning(msg);
 
     NA;
