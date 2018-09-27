@@ -1,4 +1,4 @@
-#Region "Microsoft.ROpen::23f2610292170d30875c471db388f7cb, PrecursorType.R"
+#Region "Microsoft.ROpen::9caef9733995a3aa970ef69842fbbc67, PrecursorType.R"
 
     # Summaries:
 
@@ -12,6 +12,7 @@
     # get.PrecursorMZ <- function(M, precursorType) {...
     # PrecursorType.Match <- function(mass, precursorMZ, charge,chargeMode= "+",tolerance = tolerance.deltaMass(0.3),debug.echo= TRUE) { if (tolerance %=>% is.numeric) {...
     # .PrecursorType.MatchImpl <- function(mass, precursorMZ, charge,chargeMode, tolerance,debug.echo) {...
+    # match <- function(keyName) {...
 
 #End Region
 
