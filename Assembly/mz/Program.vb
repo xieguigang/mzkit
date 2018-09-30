@@ -26,19 +26,28 @@ Module Program
     <Usage("/waves /in <data.mzXML> [/mz.range <[min, max], default is all> /mz.round <default=5> /out <data.tsv>]")>
     Public Function MzWaves(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
-        Dim mzRange As DoubleRange = args <= "/mz.range"
+        Dim mzRange As DoubleRange = DoubleRange.TryParse(args <= "/mz.range")
         Dim out$ = args("/out") Or $"{[in].TrimSuffix}-[{mzRange.Min},{mzRange.Max}].xls"
         Dim rounds As Integer = args("/mz.round") Or 5
         Dim allMs1Scans = mzXML.XML _
             .LoadScans([in]) _
             .Where(Function(s) s.msLevel = "1") _
             .ToArray
+        Dim mzFilter As Func(Of Double, Boolean)
+
+        If mzRange Is Nothing Then
+            mzFilter = Function() True
+        Else
+            mzFilter = Function(mz) mzRange.IsInside(mz)
+        End If
+
         Dim timeScans As DataSet() = allMs1Scans _
             .Select(Function(s)
                         Dim rt As String = s.retentionTime
                         Dim mzInto = s.ExtractMzI
                         Dim scanData As Dictionary(Of String, Double) = mzInto _
                             .peaks _
+                            .Where(Function(p) mzFilter(p.mz)) _
                             .ToDictionary(Function(p) Math.Round(p.mz, rounds).ToString,
                                           Function(p) p.intensity)
 
