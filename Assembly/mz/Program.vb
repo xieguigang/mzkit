@@ -23,11 +23,11 @@ Module Program
     ''' <param name="args"></param>
     ''' <returns></returns>
     <ExportAPI("/waves")>
-    <Usage("/waves /in <data.mzXML> [/mz.range <[min, max], default is all> /mz.round <default=5> /out <data.tsv>]")>
+    <Usage("/waves /in <data.mzXML> [/mz.range <[min, max], default is all> /mz.round <default=5> /out <data.csv>]")>
     Public Function MzWaves(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim mzRange As DoubleRange = DoubleRange.TryParse(args <= "/mz.range")
-        Dim out$ = args("/out") Or $"{[in].TrimSuffix}-[{mzRange.Min},{mzRange.Max}].xls"
+        Dim out$ = args("/out") Or $"{[in].TrimSuffix}-[{mzRange?.Min},{mzRange?.Max}].csv"
         Dim rounds As Integer = args("/mz.round") Or 5
         Dim allMs1Scans = mzXML.XML _
             .LoadScans([in]) _
@@ -58,7 +58,7 @@ Module Program
                     End Function) _
             .ToArray
 
-        Return timeScans.SaveTo(out).CLICode
+        Return timeScans.SaveTo(out, metaBlank:=0).CLICode
     End Function
 
     <ExportAPI("/export")>
