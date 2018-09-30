@@ -2,6 +2,9 @@
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzXML
 Imports SMRUCC.MassSpectrum.Math.MSMS
@@ -10,6 +13,43 @@ Module Program
 
     Public Function Main() As Integer
         Return GetType(Program).RunCLI(App.CommandLine)
+    End Function
+
+    ''' <summary>
+    ''' rt, mz1, mz2, mz3, ...
+    ''' t1, into1,into2,into3,...
+    ''' t2, into4,into5,into6,...
+    ''' </summary>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
+    <ExportAPI("/waves")>
+    <Usage("/waves /in <data.mzXML> [/mz.range <[min, max], default is all> /mz.round <default=5> /out <data.tsv>]")>
+    Public Function MzWaves(args As CommandLine) As Integer
+        Dim in$ = args <= "/in"
+        Dim mzRange As DoubleRange = args <= "/mz.range"
+        Dim out$ = args("/out") Or $"{[in].TrimSuffix}-[{mzRange.Min},{mzRange.Max}].xls"
+        Dim rounds As Integer = args("/mz.round") Or 5
+        Dim allMs1Scans = mzXML.XML _
+            .LoadScans([in]) _
+            .Where(Function(s) s.msLevel = "1") _
+            .ToArray
+        Dim timeScans As DataSet() = allMs1Scans _
+            .Select(Function(s)
+                        Dim rt As String = s.retentionTime
+                        Dim mzInto = s.ExtractMzI
+                        Dim scanData As Dictionary(Of String, Double) = mzInto _
+                            .peaks _
+                            .ToDictionary(Function(p) Math.Round(p.mz, rounds).ToString,
+                                          Function(p) p.intensity)
+
+                        Return New DataSet With {
+                            .ID = rt,
+                            .Properties = scanData
+                        }
+                    End Function) _
+            .ToArray
+
+        Return timeScans.SaveTo(out).CLICode
     End Function
 
     <ExportAPI("/export")>
