@@ -11,66 +11,40 @@
 
 #' Write ms2 data as a mgf spectrum data file.
 #'
-write.mgf <- function(AnnoDataSet, isotope, path) {
+#' @param meta A \code{dataframe} object that contains metainfo annotation data,
+#'    this \code{dataframe} should contains at least:
+#'    \code{mz}, \code{rt}, \code{charge}, \code{libname} value fields.
+#' @param ms2 Ms2 library data. A list of \code{dataframe} object, where the list
+#'    member name is the \code{libname} value in \code{meta} parameter value.
+#' @param path The file location of where the generated mgf file was saved.
+#'
+write.mgf <- function(meta, ms2, path) {
+    mz       <- meta[, "mz"]      %=>% as.numeric;
+    rt       <- meta[, "rt"]      %=>% as.numeric;
+    charge   <- meta[, "charge"]  %=>% as.numeric;
+    libnames <- meta[, "libname"] %=>% as.character;
 
-	peaktable <- AnnoDataSet$peaktable;
+    write <- path %=>% File.Open;
 
-	# 生成头部的MS1信息
-	ms1 <- c();
-	ms1[1] <- "BEGIN IONS";
-	ms1[2] <- sprintf("PEPMASS=%s", getSingleValue(peaktable[isotope[1]], "mz"));
-	ms1[3] <- "MSLEVEL=1";
-	ms1[4] <- "CHARGE=1+";
+    for(i in 1:nrow(meta)) {
+        spectra <- ms2[[libnames[i]]];
+        ion     <- mgf.ion(
+            mz[i], rt[i],
+            spectra,
+            charge[i],
+            libnames[i]
+        );
 
-	i <- 5;
+        ion %=>% write;
+    }
 
-	for (n in isotope) {
-		n <- peaktable[n, ];
-		ms1[i] <- sprintf("%s %s", getSingleValue(n, "mz"), getSingleValue(n, "into"));
-		i = i + 1;
-	}
-
-	ms1[i] <- "END IONS";
-	ms1[i+1] <- "";
-
-	# 在后面写入每一个峰的MS2数据
-	ms2 <- c();
-
-	for (n in isotope) {
-		data <- c();
-
-		data[1] <- "BEGIN IONS";
-		data[2] <- sprintf("PEPMASS=%s", getSingleValue(peaktable[n, ], "mz"));
-		data[3] <- "MSLEVEL=2";
-		data[4] <- "CHARGE=1+";
-
-		data <- append(
-			data,
-			unlist(
-			lapply(get.ms2peaks(AnnoDataSet$peak_ms2, n),
-			function(mz) {
-			return(sprintf("%s %s", getSingleValue(mz, "mz"), getSingleValue(mz, "intensity")));
-		})));
-
-		data <- append(data, c("END IONS"));
-
-		ms2 <- append(ms2, "");
-		ms2 <- append(ms2, data);
-	}
-
-	# 将ms1和并ms2的数据，构成最终需要写入文件的mgf文件数据
-	mgf <- append(ms1, ms2);
-
-	file <- file(path);
-	writeLines(mgf, file);
-	close(file);
-
-	return(path);
+    invisible(NULL);
 }
 
 #' Generate mgf ion from data.
 #'
-#' @param ms2 \enumerate{
+#' @param ms2 This ms2 matrix object can be in two formats:
+#' \enumerate{
 #' \item \code{list} ms2 data is consist with element sequence, each element must have property \code{mz} and \code{into}.
 #' \item \code{data.frame} The data frame object should have \code{mz} and \code{into} column.
 #' }
