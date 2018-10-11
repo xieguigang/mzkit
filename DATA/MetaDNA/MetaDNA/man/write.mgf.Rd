@@ -4,7 +4,17 @@
 \alias{write.mgf}
 \title{Write ms2 data as a mgf spectrum data file.}
 \usage{
-write.mgf(AnnoDataSet, isotope, path)
+write.mgf(meta, ms2, path)
+}
+\arguments{
+\item{meta}{A \code{dataframe} object that contains metainfo annotation data,
+this \code{dataframe} should contains at least:
+\code{mz}, \code{rt}, \code{charge}, \code{libname} value fields.}
+
+\item{ms2}{Ms2 library data. A list of \code{dataframe} object, where the list
+member name is the \code{libname} value in \code{meta} parameter value.}
+
+\item{path}{The file location of where the generated mgf file was saved.}
 }
 \description{
 Write ms2 data as a mgf spectrum data file.
