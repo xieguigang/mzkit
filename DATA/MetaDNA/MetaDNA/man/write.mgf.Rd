@@ -4,7 +4,7 @@
 \alias{write.mgf}
 \title{Write ms2 data as a mgf spectrum data file.}
 \usage{
-write.mgf(meta, ms2, path)
+write.mgf(meta, ms2, path, verbose = TRUE)
 }
 \arguments{
 \item{meta}{A \code{dataframe} object that contains metainfo annotation data,

@@ -20,7 +20,8 @@
 #'    value.
 #' @param path The file location of where the generated mgf file was saved.
 #'
-write.mgf <- function(meta, ms2, path) {
+write.mgf <- function(meta, ms2, path, verbose = TRUE) {
+
     mz       <- meta[, "mz"]      %=>% as.numeric;
     rt       <- meta[, "rt"]      %=>% as.numeric;
     charge   <- meta[, "charge"]  %=>% as.numeric;
@@ -35,6 +36,11 @@ write.mgf <- function(meta, ms2, path) {
     }
 
     for(i in 1:nrow(meta)) {
+        if (verbose) {
+            cat(libnames[i]);
+            cat(" ");
+        }
+
         spectra <- lib_ms2(libnames[i]);
         ion     <- mgf.ion(
             mz[i], rt[i],
@@ -44,6 +50,10 @@ write.mgf <- function(meta, ms2, path) {
         );
 
         ion %=>% write;
+
+        if (verbose) {
+            cat("...OK!\n");
+        }
     }
 
     invisible(NULL);
