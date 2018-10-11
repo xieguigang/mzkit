@@ -16,6 +16,8 @@
 #'    \code{mz}, \code{rt}, \code{charge}, \code{libname} value fields.
 #' @param ms2 Ms2 library data. A list of \code{dataframe} object, where the list
 #'    member name is the \code{libname} value in \code{meta} parameter value.
+#'    Or this parameter can be a function to produce such data by a given libname
+#'    value.
 #' @param path The file location of where the generated mgf file was saved.
 #'
 write.mgf <- function(meta, ms2, path) {
@@ -26,8 +28,14 @@ write.mgf <- function(meta, ms2, path) {
 
     write <- path %=>% File.Open;
 
+    if (is.function(ms2)) {
+        lib_ms2 = ms2;
+    } else {
+        lib_ms2 = function(libname) ms2[[libname]];
+    }
+
     for(i in 1:nrow(meta)) {
-        spectra <- ms2[[libnames[i]]];
+        spectra <- lib_ms2(libnames[i]);
         ion     <- mgf.ion(
             mz[i], rt[i],
             spectra,

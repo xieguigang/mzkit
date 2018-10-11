@@ -12,7 +12,9 @@ this \code{dataframe} should contains at least:
 \code{mz}, \code{rt}, \code{charge}, \code{libname} value fields.}
 
 \item{ms2}{Ms2 library data. A list of \code{dataframe} object, where the list
-member name is the \code{libname} value in \code{meta} parameter value.}
+member name is the \code{libname} value in \code{meta} parameter value.
+Or this parameter can be a function to produce such data by a given libname
+value.}
 
 \item{path}{The file location of where the generated mgf file was saved.}
 }
