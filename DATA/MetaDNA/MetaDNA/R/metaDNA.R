@@ -224,7 +224,7 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
             query <- lapply(1:length(mz), function(i) {
                 # unknown metabolite ms1 m/z match
                 # kegg mz with a given tolerance
-                if (tolerance(ms1, mz[i])) {
+                if (tolerance(ms1, mz[i])$valid) {
                     # If these two m/z value meet the tolerance condition
                     # then we match a possible KEGG annotation data.
                     # also returns with ppm value
