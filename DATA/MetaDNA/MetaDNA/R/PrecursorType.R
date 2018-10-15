@@ -1,4 +1,4 @@
-#Region "Microsoft.ROpen::3f105641483665331fcf900f09516358, PrecursorType.R"
+#Region "Microsoft.ROpen::a2c17479e7d23b3d429270c4dd142421, PrecursorType.R"
 
     # Summaries:
 
@@ -334,7 +334,8 @@ PrecursorType.Match <- function(
 
         NA;
 	} else if (tolerance(precursorMZ, mass / abs(charge))$valid) {
-	  # 本身的分子质量和前体的mz一样，说明为[M]类型
+	  # The source mass is equals to the precursor_m/z,
+	  # means it is a [M] type (auto-ionlization)
 	  if(abs(charge) == 1) {
 	    sprintf("[M]%s", chargeMode);
 	  } else {
@@ -349,18 +350,20 @@ PrecursorType.Match <- function(
 	}
 }
 
-#' 每一个模式都计算一遍，然后返回最小的ppm差值结果
+#' Calculate for each precursor type, and then returns the
+#' min tolerance type as the match result
 .PrecursorType.MatchImpl <- function(
   mass, precursorMZ, charge,
   chargeMode, tolerance,
   debug.echo) {
 
-  ## 得到某一个离子模式下的计算程序
+  ## Get the calculator in current ion mode
   mode <- Calculator[[chargeMode]];
-  
+
   if (chargeMode == "-") {
-    ## 对于负离子模式而言，虽然电荷量是负数的，但是使用xcms解析出来的却是一个电荷数的绝对值
-    ## 所以需要判断一次，乘以-1
+    ## For the negative mode, the charge is a negative value.
+    ## But the xcms package extract a positive charge value.
+    ## So this required a negative factor
     if (charge > 0) {
       charge = -1 * charge;
     }
@@ -368,41 +371,41 @@ PrecursorType.Match <- function(
 
   match <- function(keyName) {
 	calc <- mode[[keyName]];
-	
-	## 跳过电荷数不匹配的离子模式计算表达式
+
+	## Skip the precursor type where the charge value is not match
     if (charge != calc$charge) {
 		note  <- "charge mismatched!";
 		error <- NA;
 		valid <- FALSE
 	} else {
-		## 这里实际上是根据数据库之中的分子质量，通过前体离子的质量计算出mz结果
-		## 然后计算mz计算结果和precursorMZ的ppm信息
+		# Calculate the mass from precursor mz and then calculate the
+	    # mass tolerance
 		mass.reverse <- calc$calc(precursorMZ);
 		validate     <- tolerance(mass.reverse, mass);
-		
+
 		if (validate$valid) {
 			note <- NA;
-		} else {			
+		} else {
 			note <- "Tolerance not satisfied!";
 		}
-		
+
 		error <- validate$error;
 		valid <- validate$valid;
 	}
-	
+
 	calc$error  <- error;
 	calc$valid  <- valid;
 	calc$calc   <- NULL;
 	calc$cal.mz <- NULL;
 	calc$note   <- note;
-	
+
 	calc;
   }
-  
-  ## 遍历这个模式下的所有离子前体计算
+
+  ## enumerate all of the types in current mode
   match <- lapply(mode %=>% names, match);
   match <- match %=>% as.dataframe;
-  
+
   # > head(match)
   #   Name          charge M adduct   error valid
   # 1 "[M+3H]3+"    3      1 3.021828 NA    FALSE
@@ -414,26 +417,26 @@ PrecursorType.Match <- function(
   if (debug.echo) {
 	print(match);
   }
-  
-  # 查找valid的结果
+
+  # find which result its tolerance is valid
   valids <- (match[, "valid"] == TRUE) %=>% as.logical %=>% which;
-  
+
   if (length(valids) == 0) {
-	# 没有结果
+	# no result
 	min <- NA;
   } else if (length(valids) > 1) {
-	# 取最小的误差结果
+	# get the min tolerance result
 	min <- match[, "error"] %=>% as.numeric %=>% which.min;
   } else {
-	# 直接取结果出来
+	# get the unique result
 	min <- valids;
   }
-  
+
   if (min %=>% IsNothing) {
 	msg <- "No precursor_type: [mass=%s, m/z=%s] charge=%s(%s) with tolerance=%s";
-	msg <- sprintf(msg, 
-		mass, precursorMZ, 
-		charge, chargeMode, 
+	msg <- sprintf(msg,
+		mass, precursorMZ,
+		charge, chargeMode,
 		tolerance(0, 0)$describ
 	);
 	warning(msg);
@@ -442,7 +445,7 @@ PrecursorType.Match <- function(
 	if (debug.echo) {
 		printf("  ==> %s\n", match[min, ]$Name);
 	}
-	
+
 	# we found it!
 	match[min, ]$Name;
   }

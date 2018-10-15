@@ -1,4 +1,4 @@
-#Region "Microsoft.ROpen::e2daf55e7223206e9fbf45ea4c98d726, MzCalculator.R"
+#Region "Microsoft.ROpen::b610fd5f08d5ac7c4710d9fbc3ee7efe, MzCalculator.R"
 
     # Summaries:
 
@@ -30,7 +30,8 @@ mz.calculator <- function(mass, mode = c(1, -1), debug = FALSE) {
         calc <- negative();
     }
 
-    # 枚举计算器之中的所有的前体离子的类型，然后计算完成之后返回数据框
+    # Enumerate all of the precursor type in the calculator,
+    # and then returns the m/z result data frame
     out <- c();
 
     if (debug) {
