@@ -1,4 +1,5 @@
-﻿Imports System.Xml.Serialization
+﻿Imports System.Runtime.CompilerServices
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace DATA.SpectrumJSON
@@ -8,10 +9,11 @@ Namespace DATA.SpectrumJSON
         Public Property url As String
         Public Property Data As SpectrumData()
 
-        Public Shared Function Load(json$) As MetlinData
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function Load(json As String) As MetlinData
             Return New MetlinData With {
                 .url = json,
-                .Data = json.ReadAllText.LoadJSON(Of SpectrumData())
+                .Data = json.LoadJSON(Of SpectrumData())
             }
         End Function
     End Class
