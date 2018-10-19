@@ -426,6 +426,9 @@ PrecursorType.Match <- function(
 	min <- NA;
   } else if (length(valids) > 1) {
 	# get the min tolerance result
+	# if exists multiple valid result, then it means all of their
+	# error is under the cutoff
+	# So get the min error one as the result.
 	min <- match[, "error"] %=>% as.numeric %=>% which.min;
   } else {
 	# get the unique result
@@ -442,11 +445,13 @@ PrecursorType.Match <- function(
 	warning(msg);
 	NA;
   } else {
+	min <- match[min, ];
+	
 	if (debug.echo) {
-		printf("  ==> %s\n", match[min, ]$Name);
+		printf("  ==> %s\n", min[["Name"]]);
 	}
 
 	# we found it!
-	match[min, ]$Name;
+	min[["Name"]];
   }
 }
