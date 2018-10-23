@@ -27,7 +27,7 @@ Public Module Statistics
             Else
                 With refMap.KEGGCompound
                     coverages(refMap.EntryId) = (
-                        .Where(Function(id) list(id.Key) > -1) _
+                        .Where(Function(id) list(id.name) > -1) _
                         .Count,
                         .Length)
                 End With
