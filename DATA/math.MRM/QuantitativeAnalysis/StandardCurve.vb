@@ -118,16 +118,18 @@ Public Module StandardCurve
 
         Dim [IS] As Dictionary(Of String, [IS]) = ISvector.ToDictionary(Function(i) i.ID)
 
-        For Each ion As Standards In calibrates _
-            .Where(Function(i)
-                       Return Not i.IS.StringEmpty AndAlso
-                              Not ionTPA(i.IS) Is Nothing AndAlso
-                              Not ionTPA(i.IS).Properties.Count < i.C.Count ' 标曲文件之中只有7个点，但是实际上打了10个点，剩下的三个点可以不要了
-                   End Function)
+        For Each ion As Standards In calibrates
+            ' 20181106 如果没有内标，则不进行内标校正
+            ' 所以在这里移除下面的where筛选
+            ' .Where(Function(i)
+            '            Return Not i.IS.StringEmpty AndAlso
+            '                   Not ionTPA(i.IS) Is Nothing AndAlso
+            '                   Not ionTPA(i.IS).Properties.Count < i.C.Count ' 标曲文件之中只有7个点，但是实际上打了10个点，剩下的三个点可以不要了
+            '        End Function)
 
-            Dim TPA As DataSet = ionTPA(ion.HMDB)  ' 得到标准曲线实验数据
-            Dim ISA As DataSet = ionTPA(ion.IS)    ' 得到内标的实验数据
-            Dim CIS# = [IS](ion.IS).CIS            ' 内标的浓度，是不变的，所以就只有一个值
+            Dim TPA As DataSet = ionTPA(ion.HMDB)    ' 得到标准曲线实验数据
+            Dim ISA As DataSet = ionTPA(ion.IS)      ' 得到内标的实验数据，如果是空值的话，说明不需要内标进行校正
+            Dim CIS# = [IS].TryGetValue(ion.IS)?.CIS ' 内标的浓度，是不变的，所以就只有一个值
             Dim points As New List(Of MRMStandards)
 
             ' 标准曲线数据
