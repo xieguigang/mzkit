@@ -8,7 +8,10 @@ Public Module viz
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function StandardCurves(model As FitModel, Optional samples As IEnumerable(Of NamedValue(Of Double)) = Nothing, Optional name$ = "") As GraphicsData
+    Public Function StandardCurves(model As FitModel,
+                                   Optional samples As IEnumerable(Of NamedValue(Of Double)) = Nothing,
+                                   Optional name$ = "") As GraphicsData
+
         If model.RequireISCalibration Then
             ' 如果进行内标校正的话，则应该是[峰面积比, 浓度比]之间的线性关系
             Return model _
@@ -31,8 +34,8 @@ Public Module viz
                       yLabel:="Cti u mol/L",
                       size:="1600,1100",
                       predictedX:=samples,
-                      xAxisTickFormat:="G0",
-                      yAxisTickFormat:="F2",
+                      xAxisTickFormat:="G2",
+                      yAxisTickFormat:="F0",
                       showErrorBand:=False,
                       title:=name,
                       margin:="padding: 100px 100px 100px 200px"
