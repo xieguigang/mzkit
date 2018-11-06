@@ -52,19 +52,35 @@ Public Module StandardCurve
 
         ' 遍历得到的所有的标准曲线，进行样本之中的浓度的计算
         For Each metabolite As FitModel In model.Where(Function(m) TPA.ContainsKey(m.Name))
-            If Not TPA.ContainsKey(metabolite.IS.ID) Then
-                Continue For
+            Dim AIS As (ROI As DoubleRange, TPA#, baseline#, maxinto#)
+            Dim X#
+            ' 得到样品之中的峰面积
+            Dim A = TPA(metabolite.Name)
+
+            If Not metabolite.RequireISCalibration Then
+                ' 不需要内标进行校正
+                ' 则X轴的数据直接是代谢物的峰面积数据
+                X = A.TPA
+            Else
+                ' 数据存在丢失
+                If Not TPA.ContainsKey(metabolite.IS.ID) Then
+                    Continue For
+                Else
+                    ' 得到与样品混在一起的内标的峰面积
+                    ' X轴数据需要做内标校正
+                    AIS = TPA(metabolite.IS.ID)
+                    X# = A.TPA / AIS.TPA
+                End If
             End If
 
-            Dim A = TPA(metabolite.Name)            ' 得到样品之中的峰面积
-            Dim AIS = TPA(metabolite.IS.ID)         ' 得到与样品混在一起的内标的峰面积
-            Dim X# = A.TPA / AIS.TPA
-            Dim C# = metabolite.LinearRegression(X) ' 利用峰面积比计算出浓度结果数据
+            ' 利用峰面积比计算出浓度结果数据
+            ' 然后通过X轴的数据就可以通过标准曲线的线性回归模型计算出浓度了
+            Dim C# = metabolite.LinearRegression(X)
 
             ' 这里的C是相当于 cIS/ct = C，则样品的浓度结果应该为 ct = cIS/C
             ' C = Val(info!cIS) / C
 
-            Dim [IS] As IonPair = names(metabolite.IS.ID)
+            Dim [IS] As IonPair = names.TryGetValue(metabolite.IS.ID)
             Dim peaktable As New MRMPeakTable With {
                 .content = C,
                 .ID = metabolite.Name,
@@ -75,7 +91,7 @@ Public Module StandardCurve
                 .TPA = A.TPA,
                 .TPA_IS = AIS.TPA,
                 .base = A.baseline,
-                .IS = $"{[IS].AccID} ({[IS].name})",
+                .IS = If([IS] Is Nothing, "", $"{[IS].AccID} ({[IS].name})"),
                 .maxinto = A.maxinto,
                 .maxinto_IS = AIS.maxinto
             }
@@ -128,10 +144,10 @@ Public Module StandardCurve
             '                   Not ionTPA(i.IS).Properties.Count < i.C.Count ' 标曲文件之中只有7个点，但是实际上打了10个点，剩下的三个点可以不要了
             '        End Function)
 
-            Dim TPA As DataSet = ionTPA(ion.HMDB)        ' 得到标准曲线实验数据
-            Dim ISA As DataSet = ionTPA(ion.IS)          ' 得到内标的实验数据，如果是空值的话，说明不需要内标进行校正
-            Dim IsIon As [IS] = [IS].TryGetValue(ion.IS) ' 尝试得到内标的数据
-            Dim CIS# = IsIon?.CIS                        ' 内标的浓度，是不变的，所以就只有一个值
+            Dim TPA As DataSet = ionTPA(ion.HMDB)                             ' 得到标准曲线实验数据
+            Dim ISA As DataSet = ionTPA(ion.IS)                               ' 得到内标的实验数据，如果是空值的话，说明不需要内标进行校正
+            Dim IsIon As [IS] = [IS].TryGetValue(ion.IS, [default]:=New [IS]) ' 尝试得到内标的数据
+            Dim CIS# = IsIon?.CIS                                             ' 内标的浓度，是不变的，所以就只有一个值
             Dim points As New List(Of MRMStandards)
 
             ' 标准曲线数据
