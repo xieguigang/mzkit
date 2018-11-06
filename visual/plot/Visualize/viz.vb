@@ -1,15 +1,16 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports SMRUCC.MassSpectrum.Math.MRM
 
 Public Module viz
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function StandardCurves(model As NamedValue(Of IFitted), Optional samples As IEnumerable(Of NamedValue(Of Double)) = Nothing, Optional name$ = "") As GraphicsData
+    Public Function StandardCurves(model As FitModel, Optional samples As IEnumerable(Of NamedValue(Of Double)) = Nothing, Optional name$ = "") As GraphicsData
         Return model _
-            .Value _
+            .LinearRegression _
             .Plot(xLabel:="Peak area ratio (AIS/Ati)",
                   yLabel:="(CIS/Cti u mol/L) ratio",
                   size:="1600,1100",
