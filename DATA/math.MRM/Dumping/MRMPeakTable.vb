@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 
 Namespace Dumping
 
@@ -67,18 +68,50 @@ Namespace Dumping
         ''' <returns></returns>
         Public Property raw As String
 
+        Public Overrides Function ToString() As String
+            Return Name
+        End Function
+
     End Class
 
+    ''' <summary>
+    ''' 表示标准曲线上面的一个实验数据点
+    ''' </summary>
     Public Class MRMStandards
 
         Public Property ID As String
         Public Property Name As String
 
+        ''' <summary>
+        ''' 内标峰面积
+        ''' </summary>
+        ''' <returns></returns>
         Public Property AIS As Double
+        ''' <summary>
+        ''' 当前试验点的标准品峰面积
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Ati As Double
+        ''' <summary>
+        ''' 内标浓度
+        ''' </summary>
+        ''' <returns></returns>
         Public Property cIS As Double
+        ''' <summary>
+        ''' 当前试验点的标准品浓度
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Cti As Double
 
+        ''' <summary>
+        ''' 浓度梯度水平的名称，例如：``L1, L2, L3, ...``
+        ''' </summary>
+        ''' <returns></returns>
         Public Property level As String
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overrides Function ToString() As String
+            Return $"Dim {Name} As {ID} = {Cti}"
+        End Function
     End Class
 End Namespace
