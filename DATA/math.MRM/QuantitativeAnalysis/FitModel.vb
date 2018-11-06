@@ -14,6 +14,10 @@ Public Class FitModel : Implements INamedValue
     ''' <returns></returns>
     Public Property LinearRegression As IFitted
 
+    Public Overrides Function ToString() As String
+        Return $"[{Name}] {LinearRegression}"
+    End Function
+
 End Class
 
 Public Class ContentResult : Implements INamedValue

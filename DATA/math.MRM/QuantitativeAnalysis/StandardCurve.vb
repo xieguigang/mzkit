@@ -50,6 +50,7 @@ Public Module StandardCurve
 
         raw = raw.FileName
 
+        ' 遍历得到的所有的标准曲线，进行样本之中的浓度的计算
         For Each metabolite As FitModel In model.Where(Function(m) TPA.ContainsKey(m.Name))
             If Not TPA.ContainsKey(metabolite.Info!IS) Then
                 Continue For
@@ -280,7 +281,7 @@ Public Module StandardCurve
     ''' <summary>
     ''' 从一个原始文件之中扫描出给定的离子对的峰面积数据
     ''' </summary>
-    ''' <param name="raw$"></param>
+    ''' <param name="raw$">``*.mzML``原始样本数据文件</param>
     ''' <param name="ionpairs"></param>
     ''' <param name="TPAFactors">
     ''' ``{<see cref="Standards.HMDB"/>, <see cref="Standards.Factor"/>}``，这个是为了计算亮氨酸和异亮氨酸这类无法被区分的物质的峰面积所需要的
