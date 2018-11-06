@@ -126,9 +126,9 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dumping\MRMPeakTable.vb" />
-    <Compile Include="Dumping\Extensions.vb" />
-    <Compile Include="Dumping\TargetQuantification.vb" />
+    <Compile Include="Data\MRMPeakTable.vb" />
+    <Compile Include="Data\Extensions.vb" />
+    <Compile Include="Data\TargetQuantification.vb" />
     <Compile Include="Extensions.vb" />
     <Compile Include="QuantitativeAnalysis\Chromatogram\AccumulateROI.vb" />
     <Compile Include="QuantitativeAnalysis\Chromatogram\MRMPeak.vb" />
