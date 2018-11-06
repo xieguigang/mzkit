@@ -124,8 +124,8 @@ Public Module MRMSamples
                 ) _
                 .ToArray
 
-            For Each metabolite In result
-                mrmpeaktable += metabolite.Item1
+            For Each metabolite As ContentResult In result
+                mrmpeaktable += metabolite.Peaktable
             Next
 
             If result.Length = 0 Then
@@ -135,16 +135,18 @@ Public Module MRMSamples
                 out += New DataSet With {
                     .ID = file.BaseName,
                     .Properties = result _
-                        .ToDictionary(Function(i) i.Item2.Name,
-                                      Function(i) i.Item2.Value)
+                        .ToDictionary(Function(i) i.Name,
+                                      Function(i)
+                                          Return i.Content
+                                      End Function)
                 }
                 ' 这个是峰面积比 AIS/At 数据
                 X += New DataSet With {
                     .ID = file.BaseName,
                     .Properties = result _
-                        .ToDictionary(Function(i) i.Item2.Name,
+                        .ToDictionary(Function(i) i.Name,
                                       Function(i)
-                                          Return Val(i.Item2.Description)
+                                          Return i.X
                                       End Function)
                 }
             End If

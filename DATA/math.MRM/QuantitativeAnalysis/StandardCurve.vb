@@ -28,13 +28,16 @@ Public Module StandardCurve
     ''' <param name="model">标准曲线线性回归模型，X为峰面积</param>
     ''' <param name="raw$"></param>
     ''' <param name="ions"></param>
-    ''' <returns><see cref="NamedValue(Of Double).Value"/>是指定的代谢物的浓度结果数据，<see cref="NamedValue(Of Double).Description"/>则是AIS/A的结果，即X轴的数据</returns>
+    ''' <returns>
+    ''' <see cref="NamedValue(Of Double).Value"/>是指定的代谢物的浓度结果数据，
+    ''' <see cref="NamedValue(Of Double).Description"/>则是AIS/A的结果，即X轴的数据
+    ''' </returns>
     <Extension>
     Public Iterator Function ScanContent(model As FitModel(),
                                          raw$,
                                          ions As IonPair(),
                                          peakAreaMethod As PeakArea.Methods,
-                                         TPAFactors As Dictionary(Of String, Double)) As IEnumerable(Of (MRMPeakTable, NamedValue(Of Double)))
+                                         TPAFactors As Dictionary(Of String, Double)) As IEnumerable(Of ContentResult)
         Dim baseline# = 0
         Dim TPA = raw _
             .ScanTPA(ionpairs:=ions,
@@ -75,13 +78,13 @@ Public Module StandardCurve
                 .maxinto = A.maxinto,
                 .maxinto_IS = AIS.maxinto
             }
-            Dim result As New NamedValue(Of Double) With {
-                .Name = metabolite.Name,
-                .Value = C,
-                .Description = X
-            }
 
-            Yield (peaktable, result)
+            Yield New ContentResult With {
+                .Name = metabolite.Name,
+                .Content = C,
+                .X = X,
+                .Peaktable = peaktable
+            }
         Next
     End Function
 
