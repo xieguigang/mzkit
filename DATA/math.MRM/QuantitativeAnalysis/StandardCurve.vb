@@ -112,7 +112,10 @@ Public Module StandardCurve
     ''' <param name="calibrates"></param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function Regression(ionTPA As Dictionary(Of DataSet), calibrates As Standards(), [ISvector] As [IS]()) As IEnumerable(Of NamedValue(Of (IFitted, MRMStandards())))
+    Public Iterator Function Regression(ionTPA As Dictionary(Of DataSet),
+                                        calibrates As Standards(),
+                                        [ISvector] As [IS]()) As IEnumerable(Of NamedValue(Of (IFitted, MRMStandards())))
+
         Dim [IS] As Dictionary(Of String, [IS]) = ISvector.ToDictionary(Function(i) i.ID)
 
         For Each ion As Standards In calibrates _
