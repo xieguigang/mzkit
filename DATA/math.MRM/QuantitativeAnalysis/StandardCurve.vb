@@ -127,12 +127,14 @@ Public Module StandardCurve
             '                   Not ionTPA(i.IS).Properties.Count < i.C.Count ' 标曲文件之中只有7个点，但是实际上打了10个点，剩下的三个点可以不要了
             '        End Function)
 
-            Dim TPA As DataSet = ionTPA(ion.HMDB)    ' 得到标准曲线实验数据
-            Dim ISA As DataSet = ionTPA(ion.IS)      ' 得到内标的实验数据，如果是空值的话，说明不需要内标进行校正
-            Dim CIS# = [IS].TryGetValue(ion.IS)?.CIS ' 内标的浓度，是不变的，所以就只有一个值
+            Dim TPA As DataSet = ionTPA(ion.HMDB)                        ' 得到标准曲线实验数据
+            Dim ISA As DataSet = ionTPA(ion.IS)                          ' 得到内标的实验数据，如果是空值的话，说明不需要内标进行校正
+            Dim CIS# = [IS].TryGetValue(ion.IS, [default]:=New [IS]).CIS ' 内标的浓度，是不变的，所以就只有一个值
             Dim points As New List(Of MRMStandards)
 
             ' 标准曲线数据
+            ' 从实验数据之中产生线性回归计算所需要的点的集合
+            ' 注意，这些点之间是具有先后顺序的
             Dim line As PointF() = ion _
                 .C _
                 .OrderBy(Function(l)
@@ -141,13 +143,25 @@ Public Module StandardCurve
                          End Function) _
                 .Select(Function(level)
 
-                            Dim At_i = TPA(level.Key)   ' 得到峰面积Ati
-                            Dim Ct_i = level.Value      ' 得到已知的浓度数据
-                            Dim AIS = ISA(level.Key)    ' 内标的峰面积
+                            Dim At_i = TPA(level.Key) ' 得到峰面积Ati
+                            Dim Ct_i = level.Value    ' 得到已知的浓度数据
+                            Dim AIS#                  ' 内标的峰面积
 
                             ' X 为峰面积，这样子在后面计算的时候就可以直接将离子对的峰面积带入方程计算出浓度结果了
-                            Dim pX = At_i / AIS
-                            Dim pY = Ct_i ' / CIS   ' 因为CIS是假设恒定不变的，所以在这里就直接使用标准曲线的点的浓度来作为Y轴的值了
+                            Dim pX#
+                            ' 20181106
+                            ' 因为CIS是假设恒定不变的，所以在这里就直接使用标准曲线的点的浓度来作为Y轴的值了
+                            Dim pY# = Ct_i ' / CIS   
+
+                            If ISA Is Nothing Then
+                                ' 不需要进行内标校正的情况
+                                AIS = 0
+                                pX = At_i
+                            Else
+                                ' 需要做内标校正的情况
+                                AIS = ISA(level.Key)
+                                pX = At_i / AIS
+                            End If
 
                             ' C = f(A/AIS) = a * X + b
                             ' 在进行计算的时候，直接将 样本的峰面积除以内标的峰面积 作为X
@@ -182,7 +196,7 @@ Public Module StandardCurve
             Dim W = 1 / X ^ 2
             Dim fit As WeightedFit = WeightedLinearRegression.Regress(X, Y, W, 1)
             Dim info As New Dictionary(Of String, String) From {
-                {"IS", ion.IS},
+                {"IS", ion.IS Or EmptyString},
                 {"cIS", CIS}
             }
             Dim out As New NamedValue(Of (IFitted, MRMStandards())) With {
