@@ -46,7 +46,7 @@ Public Module StandardCurve
             ) _
             .ToDictionary(Function(ion) ion.Name,
                           Function(A) A.Value)
-        Dim names = ions.ToDictionary(Function(i) i.AccID)
+        Dim names As Dictionary(Of String, IonPair) = ions.ToDictionary(Function(i) i.AccID)
 
         raw = raw.FileName
 
