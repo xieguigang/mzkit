@@ -30,7 +30,7 @@ Public Module StandardCurve
     ''' <param name="ions"></param>
     ''' <returns><see cref="NamedValue(Of Double).Value"/>是指定的代谢物的浓度结果数据，<see cref="NamedValue(Of Double).Description"/>则是AIS/A的结果，即X轴的数据</returns>
     <Extension>
-    Public Iterator Function ScanContent(model As NamedValue(Of IFitted)(),
+    Public Iterator Function ScanContent(model As FitModel(),
                                          raw$,
                                          ions As IonPair(),
                                          peakAreaMethod As PeakArea.Methods,
@@ -47,23 +47,20 @@ Public Module StandardCurve
 
         raw = raw.FileName
 
-        For Each metabolite In model.Where(Function(m) TPA.ContainsKey(m.Name))
-            Dim info = metabolite.Description.LoadJSON(Of Dictionary(Of String, String))
-            Dim line = metabolite.Value    ' 该代谢物的线性回归模型
-
-            If Not TPA.ContainsKey(info!IS) Then
+        For Each metabolite As FitModel In model.Where(Function(m) TPA.ContainsKey(m.Name))
+            If Not TPA.ContainsKey(metabolite.Info!IS) Then
                 Continue For
             End If
 
-            Dim A = TPA(metabolite.Name)     ' 得到样品之中的峰面积
-            Dim AIS = TPA(info!IS)           ' 得到与样品混在一起的内标的峰面积
+            Dim A = TPA(metabolite.Name)            ' 得到样品之中的峰面积
+            Dim AIS = TPA(metabolite.Info!IS)       ' 得到与样品混在一起的内标的峰面积
             Dim X# = A.TPA / AIS.TPA
-            Dim C = line(X)                  ' 利用峰面积比计算出浓度结果数据
+            Dim C# = metabolite.LinearRegression(X) ' 利用峰面积比计算出浓度结果数据
 
             ' 这里的C是相当于 cIS/ct = C，则样品的浓度结果应该为 ct = cIS/C
             ' C = Val(info!cIS) / C
 
-            Dim [IS] = names(info!IS)
+            Dim [IS] As IonPair = names(metabolite.Info!IS)
             Dim peaktable As New MRMPeakTable With {
                 .content = C,
                 .ID = metabolite.Name,

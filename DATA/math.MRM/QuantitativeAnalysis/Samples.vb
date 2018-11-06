@@ -6,6 +6,7 @@ Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
 Imports SMRUCC.MassSpectrum.Math.MRM.Dumping
@@ -48,7 +49,7 @@ Public Module MRMSamples
     ''' </param>
     ''' <returns>经过定量计算得到的浓度数据</returns>
     Public Function QuantitativeAnalysis(wiff$, ions As IonPair(), calibrates As Standards(), [IS] As [IS](),
-                                         <Out> Optional ByRef model As NamedValue(Of IFitted)() = Nothing,
+                                         <Out> Optional ByRef model As FitModel() = Nothing,
                                          <Out> Optional ByRef standardPoints As NamedValue(Of MRMStandards())() = Nothing,
                                          <Out> Optional ByRef X As List(Of DataSet) = Nothing,
                                          <Out> Optional ByRef peaktable As MRMPeakTable() = Nothing,
@@ -76,10 +77,14 @@ Public Module MRMSamples
         X = New List(Of DataSet)
         model = detections _
             .Select(Function(i)
-                        Return New NamedValue(Of IFitted) With {
+                        Dim info = i _
+                            .Description _
+                            .LoadJSON(Of Dictionary(Of String, String))
+
+                        Return New FitModel With {
                             .Name = i.Name,
-                            .Value = i.Value.Item1,
-                            .Description = i.Description
+                            .LinearRegression = i.Value.Item1,
+                            .Info = info
                         }
                     End Function) _
             .ToArray

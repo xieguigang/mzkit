@@ -132,6 +132,7 @@
     <Compile Include="Extensions.vb" />
     <Compile Include="QuantitativeAnalysis\Chromatogram\AccumulateROI.vb" />
     <Compile Include="QuantitativeAnalysis\Chromatogram\MRMPeak.vb" />
+    <Compile Include="QuantitativeAnalysis\FitModel.vb" />
     <Compile Include="Standards.vb" />
     <Compile Include="IS.vb" />
     <Compile Include="QuantitativeAnalysis\Samples.vb" />
