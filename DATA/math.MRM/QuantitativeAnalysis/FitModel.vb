@@ -2,11 +2,12 @@
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports SMRUCC.MassSpectrum.Math.MRM.Dumping
+Imports SMRUCC.MassSpectrum.Math.MRM.Models
 
 Public Class FitModel : Implements INamedValue
 
     Public Property Name As String Implements IKeyedEntity(Of String).Key
-    Public Property Info As Dictionary(Of String, String)
+    Public Property [IS] As [IS]
 
     ''' <summary>
     ''' 该代谢物的线性回归模型

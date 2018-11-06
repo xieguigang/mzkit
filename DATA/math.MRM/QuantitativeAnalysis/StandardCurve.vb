@@ -9,8 +9,8 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
 Imports SMRUCC.MassSpectrum.Math.MRM
@@ -52,19 +52,19 @@ Public Module StandardCurve
 
         ' 遍历得到的所有的标准曲线，进行样本之中的浓度的计算
         For Each metabolite As FitModel In model.Where(Function(m) TPA.ContainsKey(m.Name))
-            If Not TPA.ContainsKey(metabolite.Info!IS) Then
+            If Not TPA.ContainsKey(metabolite.IS.ID) Then
                 Continue For
             End If
 
             Dim A = TPA(metabolite.Name)            ' 得到样品之中的峰面积
-            Dim AIS = TPA(metabolite.Info!IS)       ' 得到与样品混在一起的内标的峰面积
+            Dim AIS = TPA(metabolite.IS.ID)         ' 得到与样品混在一起的内标的峰面积
             Dim X# = A.TPA / AIS.TPA
             Dim C# = metabolite.LinearRegression(X) ' 利用峰面积比计算出浓度结果数据
 
             ' 这里的C是相当于 cIS/ct = C，则样品的浓度结果应该为 ct = cIS/C
             ' C = Val(info!cIS) / C
 
-            Dim [IS] As IonPair = names(metabolite.Info!IS)
+            Dim [IS] As IonPair = names(metabolite.IS.ID)
             Dim peaktable As New MRMPeakTable With {
                 .content = C,
                 .ID = metabolite.Name,
@@ -115,7 +115,7 @@ Public Module StandardCurve
     <Extension>
     Public Iterator Function Regression(ionTPA As Dictionary(Of DataSet),
                                         calibrates As Standards(),
-                                        [ISvector] As [IS]()) As IEnumerable(Of NamedValue(Of (IFitted, MRMStandards())))
+                                        [ISvector] As [IS]()) As IEnumerable(Of NamedValue(Of (IFitted, MRMStandards(), [IS])))
 
         Dim [IS] As Dictionary(Of String, [IS]) = ISvector.ToDictionary(Function(i) i.ID)
 
@@ -128,9 +128,10 @@ Public Module StandardCurve
             '                   Not ionTPA(i.IS).Properties.Count < i.C.Count ' 标曲文件之中只有7个点，但是实际上打了10个点，剩下的三个点可以不要了
             '        End Function)
 
-            Dim TPA As DataSet = ionTPA(ion.HMDB)                        ' 得到标准曲线实验数据
-            Dim ISA As DataSet = ionTPA(ion.IS)                          ' 得到内标的实验数据，如果是空值的话，说明不需要内标进行校正
-            Dim CIS# = [IS].TryGetValue(ion.IS, [default]:=New [IS]).CIS ' 内标的浓度，是不变的，所以就只有一个值
+            Dim TPA As DataSet = ionTPA(ion.HMDB)        ' 得到标准曲线实验数据
+            Dim ISA As DataSet = ionTPA(ion.IS)          ' 得到内标的实验数据，如果是空值的话，说明不需要内标进行校正
+            Dim IsIon As [IS] = [IS].TryGetValue(ion.IS) ' 尝试得到内标的数据
+            Dim CIS# = IsIon?.CIS                        ' 内标的浓度，是不变的，所以就只有一个值
             Dim points As New List(Of MRMStandards)
 
             ' 标准曲线数据
@@ -156,6 +157,7 @@ Public Module StandardCurve
 
                             If ISA Is Nothing Then
                                 ' 不需要进行内标校正的情况
+                                ' 直接使用样本的峰面积作为X轴数据
                                 AIS = 0
                                 pX = At_i
                             Else
@@ -194,16 +196,11 @@ Public Module StandardCurve
                 Y = .Y
             End With
 
-            Dim W = 1 / X ^ 2
+            Dim W As Vector = 1 / X ^ 2
             Dim fit As WeightedFit = WeightedLinearRegression.Regress(X, Y, W, 1)
-            Dim info As New Dictionary(Of String, String) From {
-                {"IS", ion.IS Or EmptyString},
-                {"cIS", CIS}
-            }
-            Dim out As New NamedValue(Of (IFitted, MRMStandards())) With {
+            Dim out As New NamedValue(Of (IFitted, MRMStandards(), [IS])) With {
                 .Name = ion.HMDB,
-                .Value = (fit, points.ToArray),
-                .Description = info.GetJson
+                .Value = (fit, points.ToArray, IsIon)
             }
 
             Yield out

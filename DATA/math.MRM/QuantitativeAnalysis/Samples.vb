@@ -74,7 +74,7 @@ Public Module MRMSamples
         Dim TPAFactors = calibrates.ToDictionary(Function(ion) ion.HMDB, Function(ion) ion.Factor)
 
         ' 扫描标准曲线的样本，然后进行回归建模 
-        Dim detections As NamedValue(Of (IFitted, MRMStandards()))() =
+        Dim detections As NamedValue(Of (IFitted, MRMStandards(), [IS]))() =
             StandardCurve _
             .Scan(externalStandardsWiff Or wiff.AsDefault, ions, calibrates,
                   refName:=standardNames,
@@ -91,14 +91,10 @@ Public Module MRMSamples
         isBlank = isBlank Or defaultBlankNames
         model = detections _
             .Select(Function(i)
-                        Dim info = i _
-                            .Description _
-                            .LoadJSON(Of Dictionary(Of String, String))
-
                         Return New FitModel With {
                             .Name = i.Name,
                             .LinearRegression = i.Value.Item1,
-                            .Info = info
+                            .IS = i.Value.Item3
                         }
                     End Function) _
             .ToArray
