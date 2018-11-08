@@ -1,14 +1,9 @@
-﻿Public Class GCMSJson
+﻿Imports SMRUCC.MassSpectrum.Math
 
-    Public Property time
-    Public Property series As SerialPoint()
+Public Class GCMSJson
 
-End Class
-
-Public Class SerialPoint
-
-    Public Property name As String
-    Public Property dimension As Integer
-    Public Property data
+    Public Property times
+    Public Property tic As Double()
+    Public Property ms As ms1_scan()()
 
 End Class
