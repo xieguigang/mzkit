@@ -1,5 +1,8 @@
 ﻿Imports Microsoft.VisualBasic.MIME.application.netCDF
 
+''' <summary>
+''' https://github.com/cheminfo-js/netcdf-gcms
+''' </summary>
 Public Module QuantifyAnalysis
 
     ''' <summary>
