@@ -81,6 +81,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Vendors\agilentGCMS.vb" />
+    <Compile Include="Vendors\agilentHPLC.vb" />
+    <Compile Include="Vendors\aiaTemplate.vb" />
+    <Compile Include="Vendors\brukerGCMS.vb" />
+    <Compile Include="Vendors\shimadzuGCMS.vb" />
+    <Compile Include="Vendors\finniganGCMS.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -115,8 +121,6 @@
       <Name>application.netCDF</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Vendors\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
