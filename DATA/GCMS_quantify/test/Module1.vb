@@ -6,7 +6,7 @@ Module Module1
     Sub Main()
         Dim data = QuantifyAnalysis.ReadData("D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\16s_contents\SCFA\scfa200ppmAIAEXPRT.AIA\20ppm-未处理.CDF")
 
-        Call data.GetJson.SaveTo("./gcms.json")
+        Call data.GetJson(indent:=True).SaveTo("./gcms.json")
 
         Pause()
     End Sub
