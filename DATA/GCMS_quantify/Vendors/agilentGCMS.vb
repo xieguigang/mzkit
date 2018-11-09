@@ -11,6 +11,7 @@ Public Module agilentGCMS
         Dim pointCount = cdf.getDataVariable("point_count")
         Dim massValues = cdf.getDataVariable("mass_values").tiny_num
         Dim intensityValues = cdf.getDataVariable("intensity_values").tiny_num
+        Dim scan_times = cdf.getDataVariable("time_values").tiny_num
 
         Dim ms As ms1_scan()() = New ms1_scan(pointCount.Length - 1)() {}
         Dim index As int = Scan0
@@ -23,7 +24,8 @@ Public Module agilentGCMS
             For j As Integer = 0 To size - 1
                 ms(i)(j) = New ms1_scan With {
                     .mz = massValues(index),
-                    .intensity = intensityValues(++index)
+                    .intensity = intensityValues(index),
+                    .scan_time = scan_times(++index)
                 }
             Next
         Next

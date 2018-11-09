@@ -1,4 +1,5 @@
 ﻿Imports System.Data.Linq.Mapping
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports sys = System.Math
@@ -46,8 +47,12 @@ End Class
 
 Public Class ms1_scan : Implements IMs1
 
-    Public Property mz As Double Implements IMs1.mz
-    Public Property scan_time As Double Implements IMs1.rt
-    Public Property intensity As Double
+    <XmlAttribute> Public Property mz As Double Implements IMs1.mz
+    <XmlAttribute> Public Property scan_time As Double Implements IMs1.rt
+    <XmlAttribute> Public Property intensity As Double
+
+    Public Overrides Function ToString() As String
+        Return $"{mz.ToString("F4")}@{sys.Round(scan_time)} ({intensity})"
+    End Function
 
 End Class
