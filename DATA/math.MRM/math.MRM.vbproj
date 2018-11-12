@@ -130,8 +130,7 @@
     <Compile Include="Data\Extensions.vb" />
     <Compile Include="Data\TargetQuantification.vb" />
     <Compile Include="Extensions.vb" />
-    <Compile Include="QuantitativeAnalysis\Chromatogram\AccumulateROI.vb" />
-    <Compile Include="QuantitativeAnalysis\Chromatogram\MRMPeak.vb" />
+    <Compile Include="QuantitativeAnalysis\MRMPeak.vb" />
     <Compile Include="QuantitativeAnalysis\FitModel.vb" />
     <Compile Include="Standards.vb" />
     <Compile Include="IS.vb" />
@@ -205,6 +204,9 @@
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
       <Name>ms2_math-core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="QuantitativeAnalysis\Chromatogram\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

@@ -137,6 +137,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Chromatogram\AccumulateROI.vb" />
     <Compile Include="Chromatogram\Chromatogram.vb" />
     <Compile Include="Chromatogram\ChromatogramTick.vb" />
     <Compile Include="Chromatogram\ROI.vb" />
