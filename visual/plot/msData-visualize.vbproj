@@ -237,6 +237,10 @@
       <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
       <Name>MIME-htmls</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\DATA\GCMS_quantify\GCMS_quantify.vbproj">
+      <Project>{3eb8c09a-c0f1-4c83-ae7d-40c203df50f8}</Project>
+      <Name>GCMS_quantify</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\DATA\math.MRM\math.MRM.vbproj">
       <Project>{a8a71b32-dac6-4fa7-a5c1-0f5e5d5c9eb7}</Project>
       <Name>math.MRM</Name>
