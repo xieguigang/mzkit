@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{B1752FF3-8943-41F5-8C83-88E48A86AD67}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>ConsoleApp.Test.Module1</StartupObject>
+    <StartupObject>ConsoleApp.Test.GCMS</StartupObject>
     <RootNamespace>ConsoleApp.Test</RootNamespace>
     <AssemblyName>ConsoleApp.Test</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -94,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Module1.vb" />
+    <Compile Include="GCMS.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -162,6 +163,10 @@
     <ProjectReference Include="..\..\Assembly\assembly\assembly.vbproj">
       <Project>{95f7d65e-9db1-4605-9fd3-25433277af88}</Project>
       <Name>assembly</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DATA\GCMS_quantify\GCMS_quantify.vbproj">
+      <Project>{3EB8C09A-C0F1-4C83-AE7D-40C203DF50F8}</Project>
+      <Name>GCMS_quantify</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\DATA\ms2_math-core\ms2_math-core.vbproj">
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
