@@ -31,7 +31,7 @@ Public Module agilentGCMS
         Next
 
         Return New GCMSJson With {
-            .times = time,
+            .times = time.numerics,
             .tic = tic.numerics,
             .ms = ms
         }
