@@ -53,7 +53,8 @@ Public Module ChromatogramPlot
             labelConnectorStroke:=labelConnectorStroke,
             labelFontStyle:=labelFontStyle,
             margin:=margin,
-            penStyle:=penStyle
+            penStyle:=penStyle,
+            fillCurve:=False
         )
     End Function
 
@@ -76,7 +77,7 @@ Public Module ChromatogramPlot
                          Optional labelConnectorStroke$ = Stroke.StrongHighlightStroke,
                          Optional labelTicks% = 500,
                          Optional showLabels As Boolean = True,
-                         Optional fillCurve As Boolean = False) As GraphicsData
+                         Optional fillCurve As Boolean = True) As GraphicsData
 
         Dim labelFont As Font = CSSFont.TryParse(labelFontStyle)
         Dim labelConnector As Pen = Stroke.TryParse(labelConnectorStroke)
@@ -171,8 +172,10 @@ Public Module ChromatogramPlot
                         polygon.Add(B)
                     Next
 
-                    polygon.Insert(0, New PointF(polygon(0).X, 0))
-                    polygon.Add(New PointF(polygon.Last.X, 0))
+                    Dim bottom% = region.Bottom - 6
+
+                    polygon.Insert(0, New PointF(polygon(0).X, bottom))
+                    polygon.Add(New PointF(polygon.Last.X, bottom))
 
                     If fillCurve Then
                         Dim color As Color = Color.FromArgb(200, curvePen.Color)
