@@ -1,6 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Language.Default
 
 Namespace Chromatogram
 
@@ -39,8 +40,12 @@ Namespace Chromatogram
         End Property
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetChromatogramData() As NamedCollection(Of ChromatogramTick)
-            Return New NamedCollection(Of ChromatogramTick)(Time.ToString("F0"), Ticks)
+        Public Function GetChromatogramData(Optional getTitle As Func(Of ROI, String) = Nothing) As NamedCollection(Of ChromatogramTick)
+            Static defaultRtTitle As New DefaultValue(Of Func(Of ROI, String))(
+                Function(roi)
+                    Return $"[{roi.Time.Min.ToString("F0")},{roi.Time.Max.ToString("F0")}]"
+                End Function)
+            Return New NamedCollection(Of ChromatogramTick)((getTitle Or defaultRtTitle)(Me), Ticks)
         End Function
 
         Public Overrides Function ToString() As String
