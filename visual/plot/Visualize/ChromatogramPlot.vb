@@ -68,16 +68,18 @@ Public Module ChromatogramPlot
     ''' 
     <Extension>
     Public Function TICplot(ionData As NamedCollection(Of ChromatogramTick)(),
-                         Optional size$ = "1600,1000",
-                         Optional margin$ = g.DefaultLargerPadding,
-                         Optional bg$ = "white",
-                         Optional colorsSchema$ = "scibasic.category31()",
-                         Optional penStyle$ = Stroke.ScatterLineStroke,
-                         Optional labelFontStyle$ = CSSFont.Win7Normal,
-                         Optional labelConnectorStroke$ = Stroke.StrongHighlightStroke,
-                         Optional labelTicks% = 500,
-                         Optional showLabels As Boolean = True,
-                         Optional fillCurve As Boolean = True) As GraphicsData
+                            Optional size$ = "1600,1000",
+                            Optional margin$ = g.DefaultLargerPadding,
+                            Optional bg$ = "white",
+                            Optional colorsSchema$ = "scibasic.category31()",
+                            Optional penStyle$ = Stroke.ScatterLineStroke,
+                            Optional labelFontStyle$ = CSSFont.Win7Normal,
+                            Optional labelConnectorStroke$ = Stroke.StrongHighlightStroke,
+                            Optional labelTicks% = 500,
+                            Optional showLabels As Boolean = True,
+                            Optional fillCurve As Boolean = True,
+                            Optional axisLabelFont$ = CSSFont.Win7Large,
+                            Optional axisTickFont$ = CSSFont.Win10Normal) As GraphicsData
 
         Dim labelFont As Font = CSSFont.TryParse(labelFontStyle)
         Dim labelConnector As Pen = Stroke.TryParse(labelConnectorStroke)
@@ -131,7 +133,9 @@ Public Module ChromatogramPlot
                     xlabel:="Time (s)",
                     ylabel:="Intensity",
                     htmlLabel:=False,
-                    YtickFormat:="G2"
+                    YtickFormat:="G2",
+                    labelFont:=axisLabelFont,
+                    tickFontStyle:=axisTickFont
                 )
 
                 Dim legendColors As New List(Of NamedValue(Of Pen))
