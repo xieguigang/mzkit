@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 
 Namespace Chromatogram
@@ -36,6 +37,11 @@ Namespace Chromatogram
                 Return Time.Length
             End Get
         End Property
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetChromatogramData() As NamedCollection(Of ChromatogramTick)
+            Return New NamedCollection(Of ChromatogramTick)(Time.ToString("F0"), Ticks)
+        End Function
 
         Public Overrides Function ToString() As String
             Return Time.ToString
