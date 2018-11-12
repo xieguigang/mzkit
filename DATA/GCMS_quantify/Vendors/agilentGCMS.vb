@@ -33,7 +33,8 @@ Public Module agilentGCMS
         Return New GCMSJson With {
             .times = time.numerics,
             .tic = tic.numerics,
-            .ms = ms
+            .ms = ms,
+            .title = cdf.getAttribute("experiment_title")
         }
     End Function
 End Module

@@ -5,7 +5,7 @@ Imports SMRUCC.MassSpectrum.Math.Chromatogram
 
 Public Class GCMSJson
 
-    Public Property name As String
+    Public Property title As String
     Public Property times As Double()
     Public Property tic As Double()
     Public Property ms As ms1_scan()()
@@ -13,7 +13,7 @@ Public Class GCMSJson
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetTIC() As NamedCollection(Of ChromatogramTick)
         Return New NamedCollection(Of ChromatogramTick) With {
-            .Name = name,
+            .Name = title,
             .Value = times _
                 .Select(Function(time, i)
                             Return New ChromatogramTick(time, tic(i))
