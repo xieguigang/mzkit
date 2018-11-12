@@ -46,7 +46,7 @@ Public Module ChromatogramPlot
                                         Optional labelFontStyle$ = CSSFont.Win7Normal,
                                         Optional labelConnectorStroke$ = Stroke.StrongHighlightStroke) As GraphicsData
         Return ions.ExtractIonData(mzML, Function(ion) ion.name) _
-                   .Plot(
+                   .TICplot(
             size:=size,
             bg:=bg,
             colorsSchema:=colorsSchema,
@@ -66,7 +66,7 @@ Public Module ChromatogramPlot
     ''' <returns></returns>
     ''' 
     <Extension>
-    Public Function Plot(ionData As NamedCollection(Of ChromatogramTick)(),
+    Public Function TICplot(ionData As NamedCollection(Of ChromatogramTick)(),
                          Optional size$ = "1600,1000",
                          Optional margin$ = g.DefaultLargerPadding,
                          Optional bg$ = "white",
@@ -120,7 +120,7 @@ Public Module ChromatogramPlot
                 Dim Y = d3js.scale.linear.domain(YTicks).range(integers:={rect.Top, rect.Bottom})
                 Dim scaler As New DataScaler With {
                     .AxisTicks = (XTicks, YTicks),
-                    .Region = rect,
+                    .region = rect,
                     .X = X,
                     .Y = Y
                 }

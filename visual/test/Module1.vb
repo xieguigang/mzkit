@@ -75,7 +75,7 @@ Module Module1
         'Call into_matrix.MatrixJson.SaveTo("./into.json")
 
         'Call scans.SaveTo("./test_ms1_scan.csv")
-        Call matrix.Plot("8000,3000", labelTicks:=5, showLabels:=False, fillCurve:=False).Save("./ms1.plot.png")
+        Call matrix.TICplot("8000,3000", labelTicks:=5, showLabels:=False, fillCurve:=False).Save("./ms1.plot.png")
 
         Pause()
     End Sub
