@@ -61,14 +61,16 @@ Public Module AccumulateROI
             Dim rtmin# = Fix(window.First()(0).X)
             Dim rtmax# = window.Last()(-1).X + 1
             Dim peak = chromatogram((time >= rtmin) & (time <= rtmax))
-            Dim max# = If(
-                peak.Length = 1,
-                peak.First.Intensity,
-                peak!intensity.Max
-            )
             ' 因为Y是累加曲线的值，所以可以近似的看作为峰面积积分值
             ' 在这里将区间的上限的积分值减去区间的下限的积分值即可得到当前的这个区间的积分值（近似于定积分）
             Dim integration = window.Last.Last.Y - window.First.First.Y
+            Dim max#
+
+            If peak.Length = 1 Then
+                max = peak.First.Intensity
+            Else
+                max = peak!intensity.Max
+            End If
 
             Yield New ROI With {
                 .Ticks = peak.ToArray,
