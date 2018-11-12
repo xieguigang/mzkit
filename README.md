@@ -1,7 +1,8 @@
 # MassSpectrum-toolkits
 
 ![](visual/gcms_ticplot.png)
-> GC/MS TIC plot
+![](visual/gcms_ions.png)
+> GC/MS TIC and ROI plot
 
 ![](./Manuscript/3252_428.0344@78_METLIN034522_POS_10V_[M+H]+.png)
 > MS/MS alignment for metabolite identification
