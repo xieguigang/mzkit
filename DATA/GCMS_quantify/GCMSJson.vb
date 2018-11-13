@@ -46,7 +46,9 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.MassSpectrum.Math
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
 
@@ -78,8 +80,11 @@ Public Class GCMSJson
         }
     End Function
 
-    Public Iterator Function GetScanIndex(ROI As DoubleRange) As IEnumerable(Of Integer)
+    Dim index As New Lazy(Of IndexSelector)(Function() IndexSelector.FromSortSequence(times))
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function GetScanIndex(ROI As DoubleRange) As IEnumerable(Of Integer)
+        Return index.Value.SelectByRange(ROI.Min, ROI.Max)
     End Function
 
     ''' <summary>
@@ -87,9 +92,15 @@ Public Class GCMSJson
     ''' </summary>
     ''' <param name="ROI"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetMsScan(ROI As DoubleRange) As ms1_scan()
         ' 先找到下标的集合
-
+        ' 然后再取出scan_index对应的ms scan数据
+        Return GetScanIndex(ROI) _
+            .Select(Function(scanIndex) ms(scanIndex)) _
+            .IteratesALL _
+            .ToArray
     End Function
 End Class
 
