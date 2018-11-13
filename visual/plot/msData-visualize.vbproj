@@ -151,14 +151,11 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DATA\SpectrumJSON\IntensityCoordinate.vb" />
-    <Compile Include="Extensions.vb" />
     <Compile Include="Visualize\Canvas.vb" />
     <Compile Include="Visualize\ChromatogramPeakPlot.vb" />
     <Compile Include="Visualize\ChromatogramPlot.vb" />
     <Compile Include="Visualize\MzrtPlot.vb" />
     <Compile Include="Visualize\PeakAssign.vb" />
-    <Compile Include="DATA\SpectrumJSON\SpectrumData.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -265,27 +262,6 @@
       <Project>{95f7d65e-9db1-4605-9fd3-25433277af88}</Project>
       <Name>assembly</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\index.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\App.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\data.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\images\attn.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\lib\excanvas.compiled.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\lib\highcharts.src.delta.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\lib\jquery-1.6.1.min.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
