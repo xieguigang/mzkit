@@ -21,4 +21,9 @@ Public Module Extensions
                     End Function) _
             .ToArray
     End Function
+
+    <Extension>
+    Public Function RetentionIndex(rt As IRetentionTime, A As (rt#, ri#), B As (rt#, ri#)) As Double
+
+    End Function
 End Module

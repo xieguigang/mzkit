@@ -8,7 +8,7 @@ Namespace Chromatogram
     ''' <summary>
     ''' Region of interest
     ''' </summary>
-    Public Class ROI
+    Public Class ROI : Implements IRetentionTime
 
         ''' <summary>
         ''' 这个区域的起始和结束的时间点
@@ -19,7 +19,7 @@ Namespace Chromatogram
         ''' 出峰达到峰高最大值<see cref="MaxInto"/>的时间点
         ''' </summary>
         ''' <returns></returns>
-        Public Property rt As Double
+        Public Property rt As Double Implements IRetentionTime.rt
         ''' <summary>
         ''' 这个区域的最大峰高度
         ''' </summary>
@@ -70,7 +70,8 @@ Namespace Chromatogram
                 .integration = Integration,
                 .maxInto = MaxInto,
                 .rtmax = Time.Max,
-                .rtmin = Time.Min
+                .rtmin = Time.Min,
+                .rt = rt
             }
         End Function
 

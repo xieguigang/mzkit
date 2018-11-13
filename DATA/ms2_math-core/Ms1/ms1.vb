@@ -7,7 +7,7 @@ Imports sys = System.Math
 ''' <summary>
 ''' The ms1 peak
 ''' </summary>
-Public Class Ms1Feature : Implements INamedValue, IMs1
+Public Class Ms1Feature : Implements INamedValue, IMs1, IRetentionTime
 
     <Column(Name:="#ID")>
     Public Property ID As String Implements IKeyedEntity(Of String).Key
@@ -19,9 +19,14 @@ Public Class Ms1Feature : Implements INamedValue, IMs1
     End Function
 End Class
 
-Public Interface IMs1
+Public Interface IMs1 : Inherits IRetentionTime
 
     Property mz As Double
+
+End Interface
+
+Public Interface IRetentionTime
+
     ''' <summary>
     ''' Rt in seconds
     ''' </summary>

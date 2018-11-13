@@ -4,6 +4,7 @@
 ''' </summary>
 Public Class Peaktable
     Implements IMs1
+    Implements IRetentionTime
 
     ''' <summary>
     ''' 可以是差异代谢物的编号
@@ -39,11 +40,14 @@ Public Class Peaktable
     End Function
 End Class
 
-Public Class ROITable
+Public Class ROITable : Implements IRetentionTime
 
     Public Property ID As String
+
     Public Property rtmin As Double
     Public Property rtmax As Double
+
+    Public Property rt As Double Implements IRetentionTime.rt
     ''' <summary>
     ''' 保留指数
     ''' </summary>
