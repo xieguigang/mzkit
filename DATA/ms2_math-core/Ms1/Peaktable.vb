@@ -1,5 +1,5 @@
-﻿
-Imports System.Data.Linq.Mapping
+﻿Imports System.Data.Linq.Mapping
+
 ''' <summary>
 ''' 一级信息表
 ''' </summary>
