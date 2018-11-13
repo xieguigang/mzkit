@@ -5,6 +5,8 @@ Imports Microsoft.VisualBasic.Math
 Imports SMRUCC.MassSpectrum.Math
 
 ''' <summary>
+''' GCMS自动化定量分析模块
+''' 
 ''' https://github.com/cheminfo-js/netcdf-gcms
 ''' </summary>
 Public Module QuantifyAnalysis
@@ -38,7 +40,7 @@ Public Module QuantifyAnalysis
     End Function
 
     ''' <summary>
-    ''' 
+    ''' 导出标准品参考的ROI区间列表，用于``GC/MS``自动化定性分析
     ''' </summary>
     ''' <param name="regions"></param>
     ''' <param name="sn">
@@ -51,7 +53,37 @@ Public Module QuantifyAnalysis
     ''' 第一个出峰的物质和最后一个出峰的物质作为保留指数的参考，在这里假设第一个出峰的物质的保留指数为零，
     ''' 最后一个出峰的物质的保留指数为1000，则可以根据这个区间和rt之间的线性关系计算出保留指数
     ''' </remarks>
-    <Extension> Public Function ExportROITable(regions As ROI(), Optional sn# = 1.25) As ROITable()
+    <Extension> Public Function ExportReferenceROITable(regions As ROI(),
+                                                        Optional sn# = 5,
+                                                        Optional names$() = Nothing,
+                                                        Optional RImax# = 1000) As ROITable()
 
+        With regions.Where(Function(ROI) ROI.snRatio >= sn).ToArray
+            Dim refA = .First, refB = .Last
+            Dim A = (refA.rt, 0)
+            Dim B = (refB.rt, RImax)
+            Dim getTitle As Func(Of ROI, Integer, String)
+
+            If names.IsNullOrEmpty Then
+                getTitle = Function(ROI, i) $"#{i + 1}={Fix(ROI.rt)}s"
+            Else
+                getTitle = Function(ROI, i) names.ElementAtOrDefault(i, $"#{i + 1}={Fix(ROI.rt)}s")
+            End If
+
+            Return .Select(Function(ROI, i)
+                               Return New ROITable With {
+                                   .sn = ROI.snRatio,
+                                   .baseline = ROI.Baseline,
+                                   .ID = getTitle(ROI, i),
+                                   .integration = ROI.Integration,
+                                   .maxInto = ROI.MaxInto,
+                                   .ri = ROI.RetentionIndex(A, B),
+                                   .rt = ROI.rt,
+                                   .rtmax = ROI.Time.Max,
+                                   .rtmin = ROI.Time.Min
+                               }
+                           End Function) _
+                   .ToArray
+        End With
     End Function
 End Module

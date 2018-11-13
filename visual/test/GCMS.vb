@@ -16,5 +16,6 @@ Module GCMS
         Call tic.TICplot().AsGDIImage.SaveAs("./test_gcms_ticplot.png")
         Call ROIlist.Select(Function(ROI) ROI.GetChromatogramData).ToArray.TICplot.AsGDIImage.SaveAs("./gcms_ions.png")
         Call ROIlist.ToTable.SaveTo("./ROI.csv")
+        Call ROIlist.ExportReferenceROITable.SaveTo("./ref.csv")
     End Sub
 End Module
