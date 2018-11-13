@@ -227,6 +227,18 @@ Public Module ChromatogramPlot
 
                 If showLegends Then
 
+                    ' 计算在右上角的位置
+                    Dim maxSize = legends.MaxLegendSize(g)
+                    Dim top = region.PlotRegion.Top + maxSize.Height + 5
+                    Dim maxLen = maxSize.Width
+                    Dim left = region.PlotRegion.Right - maxLen - 120
+                    Dim position As New Point With {
+                        .X = left,
+                        .Y = top
+                    }
+
+                    Call g.DrawLegends(position, legends, "120,10", d:=0)
+
                 End If
             End Sub
 
