@@ -70,4 +70,10 @@ Public Class ROITable : Implements IRetentionTime
     ''' <returns></returns>
     Public Property integration As Double
 
+    ''' <summary>
+    ''' 信噪比
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property sn As Double
+
 End Class

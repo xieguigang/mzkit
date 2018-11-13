@@ -41,6 +41,9 @@ Public Module QuantifyAnalysis
     ''' 
     ''' </summary>
     ''' <param name="regions"></param>
+    ''' <param name="sn">
+    ''' 信噪比筛选阈值
+    ''' </param>
     ''' <returns></returns>
     ''' <remarks>
     ''' 保留指数的计算：在标准化流程之中，GCMS的出峰顺序保持不变，但是保留时间可能会在不同批次实验间有变化
@@ -48,7 +51,7 @@ Public Module QuantifyAnalysis
     ''' 第一个出峰的物质和最后一个出峰的物质作为保留指数的参考，在这里假设第一个出峰的物质的保留指数为零，
     ''' 最后一个出峰的物质的保留指数为1000，则可以根据这个区间和rt之间的线性关系计算出保留指数
     ''' </remarks>
-    <Extension> Public Function ExportROITable(regions As ROI()) As ROITable()
+    <Extension> Public Function ExportROITable(regions As ROI(), Optional sn# = 1.25) As ROITable()
 
     End Function
 End Module

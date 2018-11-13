@@ -40,6 +40,8 @@ Namespace Chromatogram
             Dim sumALL# = (chromatogram!intensity - baseline) _
                 .Where(Function(x) x > 0) _
                 .Sum
+            ' 所有的基线下面的噪声加起来的积分面积总和
+            Dim sumAllNoise# = baseline * chromatogram.Length
             Dim ay = Function(into As Double) As Double
                          into -= baseline
                          accumulate += If(into < 0, 0, into)
@@ -89,7 +91,8 @@ Namespace Chromatogram
                     .Baseline = baseline,
                     .Time = {rtmin, rtmax},
                     .Integration = integration,
-                    .rt = rt
+                    .rt = rt,
+                    .Noise = (peak.Length * baseline) / sumAllNoise
                 }
             Next
         End Function

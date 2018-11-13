@@ -40,6 +40,21 @@ Namespace Chromatogram
         ''' 积分值加起来应该是约等于100的
         ''' </remarks>
         Public Property Integration As Double
+        ''' <summary>
+        ''' 噪声的面积积分百分比
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Noise As Double
+
+        ''' <summary>
+        ''' 信噪比
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property snRatio As Double
+            Get
+                Return Integration / Noise
+            End Get
+        End Property
 
         Public ReadOnly Property PeakWidth As Single
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -71,7 +86,8 @@ Namespace Chromatogram
                 .maxInto = MaxInto,
                 .rtmax = Time.Max,
                 .rtmin = Time.Min,
-                .rt = rt
+                .rt = rt,
+                .sn = snRatio
             }
         End Function
 
