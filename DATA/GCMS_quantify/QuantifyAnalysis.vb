@@ -1,4 +1,6 @@
-﻿Imports Microsoft.VisualBasic.MIME.application.netCDF
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.MIME.application.netCDF
+Imports SMRUCC.MassSpectrum.Math.Chromatogram
 
 ''' <summary>
 ''' https://github.com/cheminfo-js/netcdf-gcms
@@ -22,5 +24,11 @@ Public Module QuantifyAnalysis
             Case Else
                 Throw New NotImplementedException(vendor)
         End Select
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function ExportROI(gcms As GCMSJson) As ROI()
+        Return gcms.GetTIC.Shadows.PopulateROI.ToArray
     End Function
 End Module

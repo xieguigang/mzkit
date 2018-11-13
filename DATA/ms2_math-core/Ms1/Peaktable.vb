@@ -38,3 +38,27 @@ Public Class Peaktable
         Return $"{mz}@{rt}#{scan}-{ionization}-{energy}"
     End Function
 End Class
+
+Public Class ROITable
+
+    Public Property ID As String
+    Public Property rtmin As Double
+    Public Property rtmax As Double
+
+    ''' <summary>
+    ''' 这个区域的最大峰高度
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property maxInto As Double
+    ''' <summary>
+    ''' 所计算出来的基线的响应强度
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property baseline As Double
+    ''' <summary>
+    ''' 当前的这个ROI的峰面积积分值
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property integration As Double
+
+End Class
