@@ -5,6 +5,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.d3js
 Imports Microsoft.VisualBasic.Imaging.d3js.Layout
@@ -79,7 +80,9 @@ Public Module ChromatogramPlot
                             Optional showLabels As Boolean = True,
                             Optional fillCurve As Boolean = True,
                             Optional axisLabelFont$ = CSSFont.Win7Large,
-                            Optional axisTickFont$ = CSSFont.Win10Normal) As GraphicsData
+                            Optional axisTickFont$ = CSSFont.Win10NormalLarger,
+                            Optional showLegends As Boolean = True,
+                            Optional legendFontCSS$ = CSSFont.Win10Normal) As GraphicsData
 
         Dim labelFont As Font = CSSFont.TryParse(labelFontStyle)
         Dim labelConnector As Pen = Stroke.TryParse(labelConnectorStroke)
@@ -138,7 +141,7 @@ Public Module ChromatogramPlot
                     tickFontStyle:=axisTickFont
                 )
 
-                Dim legendColors As New List(Of NamedValue(Of Pen))
+                Dim legends As New List(Of Legend)
                 Dim peakTimes As New List(Of NamedValue(Of ChromatogramTick))
 
                 For i As Integer = 0 To ionData.Length - 1
@@ -146,9 +149,11 @@ Public Module ChromatogramPlot
                     Dim line = ionData(i)
                     Dim chromatogram = line.Value
 
-                    legendColors += New NamedValue(Of Pen) With {
-                        .Name = line.Name,
-                        .Value = curvePen
+                    legends += New Legend With {
+                        .title = line.Name,
+                        .color = curvePen.Color.ToHtmlColor,
+                        .fontstyle = legendFontCSS,
+                        .style = LegendStyles.Rectangle
                     }
                     peakTimes += New NamedValue(Of ChromatogramTick) With {
                         .Name = line.Name,
@@ -218,6 +223,10 @@ Public Module ChromatogramPlot
                         Call g.DrawLine(labelConnector, i.value, anchors(i))
                         Call g.DrawString(i.value.text, labelFont, Brushes.Black, i.value)
                     Next
+                End If
+
+                If showLegends Then
+
                 End If
             End Sub
 

@@ -36,7 +36,7 @@ Module GCMS
             Call tic.TICplot().AsGDIImage.SaveAs($"{directory}/gcms_TICplot.png")
             Call ROIlist.Select(Function(ROI) ROI.GetChromatogramData).ToArray.TICplot.AsGDIImage.SaveAs($"{directory}/ions.png")
             Call ROIlist.ExportReferenceROITable(
-                names:={"乙酸", "丙酸", "异丁酸", "丁酸", "异戊酸", "戊酸", "己酸"}
+                names:={"乙酸", "丙酸", "异丁酸", "丁酸", "异戊酸", "戊酸", "异己酸", "己酸"}
             ).SaveTo($"{directory}\ROI.csv", Encodings.UTF8)
         Next
 
