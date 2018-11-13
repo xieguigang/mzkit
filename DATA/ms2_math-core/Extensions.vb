@@ -80,4 +80,10 @@ Public Module Extensions
         Dim ri = A.ri + riScale
         Return ri
     End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function GroupByMz(mz As IEnumerable(Of ms1_scan), Optional tolerance As Tolerance = Nothing) As ms1_scan()
+        Return ms1_scan.GroupByMz(mz, tolerance)
+    End Function
 End Module
