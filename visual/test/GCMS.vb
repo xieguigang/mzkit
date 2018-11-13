@@ -70,7 +70,7 @@ Module GCMS
         ).SaveTo("D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\16s_contents\SCFA\SCFA.csv", Encodings.UTF8)
 
         Dim aaaa = gcData.GetMsScan(ROIlist(Scan0))
-
+        aaaa = ms1_scan.GroupByMz(aaaa)
 
         Pause()
     End Sub
