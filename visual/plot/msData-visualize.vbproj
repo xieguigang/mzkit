@@ -151,7 +151,6 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Canvas.vb" />
     <Compile Include="ChromatogramPeakPlot.vb" />
     <Compile Include="ChromatogramPlot.vb" />
     <Compile Include="MzrtPlot.vb" />
