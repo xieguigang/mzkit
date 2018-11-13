@@ -1,4 +1,5 @@
 ﻿
+Imports System.Data.Linq.Mapping
 ''' <summary>
 ''' 一级信息表
 ''' </summary>
@@ -48,6 +49,18 @@ Public Class ROITable : Implements IRetentionTime
     Public Property rtmax As Double
 
     Public Property rt As Double Implements IRetentionTime.rt
+
+    ''' <summary>
+    ''' 以分钟为单位的保留时间
+    ''' </summary>
+    ''' <returns></returns>
+    <Column(Name:="rt(minute)")>
+    Public ReadOnly Property rtMinute As Double
+        Get
+            Return rt / 60
+        End Get
+    End Property
+
     ''' <summary>
     ''' 保留指数
     ''' </summary>
