@@ -151,11 +151,11 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Visualize\Canvas.vb" />
-    <Compile Include="Visualize\ChromatogramPeakPlot.vb" />
-    <Compile Include="Visualize\ChromatogramPlot.vb" />
-    <Compile Include="Visualize\MzrtPlot.vb" />
-    <Compile Include="Visualize\PeakAssign.vb" />
+    <Compile Include="Canvas.vb" />
+    <Compile Include="ChromatogramPeakPlot.vb" />
+    <Compile Include="ChromatogramPlot.vb" />
+    <Compile Include="MzrtPlot.vb" />
+    <Compile Include="PeakAssign.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -171,7 +171,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Visualize\viz.vb" />
+    <Compile Include="viz.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
