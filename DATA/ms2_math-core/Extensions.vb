@@ -22,8 +22,18 @@ Public Module Extensions
             .ToArray
     End Function
 
+    ''' <summary>
+    ''' 根据保留时间来计算出保留指数
+    ''' </summary>
+    ''' <param name="rt"></param>
+    ''' <param name="A"></param>
+    ''' <param name="B"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function RetentionIndex(rt As IRetentionTime, A As (rt#, ri#), B As (rt#, ri#)) As Double
-
+        Dim rtScale = (rt.rt - A.rt) / (B.rt - A.rt)
+        Dim riScale = (B.ri - A.ri) * rtScale
+        Dim ri = A.ri + riScale
+        Return ri
     End Function
 End Module
