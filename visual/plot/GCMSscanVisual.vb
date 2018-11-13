@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports GCMS_quantify
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports SMRUCC.MassSpectrum.Math.App.GCMS
 
 Public Module GCMSscanVisual
 
