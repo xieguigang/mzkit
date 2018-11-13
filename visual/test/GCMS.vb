@@ -1,6 +1,8 @@
 ﻿Imports GCMS_quantify
+Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Math
+Imports SMRUCC.MassSpectrum.Math
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
 Imports SMRUCC.MassSpectrum.Visualization
 
@@ -13,5 +15,6 @@ Module GCMS
 
         Call tic.TICplot().AsGDIImage.SaveAs("./test_gcms_ticplot.png")
         Call ROIlist.Select(Function(ROI) ROI.GetChromatogramData).ToArray.TICplot.AsGDIImage.SaveAs("./gcms_ions.png")
+        Call ROIlist.ToTable.SaveTo("./ROI.csv")
     End Sub
 End Module

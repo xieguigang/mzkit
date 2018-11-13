@@ -30,6 +30,10 @@ Namespace Chromatogram
         ''' 当前的这个ROI的峰面积积分值
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' 为当前的ROI峰面积占整个TIC峰面积的百分比，一个实验所导出来的所有的ROI的
+        ''' 积分值加起来应该是约等于100的
+        ''' </remarks>
         Public Property Integration As Double
 
         Public ReadOnly Property PeakWidth As Single
