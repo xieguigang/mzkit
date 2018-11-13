@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9bc59191bfcf0354bc774823a79d15b0, plot\Visualize\PeakAssign.vb"
+﻿#Region "Microsoft.VisualBasic::efca05a74e4e30b75109d52d9b78af3d, plot\PeakAssign.vb"
 
     ' Author:
     ' 
@@ -42,11 +42,9 @@
 
 #End Region
 
-
 ''' <summary>
 ''' 通过KCF图模型为ms2二级质谱碎片鉴定分子碎片的具体的结构式
 ''' </summary>
 Public Module PeakAssign
 
 End Module
-

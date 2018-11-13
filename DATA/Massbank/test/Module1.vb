@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::298bdae421b2736cacf97764839547bc, Massbank\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::dade0dc3af99e21b58a6f51e051f0940, Massbank\test\Module1.vb"
 
     ' Author:
     ' 
@@ -86,4 +86,3 @@ Module Module1
         Pause()
     End Sub
 End Module
-

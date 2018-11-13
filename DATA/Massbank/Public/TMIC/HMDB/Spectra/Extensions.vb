@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2094732b04a0529208fd4c5068f157e6, Massbank\Public\TMIC\HMDB\Spectra\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::a73c972cad135f611c2b6246e07a2777, Massbank\Public\TMIC\HMDB\Spectra\Extensions.vb"
 
     ' Author:
     ' 
@@ -102,4 +102,3 @@ Namespace TMIC.HMDB.Spectra
         Positive = 1
     End Enum
 End Namespace
-

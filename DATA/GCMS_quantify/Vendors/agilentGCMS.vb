@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3bbe4eff5808bba6f2a5c70f942b69ca, GCMS_quantify\Vendors\agilentGCMS.vb"
+﻿#Region "Microsoft.VisualBasic::4b3820fad4d8140380e0b83b24f6dfa0, GCMS_quantify\Vendors\agilentGCMS.vb"
 
     ' Author:
     ' 
@@ -82,4 +82,3 @@ Public Module agilentGCMS
         }
     End Function
 End Module
-

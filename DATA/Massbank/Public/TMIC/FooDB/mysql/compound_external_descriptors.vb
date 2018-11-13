@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb9bccf226c228e853c481e1edba0fb6, Massbank\Public\TMIC\FooDB\mysql\compound_external_descriptors.vb"
+﻿#Region "Microsoft.VisualBasic::c473e387f0f2c1916a63c56455f6a3e1, Massbank\Public\TMIC\FooDB\mysql\compound_external_descriptors.vb"
 
     ' Author:
     ' 
@@ -220,4 +220,3 @@ End Class
 
 
 End Namespace
-

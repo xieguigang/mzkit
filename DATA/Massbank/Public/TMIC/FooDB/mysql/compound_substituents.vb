@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c65b6c5034612de363d6cbdb40379210, Massbank\Public\TMIC\FooDB\mysql\compound_substituents.vb"
+﻿#Region "Microsoft.VisualBasic::32900b121fb177e75cc901b6db3c084b, Massbank\Public\TMIC\FooDB\mysql\compound_substituents.vb"
 
     ' Author:
     ' 
@@ -217,4 +217,3 @@ End Class
 
 
 End Namespace
-

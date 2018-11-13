@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb13a2c221b946471834c0b3b2d3c257, ms2_simulator\test\NWAlignTest.vb"
+﻿#Region "Microsoft.VisualBasic::c3ff7a1b6228e5341e8acbda7ebac4cc, ms2_simulator\test\NWAlignTest.vb"
 
     ' Author:
     ' 
@@ -58,4 +58,3 @@ Module NWAlignTest
         Pause()
     End Sub
 End Module
-

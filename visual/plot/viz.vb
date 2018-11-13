@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a1561c503473d13375068bd8f732235a, plot\Visualize\viz.vb"
+﻿#Region "Microsoft.VisualBasic::949d03a18fdf6b289c8ba7f71119758e, plot\viz.vb"
 
     ' Author:
     ' 
@@ -87,4 +87,3 @@ Public Module viz
         End If
     End Function
 End Module
-

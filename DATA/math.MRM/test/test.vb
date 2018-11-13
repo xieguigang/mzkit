@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::96c5bc1ddba64c9fd375d8ebfcad066d, math.MRM\test\test.vb"
+﻿#Region "Microsoft.VisualBasic::79d3ee138ab01c2c3568ce1e468fc6e0, math.MRM\test\test.vb"
 
     ' Author:
     ' 
@@ -122,4 +122,3 @@ Module test
         Pause()
     End Sub
 End Module
-

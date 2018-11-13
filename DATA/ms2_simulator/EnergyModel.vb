@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb5fb4b27b4737ea9544b7c1237bc6a9, ms2_simulator\EnergyModel.vb"
+﻿#Region "Microsoft.VisualBasic::f20d73ab7dc0153d5db89c3a8cab1105, ms2_simulator\EnergyModel.vb"
 
     ' Author:
     ' 
@@ -123,4 +123,3 @@ Public Class EnergyModel
         Return 1 - PercentageGreater(energy)
     End Function
 End Class
-

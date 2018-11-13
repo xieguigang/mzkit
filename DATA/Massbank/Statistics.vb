@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::12886077a776d36de6b90f1ac70fc252, Massbank\Statistics.vb"
+﻿#Region "Microsoft.VisualBasic::5eb9bfef4498a7d9fbf375d4b6897067, Massbank\Statistics.vb"
 
     ' Author:
     ' 
@@ -155,4 +155,3 @@ Public Module Statistics
         Return coverages
     End Function
 End Module
-

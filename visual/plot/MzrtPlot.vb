@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::043c88207eeb1464b18d298227e779f2, plot\Visualize\MzrtPlot.vb"
+﻿#Region "Microsoft.VisualBasic::979a0ce6170b4b30e6041707237eb636, plot\MzrtPlot.vb"
 
     ' Author:
     ' 
@@ -102,4 +102,3 @@ Public Module MzrtPlot
         )
     End Function
 End Module
-

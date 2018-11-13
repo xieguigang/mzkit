@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::385909c895a0ddb37b548b9a080602ae, ms2_math-core\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::118b7c93c6079c83fda2eda1f0de07e5, ms2_math-core\Extensions.vb"
 
     ' Author:
     ' 
@@ -81,4 +81,3 @@ Public Module Extensions
         Return ri
     End Function
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a0d65a1a6c681173c6ae8e969eb3461, math.MRM\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::ef75d9cf9cd7dbc9e5add022ede70973, math.MRM\Extensions.vb"
 
     ' Author:
     ' 
@@ -67,4 +67,3 @@ Public Module Extensions
         Next
     End Function
 End Module
-

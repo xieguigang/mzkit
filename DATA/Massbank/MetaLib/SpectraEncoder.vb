@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dac57cc30295e067c25f1ad473ddd973, Massbank\MetaLib\SpectraEncoder.vb"
+﻿#Region "Microsoft.VisualBasic::ca9b07218ce4f30d4fac81447c9ba6bd, Massbank\MetaLib\SpectraEncoder.vb"
 
     ' Author:
     ' 
@@ -87,4 +87,3 @@ Public Module SpectraEncoder
         Return matrix
     End Function
 End Module
-

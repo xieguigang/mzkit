@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e5c6841e190155d95002915c4bed858, SDF.Extensions\SDF2KCF.vb"
+﻿#Region "Microsoft.VisualBasic::81c45ca836ea30ce107875bf5d585eef, SDF.Extensions\SDF2KCF.vb"
 
     ' Author:
     ' 
@@ -100,4 +100,3 @@ Public Module SDF2KCF
         }
     End Function
 End Module
-

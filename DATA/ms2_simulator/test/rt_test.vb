@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2260255c4bc7b0d93c7ee7fdd2a67d47, ms2_simulator\test\rt_test.vb"
+﻿#Region "Microsoft.VisualBasic::5862a9e563072770cdff88234e79f719, ms2_simulator\test\rt_test.vb"
 
     ' Author:
     ' 
@@ -67,4 +67,3 @@ Module rt_test
         Pause()
     End Sub
 End Module
-

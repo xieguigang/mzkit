@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dc64209d7bb31a161781269ed850b55d, math.MRM\Data\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::dbd199600454ddc2cebe32278e447f1e, math.MRM\Data\Extensions.vb"
 
     ' Author:
     ' 
@@ -77,6 +77,3 @@ Namespace Dumping
         End Function
     End Module
 End Namespace
-
-
-

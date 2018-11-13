@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2fa83af04511d1fc5a53e5178e2a8625, math.MRM\QuantitativeAnalysis\StandardCurve.vb"
+﻿#Region "Microsoft.VisualBasic::11fadddcb7c7bfcfd808c4213825ed3e, math.MRM\QuantitativeAnalysis\StandardCurve.vb"
 
     ' Author:
     ' 
@@ -446,4 +446,3 @@ Public Module StandardCurve
         }
     End Function
 End Module
-

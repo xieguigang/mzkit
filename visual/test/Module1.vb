@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ccf62415470d83fdc9eb87ea5518e8a, test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::4524079edfe3fb74596c6be318c0fc1c, test\Module1.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
 
     ' Module Module1
     ' 
-    '     Sub: ChromatogramPlotTest, Main, ms1Visual, mzrtPlotTest, Test
+    '     Sub: ChromatogramPlotTest, Main, ms1Visual, mzrtPlotTest
     ' 
     ' /********************************************************************************/
 
@@ -273,4 +273,3 @@ Module Module1
     '        .Save("./Plot.png")
     'End Sub
 End Module
-

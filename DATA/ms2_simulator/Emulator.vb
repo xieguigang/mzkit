@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cac38632bb6a506b7dbbe169becfbdf1, ms2_simulator\Emulator.vb"
+﻿#Region "Microsoft.VisualBasic::c5da7dd750d517114271a7db0c6c4511, ms2_simulator\Emulator.vb"
 
     ' Author:
     ' 
@@ -161,4 +161,3 @@ Public Module Emulator
         Return copy
     End Function
 End Module
-

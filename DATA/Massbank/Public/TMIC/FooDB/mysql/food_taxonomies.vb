@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8426b7982e264e32a2c14dd9c69eb4d4, Massbank\Public\TMIC\FooDB\mysql\food_taxonomies.vb"
+﻿#Region "Microsoft.VisualBasic::a00f24a5841efd2e06860159fa04dfbd, Massbank\Public\TMIC\FooDB\mysql\food_taxonomies.vb"
 
     ' Author:
     ' 
@@ -213,4 +213,3 @@ End Class
 
 
 End Namespace
-

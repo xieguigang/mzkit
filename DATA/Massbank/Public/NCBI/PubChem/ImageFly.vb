@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::64b58d50727897f274b4b66949ba63fb, Massbank\Public\NCBI\PubChem\ImageFly.vb"
+﻿#Region "Microsoft.VisualBasic::dbffa31b967945b2dd106cae0aea847f, Massbank\Public\NCBI\PubChem\ImageFly.vb"
 
     ' Author:
     ' 
@@ -62,4 +62,3 @@ Public Module ImageFly
         Return bitmap
     End Function
 End Module
-

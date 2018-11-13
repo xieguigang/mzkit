@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe64ca0a94642562aad5c43dd3d1ab06, ms2_math-core\Chromatogram\Chromatogram.vb"
+﻿#Region "Microsoft.VisualBasic::b7060749aa2f823a7178b955b76a8a48, ms2_math-core\Chromatogram\Chromatogram.vb"
 
     ' Author:
     ' 
@@ -84,4 +84,3 @@ Namespace Chromatogram
         End Function
     End Module
 End Namespace
-

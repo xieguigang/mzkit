@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0997950857ec52d3003e54982bbd67a, plot\Visualize\ChromatogramPeakPlot.vb"
+﻿#Region "Microsoft.VisualBasic::f3878aacaa87a822eda5bd03f90a6524, plot\ChromatogramPeakPlot.vb"
 
     ' Author:
     ' 
@@ -57,7 +57,6 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
-Imports SMRUCC.MassSpectrum.Math.MRM
 
 ''' <summary>
 ''' time -> into
@@ -240,4 +239,3 @@ Public Module ChromatogramPeakPlot
             plotInternal)
     End Function
 End Module
-

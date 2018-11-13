@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da4620a443fdbc8b93de959f891f61f3, Massbank\Public\MoNA\MoNAJson.vb"
+﻿#Region "Microsoft.VisualBasic::0e1f911df52e6eb3a2a3260432390c8e, Massbank\Public\MoNA\MoNAJson.vb"
 
     ' Author:
     ' 
@@ -45,4 +45,3 @@
 Public Class MoNAJson
 
 End Class
-

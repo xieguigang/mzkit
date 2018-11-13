@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34264684a7a6501df929bdde76f79ee3, Massbank\test\foodbQuery.vb"
+﻿#Region "Microsoft.VisualBasic::5e1069617cea23cc8302e17b6648f534, Massbank\test\foodbQuery.vb"
 
     ' Author:
     ' 
@@ -111,4 +111,3 @@ Module foodbQuery
         Pause()
     End Sub
 End Module
-

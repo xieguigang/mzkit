@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::42a34ab66e14330950cc3fd3947932f2, GCMS_quantify\Vendors\shimadzuGCMS.vb"
+﻿#Region "Microsoft.VisualBasic::486a06259d8d43ec0db3748e1a2f6e95, GCMS_quantify\Vendors\shimadzuGCMS.vb"
 
     ' Author:
     ' 
@@ -45,4 +45,3 @@
 Public Class shimadzuGCMS
 
 End Class
-

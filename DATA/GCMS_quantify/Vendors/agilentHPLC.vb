@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d0b5ebe235d2da2a8d95ebe382aaee3, GCMS_quantify\Vendors\agilentHPLC.vb"
+﻿#Region "Microsoft.VisualBasic::c071ce32765f1f01ab2589b574b68bb2, GCMS_quantify\Vendors\agilentHPLC.vb"
 
     ' Author:
     ' 
@@ -45,4 +45,3 @@
 Public Class agilentHPLC
 
 End Class
-

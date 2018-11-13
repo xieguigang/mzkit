@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7819e48920b038c16fe5107c092aab5, Massbank\Public\TMIC\FooDB\mysql\foodcomex_compound_providers.vb"
+﻿#Region "Microsoft.VisualBasic::0421bcd941a4b5a215122b597162a044, Massbank\Public\TMIC\FooDB\mysql\foodcomex_compound_providers.vb"
 
     ' Author:
     ' 
@@ -210,4 +210,3 @@ End Class
 
 
 End Namespace
-

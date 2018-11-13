@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b78d8dc216b48edca1659a79d57f22c9, math.MRM\QuantitativeAnalysis\Samples.vb"
+﻿#Region "Microsoft.VisualBasic::3ce819bcb793ebce18b2ef20d17c2aca, math.MRM\QuantitativeAnalysis\Samples.vb"
 
     ' Author:
     ' 
@@ -211,4 +211,3 @@ Public Module MRMSamples
         Return out
     End Function
 End Module
-

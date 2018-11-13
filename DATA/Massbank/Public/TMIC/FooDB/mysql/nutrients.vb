@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f0bbaaf37424c109910a011eb8f8411c, Massbank\Public\TMIC\FooDB\mysql\nutrients.vb"
+﻿#Region "Microsoft.VisualBasic::326aece1fcf2ccc67c24fe1d89b4c745, Massbank\Public\TMIC\FooDB\mysql\nutrients.vb"
 
     ' Author:
     ' 
@@ -270,4 +270,3 @@ End Class
 
 
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c4d7aa52ed4c9d73c731e541ba03bb1, math.MRM\QuantitativeAnalysis\MRMPeak.vb"
+﻿#Region "Microsoft.VisualBasic::d42724b5ccd09fb6a6826d580232158b, math.MRM\QuantitativeAnalysis\MRMPeak.vb"
 
     ' Author:
     ' 
@@ -214,4 +214,3 @@ Public Module MRMPeak
         Return chromatogram.Last.Time
     End Function
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4edb5661fc51a7915c5c59cb87027a03, GCMS_quantify\Vendors\brukerGCMS.vb"
+﻿#Region "Microsoft.VisualBasic::4283b1dc7216b1a83919302ffdde7f96, GCMS_quantify\Vendors\brukerGCMS.vb"
 
     ' Author:
     ' 
@@ -45,4 +45,3 @@
 Public Class brukerGCMS
 
 End Class
-

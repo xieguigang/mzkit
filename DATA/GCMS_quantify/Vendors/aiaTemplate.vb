@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d329a074e69a3fdc09b9a24466251a5b, GCMS_quantify\Vendors\aiaTemplate.vb"
+﻿#Region "Microsoft.VisualBasic::ea96ef67ff1aed4a6302defc1bc9904a, GCMS_quantify\Vendors\aiaTemplate.vb"
 
     ' Author:
     ' 
@@ -45,4 +45,3 @@
 Public Class aiaTemplate
 
 End Class
-

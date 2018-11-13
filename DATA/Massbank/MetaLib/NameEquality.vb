@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::74170d39b0b74411dfabe293508c7324, Massbank\MetaLib\NameEquality.vb"
+﻿#Region "Microsoft.VisualBasic::9e8cd3290f9727f955bd2125356c255e, Massbank\MetaLib\NameEquality.vb"
 
     ' Author:
     ' 
@@ -106,4 +106,3 @@ Public Class ChemicalNameEquality : Implements IEqualityComparer(Of String)
         Return names.DistinctIgnoreCase
     End Function
 End Class
-

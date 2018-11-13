@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7c6b9f5390f07c51e70958e8b9deaf3, GCMS_quantify\Vendors\finniganGCMS.vb"
+﻿#Region "Microsoft.VisualBasic::1ad58991396c27682ea8c34441b3df31, GCMS_quantify\Vendors\finniganGCMS.vb"
 
     ' Author:
     ' 
@@ -45,4 +45,3 @@
 Public Class finniganGCMS
 
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::965ebdb4fd547ce718c566136e54641d, Massbank\Public\TMIC\FooDB\mysql\compounds_flavors.vb"
+﻿#Region "Microsoft.VisualBasic::860cae01bcf9a1ad2777b75fa746e9ae, Massbank\Public\TMIC\FooDB\mysql\compounds_flavors.vb"
 
     ' Author:
     ' 
@@ -226,4 +226,3 @@ End Class
 
 
 End Namespace
-

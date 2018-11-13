@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::82642fe189bfb23de988a4cc55d765e8, plot\Visualize\ChromatogramPlot.vb"
+﻿#Region "Microsoft.VisualBasic::51dea253580125911f0a21f7db2b14f0, plot\ChromatogramPlot.vb"
 
     ' Author:
     ' 
@@ -294,4 +294,3 @@ Public Module ChromatogramPlot
         )
     End Function
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d38eee40756996ab1643cd9fa7042114, GCMS_quantify\QuantifyAnalysis.vb"
+﻿#Region "Microsoft.VisualBasic::b11c1deec689c8403a107f6412a184a9, GCMS_quantify\QuantifyAnalysis.vb"
 
     ' Author:
     ' 
@@ -131,4 +131,3 @@ Public Module QuantifyAnalysis
         End With
     End Function
 End Module
-

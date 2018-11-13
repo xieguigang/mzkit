@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2806c825b2893501139e287a6e326b6e, GCMS_quantify\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::b1f536ad3f88ce80a2bcd43fc8d668ca, GCMS_quantify\test\Module1.vb"
 
     ' Author:
     ' 
@@ -56,4 +56,3 @@ Module Module1
     End Sub
 
 End Module
-
