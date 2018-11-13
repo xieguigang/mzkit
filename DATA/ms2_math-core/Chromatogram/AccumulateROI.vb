@@ -2,6 +2,8 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.Imaging.Math2D
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
@@ -67,11 +69,18 @@ Namespace Chromatogram
                 ' 在这里将区间的上限的积分值减去区间的下限的积分值即可得到当前的这个区间的积分值（近似于定积分）
                 Dim integration = window.Last.Last.Y - window.First.First.Y
                 Dim max#
+                Dim rt#
 
                 If peak.Length = 1 Then
-                    max = peak.First.Intensity
+                    With peak.First
+                        max = .Intensity
+                        rt = .Time
+                    End With
                 Else
-                    max = peak!intensity.Max
+                    With peak!intensity
+                        max = .Max
+                        rt = peak(index:=Which.Max(.ByRef)).Time
+                    End With
                 End If
 
                 Yield New ROI With {
@@ -79,7 +88,8 @@ Namespace Chromatogram
                     .MaxInto = max,
                     .Baseline = baseline,
                     .Time = {rtmin, rtmax},
-                    .Integration = integration
+                    .Integration = integration,
+                    .rt = rt
                 }
             Next
         End Function

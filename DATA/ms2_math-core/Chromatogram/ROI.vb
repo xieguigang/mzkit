@@ -16,6 +16,11 @@ Namespace Chromatogram
         ''' <returns></returns>
         Public Property Time As DoubleRange
         ''' <summary>
+        ''' 出峰达到峰高最大值<see cref="MaxInto"/>的时间点
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property rt As Double
+        ''' <summary>
         ''' 这个区域的最大峰高度
         ''' </summary>
         ''' <returns></returns>

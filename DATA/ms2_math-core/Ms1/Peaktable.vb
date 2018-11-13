@@ -44,6 +44,11 @@ Public Class ROITable
     Public Property ID As String
     Public Property rtmin As Double
     Public Property rtmax As Double
+    ''' <summary>
+    ''' 保留指数
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property ri As Double
 
     ''' <summary>
     ''' 这个区域的最大峰高度
