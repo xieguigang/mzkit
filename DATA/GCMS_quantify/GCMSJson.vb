@@ -98,8 +98,11 @@ Public Class GCMSJson
         ' 先找到下标的集合
         ' 然后再取出scan_index对应的ms scan数据
         Return GetScanIndex(ROI) _
-            .Select(Function(scanIndex) ms(scanIndex)) _
+            .Select(Function(scanIndex)
+                        Return ms(scanIndex)
+                    End Function) _
             .IteratesALL _
+            .OrderBy(Function(scan) scan.mz) _
             .ToArray
     End Function
 End Class

@@ -55,10 +55,10 @@ Imports SMRUCC.MassSpectrum.Visualization
 Module GCMS
 
     Sub Main()
-        Call batchExport()
+        ' Call batchExport()
 
 
-        Dim gcData = QuantifyAnalysis.ReadData("D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\16s_contents\SCFA\SCFA测试标曲.AIA\1ppm-2.CDF")
+        Dim gcData = QuantifyAnalysis.ReadData("D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\16s_contents\SCFA\SCFA测试标曲.AIA\250ppm.CDF")
         Dim tic = {gcData.GetTIC}
         Dim ROIlist = gcData.GetTIC.Shadows.PopulateROI.ToArray
 
@@ -66,8 +66,13 @@ Module GCMS
         Call ROIlist.Select(Function(ROI) ROI.GetChromatogramData).ToArray.TICplot.AsGDIImage.SaveAs("./gcms_ions.png")
         Call ROIlist.ToTable.SaveTo("./ROI.csv")
         Call ROIlist.ExportReferenceROITable(
-            names:={"乙酸", "丙酸", "异丁酸", "丁酸", "异戊酸", "戊酸", "己酸"}
-        ).SaveTo("D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\16s_contents\SCFA\SCFA.csv")
+            names:={"乙酸", "丙酸", "异丁酸", "丁酸", "异戊酸", "戊酸", "异己酸", "己酸"}
+        ).SaveTo("D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\16s_contents\SCFA\SCFA.csv", Encodings.UTF8)
+
+        Dim aaaa = gcData.GetMsScan(ROIlist(Scan0))
+
+
+        Pause()
     End Sub
 
     Sub batchExport()

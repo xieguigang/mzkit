@@ -124,4 +124,16 @@ Public Class ms1_scan : Implements IMs1
         Return $"{mz.ToString("F4")}@{sys.Round(scan_time)} ({intensity})"
     End Function
 
+    ''' <summary>
+    ''' 按照``m/z``分组合并取出<see cref="intensity"/>最大值作为合并之后的结果
+    ''' 这个函数是忽略掉<see cref="scan_time"/>的，即认为这些数据都是通过一个
+    ''' <see cref="scan_time"/>下的结果
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="tolerance"></param>
+    ''' <returns></returns>
+    Public Shared Function GroupByMz(data As IEnumerable(Of ms1_scan), Optional tolerance As Tolerance = Nothing) As ms1_scan
+
+    End Function
+
 End Class

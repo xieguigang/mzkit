@@ -143,5 +143,9 @@ Namespace Chromatogram
         Public Overrides Function ToString() As String
             Return Time.ToString
         End Function
+
+        Public Shared Narrowing Operator CType(ROI As ROI) As DoubleRange
+            Return ROI.Time
+        End Operator
     End Class
 End Namespace
