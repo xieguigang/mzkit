@@ -43,10 +43,10 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.MIME.application.netCDF
-Imports SMRUCC.MassSpectrum.Math.Chromatogram
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.MIME.application.netCDF
 Imports SMRUCC.MassSpectrum.Math
+Imports SMRUCC.MassSpectrum.Math.Chromatogram
 
 ''' <summary>
 ''' GCMS自动化定量分析模块
