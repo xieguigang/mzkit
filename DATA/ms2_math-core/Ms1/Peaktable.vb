@@ -142,5 +142,6 @@ Public Class ROITable : Implements IRetentionTime
     ''' </summary>
     ''' <returns></returns>
     Public Property sn As Double
+    Public Property mass_spectra As String
 
 End Class

@@ -62,6 +62,7 @@ Public Class SSM2MatrixFragment
     ''' </summary>
     ''' <returns></returns>
     Public Property mz As Double
+
 #Region "Fragment intensity"
     Public Property query As Double
     Public Property ref As Double
