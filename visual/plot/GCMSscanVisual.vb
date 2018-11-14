@@ -35,9 +35,9 @@ Public Module GCMSscanVisual
                               Optional axisStrokeCss$ = Stroke.AxisStroke,
                               Optional arrowFactor$ = "2,2",
                               Optional sn_threshold# = 5,
-                              Optional viewDistance% = 8000,
-                              Optional viewAngle$ = "30,60,-56",
-                              Optional fov% = 50000) As GraphicsData
+                              Optional viewDistance% = 800,
+                              Optional viewAngle$ = "0,0,0",
+                              Optional fov% = 200) As GraphicsData
 
         Dim camera As New Camera(viewAngle) With {
             .fov = fov,
@@ -75,6 +75,14 @@ Public Module GCMSscanVisual
             .Range _
             .CreateAxisTicks
 
+        ' X
+        Dim timeScaler As New YScaler(reversed:=False) With {
+            .region = plotRegion.PlotRegion,
+            .Y = d3js.scale.linear _
+                .domain(X) _
+                .range(integers:={0, plotRegion.Width})
+        }
+        ' Y
         ' 因为intensity可能会达到上十万
         ' 与几百秒放在一起会非常不协调
         ' 所以所有的intensity值都会需要经过这个对象进行比例缩放
@@ -84,6 +92,13 @@ Public Module GCMSscanVisual
                 .domain(Y) _
                 .range(integers:={0, plotRegion.Height})
         }
+        ' Z
+        Dim massScaler As New YScaler(reversed:=False) With {
+            .region = plotRegion.PlotRegion,
+            .Y = d3js.scale.linear _
+                .domain(Z) _
+                .range(integers:={0, plotRegion.Height})
+        }
 
         Dim model As New List(Of Element3D)
         Dim TICArea As New Polygon With {
@@ -91,14 +106,20 @@ Public Module GCMSscanVisual
             .Path = data _
                 .times _
                 .Select(Function(time, i)
-                            Return New Point3D(time, intensityScaler.TranslateY(data.tic(i)), 0)
+                            Return New Point3D With {
+                                .X = timeScaler.TranslateY(time),
+                                .Y = intensityScaler.TranslateY(data.tic(i)),
+                                .Z = massScaler.TranslateY(0)
+                            }
                         End Function) _
                 .ToArray
         }
 
+        X = timeScaler.TranslateY(X).ToArray
         ' Y intensity 坐标轴需要重新scale一下
         ' 重新缩放到可以绘制的范围内
         Y = intensityScaler.TranslateY(Y).ToArray
+        Z = massScaler.TranslateY(Z).ToArray
 
         ' 添加坐标轴模型
         model += AxisDraw.Axis(
@@ -112,15 +133,16 @@ Public Module GCMSscanVisual
 
         Dim axisStroke As Pen = Stroke.TryParse(axisStrokeCss)
         Dim massFragmentStroke As Pen = Stroke.TryParse(massFragmentStrokeCSS)
+        Dim massZ#
 
         ' 添加ms scan信号柱模型
         For Each region As ROI In ROIlist
 
             ' 每一个ROI的ms scan的X都是相同的
-            Dim rtX = region.rt
+            Dim rtX# = timeScaler.TranslateY(region.rt)
             Dim msScans = data.GetMsScan(region).GroupByMz()
-            Dim A As New Point3D(rtX, 0, 0)
-            Dim B As New Point3D(rtX, 0, Z.Max)
+            Dim A As New Point3D(rtX, Y.Min, Z.Min)
+            Dim B As New Point3D(rtX, Y.Min, Z.Max)
 
             ' 添加绘制基础的线轴的模型
             model += New Line(A, B) With {
@@ -128,8 +150,9 @@ Public Module GCMSscanVisual
             }
 
             For Each mz As ms1_scan In msScans
-                A = New Point3D(rtX, 0, mz.mz)
-                B = New Point3D(rtX, intensityScaler.TranslateY(mz.intensity), mz.mz)
+                massZ = massScaler.TranslateY(mz.mz)
+                A = New Point3D(rtX, Y.Min, massZ)
+                B = New Point3D(rtX, intensityScaler.TranslateY(mz.intensity), massZ)
 
                 model += New Line(A, B) With {
                     .Stroke = massFragmentStroke
