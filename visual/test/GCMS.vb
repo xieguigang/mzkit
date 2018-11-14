@@ -57,7 +57,7 @@ Module GCMS
     Sub Main()
         ' Call batchExport()
 
-        Call New Form1().ShowDialog()
+        '  Call New Form1().ShowDialog()
 
 
         Dim gcData = QuantifyAnalysis.ReadData("D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\16s_contents\SCFA\SCFA测试标曲.AIA\250ppm.CDF")
@@ -72,6 +72,7 @@ Module GCMS
         Call ROIlist.Select(Function(ROI) ROI.GetChromatogramData).ToArray.TICplot.AsGDIImage.SaveAs("./gcms_ions.png")
         Call ROIlist.ToTable.SaveTo("./ROI.csv")
         Call ROIlist.ExportReferenceROITable(
+            raw:=gcData,
             names:={"乙酸", "丙酸", "异丁酸", "丁酸", "异戊酸", "戊酸", "异己酸", "己酸"}
         ).SaveTo("D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\16s_contents\SCFA\SCFA.csv", Encodings.UTF8)
 
@@ -91,6 +92,7 @@ Module GCMS
             Call tic.TICplot().AsGDIImage.SaveAs($"{directory}/gcms_TICplot.png")
             Call ROIlist.Select(Function(ROI) ROI.GetChromatogramData).ToArray.TICplot.AsGDIImage.SaveAs($"{directory}/ions.png")
             Call ROIlist.ExportReferenceROITable(
+                raw:=gcData,
                 names:={"乙酸", "丙酸", "异丁酸", "丁酸", "异戊酸", "戊酸", "异己酸", "己酸"}
             ).SaveTo($"{directory}\ROI.csv", Encodings.UTF8)
         Next
