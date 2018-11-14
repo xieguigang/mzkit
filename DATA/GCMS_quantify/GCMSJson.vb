@@ -82,8 +82,8 @@ Public Class GCMSJson
     Dim index As New Lazy(Of IndexSelector)(Function() IndexSelector.FromSortSequence(times))
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function GetScanIndex(ROI As DoubleRange) As IEnumerable(Of Integer)
-        Return index.Value.SelectByRange(ROI.Min, ROI.Max)
+    Public Function GetScanIndex(min#, max#) As IEnumerable(Of Integer)
+        Return index.Value.SelectByRange(min, max)
     End Function
 
     ''' <summary>
@@ -94,9 +94,14 @@ Public Class GCMSJson
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetMsScan(ROI As DoubleRange) As ms1_scan()
+        Return GetMsScan(ROI.Min, ROI.Max)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function GetMsScan(rtmin#, rtmax#) As ms1_scan()
         ' 先找到下标的集合
         ' 然后再取出scan_index对应的ms scan数据
-        Return GetScanIndex(ROI) _
+        Return GetScanIndex(rtmin, rtmax) _
             .Select(Function(scanIndex)
                         Return ms(scanIndex)
                     End Function) _

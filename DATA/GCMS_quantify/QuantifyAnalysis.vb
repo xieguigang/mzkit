@@ -43,12 +43,15 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.application.netCDF
+Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Text
 Imports SMRUCC.MassSpectrum.Math
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
-Imports Microsoft.VisualBasic.Net.Http
+Imports SMRUCC.MassSpectrum.Math.MSMS
 
 ''' <summary>
 ''' GCMS自动化定量分析模块
@@ -88,18 +91,87 @@ Public Module QuantifyAnalysis
     ''' <summary>
     ''' 利用标准品的信息从GCMS的实验数据之中找出对应的检测物质的检测结果
     ''' </summary>
-    ''' <param name="metabolites">标准品数据</param>
+    ''' <param name="standards">标准品数据</param>
     ''' <param name="data">实验数据</param>
     ''' <param name="sn#">信噪比阈值，低于这个阈值的信号都将会被抛弃</param>
+    ''' <param name="winSize">
+    ''' 进行查找的时间窗大小
+    ''' </param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function ScanContents(metabolites As ROITable(), data As GCMSJson, Optional sn# = 3) As IEnumerable(Of ROITable)
+    Public Iterator Function ScanContents(standards As ROITable(), data As GCMSJson,
+                                          Optional sn# = 3,
+                                          Optional winSize! = 3,
+                                          Optional scoreCutoff# = 0.85) As IEnumerable(Of (ROITable, query As LibraryMatrix, ref As LibraryMatrix))
+
         Dim ROIlist As ROI() = data.ExportROI _
             .Where(Function(ROI) ROI.snRatio >= sn) _
             .ToArray
-        Dim riA = (metabolites(0).rt, metabolites(0).ri)
-        Dim riB = (metabolites.Last.rt, metabolites.Last.ri)
 
+        ' 先用时间窗，找出和参考相近的实验数据
+        ' 然后做质谱图的比对操作
+        For Each ref As ROITable In standards
+            Dim timeRange As DoubleRange = {ref.rtmin - winSize, ref.rtmax + winSize}
+            Dim refSpectrum As LibraryMatrix = ref.mass_spectra _
+                .DecodeBase64 _
+                .Split(ASCII.TAB) _
+                .Select(Function(f)
+                            Return f.Split _
+                                .Select(Function(s) Val(s)) _
+                                .ToArray
+                        End Function) _
+                .Select(Function(t)
+                            Return New ms2 With {
+                                .mz = t(0),
+                                .intensity = t(1),
+                                .quantity = t(2)
+                            }
+                        End Function) _
+                .ToArray
+
+            refSpectrum.Name = ref.ID
+
+            For Each region As ROI In ROIlist _
+                .SkipWhile(Function(c) c.Time.Max < timeRange.Min) _
+                .TakeWhile(Function(c) c.Time.Min < timeRange.Max)
+
+                ' 在这个循环之中的都是rt符合条件要求的
+                Dim query = data.GetMsScan(region.Time) _
+                    .GroupByMz() _
+                    .CreateLibraryMatrix(region.ToString)
+                Dim score = GlobalAlignment.TwoDirectionSSM(
+                    x:=query.ms2,
+                    y:=refSpectrum.ms2,
+                    method:=Tolerance.DefaultTolerance
+                )
+
+                If {score.forward, score.reverse}.Min >= scoreCutoff Then
+                    Yield (region.convert(raw:=data, ri:=0, title:=region.ToString), query, refSpectrum)
+                End If
+            Next
+        Next
+    End Function
+
+    <Extension>
+    Private Function convert(ROI As ROI, raw As GCMSJson, ri#, title$) As ROITable
+        Dim spectra = raw.GetMsScan(ROI.Time).GroupByMz
+        Dim base64 As String = spectra _
+            .Select(Function(mz) $"{mz.mz} {mz.intensity}") _
+            .JoinBy(ASCII.TAB) _
+            .Base64String
+
+        Return New ROITable With {
+            .sn = ROI.snRatio,
+            .baseline = ROI.Baseline,
+            .ID = title,
+            .integration = ROI.Integration,
+            .maxInto = ROI.MaxInto,
+            .ri = ri,
+            .rt = ROI.rt,
+            .rtmax = ROI.Time.Max,
+            .rtmin = ROI.Time.Min,
+            .mass_spectra = base64
+        }
     End Function
 
     ''' <summary>
@@ -134,24 +206,7 @@ Public Module QuantifyAnalysis
             End If
 
             Return .Select(Function(ROI, i)
-                               Dim spectra = raw.GetMsScan(ROI.Time).GroupByMz
-                               Dim base64 As String = spectra _
-                                   .Select(Function(mz) $"{mz.mz} {mz.intensity}") _
-                                   .JoinBy(ASCII.TAB) _
-                                   .Base64String
-
-                               Return New ROITable With {
-                                   .sn = ROI.snRatio,
-                                   .baseline = ROI.Baseline,
-                                   .ID = getTitle(ROI, i),
-                                   .integration = ROI.Integration,
-                                   .maxInto = ROI.MaxInto,
-                                   .ri = ROI.RetentionIndex(A, B),
-                                   .rt = ROI.rt,
-                                   .rtmax = ROI.Time.Max,
-                                   .rtmin = ROI.Time.Min,
-                                   .mass_spectra = base64
-                               }
+                               Return ROI.convert(raw, ROI.RetentionIndex(A, B), getTitle(ROI, i))
                            End Function) _
                    .ToArray
         End With
