@@ -31,7 +31,7 @@ Public Module GCMSscanVisual
                               Optional bg$ = "white",
                               Optional colors$ = "clusters",
                               Optional massFragmentStrokeCSS$ = "stroke: skyblue; stroke-width: 5px; stroke-dash: solid;",
-                              Optional axisLabelFontCSS$ = CSSFont.Win7Normal,
+                              Optional axisLabelFontCSS$ = CSSFont.Win7VeryVeryLargeNormal,
                               Optional axisStrokeCss$ = Stroke.AxisStroke,
                               Optional arrowFactor$ = "2,2",
                               Optional sn_threshold# = 5,
@@ -69,7 +69,7 @@ Public Module GCMSscanVisual
         ' Z axis is mass scans
         Z = data.ms _
             .Select(Function(i)
-                        Return i.Select(Function(scan) scan.mz)
+                        Return i.Select(Function(scan) -scan.mz)
                     End Function) _
             .IteratesALL _
             .Range _
@@ -150,7 +150,7 @@ Public Module GCMSscanVisual
             }
 
             For Each mz As ms1_scan In msScans
-                massZ = massScaler.TranslateY(mz.mz)
+                massZ = massScaler.TranslateY(-mz.mz)
                 A = New Point3D(rtX, Y.Min, massZ)
                 B = New Point3D(rtX, intensityScaler.TranslateY(mz.intensity), massZ)
 
