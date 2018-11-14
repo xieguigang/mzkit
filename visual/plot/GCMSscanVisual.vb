@@ -3,6 +3,8 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D.Device
 Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D.Model
+Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
@@ -24,7 +26,10 @@ Public Module GCMSscanVisual
     <Extension>
     Public Function PlotScans(data As GCMSJson,
                               Optional size$ = "5000,5000",
+                              Optional padding$ = g.DefaultPadding,
+                              Optional bg$ = "white",
                               Optional colors$ = "clusters",
+                              Optional massFragmentStrokeCSS$ = "stroke: skyblue; stroke-width: 5px; stroke-dash: solid;",
                               Optional axisLabelFontCSS$ = CSSFont.Win7Normal,
                               Optional axisStrokeCss$ = Stroke.AxisStroke,
                               Optional arrowFactor$ = "2,2",
@@ -87,6 +92,7 @@ Public Module GCMSscanVisual
         model += TICArea
 
         Dim axisStroke As Pen = Stroke.TryParse(axisStrokeCss)
+        Dim massFragmentStroke As Pen = Stroke.TryParse(massFragmentStrokeCSS)
 
         ' 添加ms scan信号柱模型
         For Each region As ROI In ROIlist
@@ -105,8 +111,26 @@ Public Module GCMSscanVisual
             For Each mz As ms1_scan In msScans
                 A = New Point3D(rtX, 0, mz.mz)
                 B = New Point3D(rtX, mz.intensity, mz.mz)
-            Next
 
+                model += New Line(A, B) With {
+                    .Stroke = massFragmentStroke
+                }
+            Next
         Next
+
+        Dim plotInternal =
+            Sub(ByRef g As IGraphics, region As GraphicsRegion)
+                ' 要先绘制三维图形，要不然会将图例遮住的
+                Call model.RenderAs3DChart(g, camera, region)
+            End Sub
+
+        Dim plotRegion As New GraphicsRegion With {
+            .Size = camera.screen,
+            .Padding = padding
+        }
+
+        Return plotRegion _
+            .Size _
+            .GraphicsPlots(padding, bg, plotInternal)
     End Function
 End Module
