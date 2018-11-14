@@ -43,19 +43,16 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
-Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzXML
 Imports SMRUCC.MassSpectrum.Math
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
 Imports SMRUCC.MassSpectrum.Math.MSMS
 Imports SMRUCC.MassSpectrum.Visualization
-Imports SMRUCC.MassSpectrum.Visualization.DATA.SpectrumJSON
 
 Module Module1
 

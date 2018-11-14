@@ -60,27 +60,6 @@ Module GCMS
         '  Call New Form1().ShowDialog()
 
 
-        Dim gcData = QuantifyAnalysis.ReadData("D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\16s_contents\SCFA\SCFA测试标曲.AIA\250ppm.CDF")
-        Dim tic = {gcData.GetTIC}
-        Dim ROIlist = gcData.GetTIC.Shadows.PopulateROI.ToArray
-
-        Call gcData.PlotScans().AsGDIImage.SaveAs("./scans.png")
-
-        Call tic.TICplot().AsGDIImage.SaveAs("./test_gcms_ticplot.png")
-        Call ROIlist.Select(Function(ROI) ROI.GetChromatogramData).ToArray.TICplot.AsGDIImage.SaveAs("./gcms_ions.png")
-        Call ROIlist.ToTable.SaveTo("./ROI.csv")
-        Call ROIlist.ExportReferenceROITable(
-            raw:=gcData,
-            names:={"乙酸", "丙酸", "异丁酸", "丁酸", "异戊酸", "戊酸", "异己酸", "己酸"}
-        ).SaveTo("D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\16s_contents\SCFA\SCFA.csv", Encodings.UTF8)
-
-        For Each roi In ROIlist
-            Call gcData.GetMsScan(roi.Time).GroupByMz.CreateLibraryMatrix(roi.Time.ToString).MirrorPlot.AsGDIImage.SaveAs($"./[{Fix(roi.Time.Min)},{Fix(roi.Time.Max)}].png")
-        Next
-
-        Dim aaaa = gcData.GetMsScan(ROIlist(Scan0))
-        aaaa = ms1_scan.GroupByMz(aaaa)
-
         Pause()
     End Sub
 
