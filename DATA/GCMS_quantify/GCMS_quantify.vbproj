@@ -85,6 +85,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContentUnits.vb" />
     <Compile Include="GCMSJson.vb" />
     <Compile Include="QuantifyAnalysis.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
