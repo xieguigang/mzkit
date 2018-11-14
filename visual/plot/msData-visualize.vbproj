@@ -154,6 +154,7 @@
     <Compile Include="ChromatogramPeakPlot.vb" />
     <Compile Include="ChromatogramPlot.vb" />
     <Compile Include="GCMSscanVisual.vb" />
+    <Compile Include="MassSpectraMirrorPlot.vb" />
     <Compile Include="MzrtPlot.vb" />
     <Compile Include="PeakAssign.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
