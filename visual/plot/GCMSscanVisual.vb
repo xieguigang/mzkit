@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D.Device
 Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D.Model
@@ -43,6 +44,10 @@ Public Module GCMSscanVisual
             .screen = size.SizeParser,
             .ViewDistance = viewDistance
         }
+        Dim plotRegion As New GraphicsRegion With {
+            .Size = camera.screen,
+            .Padding = padding
+        }
         Dim ROIlist As ROI() = data _
             .ExportROI _
             .Where(Function(region)
@@ -70,13 +75,23 @@ Public Module GCMSscanVisual
             .Range _
             .CreateAxisTicks
 
+        ' 因为intensity可能会达到上十万
+        ' 与几百秒放在一起会非常不协调
+        ' 所以所有的intensity值都会需要经过这个对象进行比例缩放
+        Dim intensityScaler As New YScaler(reversed:=False) With {
+            .region = plotRegion.PlotRegion,
+            .Y = d3js.scale.linear _
+                .domain(Y) _
+                .range(integers:={0, plotRegion.Height})
+        }
+
         Dim model As New List(Of Element3D)
         Dim TICArea As New Polygon With {
             .brush = Brushes.Yellow,
             .Path = data _
                 .times _
                 .Select(Function(time, i)
-                            Return New Point3D(time, data.tic(i), 0)
+                            Return New Point3D(time, intensityScaler.TranslateY(data.tic(i)), 0)
                         End Function) _
                 .ToArray
         }
@@ -110,7 +125,7 @@ Public Module GCMSscanVisual
 
             For Each mz As ms1_scan In msScans
                 A = New Point3D(rtX, 0, mz.mz)
-                B = New Point3D(rtX, mz.intensity, mz.mz)
+                B = New Point3D(rtX, intensityScaler.TranslateY(mz.intensity), mz.mz)
 
                 model += New Line(A, B) With {
                     .Stroke = massFragmentStroke
@@ -123,11 +138,6 @@ Public Module GCMSscanVisual
                 ' 要先绘制三维图形，要不然会将图例遮住的
                 Call model.RenderAs3DChart(g, camera, region)
             End Sub
-
-        Dim plotRegion As New GraphicsRegion With {
-            .Size = camera.screen,
-            .Padding = padding
-        }
 
         Return plotRegion _
             .Size _
