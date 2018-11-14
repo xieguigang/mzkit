@@ -43,7 +43,10 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports SMRUCC.MassSpectrum.Math
 Imports SMRUCC.MassSpectrum.Math.App.GCMS
 
 Module Module1
@@ -52,8 +55,16 @@ Module Module1
         ' Call unitConvertTest()
 
 
-        Dim data = QuantifyAnalysis.ReadData("D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\16s_contents\SCFA\scfa200ppmAIAEXPRT.AIA\20ppm-未处理.CDF")
+        Dim data = QuantifyAnalysis.ReadData("D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\16s_contents\SCFA\SCFA测试标曲.AIA\25ppm.CDF")
+        Dim ref = "D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\16s_contents\SCFA\SCFA.csv".LoadCsv(Of ROITable)
+        Dim result As New List(Of ROITable)
 
+        For Each target In ref.ScanContents(data)
+            result += target.Item1
+
+        Next
+
+        Call result.SaveTo("./metabolites.csv")
         Call data.GetJson(indent:=True).SaveTo("./gcms.json")
 
         Pause()

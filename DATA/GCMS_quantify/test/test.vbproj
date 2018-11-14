@@ -154,6 +154,10 @@
       <Project>{6ff317ff-1a81-4272-a894-bfbffb202b41}</Project>
       <Name>application.netCDF</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\ms2_math-core\ms2_math-core.vbproj">
+      <Project>{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}</Project>
+      <Name>ms2_math-core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GCMS_quantify.vbproj">
       <Project>{3EB8C09A-C0F1-4C83-AE7D-40C203DF50F8}</Project>
       <Name>GCMS_quantify</Name>

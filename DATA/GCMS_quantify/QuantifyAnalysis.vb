@@ -99,7 +99,7 @@ Public Module QuantifyAnalysis
     ''' </param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function ScanContents(standards As ROITable(), data As GCMSJson,
+    Public Iterator Function ScanContents(standards As IEnumerable(Of ROITable), data As GCMSJson,
                                           Optional sn# = 3,
                                           Optional winSize! = 3,
                                           Optional scoreCutoff# = 0.85) As IEnumerable(Of (ROITable, query As LibraryMatrix, ref As LibraryMatrix))
