@@ -25,7 +25,7 @@ Public Module GCMSscanVisual
     ''' <returns></returns>
     <Extension>
     Public Function PlotScans(data As GCMSJson,
-                              Optional size$ = "5000,5000",
+                              Optional size$ = "8000,5000",
                               Optional padding$ = g.DefaultPadding,
                               Optional bg$ = "white",
                               Optional colors$ = "clusters",
@@ -34,9 +34,9 @@ Public Module GCMSscanVisual
                               Optional axisStrokeCss$ = Stroke.AxisStroke,
                               Optional arrowFactor$ = "2,2",
                               Optional sn_threshold# = 5,
-                              Optional viewDistance% = 3000,
+                              Optional viewDistance% = 8000,
                               Optional viewAngle$ = "30,60,-56",
-                              Optional fov% = 500000) As GraphicsData
+                              Optional fov% = 50000) As GraphicsData
 
         Dim camera As New Camera(viewAngle) With {
             .fov = fov,
