@@ -14,10 +14,6 @@ Public Module MassSpectra
                                Optional margin$ = "padding: 100px 30px 50px 100px;",
                                Optional intoCutoff# = 0.05) As GraphicsData
 
-        Dim mzRange As DoubleRange = library _
-            .Select(Function(mass) mass.mz) _
-            .ToArray
-
         library = library / library.Max
         library = library(library!intensity >= intoCutoff)
         library = library * 100
@@ -25,6 +21,9 @@ Public Module MassSpectra
         Dim matrix As (x#, value#)() = library _
             .Select(Function(mass) (mass.mz, mass.intensity)) _
             .ToArray
+        Dim mzRange As DoubleRange = library _
+            .Select(Function(mass) mass.mz) _
+            .CreateAxisTicks
 
         Return AlignmentPlot.PlotAlignment(
             matrix, matrix,

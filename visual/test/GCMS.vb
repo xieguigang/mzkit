@@ -75,7 +75,7 @@ Module GCMS
         ).SaveTo("D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\16s_contents\SCFA\SCFA.csv", Encodings.UTF8)
 
         For Each roi In ROIlist
-            Call gcData.GetMsScan(roi.Time).GroupByMz.CreateLibraryMatrix.MirrorPlot.AsGDIImage.SaveAs($"./[{Fix(roi.Time.Min)},{Fix(roi.Time.Max)}].png")
+            Call gcData.GetMsScan(roi.Time).GroupByMz.CreateLibraryMatrix(roi.Time.ToString).MirrorPlot.AsGDIImage.SaveAs($"./[{Fix(roi.Time.Min)},{Fix(roi.Time.Max)}].png")
         Next
 
         Dim aaaa = gcData.GetMsScan(ROIlist(Scan0))

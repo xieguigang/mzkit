@@ -96,15 +96,21 @@ Public Module Extensions
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function CreateLibraryMatrix(fragments As IEnumerable(Of ms1_scan)) As LibraryMatrix
-        Return fragments _
+    Public Function CreateLibraryMatrix(fragments As IEnumerable(Of ms1_scan), Optional name$ = "GC/MS Mass Scan") As LibraryMatrix
+        Dim ms2 = fragments _
             .SafeQuery _
             .Select(Function(scan)
                         Return New ms2 With {
                             .mz = scan.mz,
-                            .intensity = scan.intensity
+                            .intensity = scan.intensity,
+                            .quantity = scan.intensity
                         }
                     End Function) _
             .ToArray
+
+        Return New LibraryMatrix With {
+            .ms2 = ms2,
+            .Name = name
+        }
     End Function
 End Module
