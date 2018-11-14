@@ -45,7 +45,6 @@
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.application.netCDF
 Imports Microsoft.VisualBasic.MIME.application.netCDF.Components
-Imports SMRUCC.MassSpectrum.Math
 
 Public Module agilentGCMS
 
