@@ -35,7 +35,7 @@ Public Module GCMSscanVisual
                               Optional axisStrokeCss$ = Stroke.AxisStroke,
                               Optional arrowFactor$ = "2,2",
                               Optional sn_threshold# = 5,
-                              Optional viewDistance% = 8000,
+                              Optional viewDistance% = 108000,
                               Optional viewAngle$ = "30,60,-56",
                               Optional fov% = 50000) As GraphicsData
 
