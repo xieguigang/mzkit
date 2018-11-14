@@ -57,12 +57,16 @@ Module GCMS
     Sub Main()
         ' Call batchExport()
 
+        Call New Form1().ShowDialog()
+
 
         Dim gcData = QuantifyAnalysis.ReadData("D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\16s_contents\SCFA\SCFA测试标曲.AIA\250ppm.CDF")
         Dim tic = {gcData.GetTIC}
         Dim ROIlist = gcData.GetTIC.Shadows.PopulateROI.ToArray
 
         Call gcData.PlotScans().AsGDIImage.SaveAs("./scans.png")
+
+        End
 
         Call tic.TICplot().AsGDIImage.SaveAs("./test_gcms_ticplot.png")
         Call ROIlist.Select(Function(ROI) ROI.GetChromatogramData).ToArray.TICplot.AsGDIImage.SaveAs("./gcms_ions.png")

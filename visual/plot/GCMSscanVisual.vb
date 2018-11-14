@@ -35,9 +35,9 @@ Public Module GCMSscanVisual
                               Optional axisStrokeCss$ = Stroke.AxisStroke,
                               Optional arrowFactor$ = "2,2",
                               Optional sn_threshold# = 5,
-                              Optional viewDistance% = 800,
-                              Optional viewAngle$ = "0,0,0",
-                              Optional fov% = 200) As GraphicsData
+                              Optional viewDistance% = 14000,
+                              Optional viewAngle$ = "-90,-90,-30",
+                              Optional fov% = 800) As GraphicsData
 
         Dim camera As New Camera(viewAngle) With {
             .fov = fov,
