@@ -107,6 +107,7 @@ Public Module QuantifyAnalysis
         Dim ROIlist As ROI() = data.ExportROI _
             .Where(Function(ROI) ROI.snRatio >= sn) _
             .ToArray
+        Dim resultTable As ROITable
 
         ' 先用时间窗，找出和参考相近的实验数据
         ' 然后做质谱图的比对操作
@@ -146,7 +147,13 @@ Public Module QuantifyAnalysis
                 )
 
                 If {score.forward, score.reverse}.Min >= scoreCutoff Then
-                    Yield (region.convert(raw:=data, ri:=0, title:=region.ToString), query, refSpectrum)
+                    resultTable = region.convert(
+                        raw:=data,
+                        ri:=0,
+                        title:=region.ToString
+                    )
+
+                    Yield (resultTable, query, refSpectrum)
                 End If
             Next
         Next
@@ -202,7 +209,9 @@ Public Module QuantifyAnalysis
             If names.IsNullOrEmpty Then
                 getTitle = Function(ROI, i) $"#{i + 1}={Fix(ROI.rt)}s"
             Else
-                getTitle = Function(ROI, i) names.ElementAtOrDefault(i, $"#{i + 1}={Fix(ROI.rt)}s")
+                getTitle = Function(ROI, i)
+                               Return names.ElementAtOrDefault(i, $"#{i + 1}={Fix(ROI.rt)}s")
+                           End Function
             End If
 
             Return .Select(Function(ROI, i)
