@@ -140,7 +140,7 @@ Public Module QuantifyAnalysis
                 ' 在这个循环之中的都是rt符合条件要求的
                 Dim query = data.GetMsScan(region.Time) _
                     .GroupByMz() _
-                    .CreateLibraryMatrix(region.ToString)
+                    .CreateLibraryMatrix($"rt={region.rt}, [{Fix(region.Time.Min)},{Fix(region.Time.Max)}]")
                 Dim score = GlobalAlignment.TwoDirectionSSM(
                     x:=query.ms2,
                     y:=refSpectrum.ms2,
