@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports SMRUCC.MassSpectrum.Math
 Imports SMRUCC.MassSpectrum.Math.MSMS
 
 Public Module MassSpectra
@@ -20,15 +21,6 @@ Public Module MassSpectra
             intoCutoff:=intoCutoff,
             margin:=margin
         )
-    End Function
-
-    <Extension>
-    Private Function Trim(ByRef library As LibraryMatrix, intoCutoff#) As LibraryMatrix
-        library = library / library.Max
-        library = library(library!intensity >= intoCutoff)
-        library = library * 100
-
-        Return library
     End Function
 
     Public Function AlignMirrorPlot(query As LibraryMatrix, ref As LibraryMatrix,

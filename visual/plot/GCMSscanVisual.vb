@@ -16,6 +16,7 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports SMRUCC.MassSpectrum.Math
 Imports SMRUCC.MassSpectrum.Math.App.GCMS
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
+Imports SMRUCC.MassSpectrum.Math.MSMS
 
 Public Module GCMSscanVisual
 
@@ -140,7 +141,7 @@ Public Module GCMSscanVisual
 
             ' 每一个ROI的ms scan的X都是相同的
             Dim rtX# = timeScaler.TranslateY(region.rt)
-            Dim msScans = data.GetMsScan(region).GroupByMz()
+            Dim msScans = data.GetMsScan(region).GroupByMz().CreateLibraryMatrix.Trim(0.05)
             Dim A As New Point3D(rtX, Y.Min, Z.Min)
             Dim B As New Point3D(rtX, Y.Min, Z.Max)
 
@@ -149,7 +150,7 @@ Public Module GCMSscanVisual
                 .Stroke = axisStroke
             }
 
-            For Each mz As ms1_scan In msScans
+            For Each mz As ms2 In msScans
                 massZ = massScaler.TranslateY(-mz.mz)
                 A = New Point3D(rtX, Y.Min, massZ)
                 B = New Point3D(rtX, intensityScaler.TranslateY(mz.intensity), massZ)

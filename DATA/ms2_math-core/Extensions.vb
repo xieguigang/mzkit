@@ -49,6 +49,15 @@ Imports SMRUCC.MassSpectrum.Math.MSMS
 
 Public Module Extensions
 
+    <Extension>
+    Public Function Trim(ByRef library As LibraryMatrix, intoCutoff#) As LibraryMatrix
+        library = library / library.Max
+        library = library(library!intensity >= intoCutoff)
+        library = library * 100
+
+        Return library
+    End Function
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ToTable(ROIlist As IEnumerable(Of ROI), Optional getTitle As Func(Of ROI, String) = Nothing) As ROITable()
