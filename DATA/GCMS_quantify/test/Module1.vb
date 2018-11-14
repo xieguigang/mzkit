@@ -42,15 +42,27 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.MassSpectrum.Math.App.GCMS
 
 Module Module1
 
     Sub Main()
+        Call unitConvertTest()
+
+
         Dim data = QuantifyAnalysis.ReadData("D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\16s_contents\SCFA\scfa200ppmAIAEXPRT.AIA\20ppm-未处理.CDF")
 
         Call data.GetJson(indent:=True).SaveTo("./gcms.json")
+
+        Pause()
+    End Sub
+
+    Sub unitConvertTest()
+
+        Dim ppm2ppb = 999.0#.Unit(ContentUnits.ppm).ScaleTo(ContentUnits.ppb)
+        Dim ppt2ppm = 100.0#.Unit(ContentUnits.ppt).ScaleTo(ContentUnits.ppm)
 
         Pause()
     End Sub
