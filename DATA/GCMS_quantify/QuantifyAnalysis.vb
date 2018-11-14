@@ -102,7 +102,8 @@ Public Module QuantifyAnalysis
     Public Iterator Function ScanContents(standards As IEnumerable(Of ROITable), data As GCMSJson,
                                           Optional sn# = 3,
                                           Optional winSize! = 3,
-                                          Optional scoreCutoff# = 0.85) As IEnumerable(Of (ROITable, query As LibraryMatrix, ref As LibraryMatrix))
+                                          Optional scoreCutoff# = 0.85,
+                                          Optional all As Boolean = False) As IEnumerable(Of (ROITable, query As LibraryMatrix, ref As LibraryMatrix))
 
         Dim ROIlist As ROI() = data.ExportROI _
             .Where(Function(ROI) ROI.snRatio >= sn) _
@@ -125,7 +126,7 @@ Public Module QuantifyAnalysis
                             Return New ms2 With {
                                 .mz = t(0),
                                 .intensity = t(1),
-                                .quantity = t(2)
+                                .quantity = .intensity
                             }
                         End Function) _
                 .ToArray
@@ -150,10 +151,14 @@ Public Module QuantifyAnalysis
                     resultTable = region.convert(
                         raw:=data,
                         ri:=0,
-                        title:=region.ToString
+                        title:=ref.ID
                     )
 
                     Yield (resultTable, query, refSpectrum)
+
+                    If Not all Then
+                        Exit For
+                    End If
                 End If
             Next
         Next
