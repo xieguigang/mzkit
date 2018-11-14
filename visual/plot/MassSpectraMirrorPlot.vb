@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Imaging.Driver
@@ -7,6 +8,7 @@ Imports SMRUCC.MassSpectrum.Math.MSMS
 
 Public Module MassSpectra
 
+    <Extension>
     Public Function MirrorPlot(library As LibraryMatrix,
                                Optional size$ = "1200,800",
                                Optional margin$ = "padding: 100px 30px 50px 100px;",
