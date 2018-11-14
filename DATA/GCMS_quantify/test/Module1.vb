@@ -46,6 +46,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text
 Imports SMRUCC.MassSpectrum.Math
 Imports SMRUCC.MassSpectrum.Math.App.GCMS
 
@@ -64,7 +65,7 @@ Module Module1
 
         Next
 
-        Call result.SaveTo("./metabolites.csv")
+        Call result.SaveTo("./metabolites.csv", Encodings.UTF8)
         Call data.GetJson(indent:=True).SaveTo("./gcms.json")
 
         Pause()
