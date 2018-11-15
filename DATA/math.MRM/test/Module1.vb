@@ -48,7 +48,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 Imports SMRUCC.MassSpectrum.Math
-Imports SMRUCC.MassSpectrum.Math.App.GCMS
+Imports SMRUCC.MassSpectrum.Math.GCMS
 
 Module Module1
 
