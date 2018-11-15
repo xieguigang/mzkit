@@ -132,6 +132,7 @@
     <Compile Include="Extensions.vb" />
     <Compile Include="QuantitativeAnalysis\MRMPeak.vb" />
     <Compile Include="QuantitativeAnalysis\FitModel.vb" />
+    <Compile Include="QuantitativeAnalysis\PeakArea.vb" />
     <Compile Include="Standards.vb" />
     <Compile Include="IS.vb" />
     <Compile Include="QuantitativeAnalysis\Samples.vb" />
