@@ -92,6 +92,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Module1.vb" />
     <Compile Include="test.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -206,13 +207,13 @@
       <Project>{f2147043-7c16-48f8-838b-3d2cf14b0a7b}</Project>
       <Name>msData-visualize</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\ms2_math-core\ms2_math-core.vbproj">
+    <ProjectReference Include="..\..\ms2_math-core\MassSpectrum.math-core.vbproj">
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
-      <Name>ms2_math-core</Name>
+      <Name>MassSpectrum.math-core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\math.MRM.vbproj">
+    <ProjectReference Include="..\TargetedMetabolomics.vbproj">
       <Project>{a8a71b32-dac6-4fa7-a5c1-0f5e5d5c9eb7}</Project>
-      <Name>math.MRM</Name>
+      <Name>TargetedMetabolomics</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
