@@ -67,13 +67,14 @@ Public Module TPAExtensions
     ''' <param name="peak">
     ''' 目标峰的时间范围
     ''' </param>
+    ''' <param name="baselineQuantile">推荐0.65</param>
     ''' <returns></returns>
     ''' 
     <Extension>
     Public Function TPAIntegrator(vector As IVector(Of ChromatogramTick), peak As DoubleRange,
                                   baselineQuantile#,
-                                  peakAreaMethod As PeakArea.Methods,
-                                  Optional integratorTicks% = 5000,
+                                  Optional peakAreaMethod As PeakArea.Methods = PeakArea.Methods.Integrator,
+                                  Optional resolution% = 5000,
                                   Optional TPAFactor# = 1) As (area#, baseline#, maxPeakHeight#)
         Dim area#
         Dim baseline# = vector.Baseline(quantile:=baselineQuantile)
@@ -90,7 +91,7 @@ Public Module TPAExtensions
                 area = vector.PeakAreaIntegrator(
                     peak:=peak,
                     baselineQuantile:=baselineQuantile,
-                    n:=integratorTicks
+                    resolution:=resolution
                 )
         End Select
 

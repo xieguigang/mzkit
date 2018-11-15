@@ -171,13 +171,13 @@ Public Module PeakArea
     ''' <param name="chromatogram"></param>
     ''' <param name="peak"></param>
     ''' <param name="baselineQuantile#"></param>
-    ''' <param name="n">进行积分计算的时候的精密度，精密度越大越好，但是计算时间会被相应的加长</param>
+    ''' <param name="resolution">进行积分计算的时候的精密度，精密度越大越好，但是计算时间会被相应的加长</param>
     ''' <returns></returns>
     <Extension>
     Public Function PeakAreaIntegrator(chromatogram As IVector(Of ChromatogramTick),
                                        peak As DoubleRange,
                                        Optional baselineQuantile# = 0.65,
-                                       Optional n% = 1000,
+                                       Optional resolution% = 1000,
                                        Optional cubicSplineDensity% = 10,
                                        ByRef Optional peakRaw As PointF() = Nothing,
                                        ByRef Optional curve As PointF() = Nothing) As Double
@@ -268,7 +268,7 @@ Public Module PeakArea
         }
 
         Dim area As ODEOutput = integrator.RK4(
-            n:=n,
+            n:=resolution,
             a:=points.First.X,
             b:=points.Last.X)
         Dim areaValue = area.Y.Vector.Last
