@@ -53,7 +53,7 @@ Imports SMRUCC.MassSpectrum.Math.GCMS
 Module Module1
 
     Sub Main()
-        ' Call unitConvertTest()
+        Call unitConvertTest()
 
 
         Dim data = QuantifyAnalysis.ReadData("D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\16s_contents\SCFA\SCFA测试标曲.AIA\25ppm.CDF")
@@ -75,6 +75,11 @@ Module Module1
 
         Dim ppm2ppb = 999.0#.Unit(ContentUnits.ppm).ScaleTo(ContentUnits.ppb)
         Dim ppt2ppm = 100.0#.Unit(ContentUnits.ppt).ScaleTo(ContentUnits.ppm)
+
+
+        Dim c200ppm = "200 ppm".ParseContent
+        Dim c1ppt = "1ppt".ParseContent
+        Dim c99999ppb = "99999ppb".ParseContent
 
         Pause()
     End Sub
