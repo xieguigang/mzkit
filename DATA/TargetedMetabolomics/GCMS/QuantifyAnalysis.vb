@@ -101,7 +101,7 @@ Namespace GCMS
         ''' </param>
         ''' <returns></returns>
         <Extension>
-        Public Iterator Function ScanContents(standards As IEnumerable(Of ROITable), data As Raw,
+        Public Iterator Function ScanIons(standards As IEnumerable(Of ROITable), data As Raw,
                                           Optional sn# = 3,
                                           Optional winSize! = 3,
                                           Optional scoreCutoff# = 0.85,
