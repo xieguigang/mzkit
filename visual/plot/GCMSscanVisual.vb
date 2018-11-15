@@ -26,7 +26,7 @@ Public Module GCMSscanVisual
     ''' <param name="data"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function PlotScans(data As GCMSJson,
+    Public Function PlotScans(data As Raw,
                               Optional size$ = "8000,5000",
                               Optional padding$ = g.DefaultPadding,
                               Optional bg$ = "white",
