@@ -66,7 +66,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
 
-Namespace MSMS
+Namespace Spectra
 
     ''' <summary>
     ''' MS2 fragment matrix

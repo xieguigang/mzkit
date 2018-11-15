@@ -47,7 +47,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 
-Namespace MSMS
+Namespace Spectra
 
     ''' <summary>
     ''' Library matrix math

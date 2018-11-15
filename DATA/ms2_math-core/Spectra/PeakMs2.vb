@@ -45,7 +45,7 @@
 
 Imports System.Runtime.CompilerServices
 
-Namespace MSMS
+Namespace Spectra
 
     Public Structure PeakMs2
 

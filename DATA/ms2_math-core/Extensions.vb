@@ -45,7 +45,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
-Imports SMRUCC.MassSpectrum.Math.MSMS
+Imports SMRUCC.MassSpectrum.Math.Spectra
 
 Public Module Extensions
 
