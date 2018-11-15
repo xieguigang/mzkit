@@ -1,6 +1,5 @@
-﻿Imports System.IO
-Imports System.Runtime.CompilerServices
-Imports zlibnet
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Net.Http
 
 Namespace MarkupData
 
@@ -24,10 +23,7 @@ Namespace MarkupData
 
             Select Case stream.GetCompressionType
                 Case "zlib"
-                    Using ms As New MemoryStream, gz As New ZLibStream(New MemoryStream(bytes), CompressionMode.Decompress)
-                        gz.CopyTo(ms)
-                        bytes = ms.ToArray
-                    End Using
+                    bytes = bytes.UnzipStream.ToArray
                 Case Else
                     Throw New NotImplementedException
             End Select

@@ -209,10 +209,6 @@
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
       <Name>MassSpectrum.math-core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\runtime\zlibnet\src\zlibnet.vbproj">
-      <Project>{075e1da3-54ac-4d7c-9d4e-e34aa13910a8}</Project>
-      <Name>zlibnet</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="mzData\" />
