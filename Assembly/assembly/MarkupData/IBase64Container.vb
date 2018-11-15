@@ -23,7 +23,10 @@ Namespace MarkupData
 
             Select Case stream.GetCompressionType
                 Case "zlib"
+                    ' 2018-11-15 经过测试，与zlib的结果一致
                     bytes = bytes.UnZipStream.ToArray
+                Case "gzip"
+                    bytes = bytes.UnGzipStream.ToArray
                 Case Else
                     Throw New NotImplementedException
             End Select
