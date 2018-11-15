@@ -51,62 +51,65 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
 
-Public Class GCMSJson
+Namespace GCMS
 
-    Public Property title As String
+    Public Class GCMSJson
 
-    ''' <summary>
-    ''' 按照从开始到结束升序排序过了的
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property times As Double()
-    ''' <summary>
-    ''' 相应强度是和<see cref="times"/>一一对应的
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property tic As Double()
-    Public Property ms As ms1_scan()()
+        Public Property title As String
 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function GetTIC() As NamedCollection(Of ChromatogramTick)
-        Return New NamedCollection(Of ChromatogramTick) With {
-            .Name = title,
-            .Value = times _
-                .Select(Function(time, i)
-                            Return New ChromatogramTick(time, tic(i))
+        ''' <summary>
+        ''' 按照从开始到结束升序排序过了的
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property times As Double()
+        ''' <summary>
+        ''' 相应强度是和<see cref="times"/>一一对应的
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property tic As Double()
+        Public Property ms As ms1_scan()()
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetTIC() As NamedCollection(Of ChromatogramTick)
+            Return New NamedCollection(Of ChromatogramTick) With {
+                .Name = title,
+                .Value = times _
+                    .Select(Function(time, i)
+                                Return New ChromatogramTick(time, tic(i))
+                            End Function) _
+                    .ToArray
+            }
+        End Function
+
+        Dim index As New Lazy(Of IndexSelector)(Function() IndexSelector.FromSortSequence(times))
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetScanIndex(min#, max#) As IEnumerable(Of Integer)
+            Return index.Value.SelectByRange(min, max)
+        End Function
+
+        ''' <summary>
+        ''' 将某一个时间范围内的<see cref="ms"/>扫描结果都拿出来
+        ''' </summary>
+        ''' <param name="ROI"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetMsScan(ROI As DoubleRange) As ms1_scan()
+            Return GetMsScan(ROI.Min, ROI.Max)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetMsScan(rtmin#, rtmax#) As ms1_scan()
+            ' 先找到下标的集合
+            ' 然后再取出scan_index对应的ms scan数据
+            Return GetScanIndex(rtmin, rtmax) _
+                .Select(Function(scanIndex)
+                            Return ms(scanIndex)
                         End Function) _
+                .IteratesALL _
+                .OrderBy(Function(scan) scan.mz) _
                 .ToArray
-        }
-    End Function
-
-    Dim index As New Lazy(Of IndexSelector)(Function() IndexSelector.FromSortSequence(times))
-
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function GetScanIndex(min#, max#) As IEnumerable(Of Integer)
-        Return index.Value.SelectByRange(min, max)
-    End Function
-
-    ''' <summary>
-    ''' 将某一个时间范围内的<see cref="ms"/>扫描结果都拿出来
-    ''' </summary>
-    ''' <param name="ROI"></param>
-    ''' <returns></returns>
-    ''' 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function GetMsScan(ROI As DoubleRange) As ms1_scan()
-        Return GetMsScan(ROI.Min, ROI.Max)
-    End Function
-
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function GetMsScan(rtmin#, rtmax#) As ms1_scan()
-        ' 先找到下标的集合
-        ' 然后再取出scan_index对应的ms scan数据
-        Return GetScanIndex(rtmin, rtmax) _
-            .Select(Function(scanIndex)
-                        Return ms(scanIndex)
-                    End Function) _
-            .IteratesALL _
-            .OrderBy(Function(scan) scan.mz) _
-            .ToArray
-    End Function
-End Class
+        End Function
+    End Class
+End Namespace

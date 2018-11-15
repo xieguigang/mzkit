@@ -14,9 +14,9 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports SMRUCC.MassSpectrum.Math
-Imports SMRUCC.MassSpectrum.Math.App.GCMS
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
-Imports SMRUCC.MassSpectrum.Math.MSMS
+Imports SMRUCC.MassSpectrum.Math.GCMS
+Imports SMRUCC.MassSpectrum.Math.Spectra
 
 Public Module GCMSscanVisual
 

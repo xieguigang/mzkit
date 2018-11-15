@@ -52,176 +52,179 @@ Imports SMRUCC.MassSpectrum.Math
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
 Imports SMRUCC.MassSpectrum.Math.Spectra
 
-''' <summary>
-''' GCMS自动化定量分析模块
-''' 
-''' https://github.com/cheminfo-js/netcdf-gcms
-''' </summary>
-Public Module QuantifyAnalysis
+Namespace GCMS
 
     ''' <summary>
-    ''' 读取CDF文件然后读取原始数据
+    ''' GCMS自动化定量分析模块
+    ''' 
+    ''' https://github.com/cheminfo-js/netcdf-gcms
     ''' </summary>
-    ''' <param name="cdfPath"></param>
-    ''' <returns></returns>
-    Public Function ReadData(cdfPath$, Optional vendor$ = "agilentGCMS", Optional showSummary As Boolean = True) As GCMSJson
-        Dim cdf As New netCDFReader(cdfPath)
+    Public Module QuantifyAnalysis
 
-        If showSummary Then
-            Call Console.WriteLine(cdf.ToString)
-        End If
+        ''' <summary>
+        ''' 读取CDF文件然后读取原始数据
+        ''' </summary>
+        ''' <param name="cdfPath"></param>
+        ''' <returns></returns>
+        Public Function ReadData(cdfPath$, Optional vendor$ = "agilentGCMS", Optional showSummary As Boolean = True) As GCMSJson
+            Dim cdf As New netCDFReader(cdfPath)
 
-        Select Case vendor
-            Case "agilentGCMS" : Return agilentGCMS.Read(cdf)
-            Case Else
-                Throw New NotImplementedException(vendor)
-        End Select
-    End Function
+            If showSummary Then
+                Call Console.WriteLine(cdf.ToString)
+            End If
 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension>
-    Public Function ExportROI(gcms As GCMSJson) As ROI()
-        Return gcms.GetTIC _
-            .Shadows _
-            .PopulateROI _
-            .ToArray
-    End Function
+            Select Case vendor
+                Case "agilentGCMS" : Return agilentGCMS.Read(cdf)
+                Case Else
+                    Throw New NotImplementedException(vendor)
+            End Select
+        End Function
 
-    ''' <summary>
-    ''' 利用标准品的信息从GCMS的实验数据之中找出对应的检测物质的检测结果
-    ''' </summary>
-    ''' <param name="standards">标准品数据</param>
-    ''' <param name="data">实验数据</param>
-    ''' <param name="sn#">信噪比阈值，低于这个阈值的信号都将会被抛弃</param>
-    ''' <param name="winSize">
-    ''' 进行查找的时间窗大小
-    ''' </param>
-    ''' <returns></returns>
-    <Extension>
-    Public Iterator Function ScanContents(standards As IEnumerable(Of ROITable), data As GCMSJson,
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function ExportROI(gcms As GCMSJson) As ROI()
+            Return gcms.GetTIC _
+                .Shadows _
+                .PopulateROI _
+                .ToArray
+        End Function
+
+        ''' <summary>
+        ''' 利用标准品的信息从GCMS的实验数据之中找出对应的检测物质的检测结果
+        ''' </summary>
+        ''' <param name="standards">标准品数据</param>
+        ''' <param name="data">实验数据</param>
+        ''' <param name="sn#">信噪比阈值，低于这个阈值的信号都将会被抛弃</param>
+        ''' <param name="winSize">
+        ''' 进行查找的时间窗大小
+        ''' </param>
+        ''' <returns></returns>
+        <Extension>
+        Public Iterator Function ScanContents(standards As IEnumerable(Of ROITable), data As GCMSJson,
                                           Optional sn# = 3,
                                           Optional winSize! = 3,
                                           Optional scoreCutoff# = 0.85,
                                           Optional all As Boolean = False) As IEnumerable(Of (ROITable, query As LibraryMatrix, ref As LibraryMatrix))
 
-        Dim ROIlist As ROI() = data.ExportROI _
-            .Where(Function(ROI) ROI.snRatio >= sn) _
-            .ToArray
-        Dim resultTable As ROITable
-
-        ' 先用时间窗，找出和参考相近的实验数据
-        ' 然后做质谱图的比对操作
-        For Each ref As ROITable In standards
-            Dim timeRange As DoubleRange = {ref.rtmin - winSize, ref.rtmax + winSize}
-            Dim refSpectrum As LibraryMatrix = ref.mass_spectra _
-                .DecodeBase64 _
-                .Split(ASCII.TAB) _
-                .Select(Function(f)
-                            Return f.Split _
-                                .Select(Function(s) Val(s)) _
-                                .ToArray
-                        End Function) _
-                .Select(Function(t)
-                            Return New ms2 With {
-                                .mz = t(0),
-                                .intensity = t(1),
-                                .quantity = .intensity
-                            }
-                        End Function) _
+            Dim ROIlist As ROI() = data.ExportROI _
+                .Where(Function(ROI) ROI.snRatio >= sn) _
                 .ToArray
+            Dim resultTable As ROITable
 
-            refSpectrum.Name = ref.ID
+            ' 先用时间窗，找出和参考相近的实验数据
+            ' 然后做质谱图的比对操作
+            For Each ref As ROITable In standards
+                Dim timeRange As DoubleRange = {ref.rtmin - winSize, ref.rtmax + winSize}
+                Dim refSpectrum As LibraryMatrix = ref.mass_spectra _
+                    .DecodeBase64 _
+                    .Split(ASCII.TAB) _
+                    .Select(Function(f)
+                                Return f.Split _
+                                    .Select(Function(s) Val(s)) _
+                                    .ToArray
+                            End Function) _
+                    .Select(Function(t)
+                                Return New ms2 With {
+                                    .mz = t(0),
+                                    .intensity = t(1),
+                                    .quantity = .intensity
+                                }
+                            End Function) _
+                    .ToArray
 
-            For Each region As ROI In ROIlist _
-                .SkipWhile(Function(c) c.Time.Max < timeRange.Min) _
-                .TakeWhile(Function(c) c.Time.Min < timeRange.Max)
+                refSpectrum.Name = ref.ID
 
-                ' 在这个循环之中的都是rt符合条件要求的
-                Dim query = data.GetMsScan(region.Time) _
-                    .GroupByMz() _
-                    .CreateLibraryMatrix($"rt={region.rt}, [{Fix(region.Time.Min)},{Fix(region.Time.Max)}]")
-                Dim score = GlobalAlignment.TwoDirectionSSM(
-                    x:=query.ms2,
-                    y:=refSpectrum.ms2,
-                    method:=Tolerance.DefaultTolerance
-                )
+                For Each region As ROI In ROIlist _
+                    .SkipWhile(Function(c) c.Time.Max < timeRange.Min) _
+                    .TakeWhile(Function(c) c.Time.Min < timeRange.Max)
 
-                If {score.forward, score.reverse}.Min >= scoreCutoff Then
-                    resultTable = region.convert(
-                        raw:=data,
-                        ri:=0,
-                        title:=ref.ID
+                    ' 在这个循环之中的都是rt符合条件要求的
+                    Dim query = data.GetMsScan(region.Time) _
+                        .GroupByMz() _
+                        .CreateLibraryMatrix($"rt={region.rt}, [{Fix(region.Time.Min)},{Fix(region.Time.Max)}]")
+                    Dim score = GlobalAlignment.TwoDirectionSSM(
+                        x:=query.ms2,
+                        y:=refSpectrum.ms2,
+                        method:=Tolerance.DefaultTolerance
                     )
 
-                    Yield (resultTable, query, refSpectrum)
+                    If {score.forward, score.reverse}.Min >= scoreCutoff Then
+                        resultTable = region.convert(
+                            raw:=data,
+                            ri:=0,
+                            title:=ref.ID
+                        )
 
-                    If Not all Then
-                        Exit For
+                        Yield (resultTable, query, refSpectrum)
+
+                        If Not all Then
+                            Exit For
+                        End If
                     End If
-                End If
+                Next
             Next
-        Next
-    End Function
+        End Function
 
-    <Extension>
-    Private Function convert(ROI As ROI, raw As GCMSJson, ri#, title$) As ROITable
-        Dim spectra = raw.GetMsScan(ROI.Time).GroupByMz
-        Dim base64 As String = spectra _
-            .Select(Function(mz) $"{mz.mz} {mz.intensity}") _
-            .JoinBy(ASCII.TAB) _
-            .Base64String
+        <Extension>
+        Private Function convert(ROI As ROI, raw As GCMSJson, ri#, title$) As ROITable
+            Dim spectra = raw.GetMsScan(ROI.Time).GroupByMz
+            Dim base64 As String = spectra _
+                .Select(Function(mz) $"{mz.mz} {mz.intensity}") _
+                .JoinBy(ASCII.TAB) _
+                .Base64String
 
-        Return New ROITable With {
-            .sn = ROI.snRatio,
-            .baseline = ROI.Baseline,
-            .ID = title,
-            .integration = ROI.Integration,
-            .maxInto = ROI.MaxInto,
-            .ri = ri,
-            .rt = ROI.rt,
-            .rtmax = ROI.Time.Max,
-            .rtmin = ROI.Time.Min,
-            .mass_spectra = base64
-        }
-    End Function
+            Return New ROITable With {
+                .sn = ROI.snRatio,
+                .baseline = ROI.Baseline,
+                .ID = title,
+                .integration = ROI.Integration,
+                .maxInto = ROI.MaxInto,
+                .ri = ri,
+                .rt = ROI.rt,
+                .rtmax = ROI.Time.Max,
+                .rtmin = ROI.Time.Min,
+                .mass_spectra = base64
+            }
+        End Function
 
-    ''' <summary>
-    ''' 导出标准品参考的ROI区间列表，用于``GC/MS``自动化定性分析
-    ''' </summary>
-    ''' <param name="regions"></param>
-    ''' <param name="sn">
-    ''' 信噪比筛选阈值
-    ''' </param>
-    ''' <returns></returns>
-    ''' <remarks>
-    ''' 保留指数的计算：在标准化流程之中，GCMS的出峰顺序保持不变，但是保留时间可能会在不同批次实验间有变化
-    ''' 这个时候如果定量用的标准品混合物和样本之中的所检测物质的出峰顺序一致，则可以将标准品混合物之中的
-    ''' 第一个出峰的物质和最后一个出峰的物质作为保留指数的参考，在这里假设第一个出峰的物质的保留指数为零，
-    ''' 最后一个出峰的物质的保留指数为1000，则可以根据这个区间和rt之间的线性关系计算出保留指数
-    ''' </remarks>
-    <Extension> Public Function ExportReferenceROITable(regions As ROI(), raw As GCMSJson,
+        ''' <summary>
+        ''' 导出标准品参考的ROI区间列表，用于``GC/MS``自动化定性分析
+        ''' </summary>
+        ''' <param name="regions"></param>
+        ''' <param name="sn">
+        ''' 信噪比筛选阈值
+        ''' </param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 保留指数的计算：在标准化流程之中，GCMS的出峰顺序保持不变，但是保留时间可能会在不同批次实验间有变化
+        ''' 这个时候如果定量用的标准品混合物和样本之中的所检测物质的出峰顺序一致，则可以将标准品混合物之中的
+        ''' 第一个出峰的物质和最后一个出峰的物质作为保留指数的参考，在这里假设第一个出峰的物质的保留指数为零，
+        ''' 最后一个出峰的物质的保留指数为1000，则可以根据这个区间和rt之间的线性关系计算出保留指数
+        ''' </remarks>
+        <Extension> Public Function ExportReferenceROITable(regions As ROI(), raw As GCMSJson,
                                                         Optional sn# = 5,
                                                         Optional names$() = Nothing,
                                                         Optional RImax# = 1000) As ROITable()
 
-        With regions.Where(Function(ROI) ROI.snRatio >= sn).ToArray
-            Dim refA = .First, refB = .Last
-            Dim A = (refA.rt, 0)
-            Dim B = (refB.rt, RImax)
-            Dim getTitle As Func(Of ROI, Integer, String)
+            With regions.Where(Function(ROI) ROI.snRatio >= sn).ToArray
+                Dim refA = .First, refB = .Last
+                Dim A = (refA.rt, 0)
+                Dim B = (refB.rt, RImax)
+                Dim getTitle As Func(Of ROI, Integer, String)
 
-            If names.IsNullOrEmpty Then
-                getTitle = Function(ROI, i) $"#{i + 1}={Fix(ROI.rt)}s"
-            Else
-                getTitle = Function(ROI, i)
-                               Return names.ElementAtOrDefault(i, $"#{i + 1}={Fix(ROI.rt)}s")
-                           End Function
-            End If
+                If names.IsNullOrEmpty Then
+                    getTitle = Function(ROI, i) $"#{i + 1}={Fix(ROI.rt)}s"
+                Else
+                    getTitle = Function(ROI, i)
+                                   Return names.ElementAtOrDefault(i, $"#{i + 1}={Fix(ROI.rt)}s")
+                               End Function
+                End If
 
-            Return .Select(Function(ROI, i)
-                               Return ROI.convert(raw, ROI.RetentionIndex(A, B), getTitle(ROI, i))
-                           End Function) _
-                   .ToArray
-        End With
-    End Function
-End Module
+                Return .Select(Function(ROI, i)
+                                   Return ROI.convert(raw, ROI.RetentionIndex(A, B), getTitle(ROI, i))
+                               End Function) _
+                       .ToArray
+            End With
+        End Function
+    End Module
+End Namespace
