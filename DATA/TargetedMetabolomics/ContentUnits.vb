@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports r = System.Text.RegularExpressions.Regex
 
 Public Enum ContentUnits As Integer
@@ -21,7 +22,9 @@ Public Module UnitExtensions
         text = LCase(r.Match(text, contentPattern, RegexICSng).Value)
 
         Return New UnitValue(Of ContentUnits) With {
-            .Unit = [Enum].Parse(GetType(ContentUnits), r.Match(text, "pp(m|b|t)", RegexICSng).Value),
+            .Unit = r _
+                .Match(text, "pp(m|b|t)", RegexICSng) _
+                .TryParse(Of ContentUnits),
             .Value = Val(text)
         }
     End Function
