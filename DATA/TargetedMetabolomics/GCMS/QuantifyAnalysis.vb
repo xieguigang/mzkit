@@ -119,9 +119,10 @@ Namespace GCMS
                     .TakeWhile(Function(c) c.Time.Min < timeRange.Max) _
                     .Select(Function(region As ROI)
                                 ' 在这个循环之中的都是rt符合条件要求的
+                                Dim matrixName$ = $"rt={region.rt}, [{Fix(region.Time.Min)},{Fix(region.Time.Max)}]"
                                 Dim query = data.GetMsScan(region.Time) _
                                     .GroupByMz() _
-                                    .CreateLibraryMatrix($"rt={region.rt}, [{Fix(region.Time.Min)},{Fix(region.Time.Max)}]")
+                                    .CreateLibraryMatrix(matrixName)
                                 Dim score = GlobalAlignment.TwoDirectionSSM(
                                     x:=query.ms2,
                                     y:=refSpectrum.ms2,
