@@ -114,32 +114,45 @@ Namespace GCMS
 
                 refSpectrum.Name = ref.ID
 
-                For Each region As ROI In ROIlist _
+                Dim candidates = ROIlist _
                     .SkipWhile(Function(c) c.Time.Max < timeRange.Min) _
-                    .TakeWhile(Function(c) c.Time.Min < timeRange.Max)
+                    .TakeWhile(Function(c) c.Time.Min < timeRange.Max) _
+                    .Select(Function(region As ROI)
+                                ' 在这个循环之中的都是rt符合条件要求的
+                                Dim query = data.GetMsScan(region.Time) _
+                                    .GroupByMz() _
+                                    .CreateLibraryMatrix($"rt={region.rt}, [{Fix(region.Time.Min)},{Fix(region.Time.Max)}]")
+                                Dim score = GlobalAlignment.TwoDirectionSSM(
+                                    x:=query.ms2,
+                                    y:=refSpectrum.ms2,
+                                    method:=Tolerance.DefaultTolerance
+                                )
+                                Dim minScore# = {score.forward, score.reverse}.Min
 
-                    ' 在这个循环之中的都是rt符合条件要求的
-                    Dim query = data.GetMsScan(region.Time) _
-                        .GroupByMz() _
-                        .CreateLibraryMatrix($"rt={region.rt}, [{Fix(region.Time.Min)},{Fix(region.Time.Max)}]")
-                    Dim score = GlobalAlignment.TwoDirectionSSM(
-                        x:=query.ms2,
-                        y:=refSpectrum.ms2,
-                        method:=Tolerance.DefaultTolerance
+                                Return (
+                                    score:=score,
+                                    minScore:=minScore,
+                                    query:=query,
+                                    region:=region
+                                )
+                            End Function) _
+                    .Where(Function(candidate)
+                               Return candidate.minScore >= scoreCutoff
+                           End Function) _
+                    .OrderByDescending(Function(candidate) candidate.minScore) _
+                    .ToArray
+
+                For Each candidate In candidates
+                    resultTable = candidate.region.convert(
+                        raw:=data,
+                        ri:=0,
+                        title:=ref.ID
                     )
 
-                    If {score.forward, score.reverse}.Min >= scoreCutoff Then
-                        resultTable = region.convert(
-                            raw:=data,
-                            ri:=0,
-                            title:=ref.ID
-                        )
+                    Yield (resultTable, candidate.query, refSpectrum)
 
-                        Yield (resultTable, query, refSpectrum)
-
-                        If Not all Then
-                            Exit For
-                        End If
+                    If Not all Then
+                        Exit For
                     End If
                 Next
             Next
