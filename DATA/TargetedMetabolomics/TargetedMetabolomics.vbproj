@@ -127,6 +127,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContentUnits.vb" />
+    <Compile Include="GCMS\ChromatographyPeaktable.vb" />
     <Compile Include="GCMS\StandardCurve.vb" />
     <Compile Include="GCMS\ReaderExtensions.vb" />
     <Compile Include="GCMS\Raw.vb" />

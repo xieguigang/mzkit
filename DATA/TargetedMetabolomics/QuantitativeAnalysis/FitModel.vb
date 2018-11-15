@@ -8,6 +8,9 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports SMRUCC.MassSpectrum.Math.MRM.Models
 
+''' <summary>
+''' 标准曲线模型
+''' </summary>
 Public Class FitModel : Implements INamedValue
 
     Public Property Name As String Implements IKeyedEntity(Of String).Key
