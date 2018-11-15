@@ -7,7 +7,7 @@ Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzXML
-Imports SMRUCC.MassSpectrum.Math.MSMS
+Imports SMRUCC.MassSpectrum.Math.Spectra
 
 Module Program
 
