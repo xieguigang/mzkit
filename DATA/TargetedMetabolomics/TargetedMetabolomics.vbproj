@@ -127,7 +127,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContentUnits.vb" />
-    <Compile Include="GCMS\GCMSJson.vb" />
+    <Compile Include="GCMS\Raw.vb" />
     <Compile Include="GCMS\QuantifyAnalysis.vb" />
     <Compile Include="GCMS\Vendors\agilentGCMS.vb" />
     <Compile Include="GCMS\Vendors\agilentHPLC.vb" />

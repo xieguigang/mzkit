@@ -50,7 +50,7 @@ Namespace GCMS.Vendors
 
     Public Module agilentGCMS
 
-        Public Function Read(cdf As netCDFReader) As GCMSJson
+        Public Function Read(cdf As netCDFReader) As Raw
             Dim time As CDFData = cdf.getDataVariable("scan_acquisition_time")
             Dim tic = cdf.getDataVariable("total_intensity")
             Dim pointCount = cdf.getDataVariable("point_count")
@@ -75,7 +75,7 @@ Namespace GCMS.Vendors
                 Next
             Next
 
-            Return New GCMSJson With {
+            Return New Raw With {
                 .times = time.numerics,
                 .tic = tic.numerics,
                 .ms = ms,

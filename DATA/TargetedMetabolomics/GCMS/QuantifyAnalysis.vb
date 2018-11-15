@@ -67,7 +67,7 @@ Namespace GCMS
         ''' </summary>
         ''' <param name="cdfPath"></param>
         ''' <returns></returns>
-        Public Function ReadData(cdfPath$, Optional vendor$ = "agilentGCMS", Optional showSummary As Boolean = True) As GCMSJson
+        Public Function ReadData(cdfPath$, Optional vendor$ = "agilentGCMS", Optional showSummary As Boolean = True) As Raw
             Dim cdf As New netCDFReader(cdfPath)
 
             If showSummary Then
@@ -83,7 +83,7 @@ Namespace GCMS
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function ExportROI(gcms As GCMSJson) As ROI()
+        Public Function ExportROI(gcms As Raw) As ROI()
             Return gcms.GetTIC _
                 .Shadows _
                 .PopulateROI _
@@ -101,7 +101,7 @@ Namespace GCMS
         ''' </param>
         ''' <returns></returns>
         <Extension>
-        Public Iterator Function ScanContents(standards As IEnumerable(Of ROITable), data As GCMSJson,
+        Public Iterator Function ScanContents(standards As IEnumerable(Of ROITable), data As Raw,
                                           Optional sn# = 3,
                                           Optional winSize! = 3,
                                           Optional scoreCutoff# = 0.85,
@@ -167,7 +167,7 @@ Namespace GCMS
         End Function
 
         <Extension>
-        Private Function convert(ROI As ROI, raw As GCMSJson, ri#, title$) As ROITable
+        Private Function convert(ROI As ROI, raw As Raw, ri#, title$) As ROITable
             Dim spectra = raw.GetMsScan(ROI.Time).GroupByMz
             Dim base64 As String = spectra _
                 .Select(Function(mz) $"{mz.mz} {mz.intensity}") _
@@ -202,7 +202,7 @@ Namespace GCMS
         ''' 第一个出峰的物质和最后一个出峰的物质作为保留指数的参考，在这里假设第一个出峰的物质的保留指数为零，
         ''' 最后一个出峰的物质的保留指数为1000，则可以根据这个区间和rt之间的线性关系计算出保留指数
         ''' </remarks>
-        <Extension> Public Function ExportReferenceROITable(regions As ROI(), raw As GCMSJson,
+        <Extension> Public Function ExportReferenceROITable(regions As ROI(), raw As Raw,
                                                         Optional sn# = 5,
                                                         Optional names$() = Nothing,
                                                         Optional RImax# = 1000) As ROITable()

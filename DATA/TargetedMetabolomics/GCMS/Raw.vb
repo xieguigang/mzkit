@@ -53,20 +53,30 @@ Imports SMRUCC.MassSpectrum.Math.Chromatogram
 
 Namespace GCMS
 
-    Public Class GCMSJson
+    ''' <summary>
+    ''' 从CDF文件之中所读取出来的最原始的数据
+    ''' </summary>
+    Public Class Raw
 
         Public Property title As String
 
+#Region "Gas Chromatography"
         ''' <summary>
-        ''' 按照从开始到结束升序排序过了的
+        ''' [气相色谱数据] 按照从开始到结束升序排序过了的
         ''' </summary>
         ''' <returns></returns>
         Public Property times As Double()
         ''' <summary>
-        ''' 相应强度是和<see cref="times"/>一一对应的
+        ''' [气相色谱数据] 相应强度是和<see cref="times"/>一一对应的
         ''' </summary>
         ''' <returns></returns>
         Public Property tic As Double()
+#End Region
+
+        ''' <summary>
+        ''' 质谱扫描的结果数据
+        ''' </summary>
+        ''' <returns></returns>
         Public Property ms As ms1_scan()()
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
