@@ -23,7 +23,7 @@ Namespace MarkupData
 
             Select Case stream.GetCompressionType
                 Case "zlib"
-                    bytes = bytes.UnzipStream.ToArray
+                    bytes = bytes.UnZipStream.ToArray
                 Case Else
                     Throw New NotImplementedException
             End Select
