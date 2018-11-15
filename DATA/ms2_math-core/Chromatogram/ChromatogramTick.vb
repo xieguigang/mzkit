@@ -52,7 +52,7 @@ Imports System.Runtime.CompilerServices
 Namespace Chromatogram
 
     ''' <summary>
-    ''' The chromatogram signal ticks
+    ''' The chromatogram signal ticks (``{time => intensity}``)
     ''' </summary>
     Public Class ChromatogramTick
 

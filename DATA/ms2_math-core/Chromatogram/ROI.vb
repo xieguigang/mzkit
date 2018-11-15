@@ -90,6 +90,11 @@ Namespace Chromatogram
         ''' </summary>
         ''' <returns></returns>
         Public Property MaxInto As Double
+
+        ''' <summary>
+        ''' 在这个ROI时间窗区域内的色谱图数据
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Ticks As ChromatogramTick()
         ''' <summary>
         ''' 所计算出来的基线的响应强度

@@ -144,11 +144,18 @@ Namespace GCMS
                     .ToArray
 
                 For Each candidate In candidates
+                    ' 计算出峰面积
+                    Dim TPA = candidate.region _
+                        .Ticks _
+                        .Shadows _
+                        .TPAIntegrator(candidate.region.Time, 0.65, Methods.NetPeakSum)
+
                     resultTable = candidate.region.convert(
                         raw:=data,
                         ri:=0,
                         title:=ref.ID
                     )
+                    resultTable.integration = TPA.area
 
                     Yield (resultTable, candidate.query, refSpectrum)
 
