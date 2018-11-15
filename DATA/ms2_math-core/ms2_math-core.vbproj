@@ -146,11 +146,11 @@
     <Compile Include="Ms1\PrecursorType\MolWeight.vb" />
     <Compile Include="Ms1\PrecursorType\MzCalculator.vb" />
     <Compile Include="Ms1\Tolerance.vb" />
-    <Compile Include="Ms2\PeakMs2.vb" />
-    <Compile Include="Ms2\LibraryMatrixExtensions.vb" />
-    <Compile Include="Ms2\GlobalAlignment.vb" />
-    <Compile Include="Ms2\ms2AlignMatrix.vb" />
-    <Compile Include="Ms2\LibraryMatrix.vb" />
+    <Compile Include="Spectra\PeakMs2.vb" />
+    <Compile Include="Spectra\LibraryMatrixExtensions.vb" />
+    <Compile Include="Spectra\GlobalAlignment.vb" />
+    <Compile Include="Spectra\ms2AlignMatrix.vb" />
+    <Compile Include="Spectra\LibraryMatrix.vb" />
     <Compile Include="Ms1\ms1.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
