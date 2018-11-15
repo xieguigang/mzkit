@@ -243,9 +243,9 @@
       <Project>{a8a71b32-dac6-4fa7-a5c1-0f5e5d5c9eb7}</Project>
       <Name>math.MRM</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\DATA\ms2_math-core\ms2_math-core.vbproj">
+    <ProjectReference Include="..\..\DATA\ms2_math-core\MassSpectrum.math-core.vbproj">
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
-      <Name>ms2_math-core</Name>
+      <Name>MassSpectrum.math-core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\MwtWinDll\MwtWinDll.Extensions\MwtWinDll.Extensions.vbproj">
       <Project>{1b7c8c1b-b794-4f0a-8d6c-0f32f6d4e927}</Project>

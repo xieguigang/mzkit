@@ -181,9 +181,9 @@
       <Project>{fc125b0d-1942-496f-b502-9c0eb80e35b6}</Project>
       <Name>DataFittings</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math-core.vbproj">
+    <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\math-core.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
-      <Name>Math-core</Name>
+      <Name>math-core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\ODE\ODEsSolver.vbproj">
       <Project>{14e0b048-3a0d-4fd6-aa79-9b815d6f1b30}</Project>
@@ -201,9 +201,9 @@
       <Project>{075e1da3-54ac-4d7c-9d4e-e34aa13910a8}</Project>
       <Name>zlibnet</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ms2_math-core\ms2_math-core.vbproj">
+    <ProjectReference Include="..\ms2_math-core\MassSpectrum.math-core.vbproj">
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
-      <Name>ms2_math-core</Name>
+      <Name>MassSpectrum.math-core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

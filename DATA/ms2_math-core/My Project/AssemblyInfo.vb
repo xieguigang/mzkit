@@ -8,11 +8,11 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("ms2_math-core")>
-<Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("Microsoft")>
-<Assembly: AssemblyProduct("ms2_math-core")>
-<Assembly: AssemblyCopyright("Copyright © Microsoft 2017")>
+<Assembly: AssemblyTitle("Mass spectrum math core: includes data models and algorithms")>
+<Assembly: AssemblyDescription("Mass spectrum math core: includes data models and algorithms")>
+<Assembly: AssemblyCompany("BioNovoGene")>
+<Assembly: AssemblyProduct("")>
+<Assembly: AssemblyCopyright("Copyright © BioNovoGene 2017")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>

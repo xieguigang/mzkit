@@ -146,9 +146,9 @@
       <Project>{6FF317FF-1A81-4272-A894-BFBFFB202B41}</Project>
       <Name>application.netCDF</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ms2_math-core\ms2_math-core.vbproj">
+    <ProjectReference Include="..\ms2_math-core\MassSpectrum.math-core.vbproj">
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
-      <Name>ms2_math-core</Name>
+      <Name>MassSpectrum.math-core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
