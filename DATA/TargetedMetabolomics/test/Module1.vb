@@ -60,7 +60,7 @@ Module Module1
         Dim ref = "D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\16s_contents\SCFA\SCFA.csv".LoadCsv(Of ROITable)
         Dim result As New List(Of ROITable)
 
-        For Each target In ref.ScanContents(data)
+        For Each target In ref.ScanIons(data)
             result += target.Item1
 
         Next

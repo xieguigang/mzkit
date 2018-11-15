@@ -143,10 +143,6 @@
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
       <Name>math-core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Microsoft.VisualBasic.Imaging.vbproj">
-      <Project>{85e71b4b-9276-4ec8-aadc-c849205f1ea8}</Project>
-      <Name>Microsoft.VisualBasic.Imaging</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
@@ -155,21 +151,9 @@
       <Project>{95f7d65e-9db1-4605-9fd3-25433277af88}</Project>
       <Name>assembly</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\MwtWinDll\MwtWinDll.Extensions\MwtWinDll.Extensions.vbproj">
-      <Project>{1b7c8c1b-b794-4f0a-8d6c-0f32f6d4e927}</Project>
-      <Name>MwtWinDll.Extensions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\MwtWinDll\MwtWinDll\MwtWinDll.vbproj">
-      <Project>{78332537-7ecc-4b74-8aa9-ba66ab296af0}</Project>
-      <Name>MwtWinDll</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\runtime\zlibnet\src\zlibnet.vbproj">
       <Project>{075e1da3-54ac-4d7c-9d4e-e34aa13910a8}</Project>
       <Name>zlibnet</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\visual\plot\msData-visualize.vbproj">
-      <Project>{f2147043-7c16-48f8-838b-3d2cf14b0a7b}</Project>
-      <Name>msData-visualize</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\ms2_math-core\MassSpectrum.math-core.vbproj">
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
