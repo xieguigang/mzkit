@@ -391,7 +391,12 @@ Public Module StandardCurve
         Dim vector As IVector(Of ChromatogramTick) = ion.Value.Shadows
         Dim ROIData = vector _
             .PopulateROI _
-            .OrderByDescending(Function(ROI) ROI.Integration) _
+            .OrderByDescending(Function(ROI)
+                                   ' 这个积分值只是用来查找最大的峰面积的ROI区域
+                                   ' 并不是最后的峰面积结果
+                                   ' 还需要在下面的代码之中做峰面积积分才可以得到最终的结果
+                                   Return ROI.Integration
+                               End Function) _
             .ToArray
         Dim factor#
 
