@@ -108,9 +108,10 @@ Public Module PeakArea
     ''' <param name="range"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function PickArea(chromatogram As IVector(Of ChromatogramTick), range As DoubleRange) As IEnumerable(Of ChromatogramTick)
+    Public Function PickArea(chromatogram As IVector(Of ChromatogramTick), range As DoubleRange) As IVector(Of ChromatogramTick)
         Dim time As Vector = chromatogram!Time
-        Return chromatogram((time >= range.Min) & (time <= range.Max))
+        Dim region = chromatogram((time >= range.Min) & (time <= range.Max))
+        Return region
     End Function
 
     <Extension>
@@ -120,6 +121,13 @@ Public Module PeakArea
                Into Sum(t.Intensity)
     End Function
 
+    ''' <summary>
+    ''' 这个函数返回所给定的色谱图区域之中的最大的峰高的数值
+    ''' </summary>
+    ''' <param name="chromatogram"></param>
+    ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function MaxPeakHeight(chromatogram As IVector(Of ChromatogramTick)) As Double
         Return chromatogram!intensity.Max

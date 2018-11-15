@@ -43,12 +43,38 @@ Public Module TPAExtensions
                 .Name = ion.Name,
                 .Value = (New DoubleRange(0, 0), 0, 0, 0)
             }
+        Else
+            Dim peak As DoubleRange = ROIData _
+                .First _
+                .Time ' .MRMPeak(baselineQuantile:=baselineQuantile)
+            Dim data As (peak As DoubleRange, area#, baseline#, maxPeakHeight#)
+
+            With vector.TPAIntegrator(peak, baselineQuantile, peakAreaMethod, integratorTicks, TPAFactor)
+                data = (peak, .Item1, .Item2, .Item3)
+            End With
+
+            Return New NamedValue(Of (DoubleRange, Double, Double, Double)) With {
+                .Name = ion.Name,
+                .Value = data
+            }
         End If
+    End Function
 
-        Dim peak As DoubleRange = ROIData _
-            .First _
-            .Time ' .MRMPeak(baselineQuantile:=baselineQuantile)
-
+    ''' <summary>
+    ''' 对某一个色谱区域进行峰面积的积分计算
+    ''' </summary>
+    ''' <param name="vector">完整的色谱图，计算基线的时候会需要使用到的</param>
+    ''' <param name="peak">
+    ''' 目标峰的时间范围
+    ''' </param>
+    ''' <returns></returns>
+    ''' 
+    <Extension>
+    Public Function TPAIntegrator(vector As IVector(Of ChromatogramTick), peak As DoubleRange,
+                                  baselineQuantile#,
+                                  peakAreaMethod As PeakArea.Methods,
+                                  Optional integratorTicks% = 5000,
+                                  Optional TPAFactor# = 1) As (area#, baseline#, maxPeakHeight#)
         Dim area#
         Dim baseline# = vector.Baseline(quantile:=baselineQuantile)
 
@@ -70,9 +96,6 @@ Public Module TPAExtensions
 
         area *= TPAFactor
 
-        Return New NamedValue(Of (DoubleRange, Double, Double, Double)) With {
-            .Name = ion.Name,
-            .Value = (peak, area, baseline, vector.MaxPeakHeight)
-        }
+        Return (area, baseline, vector.PickArea(range:=peak).MaxPeakHeight)
     End Function
 End Module
