@@ -216,7 +216,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="mzData\" />
-    <Folder Include="netCDF\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
