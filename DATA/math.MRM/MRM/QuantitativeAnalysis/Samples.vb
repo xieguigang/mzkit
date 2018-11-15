@@ -53,7 +53,6 @@ Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
-Imports SMRUCC.MassSpectrum.Math.MRM.Chromatogram
 Imports SMRUCC.MassSpectrum.Math.MRM.Dumping
 Imports SMRUCC.MassSpectrum.Math.MRM.Models
 

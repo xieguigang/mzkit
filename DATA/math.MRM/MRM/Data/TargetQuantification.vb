@@ -60,7 +60,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
 Imports SMRUCC.MassSpectrum.Math.MRM.Models
 
-Namespace Dumping
+Namespace MRM.Dumping
 
     ''' <summary>
     ''' Dump MRM target quantification result in XML format.

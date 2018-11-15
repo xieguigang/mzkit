@@ -57,7 +57,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 
-Namespace Dumping
+Namespace MRM.Dumping
 
     Public Class MRMPeakTable
 

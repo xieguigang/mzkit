@@ -138,7 +138,6 @@
     <Compile Include="MRM\Data\MRMPeakTable.vb" />
     <Compile Include="MRM\Data\Extensions.vb" />
     <Compile Include="MRM\Data\TargetQuantification.vb" />
-    <Compile Include="MRM\Extensions.vb" />
     <Compile Include="MRM\QuantitativeAnalysis\MRMPeak.vb" />
     <Compile Include="MRM\QuantitativeAnalysis\FitModel.vb" />
     <Compile Include="MRM\QuantitativeAnalysis\PeakArea.vb" />
@@ -223,6 +222,8 @@
       <Name>MassSpectrum.math-core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="QuantitativeAnalysis\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
