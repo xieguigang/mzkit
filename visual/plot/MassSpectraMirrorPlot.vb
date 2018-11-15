@@ -5,7 +5,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports SMRUCC.MassSpectrum.Math
-Imports SMRUCC.MassSpectrum.Math.MSMS
+Imports SMRUCC.MassSpectrum.Math.Spectra
 
 Public Module MassSpectra
 

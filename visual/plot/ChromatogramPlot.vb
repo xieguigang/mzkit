@@ -62,8 +62,8 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
+Imports SMRUCC.MassSpectrum.Math
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
-Imports SMRUCC.MassSpectrum.Math.MRM
 
 Public Module ChromatogramPlot
 

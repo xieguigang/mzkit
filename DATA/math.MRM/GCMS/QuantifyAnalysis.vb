@@ -50,6 +50,7 @@ Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Text
 Imports SMRUCC.MassSpectrum.Math
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
+Imports SMRUCC.MassSpectrum.Math.GCMS.Vendors
 Imports SMRUCC.MassSpectrum.Math.Spectra
 
 Namespace GCMS
