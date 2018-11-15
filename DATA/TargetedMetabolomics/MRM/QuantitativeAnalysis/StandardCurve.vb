@@ -80,7 +80,7 @@ Public Module StandardCurve
                                          raw$,
                                          ions As IonPair(),
                                          peakAreaMethod As PeakArea.Methods,
-                                         TPAFactors As Dictionary(Of String, Double)) As IEnumerable(Of ContentResult)
+                                         TPAFactors As Dictionary(Of String, Double)) As IEnumerable(Of ContentResult(Of MRMPeakTable))
         Dim baseline# = 0
         Dim TPA = raw _
             .ScanTPA(ionpairs:=ions,
@@ -139,7 +139,7 @@ Public Module StandardCurve
                 .maxinto_IS = AIS.maxinto
             }
 
-            Yield New ContentResult With {
+            Yield New ContentResult(Of MRMPeakTable) With {
                 .Name = metabolite.Name,
                 .Content = C,
                 .X = X,

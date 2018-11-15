@@ -168,7 +168,7 @@ Public Module MRMSamples
 
             ' 使用离子对信息扫面当前的这个原始数据文件
             ' 得到峰面积等定量计算所需要的结果信息
-            Dim result As ContentResult() = model _
+            Dim result As ContentResult(Of MRMPeakTable)() = model _
                 .ScanContent(
                     raw:=file,
                     ions:=ions,
@@ -177,7 +177,7 @@ Public Module MRMSamples
                 ) _
                 .ToArray
 
-            For Each metabolite As ContentResult In result
+            For Each metabolite As ContentResult(Of MRMPeakTable) In result
                 mrmpeaktable += metabolite.Peaktable
             Next
 
