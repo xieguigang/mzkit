@@ -163,6 +163,7 @@ Public Module PeakArea
     ''' <param name="chromatogram"></param>
     ''' <param name="peak"></param>
     ''' <param name="baselineQuantile#"></param>
+    ''' <param name="n">进行积分计算的时候的精密度，精密度越大越好，但是计算时间会被相应的加长</param>
     ''' <returns></returns>
     <Extension>
     Public Function PeakAreaIntegrator(chromatogram As IVector(Of ChromatogramTick),

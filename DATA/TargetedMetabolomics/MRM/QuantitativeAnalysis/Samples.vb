@@ -71,10 +71,11 @@ Public Module MRMSamples
             .MRMSelector(ion_pairs) _
             .Where(Function(ion) Not ion.chromatogram Is Nothing) _
             .Select(Function(ionData)
-                        Dim ion = ionData.ion
+                        Dim ion As IonPair = ionData.ion
+                        Dim note$ = ion.name & $" [{ion.precursor}/{ion.product}]"
                         Return New NamedCollection(Of ChromatogramTick) With {
                             .Name = assignName(ion),
-                            .Description = ion.name & $" [{ion.precursor}/{ion.product}]",
+                            .Description = note,
                             .Value = ionData.chromatogram.Ticks
                         }
                     End Function) _
@@ -149,7 +150,7 @@ Public Module MRMSamples
 
         Dim nameIndex As Index(Of String) = standardNames.Indexing
         Dim out As New List(Of DataSet)
-        Dim mrmpeaktable As New List(Of MRMPeakTable)
+        Dim mrmPeaktable As New List(Of MRMPeakTable)
         Dim allSamples As List(Of String) = (ls - l - r - "*.mzML" <= wiff.ParentPath).AsList
 
         If externalStandardsWiff.ParentPath.DirectoryExists Then
@@ -178,7 +179,7 @@ Public Module MRMSamples
                 .ToArray
 
             For Each metabolite As ContentResult(Of MRMPeakTable) In result
-                mrmpeaktable += metabolite.Peaktable
+                mrmPeaktable += metabolite.Peaktable
             Next
 
             If result.Length = 0 Then
@@ -205,7 +206,7 @@ Public Module MRMSamples
             End If
         Next
 
-        peaktable = mrmpeaktable
+        peaktable = mrmPeaktable
 
         Return out
     End Function

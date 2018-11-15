@@ -370,7 +370,7 @@ Public Module StandardCurve
     End Function
 
     ''' <summary>
-    ''' 
+    ''' 对某一个色谱区域进行峰面积的积分计算
     ''' </summary>
     ''' <param name="ion"></param>
     ''' <param name="baselineQuantile#"></param>

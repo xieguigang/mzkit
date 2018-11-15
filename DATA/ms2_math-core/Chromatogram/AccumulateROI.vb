@@ -67,7 +67,7 @@ Namespace Chromatogram
         ' 这个方法仅局限于色谱峰都是各自相互独立的情况之下
 
         ''' <summary>
-        ''' 
+        ''' 在这个函数之中，只是查找出了色谱峰的时间范围，但是并未对峰面积做积分计算
         ''' </summary>
         ''' <param name="angleThreshold#">区分色谱峰的累加线切线角度的阈值，单位为度</param>
         ''' <returns></returns>
