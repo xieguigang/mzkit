@@ -1,7 +1,11 @@
-﻿Imports System.Runtime.CompilerServices
+﻿Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Data.Bootstrapping
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports SMRUCC.MassSpectrum.Math.MRM.Models
 
 Public Class FitModel : Implements INamedValue
@@ -30,4 +34,25 @@ Public Class FitModel : Implements INamedValue
         Return $"[{Name}] {LinearRegression}"
     End Function
 
+    ''' <summary>
+    ''' 对标准曲线进行线性回归建模
+    ''' </summary>
+    ''' <param name="line"></param>
+    ''' <returns></returns>
+    Public Shared Function CreateLinearRegression(line As PointF()) As WeightedFit
+        ' X是实验值，可能会因为标准曲线溶液配制的问题出现，所以这个可能会需要使用异常点检测
+        Dim X As Vector = line.X.AsVector
+        ' Y是从文件之中读取出来的浓度梯度信息，认为这个除非文件录入有错，否则将不会出现异常点
+        Dim Y As Vector = line.Y.AsVector
+
+        With X.OrderSequenceOutlierIndex.RemovesOutlier(X, Y)
+            X = .X
+            Y = .Y
+        End With
+
+        Dim W As Vector = 1 / X ^ 2
+        Dim fit As WeightedFit = WeightedLinearRegression.Regress(X, Y, W, 1)
+
+        Return fit
+    End Function
 End Class

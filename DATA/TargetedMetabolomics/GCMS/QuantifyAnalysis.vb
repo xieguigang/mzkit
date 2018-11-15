@@ -78,7 +78,9 @@ Namespace GCMS
         ''' <param name="winSize">
         ''' 进行查找的时间窗大小
         ''' </param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' 这个函数所返回来的结果之中已经包含有必须的峰面积等信息了
+        ''' </returns>
         <Extension>
         Public Iterator Function ScanIons(standards As IEnumerable(Of ROITable), data As Raw,
                                           Optional sn# = 3,

@@ -53,7 +53,6 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Math
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
 Imports SMRUCC.MassSpectrum.Math.MRM.Data
 Imports SMRUCC.MassSpectrum.Math.MRM.Models
@@ -242,19 +241,7 @@ Public Module StandardCurve
                         End Function) _
                 .ToArray
 
-            ' 对标准曲线进行线性回归建模
-            ' X是实验值，可能会因为标准曲线溶液配制的问题出现，所以这个可能会需要使用异常点检测
-            Dim X = line.X.AsVector
-            ' Y是从文件之中读取出来的浓度梯度信息，认为这个除非文件录入有错，否则将不会出现异常点
-            Dim Y = line.Y.AsVector
-
-            With X.OrderSequenceOutlierIndex.RemovesOutlier(X, Y)
-                X = .X
-                Y = .Y
-            End With
-
-            Dim W As Vector = 1 / X ^ 2
-            Dim fit As WeightedFit = WeightedLinearRegression.Regress(X, Y, W, 1)
+            Dim fit As WeightedFit = FitModel.CreateLinearRegression(line)
             Dim out As New NamedValue(Of (IFitted, MRMStandards(), [IS])) With {
                 .Name = ion.HMDB,
                 .Value = (fit, points.ToArray, IsIon)
