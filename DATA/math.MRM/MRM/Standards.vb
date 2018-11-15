@@ -50,7 +50,7 @@ Imports System.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace Models
+Namespace MRM.Models
 
     ''' <summary>
     ''' The standard curve

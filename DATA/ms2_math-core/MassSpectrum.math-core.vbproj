@@ -143,6 +143,7 @@
     <Compile Include="Chromatogram\AccumulateROI.vb" />
     <Compile Include="Chromatogram\Chromatogram.vb" />
     <Compile Include="Chromatogram\ChromatogramTick.vb" />
+    <Compile Include="Chromatogram\Quantile.vb" />
     <Compile Include="Chromatogram\ROI.vb" />
     <Compile Include="Extensions.vb" />
     <Compile Include="Ms1\PrecursorType\Extensions.vb" />
