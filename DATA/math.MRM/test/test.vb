@@ -43,15 +43,13 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.csv
-Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
 Imports SMRUCC.MassSpectrum.Math
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
+Imports SMRUCC.MassSpectrum.Math.MRM.Dumping
 Imports SMRUCC.MassSpectrum.Math.MRM.Models
 Imports SMRUCC.MassSpectrum.Visualization
 
@@ -66,8 +64,8 @@ Module test
         '   Call ROIvizTest(ion_pairs)
 
 
-        Dim fits As NamedValue(Of FitResult)() = Nothing
-        Dim X As List(Of DataSet) = Nothing
+        Dim fits As FitModel() = Nothing
+        Dim X As NamedValue(Of MRMStandards())() = Nothing
 
         For Each method As PeakArea.Methods In {Methods.Integrator, Methods.MaxPeakHeight, Methods.NetPeakSum, Methods.SumAll}
             Dim result = MRMSamples.QuantitativeAnalysis("D:\ProteoWizard.d\Data20180313\Data20180313.wiff", ion_pairs, std, [IS], fits, X, calibrationNamedPattern:=".+M1[-]L\d+", peakAreaMethod:=method).ToArray

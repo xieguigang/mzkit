@@ -57,8 +57,6 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
-Imports SMRUCC.MassSpectrum.Math.MRM
-Imports SMRUCC.MassSpectrum.Math.MRM.Chromatogram
 Imports SMRUCC.MassSpectrum.Math.MRM.Dumping
 Imports SMRUCC.MassSpectrum.Math.MRM.Models
 
