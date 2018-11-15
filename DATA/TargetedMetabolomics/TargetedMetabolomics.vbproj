@@ -127,6 +127,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContentUnits.vb" />
+    <Compile Include="GCMS\ReaderExtensions.vb" />
     <Compile Include="GCMS\Raw.vb" />
     <Compile Include="GCMS\QuantifyAnalysis.vb" />
     <Compile Include="GCMS\Vendors\agilentGCMS.vb" />

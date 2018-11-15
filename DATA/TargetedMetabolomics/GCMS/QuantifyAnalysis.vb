@@ -45,12 +45,10 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Math
-Imports Microsoft.VisualBasic.MIME.application.netCDF
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Text
 Imports SMRUCC.MassSpectrum.Math
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
-Imports SMRUCC.MassSpectrum.Math.GCMS.Vendors
 Imports SMRUCC.MassSpectrum.Math.Spectra
 
 Namespace GCMS
@@ -61,25 +59,6 @@ Namespace GCMS
     ''' https://github.com/cheminfo-js/netcdf-gcms
     ''' </summary>
     Public Module QuantifyAnalysis
-
-        ''' <summary>
-        ''' 读取CDF文件然后读取原始数据
-        ''' </summary>
-        ''' <param name="cdfPath"></param>
-        ''' <returns></returns>
-        Public Function ReadData(cdfPath$, Optional vendor$ = "agilentGCMS", Optional showSummary As Boolean = True) As Raw
-            Dim cdf As New netCDFReader(cdfPath)
-
-            If showSummary Then
-                Call Console.WriteLine(cdf.ToString)
-            End If
-
-            Select Case vendor
-                Case "agilentGCMS" : Return agilentGCMS.Read(cdf)
-                Case Else
-                    Throw New NotImplementedException(vendor)
-            End Select
-        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
