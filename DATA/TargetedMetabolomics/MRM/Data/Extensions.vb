@@ -49,7 +49,7 @@ Imports Microsoft.VisualBasic.Math.Scripting
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
 
-Namespace MRM.Dumping
+Namespace MRM.Data
 
     Public Module Extensions
 

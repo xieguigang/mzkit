@@ -140,7 +140,7 @@
     <Compile Include="MRM\Data\TargetQuantification.vb" />
     <Compile Include="MRM\QuantitativeAnalysis\MRMPeak.vb" />
     <Compile Include="MRM\QuantitativeAnalysis\FitModel.vb" />
-    <Compile Include="MRM\QuantitativeAnalysis\PeakArea.vb" />
+    <Compile Include="QuantitativeAnalysis\PeakArea.vb" />
     <Compile Include="MRM\Standards.vb" />
     <Compile Include="MRM\IS.vb" />
     <Compile Include="MRM\QuantitativeAnalysis\Samples.vb" />
