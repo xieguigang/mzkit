@@ -47,6 +47,11 @@ Namespace GCMS
         ''' </summary>
         ''' <returns></returns>
         Public Property integration As Double
+        ''' <summary>
+        ''' 目标进行浓度计算构建线性回归的时候所需要的内标
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property [IS] As String
 
         ''' <summary>
         ''' 信噪比

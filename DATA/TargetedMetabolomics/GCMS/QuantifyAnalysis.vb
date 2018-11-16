@@ -158,6 +158,7 @@ Namespace GCMS
                         title:=ref.ID
                     )
                     resultTable.integration = TPA.area
+                    resultTable.IS = ref.IS
 
                     Yield (resultTable, candidate.query, refSpectrum)
 
