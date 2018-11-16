@@ -36,6 +36,7 @@ Public Module GCMSscanVisual
                               Optional axisStrokeCss$ = Stroke.AxisStroke,
                               Optional arrowFactor$ = "2,2",
                               Optional sn_threshold# = 5,
+                              Optional angleCutoff# = 6,
                               Optional viewDistance% = 14000,
                               Optional viewAngle$ = "-90,-90,-30",
                               Optional fov% = 800) As GraphicsData
@@ -50,7 +51,7 @@ Public Module GCMSscanVisual
             .Padding = padding
         }
         Dim ROIlist As ROI() = data _
-            .ExportROI _
+            .ExportROI(angle:=angleCutoff) _
             .Where(Function(region)
                        Return region.snRatio >= sn_threshold
                    End Function) _

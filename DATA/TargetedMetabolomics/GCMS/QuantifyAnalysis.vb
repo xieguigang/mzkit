@@ -62,10 +62,10 @@ Namespace GCMS
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function ExportROI(gcms As Raw) As ROI()
+        Public Function ExportROI(gcms As Raw, angle#) As ROI()
             Return gcms.GetTIC _
                 .Shadows _
-                .PopulateROI _
+                .PopulateROI(angleThreshold:=angle) _
                 .ToArray
         End Function
 
@@ -86,9 +86,11 @@ Namespace GCMS
                                           Optional sn# = 3,
                                           Optional winSize! = 3,
                                           Optional scoreCutoff# = 0.85,
+                                          Optional angleCutoff# = 5,
                                           Optional all As Boolean = False) As IEnumerable(Of (ROITable, query As LibraryMatrix, ref As LibraryMatrix))
 
-            Dim ROIlist As ROI() = data.ExportROI _
+            Dim ROIlist As ROI() = data _
+                .ExportROI(angleCutoff) _
                 .Where(Function(ROI) ROI.snRatio >= sn) _
                 .ToArray
             Dim resultTable As ROITable
