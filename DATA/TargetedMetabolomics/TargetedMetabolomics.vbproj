@@ -128,6 +128,7 @@
   <ItemGroup>
     <Compile Include="ContentUnits.vb" />
     <Compile Include="GCMS\ChromatographyPeaktable.vb" />
+    <Compile Include="GCMS\ROITable.vb" />
     <Compile Include="GCMS\StandardCurve.vb" />
     <Compile Include="GCMS\ReaderExtensions.vb" />
     <Compile Include="GCMS\Raw.vb" />
@@ -146,7 +147,7 @@
     <Compile Include="QuantitativeAnalysis\TPAExtensions.vb" />
     <Compile Include="QuantitativeAnalysis\PeakArea.vb" />
     <Compile Include="MRM\Standards.vb" />
-    <Compile Include="MRM\IS.vb" />
+    <Compile Include="QuantitativeAnalysis\IS.vb" />
     <Compile Include="MRM\QuantitativeAnalysis\Samples.vb" />
     <Compile Include="MRM\QuantitativeAnalysis\StandardCurve.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
