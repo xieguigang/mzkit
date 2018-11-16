@@ -142,25 +142,6 @@ Namespace Chromatogram
             Return New NamedCollection(Of ChromatogramTick)((getTitle Or defaultRtTitle)(Me), Ticks)
         End Function
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetROITable(Optional getTitle As Func(Of ROI, String) = Nothing) As ROITable
-            Static defaultRtTitle As New DefaultValue(Of Func(Of ROI, String))(
-               Function(roi)
-                   Return $"[{roi.Time.Min.ToString("F0")},{roi.Time.Max.ToString("F0")}]"
-               End Function)
-
-            Return New ROITable With {
-                .baseline = Baseline,
-                .ID = (getTitle Or defaultRtTitle)(Me),
-                .integration = Integration,
-                .maxInto = MaxInto,
-                .rtmax = Time.Max,
-                .rtmin = Time.Min,
-                .rt = rt,
-                .sn = snRatio
-            }
-        End Function
-
         Public Overrides Function ToString() As String
             Return Time.ToString
         End Function
