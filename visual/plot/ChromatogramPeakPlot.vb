@@ -209,7 +209,7 @@ Public Module ChromatogramPeakPlot
                     legends += New NamedValue(Of Pen) With {.Name = "Area Integration", .Value = accumulateLine}
                 End If
                 If showMRMRegion Then
-                    legends += New NamedValue(Of Pen) With {.Name = "MRM ROI", .Value = Stroke.TryParse(ROI_styleCSS).GDIObject}
+                    legends += New NamedValue(Of Pen) With {.Name = "Chromatography ROI", .Value = Stroke.TryParse(ROI_styleCSS).GDIObject}
                     legends += New NamedValue(Of Pen) With {.Name = "Baseline", .Value = baselinePen}
                 End If
 

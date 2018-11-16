@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::675c02c09c59b7dd8373419780eb2955, ms2_math-core\Chromatogram\AccumulateROI.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module AccumulateROI
-    ' 
-    '         Function: PopulateROI
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module AccumulateROI
+' 
+'         Function: PopulateROI
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -66,27 +66,12 @@ Namespace Chromatogram
         ' 则可以利用这个特性将色谱峰给识别出来
         ' 这个方法仅局限于色谱峰都是各自相互独立的情况之下
 
-        ''' <summary>
-        ''' 在这个函数之中，只是查找出了色谱峰的时间范围，但是并未对峰面积做积分计算
-        ''' </summary>
-        ''' <param name="angleThreshold#">区分色谱峰的累加线切线角度的阈值，单位为度</param>
-        ''' <returns></returns>
-        ''' 
         <Extension>
-        Public Iterator Function PopulateROI(chromatogram As IVector(Of ChromatogramTick),
-                                             Optional angleThreshold# = 5,
-                                             Optional baselineQuantile# = 0.65) As IEnumerable(Of ROI)
-            ' 先计算出基线和累加线
-            Dim baseline# = chromatogram.Baseline(baselineQuantile)
-            Dim time As Vector = chromatogram!time
-            Dim intensity As Vector = chromatogram!intensity
-            ' Dim maxInto# = intensity.Max - baseline
+        Private Function getAccumulateLine(chromatogram As IVector(Of ChromatogramTick), baseline#) As PointF()
             Dim accumulate#
             Dim sumALL# = (chromatogram!intensity - baseline) _
                 .Where(Function(x) x > 0) _
                 .Sum
-            ' 所有的基线下面的噪声加起来的积分面积总和
-            Dim sumAllNoise# = baseline * chromatogram.Length
             Dim ay = Function(into As Double) As Double
                          into -= baseline
                          accumulate += If(into < 0, 0, into)
@@ -98,8 +83,33 @@ Namespace Chromatogram
                         End Function) _
                 .ToArray
 
+            Return accumulateLine
+        End Function
+
+        ''' <summary>
+        ''' 在这个函数之中，只是查找出了色谱峰的时间范围，但是并未对峰面积做积分计算
+        ''' </summary>
+        ''' <param name="angleThreshold#">区分色谱峰的累加线切线角度的阈值，单位为度</param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 这个方法对于MRM的数据的处理结果比较可靠，但是对于GCMS的实验数据，
+        ''' 由于GCMS实验数据的峰比较窄，这个函数不太适合处理GCMS的峰
+        ''' </remarks>
+        <Extension>
+        Public Iterator Function PopulateROI(chromatogram As IVector(Of ChromatogramTick),
+                                             Optional angleThreshold# = 5,
+                                             Optional baselineQuantile# = 0.65) As IEnumerable(Of ROI)
+            ' 先计算出基线和累加线
+            Dim baseline# = chromatogram.Baseline(baselineQuantile)
+            Dim time As Vector = chromatogram!time
+            Dim intensity As Vector = chromatogram!intensity
+            ' Dim maxInto# = intensity.Max - baseline
+            ' 所有的基线下面的噪声加起来的积分面积总和
+            Dim sumAllNoise# = baseline * chromatogram.Length
             ' 使用滑窗计算出切线的斜率
-            Dim windows = accumulateLine _
+            Dim windows As SlideWindow(Of PointF)() =
+                chromatogram _
+                .getAccumulateLine(baseline) _
                 .SlideWindows(winSize:=2) _
                 .ToArray
             Dim peaks = windows _
