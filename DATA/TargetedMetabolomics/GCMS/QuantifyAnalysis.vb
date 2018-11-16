@@ -65,7 +65,7 @@ Namespace GCMS
         Public Function ExportROI(gcms As Raw, angle#) As ROI()
             Return gcms.GetTIC _
                 .Shadows _
-                .PopulateROI(angleThreshold:=angle) _
+                .PopulateROI(angleThreshold:=angle, MRMpeaks:=False) _
                 .ToArray
         End Function
 

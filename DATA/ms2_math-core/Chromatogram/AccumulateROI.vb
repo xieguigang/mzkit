@@ -98,7 +98,8 @@ Namespace Chromatogram
         <Extension>
         Public Iterator Function PopulateROI(chromatogram As IVector(Of ChromatogramTick),
                                              Optional angleThreshold# = 5,
-                                             Optional baselineQuantile# = 0.65) As IEnumerable(Of ROI)
+                                             Optional baselineQuantile# = 0.65,
+                                             Optional MRMpeaks As Boolean = True) As IEnumerable(Of ROI)
             ' 先计算出基线和累加线
             Dim baseline# = chromatogram.Baseline(baselineQuantile)
             Dim time As Vector = chromatogram!time
@@ -112,11 +113,14 @@ Namespace Chromatogram
                 .getAccumulateLine(baseline) _
                 .SlideWindows(winSize:=2) _
                 .ToArray
-            Dim peaks = windows _
-                .Split(Function(tangent)
-                           Return (tangent.First, tangent.Last).Angle <= angleThreshold
-                       End Function) _
-                .Where(Function(p) p.Length > 1)
+            Dim peaks As IEnumerable(Of SlideWindow(Of PointF)())
+
+            If MRMpeaks Then
+                peaks = windows.SplitMRMPeaks(angleThreshold)
+            Else
+                ' peaks = windows.SplitGCMSPeaks(angleThreshold)
+                peaks = windows.SplitMRMPeaks(angleThreshold)
+            End If
 
             For Each window As SlideWindow(Of PointF)() In peaks
                 Dim rtmin# = Fix(window.First()(0).X)
@@ -150,6 +154,40 @@ Namespace Chromatogram
                     .Noise = (peak.Length * baseline) / sumAllNoise
                 }
             Next
+        End Function
+
+        ''' <summary>
+        ''' 因为MRM只有一个峰，所以在这里按照切线角度小于角度阈值来进行切割，产生峰的ROI区域
+        ''' </summary>
+        ''' <param name="windows"></param>
+        ''' <param name="angleThreshold#"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Private Function SplitMRMPeaks(windows As SlideWindow(Of PointF)(), angleThreshold#) As IEnumerable(Of SlideWindow(Of PointF)())
+            Return windows _
+                .Split(Function(tangent)
+                           Return (tangent.First, tangent.Last).Angle <= angleThreshold
+                       End Function) _
+                .Where(Function(p) p.Length > 1)
+        End Function
+
+        ''' <summary>
+        ''' 因为GCMS的峰比较窄，所以在这里将所有相邻的，切线角度大于目标角度阈值的区域取出来
+        ''' 产生峰的ROI区域
+        ''' </summary>
+        ''' <param name="windows"></param>
+        ''' <param name="angleThreshold#"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Private Function SplitGCMSPeaks(windows As SlideWindow(Of PointF)(), angleThreshold#) As IEnumerable(Of SlideWindow(Of PointF)())
+            Return windows _
+                .SplitMRMPeaks(angleThreshold) _
+                .Select(Function(primaryRegion)
+                            Return windows.SplitMRMPeaks(angleThreshold)
+                        End Function) _
+                .IteratesALL
         End Function
     End Module
 End Namespace
