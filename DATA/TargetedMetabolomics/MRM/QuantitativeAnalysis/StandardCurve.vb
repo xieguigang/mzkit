@@ -241,7 +241,7 @@ Public Module StandardCurve
                         End Function) _
                 .ToArray
 
-            Dim fit As WeightedFit = FitModel.CreateLinearRegression(line)
+            Dim fit As WeightedFit = FitModel.CreateLinearRegression(line, True)
             Dim out As New NamedValue(Of (IFitted, MRMStandards(), [IS])) With {
                 .Name = ion.HMDB,
                 .Value = (fit, points.ToArray, IsIon)

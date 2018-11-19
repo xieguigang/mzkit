@@ -152,7 +152,7 @@ Namespace GCMS
                     Dim TPA = candidate.region _
                         .Ticks _
                         .Shadows _
-                        .TPAIntegrator(candidate.region.Time, 0.65, Methods.NetPeakSum)
+                        .TPAIntegrator(candidate.region.Time, 0.65, Methods.Integrator)
 
                     resultTable = candidate.region.convert(
                         raw:=data,

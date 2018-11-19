@@ -32,9 +32,14 @@ Public Module MassSpectra
             .Trim(intoCutoff) _
             .Join(ref.Trim(intoCutoff)) _
             .Select(Function(mass) mass.mz) _
-            .CreateAxisTicks
+            .Range
         Dim qMatrix As (x#, into#)() = query.Select(Function(q) (q.mz, q.intensity)).ToArray
         Dim sMatrix As (x#, into#)() = ref.Select(Function(s) (s.mz, s.intensity)).ToArray
+
+        mzRange = {
+            mzRange.Min - (mzRange.Min * 0.125),
+            mzRange.Max + (mzRange.Max * 0.125)
+        }
 
         Return AlignmentPlot.PlotAlignment(
             qMatrix, sMatrix,

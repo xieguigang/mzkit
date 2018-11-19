@@ -12,7 +12,7 @@ Namespace GCMS
         ''' <param name="raw"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function LinearRegression(raw As (content#, data As ChromatographyPeaktable)()) As WeightedFit
+        Public Function LinearRegression(raw As (content#, data As ChromatographyPeaktable)()) As IFitted
             Dim line As PointF() = raw _
                 .OrderBy(Function(p)
                              ' 从小到大进行排序
@@ -22,7 +22,7 @@ Namespace GCMS
                             Return New PointF(p.data.TPACalibration, p.content)
                         End Function) _
                 .ToArray
-            Dim model As WeightedFit = FitModel.CreateLinearRegression(line)
+            Dim model As IFitted = FitModel.CreateLinearRegression(line, True)
             Return model
         End Function
     End Module
