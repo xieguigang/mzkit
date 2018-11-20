@@ -204,6 +204,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MetaLib\KEGGExtensions.vb" />
     <Compile Include="MetaLib\NaturalLanguageTerm.vb" />
     <Compile Include="MetaLib\SpectraEncoder.vb" />
     <Compile Include="MetaLib\NameEquality.vb" />
