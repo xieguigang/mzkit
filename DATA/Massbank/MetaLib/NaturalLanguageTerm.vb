@@ -46,6 +46,11 @@ Imports System.Runtime.CompilerServices
 
 Public Module NaturalLanguageTerm
 
+    ''' <summary>
+    ''' 尝试将文本之中的仪器厂商的名称解析出来
+    ''' </summary>
+    ''' <param name="text"></param>
+    ''' <returns></returns>
     <Extension> Public Function ParseVendorName(text As String) As String
         Static prefix$() = {"Thermo", "Waters", "Agilent"}
 

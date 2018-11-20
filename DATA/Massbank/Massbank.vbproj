@@ -206,7 +206,6 @@
   <ItemGroup>
     <Compile Include="MetaLib\KEGGExtensions.vb" />
     <Compile Include="MetaLib\NaturalLanguageTerm.vb" />
-    <Compile Include="MetaLib\SpectraEncoder.vb" />
     <Compile Include="MetaLib\NameEquality.vb" />
     <Compile Include="MetaLib\MetaLib.vb" />
     <Compile Include="Concentration.vb" />

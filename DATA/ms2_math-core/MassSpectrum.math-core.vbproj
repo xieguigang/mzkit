@@ -150,6 +150,7 @@
     <Compile Include="Ms1\PrecursorType\MolWeight.vb" />
     <Compile Include="Ms1\PrecursorType\MzCalculator.vb" />
     <Compile Include="Ms1\Tolerance.vb" />
+    <Compile Include="Spectra\SpectraEncoder.vb" />
     <Compile Include="Spectra\PeakMs2.vb" />
     <Compile Include="Spectra\LibraryMatrixExtensions.vb" />
     <Compile Include="Spectra\GlobalAlignment.vb" />
