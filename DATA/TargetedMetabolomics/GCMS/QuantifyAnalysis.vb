@@ -159,6 +159,8 @@ Namespace GCMS
                         ri:=0,
                         title:=ref.ID
                     )
+                    ' 将获取得到原始的峰面积信息
+                    ' 在下一个步骤函数之中将会除以内标的峰面积得到X坐标轴的数据
                     resultTable.integration = TPA.area
                     resultTable.IS = ref.IS
 
