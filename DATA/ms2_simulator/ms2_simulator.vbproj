@@ -192,14 +192,6 @@
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
       <Name>math-core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\KCF\KCF.Graph\KCF.Graph.vbproj">
-      <Project>{c60416d4-b3e2-45e5-bfe0-90d5021647f9}</Project>
-      <Name>KCF.Graph</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\KCF\KCF.IO\KCF.IO.vbproj">
-      <Project>{1bafa2bc-68b2-4ee0-9235-c60fae3377a0}</Project>
-      <Name>KCF.IO</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj">
       <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
       <Name>47_dotnet_ms-vb_data.framework</Name>
@@ -220,9 +212,17 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ms2_math-core\ms2_math-core.vbproj">
+    <ProjectReference Include="..\..\visual\KCF\KCF.Graph\KCF.Graph.vbproj">
+      <Project>{c60416d4-b3e2-45e5-bfe0-90d5021647f9}</Project>
+      <Name>KCF.Graph</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\visual\KCF\KCF.IO\KCF.IO.vbproj">
+      <Project>{1bafa2bc-68b2-4ee0-9235-c60fae3377a0}</Project>
+      <Name>KCF.IO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ms2_math-core\MassSpectrum.math-core.vbproj">
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
-      <Name>ms2_math-core</Name>
+      <Name>MassSpectrum.math-core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
