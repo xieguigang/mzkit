@@ -116,12 +116,22 @@
         End Sub
 
         Private Shared Function numericIdInternal(idStr As String) As Long
+            Static delimiter As Char() = {":"c, " "c, Text.ASCII.TAB}
+
+            idStr = Strings.Trim(idStr)
+
             If idStr.StringEmpty Then
                 Return -1
-            ElseIf idstr.IsPattern("\d+") Then
+            ElseIf idStr.IsPattern("\d+") Then
                 Return Long.Parse(idStr)
             Else
-                Return Long.Parse(idStr.Split(":"c).Last)
+                Dim last = idStr.Split(delimiter).Last
+
+                If Not last.IsPattern("\d+") Then
+                    Throw New NotImplementedException(idStr)
+                End If
+
+                Return Long.Parse(last)
             End If
         End Function
 
