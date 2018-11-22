@@ -118,22 +118,25 @@ Namespace ASCII.MSP
         End Sub
 
         Private Shared Function numericIdInternal(idStr As String, <CallerMemberName> Optional name$ = Nothing) As Long
-            Static delimiter As Char() = {":"c, " "c, Text.ASCII.TAB}
+            Static delimiter As Char() = {":"c, " "c, Text.ASCII.TAB, "="c}
 
             idStr = Strings.Trim(idStr)
 
             If idStr.StringEmpty Then
                 Return -1
-            ElseIf idStr.IsPattern("\d+") Then
-                Return Long.Parse(idStr)
+            ElseIf idStr.IsPattern(NumericPattern) Then
+                Return CLng(Val(idStr))
             Else
-                Dim last = idStr.Split(delimiter).Last
+                Dim last As String = idStr _
+                    .Split(delimiter) _
+                    .Where(Function(s) s.Length > 0) _
+                    .ElementAtOrDefault(1)
 
-                If Not last.IsPattern("\d+") Then
+                If Not last.IsPattern(NumericPattern) Then
                     Throw New NotImplementedException($"{name} = {idStr}")
                 End If
 
-                Return Long.Parse(last)
+                Return CLng(Val(last))
             End If
         End Function
 
