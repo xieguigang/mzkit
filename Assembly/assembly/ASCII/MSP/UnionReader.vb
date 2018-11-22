@@ -117,7 +117,7 @@ Namespace ASCII.MSP
             Me.msp = msp
         End Sub
 
-        Private Shared Function numericIdInternal(idStr As String, <CallerMemberName> Optional name$ = Nothing) As Long
+        Private Function numericIdInternal(idStr As String, <CallerMemberName> Optional name$ = Nothing) As Long
             Static delimiter As Char() = {":"c, " "c, Text.ASCII.TAB, "="c}
 
             idStr = Strings.Trim(idStr)
@@ -127,16 +127,21 @@ Namespace ASCII.MSP
             ElseIf idStr.IsPattern(NumericPattern) Then
                 Return CLng(Val(idStr))
             Else
-                Dim last As String = idStr _
+                Dim tokens() = idStr _
                     .Split(delimiter) _
                     .Where(Function(s) s.Length > 0) _
-                    .ElementAtOrDefault(1)
+                    .ToArray
+                Dim first = tokens.ElementAtOrDefault(0)
+                Dim last = tokens.ElementAtOrDefault(1)
 
-                If Not last.IsPattern(NumericPattern) Then
-                    Throw New NotImplementedException($"{name} = {idStr}")
+                If first.IsPattern(NumericPattern) Then
+                    Return CLng(Val(first))
+                ElseIf last.IsPattern(NumericPattern) Then
+                    Return CLng(Val(last))
+                Else
+                    Call $"Invalid format for {name} = ""{idStr}"", @{msp.DB_id}={msp.Name}".Warning
+                    Return -1
                 End If
-
-                Return CLng(Val(last))
             End If
         End Function
 
