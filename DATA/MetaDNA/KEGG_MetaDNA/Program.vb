@@ -63,6 +63,11 @@ Module Program
         Return GetType(Program).RunCLI(App.CommandLine)
     End Function
 
+    ''' <summary>
+    ''' 这个结构所产生的数据库是MetaDNA R程序包所需要的data数据
+    ''' </summary>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
     <ExportAPI("/compile")>
     <Usage("/compile /br08201 <reactions.repo.directory> /KEGG_cpd <compounds.repo.directory> [/out <default=metaDNA_kegg.rda>]")>
     <Description("Compile the kegg reaction/compound database as MetaDNA network database into RDA format.")>

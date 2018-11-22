@@ -29,6 +29,11 @@ Namespace ASCII.MSP
                 .Split(AddressOf StringEmpty, includes:=False) _
                 .Where(Function(c) c.Length > 0)
 
+            If path.FileLength <= 0 Then
+                Call $"Target msp file: [{path}] contains no data or file not found!".Warning
+                Return
+            End If
+
             For Each reference As String() In libs.Where(Function(r) Not r.IsNullOrEmpty AndAlso r.Length > 2)
                 Dim parts = reference _
                     .Split(Function(s)

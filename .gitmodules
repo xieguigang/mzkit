@@ -3,9 +3,9 @@
 	url = https://github.com/xieguigang/SMRUCC.WebCloud.git
 
 
-[submodule "KCF"]
-	path = visual/KCF
-	url = https://github.com/xieguigang/KEGG.molDraw.git
 [submodule "KEGG_canvas"]
 	path = visual/KEGG_canvas
 	url = https://github.com/GCModeller-Cloud/KEGG-metabolite-network.git
+[submodule "visual/KCF"]
+	path = visual/KCF
+	url = https://github.com/xieguigang/KEGG.molDraw.git
