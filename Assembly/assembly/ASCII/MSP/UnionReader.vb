@@ -13,6 +13,22 @@
             End Get
         End Property
 
+        Public ReadOnly Property hmdb As String
+            Get
+                Return meta.hmdb
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' 返回纯数字类型的chebi编号，如果物质没有chebi编号，则返回-1
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property chebi As Long
+            Get
+                Return numericIdInternal(meta.chebi)
+            End Get
+        End Property
+
         Public ReadOnly Property CAS As String
             Get
                 Return meta.Read_CAS
@@ -63,9 +79,9 @@
             End Get
         End Property
 
-        Public ReadOnly Property pubchem As String
+        Public ReadOnly Property pubchem As Long
             Get
-                Return meta.Read_pubchemID
+                Return numericIdInternal(meta.Read_pubchemID)
             End Get
         End Property
 
@@ -98,6 +114,16 @@
             Me.meta = meta
             Me.msp = msp
         End Sub
+
+        Private Shared Function numericIdInternal(idStr As String) As Long
+            If idStr.StringEmpty Then
+                Return -1
+            ElseIf idstr.IsPattern("\d+") Then
+                Return Long.Parse(idStr)
+            Else
+                Return Long.Parse(idStr.Split(":"c).Last)
+            End If
+        End Function
 
         Public Overrides Function ToString() As String
             Return meta.name
