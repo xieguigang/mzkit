@@ -1,4 +1,6 @@
-﻿Namespace ASCII.MSP
+﻿Imports System.Runtime.CompilerServices
+
+Namespace ASCII.MSP
 
     Public Class UnionReader
 
@@ -47,7 +49,7 @@
         ''' <returns></returns>
         Public ReadOnly Property retention_time As Double
             Get
-                Return meta.read_retention_time
+                Return meta.Read_retention_time
             End Get
         End Property
 
@@ -115,7 +117,7 @@
             Me.msp = msp
         End Sub
 
-        Private Shared Function numericIdInternal(idStr As String) As Long
+        Private Shared Function numericIdInternal(idStr As String, <CallerMemberName> Optional name$ = Nothing) As Long
             Static delimiter As Char() = {":"c, " "c, Text.ASCII.TAB}
 
             idStr = Strings.Trim(idStr)
@@ -128,7 +130,7 @@
                 Dim last = idStr.Split(delimiter).Last
 
                 If Not last.IsPattern("\d+") Then
-                    Throw New NotImplementedException(idStr)
+                    Throw New NotImplementedException($"{name} = {idStr}")
                 End If
 
                 Return Long.Parse(last)
