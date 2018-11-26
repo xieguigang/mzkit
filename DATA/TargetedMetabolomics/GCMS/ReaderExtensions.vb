@@ -2,12 +2,35 @@
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.netCDF
+Imports Microsoft.VisualBasic.Net.Http
+Imports Microsoft.VisualBasic.Text
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
 Imports SMRUCC.MassSpectrum.Math.GCMS.Vendors
+Imports SMRUCC.MassSpectrum.Math.Spectra
 
 Namespace GCMS
 
     Public Module ReaderExtensions
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension> Public Function CreateMatrix(roi As ROITable) As LibraryMatrix
+            Return roi.mass_spectra _
+                .DecodeBase64 _
+                .Split(ASCII.TAB) _
+                .Select(Function(f)
+                            Return f.Split _
+                                .Select(Function(s) Val(s)) _
+                                .ToArray
+                        End Function) _
+                .Select(Function(t)
+                            Return New ms2 With {
+                                .mz = t(0),
+                                .intensity = t(1),
+                                .quantity = .intensity
+                            }
+                        End Function) _
+                .ToArray
+        End Function
 
         ''' <summary>
         ''' 读取CDF文件然后读取原始数据
