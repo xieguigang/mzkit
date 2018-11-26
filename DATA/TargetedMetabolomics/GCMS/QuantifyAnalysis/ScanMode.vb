@@ -51,14 +51,14 @@ Imports SMRUCC.MassSpectrum.Math
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
 Imports SMRUCC.MassSpectrum.Math.Spectra
 
-Namespace GCMS
+Namespace GCMS.QuantifyAnalysis
 
     ''' <summary>
     ''' GCMS自动化定量分析模块
     ''' 
     ''' https://github.com/cheminfo-js/netcdf-gcms
     ''' </summary>
-    Public Module QuantifyAnalysis
+    Public Module ScanModeWorker
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>

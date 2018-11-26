@@ -2,7 +2,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 
-Namespace GCMS
+Namespace GCMS.QuantifyAnalysis
 
     Public Module StandardCurve
 
