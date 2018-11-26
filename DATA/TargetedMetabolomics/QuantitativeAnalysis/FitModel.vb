@@ -39,6 +39,10 @@ Public Class FitModel : Implements INamedValue
 
     ''' <summary>
     ''' 对标准曲线进行线性回归建模
+    ''' 
+    ''' + ``<paramref name="weighted"/> = TRUE``: <see cref="WeightedFit"/>
+    ''' + ``<paramref name="weighted"/> = FALSE``: <see cref="FitResult"/>
+    ''' 
     ''' </summary>
     ''' <param name="line"></param>
     ''' <returns></returns>

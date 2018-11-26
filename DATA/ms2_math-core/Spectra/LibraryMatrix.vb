@@ -63,6 +63,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+Imports WhichSelector = Microsoft.VisualBasic.Linq.Which
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
 
@@ -176,6 +177,11 @@ Namespace Spectra
         Sub New()
             Call MyBase.New({})
         End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetMaxInto() As ms2
+            Return buffer(WhichSelector.Max(buffer.Select(Function(mz) mz.intensity)))
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function AlignMatrix(data As ms2(), tolerance As Tolerance) As ms2()

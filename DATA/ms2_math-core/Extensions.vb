@@ -73,6 +73,12 @@ Public Module Extensions
         Return ri
     End Function
 
+    ''' <summary>
+    ''' 在一定的误差范围内按照m/z对碎片进行分组操作，并取出该分组内的信号响应值最大值作为该分组的信号响应
+    ''' </summary>
+    ''' <param name="mz"></param>
+    ''' <param name="tolerance"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function GroupByMz(mz As IEnumerable(Of ms1_scan), Optional tolerance As Tolerance = Nothing) As ms1_scan()

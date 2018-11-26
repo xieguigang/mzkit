@@ -74,6 +74,20 @@ Public MustInherit Class Tolerance
         End Get
     End Property
 
+    Default Public ReadOnly Property IsEquals(mz1#, mz2#) As Boolean
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Get
+            Return Assert(mz1, mz2)
+        End Get
+    End Property
+
+    Default Public ReadOnly Property IsEquals(mz1 As Spectra.ms2, mz2 As Spectra.ms2) As Boolean
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Get
+            Return Assert(mz1.mz, mz2.mz)
+        End Get
+    End Property
+
     ''' <summary>
     ''' 默认的误差计算是小于0.3个道尔顿以内
     ''' </summary>
@@ -85,6 +99,7 @@ Public MustInherit Class Tolerance
     End Sub
 
     Public MustOverride Function Assert(mz1#, mz2#) As Boolean
+    Public MustOverride Function AsScore(mz1#, mz2#) As Double
 
     Public Shared Function DeltaMass(da#) As DAmethod
         Return New DAmethod(da)
@@ -158,6 +173,11 @@ Public Class PPMmethod : Inherits Tolerance
     Public Overrides Function Assert(mz1 As Double, mz2 As Double) As Boolean
         Return ppm(mz1, mz2) <= ppmValue
     End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Overrides Function AsScore(mz1 As Double, mz2 As Double) As Double
+        Return 1 - (ppm(mz1, mz2) / ppmValue)
+    End Function
 End Class
 
 Public Class DAmethod : Inherits Tolerance
@@ -175,5 +195,9 @@ Public Class DAmethod : Inherits Tolerance
 
     Public Overrides Function ToString() As String
         Return $"|mz1 - mz2| <= {da}"
+    End Function
+
+    Public Overrides Function AsScore(mz1 As Double, mz2 As Double) As Double
+        Return 1 - (sys.Abs(mz1 - mz2) / da)
     End Function
 End Class

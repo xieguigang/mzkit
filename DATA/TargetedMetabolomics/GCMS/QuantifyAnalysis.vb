@@ -69,6 +69,26 @@ Namespace GCMS
                 .ToArray
         End Function
 
+        <Extension>
+        Public Function CreateMatrix(roi As ROITable) As LibraryMatrix
+            Return roi.mass_spectra _
+                .DecodeBase64 _
+                .Split(ASCII.TAB) _
+                .Select(Function(f)
+                            Return f.Split _
+                                .Select(Function(s) Val(s)) _
+                                .ToArray
+                        End Function) _
+                .Select(Function(t)
+                            Return New ms2 With {
+                                .mz = t(0),
+                                .intensity = t(1),
+                                .quantity = .intensity
+                            }
+                        End Function) _
+                .ToArray
+        End Function
+
         ''' <summary>
         ''' 利用标准品的信息从GCMS的实验数据之中找出对应的检测物质的检测结果
         ''' </summary>
@@ -99,22 +119,7 @@ Namespace GCMS
             ' 然后做质谱图的比对操作
             For Each ref As ROITable In standards
                 Dim timeRange As DoubleRange = {ref.rtmin - winSize, ref.rtmax + winSize}
-                Dim refSpectrum As LibraryMatrix = ref.mass_spectra _
-                    .DecodeBase64 _
-                    .Split(ASCII.TAB) _
-                    .Select(Function(f)
-                                Return f.Split _
-                                    .Select(Function(s) Val(s)) _
-                                    .ToArray
-                            End Function) _
-                    .Select(Function(t)
-                                Return New ms2 With {
-                                    .mz = t(0),
-                                    .intensity = t(1),
-                                    .quantity = .intensity
-                                }
-                            End Function) _
-                    .ToArray
+                Dim refSpectrum As LibraryMatrix = ref.CreateMatrix
 
                 refSpectrum.Name = ref.ID
 
