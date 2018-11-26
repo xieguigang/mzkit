@@ -128,6 +128,7 @@
   <ItemGroup>
     <Compile Include="ContentUnits.vb" />
     <Compile Include="GCMS\ChromatographyPeaktable.vb" />
+    <Compile Include="GCMS\QuantifyAnalysis\ReferenceLibrary.vb" />
     <Compile Include="GCMS\QuantifyAnalysis\SIMMode.vb" />
     <Compile Include="GCMS\ROITable.vb" />
     <Compile Include="GCMS\QuantifyAnalysis\StandardCurve.vb" />
