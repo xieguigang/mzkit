@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5cbcd7159a1906e8c65780a9079f01a0, ms2_math-core\Ms2\LibraryMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::14d676282b6a0284be78f7f7f85acce0, ms2_math-core\Spectra\LibraryMatrix.vb"
 
     ' Author:
     ' 
@@ -51,7 +51,7 @@
     '         Properties: intensity, ms2, Name
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: AlignMatrix
+    '         Function: AlignMatrix, GetMaxInto
     '         Operators: *, /
     ' 
     ' 

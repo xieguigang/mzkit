@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e3046cede724f358585993101de1958b, ms2_math-core\Ms1\Tolerance.vb"
+﻿#Region "Microsoft.VisualBasic::a9c9c4a534837c546fb1ac391417f6d5, ms2_math-core\Ms1\Tolerance.vb"
 
     ' Author:
     ' 
@@ -46,14 +46,14 @@
     '     Properties: ppmValue
     ' 
     '     Constructor: (+2 Overloads) Sub New
-    '     Function: Assert, ppm, ToString
+    '     Function: AsScore, Assert, ppm, ToString
     ' 
     ' Class DAmethod
     ' 
     '     Properties: da
     ' 
     '     Constructor: (+1 Overloads) Sub New
-    '     Function: Assert, ToString
+    '     Function: AsScore, Assert, ToString
     ' 
     ' /********************************************************************************/
 

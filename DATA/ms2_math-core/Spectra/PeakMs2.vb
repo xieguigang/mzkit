@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f56914e130832560c68e12adce303b40, ms2_math-core\Ms2\PeakMs2.vb"
+﻿#Region "Microsoft.VisualBasic::829d51a7a7516ed07f6209237ee7da8f, ms2_math-core\Spectra\PeakMs2.vb"
 
     ' Author:
     ' 
