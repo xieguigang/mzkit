@@ -115,6 +115,8 @@ Namespace Chromatogram
                 .ToArray
             Dim peaks As IEnumerable(Of SlideWindow(Of PointF)())
 
+            ' 2018-11-26
+            ' 目前暂时使用一样的方法进行MRM和GCMS的峰的解析操作
             If MRMpeaks Then
                 peaks = windows.SplitMRMPeaks(angleThreshold)
             Else

@@ -1,6 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.application.netCDF
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Text
@@ -11,6 +12,15 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
 Namespace GCMS
 
     Public Module ReaderExtensions
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function ExportROI(gcms As Raw, angle#) As ROI()
+            Return gcms.GetTIC _
+                .Shadows _
+                .PopulateROI(angleThreshold:=angle, MRMpeaks:=False) _
+                .ToArray
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function CreateMatrix(roi As ROITable) As LibraryMatrix

@@ -60,15 +60,6 @@ Namespace GCMS.QuantifyAnalysis
     ''' </summary>
     Public Module ScanModeWorker
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension>
-        Public Function ExportROI(gcms As Raw, angle#) As ROI()
-            Return gcms.GetTIC _
-                .Shadows _
-                .PopulateROI(angleThreshold:=angle, MRMpeaks:=False) _
-                .ToArray
-        End Function
-
         ''' <summary>
         ''' 利用标准品的信息从GCMS的实验数据之中找出对应的检测物质的检测结果
         ''' </summary>
