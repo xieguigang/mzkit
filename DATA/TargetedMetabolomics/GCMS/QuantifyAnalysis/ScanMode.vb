@@ -44,7 +44,10 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.MIME.application.netCDF
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Text
 Imports SMRUCC.MassSpectrum.Math
@@ -169,6 +172,89 @@ Namespace GCMS.QuantifyAnalysis
                 .rtmin = ROI.Time.Min,
                 .mass_spectra = base64
             }
+        End Function
+
+        ''' <summary>
+        ''' 利用参考库来查找实验数据之中的目标物质
+        ''' </summary>
+        ''' <param name="ref">靶向GCMS的标准品库</param>
+        ''' <param name="experiments$">实验数据的cdf文件路径</param>
+        ''' <returns></returns>
+        ''' 
+        <Extension>
+        Public Function ScanContents(ref As ROITable(), experiments$,
+                                     Optional sn_threshold# = 0,
+                                     Optional angle# = 5,
+                                     Optional baselineQuantile# = 0.3,
+                                     Optional scoreCutoff# = 0.8,
+                                     Optional ByRef alignments As (ID$, query As LibraryMatrix, ref As LibraryMatrix)() = Nothing) As ROITable()
+
+            Dim data As Raw = netCDFReader.Open(filePath:=experiments).ReadData
+            Dim result As New List(Of ROITable)
+            Dim alignList As New List(Of (String, LibraryMatrix, LibraryMatrix))
+
+            For Each target In ref.ScanIons(
+                data, sn:=sn_threshold,
+                angleCutoff:=angle,
+                scoreCutoff:=scoreCutoff
+            )
+                result += target.Item1
+                alignList += (target.Item1.ID, target.query, target.ref)
+            Next
+
+            alignments = alignList
+
+            Return result
+        End Function
+
+        <Extension>
+        Public Iterator Function FitContent(Of T As ROITable)(ROIlist As IEnumerable(Of (fileName$, data As T)), standardCurves As Dictionary(Of String, FitModel)) As IEnumerable(Of ChromatographyPeaktable)
+            Dim fileTable = ROIlist.SafeQuery _
+                .GroupBy(Function(file) file.fileName) _
+                .ToDictionary(Function(file) file.Key,
+                              Function(g)
+                                  Return g.ToDictionary(Function(c) c.data.ID,
+                                                        Function(c) c.data)
+                              End Function)
+
+            For Each targetVal As KeyValuePair(Of String, Dictionary(Of String, T)) In fileTable
+                Dim rawFile$ = targetVal.Key
+                Dim detections As Dictionary(Of String, T) = targetVal.Value
+
+                For Each target As T In detections _
+                    .Values _
+                    .Where(Function(tt)
+                               Return Not tt.ID.TextEquals(tt.IS) AndAlso standardCurves.ContainsKey(tt.ID)
+                           End Function)
+
+                    Dim TPA#
+                    Dim standardCurve As FitModel = standardCurves(target.ID)
+
+                    If Not standardCurve.IS Is Nothing Then
+                        ' 需要做内标校正
+                        TPA = target.integration / detections(target.IS).integration
+                    Else
+                        TPA = target.integration
+                    End If
+
+                    Yield New ChromatographyPeaktable With {
+                        .ID = target.ID,
+                        .baseline = target.baseline,
+                        .integration = target.integration,
+                        .content = standardCurve.LinearRegression(TPA),
+                        .mass_spectra = target.mass_spectra,
+                        .maxInto = target.maxInto,
+                        .ri = target.ri,
+                        .rt = target.rt,
+                        .rtmax = target.rtmax,
+                        .rtmin = target.rtmin,
+                        .sn = target.sn,
+                        .rawFile = rawFile,
+                        .[IS] = target.IS,
+                        .TPACalibration = TPA
+                    }
+                Next
+            Next
         End Function
     End Module
 End Namespace
