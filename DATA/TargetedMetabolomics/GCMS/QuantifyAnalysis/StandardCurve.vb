@@ -72,7 +72,7 @@ Namespace GCMS.QuantifyAnalysis
                 Dim cdf As String = contentFile.Key
                 ' 这个物质的浓度都是一样的
                 ' 主要是需要从原始数据之中提取出峰面积等计算信息
-                Dim data As ROITable() = Library.ScanContents(
+                Dim data As ROITable() = ScanModeWorker.ScanContents(
                     ref:=standards,
                     experiments:=cdf,
                     angle:=angleThreshold,
