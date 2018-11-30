@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::67aadc3e5d6b7d54e2c58e3431bff14b, ms2_math-core\Ms2\LibraryMatrixExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::4521fb684f1041581d8281e7e269669e, ms2_math-core\Spectra\LibraryMatrixExtensions.vb"
 
     ' Author:
     ' 

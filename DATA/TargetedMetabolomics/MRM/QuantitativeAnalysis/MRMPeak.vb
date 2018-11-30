@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d42724b5ccd09fb6a6826d580232158b, math.MRM\QuantitativeAnalysis\MRMPeak.vb"
+﻿#Region "Microsoft.VisualBasic::d42724b5ccd09fb6a6826d580232158b, TargetedMetabolomics\MRM\QuantitativeAnalysis\MRMPeak.vb"
 
     ' Author:
     ' 

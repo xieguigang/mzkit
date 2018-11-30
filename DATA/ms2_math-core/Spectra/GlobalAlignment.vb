@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b6b159a64e51269d3033f70f2838677, ms2_math-core\Ms2\GlobalAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::4fb905852decf3e4435b1b5b387067fc, ms2_math-core\Spectra\GlobalAlignment.vb"
 
     ' Author:
     ' 
@@ -34,9 +34,10 @@
 
     ' Summaries:
 
-    ' Module GlobalAlignment
+    '     Module GlobalAlignment
     ' 
-    '     Function: Align, AlignMatrix, SharedPeakCount, TwoDirectionSSM
+    '         Function: Align, AlignMatrix, SharedPeakCount, TwoDirectionSSM
+    ' 
     ' 
     ' /********************************************************************************/
 

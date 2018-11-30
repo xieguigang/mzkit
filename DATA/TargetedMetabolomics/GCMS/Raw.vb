@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::92888d627907f266e82285f2be32629a, GCMS_quantify\GCMSJson.vb"
+﻿#Region "Microsoft.VisualBasic::a6c8425150bf6f9aac87deb373aa1c41, TargetedMetabolomics\GCMS\Raw.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,12 @@
 
     ' Summaries:
 
-    ' Class GCMSJson
+    '     Class Raw
     ' 
-    '     Properties: ms, tic, times, title
+    '         Properties: ms, tic, times, title
     ' 
-    '     Function: GetMsScan, GetScanIndex, GetTIC
+    '         Function: (+2 Overloads) GetMsScan, GetScanIndex, GetTIC
+    ' 
     ' 
     ' /********************************************************************************/
 

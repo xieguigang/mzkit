@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d600adbd348c7b09ea1d695a1d1605d2, ms2_math-core\Ms2\ms2AlignMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::6021481facb77f2fdc5c241a2422a82c, ms2_math-core\Spectra\ms2AlignMatrix.vb"
 
     ' Author:
     ' 
@@ -34,17 +34,18 @@
 
     ' Summaries:
 
-    ' Class SSM2MatrixFragment
+    '     Class SSM2MatrixFragment
     ' 
-    '     Properties: da, mz, query, ref
+    '         Properties: da, mz, query, ref
     ' 
-    '     Function: FromXml, ToString
+    '         Function: createFragment, FromXml, ToString
     ' 
-    ' Class Ms2AlignMatrix
+    '     Class Ms2AlignMatrix
     ' 
-    '     Properties: SSM
+    '         Properties: SSM
     ' 
-    '     Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     ' 
     ' /********************************************************************************/
 

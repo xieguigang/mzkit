@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b72d62ac2b9e4b831d059f43b953b15, ms2_math-core\Chromatogram\ROI.vb"
+﻿#Region "Microsoft.VisualBasic::fa7a9f260a7ade49cda1fcebeffad4c4, ms2_math-core\Chromatogram\ROI.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,16 @@
 
     ' Summaries:
 
+    '     Interface IROI
+    ' 
+    '         Properties: rtmax, rtmin
+    ' 
     '     Class ROI
     ' 
     '         Properties: Baseline, Integration, MaxInto, Noise, PeakWidth
     '                     rt, snRatio, Ticks, Time
     ' 
-    '         Function: GetChromatogramData, GetROITable, ToString
+    '         Function: GetChromatogramData, ToString
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b7060749aa2f823a7178b955b76a8a48, ms2_math-core\Chromatogram\Chromatogram.vb"
+﻿#Region "Microsoft.VisualBasic::051189f44b40ea149d10673b4ded1e61, ms2_math-core\Chromatogram\Chromatogram.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
 
     '     Module ChromatogramMath
     ' 
-    '         Function: Baseline, IntensityArray, TimeArray
+    '         Function: Baseline, IntensityArray, Summary, TimeArray
     ' 
     ' 
     ' /********************************************************************************/

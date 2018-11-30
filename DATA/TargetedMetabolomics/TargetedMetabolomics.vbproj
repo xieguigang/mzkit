@@ -128,11 +128,13 @@
   <ItemGroup>
     <Compile Include="ContentUnits.vb" />
     <Compile Include="GCMS\ChromatographyPeaktable.vb" />
+    <Compile Include="GCMS\QuantifyAnalysis\ReferenceLibrary.vb" />
+    <Compile Include="GCMS\QuantifyAnalysis\SIMMode.vb" />
     <Compile Include="GCMS\ROITable.vb" />
-    <Compile Include="GCMS\StandardCurve.vb" />
+    <Compile Include="GCMS\QuantifyAnalysis\StandardCurve.vb" />
     <Compile Include="GCMS\ReaderExtensions.vb" />
     <Compile Include="GCMS\Raw.vb" />
-    <Compile Include="GCMS\QuantifyAnalysis.vb" />
+    <Compile Include="GCMS\QuantifyAnalysis\ScanMode.vb" />
     <Compile Include="GCMS\Vendors\agilentGCMS.vb" />
     <Compile Include="GCMS\Vendors\agilentHPLC.vb" />
     <Compile Include="GCMS\Vendors\aiaTemplate.vb" />

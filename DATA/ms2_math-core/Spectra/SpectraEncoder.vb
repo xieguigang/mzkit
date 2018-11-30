@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca9b07218ce4f30d4fac81447c9ba6bd, Massbank\MetaLib\SpectraEncoder.vb"
+﻿#Region "Microsoft.VisualBasic::dfdd9fc0bb91c193108dadd71866b728, ms2_math-core\Spectra\SpectraEncoder.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Summaries:
 
-    ' Module SpectraEncoder
+    '     Module SpectraEncoder
     ' 
     ' 
-    '     Delegate Function
+    '         Delegate Function
     ' 
-    '         Function: Decode, GetEncoder
+    '             Function: Decode, GetEncoder
     ' 
     ' 
     ' 

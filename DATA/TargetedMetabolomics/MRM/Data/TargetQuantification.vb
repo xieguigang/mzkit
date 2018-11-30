@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e63c5888c805fd115c6cb0e3e9b4c96, math.MRM\Data\TargetQuantification.vb"
+﻿#Region "Microsoft.VisualBasic::48a48761611bd554a34966387a05141a, TargetedMetabolomics\MRM\Data\TargetQuantification.vb"
 
     ' Author:
     ' 
@@ -43,12 +43,6 @@
     '     Class MRMPeak
     ' 
     '         Properties: Base, PeakHeight, Ticks, Window
-    ' 
-    '     Class Quantile
-    ' 
-    '         Properties: Percentage, Quantile
-    ' 
-    '         Function: ToString
     ' 
     ' 
     ' /********************************************************************************/

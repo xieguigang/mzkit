@@ -1,4 +1,50 @@
-﻿Imports System.Drawing
+﻿#Region "Microsoft.VisualBasic::4420ea1ed5881a4286ebc19c4bba2f45, TargetedMetabolomics\QuantitativeAnalysis\FitModel.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class FitModel
+    ' 
+    '     Properties: [IS], LinearRegression, Name, RequireISCalibration
+    ' 
+    '     Function: CreateLinearRegression, ToString
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
@@ -39,6 +85,10 @@ Public Class FitModel : Implements INamedValue
 
     ''' <summary>
     ''' 对标准曲线进行线性回归建模
+    ''' 
+    ''' + ``<paramref name="weighted"/> = TRUE``: <see cref="WeightedFit"/>
+    ''' + ``<paramref name="weighted"/> = FALSE``: <see cref="FitResult"/>
+    ''' 
     ''' </summary>
     ''' <param name="line"></param>
     ''' <returns></returns>

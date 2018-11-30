@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5cbcd7159a1906e8c65780a9079f01a0, ms2_math-core\Ms2\LibraryMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::14d676282b6a0284be78f7f7f85acce0, ms2_math-core\Spectra\LibraryMatrix.vb"
 
     ' Author:
     ' 
@@ -51,7 +51,7 @@
     '         Properties: intensity, ms2, Name
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: AlignMatrix
+    '         Function: AlignMatrix, GetMaxInto
     '         Operators: *, /
     ' 
     ' 
@@ -63,6 +63,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+Imports WhichSelector = Microsoft.VisualBasic.Linq.Which
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
 
@@ -176,6 +177,11 @@ Namespace Spectra
         Sub New()
             Call MyBase.New({})
         End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetMaxInto() As ms2
+            Return buffer(WhichSelector.Max(buffer.Select(Function(mz) mz.intensity)))
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function AlignMatrix(data As ms2(), tolerance As Tolerance) As ms2()
