@@ -72,7 +72,7 @@ Public Module Extensions
             ' 对zip文件进行解压缩
             Dim zipFolder$ = path.ParentPath & "/" & path.BaseName
 
-            GZip.ImprovedExtractToDirectory(path, zipFolder, Overwrite.Always, extractToFlat:=True)
+            ZipLib.ImprovedExtractToDirectory(path, zipFolder, Overwrite.Always, extractToFlat:=True)
             path.SetValue(zipFolder)
         End If
 
