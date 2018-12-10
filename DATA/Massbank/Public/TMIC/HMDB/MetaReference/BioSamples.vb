@@ -21,6 +21,11 @@ Namespace TMIC.HMDB.Repository
             {BioSamples.OtherFluids, {"Cerebrospinal Fluid (CSF)", "Breast Milk"}}
         }
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function ParseSampleType(type As String) As BioSamples
+            Return Enums(Of BioSamples).Where(Function(key) key.Description.TextEquals(type)).FirstOrDefault
+        End Function
+
         <Extension>
         Public Function GetSampleLocations(type As BioSamples) As String()
             If type = BioSamples.All Then
