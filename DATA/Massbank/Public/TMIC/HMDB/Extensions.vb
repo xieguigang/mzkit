@@ -214,7 +214,8 @@ Namespace TMIC.HMDB
 
             Return path _
                 .PopulateXmlElementText(Of metabolite)(NameOf(metabolite)) _
-                .Where(Function(xml) isSelected(handle.LoadXml(xml)))
+                .Where(Function(xml) isSelected(handle.LoadXml(xml))) _
+                .Select(Function(xml) handle.RemoveXmlns(xml))
         End Function
 
         ''' <summary>
