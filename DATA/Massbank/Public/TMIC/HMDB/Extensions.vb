@@ -170,18 +170,8 @@ Namespace TMIC.HMDB
         <Extension>
         Public Function MatchMetabolites(source As IEnumerable(Of metabolite), list$(), Optional by_id As Boolean = False) As IEnumerable(Of metabolite)
             If by_id Then
-                Dim hmdb_ID As Index(Of String) = list _
-                    .Select(Function(id) id.Trim.ToUpper) _
-                    .ToArray
-
-                Return source _
-                    .Where(Function(m)
-                               Return m.accession.IsOneOfA(hmdb_ID) OrElse
-                                 (Not m.secondary_accessions.accession Is Nothing AndAlso
-                                      m.secondary_accessions.accession.Any(Function(id)
-                                                                               Return id.IsOneOfA(hmdb_ID)
-                                                                           End Function))
-                           End Function)
+                Dim isSelected As Func(Of metabolite, Boolean) = list.IDAssert
+                Return source.Where(isSelected)
             Else
                 With list.NameMatch
                     Return source _
@@ -191,6 +181,23 @@ Namespace TMIC.HMDB
             End If
         End Function
 
+        <Extension>
+        Private Function IDAssert(list As String()) As Func(Of metabolite, Boolean)
+            Dim hmdb_ID As Index(Of String) = list _
+                .Select(Function(id) id.Trim.ToUpper) _
+                .ToArray
+
+            Return Function(m)
+                       Dim a = m.accession.IsOneOfA(hmdb_ID)
+                       Dim b = Not m.secondary_accessions.accession Is Nothing AndAlso
+                                   m.secondary_accessions.accession _
+                                    .Any(Function(id)
+                                             Return id.IsOneOfA(hmdb_ID)
+                                         End Function)
+                       Return a OrElse b
+                   End Function
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function LoadXML(path$) As IEnumerable(Of metabolite)
             Return metabolite.Load(path)
@@ -198,8 +205,16 @@ Namespace TMIC.HMDB
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function SubsetXmlText(path As String) As IEnumerable(Of String)
-            Return path.PopulateXmlElementText(Of metabolite)(NameOf(metabolite))
+        Public Function SubsetXmlText(path$, list$()) As IEnumerable(Of String)
+            Dim isSelected = list.IDAssert
+            Dim xmlNode$ = GetType(metabolite).GetTypeName([default]:=NameOf(metabolite))
+            Dim handle As New DeserializeHandler(Of metabolite)(xmlNode) With {
+                .ReplaceXmlns = "http://www.hmdb.ca"
+            }
+
+            Return path _
+                .PopulateXmlElementText(Of metabolite)(NameOf(metabolite)) _
+                .Where(Function(xml) isSelected(handle.LoadXml(xml)))
         End Function
 
         ''' <summary>
