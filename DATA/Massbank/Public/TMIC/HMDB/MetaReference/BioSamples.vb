@@ -21,9 +21,26 @@ Namespace TMIC.HMDB.Repository
             {BioSamples.OtherFluids, {"Cerebrospinal Fluid (CSF)", "Breast Milk"}}
         }
 
+        ''' <summary>
+        ''' 这个拓展函数接受使用``|``分隔的token来进行or运算
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function ParseSampleType(type As String) As BioSamples
-            Return Enums(Of BioSamples).Where(Function(key) key.Description.TextEquals(type)).FirstOrDefault
+            Dim list = type.Split("|"c)
+            Dim biosample As BioSamples = BioSamples.All
+            Dim types As BioSamples() = Enums(Of BioSamples)()
+
+            For Each typeName As String In list
+                For Each key As BioSamples In types
+                    If key.Description.TextEquals(typeName) Then
+                        biosample = biosample Or key
+                    End If
+                Next
+            Next
+
+            Return biosample
         End Function
 
         <Extension>
