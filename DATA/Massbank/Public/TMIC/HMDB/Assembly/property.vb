@@ -93,7 +93,7 @@ Namespace TMIC.HMDB
 
     Public Structure concentration
 
-        Public Property biofluid As String
+        Public Property biospecimen As String
         Public Property concentration_value As String
         Public Property concentration_units As String
         Public Property subject_age As String

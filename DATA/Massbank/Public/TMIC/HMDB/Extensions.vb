@@ -291,7 +291,7 @@ Namespace TMIC.HMDB
                             End If
 
                             If sample.StringEmpty OrElse sample = "*" Then
-                                Return $"[{c.biofluid}] {value}"
+                                Return $"[{c.biospecimen}] {value}"
                             Else
                                 Return value
                             End If
@@ -302,7 +302,7 @@ Namespace TMIC.HMDB
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Private Function matchSampleType(c As concentration, type$) As Boolean
-            Return type = "*" OrElse c.biofluid.TextEquals(type)
+            Return type = "*" OrElse c.biospecimen.TextEquals(type)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

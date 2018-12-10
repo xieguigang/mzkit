@@ -212,6 +212,7 @@
     <Compile Include="Public\NCBI\PubChem\ImageFly.vb" />
     <Compile Include="Public\TMIC\FooDB\Food.vb" />
     <Compile Include="Public\TMIC\FooDB\StoredProcedure.vb" />
+    <Compile Include="Public\TMIC\HMDB\MetaReference\BioSamples.vb" />
     <Compile Include="Public\TMIC\HMDB\MetaReference\RepositoryExtensions.vb" />
     <Compile Include="Public\TMIC\HMDB\Spectra\Abstract.vb" />
     <Compile Include="Public\TMIC\HMDB\Spectra\EIMS.vb" />
