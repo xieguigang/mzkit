@@ -49,6 +49,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Text.Xml.Linq
 
 Namespace TMIC.HMDB
 
@@ -193,6 +194,12 @@ Namespace TMIC.HMDB
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function LoadXML(path$) As IEnumerable(Of metabolite)
             Return metabolite.Load(path)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function SubsetXmlText(path As String) As IEnumerable(Of String)
+            Return path.PopulateXmlElementText(Of metabolite)(NameOf(metabolite))
         End Function
 
         ''' <summary>
