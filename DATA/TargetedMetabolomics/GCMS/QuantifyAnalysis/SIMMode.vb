@@ -128,6 +128,8 @@ Namespace GCMS.QuantifyAnalysis
                     .OrderByDescending(Function(candidate) candidate.minScore) _
                     .ToArray
 
+                refSpectrum.Name = ref.ID
+
                 For Each candidate In candidates
                     ' 在这里的峰面积就是定量离子的信号响应强度
                     resultTable = candidate.region.convert(
