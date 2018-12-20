@@ -61,21 +61,6 @@ Imports SMRUCC.MassSpectrum.Math
 ''' </summary>
 Public Module RTPrediction
 
-    ''' <summary>
-    ''' KEGG KCF molecular strucutre model to regression model factors.
-    ''' </summary>
-    ''' <param name="KCF"></param>
-    ''' <returns>Regression model factors</returns>
-    <Extension>
-    Public Function KCFComposition(KCF As KCF) As Dictionary(Of String, Double)
-        Return KCF.Atoms _
-            .GroupBy(Function(a)
-                         Return a.KEGGAtom.code
-                     End Function) _
-            .ToDictionary(Function(a) a.Key,
-                          Function(a) CDbl(a.Count))
-    End Function
-
     ReadOnly namedVector As NamedVectorFactory
 
     Sub New()
