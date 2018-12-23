@@ -1,4 +1,78 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::13168afaf814aa0624854d8d15828ea6, Massbank\Public\TMIC\HMDB\Spectra\Abstract.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Structure NullableValue
+    ' 
+    '         Properties: nil, value
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class reference
+    ' 
+    '         Properties: database, database_id, id, pubmed_id, ref_text
+    '                     spectra_id, spectra_type
+    ' 
+    '     Class SpectraFile
+    ' 
+    '         Properties: base_peak, chromatography_type, collection_date, column_type, database_id
+    '                     id, instrument_type, ionization_mode, notes, peak_counter
+    '                     predicted, references, retention_index, retention_time, ri_type
+    '                     sample_assessment, sample_concentration, sample_concentration_units, sample_mass, sample_mass_units
+    '                     sample_source, solvent, spectra_assessment, splash_key, structure_id
+    ' 
+    '     Interface IPeakList
+    ' 
+    '         Properties: peakList
+    ' 
+    '     Class Peak
+    ' 
+    '         Properties: id, intensity
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class MSPeak
+    ' 
+    '         Properties: mass_charge
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 

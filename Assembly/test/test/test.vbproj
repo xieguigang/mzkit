@@ -161,9 +161,9 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\DATA\ms2_math-core\ms2_math-core.vbproj">
-      <Project>{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}</Project>
-      <Name>ms2_math-core</Name>
+    <ProjectReference Include="..\..\..\DATA\ms2_math-core\MassSpectrum.math-core.vbproj">
+      <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
+      <Name>MassSpectrum.math-core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\assembly\assembly.vbproj">
       <Project>{95F7D65E-9DB1-4605-9FD3-25433277AF88}</Project>

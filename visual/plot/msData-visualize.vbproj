@@ -151,14 +151,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DATA\SpectrumJSON\IntensityCoordinate.vb" />
-    <Compile Include="Extensions.vb" />
-    <Compile Include="Visualize\Canvas.vb" />
-    <Compile Include="Visualize\ChromatogramPeakPlot.vb" />
-    <Compile Include="Visualize\ChromatogramPlot.vb" />
-    <Compile Include="Visualize\MzrtPlot.vb" />
-    <Compile Include="Visualize\PeakAssign.vb" />
-    <Compile Include="DATA\SpectrumJSON\SpectrumData.vb" />
+    <Compile Include="ChromatogramPeakPlot.vb" />
+    <Compile Include="ChromatogramPlot.vb" />
+    <Compile Include="GCMSscanVisual.vb" />
+    <Compile Include="MassSpectraMirrorPlot.vb" />
+    <Compile Include="MzrtPlot.vb" />
+    <Compile Include="PeakAssign.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -174,7 +172,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Visualize\viz.vb" />
+    <Compile Include="viz.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -197,6 +195,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\BinaryData.vbproj">
+      <Project>{487d7c92-d05a-4908-bf81-e6baba0bf592}</Project>
+      <Name>BinaryData</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj">
       <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
       <Name>47_dotnet_ms-vb_data.framework</Name>
@@ -233,17 +235,21 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\mime\application%25netcdf\application.netCDF.vbproj">
+      <Project>{6ff317ff-1a81-4272-a894-bfbffb202b41}</Project>
+      <Name>application.netCDF</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\mime\text%25html\MIME-htmls.vbproj">
       <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
       <Name>MIME-htmls</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\DATA\math.MRM\math.MRM.vbproj">
-      <Project>{a8a71b32-dac6-4fa7-a5c1-0f5e5d5c9eb7}</Project>
-      <Name>math.MRM</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\DATA\ms2_math-core\ms2_math-core.vbproj">
+    <ProjectReference Include="..\..\DATA\ms2_math-core\MassSpectrum.math-core.vbproj">
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
-      <Name>ms2_math-core</Name>
+      <Name>MassSpectrum.math-core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DATA\TargetedMetabolomics\TargetedMetabolomics.vbproj">
+      <Project>{a8a71b32-dac6-4fa7-a5c1-0f5e5d5c9eb7}</Project>
+      <Name>TargetedMetabolomics</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\MwtWinDll\MwtWinDll.Extensions\MwtWinDll.Extensions.vbproj">
       <Project>{1b7c8c1b-b794-4f0a-8d6c-0f32f6d4e927}</Project>
@@ -253,35 +259,10 @@
       <Project>{78332537-7ecc-4b74-8aa9-ba66ab296af0}</Project>
       <Name>MwtWinDll</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\runtime\zlibnet\src\zlibnet.vbproj">
-      <Project>{075e1da3-54ac-4d7c-9d4e-e34aa13910a8}</Project>
-      <Name>zlibnet</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Assembly\assembly\assembly.vbproj">
       <Project>{95f7d65e-9db1-4605-9fd3-25433277af88}</Project>
       <Name>assembly</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\index.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\App.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\data.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\images\attn.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\lib\excanvas.compiled.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\lib\highcharts.src.delta.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\lib\jquery-1.6.1.min.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

@@ -1,5 +1,9 @@
 # MassSpectrum-toolkits
 
+![](visual/gcms_ticplot.png)
+![](visual/gcms_ions.png)
+> GC/MS TIC and ROI plot
+
 ![](./Manuscript/3252_428.0344@78_METLIN034522_POS_10V_[M+H]+.png)
 > MS/MS alignment for metabolite identification
 
@@ -17,20 +21,6 @@ Next
 
 ![](./DATA/Data20180111-L7-40(4).png)
 ![](./DATA/Data20180111-WASH.png)
-
-```vbnet
-Dim title = <p>
-				H<sub>2</sub>O<sub>5</sub>C<sub>3</sub>Ag
-				<br/>
-				<span style="color:blue; font-size:20">Test MS/MS spectra plot</span>
-			</p>
-
-Call MetlinData.Load("../../SpectrumChart/Spectrum.json") _
-	.Data(Scan0) _
-	.Plot(title:=title.ToString,
-		  showPossibleFormula:=True) _
-	.Save("./Plot.png")
-```
 
 ### Molecular Weight Calculator
 

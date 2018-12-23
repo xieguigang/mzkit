@@ -205,18 +205,13 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\DATA\ms2_math-core\ms2_math-core.vbproj">
+    <ProjectReference Include="..\..\DATA\ms2_math-core\MassSpectrum.math-core.vbproj">
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
-      <Name>ms2_math-core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\runtime\zlibnet\src\zlibnet.vbproj">
-      <Project>{075e1da3-54ac-4d7c-9d4e-e34aa13910a8}</Project>
-      <Name>zlibnet</Name>
+      <Name>MassSpectrum.math-core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="mzData\" />
-    <Folder Include="netCDF\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

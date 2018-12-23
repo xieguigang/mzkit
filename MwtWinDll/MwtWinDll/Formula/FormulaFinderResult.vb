@@ -1,9 +1,17 @@
 ﻿Imports System.Data.Linq.Mapping
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
 
 Public Class FormulaComposition
+
+    Default Public ReadOnly Property GetAtomCount(atom As String) As Integer
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Get
+            Return CountsByElement.TryGetValue(atom)
+        End Get
+    End Property
 
     Public ReadOnly Property CountsByElement As Dictionary(Of String, Integer)
     Public ReadOnly Property EmpiricalFormula As String

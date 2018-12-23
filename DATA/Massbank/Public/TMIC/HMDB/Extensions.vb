@@ -1,7 +1,55 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::3f8a75edddc94578aaab34a337fb9e60, Massbank\Public\TMIC\HMDB\Extensions.vb"
+
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
+
+
+
+' /********************************************************************************/
+
+' Summaries:
+
+'     Module HMDBExtensions
+' 
+'         Function: BioSamples, BuildAsTable, (+2 Overloads) CheckNames, ConcentrationDisplay, LoadHMDBTaxonomy
+'                   LoadXML, MatchMetabolites, matchSampleType, NameMatch, (+2 Overloads) water_solubility
+' 
+' 
+' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Text.Xml.Linq
 
 Namespace TMIC.HMDB
 
@@ -120,15 +168,54 @@ Namespace TMIC.HMDB
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function MatchMetabolites(source As IEnumerable(Of metabolite), list$()) As IEnumerable(Of metabolite)
-            With list.NameMatch
-                Return source.AsParallel.Where(Function(m) Not .ByRef(m).match.StringEmpty)
-            End With
+        Public Function MatchMetabolites(source As IEnumerable(Of metabolite), list$(), Optional by_id As Boolean = False) As IEnumerable(Of metabolite)
+            If by_id Then
+                Dim isSelected As Func(Of metabolite, Boolean) = list.IDAssert
+                Return source.Where(isSelected)
+            Else
+                With list.NameMatch
+                    Return source _
+                        .AsParallel _
+                        .Where(Function(m) Not .ByRef(m).match.StringEmpty)
+                End With
+            End If
+        End Function
+
+        <Extension>
+        Private Function IDAssert(list As String()) As Func(Of metabolite, Boolean)
+            Dim hmdb_ID As Index(Of String) = list _
+                .Select(Function(id) id.Trim.ToUpper) _
+                .ToArray
+
+            Return Function(m)
+                       Dim a = m.accession.IsOneOfA(hmdb_ID)
+                       Dim b = Not m.secondary_accessions.accession Is Nothing AndAlso
+                                   m.secondary_accessions.accession _
+                                    .Any(Function(id)
+                                             Return id.IsOneOfA(hmdb_ID)
+                                         End Function)
+                       Return a OrElse b
+                   End Function
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function LoadXML(path$) As IEnumerable(Of metabolite)
             Return metabolite.Load(path)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function SubsetXmlText(path$, list$()) As IEnumerable(Of String)
+            Dim isSelected = list.IDAssert
+            Dim xmlNode$ = GetType(metabolite).GetTypeName([default]:=NameOf(metabolite))
+            Dim handle As New DeserializeHandler(Of metabolite)(xmlNode) With {
+                .ReplaceXmlns = "http://www.hmdb.ca"
+            }
+
+            Return path _
+                .PopulateXmlElementText(Of metabolite)(NameOf(metabolite)) _
+                .Where(Function(xml) isSelected(handle.LoadXml(xml))) _
+                .Select(Function(xml) handle.RemoveXmlns(xml))
         End Function
 
         ''' <summary>
@@ -205,7 +292,7 @@ Namespace TMIC.HMDB
                             End If
 
                             If sample.StringEmpty OrElse sample = "*" Then
-                                Return $"[{c.biofluid}] {value}"
+                                Return $"[{c.biospecimen}] {value}"
                             Else
                                 Return value
                             End If
@@ -216,7 +303,7 @@ Namespace TMIC.HMDB
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Private Function matchSampleType(c As concentration, type$) As Boolean
-            Return type = "*" OrElse c.biofluid.TextEquals(type)
+            Return type = "*" OrElse c.biospecimen.TextEquals(type)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

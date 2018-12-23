@@ -1,17 +1,58 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.ChartPlots
+﻿#Region "Microsoft.VisualBasic::bc0e7241c7a22371c6afd6108b1f0b4c, test\Module1.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module Module1
+    ' 
+    '     Sub: ChromatogramPlotTest, Main, ms1Visual, mzrtPlotTest
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
-Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzXML
 Imports SMRUCC.MassSpectrum.Math
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
 Imports SMRUCC.MassSpectrum.Math.MSMS
 Imports SMRUCC.MassSpectrum.Visualization
-Imports SMRUCC.MassSpectrum.Visualization.DATA.SpectrumJSON
 
 Module Module1
 
@@ -75,7 +116,7 @@ Module Module1
         'Call into_matrix.MatrixJson.SaveTo("./into.json")
 
         'Call scans.SaveTo("./test_ms1_scan.csv")
-        Call matrix.Plot("8000,3000", labelTicks:=5, showLabels:=False, fillCurve:=False).Save("./ms1.plot.png")
+        Call matrix.TICplot("8000,3000", labelTicks:=5, showLabels:=False, fillCurve:=False).Save("./ms1.plot.png")
 
         Pause()
     End Sub
@@ -89,7 +130,7 @@ Module Module1
         Call ChromatogramPlotTest()
 
 
-        Call Test()
+        ' Call Test()
 
         'Dim ddd = SMRUCC.proteomics.MS_Spectrum.DATA.Statistics.KEGGPathwayCoverages("C:\Users\gg.xie\Desktop\KEGG_ALL.csv".ReadAllLines, "D:\smartnucl_integrative\DATA\KEGG\br08901")
         'Dim ff As New File
@@ -175,57 +216,57 @@ Module Module1
     End Sub
 
 
-    Sub Test()
+    'Sub Test()
 
 
 
 
-        For Each ttt In "D:\smartnucl_integrative\20170705_library_mzXML\output\C18-_standards\lib.neg.csv".LoadCsv(Of LibraryMatrix).SpectrumFromMatrix
-            Call ttt.Plot(title:=ttt.name,
-                          showPossibleFormula:=True,
-                          mzAxis:=Nothing,
-                          showLegend:=False) _
-            .Save("./test/" & ttt.name.NormalizePathString(True) & ".png")
-        Next
+    '    For Each ttt In "D:\smartnucl_integrative\20170705_library_mzXML\output\C18-_standards\lib.neg.csv".LoadCsv(Of LibraryMatrix).SpectrumFromMatrix
+    '        Call ttt.Plot(title:=ttt.name,
+    '                      showPossibleFormula:=True,
+    '                      mzAxis:=Nothing,
+    '                      showLegend:=False) _
+    '        .Save("./test/" & ttt.name.NormalizePathString(True) & ".png")
+    '    Next
 
 
-        Dim fsdfsdf = mzXML.XML.LoadScans("G:\30STD_mix 330ppb-2.mz.XML").Select(AddressOf ExtractMzI).ToArray
+    '    Dim fsdfsdf = mzXML.XML.LoadScans("G:\30STD_mix 330ppb-2.mz.XML").Select(AddressOf ExtractMzI).ToArray
 
 
-        'Dim fff = BitConverter.GetBytes(3.0!)
+    '    'Dim fff = BitConverter.GetBytes(3.0!)
 
-        'Dim bbb = "eJxz8G3jvr1KodJh0RcGEHCIbfU5Zs5nCefHs+x0KF/0G84vLKyr8l5o4bAJyi9qWBQ0WzUTLl8cMHuD4LbpDnvyIPwSJ79pR0TfweVLkkrDGYU+wvmlQl6G0+dEw/llHyPf/V2zAm5+ZdOSs+oXHsDlax4FBekH74fLNxQXPXFZ+A8u33DQrdBB4y1C/qRbjNqPHgT/omP1uXhhhPqbdg1bxZvg/GbBmijlV+tgfACowGHJ"
+    '    'Dim bbb = "eJxz8G3jvr1KodJh0RcGEHCIbfU5Zs5nCefHs+x0KF/0G84vLKyr8l5o4bAJyi9qWBQ0WzUTLl8cMHuD4LbpDnvyIPwSJ79pR0TfweVLkkrDGYU+wvmlQl6G0+dEw/llHyPf/V2zAm5+ZdOSs+oXHsDlax4FBekH74fLNxQXPXFZ+A8u33DQrdBB4y1C/qRbjNqPHgT/omP1uXhhhPqbdg1bxZvg/GbBmijlV+tgfACowGHJ"
 
-        'Dim bytes As Byte() = Convert.FromBase64String(bbb)
+    '    'Dim bytes As Byte() = Convert.FromBase64String(bbb)
 
-        'Call bytes.Length.__DEBUG_ECHO
-        'Pause()
+    '    'Call bytes.Length.__DEBUG_ECHO
+    '    'Pause()
 
-        'Dim dataaa = bytes.Split(5)
-        'Dim mzInts = dataaa.Select(Function(b) BitConverter.ToSingle(b, Scan0)).Split(2).Select(Function(pair) (mz:=pair(0), intensity:=pair(1))).ToArray
-
-
+    '    'Dim dataaa = bytes.Split(5)
+    '    'Dim mzInts = dataaa.Select(Function(b) BitConverter.ToSingle(b, Scan0)).Split(2).Select(Function(pair) (mz:=pair(0), intensity:=pair(1))).ToArray
 
 
-        'Dim mms = bbb.UnzipBase64
-
-        'Call mms.ToArray.FlushStream("x:\ddd.xml")
-
-        'Dim scans = mzXML.XML.LoadScans("X:\Test.Xml").ToArray
 
 
-        'Call CommonAtoms.SearchByMZAndLimitCharges("-4,6", 100).SaveTo("x:\test.csv")
+    '    'Dim mms = bbb.UnzipBase64
 
-        Dim title = <p>
-                        H<sub>2</sub>O<sub>5</sub>C<sub>3</sub>Ag
-                        <br/>
-                        <span style="color:blue; font-size:20">Test MS/MS spectra plot</span>
-                    </p>
+    '    'Call mms.ToArray.FlushStream("x:\ddd.xml")
 
-        Call MetlinData.Load("../../SpectrumChart/Spectrum.json") _
-            .Data(Scan0) _
-            .Plot(title:=title.ToString,
-                  showPossibleFormula:=True) _
-            .Save("./Plot.png")
-    End Sub
+    '    'Dim scans = mzXML.XML.LoadScans("X:\Test.Xml").ToArray
+
+
+    '    'Call CommonAtoms.SearchByMZAndLimitCharges("-4,6", 100).SaveTo("x:\test.csv")
+
+    '    Dim title = <p>
+    '                    H<sub>2</sub>O<sub>5</sub>C<sub>3</sub>Ag
+    '                    <br/>
+    '                    <span style="color:blue; font-size:20">Test MS/MS spectra plot</span>
+    '                </p>
+
+    '    Call MetlinData.Load("../../SpectrumChart/Spectrum.json") _
+    '        .Data(Scan0) _
+    '        .Plot(title:=title.ToString,
+    '              showPossibleFormula:=True) _
+    '        .Save("./Plot.png")
+    'End Sub
 End Module

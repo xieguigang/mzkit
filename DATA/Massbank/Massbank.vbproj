@@ -181,9 +181,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\..\..\smartnucl_integrative\biodeepDB\METLINApp\packages\System.ValueTuple.4.4.0\lib\net47\System.ValueTuple.dll</HintPath>
-    </Reference>
     <Reference Include="System.Windows.Presentation" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
@@ -204,8 +201,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MetaLib\KEGGExtensions.vb" />
     <Compile Include="MetaLib\NaturalLanguageTerm.vb" />
-    <Compile Include="MetaLib\SpectraEncoder.vb" />
     <Compile Include="MetaLib\NameEquality.vb" />
     <Compile Include="MetaLib\MetaLib.vb" />
     <Compile Include="Concentration.vb" />
@@ -215,6 +212,7 @@
     <Compile Include="Public\NCBI\PubChem\ImageFly.vb" />
     <Compile Include="Public\TMIC\FooDB\Food.vb" />
     <Compile Include="Public\TMIC\FooDB\StoredProcedure.vb" />
+    <Compile Include="Public\TMIC\HMDB\MetaReference\BioSamples.vb" />
     <Compile Include="Public\TMIC\HMDB\MetaReference\RepositoryExtensions.vb" />
     <Compile Include="Public\TMIC\HMDB\Spectra\Abstract.vb" />
     <Compile Include="Public\TMIC\HMDB\Spectra\EIMS.vb" />
@@ -296,7 +294,6 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\GCModeller\src\GCModeller\core\Bio.Assembly\Bio.Assembly.vbproj">
