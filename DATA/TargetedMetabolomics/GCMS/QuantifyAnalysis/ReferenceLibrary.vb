@@ -64,7 +64,7 @@ Namespace GCMS.QuantifyAnalysis
         ''' <param name="cdf$"></param>
         ''' <param name="names$"></param>
         ''' <returns></returns>
-        Public Function Create(cdf$, names$(), Optional angle# = 5) As (ROIlist As ROI(), ROITable As ROITable())
+        Public Function Create(cdf$, names$(), Optional angle# = 5, Optional sn_threads# = 2) As (ROIlist As ROI(), ROITable As ROITable())
             Dim gcms As Raw = netCDFReader.Open(cdf).ReadData()
             Dim ROIlist As ROI() = gcms.GetTIC _
                 .Shadows _
@@ -72,7 +72,8 @@ Namespace GCMS.QuantifyAnalysis
                 .ToArray
             Dim result As ROITable() = ROIlist.ExportReferenceROITable(
                 raw:=gcms,
-                names:=names
+                names:=names,
+                sn:=sn_threads
             )
 
             Return (ROIlist, result)
