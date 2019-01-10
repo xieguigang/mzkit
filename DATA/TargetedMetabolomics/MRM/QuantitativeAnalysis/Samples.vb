@@ -153,7 +153,7 @@ Public Module MRMSamples
         Dim mrmPeaktable As New List(Of MRMPeakTable)
         Dim allSamples As List(Of String) = (ls - l - r - "*.mzML" <= wiff.ParentPath).AsList
 
-        If externalStandardsWiff.ParentPath.DirectoryExists Then
+        If Not externalStandardsWiff.StringEmpty AndAlso externalStandardsWiff.ParentPath.DirectoryExists Then
             allSamples += (ls - l - r - "*.mzML" <= externalStandardsWiff.ParentPath)
         End If
 

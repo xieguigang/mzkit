@@ -112,7 +112,7 @@ Namespace GCMS.QuantifyAnalysis
                 End If
 
                 Return .Select(Function(ROI, i)
-                                   Return ROI.convert(raw, ROI.RetentionIndex(A, B), getTitle(ROI, i))
+                                   Return ROI.ConvertAsTabular(raw, ROI.RetentionIndex(A, B), getTitle(ROI, i))
                                End Function) _
                        .ToArray
             End With
