@@ -58,9 +58,14 @@ Public Module MassSpectra
     Public Function MirrorPlot(library As LibraryMatrix,
                                Optional size$ = "1200,800",
                                Optional margin$ = "padding: 100px 30px 50px 100px;",
-                               Optional intoCutoff# = 0.05) As GraphicsData
+                               Optional intoCutoff# = 0.05,
+                               Optional titles$() = Nothing) As GraphicsData
+
+        Dim a As New LibraryMatrix With {.ms2 = library.ms2, .Name = titles.ElementAtOrDefault(0, library.Name)}
+        Dim b As New LibraryMatrix With {.ms2 = library.ms2, .Name = titles.ElementAtOrDefault(1, library.Name)}
+
         Return AlignMirrorPlot(
-            library, library,
+            a, b,
             size:=size,
             intoCutoff:=intoCutoff,
             margin:=margin
