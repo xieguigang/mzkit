@@ -93,16 +93,12 @@ Public Class FitModel : Implements INamedValue
     ''' <param name="line"></param>
     ''' <returns></returns>
     Public Shared Function CreateLinearRegression(line As PointF(), weighted As Boolean) As IFitted
+        Dim lineData = line.DeleteOutlier.ToArray
         ' X是实验值，可能会因为标准曲线溶液配制的问题出现，所以这个可能会需要使用异常点检测
-        Dim X As Vector = line.X.AsVector
+        Dim X As Vector = lineData.X.AsVector
         ' Y是从文件之中读取出来的浓度梯度信息，认为这个除非文件录入有错，否则将不会出现异常点
-        Dim Y As Vector = line.Y.AsVector
+        Dim Y As Vector = lineData.Y.AsVector
         Dim fit As IFitted
-
-        With X.OrderSequenceOutlierIndex.RemovesOutlier(X, Y)
-            X = .X
-            Y = .Y
-        End With
 
         If weighted Then
             Dim W As Vector = 1 / X ^ 2

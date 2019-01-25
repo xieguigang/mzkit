@@ -134,7 +134,7 @@ Namespace GCMS.QuantifyAnalysis
                         .Shadows _
                         .TPAIntegrator(candidate.region.Time, 0.65, Methods.Integrator)
 
-                    resultTable = candidate.region.convert(
+                    resultTable = candidate.region.ConvertAsTabular(
                         raw:=data,
                         ri:=0,
                         title:=ref.ID
@@ -153,8 +153,16 @@ Namespace GCMS.QuantifyAnalysis
             Next
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="ROI"></param>
+        ''' <param name="raw">需要通过raw数据来获取得到对应的质谱图结果数据</param>
+        ''' <param name="ri#"></param>
+        ''' <param name="title$"></param>
+        ''' <returns></returns>
         <Extension>
-        Friend Function convert(ROI As ROI, raw As Raw, ri#, title$) As ROITable
+        Public Function ConvertAsTabular(ROI As ROI, raw As Raw, ri#, title$) As ROITable
             Dim spectra = raw.GetMsScan(ROI.Time).GroupByMz
             Dim base64 As String = spectra _
                 .Select(Function(mz) $"{mz.mz} {mz.intensity}") _
