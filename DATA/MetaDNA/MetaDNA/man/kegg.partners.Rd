@@ -16,4 +16,3 @@ A kegg id vector which is related to the given \code{kegg_id}.
 Find KEGG reaction partner compound based on the kegg
     reaction definition.
 }
-

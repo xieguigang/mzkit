@@ -24,4 +24,3 @@ Returns the alignment result, which is a R list object with members:
 \description{
 Pick the best alignment result for unknown metabolite.
 }
-

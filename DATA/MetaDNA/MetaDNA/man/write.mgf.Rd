@@ -21,4 +21,3 @@ value.}
 \description{
 Write ms2 data as a mgf spectrum data file.
 }
-

@@ -20,4 +20,3 @@ Returns the index vector in \code{unknown.mz} vector.
 \description{
 Match unknown by mass
 }
-

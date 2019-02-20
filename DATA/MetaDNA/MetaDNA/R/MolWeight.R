@@ -90,12 +90,15 @@ MolWeight <- function() {
 		x;
 	}
 
+	# ASCII code of [0, 9], using for determine that token parts is
+	# a numeric token or not.
+	x0 <- utf8ToInt("09");
+	x9 <- x0[2];
+	x0 <- x0[1];
+
 	Mul <- function(token) {
 		n   <- c();
 		len <- Strings.Len(token);
-		x0  <- utf8ToInt("09");
-		x9  <- x0[2];
-		x0  <- x0[1];
 		xt  <- utf8ToInt(token);
 
 		for (i in 1:len) {

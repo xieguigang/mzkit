@@ -4,8 +4,8 @@
 \alias{metaDNA.impl}
 \title{Try to annotate unknown metabolite}
 \usage{
-metaDNA.impl(KEGG.partners, identify.ms2, unknown, ms2.align, unknow.matches,
-  score.cutoff = 0.8)
+metaDNA.impl(KEGG.partners, identify.ms2, unknown, ms2.align,
+  unknow.matches, score.cutoff = 0.8)
 }
 \arguments{
 \item{KEGG.partners}{Related to the identified KEGG id based on the kegg reaction definitions.
@@ -56,4 +56,3 @@ Algorithm routine:
    So, this function find every partner in unknown, and returns a set of unknown identify result
    But each unknown identify only have one best identify ms2 alignment result.
 }
-

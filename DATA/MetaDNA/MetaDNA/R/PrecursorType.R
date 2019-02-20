@@ -20,7 +20,17 @@
 
 #' The precursor type data model
 #'
+#' @details This helper function returns a list, with members:
+#'    \enumerate{
+#'       \item \code{mz} Calculate mass \code{m/z} value with given adduct and charge values.
+#'       \item \code{mass} Calculate mass value from given \code{m/z} with given adduct and charge, etc.
+#'       \item \code{new} Create a new mass and \code{m/z} calculator from given adduct info
+#'    }
+#'
 PrecursorType <- function() {
+
+    #' Evaluate adducts text to molecular weight.
+    .eval <- Eval(MolWeight)$Eval;
 
 	#' Calculate m/z
 	#'
@@ -31,6 +41,14 @@ PrecursorType <- function() {
 	#' @return Returns the m/z value of the precursor ion
 	adduct.mz <- function(mass, adduct, charge) {
 		(mass + adduct) / abs(charge);
+	}
+	adduct.mz.general <- function(mass, adduct, charge) {
+	    # Evaluate the formula expression to weights
+	    if (!is.numeric(adducts)) {
+	        adducts <- .eval(adducts);
+	    }
+
+	    adduct.mz(mass, adduct, charge);
 	}
 
 	#' Calculate mass from m/z
@@ -46,6 +64,14 @@ PrecursorType <- function() {
 	reverse.mass <- function(precursorMZ, M, charge, adduct) {
 		(precursorMZ * abs(charge) - adduct) / M;
 	}
+	reverse.mass.general <- function(precursorMZ, M, charge, adduct) {
+	    # Evaluate the formula expression to weights
+	    if (!is.numeric(adducts)) {
+	        adducts <- .eval(adducts);
+	    }
+
+	    reverse.mass(precursorMZ, M, charge, adduct);
+	}
 
 	#' Construct a \code{precursor_type} model
 	#'
@@ -57,7 +83,7 @@ PrecursorType <- function() {
 	.addKey <- function(type, charge, M, adducts) {
 		# Evaluate the formula expression to weights
 		if (!is.numeric(adducts)) {
-			adducts <- Eval(MolWeight)$Eval(adducts);
+			adducts <- .eval(adducts);
 		}
 
 		list(Name   = type,
@@ -69,8 +95,8 @@ PrecursorType <- function() {
 		);
 	}
 
-	list(mz   = adduct.mz,
-		 mass = reverse.mass,
+	list(mz   = adduct.mz.general,
+		 mass = reverse.mass.general,
 		 new  = .addKey
 	);
 }
@@ -187,6 +213,8 @@ positive <- function() {
 #'
 negative <- function() {
     neg     <- list();
+
+    # AddKey <- function(type, charge, M, adducts)
 	.addKey <- Eval(PrecursorType)$new;
 
     neg$"M-3H"	         <- .addKey("[M-3H]3-",          charge = -3, M = 1, adducts = "M-3H"    ); # M/3 -   1.007276	 3-	0.33	-1.007276	283.436354	293.113943
@@ -206,252 +234,4 @@ negative <- function() {
     neg$"3M-H"	         <- .addKey("[3M-H]-",           charge = -1, M = 3, adducts = "3M-H"    ); # 3M  -   1.007276	 1-	3.00	1.007276	2560.999946	2627.952724
 
     neg;
-}
-
-#' Get ionlization mode
-#'
-#' @description Get ionlization mode from a given precursor type name
-#'
-#' @param type The precursor type name, it should be in format like: \code{[M+H]+}.
-#'
-#' @return Function returns character \code{+} or \code{-}.
-getPolarity <- function(type) {
-    return(substr.Right(type, n=1));
-}
-
-#' Get mass calculator
-#'
-#' @param chargeMode Character value of \code{+/-}.
-#' @param PrecursorType The precursor type full name or brief name.
-#'
-#' @return Returns a function for calculate mass from \code{m/z} value.
-#'
-get.mass <- function(chargeMode, PrecursorType) {
-	if (PrecursorType %in% c("[M]+", "[M]-")) {
-		return(function(x) x);
-	}
-
-	mode <- Calculator[[chargeMode]];
-	found <- mode[[PrecursorType]];
-
-	if (found %=>% IsNothing) {
-	  # Is the precursor type full name.
-	  for (name in names(mode)) {
-	    calc <- mode[[name]];
-	    if (calc$Name == PrecursorType) {
-	      found <- calc;
-	      break;
-	    }
-	  }
-	}
-
-	found$calc;
-}
-
-#' Calculate m/z
-#'
-#' @description Calculate \code{m/z} for mass by given precursor type
-#'
-#' @param M Molecule mass
-#'
-#' @return -1 means target precursor type is not found.
-#'
-get.PrecursorMZ <- function(M, precursorType) {
-	mode        <- getPolarity(precursorType);
-	mode        <- Calculator[[mode]];
-	precursorMZ <- -1;
-
-	# calc <- mode[[precursorType]];
-	for (name in names(mode)) {
-
-		calc <- mode[[name]];
-
-		if (precursorType == calc$Name) {
-			precursorMZ   <- calc$cal.mz(M);
-			break;
-		}
-	}
-
-	if ((length(precursorMZ) == 1 && precursorMZ == -1) || ((precursorMZ == -1) %=>% all)) {
-		warnMsg <- "\"%s\" is not found... Precursor m/z is set to -1.";
-		warnMsg <- sprintf(warnMsg, precursorType);
-		warning(warnMsg);
-	}
-
-	precursorMZ;
-}
-
-#' Match the precursor type
-#'
-#' @description Match the precursor type through min ppm value match.
-#'
-#' @param charge The charge value of the ion
-#' @param mass Molecular mass
-#' @param precursorMZ Precursor m/z value of the ion.
-#' @param tolerance Tolerance between two mass value, by default is 0.3 da,
-#'    if this parameter is a numeric value, then means tolerance by ppm value.
-#'    There are two pre-defined tolerance function:
-#'
-#'    \enumerate{
-#'        \item \code{\link{tolerance.deltaMass}}
-#'        \item \code{\link{tolerance.ppm}}
-#'    }
-#'
-#' @examples mass = 853.33089
-#'
-#' PrecursorType.Match(853.33089, 307.432848,  charge = 3) # pos "[M+3Na]3+" charge = 3,  307.432848
-#' PrecursorType.Match(853.33089, 1745.624938, charge = 1) # pos "[2M+K]+"   charge = 1,  1745.624938
-#' PrecursorType.Match(853.33089, 854.338166,  charge = 1) # pos "[M+H]+"    charge = 1,  854.338166
-#'
-#' PrecursorType.Match(853.33089, 283.436354,  charge = -3, chargeMode = "-") # neg "[M-3H]3-"  charge = -3, 283.436354
-#' PrecursorType.Match(853.33089, 2560.999946, charge = -1, chargeMode = "-") # neg "[3M-H]-"   charge = -1, 2560.999946
-#' PrecursorType.Match(853.33089, 852.323614,  charge = -1, chargeMode = "-") # neg "[M-H]-"    charge = -1, 852.323614
-#'
-PrecursorType.Match <- function(
-    mass, precursorMZ, charge,
-    chargeMode   = "+",
-    tolerance    = tolerance.deltaMass(0.3),
-    debug.echo   = TRUE) {
-
-    if (tolerance %=>% is.numeric) {
-        tolerance <- tolerance.ppm(tolerance);
-    }
-
-	if (charge == 0) {
-		warning("Can't calculate the ionization mode for no charge(charge = 0)!");
-	    NA;
-	} else if ((mass %=>% IsNothing) || (precursorMZ %=>% IsNothing)) {
-		if(is.null(mass)) {
-			mass = NA;
-		}
-		if(is.null(precursorMZ)) {
-			precursorMZ = NA;
-		}
-
-	    msg <- "  ****** mass='%s' or precursor_M/Z='%s' is an invalid value!";
-	    msg <- sprintf(msg, mass, precursorMZ);
-		warning(msg);
-
-        NA;
-	} else if (tolerance(precursorMZ, mass / abs(charge))$valid) {
-	  # The source mass is equals to the precursor_m/z,
-	  # means it is a [M] type (auto-ionlization)
-	  if(abs(charge) == 1) {
-	    sprintf("[M]%s", chargeMode);
-	  } else {
-	    sprintf("[M]%s%s", charge, chargeMode);
-	  }
-	} else {
-	  .PrecursorType.MatchImpl(
-	    mass, precursorMZ, charge,
-	    chargeMode, tolerance,
-	    debug.echo
-	  );
-	}
-}
-
-#' Calculate for each precursor type, and then returns the
-#' min tolerance type as the match result
-.PrecursorType.MatchImpl <- function(
-  mass, precursorMZ, charge,
-  chargeMode, tolerance,
-  debug.echo) {
-
-  ## Get the calculator in current ion mode
-  mode <- Calculator[[chargeMode]];
-
-  if (chargeMode == "-") {
-    ## For the negative mode, the charge is a negative value.
-    ## But the xcms package extract a positive charge value.
-    ## So this required a negative factor
-    if (charge > 0) {
-      charge = -1 * charge;
-    }
-  }
-
-  match <- function(keyName) {
-	calc <- mode[[keyName]];
-
-	## Skip the precursor type where the charge value is not match
-    if (charge != calc$charge) {
-		note  <- "charge mismatched!";
-		error <- NA;
-		valid <- FALSE
-	} else {
-		# Calculate the mass from precursor mz and then calculate the
-	    # mass tolerance
-		mass.reverse <- calc$calc(precursorMZ);
-		validate     <- tolerance(mass.reverse, mass);
-
-		if (validate$valid) {
-			note <- NA;
-		} else {
-			note <- "Tolerance not satisfied!";
-		}
-
-		error <- validate$error;
-		valid <- validate$valid;
-	}
-
-	calc$error  <- error;
-	calc$valid  <- valid;
-	calc$calc   <- NULL;
-	calc$cal.mz <- NULL;
-	calc$note   <- note;
-
-	calc;
-  }
-
-  ## enumerate all of the types in current mode
-  match <- lapply(mode %=>% names, match);
-  match <- match %=>% as.dataframe;
-
-  # > head(match)
-  #   Name          charge M adduct   error valid
-  # 1 "[M+3H]3+"    3      1 3.021828 NA    FALSE
-  # 2 "[M+2H+Na]3+" 3      1 25.00432 NA    FALSE
-  # 3 "[M+H+2Na]3+" 3      1 46.98681 NA    FALSE
-  # 4 "[M+3Na]3+"   3      1 68.96931 NA    FALSE
-  # 5 "[M+2H]2+"    2      1 2.014552 NA    FALSE
-  # 6 "[M+H+NH4]2+" 2      1 19.04281 NA    FALSE
-  if (debug.echo) {
-	print(match);
-  }
-
-  # find which result its tolerance is valid
-  valids <- (match[, "valid"] == TRUE) %=>% as.logical %=>% which;
-
-  if (length(valids) == 0) {
-	# no result
-	min <- NA;
-  } else if (length(valids) > 1) {
-	# get the min tolerance result
-	# if exists multiple valid result, then it means all of their
-	# error is under the cutoff
-	# So get the min error one as the result.
-	min <- match[, "error"] %=>% as.numeric %=>% which.min;
-  } else {
-	# get the unique result
-	min <- valids;
-  }
-
-  if (min %=>% IsNothing) {
-	msg <- "No precursor_type: [mass=%s, m/z=%s] charge=%s(%s) with tolerance=%s";
-	msg <- sprintf(msg,
-		mass, precursorMZ,
-		charge, chargeMode,
-		tolerance(0, 0)$describ
-	);
-	warning(msg);
-	NA;
-  } else {
-	min <- match[min, ];
-	
-	if (debug.echo) {
-		printf("  ==> %s\n", min[["Name"]]);
-	}
-
-	# we found it!
-	min[["Name"]];
-  }
 }

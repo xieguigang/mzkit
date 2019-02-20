@@ -40,6 +40,13 @@ Construct a \code{precursor_type} model
 Calculate the molecule mass from precursor adduct ion m/z
 }
 \details{
+This helper function returns a list, with members:
+   \enumerate{
+      \item \code{mz} Calculate mass \code{m/z} value with given adduct and charge values.
+      \item \code{mass} Calculate mass value from given \code{m/z} with given adduct and charge, etc.
+      \item \code{new} Create a new mass and \code{m/z} calculator from given adduct info
+   }
+
+Evaluate adducts text to molecular weight.
 Calculate m/z
 }
-

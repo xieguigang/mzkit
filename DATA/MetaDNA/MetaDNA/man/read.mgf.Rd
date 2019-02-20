@@ -12,4 +12,3 @@ Returns a list of mgf ions that parsed from the given mgf spectrum data file.
 \description{
 Read a given mgf file
 }
-
