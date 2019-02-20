@@ -89,6 +89,9 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
     # data/metaDNA_kegg.rda
     xLoad("metaDNA_kegg.rda");
 
+    print("KEGG compound match with tolerance:");
+    print(tolerance);
+
     kegg_id.col <- meta.KEGG$kegg_id;
     meta.KEGG <- meta.KEGG$data;
     match.kegg <- kegg.match.handler(
@@ -117,7 +120,7 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
 
         # if the partner id is in the skip list
         # then it will be replaced as string "NA"
-        partners = sapply(partners, function(id) {
+        partners <- sapply(partners, function(id) {
           if (id %in% kegg_id.skips) {
             "NA";
           } else {
@@ -166,10 +169,11 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
 #'
 #' @param unknown.mz This mz parameter is a \code{m/z} vector from the
 #'         \code{unknown$peaktable}
-#' @param precursor_type precursor type that using for calculate m/z from
-#'         KEGG metabolite mass value.
+#' @param precursor_type precursor type that using for calculate
+#'         \code{m/z} from KEGG metabolite mass value.
 #'
 #' @return Returns the index vector in \code{unknown.mz} vector.
+#'
 kegg.match.handler <- function(meta.KEGG, unknown.mz,
                                precursor_type = "[M+H]+",
                                kegg_id = "KEGG",
