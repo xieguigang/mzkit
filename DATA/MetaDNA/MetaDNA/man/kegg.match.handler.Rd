@@ -11,8 +11,8 @@ kegg.match.handler(meta.KEGG, unknown.mz, precursor_type = "[M+H]+",
 \item{unknown.mz}{This mz parameter is a \code{m/z} vector from the
 \code{unknown$peaktable}}
 
-\item{precursor_type}{precursor type that using for calculate m/z from
-KEGG metabolite mass value.}
+\item{precursor_type}{precursor type that using for calculate
+\code{m/z} from KEGG metabolite mass value.}
 }
 \value{
 Returns the index vector in \code{unknown.mz} vector.
