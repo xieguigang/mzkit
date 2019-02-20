@@ -80,6 +80,8 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
                     score.cutoff = 0.8,
                     kegg_id.skips = NULL) {
 
+    cat("\n\n\n");
+
     # 1. Find all of the related KEGG compound by KEGG reaction link for
     #    identify metabolites
     # 2. Search for unknown by using ms1 precursor_m/z compare with the
@@ -89,6 +91,8 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
     # data/metaDNA_kegg.rda
     xLoad("metaDNA_kegg.rda");
 
+    print(" [metaDNA] pipline....");
+    cat("\n\n");
     print("KEGG compound match with tolerance:");
     print(tolerance);
 
