@@ -9,6 +9,7 @@ Namespace NCBI.PubChem
         ''' Search pubchem by CAS
         ''' </summary>
         Const queryCAS_URL As String = "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/%s/cids/JSON"
+        Const fetchPugView As String = "https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/data/compound/%s/XML/"
 
         Public Function QueryCAS(CAS As String) As IdentifierList
             Dim url As String = sprintf(queryCAS_URL, CAS)
@@ -17,8 +18,11 @@ Namespace NCBI.PubChem
             Return list
         End Function
 
-        Public Function PugView(cid As String)
+        Public Function PugView(cid As String) As PugView
+            Dim url As String = sprintf(fetchPugView, cid)
+            Dim view As PugView = url.GET.LoadXml(Of PugView)
 
+            Return view
         End Function
     End Module
 
