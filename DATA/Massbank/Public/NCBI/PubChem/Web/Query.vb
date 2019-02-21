@@ -17,6 +17,9 @@ Namespace NCBI.PubChem
             Return list
         End Function
 
+        Public Function PugView(cid As String)
+
+        End Function
     End Module
 
     Public Class QueryResponse
