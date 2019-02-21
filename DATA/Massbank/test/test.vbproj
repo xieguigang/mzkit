@@ -142,10 +142,6 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\KEGG_canvas\bio-core\Bio.Assembly\Bio.Assembly.vbproj">
-      <Project>{c699d311-9923-4c19-bf70-5048d0e2cf5d}</Project>
-      <Name>Bio.Assembly</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Massbank.vbproj">
       <Project>{a686bdf5-077f-47f5-a8dd-c73e6e88363c}</Project>
       <Name>Massbank</Name>
