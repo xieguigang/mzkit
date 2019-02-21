@@ -2,7 +2,7 @@
 
 Namespace NCBI.PubChem
 
-    <XmlType("Record", [Namespace]:="http://pubchem.ncbi.nlm.nih.gov/pug_view")>
+    <XmlRoot("Record", [Namespace]:="http://pubchem.ncbi.nlm.nih.gov/pug_view")>
     Public Class PugView
 
         Public Property RecordType As String
@@ -25,6 +25,7 @@ Namespace NCBI.PubChem
         Public Property TOCHeading As String
         Public Property Description As String
         Public Property HintGroupSubsectionsByReference As Boolean
+        Public Property HintEmbeddedHTML As Boolean
         <XmlElement("Information")>
         Public Property Information As Information()
         <XmlElement("Section")>
@@ -42,9 +43,14 @@ Namespace NCBI.PubChem
         Public Property URL As String
         Public Property ExternalDataURL As String
         Public Property ExternalDataMimeType As String
+        <XmlElement("StringValueList")>
+        Public Property StringValueList As String()
+        Public Property DateValue As String
     End Class
 
     Public Class Table
+
+        Public Property ExternalTableName As String
 
         <XmlElement("ColumnName")>
         Public Property ColumnNames As String()
