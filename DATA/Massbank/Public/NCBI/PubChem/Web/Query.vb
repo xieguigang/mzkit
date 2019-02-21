@@ -31,7 +31,7 @@ Namespace NCBI.PubChem
 
         Public Function PugView(cid As String) As PugView
             Dim url As String = sprintf(fetchPugView, cid)
-            Dim view As PugView = url.GET.LoadXml(Of PugView)
+            Dim view As PugView = url.GET.LoadFromXml(Of PugView)
 
             Return view
         End Function

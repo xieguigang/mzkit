@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Record
+    xmlns="http://pubchem.ncbi.nlm.nih.gov/pug_view"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema-instance"
+    xs:schemaLocation="http://pubchem.ncbi.nlm.nih.gov/pug_view https://pubchem.ncbi.nlm.nih.gov/pug_view/pug_view.xsd"
+>
+  <RecordType>CID</RecordType>
+  <RecordNumber>16213065</RecordNumber>
+  <Section>
+    <TOCHeading>2D Structure</TOCHeading>
+    <Description>A two-dimensional representation of the compound</Description>
+    <Information>
+      <ReferenceNumber>3</ReferenceNumber>
+      <Name>2D Structure</Name>
+      <BoolValue>true</BoolValue>
+    </Information>
+  </Section>
+  <Section>
+    <TOCHeading>3D Conformer</TOCHeading>
+    <Description>A three-dimensional representation of the compound. The 3D structure is not experimentally determined, but computed by PubChem. More detailed information on this conformer model is described in the &lt;a href=&quot;http://www.springeropen.com/collections/PubChem3D&quot;&gt;PubChem3D thematic series &lt;/a&gt; published in the Journal of Cheminformatics. &lt;a href=&quot;https://pubchem.ncbi.nlm.nih.gov/docs/subcmpd_summary_page_help.html#3DConformer&quot;&gt;Read more...&lt;/a&gt;</Description>
+    <Information>
+      <ReferenceNumber>3</ReferenceNumber>
+      <Name>3D Conformer of Parent</Name>
+      <Description>Fisetin</Description>
+      <NumValue>5281614</NumValue>
+    </Information>
+  </Section>
+  <Section>
+    <TOCHeading>Names and Identifiers</TOCHeading>
+    <Description>Record identifiers, synonyms, chemical names, descriptors, etc.  &lt;a href=&quot;https://pubchem.ncbi.nlm.nih.gov/docs/subcmpd_summary_page_help.html#Identification&quot;&gt;Read more...&lt;/a&gt;</Description>
+    <Section>
+      <TOCHeading>Record Title</TOCHeading>
+      <Description>Primary Identifying Name</Description>
+      <Information>
+        <ReferenceNumber>3</ReferenceNumber>
+        <Name>Record Title</Name>
+        <StringValue>GYHFUROKCOMWNQ-UHFFFAOYSA-N</StringValue>
+      </Information>
+    </Section>
+    <Section>
+      <TOCHeading>Computed Descriptors</TOCHeading>
+      <Description>Descriptors generated from chemical structure input</Description>
+      <Section>
+        <TOCHeading>IUPAC Name</TOCHeading>
+        <Description>Chemical name computed from chemical structure that uses International Union of Pure and Applied Chemistry (IUPAC) nomenclature standards.  &lt;a href=&quot;http://old.iupac.org/publications/books/seriestitles/nomenclature.html&quot;&gt;Read more..&lt;/a&gt; </Description>
+        <Information>
+          <ReferenceNumber>3</ReferenceNumber>
+          <Name>IUPAC Name</Name>
+          <StringValue>2-(3,4-dihydroxyphenyl)-3,7-dihydroxychromen-4-one;hydrate</StringValue>
+        </Information>
+      </Section>
+      <Section>
+        <TOCHeading>InChI</TOCHeading>
+        <Description>International Chemical Identifier (InChI) computed from chemical structure using the International Union of Pure and Applied Chemistry (IUPAC) standard. &lt;a href=&quot;http://www.iupac.org/home/publications/e-resources/inchi.html&quot;&gt;Read more..&lt;/a&gt;</Description>
+        <Information>
+          <ReferenceNumber>3</ReferenceNumber>
+          <Name>InChI</Name>
+          <StringValue>InChI=1S/C15H10O6.H2O/c16-8-2-3-9-12(6-8)21-15(14(20)13(9)19)7-1-4-10(17)11(18)5-7;/h1-6,16-18,20H;1H2</StringValue>
+        </Information>
+      </Section>
+      <Section>
+        <TOCHeading>InChI Key</TOCHeading>
+        <Description>International Chemical Identifier hash (InChIKey) computed from chemical structure using the International Union of Pure and Applied Chemistry (IUPAC) standard. &lt;a href=&quot;http://www.iupac.org/home/publications/e-resources/inchi.html&quot;&gt;Read more..&lt;/a&gt;</Description>
+        <Information>
+          <ReferenceNumber>3</ReferenceNumber>
+          <Name>InChI Key</Name>
+          <StringValue>GYHFUROKCOMWNQ-UHFFFAOYSA-N</StringValue>
+        </Information>
+      </Section>
+      <Section>
+        <TOCHeading>Canonical SMILES</TOCHeading>
+        <Description>Simplified Molecular-Input Line-Entry System (SMILES) computed from chemical structure devoid of isotopic and stereochemical information.  &lt;a href=&quot;http://www.daylight.com/dayhtml/doc/theory/theory.smiles.html&quot;&gt;Read more..&lt;/a&gt;</Description>
+        <Information>
+          <ReferenceNumber>3</ReferenceNumber>
+          <Name>Canonical SMILES</Name>
+          <StringValue>C1=CC(=C(C=C1C2=C(C(=O)C3=C(O2)C=C(C=C3)O)O)O)O.O</StringValue>
+        </Information>
+      </Section>
+    </Section>
+    <Section>
+      <TOCHeading>Molecular Formula</TOCHeading>
+      <Description>A chemical formula is a way of expressing information about the proportions of atoms that constitute a particular chemical compound, using a single line of chemical element symbols and numbers. PubChem uses the Hill system whereby the number of carbon atoms in a molecule is indicated first, the number of hydrogen atoms second, and then the number of all other chemical elements in alphabetical order. When the formula contains no carbon, all the elements, including hydrogen, are listed alphabetically. Sources other than PubChem may include a variant of the formula that is more structural or natural to chemists, for example &quot;H2SO4&quot; for sulfuric acid, rather than the Hill version &quot;H2O4S.&quot;</Description>
+      <Information>
+        <ReferenceNumber>3</ReferenceNumber>
+        <Name>Molecular Formula</Name>
+        <StringValue>C15H12O7</StringValue>
+      </Information>
+    </Section>
+    <Section>
+      <TOCHeading>Other Identifiers</TOCHeading>
+      <Description>Important identifiers assigned to this chemical substance by authoritative organizations</Description>
+      <Section>
+        <TOCHeading>CAS</TOCHeading>
+        <Description>A proprietary registry number assigned by the Chemical Abstracts Service (CAS) division of the American Chemical Society (ACS) often used to help describe chemical ingredients.  &lt;a href=&quot;http://en.wikipedia.org/wiki/CAS_Registry_Number&quot;&gt;Read more..&lt;/a&gt;</Description>
+        <Information>
+          <ReferenceNumber>1</ReferenceNumber>
+          <Name>CAS</Name>
+          <StringValue>345909-34-4</StringValue>
+        </Information>
+      </Section>
+    </Section>
+    <Section>
+      <TOCHeading>Synonyms</TOCHeading>
+      <Description>Alternative names for this PubChem Compound record.  A compound can have many different names.  For example, acetone (CH3C(=O)CH3) is also known as propanone, propan-2-one, or dimethyl ketone.  The brand name of a product is commonly used to indicate the primary chemical ingredient(s) in the product (e.g., Tylenol, a common pain killer, is often used for acetaminophen, its active ingredient).  Another example of common synonyms is record identifiers used in different data collections, such as Chemical Abstract Service (CAS) registry numbers, FDA UNII (Unique Ingredient Identifiers), and many others.  All these various names and identifiers that designate this compound are organized under the Synonyms section.  &lt;a href=&quot;https://pubchem.ncbi.nlm.nih.gov/docs/subcmpd_summary_page_help.html#DataProcessingSynonyms&quot;&gt;Read more...&lt;/a&gt;</Description>
+      <Section>
+        <TOCHeading>Depositor-Supplied Synonyms</TOCHeading>
+        <Description>Chemical names and identifiers provided by individual data contributors and associated to PubChem Substance records. Synonyms of Substances corresponding to a PubChem Compound record are combined.  [&lt;a href=&quot;https://pubchemblog.ncbi.nlm.nih.gov/2014/06/19/what-is-the-difference-between-a-substance-and-a-compound-in-pubchem/&quot;&gt;Read this blog&lt;/a&gt; on the difference between Compound and Substance records in PubChem.]  Some contributed names may be considered erroneous and suppressed.  &lt;a href=&quot;https://pubchem.ncbi.nlm.nih.gov/docs/subcmpd_summary_page_help.html#SynonymsFiltered&quot;&gt;Read more...&lt;/a&gt;</Description>
+        <HintEmbeddedHTML>false</HintEmbeddedHTML>
+        <Information>
+          <ReferenceNumber>3</ReferenceNumber>
+          <Name>Depositor-Supplied Synonyms</Name>
+          <StringValueList>Fisetin hydrate</StringValueList>
+          <StringValueList>2-(3,4-Dihydroxyphenyl)-3,7-dihydroxy-4H-chromen-4-one hydrate</StringValueList>
+          <StringValueList>1174865-69-0</StringValueList>
+          <StringValueList>345909-34-4</StringValueList>
+          <StringValueList>Fisetin hydrate(1:x)</StringValueList>
+          <StringValueList>AK167438</StringValueList>
+          <StringValueList>Fisetin, &gt;=98%</StringValueList>
+          <StringValueList>SCHEMBL4263659</StringValueList>
+          <StringValueList>CTK8F1065</StringValueList>
+          <StringValueList>KS-00000SWA</StringValueList>
+          <StringValueList>DTXSID10583773</StringValueList>
+          <StringValueList>MolPort-003-933-790</StringValueList>
+          <StringValueList>AKOS024386387</StringValueList>
+          <StringValueList>DS-9512</StringValueList>
+          <StringValueList>3,7,3&apos;,4&apos;-Tetrahydroxy flavone hydrate</StringValueList>
+          <StringValueList>AK601668</StringValueList>
+          <StringValueList>ST055650</StringValueList>
+          <StringValueList>RT-012717</StringValueList>
+          <StringValueList>Y2032</StringValueList>
+          <StringValueList>A829279</StringValueList>
+          <StringValueList>2-(3,4-dihydroxyphenyl)-3,7-dihydroxychromen-4-one, hydrate</StringValueList>
+          <StringValueList>2-(3,4-dihydroxyphenyl)-3,7-dihydroxy-1-benzopyran-4-one hydrate</StringValueList>
+          <StringValueList>2-[3,4-bis(oxidanyl)phenyl]-3,7-bis(oxidanyl)chromen-4-one hydrate</StringValueList>
+          <StringValueList>2-(3,4-Dihydroxyphenyl)-3,7-dihydroxy-4H-1-benzopyran-4-one--water (1/1)</StringValueList>
+          <StringValueList>3,3 inverted exclamation marka,4 inverted exclamation marka,7-Tetra-hydroxy-flavone</StringValueList>
+        </Information>
+      </Section>
+      <Section>
+        <TOCHeading>Removed Synonyms</TOCHeading>
+        <Description>Potentially erroneous chemical names and identifiers provided by PubChem Substance records for the same chemical structure that were removed by name/structure consistency filtering.  &lt;a href=&quot;https://pubchem.ncbi.nlm.nih.gov/docs/subcmpd_summary_page_help.html#SynonymsUnfiltered&quot;&gt;Read more...&lt;/a&gt;</Description>
+        <HintEmbeddedHTML>false</HintEmbeddedHTML>
+        <Information>
+          <ReferenceNumber>3</ReferenceNumber>
+          <Name>Removed Synonyms</Name>
+          <StringValueList>Fisetin</StringValueList>
+          <StringValueList>5-Deoxyquercetin</StringValueList>
+          <StringValueList>Natural Brown 1</StringValueList>
+          <StringValueList>C15H12O7</StringValueList>
+          <StringValueList>528-48-3</StringValueList>
+        </Information>
+      </Section>
+    </Section>
+    <Section>
+      <TOCHeading>Create Date</TOCHeading>
+      <Description>Date the compound record was initially added to PubChem</Description>
+      <Information>
+        <ReferenceNumber>3</ReferenceNumber>
+        <Name>Create Date</Name>
+        <DateValue>2007-07-12</DateValue>
+      </Information>
+    </Section>
+    <Section>
+      <TOCHeading>Modify Date</TOCHeading>
+      <Description>Date this record was last updated in PubChem</Description>
+      <Information>
+        <ReferenceNumber>3</ReferenceNumber>
+        <Name>Modify Date</Name>
+        <DateValue>2019-02-16</DateValue>
+      </Information>
+    </Section>
+  </Section>
+  <Section>
+    <TOCHeading>Chemical and Physical Properties</TOCHeading>
+    <Description>Chemical and physical properties such as melting point, molecular weight, etc.</Description>
+    <Section>
+      <TOCHeading>Computed Properties</TOCHeading>
+      <Description>Properties computed automatically from the given chemical structure</Description>
+      <Information>
+        <ReferenceNumber>3</ReferenceNumber>
+        <Name>Computed Properties</Name>
+        <Table>
+          <ColumnName>Property Name</ColumnName>
+          <ColumnName>Property Value</ColumnName>
+          <Row>
+            <Cell>
+              <StringValue>Molecular Weight</StringValue>
+            </Cell>
+            <Cell>
+              <NumValue>304.254</NumValue>
+              <ValueUnit>g/mol</ValueUnit>
+            </Cell>
+          </Row>
+          <Row>
+            <Cell>
+              <StringValue>Hydrogen Bond Donor Count</StringValue>
+            </Cell>
+            <Cell>
+              <NumValue>5</NumValue>
+            </Cell>
+          </Row>
+          <Row>
+            <Cell>
+              <StringValue>Hydrogen Bond Acceptor Count</StringValue>
+            </Cell>
+            <Cell>
+              <NumValue>7</NumValue>
+            </Cell>
+          </Row>
+          <Row>
+            <Cell>
+              <StringValue>Rotatable Bond Count</StringValue>
+            </Cell>
+            <Cell>
+              <NumValue>1</NumValue>
+            </Cell>
+          </Row>
+          <Row>
+            <Cell>
+              <StringValue>Complexity</StringValue>
+            </Cell>
+            <Cell>
+              <NumValue>459</NumValue>
+            </Cell>
+          </Row>
+          <Row>
+            <Cell>
+              <StringValue>Topological Polar Surface Area</StringValue>
+            </Cell>
+            <Cell>
+              <NumValue>108</NumValue>
+              <ValueUnit>A^2</ValueUnit>
+            </Cell>
+          </Row>
+          <Row>
+            <Cell>
+              <StringValue>Monoisotopic Mass</StringValue>
+            </Cell>
+            <Cell>
+              <NumValue>304.058</NumValue>
+              <ValueUnit>g/mol</ValueUnit>
+            </Cell>
+          </Row>
+          <Row>
+            <Cell>
+              <StringValue>Exact Mass</StringValue>
+            </Cell>
+            <Cell>
+              <NumValue>304.058</NumValue>
+              <ValueUnit>g/mol</ValueUnit>
+            </Cell>
+          </Row>
+          <Row>
+            <Cell>
+              <StringValue>Compound Is Canonicalized</StringValue>
+            </Cell>
+            <Cell>
+              <BoolValue>true</BoolValue>
+            </Cell>
+          </Row>
+          <Row>
+            <Cell>
+              <StringValue>Formal Charge</StringValue>
+            </Cell>
+            <Cell>
+              <NumValue>0</NumValue>
+            </Cell>
+          </Row>
+          <Row>
+            <Cell>
+              <StringValue>Heavy Atom Count</StringValue>
+            </Cell>
+            <Cell>
+              <NumValue>22</NumValue>
+            </Cell>
+          </Row>
+          <Row>
+            <Cell>
+              <StringValue>Defined Atom Stereocenter Count</StringValue>
+            </Cell>
+            <Cell>
+              <NumValue>0</NumValue>
+            </Cell>
+          </Row>
+          <Row>
+            <Cell>
+              <StringValue>Undefined Atom Stereocenter Count</StringValue>
+            </Cell>
+            <Cell>
+              <NumValue>0</NumValue>
+            </Cell>
+          </Row>
+          <Row>
+            <Cell>
+              <StringValue>Defined Bond Stereocenter Count</StringValue>
+            </Cell>
+            <Cell>
+              <NumValue>0</NumValue>
+            </Cell>
+          </Row>
+          <Row>
+            <Cell>
+              <StringValue>Undefined Bond Stereocenter Count</StringValue>
+            </Cell>
+            <Cell>
+              <NumValue>0</NumValue>
+            </Cell>
+          </Row>
+          <Row>
+            <Cell>
+              <StringValue>Isotope Atom Count</StringValue>
+            </Cell>
+            <Cell>
+              <NumValue>0</NumValue>
+            </Cell>
+          </Row>
+          <Row>
+            <Cell>
+              <StringValue>Covalently-Bonded Unit Count</StringValue>
+            </Cell>
+            <Cell>
+              <NumValue>2</NumValue>
+            </Cell>
+          </Row>
+        </Table>
+      </Information>
+    </Section>
+  </Section>
+  <Section>
+    <TOCHeading>Related Records</TOCHeading>
+    <Description>Related compounds/substances information based on the similar structure, annotations, etc.</Description>
+    <Section>
+      <TOCHeading>Related Compounds with Annotation</TOCHeading>
+      <Description>The subset of compounds that are related to the one currently displayed AND that have biomedical annotations. &lt;a href=&quot;https://pubchem.ncbi.nlm.nih.gov/docs/subcmpd_summary_page_help.html#RelatedRecords&quot;&gt;Read more..&lt;/a&gt;</Description>
+      <Information>
+        <ReferenceNumber>3</ReferenceNumber>
+        <Name>Related Compounds with Annotation</Name>
+        <BoolValue>true</BoolValue>
+      </Information>
+    </Section>
+    <Section>
+      <TOCHeading>Parent Compound</TOCHeading>
+      <Description>A parent is conceptually the &quot;important&quot; part of the molecule when the molecule has more than one covalent component. &lt;a href=&quot;https://pubchem.ncbi.nlm.nih.gov/docs/subcmpd_summary_page_help.html#LinksCompoundsParentCompound&quot;&gt;Read more..&lt;/a&gt;</Description>
+      <Information>
+        <ReferenceNumber>3</ReferenceNumber>
+        <Name>Parent Compound</Name>
+        <Description>Fisetin</Description>
+        <URL>https://pubchem.ncbi.nlm.nih.gov/compound/5281614</URL>
+        <NumValue>5281614</NumValue>
+      </Information>
+    </Section>
+    <Section>
+      <TOCHeading>Related Compounds</TOCHeading>
+      <Description>Compound records closely associated to this record. &lt;a href=&quot;https://pubchem.ncbi.nlm.nih.gov/docs/subcmpd_summary_page_help.html#RelatedRecords&quot;&gt;Read more..&lt;/a&gt;</Description>
+      <Information>
+        <ReferenceNumber>3</ReferenceNumber>
+        <Name>Same Parent, Connectivity Count</Name>
+        <URL>https://www.ncbi.nlm.nih.gov/pccompound?cmd=Link&amp;LinkName=pccompound_pccompound_parent_connectivity_pulldown&amp;from_uid=16213065</URL>
+        <NumValue>12</NumValue>
+      </Information>
+      <Information>
+        <ReferenceNumber>3</ReferenceNumber>
+        <Name>Same Parent, Exact Count</Name>
+        <URL>https://www.ncbi.nlm.nih.gov/pccompound?cmd=Link&amp;LinkName=pccompound_pccompound_parent_pulldown&amp;from_uid=16213065</URL>
+        <NumValue>11</NumValue>
+      </Information>
+      <Information>
+        <ReferenceNumber>3</ReferenceNumber>
+        <Name>Mixtures, Components, and Neutralized Forms Count</Name>
+        <URL>https://www.ncbi.nlm.nih.gov/pccompound?cmd=Link&amp;LinkName=pccompound_pccompound_mixture&amp;from_uid=16213065</URL>
+        <NumValue>2</NumValue>
+      </Information>
+      <Information>
+        <ReferenceNumber>3</ReferenceNumber>
+        <Name>Similar Compounds Count</Name>
+        <URL>https://www.ncbi.nlm.nih.gov/pccompound?cmd=Link&amp;LinkName=pccompound_pccompound&amp;from_uid=16213065</URL>
+        <NumValue>5360</NumValue>
+      </Information>
+    </Section>
+    <Section>
+      <TOCHeading>Substances</TOCHeading>
+      <Description>Substance records linked to this compound.</Description>
+      <Section>
+        <TOCHeading>Related Substances</TOCHeading>
+        <Description>Substances identical or nearly identical to this record.  &lt;a href=&quot;https://pubchem.ncbi.nlm.nih.gov/docs/subcmpd_summary_page_help.html#RelatedRecords&quot;&gt;Read more..&lt;/a&gt;</Description>
+        <Information>
+          <ReferenceNumber>3</ReferenceNumber>
+          <Name>Same Count</Name>
+          <URL>https://www.ncbi.nlm.nih.gov/pcsubstance/?term=16213065[StandardizedCID]</URL>
+          <NumValue>41</NumValue>
+        </Information>
+      </Section>
+      <Section>
+        <TOCHeading>Substances by Category</TOCHeading>
+        <Description>Substance category according to the depositors. Substance Categorization Classification - The subheaders in this section of a PubChem Compound record reflect the various categories of depositors that have submitted corresponding PubChem Substance records. This allows you to quickly find the corresponding PubChem Substance records that are likely to contain a given type of information, such as Chemical Reactions. &lt;a href=&quot;https://pubchem.ncbi.nlm.nih.gov/docs/subcmpd_summary_page_help.html#Classification&quot;&gt;Read more..&lt;/a&gt;</Description>
+        <Information>
+          <ReferenceNumber>3</ReferenceNumber>
+          <Name>Substances by Category</Name>
+          <StringValueList>Chemical Vendors</StringValueList>
+          <StringValueList>Curation Efforts</StringValueList>
+          <StringValueList>Governmental Organizations</StringValueList>
+          <StringValueList>Journal Publishers</StringValueList>
+          <StringValueList>Legacy Depositors</StringValueList>
+          <StringValueList>Research and Development</StringValueList>
+          <StringValueList>Subscription Services</StringValueList>
+        </Information>
+      </Section>
+    </Section>
+  </Section>
+  <Section>
+    <TOCHeading>Chemical Vendors</TOCHeading>
+    <Description>A list of chemical vendors that sell this compound.  Each vendor may have multiple products containing the same chemical, but different in various aspects, such as amount and purity.  For each product, the external identifier used to locate the product on the vendor&apos;s website is provided under the Purcharsable Chemical column, and clicking this identifier directs you to the vendor&apos;s website.  The information on the product provided by the vendor to PubChem can be accessed at the Summary page of the corresponding PubChem Substance ID (SID).  Note that the order of chemical vendors on the list is randomized, and that PubChem do not endorse any of the vendors.</Description>
+    <Information>
+      <ReferenceNumber>3</ReferenceNumber>
+      <Name>Chemical Vendors</Name>
+      <BoolValue>true</BoolValue>
+    </Information>
+  </Section>
+  <Section>
+    <TOCHeading>Literature</TOCHeading>
+    <Description>Literature citation references mainly refers to regular publications such as journal articles, etc. &lt;a href=&quot;https://pubchem.ncbi.nlm.nih.gov/docs/subcmpd_summary_page_help.html#Literature&quot;&gt;Scrollable table that lists all PubMed Citations associated with the chemical structure. Read more..&lt;/a&gt;</Description>
+    <Section>
+      <TOCHeading>Springer Nature References</TOCHeading>
+      <Description>Literature references related to scientific contents from Springer Nature journals and books. These references have been ranked automatically by an algorithm which calculates the relevance for each substance in a Springer Nature document. It is based on: 1. the TF-IDF, adapted to chemical structures, 2. location information in the text (e.g. title, abstract, keywords), and 3. the document size.  Springer Nature aims to provide only high qualitative and relevant content but references of lower relevance aren&apos;t withheld as they might contain also very useful information</Description>
+      <Information>
+        <ReferenceNumber>2</ReferenceNumber>
+        <Name>Springer Nature References</Name>
+        <Table>
+          <ColumnName>Title</ColumnName>
+          <ColumnName>Journal/Book</ColumnName>
+          <ColumnName>PMID</ColumnName>
+          <ColumnName>Open Access</ColumnName>
+          <ColumnName>Year</ColumnName>
+          <ExternalTableName>springernature</ExternalTableName>
+        </Table>
+      </Information>
+    </Section>
+    <Section>
+      <TOCHeading>Chemical Co-Occurrences in Literature</TOCHeading>
+      <Description>Chemical co-occurrences in literature highlight chemicals that are found mentioned together in scientific articles.  This may suggest an important relationship exists between the two chemicals.  The lists of chemicals are ordered by count of publications with co-occurrences.  The publications are prioritized such that the most relevant mentions appear at the top.  Please note that this content is generated by text-mining algorithms (i.e., it is not human curated).  It is possible that the algorithms get fooled such that a co-occurrence may be happenstance or a casual mention.</Description>
+      <Information>
+        <ReferenceNumber>3</ReferenceNumber>
+        <Name>Chemical Co-Occurrences in Literature</Name>
+        <BoolValue>true</BoolValue>
+      </Information>
+    </Section>
+    <Section>
+      <TOCHeading>Chemical-Disease Co-Occurrences in Literature</TOCHeading>
+      <Description>Chemical-disease co-occurrences in literature highlight chemical-disease pairs that are found mentioned together in scientific articles.  This may suggest an important relationship exists between the two.  The lists of diseases are ordered by count of publications with co-occurrences.  The publications are prioritized such that the most relevant mentions appear at the top.  Please note that this content is generated by text-mining algorithms (i.e., it is not human curated).  It is possible that the algorithms get fooled such that a co-occurrence may be happenstance or a casual mention.</Description>
+      <Information>
+        <ReferenceNumber>3</ReferenceNumber>
+        <Name>Chemical-Disease Co-Occurrences in Literature</Name>
+        <BoolValue>true</BoolValue>
+      </Information>
+    </Section>
+    <Section>
+      <TOCHeading>Chemical-Gene Co-Occurrences in Literature</TOCHeading>
+      <Description>Chemical-gene co-occurrences in literature highlight chemical-gene pairs that are found mentioned together in scientific articles.  This may suggest an important relationship exists between the two.  The lists of genes are ordered by count of publications with co-occurrences.  The publications are prioritized such that the most relevant mentions appear at the top.  Please note that this content is generated by text-mining algorithms (i.e., it is not human curated).  It is possible that the algorithms get fooled such that a co-occurrence may be happenstance or a casual mention.</Description>
+      <Information>
+        <ReferenceNumber>3</ReferenceNumber>
+        <Name>Chemical-Gene Co-Occurrences in Literature</Name>
+        <BoolValue>true</BoolValue>
+      </Information>
+    </Section>
+  </Section>
+  <Section>
+    <TOCHeading>Patents</TOCHeading>
+    <Description>A PubChem summary page displays Patent information when available for the given molecule. &lt;a href=&quot;https://pubchem.ncbi.nlm.nih.gov/docs/subcmpd_summary_page_help.html#Patents&quot;&gt;Read more..&lt;/a&gt;</Description>
+    <Section>
+      <TOCHeading>Depositor-Supplied Patent Identifiers</TOCHeading>
+      <Description>Patent identifiers and more information provided by depositors in form of a widget.</Description>
+      <Information>
+        <ReferenceNumber>3</ReferenceNumber>
+        <Name>Depositor-Supplied Patent Identifiers</Name>
+        <Table>
+          <ExternalTableName>patent</ExternalTableName>
+        </Table>
+      </Information>
+    </Section>
+  </Section>
+  <Section>
+    <TOCHeading>Classification</TOCHeading>
+    <Description>Classification systems from MeSH, ChEBI, Kegg, etc. &lt;a href=&quot;https://pubchem.ncbi.nlm.nih.gov/docs/subcmpd_summary_page_help.html#Classification&quot;&gt;Read more..&lt;/a&gt;</Description>
+    <Section>
+      <TOCHeading>Ontologies</TOCHeading>
+      <Description>Ontologies</Description>
+      <Section>
+        <TOCHeading>WIPO IPC</TOCHeading>
+        <Description>WIPO IPC tree</Description>
+        <Information>
+          <ReferenceNumber>4</ReferenceNumber>
+          <Name>HID</Name>
+          <URL>https://pubchem.ncbi.nlm.nih.gov/classification/#hid=58</URL>
+          <NumValue>58</NumValue>
+        </Information>
+      </Section>
+    </Section>
+  </Section>
+  <Reference>
+    <ReferenceNumber>1</ReferenceNumber>
+    <SourceName>EPA DSStox</SourceName>
+    <SourceID>DTXSID10583773</SourceID>
+    <Name>2-(3,4-Dihydroxyphenyl)-3,7-dihydroxy-4H-1-benzopyran-4-one--water (1/1)</Name>
+    <Description>DSSTox provides a high quality public chemistry resource for supporting improved predictive toxicology.</Description>
+    <URL>https://comptox.epa.gov/dashboard/dsstoxdb/results?search=DTXSID10583773</URL>
+  </Reference>
+  <Reference>
+    <ReferenceNumber>2</ReferenceNumber>
+    <SourceName>Springer Nature</SourceName>
+    <SourceID>22052883-304295398</SourceID>
+    <Description>Literature references related to scientific contents from Springer Nature journals and books. https://link.springer.com/</Description>
+    <URL>https://pubchem.ncbi.nlm.nih.gov/substance/341286951</URL>
+  </Reference>
+  <Reference>
+    <ReferenceNumber>3</ReferenceNumber>
+    <SourceName>PubChem</SourceName>
+    <SourceID>PubChem</SourceID>
+    <Description>Data deposited in or computed by PubChem</Description>
+    <URL>https://pubchem.ncbi.nlm.nih.gov</URL>
+  </Reference>
+  <Reference>
+    <ReferenceNumber>4</ReferenceNumber>
+    <SourceName>WIPO</SourceName>
+    <SourceID>IPC</SourceID>
+    <Name>International Patent Classification</Name>
+    <Description>The World Intellectual Property Organization (WIPO) International Patent Classification (IPC), established by the Strasbourg Agreement 1971, provides for a hierarchical system of language independent symbols for the classification of patents and utility models according to the different areas of technology to which they pertain.</Description>
+    <URL>http://www.wipo.int/classifications/ipc/</URL>
+  </Reference>
+</Record>
