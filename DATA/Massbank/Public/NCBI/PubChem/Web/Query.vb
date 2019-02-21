@@ -18,6 +18,17 @@ Namespace NCBI.PubChem
             Return list
         End Function
 
+        Public Function QueryPugViews(CAS As String) As Dictionary(Of String, PugView)
+            Dim list As IdentifierList = QueryCAS(CAS)
+            Dim table As New Dictionary(Of String, PugView)
+
+            For Each cid As String In list.CID
+                table(cid) = PugView(cid)
+            Next
+
+            Return table
+        End Function
+
         Public Function PugView(cid As String) As PugView
             Dim url As String = sprintf(fetchPugView, cid)
             Dim view As PugView = url.GET.LoadXml(Of PugView)
