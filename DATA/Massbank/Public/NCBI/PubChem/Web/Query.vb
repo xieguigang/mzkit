@@ -18,20 +18,28 @@ Namespace NCBI.PubChem
             Return list
         End Function
 
-        Public Function QueryPugViews(CAS As String) As Dictionary(Of String, PugView)
+        Public Function QueryPugViews(CAS As String) As Dictionary(Of String, PugViewRecord)
+            Dim cache = $"./pubchem_cache/{CAS}.json"
+
+            If cache.FileLength > 0 Then
+                Return cache.LoadJsonFile(Of Dictionary(Of String, PugViewRecord))
+            End If
+
             Dim list As IdentifierList = QueryCAS(CAS)
-            Dim table As New Dictionary(Of String, PugView)
+            Dim table As New Dictionary(Of String, PugViewRecord)
 
             For Each cid As String In list.CID
                 table(cid) = PugView(cid)
             Next
 
+            Call table.GetJson.SaveTo(cache)
+
             Return table
         End Function
 
-        Public Function PugView(cid As String) As PugView
+        Public Function PugView(cid As String) As PugViewRecord
             Dim url As String = sprintf(fetchPugView, cid)
-            Dim view As PugView = url.GET.LoadFromXml(Of PugView)
+            Dim view As PugViewRecord = url.GET.LoadFromXml(Of PugViewRecord)
 
             Return view
         End Function
