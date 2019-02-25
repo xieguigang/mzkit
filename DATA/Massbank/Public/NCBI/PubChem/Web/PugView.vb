@@ -15,5 +15,9 @@ Namespace NCBI.PubChem
         Public Function GetMetaInfo() As MetaInfo
 
         End Function
+
+        Public Overrides Function ToString() As String
+            Return RecordNumber
+        End Function
     End Class
 End Namespace
