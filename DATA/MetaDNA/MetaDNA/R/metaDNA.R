@@ -433,6 +433,19 @@ align_best.internal <- function(ref, peak, ms2.align, score.cutoff = 0.8) {
     candidate <- NULL;
     ms2.name <- list();
 
+	# Error in `colnames<-`(`*tmp*`, value = c("ProductMz", "LibraryIntensity")) :
+    #  attempt to set 'colnames' on an object with less than two dimensions
+	if (is.null(nrow(ref))) {
+		# 2019-2-26
+		#
+		# R language have a bug about matrix subset: matrix subset with only one row 
+		# will transform as vector automatic.
+		# This will cause all of the matrix operation failure. 
+		#
+		# using rbind to fix this bug.
+		ref <- rbind(ref);
+	}
+	
     colnames(ref) <- c("ProductMz", "LibraryIntensity");
 
     # loop each unknown for alignment best result
