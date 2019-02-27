@@ -76,7 +76,7 @@ Imports("Microsoft.VisualBasic.Language");
 #'
 metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
                     precursor_type = "[M+H]+",
-                    tolerance = tolerance.ppm(20),
+                    tolerance = assert.deltaMass(0.3),
                     score.cutoff = 0.8,
                     kegg_id.skips = NULL) {
 
@@ -119,7 +119,7 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
     # kegg_id.skips
     filter.skips <- function(partners) {
       if (partners %=>% IsNothing) {
-        return(NULL);
+        NULL;
       } else {
 
         # if the partner id is in the skip list
@@ -149,23 +149,21 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
         # reaction related partner compounds
         # Skip current identify metabolite.
         if (partners %=>% IsNothing) {
-            return(NULL);
+            NULL;
         } else {
-            # printf(" -> %s", identified$KEGG);
-        }
+            # Each metaDNA.impl result is a list that identify of
+			# unknowns
 
-        # Each metaDNA.impl result is a list that identify of
-        # unknowns
-
-        # KEGG.partners, identify.ms2, unknown, ms2.align, unknow.matches
-        metaDNA.impl(
-          KEGG.partners = partners,
-          identify.ms2 = ms2,
-          unknown = unknown,
-          ms2.align = ms2.align,
-          unknow.matches = match.kegg,
-          score.cutoff = score.cutoff
-        );
+			# KEGG.partners, identify.ms2, unknown, ms2.align, unknow.matches
+			metaDNA.impl(
+			  KEGG.partners = partners,
+			  identify.ms2 = ms2,
+			  unknown = unknown,
+			  ms2.align = ms2.align,
+			  unknow.matches = match.kegg,
+			  score.cutoff = score.cutoff
+			);
+        }        
     });
 }
 
@@ -181,7 +179,7 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
 kegg.match.handler <- function(meta.KEGG, unknown.mz,
                                precursor_type = "[M+H]+",
                                kegg_id = "KEGG",
-                               tolerance = tolerance.ppm(20)) {
+                               tolerance = assert.deltaMass(0.3)) {
 
     kegg.mass <- meta.KEGG[, "exact_mass"] %=>% as.numeric;
     kegg.ids <- meta.KEGG[, kegg_id] %=>% as.character;
@@ -218,7 +216,7 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
             query <- lapply(1:length(mz), function(i) {
                 # unknown metabolite ms1 m/z match
                 # kegg mz with a given tolerance
-                if (tolerance(ms1, mz[i])$valid) {
+                if (tolerance(ms1, mz[i])) {
                     # If these two m/z value meet the tolerance condition
                     # then we match a possible KEGG annotation data.
                     # also returns with ppm value
