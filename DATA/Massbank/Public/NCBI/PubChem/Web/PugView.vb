@@ -5,25 +5,13 @@ Imports MetaInfo = SMRUCC.MassSpectrum.DATA.MetaLib.MetaLib
 Namespace NCBI.PubChem
 
     <XmlRoot("Record", [Namespace]:="http://pubchem.ncbi.nlm.nih.gov/pug_view")>
-    Public Class PugViewRecord
+    Public Class PugViewRecord : Inherits InformationSection
 
         Public Property RecordType As String
         Public Property RecordNumber As String
 
-        <XmlElement("Section")>
-        Public Property Sections As Section()
-            Get
-                Return sectionTable.Values.ToArray
-            End Get
-            Set(value As Section())
-                sectionTable = value.ToDictionary(Function(sec) sec.TOCHeading)
-            End Set
-        End Property
-
         <XmlElement(NameOf(Reference))>
         Public Property Reference As Reference()
-
-        Dim sectionTable As Dictionary(Of String, Section)
 
         Public Function GetMetaInfo() As MetaInfo
             Dim identifier = sectionTable.TryGetValue("Names and Identifiers")
@@ -31,6 +19,7 @@ Namespace NCBI.PubChem
             Dim SMILES = sectionTable.TryGetValue("Canonical SMILES")
             Dim InChIKey = sectionTable.TryGetValue("InChI Key")
             Dim InChI = sectionTable.TryGetValue("InChI")
+            Dim CAS = identifier.Sections
             Dim xref As New MetaLib.xref With {
                 .InChI = InChI.GetInformationString("InChI")
             }

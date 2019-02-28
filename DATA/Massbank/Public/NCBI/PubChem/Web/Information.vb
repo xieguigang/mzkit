@@ -5,39 +5,6 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace NCBI.PubChem
 
-    Public Class Reference
-
-        Public Property ReferenceNumber As String
-        Public Property SourceName As String
-        Public Property SourceID As String
-        Public Property Name As String
-        Public Property URL As String
-        Public Property Description As String
-
-        Public Overrides Function ToString() As String
-            Return $"{Name} ({URL})"
-        End Function
-    End Class
-
-    Public Class Section
-
-        Public Property TOCHeading As String
-        Public Property Description As String
-        Public Property HintGroupSubsectionsByReference As Boolean
-        Public Property HintEmbeddedHTML As Boolean
-        Public Property HintShowAtMost As String
-        Public Property HintSortByLength As Boolean
-
-        <XmlElement("Information")>
-        Public Property Information As Information()
-        <XmlElement("Section")>
-        Public Property Sections As Section()
-
-        Public Overrides Function ToString() As String
-            Return $"[{TOCHeading}]  {Description}"
-        End Function
-    End Class
-
     Public Class Information
 
         Public Property ReferenceNumber As String
@@ -118,5 +85,19 @@ Namespace NCBI.PubChem
         <XmlElement("Cell")>
         Public Property Cells As Information()
 
+    End Class
+
+    Public Class Reference
+
+        Public Property ReferenceNumber As String
+        Public Property SourceName As String
+        Public Property SourceID As String
+        Public Property Name As String
+        Public Property URL As String
+        Public Property Description As String
+
+        Public Overrides Function ToString() As String
+            Return $"{Name} ({URL})"
+        End Function
     End Class
 End Namespace
