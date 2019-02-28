@@ -4,9 +4,9 @@
 \alias{metaDNA}
 \title{Identify unknown metabolite by metaDNA algorithm}
 \usage{
-metaDNA(identify, unknown, meta.KEGG, ms2.align,
-  precursor_type = "[M+H]+", tolerance = tolerance.ppm(20),
-  score.cutoff = 0.8, kegg_id.skips = NULL)
+metaDNA(identify, unknown, meta.KEGG, ms2.align, precursor_type = "[M+H]+",
+  tolerance = assert.deltaMass(0.3), score.cutoff = 0.8,
+  kegg_id.skips = NULL)
 }
 \arguments{
 \item{identify}{A \code{list} object with two members
@@ -67,3 +67,4 @@ Algorithm implementation and details see: \code{\link{metaDNA.impl}}.
         xxx xxx\cr
     }
 }
+

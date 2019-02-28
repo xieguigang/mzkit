@@ -5,7 +5,7 @@
 \title{Match unknown by mass}
 \usage{
 kegg.match.handler(meta.KEGG, unknown.mz, precursor_type = "[M+H]+",
-  kegg_id = "KEGG", tolerance = tolerance.ppm(20))
+  kegg_id = "KEGG", tolerance = assert.deltaMass(0.3))
 }
 \arguments{
 \item{unknown.mz}{This mz parameter is a \code{m/z} vector from the
@@ -20,3 +20,4 @@ Returns the index vector in \code{unknown.mz} vector.
 \description{
 Match unknown by mass
 }
+
