@@ -75,7 +75,7 @@ Imports("Microsoft.VisualBasic.Language");
 #'     }
 #'
 metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
-                    precursor_type = "[M+H]+",
+                    precursor_type = c("[M+H]+", "[M]+"),
                     tolerance = assert.deltaMass(0.3),
                     score.cutoff = 0.8,
                     kegg_id.skips = NULL) {
@@ -179,14 +179,18 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
 #' @return Returns the index vector in \code{unknown.mz} vector.
 #'
 kegg.match.handler <- function(meta.KEGG, unknown.mz,
-                               precursor_type = "[M+H]+",
+                               precursor_type = c("[M+H]+", "[M]+"),
                                kegg_id = "KEGG",
                                tolerance = assert.deltaMass(0.3)) {
 
 	mode <- getPolarity(precursor_type);
+	
+	print("m/z will be calculate from these precursor types:");
+	print(cbind(precursor_type, mode));
+	
     kegg.mass <- meta.KEGG[, "exact_mass"] %=>% as.numeric;
     kegg.ids <- meta.KEGG[, kegg_id] %=>% as.character;
-    kegg.mz <- get.PrecursorMZ(kegg.mass, precursor_type, mode);
+    kegg.mz <- get.PrecursorMZ(kegg.mass, precursor_type, mode[1]);
     kegg.list <- meta.KEGG %=>% .as.list;
 
     # identify kegg partners

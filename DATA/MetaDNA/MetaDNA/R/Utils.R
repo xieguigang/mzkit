@@ -148,26 +148,59 @@ get.PrecursorMZ.Auto <- function(M, precursorType) {
     get.PrecursorMZ(M, precursorType, mode = getPolarity(precursorType));
 }
 
+#' Calculate m/z with given charge mode
+#'
+#' @param mode The ion charge mode, if the \code{precursorType} is multiple length,
+#'       then this mode parameter should be the same length as the \code{precursorType}.
+#'
+#' @return If \code{precursorType} just have one element, then this function will 
+#'      returns a numeric vector. 
+#'      If this parameter \code{precursorType} contains multiple type names, then this 
+#'      function will returns a list object with member name is the \code{precursorType}
+#'      member value is the corresponding \code{m/z} vector
 get.PrecursorMZ <- function(M, precursorType, mode) {
-    mode        <- Calculator[[mode]];
-    precursorMZ <- -1;
-
-    # calc <- mode[[precursorType]];
-    for (name in names(mode)) {
-
-        calc <- mode[[name]];
-
-        if (precursorType == calc$Name) {
-            precursorMZ <- calc$cal.mz(M);
-            break;
-        }
-    }
-
-    if ((length(precursorMZ) == 1 && precursorMZ == -1) || ((precursorMZ == -1) %=>% all)) {
-        warnMsg <- "\"%s\" is not found... Precursor m/z is set to -1.";
-        warnMsg <- sprintf(warnMsg, precursorType);
-        warning(warnMsg);
-    }
+	mzVector <- function(precursorType, mode) {
+		types <- Calculator[[mode]];
+		loop <- lapply(types, function(calc) {
+			if (precursorType == calc$Name) {
+				calc$cal.mz(M);				
+			} else {
+				NULL;
+			}
+		});
+		loop <- loop[!is.null(loop)];
+		
+		if (length(loop) == 0) {
+			rep(1, length(M));
+		} else {
+			loop[[1]];
+		}
+	}
+	notFound.warn <- function(mz, precursorType) {
+		if ((mz == -1) %=>% all) {
+			warnMsg <- "\"%s\" is not found... Precursor m/z is set to -1.";
+			warnMsg <- sprintf(warnMsg, precursorType);
+			warning(warnMsg);			
+		}
+		
+		invisible(NULL);
+	}
+	
+	if (length(precursorType) == 1) {
+		precursorMZ <- mzVector(precursorType, mode);
+		#' test and warn
+		notFound.warn(precursorMZ, precursorType);	
+	} else {
+		precursorMZ <- lapply(1:length(precursorType), function(i) {
+			mzVector(precursorType[i], mode[i]);
+		});
+		names(precursorMZ) <- precursorType;
+		
+		lapply(names(precursorMZ), function(type) {
+			#' test and warn
+			notFound.warn(precursorMZ[[type]], type);	
+		});
+	}
 
     precursorMZ;
 }
