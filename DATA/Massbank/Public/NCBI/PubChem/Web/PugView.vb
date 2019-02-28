@@ -15,11 +15,16 @@ Namespace NCBI.PubChem
 
         Public Function GetMetaInfo() As MetaInfo
             Dim identifier = Me("Names and Identifiers")
-            Dim formula = Me("Molecular Formula")
-            Dim SMILES = Me("Canonical SMILES")
-            Dim InChIKey = Me("InChI Key")
-            Dim InChI = Me("InChI")
+            Dim formula = identifier("Molecular Formula")
+            Dim SMILES = identifier("Canonical SMILES").GetInformationString("Canonical SMILES")
+            Dim InChIKey = identifier("InChI Key").GetInformationString("InChI Key")
+            Dim InChI = identifier("InChI")
             Dim CAS = identifier("CAS")
+            Dim computedProperties = Me _
+                ("Chemical and Physical Properties") _
+                ("Computed Properties").GetInformationTable _
+                ("Computed Properties")
+            Dim properties = Table.ToDictionary(computedProperties)
             Dim xref As New MetaLib.xref With {
                 .InChI = InChI.GetInformationString("InChI"),
                 .CAS = CAS.GetInformationString("CAS"),
@@ -33,7 +38,8 @@ Namespace NCBI.PubChem
                 .name = identifier _
                     .Sections _
                     .FirstOrDefault(Function(s) s.TOCHeading = "Record Title") _
-                    .GetInformationString("Record Title")
+                    .GetInformationString("Record Title"),
+                .mass = ParseDouble(properties("Exact Mass").Value)
             }
         End Function
 

@@ -19,7 +19,7 @@ Namespace NCBI.PubChem
         <XmlElement("StringValueList")>
         Public Property StringValueList As String()
         Public Property DateValue As String
-
+        Public Property Table As Table
         Public Property URL As String
         Public Property ExternalDataURL As String
         Public Property ExternalDataMimeType As String
