@@ -198,9 +198,7 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
 
         # Get kegg m/z for a given kegg_id set
         kegg_id <- as.index(kegg_id);
-        mzi <- sapply(kegg.ids, function(id) {
-            kegg_id(id);
-        }) %=>% as.logical;
+        mzi <- sapply(kegg.ids, kegg_id) %=>% as.logical;
         # Get corresponding kegg mz and annotation meta data
         mz <- kegg.mz[mzi];
         kegg <- kegg.list[mzi];
