@@ -14,11 +14,11 @@ Namespace NCBI.PubChem
         Public Property Reference As Reference()
 
         Public Function GetMetaInfo() As MetaInfo
-            Dim identifier = sectionTable.TryGetValue("Names and Identifiers")
-            Dim formula = sectionTable.TryGetValue("Molecular Formula")
-            Dim SMILES = sectionTable.TryGetValue("Canonical SMILES")
-            Dim InChIKey = sectionTable.TryGetValue("InChI Key")
-            Dim InChI = sectionTable.TryGetValue("InChI")
+            Dim identifier = Me("Names and Identifiers")
+            Dim formula = Me("Molecular Formula")
+            Dim SMILES = Me("Canonical SMILES")
+            Dim InChIKey = Me("InChI Key")
+            Dim InChI = Me("InChI")
             Dim CAS = identifier.Sections
             Dim xref As New MetaLib.xref With {
                 .InChI = InChI.GetInformationString("InChI")
