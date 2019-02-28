@@ -159,16 +159,16 @@ get.PrecursorMZ.Auto <- function(M, precursorType) {
 #'      function will returns a list object with member name is the \code{precursorType}
 #'      member value is the corresponding \code{m/z} vector
 get.PrecursorMZ <- function(M, precursorType, mode) {
-	mzVector <- function(precursorType, mode) {
+	mzVector <- function(type, mode) {
 		types <- Calculator[[mode]];
 		loop <- lapply(types, function(calc) {
-			if (precursorType == calc$Name) {
+			if (type == calc$Name) {
 				calc$cal.mz(M);				
 			} else {
 				NULL;
 			}
 		});
-		loop <- loop[!is.null(loop)];
+		loop <- loop[!sapply(loop, is.null)];
 		
 		if (length(loop) == 0) {
 			rep(1, length(M));

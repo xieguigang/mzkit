@@ -4,8 +4,8 @@
 \alias{metaDNA}
 \title{Identify unknown metabolite by metaDNA algorithm}
 \usage{
-metaDNA(identify, unknown, meta.KEGG, ms2.align, precursor_type = "[M+H]+",
-  tolerance = assert.deltaMass(0.3), score.cutoff = 0.8,
+metaDNA(identify, unknown, meta.KEGG, ms2.align, precursor_type = c("[M+H]+",
+  "[M]+"), tolerance = assert.deltaMass(0.3), score.cutoff = 0.8,
   kegg_id.skips = NULL)
 }
 \arguments{
