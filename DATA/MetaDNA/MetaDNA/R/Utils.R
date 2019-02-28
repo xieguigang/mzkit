@@ -139,11 +139,16 @@ get.mass <- function(chargeMode, PrecursorType) {
 #' @description Calculate \code{m/z} for mass by given precursor type
 #'
 #' @param M Molecule mass
-#'
+#' @param precursorType Charge mode was parsed from this parameter string, 
+#'      it is convenient, but inefficient when in batch mode.
+#' 
 #' @return -1 means target precursor type is not found.
 #'
-get.PrecursorMZ <- function(M, precursorType) {
-    mode        <- getPolarity(precursorType);
+get.PrecursorMZ.Auto <- function(M, precursorType) {
+    get.PrecursorMZ(M, precursorType, mode = getPolarity(precursorType));
+}
+
+get.PrecursorMZ <- function(M, precursorType, mode) {
     mode        <- Calculator[[mode]];
     precursorMZ <- -1;
 
@@ -153,7 +158,7 @@ get.PrecursorMZ <- function(M, precursorType) {
         calc <- mode[[name]];
 
         if (precursorType == calc$Name) {
-            precursorMZ   <- calc$cal.mz(M);
+            precursorMZ <- calc$cal.mz(M);
             break;
         }
     }
@@ -166,4 +171,3 @@ get.PrecursorMZ <- function(M, precursorType) {
 
     precursorMZ;
 }
-
