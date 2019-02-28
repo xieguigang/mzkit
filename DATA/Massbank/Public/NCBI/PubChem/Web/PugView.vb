@@ -19,9 +19,12 @@ Namespace NCBI.PubChem
             Dim SMILES = Me("Canonical SMILES")
             Dim InChIKey = Me("InChI Key")
             Dim InChI = Me("InChI")
-            Dim CAS = identifier.Sections
+            Dim CAS = identifier("CAS")
             Dim xref As New MetaLib.xref With {
-                .InChI = InChI.GetInformationString("InChI")
+                .InChI = InChI.GetInformationString("InChI"),
+                .CAS = CAS.GetInformationString("CAS"),
+                .InChIkey = InChIKey,
+                .pubchem = RecordNumber
             }
 
             Return New MetaInfo With {

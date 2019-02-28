@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -77,6 +78,30 @@ Namespace NCBI.PubChem
         Public Property ColumnNames As String()
         <XmlElement("Row")>
         Public Property Rows As Row()
+
+        Public Shared Function ToDictionary(table As Table) As Dictionary(Of NamedValue(Of String))
+            If table.ColumnNames.Length > 2 Then
+                Call $"Target table is not a key-value pair! (columns={table.ColumnNames.Length} > 2)".Warning
+            End If
+
+            Return table.Rows _
+                .Select(Function(r)
+                            Return New NamedValue(Of String) With {
+                                .Name = r.Cells(0).StringValue,
+                                .Value = Scripting.ToString(r.Cells(1).InfoValue),
+                                .Description = r.Cells(1).ValueUnit
+                            }
+                        End Function) _
+                .ToDictionary
+        End Function
+
+        Public Overrides Function ToString() As String
+            If ColumnNames.IsNullOrEmpty Then
+                Return ExternalTableName
+            Else
+                Return ColumnNames.GetJson
+            End If
+        End Function
 
     End Class
 
