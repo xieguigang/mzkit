@@ -205,7 +205,8 @@ positive <- function() {
     pos$"2M+K"	         <- .addKey("[2M+K]+",           charge = 1, M = 2, adducts = "2M+K"          ); # 2M + 38.963158	    1+	2.00	38.963158	1745.624938	1713.676842
     pos$"2M+ACN+H"	     <- .addKey("[2M+ACN+H]+",       charge = 1, M = 2, adducts = "2M+ACN+H"      ); # 2M + 42.033823	    1+	2.00	42.033823	1748.695603	1710.606177
     pos$"2M+ACN+Na"	     <- .addKey("[2M+ACN+Na]+",      charge = 1, M = 2, adducts = "2M+ACN+Na"     ); # 2M + 64.015765	    1+	2.00	64.015765	1770.677545	1688.624235
-
+	pos$"M"              <- .addKey("[M]+",              charge = 1, M = 1, adducts = 0);
+	
     pos;
 }
 
@@ -232,6 +233,7 @@ negative <- function() {
     neg$"2M+FA-H"	     <- .addKey("[2M+FA-H]-",        charge = -1, M = 2, adducts = "2M+FA-H" ); # 2M  +  44.998201	 1-	2.00	44.998201	1751.659981	1707.641799
     neg$"2M+Hac-H"	     <- .addKey("[2M+Hac-H]-",       charge = -1, M = 2, adducts = "2M+Hac-H"); # 2M  +  59.013851	 1-	2.00	59.013851	1765.675631	1693.626149
     neg$"3M-H"	         <- .addKey("[3M-H]-",           charge = -1, M = 3, adducts = "3M-H"    ); # 3M  -   1.007276	 1-	3.00	1.007276	2560.999946	2627.952724
-
+	neg$"M"              <- .addKey("[M]-",              charge = -1, M = 1, adducts = 0);
+	
     neg;
 }
