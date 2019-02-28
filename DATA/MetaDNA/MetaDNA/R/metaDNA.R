@@ -190,53 +190,68 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
 	
     kegg.mass <- meta.KEGG[, "exact_mass"] %=>% as.numeric;
     kegg.ids <- meta.KEGG[, kegg_id] %=>% as.character;
-    kegg.mz <- get.PrecursorMZ(kegg.mass, precursor_type, mode[1]);
+    kegg.mz <- get.PrecursorMZ(kegg.mass, precursor_type, mode);
     kegg.list <- meta.KEGG %=>% .as.list;
 
-    # identify kegg partners
-    #   => kegg m/z
-    #   => unknown mz with tolerance
-    #   => unknown index
-    #   => unknown peak and ms2 for align
     function(kegg_id) {
-
-        # Get kegg m/z for a given kegg_id set
-        kegg_id <- as.index(kegg_id);
-        mzi <- sapply(kegg.ids, kegg_id) %=>% as.logical;
-        # Get corresponding kegg mz and annotation meta data
-        mz <- kegg.mz[mzi];
-        kegg <- kegg.list[mzi];
-		mz.index <- 1:length(mz);
-
-		unknown.query_impl <- function(ms1, j) {
-		    query <- lapply(mz.index, function(i) {
-                # unknown metabolite ms1 m/z match
-                # kegg mz with a given tolerance
-                if (tolerance(ms1, mz[i])) {
-                    # If these two m/z value meet the tolerance condition
-                    # then we match a possible KEGG annotation data.
-                    # also returns with ppm value
-                    list(kegg = kegg[[i]], ppm = PPM(ms1, mz[i]));
-                } else {
-                    NULL;
-                }
-            });
-
-            # removes all null result
-            nulls <- sapply(query, is.null) %=>% unlist;
-            query <- query[!nulls];
-
-            if (length(query) == 0) {
-                NULL;
-            } else {
-				if (length(query) > 1 && is.null(names(query))) {
-					# returns with min ppm?
-					min_ppm.i <- sapply(query, function(q) q$ppm) %=>% which.min;
-					query <- query[min_ppm.i];
+		out <- list();
+		i <- 1;
+		list <- lapply(precursor_type, function(type) {
+			mz <- kegg.mz[[type]];
+			kegg.match(kegg_id, kegg.mass, kegg.ids, kegg.mz, kegg.list, type, tolerance);
+		});
+		
+		for(hits in list) {
+			if (!is.null(hits)) {
+				for(kegg in hits) {
+					out[[i]] <- kegg;
+					i = i + 1;
 				}
+			}
+		}
+		
+		names(out) <- as.character(1:length(out));
+		out;
+    }
+}
 
-				query <- query[[1]];
+# identify kegg partners
+#   => kegg m/z
+#   => unknown mz with tolerance
+#   => unknown index
+#   => unknown peak and ms2 for align
+kegg.match <- function(kegg_id, kegg.mass, kegg.ids, kegg.mz, kegg.list, precursor_type, tolerance) {
 
+	# Get kegg m/z for a given kegg_id set
+	kegg_id <- as.index(kegg_id);
+	mzi <- sapply(kegg.ids, kegg_id) %=>% as.logical;
+	# Get corresponding kegg mz and annotation meta data
+	mz <- kegg.mz[mzi];
+	kegg <- kegg.list[mzi];
+	mz.index <- 1:length(mz);
+
+	unknown.query_impl <- function(ms1, j) {
+		query <- lapply(mz.index, function(i) {
+			# unknown metabolite ms1 m/z match
+			# kegg mz with a given tolerance
+			if (tolerance(ms1, mz[i])) {
+				# If these two m/z value meet the tolerance condition
+				# then we match a possible KEGG annotation data.
+				# also returns with ppm value
+				list(kegg = kegg[[i]], ppm = PPM(ms1, mz[i]));
+			} else {
+				NULL;
+			}
+		});
+
+		# removes all null result
+		nulls <- sapply(query, is.null) %=>% unlist;
+		query <- query[!nulls];
+
+		if (length(query) == 0) {
+			NULL;
+		} else {
+			lapply(query, function(hit) {
 				list(
 					unknown.index = j,
 					unknown.mz = ms1,
@@ -245,31 +260,48 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
 					# current unknown metabolite could have
 					# multiple kegg annotation result, based on the ms1
 					# tolerance.
-					kegg = query$kegg,
-					ppm = query$ppm
-				);			
+					kegg = hit$kegg,
+					ppm = hit$ppm
+				);	
+			});		
+		}
+	}
+	
+	# Loop on each unknown metabolite ms1 m/z
+	# And using this m/z for match kegg m/z to
+	# get possible kegg meta annotation data.
+	unknown.query <- sapply(1:length(unknown.mz), function(j) {
+		ms1 <- unknown.mz[j];
+
+		# 2018-7-8 why NA value happened???
+		if (is.na(ms1)) {
+			NULL;
+		} else {
+			unknown.query_impl(ms1, j);
+		}
+	});
+
+	# removes null result
+	# Get null index and then removes null subset
+	nulls <- sapply(unknown.query, is.null) %=>% unlist;
+	unknown.query <- unknown.query[!nulls];
+	
+	if (length(unknown.query) == 0) {
+		NULL;
+	} else {
+		out <- list();
+		i <- 1;
+		
+		for(query in unknown.query) {
+			for(hit in query) {
+				out[[i]] <- hit;
+				i = i + 1;
 			}
 		}
 		
-        # Loop on each unknown metabolite ms1 m/z
-        # And using this m/z for match kegg m/z to
-        # get possible kegg meta annotation data.
-        unknown.query <- sapply(1:length(unknown.mz), function(j) {
-            ms1 <- unknown.mz[j];
-
-		    # 2018-7-8 why NA value happened???
-		    if (is.na(ms1)) {
-			    NULL;
-		    } else {
-				unknown.query_impl(ms1, j);
-			}
-        });
-
-        # removes null result
-        # Get null index and then removes null subset
-        nulls <- sapply(unknown.query, is.null) %=>% unlist;
-        unknown.query[!nulls];
-    }
+		names(out) <- as.character(1:length(out));
+		out;
+	}	
 }
 
 #' Find kegg reaction partner
@@ -347,6 +379,8 @@ metaDNA.impl <- function(KEGG.partners, identify.ms2,
 
     # Current set of KEGG.partners which comes from the identify KEGG metabolite
     # can have multiple unknown metabolite match result
+	#
+	# precursor_type list();
     unknown.query <- KEGG.partners %=>% unknow.matches;
 
     if (IsNothing(unknown.query)) {
@@ -463,26 +497,41 @@ align_best.internal <- function(ref, peak, ms2.align, score.cutoff = 0.8) {
     colnames(ref) <- c("ProductMz", "LibraryIntensity");
 
     # loop each unknown for alignment best result
-    for (fileName in names(peak)) {
-        file <- peak[[fileName]];
-
-        for (scan in names(file)) {
-            unknown <- file[[scan]];
-            align.scores <- ms2.align(unknown, ref);
-
-            if (mean(align.scores) > best.score) {
-                best.score <- mean(align.scores);
-                score <- align.scores;
-                candidate <- unknown;
-                ms2.name <- list(
-                    file = fileName,
-                    scan = scan
-                );
-            }
-        }
-    }
-
-    if (!IsNothing(score) && all(score >= score.cutoff)) {
+	align <- lapply(names(peak), function(fileName) {
+		file <- peak[[fileName]];
+		lapply(names(file), function(scan) {
+			unknown <- file[[scan]];
+			align.scores <- ms2.align(unknown, ref);
+			ms2.name <- list(
+				file = fileName,
+				scan = scan
+            );			
+			
+			if (all(align.scores >= score.cutoff)) {
+				list(score = align.scores, ms2.name = ms2.name, candidate = unknown);
+			} else {
+				NULL;
+			}		
+		});
+	});
+	
+	for(file in align) {
+		for(scan in file) {
+			if (!is.null(scan)) {
+				x <- scan$score;
+				test <- mean(x);
+				
+				if (test > best.score) {
+					score <- x;
+					best.score <- test;					
+					candidate <- scan$candidate;
+					ms2.name <- scan$ms2.name;
+				}
+			}
+		}
+	}
+	
+    if (!IsNothing(score)) {
         list(ref = ref,
              candidate = candidate,
              score = score,
