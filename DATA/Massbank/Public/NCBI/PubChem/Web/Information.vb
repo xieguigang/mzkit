@@ -1,38 +1,10 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace NCBI.PubChem
-
-    Public Class Reference
-
-        Public Property ReferenceNumber As String
-        Public Property SourceName As String
-        Public Property SourceID As String
-        Public Property Name As String
-        Public Property URL As String
-
-        Public Overrides Function ToString() As String
-            Return $"{Name} ({URL})"
-        End Function
-    End Class
-
-    Public Class Section
-
-        Public Property TOCHeading As String
-        Public Property Description As String
-        Public Property HintGroupSubsectionsByReference As Boolean
-        Public Property HintEmbeddedHTML As Boolean
-        <XmlElement("Information")>
-        Public Property Information As Information()
-        <XmlElement("Section")>
-        Public Property Sections As Section()
-
-        Public Overrides Function ToString() As String
-            Return $"[{TOCHeading}]  {Description}"
-        End Function
-    End Class
 
     Public Class Information
 
@@ -47,7 +19,7 @@ Namespace NCBI.PubChem
         <XmlElement("StringValueList")>
         Public Property StringValueList As String()
         Public Property DateValue As String
-
+        Public Property Table As Table
         Public Property URL As String
         Public Property ExternalDataURL As String
         Public Property ExternalDataMimeType As String
@@ -107,6 +79,30 @@ Namespace NCBI.PubChem
         <XmlElement("Row")>
         Public Property Rows As Row()
 
+        Public Shared Function ToDictionary(table As Table) As Dictionary(Of NamedValue(Of String))
+            If table.ColumnNames.Length > 2 Then
+                Call $"Target table is not a key-value pair! (columns={table.ColumnNames.Length} > 2)".Warning
+            End If
+
+            Return table.Rows _
+                .Select(Function(r)
+                            Return New NamedValue(Of String) With {
+                                .Name = r.Cells(0).StringValue,
+                                .Value = Scripting.ToString(r.Cells(1).InfoValue),
+                                .Description = r.Cells(1).ValueUnit
+                            }
+                        End Function) _
+                .ToDictionary
+        End Function
+
+        Public Overrides Function ToString() As String
+            If ColumnNames.IsNullOrEmpty Then
+                Return ExternalTableName
+            Else
+                Return ColumnNames.GetJson
+            End If
+        End Function
+
     End Class
 
     Public Class Row
@@ -114,5 +110,19 @@ Namespace NCBI.PubChem
         <XmlElement("Cell")>
         Public Property Cells As Information()
 
+    End Class
+
+    Public Class Reference
+
+        Public Property ReferenceNumber As String
+        Public Property SourceName As String
+        Public Property SourceID As String
+        Public Property Name As String
+        Public Property URL As String
+        Public Property Description As String
+
+        Public Overrides Function ToString() As String
+            Return $"{Name} ({URL})"
+        End Function
     End Class
 End Namespace

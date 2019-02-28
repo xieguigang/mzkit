@@ -210,7 +210,9 @@
     <Compile Include="Public\MoNA\MoNAJson.vb" />
     <Compile Include="Public\NCBI\PubChem\MetaData.vb" />
     <Compile Include="Public\NCBI\PubChem\ImageFly.vb" />
-    <Compile Include="Public\NCBI\PubChem\Web\Components.vb" />
+    <Compile Include="Public\NCBI\PubChem\Web\InformationSection.vb" />
+    <Compile Include="Public\NCBI\PubChem\Web\Extensions.vb" />
+    <Compile Include="Public\NCBI\PubChem\Web\Information.vb" />
     <Compile Include="Public\NCBI\PubChem\Web\PugView.vb" />
     <Compile Include="Public\NCBI\PubChem\Web\Query.vb" />
     <Compile Include="Public\TMIC\FooDB\Food.vb" />
