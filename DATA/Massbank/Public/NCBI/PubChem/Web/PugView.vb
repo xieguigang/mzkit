@@ -19,6 +19,9 @@ Namespace NCBI.PubChem
             End Set
         End Property
 
+        <XmlElement(NameOf(Reference))>
+        Public Property Reference As Reference()
+
         Dim sectionTable As Dictionary(Of String, Section)
 
         Public Function GetMetaInfo() As MetaInfo

@@ -12,6 +12,7 @@ Namespace NCBI.PubChem
         Public Property SourceID As String
         Public Property Name As String
         Public Property URL As String
+        Public Property Description As String
 
         Public Overrides Function ToString() As String
             Return $"{Name} ({URL})"
@@ -24,6 +25,9 @@ Namespace NCBI.PubChem
         Public Property Description As String
         Public Property HintGroupSubsectionsByReference As Boolean
         Public Property HintEmbeddedHTML As Boolean
+        Public Property HintShowAtMost As String
+        Public Property HintSortByLength As Boolean
+
         <XmlElement("Information")>
         Public Property Information As Information()
         <XmlElement("Section")>
