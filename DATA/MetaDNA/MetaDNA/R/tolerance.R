@@ -90,10 +90,17 @@ tolerance <- function(threshold = 0.3, method = c("da", "ppm")) {
         stop(sprintf("Unknown tolerance method: '%s'.", method[1]));
     }
 
+    resolution <- if (is.low.resolution) {
+        "Low resolution";
+    } else {
+        "High resolution";
+    }
+
     list(
         threshold         = threshold,
         method            = method[1],
         assert            = assert,
-        is.low.resolution = is.low.resolution
+        is.low.resolution = is.low.resolution,
+        toString          = sprintf("%s m/z tolerance with threshold %s(%s).", threshold, method[1])
     );
 }
