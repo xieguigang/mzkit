@@ -314,9 +314,15 @@ kegg.match <- function(kegg_id, kegg.mass, kegg.ids, kegg.mz, kegg.list, precurs
 #' @return A kegg id vector which is related to the given \code{kegg_id}.
 #'
 kegg.partners <- function(kegg_id) {
-    sapply(network, function(reaction) {
-
-        if (kegg_id %in% reaction$reactants) {
+	# kegg_id list could be empty???
+	is_null <- IsNothing(kegg_id);	
+	
+    sapply(network, function(reaction) {	
+		# 2019-03-01
+		# fix for Error in if (kegg_id %in% reaction$reactants) { :
+		if (is_null) {
+			NULL;
+		} else if (kegg_id %in% reaction$reactants) {
             reaction$products;
         } else if (kegg_id %in% reaction$products) {
             reaction$reactants;
