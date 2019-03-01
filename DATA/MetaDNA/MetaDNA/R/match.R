@@ -1,3 +1,12 @@
+#Region "Microsoft.ROpen::ce830ddd7d84ada8fa3cd06162456015, match.R"
+
+    # Summaries:
+
+    # PrecursorType.Match <- function(mass, precursorMZ, charge,chargeMode= "+",tolerance = tolerance.deltaMass(0.3),debug.echo= TRUE) { if (tolerance %=>% is.numeric) {...
+    # .PrecursorType.MatchImpl <- function(mass, precursorMZ, charge,chargeMode, tolerance,debug.echo) {...
+    # match <- function(keyName) {...
+
+#End Region
 
 #' Match the precursor type
 #'
