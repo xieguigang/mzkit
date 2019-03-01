@@ -9,7 +9,7 @@ get.PrecursorMZ.Auto(M, precursorType)
 \arguments{
 \item{M}{Molecule mass}
 
-\item{precursorType}{Charge mode was parsed from this parameter string, 
+\item{precursorType}{Charge mode was parsed from this parameter string,
 it is convenient, but inefficient when in batch mode.}
 }
 \value{

@@ -54,7 +54,7 @@ assert.ppm <- function(ppm = 20) {
     function(a, b) PPM(a, b) <= ppm;
 }
 
-#' m/z tolerance helper
+#' \code{m/z} tolerance helper
 #'
 #' @return This function returns a list object with members:
 #'    \enumerate{

@@ -11,9 +11,9 @@ get.PrecursorMZ(M, precursorType, mode)
 then this mode parameter should be the same length as the \code{precursorType}.}
 }
 \value{
-If \code{precursorType} just have one element, then this function will 
-     returns a numeric vector. 
-     If this parameter \code{precursorType} contains multiple type names, then this 
+If \code{precursorType} just have one element, then this function will
+     returns a numeric vector.
+     If this parameter \code{precursorType} contains multiple type names, then this
      function will returns a list object with member name is the \code{precursorType}
      member value is the corresponding \code{m/z} vector
 test and warn
