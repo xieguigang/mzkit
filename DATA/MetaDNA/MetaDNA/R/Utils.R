@@ -27,62 +27,6 @@ Delete.EmptyKEGG <- function(dataframe, col.name = "KEGG") {
     dataframe[test, ];
 }
 
-#' Tolerance in Mass delta mode
-#'
-#' @param da The mass delta value. By default if two mass value which
-#'           their delta value is less than \code{0.3da}, then
-#'           the predicate will be true.
-#'
-#' @return Function returns a lambda function that can be using for
-#'         tolerance predication.
-#'
-tolerance.deltaMass <- function(da = 0.3) {
-    describ <- sprintf("%s(da)", da);
-
-    function(a, b) {
-        err  <- abs(a - b);
-        test <- err <= da;
-
-        list(error     = err,
-             valid     = test,
-             describ   = describ,
-             threshold = da
-        );
-    }
-}
-
-#' Tolerance in PPM mode
-#'
-#' @param ppm The mass ppm value. By default if two mass value which
-#'            their ppm delta value is less than \code{20ppm}, then
-#'            the predicate will be true.
-#'
-#' @return Function returns a lambda function that can be using for
-#'         tolerance predication.
-#'
-tolerance.ppm <- function(ppm = 20) {
-    describ <- sprintf("%s(ppm)", ppm);
-
-    function(a, b) {
-        err  <- PPM(a, b);
-        test <- err <= ppm;
-
-        list(error     = err,
-             valid     = test,
-             describ   = describ,
-             threshold = ppm
-        );
-    }
-}
-
-assert.deltaMass <- function(da = 0.3) {
-    function(a, b) abs(a-b) <= da;
-}
-
-assert.ppm <- function(ppm = 20) {
-    function(a, b) PPM(a, b) <= ppm;
-}
-
 #' PPM value between two mass value
 #'
 PPM <- function(measured, actualValue) {
@@ -137,9 +81,9 @@ get.mass <- function(chargeMode, PrecursorType) {
 #' @description Calculate \code{m/z} for mass by given precursor type
 #'
 #' @param M Molecule mass
-#' @param precursorType Charge mode was parsed from this parameter string, 
+#' @param precursorType Charge mode was parsed from this parameter string,
 #'      it is convenient, but inefficient when in batch mode.
-#' 
+#'
 #' @return -1 means target precursor type is not found.
 #'
 get.PrecursorMZ.Auto <- function(M, precursorType) {
@@ -151,9 +95,9 @@ get.PrecursorMZ.Auto <- function(M, precursorType) {
 #' @param mode The ion charge mode, if the \code{precursorType} is multiple length,
 #'       then this mode parameter should be the same length as the \code{precursorType}.
 #'
-#' @return If \code{precursorType} just have one element, then this function will 
-#'      returns a numeric vector. 
-#'      If this parameter \code{precursorType} contains multiple type names, then this 
+#' @return If \code{precursorType} just have one element, then this function will
+#'      returns a numeric vector.
+#'      If this parameter \code{precursorType} contains multiple type names, then this
 #'      function will returns a list object with member name is the \code{precursorType}
 #'      member value is the corresponding \code{m/z} vector
 get.PrecursorMZ <- function(M, precursorType, mode) {
@@ -161,13 +105,13 @@ get.PrecursorMZ <- function(M, precursorType, mode) {
 		types <- Calculator[[mode]];
 		loop <- lapply(types, function(calc) {
 			if (type == calc$Name) {
-				calc$cal.mz(M);				
+				calc$cal.mz(M);
 			} else {
 				NULL;
 			}
 		});
 		loop <- loop[!sapply(loop, is.null)];
-		
+
 		if (length(loop) == 0) {
 			rep(1, length(M));
 		} else {
@@ -178,25 +122,25 @@ get.PrecursorMZ <- function(M, precursorType, mode) {
 		if ((mz == -1) %=>% all) {
 			warnMsg <- "\"%s\" is not found... Precursor m/z is set to -1.";
 			warnMsg <- sprintf(warnMsg, precursorType);
-			warning(warnMsg);			
+			warning(warnMsg);
 		}
-		
+
 		invisible(NULL);
 	}
-	
+
 	if (length(precursorType) == 1) {
 		precursorMZ <- mzVector(precursorType, mode);
 		#' test and warn
-		notFound.warn(precursorMZ, precursorType);	
+		notFound.warn(precursorMZ, precursorType);
 	} else {
 		precursorMZ <- lapply(1:length(precursorType), function(i) {
 			mzVector(precursorType[i], mode[i]);
 		});
 		names(precursorMZ) <- precursorType;
-		
+
 		lapply(names(precursorMZ), function(type) {
 			#' test and warn
-			notFound.warn(precursorMZ[[type]], type);	
+			notFound.warn(precursorMZ[[type]], type);
 		});
 	}
 
