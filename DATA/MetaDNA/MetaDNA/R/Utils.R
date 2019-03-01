@@ -101,9 +101,7 @@ PPM <- function(measured, actualValue) {
 #' @param type The precursor type name, it should be in format like: \code{[M+H]+}.
 #'
 #' @return Function returns character \code{+} or \code{-}.
-getPolarity <- function(type) {
-    return(substr.Right(type, n=1));
-}
+getPolarity <- function(type) {substr.Right(type, n=1);}
 
 #' Get mass calculator
 #'
@@ -114,10 +112,9 @@ getPolarity <- function(type) {
 #'
 get.mass <- function(chargeMode, PrecursorType) {
     if (PrecursorType %in% c("[M]+", "[M]-")) {
-        return(function(x) x);
-    }
-
-    mode <- Calculator[[chargeMode]];
+        function(x) x;
+    } else {
+        mode <- Calculator[[chargeMode]];
     found <- mode[[PrecursorType]];
 
     if (found %=>% IsNothing) {
@@ -132,6 +129,7 @@ get.mass <- function(chargeMode, PrecursorType) {
     }
 
     found$calc;
+    }
 }
 
 #' Calculate m/z
