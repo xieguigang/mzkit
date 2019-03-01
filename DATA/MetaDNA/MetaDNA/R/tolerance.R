@@ -101,6 +101,6 @@ tolerance <- function(threshold = 0.3, method = c("da", "ppm")) {
         method            = method[1],
         assert            = assert,
         is.low.resolution = is.low.resolution,
-        toString          = sprintf("%s m/z tolerance with threshold %s(%s).", threshold, method[1])
+        toString          = sprintf("%s m/z tolerance with threshold %s(%s).", resolution, threshold, method[1])
     );
 }
