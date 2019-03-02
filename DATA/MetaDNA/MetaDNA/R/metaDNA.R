@@ -15,9 +15,9 @@
 
 require(VisualBasic.R);
 
-Imports("Microsoft.VisualBasic.Data");
-Imports("Microsoft.VisualBasic.Data.Linq");
-Imports("Microsoft.VisualBasic.Language");
+Imports(Microsoft.VisualBasic.Data);
+Imports(Microsoft.VisualBasic.Data.Linq);
+Imports(Microsoft.VisualBasic.Language);
 
 #' Identify unknown metabolite by metaDNA algorithm
 #'
@@ -118,7 +118,7 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
     }
 
 	kegg_id.skips <- as.index(kegg_id.skips);
-	
+
     # return the kegg id vector which is not in
     # kegg_id.skips
     filter.skips <- function(partners) {
@@ -147,7 +147,7 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
         # Get all of the kegg reaction partner metabolite id
         # for current identified kegg metabolite id
         partners <- identified$KEGG %=>% kegg.partners %=>% filter.skips;
-        
+
         # current identify metabolite KEGG id didnt found any
         # reaction related partner compounds
         # Skip current identify metabolite.
@@ -167,7 +167,7 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
 			  unknow.matches = match.kegg,
 			  score.cutoff = score.cutoff
 			);
-        }        
+        }
     });
 }
 
@@ -186,10 +186,10 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
                                tolerance = assert.deltaMass(0.3)) {
 
 	mode <- getPolarity(precursor_type);
-	
+
 	print("m/z will be calculate from these precursor types:");
 	print(cbind(precursor_type, mode));
-	
+
     kegg.mass <- meta.KEGG[, "exact_mass"] %=>% as.numeric;
     kegg.ids <- meta.KEGG[, kegg_id] %=>% as.character;
     kegg.mz <- get.PrecursorMZ(kegg.mass, precursor_type, mode);
@@ -200,9 +200,9 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
 		i <- 1;
 		list <- lapply(precursor_type, function(type) {
 			mz <- kegg.mz[[type]];
-			kegg.match(kegg_id, kegg.mass, kegg.ids, kegg.mz, kegg.list, type, tolerance);
+			kegg.match(kegg_id, kegg.mass, kegg.ids, kegg.mz, kegg.list, type, unknown.mz, tolerance);
 		});
-		
+
 		for(hits in list) {
 			if (!is.null(hits)) {
 				for(kegg in hits) {
@@ -211,7 +211,7 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
 				}
 			}
 		}
-		
+
 		names(out) <- as.character(1:length(out));
 		out;
     }
@@ -222,7 +222,7 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
 #   => unknown mz with tolerance
 #   => unknown index
 #   => unknown peak and ms2 for align
-kegg.match <- function(kegg_id, kegg.mass, kegg.ids, kegg.mz, kegg.list, precursor_type, tolerance) {
+kegg.match <- function(kegg_id, kegg.mass, kegg.ids, kegg.mz, kegg.list, precursor_type, unknown.mz, tolerance) {
 
 	# Get kegg m/z for a given kegg_id set
 	kegg_id <- as.index(kegg_id);
@@ -264,11 +264,11 @@ kegg.match <- function(kegg_id, kegg.mass, kegg.ids, kegg.mz, kegg.list, precurs
 					# tolerance.
 					kegg = hit$kegg,
 					ppm = hit$ppm
-				);	
-			});		
+				);
+			});
 		}
 	}
-	
+
 	# Loop on each unknown metabolite ms1 m/z
 	# And using this m/z for match kegg m/z to
 	# get possible kegg meta annotation data.
@@ -287,23 +287,23 @@ kegg.match <- function(kegg_id, kegg.mass, kegg.ids, kegg.mz, kegg.list, precurs
 	# Get null index and then removes null subset
 	nulls <- sapply(unknown.query, is.null) %=>% unlist;
 	unknown.query <- unknown.query[!nulls];
-	
+
 	if (length(unknown.query) == 0) {
 		NULL;
 	} else {
 		out <- list();
 		i <- 1;
-		
+
 		for(query in unknown.query) {
 			for(hit in query) {
 				out[[i]] <- hit;
 				i = i + 1;
 			}
 		}
-		
+
 		names(out) <- as.character(1:length(out));
 		out;
-	}	
+	}
 }
 
 #' Find kegg reaction partner
@@ -317,9 +317,9 @@ kegg.match <- function(kegg_id, kegg.mass, kegg.ids, kegg.mz, kegg.list, precurs
 #'
 kegg.partners <- function(kegg_id) {
 	# kegg_id list could be empty???
-	is_null <- IsNothing(kegg_id);	
-	
-    sapply(network, function(reaction) {	
+	is_null <- IsNothing(kegg_id);
+
+    sapply(network, function(reaction) {
 		# 2019-03-01
 		# fix for Error in if (kegg_id %in% reaction$reactants) { :
 		if (is_null) {
@@ -463,7 +463,7 @@ metaDNA.impl <- function(KEGG.partners, identify.ms2,
 	# and then get all names of the non-null result
 	rows <- sapply(query.result, function(q) q$name) %=>% as.character;
 	names(query.result) <- rows;
-	
+
     query.result;
 }
 
@@ -494,14 +494,14 @@ align_best.internal <- function(ref, peak, ms2.align, score.cutoff = 0.8) {
 	if (is.null(nrow(ref))) {
 		# 2019-2-26
 		#
-		# R language have a bug about matrix subset: matrix subset with only one row 
+		# R language have a bug about matrix subset: matrix subset with only one row
 		# will transform as vector automatic.
-		# This will cause all of the matrix operation failure. 
+		# This will cause all of the matrix operation failure.
 		#
 		# using rbind to fix this bug.
 		ref <- rbind(ref);
 	}
-	
+
     colnames(ref) <- c("ProductMz", "LibraryIntensity");
 
     # loop each unknown for alignment best result
@@ -513,32 +513,32 @@ align_best.internal <- function(ref, peak, ms2.align, score.cutoff = 0.8) {
 			ms2.name <- list(
 				file = fileName,
 				scan = scan
-            );			
-			
+            );
+
 			if (all(align.scores >= score.cutoff)) {
 				list(score = align.scores, ms2.name = ms2.name, candidate = unknown);
 			} else {
 				NULL;
-			}		
+			}
 		});
 	});
-	
+
 	for(file in align) {
 		for(scan in file) {
 			if (!is.null(scan)) {
 				x <- scan$score;
 				test <- mean(x);
-				
+
 				if (test > best.score) {
 					score <- x;
-					best.score <- test;					
+					best.score <- test;
 					candidate <- scan$candidate;
 					ms2.name <- scan$ms2.name;
 				}
 			}
 		}
 	}
-	
+
     if (!IsNothing(score)) {
         list(ref = ref,
              candidate = candidate,
