@@ -14,12 +14,12 @@ Namespace NCBI.PubChem
         Public Property Reference As Reference()
 
         Public Function GetMetaInfo() As MetaInfo
-            Dim identifier = Me("Names and Identifiers")
+            Dim identifier = Me.Section("Names and Identifiers")
             Dim formula = identifier("Molecular Formula")
             Dim SMILES = identifier("Canonical SMILES").GetInformationString("Canonical SMILES")
             Dim InChIKey = identifier("InChI Key").GetInformationString("InChI Key")
             Dim InChI = identifier("InChI")
-            Dim CAS = identifier("CAS")
+            Dim CAS = identifier("Other Identifiers")
             Dim computedProperties = Me _
                 ("Chemical and Physical Properties") _
                 ("Computed Properties").GetInformationTable _
