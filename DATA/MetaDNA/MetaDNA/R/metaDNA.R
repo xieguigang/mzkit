@@ -228,7 +228,7 @@ kegg.match <- function(kegg_id, kegg.mass, kegg.ids, kegg.mz, kegg.list, precurs
 	kegg_id <- as.index(kegg_id);
 	mzi <- sapply(kegg.ids, kegg_id) %=>% as.logical;
 	# Get corresponding kegg mz and annotation meta data
-	mz <- kegg.mz[mzi];
+	mz <- kegg.mz[[precursor_type]][mzi];
 	kegg <- kegg.list[mzi];
 	mz.index <- 1:length(mz);
 
