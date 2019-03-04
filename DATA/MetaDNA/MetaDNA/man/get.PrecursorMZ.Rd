@@ -2,16 +2,24 @@
 % Please edit documentation in R/Utils.R
 \name{get.PrecursorMZ}
 \alias{get.PrecursorMZ}
-\title{Calculate m/z}
+\title{Calculate m/z with given charge mode}
 \usage{
-get.PrecursorMZ(M, precursorType)
+get.PrecursorMZ(M, precursorType, mode)
 }
 \arguments{
-\item{M}{Molecule mass}
+\item{mode}{The ion charge mode, if the \code{precursorType} is multiple length,
+then this mode parameter should be the same length as the \code{precursorType}.}
 }
 \value{
--1 means target precursor type is not found.
+If \code{precursorType} just have one element, then this function will
+     returns a numeric vector.
+     If this parameter \code{precursorType} contains multiple type names, then this
+     function will returns a list object with member name is the \code{precursorType}
+     member value is the corresponding \code{m/z} vector
+test and warn
+test and warn
 }
 \description{
-Calculate \code{m/z} for mass by given precursor type
+Calculate m/z with given charge mode
 }
+
