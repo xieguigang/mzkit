@@ -80,7 +80,11 @@ Namespace NCBI.PubChem
         Public Property Rows As Row()
 
         Public Shared Function ToDictionary(table As Table) As Dictionary(Of NamedValue(Of String))
-            If table.ColumnNames.Length > 2 Then
+            If table Is Nothing OrElse table.ColumnNames.IsNullOrEmpty Then
+                Call "Empty table data!".Warning
+                ' return a empty dictionary table
+                Return New Dictionary(Of NamedValue(Of String))
+            ElseIf table.ColumnNames.Length > 2 Then
                 Call $"Target table is not a key-value pair! (columns={table.ColumnNames.Length} > 2)".Warning
             End If
 
