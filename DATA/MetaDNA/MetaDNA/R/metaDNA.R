@@ -199,7 +199,7 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
 		out <- list();
 		i <- 1;
 		list <- lapply(precursor_type, function(type) {
-			mz <- kegg.mz[[type]];
+			# mz <- kegg.mz[[type]];
 			kegg.match(kegg_id, kegg.mass, kegg.ids, kegg.mz, kegg.list, type, unknown.mz, tolerance);
 		});
 
