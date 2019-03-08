@@ -70,19 +70,15 @@ Namespace Massbank
             Return out
         End Function
 
-        Public Function LoadFile(txt$) As Record()
-            Dim out As New List(Of Record)
-
+        Public Iterator Function LoadFile(txt As String) As IEnumerable(Of Record)
             For Each data As String() In txt.ReadAllLines.Split("//")
                 Dim annotationHeaders$() = Nothing
                 Dim nodes As Dictionary(Of String, Node) = data.__loadSection(annotationHeaders)
                 ' 文件区段读取完毕，开始生成数据对象
                 Dim r As Record = nodes.__createObject(annotationHeaders)
 
-                out += r
+                Yield r
             Next
-
-            Return out
         End Function
 
         <Extension>
@@ -104,6 +100,7 @@ Namespace Massbank
 
             pk.NUM_PEAK = node.TryGetValue(NameOf(pk.NUM_PEAK)).DefaultFirst
             pk.SPLASH = node.TryGetValue(NameOf(pk.SPLASH)).DefaultFirst
+
             Try
                 pk.ANNOTATION = node.TryGetValue(NameOf(pk.ANNOTATION)) _
                 .SafeQuery _
@@ -111,17 +108,16 @@ Namespace Massbank
                 .Select(Function(s)
                             Dim t$() = (+s).Split
                             Dim table As PropertyValue() =
-                                t _
-                                .Where(Function(ss) Not ss.StringEmpty) _
-                                .SeqIterator _
-                                .Select(Function(k)
-                                            Return New PropertyValue With {
+                                t.Where(Function(ss) Not ss.StringEmpty) _
+                                 .SeqIterator _
+                                 .Select(Function(k)
+                                             Return New PropertyValue With {
                                                 .Key = k.i,
                                                 .Property = annotationHeaders(k),
                                                 .Value = +k
-                                            }
-                                        End Function) _
-                                .ToArray
+                                             }
+                                         End Function) _
+                                 .ToArray
 
                             Return New Entity With {
                                 .ID = s.i,
@@ -132,6 +128,7 @@ Namespace Massbank
             Catch ex As Exception
 
             End Try
+
             pk.PEAK = node(NameOf(pk.PEAK)) _
                 .Select(Function(s$)
                             Dim t$() = s.Split
@@ -171,13 +168,13 @@ Namespace Massbank
         <Extension>
         Private Function __loadSection(data$(), ByRef annotationHeaders$()) As Dictionary(Of String, Node)
             Dim nodes As New Dictionary(Of String, Node) From {
-            {"$_", New Node},
-            {"CH", New Node},
-            {"AC", New Node},
-            {"MS", New Node},
-            {"PK", New Node},
-            {"SP", New Node}
-        }
+                {"$_", New Node},
+                {"CH", New Node},
+                {"AC", New Node},
+                {"MS", New Node},
+                {"PK", New Node},
+                {"SP", New Node}
+            }
             Dim table$ = ""
             Dim readTable As Boolean = False
             Dim appendNodeData =
@@ -188,6 +185,7 @@ Namespace Massbank
                 If Not node.ContainsKey(nodeName.Value) Then
                     node(nodeName.Value) = New List(Of String)
                 End If
+
                 node(nodeName.Value) += value
             End Sub
 
@@ -217,13 +215,15 @@ Namespace Massbank
                 If value.Name.Contains("$") Then
                     With value
                         Call appendNodeData(
-                        path:= .Name,
-                        value:= .Value)
+                            path:= .Name,
+                            value:= .Value
+                        )
                     End With
                 Else
                     If Not nodes("$_").ContainsKey(value.Name) Then
                         nodes("$_")(value.Name) = New List(Of String)
                     End If
+
                     nodes("$_")(value.Name) += value.Value
                 End If
             Next
