@@ -84,7 +84,7 @@ Namespace GCMS.QuantifyAnalysis
             Dim data As Raw = netCDFReader.Open(filePath:=experiments).ReadData
             Dim result As New List(Of ROITable)
             Dim output$ = experiments.TrimSuffix
-            Dim i As int = 1
+            Dim i As VBInteger = 1
             Dim TIC = data.GetTIC
             Dim ROIlist As ROI() = TIC.Shadows _
                 .PopulateROI(angle, MRMpeaks:=False, baselineQuantile:=baselineQuantile) _

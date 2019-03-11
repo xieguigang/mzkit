@@ -60,7 +60,7 @@ Namespace GCMS.Vendors
             Dim scan_times = cdf.getDataVariable("time_values").tiny_num
 
             Dim ms As ms1_scan()() = New ms1_scan(pointCount.Length - 1)() {}
-            Dim index As int = Scan0
+            Dim index As VBInteger = Scan0
             Dim size%
 
             For i As Integer = 0 To ms.Length - 1
