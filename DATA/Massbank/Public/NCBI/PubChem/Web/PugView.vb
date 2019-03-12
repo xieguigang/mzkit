@@ -37,9 +37,17 @@ Namespace NCBI.PubChem
                 ("Computed Properties").GetInformationTable _
                 ("Computed Properties")
             Dim properties = Table.ToDictionary(computedProperties)
+            Dim CASNumber$
+
+            If otherNames Is Nothing Then
+                CASNumber = synonyms.FirstOrDefault(Function(id) id.IsPattern("\d+([-]\d+)+"))
+            Else
+                CASNumber = otherNames("CAS")?.GetInformationString("CAS")
+            End If
+
             Dim xref As New MetaLib.xref With {
                 .InChI = InChI,
-                .CAS = otherNames("CAS")?.GetInformationString("CAS"),
+                .CAS = CASNumber,
                 .InChIkey = InChIKey,
                 .pubchem = RecordNumber,
                 .chebi = synonyms.FirstOrDefault(Function(id) id.IsPattern("CHEBI[:]\d+")),
