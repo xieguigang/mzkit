@@ -13,9 +13,17 @@ Namespace NCBI.PubChem
 
         Public Function QueryCAS(CAS As String) As IdentifierList
             Dim url As String = sprintf(queryCAS_URL, CAS)
-            Dim list As IdentifierList = url.GET.LoadJSON(Of QueryResponse)?.IdentifierList
+            Dim jsonText = url.GET
 
-            Return list
+            If jsonText.StringEmpty Then
+                ' 404 代码之下得到的content text是空字符串
+                Return Nothing
+            Else
+                Dim list As IdentifierList = jsonText _
+                    .LoadJSON(Of QueryResponse) _
+                   ?.IdentifierList
+                Return list
+            End If
         End Function
 
         Public Function QueryPugViews(CAS As String) As Dictionary(Of String, PugViewRecord)
@@ -53,10 +61,21 @@ Namespace NCBI.PubChem
     Public Class QueryResponse
 
         Public Property IdentifierList As IdentifierList
+        ''' <summary>
+        ''' 当这个属性为空值的时候说明请求成功,反之不为空的时候说明出现了错误
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Fault As Fault
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
         End Function
+    End Class
+
+    Public Class Fault
+        Public Property Code As String
+        Public Property Message As String
+        Public Property Details As String()
     End Class
 
     Public Class IdentifierList
