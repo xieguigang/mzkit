@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Language.C
+﻿Imports System.Threading
+Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace NCBI.PubChem
@@ -33,6 +34,8 @@ Namespace NCBI.PubChem
                 Return cache _
                     .LoadXml(Of List(Of PugViewRecord)) _
                     .ToDictionary(Function(info) info.RecordNumber)
+            Else
+                Call Thread.Sleep(1000)
             End If
 
             Dim list As IdentifierList = QueryCAS(CAS)
@@ -44,6 +47,8 @@ Namespace NCBI.PubChem
                 For Each cid As String In list.CID
                     table(cid) = PugView(cid)
                 Next
+
+                Call Thread.Sleep(1000)
             End If
 
             Call table.Values _
