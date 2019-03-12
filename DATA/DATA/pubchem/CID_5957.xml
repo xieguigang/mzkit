@@ -272,9 +272,9 @@
           <StringValueList>C10H16N5O13P3</StringValueList>
           <StringValueList>EINECS 200-283-2</StringValueList>
           <StringValueList>adenosine 5&apos; triphosphate</StringValueList>
-          <StringValueList>((2R,3S,4R,5R)-5-(6-Amino-9H-purin-9-yl)-3,4-dihydroxytetrahydrofuran-2-yl)methyl tetrahydrogen triphosphate</StringValueList>
           <StringValueList>CHEMBL14249</StringValueList>
           <StringValueList>8L70Q75FXE</StringValueList>
+          <StringValueList>((2R,3S,4R,5R)-5-(6-Amino-9H-purin-9-yl)-3,4-dihydroxytetrahydrofuran-2-yl)methyl tetrahydrogen triphosphate</StringValueList>
           <StringValueList>adenosine-5&apos;-triphosphoric acid</StringValueList>
           <StringValueList>ZKHQWZAMYRWXGA-KQYNXXCUSA-N</StringValueList>
           <StringValueList>NCGC00163309-01</StringValueList>
@@ -440,7 +440,7 @@
       <Information>
         <ReferenceNumber>69</ReferenceNumber>
         <Name>Modify Date</Name>
-        <DateValue>2019-03-02</DateValue>
+        <DateValue>2019-03-09</DateValue>
       </Information>
     </Section>
   </Section>
@@ -1175,19 +1175,19 @@
           <ReferenceNumber>69</ReferenceNumber>
           <Name>All Count</Name>
           <URL>https://www.ncbi.nlm.nih.gov/pcsubstance/?term=5957[CompoundID]</URL>
-          <NumValue>2029</NumValue>
+          <NumValue>2033</NumValue>
         </Information>
         <Information>
           <ReferenceNumber>69</ReferenceNumber>
           <Name>Same Count</Name>
           <URL>https://www.ncbi.nlm.nih.gov/pcsubstance/?term=5957[StandardizedCID]</URL>
-          <NumValue>1476</NumValue>
+          <NumValue>1478</NumValue>
         </Information>
         <Information>
           <ReferenceNumber>69</ReferenceNumber>
           <Name>Mixture Count</Name>
           <URL>https://www.ncbi.nlm.nih.gov/pcsubstance/?term=5957[ComponentCID]</URL>
-          <NumValue>553</NumValue>
+          <NumValue>555</NumValue>
         </Information>
       </Section>
       <Section>
@@ -1220,7 +1220,7 @@
         <ReferenceNumber>69</ReferenceNumber>
         <Name>Protein Structures Count</Name>
         <URL>https://www.ncbi.nlm.nih.gov/sites/entrez?LinkName=pccompound_structure&amp;db=pccompound&amp;cmd=Link&amp;from_uid=5957</URL>
-        <NumValue>1131</NumValue>
+        <NumValue>1132</NumValue>
       </Information>
       <Information>
         <ReferenceNumber>69</ReferenceNumber>
@@ -3675,7 +3675,6 @@
           <StringValueList>&lt;a href=&quot;http://smpdb.ca/view/SMP00235&quot;&gt;Short Chain Acyl CoA Dehydrogenase Deficiency (SCAD Deficiency)&lt;/a&gt;</StringValueList>
           <StringValueList>&lt;a href=&quot;http://smpdb.ca/view/SMP00568&quot;&gt;Short-chain 3-hydroxyacyl-CoA dehydrogenase deficiency (SCHAD)&lt;/a&gt;</StringValueList>
           <StringValueList>&lt;a href=&quot;http://smpdb.ca/view/SMP00216&quot;&gt;Sialuria or French Type Sialuria&lt;/a&gt;</StringValueList>
-          <StringValueList>&lt;a href=&quot;http://smpdb.ca/view/SMP00217&quot;&gt;Sialuria or French Type Sialuria&lt;/a&gt;</StringValueList>
           <StringValueList>&lt;a href=&quot;http://smpdb.ca/view/SMP00082&quot;&gt;&lt;a class=&quot;pubchem-internal-link CID-54454&quot; href=&quot;https://pubchem.ncbi.nlm.nih.gov/compound/Simvastatin&quot;&gt;Simvastatin&lt;/a&gt; Action Pathway&lt;/a&gt;</StringValueList>
           <StringValueList>&lt;a href=&quot;http://smpdb.ca/view/SMP00389&quot;&gt;Smith-Lemli-Opitz Syndrome (SLOS)&lt;/a&gt;</StringValueList>
           <StringValueList>&lt;a href=&quot;http://smpdb.ca/view/SMP00660&quot;&gt;&lt;a class=&quot;pubchem-internal-link CID-5253&quot; href=&quot;https://pubchem.ncbi.nlm.nih.gov/compound/Sotalol&quot;&gt;Sotalol&lt;/a&gt; Action Pathway&lt;/a&gt;</StringValueList>
@@ -3936,7 +3935,7 @@
           <ColumnName>Open Access</ColumnName>
           <ColumnName>Year</ColumnName>
           <ExternalTableName>springernature</ExternalTableName>
-          <ExternalTableNumRows>4</ExternalTableNumRows>
+          <ExternalTableNumRows>6</ExternalTableNumRows>
         </Table>
       </Information>
       <Information>
@@ -3961,7 +3960,7 @@
           <ColumnName>Open Access</ColumnName>
           <ColumnName>Year</ColumnName>
           <ExternalTableName>springernature</ExternalTableName>
-          <ExternalTableNumRows>49</ExternalTableNumRows>
+          <ExternalTableNumRows>63</ExternalTableNumRows>
         </Table>
       </Information>
     </Section>
@@ -4055,7 +4054,7 @@
         <ReferenceNumber>69</ReferenceNumber>
         <Name>Protein Bound 3-D Structures</Name>
         <URL>https://www.ncbi.nlm.nih.gov/structure?cmd=Link&amp;LinkName=pccompound_structure&amp;from_uid=5957</URL>
-        <StringValue>View 1131 proteins in NCBI Structure</StringValue>
+        <StringValue>View 1132 proteins in NCBI Structure</StringValue>
       </Information>
     </Section>
     <Section>
@@ -6950,7 +6949,7 @@
               <StringValue>Specific Function</StringValue>
             </Cell>
             <Cell>
-              <StringValue>Phosphoinositide-3-kinase (PI3K) that phosphorylates &lt;a class=&quot;pubchem-internal-link CID-71308709&quot; href=&quot;https://pubchem.ncbi.nlm.nih.gov/compound/PtdIns&quot;&gt;PtdIns&lt;/a&gt; (Phosphatidylinositol), PtdIns4P (Phosphatidylinositol 4-phosphate) and &lt;a class=&quot;pubchem-internal-link CID-125105&quot; href=&quot;https://pubchem.ncbi.nlm.nih.gov/compound/PtdIns%284%2C5%29P2&quot;&gt;PtdIns(4,5)P2&lt;/a&gt; (Phosphatidylinositol 4,5-bisphosphate) to generate phosphatidylinositol 3,4,5-trisphosphate (PIP3). PIP3 plays a key role by recruiting PH domain-containing proteins to the membrane, including AKT1 and PDPK1, activating signaling cascades involved in cell growth, survival, proliferation, motility and morphology. Participates in cellular signaling in response to various growth factors. Involved in the activation of AKT1 upon stimulation by receptor &lt;a class=&quot;pubchem-internal-link CID-6057&quot; href=&quot;https://pubchem.ncbi.nlm.nih.gov/compound/tyrosine&quot;&gt;tyrosine&lt;/a&gt; kinases ligands such as EGF, insulin, IGF1, VEGFA and PDGF. Involved in signaling via insulin-receptor substrate (IRS) proteins. Essential in endothelial cell migration during vascular development through VEGFA signaling, possibly by regulating RhoA activity. Required for lymphatic vasculature development, possibly by binding to RAS and by activation by EGF and FGF2, but not by PDGF. Regulates invadopodia formation in breast cancer cells through the PDPK1-AKT1 pathway. Participates in cardiomyogenesis in embryonic stem cells through a AKT1 pathway. Participates in vasculogenesis in embryonic stem cells through PDK1 and protein kinase C pathway. Has also &lt;a class=&quot;pubchem-internal-link CID-5951&quot; href=&quot;https://pubchem.ncbi.nlm.nih.gov/compound/serine&quot;&gt;serine&lt;/a&gt;-protein kinase activity: phosphorylates PIK3R1 (p85alpha regulatory subunit), EIF4EBP1 and HRAS.</StringValue>
+              <StringValue>Phosphoinositide-3-kinase (PI3K) that phosphorylates &lt;a class=&quot;pubchem-internal-link CID-71308709&quot; href=&quot;https://pubchem.ncbi.nlm.nih.gov/compound/PtdIns&quot;&gt;PtdIns&lt;/a&gt; (Phosphatidylinositol), PtdIns4P (Phosphatidylinositol 4-phosphate) and &lt;a class=&quot;pubchem-internal-link CID-125105&quot; href=&quot;https://pubchem.ncbi.nlm.nih.gov/compound/PtdIns%284%2C5%29P2&quot;&gt;PtdIns(4,5)P2&lt;/a&gt; (Phosphatidylinositol 4,5-bisphosphate) to generate phosphatidylinositol 3,4,5-trisphosphate (&lt;a class=&quot;pubchem-internal-link CID-53477782&quot; href=&quot;https://pubchem.ncbi.nlm.nih.gov/compound/PIP3&quot;&gt;PIP3&lt;/a&gt;). &lt;a class=&quot;pubchem-internal-link CID-53477782&quot; href=&quot;https://pubchem.ncbi.nlm.nih.gov/compound/PIP3&quot;&gt;PIP3&lt;/a&gt; plays a key role by recruiting PH domain-containing proteins to the membrane, including AKT1 and PDPK1, activating signaling cascades involved in cell growth, survival, proliferation, motility and morphology. Participates in cellular signaling in response to various growth factors. Involved in the activation of AKT1 upon stimulation by receptor &lt;a class=&quot;pubchem-internal-link CID-6057&quot; href=&quot;https://pubchem.ncbi.nlm.nih.gov/compound/tyrosine&quot;&gt;tyrosine&lt;/a&gt; kinases ligands such as EGF, insulin, IGF1, VEGFA and PDGF. Involved in signaling via insulin-receptor substrate (IRS) proteins. Essential in endothelial cell migration during vascular development through VEGFA signaling, possibly by regulating RhoA activity. Required for lymphatic vasculature development, possibly by binding to RAS and by activation by EGF and FGF2, but not by PDGF. Regulates invadopodia formation in breast cancer cells through the PDPK1-AKT1 pathway. Participates in cardiomyogenesis in embryonic stem cells through a AKT1 pathway. Participates in vasculogenesis in embryonic stem cells through PDK1 and protein kinase C pathway. Has also &lt;a class=&quot;pubchem-internal-link CID-5951&quot; href=&quot;https://pubchem.ncbi.nlm.nih.gov/compound/serine&quot;&gt;serine&lt;/a&gt;-protein kinase activity: phosphorylates PIK3R1 (p85alpha regulatory subunit), EIF4EBP1 and HRAS.</StringValue>
             </Cell>
           </Row>
           <Row>
@@ -7173,7 +7172,7 @@
   <Reference>
     <ReferenceNumber>55</ReferenceNumber>
     <SourceName>NCIt</SourceName>
-    <SourceID>C209_943</SourceID>
+    <SourceID>C209_968</SourceID>
     <Name>Adenosine Triphosphate</Name>
     <Description>NCI Thesaurus (NCIt) provides reference terminology for many systems. It covers vocabulary for clinical care, translational and basic research, and public information and administrative activities.</Description>
     <URL>https://ncit.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&amp;ns=NCI_Thesaurus&amp;code=C209</URL>
@@ -7658,7 +7657,7 @@
     <SourceID>ChemIDplus_tree</SourceID>
     <Name>ChemIDplus Chemical Information Classification</Name>
     <Description>ChemIDplus is a TOXNET (TOXicology Data NETwork) databases that contain chemicals and drugs related information. It is managed by the Toxicology and Environmental Health Information Program (TEHIP) in the Division of Specialized Information Services (SIS) of the National Library of Medicine (NLM).</Description>
-    <URL>https://chem.sis.nlm.nih.gov/chemidplus/</URL>
+    <URL>https://chem.sis.nlm.nih.gov/chemidplus/chemidheavy.jsp</URL>
   </Reference>
   <Reference>
     <ReferenceNumber>79</ReferenceNumber>

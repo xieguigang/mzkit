@@ -16,7 +16,7 @@ Module pubchemTest
     End Sub
 
     Sub fileTest()
-        Dim file = "D:\MassSpectrum-toolkits\DATA\Massbank\Public\NCBI\PubChem\Web\CID_5957.xml"
+        Dim file = "D:\MassSpectrum-toolkits\DATA\DATA\pubchem\CID_5957.xml"
         Dim xml = file.LoadXml(Of PugViewRecord)
 
         Call xml.GetJson.SaveTo(file.ChangeSuffix("json"))
