@@ -44,7 +44,8 @@ Namespace NCBI.PubChem
                 .pubchem = RecordNumber,
                 .chebi = synonyms.FirstOrDefault(Function(id) id.IsPattern("CHEBI[:]\d+")),
                 .KEGG = synonyms.FirstOrDefault(Function(id)
-                                                    Return id.IsPattern("C\d+", RegexOptions.Singleline)
+                                                    ' KEGG编号是C开头,后面跟随5个数字
+                                                    Return id.IsPattern("C\d{5}", RegexOptions.Singleline)
                                                 End Function),
                 .HMDB = Reference.GetHMDBId
             }
