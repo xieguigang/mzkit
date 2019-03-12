@@ -19,10 +19,12 @@ Namespace NCBI.PubChem
         End Function
 
         Public Function QueryPugViews(CAS As String) As Dictionary(Of String, PugViewRecord)
-            Dim cache = $"./pubchem_cache/{CAS}.json"
+            Dim cache = $"./pubchem_cache/{CAS}.Xml"
 
             If cache.FileLength > 0 Then
-                Return cache.LoadJsonFile(Of Dictionary(Of String, PugViewRecord))
+                Return cache _
+                    .LoadXml(Of List(Of PugViewRecord)) _
+                    .ToDictionary(Function(info) info.RecordNumber)
             End If
 
             Dim list As IdentifierList = QueryCAS(CAS)
@@ -32,7 +34,10 @@ Namespace NCBI.PubChem
                 table(cid) = PugView(cid)
             Next
 
-            Call table.GetJson.SaveTo(cache)
+            Call table.Values _
+                .ToList _
+                .GetXml _
+                .SaveTo(cache)
 
             Return table
         End Function
