@@ -46,6 +46,7 @@ Namespace NCBI.PubChem
             Else
                 For Each cid As String In list.CID
                     table(cid) = PugView(cid)
+                    Call Thread.Sleep(500)
                 Next
 
                 Call Thread.Sleep(1000)
