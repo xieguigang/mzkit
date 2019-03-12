@@ -31,7 +31,11 @@ Namespace NCBI.PubChem
 
         <Extension>
         Friend Function GetHMDBId(refs As Reference()) As String
-            Return refs.FirstOrDefault(Function(ref) ref.SourceName = PugViewRecord.HMDB)?.SourceID
+            Return refs.SafeQuery _
+                .FirstOrDefault(Function(ref)
+                                    Return ref.SourceName = PugViewRecord.HMDB
+                                End Function) _
+               ?.SourceID
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
