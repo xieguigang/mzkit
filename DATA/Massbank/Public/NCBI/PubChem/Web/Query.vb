@@ -38,9 +38,13 @@ Namespace NCBI.PubChem
             Dim list As IdentifierList = QueryCAS(CAS)
             Dim table As New Dictionary(Of String, PugViewRecord)
 
-            For Each cid As String In list.CID
-                table(cid) = PugView(cid)
-            Next
+            If list Is Nothing OrElse list.CID.IsNullOrEmpty Then
+                Return New Dictionary(Of String, PugViewRecord)
+            Else
+                For Each cid As String In list.CID
+                    table(cid) = PugView(cid)
+                Next
+            End If
 
             Call table.Values _
                 .ToList _
