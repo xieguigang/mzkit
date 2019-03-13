@@ -127,6 +127,7 @@ Namespace MarkupData.mzXML
         Public Function ScanData(Optional basename$ = Nothing) As PeakMs2
             Dim mzInto As LibraryMatrix = peaks _
                 .ExtractMzI _
+                .Where(Function(p) p.intensity > 0) _
                 .Select(Function(p)
                             Return New ms2 With {
                                 .mz = p.mz,
