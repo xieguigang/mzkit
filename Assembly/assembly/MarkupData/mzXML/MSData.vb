@@ -70,6 +70,7 @@
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports SMRUCC.MassSpectrum.Math.Spectra
 
 Namespace MarkupData.mzXML
 
@@ -88,6 +89,9 @@ Namespace MarkupData.mzXML
 
     End Class
 
+    ''' <summary>
+    ''' 一个一级或者二级的扫描结果数据的模型
+    ''' </summary>
     Public Class scan
 
         ''' <summary>
@@ -97,6 +101,10 @@ Namespace MarkupData.mzXML
         <XmlAttribute> Public Property num As Integer
         <XmlAttribute> Public Property scanType As String
         <XmlAttribute> Public Property centroided As String
+        ''' <summary>
+        ''' 当前的质谱碎片的等级,一级质谱,二级质谱或者msn等级的质谱
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property msLevel As String
         <XmlAttribute> Public Property peaksCount As Integer
         <XmlAttribute> Public Property polarity As String
@@ -116,6 +124,26 @@ Namespace MarkupData.mzXML
             Return Me.GetJson
         End Function
 
+        Public Function ScanData(Optional basename$ = Nothing) As PeakMs2
+            Dim mzInto As LibraryMatrix = peaks _
+                .ExtractMzI _
+                .Select(Function(p)
+                            Return New ms2 With {
+                                .mz = p.mz,
+                                .quantity = p.intensity,
+                                .intensity = p.intensity
+                            }
+                        End Function) _
+                .ToArray
+
+            Return New PeakMs2 With {
+                .mz = precursorMz,
+                .rt = PeakMs2.RtInSecond(retentionTime),
+                .scan = num,
+                .file = basename,
+                .mzInto = mzInto
+            }
+        End Function
     End Class
 
     Public Class peaks : Implements IBase64Container
@@ -145,7 +173,7 @@ Namespace MarkupData.mzXML
     ''' <summary>
     ''' 这个类型模型的隐式转换的数据来源为<see cref="precursorMz.value"/>属性值
     ''' </summary>
-    Public Structure precursorMz
+    Public Structure precursorMz : Implements IComparable(Of precursorMz)
 
         <XmlAttribute> Public Property windowWideness As String
         <XmlAttribute> Public Property precursorCharge As Double
@@ -161,6 +189,11 @@ Namespace MarkupData.mzXML
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function CompareTo(other As precursorMz) As Integer Implements IComparable(Of precursorMz).CompareTo
+            Return Me.value.CompareTo(other.value)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

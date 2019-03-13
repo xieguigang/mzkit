@@ -47,12 +47,30 @@ Imports System.Runtime.CompilerServices
 
 Namespace Spectra
 
+    ''' <summary>
+    ''' 将mzXML文件之中的每一个ms2 scan转换而来
+    ''' </summary>
     Public Structure PeakMs2
 
+        ''' <summary>
+        ''' 一级母离子的``m/z``
+        ''' </summary>
         Dim mz As Double
+        ''' <summary>
+        ''' 一级母离子的出峰时间
+        ''' </summary>
         Dim rt As Double
+        ''' <summary>
+        ''' 原始数据文件名
+        ''' </summary>
         Dim file As String
+        ''' <summary>
+        ''' 数据扫描编号
+        ''' </summary>
         Dim scan As Integer
+        ''' <summary>
+        ''' 二级碎片信息
+        ''' </summary>
         Dim mzInto As LibraryMatrix
 
         Public Shared Function RtInSecond(rt As String) As Double
