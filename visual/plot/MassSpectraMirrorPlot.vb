@@ -53,6 +53,15 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
 
 Public Module MassSpectra
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="library"></param>
+    ''' <param name="size$"></param>
+    ''' <param name="margin$"></param>
+    ''' <param name="intoCutoff#"></param>
+    ''' <param name="titles">[query, reference]</param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function MirrorPlot(library As LibraryMatrix,

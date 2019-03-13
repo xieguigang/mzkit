@@ -140,6 +140,7 @@ Public MustInherit Class Tolerance
         Return mass
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Narrowing Operator CType(tolerance As Tolerance) As Comparison(Of Double)
         Return Function(mz1, mz2) As Integer
                    If tolerance(mz1, mz2) Then
@@ -150,6 +151,11 @@ Public MustInherit Class Tolerance
                        Return -1
                    End If
                End Function
+    End Operator
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Narrowing Operator CType(tolerance As Tolerance) As GenericLambda(Of Double).IEquals
+        Return AddressOf tolerance.Assert
     End Operator
 End Class
 
