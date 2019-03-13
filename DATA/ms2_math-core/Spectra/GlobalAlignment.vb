@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::4fb905852decf3e4435b1b5b387067fc, ms2_math-core\Spectra\GlobalAlignment.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module GlobalAlignment
-    ' 
-    '         Function: Align, AlignMatrix, SharedPeakCount, TwoDirectionSSM
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module GlobalAlignment
+' 
+'         Function: Align, AlignMatrix, SharedPeakCount, TwoDirectionSSM
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -89,19 +89,30 @@ Namespace Spectra
         '    End With
         'End Function
 
+        ''' <summary>
+        ''' 只计算响应度最高的前<paramref name="top"/>个二级碎片之中的相同mz的碎片数量
+        ''' </summary>
+        ''' <param name="query"></param>
+        ''' <param name="subject"></param>
+        ''' <param name="tolerance"></param>
+        ''' <param name="top%"></param>
+        ''' <returns></returns>
         Public Function SharedPeakCount(query As LibraryMatrix, subject As LibraryMatrix, Optional tolerance As Tolerance = Nothing, Optional top% = 10) As Integer
             Dim q = query.OrderByDescending(Function(mz) mz.quantity).Take(top).ToArray
             Dim s = subject.OrderByDescending(Function(mz) mz.quantity).Take(top).ToArray
 
             With tolerance Or Tolerance.DefaultTolerance
-                Dim share = s.Where(Function(mz)
-                                        Dim find = q.Where(Function(frag)
-                                                               Return .Assert(frag.mz, mz.mz)
-                                                           End Function) _
-                                                .FirstOrDefault
-                                        Return Not find Is Nothing
-                                    End Function) _
-                             .Count
+                Dim share As Integer = s _
+                    .Where(Function(mz)
+                               Dim find As ms2 = q _
+                                   .Where(Function(frag)
+                                              Return .Assert(frag.mz, mz.mz)
+                                          End Function) _
+                                   .FirstOrDefault
+                               Return Not find Is Nothing
+                           End Function) _
+                    .Count
+
                 Return share
             End With
         End Function
@@ -151,13 +162,15 @@ Namespace Spectra
                             ' 所以在这个Linq表达式中，后面不需要使用Where来删除对象了
 
                             Dim subject = query _
-                                .Where(Function(q) method.Assert(q.mz, mz.mz)) _
+                                .Where(Function(q) method(q.mz, mz.mz)) _
                                 .Shadows
 
                             If subject.Length = 0 Then
                                 ' With single intensity ZERO
                                 Return New ms2 With {
-                                    .mz = mz.mz
+                                    .mz = mz.mz,
+                                    .intensity = 0,
+                                    .quantity = 0
                                 }
                             Else
                                 ' 返回响应值最大的
