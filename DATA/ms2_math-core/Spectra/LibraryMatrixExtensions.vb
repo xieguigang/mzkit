@@ -87,7 +87,7 @@ Namespace Spectra
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Shrink(matrix As LibraryMatrix, tolerance As Tolerance) As LibraryMatrix
-            Return matrix.GroupBy(Function(ms2) ms2.mz, AddressOf tolerance.Assert, False) _
+            Return matrix.GroupBy(Function(ms2) ms2.mz, AddressOf tolerance.Assert) _
                 .Select(Function(g)
                             Return g(Which.Max(g.Select(Function(m) m.intensity)))
                         End Function) _

@@ -158,5 +158,23 @@ Module Program
 
         Return 0
     End Function
+
+    ''' <summary>
+    ''' 将二级碎片数据按照m/z分组导出
+    ''' </summary>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
+    <ExportAPI("/Dump.ms2")>
+    <Usage("/Dump.ms2 /in <lib.mzXML> [/out <out.directory>]")>
+    Public Function DumpMs2(args As CommandLine) As Integer
+        Dim in$ = args <= "/in"
+        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.dump/"
+        Dim allMs2Scans = mzXML.XML.LoadScans([in]) _
+            .Where(Function(s) s.msLevel = "2") _
+            .ToArray
+
+        ' 首先按照m/z分组
+
+    End Function
 End Module
 

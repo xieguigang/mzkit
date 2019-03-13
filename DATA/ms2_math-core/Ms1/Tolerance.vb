@@ -64,7 +64,8 @@ Imports Microsoft.VisualBasic.Language.Default
 Imports sys = System.Math
 
 ''' <summary>
-''' The m/z tolerance methods
+''' The m/z tolerance methods.
+''' (可以直接使用这个对象的索引属性来进行计算判断)
 ''' </summary>
 Public MustInherit Class Tolerance
 

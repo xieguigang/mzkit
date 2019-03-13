@@ -88,6 +88,11 @@ Namespace Ms1.PrecursorType
             Return (ReverseMass(precursorMZ, M, charge, adducts))
         End Function
 
+        ''' <summary>
+        ''' 通过所给定的精确分子质量计算出``m/z``
+        ''' </summary>
+        ''' <param name="mass#"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CalcPrecursorMZ(mass#) As Double
             Return (AdductMass(mass, adducts, charge))
