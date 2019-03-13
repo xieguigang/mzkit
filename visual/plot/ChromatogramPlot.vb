@@ -299,7 +299,7 @@ Public Module ChromatogramPlot
                         .ToArray
                     Dim anchors As Anchor() = labels.GetLabelAnchors(r:=3)
 
-                    Call d3js.labeler _
+                    Call d3js.labeler(maxAngle:=5, maxMove:=300, w_lab2:=100, w_lab_anc:=100) _
                         .Labels(labels) _
                         .Anchors(anchors) _
                         .Width(rect.Width) _
@@ -307,7 +307,7 @@ Public Module ChromatogramPlot
                         .Start(showProgress:=False, nsweeps:=labelTicks)
 
                     For Each i As SeqValue(Of Label) In labels.SeqIterator
-                        Call g.DrawLine(labelConnector, i.value, anchors(i))
+                        Call g.DrawLine(labelConnector, i.value.GetTextAnchor(anchors(i)), anchors(i))
                         Call g.DrawString(i.value.text, labelFont, Brushes.Black, i.value)
                     Next
                 End If
