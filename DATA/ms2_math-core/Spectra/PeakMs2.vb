@@ -74,6 +74,23 @@ Namespace Spectra
         ''' </summary>
         Dim mzInto As LibraryMatrix
 
+        ''' <summary>
+        ''' 获取得到二级碎片的最大响应强度值,这个响应强度值是和其对应的一级母离子的响应强度值是呈正相关的
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Ms2Intensity As Double
+            Get
+                Return Aggregate mz As ms2
+                       In mzInto
+                       Into Max(mz.quantity)
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' 将mzXML文件之中的RT文本解析为以秒为单位的rt保留时间数值
+        ''' </summary>
+        ''' <param name="rt">诸如``PT508.716S``这样格式的表达式字符串</param>
+        ''' <returns></returns>
         Public Shared Function RtInSecond(rt As String) As Double
             rt = rt.Substring(2)
             rt = rt.Substring(0, rt.Length - 1)
@@ -81,7 +98,7 @@ Namespace Spectra
         End Function
 
         Public Overrides Function ToString() As String
-            Return $"M{sys.Round(mz)}T{sys.Round(rt)}  {file}#{scan}"
+            Return $"M{sys.Round(mz)}T{sys.Round(rt)}  into={Fix(Ms2Intensity)}  {file}#{scan}"
         End Function
 
         ''' <summary>
