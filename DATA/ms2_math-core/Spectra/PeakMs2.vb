@@ -75,14 +75,14 @@ Namespace Spectra
         Dim mzInto As LibraryMatrix
 
         ''' <summary>
-        ''' 获取得到二级碎片的最大响应强度值,这个响应强度值是和其对应的一级母离子的响应强度值是呈正相关的
+        ''' 获取得到二级碎片的响应强度值的和,这个响应强度值是和其对应的一级母离子的响应强度值是呈正相关的
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Ms2Intensity As Double
             Get
                 Return Aggregate mz As ms2
                        In mzInto
-                       Into Max(mz.quantity)
+                       Into Sum(mz.quantity)
             End Get
         End Property
 
