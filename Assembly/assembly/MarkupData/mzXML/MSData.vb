@@ -70,6 +70,7 @@
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports SMRUCC.MassSpectrum.Math
 Imports SMRUCC.MassSpectrum.Math.Spectra
 
 Namespace MarkupData.mzXML
@@ -124,7 +125,7 @@ Namespace MarkupData.mzXML
             Return Me.GetJson
         End Function
 
-        Public Function ScanData(Optional basename$ = Nothing) As PeakMs2
+        Public Function ScanData(Optional basename$ = Nothing, Optional shrinkTolerance As Tolerance = Nothing) As PeakMs2
             Dim mzInto As LibraryMatrix = peaks _
                 .ExtractMzI _
                 .Where(Function(p) p.intensity > 0) _
@@ -136,6 +137,10 @@ Namespace MarkupData.mzXML
                             }
                         End Function) _
                 .ToArray
+
+            If Not shrinkTolerance Is Nothing Then
+                mzInto = mzInto.Shrink(shrinkTolerance)
+            End If
 
             Return New PeakMs2 With {
                 .mz = precursorMz,

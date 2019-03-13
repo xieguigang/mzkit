@@ -87,8 +87,10 @@ Namespace Spectra
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Shrink(matrix As LibraryMatrix, tolerance As Tolerance) As LibraryMatrix
-            Return matrix.GroupBy(Function(ms2) ms2.mz, AddressOf tolerance.Assert) _
+            Return matrix _
+                .GroupBy(Function(ms2) ms2.mz, AddressOf tolerance.Assert) _
                 .Select(Function(g)
+                            ' 合并在一起的二级碎片的相应强度取最高的为结果
                             Return g(Which.Max(g.Select(Function(m) m.intensity)))
                         End Function) _
                 .ToArray
