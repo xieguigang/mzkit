@@ -142,6 +142,8 @@ Namespace MarkupData.mzXML
                 mzInto = mzInto.Shrink(shrinkTolerance)
             End If
 
+            mzInto = mzInto / mzInto.Max
+
             Return New PeakMs2 With {
                 .mz = precursorMz,
                 .rt = PeakMs2.RtInSecond(retentionTime),

@@ -44,11 +44,16 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
-Imports SMRUCC.MassSpectrum.Math.Chromatogram
 Imports SMRUCC.MassSpectrum.Math.Spectra
 
 Public Module Extensions
 
+    ''' <summary>
+    ''' 将响应强度低于一定值的碎片进行删除
+    ''' </summary>
+    ''' <param name="library"></param>
+    ''' <param name="intoCutoff">相对相应强度的删除阈值, 值范围为``[0, 1]``</param>
+    ''' <returns></returns>
     <Extension>
     Public Function Trim(ByRef library As LibraryMatrix, intoCutoff#) As LibraryMatrix
         library = library / library.Max
