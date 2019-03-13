@@ -139,6 +139,18 @@ Public MustInherit Class Tolerance
 
         Return mass
     End Function
+
+    Public Shared Narrowing Operator CType(tolerance As Tolerance) As Comparison(Of Double)
+        Return Function(mz1, mz2) As Integer
+                   If tolerance(mz1, mz2) Then
+                       Return 0
+                   ElseIf mz1 > mz2 Then
+                       Return 1
+                   Else
+                       Return -1
+                   End If
+               End Function
+    End Operator
 End Class
 
 Public Class PPMmethod : Inherits Tolerance
