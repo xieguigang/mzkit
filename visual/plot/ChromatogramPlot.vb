@@ -120,7 +120,7 @@ Public Module ChromatogramPlot
                             Optional penStyle$ = Stroke.ScatterLineStroke,
                             Optional labelFontStyle$ = CSSFont.Win7Normal,
                             Optional labelConnectorStroke$ = Stroke.StrongHighlightStroke,
-                            Optional labelTicks% = 500,
+                            Optional labelLayoutTicks% = 500,
                             Optional showLabels As Boolean = True,
                             Optional fillCurve As Boolean = True,
                             Optional axisLabelFont$ = CSSFont.Win7Large,
@@ -138,7 +138,7 @@ Public Module ChromatogramPlot
             labelConnectorStroke:=labelConnectorStroke,
             colorsSchema:=colorsSchema,
             margin:=margin,
-            labelTicks:=labelTicks,
+            labelLayoutTicks:=labelLayoutTicks,
             showLabels:=showLabels,
             showLegends:=showLegends,
             fillCurve:=fillCurve,
@@ -161,9 +161,10 @@ Public Module ChromatogramPlot
                             Optional bg$ = "white",
                             Optional colorsSchema$ = "scibasic.category31()",
                             Optional penStyle$ = Stroke.ScatterLineStroke,
-                            Optional labelFontStyle$ = CSSFont.Win7Normal,
+                            Optional labelFontStyle$ = CSSFont.Win7Small,
                             Optional labelConnectorStroke$ = Stroke.StrongHighlightStroke,
-                            Optional labelTicks% = 500,
+                            Optional labelLayoutTicks% = 1000,
+                            Optional labelColor$ = "black",
                             Optional showLabels As Boolean = True,
                             Optional fillCurve As Boolean = True,
                             Optional axisLabelFont$ = CSSFont.Win7Large,
@@ -304,11 +305,13 @@ Public Module ChromatogramPlot
                         .Anchors(anchors) _
                         .Width(rect.Width) _
                         .Height(rect.Height) _
-                        .Start(showProgress:=False, nsweeps:=labelTicks)
+                        .Start(showProgress:=False, nsweeps:=labelLayoutTicks)
+
+                    Dim labelBrush As Brush = labelColor.GetBrush
 
                     For Each i As SeqValue(Of Label) In labels.SeqIterator
                         Call g.DrawLine(labelConnector, i.value.GetTextAnchor(anchors(i)), anchors(i))
-                        Call g.DrawString(i.value.text, labelFont, Brushes.Black, i.value)
+                        Call g.DrawString(i.value.text, labelFont, labelBrush, i.value)
                     Next
                 End If
 
