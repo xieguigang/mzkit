@@ -157,31 +157,37 @@ Namespace Ms1.PrecursorType
             End Get
         End Property
 
+        Public Function ParseIonMode(mode As String) As Integer
+            Select Case LCase(mode)
+                Case "+", "1", "p", "pos", "positive"
+                    Return 1
+                Case "-", "-1", "n", "neg", "negative"
+                    Return -1
+                Case Else
+                    Throw New InvalidExpressionException(mode)
+            End Select
+        End Function
+
         ''' <summary>
         ''' 采用Friend访问控制是为了避免被不必要的意外修改出现
         ''' </summary>
         ''' <param name="ion_mode"></param>
         ''' <returns></returns>
         Friend Function Calculator(ion_mode As String) As Dictionary(Of String, MzCalculator)
-            Select Case LCase(ion_mode)
-                Case "+", "1", "p", "pos", "positive"
-                    Return pos
-                Case "-", "-1", "n", "neg", "negative"
-                    Return neg
-                Case Else
-                    Throw New InvalidExpressionException(ion_mode)
-            End Select
+            ' using cache for internal modules
+            If ParseIonMode(ion_mode) = 1 Then
+                Return pos
+            Else
+                Return neg
+            End If
         End Function
 
         Public Function GetCalculator(ion_mode As String) As Dictionary(Of String, MzCalculator)
-            Select Case LCase(ion_mode)
-                Case "+", "1", "p", "pos", "positive"
-                    Return Positive
-                Case "-", "-1", "n", "neg", "negative"
-                    Return Negative
-                Case Else
-                    Throw New InvalidExpressionException(ion_mode)
-            End Select
+            If ParseIonMode(ion_mode) = 1 Then
+                Return Positive
+            Else
+                Return Negative
+            End If
         End Function
     End Module
 End Namespace
