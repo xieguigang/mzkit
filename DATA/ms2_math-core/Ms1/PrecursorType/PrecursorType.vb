@@ -94,25 +94,26 @@ Namespace Ms1.PrecursorType
         ''' <param name="tolerance">所能够容忍的质量误差</param>
         ''' <returns></returns>
         Public Function FindPrecursorType(mass#, precursorMZ#, charge%, Optional chargeMode$ = "+", Optional tolerance As Tolerance = Nothing) As TypeMatch
-            If (charge = 0) Then
+            If charge = 0 Then
                 Return New TypeMatch With {
                     .errors = Double.NaN,
                     .precursorType = no_result,
                     .message = "I can't calculate the ionization mode for no charge(charge = 0)!"
                 }
-            End If
-
-            If (mass.IsNaNImaginary OrElse precursorMZ.IsNaNImaginary) Then
+            ElseIf (mass.IsNaNImaginary OrElse precursorMZ.IsNaNImaginary) Then
                 Return New TypeMatch With {
                     .errors = Double.NaN,
                     .precursorType = no_result,
                     .message = sprintf("  ****** mass='%s' or precursor_M/Z='%s' is an invalid value!", mass, precursorMZ)
                 }
+            Else
+                tolerance = tolerance Or Tolerance.DefaultTolerance
             End If
 
-            Dim ppm As Double = tolerance.MassError(precursorMZ, mass / sys.Abs(charge))
+            Dim mz# = mass / sys.Abs(charge)
+            Dim ppm As Double = tolerance.MassError(precursorMZ, mz)
 
-            If (ppm <= 500) Then
+            If tolerance.MatchTolerance([error]:=ppm) Then
                 ' 本身的分子质量和前体的mz一样，说明为[M]类型
                 If (sys.Abs(charge) = 1) Then
                     Return New TypeMatch With {
@@ -125,63 +126,43 @@ Namespace Ms1.PrecursorType
                         .precursorType = sprintf("[M]%s%s", charge, chargeMode)
                     }
                 End If
+            Else
+                Return FindPrecursorType(mass, precursorMZ, charge, Provider.Calculator(chargeMode), tolerance)
             End If
+        End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="mass"></param>
+        ''' <param name="precursorMZ#"></param>
+        ''' <param name="charge%"></param>
+        ''' <param name="calculator">得到某一个离子模式下的计算程序</param>
+        ''' <param name="tolerance"></param>
+        ''' <returns></returns>
+        Private Function FindPrecursorType(mass#, precursorMZ#, charge%, calculator As Dictionary(Of String, MzCalculator), tolerance As Tolerance) As TypeMatch
             ' 每一个模式都计算一遍，然后返回最小的ppm差值结果
             Dim min = 999999
             Dim minType$ = Nothing
 
-            ' 得到某一个离子模式下的计算程序
-            Dim mode As Dictionary(Of String, MzCalculator) = Provider.Calculator(chargeMode)
-
-            If (chargeMode = "-") Then
-                ' 对于负离子模式而言，虽然电荷量是负数的，但是使用xcms解析出来的却是一个电荷数的绝对值
-                ' 所以需要判断一次，乘以-1 
-                If (charge > 0) Then
-                    charge = -1 * charge
-                End If
-            End If
-
             ' 然后遍历这个模式下的所有离子前体计算
-            For Each calc As MzCalculator In mode.Values
-                Dim ptype = calc.name
+            ' 跳过电荷数不匹配的离子模式计算表达式
+            For Each calc As MzCalculator In calculator.Values.Where(Function(cal) cal.charge = charge)
+                Dim mz As Double = calc.CalcMZ(mass)
 
-                ' 跳过电荷数不匹配的离子模式计算表达式
-                If (charge <> calc.charge) Then
-                    Continue For
-                End If
-
-                ' 这里实际上是根据数据库之中的分子质量，通过前体离子的质量计算出mz结果
-                ' 然后计算mz计算结果和precursorMZ的ppm信息
-                Dim massReverse = calc.CalcMass(precursorMZ)
-                Dim deltappm# = PPMmethod.ppm(massReverse, actualValue:=mass)
-
-                If (debugEcho) Then
-                    println("%s - %s = %s(ppm), type=%s", mass, massReverse, deltappm, ptype)
-                End If
-
-                ' 根据质量计算出前体质量，然后计算出差值
-                If (deltappm < min) Then
-                    min = deltappm
-                    minType = ptype
+                If tolerance(mz, precursorMZ) Then
+                    Return New TypeMatch With {
+                        .errors = tolerance.MassError(mz, precursorMZ),
+                        .precursorType = calc.name
+                    }
                 End If
             Next
 
-            ' 假若这个最小的ppm差值符合误差范围，则认为找到了一个前体模式
-            If (debugEcho) Then
-                println("  ==> %s", minType)
-            End If
-
-            If (min <= minError_ppm) Then
-                Return (min, minType)
-            Else
-                If (debugEcho) Then
-                    println("But the '%s' ionization mode its ppm error (%s ppm) is ", minType, min)
-                    println("not satisfy the minError requirement(%s), returns Unknown!", minError_ppm)
-                End If
-
-                Return (-1, no_result)
-            End If
+            Return New TypeMatch With {
+                .precursorType = no_result,
+                .errors = Double.NaN,
+                .message = "No match"
+            }
         End Function
     End Module
 
