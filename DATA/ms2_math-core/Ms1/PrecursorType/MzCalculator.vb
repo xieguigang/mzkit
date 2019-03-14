@@ -95,7 +95,7 @@ Namespace Ms1.PrecursorType
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CalcMZ(mass#) As Double
-            Return (AdductMass(mass * M, adducts, charge))
+            Return (AdductMZ(mass * M, adducts, charge))
         End Function
 
         Public Overrides Function ToString() As String
@@ -123,22 +123,22 @@ Namespace Ms1.PrecursorType
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function AdductMass(mass#, adduct#, charge%) As Double
+        Public Shared Function AdductMZ(mass#, adduct#, charge%) As Double
             Return (mass / sys.Abs(charge) + adduct)
         End Function
 
         ''' <summary>
         ''' 从质谱的MS/MS的前体的m/z结果反推目标分子的mass结果
         ''' </summary>
-        ''' <param name="precursorMZ#"></param>
+        ''' <param name="mz#"></param>
         ''' <param name="M#"></param>
         ''' <param name="charge%"></param>
         ''' <param name="adduct#"></param>
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function ReverseMass(precursorMZ#, M#, charge%, adduct#) As Double
-            Return ((precursorMZ - adduct) * sys.Abs(charge) / M)
+        Public Shared Function ReverseMass(mz#, M#, charge%, adduct#) As Double
+            Return ((mz - adduct) * sys.Abs(charge) / M)
         End Function
 
         Public Shared Iterator Function CalculateMode(mass#, mode As String) As IEnumerable(Of MzReport)
