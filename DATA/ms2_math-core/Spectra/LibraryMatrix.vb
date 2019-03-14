@@ -63,9 +63,10 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
-Imports WhichSelector = Microsoft.VisualBasic.Linq.Which
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
+Imports SMRUCC.MassSpectrum.Math.Ms1
+Imports WhichSelector = Microsoft.VisualBasic.Linq.Which
 
 Namespace Spectra
 

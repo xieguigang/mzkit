@@ -1,66 +1,67 @@
 ﻿#Region "Microsoft.VisualBasic::a9c9c4a534837c546fb1ac391417f6d5, ms2_math-core\Ms1\Tolerance.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class Tolerance
-    ' 
-    '     Properties: [Interface], DefaultTolerance
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: AddPPM, DeltaMass, PPM, SubPPM
-    ' 
-    ' Class PPMmethod
-    ' 
-    '     Properties: ppmValue
-    ' 
-    '     Constructor: (+2 Overloads) Sub New
-    '     Function: AsScore, Assert, ppm, ToString
-    ' 
-    ' Class DAmethod
-    ' 
-    '     Properties: da
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: AsScore, Assert, ToString
-    ' 
-    ' /********************************************************************************/
+' Class Tolerance
+' 
+'     Properties: [Interface], DefaultTolerance
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: AddPPM, DeltaMass, PPM, SubPPM
+' 
+' Class PPMmethod
+' 
+'     Properties: ppmValue
+' 
+'     Constructor: (+2 Overloads) Sub New
+'     Function: AsScore, Assert, ppm, ToString
+' 
+' Class DAmethod
+' 
+'     Properties: da
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: AsScore, Assert, ToString
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.Default
+Imports sys = System.Math
 
 Namespace Ms1
 
@@ -96,13 +97,47 @@ Namespace Ms1
         ''' <returns></returns>
         Public Shared ReadOnly Property DefaultTolerance As DefaultValue(Of Tolerance)
 
+        ''' <summary>
+        ''' 分子质量误差的上限值
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Threshold As Double
+
         Shared Sub New()
             DefaultTolerance = New DAmethod(0.3).Interface
         End Sub
 
+        ''' <summary>
+        ''' 判断两个分子质量是否一致
+        ''' </summary>
+        ''' <param name="mz1#"></param>
+        ''' <param name="mz2#"></param>
+        ''' <returns></returns>
         Public MustOverride Function Assert(mz1#, mz2#) As Boolean
+        ''' <summary>
+        ''' 将分子质量误差值转换为百分比得分
+        ''' </summary>
+        ''' <param name="mz1#"></param>
+        ''' <param name="mz2#"></param>
+        ''' <returns></returns>
         Public MustOverride Function AsScore(mz1#, mz2#) As Double
+        ''' <summary>
+        ''' 计算出两个分子质量之间的误差值的大小
+        ''' </summary>
+        ''' <param name="mz1#"></param>
+        ''' <param name="mz2#"></param>
+        ''' <returns></returns>
         Public MustOverride Function MassError(mz1#, mz2#) As Double
+        ''' <summary>
+        ''' 判断目标分子质量误差是否符合当前的误差要求
+        ''' </summary>
+        ''' <param name="error"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function MatchTolerance([error] As Double) As Boolean
+            Return sys.Abs([error]) <= Threshold
+        End Function
 
         Public Shared Function DeltaMass(da#) As DAmethod
             Return New DAmethod(da)

@@ -110,14 +110,20 @@ Namespace Ms1.PrecursorType
                 }
             End If
 
-            Dim ppm As Double = tolerance.(precursorMZ, mass / sys.Abs(charge))
+            Dim ppm As Double = tolerance.MassError(precursorMZ, mass / sys.Abs(charge))
 
             If (ppm <= 500) Then
                 ' 本身的分子质量和前体的mz一样，说明为[M]类型
                 If (sys.Abs(charge) = 1) Then
-                    Return (ppm, "[M]" & chargeMode)
+                    Return New TypeMatch With {
+                        .errors = ppm,
+                        .precursorType = "[M]" & chargeMode
+                    }
                 Else
-                    Return (ppm, sprintf("[M]%s%s", charge, chargeMode))
+                    Return New TypeMatch With {
+                        .errors = ppm,
+                        .precursorType = sprintf("[M]%s%s", charge, chargeMode)
+                    }
                 End If
             End If
 
@@ -137,7 +143,7 @@ Namespace Ms1.PrecursorType
             End If
 
             ' 然后遍历这个模式下的所有离子前体计算
-            For Each calc In mode.Values
+            For Each calc As MzCalculator In mode.Values
                 Dim ptype = calc.name
 
                 ' 跳过电荷数不匹配的离子模式计算表达式

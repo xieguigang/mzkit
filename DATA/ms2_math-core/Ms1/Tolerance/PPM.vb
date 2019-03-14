@@ -8,18 +8,12 @@ Namespace Ms1
     ''' </summary>
     Public Class PPMmethod : Inherits Tolerance
 
-        Public Property ppmValue As Double
-
         Sub New()
         End Sub
 
         Sub New(ppm#)
-            ppmValue = ppm
+            Threshold = ppm
         End Sub
-
-        Public Overrides Function ToString() As String
-            Return $"ppm(mz1, mz2) <= {ppmValue}"
-        End Function
 
         ''' <summary>
         ''' 分子量差值
@@ -37,17 +31,21 @@ Namespace Ms1
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function Assert(mz1 As Double, mz2 As Double) As Boolean
-            Return ppm(mz1, mz2) <= ppmValue
+            Return ppm(mz1, mz2) <= Threshold
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function AsScore(mz1 As Double, mz2 As Double) As Double
-            Return 1 - (ppm(mz1, mz2) / ppmValue)
+            Return 1 - (ppm(mz1, mz2) / Threshold)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function MassError(mz1 As Double, mz2 As Double) As Double
             Return ppm(mz1, mz2)
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return $"ppm(mz1, mz2) <= {Threshold}"
         End Function
     End Class
 End Namespace

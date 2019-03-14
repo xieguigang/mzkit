@@ -8,20 +8,18 @@ Namespace Ms1
     ''' </summary>
     Public Class DAmethod : Inherits Tolerance
 
-        Public Property da As Double
-
         Sub New(Optional da# = 0.3)
-            Me.da = da
+            Threshold = da
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function Assert(mz1 As Double, mz2 As Double) As Boolean
-            Return sys.Abs(mz1 - mz2) <= da
+            Return sys.Abs(mz1 - mz2) <= Threshold
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function AsScore(mz1 As Double, mz2 As Double) As Double
-            Return 1 - (sys.Abs(mz1 - mz2) / da)
+            Return 1 - (sys.Abs(mz1 - mz2) / Threshold)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -30,7 +28,7 @@ Namespace Ms1
         End Function
 
         Public Overrides Function ToString() As String
-            Return $"|mz1 - mz2| <= {da}"
+            Return $"|mz1 - mz2| <= {Threshold}"
         End Function
     End Class
 End Namespace

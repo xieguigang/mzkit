@@ -44,6 +44,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports SMRUCC.MassSpectrum.Math.Ms1
 Imports sys = System.Math
 
 Namespace Spectra
