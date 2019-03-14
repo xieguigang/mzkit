@@ -94,7 +94,7 @@ Namespace Ms1.PrecursorType
         ''' <param name="mass#"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function CalcPrecursorMZ(mass#) As Double
+        Public Function CalcMZ(mass#) As Double
             Return (AdductMass(mass, adducts, charge))
         End Function
 
@@ -140,5 +140,25 @@ Namespace Ms1.PrecursorType
         Public Shared Function ReverseMass(precursorMZ#, M#, charge%, adduct#) As Double
             Return ((precursorMZ - adduct) * sys.Abs(charge) / M)
         End Function
+
+        Public Iterator Function CalculateMode(mass#, mode As String) As IEnumerable(Of MzReport)
+            For Each type In Provider.Calculator(mode).Values
+                Yield New MzReport With {
+                    .Adduct = type.adducts,
+                    .Charge = type.charge,
+                    .M = type.M,
+                    .mz = type.CalcMZ(mass),
+                    .PrecursorType = type.name
+                }
+            Next
+        End Function
+    End Structure
+
+    Public Structure MzReport
+        Dim PrecursorType As String
+        Dim Charge As Double
+        Dim M As Double
+        Dim Adduct As Double
+        Dim mz As Double
     End Structure
 End Namespace
