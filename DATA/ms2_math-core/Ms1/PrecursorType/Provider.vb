@@ -173,5 +173,15 @@ Namespace Ms1.PrecursorType
             End Select
         End Function
 
+        Public Function GetCalculator(ion_mode As String) As Dictionary(Of String, MzCalculator)
+            Select Case LCase(ion_mode)
+                Case "+", "1", "p", "pos", "positive"
+                    Return Positive
+                Case "-", "-1", "n", "neg", "negative"
+                    Return Negative
+                Case Else
+                    Throw New InvalidExpressionException(ion_mode)
+            End Select
+        End Function
     End Module
 End Namespace
