@@ -147,6 +147,7 @@
     <Compile Include="Chromatogram\ROI.vb" />
     <Compile Include="Extensions.vb" />
     <Compile Include="Ms1\PrecursorType\Extensions.vb" />
+    <Compile Include="Ms1\PrecursorType\Provider.vb" />
     <Compile Include="Ms1\PrecursorType\MolWeight.vb" />
     <Compile Include="Ms1\PrecursorType\MzCalculator.vb" />
     <Compile Include="Ms1\Tolerance.vb" />
