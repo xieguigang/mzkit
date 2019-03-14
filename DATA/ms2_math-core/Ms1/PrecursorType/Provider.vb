@@ -151,5 +151,21 @@ Namespace Ms1.PrecursorType
             End Get
         End Property
 
+        ''' <summary>
+        ''' 采用Friend访问控制是为了避免被不必要的意外修改出现
+        ''' </summary>
+        ''' <param name="ion_mode"></param>
+        ''' <returns></returns>
+        Friend Function Calculator(ion_mode As String) As Dictionary(Of String, MzCalculator)
+            Select Case LCase(ion_mode)
+                Case "+", "1", "p", "pos", "positive"
+                    Return pos
+                Case "-", "-1", "n", "neg", "negative"
+                    Return neg
+                Case Else
+                    Throw New InvalidExpressionException(ion_mode)
+            End Select
+        End Function
+
     End Module
 End Namespace

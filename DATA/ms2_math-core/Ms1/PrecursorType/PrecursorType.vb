@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::e1e3d93c2b2f5fb037ec0ac9ae0813cc, ms2_math-core\Ms1\PrecursorType\PrecursorType.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module PrecursorType
-    ' 
-    '         Function: CalcMass, FindPrecursorType, Negative, Positive, ppm
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module PrecursorType
+' 
+'         Function: CalcMass, FindPrecursorType, Negative, Positive, ppm
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -67,27 +67,22 @@ Namespace Ms1.PrecursorType
                 Return (Function(x) x)
             End If
 
-            Dim mode As Dictionary(Of String, MzCalculator) = calculator(chargeMode)
+            Dim mode As Dictionary(Of String, MzCalculator) = Calculator(chargeMode)
             Dim found As MzCalculator = Nothing
 
             For Each cacl In mode.Values
-                If (cacl.Name = PrecursorType) Then
+                If (cacl.name = PrecursorType) Then
                     found = cacl
                     Exit For
                 End If
             Next
 
-            If found.Name.StringEmpty Then
+            If found.name.StringEmpty Then
                 Return Nothing
             Else
                 Return AddressOf found.CalcMass
             End If
         End Function
-
-        ReadOnly calculator As New Dictionary(Of String, Dictionary(Of String, MzCalculator)) From {
-            {"+", Positive()},
-            {"-", Negative()}
-        }
 
         ''' <summary>
         ''' 计算出前体离子的加和模式
@@ -113,7 +108,7 @@ Namespace Ms1.PrecursorType
                 Return (Double.NaN, no_result)
             End If
 
-            Dim ppm = PrecursorType.ppm(precursorMZ, mass / sys.Abs(charge))
+            Dim ppm As Double = PPMmethod.ppm(precursorMZ, mass / sys.Abs(charge))
 
             If (ppm <= 500) Then
                 ' 本身的分子质量和前体的mz一样，说明为[M]类型
@@ -129,7 +124,7 @@ Namespace Ms1.PrecursorType
             Dim minType$ = Nothing
 
             ' 得到某一个离子模式下的计算程序
-            Dim mode As Dictionary(Of String, MzCalculator) = calculator(chargeMode)
+            Dim mode As Dictionary(Of String, MzCalculator) = Provider.Calculator(chargeMode)
 
             If (chargeMode = "-") Then
                 ' 对于负离子模式而言，虽然电荷量是负数的，但是使用xcms解析出来的却是一个电荷数的绝对值
@@ -141,7 +136,7 @@ Namespace Ms1.PrecursorType
 
             ' 然后遍历这个模式下的所有离子前体计算
             For Each calc In mode.Values
-                Dim ptype = calc.Name
+                Dim ptype = calc.name
 
                 ' 跳过电荷数不匹配的离子模式计算表达式
                 If (charge <> calc.charge) Then
@@ -151,7 +146,7 @@ Namespace Ms1.PrecursorType
                 ' 这里实际上是根据数据库之中的分子质量，通过前体离子的质量计算出mz结果
                 ' 然后计算mz计算结果和precursorMZ的ppm信息
                 Dim massReverse = calc.CalcMass(precursorMZ)
-                Dim deltappm = PrecursorType.ppm(massReverse, actualValue:=mass)
+                Dim deltappm# = PPMmethod.ppm(massReverse, actualValue:=mass)
 
                 If (debugEcho) Then
                     println("%s - %s = %s(ppm), type=%s", mass, massReverse, deltappm, ptype)

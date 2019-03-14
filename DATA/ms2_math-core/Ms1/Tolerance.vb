@@ -159,6 +159,9 @@ Public MustInherit Class Tolerance
     End Operator
 End Class
 
+''' <summary>
+''' PPM tolerance calculator
+''' </summary>
 Public Class PPMmethod : Inherits Tolerance
 
     Public Property ppmValue As Double
