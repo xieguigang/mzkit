@@ -193,7 +193,7 @@ Public Module ChromatogramPlot
 
         If ionData.Length = 1 Then
             colors = {
-                newPen(colorsSchema.TranslateColor Or Color.DeepSkyBlue.AsDefault)
+                newPen(colorsSchema.TranslateColor(False) Or Color.DeepSkyBlue.AsDefault)
             }
         Else
             colors = Designer _
