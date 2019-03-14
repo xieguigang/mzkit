@@ -120,16 +120,16 @@ Namespace Ms1.PrecursorType
         ''' <param name="output"></param>
         <Extension>
         Public Sub PrintTable(report As IEnumerable(Of MzReport), output As TextWriter)
-            Call output.WriteLine("<table>")
+            Call output.WriteLine("<table style='width:100% font-size:0.9em;'>")
             Call output.WriteLine(html:=
                  <thead>
-                     <th>
-                         <td>Precursor Type</td>
-                         <td>Charge</td>
-                         <td>M</td>
-                         <td>Adduct</td>
-                         <td>m/z</td>
-                     </th>
+                     <tr>
+                         <th>Precursor Type</th>
+                         <th>Charge</th>
+                         <th>M</th>
+                         <th>Adduct</th>
+                         <th>m/z</th>
+                     </tr>
                  </thead>)
 
             Call output.WriteLine("<tbody>")

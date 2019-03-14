@@ -141,7 +141,7 @@ Namespace Ms1.PrecursorType
             Return ((precursorMZ - adduct) * sys.Abs(charge) / M)
         End Function
 
-        Public Iterator Function CalculateMode(mass#, mode As String) As IEnumerable(Of MzReport)
+        Public Shared Iterator Function CalculateMode(mass#, mode As String) As IEnumerable(Of MzReport)
             For Each type In Provider.Calculator(mode).Values
                 Yield New MzReport With {
                     .Adduct = type.adducts,
