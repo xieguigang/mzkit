@@ -101,6 +101,7 @@ Public MustInherit Class Tolerance
 
     Public MustOverride Function Assert(mz1#, mz2#) As Boolean
     Public MustOverride Function AsScore(mz1#, mz2#) As Double
+    Public MustOverride Function MassError(mz1#, mz2#) As Double
 
     Public Shared Function DeltaMass(da#) As DAmethod
         Return New DAmethod(da)
@@ -200,6 +201,11 @@ Public Class PPMmethod : Inherits Tolerance
     Public Overrides Function AsScore(mz1 As Double, mz2 As Double) As Double
         Return 1 - (ppm(mz1, mz2) / ppmValue)
     End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Overrides Function MassError(mz1 As Double, mz2 As Double) As Double
+        Return ppm(mz1, mz2)
+    End Function
 End Class
 
 Public Class DAmethod : Inherits Tolerance
@@ -215,11 +221,17 @@ Public Class DAmethod : Inherits Tolerance
         Return sys.Abs(mz1 - mz2) <= da
     End Function
 
-    Public Overrides Function ToString() As String
-        Return $"|mz1 - mz2| <= {da}"
-    End Function
-
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function AsScore(mz1 As Double, mz2 As Double) As Double
         Return 1 - (sys.Abs(mz1 - mz2) / da)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Overrides Function MassError(mz1 As Double, mz2 As Double) As Double
+        Return sys.Abs(mz1 - mz2)
+    End Function
+
+    Public Overrides Function ToString() As String
+        Return $"|mz1 - mz2| <= {da}"
     End Function
 End Class

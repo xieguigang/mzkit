@@ -87,28 +87,30 @@ Namespace Ms1.PrecursorType
         ''' <summary>
         ''' 计算出前体离子的加和模式
         ''' </summary>
-        ''' <param name="mass#">分子质量</param>
-        ''' <param name="precursorMZ#">前体的m/z</param>
-        ''' <param name="charge%">电荷量</param>
-        ''' <param name="chargeMode$">极性</param>
-        ''' <param name="minError_ppm#">所能够容忍的质量误差</param>
-        ''' <param name="debugEcho"></param>
+        ''' <param name="mass">分子质量</param>
+        ''' <param name="precursorMZ">前体的m/z</param>
+        ''' <param name="charge">电荷量</param>
+        ''' <param name="chargeMode">极性</param>
+        ''' <param name="tolerance">所能够容忍的质量误差</param>
         ''' <returns></returns>
-        Public Function FindPrecursorType(mass#, precursorMZ#, charge%,
-                                          Optional chargeMode$ = "+",
-                                          Optional minError_ppm# = 100,
-                                          Optional debugEcho As Boolean = True) As (ppm#, type$)
+        Public Function FindPrecursorType(mass#, precursorMZ#, charge%, Optional chargeMode$ = "+", Optional tolerance As Tolerance = Nothing) As TypeMatch
             If (charge = 0) Then
-                println("I can't calculate the ionization mode for no charge(charge = 0)!")
-                Return (Double.NaN, no_result)
+                Return New TypeMatch With {
+                    .errors = Double.NaN,
+                    .precursorType = no_result,
+                    .message = "I can't calculate the ionization mode for no charge(charge = 0)!"
+                }
             End If
 
             If (mass.IsNaNImaginary OrElse precursorMZ.IsNaNImaginary) Then
-                println("  ****** mass='%s' or precursor_M/Z='%s' is an invalid value!", mass, precursorMZ)
-                Return (Double.NaN, no_result)
+                Return New TypeMatch With {
+                    .errors = Double.NaN,
+                    .precursorType = no_result,
+                    .message = sprintf("  ****** mass='%s' or precursor_M/Z='%s' is an invalid value!", mass, precursorMZ)
+                }
             End If
 
-            Dim ppm As Double = PPMmethod.ppm(precursorMZ, mass / sys.Abs(charge))
+            Dim ppm As Double = tolerance.(precursorMZ, mass / sys.Abs(charge))
 
             If (ppm <= 500) Then
                 ' 本身的分子质量和前体的mz一样，说明为[M]类型
@@ -176,4 +178,15 @@ Namespace Ms1.PrecursorType
             End If
         End Function
     End Module
+
+    Public Structure TypeMatch
+
+        ''' <summary>
+        ''' 值误差
+        ''' </summary>
+        Dim errors As Double
+        Dim precursorType As String
+        Dim message As String
+
+    End Structure
 End Namespace
