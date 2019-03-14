@@ -8,6 +8,9 @@ Module Module1
 
         Dim mass = 853.33089
 
+        Dim mz = Provider.Positive("2M+H").CalcMZ(mass)
+
+
         Dim html As New StringBuilder
 
         Using dev As New StringWriter(html)

@@ -95,7 +95,7 @@ Namespace Ms1.PrecursorType
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CalcMZ(mass#) As Double
-            Return (AdductMass(mass, adducts, charge))
+            Return (AdductMass(mass * M, adducts, charge))
         End Function
 
         Public Overrides Function ToString() As String
