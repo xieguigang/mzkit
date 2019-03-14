@@ -2,6 +2,12 @@
 
 Namespace Ms1.PrecursorType
 
+    ''' <summary>
+    ''' 提供一些常用的前体母离子加和物类型的mz计算
+    ''' </summary>
+    ''' <remarks>
+    ''' ###### 2019-03-14 经过测试,无错误
+    ''' </remarks>
     Public Module Provider
 
         '# http://fiehnlab.ucdavis.edu/staff/kind/Metabolomics/MS-Adduct-Calculator
