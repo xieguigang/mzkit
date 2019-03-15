@@ -82,6 +82,7 @@ Namespace Ms1.PrecursorType
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return New Dictionary(Of String, MzCalculator) From {
+                    {"M", New MzCalculator("[M]+", charge:=1, M:=1, adducts:=0)},
                     {"M+3H", New MzCalculator("[M+3H]3+", charge:=3, M:=1, adducts:=1.007276)},                    ' M/3 + 1.007276	    3+	0.33	 1.007276	 285.450906	 291.099391 
                     {"M+2H+Na", New MzCalculator("[M+2H+Na]3+", charge:=3, M:=1, adducts:=8.33459)},               ' M/3 + 8.334590	    3+	0.33	 8.334590	 292.778220	 283.772077
                     {"M+H+2Na", New MzCalculator("[M+H+2Na]3+", charge:=3, M:=1, adducts:=15.76619)},              ' M/3 + 15.7661904	    3+	0.33	15.766190	 300.209820	 276.340476
@@ -121,6 +122,7 @@ Namespace Ms1.PrecursorType
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return New Dictionary(Of String, MzCalculator) From {
+                    {"M", New MzCalculator("[M]-", charge:=-1, M:=1, adducts:=0)},
                     {"M-3H", New MzCalculator("[M-3H]3-", charge:=-3, M:=1, adducts:=-1.007276)},        ' M/3 - 1.007276	    3-	0.33	 -1.007276	 283.436354	 293.113943
                     {"M-2H", New MzCalculator("[M-2H]2-", charge:=-2, M:=1, adducts:=-1.007276)},        ' M/2 - 1.007276	    2-	0.50	 -1.007276	 425.658169	 439.167276
                     {"M-H2O-H", New MzCalculator("[M-H2O-H]-", charge:=-1, M:=1, adducts:=-19.01839)},   ' M - 19.01839	    1-	1.00	-19.01839	 834.312500	 895.338390
