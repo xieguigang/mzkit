@@ -14,7 +14,14 @@ Namespace NCBI.PubChem
             End Get
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Set(value As Section())
-                sectionTable = value.ToDictionary(Function(sec) sec.TOCHeading)
+                If value.IsNullOrEmpty Then
+                    sectionTable = New Dictionary(Of String, Section)
+                Else
+                    sectionTable = value _
+                        .ToDictionary(Function(sec)
+                                          Return sec.TOCHeading
+                                      End Function)
+                End If
             End Set
         End Property
 

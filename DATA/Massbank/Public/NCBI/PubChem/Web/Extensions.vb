@@ -11,6 +11,12 @@ Namespace NCBI.PubChem
             Return section.getInformation(key)?.StringValue
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function GetInformationStrings(section As Section, key$) As String()
+            Return section.getInformation(key)?.StringValueList
+        End Function
+
         <Extension>
         Private Function getInformation(section As Section, key$) As Information
             If section Is Nothing Then
@@ -21,6 +27,15 @@ Namespace NCBI.PubChem
                     .SafeQuery _
                     .FirstOrDefault(Function(i) i.Name = key)
             End If
+        End Function
+
+        <Extension>
+        Friend Function GetHMDBId(refs As Reference()) As String
+            Return refs.SafeQuery _
+                .FirstOrDefault(Function(ref)
+                                    Return ref.SourceName = PugViewRecord.HMDB
+                                End Function) _
+               ?.SourceID
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

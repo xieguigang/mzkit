@@ -146,7 +146,7 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
     tick.each(identify$meta.KEGG %=>% .as.list, function(identified) {
         # Get all of the kegg reaction partner metabolite id
         # for current identified kegg metabolite id
-        partners <- identified$KEGG %=>% kegg.partners %=>% filter.skips;
+        partners <- identified$KEGG %=>% kegg.partners %=>% filter.skips %=>% unique;
 
         # current identify metabolite KEGG id didnt found any
         # reaction related partner compounds
@@ -199,8 +199,13 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
 		out <- list();
 		i <- 1;
 		list <- lapply(precursor_type, function(type) {
-			mz <- kegg.mz[[type]];
-			kegg.match(kegg_id, kegg.mass, kegg.ids, kegg.mz, kegg.list, type, unknown.mz, tolerance);
+			# mz <- kegg.mz[[type]];
+			kegg.match(
+				kegg_id, kegg.mass, kegg.ids, kegg.mz, kegg.list, 
+				precursor_type = type, 
+				unknown.mz     = unknown.mz, 
+				tolerance      = tolerance
+			);
 		});
 
 		for(hits in list) {
@@ -212,8 +217,12 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
 			}
 		}
 
-		names(out) <- as.character(1:length(out));
-		out;
+		if (length(out) == 0) {
+			NULL;
+		} else {
+			names(out) <- as.character(1:length(out));
+			out;
+		}
     }
 }
 
@@ -222,13 +231,16 @@ kegg.match.handler <- function(meta.KEGG, unknown.mz,
 #   => unknown mz with tolerance
 #   => unknown index
 #   => unknown peak and ms2 for align
-kegg.match <- function(kegg_id, kegg.mass, kegg.ids, kegg.mz, kegg.list, precursor_type, unknown.mz, tolerance) {
+kegg.match <- function(kegg_id, kegg.mass, kegg.ids, kegg.mz, kegg.list, 
+	precursor_type, 
+	unknown.mz, 
+	tolerance) {
 
 	# Get kegg m/z for a given kegg_id set
 	kegg_id <- as.index(kegg_id);
 	mzi <- sapply(kegg.ids, kegg_id) %=>% as.logical;
 	# Get corresponding kegg mz and annotation meta data
-	mz <- kegg.mz[mzi];
+	mz <- kegg.mz[[precursor_type]][mzi];
 	kegg <- kegg.list[mzi];
 	mz.index <- 1:length(mz);
 

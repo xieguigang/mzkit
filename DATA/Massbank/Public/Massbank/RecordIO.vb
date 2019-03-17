@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::815b3227d7976cdbdc8b509a6f3a5dc3, Massbank\Public\Massbank\RecordIO.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module RecordIO
-    ' 
-    '         Function: (+2 Overloads) __createObject, __createPeaksData, __loadSection, LoadFile, ScanLoad
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module RecordIO
+' 
+'         Function: (+2 Overloads) __createObject, __createPeaksData, __loadSection, LoadFile, ScanLoad
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -70,19 +70,15 @@ Namespace Massbank
             Return out
         End Function
 
-        Public Function LoadFile(txt$) As Record()
-            Dim out As New List(Of Record)
-
+        Public Iterator Function LoadFile(txt As String) As IEnumerable(Of Record)
             For Each data As String() In txt.ReadAllLines.Split("//")
                 Dim annotationHeaders$() = Nothing
                 Dim nodes As Dictionary(Of String, Node) = data.__loadSection(annotationHeaders)
                 ' 文件区段读取完毕，开始生成数据对象
                 Dim r As Record = nodes.__createObject(annotationHeaders)
 
-                out += r
+                Yield r
             Next
-
-            Return out
         End Function
 
         <Extension>
@@ -104,6 +100,7 @@ Namespace Massbank
 
             pk.NUM_PEAK = node.TryGetValue(NameOf(pk.NUM_PEAK)).DefaultFirst
             pk.SPLASH = node.TryGetValue(NameOf(pk.SPLASH)).DefaultFirst
+
             Try
                 pk.ANNOTATION = node.TryGetValue(NameOf(pk.ANNOTATION)) _
                 .SafeQuery _
@@ -111,17 +108,16 @@ Namespace Massbank
                 .Select(Function(s)
                             Dim t$() = (+s).Split
                             Dim table As PropertyValue() =
-                                t _
-                                .Where(Function(ss) Not ss.StringEmpty) _
-                                .SeqIterator _
-                                .Select(Function(k)
-                                            Return New PropertyValue With {
+                                t.Where(Function(ss) Not ss.StringEmpty) _
+                                 .SeqIterator _
+                                 .Select(Function(k)
+                                             Return New PropertyValue With {
                                                 .Key = k.i,
                                                 .Property = annotationHeaders(k),
                                                 .Value = +k
-                                            }
-                                        End Function) _
-                                .ToArray
+                                             }
+                                         End Function) _
+                                 .ToArray
 
                             Return New Entity With {
                                 .ID = s.i,
@@ -132,18 +128,19 @@ Namespace Massbank
             Catch ex As Exception
 
             End Try
-            pk.PEAK = node(NameOf(pk.PEAK)) _
-            .Select(Function(s$)
-                        Dim t$() = s.Split
-                        Dim i As int = Scan0
 
-                        Return New PeakData With {
-                            .mz = t(++i),
-                            .int = t(++i),
-                            .relint = t(++i)
-                        }
-                    End Function) _
-            .ToArray
+            pk.PEAK = node(NameOf(pk.PEAK)) _
+                .Select(Function(s$)
+                            Dim t$() = s.Split
+                            Dim i As VBInteger = Scan0
+
+                            Return New PeakData With {
+                                .mz = t(++i),
+                                .int = t(++i),
+                                .relint = t(++i)
+                            }
+                        End Function) _
+                .ToArray
 
             Return pk
         End Function
@@ -171,13 +168,13 @@ Namespace Massbank
         <Extension>
         Private Function __loadSection(data$(), ByRef annotationHeaders$()) As Dictionary(Of String, Node)
             Dim nodes As New Dictionary(Of String, Node) From {
-            {"$_", New Node},
-            {"CH", New Node},
-            {"AC", New Node},
-            {"MS", New Node},
-            {"PK", New Node},
-            {"SP", New Node}
-        }
+                {"$_", New Node},
+                {"CH", New Node},
+                {"AC", New Node},
+                {"MS", New Node},
+                {"PK", New Node},
+                {"SP", New Node}
+            }
             Dim table$ = ""
             Dim readTable As Boolean = False
             Dim appendNodeData =
@@ -188,6 +185,7 @@ Namespace Massbank
                 If Not node.ContainsKey(nodeName.Value) Then
                     node(nodeName.Value) = New List(Of String)
                 End If
+
                 node(nodeName.Value) += value
             End Sub
 
@@ -217,13 +215,15 @@ Namespace Massbank
                 If value.Name.Contains("$") Then
                     With value
                         Call appendNodeData(
-                        path:= .Name,
-                        value:= .Value)
+                            path:= .Name,
+                            value:= .Value
+                        )
                     End With
                 Else
                     If Not nodes("$_").ContainsKey(value.Name) Then
                         nodes("$_")(value.Name) = New List(Of String)
                     End If
+
                     nodes("$_")(value.Name) += value.Value
                 End If
             Next
