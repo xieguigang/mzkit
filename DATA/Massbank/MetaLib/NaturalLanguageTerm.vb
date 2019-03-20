@@ -50,7 +50,7 @@ Public Module NaturalLanguageTerm
     ''' <summary>
     ''' 低聚肽的名称匹配模式
     ''' </summary>
-    Public Const OligopeptideName$ = "([A-Z][a-z]{2})(\s+([A-Z][a-z]{2})){2,}"
+    Public Const OligopeptideName$ = "([A-Z][a-z]{2})(([-]|\s)+([A-Z][a-z]{2})){2,}"
 
     ReadOnly oligopeptidePattern As New Regex(OligopeptideName, RegexOptions.Singleline)
 
