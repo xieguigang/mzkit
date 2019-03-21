@@ -209,7 +209,7 @@ Public Module GCMSscanVisual
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 ' 要先绘制三维图形，要不然会将图例遮住的
-                Call model.RenderAs3DChart(g, camera, region)
+                Call model.RenderAs3DChart(g, camera, region, Nothing)
             End Sub
 
         Return plotRegion _
