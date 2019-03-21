@@ -149,7 +149,9 @@ Namespace MarkupData.mzXML
                 .rt = PeakMs2.RtInSecond(retentionTime),
                 .scan = num,
                 .file = basename,
-                .mzInto = mzInto
+                .mzInto = mzInto,
+                .activation = precursorMz.activationMethod,
+                .collisionEnergy = Val(collisionEnergy)
             }
         End Function
     End Class

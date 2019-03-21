@@ -70,6 +70,8 @@ Namespace Spectra
         ''' 数据扫描编号
         ''' </summary>
         Dim scan As Integer
+        Dim activation As String
+        Dim collisionEnergy As Double
         ''' <summary>
         ''' 二级碎片信息
         ''' </summary>
