@@ -77,9 +77,9 @@ Namespace Ms1.PrecursorType
         End Function
 
         Public Function Eval(formula As String) As Double
-            Static symbol As Index(Of Char) = {"+"c, "-"c}
+            Static ionModeSymbols As Index(Of Char) = {"+"c, "-"c}
 
-            If formula.First.IsOneOfA(symbol) Then
+            If formula.First Like ionModeSymbols Then
                 formula = "0H" & formula
             End If
 
