@@ -57,18 +57,16 @@ Namespace IUPAC.InChILayers
             Dim c As Value(Of Char) = ASCII.NUL
             Dim popIndex = Function() Integer.Parse(buffer.PopAll.JoinBy(""))
             Dim indexStack As New Stack(Of Integer)
-            Dim pop_i = Sub()
-                            Do While True
-                                If Char.IsNumber(c = ++chars) Then
-                                    buffer += c
-                                Else
-                                    i = popIndex()
-                                    Exit Do
-                                End If
-                            Loop
-                        End Sub
+            Dim previous As Char = ASCII.NUL
 
-            Call pop_i()
+            Do While True
+                If Char.IsNumber(c = ++chars) Then
+                    buffer += c
+                Else
+                    i = popIndex()
+                    Exit Do
+                End If
+            Loop
 
             Do While Not chars.EndRead
                 If Char.IsNumber(c = ++chars) Then
@@ -82,13 +80,22 @@ Namespace IUPAC.InChILayers
                     }
                     i = j
                 ElseIf c.Equals("("c) Then
-                    Call indexStack.Push(i)
-                    Call pop_i()
+                    indexStack.Push(i)
+                    i = popIndex()
                 ElseIf c.Equals(")"c) Then
-                    i = indexStack.Pop
+                    If buffer > 0 Then
+                        j = popIndex()
+
+                        Yield New Bound With {
+                            .i = i,
+                            .j = j
+                        }
+                    End If
                 Else
                     Throw New NotImplementedException(c)
                 End If
+
+                previous = c
             Loop
 
             If buffer > 0 Then
