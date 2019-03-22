@@ -188,11 +188,11 @@ Namespace TMIC.HMDB
                 .ToArray
 
             Return Function(m)
-                       Dim a = m.accession.IsOneOfA(hmdb_ID)
+                       Dim a = m.accession Like hmdb_ID
                        Dim b = Not m.secondary_accessions.accession Is Nothing AndAlso
                                    m.secondary_accessions.accession _
                                     .Any(Function(id)
-                                             Return id.IsOneOfA(hmdb_ID)
+                                             Return id Like hmdb_ID
                                          End Function)
                        Return a OrElse b
                    End Function

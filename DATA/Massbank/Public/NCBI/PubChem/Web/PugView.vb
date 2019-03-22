@@ -39,6 +39,10 @@ Namespace NCBI.PubChem
             Dim properties = Table.ToDictionary(computedProperties)
             Dim CASNumber$
 
+            If synonyms Is Nothing Then
+                synonyms = {}
+            End If
+
             If otherNames Is Nothing Then
                 CASNumber = synonyms.FirstOrDefault(Function(id) id.IsPattern("\d+([-]\d+)+"))
             Else

@@ -77,9 +77,9 @@ Namespace Ms1.PrecursorType
         End Function
 
         Public Function Eval(formula As String) As Double
-            Static symbol As Index(Of Char) = {"+"c, "-"c}
+            Static ionModeSymbols As Index(Of Char) = {"+"c, "-"c}
 
-            If formula.First.IsOneOfA(symbol) Then
+            If formula.First Like ionModeSymbols Then
                 formula = "0H" & formula
             End If
 
@@ -116,8 +116,8 @@ Namespace Ms1.PrecursorType
             Dim n$ = ""
             Dim len% = Strings.Len(token)
 
-            Static x0 = Asc("0")
-            Static x9 = Asc("9")
+            Static x0 As Integer = Asc("0")
+            Static x9 As Integer = Asc("9")
 
             For i As Integer = 0 To len - 1
                 Dim x% = Asc(token(i))

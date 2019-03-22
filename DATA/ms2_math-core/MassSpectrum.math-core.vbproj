@@ -147,9 +147,12 @@
     <Compile Include="Chromatogram\ROI.vb" />
     <Compile Include="Extensions.vb" />
     <Compile Include="Ms1\PrecursorType\Extensions.vb" />
+    <Compile Include="Ms1\PrecursorType\Provider.vb" />
     <Compile Include="Ms1\PrecursorType\MolWeight.vb" />
     <Compile Include="Ms1\PrecursorType\MzCalculator.vb" />
-    <Compile Include="Ms1\Tolerance.vb" />
+    <Compile Include="Ms1\Tolerance\PPM.vb" />
+    <Compile Include="Ms1\Tolerance\DeltaMass.vb" />
+    <Compile Include="Ms1\Tolerance\Tolerance.vb" />
     <Compile Include="Spectra\SpectraEncoder.vb" />
     <Compile Include="Spectra\PeakMs2.vb" />
     <Compile Include="Spectra\LibraryMatrixExtensions.vb" />
@@ -204,5 +207,6 @@
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

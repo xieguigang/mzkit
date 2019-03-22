@@ -94,8 +94,8 @@ Namespace Ms1.PrecursorType
         ''' <param name="mass#"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function CalcPrecursorMZ(mass#) As Double
-            Return (AdductMass(mass, adducts, charge))
+        Public Function CalcMZ(mass#) As Double
+            Return (AdductMZ(mass * M, adducts, charge))
         End Function
 
         Public Overrides Function ToString() As String
@@ -123,22 +123,42 @@ Namespace Ms1.PrecursorType
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function AdductMass(mass#, adduct#, charge%) As Double
+        Public Shared Function AdductMZ(mass#, adduct#, charge%) As Double
             Return (mass / sys.Abs(charge) + adduct)
         End Function
 
         ''' <summary>
         ''' 从质谱的MS/MS的前体的m/z结果反推目标分子的mass结果
         ''' </summary>
-        ''' <param name="precursorMZ#"></param>
+        ''' <param name="mz#"></param>
         ''' <param name="M#"></param>
         ''' <param name="charge%"></param>
         ''' <param name="adduct#"></param>
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function ReverseMass(precursorMZ#, M#, charge%, adduct#) As Double
-            Return ((precursorMZ - adduct) * sys.Abs(charge) / M)
+        Public Shared Function ReverseMass(mz#, M#, charge%, adduct#) As Double
+            Return ((mz - adduct) * sys.Abs(charge) / M)
         End Function
+
+        Public Shared Iterator Function CalculateMode(mass#, mode As String) As IEnumerable(Of MzReport)
+            For Each type In Provider.Calculator(mode).Values
+                Yield New MzReport With {
+                    .Adduct = type.adducts,
+                    .Charge = type.charge,
+                    .M = type.M,
+                    .mz = type.CalcMZ(mass),
+                    .PrecursorType = type.name
+                }
+            Next
+        End Function
+    End Structure
+
+    Public Structure MzReport
+        Dim PrecursorType As String
+        Dim Charge As Double
+        Dim M As Double
+        Dim Adduct As Double
+        Dim mz As Double
     End Structure
 End Namespace

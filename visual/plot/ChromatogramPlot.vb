@@ -149,11 +149,11 @@ Public Module ChromatogramPlot
     ''' <summary>
     ''' 从mzML文件之中解析出色谱数据之后，将所有的色谱峰都绘制在一张图之中进行可视化
     ''' </summary>
-    ''' <param name="size$"></param>
-    ''' <param name="margin$"></param>
-    ''' <param name="bg$"></param>
-    ''' <returns></returns>
-    ''' 
+    ''' <param name="size"></param>
+    ''' <param name="margin"></param>
+    ''' <param name="bg"></param>
+    ''' <param name="deln">legend每一列有多少个进行显示</param>
+    ''' <param name="labelColor"></param>
     <Extension>
     Public Function TICplot(ionData As NamedCollection(Of ChromatogramTick)(),
                             Optional size$ = "1600,1000",
@@ -170,7 +170,8 @@ Public Module ChromatogramPlot
                             Optional axisLabelFont$ = CSSFont.Win7Large,
                             Optional axisTickFont$ = CSSFont.Win10NormalLarger,
                             Optional showLegends As Boolean = True,
-                            Optional legendFontCSS$ = CSSFont.Win10Normal) As GraphicsData
+                            Optional legendFontCSS$ = CSSFont.Win10Normal,
+                            Optional deln% = 10) As GraphicsData
 
         Dim labelFont As Font = CSSFont.TryParse(labelFontStyle)
         Dim labelConnector As Pen = Stroke.TryParse(labelConnectorStroke)
@@ -182,14 +183,25 @@ Public Module ChromatogramPlot
             Call $"{ion.Name}: {base}/{max} = {(100 * base / max).ToString("F2")}%".__DEBUG_ECHO
         Next
 
-        Dim colors As LoopArray(Of Pen) = Designer _
-            .GetColors(colorsSchema) _
-            .Select(Function(c)
-                        Dim style As Stroke = Stroke.TryParse(penStyle)
-                        style.fill = c.ARGBExpression
-                        Return style.GDIObject
-                    End Function) _
-            .ToArray
+        Dim colors As LoopArray(Of Pen)
+        Dim newPen As Func(Of Color, Pen) =
+            Function(c As Color) As Pen
+                Dim style As Stroke = Stroke.TryParse(penStyle)
+                style.fill = c.ARGBExpression
+                Return style.GDIObject
+            End Function
+
+        If ionData.Length = 1 Then
+            colors = {
+                newPen(colorsSchema.TranslateColor(False) Or Color.DeepSkyBlue.AsDefault)
+            }
+        Else
+            colors = Designer _
+                .GetColors(colorsSchema) _
+                .Select(newPen) _
+                .ToArray
+        End If
+
         Dim XTicks = ionData _
             .Select(Function(ion)
                         Return ion.Value.TimeArray
@@ -317,18 +329,33 @@ Public Module ChromatogramPlot
 
                 If showLegends Then
 
+                    ' 如果离子数量非常多的话,则会显示不完
+                    ' 这时候每20个换一列
+                    Dim cols = legends.Count / deln
+
+                    If cols > Fix(cols) Then
+                        ' 有余数,说明还有剩下的,增加一列
+                        cols += 1
+                    End If
+
                     ' 计算在右上角的位置
                     Dim maxSize = legends.MaxLegendSize(g)
                     Dim top = region.PlotRegion.Top + maxSize.Height + 5
                     Dim maxLen = maxSize.Width
-                    Dim left = region.PlotRegion.Right - maxLen - 120
+                    Dim legendShapeWidth% = 70
+                    Dim left = region.PlotRegion.Right - (maxLen + legendShapeWidth) * cols
                     Dim position As New Point With {
                         .X = left,
                         .Y = top
                     }
 
-                    Call g.DrawLegends(position, legends, "120,10", d:=0)
-
+                    For Each block As Legend() In legends.Split(deln)
+                        g.DrawLegends(position, block, $"{legendShapeWidth},10", d:=0)
+                        position = New Point With {
+                            .X = position.X + maxLen + legendShapeWidth,
+                            .Y = position.Y
+                        }
+                    Next
                 End If
             End Sub
 

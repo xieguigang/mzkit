@@ -49,6 +49,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Extensions
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports SMRUCC.MassSpectrum.Math.Ms1
 
 Namespace Spectra
 
