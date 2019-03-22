@@ -203,6 +203,7 @@
   <ItemGroup>
     <Compile Include="InChI\Layers.vb" />
     <Compile Include="InChI\InChI.vb" />
+    <Compile Include="InChI\Extensions.vb" />
     <Compile Include="MetaLib\KEGGExtensions.vb" />
     <Compile Include="MetaLib\NaturalLanguageTerm.vb" />
     <Compile Include="MetaLib\NameEquality.vb" />
