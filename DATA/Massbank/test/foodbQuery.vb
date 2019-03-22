@@ -83,11 +83,11 @@ Module foodbQuery
 "HMDB0000906"}.Indexing
 
         For Each m In hmdb
-            If m.accession.IsOneOfA(index) Then
+            If m.accession Like index Then
                 Call {m}.GetXml.SaveTo($"./hmdb/{m.accession}.xml")
             ElseIf Not m.secondary_accessions.accession Is Nothing Then
                 For Each id In m.secondary_accessions.accession
-                    If id.IsOneOfA(index) Then
+                    If id Like index Then
                         Call {m}.GetXml.SaveTo($"./hmdb/{m.accession}.xml")
                     End If
                 Next
