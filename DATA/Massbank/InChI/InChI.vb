@@ -1,6 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Language
+Imports System.Security.Cryptography
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
+Imports Microsoft.VisualBasic.SecurityString.MD5Hash
 Imports SMRUCC.MassSpectrum.DATA.IUPAC.InChILayers
 
 Namespace IUPAC
@@ -23,6 +24,15 @@ Namespace IUPAC
 
         Public Property Version As String
         Public Property IsStandard As Boolean
+
+        Public ReadOnly Property Key As String
+            Get
+                Using SHA256 As SHA256 = SHA256.Create()
+                    Dim hashValue() As Byte = SHA256.ComputeHash(ToString.AsciiBytes)
+                    Return hashValue.Sha256ByteString(delimiter:="-")
+                End Using
+            End Get
+        End Property
 
         Sub New(inchi As String)
             Dim tokens$() = inchi.GetTagValue("=").Value.Split("/"c)

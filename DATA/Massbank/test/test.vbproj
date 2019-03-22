@@ -93,6 +93,7 @@
   <ItemGroup>
     <Compile Include="Module1.vb" />
     <Compile Include="foodbQuery.vb" />
+    <Compile Include="inchiTest.vb" />
     <Compile Include="pubchemTest.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
