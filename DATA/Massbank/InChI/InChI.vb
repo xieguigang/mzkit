@@ -29,7 +29,7 @@ Namespace IUPAC
             Get
                 Using SHA256 As SHA256 = SHA256.Create()
                     Dim hashValue() As Byte = SHA256.ComputeHash(ToString.AsciiBytes)
-                    Return hashValue.Sha256ByteString(delimiter:="-")
+                    Return hashValue.Sha256ByteString(delimiter:="-").ToUpper
                 End Using
             End Get
         End Property

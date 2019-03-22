@@ -8,7 +8,9 @@ Module inchiTest
 
         Dim inchi As New InChI(ascorbicAcid)
 
-        Dim key As String = inchi.key
+        Dim key As String = inchi.Key
 
+
+        Pause()
     End Sub
 End Module
