@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.Text.Parser
 Imports SMRUCC.MassSpectrum.DATA.File
 
 Namespace IUPAC.InChILayers
@@ -49,7 +50,7 @@ Namespace IUPAC.InChILayers
         Public Property Hydrogen As String
 
         Public Shared Iterator Function ParseBounds(token As String) As IEnumerable(Of Bound)
-            Dim chars As New Parser.CharEnumerator(token)
+            Dim chars As New CharPtr(token)
             Dim i As Integer
             Dim j As Integer
             Dim buffer As New List(Of Char)
