@@ -27,8 +27,8 @@ Namespace NCBI.PubChem
             End If
         End Function
 
-        Public Function QueryPugViews(CAS As String) As Dictionary(Of String, PugViewRecord)
-            Dim cache = $"./pubchem_cache/{CAS}.Xml"
+        Public Function QueryPugViews(CAS As String, Optional cacheFolder$ = "./pubchem_cache") As Dictionary(Of String, PugViewRecord)
+            Dim cache = $"{cacheFolder}/{CAS}.Xml"
 
             If cache.FileLength > 0 Then
                 Return cache _
