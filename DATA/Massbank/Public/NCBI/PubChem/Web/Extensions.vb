@@ -8,13 +8,25 @@ Namespace NCBI.PubChem
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function GetInformationString(section As Section, key$) As String
-            Return section.getInformation(key)?.StringValue
+            Dim info = section.getInformation(key)
+
+            If info Is Nothing Then
+                Return ""
+            Else
+                Return info.Value.StringWithMarkup.First.String
+            End If
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function GetInformationStrings(section As Section, key$) As String()
-            Return section.getInformation(key)?.StringValueList
+            Dim info = section.getInformation(key)
+
+            If info Is Nothing Then
+                Return {}
+            Else
+                Return info.InfoValue
+            End If
         End Function
 
         <Extension>

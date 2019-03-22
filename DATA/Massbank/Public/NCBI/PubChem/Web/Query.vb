@@ -27,10 +27,11 @@ Namespace NCBI.PubChem
             End If
         End Function
 
-        Public Function QueryPugViews(CAS As String) As Dictionary(Of String, PugViewRecord)
-            Dim cache = $"./pubchem_cache/{CAS}.Xml"
+        Public Function QueryPugViews(CAS As String, Optional cacheFolder$ = "./pubchem_cache", Optional ByRef hitCache As Boolean = False) As Dictionary(Of String, PugViewRecord)
+            Dim cache = $"{cacheFolder}/{CAS}.Xml"
 
             If cache.FileLength > 0 Then
+                hitCache = True
                 Return cache _
                     .LoadXml(Of List(Of PugViewRecord)) _
                     .ToDictionary(Function(info) info.RecordNumber)
@@ -46,7 +47,7 @@ Namespace NCBI.PubChem
             Else
                 For Each cid As String In list.CID
                     table(cid) = PugView(cid)
-                    Call Thread.Sleep(500)
+                    Call Thread.Sleep(1000)
                 Next
 
                 Call Thread.Sleep(1000)
