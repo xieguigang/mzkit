@@ -180,7 +180,13 @@ Namespace MetaLib
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Shared Function ParseInteger(xref As String) As Integer
-            Return Integer.Parse(xref.Match("\d+"))
+            With xref.Match("\d+")
+                If .StringEmpty Then
+                    Return 0
+                Else
+                    Return Integer.Parse(.ByRef)
+                End If
+            End With
         End Function
     End Class
 
