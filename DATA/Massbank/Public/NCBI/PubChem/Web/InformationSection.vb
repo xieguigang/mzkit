@@ -41,6 +41,7 @@ Namespace NCBI.PubChem
         Public Property HintEmbeddedHTML As Boolean
         Public Property HintShowAtMost As String
         Public Property HintSortByLength As Boolean
+        Public Property DisplayControls As DisplayControls
 
         <XmlElement("Information")>
         Public Property Information As Information()
@@ -48,5 +49,17 @@ Namespace NCBI.PubChem
         Public Overrides Function ToString() As String
             Return $"[{TOCHeading}]  {Description}"
         End Function
+    End Class
+
+    Public Class DisplayControls
+        Public Property CreateTable As CreateTable
+        Public Property ShowAtMost As String
+    End Class
+
+    Public Class CreateTable
+        Public Property FromInformationIn As String
+        Public Property NumberOfColumns As Integer
+        <XmlElement("ColumnContents")>
+        Public Property ColumnContents As String()
     End Class
 End Namespace
