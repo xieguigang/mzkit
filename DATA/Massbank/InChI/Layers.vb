@@ -1,4 +1,4 @@
-﻿Namespace Layers
+﻿Namespace IUPAC.InChILayers
 
     Public MustInherit Class Layer
 
