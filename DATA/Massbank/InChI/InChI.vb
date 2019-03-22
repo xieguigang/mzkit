@@ -1,5 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
+Imports SMRUCC.MassSpectrum.DATA.IUPAC.InChILayers
 
 Namespace IUPAC
 
@@ -12,9 +14,44 @@ Namespace IUPAC
     ''' </summary>
     <ContentType("chemical/x-inchi")> Public Class InChI
 
-        Sub New(inchi As String)
+        Public Property Main As MainLayer
+        Public Property Charge As ChargeLayer
+        Public Property Stereochemical As StereochemicalLayer
+        Public Property Isotopic As IsotopicLayer
+        Public Property FixedH As FixedHLayer
+        Public Property Reconnected As ReconnectedLayer
 
+        Public Property Version As String
+        Public Property IsStandard As Boolean
+
+        Sub New(inchi As String)
+            Dim tokens$() = inchi.GetTagValue("=").Value.Split("/"c)
+            Dim version = tokens(Scan0)
+            Dim populator = Layer.GetByPrefix(tokens.Skip(1).ToArray)
+
+            If version.IsPattern("\d+") Then
+                Me.Version = version
+                Me.IsStandard = False
+            Else
+                Me.Version = Val(version)
+                Me.IsStandard = True
+            End If
+
+            Main = Layer.ParseMainLayer(populator)
+            Charge = Layer.ParseChargeLayer(populator)
+            Stereochemical = Layer.ParseStereochemicalLayer(populator)
+            Isotopic = Layer.ParseIsotopicLayer(populator)
+            FixedH = Layer.ParseFixedHLayer(populator)
+            Reconnected = Layer.ParseReconnectedLayer(populator)
         End Sub
+
+        ''' <summary>
+        ''' Generate A InChI string base on the layer information
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overrides Function ToString() As String
+            Return MyBase.ToString()
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Parse(inchi As String) As InChI

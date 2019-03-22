@@ -1,7 +1,71 @@
-﻿Namespace IUPAC.InChILayers
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Text
+
+Namespace IUPAC.InChILayers
 
     Public MustInherit Class Layer
 
+        Shared ReadOnly prefixes As Index(Of Char) = "chpqbtmsihfr"
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Friend Shared Function GetByPrefix(tokens As String()) As Func(Of UnionType(Of Char, Char()), String)
+            Return Function(c As UnionType(Of Char, Char()))
+                       If c Like GetType(Char) Then
+                           If c = ASCII.NUL Then
+                               Return tokens.First(Function(t) Not t.First Like prefixes)
+                           Else
+                               Return tokens.FirstOrDefault(Function(t) c = t.First)
+                           End If
+                       Else
+                           With CType(c, Char())
+                               Return tokens.FirstOrDefault(Function(t) .Any(Function(cc) cc = t.First))
+                           End With
+                       End If
+                   End Function
+        End Function
+
+        Friend Shared Function ParseMainLayer(tokens As Func(Of UnionType(Of Char, Char()), String)) As MainLayer
+            Dim main As New MainLayer With {
+                .Formula = tokens(ASCII.NUL),
+                .Bounds = tokens("c"c),
+                .Hydrogen = tokens("h"c)
+            }
+
+            Return main
+        End Function
+
+        Friend Shared Function ParseChargeLayer(tokens As Func(Of UnionType(Of Char, Char()), String)) As ChargeLayer
+            Dim charge As New ChargeLayer With {
+                .Proton = tokens("p"c),
+                .Charge = tokens("q"c)
+            }
+
+            Return charge
+        End Function
+
+        Friend Shared Function ParseStereochemicalLayer(tokens As Func(Of UnionType(Of Char, Char()), String)) As StereochemicalLayer
+            Dim stereochemical As New StereochemicalLayer With {
+                .DoubleBounds = tokens("b"c),
+                .Tetrahedral = tokens({"t"c, "m"c}),
+                .Type = tokens("s"c)
+            }
+
+            Return stereochemical
+        End Function
+
+        Friend Shared Function ParseIsotopicLayer(tokens As Func(Of UnionType(Of Char, Char()), String)) As IsotopicLayer
+
+        End Function
+
+        Friend Shared Function ParseFixedHLayer(tokens As Func(Of UnionType(Of Char, Char()), String)) As FixedHLayer
+
+        End Function
+
+        Friend Shared Function ParseReconnectedLayer(tokens As Func(Of UnionType(Of Char, Char()), String)) As ReconnectedLayer
+
+        End Function
     End Class
 
     ''' <summary>
@@ -101,5 +165,4 @@
     Public Class ReconnectedLayer : Inherits Layer
 
     End Class
-
 End Namespace
