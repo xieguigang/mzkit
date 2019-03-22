@@ -1,4 +1,5 @@
 ﻿Imports SMRUCC.MassSpectrum.DATA.IUPAC
+Imports SMRUCC.MassSpectrum.DATA.IUPAC.InChILayers
 
 Module inchiTest
 
@@ -9,6 +10,8 @@ Module inchiTest
         Dim inchi As New InChI(ascorbicAcid)
 
         Dim key As String = inchi.Key
+
+        Dim bounds = MainLayer.ParseBounds("7-1-2(8)5-3(9)4(10)6(11)12-5").ToArray
 
 
         Pause()
