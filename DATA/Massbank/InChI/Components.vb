@@ -80,8 +80,15 @@ Namespace IUPAC.InChILayers
                     }
                     i = j
                 ElseIf c.Equals("("c) Then
+                    j = popIndex()
+
+                    Yield New Bound With {
+                        .i = i,
+                        .j = j
+                    }
+
+                    i = j
                     indexStack.Push(i)
-                    i = popIndex()
                 ElseIf c.Equals(")"c) Then
                     If buffer > 0 Then
                         j = popIndex()
