@@ -97,6 +97,9 @@ Namespace File
         End Function
     End Class
 
+    ''' <summary>
+    ''' Connection between atoms
+    ''' </summary>
     Public Class Bound
 
         <XmlAttribute> Public Property i As Integer

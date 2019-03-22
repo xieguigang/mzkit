@@ -5,6 +5,51 @@ Imports Microsoft.VisualBasic.Text
 
 Namespace IUPAC.InChILayers
 
+    ''' <summary>
+    ''' ### Layers of the identifier
+    ''' 
+    ''' ``{InChI version}`` 
+    '''
+    ''' #### 1. Main Layer (M): 
+    ''' + ``/{formula}`` 
+    ''' + ``/c{connections}``
+    ''' + ``/h{H_atoms}`` 
+    '''
+    ''' #### 2. Charge Layer 
+    ''' + ``/q{charge}`` 
+    ''' + ``/p{protons}``
+    '''
+    ''' #### 3. Stereo Layer 
+    ''' + ``/b{stereo:dbond}`` 
+    ''' + ``/t{stereo:sp3}`` 
+    ''' + ``/m{stereo:sp3:inverted}`` 
+    ''' + ``/s{stereo:type (1=abs, 2=rel, 3=rac)}`` 
+    '''
+    ''' #### 4. Isotopic Layer (MI): 
+    ''' + ``/i{isotopicatoms}*`` 
+    ''' + ``/h{isotopic:exchangeable_H}`` 
+    ''' + ``/b{isotopic:stereo:dbond}`` 
+    ''' + ``/t{isotopic:stereo:sp3}`` 
+    ''' + ``/m{isotopic:stereo:sp3:inverted}`` 
+    ''' + ``/s{isotopic:stereo:type (1=abs, 2=rel, 3=rac)}`` 
+    '''
+    ''' #### 5. Fixed H Layer (F): 
+    ''' + ``/f{fixed_Hformula}*`` 
+    ''' + ``/h{fixed_H:H_fixed}`` 
+    ''' + ``/q{fixed_H:charge}`` 
+    ''' + ``/b{fixed_H:stereo:dbond}`` 
+    ''' + ``/t{fixed_H:stereo:sp3}`` 
+    ''' + ``/m{fixed_H:stereo:sp3:inverted}`` 
+    ''' + ``/s{fixed_H:stereo:type (1=abs, 2=rel, 3=rac)}`` 
+    '''
+    ''' ### (6.) Fixed/Isotopic Combination (FI) 
+    ''' + ``/i{fixed_H:isotopic:atoms}*`` 
+    ''' + ``/b{fixed_H:isotopic:stereo:dbond}`` 
+    ''' + ``/t{fixed_H:isotopic:stereo:sp3}`` 
+    ''' + ``/m{fixed_H:isotopic:stereo:sp3:inverted}`` 
+    ''' + ``/s{fixed_H:isotopic:stereo:type (1=abs, 2=rel, 3=rac)}`` 
+    ''' + ``/o{transposition}``
+    ''' </summary>
     Public MustInherit Class Layer
 
         Shared ReadOnly prefixes As Index(Of Char) = "chpqbtmsihfr"
@@ -12,16 +57,24 @@ Namespace IUPAC.InChILayers
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Friend Shared Function GetByPrefix(tokens As String()) As Func(Of [Variant](Of Char, Char()), String)
             Return Function(c As [Variant](Of Char, Char()))
+                       Dim str As String
+
                        If c Like GetType(Char) Then
                            If c = ASCII.NUL Then
                                Return tokens.First(Function(t) Not t.First Like prefixes)
                            Else
-                               Return tokens.FirstOrDefault(Function(t) c = t.First)
+                               str = tokens.FirstOrDefault(Function(t) c = t.First)
                            End If
                        Else
                            With CType(c, Char())
-                               Return tokens.FirstOrDefault(Function(t) .Any(Function(cc) cc = t.First))
+                               str = tokens.FirstOrDefault(Function(t) .Any(Function(cc) cc = t.First))
                            End With
+                       End If
+
+                       If str.StringEmpty Then
+                           Return ""
+                       Else
+                           Return str.Substring(1)
                        End If
                    End Function
         End Function
@@ -29,7 +82,7 @@ Namespace IUPAC.InChILayers
         Friend Shared Function ParseMainLayer(tokens As Func(Of [Variant](Of Char, Char()), String)) As MainLayer
             Dim main As New MainLayer With {
                 .Formula = tokens(ASCII.NUL),
-                .Bounds = tokens("c"c),
+                .Bounds = MainLayer.ParseBounds(tokens("c"c)).ToArray,
                 .Hydrogen = tokens("h"c)
             }
 
@@ -38,7 +91,7 @@ Namespace IUPAC.InChILayers
 
         Friend Shared Function ParseChargeLayer(tokens As Func(Of [Variant](Of Char, Char()), String)) As ChargeLayer
             Dim charge As New ChargeLayer With {
-                .Proton = tokens("p"c),
+                .Proton = tokens("p"c).ParseInteger,
                 .Charge = tokens("q"c)
             }
 
@@ -68,101 +121,9 @@ Namespace IUPAC.InChILayers
         End Function
     End Class
 
-    ''' <summary>
-    ''' 主层（main layer）：以``1``表示
-    ''' </summary>
-    Public Class MainLayer : Inherits Layer
-
-        ''' <summary>
-        ''' Chemical formula (no prefix). This is the only sublayer that must occur in every InChI.
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property Formula As String
-        ''' <summary>
-        ''' Atom connections (prefix: "c"). The atoms in the chemical formula (except for hydrogens) 
-        ''' are numbered in sequence; this sublayer describes which atoms are connected by bonds to 
-        ''' which other ones.
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property Bounds As String
-        ''' <summary>
-        ''' Hydrogen atoms (prefix: "h"). Describes how many hydrogen atoms are connected to each of 
-        ''' the other atoms.
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property Hydrogen As String
-
-    End Class
-
-    ''' <summary>
-    ''' 电荷层（charge layer）：以``q``表示
-    ''' </summary>
-    Public Class ChargeLayer : Inherits Layer
-
-        ''' <summary>
-        ''' proton sublayer (prefix: "p" for "protons")
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property Proton As String
-        ''' <summary>
-        ''' charge sublayer (prefix: "q")
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property Charge As String
-    End Class
-
-    ''' <summary>
-    ''' 立体化学层（Stereochemical layer）：以``t``，``m``，``s``表示
-    ''' </summary>
-    Public Class StereochemicalLayer : Inherits Layer
-        ''' <summary>
-        ''' double bonds and cumulenes (prefix: "b")
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property DoubleBounds As String
-        ''' <summary>
-        ''' tetrahedral stereochemistry of atoms and allenes (prefixes: "t", "m")
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property Tetrahedral As String
-        ''' <summary>
-        ''' type of stereochemistry information (prefix: "s")
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property Type As String
-    End Class
-
-    ''' <summary>
-    ''' 异构体层（Isotopic layer）：以``i``表示
-    ''' </summary>
-    ''' <remarks>
-    ''' Isotopic layer (prefixes: "i", "h", as well as "b", "t", "m", "s" for isotopic 
-    ''' stereochemistry)
-    ''' </remarks>
-    Public Class IsotopicLayer : Inherits Layer
-
-    End Class
-
-    ''' <summary>
-    ''' 固定氢原子（Fixed-H layer）：以``f``表示
-    ''' </summary>
-    ''' <remarks>
-    ''' Fixed-H layer (prefix: "f"); contains some or all of the above types of layers 
-    ''' except atom connections; may end with "o" sublayer; never included in standard 
-    ''' InChI
-    ''' </remarks>
-    Public Class FixedHLayer : Inherits Layer
-
-    End Class
-
-    ''' <summary>
-    ''' 再连接层（Reconnected Layer）：以``r``表示
-    ''' </summary>
-    ''' <remarks>
-    ''' Reconnected layer (prefix: "r"); contains the whole InChI of a structure with 
-    ''' reconnected metal atoms; never included in standard InChI
-    ''' </remarks>
-    Public Class ReconnectedLayer : Inherits Layer
-
-    End Class
+    Public Enum StereoType
+        Abs = 1
+        Rel = 2
+        Rac = 3
+    End Enum
 End Namespace

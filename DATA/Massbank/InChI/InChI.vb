@@ -1,7 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports System.Security.Cryptography
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
-Imports Microsoft.VisualBasic.SecurityString.MD5Hash
 Imports SMRUCC.MassSpectrum.DATA.IUPAC.InChILayers
 
 Namespace IUPAC
@@ -22,15 +20,13 @@ Namespace IUPAC
         Public Property FixedH As FixedHLayer
         Public Property Reconnected As ReconnectedLayer
 
-        Public Property Version As String
+        Public Property Version As Integer
         Public Property IsStandard As Boolean
 
         Public ReadOnly Property Key As String
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Using SHA256 As SHA256 = SHA256.Create()
-                    Dim hashValue() As Byte = SHA256.ComputeHash(ToString.AsciiBytes)
-                    Return hashValue.Sha256ByteString(delimiter:="-").ToUpper
-                End Using
+                Return ToString()
             End Get
         End Property
 
@@ -39,13 +35,8 @@ Namespace IUPAC
             Dim version = tokens(Scan0)
             Dim populator = Layer.GetByPrefix(tokens.Skip(1).ToArray)
 
-            If version.IsPattern("\d+") Then
-                Me.Version = version
-                Me.IsStandard = False
-            Else
-                Me.Version = Val(version)
-                Me.IsStandard = True
-            End If
+            Me.Version = Val(version)
+            Me.IsStandard = Not version.IsPattern("\d+")
 
             Main = Layer.ParseMainLayer(populator)
             Charge = Layer.ParseChargeLayer(populator)
@@ -59,8 +50,10 @@ Namespace IUPAC
         ''' Generate A InChI string base on the layer information
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
-            Return MyBase.ToString()
+            Return New InChIKey(Me).ToString()
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
