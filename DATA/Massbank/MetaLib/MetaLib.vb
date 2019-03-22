@@ -135,8 +135,11 @@ Namespace MetaLib
                      End Sub
             Dim intId As VBInteger = 0
             Dim compareInteger = Sub(a$, b$)
-                                     If a = b Then
+                                     If a = b AndAlso Not a.StringEmpty Then
                                          yes()
+                                         Return
+                                     ElseIf a.StringEmpty OrElse b.StringEmpty Then
+                                         no()
                                          Return
                                      End If
 
