@@ -99,7 +99,7 @@ Namespace Spectra
         End Function
 
         Public Overrides Function ToString() As String
-            Return $"M{sys.Round(mz)}T{sys.Round(rt)}  into={Fix(Ms2Intensity)}  {file}#{scan}"
+            Return $"M{sys.Round(mz)}T{sys.Round(rt)} intensity={Ms2Intensity.ToString("G3")} {file}#{scan}"
         End Function
 
         ''' <summary>
