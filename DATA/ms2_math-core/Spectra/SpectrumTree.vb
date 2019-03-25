@@ -73,6 +73,10 @@ Namespace Spectra
         ''' <returns></returns>
         Public Property cluster As PeakMs2()
 
+        Public Overrides Function ToString() As String
+            Return Representative.ToString & $"  with {cluster.Length} cluster members."
+        End Function
+
         Public Iterator Function GetEnumerator() As IEnumerator(Of PeakMs2) Implements IEnumerable(Of PeakMs2).GetEnumerator
             For Each spectrum As PeakMs2 In cluster
                 Yield spectrum
