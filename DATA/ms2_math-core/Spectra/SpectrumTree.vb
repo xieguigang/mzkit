@@ -73,6 +73,12 @@ Namespace Spectra
         ''' <returns></returns>
         Public Property cluster As PeakMs2()
 
+        Public ReadOnly Property Length As Integer
+            Get
+                Return cluster.Length
+            End Get
+        End Property
+
         Public Overrides Function ToString() As String
             Return Representative.ToString & $"  with {cluster.Length} cluster members."
         End Function
