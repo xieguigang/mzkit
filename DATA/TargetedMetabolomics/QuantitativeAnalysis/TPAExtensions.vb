@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ebfa3f5fd7c4f8b45eddf61cbbf60ef2, TargetedMetabolomics\QuantitativeAnalysis\TPAExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::f9b94c7466b91260da682451a8d9c924, TargetedMetabolomics\QuantitativeAnalysis\TPAExtensions.vb"
 
     ' Author:
     ' 
@@ -144,4 +144,3 @@ Public Module TPAExtensions
         Return (area, baseline, vector.PickArea(range:=peak).MaxPeakHeight)
     End Function
 End Module
-

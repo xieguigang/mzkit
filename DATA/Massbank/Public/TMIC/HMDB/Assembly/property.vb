@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69ce46539791f88daecd7d0ba9ada650, Massbank\Public\TMIC\HMDB\Assembly\property.vb"
+﻿#Region "Microsoft.VisualBasic::76e65deca35a7b569425c91d0cc5f12f, Massbank\Public\TMIC\HMDB\Assembly\property.vb"
 
     ' Author:
     ' 
@@ -48,7 +48,7 @@
     ' 
     '     Structure concentration
     ' 
-    '         Properties: AgeType, biofluid, concentration_units, concentration_value, references
+    '         Properties: AgeType, biospecimen, concentration_units, concentration_value, references
     '                     subject_age, subject_condition, subject_sex
     ' 
     '         Function: ToString
