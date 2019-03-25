@@ -1,7 +1,7 @@
 ﻿Imports SMRUCC.MassSpectrum.Assembly.MarkupData
 Imports SMRUCC.MassSpectrum.Math
 
-Public Class SpectrumTree : Inherits Spectra.SpectrumTree
+Public Class SpectrumTree : Inherits Spectra.SpectrumTreeCluster
 
     Sub New(showReport As Boolean)
         Call MyBase.New(showReport)

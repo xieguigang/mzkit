@@ -13,7 +13,7 @@ Namespace Spectra
     ''' 通过二叉树对所有的质谱图进行聚类,取出成员最多的簇
     ''' 作为候选的标准品质谱图
     ''' </summary>
-    Public Class SpectrumTree
+    Public Class SpectrumTreeCluster
 
         Dim tolerance As Tolerance = Tolerance.PPM(20)
         Dim tree As AVLTree(Of PeakMs2, PeakMs2)
@@ -27,7 +27,7 @@ Namespace Spectra
 
         Private Function ms2Compares(x As PeakMs2, y As PeakMs2) As Integer
             Dim score = GlobalAlignment.TwoDirectionSSM(x.mzInto.ms2, y.mzInto.ms2, tolerance)
-            Dim min = Sys.Min(score.forward, score.reverse)
+            Dim min = sys.Min(score.forward, score.reverse)
 
             If min >= 0.85 Then
                 Return 0
@@ -46,7 +46,7 @@ Namespace Spectra
             Next
         End Function
 
-        Public Function doCluster(ms2list As PeakMs2()) As SpectrumTree
+        Public Function doCluster(ms2list As PeakMs2()) As SpectrumTreeCluster
             Dim shrinkTolerance As Tolerance = Tolerance.DeltaMass(0.1)
             Dim tickAction As Action
             Dim releaseAction As Action
