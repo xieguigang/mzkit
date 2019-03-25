@@ -7,6 +7,26 @@ Imports sys = System.Math
 
 Namespace Spectra
 
+    Public Class SpectrumCluster : Implements IEnumerable(Of PeakMs2)
+
+        Public Property Representative As PeakMs2
+        ''' <summary>
+        ''' 在这个属性之中也会通过包含有<see cref="Representative"/>代表质谱图
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property cluster As PeakMs2()
+
+        Public Iterator Function GetEnumerator() As IEnumerator(Of PeakMs2) Implements IEnumerable(Of PeakMs2).GetEnumerator
+            For Each spectrum As PeakMs2 In cluster
+                Yield spectrum
+            Next
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield GetEnumerator()
+        End Function
+    End Class
+
     ''' <summary>
     ''' 因为在标准品实验之中仅包含有标准品以及流动相物质
     ''' 标准品的质谱碎片理论上应该是数量最多的,所以在这里
@@ -49,11 +69,14 @@ Namespace Spectra
             End If
         End Function
 
-        Public Iterator Function PopulateClusters() As IEnumerable(Of PeakMs2())
+        Public Iterator Function PopulateClusters() As IEnumerable(Of SpectrumCluster)
             For Each cluster In tree.GetAllNodes
-                Yield DirectCast(cluster!values, IEnumerable(Of PeakMs2)) _
-                    .OrderBy(Function(x) x.rt) _
-                    .ToArray
+                Yield New SpectrumCluster With {
+                    .Representative = cluster.Value,
+                    .cluster = DirectCast(cluster!values, IEnumerable(Of PeakMs2)) _
+                        .OrderBy(Function(x) x.rt) _
+                        .ToArray
+                }
             Next
         End Function
 
@@ -87,10 +110,11 @@ Namespace Spectra
                 Dim tick As New ProgressProvider(ms2list.Length)
                 Dim message$
 
-                tickAction = Sub()
-                                 message = $"ETA: {tick.ETA(progress.ElapsedMilliseconds).FormatTime}"
-                                 progress.SetProgress(tick.StepProgress, message)
-                             End Sub
+                tickAction =
+                    Sub()
+                        message = $"ETA: {tick.ETA(progress.ElapsedMilliseconds).FormatTime}"
+                        progress.SetProgress(tick.StepProgress, message)
+                    End Sub
                 releaseAction = AddressOf progress.Dispose
             Else
                 tickAction = App.DoNothing
