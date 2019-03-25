@@ -130,6 +130,10 @@ Namespace Spectra
             End If
         End Function
 
+        ''' <summary>
+        ''' 这个函数返回来的质谱图的矩阵都是未经处理的原始矩阵数据
+        ''' </summary>
+        ''' <returns></returns>
         Public Iterator Function PopulateClusters() As IEnumerable(Of SpectrumCluster)
             For Each cluster In tree.GetAllNodes
                 Yield New SpectrumCluster With {
