@@ -17,21 +17,32 @@ Namespace Spectra
 
         Dim tolerance As Tolerance = Tolerance.PPM(20)
         Dim tree As AVLTree(Of PeakMs2, PeakMs2)
-        Dim report As Boolean
+        Dim showReport As Boolean
+        Dim equalsScore#
+        Dim gtScore#
 
         Public ReadOnly Property allMs2Scans As New List(Of PeakMs2)
 
-        Sub New(showReport As Boolean)
-            report = showReport
+        Sub New(showReport As Boolean, Optional equalsScore# = 0.85, Optional gtScore# = 0.6)
+            Me.showReport = showReport
+            Me.equalsScore = equalsScore
+            Me.gtScore = gtScore
+
+            If equalsScore < 0 OrElse equalsScore > 1 Then
+                Throw New InvalidConstraintException("Scores for spectra equals is invalid, it should be in range (0, 1].")
+            End If
+            If gtScore < 0 OrElse gtScore > 1 OrElse gtScore > equalsScore Then
+                Throw New InvalidConstraintException("Scores for x < y should be in range (0, 1] and its value is also less than score for spectra equals!")
+            End If
         End Sub
 
         Private Function ms2Compares(x As PeakMs2, y As PeakMs2) As Integer
             Dim score = GlobalAlignment.TwoDirectionSSM(x.mzInto.ms2, y.mzInto.ms2, tolerance)
             Dim min = sys.Min(score.forward, score.reverse)
 
-            If min >= 0.85 Then
+            If min >= equalsScore Then
                 Return 0
-            ElseIf min >= 0.6 Then
+            ElseIf min >= gtScore Then
                 Return 1
             Else
                 Return -1
@@ -46,30 +57,11 @@ Namespace Spectra
             Next
         End Function
 
-        Public Function doCluster(ms2list As PeakMs2()) As SpectrumTreeCluster
+        Private Sub clusterInternal(ms2list As PeakMs2(), tick As Action)
             Dim shrinkTolerance As Tolerance = Tolerance.DeltaMass(0.1)
-            Dim tickAction As Action
-            Dim releaseAction As Action
 
             ' simple => raw
             tree = New AVLTree(Of PeakMs2, PeakMs2)(AddressOf ms2Compares, Function(x) x.ToString)
-
-            If report Then
-                Dim progress As New ProgressBar("Create spectrum tree", 2, True)
-                Dim tick As New ProgressProvider(ms2list.Length)
-
-                tickAction = Sub()
-                                 Call progress.SetProgress(tick.StepProgress, $"ETA: {tick.ETA(progress.ElapsedMilliseconds).FormatTime}")
-                             End Sub
-                releaseAction = AddressOf progress.Dispose
-            Else
-                tickAction = Sub()
-
-                             End Sub
-                releaseAction = Sub()
-
-                                End Sub
-            End If
 
             For Each ms2 As PeakMs2 In ms2list
                 Dim simple As New PeakMs2 With {
@@ -82,9 +74,30 @@ Namespace Spectra
 
                 Call allMs2Scans.Add(ms2)
                 Call tree.Add(simple, ms2)
-                Call tickAction()
+                Call tick()
             Next
+        End Sub
 
+        Public Function doCluster(ms2list As PeakMs2()) As SpectrumTreeCluster
+            Dim tickAction As Action
+            Dim releaseAction As Action
+
+            If showReport Then
+                Dim progress As New ProgressBar("Create spectrum tree", 2, True)
+                Dim tick As New ProgressProvider(ms2list.Length)
+                Dim message$
+
+                tickAction = Sub()
+                                 message = $"ETA: {tick.ETA(progress.ElapsedMilliseconds).FormatTime}"
+                                 progress.SetProgress(tick.StepProgress, message)
+                             End Sub
+                releaseAction = AddressOf progress.Dispose
+            Else
+                tickAction = App.DoNothing
+                releaseAction = App.DoNothing
+            End If
+
+            Call clusterInternal(ms2list, tickAction)
             Call releaseAction()
 
             Return Me
