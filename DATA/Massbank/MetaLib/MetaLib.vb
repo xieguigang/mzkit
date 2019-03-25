@@ -135,6 +135,9 @@ Namespace MetaLib
                      End Sub
             Dim intId As VBInteger = 0
             Dim compareInteger = Sub(a$, b$)
+                                     a = Strings.Trim(a)
+                                     b = Strings.Trim(b)
+
                                      If a = b AndAlso Not a.StringEmpty Then
                                          yes()
                                          Return
@@ -173,6 +176,12 @@ Namespace MetaLib
                 yes()
             Else
                 no()
+            End If
+
+            ' 因为name在不同的数据库之间差异有些大,所以在这里只作为可选参考
+            ' 不调用no函数了
+            If Strings.Trim(name).TextEquals(Strings.Trim(other.name)) AndAlso Not Strings.Trim(other.name).StringEmpty Then
+                yes()
             End If
 
             Return (agree / total) >= 0.65
