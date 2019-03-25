@@ -32,11 +32,8 @@ Namespace NCBI.PubChem
                 ("Synonyms") _
                 ("Depositor-Supplied Synonyms").GetInformationStrings _
                 ("Depositor-Supplied Synonyms")
-            Dim computedProperties = Me _
-                ("Chemical and Physical Properties") _
-                ("Computed Properties").GetInformationTable _
-                ("Computed Properties")
-            Dim properties = Table.ToDictionary(computedProperties)
+            Dim computedProperties = Me("Chemical and Physical Properties")("Computed Properties")("Computed Properties")
+            ' Dim properties = Table.ToDictionary(computedProperties)
             Dim CASNumber$
 
             If synonyms Is Nothing Then
@@ -49,6 +46,7 @@ Namespace NCBI.PubChem
                 CASNumber = otherNames("CAS")?.GetInformationString("CAS")
             End If
 
+            Dim exact_mass# = computedProperties("Exact Mass").GetInformationNumber("Exact Mass")
             Dim xref As New MetaLib.xref With {
                 .InChI = InChI,
                 .CAS = CASNumber,
@@ -70,7 +68,7 @@ Namespace NCBI.PubChem
                 .formula = formula,
                 .xref = xref,
                 .name = commonName,
-                .mass = ParseDouble(properties("Exact Mass").Value),
+                .mass = exact_mass,
                 .ID = RecordNumber
             }
         End Function

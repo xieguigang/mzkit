@@ -7,6 +7,18 @@ Namespace NCBI.PubChem
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
+        Public Function GetInformationNumber(section As Section, key$) As Double
+            Dim info = section.getInformation(key)
+
+            If info Is Nothing OrElse info.Value.Number.StringEmpty Then
+                Return 0
+            Else
+                Return Val(info.Value.Number)
+            End If
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
         Public Function GetInformationString(section As Section, key$) As String
             Dim info = section.getInformation(key)
 
