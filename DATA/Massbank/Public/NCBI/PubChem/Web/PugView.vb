@@ -1,5 +1,6 @@
 ﻿Imports System.Text.RegularExpressions
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 Imports MetaInfo = SMRUCC.MassSpectrum.DATA.MetaLib.MetaLib
 
@@ -10,11 +11,14 @@ Namespace NCBI.PubChem
 
         Public Property RecordType As String
         Public Property RecordNumber As String
+        Public Property RecordTitle As String
 
         <XmlElement(NameOf(Reference))>
         Public Property Reference As Reference()
 
         Public Const HMDB$ = "Human Metabolome Database (HMDB)"
+
+        Shared ReadOnly nameDatabase As Index(Of String) = {"Human Metabolome Database (HMDB)", "ChEBI", "DrugBank", "European Chemicals Agency (ECHA)", "MassBank of North America (MoNA)"}
 
         ''' <summary>
         ''' 从pubchem数据库之中提取注释所需要的必须基本信息
@@ -32,7 +36,7 @@ Namespace NCBI.PubChem
                 ("Synonyms") _
                 ("Depositor-Supplied Synonyms").GetInformationStrings _
                 ("Depositor-Supplied Synonyms")
-            Dim computedProperties = Me("Chemical and Physical Properties")("Computed Properties")("Computed Properties")
+            Dim computedProperties = Me("Chemical and Physical Properties")("Computed Properties")
             ' Dim properties = Table.ToDictionary(computedProperties)
             Dim CASNumber$
 
@@ -59,10 +63,13 @@ Namespace NCBI.PubChem
                                                 End Function),
                 .HMDB = Reference.GetHMDBId
             }
-            Dim commonName$ = identifier _
-                .Sections _
-                .FirstOrDefault(Function(s) s.TOCHeading = "Record Title") _
-                .GetInformationString("Record Title")
+            Dim commonName$ = RecordTitle
+
+            If commonName.StringEmpty Then
+                commonName = Reference _
+                    .FirstOrDefault(Function(r) r.SourceName Like nameDatabase) _
+                   ?.Name
+            End If
 
             Return New MetaInfo With {
                 .formula = formula,
