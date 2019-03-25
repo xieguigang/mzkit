@@ -1,4 +1,5 @@
-﻿Imports SMRUCC.MassSpectrum.Assembly.MarkupData
+﻿Imports System.Runtime.CompilerServices
+Imports SMRUCC.MassSpectrum.Assembly.MarkupData
 Imports SMRUCC.MassSpectrum.Math
 
 Public Class SpectrumTree : Inherits Spectra.SpectrumTreeCluster
@@ -7,6 +8,7 @@ Public Class SpectrumTree : Inherits Spectra.SpectrumTreeCluster
         Call MyBase.New(showReport)
     End Sub
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overloads Function doCluster(ms2list As mzXML.scan(), fileName$) As SpectrumTree
         Return doCluster(ms2list _
             .Select(Function(scan) scan.ScanData(fileName)) _
