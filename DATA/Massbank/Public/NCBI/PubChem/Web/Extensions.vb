@@ -66,7 +66,7 @@ Namespace NCBI.PubChem
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function GetInformationString(section As Section, key$) As String
-            Dim info = section.getInformation(key)
+            Dim info = section?.GetInformation(key)
 
             If info Is Nothing OrElse info.Value.StringWithMarkup Is Nothing Then
                 Return ""
@@ -101,14 +101,14 @@ Namespace NCBI.PubChem
         End Function
 
         <Extension>
-        Private Function getInformation(section As Section, key$) As Information
+        Public Function GetInformation(section As Section, key$) As Information
             If section Is Nothing Then
                 Return Nothing
             Else
                 Return section _
                     .Information _
                     .SafeQuery _
-                    .FirstOrDefault(Function(i) i.Name = key)
+                    .FirstOrDefault(Function(i) i.Name = key OrElse i.Name.TextEquals(key))
             End If
         End Function
 
@@ -125,11 +125,6 @@ Namespace NCBI.PubChem
         <Extension>
         Public Function GetInformationTable(section As Section, key$) As Table
             Return section.getInformation(key)?.Table
-        End Function
-
-        <Extension>
-        Public Function GetProperties(section As Section) As Dictionary(Of String, Double)
-            Return section.Sections.ToDictionary(Function(sec) sec.TOCHeading, Function(sec) CType(sec.Information.First.Value.Number, Double))
         End Function
     End Module
 End Namespace

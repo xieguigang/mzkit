@@ -122,6 +122,10 @@ Namespace NCBI.PubChem
         Public Property ExternalDataURL As String
         Public Property ExternalDataMimeType As String
 
+        ''' <summary>
+        ''' Try get data type of the information its <see cref="Value"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property InfoType As Type
             Get
                 If Not Value.Number Is Nothing Then
