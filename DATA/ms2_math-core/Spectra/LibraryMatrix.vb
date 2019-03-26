@@ -129,7 +129,11 @@ Namespace Spectra
         Public Property intensity As Double
 
         Public Overrides Function ToString() As String
-            Return $"{mz} ({Fix(intensity * 100%)}%)"
+            If intensity < 1 Then
+                Return $"{mz} ({Fix(intensity * 100%)}%)"
+            Else
+                Return $"{mz} ({Fix(intensity)}%)"
+            End If
         End Function
 
     End Class
