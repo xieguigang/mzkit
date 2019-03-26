@@ -89,7 +89,7 @@ Namespace NCBI.PubChem
         Public Property StringWithMarkup As StringWithMarkup()
         Public Property ExternalDataURL As String
         Public Property MimeType As String
-        Public Property Number As String
+        Public Property Number As Double?
         Public Property Unit As String
         Public Property DateISO8601 As String
         Public Property [Boolean] As Boolean
@@ -124,7 +124,7 @@ Namespace NCBI.PubChem
 
         Public ReadOnly Property InfoType As Type
             Get
-                If Not Value.Number.StringEmpty Then
+                If Not Value.Number Is Nothing Then
                     Return GetType(Double)
                 ElseIf Not Value.StringWithMarkup.IsNullOrEmpty AndAlso Value.StringWithMarkup.Length = 1 Then
                     Return GetType(String)

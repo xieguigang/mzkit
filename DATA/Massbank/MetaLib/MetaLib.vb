@@ -138,6 +138,17 @@ Namespace MetaLib
                                      a = Strings.Trim(a)
                                      b = Strings.Trim(b)
 
+                                     ' 2019-03-25
+                                     ' 都没有该数据库的编号,即改数据库之中还没有登录该物质
+                                     ' 则不应该认为是不一样的
+                                     If a = b AndAlso a = "NA" Then
+                                         yes()
+                                         Return
+                                     ElseIf (a.StringEmpty OrElse b.StringEmpty) AndAlso (a = "NA" OrElse b = "NA") Then
+                                         yes()
+                                         Return
+                                     End If
+
                                      If a = b AndAlso Not a.StringEmpty Then
                                          yes()
                                          Return
@@ -161,6 +172,7 @@ Namespace MetaLib
                 no()
             End If
 
+            ' 下面的这个几个数据库编号可能都是没有的
             Call compareInteger(xref.chebi, other.xref.chebi)
             Call compareInteger(xref.KEGG, other.xref.KEGG)
             Call compareInteger(xref.pubchem, other.xref.pubchem)
@@ -184,7 +196,7 @@ Namespace MetaLib
                 yes()
             End If
 
-            Return (agree / total) >= 0.65
+            Return (agree / total) >= 0.45
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

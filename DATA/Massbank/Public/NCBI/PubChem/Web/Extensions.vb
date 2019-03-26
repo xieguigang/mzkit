@@ -56,10 +56,10 @@ Namespace NCBI.PubChem
         Public Function GetInformationNumber(section As Section, key$) As Double
             Dim info = section.getInformation(key)
 
-            If info Is Nothing OrElse info.Value.Number.StringEmpty Then
+            If info Is Nothing OrElse info.Value.Number Is Nothing Then
                 Return 0
             Else
-                Return Val(info.Value.Number)
+                Return info.Value.Number
             End If
         End Function
 
@@ -125,6 +125,11 @@ Namespace NCBI.PubChem
         <Extension>
         Public Function GetInformationTable(section As Section, key$) As Table
             Return section.getInformation(key)?.Table
+        End Function
+
+        <Extension>
+        Public Function GetProperties(section As Section) As Dictionary(Of String, Double)
+            Return section.Sections.ToDictionary(Function(sec) sec.TOCHeading, Function(sec) CType(sec.Information.First.Value.Number, Double))
         End Function
     End Module
 End Namespace
