@@ -52,12 +52,13 @@ Imports(Microsoft.VisualBasic.Language);
 #' @param precursor_type By default is positive mode with the \code{H+} adduct for
 #'      search unknown metabolites.
 #'
-#' @param tolerance m/z equalient compares tolerance, by default is less than ppm 20.
+#' @param tolerance KEGG compound match with this tolerance, m/z equalient compares tolerance, 
+#'      by default is less than ppm 20.
 #'
 #' @param score.cutoff MS/MS similarity cutoff for identify ms2 alignment with unknown ms2
 #'
-#' @param ms2.align The MS/MS alignment method, which is in format like: \code{function(q, s)}
-#'      Where \code{q} and \code{s} is a matrix.
+#' @param do.align The MS/MS alignment method, which is in format like: \code{function(q, s)}
+#'      Where \code{q} and \code{s} is a ms2 spectra matrix.
 #'
 #' @param kegg_id.skips You can put the kegg compound ids in this character vector
 #'       If you don't want some specific metabolite was indeified from this
@@ -76,7 +77,7 @@ Imports(Microsoft.VisualBasic.Language);
 #'         xxx xxx\cr
 #'     }
 #'
-metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
+metaDNA <- function(identify, unknown, do.align,
                     precursor_type = c("[M+H]+", "[M]+"),
                     tolerance = assert.deltaMass(0.3),
                     score.cutoff = 0.8,
@@ -163,7 +164,7 @@ metaDNA <- function(identify, unknown, meta.KEGG, ms2.align,
 			  KEGG.partners = partners,
 			  identify.ms2 = ms2,
 			  unknown = unknown,
-			  ms2.align = ms2.align,
+			  ms2.align = do.align,
 			  unknow.matches = match.kegg,
 			  score.cutoff = score.cutoff
 			);
