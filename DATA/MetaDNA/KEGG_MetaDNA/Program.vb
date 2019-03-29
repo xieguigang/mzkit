@@ -64,6 +64,44 @@ Module Program
     End Function
 
     ''' <summary>
+    ''' 创建一个KEGG代谢物基本信息数据集
+    ''' </summary>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
+    <ExportAPI("/KEGG.meta")>
+    <Usage("/KEGG.meta /kegg <compounds.repo.directory> [/out <default=KEGG_meta.rda>]")>
+    <Description("Compile a KEGG compound basic information database.")>
+    Public Function KEGGMeta(args As CommandLine) As Integer
+        Dim kegg$ = args <= "/kegg"
+        Dim out$ = args("/out") Or $"{kegg.ParentPath}/KEGG_meta.rda"
+        Dim compounds = ScanLoad(repository:=kegg) _
+            .GroupBy(Function(c) c.Entry) _
+            .Select(Function(g) g.First) _
+            .ToArray
+
+        SyncLock R_server.R
+            With R_server.R
+
+                !KEGG_meta = Rbase.lapply(
+                    x:=compounds,
+                    FUN:=Function(compound)
+                             Return Rbase.list(
+                                !ID = compound.Entry,
+                                !exact_mass = compound.ExactMass,
+                                !name = compound.CommonNames,
+                                !formula = compound.Formula,
+                                !chebi = (compound.CHEBI.FirstOrDefault Or NA)
+                             )
+                         End Function)
+
+                Call Rbase.save({"KEGG_meta"}, file:=out)
+            End With
+        End SyncLock
+
+        Return 0
+    End Function
+
+    ''' <summary>
     ''' 这个结构所产生的数据库是MetaDNA R程序包所需要的data数据
     ''' </summary>
     ''' <param name="args"></param>
@@ -84,7 +122,7 @@ Module Program
             .CLICode
     End Function
 
-    ReadOnly NA As New DefaultValue(Of String)("NA", Function(exp) CStr(exp) = "NULL")
+    ReadOnly NA As New DefaultValue(Of String)("NA", Function(exp) CStr(exp).StringEmpty OrElse CStr(exp) = "NULL")
 
     <Extension> Private Function BuildNetwork(repository As (reaction$, compound$), rda$) As Boolean
         Dim reactions = (ls - l - r - "*.Xml" <= repository.reaction) _
