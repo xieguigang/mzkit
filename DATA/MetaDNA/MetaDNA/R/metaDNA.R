@@ -102,8 +102,7 @@ metaDNA <- function(identify, unknown, do.align,
       kegg_id = kegg_id.col,
       tolerance = tolerance
     );
-    identify.peak_ms2 <- identify$peak_ms2;
-
+    
     if (kegg_id.skips %=>% IsNothing) {
       kegg_id.skips = "NA";
     } else {
@@ -138,10 +137,11 @@ metaDNA <- function(identify, unknown, do.align,
 
     # tick.each
     # lapply
-    tick.each(identify$meta.KEGG %=>% .as.list, function(identified) {
+    tick.each(names(identify), function(KEGG_cpd) {
         # Get all of the kegg reaction partner metabolite id
         # for current identified kegg metabolite id
-        partners <- identified$KEGG %=>% kegg.partners %=>% filter.skips %=>% unique;
+		identified <- identify[[KEGG_cpd]];
+        partners <- KEGG_cpd %=>% kegg.partners %=>% filter.skips %=>% unique;
 
         # current identify metabolite KEGG id didnt found any
         # reaction related partner compounds
@@ -149,14 +149,15 @@ metaDNA <- function(identify, unknown, do.align,
         if (partners %=>% IsNothing) {
             NULL;
         } else {
-			ms2 <- identify.peak_ms2[[identified$peak_ms2.i]];
+		
+			# identify contains single result			
             # Each metaDNA.impl result is a list that identify of
 			# unknowns
 
 			# KEGG.partners, identify.ms2, unknown, ms2.align, unknow.matches
 			metaDNA.impl(
 			  KEGG.partners = partners,
-			  identify.ms2 = ms2,
+			  identify.ms2 = identified$spectra,
 			  unknown = unknown,
 			  ms2.align = do.align,
 			  unknow.matches = match.kegg,
