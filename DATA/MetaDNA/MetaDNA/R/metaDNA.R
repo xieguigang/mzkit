@@ -98,8 +98,7 @@ metaDNA <- function(identify, unknown, do.align,
 	unknown.mz <- sapply(unknown, function(x) x$mz) %=>% as.numeric;
     match.kegg <- kegg.match.handler(
       unknown.mz = unknown.mz,
-      precursor_type = precursor_type,
-      kegg_id = kegg_id.col,
+      precursor_type = precursor_type,      
       tolerance = tolerance
     );
     
@@ -175,7 +174,7 @@ metaDNA <- function(identify, unknown, do.align,
 #'         \code{m/z} from KEGG metabolite mass value.
 #'
 #' @return Returns the index vector in \code{unknown.mz} vector.
-#'
+#' @details \code{mass - mz - kegg_id}
 kegg.match.handler <- function(unknown.mz, precursor_type = c("[M+H]+", "[M]+"), tolerance = assert.deltaMass(0.3)) {
     # load kegg reaction database and kegg meta information
     # data/metaDNA_kegg.rda
