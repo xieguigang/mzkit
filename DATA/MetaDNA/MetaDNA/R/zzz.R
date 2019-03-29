@@ -49,7 +49,7 @@
 
     cat("You can acquire the toolkit's source code from github:");
     cat("\n\n");
-    cat("     https://github.com/xieguigang/MassSpectrum-toolkits");
+    cat("     https://github.com/xieguigang/mzkit");
     cat("\n\n");
     cat("If any problem for this package, contact the author:");
     cat("\n\n");
