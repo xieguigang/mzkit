@@ -177,6 +177,7 @@
     </Compile>
     <Compile Include="Ms1\Peaktable.vb" />
     <Compile Include="Ms1\PrecursorType\PrecursorType.vb" />
+    <Compile Include="Spectra\SpectrumTree.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
