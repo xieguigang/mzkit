@@ -246,6 +246,8 @@ kegg.match <- function(kegg_id, kegg.mass, kegg.ids, kegg.mz, kegg.list,
 	kegg <- kegg.list[mzi];
 	mz.index <- 1:length(mz);
 
+	# the ms1 parameter is a m/z number of a unknown metabolite
+	# j is the index of the unknown m/z in the vector 
 	unknown.query_impl <- function(ms1, j) {
 		query <- lapply(mz.index, function(i) {
 			# unknown metabolite ms1 m/z match
@@ -407,65 +409,57 @@ metaDNA.impl <- function(KEGG.partners, identify.ms2,
 
     if (IsNothing(unknown.query)) {
         return(NULL);
-    }
+    } else {
+		# element structure in unknown.query:
+		#
+		# [1] "unknown.index"  "unknown.mz"     "precursor_type" "kegg"
+		# [5] "ppm"
+		#
+		# unknown.index is the index of the unknown metabolite in input sequence
+		# unknown.mz is the corresponding m/z
+		# ppm is the ppm value for unknown mz match with the KEGG compound m/z
+	}
 
     # unknown.i integer index of the peaktable
-    unknown.i <- sapply(unknown.query, function(x) x$unknown.index) %=>% unlist;
+    unknown.i <- sapply(unknown.query, function(x) x$unknown.index) %=>% unlist %=>% as.numeric;
     # subset of the peaktable by using the unknown index value
-    peaktable <- ensure.dataframe(
-      unknown$peaktable[unknown.i,],
-      colnames(unknown$peaktable)
-    );
-    # rownames of peaktable is the list names for the peak_ms2
-    peak_ms2.index <- peaktable %=>% rownames;
-
-    # peak_ms2 and peaktable is corresponding to each other
-    peak_ms2 <- unknown$peak_ms2[peak_ms2.index];
-    peaktable <- peaktable %=>% .as.list;
-
+	# the peaktable subset object contains ms1 feature and ms2 feature
+    unknown.features <- unknown[unknown.i];
+       
+	# 2019-03-29 these object is in length equals
+	#
+	# unknown.query
+	# unknown.i
+	# unknown.features 
+	   
     # alignment of the ms2 between the identify and unknown
     # The unknown will identified as identify.ms2 when ms2.align
     # pass the threshold cutoff.
-    query.result <- lapply(1:length(peak_ms2.index), function(i) {
+    query.result <- lapply(1:length(unknown.features), function(i) {
 		# loop on current unknown match list from the identify kegg partners
         # identify for each unknown metabolite
-        kegg.query <- unknown.query[i];
-        name <- peak_ms2.index[i];
-        peak <- peak_ms2[[name]];
-        ms1.feature <- peaktable[[i]];
-        best.score <- -10000;
-        best <- NULL;
+        kegg.query <- unknown.query[[i]];
+		feature <- unknown.features[[i]];
+        peak <- feature$ms2;	
+		result <- align_best.internal(
+		  ref = identify.ms2,
+		  peak = peak,
+		  ms2.align = ms2.align,
+		  score.cutoff = score.cutoff
+		);
 
-        # Loop each identify and using its ms2 as reference
-        for (fileName in names(identify.ms2)) {
-
-            file <- identify.ms2[[fileName]];
-
-            for (scan in names(file)) {
-                result <- align_best.internal(
-                  ref = file[[scan]],
-                  peak = peak,
-                  ms2.align = ms2.align,
-                  score.cutoff = score.cutoff
-                );
-
-                if (!is.null(result)) {
-                    if (mean(result$score) > best.score) {
-                        best.score <- mean(result$score);
-                        best <- result;
-                    }
-                }
-            }
-        }
-
-        if (!is.null(best)) {
+        if (!is.null(result)) {
             # name is the peaktable rownames
+			feature$ms2 <- NULL;
+			
             list(
-              ms2.alignment = best,
-              ms1.feature = ms1.feature,
+              feature = feature,
               kegg.info = kegg.query,
-              peak_ms2.i = peak_ms2.index[i],
-			  name = name
+			  # due to the reason of database did not 
+			  # have this kegg compound its standard spectrum, so that 
+			  # align using identify metabolite its spectrum matrix
+			  align = result,
+			  name = feature$ID
             );
         } else {
 			NULL;
