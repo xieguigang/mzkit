@@ -99,11 +99,9 @@ metaDNA <- function(identify, unknown, do.align,
     print("KEGG compound match with tolerance:");
     print(tolerance);
 
-    kegg_id.col <- meta.KEGG$kegg_id;
-    meta.KEGG <- meta.KEGG$data;
+	unknown.mz <- sapply(unknown, function(x) x$mz) %=>% as.numeric;
     match.kegg <- kegg.match.handler(
-      meta.KEGG,
-      unknown.mz = unknown$peaktable[, "mz"],
+      unknown.mz = unknown.mz,
       precursor_type = precursor_type,
       kegg_id = kegg_id.col,
       tolerance = tolerance
