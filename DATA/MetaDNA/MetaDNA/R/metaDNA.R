@@ -90,10 +90,6 @@ metaDNA <- function(identify, unknown, do.align,
     # 2. Search for unknown by using ms1 precursor_m/z compare with the
     #    KEGG compound molecule weight in a given precursor_type mode.
 
-    # load kegg reaction database
-    # data/metaDNA_kegg.rda
-    xLoad("metaDNA_kegg.rda");
-
     print(" [metaDNA] pipline....");
     cat("\n\n");
     print("KEGG compound match with tolerance:");
@@ -179,20 +175,27 @@ metaDNA <- function(identify, unknown, do.align,
 #'
 #' @return Returns the index vector in \code{unknown.mz} vector.
 #'
-kegg.match.handler <- function(meta.KEGG, unknown.mz,
-                               precursor_type = c("[M+H]+", "[M]+"),
-                               kegg_id = "KEGG",
-                               tolerance = assert.deltaMass(0.3)) {
-
+kegg.match.handler <- function(unknown.mz, precursor_type = c("[M+H]+", "[M]+"), tolerance = assert.deltaMass(0.3)) {
+    # load kegg reaction database and kegg meta information
+    # data/metaDNA_kegg.rda
+    xLoad("metaDNA_kegg.rda");
+	xLoad("KEGG_meta.rda");
+	
+	# 2019-03-29 some metabolite in KEGG database is a generic compound
+	# which means it have no mass and formula
+	# removes all of these generic compound.
+	non.generic <- sapply(KEGG_meta, function(c) c$exact_mass > 0) %=>% as.logical;
+	KEGG_meta <- KEGG_meta[non.generic];
+	
 	mode <- getPolarity(precursor_type);
 
 	print("m/z will be calculate from these precursor types:");
 	print(cbind(precursor_type, mode));
 
-    kegg.mass <- meta.KEGG[, "exact_mass"] %=>% as.numeric;
-    kegg.ids <- meta.KEGG[, kegg_id] %=>% as.character;
+    kegg.mass <- sapply(KEGG_meta, function(c) c$exact_mass) %=>% as.numeric;
+    kegg.ids <- sapply(KEGG_meta, function(c) c$ID) %=>% as.character;
     kegg.mz <- get.PrecursorMZ(kegg.mass, precursor_type, mode);
-    kegg.list <- meta.KEGG %=>% .as.list;
+    kegg.list <- KEGG_meta;
 
     function(kegg_id) {
 		out <- list();
