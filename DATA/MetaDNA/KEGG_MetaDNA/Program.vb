@@ -73,7 +73,7 @@ Module Program
     <Description("Compile a KEGG compound basic information database.")>
     Public Function KEGGMeta(args As CommandLine) As Integer
         Dim kegg$ = args <= "/kegg"
-        Dim out$ = args("/out") Or $"{kegg.ParentPath}/KEGG_meta.rda"
+        Dim out$ = args("/out") Or $"{kegg.TrimDIR}/KEGG_meta.rda"
         Dim compounds = ScanLoad(repository:=kegg) _
             .GroupBy(Function(c) c.Entry) _
             .Select(Function(g) g.First) _
@@ -85,15 +85,18 @@ Module Program
                 !KEGG_meta = Rbase.lapply(
                     x:=compounds,
                     FUN:=Function(compound)
+                             Call compound.CommonNames?.FirstOrDefault().__DEBUG_ECHO
+
                              Return Rbase.list(
                                 !ID = compound.Entry,
                                 !exact_mass = compound.ExactMass,
                                 !name = compound.CommonNames,
                                 !formula = compound.Formula,
-                                !chebi = (compound.CHEBI.FirstOrDefault Or NA)
+                                !chebi = (compound.CHEBI?.FirstOrDefault Or NA)
                              )
                          End Function)
 
+                Call out.__DEBUG_ECHO
                 Call Rbase.save({"KEGG_meta"}, file:=out)
             End With
         End SyncLock
