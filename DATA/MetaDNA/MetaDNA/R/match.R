@@ -1,9 +1,9 @@
-#Region "Microsoft.ROpen::ce830ddd7d84ada8fa3cd06162456015, match.R"
+#Region "Microsoft.ROpen::d148cdb061a308f48e55d5a340efbc5b, match.R"
 
     # Summaries:
 
     # PrecursorType.Match <- function(mass, precursorMZ, charge,chargeMode= "+",tolerance = tolerance.deltaMass(0.3),debug.echo= TRUE) { if (tolerance %=>% is.numeric) {...
-    # .PrecursorType.MatchImpl <- function(mass, precursorMZ, charge,chargeMode, tolerance,debug.echo) {...
+    # precursorType.MatchImpl <- function(mass, precursorMZ, charge,chargeMode, tolerance,debug.echo) {...
     # match <- function(keyName) {...
 
 #End Region
@@ -69,7 +69,7 @@ PrecursorType.Match <- function(
             sprintf("[M]%s%s", charge, chargeMode);
         }
     } else {
-        .PrecursorType.MatchImpl(
+        precursorType.MatchImpl(
             mass, precursorMZ, charge,
             chargeMode, tolerance,
             debug.echo
@@ -77,9 +77,11 @@ PrecursorType.Match <- function(
     }
 }
 
-#' Calculate for each precursor type, and then returns the
+#' Match the precursor type
+#'
+#' @description Calculate for each precursor type, and then returns the
 #' min tolerance type as the match result
-.PrecursorType.MatchImpl <- function(
+precursorType.MatchImpl <- function(
     mass, precursorMZ, charge,
     chargeMode, tolerance,
     debug.echo) {
