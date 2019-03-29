@@ -256,7 +256,7 @@ kegg.match <- function(kegg_id, kegg.mass, kegg.ids, kegg.mz, kegg.list,
 				# If these two m/z value meet the tolerance condition
 				# then we match a possible KEGG annotation data.
 				# also returns with ppm value
-				list(kegg = kegg[[i]], ppm = PPM(ms1, mz[i]));
+				list(kegg = kegg[[i]], ppm = PPM(ms1, mz[i]), libmz = mz[i]);
 			} else {
 				NULL;
 			}
@@ -279,7 +279,8 @@ kegg.match <- function(kegg_id, kegg.mass, kegg.ids, kegg.mz, kegg.list,
 					# multiple kegg annotation result, based on the ms1
 					# tolerance.
 					kegg = hit$kegg,
-					ppm = hit$ppm
+					ppm = hit$ppm,
+					libmz = hit$libmz
 				);
 			});
 		}
