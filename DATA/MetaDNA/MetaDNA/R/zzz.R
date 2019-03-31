@@ -1,4 +1,4 @@
-#Region "Microsoft.ROpen::1e024dc9e01b94baea58ebfe8e03e6a2, zzz.R"
+#Region "Microsoft.ROpen::df252ee88733584f15fc683d2c1ebefb, zzz.R"
 
     # Summaries:
 
@@ -49,7 +49,7 @@
 
     cat("You can acquire the toolkit's source code from github:");
     cat("\n\n");
-    cat("     https://github.com/xieguigang/MassSpectrum-toolkits");
+    cat("     https://github.com/xieguigang/mzkit");
     cat("\n\n");
     cat("If any problem for this package, contact the author:");
     cat("\n\n");

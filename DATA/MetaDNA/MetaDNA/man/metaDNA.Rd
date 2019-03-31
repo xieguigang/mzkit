@@ -4,8 +4,8 @@
 \alias{metaDNA}
 \title{Identify unknown metabolite by metaDNA algorithm}
 \usage{
-metaDNA(identify, unknown, meta.KEGG, ms2.align, precursor_type = c("[M+H]+",
-  "[M]+"), tolerance = assert.deltaMass(0.3), score.cutoff = 0.8,
+metaDNA(identify, unknown, do.align, precursor_type = c("[M+H]+", "[M]+"),
+  tolerance = assert.deltaMass(0.3), score.cutoff = 0.8,
   kegg_id.skips = NULL)
 }
 \arguments{
@@ -34,13 +34,14 @@ metaDNA(identify, unknown, meta.KEGG, ms2.align, precursor_type = c("[M+H]+",
      \code{peak_ms2} is a MS/MS list, MS/MS matrix should contains at
      least two column: \code{mz} and \code{into}}
 
-\item{ms2.align}{The MS/MS alignment method, which is in format like: \code{function(q, s)}
-Where \code{q} and \code{s} is a matrix.}
+\item{do.align}{The MS/MS alignment method, which is in format like: \code{function(q, s)}
+Where \code{q} and \code{s} is a ms2 spectra matrix.}
 
 \item{precursor_type}{By default is positive mode with the \code{H+} adduct for
 search unknown metabolites.}
 
-\item{tolerance}{m/z equalient compares tolerance, by default is less than ppm 20.}
+\item{tolerance}{KEGG compound match with this tolerance, m/z equalient compares tolerance, 
+by default is less than ppm 20.}
 
 \item{score.cutoff}{MS/MS similarity cutoff for identify ms2 alignment with unknown ms2}
 

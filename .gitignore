@@ -257,3 +257,4 @@ paket-files/
 *.zip
 /DATA/MetaDNA/MetaDNA/%APPDATA%/Microsoft/Windows/IETldCache
 /Assembly/Apps
+/App
