@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::bc0e7241c7a22371c6afd6108b1f0b4c, test\Module1.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Module1
-    ' 
-    '     Sub: ChromatogramPlotTest, Main, ms1Visual, mzrtPlotTest
-    ' 
-    ' /********************************************************************************/
+' Module Module1
+' 
+'     Sub: ChromatogramPlotTest, Main, ms1Visual, mzrtPlotTest
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -51,7 +51,7 @@ Imports SMRUCC.MassSpectrum.Assembly.MarkupData
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
 Imports SMRUCC.MassSpectrum.Math
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
-Imports SMRUCC.MassSpectrum.Math.MSMS
+Imports SMRUCC.MassSpectrum.Math.Ms1
 Imports SMRUCC.MassSpectrum.Visualization
 
 Module Module1
@@ -75,7 +75,7 @@ Module Module1
 
         Dim matrix = "D:\Resources\40\40.mzML" _
             .PopulateMS1 _
-            .Ms1Chromatogram(New DAmethod With {.da = 0.3}) _
+            .Ms1Chromatogram(New DAmethod With {.Threshold = 0.3}) _
             .Select(Function(mz)
                         Dim table = mz.chromatogram.GroupBy(Function(t) t.Time).Select(Function(c) New ChromatogramTick With {.Time = c.Key, .Intensity = c.Select(Function(s) s.Intensity).Max}).ToArray
                         Return New NamedCollection(Of ChromatogramTick) With {.Name = mz.mz, .Value = table}
@@ -116,7 +116,7 @@ Module Module1
         'Call into_matrix.MatrixJson.SaveTo("./into.json")
 
         'Call scans.SaveTo("./test_ms1_scan.csv")
-        Call matrix.TICplot("8000,3000", labelTicks:=5, showLabels:=False, fillCurve:=False).Save("./ms1.plot.png")
+        Call matrix.TICplot("8000,3000", labelLayoutTicks:=5, showLabels:=False, fillCurve:=False).Save("./ms1.plot.png")
 
         Pause()
     End Sub
