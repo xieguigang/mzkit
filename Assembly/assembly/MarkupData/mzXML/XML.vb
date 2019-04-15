@@ -65,7 +65,7 @@ Namespace MarkupData.mzXML
         Public Property shal As String
 
         ''' <summary>
-        ''' Load all scan node in the mzXML document.
+        ''' Load all scan node in the mzXML document.(这个函数使用的是Linq集合的方式进行大型原始数据文件的加载操作的)
         ''' </summary>
         ''' <param name="mzXML"></param>
         ''' <returns></returns>
