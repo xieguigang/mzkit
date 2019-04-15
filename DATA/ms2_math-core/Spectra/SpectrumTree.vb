@@ -81,6 +81,18 @@ Namespace Spectra
             End Get
         End Property
 
+        Public ReadOnly Property MID As String
+            Get
+                Return $"M{sys.Round(Representative.mz)}T{sys.Round(Representative.rt)}"
+            End Get
+        End Property
+
+        Public ReadOnly Property RepresentativeFeature As String
+            Get
+                Return $"{Representative.file}#{Representative.scan}"
+            End Get
+        End Property
+
         Public Overrides Function ToString() As String
             Return Representative.ToString & $"  with {cluster.Length} cluster members."
         End Function
