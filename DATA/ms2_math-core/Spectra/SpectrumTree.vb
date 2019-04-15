@@ -149,7 +149,7 @@ Namespace Spectra
         End Function
 
         ''' <summary>
-        ''' 这个函数返回来的质谱图的矩阵都是未经处理的原始矩阵数据
+        ''' 将通过二叉树所构建得到的所有聚类结果返回给调用者, 这个函数返回来的质谱图的矩阵都是未经处理的原始矩阵数据
         ''' </summary>
         ''' <returns></returns>
         Public Iterator Function PopulateClusters() As IEnumerable(Of SpectrumCluster)

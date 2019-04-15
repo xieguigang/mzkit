@@ -107,6 +107,9 @@ Namespace Spectra
 
     End Class
 
+    ''' <summary>
+    ''' A spectra fragment with m/z and into data.
+    ''' </summary>
     Public Class ms2
 
         ''' <summary>
