@@ -125,6 +125,14 @@ Namespace MarkupData.mzXML
             Return Me.GetJson
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="basename"></param>
+        ''' <param name="shrinkTolerance">
+        ''' If this tolerance value is not nothing, then the fragment with mz inside this given tolerance will be merge.
+        ''' </param>
+        ''' <returns></returns>
         Public Function ScanData(Optional basename$ = Nothing, Optional shrinkTolerance As Tolerance = Nothing) As PeakMs2
             Dim mzInto As LibraryMatrix = peaks _
                 .ExtractMzI _
