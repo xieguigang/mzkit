@@ -154,11 +154,11 @@
     <Compile Include="Ms1\Tolerance\DeltaMass.vb" />
     <Compile Include="Ms1\Tolerance\Tolerance.vb" />
     <Compile Include="Spectra\SpectraEncoder.vb" />
-    <Compile Include="Spectra\PeakMs2.vb" />
+    <Compile Include="Spectra\Models\PeakMs2.vb" />
     <Compile Include="Spectra\LibraryMatrixExtensions.vb" />
     <Compile Include="Spectra\GlobalAlignment.vb" />
-    <Compile Include="Spectra\ms2AlignMatrix.vb" />
-    <Compile Include="Spectra\LibraryMatrix.vb" />
+    <Compile Include="Spectra\Models\ms2AlignMatrix.vb" />
+    <Compile Include="Spectra\Models\LibraryMatrix.vb" />
     <Compile Include="Ms1\ms1.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -177,7 +177,8 @@
     </Compile>
     <Compile Include="Ms1\Peaktable.vb" />
     <Compile Include="Ms1\PrecursorType\PrecursorType.vb" />
-    <Compile Include="Spectra\SpectrumTree.vb" />
+    <Compile Include="Spectra\SpectrumTree\SpectrumCluster.vb" />
+    <Compile Include="Spectra\SpectrumTree\SpectrumTree.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
