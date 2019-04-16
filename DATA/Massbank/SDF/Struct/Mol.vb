@@ -49,6 +49,9 @@ Imports Microsoft.VisualBasic.Text
 
 Namespace File
 
+    ''' <summary>
+    ''' The molecular structure.
+    ''' </summary>
     Public Class [Structure]
 
         Public Property Atoms As Atom()

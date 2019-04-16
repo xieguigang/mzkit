@@ -231,6 +231,7 @@
     <Compile Include="Public\TMIC\HMDB\Spectra\NMR1D.vb" />
     <Compile Include="Public\TMIC\HMDB\Spectra\MSMS.vb" />
     <Compile Include="Public\TMIC\HMDB\Spectra\CMS.vb" />
+    <Compile Include="SDF\Struct\Enums.vb" />
     <Compile Include="SDF\Struct\Elements.vb" />
     <Compile Include="SDF\Extensions.vb" />
     <Compile Include="Public\TMIC\FooDB\mysql\compounds.vb" />
