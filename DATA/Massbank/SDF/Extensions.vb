@@ -104,7 +104,7 @@ Namespace File
         ''' </summary>
         ''' <typeparam name="MetaData"></typeparam>
         ''' <param name="sdf"></param>
-        ''' <param name="properties"></param>
+        ''' <param name="properties">将<see cref="defaultKeys"/>之中的键名称映射为对应的成员属性的字典</param>
         ''' <returns></returns>
         <Extension>
         Public Function Data(Of MetaData As {New, Class})(sdf As SDF, properties As Dictionary(Of String, PropertyInfo)) As MetaData
