@@ -116,48 +116,49 @@ Namespace Spectra
     ''' </summary>
     Public Class SpectrumTreeCluster
 
-        Dim tolerance As Tolerance = Tolerance.PPM(20)
         Dim tree As AVLTree(Of PeakMs2, PeakMs2)
         Dim showReport As Boolean
-        Dim equalsScore#
-        Dim gtScore#
-        Dim Ms2Compares As Comparison(Of PeakMs2) = AddressOf SSMCompares
+        Dim Ms2Compares As Comparison(Of PeakMs2) = SSMCompares(Tolerance.PPM(20))
 
         Public ReadOnly Property allMs2Scans As New List(Of PeakMs2)
 
         Const InvalidScoreRange$ = "Scores for x < y should be in range (0, 1] and its value is also less than score for spectra equals!"
 
-        Sub New(showReport As Boolean,
-                Optional equalsScore# = 0.85,
-                Optional gtScore# = 0.6,
-                Optional compares As Comparison(Of PeakMs2) = Nothing)
-
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="compares">
+        ''' By default is SSM method <see cref="SSMCompares(Tolerance, Double, Double)"/>
+        ''' </param>
+        ''' <param name="showReport"></param>
+        Sub New(Optional compares As Comparison(Of PeakMs2) = Nothing, Optional showReport As Boolean = True)
             Me.showReport = showReport
-            Me.equalsScore = equalsScore
-            Me.gtScore = gtScore
 
+            If Not compares Is Nothing Then
+                Ms2Compares = compares
+            End If
+        End Sub
+
+        Public Shared Function SSMCompares(tolerance As Tolerance, Optional equalsScore# = 0.85, Optional gtScore# = 0.6) As Comparison(Of PeakMs2)
             If equalsScore < 0 OrElse equalsScore > 1 Then
                 Throw New InvalidConstraintException("Scores for spectra equals is invalid, it should be in range (0, 1].")
             End If
             If gtScore < 0 OrElse gtScore > 1 OrElse gtScore > equalsScore Then
                 Throw New InvalidConstraintException(InvalidScoreRange)
             End If
-            If Not compares Is Nothing Then
-                Ms2Compares = compares
-            End If
-        End Sub
 
-        Private Function SSMCompares(x As PeakMs2, y As PeakMs2) As Integer
-            Dim score = GlobalAlignment.TwoDirectionSSM(x.mzInto.ms2, y.mzInto.ms2, tolerance)
-            Dim min = sys.Min(score.forward, score.reverse)
+            Return Function(x, y) As Integer
+                       Dim score = GlobalAlignment.TwoDirectionSSM(x.mzInto.ms2, y.mzInto.ms2, tolerance)
+                       Dim min = sys.Min(score.forward, score.reverse)
 
-            If min >= equalsScore Then
-                Return 0
-            ElseIf min >= gtScore Then
-                Return 1
-            Else
-                Return -1
-            End If
+                       If min >= equalsScore Then
+                           Return 0
+                       ElseIf min >= gtScore Then
+                           Return 1
+                       Else
+                           Return -1
+                       End If
+                   End Function
         End Function
 
         ''' <summary>

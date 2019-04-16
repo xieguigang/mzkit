@@ -72,7 +72,9 @@ Namespace MarkupData.mzXML
         ''' (这个函数使用的是Linq集合的方式进行大型原始数据文件的加载操作的)
         ''' </summary>
         ''' <param name="mzXML"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' 这个函数仅仅是用来加载原始数据,并没有做任何预处理
+        ''' </returns>
         Public Shared Iterator Function LoadScans(ParamArray mzXML As String()) As IEnumerable(Of scan)
             For Each file As String In mzXML
                 For Each scan As scan In file.LoadXmlDataSet(Of scan)(, xmlns:=mzXMLSchema)

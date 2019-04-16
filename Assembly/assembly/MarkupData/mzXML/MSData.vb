@@ -126,7 +126,7 @@ Namespace MarkupData.mzXML
         End Function
 
         ''' <summary>
-        ''' 
+        ''' 这个函数根据<paramref name="shrinkTolerance"/>参数值可能会合并碎片
         ''' </summary>
         ''' <param name="basename"></param>
         ''' <param name="shrinkTolerance">
