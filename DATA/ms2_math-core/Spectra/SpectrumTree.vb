@@ -130,7 +130,7 @@ Namespace Spectra
         ''' <param name="compares">
         ''' By default is SSM method <see cref="SSMCompares(Tolerance, Double, Double)"/>
         ''' </param>
-        ''' <param name="showReport"></param>
+        ''' <param name="showReport">Show progress report?</param>
         Sub New(Optional compares As Comparison(Of PeakMs2) = Nothing, Optional showReport As Boolean = True)
             Me.showReport = showReport
 
@@ -178,21 +178,26 @@ Namespace Spectra
 
         Private Sub clusterInternal(ms2list As PeakMs2(), tick As Action)
             Dim shrinkTolerance As Tolerance = Tolerance.DeltaMass(0.1)
+            Dim matrix As LibraryMatrix
+            Dim simply As PeakMs2
 
             ' simple => raw
             tree = New AVLTree(Of PeakMs2, PeakMs2)(Ms2Compares, Function(x) x.ToString)
 
             For Each ms2 As PeakMs2 In ms2list
-                Dim simple As New PeakMs2 With {
+                matrix = ms2.mzInto _
+                    .Shrink(shrinkTolerance) _
+                    .Trim(0.05)
+                simply = New PeakMs2 With {
                     .mz = ms2.mz,
                     .file = ms2.file,
                     .rt = ms2.rt,
                     .scan = ms2.scan,
-                    .mzInto = ms2.mzInto.Shrink(shrinkTolerance).Trim(0.05)
+                    .mzInto = matrix
                 }
 
                 Call allMs2Scans.Add(ms2)
-                Call tree.Add(simple, ms2)
+                Call tree.Add(simply, ms2)
                 Call tick()
             Next
         End Sub
