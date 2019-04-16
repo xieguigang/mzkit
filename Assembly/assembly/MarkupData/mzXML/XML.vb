@@ -68,7 +68,8 @@ Namespace MarkupData.mzXML
         Public Const mzXMLSchema$ = "http://sashimi.sourceforge.net/schema_revision/mzXML_3.2"
 
         ''' <summary>
-        ''' Load all scan node in the mzXML document.(这个函数使用的是Linq集合的方式进行大型原始数据文件的加载操作的)
+        ''' Load all scan node in the mzXML document.
+        ''' (这个函数使用的是Linq集合的方式进行大型原始数据文件的加载操作的)
         ''' </summary>
         ''' <param name="mzXML"></param>
         ''' <returns></returns>
