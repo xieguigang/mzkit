@@ -97,6 +97,10 @@ Namespace File
         Public Property [Structure] As [Structure]
         Public Property MetaData As Dictionary(Of String, String())
 
+        Public Overrides Function ToString() As String
+            Return $"[{MetaData.TryGetValue("PUBCHEM_COMPOUND_CID").FirstOrDefault}] {MetaData.TryGetValue("PUBCHEM_IUPAC_NAME", [default]:={}).FirstOrDefault}"
+        End Function
+
         ''' <summary>
         ''' Scan and parsing all of the ``*.sdf`` model file in the target <paramref name="directory"/>
         ''' </summary>
@@ -129,15 +133,11 @@ Namespace File
         ''' <param name="path$"></param>
         ''' <returns></returns>
         Public Shared Iterator Function IterateParser(path As String) As IEnumerable(Of SDF)
-            Dim o As SDF
-
             For Each block As String() In path _
                 .IterateAllLines _
                 .Split(Function(s) s = "$$$$", includes:=False)
 
-                o = SDF.StreamParser(block)
-
-                Yield o
+                Yield SDF.StreamParser(block)
             Next
         End Function
 

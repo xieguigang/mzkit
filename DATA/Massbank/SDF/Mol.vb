@@ -54,6 +54,10 @@ Namespace File
         Public Property Atoms As Atom()
         Public Property Bounds As Bound()
 
+        Public Overrides Function ToString() As String
+            Return $"{Atoms.Length} atoms with {Bounds.Length} bounds"
+        End Function
+
         ''' <summary>
         ''' Next comes the so-called "counts" line. This line is made up of twelve fixed-length fields 
         ''' 
