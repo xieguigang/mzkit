@@ -7,6 +7,7 @@
         ''' </summary>
         ''' <returns></returns>
         Public Property XLogP3 As Double
+
         ''' <summary>
         ''' Hydrogen Bond Donor Count
         ''' </summary>
@@ -31,13 +32,20 @@
         Sub New(data As Dictionary(Of String, String()))
             Dim read = getOne(data)
 
-            ExactMass = Val(read("PUBCHEM_EXACT_MASS"))
-            XLogP3 = Val(read("PUBCHEM_XLOGP3"))
+            ExactMass = Double.Parse(read("PUBCHEM_EXACT_MASS"))
+            XLogP3 = Double.Parse(read("PUBCHEM_XLOGP3"))
+            FormalCharge = Integer.Parse(read("PUBCHEM_TOTAL_CHARGE"))
+            TopologicalPolarSurfaceArea = Double.Parse(read("PUBCHEM_CACTVS_TPSA"))
+            HydrogenAcceptor = Integer.Parse(read("PUBCHEM_CACTVS_HBOND_ACCEPTOR"))
+            HydrogenDonors = Integer.Parse(read("PUBCHEM_CACTVS_HBOND_DONOR"))
+            RotatableBonds = Integer.Parse(read("PUBCHEM_CACTVS_ROTATABLE_BOND"))
+            HeavyAtoms = Integer.Parse(read("PUBCHEM_HEAVY_ATOM_COUNT"))
+            Complexity = Integer.Parse(read("PUBCHEM_CACTVS_COMPLEXITY"))
         End Sub
 
         Private Shared Function getOne(data As Dictionary(Of String, String())) As Func(Of String, String)
             Return Function(key)
-                       Return data.TryGetValue(key, [default]:={}).FirstOrDefault
+                       Return data.TryGetValue(key, [default]:={"Inf"}).FirstOrDefault
                    End Function
         End Function
     End Class

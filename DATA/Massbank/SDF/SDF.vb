@@ -102,8 +102,14 @@ Namespace File
             End Get
         End Property
 
+        Public ReadOnly Property Name As String
+            Get
+                Return MetaData.TryGetValue("PUBCHEM_IUPAC_NAME", [default]:={}).FirstOrDefault
+            End Get
+        End Property
+
         Public Overrides Function ToString() As String
-            Return $"[{MetaData.TryGetValue("PUBCHEM_COMPOUND_CID").FirstOrDefault}] {MetaData.TryGetValue("PUBCHEM_IUPAC_NAME", [default]:={}).FirstOrDefault}"
+            Return $"[{MetaData.TryGetValue("PUBCHEM_COMPOUND_CID").FirstOrDefault}] {Name}"
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
