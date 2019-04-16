@@ -96,6 +96,12 @@ Namespace File
         Public Property [Structure] As [Structure]
         Public Property MetaData As Dictionary(Of String, String())
 
+        Public ReadOnly Property ChemicalProperties As ChemicalProperties
+            Get
+                Return New ChemicalProperties(MetaData)
+            End Get
+        End Property
+
         Public Overrides Function ToString() As String
             Return $"[{MetaData.TryGetValue("PUBCHEM_COMPOUND_CID").FirstOrDefault}] {MetaData.TryGetValue("PUBCHEM_IUPAC_NAME", [default]:={}).FirstOrDefault}"
         End Function

@@ -27,5 +27,18 @@
         Public Property HeavyAtoms As Integer
         Public Property FormalCharge As Integer
         Public Property Complexity As Integer
+
+        Sub New(data As Dictionary(Of String, String()))
+            Dim read = getOne(data)
+
+            ExactMass = Val(read("PUBCHEM_EXACT_MASS"))
+            XLogP3 = Val(read("PUBCHEM_XLOGP3"))
+        End Sub
+
+        Private Shared Function getOne(data As Dictionary(Of String, String())) As Func(Of String, String)
+            Return Function(key)
+                       Return data.TryGetValue(key, [default]:={}).FirstOrDefault
+                   End Function
+        End Function
     End Class
 End Namespace
