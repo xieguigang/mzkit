@@ -1,11 +1,13 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData
 Imports SMRUCC.MassSpectrum.Math
+Imports SMRUCC.MassSpectrum.Math.Spectra
 
 Public Class SpectrumTree : Inherits Spectra.SpectrumTreeCluster
 
-    Sub New(showReport As Boolean)
-        Call MyBase.New(showReport)
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Sub New(Optional compares As Comparison(Of PeakMs2) = Nothing, Optional showReport As Boolean = True)
+        Call MyBase.New(compares, showReport)
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -24,6 +26,6 @@ Public Class SpectrumTree : Inherits Spectra.SpectrumTreeCluster
             .OrderBy(Function(mz) mz.precursorMz) _
             .ToArray
 
-        Return New SpectrumTree(True).doCluster(allMs2Scans, file.FileName)
+        Return New SpectrumTree(showReport:=True).doCluster(allMs2Scans, file.FileName)
     End Function
 End Class

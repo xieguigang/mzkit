@@ -95,13 +95,15 @@ Namespace Spectra
             End If
         End Sub
 
-        Public Shared Function SSMCompares(tolerance As Tolerance, Optional equalsScore# = 0.85, Optional gtScore# = 0.6) As Comparison(Of PeakMs2)
+        Public Shared Function SSMCompares(Optional tolerance As Tolerance = Nothing, Optional equalsScore# = 0.85, Optional gtScore# = 0.6) As Comparison(Of PeakMs2)
             If equalsScore < 0 OrElse equalsScore > 1 Then
                 Throw New InvalidConstraintException("Scores for spectra equals is invalid, it should be in range (0, 1].")
             End If
             If gtScore < 0 OrElse gtScore > 1 OrElse gtScore > equalsScore Then
                 Throw New InvalidConstraintException(InvalidScoreRange)
             End If
+
+            tolerance = tolerance Or ppm20
 
             Return Function(x, y) As Integer
                        Dim score = GlobalAlignment.TwoDirectionSSM(x.mzInto.ms2, y.mzInto.ms2, tolerance)
