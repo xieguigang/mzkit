@@ -51,6 +51,12 @@ Module pubchemTest
 
     Sub Main()
 
+        Dim keys = SMRUCC.MassSpectrum.DATA.File.SDF.ScanKeys("D:\Database\pubchem").ToArray
+
+        Call keys.GetJson.SaveTo("D:\Database\pubchem_sdf_keys.json")
+
+        Pause()
+
         Call sdfParserTest()
         Call fileTest()
 
