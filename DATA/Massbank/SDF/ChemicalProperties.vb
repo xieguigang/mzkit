@@ -32,6 +32,8 @@
         Sub New(data As Dictionary(Of String, String()))
             Dim read = getOne(data)
 
+            On Error Resume Next
+
             ExactMass = Double.Parse(read("PUBCHEM_EXACT_MASS"))
             XLogP3 = Double.Parse(read("PUBCHEM_XLOGP3"))
             FormalCharge = Integer.Parse(read("PUBCHEM_TOTAL_CHARGE"))
@@ -45,7 +47,7 @@
 
         Private Shared Function getOne(data As Dictionary(Of String, String())) As Func(Of String, String)
             Return Function(key)
-                       Return data.TryGetValue(key, [default]:={"Inf"}).FirstOrDefault
+                       Return data.TryGetValue(key, [default]:={CStr(1 / 0)}).FirstOrDefault
                    End Function
         End Function
     End Class
