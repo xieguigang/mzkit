@@ -1,47 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::b82f8b03249fea333144a7afbbd51d8e, assembly\MarkupData\mzXML\XML.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class XML
-    ' 
-    '         Properties: index, indexOffset, msRun, shal
-    ' 
-    '         Function: ExportPeaktable, LoadScans
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class XML
+' 
+'         Properties: index, indexOffset, msRun, shal
+' 
+'         Function: ExportPeaktable, LoadScans
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -57,20 +57,27 @@ Namespace MarkupData.mzXML
     ''' ``*.mzXML`` raw data
     ''' </summary>
     ''' 
-    <XmlType("mzXML", [Namespace]:="http://sashimi.sourceforge.net/schema_revision/mzXML_3.2")> Public Class XML
+    <XmlType("mzXML", [Namespace]:=XML.mzXMLSchema)>
+    Public Class XML
 
         Public Property msRun As MSData
         Public Property index As index
         Public Property indexOffset As Long
         Public Property shal As String
 
+        Public Const mzXMLSchema$ = "http://sashimi.sourceforge.net/schema_revision/mzXML_3.2"
+
         ''' <summary>
         ''' Load all scan node in the mzXML document.(这个函数使用的是Linq集合的方式进行大型原始数据文件的加载操作的)
         ''' </summary>
         ''' <param name="mzXML"></param>
         ''' <returns></returns>
-        Public Shared Function LoadScans(mzXML As String) As IEnumerable(Of scan)
-            Return mzXML.LoadXmlDataSet(Of scan)(, xmlns:="http://sashimi.sourceforge.net/schema_revision/mzXML_3.2")
+        Public Shared Iterator Function LoadScans(ParamArray mzXML As String()) As IEnumerable(Of scan)
+            For Each file As String In mzXML
+                For Each scan As scan In file.LoadXmlDataSet(Of scan)(, xmlns:=mzXMLSchema)
+                    Yield scan
+                Next
+            Next
         End Function
 
         Public Shared Function ExportPeaktable(mzXML As String) As Peaktable()
