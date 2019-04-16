@@ -53,12 +53,6 @@ Module Module1
         Call convertorTest()
         '  Call dumpPubChem()
 
-
-        Dim keys = SMRUCC.MassSpectrum.DATA.File.SDF.ScanKeys("D:\smartnucl_integrative\DATA\NCBI\SDF").ToArray
-
-        Call keys.GetJson.SaveTo("./keys.json")
-
-
         Pause()
     End Sub
 
@@ -80,7 +74,7 @@ Module Module1
 
     Sub dumpPubChem()
 
-        Call SMRUCC.MassSpectrum.DATA.File.DumpingPubChemAnnotations("D:\smartnucl_integrative\DATA\NCBI\SDF", "./ddddd.csv")
+        Call SMRUCC.MassSpectrum.DATA.File.DumpingPubChemAnnotations("D:\Database\pubchem", "D:\Database\pubchem.sdk_keys.csv")
 
 
         Pause()

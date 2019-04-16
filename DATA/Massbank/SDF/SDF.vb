@@ -1,55 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::76ee535cd54d0bf090d722fb535338da, Massbank\SDF\SDF.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class SDF
-    ' 
-    '         Properties: [Structure], Comment, ID, MetaData, Software
-    ' 
-    '         Function: IterateParser, MoleculePopulator, ScanKeys, StreamParser
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class SDF
+' 
+'         Properties: [Structure], Comment, ID, MetaData, Software
+' 
+'         Function: IterateParser, MoleculePopulator, ScanKeys, StreamParser
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
-Imports Microsoft.VisualBasic.Language.UnixBash
 
 Namespace File
 
@@ -97,6 +96,32 @@ Namespace File
         Public Property [Structure] As [Structure]
         Public Property MetaData As Dictionary(Of String, String())
 
+        Public ReadOnly Property ChemicalProperties As ChemicalProperties
+            Get
+                Return New ChemicalProperties(MetaData)
+            End Get
+        End Property
+
+        Public ReadOnly Property Name As String
+            Get
+                Return MetaData.TryGetValue("PUBCHEM_IUPAC_NAME", [default]:={}).FirstOrDefault
+            End Get
+        End Property
+
+        Public Overrides Function ToString() As String
+            Return $"[{MetaData.TryGetValue("PUBCHEM_COMPOUND_CID").FirstOrDefault}] {Name}"
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function ScanKeys(directory As String) As String()
+            Return SDFParser.ScanKeys(directory)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function IterateParser(path As String) As IEnumerable(Of SDF)
+            Return SDFParser.IterateParser(path)
+        End Function
+
         ''' <summary>
         ''' Scan and parsing all of the ``*.sdf`` model file in the target <paramref name="directory"/>
         ''' </summary>
@@ -104,101 +129,10 @@ Namespace File
         ''' <param name="takes%"></param>
         ''' <param name="echo"></param>
         ''' <returns></returns>
-        Public Shared Iterator Function MoleculePopulator(directory$, Optional takes% = -1, Optional echo As Boolean = True) As IEnumerable(Of SDF)
-            Dim list = ls - l - r - "*.sdf" <= directory
-
-            If takes > 0 Then
-                list = list.Take(takes)
-            End If
-
-            For Each path As String In list
-
-                If echo Then
-                    Call path.__INFO_ECHO
-                End If
-
-                For Each model As SDF In IterateParser(path)
-                    Yield model
-                Next
-            Next
-        End Function
-
-        ''' <summary>
-        ''' 解析单个的SDF文件
-        ''' </summary>
-        ''' <param name="path$"></param>
-        ''' <returns></returns>
-        Public Shared Iterator Function IterateParser(path As String) As IEnumerable(Of SDF)
-            Dim o As SDF
-
-            For Each block As String() In path _
-                .IterateAllLines _
-                .Split(Function(s) s = "$$$$", includes:=False)
-
-                o = SDF.StreamParser(block)
-
-                Yield o
-            Next
-        End Function
-
-        Const molEnds$ = "M  END"
-
-        Private Shared Function StreamParser(block$()) As SDF
-            Dim ID$ = block(0), program$ = block(1)
-            Dim comment$ = block(2)
-            Dim metas$()
-            Dim mol$
-
-            With block _
-                .Skip(2) _
-                .Split(Function(s) s = molEnds, includes:=False)
-
-                metas = .Last
-                mol = .First _
-                    .Join({molEnds}) _
-                    .JoinBy(vbLf)
-            End With
-
-            Dim metaData As Dictionary(Of String, String()) =
-                metas _
-                .Split(Function(s) s.StringEmpty, includes:=False) _
-                .Where(Function(t) Not t.IsNullOrEmpty) _
-                .ToDictionary(Function(t)
-                                  Return Mid(t(0), 4, t(0).Length - 4)
-                              End Function,
-                              Function(t)
-                                  Return t _
-                                      .Skip(1) _
-                                      .ToArray
-                              End Function)
-            Dim struct As [Structure] = [Structure].Parse(mol)
-
-            Return New SDF With {
-                .ID = ID.Trim,
-                .[Structure] = struct,
-                .Software = program.Trim,
-                .Comment = comment.Trim,
-                .MetaData = metaData
-            }
-        End Function
-
-        ''' <summary>
-        ''' 这个函数可能在构建csv文件进行数据存储的时候回有用
-        ''' </summary>
-        ''' <param name="directory"></param>
-        ''' <returns></returns>
-        Public Shared Function ScanKeys(directory As String) As String()
-            Dim keys As New Index(Of String)
-
-            For Each model As SDF In MoleculePopulator(directory, takes:=20)
-                For Each key As String In model.MetaData.Keys
-                    If keys.IndexOf(key) = -1 Then
-                        Call keys.Add(key)
-                    End If
-                Next
-            Next
-
-            Return keys.Objects
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function MoleculePopulator(directory$, Optional takes% = -1, Optional echo As Boolean = True) As IEnumerable(Of SDF)
+            Return SDFParser.MoleculePopulator(directory, takes, echo)
         End Function
     End Class
 End Namespace

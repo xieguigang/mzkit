@@ -231,7 +231,10 @@
     <Compile Include="Public\TMIC\HMDB\Spectra\NMR1D.vb" />
     <Compile Include="Public\TMIC\HMDB\Spectra\MSMS.vb" />
     <Compile Include="Public\TMIC\HMDB\Spectra\CMS.vb" />
-    <Compile Include="SDF\Elements.vb" />
+    <Compile Include="SDF\ChemicalProperties.vb" />
+    <Compile Include="SDF\SDFParser.vb" />
+    <Compile Include="SDF\Struct\Enums.vb" />
+    <Compile Include="SDF\Struct\Elements.vb" />
     <Compile Include="SDF\Extensions.vb" />
     <Compile Include="Public\TMIC\FooDB\mysql\compounds.vb" />
     <Compile Include="Public\TMIC\FooDB\mysql\compounds_enzymes.vb" />
@@ -257,7 +260,7 @@
     <Compile Include="Public\TMIC\HMDB\Assembly\property.vb" />
     <Compile Include="Public\TMIC\HMDB\Assembly\disease.vb" />
     <Compile Include="Public\lipidMAPS\MapsHelper.vb" />
-    <Compile Include="SDF\Mol.vb" />
+    <Compile Include="SDF\Struct\Mol.vb" />
     <Compile Include="SDF\SDF.vb" />
     <Compile Include="Public\TMIC\HMDB\NameValue.vb" />
     <Compile Include="MetaLib\XrefEngine.vb" />
