@@ -233,6 +233,7 @@ Namespace MetaLib
         ''' Multiple CAS id may exists
         ''' </summary>
         ''' <returns></returns>
+        <XmlElement>
         Public Property CAS As String()
         Public Property InChIkey As String
         Public Property InChI As String
