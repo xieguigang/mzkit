@@ -103,10 +103,10 @@ Namespace File
             End Get
         End Property
 
-        Public ReadOnly Property ChemicalProperties As ChemicalProperties
+        Public ReadOnly Property ChemicalProperties As ChemicalDescriptor
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return New ChemicalProperties(MetaData)
+                Return New ChemicalDescriptor(MetaData)
             End Get
         End Property
 

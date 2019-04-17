@@ -1,6 +1,9 @@
 ﻿Namespace File
 
-    Public Class ChemicalProperties
+    ''' <summary>
+    ''' Chemical descriptor
+    ''' </summary>
+    Public Class ChemicalDescriptor
 
         ''' <summary>
         ''' Computed Octanol/Water Partition Coefficient
@@ -43,6 +46,9 @@
             RotatableBonds = Integer.Parse(read("PUBCHEM_CACTVS_ROTATABLE_BOND"))
             HeavyAtoms = Integer.Parse(read("PUBCHEM_HEAVY_ATOM_COUNT"))
             Complexity = Integer.Parse(read("PUBCHEM_CACTVS_COMPLEXITY"))
+        End Sub
+
+        Sub New()
         End Sub
 
         Private Shared Function getOne(data As Dictionary(Of String, String())) As Func(Of String, String)

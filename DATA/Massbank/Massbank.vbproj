@@ -230,7 +230,7 @@
     <Compile Include="Public\TMIC\HMDB\Spectra\NMR1D.vb" />
     <Compile Include="Public\TMIC\HMDB\Spectra\MSMS.vb" />
     <Compile Include="Public\TMIC\HMDB\Spectra\CMS.vb" />
-    <Compile Include="SDF\ChemicalProperties.vb" />
+    <Compile Include="SDF\ChemicalDescriptor.vb" />
     <Compile Include="SDF\SDFParser.vb" />
     <Compile Include="SDF\Struct\Enums.vb" />
     <Compile Include="SDF\Struct\Elements.vb" />
