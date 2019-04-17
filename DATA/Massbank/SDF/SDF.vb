@@ -96,18 +96,28 @@ Namespace File
         Public Property [Structure] As [Structure]
         Public Property MetaData As Dictionary(Of String, String())
 
+        Public ReadOnly Property CID As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return Integer.Parse(ID)
+            End Get
+        End Property
+
         Public ReadOnly Property ChemicalProperties As ChemicalProperties
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return New ChemicalProperties(MetaData)
             End Get
         End Property
 
         Public ReadOnly Property Name As String
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return MetaData.TryGetValue("PUBCHEM_IUPAC_NAME", [default]:={}).FirstOrDefault
             End Get
         End Property
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return $"[{MetaData.TryGetValue("PUBCHEM_COMPOUND_CID").FirstOrDefault}] {Name}"
         End Function

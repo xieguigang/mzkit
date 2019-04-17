@@ -40,6 +40,7 @@ Namespace File
                     .JoinBy(vbLf)
             End With
 
+            Dim struct As [Structure] = [Structure].Parse(mol)
             Dim metaData As Dictionary(Of String, String()) =
                 metas _
                 .Split(Function(s) s.StringEmpty, includes:=False) _
@@ -52,7 +53,6 @@ Namespace File
                                       .Skip(1) _
                                       .ToArray
                               End Function)
-            Dim struct As [Structure] = [Structure].Parse(mol)
 
             Return New SDF With {
                 .ID = ID.Trim,
