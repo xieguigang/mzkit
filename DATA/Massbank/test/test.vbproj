@@ -132,6 +132,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\core\Bio.Assembly\Bio.Assembly.vbproj">
+      <Project>{c699d311-9923-4c19-bf70-5048d0e2cf5d}</Project>
+      <Name>Bio.Assembly</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\mysqli\LibMySQL\LibMySQL.vbproj">
       <Project>{2c34a044-1bde-44e8-a86e-e9971c87da21}</Project>
       <Name>LibMySQL</Name>
