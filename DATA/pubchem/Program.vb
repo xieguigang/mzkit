@@ -24,7 +24,7 @@ Module Program
             For Each meta As MetaLib In CIDSynonym.LoadMetaInfo([in])
                 Call dataset.Write(meta)
 
-                If ++i Mod 100 = 0 Then
+                If ++i Mod 10000 = 0 Then
                     Call Console.Write(i)
                     Call Console.Write(vbTab)
                     Call dataset.Flush()
