@@ -26,6 +26,7 @@ Module Program
                 If ++i Mod 100 = 0 Then
                     Call Console.Write(i)
                     Call Console.Write(vbTab)
+                    Call dataset.Flush()
                 End If
             Next
         End Using
