@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text.Xml.Linq
 Imports SMRUCC.MassSpectrum.DATA.MetaLib
@@ -12,7 +13,7 @@ Module Program
     End Function
 
     <ExportAPI("/unify.metalib")>
-    <Usage("/unify.metalib /in <CID-Synonym-filtered.txt> /out <out.Xml>")>
+    <Usage("/unify.metalib /in <CID-Synonym-filtered.txt> [/out <out.Xml>]")>
     Public Function PubchemUnifyMetaLib(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim out$ = args("/out") Or $"{[in].TrimSuffix}.metlib.Xml"
@@ -32,5 +33,16 @@ Module Program
         End Using
 
         Return 0
+    End Function
+
+    <ExportAPI("/image.fly")>
+    <Usage("/image.fly /cid <cid> [/out <save.png>]")>
+    Public Function ImageFlyCLI(args As CommandLine) As Integer
+        Dim cid$ = args("/cid")
+        Dim out$ = args("/out") Or $"./{cid}.png"
+
+        Return ImageFly.GetImage(cid) _
+            .SaveAs(out) _
+            .CLICode
     End Function
 End Module
