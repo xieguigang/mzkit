@@ -52,7 +52,7 @@ Module Program
                      End Function) _
             .ToArray
         Dim descript As ChemicalDescriptor
-        Dim verify As ChemicalDescriptor
+        ' Dim verify As ChemicalDescriptor
 
         Using repo As New DescriptorDatabase(out.Open(FileMode.OpenOrCreate, doClear:=False))
             For Each file As String In BlockOrderFiles
@@ -61,12 +61,12 @@ Module Program
                 For Each mol As SDF In SDF.IterateParser(file)
                     descript = mol.ChemicalProperties
                     repo.Write(mol.CID, descript)
-                    repo.Flush()
-                    verify = repo.GetDescriptor(mol.CID)
+                    ' repo.Flush()
+                    ' verify = repo.GetDescriptor(mol.CID)
 
-                    If Not descript.SequenceEqual(verify) Then
-                        Throw New Exception
-                    End If
+                    ' If Not descript.SequenceEqual(verify) Then
+                    '    Throw New Exception
+                    ' End If
                 Next
 
                 Call file.DeleteFile
