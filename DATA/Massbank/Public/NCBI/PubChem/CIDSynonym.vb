@@ -115,6 +115,11 @@ Namespace NCBI.PubChem
                     ' 这是一个新的物质,并且是第一个最好的名称
                     ' 则会需要将前面的meta信息抛出,并构建一个新的注释信息对象
                     If Not meta Is Nothing Then
+                        meta.xref.CAS = cas _
+                            .Distinct _
+                            .ToArray
+
+                        ' yield new unify meta info
                         Yield meta
                     End If
 
