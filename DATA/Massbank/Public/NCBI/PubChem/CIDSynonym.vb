@@ -1,4 +1,5 @@
 ﻿Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
 Imports SMRUCC.MassSpectrum.DATA.MetaLib
 
@@ -17,7 +18,7 @@ Namespace NCBI.PubChem
     <XmlType("Synonym")> Public Class CIDSynonym
 
         <XmlAttribute>
-        Public Property CID As String
+        Public Property CID As Integer
 
         <XmlText>
         Public Property Synonym As String
@@ -67,7 +68,7 @@ Namespace NCBI.PubChem
         ''' ' 第一个名称是权重最好的名称
         ''' </remarks>
         Public Shared Iterator Function LoadNames(file As String, Optional filter As Boolean = True) As IEnumerable(Of CIDSynonym)
-            Dim cid$ = 0
+            Dim cid As Integer = 0
             Dim name As String
             Dim t As String()
 
@@ -75,15 +76,15 @@ Namespace NCBI.PubChem
                 t = line.Split(ASCII.TAB)
                 name = t(1)
 
-                If t(0) <> cid Then
+                If Integer.Parse(t(0)) <> cid Then
+                    cid = Integer.Parse(t(0))
+
                     ' 这个是新的物质行
                     ' 第一个名称是权重最高的名称, 直接返回
                     Yield New CIDSynonym With {
-                        .CID = t(0),
+                        .CID = cid,
                         .Synonym = name
                     }
-
-                    cid = t(0)
                 Else
                     If filter Then
                         If patterns.Any(Function(test) test(name)) Then
@@ -104,12 +105,42 @@ Namespace NCBI.PubChem
         End Function
 
         Public Shared Iterator Function LoadMetInfo(file As String) As IEnumerable(Of MetaLib.MetaLib)
-            Dim xref As xref
-            Dim meta As MetaLib.MetaLib
+            Dim xref As xref = Nothing
+            Dim meta As MetaLib.MetaLib = Nothing
+            Dim cid As Integer = 0
+            Dim cas As New List(Of String)
 
             For Each synonym As CIDSynonym In LoadNames(file)
+                If synonym.CID <> cid Then
+                    ' 这是一个新的物质,并且是第一个最好的名称
+                    ' 则会需要将前面的meta信息抛出,并构建一个新的注释信息对象
+                    If Not meta Is Nothing Then
+                        Yield meta
+                    End If
 
+                    xref = New xref With {.pubchem = synonym.CID}
+                    cas *= 0
+                    meta = New MetaLib.MetaLib With {
+                        .ID = cid,
+                        .name = synonym.Synonym,
+                        .xref = xref
+                    }
+                Else
+                    If synonym.IsCAS Then
+                        cas += synonym.Synonym
+                    ElseIf synonym.IsChEBI Then
+                        xref.chebi = synonym.Synonym
+                    ElseIf synonym.IsHMDB Then
+                        xref.HMDB = synonym.Synonym
+                    ElseIf synonym.IsKEGG Then
+                        xref.KEGG = synonym.Synonym
+                    Else
+                        ' do nothing
+                    End If
+                End If
             Next
+
+            Yield meta
         End Function
     End Class
 End Namespace
