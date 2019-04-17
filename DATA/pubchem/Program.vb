@@ -42,32 +42,37 @@ Module Program
     End Function
 
     <ExportAPI("/descriptor")>
-    <Usage("/descriptor /compounds <*.gz directory> /meta <CID-Synonym> [/out <description.csv>]")>
+    <Usage("/descriptor /compounds <*.gz directory> [/out <description.db>]")>
     Public Function Descriptor(args As CommandLine) As Integer
         Dim compoundRepo$ = args <= "/compounds"
-        Dim meta$ = args <= "/meta"
-        Dim out$ = args("/out") Or $"{compoundRepo.TrimDIR}.description.csv"
-        Dim metaIterator = CIDSynonym.LoadMetaInfo(meta).GetEnumerator
+        Dim out$ = args("/out") Or $"{compoundRepo.TrimDIR}.description.db"
         Dim BlockOrderFiles = (ls - l - r - "*.gz" <= compoundRepo) _
             .OrderBy(Function(path)
                          Return Val(path.BaseName.Replace("Compound_", ""))
                      End Function) _
             .ToArray
+        Dim descript As ChemicalDescriptor
+        Dim verify As ChemicalDescriptor
 
+        Using repo As New DescriptorDatabase(out.Open(FileMode.OpenOrCreate, doClear:=False))
+            For Each file As String In BlockOrderFiles
+                file = Decompress(New FileInfo(file))
 
+                For Each mol As SDF In SDF.IterateParser(file)
+                    descript = mol.ChemicalProperties
+                    repo.Write(mol.CID, descript)
+                    repo.Flush()
+                    verify = repo.GetDescriptor(mol.CID)
 
-        For Each file As String In BlockOrderFiles
-            file = Decompress(New FileInfo(file))
+                    If Not descript.SequenceEqual(verify) Then
+                        Throw New Exception
+                    End If
+                Next
 
-            For Each mol As SDF In SDF.IterateParser(file)
-                Dim metaInfo As MetaLib = metaIterator.Next
-                Dim descript = mol.ChemicalProperties
-
-
+                Call file.DeleteFile
+                Call repo.Flush()
             Next
-
-            Call file.DeleteFile
-        Next
+        End Using
 
         Return 0
     End Function

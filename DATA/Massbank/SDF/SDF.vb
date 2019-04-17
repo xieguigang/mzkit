@@ -96,10 +96,10 @@ Namespace File
         Public Property [Structure] As [Structure]
         Public Property MetaData As Dictionary(Of String, String())
 
-        Public ReadOnly Property CID As Integer
+        Public ReadOnly Property CID As Long
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Integer.Parse(ID)
+                Return Long.Parse(ID)
             End Get
         End Property
 
