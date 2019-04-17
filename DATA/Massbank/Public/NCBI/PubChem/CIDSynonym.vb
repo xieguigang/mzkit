@@ -104,7 +104,7 @@ Namespace NCBI.PubChem
             Next
         End Function
 
-        Public Shared Iterator Function LoadMetInfo(file As String) As IEnumerable(Of MetaLib.MetaLib)
+        Public Shared Iterator Function LoadMetaInfo(file As String) As IEnumerable(Of MetaLib.MetaLib)
             Dim xref As xref = Nothing
             Dim meta As MetaLib.MetaLib = Nothing
             Dim cid As Integer = 0

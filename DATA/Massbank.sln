@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Massbank", "Massbank.vbproj", "{A686BDF5-077F-47F5-A8DD-C73E6E88363C}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Massbank", "Massbank\Massbank.vbproj", "{A686BDF5-077F-47F5-A8DD-C73E6E88363C}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "47-dotnet_Microsoft.VisualBasic", "..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj", "{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "47-dotnet_Microsoft.VisualBasic", "..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj", "{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "runtime", "runtime", "{CFB7D36B-2F9B-4698-9B74-DCFC2F143105}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "47_dotnet_ms-vb_data.framework", "..\..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj", "{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "47_dotnet_ms-vb_data.framework", "..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj", "{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Bio.Assembly", "..\..\..\GCModeller\src\GCModeller\core\Bio.Assembly\Bio.Assembly.vbproj", "{C699D311-9923-4C19-BF70-5048D0E2CF5D}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Bio.Assembly", "..\..\GCModeller\src\GCModeller\core\Bio.Assembly\Bio.Assembly.vbproj", "{C699D311-9923-4C19-BF70-5048D0E2CF5D}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "pubchem", "..\pubchem\pubchem.vbproj", "{D35A0E14-1588-46DC-90DC-6A6EB4CADB4D}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "pubchem", "pubchem\pubchem.vbproj", "{D35A0E14-1588-46DC-90DC-6A6EB4CADB4D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -504,8 +504,8 @@ Global
 		{D35A0E14-1588-46DC-90DC-6A6EB4CADB4D}.Biostack-Debug|x86.Build.0 = Debug|Any CPU
 		{D35A0E14-1588-46DC-90DC-6A6EB4CADB4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D35A0E14-1588-46DC-90DC-6A6EB4CADB4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D35A0E14-1588-46DC-90DC-6A6EB4CADB4D}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{D35A0E14-1588-46DC-90DC-6A6EB4CADB4D}.Debug|x64.Build.0 = Debug|Any CPU
+		{D35A0E14-1588-46DC-90DC-6A6EB4CADB4D}.Debug|x64.ActiveCfg = Debug|x64
+		{D35A0E14-1588-46DC-90DC-6A6EB4CADB4D}.Debug|x64.Build.0 = Debug|x64
 		{D35A0E14-1588-46DC-90DC-6A6EB4CADB4D}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{D35A0E14-1588-46DC-90DC-6A6EB4CADB4D}.Debug|x86.Build.0 = Debug|Any CPU
 		{D35A0E14-1588-46DC-90DC-6A6EB4CADB4D}.DEMO|Any CPU.ActiveCfg = Debug|Any CPU
