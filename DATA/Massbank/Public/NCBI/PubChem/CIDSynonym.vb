@@ -125,6 +125,7 @@ Namespace NCBI.PubChem
 
                     xref = New xref With {.pubchem = synonym.CID}
                     cas *= 0
+                    cid = synonym.CID
                     meta = New MetaLib.MetaLib With {
                         .ID = cid,
                         .name = synonym.Synonym,
