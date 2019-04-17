@@ -49,20 +49,36 @@ Namespace File
 
             On Error Resume Next
 
-            ExactMass = Double.Parse(read("PUBCHEM_EXACT_MASS"))
-            XLogP3 = Double.Parse(read("PUBCHEM_XLOGP3"))
-            XLogP3_AA = Double.Parse(read("PUBCHEM_XLOGP3_AA"))
-            FormalCharge = Integer.Parse(read("PUBCHEM_TOTAL_CHARGE"))
-            TopologicalPolarSurfaceArea = Double.Parse(read("PUBCHEM_CACTVS_TPSA"))
-            HydrogenAcceptor = Integer.Parse(read("PUBCHEM_CACTVS_HBOND_ACCEPTOR"))
-            HydrogenDonors = Integer.Parse(read("PUBCHEM_CACTVS_HBOND_DONOR"))
-            RotatableBonds = Integer.Parse(read("PUBCHEM_CACTVS_ROTATABLE_BOND"))
-            HeavyAtoms = Integer.Parse(read("PUBCHEM_HEAVY_ATOM_COUNT"))
-            Complexity = Integer.Parse(read("PUBCHEM_CACTVS_COMPLEXITY"))
+            ExactMass = TryParseDouble(read("PUBCHEM_EXACT_MASS"))
+            XLogP3 = TryParseDouble(read("PUBCHEM_XLOGP3"))
+            XLogP3_AA = TryParseDouble(read("PUBCHEM_XLOGP3_AA"))
+            FormalCharge = TryParseInteger(read("PUBCHEM_TOTAL_CHARGE"))
+            TopologicalPolarSurfaceArea = TryParseDouble(read("PUBCHEM_CACTVS_TPSA"))
+            HydrogenAcceptor = TryParseInteger(read("PUBCHEM_CACTVS_HBOND_ACCEPTOR"))
+            HydrogenDonors = TryParseInteger(read("PUBCHEM_CACTVS_HBOND_DONOR"))
+            RotatableBonds = TryParseInteger(read("PUBCHEM_CACTVS_ROTATABLE_BOND"))
+            HeavyAtoms = TryParseInteger(read("PUBCHEM_HEAVY_ATOM_COUNT"))
+            Complexity = TryParseInteger(read("PUBCHEM_CACTVS_COMPLEXITY"))
         End Sub
 
         Sub New()
         End Sub
+
+        Private Function TryParseDouble(s As String) As Double
+            If PrimitiveParser.IsNumeric(s) Then
+                Return Double.Parse(s)
+            Else
+                Return -10000000
+            End If
+        End Function
+
+        Private Function TryParseInteger(s As String) As Integer
+            If PrimitiveParser.IsInteger(s) Then
+                Return Integer.Parse(s)
+            Else
+                Return -10000000
+            End If
+        End Function
 
         Public Shared Function GetBytesBuffer(descript As ChemicalDescriptor) As Byte()
             Dim bytes As New List(Of Byte)
