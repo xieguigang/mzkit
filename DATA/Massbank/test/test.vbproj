@@ -144,6 +144,10 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\FooDB\FooDB.vbproj">
+      <Project>{a604eaa0-b26a-4287-b578-872b94ef5d33}</Project>
+      <Name>FooDB</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Massbank.vbproj">
       <Project>{a686bdf5-077f-47f5-a8dd-c73e6e88363c}</Project>
       <Name>Massbank</Name>
