@@ -222,6 +222,10 @@ Namespace MetaLib
         ''' <returns></returns>
         Public Property chebi As String
         Public Property KEGG As String
+        ''' <summary>
+        ''' The pubchem cid
+        ''' </summary>
+        ''' <returns></returns>
         Public Property pubchem As String
         Public Property HMDB As String
         Public Property metlin As String

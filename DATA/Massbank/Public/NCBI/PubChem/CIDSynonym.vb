@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Text
+﻿Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Text
 Imports SMRUCC.MassSpectrum.DATA.MetaLib
 
 Namespace NCBI.PubChem
@@ -13,9 +14,12 @@ Namespace NCBI.PubChem
     ''' names may be composed Of more than one word, separated by spaces.
     ''' </summary>
     ''' <remarks>Data for ``CID-Synonym-filtered.gz`` file</remarks>
-    Public Class CIDSynonym
+    <XmlType("Synonym")> Public Class CIDSynonym
 
+        <XmlAttribute>
         Public Property CID As String
+
+        <XmlText>
         Public Property Synonym As String
 
         Public ReadOnly Property IsChEBI As Boolean
@@ -46,12 +50,27 @@ Namespace NCBI.PubChem
             Return Synonym
         End Function
 
-        Public Shared Iterator Function LoadNames(file As String) As IEnumerable(Of CIDSynonym)
+        Shared ReadOnly patterns As Func(Of String, Boolean)() = {
+            AddressOf xref.IsCAS,
+            AddressOf xref.IsChEBI,
+            AddressOf xref.IsHMDB,
+            AddressOf xref.IsKEGG
+        }
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="file"></param>
+        ''' <param name="filter"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' ' 第一个名称是权重最好的名称
+        ''' </remarks>
+        Public Shared Iterator Function LoadNames(file As String, Optional filter As Boolean = True) As IEnumerable(Of CIDSynonym)
             Dim cid$ = 0
             Dim name As String
             Dim t As String()
 
-            ' 第一个名称是权重最好的名称
             For Each line As String In file.IterateAllLines
                 t = line.Split(ASCII.TAB)
                 name = t(1)
@@ -66,18 +85,30 @@ Namespace NCBI.PubChem
 
                     cid = t(0)
                 Else
-                    ' 只返回kegg/hmdb/chebi/cas编号名称
-                    If xref.IsCAS(name) OrElse
-                        xref.IsChEBI(name) OrElse
-                        xref.IsHMDB(name) OrElse
-                        xref.IsKEGG(name) Then
-
+                    If filter Then
+                        If patterns.Any(Function(test) test(name)) Then
+                            ' 只返回kegg/hmdb/chebi/cas编号名称
+                            Yield New CIDSynonym With {
+                                .CID = cid,
+                                .Synonym = name
+                            }
+                        End If
+                    Else
                         Yield New CIDSynonym With {
                             .CID = cid,
                             .Synonym = name
                         }
                     End If
                 End If
+            Next
+        End Function
+
+        Public Shared Iterator Function LoadMetInfo(file As String) As IEnumerable(Of MetaLib.MetaLib)
+            Dim xref As xref
+            Dim meta As MetaLib.MetaLib
+
+            For Each synonym As CIDSynonym In LoadNames(file)
+
             Next
         End Function
     End Class
