@@ -1,4 +1,4 @@
-#Region "Microsoft.ROpen::65d5bd54a055ecf84b985c4390193f12, metaDNA.R"
+#Region "Microsoft.ROpen::b2ba9de6f2eb9ee6895ae9b055bc9f5e, metaDNA.R"
 
     # Summaries:
 
@@ -100,7 +100,12 @@ metaDNA <- function(identify, unknown, do.align,
       tolerance = tolerance
     );
 
-    seeds <- metaDNA.iteration(identify, kegg.partners, filter.skips, unknown, do.align, match.kegg, score.cutoff);
+    seeds <- metaDNA.iteration(
+        identify, kegg.partners, filter.skips,
+        unknown, do.align,
+        match.kegg,
+        score.cutoff
+    );
 
     for(i in 1:iterations) {
         seeds <- metaDNA.iteration(
@@ -124,6 +129,9 @@ metaDNA <- function(identify, unknown, do.align,
 #' @param kegg.partners A lambda function for find reaction partners for a given list of KEGG compound id.
 #' @param unknown The user sample data
 #' @param do.align A lambda function that provides spectra alignment
+#' @param unknow.matches function evaluate result of \code{\link{kegg.match.handler}}, this function
+#'     descript that how to find out the unknown metabolite from a given set of identify related kegg
+#'     partners compound id set.
 #'
 #' @details The \code{do.align} function should take two parameter:
 #'     The spectra matrix of query and reference and retuns a score vector
@@ -152,15 +160,32 @@ metaDNA.iteration <- function(identify, kegg.partners, filter.skips,
             # Each metaDNA.impl result is a list that identify of
             # unknowns
 
-            # KEGG.partners, identify.ms2, unknown, ms2.align, unknow.matches
-            metaDNA.impl(
-                KEGG.partners = partners,
-                identify.ms2 = identified$spectra,
-                unknown = unknown,
-                ms2.align = do.align,
-                unknow.matches = match.kegg,
-                score.cutoff = score.cutoff
-            );
+            # Current set of KEGG.partners which comes from the identify KEGG metabolite
+            # can have multiple unknown metabolite match result
+            #
+            # precursor_type list();
+            unknown.query <- KEGG.partners %=>% match.kegg;
+
+            if (IsNothing(unknown.query)) {
+                NULL;
+            } else {
+                # element structure in unknown.query:
+                #
+                # [1] "unknown.index"  "unknown.mz"     "precursor_type" "kegg"
+                # [5] "ppm"
+                #
+                # unknown.index is the index of the unknown metabolite in input sequence
+                # unknown.mz is the corresponding m/z
+                # ppm is the ppm value for unknown mz match with the KEGG compound m/z
+                # KEGG.partners, identify.ms2, unknown, ms2.align, unknow.matches
+                metaDNA.impl(
+                    unknown.query = unknown.query,
+                    identify.ms2 = identified$spectra,
+                    unknown = unknown,
+                    ms2.align = do.align,
+                    score.cutoff = score.cutoff
+                );
+            }
         }
     });
 

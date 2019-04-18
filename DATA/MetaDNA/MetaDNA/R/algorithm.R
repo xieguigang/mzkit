@@ -1,8 +1,8 @@
-#Region "Microsoft.ROpen::06895befd12ea0cd2405f64b1a55e508, algorithm.R"
+#Region "Microsoft.ROpen::631876fe3627cc088fcd6551c98aa02e, algorithm.R"
 
     # Summaries:
 
-    # metaDNA.impl <- function(KEGG.partners, identify.ms2,unknown,ms2.align,unknow.matches,score.cutoff = 0.8) {...
+    # metaDNA.impl <- function(unknown.query, identify.ms2,unknown,ms2.align,score.cutoff = 0.8) {...
     # align_best.internal <- function(ref, peak, ms2.align, score.cutoff = 0.8) {...
 
 #End Region
@@ -21,10 +21,6 @@
 #'      and \code{reverse} alignment score result list which its data structure in format like:
 #'
 #'      \code{list(forward = score1, reverse = score2)}.
-#'
-#' @param unknow.matches function evaluate result of \code{\link{kegg.match.handler}}, this function
-#'      descript that how to find out the unknown metabolite from a given set of identify related kegg
-#'      partners compound id set.
 #'
 #' @param score.cutoff SSM algorithm alignment score cutoff, by default is \code{0.8}. The unknown
 #'      metabolite which its forward and reverse alignment score greater than this cutoff value both,
@@ -51,43 +47,23 @@
 #'
 #' @return A set of unknown identify result based on the given related kegg partners id set.
 #'
-metaDNA.impl <- function(KEGG.partners, identify.ms2,
+metaDNA.impl <- function(unknown.query, identify.ms2,
                          unknown,
                          ms2.align,
-                         unknow.matches,
                          score.cutoff = 0.8) {
-
-    # Current set of KEGG.partners which comes from the identify KEGG metabolite
-    # can have multiple unknown metabolite match result
-	#
-	# precursor_type list();
-    unknown.query <- KEGG.partners %=>% unknow.matches;
-
-    if (IsNothing(unknown.query)) {
-        return(NULL);
-    } else {
-		# element structure in unknown.query:
-		#
-		# [1] "unknown.index"  "unknown.mz"     "precursor_type" "kegg"
-		# [5] "ppm"
-		#
-		# unknown.index is the index of the unknown metabolite in input sequence
-		# unknown.mz is the corresponding m/z
-		# ppm is the ppm value for unknown mz match with the KEGG compound m/z
-	}
 
     # unknown.i integer index of the peaktable
     unknown.i <- sapply(unknown.query, function(x) x$unknown.index) %=>% unlist %=>% as.numeric;
     # subset of the peaktable by using the unknown index value
 	# the peaktable subset object contains ms1 feature and ms2 feature
     unknown.features <- unknown[unknown.i];
-       
+
 	# 2019-03-29 these object is in length equals
 	#
 	# unknown.query
 	# unknown.i
-	# unknown.features 
-	   
+	# unknown.features
+
     # alignment of the ms2 between the identify and unknown
     # The unknown will identified as identify.ms2 when ms2.align
     # pass the threshold cutoff.
@@ -96,7 +72,7 @@ metaDNA.impl <- function(KEGG.partners, identify.ms2,
         # identify for each unknown metabolite
         kegg.query <- unknown.query[[i]];
 		feature <- unknown.features[[i]];
-        peak <- feature$ms2;	
+        peak <- feature$ms2;
 		result <- align_best.internal(
 		  ref = identify.ms2,
 		  peak = peak,
@@ -107,12 +83,12 @@ metaDNA.impl <- function(KEGG.partners, identify.ms2,
         if (!is.null(result)) {
             # name is the peaktable rownames
 			feature$ms2 <- NULL;
-			
+
             list(
               feature = feature,
               kegg.info = kegg.query,
-			  # due to the reason of database did not 
-			  # have this kegg compound its standard spectrum, so that 
+			  # due to the reason of database did not
+			  # have this kegg compound its standard spectrum, so that
 			  # align using identify metabolite its spectrum matrix
 			  align = result,
 			  name = feature$ID
