@@ -116,44 +116,48 @@ metaDNA <- function(identify, unknown, do.align,
 	kegg_id.skips <- append(kegg_id.skips, names(seeds));
 	filter.skips <- kegg_id.skips %=>% create_filter.skips;
 	
-    for(i in 1:iterations) {		
-		print(sprintf("   do metaDNA Iteration %s ...", i));
-	
-        output <- metaDNA.iteration(
-            identify = seeds,            
-            filter.skips = filter.skips,
-            unknown = unknown,
-            do.align = do.align,
-            match.kegg = match.kegg,
-            score.cutoff = score.cutoff
-        );
-		metaDNA.out <- append(metaDNA.out, output);				
+	if (iterations > 1) {
+	    for(i in 1:iterations) {
+			print(sprintf("   do metaDNA Iteration %s ...", i));
 		
-		# using identify output as seeds for next iteration
-		seeds <- extends.seeds(output);
-		n <- length(seeds);
-		
-		if (n == 0) {
-			if (debug.echo) {
-				print("No more metabolite can be predicted, exit iterations...");
-			}
-		
-			break;
-		} else {
-			print(sprintf("  Found %s kegg compound:", n));
-			print(names(seeds));
+			output <- metaDNA.iteration(
+				identify = seeds,            
+				filter.skips = filter.skips,
+				unknown = unknown,
+				do.align = do.align,
+				match.kegg = match.kegg,
+				score.cutoff = score.cutoff
+			);
+			metaDNA.out <- append(metaDNA.out, output);				
 			
-			kegg_id.skips <- append(kegg_id.skips, names(seeds));
-			filter.skips <- kegg_id.skips %=>% create_filter.skips;			
-			totals <- totals + n;
-			stats <- rbind(stats, c(i, n, totals));
+			# using identify output as seeds for next iteration
+			seeds <- extends.seeds(output);
+			n <- length(seeds);
+			
+			if (n == 0) {
+				if (debug.echo) {
+					print("No more metabolite can be predicted, exit iterations...");
+				}
+			
+				break;
+			} else {
+				print(sprintf("  Found %s kegg compound:", n));
+				print(names(seeds));
+				
+				kegg_id.skips <- append(kegg_id.skips, names(seeds));
+				filter.skips <- kegg_id.skips %=>% create_filter.skips;			
+				totals <- totals + n;
+				stats <- rbind(stats, c(i, n, totals));
+			}
 		}
-    }
 
-	colnames(stats) <- c("Iteration", "Predicts", "Total");
-	rownames(stats) <- stats[, "Iteration"];
-	
-	print(stats);
+		if (!is.null(stats)) {
+			colnames(stats) <- c("Iteration", "Predicts", "Total");
+			rownames(stats) <- stats[, "Iteration"];
+			
+			print(stats);
+		}	
+	}
 	
     # at last returns the prediction result
     metaDNA.out;
