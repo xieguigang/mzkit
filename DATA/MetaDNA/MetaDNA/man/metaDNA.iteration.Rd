@@ -4,17 +4,17 @@
 \alias{metaDNA.iteration}
 \title{Run a metaDNA prediction iteration}
 \usage{
-metaDNA.iteration(identify, kegg.partners, filter.skips, unknown, do.align,
-  match.kegg, score.cutoff)
+metaDNA.iteration(identify, filter.skips, unknown, do.align, match.kegg,
+  score.cutoff)
 }
 \arguments{
 \item{identify}{The seeds data for the metaDNA algorithm.}
 
-\item{kegg.partners}{A lambda function for find reaction partners for a given list of KEGG compound id.}
-
 \item{unknown}{The user sample data}
 
 \item{do.align}{A lambda function that provides spectra alignment}
+
+\item{kegg.partners}{A lambda function for find reaction partners for a given list of KEGG compound id.}
 
 \item{unknow.matches}{function evaluate result of \code{\link{kegg.match.handler}}, this function
 descript that how to find out the unknown metabolite from a given set of identify related kegg

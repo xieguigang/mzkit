@@ -1,10 +1,10 @@
-#Region "Microsoft.ROpen::f5aac061f9eb75d1512d8d9c9f946331, KEGGHandler.R"
+#Region "Microsoft.ROpen::6e9fdd583cfe79dc22821fd5f357d75f, KEGGHandler.R"
 
     # Summaries:
 
     # kegg.match.handler <- function(unknown.mz, precursor_type = c("[M+H]+", "[M]+"), tolerance = assert.deltaMass(0.3)) {...
     # kegg.match <- function(kegg_id, kegg.mass, kegg.ids, kegg.mz, kegg.list,precursor_type,unknown.mz,tolerance) {...
-    # unknown.query_impl <- function(ms1, j) {query <- lapply(mz.index, function(i) {	# unknown metabolite ms1 m/z match	# kegg mz with a given tolerance	if (tolerance(ms1, mz[i])) {...
+    # unknown.query_impl <- function(ms1, j) {query <- lapply(mz.index, function(i) {	# unknown metabolite ms1 m/z match	# kegg mz with a given tolerance	if ((!IsNothing(mz[i])) && tolerance(ms1, mz[i])) {...
     # kegg.partners <- function(kegg_id) {...
 
 #End Region
@@ -95,7 +95,7 @@ kegg.match <- function(kegg_id, kegg.mass, kegg.ids, kegg.mz, kegg.list,
 		query <- lapply(mz.index, function(i) {
 			# unknown metabolite ms1 m/z match
 			# kegg mz with a given tolerance
-			if (tolerance(ms1, mz[i])) {
+			if ((!IsNothing(mz[i])) && tolerance(ms1, mz[i])) {
 				# If these two m/z value meet the tolerance condition
 				# then we match a possible KEGG annotation data.
 				# also returns with ppm value
