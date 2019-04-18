@@ -112,6 +112,8 @@ metaDNA <- function(identify, unknown, do.align,
 	metaDNA.out <- output;
 	stats <- NULL;
 	totals <- 0;
+	kegg_id.skips <- append(kegg_id.skips, names(seeds));
+	filter.skips <- kegg_id.skips %=>% create_filter.skips;
 	
     for(i in 1:iterations) {		
 		print(sprintf("   do metaDNA Iteration %s ...", i));
@@ -131,16 +133,25 @@ metaDNA <- function(identify, unknown, do.align,
 		n <- length(seeds);
 		
 		if (n == 0) {
+			if (debug.echo) {
+				print("No more metabolite can be predicted, exit iterations...");
+			}
+		
 			break;
 		} else {
 			print(sprintf("  Found %s kegg compound:", n));
 			print(names(seeds));
 			
+			kegg_id.skips <- append(kegg_id.skips, names(seeds));
+			filter.skips <- kegg_id.skips %=>% create_filter.skips;			
 			totals <- totals + n;
 			stats <- rbind(stats, c(i, n, totals));
 		}
     }
 
+	colnames(stats) <- c("Iteration", "Predicts", "Total");
+	rownames(stats) <- stats[, "Iteration"];
+	
 	print(stats);
 	
     # at last returns the prediction result
