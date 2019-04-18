@@ -128,8 +128,8 @@ Namespace File
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function IterateParser(path As String) As IEnumerable(Of SDF)
-            Return SDFParser.IterateParser(path)
+        Public Shared Function IterateParser(path$, Optional parseStruct As Boolean = True) As IEnumerable(Of SDF)
+            Return SDFParser.IterateParser(path, parseStruct)
         End Function
 
         ''' <summary>

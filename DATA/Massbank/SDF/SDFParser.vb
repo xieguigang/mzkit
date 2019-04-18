@@ -13,18 +13,18 @@ Namespace File
         ''' </summary>
         ''' <param name="path$"></param>
         ''' <returns></returns>
-        Public Iterator Function IterateParser(path As String) As IEnumerable(Of SDF)
+        Public Iterator Function IterateParser(path$, Optional parseStruct As Boolean = True) As IEnumerable(Of SDF)
             For Each block As String() In path _
                 .IterateAllLines _
                 .Split(Function(s) s = "$$$$", includes:=False)
 
-                Yield SDFParser.StreamParser(block)
+                Yield SDFParser.StreamParser(block, parseStruct)
             Next
         End Function
 
         Const molEnds$ = "M  END"
 
-        Private Function StreamParser(block$()) As SDF
+        Private Function StreamParser(block$(), parseStruct As Boolean) As SDF
             Dim ID$ = block(0), program$ = block(1)
             Dim comment$ = block(2)
             Dim metas$()
@@ -40,7 +40,7 @@ Namespace File
                     .JoinBy(vbLf)
             End With
 
-            Dim struct As [Structure] = [Structure].Parse(mol)
+            Dim struct As [Structure] = Nothing
             Dim metaData As Dictionary(Of String, String()) =
                 metas _
                 .Split(Function(s) s.StringEmpty, includes:=False) _
@@ -53,6 +53,10 @@ Namespace File
                                       .Skip(1) _
                                       .ToArray
                               End Function)
+
+            If parseStruct Then
+                struct = [Structure].Parse(mol)
+            End If
 
             Return New SDF With {
                 .ID = ID.Trim,
@@ -89,7 +93,10 @@ Namespace File
         ''' <param name="takes%"></param>
         ''' <param name="echo"></param>
         ''' <returns></returns>
-        Public Iterator Function MoleculePopulator(directory$, Optional takes% = -1, Optional echo As Boolean = True) As IEnumerable(Of SDF)
+        Public Iterator Function MoleculePopulator(directory$,
+                                                   Optional takes% = -1,
+                                                   Optional echo As Boolean = True,
+                                                   Optional parseStruct As Boolean = True) As IEnumerable(Of SDF)
             Dim list = ls - l - r - "*.sdf" <= directory
 
             If takes > 0 Then
@@ -101,7 +108,7 @@ Namespace File
                     Call path.__INFO_ECHO
                 End If
 
-                For Each model As SDF In IterateParser(path)
+                For Each model As SDF In SDFParser.IterateParser(path, parseStruct)
                     Yield model
                 Next
             Next

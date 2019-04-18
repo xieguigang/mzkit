@@ -80,7 +80,7 @@ Module Program
             For Each file As String In BlockOrderFiles
                 file = Decompress(New FileInfo(file))
 
-                For Each mol As SDF In SDF.IterateParser(file)
+                For Each mol As SDF In SDF.IterateParser(file, parseStruct:=False)
                     descript = mol.ChemicalProperties
                     repo.Write(mol.CID, descript)
                     ' repo.Flush()
