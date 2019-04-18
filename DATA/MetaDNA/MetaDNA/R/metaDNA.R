@@ -99,6 +99,8 @@ metaDNA <- function(identify, unknown, do.align,
       precursor_type = precursor_type,
       tolerance = tolerance
     );
+	
+	print("do First iteration....");
 
     output <- metaDNA.iteration(
         identify, filter.skips,
@@ -108,8 +110,12 @@ metaDNA <- function(identify, unknown, do.align,
     );
 	seeds <- extends.seeds(output);
 	metaDNA.out <- output;
+	stats <- NULL;
+	totals <- 0;
 	
     for(i in 1:iterations) {		
+		print(sprintf("   do metaDNA Iteration %s ...", i));
+	
         output <- metaDNA.iteration(
             identify = seeds,            
             filter.skips = filter.skips,
@@ -118,10 +124,25 @@ metaDNA <- function(identify, unknown, do.align,
             match.kegg = match.kegg,
             score.cutoff = score.cutoff
         );
-		metaDNA.out <- append(metaDNA.out, output);
+		metaDNA.out <- append(metaDNA.out, output);				
+		
+		# using identify output as seeds for next iteration
 		seeds <- extends.seeds(output);
+		n <- length(seeds);
+		
+		if (n == 0) {
+			break;
+		} else {
+			print(printf("  Found %s kegg compound:", n));
+			print(names(seeds));
+			
+			totals <- totals + n;
+			stats <- rbind(stats, c(i, n, totals));
+		}
     }
 
+	print(stats);
+	
     # at last returns the prediction result
     metaDNA.out;
 }
@@ -141,7 +162,37 @@ metaDNA <- function(identify, unknown, do.align,
 #'   }
 #'
 extends.seeds <- function(output) {
-
+	# one kegg id only have one best spectra
+	seeds <- list();
+	
+	for(block in output) {
+		if (block %=>% IsNothing) {
+			next;
+		}
+	
+		for(feature in block) {
+			KEGG <- feature$kegg.info$kegg$ID;
+			best <- seeds[[KEGG]];
+			hit <- list(
+				spectra = feature$align$candidate,
+				score = feature$align$score
+			);
+			
+			if (best %=>% IsNothing) {
+				# current feature alignment is the best
+				seeds[[KEGG]] <- hit;
+			} else {
+				if (min(hit$score) > min(best$score)) {
+					# current feature alignment is the best alignment
+					seeds[[KEGG]] <- hit;
+				} else {
+					# no changes
+				}
+			}
+		}
+	}
+	
+	seeds;
 }
 
 #' Run a metaDNA prediction iteration
