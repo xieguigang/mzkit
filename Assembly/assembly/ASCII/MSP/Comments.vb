@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::705aee276dceef097aef354369dfbe72, assembly\ASCII\MSP\Comments.vb"
+﻿#Region "Microsoft.VisualBasic::705aee276dceef097aef354369dfbe72, ASCII\MSP\Comments.vb"
 
     ' Author:
     ' 

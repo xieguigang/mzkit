@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::37033628de9b24f3919aade8c0156493, assembly\ASCII\MSP\MspData.vb"
+﻿#Region "Microsoft.VisualBasic::37033628de9b24f3919aade8c0156493, ASCII\MSP\MspData.vb"
 
     ' Author:
     ' 

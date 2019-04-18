@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::48e0686dddef7fa9114641e61cdceb94, assembly\ASCII\MSP\ReaderViews.vb"
+﻿#Region "Microsoft.VisualBasic::48e0686dddef7fa9114641e61cdceb94, ASCII\MSP\ReaderViews.vb"
 
     ' Author:
     ' 

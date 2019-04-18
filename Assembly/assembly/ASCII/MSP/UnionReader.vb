@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dbcb2abbcce813cb6acea4f6bcb7bcdd, assembly\ASCII\MSP\UnionReader.vb"
+﻿#Region "Microsoft.VisualBasic::dbcb2abbcce813cb6acea4f6bcb7bcdd, ASCII\MSP\UnionReader.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e53ffceb711752746b86f23de06881cc, assembly\ASCII\MGF\Ions.vb"
+﻿#Region "Microsoft.VisualBasic::6157bab5e80413132bb346c85afcb4dc, ASCII\MGF\Ions.vb"
 
     ' Author:
     ' 
@@ -132,4 +132,3 @@ Namespace ASCII.MGF
         End Function
     End Class
 End Namespace
-
