@@ -25,12 +25,14 @@ Module Program
         Dim dbtype$ = args <= "/dbtype"
         Dim out$
         Dim subsetTest As Func(Of MetaLib, Boolean) = Function() True
+        Dim reportTick As Integer = 10000
 
         If dbtype.StringEmpty Then
             ' all
             out = args("/out") Or $"{[in].TrimSuffix}.metlib.Xml"
         Else
             out = args("/out") Or $"{[in].TrimSuffix}.metlib_{dbtype}.Xml"
+            reportTick = 100
 
             Select Case dbtype.ToLower
                 Case "chebi" : subsetTest = Function(m) Not m.xref.chebi.StringEmpty(True)
@@ -48,7 +50,7 @@ Module Program
             For Each meta As MetaLib In CIDSynonym.LoadMetaInfo([in]).Where(subsetTest)
                 Call dataset.Write(meta)
 
-                If ++i Mod 10000 = 0 Then
+                If ++i Mod reportTick = 0 Then
                     Call Console.Write(i)
                     Call Console.Write(vbTab)
                     Call dataset.Flush()
