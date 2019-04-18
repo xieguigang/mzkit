@@ -1,3 +1,11 @@
+#Region "Microsoft.ROpen::06895befd12ea0cd2405f64b1a55e508, algorithm.R"
+
+    # Summaries:
+
+    # metaDNA.impl <- function(KEGG.partners, identify.ms2,unknown,ms2.align,unknow.matches,score.cutoff = 0.8) {...
+    # align_best.internal <- function(ref, peak, ms2.align, score.cutoff = 0.8) {...
+
+#End Region
 
 #' Try to annotate unknown metabolite
 #'
