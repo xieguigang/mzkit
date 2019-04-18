@@ -100,8 +100,17 @@ metaDNA <- function(identify, unknown, do.align,
       tolerance = tolerance
     );
 
+	# The identify list only provides ms2 spectra matrix and KEGG id.
+	# KEGG id is the names of the identify list.
+	# So, the identify list object its structure looks like: 
+	# 
+	# identify {
+	#    KEGG_id1 => list(spectra),
+	#    KEGG_id2 => list(spectra),
+	#    ...
+	# }
     seeds <- metaDNA.iteration(
-        identify, kegg.partners, filter.skips,
+        identify, filter.skips,
         unknown, do.align,
         match.kegg,
         score.cutoff
@@ -109,8 +118,7 @@ metaDNA <- function(identify, unknown, do.align,
 
     for(i in 1:iterations) {
         seeds <- metaDNA.iteration(
-            identify = seeds,
-            kegg.partners = kegg.partners,
+            identify = seeds,            
             filter.skips = filter.skips,
             unknown = unknown,
             do.align = do.align,
@@ -137,7 +145,7 @@ metaDNA <- function(identify, unknown, do.align,
 #'     The spectra matrix of query and reference and retuns a score vector
 #'     which produced by forward and reverse spectra alignment.
 #'
-metaDNA.iteration <- function(identify, kegg.partners, filter.skips,
+metaDNA.iteration <- function(identify, filter.skips,
                               unknown, do.align,
                               match.kegg,
                               score.cutoff) {
@@ -147,12 +155,13 @@ metaDNA.iteration <- function(identify, kegg.partners, filter.skips,
         # Get all of the kegg reaction partner metabolite id
         # for current identified kegg metabolite id
         identified <- identify[[KEGG_cpd]];
-        partners <- KEGG_cpd %=>% kegg.partners %=>% filter.skips %=>% unique;
+		# find KEGG reaction partner for current identify KEGG compound
+        KEGG.partners <- KEGG_cpd %=>% kegg.partners %=>% filter.skips %=>% unique;
 
         # current identify metabolite KEGG id didnt found any
         # reaction related partner compounds
         # Skip current identify metabolite.
-        if (partners %=>% IsNothing) {
+        if (KEGG.partners %=>% IsNothing) {
             NULL;
         } else {
 
