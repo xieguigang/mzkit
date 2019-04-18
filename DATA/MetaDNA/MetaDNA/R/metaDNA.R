@@ -107,7 +107,15 @@ metaDNA <- function(identify, unknown, do.align,
     seeds <- metaDNA.iteration(identify, kegg.partners, filter.skips, unknown, do.align, match.kegg, score.cutoff);
 
     for(i in 1:iterations) {
-        seeds <- metaDNA.iteration(seeds, kegg.partners, filter.skips, unknown, do.align, match.kegg, score.cutoff);
+        seeds <- metaDNA.iteration(
+            identify = seeds,
+            kegg.partners = kegg.partners,
+            filter.skips = filter.skips,
+            unknown = unknown,
+            do.align = do.align,
+            match.kegg = match.kegg,
+            score.cutoff = score.cutoff
+        );
     }
 
     # at last returns the prediction result
