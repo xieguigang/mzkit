@@ -129,11 +129,12 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Biodeep\</OutputPath>
     <DocumentationFile>SMRUCC.MassSpectrum.DATA.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|x86'">
     <DefineTrace>true</DefineTrace>
@@ -207,21 +208,22 @@
     <Compile Include="InChI\Components.vb" />
     <Compile Include="InChI\InChIKey.vb" />
     <Compile Include="MetaLib\KEGGExtensions.vb" />
+    <Compile Include="MetaLib\MetaEquals.vb" />
     <Compile Include="MetaLib\NaturalLanguageTerm.vb" />
     <Compile Include="MetaLib\NameEquality.vb" />
     <Compile Include="MetaLib\MetaLib.vb" />
     <Compile Include="Concentration.vb" />
     <Compile Include="Public\lipidMAPS\SDF.vb" />
     <Compile Include="Public\MoNA\MoNAJson.vb" />
+    <Compile Include="Public\NCBI\PubChem\CIDSynonym.vb" />
     <Compile Include="Public\NCBI\PubChem\MetaData.vb" />
     <Compile Include="Public\NCBI\PubChem\ImageFly.vb" />
+    <Compile Include="Public\NCBI\PubChem\SIDMap.vb" />
     <Compile Include="Public\NCBI\PubChem\Web\InformationSection.vb" />
     <Compile Include="Public\NCBI\PubChem\Web\Extensions.vb" />
     <Compile Include="Public\NCBI\PubChem\Web\Information.vb" />
     <Compile Include="Public\NCBI\PubChem\Web\PugView.vb" />
     <Compile Include="Public\NCBI\PubChem\Web\Query.vb" />
-    <Compile Include="Public\TMIC\FooDB\Food.vb" />
-    <Compile Include="Public\TMIC\FooDB\StoredProcedure.vb" />
     <Compile Include="Public\TMIC\HMDB\MetaReference\BioSamples.vb" />
     <Compile Include="Public\TMIC\HMDB\MetaReference\RepositoryExtensions.vb" />
     <Compile Include="Public\TMIC\HMDB\Spectra\Abstract.vb" />
@@ -231,31 +233,11 @@
     <Compile Include="Public\TMIC\HMDB\Spectra\NMR1D.vb" />
     <Compile Include="Public\TMIC\HMDB\Spectra\MSMS.vb" />
     <Compile Include="Public\TMIC\HMDB\Spectra\CMS.vb" />
-    <Compile Include="SDF\ChemicalProperties.vb" />
+    <Compile Include="SDF\ChemicalDescriptor.vb" />
     <Compile Include="SDF\SDFParser.vb" />
     <Compile Include="SDF\Struct\Enums.vb" />
     <Compile Include="SDF\Struct\Elements.vb" />
     <Compile Include="SDF\Extensions.vb" />
-    <Compile Include="Public\TMIC\FooDB\mysql\compounds.vb" />
-    <Compile Include="Public\TMIC\FooDB\mysql\compounds_enzymes.vb" />
-    <Compile Include="Public\TMIC\FooDB\mysql\compounds_flavors.vb" />
-    <Compile Include="Public\TMIC\FooDB\mysql\compounds_health_effects.vb" />
-    <Compile Include="Public\TMIC\FooDB\mysql\compounds_pathways.vb" />
-    <Compile Include="Public\TMIC\FooDB\mysql\compound_alternate_parents.vb" />
-    <Compile Include="Public\TMIC\FooDB\mysql\compound_external_descriptors.vb" />
-    <Compile Include="Public\TMIC\FooDB\mysql\compound_substituents.vb" />
-    <Compile Include="Public\TMIC\FooDB\mysql\compound_synonyms.vb" />
-    <Compile Include="Public\TMIC\FooDB\mysql\contents.vb" />
-    <Compile Include="Public\TMIC\FooDB\mysql\enzymes.vb" />
-    <Compile Include="Public\TMIC\FooDB\mysql\flavors.vb" />
-    <Compile Include="Public\TMIC\FooDB\mysql\foodcomex_compounds.vb" />
-    <Compile Include="Public\TMIC\FooDB\mysql\foodcomex_compound_providers.vb" />
-    <Compile Include="Public\TMIC\FooDB\mysql\foods.vb" />
-    <Compile Include="Public\TMIC\FooDB\mysql\food_taxonomies.vb" />
-    <Compile Include="Public\TMIC\FooDB\mysql\health_effects.vb" />
-    <Compile Include="Public\TMIC\FooDB\mysql\nutrients.vb" />
-    <Compile Include="Public\TMIC\FooDB\mysql\pathways.vb" />
-    <Compile Include="Public\TMIC\FooDB\mysql\references.vb" />
     <Compile Include="Public\TMIC\HMDB\BriefTable.vb" />
     <Compile Include="Public\TMIC\HMDB\Assembly\property.vb" />
     <Compile Include="Public\TMIC\HMDB\Assembly\disease.vb" />
@@ -312,10 +294,6 @@
     <ProjectReference Include="..\..\..\GCModeller\src\GCModeller\core\Bio.Assembly\Bio.Assembly.vbproj">
       <Project>{c699d311-9923-4c19-bf70-5048d0e2cf5d}</Project>
       <Name>Bio.Assembly</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\GCModeller\src\runtime\mysqli\LibMySQL\LibMySQL.vbproj">
-      <Project>{2c34a044-1bde-44e8-a86e-e9971c87da21}</Project>
-      <Name>LibMySQL</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj">
       <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>

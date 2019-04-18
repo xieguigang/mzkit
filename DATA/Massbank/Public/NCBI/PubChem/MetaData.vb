@@ -96,8 +96,14 @@ Namespace NCBI.PubChem
         Public Property PUBCHEM_COORDINATE_TYPE As String
         Public Property PUBCHEM_BONDANNOTATIONS As String
 
-        Shared ReadOnly properties As Dictionary(Of String, PropertyInfo) =
-            DataFramework.Schema(Of MetaData)(PropertyAccess.Writeable, True)
+        ''' <summary>
+        ''' Schema cache of current data reader class object
+        ''' </summary>
+        Shared ReadOnly properties As Dictionary(Of String, PropertyInfo)
+
+        Shared Sub New()
+            properties = DataFramework.Schema(Of MetaData)(PropertyAccess.Writeable, True)
+        End Sub
 
         Public Shared Function Data(sdf As SDF) As MetaData
             Return sdf.Data(Of MetaData)(properties)

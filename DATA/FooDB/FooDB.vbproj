@@ -4,14 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{203506AB-8CB6-454C-98DB-2E27AC94CB17}</ProjectGuid>
+    <ProjectGuid>{A604EAA0-B26A-4287-B578-872B94EF5D33}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>SMRUCC.MassSpectrum.DATA.File</RootNamespace>
-    <AssemblyName>SMRUCC.MassSpectrum.DATA.SDF.Extensions</AssemblyName>
+    <RootNamespace>SMRUCC.MassSpectrum.DATA</RootNamespace>
+    <AssemblyName>SMRUCC.MassSpectrum.DATA.FooDB</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
-    <TargetFrameworkProfile />
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -19,7 +19,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>SMRUCC.MassSpectrum.DATA.SDF.Extensions.xml</DocumentationFile>
+    <DocumentationFile>SMRUCC.MassSpectrum.DATA.FooDB.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -28,7 +28,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>SMRUCC.MassSpectrum.DATA.SDF.Extensions.xml</DocumentationFile>
+    <DocumentationFile>SMRUCC.MassSpectrum.DATA.FooDB.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -48,7 +48,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Debug\</OutputPath>
-    <DocumentationFile>SMRUCC.MassSpectrum.DATA.SDF.Extensions.xml</DocumentationFile>
+    <DocumentationFile>SMRUCC.MassSpectrum.DATA.FooDB.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -57,7 +57,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Release\</OutputPath>
-    <DocumentationFile>SMRUCC.MassSpectrum.DATA.SDF.Extensions.xml</DocumentationFile>
+    <DocumentationFile>SMRUCC.MassSpectrum.DATA.FooDB.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -65,9 +65,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -86,7 +86,28 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SDF2KCF.vb" />
+    <Compile Include="FooDB\Food.vb" />
+    <Compile Include="FooDB\mysql\compounds.vb" />
+    <Compile Include="FooDB\mysql\compounds_enzymes.vb" />
+    <Compile Include="FooDB\mysql\compounds_flavors.vb" />
+    <Compile Include="FooDB\mysql\compounds_health_effects.vb" />
+    <Compile Include="FooDB\mysql\compounds_pathways.vb" />
+    <Compile Include="FooDB\mysql\compound_alternate_parents.vb" />
+    <Compile Include="FooDB\mysql\compound_external_descriptors.vb" />
+    <Compile Include="FooDB\mysql\compound_substituents.vb" />
+    <Compile Include="FooDB\mysql\compound_synonyms.vb" />
+    <Compile Include="FooDB\mysql\contents.vb" />
+    <Compile Include="FooDB\mysql\enzymes.vb" />
+    <Compile Include="FooDB\mysql\flavors.vb" />
+    <Compile Include="FooDB\mysql\foodcomex_compounds.vb" />
+    <Compile Include="FooDB\mysql\foodcomex_compound_providers.vb" />
+    <Compile Include="FooDB\mysql\foods.vb" />
+    <Compile Include="FooDB\mysql\food_taxonomies.vb" />
+    <Compile Include="FooDB\mysql\health_effects.vb" />
+    <Compile Include="FooDB\mysql\nutrients.vb" />
+    <Compile Include="FooDB\mysql\pathways.vb" />
+    <Compile Include="FooDB\mysql\references.vb" />
+    <Compile Include="FooDB\StoredProcedure.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -123,13 +144,21 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\GCModeller\src\GCModeller\core\Bio.Assembly\Bio.Assembly.vbproj">
+      <Project>{c699d311-9923-4c19-bf70-5048d0e2cf5d}</Project>
+      <Name>Bio.Assembly</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\GCModeller\src\runtime\mysqli\LibMySQL\LibMySQL.vbproj">
+      <Project>{2c34a044-1bde-44e8-a86e-e9971c87da21}</Project>
+      <Name>LibMySQL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj">
+      <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
+      <Name>47_dotnet_ms-vb_data.framework</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\visual\KCF\KCF.IO\KCF.IO.vbproj">
-      <Project>{1bafa2bc-68b2-4ee0-9235-c60fae3377a0}</Project>
-      <Name>KCF.IO</Name>
     </ProjectReference>
     <ProjectReference Include="..\Massbank\Massbank.vbproj">
       <Project>{a686bdf5-077f-47f5-a8dd-c73e6e88363c}</Project>

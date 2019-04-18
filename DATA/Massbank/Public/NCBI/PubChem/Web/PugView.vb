@@ -100,7 +100,7 @@ Namespace NCBI.PubChem
             Dim exact_mass# = computedProperties("Exact Mass").GetInformationNumber("Exact Mass")
             Dim xref As New MetaLib.xref With {
                 .InChI = InChI,
-                .CAS = CASNumber,
+                .CAS = {CASNumber},
                 .InChIkey = InChIKey,
                 .pubchem = RecordNumber,
                 .chebi = synonyms.FirstOrDefault(Function(id) id.IsPattern("CHEBI[:]\d+")),

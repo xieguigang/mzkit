@@ -96,18 +96,28 @@ Namespace File
         Public Property [Structure] As [Structure]
         Public Property MetaData As Dictionary(Of String, String())
 
-        Public ReadOnly Property ChemicalProperties As ChemicalProperties
+        Public ReadOnly Property CID As Long
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return New ChemicalProperties(MetaData)
+                Return Long.Parse(ID)
+            End Get
+        End Property
+
+        Public ReadOnly Property ChemicalProperties As ChemicalDescriptor
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return New ChemicalDescriptor(MetaData)
             End Get
         End Property
 
         Public ReadOnly Property Name As String
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return MetaData.TryGetValue("PUBCHEM_IUPAC_NAME", [default]:={}).FirstOrDefault
             End Get
         End Property
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return $"[{MetaData.TryGetValue("PUBCHEM_COMPOUND_CID").FirstOrDefault}] {Name}"
         End Function
@@ -118,8 +128,8 @@ Namespace File
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function IterateParser(path As String) As IEnumerable(Of SDF)
-            Return SDFParser.IterateParser(path)
+        Public Shared Function IterateParser(path$, Optional parseStruct As Boolean = True) As IEnumerable(Of SDF)
+            Return SDFParser.IterateParser(path, parseStruct)
         End Function
 
         ''' <summary>
