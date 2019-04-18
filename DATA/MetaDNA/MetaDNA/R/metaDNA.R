@@ -122,7 +122,21 @@ metaDNA <- function(identify, unknown, do.align,
     seeds;
 }
 
-metaDNA.iteration <- function(identify, kegg.partners, filter.skips, unknown, do.align, match.kegg, score.cutoff) {
+#' Run a metaDNA prediction iteration
+#'
+#' @param identify The seeds data for the metaDNA algorithm.
+#' @param kegg.partners A lambda function for find reaction partners for a given list of KEGG compound id.
+#' @param unknown The user sample data
+#' @param do.align A lambda function that provides spectra alignment
+#'
+#' @details The \code{do.align} function should take two parameter:
+#'     The spectra matrix of query and reference and retuns a score vector
+#'     which produced by forward and reverse spectra alignment.
+#'
+metaDNA.iteration <- function(identify, kegg.partners, filter.skips,
+                              unknown, do.align,
+                              match.kegg,
+                              score.cutoff) {
     # tick.each
     # lapply
     seeds <- tick.each(names(identify), function(KEGG_cpd) {
@@ -160,7 +174,7 @@ metaDNA.iteration <- function(identify, kegg.partners, filter.skips, unknown, do
 #' Create skips handler for KEGG id
 #'
 #' @param kegg_id.skips A character vector that contains KEGG id
-#' want to ignores in the metaDNA prediction process.
+#'   want to ignores in the metaDNA prediction process.
 #'
 #' @return This function returns a lambda function that can determine the
 #'   given kegg id vector which is not in the input \code{kegg_id.skips}.
