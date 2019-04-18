@@ -81,7 +81,8 @@ metaDNA <- function(identify, unknown, do.align,
                     precursor_type = c("[M+H]+", "[M]+"),
                     tolerance = assert.deltaMass(0.3),
                     score.cutoff = 0.8,
-                    kegg_id.skips = NULL) {
+                    kegg_id.skips = NULL,
+                    iterations = 20) {
 
     cat("\n\n\n");
 
@@ -96,28 +97,30 @@ metaDNA <- function(identify, unknown, do.align,
     print(tolerance);
 
 	unknown.mz <- sapply(unknown, function(x) x$mz) %=>% as.numeric;
+	filter.skips <- kegg_id.skips %=>% create_filter.skips;
     match.kegg <- kegg.match.handler(
       unknown.mz = unknown.mz,
       precursor_type = precursor_type,
       tolerance = tolerance
     );
 
-    if (kegg_id.skips %=>% IsNothing) {
-      kegg_id.skips = "NA";
-    } else {
-      cat("\nThese KEGG compound will not be identified from metaDNA\n\n");
-      print(kegg_id.skips);
-      cat("\n");
+    seeds <- metaDNA.iteration(identify, kegg.partners, filter.skips, unknown, do.align, match.kegg, score.cutoff);
+
+    for(i in 1:iterations) {
+        seeds <- metaDNA.iteration(seeds, kegg.partners, filter.skips, unknown, do.align, match.kegg, score.cutoff);
     }
 
-    filter.skips <- kegg_id.skips %=>% create_filter.skips;
+    # at last returns the prediction result
+    seeds;
+}
 
+metaDNA.iteration <- function(identify, kegg.partners, filter.skips, unknown, do.align, match.kegg, score.cutoff) {
     # tick.each
     # lapply
-    tick.each(names(identify), function(KEGG_cpd) {
+    seeds <- tick.each(names(identify), function(KEGG_cpd) {
         # Get all of the kegg reaction partner metabolite id
         # for current identified kegg metabolite id
-		identified <- identify[[KEGG_cpd]];
+        identified <- identify[[KEGG_cpd]];
         partners <- KEGG_cpd %=>% kegg.partners %=>% filter.skips %=>% unique;
 
         # current identify metabolite KEGG id didnt found any
@@ -127,21 +130,23 @@ metaDNA <- function(identify, unknown, do.align,
             NULL;
         } else {
 
-			# identify contains single result
+            # identify contains single result
             # Each metaDNA.impl result is a list that identify of
-			# unknowns
+            # unknowns
 
-			# KEGG.partners, identify.ms2, unknown, ms2.align, unknow.matches
-			metaDNA.impl(
-			  KEGG.partners = partners,
-			  identify.ms2 = identified$spectra,
-			  unknown = unknown,
-			  ms2.align = do.align,
-			  unknow.matches = match.kegg,
-			  score.cutoff = score.cutoff
-			);
+            # KEGG.partners, identify.ms2, unknown, ms2.align, unknow.matches
+            metaDNA.impl(
+                KEGG.partners = partners,
+                identify.ms2 = identified$spectra,
+                unknown = unknown,
+                ms2.align = do.align,
+                unknow.matches = match.kegg,
+                score.cutoff = score.cutoff
+            );
         }
     });
+
+    seeds;
 }
 
 #' Create skips handler for KEGG id
@@ -151,7 +156,17 @@ metaDNA <- function(identify, unknown, do.align,
 #'
 #' @return This function returns a lambda function that can determine the
 #'   given kegg id vector which is not in the input \code{kegg_id.skips}.
+#'
 create_filter.skips <- function(kegg_id.skips) {
+
+    if (kegg_id.skips %=>% IsNothing) {
+        kegg_id.skips = "NA";
+    } else {
+        cat("\nThese KEGG compound will not be identified from metaDNA\n\n");
+        print(kegg_id.skips);
+        cat("\n");
+    }
+
     kegg_id.skips <- as.index(kegg_id.skips);
     filter.skips <- function(partners) {
         if (partners %=>% IsNothing) {
