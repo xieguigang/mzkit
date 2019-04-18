@@ -218,6 +218,7 @@
     <Compile Include="Public\NCBI\PubChem\CIDSynonym.vb" />
     <Compile Include="Public\NCBI\PubChem\MetaData.vb" />
     <Compile Include="Public\NCBI\PubChem\ImageFly.vb" />
+    <Compile Include="Public\NCBI\PubChem\SIDMap.vb" />
     <Compile Include="Public\NCBI\PubChem\Web\InformationSection.vb" />
     <Compile Include="Public\NCBI\PubChem\Web\Extensions.vb" />
     <Compile Include="Public\NCBI\PubChem\Web\Information.vb" />
