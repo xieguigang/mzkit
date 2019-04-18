@@ -4,13 +4,10 @@
 \alias{metaDNA.impl}
 \title{Try to annotate unknown metabolite}
 \usage{
-metaDNA.impl(KEGG.partners, identify.ms2, unknown, ms2.align, unknow.matches,
+metaDNA.impl(unknown.query, identify.ms2, unknown, ms2.align,
   score.cutoff = 0.8)
 }
 \arguments{
-\item{KEGG.partners}{Related to the identified KEGG id based on the kegg reaction definitions.
-Using for find unknown metabolite ms2 data.}
-
 \item{identify.ms2}{The identify metabolite's MS/MS matrix data.}
 
 \item{unknown}{Unknown metabolite's peaktable and peak_ms2 data.}
@@ -20,13 +17,12 @@ Using for find unknown metabolite ms2 data.}
 
      \code{list(forward = score1, reverse = score2)}.}
 
-\item{unknow.matches}{function evaluate result of \code{\link{kegg.match.handler}}, this function
-descript that how to find out the unknown metabolite from a given set of identify related kegg
-partners compound id set.}
-
 \item{score.cutoff}{SSM algorithm alignment score cutoff, by default is \code{0.8}. The unknown
 metabolite which its forward and reverse alignment score greater than this cutoff value both,
 will be picked as the candidate result.}
+
+\item{KEGG.partners}{Related to the identified KEGG id based on the kegg reaction definitions.
+Using for find unknown metabolite ms2 data.}
 }
 \value{
 A set of unknown identify result based on the given related kegg partners id set.

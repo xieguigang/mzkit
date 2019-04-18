@@ -15,6 +15,10 @@ metaDNA.iteration(identify, kegg.partners, filter.skips, unknown, do.align,
 \item{unknown}{The user sample data}
 
 \item{do.align}{A lambda function that provides spectra alignment}
+
+\item{unknow.matches}{function evaluate result of \code{\link{kegg.match.handler}}, this function
+descript that how to find out the unknown metabolite from a given set of identify related kegg
+partners compound id set.}
 }
 \description{
 Run a metaDNA prediction iteration
