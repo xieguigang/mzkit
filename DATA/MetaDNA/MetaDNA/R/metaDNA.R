@@ -52,7 +52,7 @@ Imports(Microsoft.VisualBasic.Language);
 #' @param precursor_type By default is positive mode with the \code{H+} adduct for
 #'      search unknown metabolites.
 #'
-#' @param tolerance KEGG compound match with this tolerance, m/z equalient compares tolerance, 
+#' @param tolerance KEGG compound match with this tolerance, m/z equalient compares tolerance,
 #'      by default is less than ppm 20.
 #'
 #' @param score.cutoff MS/MS similarity cutoff for identify ms2 alignment with unknown ms2
@@ -98,10 +98,10 @@ metaDNA <- function(identify, unknown, do.align,
 	unknown.mz <- sapply(unknown, function(x) x$mz) %=>% as.numeric;
     match.kegg <- kegg.match.handler(
       unknown.mz = unknown.mz,
-      precursor_type = precursor_type,      
+      precursor_type = precursor_type,
       tolerance = tolerance
     );
-    
+
     if (kegg_id.skips %=>% IsNothing) {
       kegg_id.skips = "NA";
     } else {
@@ -110,29 +110,7 @@ metaDNA <- function(identify, unknown, do.align,
       cat("\n");
     }
 
-	kegg_id.skips <- as.index(kegg_id.skips);
-
-    # return the kegg id vector which is not in
-    # kegg_id.skips
-    filter.skips <- function(partners) {
-      if (partners %=>% IsNothing) {
-        NULL;
-      } else {
-
-        # if the partner id is in the skip list
-        # then it will be replaced as string "NA"
-        partners <- sapply(partners, function(id) {
-          if (kegg_id.skips(id)) {
-            "NA";
-          } else {
-            id;
-          }
-        }) %=>% as.character;
-
-        # Removes those NA string in the partner id list
-        partners[partners != "NA"];
-      }
-    }
+    filter.skips <- kegg_id.skips %=>% create_filter.skips;
 
     # tick.each
     # lapply
@@ -148,8 +126,8 @@ metaDNA <- function(identify, unknown, do.align,
         if (partners %=>% IsNothing) {
             NULL;
         } else {
-		
-			# identify contains single result			
+
+			# identify contains single result
             # Each metaDNA.impl result is a list that identify of
 			# unknowns
 
@@ -164,4 +142,36 @@ metaDNA <- function(identify, unknown, do.align,
 			);
         }
     });
+}
+
+#' Create skips handler for KEGG id
+#'
+#' @param kegg_id.skips A character vector that contains KEGG id
+#' want to ignores in the metaDNA prediction process.
+#'
+#' @return This function returns a lambda function that can determine the
+#'   given kegg id vector which is not in the input \code{kegg_id.skips}.
+create_filter.skips <- function(kegg_id.skips) {
+    kegg_id.skips <- as.index(kegg_id.skips);
+    filter.skips <- function(partners) {
+        if (partners %=>% IsNothing) {
+            NULL;
+        } else {
+
+            # if the partner id is in the skip list
+            # then it will be replaced as string "NA"
+            partners <- sapply(partners, function(id) {
+                if (kegg_id.skips(id)) {
+                    "NA";
+                } else {
+                    id;
+                }
+            }) %=>% as.character;
+
+            # Removes those NA string in the partner id list
+            partners[partners != "NA"];
+        }
+    }
+
+    filter.skips;
 }
