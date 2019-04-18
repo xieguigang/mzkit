@@ -38,7 +38,9 @@ Module Program
                 Case "chebi" : subsetTest = Function(m) Not m.xref.chebi.StringEmpty(True)
                 Case "hmdb" : subsetTest = Function(m) Not m.xref.HMDB.StringEmpty(True)
                 Case "kegg" : subsetTest = Function(m) Not m.xref.KEGG.StringEmpty(True)
-                Case "cas" : subsetTest = Function(m) Not m.xref.CAS.IsNullOrEmpty
+                Case "cas"
+                    reportTick = 10000
+                    subsetTest = Function(m) Not m.xref.CAS.IsNullOrEmpty
                 Case Else
                     Throw New NotSupportedException(dbtype)
             End Select
