@@ -100,24 +100,17 @@ metaDNA <- function(identify, unknown, do.align,
       tolerance = tolerance
     );
 
-	# The identify list only provides ms2 spectra matrix and KEGG id.
-	# KEGG id is the names of the identify list.
-	# So, the identify list object its structure looks like: 
-	# 
-	# identify {
-	#    KEGG_id1 => list(spectra),
-	#    KEGG_id2 => list(spectra),
-	#    ...
-	# }
-    seeds <- metaDNA.iteration(
+    output <- metaDNA.iteration(
         identify, filter.skips,
         unknown, do.align,
         match.kegg,
         score.cutoff
     );
-
-    for(i in 1:iterations) {
-        seeds <- metaDNA.iteration(
+	seeds <- extends.seeds(output);
+	metaDNA.out <- output;
+	
+    for(i in 1:iterations) {		
+        output <- metaDNA.iteration(
             identify = seeds,            
             filter.skips = filter.skips,
             unknown = unknown,
@@ -125,10 +118,30 @@ metaDNA <- function(identify, unknown, do.align,
             match.kegg = match.kegg,
             score.cutoff = score.cutoff
         );
+		metaDNA.out <- append(metaDNA.out, output);
+		seeds <- extends.seeds(output);
     }
 
     # at last returns the prediction result
-    seeds;
+    metaDNA.out;
+}
+
+#' Convert output as metaDNA seeds
+#'
+#' @description The identify list only provides ms2 spectra matrix and KEGG id.
+#'   KEGG id is the names of the identify list.
+#'   So, the identify list object its structure looks like: 
+#' 
+#'   \code{
+#'      identify \{
+#'         KEGG_id1 => list(spectra),
+#'         KEGG_id2 => list(spectra),
+#'         ...
+#'      \}
+#'   }
+#'
+extends.seeds <- function(output) {
+
 }
 
 #' Run a metaDNA prediction iteration
