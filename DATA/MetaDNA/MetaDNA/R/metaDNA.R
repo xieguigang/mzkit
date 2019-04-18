@@ -133,7 +133,7 @@ metaDNA <- function(identify, unknown, do.align,
 		if (n == 0) {
 			break;
 		} else {
-			print(printf("  Found %s kegg compound:", n));
+			print(sprintf("  Found %s kegg compound:", n));
 			print(names(seeds));
 			
 			totals <- totals + n;
