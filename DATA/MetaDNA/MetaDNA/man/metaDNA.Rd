@@ -6,7 +6,7 @@
 \usage{
 metaDNA(identify, unknown, do.align, precursor_type = c("[M+H]+", "[M]+"),
   tolerance = assert.deltaMass(0.3), score.cutoff = 0.8,
-  kegg_id.skips = NULL)
+  kegg_id.skips = NULL, iterations = 20)
 }
 \arguments{
 \item{identify}{A \code{list} object with two members
@@ -40,7 +40,7 @@ Where \code{q} and \code{s} is a ms2 spectra matrix.}
 \item{precursor_type}{By default is positive mode with the \code{H+} adduct for
 search unknown metabolites.}
 
-\item{tolerance}{KEGG compound match with this tolerance, m/z equalient compares tolerance, 
+\item{tolerance}{KEGG compound match with this tolerance, m/z equalient compares tolerance,
 by default is less than ppm 20.}
 
 \item{score.cutoff}{MS/MS similarity cutoff for identify ms2 alignment with unknown ms2}
