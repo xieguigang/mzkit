@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f9761511f6a1a7e444a501e4b0f2c62, TargetedMetabolomics\GCMS\QuantifyAnalysis\SIMMode.vb"
+﻿#Region "Microsoft.VisualBasic::e9676b8ebe11ea63f1276406efa6e2f8, TargetedMetabolomics\GCMS\QuantifyAnalysis\SIMMode.vb"
 
     ' Author:
     ' 

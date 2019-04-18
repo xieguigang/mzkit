@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd0c58addc4a333386454b84b53d3e98, ms2_math-core\Ms1\PrecursorType\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::18d5467dd1adf82adaf71ff67075dc97, ms2_math-core\Ms1\PrecursorType\Extensions.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dbffa31b967945b2dd106cae0aea847f, Massbank\Public\NCBI\PubChem\ImageFly.vb"
+﻿#Region "Microsoft.VisualBasic::2909fa3989c7d763f4dab9f11367bf17, Massbank\Public\NCBI\PubChem\ImageFly.vb"
 
     ' Author:
     ' 
@@ -34,9 +34,10 @@
 
     ' Summaries:
 
-    ' Module ImageFly
+    '     Module ImageFly
     ' 
-    '     Function: GetImage
+    '         Function: GetImage
+    ' 
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e4746bde0b2f1b99692843397802907, Massbank\SDF\Mol.vb"
+﻿#Region "Microsoft.VisualBasic::33b69e352ec87255a227243e21ca1642, Massbank\SDF\Struct\Mol.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     ' 
     '         Properties: Atoms, Bounds
     ' 
-    '         Function: Parse, parseCounter
+    '         Function: Parse, parseCounter, ToString
     ' 
     ' 
     ' /********************************************************************************/

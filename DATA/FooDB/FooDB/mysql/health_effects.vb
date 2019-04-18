@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e10482514bae9a79f29db4540f099378, Massbank\Public\TMIC\FooDB\mysql\health_effects.vb"
+﻿#Region "Microsoft.VisualBasic::e10482514bae9a79f29db4540f099378, FooDB\FooDB\mysql\health_effects.vb"
 
     ' Author:
     ' 

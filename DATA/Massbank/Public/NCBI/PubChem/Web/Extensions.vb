@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16202e58d34078bfaf25aa341d607e14, Massbank\Public\NCBI\PubChem\Web\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::5cae4fe2f92fac86920ba2d5d7efc3c3, Massbank\Public\NCBI\PubChem\Web\Extensions.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
 
     '     Module Extensions
     ' 
-    '         Function: GetHMDBId, getInformation, GetInformationNumber, GetInformationString, GetInformationStrings
+    '         Function: GetHMDBId, GetInformation, GetInformationNumber, GetInformationString, GetInformationStrings
     '                   GetInformationTable
     ' 
     ' 

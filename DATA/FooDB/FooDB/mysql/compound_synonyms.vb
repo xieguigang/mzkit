@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::59e039ab03ed375be65fce271787559a, Massbank\Public\TMIC\FooDB\mysql\compound_synonyms.vb"
+﻿#Region "Microsoft.VisualBasic::59e039ab03ed375be65fce271787559a, FooDB\FooDB\mysql\compound_synonyms.vb"
 
     ' Author:
     ' 
