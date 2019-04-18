@@ -19,15 +19,33 @@ Module Program
     End Function
 
     <ExportAPI("/unify.metalib")>
-    <Usage("/unify.metalib /in <CID-Synonym-filtered.txt> [/out <out.Xml>]")>
+    <Usage("/unify.metalib /in <CID-Synonym-filtered.txt> [/dbtype <chebi/hmdb/kegg/cas> /out <out.Xml>]")>
     Public Function PubchemUnifyMetaLib(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
-        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.metlib.Xml"
+        Dim dbtype$ = args <= "/dbtype"
+        Dim out$
+        Dim subsetTest As Func(Of MetaLib, Boolean) = Function() True
+
+        If dbtype.StringEmpty Then
+            ' all
+            out = args("/out") Or $"{[in].TrimSuffix}.metlib.Xml"
+        Else
+            out = args("/out") Or $"{[in].TrimSuffix}.metlib_{dbtype}.Xml"
+
+            Select Case dbtype.ToLower
+                Case "chebi" : subsetTest = Function(m) Not m.xref.chebi.StringEmpty(True)
+                Case "hmdb" : subsetTest = Function(m) Not m.xref.HMDB.StringEmpty(True)
+                Case "kegg" : subsetTest = Function(m) Not m.xref.KEGG.StringEmpty(True)
+                Case "cas" : subsetTest = Function(m) Not m.xref.CAS.IsNullOrEmpty
+                Case Else
+                    Throw New NotSupportedException(dbtype)
+            End Select
+        End If
 
         Using dataset As New DataSetWriter(Of MetaLib)(out)
             Dim i As VBInteger = 0
 
-            For Each meta As MetaLib In CIDSynonym.LoadMetaInfo([in])
+            For Each meta As MetaLib In CIDSynonym.LoadMetaInfo([in]).Where(subsetTest)
                 Call dataset.Write(meta)
 
                 If ++i Mod 10000 = 0 Then
