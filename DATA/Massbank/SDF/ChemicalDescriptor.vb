@@ -98,6 +98,9 @@ Namespace File
         Public Property FormalCharge As Integer
         Public Property Complexity As Integer
 
+        ''' <summary>
+        ''' All of the property reflection info of <see cref="ChemicalDescriptor"/> object.
+        ''' </summary>
         Shared ReadOnly schema As PropertyInfo() = DataFramework _
             .Schema(Of ChemicalDescriptor)(PropertyAccess.Readable, True, True) _
             .Values _
@@ -196,6 +199,16 @@ Namespace File
         Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
             Yield GetEnumerator()
         End Function
+
+        Public Shared Narrowing Operator CType(descriptor As ChemicalDescriptor) As Dictionary(Of String, Double)
+            With New Dictionary(Of String, Double)
+                For Each data As PropertyInfo In schema
+                    Call .Add(data.Name, data.GetValue(descriptor))
+                Next
+
+                Return .ByRef
+            End With
+        End Operator
     End Class
 
     Public Class DescriptorDatabase : Implements IEnumerable(Of ChemicalDescriptor)

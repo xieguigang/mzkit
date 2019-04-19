@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{2223FB63-E148-4342-87E6-495571B2898E}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>test.pubchemTest</StartupObject>
+    <StartupObject>test.metaLibLoaderTest</StartupObject>
     <RootNamespace>test</RootNamespace>
     <AssemblyName>test</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -94,6 +94,7 @@
     <Compile Include="Module1.vb" />
     <Compile Include="foodbQuery.vb" />
     <Compile Include="inchiTest.vb" />
+    <Compile Include="metaLibLoaderTest.vb" />
     <Compile Include="pubchemTest.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

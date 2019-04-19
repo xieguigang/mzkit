@@ -1,52 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::7f5349c4d573ac8fc3bc3e444577335d, pubchem\Program.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Program
-    ' 
-    '     Function: Decompress, Descriptor, ImageFlyCLI, Main, PubchemUnifyMetaLib
-    ' 
-    ' /********************************************************************************/
+' Module Program
+' 
+'     Function: Decompress, Descriptor, ImageFlyCLI, Main, PubchemUnifyMetaLib
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.ComponentModel
 Imports System.IO
 Imports System.IO.Compression
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
@@ -64,6 +67,7 @@ Module Program
 
     <ExportAPI("/unify.metalib")>
     <Usage("/unify.metalib /in <CID-Synonym-filtered.txt> [/dbtype <chebi/hmdb/kegg/cas> /out <out.Xml>]")>
+    <Description("Create a unify xref database file.")>
     Public Function PubchemUnifyMetaLib(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim dbtype$ = args <= "/dbtype"
@@ -107,8 +111,39 @@ Module Program
         Return 0
     End Function
 
+    ''' <summary>
+    ''' 通过物质注释信息查询物质的Descriptor计算数据
+    ''' </summary>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
+    <ExportAPI("/descriptor.query")>
+    <Usage("/descriptor.query /meta <metaLib.Xml> /descriptor <descriptor.db> [/out <matrix.csv>]")>
+    Public Function CompoundDescriptorQuery(args As CommandLine) As Integer
+        Dim in$ = args <= "/meta"
+        Dim db$ = args <= "/descriptor"
+        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.descriptor.csv"
+        ' 必须要保证这里面有正确的pubchem CID
+        Dim metaLib As MetaLib() = LoadUltraLargeXMLDataSet(Of MetaLib)(path:=[in]) _
+            .Where(Function(m) m.xref.pubchem > 0) _
+            .ToArray
+
+        ' 在这里不适用using,因为using在结束的时候会自动写数据
+        Dim repo As New DescriptorDatabase(out.Open(FileMode.OpenOrCreate, doClear:=False))
+        Dim matrix As DataSet() = metaLib _
+            .Select(Function(m)
+                        Return New DataSet With {
+                            .ID = m.ID,
+                            .Properties = repo.GetDescriptor(m.xref.pubchem)
+                        }
+                    End Function) _
+            .ToArray
+
+        Return matrix.SaveTo(out).CLICode
+    End Function
+
     <ExportAPI("/descriptor")>
     <Usage("/descriptor /compounds <*.gz directory> [/out <description.db>]")>
+    <Description("Build a chemical descriptor database repository.")>
     Public Function Descriptor(args As CommandLine) As Integer
         Dim compoundRepo$ = args <= "/compounds"
         Dim out$ = args("/out") Or $"{compoundRepo.TrimDIR}.description.db"
