@@ -142,10 +142,10 @@ metaDNA <- function(identify, unknown, do.align,
 				break;
 			} else {
 				print(sprintf("  Found %s kegg compound:", n));
-				print(names(seeds));
+				# print(names(seeds));
 				
 				kegg_id.skips <- append(kegg_id.skips, names(seeds));
-				filter.skips <- kegg_id.skips %=>% create_filter.skips;			
+				filter.skips <- create_filter.skips(kegg_id.skips, FALSE);			
 				totals <- totals + n;
 				stats <- rbind(stats, c(i, n, totals));
 			}
@@ -289,11 +289,11 @@ metaDNA.iteration <- function(identify, filter.skips,
 #' @return This function returns a lambda function that can determine the
 #'   given kegg id vector which is not in the input \code{kegg_id.skips}.
 #'
-create_filter.skips <- function(kegg_id.skips) {
+create_filter.skips <- function(kegg_id.skips, debug.echo = TRUE) {
 
     if (kegg_id.skips %=>% IsNothing) {
         kegg_id.skips = "NA";
-    } else {
+    } else if (debug.echo) {
         cat("\nThese KEGG compound will not be identified from metaDNA\n\n");
         print(kegg_id.skips);
         cat("\n");
