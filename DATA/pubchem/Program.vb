@@ -50,6 +50,7 @@ Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.csv.IO.Linq
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
@@ -104,6 +105,37 @@ Module Program
                     Call Console.Write(i)
                     Call Console.Write(vbTab)
                     Call dataset.Flush()
+                End If
+            Next
+        End Using
+
+        Return 0
+    End Function
+
+    ''' <summary>
+    ''' Convert database cross reference id to pubchem CID
+    ''' </summary>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
+    ''' 
+    <ExportAPI("/xref.CID")>
+    <Usage("/xref.CID /in <SID-Map> /db <database_name> [/out <out.csv>]")>
+    <Description("Convert database cross reference id to pubchem CID")>
+    Public Function Xref2CID(args As CommandLine) As Integer
+        Dim in$ = args <= "/in"
+        Dim db$ = args <= "/db"
+        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.{db}.csv"
+        Dim i As VBInteger = 0
+
+        Using table As New WriteStream(Of SIDMap)(out)
+            For Each sid As SIDMap In SIDMap.GetMaps([in])
+                If sid.sourceName.TextEquals(db) Then
+                    Call table.Flush(sid)
+
+                    If ++i Mod 1000 = 0 Then
+                        Call Console.Write(i)
+                        Call Console.Write(vbTab)
+                    End If
                 End If
             Next
         End Using
