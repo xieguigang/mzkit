@@ -3,6 +3,8 @@ Imports System.IO.Compression
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
@@ -61,6 +63,36 @@ Module Program
         End Using
 
         Return 0
+    End Function
+
+    ''' <summary>
+    ''' 通过物质注释信息查询物质的Descriptor计算数据
+    ''' </summary>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
+    <ExportAPI("/descriptor.query")>
+    <Usage("/descriptor.query /meta <metaLib.Xml> /descriptor <descriptor.db> [/out <matrix.csv>]")>
+    Public Function CompoundDescriptorQuery(args As CommandLine) As Integer
+        Dim in$ = args <= "/meta"
+        Dim db$ = args <= "/descriptor"
+        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.descriptor.csv"
+        ' 必须要保证这里面有正确的pubchem CID
+        Dim metaLib As MetaLib() = LoadUltraLargeXMLDataSet(Of MetaLib)(path:=[in]) _
+            .Where(Function(m) m.xref.pubchem > 0) _
+            .ToArray
+
+        ' 在这里不适用using,因为using在结束的时候会自动写数据
+        Dim repo As New DescriptorDatabase(out.Open(FileMode.OpenOrCreate, doClear:=False))
+        Dim matrix As DataSet() = metaLib _
+            .Select(Function(m)
+                        Return New DataSet With {
+                            .ID = m.ID,
+                            .Properties = repo.GetDescriptor(m.xref.pubchem)
+                        }
+                    End Function) _
+            .ToArray
+
+        Return matrix.SaveTo(out).CLICode
     End Function
 
     <ExportAPI("/descriptor")>
