@@ -4,7 +4,7 @@
 \alias{create_filter.skips}
 \title{Create skips handler for KEGG id}
 \usage{
-create_filter.skips(kegg_id.skips)
+create_filter.skips(kegg_id.skips, debug.echo = TRUE)
 }
 \arguments{
 \item{kegg_id.skips}{A character vector that contains KEGG id
