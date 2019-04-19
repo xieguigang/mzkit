@@ -46,6 +46,7 @@ Imports System.ComponentModel
 Imports System.IO
 Imports System.IO.Compression
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.csv
@@ -67,41 +68,51 @@ Module Program
     End Function
 
     <ExportAPI("/unify.metalib")>
-    <Usage("/unify.metalib /in <CID-Synonym-filtered.txt> [/dbtype <chebi/hmdb/kegg/cas> /out <out.Xml>]")>
+    <Usage("/unify.metalib /in <CID-Synonym-filtered.txt> /SID <SID-Map.txt> [/cas /out <out.Xml>]")>
     <Description("Create a unify xref database file.")>
     Public Function PubchemUnifyMetaLib(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
-        Dim dbtype$ = args <= "/dbtype"
-        Dim out$
+        Dim sidMap$ = args <= "/SID"
+        Dim CASnotEmpty As Boolean = args("/cas")
+        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.metalib.Xml"
         Dim subsetTest As Func(Of MetaLib, Boolean) = Function() True
-        Dim reportTick As Integer = 10000
 
-        If dbtype.StringEmpty Then
-            ' all
-            out = args("/out") Or $"{[in].TrimSuffix}.metlib.Xml"
-        Else
-            out = args("/out") Or $"{[in].TrimSuffix}.metlib_{dbtype}.Xml"
-            reportTick = 100
+        Const HMDBName$ = "Human Metabolome Database (HMDB)"
 
-            Select Case dbtype.ToLower
-                Case "chebi" : subsetTest = Function(m) Not m.xref.chebi.StringEmpty(True)
-                Case "hmdb" : subsetTest = Function(m) Not m.xref.HMDB.StringEmpty(True)
-                Case "kegg" : subsetTest = Function(m) Not m.xref.KEGG.StringEmpty(True)
-                Case "cas"
-                    reportTick = 10000
-                    subsetTest = Function(m) Not m.xref.CAS.IsNullOrEmpty
-                Case Else
-                    Throw New NotSupportedException(dbtype)
-            End Select
+        If CASnotEmpty Then
+            subsetTest = Function(m) Not m.xref.CAS.IsNullOrEmpty
         End If
+
+        Dim HMDB As Dictionary(Of String, String)
+
+        ' prepare hmdb 2 CID map data
+        With $"{[in].ParentPath}/SID-Map.HMDB.txt"
+            If .FileLength < 100 Then
+                Call App.SelfFolk($"/xref.CID /in {sidMap.CLIPath} /db ""{HMDBName}"" /out { .CLIPath}").Run()
+            End If
+
+            HMDB = .LoadCsv(Of SIDMap) _
+                   .Where(Function(map) map.CID > 0) _
+                   .ToDictionary(Function(map) CStr(map.CID),
+                                 Function(map)
+                                     Return map.registryIdentifier
+                                 End Function)
+        End With
 
         Using dataset As New DataSetWriter(Of MetaLib)(out)
             Dim i As VBInteger = 0
 
-            For Each meta As MetaLib In CIDSynonym.LoadMetaInfo([in]).Where(subsetTest)
+            For Each meta As MetaLib In CIDSynonym _
+                .LoadMetaInfo([in]) _
+                .Where(subsetTest)
+
+                If HMDB.ContainsKey(meta.xref.pubchem) Then
+                    meta.xref.HMDB = HMDB(meta.xref.pubchem)
+                End If
+
                 Call dataset.Write(meta)
 
-                If ++i Mod reportTick = 0 Then
+                If ++i Mod 10000 = 0 Then
                     Call Console.Write(i)
                     Call Console.Write(vbTab)
                     Call dataset.Flush()
