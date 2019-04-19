@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::210d74b6dfe88172cd3e665e4383351f, Massbank\Public\NCBI\PubChem\Web\Query.vb"
+﻿#Region "Microsoft.VisualBasic::7a802f3c9bc95df5022f2a290b6fb85a, Massbank\Public\NCBI\PubChem\Web\Query.vb"
 
     ' Author:
     ' 

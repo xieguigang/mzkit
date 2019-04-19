@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3044b444ca519df4765c7df98e05762, Massbank\SDF\Elements.vb"
+﻿#Region "Microsoft.VisualBasic::3a3b6397e82285f42101ae2f53af0a0d, Massbank\SDF\Struct\Elements.vb"
 
     ' Author:
     ' 
@@ -45,21 +45,6 @@
     '         Properties: i, j, Stereo, Type
     ' 
     '         Function: Parse, ToString
-    ' 
-    '     Enum BoundTypes
-    ' 
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Enum BoundStereos
-    ' 
-    '         Other
-    ' 
-    '  
-    ' 
-    ' 
     ' 
     ' 
     ' /********************************************************************************/

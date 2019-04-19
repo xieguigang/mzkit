@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c62ef07d785e818cfb52d0c13fdd6af2, MetaDNA\MZ.MetaDNA\keggKB.vb"
+﻿#Region "Microsoft.VisualBasic::005453f1e9410c323232438ac2fc6faa, MetaDNA\MZ.MetaDNA\keggKB.vb"
 
     ' Author:
     ' 
@@ -42,11 +42,9 @@
 
 #End Region
 
-
 ''' <summary>
 ''' KEGG knowledge base for MetaDNA algorithm.
 ''' </summary>
 Public Class keggKB
 
 End Class
-

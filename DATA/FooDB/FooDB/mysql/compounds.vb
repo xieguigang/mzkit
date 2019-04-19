@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c922111663270fe91b503e8727825f82, Massbank\Public\TMIC\FooDB\mysql\compounds.vb"
+﻿#Region "Microsoft.VisualBasic::c922111663270fe91b503e8727825f82, FooDB\FooDB\mysql\compounds.vb"
 
     ' Author:
     ' 

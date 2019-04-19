@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4a75e81529cd243342f99cd8337f73e, assembly\ASCII\MSP\MetaData.vb"
+﻿#Region "Microsoft.VisualBasic::a4a75e81529cd243342f99cd8337f73e, ASCII\MSP\MetaData.vb"
 
     ' Author:
     ' 

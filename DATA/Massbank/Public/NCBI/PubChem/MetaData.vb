@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c8e3693840d9a6fa2ce7fff45a42c25, Massbank\Public\NCBI\PubChem\MetaData.vb"
+﻿#Region "Microsoft.VisualBasic::0b1300936662d1857af23b43b66058f1, Massbank\Public\NCBI\PubChem\MetaData.vb"
 
     ' Author:
     ' 
@@ -44,6 +44,7 @@
     '                     PUBCHEM_IUPAC_TRADITIONAL_NAME, PUBCHEM_MOLECULAR_FORMULA, PUBCHEM_MOLECULAR_WEIGHT, PUBCHEM_MONOISOTOPIC_WEIGHT, PUBCHEM_OPENEYE_CAN_SMILES
     '                     PUBCHEM_OPENEYE_ISO_SMILES, PUBCHEM_TOTAL_CHARGE, PUBCHEM_XLOGP3_AA
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: Data
     ' 
     ' 

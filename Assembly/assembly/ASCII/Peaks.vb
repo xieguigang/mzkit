@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10ac7af36e3f1155687780ab2962def0, assembly\ASCII\Peaks.vb"
+﻿#Region "Microsoft.VisualBasic::491031dcfeab0e62b607c0af3bcd4fea, ASCII\Peaks.vb"
 
     ' Author:
     ' 
@@ -72,4 +72,3 @@ Public Structure MSMSPeak
         End If
     End Function
 End Structure
-

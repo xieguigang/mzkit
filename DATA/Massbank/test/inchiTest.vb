@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84c85332ee7c7ee10d2acee12d126919, Massbank\test\inchiTest.vb"
+﻿#Region "Microsoft.VisualBasic::078f076b8716e3e7dfb7a43422f531f8, Massbank\test\inchiTest.vb"
 
     ' Author:
     ' 
@@ -70,4 +70,3 @@ Module inchiTest
         Pause()
     End Sub
 End Module
-
