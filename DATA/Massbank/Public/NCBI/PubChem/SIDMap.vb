@@ -64,7 +64,15 @@ Namespace NCBI.PubChem
         Public Property registryIdentifier As String
         Public Property CID As Integer
 
-        Public Shared Iterator Function GetMaps(path As String) As IEnumerable(Of SIDMap)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="path">SID-Map.txt file path.</param>
+        ''' <param name="skipNoCID">
+        ''' By default is skip all of the record rows that without CID assigned.
+        ''' </param>
+        ''' <returns></returns>
+        Public Shared Iterator Function GetMaps(path$, Optional skipNoCID As Boolean = True) As IEnumerable(Of SIDMap)
             Dim t As String()
             Dim CID As Integer
 
@@ -74,7 +82,11 @@ Namespace NCBI.PubChem
                 If t.Length > 3 Then
                     CID = Integer.Parse(t(3))
                 Else
-                    CID = -1
+                    If skipNoCID Then
+                        Continue For
+                    Else
+                        CID = -1
+                    End If
                 End If
 
                 Yield New SIDMap With {
