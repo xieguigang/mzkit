@@ -94,6 +94,15 @@ Public Module SDFReader
         info!instrument = M("INSTRUMENT")
         info!collision_energy = M("COLLISION ENERGY")
         info!ion_mode = M("ION MODE")
+        info!ionization = M("ionization")
+        info!fragmentation_mode = M("fragmentation mode")
+        info!resolution = M("resolution")
+        info!column = M("column")
+        info!flow_gradient = M("flow gradient")
+        info!flow_rate = M("flow rate")
+        info!retention_time = M("retention time")
+        info!solvent_a = M("solvent a")
+        info!solvent_b = M("solvent a")
 
         Return info
     End Function
