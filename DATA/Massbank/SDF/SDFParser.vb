@@ -68,17 +68,35 @@ Namespace File
                 .Split(Function(s) s = "$$$$", includes:=False)
 
                 offset = block.solveOffset()
-                block = block.Skip(offset).ToArray
+                block = block _
+                    .Skip(offset) _
+                    .ToArray
 
                 Yield SDFParser.StreamParser(block, parseStruct)
             Next
         End Function
 
-        Const molEnds$ = "M  END"
+        Const MolEndMarks$ = "M  END"
 
         <Extension>
-        Private Iterator Function SplitMolData(block As String) As IEnumerable(Of String())
+        Private Iterator Function SplitMolData(block As String()) As IEnumerable(Of String())
+            For i As Integer = 3 To block.Length - 1
+                If block(i) = MolEndMarks OrElse (InStr(block(i), ">") = 1) Then
+                    Dim mol$() = block.Skip(3).Take(i - 3).ToArray
 
+                    ' 抛出分子结构数据部分的文本数据行
+                    If block(i) <> MolEndMarks Then
+                        Yield mol.Join(MolEndMarks).ToArray
+                    Else
+                        Yield mol
+                    End If
+
+                    ' 抛出分子物质注释信息部分的文本行数据
+                    Yield block.Skip(i).ToArray
+
+                    Exit For
+                End If
+            Next
         End Function
 
         Const MolStartFlag$ = "((\d+)|(\s+))+V2000\s*"
@@ -103,16 +121,11 @@ Namespace File
             Dim ID$ = block(0), program$ = block(1)
             Dim comment$ = block(2)
             Dim metas$()
-            Dim mol$
+            Dim mol$()
 
-            With block _
-                .Skip(2) _
-                .Split(Function(s) s = molEnds, includes:=False)
-
+            With block.SplitMolData
+                mol = .First
                 metas = .Last
-                mol = .First _
-                    .Join({molEnds}) _
-                    .JoinBy(vbLf)
             End With
 
             Dim struct As [Structure] = Nothing
@@ -130,7 +143,7 @@ Namespace File
                               End Function)
 
             If parseStruct Then
-                struct = [Structure].Parse(mol)
+                struct = [Structure].ParseStream(mol)
             End If
 
             Return New SDF With {
