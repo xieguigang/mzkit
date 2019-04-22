@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MetaData.vb" />
+    <Compile Include="Extensions.vb" />
     <Compile Include="MSP\MspReader.vb" />
     <Compile Include="SDF\SDFReader.vb" />
     <Compile Include="SpectraSection.vb" />

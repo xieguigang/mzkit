@@ -47,7 +47,6 @@
 
 Imports System.Collections.Specialized
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -100,15 +99,14 @@ Namespace ASCII.MSP
                     End If
                 End If
 
-                Dim peaksdata As MSMSPeak() =
-                    parts _
+                Dim peaksdata As MSMSPeak() = parts _
                     .Last _
                     .Skip(1) _
                     .Select(Function(s)
-                                With Tokenizer.CharsParser(s:=s, delimiter:=" "c)
+                                With s.Split(" "c)
                                     Dim mz$ = .First
                                     Dim into$ = .Second
-                                    Dim comment$ = .ElementAtOrDefault(2)
+                                    Dim comment$ = .Skip(2).JoinBy(" ")
 
                                     Return New MSMSPeak(mz:=mz, intensity:=into, comment:=comment)
                                 End With
@@ -131,9 +129,10 @@ Namespace ASCII.MSP
                                End If
                            End Function
 
+            Dim metaComment$ = getValue(NameOf(MspData.Comments)) Or getValue("Comment").AsDefault
             Dim msp As New MspData With {
                 .Peaks = peaksdata,
-                .Comments = getValue(NameOf(MspData.Comments)) Or getValue("Comment").AsDefault,
+                .Comments = metaComment.ToTable,
                 .DB_id = getValue("DB#"),
                 .Formula = getValue(NameOf(MspData.Formula)),
                 .InChIKey = getValue(NameOf(MspData.InChIKey)),
