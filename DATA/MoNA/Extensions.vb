@@ -43,7 +43,7 @@ Public Module Extensions
     ''' <returns></returns>
     <Extension>
     Public Function LipidBlastParser(comments$) As MetaData
-        Dim meta As MetaData = comments.FillData
+        Dim meta As MetaData = MspData.ParseCommentMetaTable(comments).FillData
         Dim tokens$() = comments.Split(";"c).Skip(1).ToArray
 
         meta.name = Strings.Trim(tokens(0))
@@ -59,8 +59,7 @@ Public Module Extensions
     ''' </summary>
     ''' <param name="comments$"></param>
     ''' <returns></returns>
-    <Extension> Public Function FillData(comments$) As MetaData
-        Dim table As NameValueCollection = comments.ToTable
+    <Extension> Public Function FillData(comments As NameValueCollection) As MetaData
         Dim meta As Object = New MetaData
         Dim castValue As Object
 
@@ -70,18 +69,18 @@ Public Module Extensions
             If field.Type.IsInheritsFrom(GetType(Array)) Then
                 Dim value As String()
 
-                value = table.GetValues(name)
+                value = comments.GetValues(name)
 
                 If value.IsNullOrEmpty Then
-                    value = table.GetValues(names(name))
+                    value = comments.GetValues(names(name))
                 End If
 
                 Call field.SetValue(meta, value)
             Else
-                Dim value$ = table(name)
+                Dim value$ = comments(name)
 
                 If value.StringEmpty Then
-                    value = table(names(name))
+                    value = comments(names(name))
                 End If
 
                 castValue = Scripting.CTypeDynamic(value, field.Type)

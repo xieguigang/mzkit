@@ -71,7 +71,6 @@ Namespace ASCII.MSP
         Public Property Formula As String
         Public Property PrecursorMZ As String
         Public Property Precursor_type As String
-        Public Property Comments As NameValueCollection
         Public Property Spectrum_type As String
         Public Property Instrument_type As String
         Public Property Instrument As String
@@ -79,6 +78,11 @@ Namespace ASCII.MSP
         Public Property Collision_energy As String
 
         Public Property Peaks As ms2()
+        ''' <summary>
+        ''' 如果这个文件是来自于MoNA数据库的话, 则在这里是物质的注释信息
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Comments As NameValueCollection
 
         Public Overrides Function ToString() As String
             Return Name
@@ -87,6 +91,11 @@ Namespace ASCII.MSP
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Load(path$, Optional ms2 As Boolean = True) As IEnumerable(Of MspData)
             Return MspParser.Load(path, ms2)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function ParseCommentMetaTable(comment As String) As NameValueCollection
+            Return comment.ToTable
         End Function
     End Class
 End Namespace
