@@ -133,7 +133,8 @@ Namespace File
                 .Split(Function(s) s.StringEmpty, includes:=False) _
                 .Where(Function(t) Not t.IsNullOrEmpty) _
                 .ToDictionary(Function(t)
-                                  Return Mid(t(0), 4, t(0).Length - 4)
+                                  Dim title As String = t(Scan0).GetStackValue("<", ">")
+                                  Return title
                               End Function,
                               Function(t)
                                   Return t.Skip(1).ToArray
