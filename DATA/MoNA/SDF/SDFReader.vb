@@ -44,17 +44,14 @@
 
 Imports SMRUCC.MassSpectrum.DATA.File
 
-Namespace MoNA
+''' <summary>
+''' Reader for file ``MoNA-export-LC-MS-MS_Spectra.sdf``
+''' </summary>
+Public Module SDFReader
 
-    ''' <summary>
-    ''' Reader for file ``MoNA-export-LC-MS-MS_Spectra.sdf``
-    ''' </summary>
-    Public Module SDFReader
+    Public Iterator Function ParseFile(path$, Optional parseStruct As Boolean = False) As IEnumerable(Of SpectraSection)
+        For Each mol As SDF In SDF.IterateParser(path, parseStruct:=parseStruct)
 
-        Public Iterator Function ParseFile(path$, Optional parseStruct As Boolean = False) As IEnumerable(Of SpectraSection)
-            For Each mol As SDF In SDF.IterateParser(path, parseStruct:=parseStruct)
-
-            Next
-        End Function
-    End Module
-End Namespace
+        Next
+    End Function
+End Module
