@@ -67,6 +67,24 @@ Module Program
         Return GetType(Program).RunCLI(App.CommandLine)
     End Function
 
+    <Extension>
+    Private Function xrefNotEmpty(xref As xref) As Boolean
+        If Not xref.CAS.IsNullOrEmpty Then
+            Return True
+        End If
+        If Not xref.chebi.StringEmpty Then
+            Return True
+        End If
+        If Not xref.HMDB.StringEmpty Then
+            Return True
+        End If
+        If Not xref.KEGG.StringEmpty Then
+            Return True
+        End If
+
+        Return False
+    End Function
+
     <ExportAPI("/unify.metalib")>
     <Usage("/unify.metalib /in <CID-Synonym-filtered.txt> /SID <SID-Map.txt> [/cas /out <out.Xml>]")>
     <Description("Create a unify xref database file.")>
@@ -80,10 +98,10 @@ Module Program
         Const HMDBName$ = "Human Metabolome Database (HMDB)"
 
         If CASnotEmpty Then
-            subsetTest = Function(m) Not m.xref.CAS.IsNullOrEmpty
+            subsetTest = Function(m) m.xref.xrefNotEmpty
         End If
 
-        Dim HMDB As Dictionary(Of String, String)
+        Dim HMDB As Dictionary(Of String, String())
 
         ' prepare hmdb 2 CID map data
         With $"{[in].ParentPath}/SID-Map.HMDB.txt"
@@ -91,12 +109,18 @@ Module Program
                 Call App.SelfFolk($"/xref.CID /in {sidMap.CLIPath} /db ""{HMDBName}"" /out { .CLIPath}").Run()
             End If
 
-            HMDB = .LoadCsv(Of SIDMap) _
-                   .Where(Function(map) map.CID > 0) _
-                   .ToDictionary(Function(map) CStr(map.CID),
-                                 Function(map)
-                                     Return map.registryIdentifier
-                                 End Function)
+            Dim mapsData = .LoadCsv(Of SIDMap).ToArray
+
+            HMDB = mapsData _
+                .Where(Function(map) map.CID > 0) _
+                .GroupBy(Function(map) CStr(map.CID)) _
+                .OrderByDescending(Function(group) group.Count) _
+                .ToDictionary(Function(map) map.Key,
+                              Function(map)
+                                  Return map _
+                                      .Select(Function(m) m.registryIdentifier) _
+                                      .ToArray
+                              End Function)
         End With
 
         Using dataset As New DataSetWriter(Of MetaLib)(out)
@@ -106,11 +130,17 @@ Module Program
                 .LoadMetaInfo([in]) _
                 .Where(subsetTest)
 
+                ' 一个HMDB编号可能会对应多个pubchem CID
+                ' 一个CAS编号也同样会对应多个pubchem CID
+                ' 同理,KEGG代谢物编号,chebi编号也是会存在这个情况的
                 If HMDB.ContainsKey(meta.xref.pubchem) Then
-                    meta.xref.HMDB = HMDB(meta.xref.pubchem)
+                    For Each hmdbID As String In HMDB(meta.xref.pubchem)
+                        meta.xref.pubchem = hmdbID
+                        dataset.Write(meta)
+                    Next
+                Else
+                    Call dataset.Write(meta)
                 End If
-
-                Call dataset.Write(meta)
 
                 If ++i Mod 10000 = 0 Then
                     Call Console.Write(i)
@@ -118,6 +148,9 @@ Module Program
                     Call dataset.Flush()
                 End If
             Next
+
+            ' write the remaining data.
+            Call dataset.Flush()
         End Using
 
         Return 0
