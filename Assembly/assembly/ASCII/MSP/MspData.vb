@@ -51,6 +51,7 @@
 Imports System.Collections.Specialized
 Imports System.Data.Linq.Mapping
 Imports System.Runtime.CompilerServices
+Imports SMRUCC.MassSpectrum.Math.Spectra
 
 Namespace ASCII.MSP
 
@@ -77,7 +78,7 @@ Namespace ASCII.MSP
         Public Property Ion_mode As String
         Public Property Collision_energy As String
 
-        Public Property Peaks As MSMSPeak()
+        Public Property Peaks As ms2()
 
         Public Overrides Function ToString() As String
             Return Name

@@ -64,6 +64,12 @@ Namespace Spectra
         <DataFrameColumn(NameOf(intensity))>
         <XmlAttribute> Public Property intensity As Double
 
+        ''' <summary>
+        ''' Peak annotation data or something else
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Annotation As String
+
         Public Overrides Function ToString() As String
             If intensity < 1 Then
                 Return $"{mz} ({Fix(intensity * 100%)}%)"
