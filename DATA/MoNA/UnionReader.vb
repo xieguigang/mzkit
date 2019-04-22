@@ -49,12 +49,13 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
 Imports SMRUCC.MassSpectrum.Assembly.ASCII.MSP
 
 Public Class UnionReader
 
     ReadOnly meta As MetaData
-    ReadOnly msp As MspData
+    ReadOnly mold As [Variant](Of MspData, SpectraSection)
 
 #Region "Reader Properties"
 
@@ -113,7 +114,11 @@ Public Class UnionReader
             Dim mass# = meta.Read_exact_mass
 
             If mass = 0R Then
-                Return msp.MW
+                If mold Like GetType(MspData) Then
+                    Return mold.TryCast(Of MspData).MW
+                Else
+                    Return mold.TryCast(Of SpectraSection).mass
+                End If
             Else
                 Return mass
             End If
@@ -122,10 +127,18 @@ Public Class UnionReader
 
     Public ReadOnly Property formula As String
         Get
-            If msp.Formula.StringEmpty Then
+            Dim formulaVal$
+
+            If mold Like GetType(MspData) Then
+                formulaVal = mold.TryCast(Of MspData).Formula
+            Else
+                formulaVal = mold.TryCast(Of SpectraSection).formula
+            End If
+
+            If formulaVal.StringEmpty Then
                 Return meta.molecular_formula
             Else
-                Return msp.Formula
+                Return formulaVal
             End If
         End Get
     End Property
@@ -138,12 +151,20 @@ Public Class UnionReader
 
     Public ReadOnly Property ionMode As String
         Get
-            If msp.Ion_mode.StringEmpty Then
+            Dim ionVal$
+
+            If mold Like GetType(MspData) Then
+                ionVal = mold.TryCast(Of MspData).Ion_mode
+            Else
+                ionVal = mold.TryCast(Of SpectraSection).MetaDB.ionization_mode
+            End If
+
+            If ionVal.StringEmpty Then
                 Return meta.ionization_mode _
                     ?.Split(","c) _
                     ?.FirstOrDefault
             Else
-                Return msp.Ion_mode
+                Return ionVal
             End If
         End Get
     End Property
@@ -163,7 +184,12 @@ Public Class UnionReader
 
     Sub New(meta As MetaData, Optional msp As MspData = Nothing)
         Me.meta = meta
-        Me.msp = msp
+        Me.mold = msp
+    End Sub
+
+    Sub New(meta As MetaData, spectra As SpectraSection)
+        Me.meta = meta
+        Me.mold = spectra
     End Sub
 
     Private Function numericIdInternal(idStr As String, <CallerMemberName> Optional name$ = Nothing) As Long
@@ -188,7 +214,7 @@ Public Class UnionReader
             ElseIf PrimitiveParser.IsNumeric(last) Then
                 Return CLng(Val(last))
             Else
-                Call $"Invalid format for {name} = ""{idStr}"", @{msp.DB_id}={msp.Name}".Warning
+                Call $"Invalid format for {name} = ""{idStr}""".Warning
                 Return -1
             End If
         End If

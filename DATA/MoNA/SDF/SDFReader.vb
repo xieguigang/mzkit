@@ -45,6 +45,7 @@
 Imports System.Runtime.CompilerServices
 Imports SMRUCC.MassSpectrum.Assembly.ASCII.MSP
 Imports SMRUCC.MassSpectrum.DATA.File
+Imports SMRUCC.MassSpectrum.Math.Spectra
 
 ''' <summary>
 ''' Reader for file ``MoNA-export-LC-MS-MS_Spectra.sdf``
@@ -54,14 +55,25 @@ Public Module SDFReader
     Public Iterator Function ParseFile(path As String) As IEnumerable(Of SpectraSection)
         For Each mol As SDF In SDF.IterateParser(path, parseStruct:=False)
             Dim M = mol.readMeta
+            Dim commentMeta = mol.MetaData!COMMENT.ToTable
+            Dim ms2 As ms2() = commentMeta.GetValues("MASS SPECTRAL PEAKS") _
+                .Select(Function(line) line.Split) _
+                .Select(Function(line)
+                            Return New ms2 With {
+                                .mz = line(0),
+                                .intensity = line(1),
+                                .quantity = line(2)
+                            }
+                        End Function) _
+                .ToArray
 
             Yield New SpectraSection With {
                 .name = M("NAME"),
                 .ID = M("ID"),
-                .Comment = mol.MetaData!COMMENT.ToTable,
+                .Comment = commentMeta,
                 .formula = M("FORMULA"),
                 .mass = M("EXACT MASS"),
-                .MassPeaks = .Comment("MASS SPECTRAL PEAKS").LineTokens.
+                .MassPeaks = ms2
             }
         Next
     End Function
