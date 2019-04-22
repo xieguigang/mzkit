@@ -129,17 +129,14 @@ Namespace File
             End With
 
             Dim struct As [Structure] = Nothing
-            Dim metaData As Dictionary(Of String, String()) =
-                metas _
+            Dim metaData As Dictionary(Of String, String()) = metas _
                 .Split(Function(s) s.StringEmpty, includes:=False) _
                 .Where(Function(t) Not t.IsNullOrEmpty) _
                 .ToDictionary(Function(t)
                                   Return Mid(t(0), 4, t(0).Length - 4)
                               End Function,
                               Function(t)
-                                  Return t _
-                                      .Skip(1) _
-                                      .ToArray
+                                  Return t.Skip(1).ToArray
                               End Function)
 
             If parseStruct Then
