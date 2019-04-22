@@ -135,7 +135,7 @@ Module Program
                 ' 同理,KEGG代谢物编号,chebi编号也是会存在这个情况的
                 If HMDB.ContainsKey(meta.xref.pubchem) Then
                     For Each hmdbID As String In HMDB(meta.xref.pubchem)
-                        meta.xref.pubchem = hmdbID
+                        meta.xref.HMDB = hmdbID
                         dataset.Write(meta)
                     Next
                 Else
