@@ -51,23 +51,37 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Namespace ASCII.MSP
 
-    Module Comments
+    ''' <summary>
+    ''' MetaData in comments
+    ''' </summary>
+    Public Module Comments
 
         ''' <summary>
         ''' 解析放置于注释之中的代谢物注释元数据
         ''' </summary>
         ''' <param name="comments$"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function ToTable(comments$) As NameValueCollection
-            Dim tokens$() = CLIParser.GetTokens(comments)
-            Dim data = tokens _
+            Return CLIParser.GetTokens(comments).ToTable
+        End Function
+
+        ''' <summary>
+        ''' 解析放置于注释之中的代谢物注释元数据
+        ''' </summary>
+        ''' <param name="comments$"></param>
+        ''' <returns></returns>
+        <Extension> Public Function ToTable(comments As String()) As NameValueCollection
+            ' 为了兼容两个SMILES结构
+            Dim table As New NameValueCollection
+            Dim data = comments _
                 .Select(Function(s)
                             Return s.GetTagValue("=", trim:=True)
                         End Function) _
                 .GroupBy(Function(o) o.Name)
-            Dim table As New NameValueCollection  ' 为了兼容两个SMILES结构
 
-            For Each g In data
+            For Each g As IGrouping(Of String, NamedValue(Of String)) In data
                 For Each s As NamedValue(Of String) In g
                     Call table.Add(g.Key, s.Value)
                 Next
