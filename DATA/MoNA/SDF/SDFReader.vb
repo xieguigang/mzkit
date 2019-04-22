@@ -49,8 +49,9 @@ Imports SMRUCC.MassSpectrum.DATA.File
 ''' </summary>
 Public Module SDFReader
 
-    Public Iterator Function ParseFile(path$, Optional parseStruct As Boolean = False) As IEnumerable(Of SpectraSection)
-        For Each mol As SDF In SDF.IterateParser(path, parseStruct:=parseStruct)
+    Public Iterator Function ParseFile(path$) As IEnumerable(Of SpectraSection)
+        For Each mol As SDF In SDF.IterateParser(path, parseStruct:=False)
+
 
         Next
     End Function

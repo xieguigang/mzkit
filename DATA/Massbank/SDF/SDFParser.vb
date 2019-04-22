@@ -1,48 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::f980bfebaaec2933fc89b8a3a46aabbf, Massbank\SDF\SDFParser.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module SDFParser
-    ' 
-    '         Function: IterateParser, MoleculePopulator, ScanKeys, StreamParser
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module SDFParser
+' 
+'         Function: IterateParser, MoleculePopulator, ScanKeys, StreamParser
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language.UnixBash
 
@@ -59,15 +61,43 @@ Namespace File
         ''' <param name="path$"></param>
         ''' <returns></returns>
         Public Iterator Function IterateParser(path$, Optional parseStruct As Boolean = True) As IEnumerable(Of SDF)
+            Dim offset%
+
             For Each block As String() In path _
                 .IterateAllLines _
                 .Split(Function(s) s = "$$$$", includes:=False)
+
+                offset = block.solveOffset()
+                block = block.Skip(offset).ToArray
 
                 Yield SDFParser.StreamParser(block, parseStruct)
             Next
         End Function
 
         Const molEnds$ = "M  END"
+
+        <Extension>
+        Private Iterator Function SplitMolData(block As String) As IEnumerable(Of String())
+
+        End Function
+
+        Const MolStartFlag$ = "((\d+)|(\s+))+V2000\s*"
+
+        ''' <summary>
+        ''' 假设Program名称的行总是不是空的
+        ''' </summary>
+        ''' <param name="block"></param>
+        ''' <returns></returns>
+        <Extension>
+        Private Function solveOffset(block As String()) As Integer
+            For i As Integer = 0 To block.Length - 1
+                If block(i).IsPattern(MolStartFlag, RegexOptions.Singleline) Then
+                    Return i - 3
+                End If
+            Next
+
+            Throw New BadImageFormatException
+        End Function
 
         Private Function StreamParser(block$(), parseStruct As Boolean) As SDF
             Dim ID$ = block(0), program$ = block(1)
