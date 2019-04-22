@@ -117,6 +117,10 @@ Namespace ASCII.MSP
             Next
         End Function
 
+        Private Function parseMspPeaks()
+
+        End Function
+
         <Extension>
         Private Function createObject(metadata As NameValueCollection, peaksdata As MSMSPeak()) As MspData
             Dim getValue = Function(key$)
