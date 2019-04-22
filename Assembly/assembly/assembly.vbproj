@@ -139,13 +139,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ASCII\MGF\Ions.vb" />
-    <Compile Include="ASCII\MSP\ReaderViews.vb" />
-    <Compile Include="ASCII\MSP\UnionReader.vb" />
-    <Compile Include="ASCII\MSP\MetaData.vb" />
     <Compile Include="ASCII\MSP\MspParser.vb" />
     <Compile Include="ASCII\Peaks.vb" />
     <Compile Include="ASCII\MSP\Comments.vb" />
     <Compile Include="ASCII\MSP\MspData.vb" />
+    <Compile Include="NamespaceDoc.vb" />
     <Compile Include="SpectrumTree.vb" />
     <Compile Include="MarkupData\IBase64Container.vb" />
     <Compile Include="MarkupData\MS1.vb" />
