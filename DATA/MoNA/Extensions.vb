@@ -11,13 +11,15 @@ Public Module Extensions
 
     <Extension>
     Public Iterator Function AsDataFrame(msp As IEnumerable(Of MspData)) As IEnumerable(Of EntityObject)
+        Dim part1, part2 As Dictionary(Of String, String)
+
         For Each mspValue As MspData In msp
+            part1 = mspValue.DictionaryTable(primitiveType:=True)
+            part2 = mspValue.Comments.FillData.DictionaryTable
+
             Yield New EntityObject With {
                 .ID = mspValue.DB_id,
-                .Properties = mspValue _
-                    .DictionaryTable(primitiveType:=True) _
-                    .Join(mspValue.MetaDB.DictionaryTable) _
-                    .ToDictionary
+                .Properties = part1.Join(part2).ToDictionary
             }
         Next
     End Function

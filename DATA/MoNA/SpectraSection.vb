@@ -26,7 +26,8 @@ Public Class SpectraSection : Inherits MetaInfo
     Public ReadOnly Property MetaReader As UnionReader
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
-            Return New UnionReader(MetaDB, msp:=Me)
+            ' Return New UnionReader(MetaDB, msp:=Me)
+            Throw New NotImplementedException
         End Get
     End Property
 End Class
