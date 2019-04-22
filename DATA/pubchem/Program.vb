@@ -99,6 +99,8 @@ Module Program
 
         If CASnotEmpty Then
             subsetTest = Function(m) m.xref.xrefNotEmpty
+
+            Call "Required at least one registryID is not empty!".__INFO_ECHO
         End If
 
         Dim HMDB As Dictionary(Of String, String())
