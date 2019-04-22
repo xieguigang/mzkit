@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::8dc8f3d7d3f1a10c80ac9bfea7bd208b, Massbank\SDF\SDF.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class SDF
-    ' 
-    '         Properties: [Structure], ChemicalProperties, CID, Comment, ID
-    '                     MetaData, Name, Software
-    ' 
-    '         Function: IterateParser, MoleculePopulator, ScanKeys, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class SDF
+' 
+'         Properties: [Structure], ChemicalProperties, CID, Comment, ID
+'                     MetaData, Name, Software
+' 
+'         Function: IterateParser, MoleculePopulator, ScanKeys, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -50,6 +50,8 @@ Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
+Imports Microsoft.VisualBasic.Language
+Imports SMRUCC.MassSpectrum.DATA.NCBI.PubChem
 
 Namespace File
 
@@ -97,30 +99,12 @@ Namespace File
         Public Property [Structure] As [Structure]
         Public Property MetaData As Dictionary(Of String, String())
 
-        Public ReadOnly Property CID As Long
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return Long.Parse(ID)
-            End Get
-        End Property
-
-        Public ReadOnly Property ChemicalProperties As ChemicalDescriptor
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return New ChemicalDescriptor(MetaData)
-            End Get
-        End Property
-
-        Public ReadOnly Property Name As String
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return MetaData.TryGetValue("PUBCHEM_IUPAC_NAME", [default]:={}).FirstOrDefault
-            End Get
-        End Property
-
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
-            Return $"[{MetaData.TryGetValue("PUBCHEM_COMPOUND_CID").FirstOrDefault}] {Name}"
+            Dim id As String = MetaData.TryGetValue("PUBCHEM_COMPOUND_CID").FirstOrDefault Or Me.ID.AsDefault
+            Dim name As String = Me.Name Or MetaData.TryGetValue("NAME").FirstOrDefault.AsDefault
+
+            Return $"[{id}] {name}"
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

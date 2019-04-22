@@ -214,6 +214,7 @@
     <Compile Include="MetaLib\MetaLib.vb" />
     <Compile Include="Concentration.vb" />
     <Compile Include="Public\lipidMAPS\SDF.vb" />
+    <Compile Include="Public\NCBI\SDFExtensions.vb" />
     <Compile Include="Public\NCBI\PubChem\CIDSynonym.vb" />
     <Compile Include="Public\NCBI\PubChem\MetaData.vb" />
     <Compile Include="Public\NCBI\PubChem\ImageFly.vb" />

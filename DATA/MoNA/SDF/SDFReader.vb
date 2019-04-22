@@ -42,6 +42,8 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+Imports SMRUCC.MassSpectrum.Assembly.ASCII.MSP
 Imports SMRUCC.MassSpectrum.DATA.File
 
 ''' <summary>
@@ -49,10 +51,38 @@ Imports SMRUCC.MassSpectrum.DATA.File
 ''' </summary>
 Public Module SDFReader
 
-    Public Iterator Function ParseFile(path$) As IEnumerable(Of SpectraSection)
+    Public Iterator Function ParseFile(path As String) As IEnumerable(Of SpectraSection)
         For Each mol As SDF In SDF.IterateParser(path, parseStruct:=False)
+            Dim M = mol.readMeta
 
-
+            Yield New SpectraSection With {
+                .name = M("NAME"),
+                .ID = M("ID"),
+                .Comment = mol.MetaData!COMMENT.ToTable,
+                .formula = M("FORMULA"),
+                .mass = M("EXACT MASS"),
+                .MassPeaks = .Comment("MASS SPECTRAL PEAKS").LineTokens.
+            }
         Next
+    End Function
+
+    <Extension>
+    Private Function readMeta(mol As SDF) As Func(Of String, String)
+        Dim meta As Dictionary(Of String, String()) = mol.MetaData _
+            !COMMENT _
+            .ToTable _
+            .ToDictionary(allStrings:=True)
+
+        For Each [property] In mol.MetaData
+            If meta.ContainsKey([property].Key) Then
+                meta([property].Key) = meta([property].Key).Join([property].Value).ToArray
+            Else
+                meta([property].Key) = [property].Value
+            End If
+        Next
+
+        Return Function(key As String)
+                   Return meta.TryGetValue(key, [default]:={}).FirstOrDefault
+               End Function
     End Function
 End Module

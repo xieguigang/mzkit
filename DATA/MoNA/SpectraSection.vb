@@ -1,14 +1,14 @@
 ﻿Imports System.Collections.Specialized
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data.csv.IO
 Imports SMRUCC.MassSpectrum.DATA.MetaLib
+Imports SMRUCC.MassSpectrum.Math.Spectra
 
 Public Class SpectraSection : Inherits MetaInfo
 
     Public Property xref As xref
     Public Property SpectraInfo As Dictionary(Of String, String)
     Public Property Comment As NameValueCollection
-    Public Property MassPeaks As DataSet()
+    Public Property MassPeaks As ms2()
 
     ''' <summary>
     ''' MoNA里面都主要是讲注释的信息放在<see cref="Comment"/>字段里面的。
