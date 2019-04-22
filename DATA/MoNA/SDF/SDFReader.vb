@@ -56,13 +56,13 @@ Public Module SDFReader
         For Each mol As SDF In SDF.IterateParser(path, parseStruct:=False)
             Dim M = mol.readMeta
             Dim commentMeta = mol.MetaData!COMMENT.ToTable
-            Dim ms2 As ms2() = commentMeta.GetValues("MASS SPECTRAL PEAKS") _
+            Dim ms2 As ms2() = mol.MetaData("MASS SPECTRAL PEAKS") _
                 .Select(Function(line) line.Split) _
                 .Select(Function(line)
                             Return New ms2 With {
                                 .mz = line(0),
                                 .intensity = line(1),
-                                .quantity = line(2)
+                                .quantity = line(1)
                             }
                         End Function) _
                 .ToArray

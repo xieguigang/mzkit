@@ -1,53 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::48e0686dddef7fa9114641e61cdceb94, ASCII\MSP\ReaderViews.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module ReaderViews
-    ' 
-    '         Function: Read_CAS, Read_collision_energy, Read_compound_source, Read_exact_mass, Read_instrument_type
-    '                   Read_precursor_type, Read_pubchemID, Read_retention_time, Read_source_file, ReadDoubleMultiple
-    '                   ReadDoublesMultiple, ReadMultiple, ReadStringMultiple, ReadStringsMultiple
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module ReaderViews
+' 
+'         Function: Read_CAS, Read_collision_energy, Read_compound_source, Read_exact_mass, Read_instrument_type
+'                   Read_precursor_type, Read_pubchemID, Read_retention_time, Read_source_file, ReadDoubleMultiple
+'                   ReadDoublesMultiple, ReadMultiple, ReadStringMultiple, ReadStringsMultiple
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Data.Linq.Mapping
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Module ReaderViews
 
@@ -143,9 +144,11 @@ Module ReaderViews
     End Function
 
     <Extension>
-    Public Function Read_CAS(meta As MetaData) As String
+    Public Function Read_CAS(meta As MetaData) As String()
         With meta
-            Return .ReadStringMultiple({NameOf(.cas), NameOf(.cas_number)})
+            Return .ReadMultiple({NameOf(.cas), NameOf(.cas_number)}) _
+                .As(Of String)() _
+                .ToArray
         End With
     End Function
 
@@ -153,8 +156,7 @@ Module ReaderViews
 
     <Extension>
     Private Function ReadStringMultiple(meta As MetaData, names$()) As String
-        Dim value As Object = meta.ReadMultiple(names)
-        Return Scripting.ToString(value)
+        Return meta.ReadMultiple(names).As(Of String).FirstOrDefault
     End Function
 
     <Extension>
@@ -164,7 +166,7 @@ Module ReaderViews
     End Function
 
     <Extension>
-    Private Function ReadMultiple(meta As MetaData, names$()) As Object
+    Private Iterator Function ReadMultiple(meta As MetaData, names$()) As IEnumerable(Of Object)
         Dim value As Object = Nothing
 
         For Each name$ In names
@@ -179,28 +181,25 @@ Module ReaderViews
             Select Case value.GetType
                 Case GetType(String)
                     If Not DirectCast(value, String).StringEmpty Then
-                        Return value
+                        Yield value
                     End If
                 Case GetType(Double), GetType(Integer), GetType(Long), GetType(Short), GetType(Byte)
                     If Not CDbl(value) = 0R Then
-                        Return value
+                        Yield value
                     End If
                 Case Else
-
                     ' object 肯定有值，则直接返回
-                    Return value
-
+                    Yield value
             End Select
         Next
-
-        Return Nothing
     End Function
 
     <Extension>
     Private Function ReadStringsMultiple(meta As MetaData, names$()) As String()
-        Dim value = meta.ReadMultiple(names)
+        Dim value = meta.ReadMultiple(names).As(Of String)
+
         If value Is Nothing Then
-            Return value
+            Return {}
         Else
             Return DirectCast(value, String())
         End If

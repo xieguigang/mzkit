@@ -81,7 +81,7 @@ Public Class UnionReader
         End Get
     End Property
 
-    Public ReadOnly Property CAS As String
+    Public ReadOnly Property CAS As String()
         Get
             Return meta.Read_CAS
         End Get
