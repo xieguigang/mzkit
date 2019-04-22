@@ -157,6 +157,7 @@ Namespace MetaLib
         Public Property CAS As String()
         Public Property InChIkey As String
         Public Property InChI As String
+        Public Property SMILES As String
 
         Public Shared Function IsChEBI(synonym As String) As Boolean
             Return synonym.IsPattern("CHEBI[:]\d+", RegexICSng)

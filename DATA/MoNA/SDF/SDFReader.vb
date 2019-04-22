@@ -42,9 +42,12 @@
 
 #End Region
 
+Imports System.Collections.Specialized
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
 Imports SMRUCC.MassSpectrum.Assembly.ASCII.MSP
 Imports SMRUCC.MassSpectrum.DATA.File
+Imports SMRUCC.MassSpectrum.DATA.MetaLib
 Imports SMRUCC.MassSpectrum.Math.Spectra
 
 ''' <summary>
@@ -54,7 +57,7 @@ Public Module SDFReader
 
     Public Iterator Function ParseFile(path As String) As IEnumerable(Of SpectraSection)
         For Each mol As SDF In SDF.IterateParser(path, parseStruct:=False)
-            Dim M = mol.readMeta
+            Dim M As Func(Of String, String) = mol.readMeta
             Dim commentMeta = mol.MetaData!COMMENT.ToTable
             Dim ms2 As ms2() = mol.MetaData("MASS SPECTRAL PEAKS") _
                 .Select(Function(line) line.Split) _
@@ -66,6 +69,7 @@ Public Module SDFReader
                             }
                         End Function) _
                 .ToArray
+            Dim info As Dictionary(Of String, String) = M.readSpectraInfo
 
             Yield New SpectraSection With {
                 .name = M("NAME"),
@@ -73,9 +77,41 @@ Public Module SDFReader
                 .Comment = commentMeta,
                 .formula = M("FORMULA"),
                 .mass = M("EXACT MASS"),
-                .MassPeaks = ms2
+                .MassPeaks = ms2,
+                .xref = commentMeta.readXref(M),
+                .SpectraInfo = info
             }
         Next
+    End Function
+
+    <Extension>
+    Private Function readSpectraInfo(M As Func(Of String, String)) As Dictionary(Of String, String)
+        Dim info As New Dictionary(Of String, String)
+
+        info!MsLevel = M("SPECTRUM TYPE")
+        info!mz = M("PRECURSOR M/Z")
+        info!instrument_type = M("INSTRUMENT TYPE")
+        info!instrument = M("INSTRUMENT")
+        info!collision_energy = M("COLLISION ENERGY")
+        info!ion_mode = M("ION MODE")
+
+        Return info
+    End Function
+
+    <Extension>
+    Private Function readXref(commentMeta As NameValueCollection, M As Func(Of String, String)) As xref
+        Dim xref As New xref
+
+        xref.CAS = commentMeta.GetValues("cas")
+        xref.chebi = commentMeta("chebi")
+        xref.HMDB = commentMeta("hmdb")
+        xref.InChI = commentMeta("InChI")
+        xref.InChIkey = commentMeta("InChIKey") Or M("INCHIKEY").AsDefault
+        xref.KEGG = commentMeta("KEGG")
+        xref.pubchem = commentMeta("pubchem cid")
+        xref.SMILES = commentMeta("SMILES")
+
+        Return xref
     End Function
 
     <Extension>
