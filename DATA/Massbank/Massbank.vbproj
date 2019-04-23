@@ -207,6 +207,7 @@
     <Compile Include="InChI\Extensions.vb" />
     <Compile Include="InChI\Components.vb" />
     <Compile Include="InChI\InChIKey.vb" />
+    <Compile Include="MetaLib\TreeSearch.vb" />
     <Compile Include="MetaLib\KEGGExtensions.vb" />
     <Compile Include="MetaLib\MetaEquals.vb" />
     <Compile Include="MetaLib\NaturalLanguageTerm.vb" />

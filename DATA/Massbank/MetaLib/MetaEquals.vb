@@ -51,6 +51,10 @@ Namespace MetaLib
     Module MetaEquals
 
         Public Function Equals(meta As MetaLib, other As MetaLib) As Boolean
+            Return Agreement(meta, other) >= 0.45
+        End Function
+
+        Public Function Agreement(meta As MetaLib, other As MetaLib) As Double
             Dim xref As xref = meta.xref
             Dim agree As Integer
             Dim total As Integer
@@ -90,7 +94,7 @@ Namespace MetaLib
                 yes()
             End If
 
-            Return (agree / total) >= 0.45
+            Return agree / total
         End Function
 
         Private Function comparesInteger(yes As Action, no As Action) As Action(Of String, String)
