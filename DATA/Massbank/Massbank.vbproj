@@ -207,12 +207,12 @@
     <Compile Include="InChI\Extensions.vb" />
     <Compile Include="InChI\Components.vb" />
     <Compile Include="InChI\InChIKey.vb" />
-    <Compile Include="MetaLib\TreeSearch.vb" />
+    <Compile Include="MetaLib\Match\TreeSearch.vb" />
     <Compile Include="MetaLib\KEGGExtensions.vb" />
-    <Compile Include="MetaLib\MetaEquals.vb" />
+    <Compile Include="MetaLib\Match\MetaEquals.vb" />
     <Compile Include="MetaLib\NaturalLanguageTerm.vb" />
-    <Compile Include="MetaLib\NameEquality.vb" />
-    <Compile Include="MetaLib\MetaLib.vb" />
+    <Compile Include="MetaLib\Match\NameEquality.vb" />
+    <Compile Include="MetaLib\Models\MetaLib.vb" />
     <Compile Include="Concentration.vb" />
     <Compile Include="Public\lipidMAPS\SDF.vb" />
     <Compile Include="Public\NCBI\SDFExtensions.vb" />
