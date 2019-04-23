@@ -7,7 +7,7 @@ Namespace MetaLib
     ''' </summary>
     Public Class TreeSearch
 
-        ReadOnly metaTree As AVLTree(Of MetaLib, MetaLib)
+        ReadOnly metaTree As AVLTree(Of MetaInfo, MetaInfo)
         ReadOnly cutoff#
 
         ''' <summary>
@@ -15,11 +15,11 @@ Namespace MetaLib
         ''' </summary>
         ''' <param name="score">认为两个物质注释指的是相同的物质的最低得分</param>
         Sub New(Optional score# = 0.4)
-            metaTree = New AVLTree(Of MetaLib, MetaLib)(AddressOf CompareAnnotation, Function(meta) meta.name)
+            metaTree = New AVLTree(Of MetaInfo, MetaInfo)(AddressOf CompareAnnotation, Function(meta) meta.name)
             cutoff = score
         End Sub
 
-        Public Function CompareAnnotation(a As MetaLib, b As MetaLib) As Integer
+        Public Function CompareAnnotation(a As MetaInfo, b As MetaInfo) As Integer
             Dim score = MetaEquals.Agreement(a, b)
 
             If score >= cutoff Then
@@ -31,12 +31,22 @@ Namespace MetaLib
             End If
         End Function
 
-        Public Function BuildTree(pubchem As IEnumerable(Of MetaLib)) As TreeSearch
-            For Each meta As MetaLib In pubchem
+        Public Function BuildTree(pubchem As IEnumerable(Of MetaInfo)) As TreeSearch
+            For Each meta As MetaInfo In pubchem
                 Call metaTree.Add(meta, meta, False)
             Next
 
             Return Me
+        End Function
+
+        Public Function Search(term As MetaInfo) As MetaInfo()
+            Dim result = metaTree.Find(term)
+
+            If result Is Nothing Then
+                Return {}
+            Else
+                Return result.Members
+            End If
         End Function
 
     End Class
