@@ -9,9 +9,9 @@ Public Class CIDSynonymIndex
     ''' </summary>
     ''' <param name="mapFile">CID-Synonym-filtered.txt</param>
     Public Shared Sub BuildIndex(mapFile As String, indexFile As String)
-        Using index As New TrieIndexWriter(New BinaryDataWriter(indexFile.Open(doClear:=False)))
+        Using index As New TrieIndexWriter(indexFile.Open(doClear:=False))
             For Each name As CIDSynonym In CIDSynonym.LoadNames(mapFile, filter:=False)
-                Call index.AddTerm(name.Synonym)
+                Call index.AddTerm(name.Synonym, name.CID)
             Next
 
             Stop
