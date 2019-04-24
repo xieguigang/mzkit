@@ -21,9 +21,9 @@ Public Class CIDSynonymIndex : Implements IDisposable
     ''' 
     ''' </summary>
     ''' <param name="mapFile">CID-Synonym-filtered.txt</param>
-    Public Shared Sub BuildIndex(mapFile As String, indexFile$, Optional doClear As Boolean = True)
+    Public Shared Sub BuildIndex(mapFile As String, indexFile$, Optional doFilter As Boolean = True, Optional doClear As Boolean = True)
         Using index As New TrieIndexWriter(indexFile.Open(doClear:=doClear))
-            For Each name As CIDSynonym In CIDSynonym.LoadNames(mapFile, filter:=False)
+            For Each name As CIDSynonym In CIDSynonym.LoadNames(mapFile, filter:=doFilter)
                 Call index.AddTerm(name.Synonym, name.CID)
             Next
         End Using
