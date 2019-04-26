@@ -1,55 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::3bda106bd44f7f837adb0c1c2f8283fc, ASCII\MSP\MspParser.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module MspParser
-    ' 
-    '         Function: createObject, incorrects, Load
-    ' 
-    '         Sub: TestMissingFields
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module MspParser
+' 
+'         Function: createObject, incorrects, Load
+' 
+'         Sub: TestMissingFields
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Collections.Specialized
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports SMRUCC.MassSpectrum.Math.Spectra
 
 Namespace ASCII.MSP
 
@@ -87,8 +87,7 @@ Namespace ASCII.MSP
                                Return s.MatchPattern("Num Peaks[:]\s*\d+", RegexICSng)
                            End Function) _
                     .ToArray
-                Dim metadata As NameValueCollection =
-                    parts _
+                Dim metadata As NameValueCollection = parts _
                     .First _
                     .Select(Function(s) s.GetTagValue(":", trim:=True)) _
                     .NameValueCollection
@@ -100,27 +99,34 @@ Namespace ASCII.MSP
                     End If
                 End If
 
-                Dim peaksdata As MSMSPeak() =
-                    parts _
-                    .Last _
-                    .Skip(1) _
-                    .Select(Function(s)
-                                With Tokenizer.CharsParser(s:=s, delimiter:=" "c)
-                                    Dim mz$ = .First
-                                    Dim into$ = .Second
-                                    Dim comment$ = .ElementAtOrDefault(2)
-
-                                    Return New MSMSPeak(mz:=mz, intensity:=into, comment:=comment)
-                                End With
-                            End Function) _
-                    .ToArray
+                Dim peaksdata As ms2() = parts.Last.parseMspPeaks
 
                 Yield metadata.createObject(peaksdata)
             Next
         End Function
 
         <Extension>
-        Private Function createObject(metadata As NameValueCollection, peaksdata As MSMSPeak()) As MspData
+        Private Function parseMspPeaks(str As String()) As ms2()
+            Return str _
+                .Skip(1) _
+                .Select(Function(s)
+                            With s.Split(" "c)
+                                Dim mz$ = .First
+                                Dim into$ = .Second
+                                Dim comment$ = .Skip(2).JoinBy(" ")
+
+                                Return New ms2 With {
+                                    .mz = mz,
+                                    .intensity = into,
+                                    .Annotation = comment
+                                }
+                            End With
+                        End Function) _
+                .ToArray
+        End Function
+
+        <Extension>
+        Private Function createObject(metadata As NameValueCollection, peaksdata As ms2()) As MspData
             Dim getValue = Function(key$)
                                If metadata.ContainsKey(key) Then
                                    Dim value = metadata(key)
@@ -131,9 +137,10 @@ Namespace ASCII.MSP
                                End If
                            End Function
 
+            Dim metaComment$ = getValue(NameOf(MspData.Comments)) Or getValue("Comment").AsDefault
             Dim msp As New MspData With {
                 .Peaks = peaksdata,
-                .Comments = getValue(NameOf(MspData.Comments)) Or getValue("Comment").AsDefault,
+                .Comments = metaComment.ToTable,
                 .DB_id = getValue("DB#"),
                 .Formula = getValue(NameOf(MspData.Formula)),
                 .InChIKey = getValue(NameOf(MspData.InChIKey)),

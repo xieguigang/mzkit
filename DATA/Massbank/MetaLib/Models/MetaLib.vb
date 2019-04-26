@@ -1,60 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::8744caf92b6d90d05a3b7838a690d521, Massbank\MetaLib\MetaLib.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class MetaInfo
-    ' 
-    '         Properties: formula, ID, mass, name
-    ' 
-    '         Function: ToString
-    ' 
-    '     Class MetaLib
-    ' 
-    '         Properties: biofluid_locations, compound_class, pathways, tissue_locations, xref
-    ' 
-    '         Function: Equals, ToString
-    ' 
-    '     Class xref
-    ' 
-    '         Properties: CAS, chebi, HMDB, InChI, InChIkey
-    '                     KEGG, metlin, pubchem
-    ' 
-    '         Function: IsCAS, IsChEBI, IsHMDB, IsKEGG, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class MetaInfo
+' 
+'         Properties: formula, ID, mass, name
+' 
+'         Function: ToString
+' 
+'     Class MetaLib
+' 
+'         Properties: biofluid_locations, compound_class, pathways, tissue_locations, xref
+' 
+'         Function: Equals, ToString
+' 
+'     Class xref
+' 
+'         Properties: CAS, chebi, HMDB, InChI, InChIkey
+'                     KEGG, metlin, pubchem
+' 
+'         Function: IsCAS, IsChEBI, IsHMDB, IsKEGG, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -66,6 +66,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Namespace MetaLib
 
     Public Class MetaInfo : Implements INamedValue
+        Implements IEquatable(Of MetaInfo)
 
         ''' <summary>
         ''' 该物质在整合库之中的唯一标识符
@@ -76,9 +77,18 @@ Namespace MetaLib
         <XmlAttribute> Public Property mass As Double
 
         Public Property name As String
+        Public Property xref As xref
 
         Public Overrides Function ToString() As String
             Return name
+        End Function
+
+        Public Overloads Function Equals(other As MetaInfo) As Boolean Implements IEquatable(Of MetaInfo).Equals
+            If other Is Nothing Then
+                Return False
+            Else
+                Return MetaEquals.Equals(Me, other)
+            End If
         End Function
     End Class
 
@@ -87,8 +97,6 @@ Namespace MetaLib
     ''' </summary>
     Public Class MetaLib : Inherits MetaInfo
         Implements IEquatable(Of MetaLib)
-
-        Public Property xref As xref
 
         ''' <summary>
         ''' 化合物分类
@@ -157,6 +165,7 @@ Namespace MetaLib
         Public Property CAS As String()
         Public Property InChIkey As String
         Public Property InChI As String
+        Public Property SMILES As String
 
         Public Shared Function IsChEBI(synonym As String) As Boolean
             Return synonym.IsPattern("CHEBI[:]\d+", RegexICSng)

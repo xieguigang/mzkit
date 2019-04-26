@@ -207,14 +207,15 @@
     <Compile Include="InChI\Extensions.vb" />
     <Compile Include="InChI\Components.vb" />
     <Compile Include="InChI\InChIKey.vb" />
+    <Compile Include="MetaLib\Match\TreeSearch.vb" />
     <Compile Include="MetaLib\KEGGExtensions.vb" />
-    <Compile Include="MetaLib\MetaEquals.vb" />
+    <Compile Include="MetaLib\Match\MetaEquals.vb" />
     <Compile Include="MetaLib\NaturalLanguageTerm.vb" />
-    <Compile Include="MetaLib\NameEquality.vb" />
-    <Compile Include="MetaLib\MetaLib.vb" />
+    <Compile Include="MetaLib\Match\NameEquality.vb" />
+    <Compile Include="MetaLib\Models\MetaLib.vb" />
     <Compile Include="Concentration.vb" />
     <Compile Include="Public\lipidMAPS\SDF.vb" />
-    <Compile Include="Public\MoNA\MoNAJson.vb" />
+    <Compile Include="Public\NCBI\SDFExtensions.vb" />
     <Compile Include="Public\NCBI\PubChem\CIDSynonym.vb" />
     <Compile Include="Public\NCBI\PubChem\MetaData.vb" />
     <Compile Include="Public\NCBI\PubChem\ImageFly.vb" />
@@ -245,7 +246,6 @@
     <Compile Include="SDF\Struct\Mol.vb" />
     <Compile Include="SDF\SDF.vb" />
     <Compile Include="Public\TMIC\HMDB\NameValue.vb" />
-    <Compile Include="MetaLib\XrefEngine.vb" />
     <Compile Include="Public\TMIC\HMDB\Extensions.vb" />
     <Compile Include="Public\TMIC\HMDB\Assembly\taxonomy.vb" />
     <Compile Include="Public\TMIC\HMDB\Assembly\metabolite.vb" />

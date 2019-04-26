@@ -103,6 +103,11 @@ Namespace File
                 .SolveStream _
                 .Trim(ASCII.CR, ASCII.LF) _
                 .LineTokens
+
+            Return ParseStream(lines)
+        End Function
+
+        Friend Shared Function ParseStream(lines As String()) As [Structure]
             Dim countLine = parseCounter(lines(Scan0))
             Dim [dim] = (
                 atoms:=CInt(countLine.counts(0)),
