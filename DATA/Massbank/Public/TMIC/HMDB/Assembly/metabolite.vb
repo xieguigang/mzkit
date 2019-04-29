@@ -129,6 +129,7 @@ Namespace TMIC.HMDB
 
         Public Property iupac_name As String
         Public Property traditional_iupac As String
+        <XmlElement>
         Public Property cas_registry_number As String()
         Public Property smiles As String
         Public Property inchi As String
