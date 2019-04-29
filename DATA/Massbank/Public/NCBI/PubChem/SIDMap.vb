@@ -64,6 +64,14 @@ Namespace NCBI.PubChem
         Public Property registryIdentifier As String
         Public Property CID As Integer
 
+        Public Const KEGG As String = "KEGG"
+        Public Const ChEBI As String = "ChEBI"
+        Public Const HMDB As String = "Human Metabolome Database (HMDB)"
+
+        Public Overrides Function ToString() As String
+            Return $"[{SID}] {registryIdentifier}"
+        End Function
+
         ''' <summary>
         ''' 
         ''' </summary>
