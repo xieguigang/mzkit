@@ -61,7 +61,7 @@ Namespace TMIC.HMDB
         Public Property HMDB As String
         Public Property KEGG As String
         Public Property chebi As String
-        Public Property CAS As String()
+        Public Property CAS As String
 
     End Class
 
@@ -99,7 +99,7 @@ Namespace TMIC.HMDB
         Public Property exact_mass As Double
         Public Property iupac_name As String
         Public Property traditional_iupac As String
-        Public Property CAS As String()
+        Public Property CAS As String
         Public Property smiles As String
         Public Property inchi As String
         Public Property inchikey As String
