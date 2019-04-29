@@ -59,7 +59,7 @@ Namespace TMIC.HMDB
         Public Property HMDB As String
         Public Property KEGG As String
         Public Property chebi As String
-        Public Property CAS As String
+        Public Property CAS As String()
 
     End Class
 
@@ -86,5 +86,68 @@ Namespace TMIC.HMDB
         Public Function Clone() As Object Implements ICloneable.Clone
             Return MemberwiseClone()
         End Function
+    End Class
+
+    Public Class MetaDb
+
+        Public Property accession As String
+        Public Property secondary_accessions As String()
+        Public Property name As String
+        Public Property chemical_formula As String
+        Public Property exact_mass As Double
+        Public Property iupac_name As String
+        Public Property traditional_iupac As String
+        Public Property CAS As String()
+        Public Property smiles As String
+        Public Property inchi As String
+        Public Property inchikey As String
+        Public Property kingdom As String
+        Public Property super_class As String
+        Public Property [class] As String
+        Public Property sub_class As String
+        Public Property molecular_framework As String
+        Public Property direct_parent As String
+        Public Property state As String
+        Public Property cellular_locations As String()
+        Public Property biospecimen As String()
+        Public Property tissue As String()
+        Public Property chebi_id As String
+        Public Property pubchem_cid As String
+        Public Property kegg_id As String
+        Public Property wikipedia_id As String
+
+        Public Shared Function FromMetabolite(metabolite As metabolite) As MetaDb
+            Dim metabolite_taxonomy = metabolite.taxonomy
+            Dim biosample = metabolite.biological_properties
+
+            Return New MetaDb With {
+                .accession = metabolite.accession,
+                .secondary_accessions = metabolite.secondary_accessions.accession,
+                .chebi_id = metabolite.chebi_id,
+                .pubchem_cid = metabolite.pubchem_compound_id,
+                .chemical_formula = metabolite.chemical_formula,
+                .kegg_id = metabolite.kegg_id,
+                .wikipedia_id = metabolite.wikipedia_id,
+                .inchi = metabolite.inchi,
+                .inchikey = metabolite.inchikey,
+                .name = metabolite.name,
+                .state = metabolite.state,
+                .traditional_iupac = metabolite.traditional_iupac,
+                .smiles = metabolite.smiles,
+                .iupac_name = metabolite.iupac_name,
+                .CAS = metabolite.cas_registry_number,
+                .exact_mass = Val(metabolite.monisotopic_molecular_weight),
+                .direct_parent = metabolite_taxonomy?.direct_parent,
+                .kingdom = metabolite_taxonomy?.kingdom,
+                .super_class = metabolite_taxonomy?.super_class,
+                .sub_class = metabolite_taxonomy?.sub_class,
+                .molecular_framework = metabolite_taxonomy?.molecular_framework,
+                .[class] = metabolite_taxonomy?.class,
+                .biospecimen = biosample?.biospecimen_locations.biospecimen,
+                .cellular_locations = biosample?.cellular_locations.cellular,
+                .tissue = biosample?.tissue_locations.tissue
+            }
+        End Function
+
     End Class
 End Namespace

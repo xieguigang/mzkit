@@ -1,82 +1,82 @@
 ﻿#Region "Microsoft.VisualBasic::1fa4e61547f5641ea3ebb2727e6d59c6, Massbank\Public\TMIC\HMDB\Assembly\metabolite.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class MetaReference
-    ' 
-    '         Properties: accession, average_molecular_weight, bigg_id, biocyc_id, biospecimen_locations
-    '                     cas_registry_number, chebi_id, chemical_formula, chemspider_id, description
-    '                     drugbank_id, drugbank_metabolite_id, foodb_id, het_id, inchi
-    '                     inchikey, iupac_name, kegg_id, knapsack_id, Mass
-    '                     metagene, metlin_id, monisotopic_molecular_weight, name, nugowiki
-    '                     phenol_explorer_compound_id, phenol_explorer_metabolite_id, pubchem_compound_id, secondary_accessions, smiles
-    '                     synonyms, taxonomy, tissue_locations, traditional_iupac, wikipidia
-    ' 
-    '     Class metabolite
-    ' 
-    '         Properties: abnormal_concentrations, creation_date, diseases, experimental_properties, normal_concentrations
-    '                     ontology, predicted_properties, state, update_date, version
-    ' 
-    '         Function: Load, ToString
-    ' 
-    '     Structure biospecimen_locations
-    ' 
-    '         Properties: biospecimen
-    ' 
-    '         Function: ToString
-    ' 
-    '     Structure tissue_locations
-    ' 
-    '         Properties: tissue
-    ' 
-    '         Function: ToString
-    ' 
-    '     Structure secondary_accessions
-    ' 
-    '         Properties: accession
-    ' 
-    '         Function: ToString
-    ' 
-    '     Structure synonyms
-    ' 
-    '         Properties: synonym
-    ' 
-    '         Function: ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class MetaReference
+' 
+'         Properties: accession, average_molecular_weight, bigg_id, biocyc_id, biospecimen_locations
+'                     cas_registry_number, chebi_id, chemical_formula, chemspider_id, description
+'                     drugbank_id, drugbank_metabolite_id, foodb_id, het_id, inchi
+'                     inchikey, iupac_name, kegg_id, knapsack_id, Mass
+'                     metagene, metlin_id, monisotopic_molecular_weight, name, nugowiki
+'                     phenol_explorer_compound_id, phenol_explorer_metabolite_id, pubchem_compound_id, secondary_accessions, smiles
+'                     synonyms, taxonomy, tissue_locations, traditional_iupac, wikipidia
+' 
+'     Class metabolite
+' 
+'         Properties: abnormal_concentrations, creation_date, diseases, experimental_properties, normal_concentrations
+'                     ontology, predicted_properties, state, update_date, version
+' 
+'         Function: Load, ToString
+' 
+'     Structure biospecimen_locations
+' 
+'         Properties: biospecimen
+' 
+'         Function: ToString
+' 
+'     Structure tissue_locations
+' 
+'         Properties: tissue
+' 
+'         Function: ToString
+' 
+'     Structure secondary_accessions
+' 
+'         Properties: accession
+' 
+'         Function: ToString
+' 
+'     Structure synonyms
+' 
+'         Properties: synonym
+' 
+'         Function: ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -129,7 +129,7 @@ Namespace TMIC.HMDB
 
         Public Property iupac_name As String
         Public Property traditional_iupac As String
-        Public Property cas_registry_number As String
+        Public Property cas_registry_number As String()
         Public Property smiles As String
         Public Property inchi As String
         Public Property inchikey As String
@@ -153,10 +153,27 @@ Namespace TMIC.HMDB
         <Xref> Public Property pubchem_compound_id As String
         <Xref> Public Property het_id As String
         <Xref> Public Property chebi_id As String
+        <Xref> Public Property wikipedia_id As String
+        <Xref> Public Property meta_cyc_id As String
+        <Xref> Public Property pdb_id As String
 #End Region
 
+        Public Property synthesis_reference As String
+        Public Property biological_properties As biological_properties
+
+    End Class
+
+    Public Class biological_properties
         Public Property biospecimen_locations As biospecimen_locations
         Public Property tissue_locations As tissue_locations
+        Public Property cellular_locations As cellular_locations
+        Public Property pathways As pathway()
+    End Class
+
+    Public Class pathway
+        Public Property name As String
+        Public Property smpdb_id As String
+        Public Property kegg_map_id As String
     End Class
 
     ''' <summary>
@@ -230,6 +247,10 @@ Namespace TMIC.HMDB
         Public Overrides Function ToString() As String
             Return Me.accession.GetJson
         End Function
+
+        Public Shared Narrowing Operator CType(acc As secondary_accessions) As String()
+            Return acc.accession
+        End Operator
     End Structure
 
     Public Structure synonyms
