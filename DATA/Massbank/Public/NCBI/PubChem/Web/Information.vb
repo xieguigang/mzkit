@@ -96,9 +96,15 @@ Namespace NCBI.PubChem
     End Class
 
     Public Class StringWithMarkup
+
         Public Property [String] As String
         <XmlElement("Markup")>
         Public Property Markups As Markup()
+
+        Public Overrides Function ToString() As String
+            Return Me.String
+        End Function
+
     End Class
 
     Public Class Markup
@@ -227,6 +233,8 @@ Namespace NCBI.PubChem
         Public Property Name As String
         Public Property URL As String
         Public Property Description As String
+        Public Property IsToxnet As String
+        Public Property ANID As String
 
         Public Overrides Function ToString() As String
             Return $"{Name} ({URL})"
