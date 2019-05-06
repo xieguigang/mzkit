@@ -62,33 +62,12 @@
 Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports Microsoft.VisualBasic.Language.C
-Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.genomics.ComponentModel
 
 Namespace NCBI.PubChem
 
     Public Module Query
-
-        ''' <summary>
-        ''' Search pubchem by CAS
-        ''' </summary>
-        Const queryCAS_URL As String = "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/%s/cids/JSON"
-
-        Public Function QueryCAS(CAS As String) As IdentifierList
-            Dim url As String = sprintf(queryCAS_URL, CAS)
-            Dim jsonText = url.GET
-
-            If jsonText.StringEmpty Then
-                ' 404 代码之下得到的content text是空字符串
-                Return Nothing
-            Else
-                Dim list As IdentifierList = jsonText _
-                    .LoadJSON(Of QueryResponse) _
-                   ?.IdentifierList
-                Return list
-            End If
-        End Function
 
         Public Function QueryPugViews(CAS As String, Optional cacheFolder$ = "./pubchem_cache", Optional ByRef hitCache As Boolean = False) As Dictionary(Of String, PugViewRecord)
             Dim cache = $"{cacheFolder}/{CAS.NormalizePathString(False)}.Xml"
@@ -102,7 +81,8 @@ Namespace NCBI.PubChem
                 Call Thread.Sleep(1000)
             End If
 
-            Dim list As IdentifierList = QueryCAS(CAS)
+            Dim cidQuery As New CIDQuery($"{cacheFolder}/cid/")
+            Dim list As IdentifierList = cidQuery.Query(Of IdentifierList)(CAS, ".json")
             Dim table As New Dictionary(Of String, PugViewRecord)
             Dim api As New WebQuery($"{cacheFolder}/pugViews/")
 
@@ -124,6 +104,39 @@ Namespace NCBI.PubChem
             Return table
         End Function
     End Module
+
+    Public Class CIDQuery : Inherits WebQuery(Of String)
+
+        ''' <summary>
+        ''' Search pubchem by CAS
+        ''' </summary>
+        Const queryCAS_URL As String = "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/%s/cids/JSON"
+
+        Public Sub New(<CallerMemberName> Optional cache As String = Nothing, Optional interval As Integer = -1)
+            MyBase.New(AddressOf queryApi, AddressOf normalizeFileName, AddressOf loadQueryJson, , cache, interval)
+        End Sub
+
+        Private Shared Function loadQueryJson(jsonText As String, type As Type) As IdentifierList
+            If jsonText.StringEmpty Then
+                ' 404 代码之下得到的content text是空字符串
+                Return Nothing
+            Else
+                Dim list As IdentifierList = jsonText _
+                    .LoadJSON(Of QueryResponse) _
+                   ?.IdentifierList
+                Return list
+            End If
+        End Function
+
+        Private Shared Function normalizeFileName(text As String) As String
+            Return text.NormalizePathString(False)
+        End Function
+
+        Private Shared Function queryApi(CAS As String) As String
+            Return sprintf(queryCAS_URL, CAS)
+        End Function
+
+    End Class
 
     Public Class WebQuery : Inherits WebQuery(Of String)
 
