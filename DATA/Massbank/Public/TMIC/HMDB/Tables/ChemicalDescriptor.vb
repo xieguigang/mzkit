@@ -1,4 +1,7 @@
-﻿Namespace TMIC.HMDB
+﻿Imports System.IO
+Imports Microsoft.VisualBasic.Data.csv.IO.Linq
+
+Namespace TMIC.HMDB
 
     Public Class ChemicalDescriptor
 
@@ -74,5 +77,12 @@
             }
         End Function
 
+        Public Shared Sub WriteTable(metabolites As IEnumerable(Of metabolite), out As Stream)
+            Using table As New WriteStream(Of ChemicalDescriptor)(New StreamWriter(out))
+                For Each metabolite As metabolite In metabolites
+                    Call table.Flush(FromMetabolite(metabolite))
+                Next
+            End Using
+        End Sub
     End Class
 End Namespace
