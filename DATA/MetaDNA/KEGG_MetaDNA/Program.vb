@@ -88,11 +88,10 @@ Module Program
                              Call compound.CommonNames?.FirstOrDefault().__DEBUG_ECHO
 
                              Return Rbase.list(
-                                !ID = compound.Entry,
-                                !exact_mass = compound.ExactMass,
-                                !name = compound.CommonNames,
-                                !formula = compound.Formula,
-                                !chebi = (compound.CHEBI?.FirstOrDefault Or NA)
+                                !ID = compound.entry,
+                                !exact_mass = compound.exactMass,
+                                !name = compound.commonNames,
+                                !formula = compound.formula
                              )
                          End Function)
 
