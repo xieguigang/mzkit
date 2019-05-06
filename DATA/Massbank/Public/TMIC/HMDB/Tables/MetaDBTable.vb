@@ -113,8 +113,8 @@ Namespace TMIC.HMDB
         Public Property cellular_locations As String()
         Public Property biospecimen As String()
         Public Property tissue As String()
-        Public Property chebi_id As String
-        Public Property pubchem_cid As String
+        Public Property chebi_id As Long
+        Public Property pubchem_cid As Long
         Public Property kegg_id As String
         Public Property wikipedia_id As String
 
