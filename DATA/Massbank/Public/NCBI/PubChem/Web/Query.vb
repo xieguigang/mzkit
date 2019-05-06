@@ -1,67 +1,70 @@
 ﻿#Region "Microsoft.VisualBasic::7a802f3c9bc95df5022f2a290b6fb85a, Massbank\Public\NCBI\PubChem\Web\Query.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Query
-    ' 
-    '         Function: PugView, QueryCAS, QueryPugViews
-    ' 
-    '     Class QueryResponse
-    ' 
-    '         Properties: Fault, IdentifierList
-    ' 
-    '         Function: ToString
-    ' 
-    '     Class Fault
-    ' 
-    '         Properties: Code, Details, Message
-    ' 
-    '     Class IdentifierList
-    ' 
-    '         Properties: CID
-    ' 
-    '         Function: ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Query
+' 
+'         Function: PugView, QueryCAS, QueryPugViews
+' 
+'     Class QueryResponse
+' 
+'         Properties: Fault, IdentifierList
+' 
+'         Function: ToString
+' 
+'     Class Fault
+' 
+'         Properties: Code, Details, Message
+' 
+'     Class IdentifierList
+' 
+'         Properties: CID
+' 
+'         Function: ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports Microsoft.VisualBasic.Language.C
+Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports SMRUCC.genomics.ComponentModel
 
 Namespace NCBI.PubChem
 
@@ -71,7 +74,6 @@ Namespace NCBI.PubChem
         ''' Search pubchem by CAS
         ''' </summary>
         Const queryCAS_URL As String = "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/%s/cids/JSON"
-        Const fetchPugView As String = "https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/data/compound/%s/XML/"
 
         Public Function QueryCAS(CAS As String) As IdentifierList
             Dim url As String = sprintf(queryCAS_URL, CAS)
@@ -102,13 +104,13 @@ Namespace NCBI.PubChem
 
             Dim list As IdentifierList = QueryCAS(CAS)
             Dim table As New Dictionary(Of String, PugViewRecord)
+            Dim api As New WebQuery($"{cacheFolder}/pugViews/")
 
             If list Is Nothing OrElse list.CID.IsNullOrEmpty Then
                 Return New Dictionary(Of String, PugViewRecord)
             Else
                 For Each cid As String In list.CID
-                    table(cid) = PugView(cid)
-                    Call Thread.Sleep(1000)
+                    table(cid) = api.Query(Of PugViewRecord)(cid)
                 Next
 
                 Call Thread.Sleep(1000)
@@ -121,14 +123,28 @@ Namespace NCBI.PubChem
 
             Return table
         End Function
-
-        Public Function PugView(cid As String) As PugViewRecord
-            Dim url As String = sprintf(fetchPugView, cid)
-            Dim view As PugViewRecord = url.GET.LoadFromXml(Of PugViewRecord)
-
-            Return view
-        End Function
     End Module
+
+    Public Class WebQuery : Inherits WebQuery(Of String)
+
+        Const fetchPugView As String = "https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/data/compound/%s/XML/"
+
+        Public Sub New(<CallerMemberName> Optional cache As String = Nothing, Optional interval As Integer = -1)
+            MyBase.New(AddressOf pugViewApi, Function(cid) cid, AddressOf loadPugView, , cache, interval)
+        End Sub
+
+        Private Shared Function loadPugView(xml As String, type As Type) As PugViewRecord
+            If type Is GetType(PugViewRecord) Then
+                Return xml.LoadFromXml(Of PugViewRecord)
+            Else
+                Throw New NotImplementedException
+            End If
+        End Function
+
+        Private Shared Function pugViewApi(cid As String) As String
+            Return sprintf(fetchPugView, cid)
+        End Function
+    End Class
 
     Public Class QueryResponse
 
