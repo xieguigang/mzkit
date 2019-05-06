@@ -8,6 +8,7 @@
         ''' <returns></returns>
         Public Property accession As String
         Public Property name As String
+        Public Property kegg_id As String
         Public Property state As String
         Public Property melting_point As Double
         Public Property logp As Double
@@ -50,14 +51,15 @@
             Return New ChemicalDescriptor With {
                 .accession = metabolite.accession,
                 .name = metabolite.name,
+                .kegg_id = metabolite.kegg_id,
                 .state = metabolite.state,
                 .acceptor_count = read(NameOf(.acceptor_count), 0),
                 .bioavailability = read(NameOf(.bioavailability), 0),
                 .donor_count = read(NameOf(.donor_count), 0),
                 .formal_charge = read(NameOf(.formal_charge), 0),
-                .ghose_filter = read(NameOf(.ghose_filter), 0),
+                .ghose_filter = read(NameOf(.ghose_filter), "no"),
                 .logp = read(NameOf(.logp), 0),
-                .mddr_like_rule = read(NameOf(.mddr_like_rule), 0),
+                .mddr_like_rule = read(NameOf(.mddr_like_rule), "no"),
                 .melting_point = read(NameOf(melting_point), 0),
                 .number_of_rings = read(NameOf(.number_of_rings), 0),
                 .physiological_charge = read(NameOf(.physiological_charge), 0),
@@ -67,8 +69,8 @@
                 .polar_surface_area = read(NameOf(.polar_surface_area), 0),
                 .refractivity = read(NameOf(.refractivity), 0),
                 .rotatable_bond_count = read(NameOf(.rotatable_bond_count), 0),
-                .rule_of_five = read(NameOf(.rule_of_five), 0),
-                .veber_rule = read(NameOf(.veber_rule), 0)
+                .rule_of_five = read(NameOf(.rule_of_five), "no"),
+                .veber_rule = read(NameOf(.veber_rule), "no")
             }
         End Function
 
