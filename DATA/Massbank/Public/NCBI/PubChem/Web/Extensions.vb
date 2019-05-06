@@ -67,7 +67,7 @@ Namespace NCBI.PubChem
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function GetInformationString(section As Section, key$) As String
-            Dim info = section?.GetInformation(key)
+            Dim info = section.GetInformation(key).TryCast(Of Information)
 
             If info Is Nothing OrElse info.Value.StringWithMarkup Is Nothing Then
                 Return ""
@@ -138,7 +138,7 @@ Namespace NCBI.PubChem
         <Extension>
         Public Function GetInformation(section As Section, key$, Optional multipleInfo As Boolean = False) As [Variant](Of Information, Information())
             If section Is Nothing Then
-                Return Nothing
+                Return New Information
             Else
                 If multipleInfo Then
                     Return section _
