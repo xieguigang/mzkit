@@ -1,4 +1,7 @@
 ﻿Imports System.IO
+Imports System.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO.Linq
 
 Namespace TMIC.HMDB
@@ -31,6 +34,66 @@ Namespace TMIC.HMDB
         Public Property ghose_filter As String
         Public Property veber_rule As String
         Public Property mddr_like_rule As String
+
+        ''' <summary>
+        ''' The chemical descriptor names
+        ''' </summary>
+        ''' <returns></returns>
+        Public Shared ReadOnly Property descriptors As Index(Of String)
+
+        Shared ReadOnly readers As PropertyInfo()
+
+        Shared Sub New()
+            readers = DataFramework _
+                .Schema(GetType(ChemicalDescriptor), PropertyAccess.Readable, nonIndex:=True) _
+                .Values _
+                .ToArray
+
+            descriptors = readers _
+                .Where(Function(p)
+                           Return p.PropertyType Is GetType(Double)
+                       End Function) _
+                .Select(Function(p) p.Name) _
+                .AsList + {
+                    NameOf(state),
+                    NameOf(rule_of_five),
+                    NameOf(ghose_filter),
+                    NameOf(veber_rule),
+                    NameOf(mddr_like_rule)
+                }
+
+            readers = readers _
+                .Where(Function(p) p.Name Like descriptors) _
+                .ToArray
+        End Sub
+
+        ''' <summary>
+        ''' Create descriptor data set for machine learning 
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function ToDescriptor() As Dictionary(Of String, Double)
+            Return readers _
+                .ToDictionary(Function(p) p.Name,
+                              Function(p)
+                                  Dim value As Object = p.GetValue(Me)
+
+                                  If p.PropertyType Is GetType(Double) Then
+                                      Return CDbl(value)
+                                  ElseIf p.Name = NameOf(state) Then
+                                      If CStr(value).TextEquals("Solid") Then
+                                          Return 1
+                                      Else
+                                          Return 0
+                                      End If
+                                  Else
+                                      If CStr(value).ParseBoolean = False Then
+                                          Return 0
+                                      Else
+                                          Return 1
+                                      End If
+                                  End If
+                              End Function)
+        End Function
 
         Public Shared Function FromMetabolite(metabolite As metabolite) As ChemicalDescriptor
             Dim properties = metabolite.experimental_properties.PropertyList.AsList +
