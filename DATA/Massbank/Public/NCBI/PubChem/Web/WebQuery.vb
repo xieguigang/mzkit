@@ -1,12 +1,15 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text.Xml
 Imports SMRUCC.genomics.ComponentModel
 
 Namespace NCBI.PubChem
 
     ' {"download":"*","collection":"compound","where":{"ands":[{"*":"66-84-2"}]},"order":["relevancescore,desc"],"start":1,"limit":1000000}
+    ' {"collection":"compound","download":"*","limit":10,"order":["relevancescore,desc"],"start":1,"where":{"ands":{"*":"650818-62-1"}}}
     Public Class JsonQuery
 
         Public Property download As String = "*"
@@ -19,7 +22,7 @@ Namespace NCBI.PubChem
     End Class
 
     Public Class [QueryWhere]
-        Public Property ands As Dictionary(Of String, String)
+        Public Property ands As Dictionary(Of String, String)()
     End Class
 
     ''' <summary>
@@ -51,13 +54,46 @@ Namespace NCBI.PubChem
         Public Property dois As String()
     End Class
 
+    Public Class CIDExport : Inherits WebQuery(Of String)
+
+        Const queryCAS_Api As String = "https://pubchem.ncbi.nlm.nih.gov/sdq/sdqagent.cgi?infmt=json&outfmt=jsonp"
+
+        Public Sub New(<CallerMemberName> Optional cache As String = Nothing, Optional interval As Integer = -1)
+            MyBase.New(AddressOf queryApi, AddressOf normalizeFileName, AddressOf parseExportTable, , cache, interval)
+        End Sub
+
+        Private Shared Function parseExportTable(text As String, schema As Type) As Object
+            Return text _
+                .LineTokens _
+                .AsDataSource(Of QueryTableExport) _
+                .ToArray
+        End Function
+
+        Private Shared Function queryApi(CAS As String) As String
+            Dim query As New JsonQuery With {
+                .where = New QueryWhere With {
+                    .ands = {New Dictionary(Of String, String) From {
+                        {"*", CAS}
+                    }}
+                }
+            }
+            Dim json$ = query.GetJson.UrlEncode
+            Dim url$ = $"{queryCAS_Api}&query={json}"
+
+            Return url
+        End Function
+
+        Private Shared Function normalizeFileName(text As String) As String
+            Return text.NormalizePathString(False)
+        End Function
+    End Class
+
     Public Class CIDQuery : Inherits WebQuery(Of String)
 
         ''' <summary>
         ''' Search pubchem by CAS
         ''' </summary>
         Const queryCAS_URL As String = "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/%s/cids/JSON"
-        Const queryCAS2 As String = "https://pubchem.ncbi.nlm.nih.gov/sdq/sdqagent.cgi?infmt=json&outfmt=jsonp&query="
 
         Public Sub New(<CallerMemberName> Optional cache As String = Nothing, Optional interval As Integer = -1)
             MyBase.New(AddressOf queryApi, AddressOf normalizeFileName, AddressOf loadQueryJson, , cache, interval)
@@ -80,7 +116,7 @@ Namespace NCBI.PubChem
         End Function
 
         Private Shared Function queryApi(CAS As String) As String
-            Return sprintf(queryCAS_URL, CAS)
+            Return CLangStringFormatProvider.sprintf(queryCAS_URL, CAS)
         End Function
 
     End Class
@@ -102,7 +138,7 @@ Namespace NCBI.PubChem
         End Function
 
         Private Shared Function pugViewApi(cid As String) As String
-            Return sprintf(fetchPugView, cid)
+            Return CLangStringFormatProvider.sprintf(fetchPugView, cid)
         End Function
     End Class
 

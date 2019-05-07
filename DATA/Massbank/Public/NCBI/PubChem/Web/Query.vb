@@ -71,12 +71,22 @@ Namespace NCBI.PubChem
             Dim list As IdentifierList = cidQuery.Query(Of IdentifierList)(CAS, ".json")
             Dim table As New Dictionary(Of String, PugViewRecord)
             Dim api As New WebQuery($"{cacheFolder}/pugViews/")
+            Dim CID As String() = Nothing
 
             If list Is Nothing OrElse list.CID.IsNullOrEmpty Then
+                ' Dim exportQuery As New CIDExport($"{cacheFolder}/cid/")
+                ' Dim exportList = exportQuery.Query(Of QueryTableExport())(CAS, ".txt")
+
+                ' CID = exportList.Select(Function(row) row.cid).ToArray
+            Else
+                CID = list.CID
+            End If
+
+            If CID.IsNullOrEmpty Then
                 Return New Dictionary(Of String, PugViewRecord)
             Else
-                For Each cid As String In list.CID
-                    table(cid) = api.Query(Of PugViewRecord)(cid)
+                For Each id As String In CID
+                    table(id) = api.Query(Of PugViewRecord)(id)
                 Next
 
                 Call Thread.Sleep(1000)
