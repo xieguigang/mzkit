@@ -67,16 +67,6 @@ Namespace NCBI.PubChem
 
         Public Function QueryPugViews(CAS As String, Optional cacheFolder$ = "./pubchem_cache", Optional ByRef hitCache As Boolean = False) As Dictionary(Of String, PugViewRecord)
             Dim cache = $"{cacheFolder}/{CAS.NormalizePathString(False)}.Xml"
-
-            If cache.FileLength > 0 Then
-                hitCache = True
-                Return cache _
-                    .LoadXml(Of List(Of PugViewRecord)) _
-                    .ToDictionary(Function(info) info.RecordNumber)
-            Else
-                Call Thread.Sleep(1000)
-            End If
-
             Dim cidQuery As New CIDQuery($"{cacheFolder}/cid/")
             Dim list As IdentifierList = cidQuery.Query(Of IdentifierList)(CAS, ".json")
             Dim table As New Dictionary(Of String, PugViewRecord)
