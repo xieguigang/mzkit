@@ -105,7 +105,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classify.vb" />
+    <Compile Include="ChemOntClassify.vb" />
+    <Compile Include="ClassyfireAnnotation.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
