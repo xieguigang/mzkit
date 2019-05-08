@@ -79,28 +79,27 @@ Namespace NCBI.PubChem
             Dim InChIKey = descriptors("InChI Key").GetInformationString("InChI Key")
             Dim InChI = descriptors("InChI").GetInformationString("InChI")
             Dim otherNames = identifier("Other Identifiers")
-            Dim synonyms = identifier _
-                ("Synonyms") _
-                ("Depositor-Supplied Synonyms").GetInformationStrings _
-                ("Depositor-Supplied Synonyms")
+            Dim synonyms = identifier("Synonyms")("Depositor-Supplied Synonyms").GetInformationStrings(Nothing)
             Dim computedProperties = Me("Chemical and Physical Properties")("Computed Properties")
             ' Dim properties = Table.ToDictionary(computedProperties)
-            Dim CASNumber$
+            Dim CASNumber$()
 
             If synonyms Is Nothing Then
                 synonyms = {}
             End If
 
             If otherNames Is Nothing Then
-                CASNumber = synonyms.FirstOrDefault(Function(id) id.IsPattern("\d+([-]\d+)+"))
+                CASNumber = synonyms _
+                    .Where(Function(id) id.IsPattern("\d+([-]\d+)+")) _
+                    .ToArray
             Else
-                CASNumber = otherNames("CAS")?.GetInformationString("CAS")
+                CASNumber = otherNames("CAS")?.GetInformationStrings("CAS", True)
             End If
 
-            Dim exact_mass# = computedProperties("Exact Mass").GetInformationNumber("Exact Mass")
+            Dim exact_mass# = computedProperties("Exact Mass").GetInformationNumber(Nothing)
             Dim xref As New MetaLib.xref With {
                 .InChI = InChI,
-                .CAS = {CASNumber},
+                .CAS = CASNumber,
                 .InChIkey = InChIKey,
                 .pubchem = RecordNumber,
                 .chebi = synonyms.FirstOrDefault(Function(id) id.IsPattern("CHEBI[:]\d+")),

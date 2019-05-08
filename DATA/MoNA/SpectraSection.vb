@@ -5,7 +5,6 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
 
 Public Class SpectraSection : Inherits MetaInfo
 
-    Public Property xref As xref
     Public Property SpectraInfo As Dictionary(Of String, String)
     Public Property Comment As NameValueCollection
     Public Property MassPeaks As ms2()
