@@ -18,6 +18,8 @@
                 {"M+2ACN+2H", New MzCalculator("[M+2ACN+2H]2+", charge:=2, M:=1, adducts:=42.033823)},         ' M/2 + 42.033823	    2+	0.50	42.033823	 468.699268	 396.126177
                 {"M+3ACN+2H", New MzCalculator("[M+3ACN+2H]2+", charge:=2, M:=1, adducts:=62.547097)},         ' M/2 + 62.547097	    2+	0.50	62.547097	 489.212542	 375.612903
                 {"M+H", New MzCalculator("[M+H]+", charge:=1, M:=1, adducts:=1.007276)},                       '  M + 1.007276	    1+	1.00	 1.007276	 854.338166	 875.312724
+                {"M+Li", New MzCalculator("[M+Li]+", charge:=1, M:=1, adducts:=MolWeight.Eval("+Li"))},
+                {"M-H2O+NH4", New MzCalculator("[M-H2O+NH4]+", charge:=1, M:=1, adducts:=MolWeight.Eval("-H2O+NH4"))},
                 {"M+H-2H2O", New MzCalculator("[M+H-2H2O]+", charge:=1, M:=1, adducts:=MolWeight.Eval("+H-2H2O"))},
                 {"M+H-H2O", New MzCalculator("[M+H-H2O]+", charge:=1, M:=1, adducts:=MolWeight.Eval("+H-H2O"))},
                 {"M+NH4", New MzCalculator("[M+NH4]+", charge:=1, M:=1, adducts:=18.033823)},                  '  M + 18.033823	    1+	1.00	18.033823	 871.364713	 858.286177
