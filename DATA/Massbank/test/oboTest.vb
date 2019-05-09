@@ -1,6 +1,7 @@
 ﻿Imports SMRUCC.genomics.foundation.OBO_Foundry
 Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.MassSpectrum.DATA.MetaLib
+Imports Microsoft.VisualBasic.Data.csv.IO.Linq
 
 Module oboTest
 
@@ -17,6 +18,9 @@ Module oboTest
 
 
         Dim classify As New ChemOntClassify("D:\MassSpectrum-toolkits\DATA\DATA\ChemOnt_2_1.obo.TXT")
+
+        Dim annos = classify.FilterByLevel("C:\Users\gg.xie\Downloads\ChEBI_126_classyfire_21_annotations.csv\ChEBI_126_classyfire_21_annotations.csv".OpenHandle.AsLinq(Of ClassyfireAnnotation), 2).ToArray
+
 
         Pause()
     End Sub
