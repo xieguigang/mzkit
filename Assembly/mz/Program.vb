@@ -74,6 +74,9 @@ Module Program
 
         If out.StringEmpty Then
             ' print on console
+            Using file As New StreamWriter(Console.OpenStandardOutput)
+                Call table.Print(file)
+            End Using
         ElseIf out.ExtensionSuffix.TextEquals("csv") Then
             Return table.SaveTo(out).CLICode
         ElseIf out.ExtensionSuffix.TextEquals("html") Then
@@ -81,7 +84,9 @@ Module Program
                 Call table.PrintTable(file)
             End Using
         Else
-
+            Using file As StreamWriter = out.OpenWriter
+                Call table.Print(file)
+            End Using
         End If
 
         Return 0
