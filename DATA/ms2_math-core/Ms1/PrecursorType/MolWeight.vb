@@ -57,7 +57,7 @@ Namespace Ms1.PrecursorType
             {"NH4", 18.035534},
             {"K", 39.0983},
             {"F", 18.998},
-            {"Li", 6.94},
+            {"Li", 6.941},
             {"H2O", 18.01471},
             {"ACN", 41.04746},      ' Acetonitrile (CH3CN)
             {"CH3OH", 32.03773},
