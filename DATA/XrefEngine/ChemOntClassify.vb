@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.genomics.foundation.OBO_Foundry
@@ -60,6 +61,19 @@ Public Class ChemOntClassify
             .Values _
             .ToArray
     End Sub
+
+    Public Iterator Function FilterByLevel(anno As IEnumerable(Of ClassyfireAnnotation), level%) As IEnumerable(Of ClassyfireAnnotation)
+        Dim levelIndex As Index(Of String) = termsByLevel(level) _
+            .Select(Function(node) node.ID) _
+            .Distinct _
+            .ToArray
+
+        For Each item As ClassyfireAnnotation In anno
+            If item.ChemOntID Like levelIndex Then
+                Yield item
+            End If
+        Next
+    End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetLineages(term_id As String) As NamedCollection(Of GenericTree)()
