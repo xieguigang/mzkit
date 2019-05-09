@@ -85,7 +85,7 @@ Module Program
             End Using
         Else
             Using file As StreamWriter = out.OpenWriter
-                Call table.Print(file)
+                Call table.Print(file, False)
             End Using
         End If
 
