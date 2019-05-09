@@ -49,7 +49,8 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.Text.Parser
 Imports Microsoft.VisualBasic.Text.Xml.HtmlBuilder
 
 Namespace Ms1.PrecursorType
@@ -61,24 +62,33 @@ Namespace Ms1.PrecursorType
         ' [M+Cl]-
         ' [2M+NH4-H2O]4+
 
+        ReadOnly defaultCharge As DefaultValue(Of String) = "1"
+        ReadOnly defaultMassCount As DefaultValue(Of Integer) = 1.AsDefault(Function(m) CInt(m) <= 0)
+
         <Extension>
-        Public Function PrecursorTypeParser(precursor_type$, formulaMass As Evaluate(Of String)) As MzCalculator
+        Public Function PrecursorTypeParser(precursor_type As String) As MzCalculator
             Dim type$ = precursor_type.GetStackValue("[", "]")
             Dim mode$ = precursor_type.Split("]"c).Last.Match("[+-]")
-            Dim charge$ = precursor_type.Split("]"c).Last.Match("\d+")
+            Dim charge$ = precursor_type.Split("]"c).Last.Match("\d+") Or defaultCharge
+            Dim M% = CInt(Val(type.Matches("\d*M[+-]+").FirstOrDefault)) Or defaultMassCount
+            Dim formulas = PrecursorTypeFormula(precursor_type, raw:=True)
+            Dim adducts# = Aggregate formula
+                           In formulas.TryCast(Of IEnumerable(Of (sign%, expression As String)))
+                           Let mass As Double = MolWeight.Eval(formula.expression)
+                           Into Sum(formula.sign * mass)
 
-            If charge.StringEmpty Then
-                charge = 1
-            End If
+            Return New MzCalculator With {
+                .M = M,
+                .charge = charge,
+                .name = precursor_type,
+                .adducts = adducts,
+                .mode = mode
+            }
+        End Function
 
-            Dim M% = Val(type.Matches("\d*M[+-]+").FirstOrDefault)
-
-            If M = 0 Then
-                M = 1
-            End If
-
+        Public Function PrecursorTypeFormula(precursor_type$, Optional raw As Boolean = True) As [Variant](Of String, IEnumerable(Of (sign%, expression As String)))
             Dim formulas As New List(Of (sign%, expression As String))
-            Dim parser As New Pointer(Of Char)(type.StringReplace("\d*M", ""))
+            Dim parser As CharPtr = precursor_type.GetStackValue("[", "]").StringReplace("\d*M", "")
             Dim buffer As New List(Of Char)
             Dim c As Char
             Dim sign%
@@ -101,18 +111,11 @@ Namespace Ms1.PrecursorType
             ' 补上最后一个元素
             formulas += (sign, buffer.CharString)
 
-            Dim adducts# = Aggregate formula
-                           In formulas
-                           Let mass As Double = formulaMass(formula.expression)
-                           Into Sum(formula.sign * mass)
-
-            Return New MzCalculator With {
-                .M = M,
-                .charge = charge,
-                .name = precursor_type,
-                .adducts = adducts,
-                .mode = mode
-            }
+            If raw Then
+                Return formulas.AsEnumerable
+            Else
+                Throw New NotImplementedException
+            End If
         End Function
 
         ''' <summary>
