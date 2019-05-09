@@ -1,47 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::1e9f50ffbbba3593a9e7266872c08066, ms2_math-core\Ms1\PrecursorType\Provider.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Provider
-    ' 
-    '         Properties: (+2 Overloads) Negative, (+2 Overloads) Positive
-    ' 
-    '         Function: Calculator, GetCalculator, ParseIonMode
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Provider
+' 
+'         Properties: (+2 Overloads) Negative, (+2 Overloads) Positive
+' 
+'         Function: Calculator, GetCalculator, ParseIonMode
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -143,6 +143,7 @@ Namespace Ms1.PrecursorType
                     {"M+2ACN+2H", New MzCalculator("[M+2ACN+2H]2+", charge:=2, M:=1, adducts:=42.033823)},         ' M/2 + 42.033823	    2+	0.50	42.033823	 468.699268	 396.126177
                     {"M+3ACN+2H", New MzCalculator("[M+3ACN+2H]2+", charge:=2, M:=1, adducts:=62.547097)},         ' M/2 + 62.547097	    2+	0.50	62.547097	 489.212542	 375.612903
                     {"M+H", New MzCalculator("[M+H]+", charge:=1, M:=1, adducts:=1.007276)},                       '  M + 1.007276	    1+	1.00	 1.007276	 854.338166	 875.312724
+                    {"M+H-2H2O", New MzCalculator("[M+H-2H2O]+", charge:=1, M:=1, adducts:=MolWeight.Eval("M+H-2H2O"))},
                     {"M+NH4", New MzCalculator("[M+NH4]+", charge:=1, M:=1, adducts:=18.033823)},                  '  M + 18.033823	    1+	1.00	18.033823	 871.364713	 858.286177
                     {"M+Na", New MzCalculator("[M+Na]+", charge:=1, M:=1, adducts:=22.989218)},                    '  M + 22.989218	    1+	1.00	22.989218	 876.320108	 853.330782
                     {"M+CH3OH+H", New MzCalculator("[M+CH3OH+H]+", charge:=1, M:=1, adducts:=33.033489)},          '  M + 33.033489	    1+	1.00	33.033489	 886.364379	 843.286511
