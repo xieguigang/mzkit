@@ -107,6 +107,12 @@ Public Module SDFReader
         Return info
     End Function
 
+    ''' <summary>
+    ''' 读取数据库编号引用信息
+    ''' </summary>
+    ''' <param name="commentMeta"></param>
+    ''' <param name="M"></param>
+    ''' <returns></returns>
     <Extension>
     Private Function readXref(commentMeta As NameValueCollection, M As Func(Of String, String)) As xref
         Dim xref As New xref
@@ -123,6 +129,11 @@ Public Module SDFReader
         Return xref
     End Function
 
+    ''' <summary>
+    ''' Create a lambda function for read meta data by key
+    ''' </summary>
+    ''' <param name="mol">Molecule annotation data in sdf format.</param>
+    ''' <returns></returns>
     <Extension>
     Private Function readMeta(mol As SDF) As Func(Of String, String)
         Dim meta As Dictionary(Of String, String()) = mol.MetaData _
@@ -130,9 +141,11 @@ Public Module SDFReader
             .ToTable _
             .ToDictionary(allStrings:=True)
 
-        For Each [property] In mol.MetaData
+        For Each [property] As KeyValuePair(Of String, String()) In mol.MetaData
             If meta.ContainsKey([property].Key) Then
-                meta([property].Key) = meta([property].Key).Join([property].Value).ToArray
+                meta([property].Key) = meta([property].Key) _
+                    .Join([property].Value) _
+                    .ToArray
             Else
                 meta([property].Key) = [property].Value
             End If
