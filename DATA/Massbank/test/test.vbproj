@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{2223FB63-E148-4342-87E6-495571B2898E}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>test.metaLibLoaderTest</StartupObject>
+    <StartupObject>test.oboTest</StartupObject>
     <RootNamespace>test</RootNamespace>
     <AssemblyName>test</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -95,6 +95,7 @@
     <Compile Include="foodbQuery.vb" />
     <Compile Include="inchiTest.vb" />
     <Compile Include="metaLibLoaderTest.vb" />
+    <Compile Include="oboTest.vb" />
     <Compile Include="pubchemTest.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -137,6 +138,10 @@
       <Project>{c699d311-9923-4c19-bf70-5048d0e2cf5d}</Project>
       <Name>Bio.Assembly</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\foundation\OBO_Foundry\OBO_Foundry.vbproj">
+      <Project>{327A0323-5469-45C1-B95B-4A0336CF27C2}</Project>
+      <Name>OBO_Foundry</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\mysqli\LibMySQL\LibMySQL.vbproj">
       <Project>{2c34a044-1bde-44e8-a86e-e9971c87da21}</Project>
       <Name>LibMySQL</Name>
@@ -152,6 +157,10 @@
     <ProjectReference Include="..\..\FooDB\FooDB.vbproj">
       <Project>{a604eaa0-b26a-4287-b578-872b94ef5d33}</Project>
       <Name>FooDB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\XrefEngine\XrefEngine.vbproj">
+      <Project>{1EE9CB3A-4625-4406-9E9D-CD2E471CD67A}</Project>
+      <Name>XrefEngine</Name>
     </ProjectReference>
     <ProjectReference Include="..\Massbank.vbproj">
       <Project>{a686bdf5-077f-47f5-a8dd-c73e6e88363c}</Project>
