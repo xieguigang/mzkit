@@ -158,6 +158,10 @@
       <Project>{a604eaa0-b26a-4287-b578-872b94ef5d33}</Project>
       <Name>FooDB</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\XrefEngine\XrefEngine.vbproj">
+      <Project>{1EE9CB3A-4625-4406-9E9D-CD2E471CD67A}</Project>
+      <Name>XrefEngine</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Massbank.vbproj">
       <Project>{a686bdf5-077f-47f5-a8dd-c73e6e88363c}</Project>
       <Name>Massbank</Name>

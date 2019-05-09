@@ -1,5 +1,6 @@
 ﻿Imports SMRUCC.genomics.foundation.OBO_Foundry
 Imports Microsoft.VisualBasic.Linq
+Imports SMRUCC.MassSpectrum.DATA.MetaLib
 
 Module oboTest
 
@@ -14,6 +15,8 @@ Module oboTest
             .OrderBy(Function(o) o.name) _
             .ToArray
 
+
+        Dim classify As New ChemOntClassify("D:\MassSpectrum-toolkits\DATA\DATA\ChemOnt_2_1.obo.TXT")
 
         Pause()
     End Sub
