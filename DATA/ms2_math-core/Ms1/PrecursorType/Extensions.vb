@@ -70,7 +70,7 @@ Namespace Ms1.PrecursorType
             Dim mode$ = precursor_type.Split("]"c).Last.Match("[+-]")
             Dim charge$ = precursor_type.Split("]"c).Last.Match("\d+") Or defaultCharge
             Dim M% = CInt(Val(type.Matches("\d*M[+-]+").FirstOrDefault)) Or defaultMassCount
-            Dim formulas = Parser.Formula(precursor_type, raw:=True)
+            Dim formulas = Parser.Formula(Strings.Trim(precursor_type), raw:=True)
             Dim adducts# = Aggregate formula
                            In formulas.TryCast(Of IEnumerable(Of (sign%, expression As String)))
                            Let mass As Double = MolWeight.Eval(formula.expression)
