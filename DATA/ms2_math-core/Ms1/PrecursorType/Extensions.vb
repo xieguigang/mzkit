@@ -47,7 +47,6 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Text.Parser
@@ -55,7 +54,7 @@ Imports Microsoft.VisualBasic.Text.Xml.HtmlBuilder
 
 Namespace Ms1.PrecursorType
 
-    Public Module Extensions
+    Public Module Parser
 
         ' [M+H]+
         ' [M+H2O]+
@@ -66,12 +65,12 @@ Namespace Ms1.PrecursorType
         ReadOnly defaultMassCount As DefaultValue(Of Integer) = 1.AsDefault(Function(m) CInt(m) <= 0)
 
         <Extension>
-        Public Function PrecursorTypeParser(precursor_type As String) As MzCalculator
+        Public Function ParseMzCalculator(precursor_type As String) As MzCalculator
             Dim type$ = precursor_type.GetStackValue("[", "]")
             Dim mode$ = precursor_type.Split("]"c).Last.Match("[+-]")
             Dim charge$ = precursor_type.Split("]"c).Last.Match("\d+") Or defaultCharge
             Dim M% = CInt(Val(type.Matches("\d*M[+-]+").FirstOrDefault)) Or defaultMassCount
-            Dim formulas = PrecursorTypeFormula(precursor_type, raw:=True)
+            Dim formulas = Parser.Formula(precursor_type, raw:=True)
             Dim adducts# = Aggregate formula
                            In formulas.TryCast(Of IEnumerable(Of (sign%, expression As String)))
                            Let mass As Double = MolWeight.Eval(formula.expression)
@@ -86,7 +85,7 @@ Namespace Ms1.PrecursorType
             }
         End Function
 
-        Public Function PrecursorTypeFormula(precursor_type$, Optional raw As Boolean = True) As [Variant](Of String, IEnumerable(Of (sign%, expression As String)))
+        Public Function Formula(precursor_type$, Optional raw As Boolean = True) As [Variant](Of String, IEnumerable(Of (sign%, expression As String)))
             Dim formulas As New List(Of (sign%, expression As String))
             Dim parser As CharPtr = precursor_type.GetStackValue("[", "]").StringReplace("\d*M", "")
             Dim buffer As New List(Of Char)
@@ -117,6 +116,9 @@ Namespace Ms1.PrecursorType
                 Throw New NotImplementedException
             End If
         End Function
+    End Module
+
+    Public Module Extensions
 
         ''' <summary>
         ''' Debug used
