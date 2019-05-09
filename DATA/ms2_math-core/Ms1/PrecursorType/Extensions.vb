@@ -50,7 +50,6 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text.Xml.HtmlBuilder
-Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Namespace Ms1.PrecursorType
 
