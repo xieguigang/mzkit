@@ -52,12 +52,39 @@ Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzXML
+Imports SMRUCC.MassSpectrum.Math.Ms1.PrecursorType
 Imports SMRUCC.MassSpectrum.Math.Spectra
 
 Module Program
 
     Public Function Main() As Integer
         Return GetType(Program).RunCLI(App.CommandLine)
+    End Function
+
+    <ExportAPI("/mz.calculate")>
+    <Usage("/mz.calculate /mass <mass> [/mode <+/-, default=+> /out <out.csv/html/txt>]")>
+    <Argument("/out", True, CLITypes.File, PipelineTypes.std_out,
+              AcceptTypes:={GetType(String)},
+              Description:="If this argument is not config in cli input, then result will be print on console.")>
+    Public Function Calculator(args As CommandLine) As Integer
+        Dim mass# = args("/mass")
+        Dim mode$ = args("/mode") Or "+"
+        Dim out$ = args("/out")
+        Dim table As MzReport() = MzCalculator.CalculateMode(mass, mode).ToArray
+
+        If out.StringEmpty Then
+            ' print on console
+        ElseIf out.ExtensionSuffix.TextEquals("csv") Then
+            Return table.SaveTo(out).CLICode
+        ElseIf out.ExtensionSuffix.TextEquals("html") Then
+            Using file As StreamWriter = out.OpenWriter
+                Call table.PrintTable(file)
+            End Using
+        Else
+
+        End If
+
+        Return 0
     End Function
 
     ''' <summary>
