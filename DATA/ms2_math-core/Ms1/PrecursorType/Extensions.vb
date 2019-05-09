@@ -61,10 +61,10 @@ Namespace Ms1.PrecursorType
         ' [2M+NH4-H2O]4+
 
         <Extension>
-        Public Function PrecursorTypeParser(precursorType As String, formulaMass As Func(Of String, Double)) As MzCalculator
-            Dim type$ = precursorType.GetStackValue("[", "]")
-            Dim mode$ = precursorType.Split("]"c).Last.Match("[+-]")
-            Dim charge$ = precursorType.Split("]"c).Last.Match("\d+")
+        Public Function PrecursorTypeParser(precursor_type$, formulaMass As Func(Of String, Double)) As MzCalculator
+            Dim type$ = precursor_type.GetStackValue("[", "]")
+            Dim mode$ = precursor_type.Split("]"c).Last.Match("[+-]")
+            Dim charge$ = precursor_type.Split("]"c).Last.Match("\d+")
 
             If charge.StringEmpty Then
                 charge = 1
@@ -108,7 +108,7 @@ Namespace Ms1.PrecursorType
             Return New MzCalculator With {
                 .M = M,
                 .charge = charge,
-                .name = precursorType,
+                .name = precursor_type,
                 .adducts = adducts,
                 .mode = mode
             }
