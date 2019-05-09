@@ -8,24 +8,40 @@ Public Class ChemOntClassify
     ReadOnly oboNodeList As GenericTree()
     ReadOnly oboTable As Dictionary(Of String, GenericTree)
 
+    ''' <summary>
+    ''' level 1
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property kingdom As GenericTree()
         Get
             Return termsByLevel(1)
         End Get
     End Property
 
+    ''' <summary>
+    ''' level 2
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property superClass As GenericTree()
         Get
             Return termsByLevel(2)
         End Get
     End Property
 
+    ''' <summary>
+    ''' level 3
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property [class] As GenericTree()
         Get
             Return termsByLevel(3)
         End Get
     End Property
 
+    ''' <summary>
+    ''' level 4
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property subClass As GenericTree()
         Get
             Return termsByLevel(4)
