@@ -49,6 +49,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Text.Xml.HtmlBuilder
 
 Namespace Ms1.PrecursorType
@@ -61,7 +62,7 @@ Namespace Ms1.PrecursorType
         ' [2M+NH4-H2O]4+
 
         <Extension>
-        Public Function PrecursorTypeParser(precursor_type$, formulaMass As Func(Of String, Double)) As MzCalculator
+        Public Function PrecursorTypeParser(precursor_type$, formulaMass As Evaluate(Of String)) As MzCalculator
             Dim type$ = precursor_type.GetStackValue("[", "]")
             Dim mode$ = precursor_type.Split("]"c).Last.Match("[+-]")
             Dim charge$ = precursor_type.Split("]"c).Last.Match("\d+")
