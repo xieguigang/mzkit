@@ -55,21 +55,34 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
 ''' </summary>
 Public Module SDFReader
 
-    Public Iterator Function ParseFile(path As String) As IEnumerable(Of SpectraSection)
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="path"></param>
+    ''' <param name="skipSpectraInfo">
+    ''' 是否只解析注释信息部分的数据
+    ''' </param>
+    ''' <returns></returns>
+    Public Iterator Function ParseFile(path As String, Optional skipSpectraInfo As Boolean = False) As IEnumerable(Of SpectraSection)
         For Each mol As SDF In SDF.IterateParser(path, parseStruct:=False)
             Dim M As Func(Of String, String) = mol.readMeta
             Dim commentMeta = mol.MetaData!COMMENT.ToTable
-            Dim ms2 As ms2() = mol.MetaData("MASS SPECTRAL PEAKS") _
-                .Select(Function(line) line.Split) _
-                .Select(Function(line)
-                            Return New ms2 With {
-                                .mz = line(0),
-                                .intensity = line(1),
-                                .quantity = line(1)
-                            }
-                        End Function) _
-                .ToArray
-            Dim info As Dictionary(Of String, String) = M.readSpectraInfo
+            Dim ms2 As ms2() = Nothing
+            Dim info As Dictionary(Of String, String) = Nothing
+
+            If Not skipSpectraInfo Then
+                info = M.readSpectraInfo
+                ms2 = mol.MetaData("MASS SPECTRAL PEAKS") _
+                    .Select(Function(line) line.Split) _
+                    .Select(Function(line)
+                                Return New ms2 With {
+                                    .mz = line(0),
+                                    .intensity = line(1),
+                                    .quantity = line(1)
+                                }
+                            End Function) _
+                    .ToArray
+            End If
 
             Yield New SpectraSection With {
                 .name = M("NAME"),
