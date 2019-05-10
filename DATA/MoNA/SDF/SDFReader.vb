@@ -107,6 +107,7 @@ Public Module SDFReader
                             End Function) _
                     .ToArray
 
+                ' precursor_type可能在其他的位置, 或者读取的字符串主键不正确
                 If info.precursor_type.StringEmpty Then
                     info.precursor_type = PrecursorType _
                         .FindPrecursorType(exact_mass, info.mz, 1, info.ion_mode) _
