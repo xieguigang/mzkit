@@ -52,6 +52,24 @@ Imports SMRUCC.MassSpectrum.DATA.File
 Imports SMRUCC.MassSpectrum.DATA.MetaLib
 Imports SMRUCC.MassSpectrum.Math.Spectra
 
+Public Class SpectraInfo
+    Public Property MsLevel As String
+    Public Property mz As Double
+    Public Property instrument_type As String
+    Public Property instrument As String
+    Public Property collision_energy As String
+    Public Property ion_mode As String
+    Public Property ionization As String
+    Public Property fragmentation_mode As String
+    Public Property resolution As String
+    Public Property column As String
+    Public Property flow_gradient As String
+    Public Property flow_rate As String
+    Public Property retention_time As String
+    Public Property solvent_a As String
+    Public Property solvent_b As String
+End Class
+
 ''' <summary>
 ''' Reader for file ``MoNA-export-LC-MS-MS_Spectra.sdf``
 ''' </summary>
@@ -70,7 +88,7 @@ Public Module SDFReader
             Dim M As Func(Of String, String) = mol.readMeta
             Dim commentMeta = mol.MetaData!COMMENT.ToTable
             Dim ms2 As ms2() = Nothing
-            Dim info As Dictionary(Of String, String) = Nothing
+            Dim info As SpectraInfo = Nothing
             Dim commonName$ = Strings.Trim(M("NAME")).Trim(ASCII.Quot)
 
             If Not skipSpectraInfo Then
@@ -101,24 +119,24 @@ Public Module SDFReader
     End Function
 
     <Extension>
-    Private Function readSpectraInfo(M As Func(Of String, String)) As Dictionary(Of String, String)
-        Dim info As New Dictionary(Of String, String)
-
-        info!MsLevel = M("SPECTRUM TYPE")
-        info!mz = M("PRECURSOR M/Z")
-        info!instrument_type = M("INSTRUMENT TYPE")
-        info!instrument = M("INSTRUMENT")
-        info!collision_energy = M("COLLISION ENERGY")
-        info!ion_mode = M("ION MODE")
-        info!ionization = M("ionization")
-        info!fragmentation_mode = M("fragmentation mode")
-        info!resolution = M("resolution")
-        info!column = M("column")
-        info!flow_gradient = M("flow gradient")
-        info!flow_rate = M("flow rate")
-        info!retention_time = M("retention time")
-        info!solvent_a = M("solvent a")
-        info!solvent_b = M("solvent a")
+    Private Function readSpectraInfo(M As Func(Of String, String)) As SpectraInfo
+        Dim info As New SpectraInfo With {
+            .MsLevel = M("SPECTRUM TYPE"),
+            .mz = M("PRECURSOR M/Z"),
+            .instrument_type = M("INSTRUMENT TYPE"),
+            .instrument = M("INSTRUMENT"),
+            .collision_energy = M("COLLISION ENERGY"),
+            .ion_mode = M("ION MODE"),
+            .ionization = M("ionization"),
+            .fragmentation_mode = M("fragmentation mode"),
+            .resolution = M("resolution"),
+            .column = M("column"),
+            .flow_gradient = M("flow gradient"),
+            .flow_rate = M("flow rate"),
+            .retention_time = M("retention time"),
+            .solvent_a = M("solvent a"),
+            .solvent_b = M("solvent a")
+        }
 
         Return info
     End Function
