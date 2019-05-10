@@ -63,6 +63,10 @@ Namespace Ms1.PrecursorType
     Public Structure MzCalculator
 
         Public Property name As String
+        ''' <summary>
+        ''' 电荷量的符号无所谓,计算出来的m/z结果值总是正数
+        ''' </summary>
+        ''' <returns></returns>
         Public Property charge As Integer
         Public Property M As Integer
 

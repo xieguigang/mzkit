@@ -156,6 +156,11 @@ Namespace Ms1.PrecursorType
             End Get
         End Property
 
+        ''' <summary>
+        ''' 这个函数返回1或者-1,用来分别对应于阳离子和阴离子
+        ''' </summary>
+        ''' <param name="mode"></param>
+        ''' <returns></returns>
         Public Function ParseIonMode(mode As String) As Integer
             Select Case LCase(mode)
                 Case "+", "1", "p", "pos", "positive"

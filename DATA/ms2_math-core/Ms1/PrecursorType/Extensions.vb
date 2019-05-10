@@ -65,6 +65,25 @@ Namespace Ms1.PrecursorType
         ReadOnly defaultMassCount As DefaultValue(Of Integer) = 1.AsDefault(Function(m) CInt(m) <= 0)
 
         <Extension>
+        Public Function ParseCharge(precursor_type$, ionmode$) As Integer
+            Dim charge$ = precursor_type.Split("]"c).Last
+            Dim chargeValue As Integer
+            Dim iint As Integer = ParseIonMode(ionmode)
+
+            If charge = "+" Then
+                chargeValue = 1
+            ElseIf charge = "-" Then
+                chargeValue = -1
+            ElseIf charge.StringEmpty Then
+                chargeValue = iint
+            Else
+                chargeValue = Val(charge) * iint
+            End If
+
+            Return chargeValue
+        End Function
+
+        <Extension>
         Public Function ParseMzCalculator(precursor_type As String) As MzCalculator
             Dim type$ = precursor_type.GetStackValue("[", "]")
             Dim mode$ = precursor_type.Split("]"c).Last.Match("[+-]")

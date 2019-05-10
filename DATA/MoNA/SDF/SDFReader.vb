@@ -55,6 +55,7 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
 Public Class SpectraInfo
     Public Property MsLevel As String
     Public Property mz As Double
+    Public Property precursor_type As String
     Public Property instrument_type As String
     Public Property instrument As String
     Public Property collision_energy As String
@@ -123,6 +124,7 @@ Public Module SDFReader
         Dim info As New SpectraInfo With {
             .MsLevel = M("SPECTRUM TYPE"),
             .mz = M("PRECURSOR M/Z"),
+            .precursor_type = M("PRECURSOR TYPE"),
             .instrument_type = M("INSTRUMENT TYPE"),
             .instrument = M("INSTRUMENT"),
             .collision_energy = M("COLLISION ENERGY"),
