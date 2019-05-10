@@ -60,7 +60,7 @@ Namespace MetaLib
         <Extension>
         Public Function IsOligopeptideName(name As String) As Boolean
             Dim tokens As String() = name.StringSplit("\s+")
-            Dim assert As Boolean = tokens.Length > 1 AndAlso tokens.All(Function(part) oligopeptidePattern.Match(name).Value = name)
+            Dim assert As Boolean = tokens.Length > 1 AndAlso tokens.All(Function(part) oligopeptidePattern.Match(part).Value = part)
 
             Return assert
         End Function
