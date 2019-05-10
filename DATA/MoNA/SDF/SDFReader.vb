@@ -45,6 +45,7 @@
 Imports System.Collections.Specialized
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Text
 Imports SMRUCC.MassSpectrum.Assembly.ASCII.MSP
 Imports SMRUCC.MassSpectrum.DATA.File
 Imports SMRUCC.MassSpectrum.DATA.MetaLib
@@ -69,6 +70,7 @@ Public Module SDFReader
             Dim commentMeta = mol.MetaData!COMMENT.ToTable
             Dim ms2 As ms2() = Nothing
             Dim info As Dictionary(Of String, String) = Nothing
+            Dim commonName$ = Strings.Trim(M("NAME")).Trim(ASCII.Quot)
 
             If Not skipSpectraInfo Then
                 info = M.readSpectraInfo
@@ -85,7 +87,7 @@ Public Module SDFReader
             End If
 
             Yield New SpectraSection With {
-                .name = M("NAME"),
+                .name = commonName,
                 .ID = M("ID"),
                 .Comment = commentMeta,
                 .formula = M("FORMULA"),
