@@ -76,7 +76,7 @@ Public Module SDFReader
                 .ID = M("ID"),
                 .Comment = commentMeta,
                 .formula = M("FORMULA"),
-                .mass = M("EXACT MASS"),
+                .exact_mass = M("EXACT MASS"),
                 .MassPeaks = ms2,
                 .xref = commentMeta.readXref(M),
                 .SpectraInfo = info
@@ -117,7 +117,7 @@ Public Module SDFReader
     Private Function readXref(commentMeta As NameValueCollection, M As Func(Of String, String)) As xref
         Dim xref As New xref
 
-        xref.CAS = commentMeta.GetValues("cas")
+        xref.CAS = commentMeta.GetValues("cas").AsList + commentMeta.GetValues("cas number")
         xref.chebi = commentMeta("chebi")
         xref.HMDB = commentMeta("hmdb")
         xref.InChI = commentMeta("InChI")
@@ -125,6 +125,7 @@ Public Module SDFReader
         xref.KEGG = commentMeta("KEGG")
         xref.pubchem = commentMeta("pubchem cid")
         xref.SMILES = commentMeta("SMILES")
+        xref.Wikipedia = commentMeta("wikipedia")
 
         Return xref
     End Function

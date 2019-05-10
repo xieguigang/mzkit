@@ -74,7 +74,7 @@ Namespace MetaLib
         ''' <returns></returns>
         <XmlAttribute> Public Property ID As String Implements IKeyedEntity(Of String).Key
         <XmlAttribute> Public Property formula As String
-        <XmlAttribute> Public Property mass As Double
+        <XmlAttribute> Public Property exact_mass As Double
 
         Public Property name As String
         Public Property xref As xref
@@ -157,6 +157,7 @@ Namespace MetaLib
         Public Property pubchem As String
         Public Property HMDB As String
         Public Property metlin As String
+        Public Property Wikipedia As String
         ''' <summary>
         ''' Multiple CAS id may exists
         ''' </summary>

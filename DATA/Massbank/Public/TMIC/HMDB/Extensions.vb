@@ -257,7 +257,7 @@ Namespace TMIC.HMDB
                     .formula = metabolite.chemical_formula,
                     .HMDB = metabolite.accession,
                     .KEGG = metabolite.kegg_id,
-                    .mass = metabolite.average_molecular_weight,
+                    .exact_mass = metabolite.average_molecular_weight,
                     .water_solubility = metabolite.experimental_properties.water_solubility,
                     .disease = disease,
                     .name = name

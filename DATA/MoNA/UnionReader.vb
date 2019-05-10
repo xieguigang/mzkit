@@ -117,7 +117,7 @@ Public Class UnionReader
                 If mold Like GetType(MspData) Then
                     Return mold.TryCast(Of MspData).MW
                 Else
-                    Return mold.TryCast(Of SpectraSection).mass
+                    Return mold.TryCast(Of SpectraSection).exact_mass
                 End If
             Else
                 Return mass
