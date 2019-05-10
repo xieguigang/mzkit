@@ -45,6 +45,7 @@
 Imports System.Collections.Specialized
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
 Imports SMRUCC.MassSpectrum.Assembly.ASCII.MSP
 Imports SMRUCC.MassSpectrum.DATA.File
@@ -133,6 +134,11 @@ Public Module SDFReader
         Dim xref As New xref
 
         xref.CAS = commentMeta.GetValues("cas").AsList + commentMeta.GetValues("cas number")
+        xref.CAS = xref.CAS _
+            .Select(Function(id) id.StringSplit("\s+")) _
+            .IteratesALL _
+            .Where(Function(id) xref.IsCASNumber(id)) _
+            .ToArray
         xref.chebi = commentMeta("chebi")
         xref.HMDB = commentMeta("hmdb")
         xref.InChI = commentMeta("InChI")

@@ -79,7 +79,7 @@ Namespace NCBI.PubChem
 
         Public ReadOnly Property IsCAS As Boolean
             Get
-                Return xref.IsCAS(Synonym)
+                Return xref.IsCASNumber(Synonym)
             End Get
         End Property
 
@@ -100,7 +100,7 @@ Namespace NCBI.PubChem
         End Function
 
         Shared ReadOnly patterns As Func(Of String, Boolean)() = {
-            AddressOf xref.IsCAS,
+            AddressOf xref.IsCASNumber,
             AddressOf xref.IsChEBI,
             AddressOf xref.IsHMDB,
             AddressOf xref.IsKEGG

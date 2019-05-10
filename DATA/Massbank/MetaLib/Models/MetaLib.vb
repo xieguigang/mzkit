@@ -58,6 +58,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
@@ -168,18 +169,22 @@ Namespace MetaLib
         Public Property InChI As String
         Public Property SMILES As String
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function IsChEBI(synonym As String) As Boolean
             Return synonym.IsPattern("CHEBI[:]\d+", RegexICSng)
         End Function
 
-        Public Shared Function IsCAS(synonym As String) As Boolean
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function IsCASNumber(synonym As String) As Boolean
             Return synonym.IsPattern("\d+([-]\d+)+", RegexICSng)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function IsHMDB(synonym As String) As Boolean
             Return synonym.IsPattern("HMDB\d+", RegexICSng)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function IsKEGG(synonym As String) As Boolean
             Return synonym.IsPattern("C((\d){5})", RegexICSng)
         End Function
