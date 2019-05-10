@@ -111,7 +111,9 @@ Namespace Ms1.PrecursorType
             formulas += (sign, buffer.CharString)
 
             If raw Then
-                Return formulas.AsEnumerable
+                ' 20190510
+                ' 运行时不允许隐式转换  
+                Return New [Variant](Of String, IEnumerable(Of (sign As Integer, expression As String)))(formulas.AsEnumerable)
             Else
                 Throw New NotImplementedException
             End If
