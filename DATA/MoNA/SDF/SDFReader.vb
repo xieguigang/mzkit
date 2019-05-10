@@ -50,6 +50,7 @@ Imports Microsoft.VisualBasic.Text
 Imports SMRUCC.MassSpectrum.Assembly.ASCII.MSP
 Imports SMRUCC.MassSpectrum.DATA.File
 Imports SMRUCC.MassSpectrum.DATA.MetaLib
+Imports SMRUCC.MassSpectrum.Math.Ms1.PrecursorType
 Imports SMRUCC.MassSpectrum.Math.Spectra
 
 Public Class SpectraInfo
@@ -91,6 +92,7 @@ Public Module SDFReader
             Dim ms2 As ms2() = Nothing
             Dim info As SpectraInfo = Nothing
             Dim commonName$ = Strings.Trim(M("NAME")).Trim(ASCII.Quot)
+            Dim exact_mass# = M("EXACT MASS")
 
             If Not skipSpectraInfo Then
                 info = M.readSpectraInfo
@@ -104,6 +106,12 @@ Public Module SDFReader
                                 }
                             End Function) _
                     .ToArray
+
+                If info.precursor_type.StringEmpty Then
+                    info.precursor_type = PrecursorType _
+                        .FindPrecursorType(exact_mass, info.mz, 1, info.ion_mode) _
+                        .precursorType
+                End If
             End If
 
             Yield New SpectraSection With {
@@ -111,7 +119,7 @@ Public Module SDFReader
                 .ID = M("ID"),
                 .Comment = commentMeta,
                 .formula = M("FORMULA"),
-                .exact_mass = M("EXACT MASS"),
+                .exact_mass = exact_mass,
                 .MassPeaks = ms2,
                 .xref = commentMeta.readXref(M),
                 .SpectraInfo = info
