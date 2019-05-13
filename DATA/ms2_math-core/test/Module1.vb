@@ -54,6 +54,7 @@ Module Module1
         Dim t3 = Parser.ParseMzCalculator("[M]")
         Dim t4 = Parser.ParseMzCalculator("[M+H]2+")
         Dim t5 = Parser.ParseMzCalculator("[-H]?")
+        Dim t6 = Parser.ParseMzCalculator("[99M-235H+33C]1000+")
 
         Pause()
     End Sub

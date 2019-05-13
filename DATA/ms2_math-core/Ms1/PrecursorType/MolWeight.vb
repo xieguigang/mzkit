@@ -53,6 +53,7 @@ Namespace Ms1.PrecursorType
 
         ReadOnly weights As New Dictionary(Of String, Double) From {
             {"H", 1.007276},
+            {"C", 12.0107},
             {"Na", 22.98976928},
             {"NH4", 18.035534},
             {"K", 39.0983},
