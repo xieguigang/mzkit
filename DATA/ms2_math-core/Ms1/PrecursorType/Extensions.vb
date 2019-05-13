@@ -90,7 +90,7 @@ Namespace Ms1.PrecursorType
         ''' <param name="ionMode">只允许出现``+/-``这两种字符串</param>
         ''' <returns></returns>
         <Extension>
-        Public Function ParseMzCalculator(precursor_type$, Optional ionMode$ = "+") As MzCalculator
+        Public Function ParseMzCalculator(precursor_type$, Optional ionMode$ = "+", Optional skipEvalAdducts As Boolean = False) As MzCalculator
             Static cache As New Dictionary(Of String, Dictionary(Of String, MzCalculator)) From {
                 {"+", New Dictionary(Of String, MzCalculator)},
                 {"-", New Dictionary(Of String, MzCalculator)}
@@ -99,14 +99,14 @@ Namespace Ms1.PrecursorType
             If cache(ionMode).ContainsKey(precursor_type) Then
                 Return cache(ionMode)(precursor_type)
             Else
-                Dim mz = ParseMzCalculatorInternal(precursor_type, ionMode)
+                Dim mz = ParseMzCalculatorInternal(precursor_type, ionMode, skipEvalAdducts)
                 cache(ionMode).Add(precursor_type, mz)
                 Return mz
             End If
         End Function
 
         <Extension>
-        Private Function ParseMzCalculatorInternal(precursor_type$, Optional ionMode$ = "+") As MzCalculator
+        Private Function ParseMzCalculatorInternal(precursor_type$, Optional ionMode$ = "+", Optional skipEvalAdducts As Boolean = False) As MzCalculator
             Dim type$ = precursor_type.GetStackValue("[", "]")
             Dim mode$ = precursor_type.Split("]"c).Last.Match("[+-]") Or ionMode.AsDefault
             Dim charge$ = precursor_type.Split("]"c).Last.Match("\d+") Or defaultCharge
@@ -114,10 +114,14 @@ Namespace Ms1.PrecursorType
             Dim formulas = Parser.Formula(Strings.Trim(precursor_type), raw:=True) _
                 .TryCast(Of IEnumerable(Of (sign%, expression As String))) _
                 .ToArray
-            Dim adducts# = Aggregate formula As (sign%, expression$)
-                           In formulas
-                           Let mass As Double = MolWeight.Eval(formula.expression)
-                           Into Sum(formula.sign * mass)
+            Dim adducts# = 0
+
+            If Not skipEvalAdducts Then
+                adducts = Aggregate formula As (sign%, expression$)
+                          In formulas
+                          Let mass As Double = MolWeight.Eval(formula.expression)
+                          Into Sum(formula.sign * mass)
+            End If
 
             If ParseIonMode(mode) = 0 Then
                 mode = ionMode
