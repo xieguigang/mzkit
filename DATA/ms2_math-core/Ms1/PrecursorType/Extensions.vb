@@ -84,13 +84,29 @@ Namespace Ms1.PrecursorType
         End Function
 
         ''' <summary>
-        ''' 
+        ''' 这个函数是具有缓存功能的
         ''' </summary>
         ''' <param name="precursor_type">如果这个字符串没有电荷数量结尾,则这个函数默认是带有1个单位的电荷的</param>
-        ''' <param name="ionMode$"></param>
+        ''' <param name="ionMode">只允许出现``+/-``这两种字符串</param>
         ''' <returns></returns>
         <Extension>
         Public Function ParseMzCalculator(precursor_type$, Optional ionMode$ = "+") As MzCalculator
+            Static cache As New Dictionary(Of String, Dictionary(Of String, MzCalculator)) From {
+                {"+", New Dictionary(Of String, MzCalculator)},
+                {"-", New Dictionary(Of String, MzCalculator)}
+            }
+
+            If cache(ionMode).ContainsKey(precursor_type) Then
+                Return cache(ionMode)(precursor_type)
+            Else
+                Dim mz = ParseMzCalculatorInternal(precursor_type, ionMode)
+                cache(ionMode).Add(precursor_type, mz)
+                Return mz
+            End If
+        End Function
+
+        <Extension>
+        Private Function ParseMzCalculatorInternal(precursor_type$, Optional ionMode$ = "+") As MzCalculator
             Dim type$ = precursor_type.GetStackValue("[", "]")
             Dim mode$ = precursor_type.Split("]"c).Last.Match("[+-]") Or ionMode.AsDefault
             Dim charge$ = precursor_type.Split("]"c).Last.Match("\d+") Or defaultCharge
