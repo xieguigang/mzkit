@@ -130,10 +130,20 @@ Public Module SDFReader
 
     <Extension>
     Private Function readSpectraInfo(M As Func(Of String, String)) As SpectraInfo
+        ' 有些数据是错误标记上了的,有些precursor_type和precursor_mz被标反了
+        Dim precursor_type$ = M("PRECURSOR TYPE")
+        Dim mz$ = M("PRECURSOR M/Z")
+
+        If Not Double.TryParse(mz, Nothing) Then
+            Dim tmp = precursor_type
+            precursor_type = mz
+            mz = tmp
+        End If
+
         Dim info As New SpectraInfo With {
             .MsLevel = M("SPECTRUM TYPE"),
-            .mz = M("PRECURSOR M/Z"),
-            .precursor_type = M("PRECURSOR TYPE"),
+            .mz = Double.Parse(mz),
+            .precursor_type = precursor_type,
             .instrument_type = M("INSTRUMENT TYPE"),
             .instrument = M("INSTRUMENT"),
             .collision_energy = M("COLLISION ENERGY"),
