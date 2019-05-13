@@ -88,6 +88,9 @@ Namespace Ms1.PrecursorType
         ''' </summary>
         ''' <param name="precursor_type">如果这个字符串没有电荷数量结尾,则这个函数默认是带有1个单位的电荷的</param>
         ''' <param name="ionMode">只允许出现``+/-``这两种字符串</param>
+        ''' <param name="skipEvalAdducts">
+        ''' 如果有时候只需要对<paramref name="precursor_type"/>字符串做格式化,而不需要做计算的话,可以将这个参数设置为True,加快计算效率
+        ''' </param>
         ''' <returns></returns>
         <Extension>
         Public Function ParseMzCalculator(precursor_type$, Optional ionMode$ = "+", Optional skipEvalAdducts As Boolean = False) As MzCalculator
