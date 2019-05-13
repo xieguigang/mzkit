@@ -84,7 +84,7 @@ Namespace Ms1.PrecursorType
         End Function
 
         <Extension>
-        Public Function ParseMzCalculator(precursor_type As String) As MzCalculator
+        Public Function ParseMzCalculator(precursor_type$, Optional ionMode$ = "+") As MzCalculator
             Dim type$ = precursor_type.GetStackValue("[", "]")
             Dim mode$ = precursor_type.Split("]"c).Last.Match("[+-]")
             Dim charge$ = precursor_type.Split("]"c).Last.Match("\d+") Or defaultCharge
@@ -94,6 +94,10 @@ Namespace Ms1.PrecursorType
                            In formulas.TryCast(Of IEnumerable(Of (sign%, expression As String)))
                            Let mass As Double = MolWeight.Eval(formula.expression)
                            Into Sum(formula.sign * mass)
+
+            If mode.StringEmpty Then
+                mode = ionMode
+            End If
 
             Return New MzCalculator With {
                 .M = M,
