@@ -83,29 +83,48 @@ Namespace Ms1.PrecursorType
             Return chargeValue
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="precursor_type">如果这个字符串没有电荷数量结尾,则这个函数默认是带有1个单位的电荷的</param>
+        ''' <param name="ionMode$"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function ParseMzCalculator(precursor_type$, Optional ionMode$ = "+") As MzCalculator
             Dim type$ = precursor_type.GetStackValue("[", "]")
-            Dim mode$ = precursor_type.Split("]"c).Last.Match("[+-]")
+            Dim mode$ = precursor_type.Split("]"c).Last.Match("[+-]") Or ionMode.AsDefault
             Dim charge$ = precursor_type.Split("]"c).Last.Match("\d+") Or defaultCharge
             Dim M% = CInt(Val(type.Matches("\d*M[+-]+").FirstOrDefault)) Or defaultMassCount
-            Dim formulas = Parser.Formula(Strings.Trim(precursor_type), raw:=True)
-            Dim adducts# = Aggregate formula
-                           In formulas.TryCast(Of IEnumerable(Of (sign%, expression As String)))
+            Dim formulas = Parser.Formula(Strings.Trim(precursor_type), raw:=True) _
+                .TryCast(Of IEnumerable(Of (sign%, expression As String))) _
+                .ToArray
+            Dim adducts# = Aggregate formula As (sign%, expression$)
+                           In formulas
                            Let mass As Double = MolWeight.Eval(formula.expression)
                            Into Sum(formula.sign * mass)
 
-            If mode.StringEmpty Then
+            If ParseIonMode(mode) = 0 Then
                 mode = ionMode
             End If
 
             Return New MzCalculator With {
                 .M = M,
                 .charge = charge,
-                .name = precursor_type,
+                .name = formulas.ToString(M, charge, mode),
                 .adducts = adducts,
                 .mode = mode
             }
+        End Function
+
+        <Extension>
+        Private Function ToString(formula As (sign%, expression$)(), M%, charge$, mode$) As String
+            Dim adducts$ = formula _
+                .Select(Function(t) $"{If(t.sign > 0, "+", "-")}{t.expression}") _
+                .JoinBy("")
+            Dim main$ = If(M = 1, "M", M & "M")
+            Dim chargeMode$ = If(charge = 1, mode, charge & mode)
+
+            Return $"[{main}{adducts}]{chargeMode}"
         End Function
 
         Public Function Formula(precursor_type$, Optional raw As Boolean = True) As [Variant](Of String, IEnumerable(Of (sign%, expression As String)))
@@ -113,7 +132,7 @@ Namespace Ms1.PrecursorType
             Dim parser As CharPtr = precursor_type.GetStackValue("[", "]").StringReplace("\d*M", "")
             Dim buffer As New List(Of Char)
             Dim c As Char
-            Dim sign%
+            Dim sign% = 1
 
             Do While Not parser.EndRead
                 c = ++parser
@@ -131,7 +150,9 @@ Namespace Ms1.PrecursorType
             Loop
 
             ' 补上最后一个元素
-            formulas += (sign, buffer.CharString)
+            If buffer > 0 Then
+                formulas += (sign, buffer.CharString)
+            End If
 
             If raw Then
                 ' 20190510

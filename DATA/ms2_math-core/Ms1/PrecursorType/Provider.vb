@@ -161,14 +161,18 @@ Namespace Ms1.PrecursorType
         ''' </summary>
         ''' <param name="mode"></param>
         ''' <returns></returns>
-        Public Function ParseIonMode(mode As String) As Integer
+        Public Function ParseIonMode(mode$, Optional allowsUnknown As Boolean = False) As Integer
             Select Case LCase(mode)
                 Case "+", "1", "p", "pos", "positive"
                     Return 1
                 Case "-", "-1", "n", "neg", "negative"
                     Return -1
                 Case Else
-                    Throw New InvalidExpressionException(mode)
+                    If allowsUnknown Then
+                        Return 0
+                    Else
+                        Throw New InvalidExpressionException(mode)
+                    End If
             End Select
         End Function
 
