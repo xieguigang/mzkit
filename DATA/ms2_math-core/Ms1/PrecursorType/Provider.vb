@@ -125,34 +125,50 @@ Namespace Ms1.PrecursorType
         '# 2M+Hac-H	        2M + 59.013851	    1-	2.00	59.013851	1765.675631	1693.626149
         '# 3M-H	            3M - 1.007276	    1-	3.00	1.007276	2560.999946	2627.952724
 
-        Public ReadOnly Property Positive() As Dictionary(Of String, MzCalculator)
+        Public ReadOnly Property Positives() As MzCalculator()
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return PositiveFormula.GetFormulas
+                Return PositiveFormula.GetFormulas _
+                    .Values _
+                    .ToArray
             End Get
         End Property
 
-        Public ReadOnly Property Negative() As Dictionary(Of String, MzCalculator)
+        Public ReadOnly Property Negatives() As MzCalculator()
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return NegativeFormula.GetFormulas
+                Return NegativeFormula.GetFormulas _
+                    .Values _
+                    .ToArray
             End Get
         End Property
 
-        ReadOnly pos As Dictionary(Of String, MzCalculator) = Positive
-        ReadOnly neg As Dictionary(Of String, MzCalculator) = Negative
+        ReadOnly pos As Dictionary(Of String, MzCalculator) = PositiveFormula.GetFormulas
+        ReadOnly neg As Dictionary(Of String, MzCalculator) = NegativeFormula.GetFormulas
 
         Public ReadOnly Property Positive(mode As String) As MzCalculator
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return pos.GetValueOrNull(mode)
+                Dim mz = pos.GetValueOrNull(mode)
+
+                If mz Is Nothing Then
+                    mz = Parser.ParseMzCalculator(mode, "+")
+                End If
+
+                Return mz
             End Get
         End Property
 
         Public ReadOnly Property Negative(mode As String) As MzCalculator
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return neg.GetValueOrNull(mode)
+                Dim mz = neg.GetValueOrNull(mode)
+
+                If mz Is Nothing Then
+                    mz = Parser.ParseMzCalculator(mode, "-")
+                End If
+
+                Return mz
             End Get
         End Property
 
@@ -192,9 +208,9 @@ Namespace Ms1.PrecursorType
 
         Public Function GetCalculator(ion_mode As String) As Dictionary(Of String, MzCalculator)
             If ParseIonMode(ion_mode) = 1 Then
-                Return Positive
+                Return pos
             Else
-                Return Negative
+                Return neg
             End If
         End Function
     End Module

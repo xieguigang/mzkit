@@ -60,7 +60,7 @@ Imports sys = System.Math
 
 Namespace Ms1.PrecursorType
 
-    Public Structure MzCalculator
+    Public Class MzCalculator
 
         Public Property name As String
         ''' <summary>
@@ -85,6 +85,9 @@ Namespace Ms1.PrecursorType
                                mode = ASCII.NUL
             End Get
         End Property
+
+        Sub New()
+        End Sub
 
         Sub New(type$, charge%, M#, adducts#)
             Me.name = type
@@ -162,7 +165,7 @@ Namespace Ms1.PrecursorType
                 }
             Next
         End Function
-    End Structure
+    End Class
 
     Public Class MzReport
 
