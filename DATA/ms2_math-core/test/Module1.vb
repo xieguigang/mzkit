@@ -48,7 +48,19 @@ Imports SMRUCC.MassSpectrum.Math.Ms1.PrecursorType
 
 Module Module1
 
+    Sub parserTest()
+        Dim t1 = Parser.ParseMzCalculator("M+H")
+        Dim t2 = Parser.ParseMzCalculator("[M+H]+")
+        Dim t3 = Parser.ParseMzCalculator("[M]")
+        Dim t4 = Parser.ParseMzCalculator("[M+H]2+")
+
+
+        Pause()
+    End Sub
+
     Sub Main()
+
+        Call parserTest()
 
         Dim mass = 853.33089
 

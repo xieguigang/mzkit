@@ -79,9 +79,18 @@ Namespace Ms1.PrecursorType
             End If
         End Function
 
+        ''' <summary>
+        ''' 主要是用于计算<see cref="MzCalculator.adducts"/>部分的质量
+        ''' </summary>
+        ''' <param name="formula"></param>
+        ''' <returns></returns>
         Public Function Eval(formula As String) As Double
             Static ionModeSymbols As Index(Of Char) = {"+"c, "-"c}
 
+            If formula.StringEmpty Then
+                ' [M]+, [M]-是没有adducts的
+                Return 0
+            End If
             If formula.First Like ionModeSymbols Then
                 formula = "0H" & formula
             End If
