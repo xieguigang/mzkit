@@ -44,6 +44,7 @@
 
 Imports System.Collections.Specialized
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
@@ -84,8 +85,15 @@ Public Module SDFReader
     ''' <param name="skipSpectraInfo">
     ''' 是否只解析注释信息部分的数据
     ''' </param>
+    ''' <param name="recalculateMz">
+    ''' 假若重新计算m/z的话,会要求目标具有正确的exact_mass结果值, 在打开了这个选项之后,
+    ''' 程序会将所有的非[M]+/[M]-/[M+H]+/[M-H]-的mz重新更新计算为[M+H]+或者[M-H]-的
+    ''' m/z结果值
+    ''' </param>
     ''' <returns></returns>
-    Public Iterator Function ParseFile(path As String, Optional skipSpectraInfo As Boolean = False) As IEnumerable(Of SpectraSection)
+    Public Iterator Function ParseFile(path As String,
+                                       Optional skipSpectraInfo As Boolean = False,
+                                       Optional recalculateMz As Boolean = False) As IEnumerable(Of SpectraSection)
         For Each mol As SDF In SDF.IterateParser(path, parseStruct:=False)
             Dim M As Func(Of String, String) = mol.readMeta
             Dim commentMeta = mol.MetaData!COMMENT.ToTable
@@ -95,7 +103,7 @@ Public Module SDFReader
             Dim exact_mass# = M("EXACT MASS")
 
             If Not skipSpectraInfo Then
-                info = M.readSpectraInfo
+                info = M.readSpectraInfo.FixMzType(exact_mass, recalculateMz)
                 ms2 = mol.MetaData("MASS SPECTRAL PEAKS") _
                     .Select(Function(line) line.Split) _
                     .Select(Function(line)
@@ -106,26 +114,6 @@ Public Module SDFReader
                                 }
                             End Function) _
                     .ToArray
-
-                ' precursor_type可能在其他的位置, 或者读取的字符串主键不正确
-                If info.precursor_type.StringEmpty Then
-                    info.precursor_type = PrecursorType _
-                        .FindPrecursorType(exact_mass, info.mz, 1, info.ion_mode) _
-                        .precursorType
-
-                    If info.precursor_type = "Unknown" Then
-                        ' [M+H]+/[M-H]- default
-                        If ParseIonMode(info.ion_mode, allowsUnknown:=True) >= 0 Then
-                            info.precursor_type = "[M+H]+"
-                            info.mz = Provider.Positive("M+H").CalcMZ(exact_mass)
-                            info.ion_mode = "+"
-                        Else
-                            info.precursor_type = "[M-H]-"
-                            info.mz = Provider.Negative("M-H").CalcMZ(exact_mass)
-                            info.ion_mode = "-"
-                        End If
-                    End If
-                End If
             End If
 
             Yield New SpectraSection With {
@@ -139,6 +127,74 @@ Public Module SDFReader
                 .SpectraInfo = info
             }
         Next
+    End Function
+
+    ReadOnly standards As Index(Of String) = {"M", "M+H", "M-H", "[M]", "[M]+", "[M]-", "[M+H]", "[M-H]", "[M+H]+", "[M-H]-"}
+
+    ''' <summary>
+    ''' MoNA库之中一些比较重要的字段比较混乱,会需要使用这个函数来重新构建出所需要的数据
+    ''' </summary>
+    ''' <param name="info"></param>
+    ''' <param name="recalculateMz"></param>
+    ''' <returns></returns>
+    ''' 
+    <Extension>
+    Private Function FixMzType(info As SpectraInfo, exact_mass#, recalculateMz As Boolean) As SpectraInfo
+        Dim precursor_type As String = info.precursor_type
+        Dim ion_mode$ = ParseIonMode(info.ion_mode, allowsUnknown:=True)
+
+        If ion_mode = "0" Then
+            ion_mode = ParseIonMode(Strings.Trim(precursor_type).Last, allowsUnknown:=True)
+
+            ' 默认为阳离子
+            If ion_mode = "0" Then
+                ion_mode = "1"
+            End If
+        End If
+
+        If recalculateMz Then
+            If precursor_type Like standards Then
+                ' 重新格式化一次
+                With Parser.ParseMzCalculator(precursor_type, ion_mode, skipEvalAdducts:=False)
+                    info.precursor_type = .ToString
+                    info.mz = .CalcMZ(exact_mass)
+                    info.ion_mode = ion_mode
+                End With
+            Else
+                ' 对于其他的类型,则重新计算为[M+H]+或者[M-H]-类型的数据
+                If ion_mode = "1" Then
+                    info.precursor_type = "[M+H]+"
+                    info.mz = Provider.Positive("M+H").CalcMZ(exact_mass)
+                    info.ion_mode = "+"
+                Else
+                    info.precursor_type = "[M-H]-"
+                    info.mz = Provider.Negative("M-H").CalcMZ(exact_mass)
+                    info.ion_mode = "-"
+                End If
+            End If
+        Else
+            ' precursor_type可能在其他的位置, 或者读取的字符串主键不正确
+            If info.precursor_type.StringEmpty Then
+                info.precursor_type = PrecursorType _
+                    .FindPrecursorType(exact_mass, info.mz, 1, info.ion_mode) _
+                    .precursorType
+
+                If info.precursor_type = "Unknown" Then
+                    ' [M+H]+/[M-H]- default
+                    If ParseIonMode(info.ion_mode, allowsUnknown:=True) >= 0 Then
+                        info.precursor_type = "[M+H]+"
+                        info.mz = Provider.Positive("M+H").CalcMZ(exact_mass)
+                        info.ion_mode = "+"
+                    Else
+                        info.precursor_type = "[M-H]-"
+                        info.mz = Provider.Negative("M-H").CalcMZ(exact_mass)
+                        info.ion_mode = "-"
+                    End If
+                End If
+            End If
+        End If
+
+        Return info
     End Function
 
     <Extension>
