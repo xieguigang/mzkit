@@ -115,12 +115,14 @@ Public Module SDFReader
 
                     If info.precursor_type = "Unknown" Then
                         ' [M+H]+/[M-H]- default
-                        If ParseIonMode(info.ion_mode) = 1 Then
+                        If ParseIonMode(info.ion_mode, allowsUnknown:=True) >= 0 Then
                             info.precursor_type = "[M+H]+"
                             info.mz = Provider.Positive("M+H").CalcMZ(exact_mass)
+                            info.ion_mode = "+"
                         Else
                             info.precursor_type = "[M-H]-"
                             info.mz = Provider.Negative("M-H").CalcMZ(exact_mass)
+                            info.ion_mode = "-"
                         End If
                     End If
                 End If

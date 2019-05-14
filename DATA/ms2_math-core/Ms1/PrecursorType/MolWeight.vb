@@ -55,6 +55,8 @@ Namespace Ms1.PrecursorType
             {"H", 1.007276},
             {"CH3COO", 59.013},
             {"C3H7O2", 75.045},
+            {"C2H3O", 43.018},
+            {"Methylcarbonyl", 43.018},
             {"Propyldioxy", 75.045},
             {"C12H20O9", 308.111},
             {"Lactal", 308.111},
