@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports System.Web.Script.Serialization
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
@@ -55,6 +56,14 @@ Namespace Spectra
 
         <XmlElement>
         Public Property matrix As ms2()
+
+        <ScriptIgnore>
+        <XmlIgnore>
+        Public ReadOnly Property length As Integer
+            Get
+                Return matrix.Length
+            End Get
+        End Property
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function LibraryMatrix() As LibraryMatrix
