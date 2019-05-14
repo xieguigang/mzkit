@@ -70,7 +70,7 @@ Imports WhichSelector = Microsoft.VisualBasic.Linq.Which
 Namespace Spectra
 
     ''' <summary>
-    ''' The <see cref="ms2"/> library matrix
+    ''' The <see cref="ms2"/> library matrix object model
     ''' </summary>
     Public Class LibraryMatrix : Inherits IVector(Of ms2)
         Implements INamedValue
