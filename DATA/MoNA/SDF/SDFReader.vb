@@ -112,6 +112,17 @@ Public Module SDFReader
                     info.precursor_type = PrecursorType _
                         .FindPrecursorType(exact_mass, info.mz, 1, info.ion_mode) _
                         .precursorType
+
+                    If info.precursor_type = "Unknown" Then
+                        ' [M+H]+/[M-H]- default
+                        If ParseIonMode(info.ion_mode) = 1 Then
+                            info.precursor_type = "[M+H]+"
+                            info.mz = Provider.Positive("M+H").CalcMZ(exact_mass)
+                        Else
+                            info.precursor_type = "[M-H]-"
+                            info.mz = Provider.Negative("M-H").CalcMZ(exact_mass)
+                        End If
+                    End If
                 End If
             End If
 
@@ -134,7 +145,9 @@ Public Module SDFReader
         Dim precursor_type$ = M("PRECURSOR TYPE")
         Dim mz$ = M("PRECURSOR M/Z")
 
-        If Not Double.TryParse(mz, Nothing) Then
+        If mz.StringEmpty Then
+            mz = 0
+        ElseIf Not Double.TryParse(mz, Nothing) Then
             Dim tmp = precursor_type
             precursor_type = mz
             mz = tmp
