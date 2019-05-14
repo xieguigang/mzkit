@@ -94,6 +94,7 @@ Public Module SDFReader
     Public Iterator Function ParseFile(path As String,
                                        Optional skipSpectraInfo As Boolean = False,
                                        Optional recalculateMz As Boolean = False) As IEnumerable(Of SpectraSection)
+
         For Each mol As SDF In SDF.IterateParser(path, parseStruct:=False)
             Dim M As Func(Of String, String) = mol.readMeta
             Dim commentMeta = mol.MetaData!COMMENT.ToTable
@@ -148,8 +149,17 @@ Public Module SDFReader
 
             ' 默认为阳离子
             If ion_mode = "0" Then
-                ion_mode = "1"
+                ion_mode = "+"
+                Call $"[{info.ion_mode}] is invalid, use positive mode as default".__DEBUG_ECHO
             End If
+        End If
+
+        ' 2019-05-14
+        ' Parser.ParseMzCalculator函数之中的缓存需要+/-作为主键
+        If ion_mode = "1" Then
+            ion_mode = "+"
+        Else
+            ion_mode = "-"
         End If
 
         If recalculateMz Then
@@ -161,6 +171,8 @@ Public Module SDFReader
                     info.ion_mode = ion_mode
                 End With
             Else
+                Call $"Recalculate m/z precursor_type for [{info.precursor_type}]".__DEBUG_ECHO
+
                 ' 对于其他的类型,则重新计算为[M+H]+或者[M-H]-类型的数据
                 If ion_mode = "1" Then
                     info.precursor_type = "[M+H]+"
