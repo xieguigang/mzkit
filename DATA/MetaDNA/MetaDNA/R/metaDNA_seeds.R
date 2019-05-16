@@ -29,7 +29,7 @@
 #'       And this will makes the alignment iteration took very long long time for run. 
 #'       So just pick the top 5 result when requires all alignment hit as seeds.
 #'
-extends.seeds <- function(output, seeds.all) {
+extends.seeds <- function(output, rt.adjust = function(rt, KEGG_id) 1, seeds.all = TRUE) {
 	# one kegg id have multiple hits or only one best spectra
 	seeds <- list();	
 	
@@ -51,9 +51,10 @@ extends.seeds <- function(output, seeds.all) {
 				align <- feature$align;
 				cluster <- seeds[[KEGG]];
 				hit <- list(
-					spectra = align$candidate, 
-					score   = align$score, 
-					ref     = align$ms2.name
+					spectra   = align$candidate, 
+					score     = align$score, 
+					ref       = align$ms2.name,
+					rt.adjust = rt.adjust(feature$feature$rt, KEGG)
 				);							
 				
 				# try to fix the duplicated spectra data
@@ -78,7 +79,7 @@ extends.seeds <- function(output, seeds.all) {
 						# so that we can get the best hit directly by index 1
 						best <- cluster[[1]];
 						
-						if (min(hit$score) > min(best$score)) {
+						if (metaDNA.score(hit) > metaDNA.score(best)) {
 							# current feature alignment is the best alignment
 							seed <- list();
 							seed[[uid]] <- hit;
@@ -102,6 +103,14 @@ extends.seeds <- function(output, seeds.all) {
 	}
 }
 
+#' Seeds score evaluation
+#'
+#' @param hit The metaDNA alignment hit record 
+#'
+metaDNA.score <- function(hit) {
+	min(hit$score) + hit$rt.adjust;
+}
+
 #' Subset of the seeds by top scores
 #'
 #' @param seeds The seeds data collection
@@ -112,7 +121,7 @@ extends.seeds <- function(output, seeds.all) {
 extends.seeds.top <- function(seeds, n = 5) {
 	lapply(seeds, function(compound) {
 		if (length(compound) > n) {
-			scores <- sapply(compound, function(m) min(m$score)) %=>% as.vector;
+			scores <- sapply(compound, metaDNA.score) %=>% as.vector;
 			desc <- order(-scores);
 			index <- names(compound)[desc];
 			top <- index[1:n];

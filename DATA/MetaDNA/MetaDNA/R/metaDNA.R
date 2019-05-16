@@ -61,7 +61,14 @@ Imports(Microsoft.VisualBasic.Language);
 #' @param kegg_id.skips You can put the kegg compound ids in this character vector
 #'       If you don't want some specific metabolite was indeified from this
 #'       metaDNA algorithm function.
-#'
+#' @param rt.adjust The rt adjust lambda function, it takes two parameter:  
+#'    \enumerate{
+#'        \item \code{rt}, the rt of unidentified sample ms1 feature,
+#'        \item \code{KEGG_id} the KEGG_cpd that assigned to current unidentified sample ms1 feature.
+#'    }
+#'    and then returns a rt alignment score. If this parameter is ignored, 
+#'    then will use score 1 as default means no rt adjustment score.
+#' 
 #' @return A \code{identify} parameter data structure like metabolite identify
 #'      result for \code{unknown} parameter input data
 #'
@@ -78,6 +85,7 @@ Imports(Microsoft.VisualBasic.Language);
 metaDNA <- function(identify, unknown, do.align,
                     precursor_type = c("[M+H]+", "[M]+"),
                     tolerance = assert.deltaMass(0.3),
+					rt.adjust = function(rt, KEGG_id) 1,
                     score.cutoff = 0.8,
                     kegg_id.skips = NULL,
 					seeds.all = TRUE,
@@ -109,12 +117,12 @@ metaDNA <- function(identify, unknown, do.align,
         identify, filter.skips,
         unknown, do.align,
         match.kegg,
-        score.cutoff
+        score.cutoff		
     );
 	
 	memory.sample("[metaDNA]    do First iteration...");
 	
-	seeds <- extends.seeds(output, seeds.all);
+	seeds <- extends.seeds(output, rt.adjust, seeds.all);
 	metaDNA.out <- output;
 	stats <- NULL;
 	totals <- 0;
@@ -132,12 +140,12 @@ metaDNA <- function(identify, unknown, do.align,
 				unknown = unknown,
 				do.align = do.align,
 				match.kegg = match.kegg,
-				score.cutoff = score.cutoff
+				score.cutoff = score.cutoff				
 			);
 			metaDNA.out <- append(metaDNA.out, output);				
 			
 			# using identify output as seeds for next iteration
-			seeds <- extends.seeds(output, seeds.all);
+			seeds <- extends.seeds(output, rt.adjust, seeds.all);
 			n <- length(seeds);
 			
 			if (n == 0) {
