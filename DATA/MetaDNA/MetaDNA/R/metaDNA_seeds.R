@@ -103,7 +103,7 @@ extends.seeds <- function(output, seeds.all) {
 extends.seeds.top <- function(seeds, n = 5) {
 	lapply(seeds, function(compound) {
 		if (length(compound) > n) {
-			scores <- sapply(compound, function(m) min(hit$score)) %=>% as.vector;
+			scores <- sapply(compound, function(m) min(m$score)) %=>% as.vector;
 			desc <- order(-scores);
 			index <- names(compound)[desc];
 			top <- index[1:n];
