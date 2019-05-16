@@ -80,6 +80,7 @@ metaDNA <- function(identify, unknown, do.align,
                     tolerance = assert.deltaMass(0.3),
                     score.cutoff = 0.8,
                     kegg_id.skips = NULL,
+					seeds.all = TRUE,
                     iterations = 20) {
 
     cat("\n\n\n");
@@ -110,7 +111,7 @@ metaDNA <- function(identify, unknown, do.align,
         match.kegg,
         score.cutoff
     );
-	seeds <- extends.seeds(output);
+	seeds <- extends.seeds(output, seeds.all);
 	metaDNA.out <- output;
 	stats <- NULL;
 	totals <- 0;
@@ -132,7 +133,7 @@ metaDNA <- function(identify, unknown, do.align,
 			metaDNA.out <- append(metaDNA.out, output);				
 			
 			# using identify output as seeds for next iteration
-			seeds <- extends.seeds(output);
+			seeds <- extends.seeds(output, seeds.all);
 			n <- length(seeds);
 			
 			if (n == 0) {
