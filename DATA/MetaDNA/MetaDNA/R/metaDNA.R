@@ -21,7 +21,7 @@ Imports(Microsoft.VisualBasic.Language);
 #' @description How to: The basic idea of the \code{MetaDNA} algorightm is
 #'      using the identified ms2 data to align the unknown ms2 data.
 #'
-#' @param identify A \code{list} object with two members
+#' @param identify The metaDNA seeds data input, A \code{list} object with two members
 #'
 #'      \code{identify = list((data.frame) meta.KEGG, (list) peak_ms2)}
 #'
@@ -165,54 +165,6 @@ metaDNA <- function(identify, unknown, do.align,
     metaDNA.out;
 }
 
-#' Convert output as metaDNA seeds
-#'
-#' @description The identify list only provides ms2 spectra matrix and KEGG id.
-#'   KEGG id is the names of the identify list.
-#'   So, the identify list object its structure looks like: 
-#' 
-#'   \code{
-#'      identify \{
-#'         KEGG_id1 => list(spectra),
-#'         KEGG_id2 => list(spectra),
-#'         ...
-#'      \}
-#'   }
-#'
-extends.seeds <- function(output) {
-	# one kegg id only have one best spectra
-	seeds <- list();
-	
-	for(block in output) {
-		if (block %=>% IsNothing) {
-			next;
-		}
-	
-		for(feature in block) {
-			KEGG <- feature$kegg.info$kegg$ID;
-			best <- seeds[[KEGG]];
-			hit <- list(
-				spectra = feature$align$candidate,
-				score = feature$align$score
-			);
-			
-			if (best %=>% IsNothing) {
-				# current feature alignment is the best
-				seeds[[KEGG]] <- hit;
-			} else {
-				if (min(hit$score) > min(best$score)) {
-					# current feature alignment is the best alignment
-					seeds[[KEGG]] <- hit;
-				} else {
-					# no changes
-				}
-			}
-		}
-	}
-	
-	seeds;
-}
-
 #' Run a metaDNA prediction iteration
 #'
 #' @param identify The seeds data for the metaDNA algorithm.
@@ -236,6 +188,8 @@ metaDNA.iteration <- function(identify, filter.skips,
     seeds <- tick.each(names(identify), function(KEGG_cpd) {
         # Get all of the kegg reaction partner metabolite id
         # for current identified kegg metabolite id
+		# 
+		# this seeds data contains multiple hits
         identified <- identify[[KEGG_cpd]];
 		# find KEGG reaction partner for current identify KEGG compound
         KEGG.partners <- KEGG_cpd %=>% kegg.partners %=>% filter.skips %=>% unique;
@@ -269,13 +223,15 @@ metaDNA.iteration <- function(identify, filter.skips,
                 # unknown.mz is the corresponding m/z
                 # ppm is the ppm value for unknown mz match with the KEGG compound m/z
                 # KEGG.partners, identify.ms2, unknown, ms2.align, unknow.matches
-                metaDNA.impl(
-                    unknown.query = unknown.query,
-                    identify.ms2 = identified$spectra,
-                    unknown = unknown,
-                    ms2.align = do.align,
-                    score.cutoff = score.cutoff
-                );
+				lapply(identified, function(seed) {
+					metaDNA.impl(
+						unknown.query = unknown.query,
+						identify.ms2  = seed$spectra,
+						unknown       = unknown,
+						ms2.align     = do.align,
+						score.cutoff  = score.cutoff
+					);
+				});                
             }
         }
     });
