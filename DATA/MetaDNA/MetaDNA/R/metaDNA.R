@@ -111,12 +111,16 @@ metaDNA <- function(identify, unknown, do.align,
         match.kegg,
         score.cutoff
     );
+	
+	memory.sample("[metaDNA]    do First iteration...");
+	
 	seeds <- extends.seeds(output, seeds.all);
 	metaDNA.out <- output;
 	stats <- NULL;
 	totals <- 0;
 	kegg_id.skips <- append(kegg_id.skips, names(seeds));
 	filter.skips <- kegg_id.skips %=>% create_filter.skips;
+	timer <- benchmark();
 	
 	if (iterations > 1) {
 	    for(i in 1:iterations) {
@@ -149,12 +153,14 @@ metaDNA <- function(identify, unknown, do.align,
 				kegg_id.skips <- append(kegg_id.skips, names(seeds));
 				filter.skips <- create_filter.skips(kegg_id.skips, FALSE);			
 				totals <- totals + n;
-				stats <- rbind(stats, c(i, n, totals));
+				stats <- rbind(stats, c(i, n, totals, timer$since_last));
 			}
+			
+			memory.sample(sprintf("[metaDNA]    do metaDNA Iteration %s ...", i));
 		}
 
 		if (!is.null(stats)) {
-			colnames(stats) <- c("Iteration", "Predicts", "Total");
+			colnames(stats) <- c("Iteration", "Predicts", "Total", "Elapsed(ms)");
 			rownames(stats) <- stats[, "Iteration"];
 			
 			print(stats);
