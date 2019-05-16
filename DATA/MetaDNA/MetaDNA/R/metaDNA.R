@@ -82,7 +82,7 @@ metaDNA <- function(identify, unknown, do.align,
                     kegg_id.skips = NULL,
 					seeds.all = TRUE,
                     iterations = 20) {
-
+					
     cat("\n\n\n");
 
     # 1. Find all of the related KEGG compound by KEGG reaction link for
