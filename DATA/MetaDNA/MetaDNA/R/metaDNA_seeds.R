@@ -20,24 +20,36 @@
 #'      \}
 #'   }
 #'
+#' @param seeds.all If this parameter is enable, then all of the hit from the 
+#'       alignment result will be used as metaDNA seeds in the next iteration, 
+#'       otherwise the best hit will be picked from the alignment result as 
+#'       the seeds if this parameter is set to \code{FALSE}
+#'
 extends.seeds <- function(output, seeds.all) {
 	# one kegg id have multiple hits or only one best spectra
 	seeds <- list();
-	uid <- 1;
+	uid <- 0;
 	
-	for(block in output) {
+	print("Create metaDNA seeds from alignment result");
+	
+	for (block in output) {
 		if (block %=>% IsNothing) {
 			next;
 		}
 	
 		for (seedsCluster in block) {
+		
+		    if (seedsCluster %=>% IsNothing) {
+			    next;
+			}
+		
 			for (feature in seedsCluster) {
 				KEGG <- feature$kegg.info$kegg$ID;
+				align <- feature$align;
 				cluster <- seeds[[KEGG]];
-				hit <- list(
-					spectra = feature$align$candidate,
-					score = feature$align$score
-				);							
+				hit <- list(spectra = align$candidate, score = align$score);							
+				
+				uid = uid + 1;
 				
 				if (cluster %=>% IsNothing) {
 					# current feature alignment is the best
@@ -70,6 +82,8 @@ extends.seeds <- function(output, seeds.all) {
 			}
 		}
 	}
+	
+	gc();
 	
 	seeds;
 }

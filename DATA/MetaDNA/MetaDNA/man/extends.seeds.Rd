@@ -4,7 +4,13 @@
 \alias{extends.seeds}
 \title{Convert output as metaDNA seeds}
 \usage{
-extends.seeds(output)
+extends.seeds(output, seeds.all)
+}
+\arguments{
+\item{seeds.all}{If this parameter is enable, then all of the hit from the 
+alignment result will be used as metaDNA seeds in the next iteration, 
+otherwise the best hit will be picked from the alignment result as 
+the seeds if this parameter is set to \code{FALSE}}
 }
 \description{
 The identify list only provides ms2 spectra matrix and KEGG id.
