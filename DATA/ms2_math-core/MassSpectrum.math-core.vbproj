@@ -122,6 +122,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -146,7 +147,10 @@
     <Compile Include="Chromatogram\Quantile.vb" />
     <Compile Include="Chromatogram\ROI.vb" />
     <Compile Include="Extensions.vb" />
+    <Compile Include="Ms1\PolarityData.vb" />
     <Compile Include="Ms1\PrecursorType\Extensions.vb" />
+    <Compile Include="Ms1\PrecursorType\Formula\Negative.vb" />
+    <Compile Include="Ms1\PrecursorType\Formula\Positive.vb" />
     <Compile Include="Ms1\PrecursorType\Provider.vb" />
     <Compile Include="Ms1\PrecursorType\MolWeight.vb" />
     <Compile Include="Ms1\PrecursorType\MzCalculator.vb" />

@@ -49,6 +49,12 @@ Public Class ChemOntClassify
         End Get
     End Property
 
+    Default Public ReadOnly Property Item(id As String) As GenericTree
+        Get
+            Return oboTable(id)
+        End Get
+    End Property
+
     ''' <summary>
     ''' 
     ''' </summary>

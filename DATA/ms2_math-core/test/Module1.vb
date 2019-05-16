@@ -48,7 +48,20 @@ Imports SMRUCC.MassSpectrum.Math.Ms1.PrecursorType
 
 Module Module1
 
+    Sub parserTest()
+        Dim t1 = Parser.ParseMzCalculator("M+H")
+        Dim t2 = Parser.ParseMzCalculator("[M+H]+")
+        Dim t3 = Parser.ParseMzCalculator("[M]")
+        Dim t4 = Parser.ParseMzCalculator("[M+H]2+")
+        Dim t5 = Parser.ParseMzCalculator("[-H]?")
+        Dim t6 = Parser.ParseMzCalculator("[99M-235H+33C]1000+")
+
+        Pause()
+    End Sub
+
     Sub Main()
+
+        Call parserTest()
 
         Dim mass = 853.33089
 
@@ -58,7 +71,7 @@ Module Module1
         Dim html As New StringBuilder
 
         Using dev As New StringWriter(html)
-            Call MzCalculator.CalculateMode(mass, "-").PrintTable(dev)
+            Call MzCalculator.Calculate(mass, "-").PrintTable(dev)
         End Using
 
         Dim display As String = html.ToString

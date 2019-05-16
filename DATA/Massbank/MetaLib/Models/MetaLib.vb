@@ -58,6 +58,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
@@ -74,7 +75,7 @@ Namespace MetaLib
         ''' <returns></returns>
         <XmlAttribute> Public Property ID As String Implements IKeyedEntity(Of String).Key
         <XmlAttribute> Public Property formula As String
-        <XmlAttribute> Public Property mass As Double
+        <XmlAttribute> Public Property exact_mass As Double
 
         Public Property name As String
         Public Property xref As xref
@@ -157,6 +158,7 @@ Namespace MetaLib
         Public Property pubchem As String
         Public Property HMDB As String
         Public Property metlin As String
+        Public Property Wikipedia As String
         ''' <summary>
         ''' Multiple CAS id may exists
         ''' </summary>
@@ -167,18 +169,22 @@ Namespace MetaLib
         Public Property InChI As String
         Public Property SMILES As String
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function IsChEBI(synonym As String) As Boolean
             Return synonym.IsPattern("CHEBI[:]\d+", RegexICSng)
         End Function
 
-        Public Shared Function IsCAS(synonym As String) As Boolean
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function IsCASNumber(synonym As String) As Boolean
             Return synonym.IsPattern("\d+([-]\d+)+", RegexICSng)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function IsHMDB(synonym As String) As Boolean
             Return synonym.IsPattern("HMDB\d+", RegexICSng)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function IsKEGG(synonym As String) As Boolean
             Return synonym.IsPattern("C((\d){5})", RegexICSng)
         End Function

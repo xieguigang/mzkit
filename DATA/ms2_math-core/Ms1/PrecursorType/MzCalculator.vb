@@ -1,57 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::dfb2e4c3214a41198dd8fec91af1dd94, ms2_math-core\Ms1\PrecursorType\MzCalculator.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Structure MzCalculator
-    ' 
-    '         Properties: adducts, charge, IsEmpty, M, mode
-    '                     name
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: AdductMZ, CalcMass, CalcMZ, CalculateMode, ReverseMass
-    '                   (+2 Overloads) ToString
-    ' 
-    '     Structure MzReport
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Structure MzCalculator
+' 
+'         Properties: adducts, charge, IsEmpty, M, mode
+'                     name
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: AdductMZ, CalcMass, CalcMZ, CalculateMode, ReverseMass
+'                   (+2 Overloads) ToString
+' 
+'     Structure MzReport
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Data.Linq.Mapping
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
@@ -59,9 +60,13 @@ Imports sys = System.Math
 
 Namespace Ms1.PrecursorType
 
-    Public Structure MzCalculator
+    Public Class MzCalculator
 
         Public Property name As String
+        ''' <summary>
+        ''' 电荷量的符号无所谓,计算出来的m/z结果值总是正数
+        ''' </summary>
+        ''' <returns></returns>
         Public Property charge As Integer
         Public Property M As Integer
 
@@ -80,6 +85,9 @@ Namespace Ms1.PrecursorType
                                mode = ASCII.NUL
             End Get
         End Property
+
+        Sub New()
+        End Sub
 
         Sub New(type$, charge%, M#, adducts#)
             Me.name = type
@@ -146,24 +154,31 @@ Namespace Ms1.PrecursorType
             Return ((mz - adduct) * sys.Abs(charge) / M)
         End Function
 
-        Public Shared Iterator Function CalculateMode(mass#, mode As String) As IEnumerable(Of MzReport)
+        Public Shared Iterator Function Calculate(mass#, mode As String) As IEnumerable(Of MzReport)
             For Each type In Provider.Calculator(mode).Values
                 Yield New MzReport With {
-                    .Adduct = type.adducts,
-                    .Charge = type.charge,
+                    .adduct = type.adducts,
+                    .charge = type.charge,
                     .M = type.M,
                     .mz = type.CalcMZ(mass),
-                    .PrecursorType = type.name
+                    .precursor_type = type.name
                 }
             Next
         End Function
-    End Structure
+    End Class
 
-    Public Structure MzReport
-        Dim PrecursorType As String
-        Dim Charge As Double
-        Dim M As Double
-        Dim Adduct As Double
-        Dim mz As Double
-    End Structure
+    Public Class MzReport
+
+        Public Property precursor_type As String
+        Public Property charge As Double
+        Public Property M As Double
+        Public Property adduct As Double
+
+        <Column(Name:="m/z")>
+        Public Property mz As Double
+
+        Public Overrides Function ToString() As String
+            Return $"{precursor_type} m/z={mz}"
+        End Function
+    End Class
 End Namespace

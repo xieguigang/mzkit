@@ -67,7 +67,7 @@ Namespace MetaLib
 
             Dim compareInteger = comparesInteger(yes, no)
 
-            If Math.Abs(meta.mass - other.mass) > 0.3 Then
+            If Math.Abs(meta.exact_mass - other.exact_mass) > 0.3 Then
                 no()
             End If
 

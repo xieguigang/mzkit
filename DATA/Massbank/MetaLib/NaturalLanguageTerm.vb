@@ -52,14 +52,17 @@ Namespace MetaLib
         ''' <summary>
         ''' 低聚肽的名称匹配模式
         ''' </summary>
-        Public Const OligopeptideName$ = "([A-Z][a-z]{2})(([-]|\s)+([A-Z][a-z]{2})){2,}"
+        Public Const OligopeptideName$ = "[A-Z][a-z]{2}"
 
         ReadOnly oligopeptidePattern As New Regex(OligopeptideName, RegexOptions.Singleline)
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function IsOligopeptideName(name As String) As Boolean
-            Return oligopeptidePattern.Match(name).Value = name
+            Dim tokens As String() = name.StringSplit("\s+")
+            Dim assert As Boolean = tokens.Length > 1 AndAlso tokens.All(Function(part) oligopeptidePattern.Match(part).Value = part)
+
+            Return assert
         End Function
 
         ''' <summary>

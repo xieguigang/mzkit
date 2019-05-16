@@ -95,6 +95,10 @@ Namespace File
                     Yield block.Skip(i).ToArray
 
                     Exit For
+                ElseIf block(i) = "No Structure" Then
+                    ' no structure, yield nothing
+                    Yield {}
+                    Yield block.Skip(i + 1).ToArray
                 End If
             Next
         End Function
@@ -110,6 +114,8 @@ Namespace File
         Private Function solveOffset(block As String()) As Integer
             For i As Integer = 0 To block.Length - 1
                 If block(i).IsPattern(MolStartFlag, RegexOptions.Singleline) Then
+                    Return i - 3
+                ElseIf block(i) = "No Structure" Then
                     Return i - 3
                 End If
             Next
@@ -142,6 +148,10 @@ Namespace File
 
             If parseStruct Then
                 struct = [Structure].ParseStream(mol)
+            End If
+
+            If ID.StringEmpty Then
+                ID = (metaData!ID)(Scan0)
             End If
 
             Return New SDF With {

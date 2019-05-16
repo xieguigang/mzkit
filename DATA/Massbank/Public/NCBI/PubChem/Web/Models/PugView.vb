@@ -121,7 +121,7 @@ Namespace NCBI.PubChem
                 .formula = formula,
                 .xref = xref,
                 .name = commonName,
-                .mass = exact_mass,
+                .exact_mass = exact_mass,
                 .ID = RecordNumber
             }
         End Function

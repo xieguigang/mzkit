@@ -53,6 +53,17 @@ Namespace MetaLib
 
     Public Module KEGGExtensions
 
+        <Extension>
+        Public Function FormatChebiId(id As String) As String
+            id = id.Match("\d+")
+
+            If Val(id) <= 0 Then
+                Return ""
+            Else
+                Return $"CHEBI:{id}"
+            End If
+        End Function
+
         ''' <summary>
         ''' 将KEGG数据库之中的药物编号以及Glyan物质的编号转换为Compound编号
         ''' </summary>
@@ -88,7 +99,7 @@ Namespace MetaLib
                 Dim CId = glycan.CompoundId
 
                 If Not CId.IsNullOrEmpty Then
-                    idMaps(glycan.Entry) = CId.First
+                    idMaps(glycan.entry) = CId.First
                 End If
             Next
 
