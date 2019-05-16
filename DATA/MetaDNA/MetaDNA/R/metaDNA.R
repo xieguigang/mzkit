@@ -55,7 +55,9 @@ Imports(Microsoft.VisualBasic.Language);
 #' @param score.cutoff MS/MS similarity cutoff for identify ms2 alignment with unknown ms2
 #'
 #' @param do.align The MS/MS alignment method, which is in format like: \code{function(q, s)}
-#'      Where \code{q} and \code{s} is a ms2 spectra matrix.
+#'      Where \code{q} and \code{s} is a ms2 spectra matrix. Due to the reason of the \code{q}
+#'      and \code{s} spectra data is comes from the same sample and same instrument, so that 
+#'      using the \code{SSM} spectra alignment algorithm for this parameter is recommended. 
 #'
 #' @param kegg_id.skips You can put the kegg compound ids in this character vector
 #'       If you don't want some specific metabolite was indeified from this
