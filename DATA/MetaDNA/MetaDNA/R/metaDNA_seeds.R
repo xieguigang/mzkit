@@ -20,9 +20,10 @@
 #'      \}
 #'   }
 #'
-extends.seeds <- function(output) {
+extends.seeds <- function(output, seeds.all) {
 	# one kegg id have multiple hits or only one best spectra
 	seeds <- list();
+	uid <- 1;
 	
 	for(block in output) {
 		if (block %=>% IsNothing) {
@@ -30,24 +31,41 @@ extends.seeds <- function(output) {
 		}
 	
 		for (seedsCluster in block) {
-			for(feature in seedsCluster) {
+			for (feature in seedsCluster) {
 				KEGG <- feature$kegg.info$kegg$ID;
-				best <- seeds[[KEGG]];
+				cluster <- seeds[[KEGG]];
 				hit <- list(
 					spectra = feature$align$candidate,
 					score = feature$align$score
-				);
+				);							
 				
-				if (best %=>% IsNothing) {
+				if (cluster %=>% IsNothing) {
 					# current feature alignment is the best
-					seeds[[KEGG]] <- hit;
+					seed <- list();
+					seed[[sprintf("#%s", uid)]] <- hit;
+					seeds[[KEGG]] <- seed;
 				} else {
-					if (min(hit$score) > min(best$score)) {
-						# current feature alignment is the best alignment
-						seeds[[KEGG]] <- hit;
+				    if (seeds.all) {
+					    # insert all hits as the seeds
+					    cluster[[sprintf("#%s", uid)]] <- hit;
+						seeds[[KEGG]] <- cluster;
+						
+						rm(list="cluster");
 					} else {
-						# no changes
-					}
+					    # only pick the best hit for seeds
+						# due to the reason of only have one best hit record
+						# so that we can get the best hit directly by index 1
+						best <- cluster[[1]];
+						
+						if (min(hit$score) > min(best$score)) {
+							# current feature alignment is the best alignment
+							seed <- list();
+							seed[[sprintf("#%s", uid)]] <- hit;
+							seeds[[KEGG]] <- seed;
+						} else {
+							# no changes
+						}
+					}					
 				}
 			}
 		}
