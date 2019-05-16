@@ -5,8 +5,9 @@
 \title{Identify unknown metabolite by metaDNA algorithm}
 \usage{
 metaDNA(identify, unknown, do.align, precursor_type = c("[M+H]+", "[M]+"),
-  tolerance = assert.deltaMass(0.3), score.cutoff = 0.8,
-  kegg_id.skips = NULL, seeds.all = TRUE, iterations = 20)
+  tolerance = assert.deltaMass(0.3), rt.adjust = function(rt, KEGG_id) 1,
+  score.cutoff = 0.8, kegg_id.skips = NULL, seeds.all = TRUE,
+  iterations = 20)
 }
 \arguments{
 \item{identify}{The metaDNA seeds data input, A \code{list} object with two members
@@ -44,6 +45,14 @@ search unknown metabolites.}
 
 \item{tolerance}{KEGG compound match with this tolerance, m/z equalient compares tolerance,
 by default is less than ppm 20.}
+
+\item{rt.adjust}{The rt adjust lambda function, it takes two parameter:
+\enumerate{
+    \item \code{rt}, the rt of unidentified sample ms1 feature,
+    \item \code{KEGG_id} the KEGG_cpd that assigned to current unidentified sample ms1 feature.
+}
+and then returns a rt alignment score. If this parameter is ignored, 
+then will use score 1 as default means no rt adjustment score.}
 
 \item{score.cutoff}{MS/MS similarity cutoff for identify ms2 alignment with unknown ms2}
 
