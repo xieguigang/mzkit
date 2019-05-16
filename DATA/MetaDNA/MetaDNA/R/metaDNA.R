@@ -153,7 +153,7 @@ metaDNA <- function(identify, unknown, do.align,
 				kegg_id.skips <- append(kegg_id.skips, names(seeds));
 				filter.skips <- create_filter.skips(kegg_id.skips, FALSE);			
 				totals <- totals + n;
-				stats <- rbind(stats, c(i, n, totals, timer$since_last));
+				stats <- rbind(stats, c(i, n, totals, timer()$since_last));
 			}
 			
 			memory.sample(sprintf("[metaDNA]    do metaDNA Iteration %s ...", i));
