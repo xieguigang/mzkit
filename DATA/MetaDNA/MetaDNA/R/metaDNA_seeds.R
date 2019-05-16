@@ -1,8 +1,8 @@
-#Region "Microsoft.ROpen::fe49ca3d06fcaed25bcaca2eb725b267, metaDNA_seeds.R"
+#Region "Microsoft.ROpen::92cc22ad8806ffb489ad0a8553eb2725, metaDNA_seeds.R"
 
     # Summaries:
 
-    # extends.seeds <- function(output) {...
+    # extends.seeds <- function(output, seeds.all) {...
 
 #End Region
 
