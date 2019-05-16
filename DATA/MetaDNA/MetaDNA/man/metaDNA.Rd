@@ -9,7 +9,7 @@ metaDNA(identify, unknown, do.align, precursor_type = c("[M+H]+", "[M]+"),
   kegg_id.skips = NULL, iterations = 20)
 }
 \arguments{
-\item{identify}{A \code{list} object with two members
+\item{identify}{The metaDNA seeds data input, A \code{list} object with two members
 
      \code{identify = list((data.frame) meta.KEGG, (list) peak_ms2)}
 
@@ -35,7 +35,9 @@ metaDNA(identify, unknown, do.align, precursor_type = c("[M+H]+", "[M]+"),
      least two column: \code{mz} and \code{into}}
 
 \item{do.align}{The MS/MS alignment method, which is in format like: \code{function(q, s)}
-Where \code{q} and \code{s} is a ms2 spectra matrix.}
+Where \code{q} and \code{s} is a ms2 spectra matrix. Due to the reason of the \code{q}
+and \code{s} spectra data is comes from the same sample and same instrument, so that 
+using the \code{SSM} spectra alignment algorithm for this parameter is recommended.}
 
 \item{precursor_type}{By default is positive mode with the \code{H+} adduct for
 search unknown metabolites.}
