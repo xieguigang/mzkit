@@ -1,8 +1,9 @@
-#Region "Microsoft.ROpen::92cc22ad8806ffb489ad0a8553eb2725, metaDNA_seeds.R"
+#Region "Microsoft.ROpen::b03c23e985518f7c3eb0c616626d2a97, metaDNA_seeds.R"
 
     # Summaries:
 
     # extends.seeds <- function(output, seeds.all) {...
+    # extends.seeds.top <- function(seeds, n = 5) {lapply(seeds, function(compound) {	if (length(compound) > n) {...
 
 #End Region
 
@@ -27,6 +28,7 @@
 #'       But if too many seeds in a cluster, then will caused the dataset is too large,
 #'       And this will makes the alignment iteration took very long long time for run. 
 #'       So just pick the top 5 result when requires all alignment hit as seeds.
+#'
 extends.seeds <- function(output, seeds.all) {
 	# one kegg id have multiple hits or only one best spectra
 	seeds <- list();	
@@ -100,6 +102,13 @@ extends.seeds <- function(output, seeds.all) {
 	}
 }
 
+#' Subset of the seeds by top scores
+#'
+#' @param seeds The seeds data collection
+#' @param n top n, by default is top 5
+#'
+#' @return The subset of the input seeds collection.
+#'
 extends.seeds.top <- function(seeds, n = 5) {
 	lapply(seeds, function(compound) {
 		if (length(compound) > n) {

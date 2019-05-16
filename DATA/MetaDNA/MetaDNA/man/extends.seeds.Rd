@@ -10,7 +10,10 @@ extends.seeds(output, seeds.all)
 \item{seeds.all}{If this parameter is enable, then all of the hit from the 
 alignment result will be used as metaDNA seeds in the next iteration, 
 otherwise the best hit will be picked from the alignment result as 
-the seeds if this parameter is set to \code{FALSE}}
+the seeds if this parameter is set to \code{FALSE}
+But if too many seeds in a cluster, then will caused the dataset is too large,
+And this will makes the alignment iteration took very long long time for run. 
+So just pick the top 5 result when requires all alignment hit as seeds.}
 }
 \description{
 The identify list only provides ms2 spectra matrix and KEGG id.
