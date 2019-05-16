@@ -1,3 +1,11 @@
+#Region "Microsoft.ROpen::fe49ca3d06fcaed25bcaca2eb725b267, metaDNA_seeds.R"
+
+    # Summaries:
+
+    # extends.seeds <- function(output) {...
+
+#End Region
+
 #' Convert output as metaDNA seeds
 #'
 #' @description The identify list only provides ms2 spectra matrix and KEGG id.

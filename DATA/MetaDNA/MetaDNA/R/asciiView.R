@@ -1,3 +1,11 @@
+#Region "Microsoft.ROpen::3f3edc3157844755e929b0e8ed80d940, asciiView.R"
+
+    # Summaries:
+
+    # asciiView <- function(spectra,into.cutoff = 0.05,maxWidth = 80,show.mz.labels = TRUE) {...
+    # lenOf <- function(x) {if (x < 10) {...
+
+#End Region
 
 #' ASCII View of Spectra Matrix
 #'

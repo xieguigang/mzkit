@@ -1,3 +1,11 @@
+#Region "Microsoft.ROpen::e532340a2629d6f9095515898cf106fe, providers.R"
+
+    # Summaries:
+
+    # positive <- function() {...
+    # negative <- function() {...
+
+#End Region
 
 # http://fiehnlab.ucdavis.edu/staff/kind/Metabolomics/MS-Adduct-Calculator
 #
