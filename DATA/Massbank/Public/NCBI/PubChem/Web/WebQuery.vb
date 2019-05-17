@@ -96,8 +96,12 @@ Namespace NCBI.PubChem
         Const queryCAS_URL As String = "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/%s/cids/JSON"
 
         Public Sub New(<CallerMemberName> Optional cache As String = Nothing, Optional interval As Integer = -1)
-            MyBase.New(AddressOf queryApi, AddressOf normalizeFileName, AddressOf loadQueryJson, , cache, interval)
+            MyBase.New(AddressOf queryApi, AddressOf normalizeFileName, AddressOf loadQueryJson, AddressOf prefix, cache, interval)
         End Sub
+
+        Private Shared Function prefix(name As String) As String
+            Return Mid(name, 1, 3)
+        End Function
 
         Private Shared Function loadQueryJson(jsonText As String, type As Type) As IdentifierList
             If jsonText.StringEmpty Then
@@ -126,8 +130,12 @@ Namespace NCBI.PubChem
         Const fetchPugView As String = "https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/data/compound/%s/XML/"
 
         Public Sub New(<CallerMemberName> Optional cache As String = Nothing, Optional interval As Integer = -1)
-            MyBase.New(AddressOf pugViewApi, Function(cid) cid, AddressOf loadPugView, , cache, interval)
+            MyBase.New(AddressOf pugViewApi, Function(cid) cid, AddressOf loadPugView, AddressOf prefix, cache, interval)
         End Sub
+
+        Private Shared Function prefix(name As String) As String
+            Return Mid(name, 1, 3)
+        End Function
 
         Private Shared Function loadPugView(xml As String, type As Type) As PugViewRecord
             If type Is GetType(PugViewRecord) Then
