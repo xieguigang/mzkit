@@ -99,8 +99,13 @@ Namespace NCBI.PubChem
             MyBase.New(AddressOf queryApi, AddressOf normalizeFileName, AddressOf loadQueryJson, AddressOf prefix, cache, interval)
         End Sub
 
+        ''' <summary>
+        ''' Path prefix of the compound name
+        ''' </summary>
+        ''' <param name="name"></param>
+        ''' <returns></returns>
         Private Shared Function prefix(name As String) As String
-            Return Mid(name, 1, 3)
+            Return name.NormalizePathString.Trim("_"c, " "c).First
         End Function
 
         Private Shared Function loadQueryJson(jsonText As String, type As Type) As IdentifierList
@@ -133,6 +138,11 @@ Namespace NCBI.PubChem
             MyBase.New(AddressOf pugViewApi, Function(cid) cid, AddressOf loadPugView, AddressOf prefix, cache, interval)
         End Sub
 
+        ''' <summary>
+        ''' Path prefix of the CID number
+        ''' </summary>
+        ''' <param name="name"></param>
+        ''' <returns></returns>
         Private Shared Function prefix(name As String) As String
             Return Mid(name, 1, 3)
         End Function
