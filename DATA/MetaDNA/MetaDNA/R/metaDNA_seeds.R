@@ -1,15 +1,15 @@
-#Region "Microsoft.ROpen::5b8397be0d4057dcfd8036663b375bb5, metaDNA_seeds.R"
+#Region "Microsoft.ROpen::150f2a8626e0ca435dd66cf03afae3d6, metaDNA_seeds.R"
 
     # Summaries:
 
-    # seeding <- function(output, seeds.all) {...
+    # seeding <- function(output, rt.adjust, seeds.all) {...
     # extends.seeds <- function(output, rt.adjust = function(rt, KEGG_id) 1, seeds.all = TRUE) {...
     # metaDNA.score <- function(hit) {...
     # extends.seeds.top <- function(seeds, n = 5) {lapply(seeds, function(compound) {	if (length(compound) > n) {...
 
 #End Region
 
-seeding <- function(output, seeds.all) {	
+seeding <- function(output, rt.adjust, seeds.all) {	
 	seeds <- list();	
 	
 	for (block in output) {
@@ -100,7 +100,7 @@ extends.seeds <- function(output, rt.adjust = function(rt, KEGG_id) 1, seeds.all
 	print("Create metaDNA seeds from alignment result");
 	
 	# one kegg id have multiple hits or only one best spectra
-	seeds <- seeding(output, seeds.all);
+	seeds <- seeding(output, rt.adjust, seeds.all);
 	
 	gc();
 	
