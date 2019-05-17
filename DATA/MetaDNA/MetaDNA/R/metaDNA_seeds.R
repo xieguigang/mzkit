@@ -7,33 +7,8 @@
 
 #End Region
 
-#' Convert output as metaDNA seeds
-#'
-#' @description The identify list only provides ms2 spectra matrix and KEGG id.
-#'   KEGG id is the names of the identify list.
-#'   So, the identify list object its structure looks like: 
-#' 
-#'   \code{
-#'      identify \{
-#'         KEGG_id1 => list(spectra),
-#'         KEGG_id2 => list(spectra),
-#'         ...
-#'      \}
-#'   }
-#'
-#' @param seeds.all If this parameter is enable, then all of the hit from the 
-#'       alignment result will be used as metaDNA seeds in the next iteration, 
-#'       otherwise the best hit will be picked from the alignment result as 
-#'       the seeds if this parameter is set to \code{FALSE}
-#'       But if too many seeds in a cluster, then will caused the dataset is too large,
-#'       And this will makes the alignment iteration took very long long time for run. 
-#'       So just pick the top 5 result when requires all alignment hit as seeds.
-#'
-extends.seeds <- function(output, rt.adjust = function(rt, KEGG_id) 1, seeds.all = TRUE) {
-	# one kegg id have multiple hits or only one best spectra
+seeding <- function(output, seeds.all) {	
 	seeds <- list();	
-	
-	print("Create metaDNA seeds from alignment result");
 	
 	for (block in output) {
 		if (block %=>% IsNothing) {
@@ -92,6 +67,38 @@ extends.seeds <- function(output, rt.adjust = function(rt, KEGG_id) 1, seeds.all
 			}
 		}
 	}
+	
+	seeds;
+}
+
+#' Convert output as metaDNA seeds
+#'
+#' @description The identify list only provides ms2 spectra matrix and KEGG id.
+#'   KEGG id is the names of the identify list.
+#'   So, the identify list object its structure looks like: 
+#' 
+#'   \code{
+#'      identify \{
+#'         KEGG_id1 => list(spectra),
+#'         KEGG_id2 => list(spectra),
+#'         ...
+#'      \}
+#'   }
+#'
+#' @param seeds.all If this parameter is enable, then all of the hit from the 
+#'       alignment result will be used as metaDNA seeds in the next iteration, 
+#'       otherwise the best hit will be picked from the alignment result as 
+#'       the seeds if this parameter is set to \code{FALSE}
+#'       But if too many seeds in a cluster, then will caused the dataset is too large,
+#'       And this will makes the alignment iteration took very long long time for run. 
+#'       So just pick the top 5 result when requires all alignment hit as seeds.
+#'
+extends.seeds <- function(output, rt.adjust = function(rt, KEGG_id) 1, seeds.all = TRUE) {
+		
+	print("Create metaDNA seeds from alignment result");
+	
+	# one kegg id have multiple hits or only one best spectra
+	seeds <- seeding(output, seeds.all);
 	
 	gc();
 	

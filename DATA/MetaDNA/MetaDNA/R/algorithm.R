@@ -144,7 +144,7 @@ align_best.internal <- function(ref, peak, ms2.align, score.cutoff = 0.8) {
 
     colnames(ref) <- c("ProductMz", "LibraryIntensity");
 
-    # loop each unknown for alignment best result
+    # loop each unknown ms2 for alignment best result
 	align <- lapply(names(peak), function(fileName) {
 		file <- peak[[fileName]];
 		lapply(names(file), function(scan) {
