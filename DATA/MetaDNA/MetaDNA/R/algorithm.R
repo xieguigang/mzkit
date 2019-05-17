@@ -84,7 +84,9 @@ metaDNA.impl <- function(unknown.query, identify.ms2,
         if (!is.null(result)) {
             # name is the peaktable rownames
 			feature$ms2 <- NULL;
-
+			# add reference spectra matrix data
+			result$ref = identify.ms2;
+			
             list(
               feature = feature,
               kegg.info = kegg.query,
@@ -196,8 +198,7 @@ pickbest.internal <- function(align) {
 	}
 
     if (!IsNothing(score)) {
-        list(ref = ref,
-             candidate = candidate,
+        list(candidate = candidate,
              score = score,
              ms2.name = ms2.name
         );
