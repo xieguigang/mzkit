@@ -65,12 +65,15 @@ Namespace NCBI.PubChem
 
     Public Module Query
 
-        Public Function QueryPugViews(CAS As String, Optional cacheFolder$ = "./pubchem_cache", Optional ByRef hitCache As Boolean = False) As Dictionary(Of String, PugViewRecord)
-            Dim cache = $"{cacheFolder}/{CAS.NormalizePathString(False)}.Xml"
+        ''' <summary>
+        ''' Query pubchem compound id by a given name
+        ''' </summary>
+        ''' <param name="name"></param>
+        ''' <param name="cacheFolder$"></param>
+        ''' <returns></returns>
+        Public Function QueryCID(name As String, Optional cacheFolder$ = "./pubchem_cache") As String()
             Dim cidQuery As New CIDQuery($"{cacheFolder}/cid/")
-            Dim list As IdentifierList = cidQuery.Query(Of IdentifierList)(CAS, ".json")
-            Dim table As New Dictionary(Of String, PugViewRecord)
-            Dim api As New WebQuery($"{cacheFolder}/pugViews/")
+            Dim list As IdentifierList = cidQuery.Query(Of IdentifierList)(name, ".json")
             Dim CID As String() = Nothing
 
             If list Is Nothing OrElse list.CID.IsNullOrEmpty Then
@@ -81,6 +84,23 @@ Namespace NCBI.PubChem
             Else
                 CID = list.CID
             End If
+
+            Return CID
+        End Function
+
+        ''' <summary>
+        ''' Query compound annotation information by a given name
+        ''' </summary>
+        ''' <param name="name"></param>
+        ''' <param name="cacheFolder">
+        ''' The folder for save cache json/xml data, which are downloads from pubchem web server.
+        ''' </param>
+        ''' <returns></returns>
+        Public Function QueryPugViews(name As String, Optional cacheFolder$ = "./pubchem_cache") As Dictionary(Of String, PugViewRecord)
+            Dim CID As String() = Query.QueryCID(name, cacheFolder)
+            Dim table As New Dictionary(Of String, PugViewRecord)
+            Dim api As New WebQuery($"{cacheFolder}/pugViews/")
+            Dim cache = $"{cacheFolder}/{name.NormalizePathString(False)}.Xml"
 
             If CID.IsNullOrEmpty Then
                 Return New Dictionary(Of String, PugViewRecord)
