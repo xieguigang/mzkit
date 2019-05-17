@@ -117,7 +117,7 @@ metaDNA <- function(identify, unknown, do.align,
         identify, filter.skips,
         unknown, do.align,
         match.kegg,
-        score.cutoff		
+        score.cutoff
     );
 	
 	memory.sample("[metaDNA]    do First iteration...");
@@ -241,8 +241,9 @@ metaDNA.iteration <- function(identify, filter.skips,
 					metaDNA.impl(
 						unknown.query = unknown.query,
 						identify.ms2  = seed$spectra,
+						trace         = seed$trace %||% seed$feature,
 						unknown       = unknown,
-						ms2.align     = do.align,
+						ms2.align     = do.align,						
 						score.cutoff  = score.cutoff
 					);
 				});                
