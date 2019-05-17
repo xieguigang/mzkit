@@ -125,7 +125,7 @@ Namespace NCBI.PubChem
         End Function
 
         Private Shared Function queryApi(name As String) As String
-            Return CLangStringFormatProvider.sprintf(queryCAS_URL, name.UrlEncode)
+            Return CLangStringFormatProvider.sprintf(queryCAS_URL, name.UrlEncode(jswhitespace:=True))
         End Function
 
     End Class
