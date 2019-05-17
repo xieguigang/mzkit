@@ -124,8 +124,8 @@ Namespace NCBI.PubChem
             Return text.NormalizePathString(False)
         End Function
 
-        Private Shared Function queryApi(CAS As String) As String
-            Return CLangStringFormatProvider.sprintf(queryCAS_URL, CAS)
+        Private Shared Function queryApi(name As String) As String
+            Return CLangStringFormatProvider.sprintf(queryCAS_URL, name.UrlEncode)
         End Function
 
     End Class
