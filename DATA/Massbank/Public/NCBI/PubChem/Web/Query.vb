@@ -59,11 +59,29 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Threading
 
 Namespace NCBI.PubChem
 
     Public Module Query
+
+        ReadOnly cache As New Dictionary(Of String, Object)
+
+        <Extension>
+        Private Function getQueryHandler(Of T)(handle As String) As T
+            If GetType(T) Is GetType(CIDQuery) Then
+                If Not cache.ContainsKey(handle) Then
+                    cache(handle) = New CIDQuery(cache:=handle)
+                End If
+            Else
+                If Not cache.ContainsKey(handle) Then
+                    cache(handle) = New WebQuery(cache:=handle)
+                End If
+            End If
+
+            Return cache(handle)
+        End Function
 
         ''' <summary>
         ''' Query pubchem compound id by a given name
@@ -72,7 +90,7 @@ Namespace NCBI.PubChem
         ''' <param name="cacheFolder$"></param>
         ''' <returns></returns>
         Public Function QueryCID(name As String, Optional cacheFolder$ = "./pubchem_cache") As String()
-            Dim cidQuery As New CIDQuery($"{cacheFolder}/cid/")
+            Dim cidQuery As CIDQuery = $"{cacheFolder}/cid/".getQueryHandler(Of CIDQuery)
             Dim list As IdentifierList = cidQuery.Query(Of IdentifierList)(name, ".json")
             Dim CID As String() = Nothing
 
@@ -99,7 +117,7 @@ Namespace NCBI.PubChem
         Public Function QueryPugViews(name As String, Optional cacheFolder$ = "./pubchem_cache") As Dictionary(Of String, PugViewRecord)
             Dim CID As String() = Query.QueryCID(name, cacheFolder)
             Dim table As New Dictionary(Of String, PugViewRecord)
-            Dim api As New WebQuery($"{cacheFolder}/pugViews/")
+            Dim api As WebQuery = $"{cacheFolder}/pugViews/".getQueryHandler(Of WebQuery)
             Dim cache = $"{cacheFolder}/{name.NormalizePathString(False)}.Xml"
 
             If CID.IsNullOrEmpty Then
