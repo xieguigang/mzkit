@@ -1,9 +1,10 @@
-#Region "Microsoft.ROpen::631876fe3627cc088fcd6551c98aa02e, algorithm.R"
+#Region "Microsoft.ROpen::52f4393c0c8a590ea5c7951b7677878b, algorithm.R"
 
     # Summaries:
 
     # metaDNA.impl <- function(unknown.query, identify.ms2,unknown,ms2.align,score.cutoff = 0.8) {...
-    # align_best.internal <- function(ref, peak, ms2.align, score.cutoff = 0.8) {...
+    # align_best.internal <- function(ref, peak, ms2.align, score.cutoff = 0.8) {# Error in `colnames<-`(`*tmp*`, value = c("ProductMz", "LibraryIntensity")) :#attempt to set 'colnames' on an object with less than two dimensionsif (is.null(nrow(ref))) {...
+    # pickbest.internal <- function(align) {...
 
 #End Region
 
@@ -83,7 +84,9 @@ metaDNA.impl <- function(unknown.query, identify.ms2,
         if (!is.null(result)) {
             # name is the peaktable rownames
 			feature$ms2 <- NULL;
-
+			# add reference spectra matrix data
+			result$ref = identify.ms2;
+			
             list(
               feature = feature,
               kegg.info = kegg.query,
@@ -124,11 +127,6 @@ metaDNA.impl <- function(unknown.query, identify.ms2,
 #'
 align_best.internal <- function(ref, peak, ms2.align, score.cutoff = 0.8) {
 
-    best.score <- -10000
-    score <- c();
-    candidate <- NULL;
-    ms2.name <- list();
-
 	# Error in `colnames<-`(`*tmp*`, value = c("ProductMz", "LibraryIntensity")) :
     #  attempt to set 'colnames' on an object with less than two dimensions
 	if (is.null(nrow(ref))) {
@@ -144,7 +142,7 @@ align_best.internal <- function(ref, peak, ms2.align, score.cutoff = 0.8) {
 
     colnames(ref) <- c("ProductMz", "LibraryIntensity");
 
-    # loop each unknown for alignment best result
+    # loop each unknown ms2 for alignment best result
 	align <- lapply(names(peak), function(fileName) {
 		file <- peak[[fileName]];
 		lapply(names(file), function(scan) {
@@ -163,11 +161,31 @@ align_best.internal <- function(ref, peak, ms2.align, score.cutoff = 0.8) {
 		});
 	});
 
+	align %=>% pickbest.internal;
+}
+
+#' Pick best alignment result for single ms1 feature 
+#'
+#' @description due to the reason of all of the ms2 spectra in current one peak pack
+#' is corresponding to one ms1 feature, so that the precursor m/z and rt 
+#' all the same. so no needs for rt.adjust score at here
+#'
+#' we just required compare the best dot product score at here
+#'
+#' @param align The alignment result of the ms2 spectra that align with reference spectra
+#'
+pickbest.internal <- function(align) {
+    best.score <- -10000
+    score <- c();
+    candidate <- NULL;
+    ms2.name <- list();
+	
 	for(file in align) {
 		for(scan in file) {
 			if (!is.null(scan)) {
+			
 				x <- scan$score;
-				test <- mean(x);
+				test <- min(x);
 
 				if (test > best.score) {
 					score <- x;
@@ -180,8 +198,7 @@ align_best.internal <- function(ref, peak, ms2.align, score.cutoff = 0.8) {
 	}
 
     if (!IsNothing(score)) {
-        list(ref = ref,
-             candidate = candidate,
+        list(candidate = candidate,
              score = score,
              ms2.name = ms2.name
         );
