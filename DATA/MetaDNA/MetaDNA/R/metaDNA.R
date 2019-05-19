@@ -200,55 +200,61 @@ metaDNA.iteration <- function(identify, filter.skips,
     # tick.each
     # lapply
     seeds <- tick.each(names(identify), function(KEGG_cpd) {
+	
         # Get all of the kegg reaction partner metabolite id
         # for current identified kegg metabolite id
 		# 
 		# this seeds data contains multiple hits
-        identified <- identify[[KEGG_cpd]];
-		# find KEGG reaction partner for current identify KEGG compound
-        KEGG.partners <- KEGG_cpd %=>% kegg.partners %=>% filter.skips %=>% unique;
+		if (KEGG_cpd %=>% IsNothing) {
+			NULL;
+		} else {
+		
+		    identified <- identify[[KEGG_cpd]];
+			# find KEGG reaction partner for current identify KEGG compound
+			KEGG.partners <- KEGG_cpd %=>% kegg.partners %=>% filter.skips %=>% unique;
 
-        # current identify metabolite KEGG id didnt found any
-        # reaction related partner compounds
-        # Skip current identify metabolite.
-        if (KEGG.partners %=>% IsNothing) {
-            NULL;
-        } else {
+			# current identify metabolite KEGG id didnt found any
+			# reaction related partner compounds
+			# Skip current identify metabolite.
+			if (KEGG.partners %=>% IsNothing) {
+				NULL;
+			} else {
 
-            # identify contains single result
-            # Each metaDNA.impl result is a list that identify of
-            # unknowns
+				# identify contains single result
+				# Each metaDNA.impl result is a list that identify of
+				# unknowns
 
-            # Current set of KEGG.partners which comes from the identify KEGG metabolite
-            # can have multiple unknown metabolite match result
-            #
-            # precursor_type list();
-            unknown.query <- KEGG.partners %=>% match.kegg;
+				# Current set of KEGG.partners which comes from the identify KEGG metabolite
+				# can have multiple unknown metabolite match result
+				#
+				# precursor_type list();
+				unknown.query <- KEGG.partners %=>% match.kegg;
 
-            if (IsNothing(unknown.query)) {
-                NULL;
-            } else {
-                # element structure in unknown.query:
-                #
-                # [1] "unknown.index"  "unknown.mz"     "precursor_type" "kegg"
-                # [5] "ppm"
-                #
-                # unknown.index is the index of the unknown metabolite in input sequence
-                # unknown.mz is the corresponding m/z
-                # ppm is the ppm value for unknown mz match with the KEGG compound m/z
-                # KEGG.partners, identify.ms2, unknown, ms2.align, unknow.matches
-				lapply(identified, function(seed) {
-					metaDNA.impl(
-						unknown.query = unknown.query,
-						identify.ms2  = seed$spectra,
-						trace         = seed$trace %||% seed$feature,
-						unknown       = unknown,
-						ms2.align     = do.align,						
-						score.cutoff  = score.cutoff
-					);
-				});                
-            }
-        }
+				if (IsNothing(unknown.query)) {
+					NULL;
+				} else {
+					# element structure in unknown.query:
+					#
+					# [1] "unknown.index"  "unknown.mz"     "precursor_type" "kegg"
+					# [5] "ppm"
+					#
+					# unknown.index is the index of the unknown metabolite in input sequence
+					# unknown.mz is the corresponding m/z
+					# ppm is the ppm value for unknown mz match with the KEGG compound m/z
+					# KEGG.partners, identify.ms2, unknown, ms2.align, unknow.matches
+					lapply(identified, function(seed) {
+						metaDNA.impl(
+							unknown.query = unknown.query,
+							identify.ms2  = seed$spectra,
+							trace         = seed$trace %||% seed$feature,
+							unknown       = unknown,
+							ms2.align     = do.align,						
+							score.cutoff  = score.cutoff
+						);
+					});                
+				}
+			}	
+		}
     });
 
     seeds;
