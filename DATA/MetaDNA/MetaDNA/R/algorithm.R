@@ -51,6 +51,7 @@
 metaDNA.impl <- function(unknown.query, identify.ms2,
                          unknown,
                          ms2.align,
+						 trace,
                          score.cutoff = 0.8) {
 
     # unknown.i integer index of the peaktable
@@ -85,7 +86,8 @@ metaDNA.impl <- function(unknown.query, identify.ms2,
             # name is the peaktable rownames
 			feature$ms2 <- NULL;
 			# add reference spectra matrix data
-			result$ref = identify.ms2;
+			result$ref <- identify.ms2;
+			result$trace <- trace;
 			
             list(
               feature = feature,

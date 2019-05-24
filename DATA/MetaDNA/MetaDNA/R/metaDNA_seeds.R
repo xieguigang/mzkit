@@ -31,7 +31,9 @@ seeding <- function(output, rt.adjust, seeds.all) {
 					spectra   = align$candidate, 
 					score     = align$score, 
 					ref       = align$ms2.name,
-					rt.adjust = rt.adjust(feature$feature$rt, KEGG)
+					rt.adjust = rt.adjust(feature$feature$rt, KEGG),
+					# append the iteration trace stack
+					trace     = append(feature$align$trace, feature$name)
 				);							
 				
 				# try to fix the duplicated spectra data

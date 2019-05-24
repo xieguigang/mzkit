@@ -4,7 +4,7 @@
 \alias{metaDNA.impl}
 \title{Try to annotate unknown metabolite}
 \usage{
-metaDNA.impl(unknown.query, identify.ms2, unknown, ms2.align,
+metaDNA.impl(unknown.query, identify.ms2, unknown, ms2.align, trace,
   score.cutoff = 0.8)
 }
 \arguments{
