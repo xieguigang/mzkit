@@ -85,7 +85,7 @@ Public Module MRMSamples
     ''' <summary>
     ''' 默认将``-KB``和``-BLK``结尾的文件都判断为实验空白
     ''' </summary>
-    ReadOnly defaultBlankNames As New DefaultValue(Of Func(Of String, Boolean))(
+    ReadOnly defaultBlankNames As New [Default](Of Func(Of String, Boolean))(
         Function(basename)
             Return InStr(basename, "-KB") > 0 OrElse InStr(basename, "-BLK") > 0
         End Function)
