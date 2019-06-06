@@ -60,7 +60,7 @@ Namespace Spectra
     ''' </summary>
     Public Module GlobalAlignment
 
-        Public ReadOnly Property ppm20 As DefaultValue(Of Tolerance) = Tolerance.PPM(20)
+        Public ReadOnly Property ppm20 As [Default](Of Tolerance) = Tolerance.PPM(20)
 
         '''' <summary>
         '''' ### shared peak count

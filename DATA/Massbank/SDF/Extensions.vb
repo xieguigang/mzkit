@@ -118,7 +118,7 @@ Namespace File
             Return DirectCast(meta, MetaData)
         End Function
 
-        ReadOnly defaultKeys As DefaultValue(Of String()) = (
+        ReadOnly defaultKeys As [Default](Of String()) = (
             <json>
 [
     "PUBCHEM_COMPOUND_CID",

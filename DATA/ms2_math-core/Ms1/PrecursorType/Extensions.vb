@@ -61,8 +61,8 @@ Namespace Ms1.PrecursorType
         ' [M+Cl]-
         ' [2M+NH4-H2O]4+
 
-        ReadOnly defaultCharge As DefaultValue(Of String) = "1"
-        ReadOnly defaultMassCount As DefaultValue(Of Integer) = 1.AsDefault(Function(m) CInt(m) <= 0)
+        ReadOnly defaultCharge As [Default](Of String) = "1"
+        ReadOnly defaultMassCount As [Default](Of Integer) = 1.AsDefault(Function(m) CInt(m) <= 0)
 
         <Extension>
         Public Function ParseCharge(precursor_type$, ionmode$) As Integer

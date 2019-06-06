@@ -82,7 +82,7 @@ Namespace Ms1
         ''' 默认的误差计算是小于0.3个道尔顿以内
         ''' </summary>
         ''' <returns></returns>
-        Public Shared ReadOnly Property DefaultTolerance As DefaultValue(Of Tolerance)
+        Public Shared ReadOnly Property DefaultTolerance As [Default](Of Tolerance)
 
         ''' <summary>
         ''' 分子质量误差的上限值
