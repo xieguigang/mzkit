@@ -55,7 +55,7 @@ Namespace MarkupData
 
     Public Module MS1Extensions
 
-        ReadOnly ppm50 As DefaultValue(Of Tolerance) = New PPMmethod(50).Interface
+        ReadOnly ppm50 As [Default](Of Tolerance) = New PPMmethod(50).Interface
 
         ''' <summary>
         ''' 将质谱之中的ms1的结果，按照mz进行分组，之后再按照时间排序即可得到随时间变化的信号曲线

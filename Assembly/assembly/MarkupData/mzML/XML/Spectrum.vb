@@ -121,7 +121,7 @@ Namespace MarkupData.mzML
         End Property
 
         Public Overrides Function ToString() As String
-            Static noTitle As DefaultValue(Of String) = "Unknown title"
+            Static noTitle As [Default](Of String) = "Unknown title"
             Return cvParams.KeyItem("spectrum title")?.value Or noTitle
         End Function
     End Class

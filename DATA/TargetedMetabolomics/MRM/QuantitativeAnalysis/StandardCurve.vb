@@ -160,7 +160,7 @@ Public Module StandardCurve
     ' 在计算峰面积的时候，对于亮氨酸和异亮氨酸，会需要乘以一个系数
     ' 这个Factor参数默认为1
 
-    ReadOnly NoChange As DefaultValue(Of Double) = 1.0R
+    ReadOnly NoChange As [Default](Of Double) = 1.0R
 
     ''' <summary>
     ''' 根据扫描出来的TPA峰面积进行对标准曲线的回归建模
