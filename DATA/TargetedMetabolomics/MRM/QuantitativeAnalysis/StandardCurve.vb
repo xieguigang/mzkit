@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::360a48b196e43a5d97e9d722556444b3, TargetedMetabolomics\MRM\QuantitativeAnalysis\StandardCurve.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module StandardCurve
-    ' 
-    '     Function: GetFactor, Regression, Scan, ScanContent, ScanTPA
-    ' 
-    ' /********************************************************************************/
+' Module StandardCurve
+' 
+'     Function: GetFactor, Regression, Scan, ScanContent, ScanTPA
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -201,7 +201,8 @@ Public Module StandardCurve
                          End Function) _
                 .Select(Function(level)
 
-                            Dim At_i = TPA(level.Key) ' 得到峰面积Ati
+                            Dim key As String = level.Key.ToUpper
+                            Dim At_i = TPA(key) ' 得到峰面积Ati
                             Dim Ct_i = level.Value    ' 得到已知的浓度数据
                             Dim AIS#                  ' 内标的峰面积
 
@@ -218,7 +219,7 @@ Public Module StandardCurve
                                 pX = At_i
                             Else
                                 ' 需要做内标校正的情况
-                                AIS = ISA(level.Key)
+                                AIS = ISA(key)
                                 pX = At_i / AIS
                             End If
 
@@ -233,7 +234,7 @@ Public Module StandardCurve
                                 .Cti = Ct_i,
                                 .ID = ion.HMDB,
                                 .Name = ion.Name,
-                                .level = level.Key
+                                .level = key
                             }
 
                             ' 得到标准曲线之中的一个点
@@ -303,7 +304,7 @@ Public Module StandardCurve
             ' level = level.Match("[-]L\d+", RegexICSng).Trim("-"c)
 
             For Each ion In TPA
-                ionTPAs(ion.Name).Add(level, ion.Value.TPA)
+                ionTPAs(ion.Name).Add(level.ToUpper, ion.Value.TPA)
             Next
         Next
 
