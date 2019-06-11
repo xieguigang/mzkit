@@ -49,6 +49,12 @@ Public Class ChemOntClassify
         End Get
     End Property
 
+    Public ReadOnly Property molecularFramework As GenericTree()
+        Get
+            Return termsByLevel(5)
+        End Get
+    End Property
+
     Default Public ReadOnly Property Item(id As String) As GenericTree
         Get
             Return oboTable(id)
@@ -92,6 +98,11 @@ Public Class ChemOntClassify
         Return oboTable(term_id).TermLineages.ToArray
     End Function
 
+    ''' <summary>
+    ''' Get terms by level on tree
+    ''' </summary>
+    ''' <param name="level"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Function termsByLevel(level As Integer) As GenericTree()
         Return oboNodeList _
