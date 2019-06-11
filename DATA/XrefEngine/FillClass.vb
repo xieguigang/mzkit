@@ -11,6 +11,15 @@ Public Module FillClass
             classifyObo As ChemOntClassify,
             compounds As IEnumerable(Of cpd)) As IEnumerable(Of cpd)
 
+        Dim classyfireFiller = anno.ClassyfireFillerLambda(Of cpd)(classifyObo)
+
+        For Each compound As cpd In compounds
+            Yield classyfireFiller(compound)
+        Next
+    End Function
+
+    <Extension>
+    Public Function ClassyfireFillerLambda(Of cpd As {Class, INamedValue, ICompoundClass})(anno As IEnumerable(Of ClassyfireAnnotation), classifyObo As ChemOntClassify) As Func(Of cpd, cpd)
         Dim annotations = anno _
             .GroupBy(Function(a) a.CompoundID) _
             .ToDictionary(Function(a) a.Key,
@@ -23,25 +32,25 @@ Public Module FillClass
         Dim sub_class As Index(Of String) = classifyObo.subClass.TermIndex
         Dim molecular_framework = classifyObo.molecularFramework.TermIndex
 
-        For Each compound As cpd In compounds
-            If annotations.ContainsKey(compound.Key) Then
-                Dim classyfire As ClassyfireAnnotation() = annotations(compound.Key)
-                Dim getByLevel = Function(level As Index(Of String)) As String
-                                     Return classyfire _
-                                         .FirstOrDefault(Function(a) a.ChemOntID Like level) _
-                                        ?.ParentName
-                                 End Function
+        Return Function(compound)
+                   If annotations.ContainsKey(compound.Key) Then
+                       Dim classyfire As ClassyfireAnnotation() = annotations(compound.Key)
+                       Dim getByLevel = Function(level As Index(Of String)) As String
+                                            Return classyfire _
+                                                .FirstOrDefault(Function(a) a.ChemOntID Like level) _
+                                               ?.ParentName
+                                        End Function
 
-                With compound
-                    .class = getByLevel([class])
-                    .kingdom = getByLevel(kingdom)
-                    .molecular_framework = getByLevel(molecular_framework)
-                    .sub_class = getByLevel(sub_class)
-                    .super_class = getByLevel(super_class)
-                End With
-            End If
+                       With compound
+                           .class = getByLevel([class])
+                           .kingdom = getByLevel(kingdom)
+                           .molecular_framework = getByLevel(molecular_framework)
+                           .sub_class = getByLevel(sub_class)
+                           .super_class = getByLevel(super_class)
+                       End With
+                   End If
 
-            Yield compound
-        Next
+                   Return compound
+               End Function
     End Function
 End Module
