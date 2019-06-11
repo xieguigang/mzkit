@@ -53,6 +53,7 @@
 Imports System.IO
 Imports Microsoft.VisualBasic.Data.csv.IO.Linq
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
+Imports SMRUCC.MassSpectrum.DATA.MetaLib
 
 Namespace TMIC.HMDB
 
@@ -90,7 +91,7 @@ Namespace TMIC.HMDB
         End Function
     End Class
 
-    Public Class MetaDb
+    Public Class MetaDb : Implements ICompoundClass
 
         Public Property accession As String
         Public Property secondary_accessions As String()
@@ -103,11 +104,11 @@ Namespace TMIC.HMDB
         Public Property smiles As String
         Public Property inchi As String
         Public Property inchikey As String
-        Public Property kingdom As String
-        Public Property super_class As String
-        Public Property [class] As String
-        Public Property sub_class As String
-        Public Property molecular_framework As String
+        Public Property kingdom As String Implements ICompoundClass.kingdom
+        Public Property super_class As String Implements ICompoundClass.super_class
+        Public Property [class] As String Implements ICompoundClass.class
+        Public Property sub_class As String Implements ICompoundClass.sub_class
+        Public Property molecular_framework As String Implements ICompoundClass.molecular_framework
         Public Property direct_parent As String
         Public Property state As String
         Public Property cellular_locations As String()
