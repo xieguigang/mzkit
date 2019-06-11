@@ -141,11 +141,13 @@
     <Compile Include="GCMS\Vendors\brukerGCMS.vb" />
     <Compile Include="GCMS\Vendors\finniganGCMS.vb" />
     <Compile Include="GCMS\Vendors\shimadzuGCMS.vb" />
+    <Compile Include="MRM\RawFile.vb" />
     <Compile Include="MRM\Data\MRMPeakTable.vb" />
     <Compile Include="MRM\Data\Extensions.vb" />
     <Compile Include="MRM\Data\TargetQuantification.vb" />
     <Compile Include="MRM\QuantitativeAnalysis\MRMPeak.vb" />
     <Compile Include="QuantitativeAnalysis\ContentResult.vb" />
+    <Compile Include="QuantitativeAnalysis\NamespaceDoc.vb" />
     <Compile Include="QuantitativeAnalysis\TPAExtensions.vb" />
     <Compile Include="QuantitativeAnalysis\PeakArea.vb" />
     <Compile Include="MRM\Standards.vb" />
