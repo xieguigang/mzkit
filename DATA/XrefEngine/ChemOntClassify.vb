@@ -68,6 +68,12 @@ Public Class ChemOntClassify
             .ToArray
     End Sub
 
+    ''' <summary>
+    ''' 将对应分类层次等级的注释分类信息取出来
+    ''' </summary>
+    ''' <param name="anno"></param>
+    ''' <param name="level%"></param>
+    ''' <returns></returns>
     Public Iterator Function FilterByLevel(anno As IEnumerable(Of ClassyfireAnnotation), level%) As IEnumerable(Of ClassyfireAnnotation)
         Dim levelIndex As Index(Of String) = termsByLevel(level) _
             .Select(Function(node) node.ID) _
