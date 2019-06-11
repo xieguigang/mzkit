@@ -3,6 +3,8 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.genomics.foundation.OBO_Foundry
+Imports SMRUCC.genomics.foundation.OBO_Foundry.IO.Models
+Imports SMRUCC.genomics.foundation.OBO_Foundry.Tree
 
 Public Class ChemOntClassify
 
@@ -81,10 +83,7 @@ Public Class ChemOntClassify
     ''' <param name="level%"></param>
     ''' <returns></returns>
     Public Iterator Function FilterByLevel(anno As IEnumerable(Of ClassyfireAnnotation), level%) As IEnumerable(Of ClassyfireAnnotation)
-        Dim levelIndex As Index(Of String) = termsByLevel(level) _
-            .Select(Function(node) node.ID) _
-            .Distinct _
-            .ToArray
+        Dim levelIndex As Index(Of String) = termsByLevel(level).TermIndex
 
         For Each item As ClassyfireAnnotation In anno
             If item.ChemOntID Like levelIndex Then

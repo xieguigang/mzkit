@@ -1,5 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports SMRUCC.genomics.foundation.OBO_Foundry
 
 Public Module FillClass
 
@@ -13,7 +15,7 @@ Public Module FillClass
                           Function(a)
                               Return a.ToArray
                           End Function)
-        Dim kingdom = classifyObo.kingdom.Select(Function() )
+        Dim kingdom As Index(Of String) = classifyObo.kingdom.TermIndex
         Dim super_class
         Dim [class]
         Dim sub_class
