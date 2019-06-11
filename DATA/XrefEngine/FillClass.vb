@@ -13,6 +13,13 @@ Public Module FillClass
                           Function(a)
                               Return a.ToArray
                           End Function)
+        Dim kingdom = classifyObo.kingdom.Select(Function() )
+        Dim super_class
+        Dim [class]
+        Dim sub_class
+        Dim molecular_framework
 
     End Function
+
+
 End Module
