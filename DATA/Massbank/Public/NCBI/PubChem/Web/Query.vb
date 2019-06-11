@@ -68,15 +68,21 @@ Namespace NCBI.PubChem
 
         ReadOnly cache As New Dictionary(Of String, Object)
 
+        ''' <summary>
+        ''' 根据类型获取数据请求查询的接口对象
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="handle"></param>
+        ''' <returns></returns>
         <Extension>
-        Private Function getQueryHandler(Of T)(handle As String) As T
+        Private Function getQueryHandler(Of T)(handle As String, offline As Boolean) As T
             If GetType(T) Is GetType(CIDQuery) Then
                 If Not cache.ContainsKey(handle) Then
-                    cache(handle) = New CIDQuery(cache:=handle)
+                    cache(handle) = New CIDQuery(cache:=handle, offline:=offline)
                 End If
             Else
                 If Not cache.ContainsKey(handle) Then
-                    cache(handle) = New WebQuery(cache:=handle)
+                    cache(handle) = New WebQuery(cache:=handle, offline:=offline)
                 End If
             End If
 
@@ -89,8 +95,8 @@ Namespace NCBI.PubChem
         ''' <param name="name"></param>
         ''' <param name="cacheFolder$"></param>
         ''' <returns></returns>
-        Public Function QueryCID(name As String, Optional cacheFolder$ = "./pubchem_cache") As String()
-            Dim cidQuery As CIDQuery = $"{cacheFolder}/cid/".getQueryHandler(Of CIDQuery)
+        Public Function QueryCID(name As String, Optional cacheFolder$ = "./pubchem_cache", Optional offlineMode As Boolean = False) As String()
+            Dim cidQuery As CIDQuery = $"{cacheFolder}/cid/".getQueryHandler(Of CIDQuery)(offline:=offlineMode)
             Dim list As IdentifierList = cidQuery.Query(Of IdentifierList)(name, ".json")
             Dim CID As String() = Nothing
 
@@ -114,10 +120,10 @@ Namespace NCBI.PubChem
         ''' The folder for save cache json/xml data, which are downloads from pubchem web server.
         ''' </param>
         ''' <returns></returns>
-        Public Function QueryPugViews(name As String, Optional cacheFolder$ = "./pubchem_cache") As Dictionary(Of String, PugViewRecord)
+        Public Function QueryPugViews(name As String, Optional cacheFolder$ = "./pubchem_cache", Optional offline As Boolean = False) As Dictionary(Of String, PugViewRecord)
             Dim CID As String() = Query.QueryCID(name, cacheFolder)
             Dim table As New Dictionary(Of String, PugViewRecord)
-            Dim api As WebQuery = $"{cacheFolder}/pugViews/".getQueryHandler(Of WebQuery)
+            Dim api As WebQuery = $"{cacheFolder}/pugViews/".getQueryHandler(Of WebQuery)(offline)
             Dim cache = $"{cacheFolder}/{name.NormalizePathString(False)}.Xml"
 
             If CID.IsNullOrEmpty Then

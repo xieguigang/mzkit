@@ -95,8 +95,11 @@ Namespace NCBI.PubChem
         ''' </summary>
         Const queryCAS_URL As String = "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/%s/cids/JSON"
 
-        Public Sub New(<CallerMemberName> Optional cache As String = Nothing, Optional interval As Integer = -1)
-            MyBase.New(AddressOf queryApi, AddressOf normalizeFileName, AddressOf loadQueryJson, AddressOf prefix, cache, interval)
+        Public Sub New(<CallerMemberName>
+                       Optional cache As String = Nothing,
+                       Optional interval As Integer = -1,
+                       Optional offline As Boolean = False)
+            MyBase.New(AddressOf queryApi, AddressOf normalizeFileName, AddressOf loadQueryJson, AddressOf prefix, cache, interval, offline)
         End Sub
 
         ''' <summary>
@@ -134,8 +137,11 @@ Namespace NCBI.PubChem
 
         Const fetchPugView As String = "https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/data/compound/%s/XML/"
 
-        Public Sub New(<CallerMemberName> Optional cache As String = Nothing, Optional interval As Integer = -1)
-            MyBase.New(AddressOf pugViewApi, Function(cid) cid, AddressOf loadPugView, AddressOf prefix, cache, interval)
+        Public Sub New(<CallerMemberName>
+                       Optional cache As String = Nothing,
+                       Optional interval As Integer = -1,
+                       Optional offline As Boolean = False)
+            MyBase.New(AddressOf pugViewApi, Function(cid) cid, AddressOf loadPugView, AddressOf prefix, cache, interval, offline)
         End Sub
 
         ''' <summary>
