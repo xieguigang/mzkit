@@ -255,8 +255,8 @@ Public Module StandardCurve
     ''' <summary>
     ''' 从原始数据之中扫描峰面积数据，返回来的数据集之中的<see cref="DataSet.ID"/>是HMDB代谢物编号
     ''' </summary>
-    ''' <param name="raw$">``*.wiff``，转换之后的结果文件夹，其中标准曲线的数据都是默认使用``L数字``标记的。</param>
-    ''' <param name="ions$">包括离子对的定义数据以及浓度区间</param>
+    ''' <param name="raw">``*.wiff``，转换之后的结果文件夹，其中标准曲线的数据都是默认使用``L数字``标记的。</param>
+    ''' <param name="ions">包括离子对的定义数据以及浓度区间</param>
     ''' <param name="TPAFactors">
     ''' ``{<see cref="Standards.HMDB"/>, <see cref="Standards.Factor"/>}``，这个是为了计算亮氨酸和异亮氨酸这类无法被区分的物质的峰面积所需要的
     ''' </param>

@@ -118,9 +118,10 @@ Public Module MRMSamples
         Dim TPAFactors = calibrates.ToDictionary(Function(ion) ion.HMDB, Function(ion) ion.Factor)
 
         ' 扫描标准曲线的样本，然后进行回归建模 
+        Dim calWiffRaw$ = externalStandardsWiff Or wiff.AsDefault
         Dim detections As NamedValue(Of (IFitted, MRMStandards(), [IS]))() =
             StandardCurve _
-            .Scan(externalStandardsWiff Or wiff.AsDefault, ions, calibrates,
+            .Scan(calWiffRaw, ions, calibrates,
                   refName:=standardNames,
                   calibrationNamedPattern:=calibrationNamedPattern,
                   levelPattern:=levelPattern,
