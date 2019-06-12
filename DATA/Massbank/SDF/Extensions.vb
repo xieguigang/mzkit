@@ -52,7 +52,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
-Imports SMRUCC.genomics.Assembly.EBI.ChEBI.XML
+Imports SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI.XML
 
 Namespace File
 
