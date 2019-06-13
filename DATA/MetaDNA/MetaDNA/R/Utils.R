@@ -48,7 +48,9 @@ PPM <- function(measured, actualValue) {
 #' @param type The precursor type name, it should be in format like: \code{[M+H]+}.
 #'
 #' @return Function returns character \code{+} or \code{-}.
-getPolarity <- function(type) {substr.Right(type, n=1);}
+getPolarity <- function(type) {
+	substr.Right(type, n=1);
+}
 
 #' Get mass calculator
 #'
