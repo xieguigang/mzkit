@@ -19,7 +19,7 @@ Namespace NCBI.PubChem
 
         <Extension>
         Private Function navigateView(view As PugViewRecord, parts As String()) As Section
-            If parts.Length = 1 Then
+            If parts.Length = 1 OrElse view Is Nothing Then
                 Return Nothing
             End If
 
