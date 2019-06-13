@@ -9,6 +9,41 @@ Namespace NCBI.PubChem
     <HideModuleName>
     Public Module MetaInfoReader
 
+        <Extension>
+        Public Function GetInform(view As PugViewRecord, path$) As Information
+            Dim parts = path.Split("/"c)
+            Dim section = view.navigateView(parts)
+
+            Return section.GetInformation(parts.Last, multipleInfo:=False)
+        End Function
+
+        <Extension>
+        Private Function navigateView(view As PugViewRecord, parts As String()) As Section
+            If parts.Length = 1 Then
+                Return Nothing
+            End If
+
+            Dim sec As Section = view(parts(Scan0))
+
+            For Each part As String In parts.Skip(1).Take(parts.Length - 2)
+                If sec Is Nothing Then
+                    Return Nothing
+                Else
+                    sec = sec(part)
+                End If
+            Next
+
+            Return sec
+        End Function
+
+        <Extension>
+        Public Function GetInformList(view As PugViewRecord, path$) As Information()
+            Dim parts = path.Split("/"c)
+            Dim section = view.navigateView(parts)
+
+            Return section.GetInformation(parts.Last, multipleInfo:=True)
+        End Function
+
         ReadOnly nameDatabase As Index(Of String) = {
             "Human Metabolome Database (HMDB)",
             "ChEBI",
