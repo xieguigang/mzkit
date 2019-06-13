@@ -89,6 +89,7 @@ metaDNA <- function(identify, unknown, do.align,
                     score.cutoff = 0.8,
                     kegg_id.skips = NULL,
 					seeds.all = TRUE,
+					seeds.topn = 5,
                     iterations = 20) {
 					
     cat("\n\n\n");
@@ -103,6 +104,7 @@ metaDNA <- function(identify, unknown, do.align,
     print("KEGG compound match with tolerance:");
     print(tolerance);
 
+	timer <- benchmark();
 	unknown.mz <- sapply(unknown, function(x) x$mz) %=>% as.numeric;
 	filter.skips <- kegg_id.skips %=>% create_filter.skips;
     match.kegg <- kegg.match.handler(
@@ -110,6 +112,14 @@ metaDNA <- function(identify, unknown, do.align,
       precursor_type = precursor_type,
       tolerance = tolerance
     );
+	
+	if (seeds.all && seeds.topn > 0) {
+		print(sprintf("metaDNA only used top %s best hit as seeds...", seeds.topn));
+	} else if (seeds.all) {
+		print("metaDNA will used all of the hits as seeds...");
+	} else {
+		print("metaDNA will used the top best hit as seeds...");
+	}
 	
 	print("do First iteration....");
 
@@ -122,13 +132,16 @@ metaDNA <- function(identify, unknown, do.align,
 	
 	memory.sample("[metaDNA]    do First iteration...");
 	
-	seeds <- extends.seeds(output, rt.adjust, seeds.all);
+	seeds <- extends.seeds(output, rt.adjust, seeds.all, seeds.topn = seeds.topn);
 	metaDNA.out <- output;
 	stats <- NULL;
 	totals <- 0;
 	kegg_id.skips <- append(kegg_id.skips, names(seeds));
-	filter.skips <- kegg_id.skips %=>% create_filter.skips;
-	timer <- benchmark();
+	filter.skips <- kegg_id.skips %=>% create_filter.skips;	
+	
+	n <- length(seeds);
+	totals <- totals + n;
+	stats <- rbind(stats, c(0, n, totals, timer()$since_last));
 	
 	if (iterations > 1) {
 	    for(i in 1:iterations) {
@@ -145,7 +158,7 @@ metaDNA <- function(identify, unknown, do.align,
 			metaDNA.out <- append(metaDNA.out, output);				
 			
 			# using identify output as seeds for next iteration
-			seeds <- extends.seeds(output, rt.adjust, seeds.all);
+			seeds <- extends.seeds(output, rt.adjust, seeds.all, seeds.topn = seeds.topn);
 			n <- length(seeds);
 			
 			if (n == 0) {

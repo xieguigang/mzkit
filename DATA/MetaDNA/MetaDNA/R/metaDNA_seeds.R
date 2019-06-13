@@ -97,7 +97,10 @@ seeding <- function(output, rt.adjust, seeds.all) {
 #'       And this will makes the alignment iteration took very long long time for run. 
 #'       So just pick the top 5 result when requires all alignment hit as seeds.
 #'
-extends.seeds <- function(output, rt.adjust = function(rt, KEGG_id) 1, seeds.all = TRUE) {
+extends.seeds <- function(output, 
+	rt.adjust = function(rt, KEGG_id) 1, 
+	seeds.all = TRUE, 
+	seeds.topn = 5) {
 		
 	print("Create metaDNA seeds from alignment result");
 	
@@ -107,9 +110,13 @@ extends.seeds <- function(output, rt.adjust = function(rt, KEGG_id) 1, seeds.all
 	gc();
 	
 	# and then pick top 5 if use all alignment result hit as seeds
-	if (seeds.all) {
-		seeds %=>% extends.seeds.top;
+	if (seeds.all && seeds.topn > 0) {
+		extends.seeds.top(seeds, n = seeds.topn);
+	} else if (seeds.all) {
+		# using all hits as seeds
+		seeds;
 	} else {
+		# just best 1
 		seeds;
 	}
 }
