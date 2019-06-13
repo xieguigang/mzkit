@@ -216,7 +216,8 @@
     <Compile Include="MetaLib\Models\MetaLib.vb" />
     <Compile Include="Concentration.vb" />
     <Compile Include="Public\lipidMAPS\SDF.vb" />
-    <Compile Include="Public\NCBI\PubChem\Web\WebQuery.vb" />
+    <Compile Include="Public\NCBI\PubChem\Web\MetaInfoReader.vb" />
+    <Compile Include="Public\NCBI\PubChem\Web\Query\WebQuery.vb" />
     <Compile Include="Public\NCBI\SDFExtensions.vb" />
     <Compile Include="Public\NCBI\PubChem\CIDSynonym.vb" />
     <Compile Include="Public\NCBI\PubChem\MetaData.vb" />
@@ -226,7 +227,7 @@
     <Compile Include="Public\NCBI\PubChem\Web\Extensions.vb" />
     <Compile Include="Public\NCBI\PubChem\Web\Models\Information.vb" />
     <Compile Include="Public\NCBI\PubChem\Web\Models\PugView.vb" />
-    <Compile Include="Public\NCBI\PubChem\Web\Query.vb" />
+    <Compile Include="Public\NCBI\PubChem\Web\Query\Query.vb" />
     <Compile Include="Public\TMIC\HMDB\MetaReference\BioSamples.vb" />
     <Compile Include="Public\TMIC\HMDB\MetaReference\RepositoryExtensions.vb" />
     <Compile Include="Public\TMIC\HMDB\Spectra\Abstract.vb" />
