@@ -140,15 +140,31 @@ Namespace NCBI.PubChem
             If section Is Nothing Then
                 Return New Information
             Else
-                If multipleInfo Then
+                Return section.InformationNoNull(key, multipleInfo)
+            End If
+        End Function
+
+        <Extension>
+        Private Function InformationNoNull(section As Section, key$, multipleInfo As Boolean) As [Variant](Of Information, Information())
+            If multipleInfo Then
+                Return section _
+                    .Information _
+                    .SafeQuery _
+                    .Where(Function(i)
+                               Return i.matchName(key)
+                           End Function) _
+                    .ToArray
+            Else
+                If key.IsPattern("[#]\d+") Then
+                    Dim index = key.Trim("#"c).ParseInteger
+
+                    ' get by index
                     Return section _
                         .Information _
                         .SafeQuery _
-                        .Where(Function(i)
-                                   Return i.matchName(key)
-                               End Function) _
-                        .ToArray
+                        .ElementAtOrDefault(index)
                 Else
+                    ' get by name
                     Return section _
                         .Information _
                         .SafeQuery _

@@ -11,7 +11,7 @@ Namespace NCBI.PubChem
 
         <Extension>
         Public Function GetInform(view As PugViewRecord, path$) As Information
-            Dim parts = path.Split("/"c)
+            Dim parts = path.Trim("/"c).Split("/"c)
             Dim section = view.navigateView(parts)
 
             Return section.GetInformation(parts.Last, multipleInfo:=False)
@@ -38,7 +38,7 @@ Namespace NCBI.PubChem
 
         <Extension>
         Public Function GetInformList(view As PugViewRecord, path$) As Information()
-            Dim parts = path.Split("/"c)
+            Dim parts = path.Trim("/"c).Split("/"c)
             Dim section = view.navigateView(parts)
 
             Return section.GetInformation(parts.Last, multipleInfo:=True)
