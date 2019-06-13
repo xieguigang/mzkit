@@ -155,7 +155,7 @@ Namespace NCBI.PubChem
 
         Private Shared Function loadPugView(xml As String, type As Type) As PugViewRecord
             If type Is GetType(PugViewRecord) Then
-                Return xml.LoadFromXml(Of PugViewRecord)
+                Return xml.LoadFromXml(Of PugViewRecord)(throwEx:=False)
             Else
                 Throw New NotImplementedException
             End If
