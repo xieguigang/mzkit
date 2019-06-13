@@ -63,6 +63,9 @@ Imports System.Xml.Serialization
 
 Namespace NCBI.PubChem
 
+    ''' <summary>
+    ''' 类似于Folder
+    ''' </summary>
     Public MustInherit Class InformationSection
 
         Dim sectionTable As Dictionary(Of String, Section)

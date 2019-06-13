@@ -54,7 +54,7 @@ Namespace Ms1
 
     ''' <summary>
     ''' The m/z tolerance methods.
-    ''' (可以直接使用这个对象的索引属性来进行计算判断)
+    ''' (可以直接使用这个对象的索引属性来进行计算判断,索引属性表示两个``m/z``值之间是否相等)
     ''' </summary>
     Public MustInherit Class Tolerance
 

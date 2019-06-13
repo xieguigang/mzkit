@@ -59,7 +59,7 @@ Imports SMRUCC.MassSpectrum.DATA.File
 Namespace NCBI.PubChem
 
     ''' <summary>
-    ''' NCBI compound annotation meta data.
+    ''' NCBI compound annotation meta data in sdf file.
     ''' </summary>
     Public Class MetaData
 

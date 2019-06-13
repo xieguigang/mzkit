@@ -61,6 +61,8 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Threading
+Imports Microsoft.VisualBasic.Linq
+Imports SMRUCC.genomics.ComponentModel
 
 Namespace NCBI.PubChem
 
@@ -86,7 +88,10 @@ Namespace NCBI.PubChem
                 End If
             End If
 
-            Return cache(handle)
+            ' 因为在这里采用的是缓存,所以还需要额外的修改执行模式
+            Return DirectCast(cache(handle), WebQuery(Of String)) _
+                .With(Sub(q) q.offlineMode = offline) _
+                .DoCall(Function(q) CObj(q))
         End Function
 
         ''' <summary>
