@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc0e7241c7a22371c6afd6108b1f0b4c, test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::39a511c9108d3f098be2786d37ff00bd, test\Module1.vb"
 
     ' Author:
     ' 
@@ -51,7 +51,7 @@ Imports SMRUCC.MassSpectrum.Assembly.MarkupData
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
 Imports SMRUCC.MassSpectrum.Math
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
-Imports SMRUCC.MassSpectrum.Math.MSMS
+Imports SMRUCC.MassSpectrum.Math.Ms1
 Imports SMRUCC.MassSpectrum.Visualization
 
 Module Module1
@@ -75,7 +75,7 @@ Module Module1
 
         Dim matrix = "D:\Resources\40\40.mzML" _
             .PopulateMS1 _
-            .Ms1Chromatogram(New DAmethod With {.da = 0.3}) _
+            .Ms1Chromatogram(New DAmethod With {.Threshold = 0.3}) _
             .Select(Function(mz)
                         Dim table = mz.chromatogram.GroupBy(Function(t) t.Time).Select(Function(c) New ChromatogramTick With {.Time = c.Key, .Intensity = c.Select(Function(s) s.Intensity).Max}).ToArray
                         Return New NamedCollection(Of ChromatogramTick) With {.Name = mz.mz, .Value = table}
@@ -116,7 +116,7 @@ Module Module1
         'Call into_matrix.MatrixJson.SaveTo("./into.json")
 
         'Call scans.SaveTo("./test_ms1_scan.csv")
-        Call matrix.TICplot("8000,3000", labelTicks:=5, showLabels:=False, fillCurve:=False).Save("./ms1.plot.png")
+        Call matrix.TICplot("8000,3000", labelLayoutTicks:=5, showLabels:=False, fillCurve:=False).Save("./ms1.plot.png")
 
         Pause()
     End Sub

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a631d019f1ab057473f47f820a2d4571, MetaDNA\MZ.MetaDNA\Algorithm.vb"
+﻿#Region "Microsoft.VisualBasic::a9094c93e0b6cb5eb7716f611a985229, MetaDNA\MZ.MetaDNA\Algorithm.vb"
 
     ' Author:
     ' 
@@ -46,4 +46,3 @@ Public Module Algorithm
 
 
 End Module
-

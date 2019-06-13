@@ -125,9 +125,9 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
-      <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
+      <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\KCF\KCF.IO\KCF.IO.vbproj">
+    <ProjectReference Include="..\..\visual\KCF\KCF.IO\KCF.IO.vbproj">
       <Project>{1bafa2bc-68b2-4ee0-9235-c60fae3377a0}</Project>
       <Name>KCF.IO</Name>
     </ProjectReference>

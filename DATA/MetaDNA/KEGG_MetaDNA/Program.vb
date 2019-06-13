@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a082c0a86fe3f0ce40f5faf81912a557, MetaDNA\KEGG_MetaDNA\Program.vb"
+﻿#Region "Microsoft.VisualBasic::e085223837d2b6371723783fdd862e54, MetaDNA\KEGG_MetaDNA\Program.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
 
     ' Module Program
     ' 
-    '     Function: BuildNetwork, Compiler, Main
+    '     Function: BuildNetwork, Compiler, KEGGMeta, Main
     ' 
     ' /********************************************************************************/
 
@@ -88,11 +88,10 @@ Module Program
                              Call compound.CommonNames?.FirstOrDefault().__DEBUG_ECHO
 
                              Return Rbase.list(
-                                !ID = compound.Entry,
-                                !exact_mass = compound.ExactMass,
-                                !name = compound.CommonNames,
-                                !formula = compound.Formula,
-                                !chebi = (compound.CHEBI?.FirstOrDefault Or NA)
+                                !ID = compound.entry,
+                                !exact_mass = compound.exactMass,
+                                !name = compound.commonNames,
+                                !formula = compound.formula
                              )
                          End Function)
 

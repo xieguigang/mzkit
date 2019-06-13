@@ -122,6 +122,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -146,19 +147,23 @@
     <Compile Include="Chromatogram\Quantile.vb" />
     <Compile Include="Chromatogram\ROI.vb" />
     <Compile Include="Extensions.vb" />
+    <Compile Include="Ms1\PolarityData.vb" />
     <Compile Include="Ms1\PrecursorType\Extensions.vb" />
+    <Compile Include="Ms1\PrecursorType\Formula\Negative.vb" />
+    <Compile Include="Ms1\PrecursorType\Formula\Positive.vb" />
     <Compile Include="Ms1\PrecursorType\Provider.vb" />
     <Compile Include="Ms1\PrecursorType\MolWeight.vb" />
     <Compile Include="Ms1\PrecursorType\MzCalculator.vb" />
     <Compile Include="Ms1\Tolerance\PPM.vb" />
     <Compile Include="Ms1\Tolerance\DeltaMass.vb" />
     <Compile Include="Ms1\Tolerance\Tolerance.vb" />
+    <Compile Include="Spectra\Models\Fragments.vb" />
     <Compile Include="Spectra\SpectraEncoder.vb" />
-    <Compile Include="Spectra\PeakMs2.vb" />
+    <Compile Include="Spectra\Models\PeakMs2.vb" />
     <Compile Include="Spectra\LibraryMatrixExtensions.vb" />
     <Compile Include="Spectra\GlobalAlignment.vb" />
-    <Compile Include="Spectra\ms2AlignMatrix.vb" />
-    <Compile Include="Spectra\LibraryMatrix.vb" />
+    <Compile Include="Spectra\Models\ms2AlignMatrix.vb" />
+    <Compile Include="Spectra\Models\LibraryMatrix.vb" />
     <Compile Include="Ms1\ms1.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -177,7 +182,8 @@
     </Compile>
     <Compile Include="Ms1\Peaktable.vb" />
     <Compile Include="Ms1\PrecursorType\PrecursorType.vb" />
-    <Compile Include="Spectra\SpectrumTree.vb" />
+    <Compile Include="Spectra\SpectrumTree\SpectrumCluster.vb" />
+    <Compile Include="Spectra\SpectrumTree\SpectrumTree.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -199,9 +205,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\math-core.vbproj">
+    <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math-core.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
-      <Name>math-core</Name>
+      <Name>Math-core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>

@@ -1,45 +1,45 @@
-﻿#Region "Microsoft.VisualBasic::cd67543b35fc4dbdde01a9dbd9ab1178, ms2_math-core\Ms1\PrecursorType\MolWeight.vb"
+﻿#Region "Microsoft.VisualBasic::57e17e1bbd03767d5261da717946fa9c, ms2_math-core\Ms1\PrecursorType\MolWeight.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module MolWeight
-    ' 
-    '         Function: Eval, Mul, Weight
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module MolWeight
+' 
+'         Function: Eval, Mul, Weight
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -53,12 +53,24 @@ Namespace Ms1.PrecursorType
 
         ReadOnly weights As New Dictionary(Of String, Double) From {
             {"H", 1.007276},
+            {"CH3COO", 59.013},
+            {"C3H7O2", 75.045},
+            {"C2H3O", 43.018},
+            {"Methylcarbonyl", 43.018},
+            {"Propyldioxy", 75.045},
+            {"C12H20O9", 308.111},
+            {"Lactal", 308.111},
+            {"CH3", 15.032528},
+            {"C", 12.0107},
             {"Na", 22.98976928},
             {"NH4", 18.035534},
             {"K", 39.0983},
+            {"F", 18.998},
+            {"Li", 6.941},
             {"H2O", 18.01471},
             {"ACN", 41.04746},      ' Acetonitrile (CH3CN)
             {"CH3OH", 32.03773},
+            {"C2H3O2", 59.013},     ' Acetate
             {"DMSO", 78.12089},     ' dimethyl sulfoxide (CH3)2SO 
             {"IsoProp", 60.058064}, ' Unknown
             {"Cl", 35.446},
@@ -76,9 +88,18 @@ Namespace Ms1.PrecursorType
             End If
         End Function
 
+        ''' <summary>
+        ''' 主要是用于计算<see cref="MzCalculator.adducts"/>部分的质量
+        ''' </summary>
+        ''' <param name="formula"></param>
+        ''' <returns></returns>
         Public Function Eval(formula As String) As Double
             Static ionModeSymbols As Index(Of Char) = {"+"c, "-"c}
 
+            If formula.StringEmpty Then
+                ' [M]+, [M]-是没有adducts的
+                Return 0
+            End If
             If formula.First Like ionModeSymbols Then
                 formula = "0H" & formula
             End If

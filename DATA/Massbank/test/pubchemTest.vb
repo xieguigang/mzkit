@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cff1e20b0407c4fac6e3e8721f549029, Massbank\test\pubchemTest.vb"
+﻿#Region "Microsoft.VisualBasic::2faca1df65f64724ca439c1862f4409c, Massbank\test\pubchemTest.vb"
 
     ' Author:
     ' 
@@ -36,13 +36,14 @@
 
     ' Module pubchemTest
     ' 
-    '     Sub: fileTest, Main
+    '     Sub: fileTest, Main, sdfParserTest
     ' 
     ' /********************************************************************************/
 
 #End Region
 
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports SMRUCC.MassSpectrum.DATA.File
 Imports SMRUCC.MassSpectrum.DATA.NCBI
 Imports SMRUCC.MassSpectrum.DATA.NCBI.PubChem
 
@@ -50,11 +51,25 @@ Module pubchemTest
 
     Sub Main()
 
+        Dim keys = SMRUCC.MassSpectrum.DATA.File.SDF.ScanKeys("D:\Database\pubchem").ToArray
+
+        Call keys.GetJson.SaveTo("D:\Database\pubchem_sdf_keys.json")
+
+        Pause()
+
+        Call sdfParserTest()
         Call fileTest()
 
 
         Dim cas$ = "345909-34-4"
         Dim result = PubChem.Query.QueryPugViews(cas)
+
+        Pause()
+    End Sub
+
+    Sub sdfParserTest()
+        Dim mols = SDF.IterateParser("D:\Database\pubchem\Compound_000000001_000025000.sdf").ToArray
+
 
         Pause()
     End Sub
@@ -70,4 +85,3 @@ Module pubchemTest
         Pause()
     End Sub
 End Module
-

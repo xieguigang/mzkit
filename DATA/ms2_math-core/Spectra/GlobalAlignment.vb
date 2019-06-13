@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c745b50349b7b777e72bdc90bb644f29, ms2_math-core\Spectra\GlobalAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::b053cb28d70f437d1234bc3654447410, ms2_math-core\Spectra\GlobalAlignment.vb"
 
     ' Author:
     ' 
@@ -36,6 +36,8 @@
 
     '     Module GlobalAlignment
     ' 
+    '         Properties: ppm20
+    ' 
     '         Function: Align, AlignMatrix, SharedPeakCount, TwoDirectionSSM
     ' 
     ' 
@@ -57,6 +59,8 @@ Namespace Spectra
     ''' Global alignment of two MS/MS matrix.
     ''' </summary>
     Public Module GlobalAlignment
+
+        Public ReadOnly Property ppm20 As [Default](Of Tolerance) = Tolerance.PPM(20)
 
         '''' <summary>
         '''' ### shared peak count
@@ -91,6 +95,21 @@ Namespace Spectra
         'End Function
 
         ''' <summary>
+        ''' 取出响应度前<paramref name="top"/>个数量的质谱图碎片
+        ''' </summary>
+        ''' <param name="spectra"></param>
+        ''' <param name="top%"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function TopPeaks(spectra As LibraryMatrix, top%) As IEnumerable(Of ms2)
+            Return spectra _
+                .OrderByDescending(Function(mz) mz.quantity) _
+                .Take(top)
+        End Function
+
+        ''' <summary>
         ''' 只计算响应度最高的前<paramref name="top"/>个二级碎片之中的相同mz的碎片数量
         ''' </summary>
         ''' <param name="query"></param>
@@ -98,13 +117,16 @@ Namespace Spectra
         ''' <param name="tolerance"></param>
         ''' <param name="top%"></param>
         ''' <returns></returns>
-        Public Function SharedPeakCount(query As LibraryMatrix, subject As LibraryMatrix, Optional tolerance As Tolerance = Nothing, Optional top% = 10) As Integer
-            Dim q = query.OrderByDescending(Function(mz) mz.quantity).Take(top).ToArray
-            Dim s = subject.OrderByDescending(Function(mz) mz.quantity).Take(top).ToArray
+        Public Function SharedPeakCount(query As LibraryMatrix, subject As LibraryMatrix,
+                                        Optional tolerance As Tolerance = Nothing,
+                                        Optional top% = 10) As Integer
+
+            Dim q As ms2() = query.TopPeaks(top).ToArray
+            Dim s As ms2() = subject.TopPeaks(top).ToArray
 
             With tolerance Or Tolerance.DefaultTolerance
                 Dim share As Integer = s _
-                    .Where(Function(mz)
+                    .Where(Function(mz As ms2)
                                Dim find As ms2 = q _
                                    .Where(Function(frag)
                                               Return .Assert(frag.mz, mz.mz)
@@ -129,8 +151,6 @@ Namespace Spectra
         Public Function TwoDirectionSSM(x As ms2(), y As ms2(), method As Tolerance) As (forward#, reverse#)
             Return (GlobalAlignment.Align(x, y, method), GlobalAlignment.Align(y, x, method))
         End Function
-
-        ReadOnly ppm20 As DefaultValue(Of Tolerance) = New PPMmethod(20).Interface
 
         ''' <summary>
         ''' 以<paramref name="ref"/>为基准，从<paramref name="query"/>之中选择出对应的<see cref="ms2.mz"/>信号响应信息，完成对齐操作

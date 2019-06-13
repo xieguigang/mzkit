@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f350ba88fe3d6d0d25ab332418e9f41, assembly\MarkupData\mzML\XML\XML.vb"
+﻿#Region "Microsoft.VisualBasic::1f350ba88fe3d6d0d25ab332418e9f41, MarkupData\mzML\XML\XML.vb"
 
     ' Author:
     ' 
@@ -279,7 +279,7 @@ Namespace MarkupData.mzML
         <XmlAttribute> Public Property unitCvRef As String
         <XmlAttribute> Public Property unitAccession As String
 
-        Shared ReadOnly Unknown As DefaultValue(Of String) = NameOf(Unknown)
+        Shared ReadOnly Unknown As [Default](Of String) = NameOf(Unknown)
 
         Public Overrides Function ToString() As String
             Return $"[{accession}] Dim {name} As <{unitName Or Unknown}> = {value}"

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5dcb7b6a85bbfc405328a8cd78affba5, Massbank\Public\TMIC\HMDB\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::7655a0d08513a54aeeb9db5efec231f6, Massbank\Public\TMIC\HMDB\Extensions.vb"
 
     ' Author:
     ' 
@@ -56,10 +56,11 @@ Namespace TMIC.HMDB
 
     Public Module HMDBExtensions
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function BioSamples(metabolite As metabolite) As String()
-            Return metabolite.biospecimen_locations.biospecimen.AsList + metabolite.tissue_locations.tissue
+            Dim biosample = metabolite.biological_properties
+
+            Return biosample?.biospecimen_locations.biospecimen.AsList + biosample.tissue_locations.tissue
         End Function
 
         ''' <summary>
@@ -229,8 +230,8 @@ Namespace TMIC.HMDB
             Dim matchName = (names Or New String() {}.AsDefault).NameMatch
 
             For Each metabolite As metabolite In metabolite.Load(path)
-                Dim samples$() = metabolite _
-                    .biospecimen_locations _
+                Dim samples$() = metabolite.biological_properties _
+                   ?.biospecimen_locations _
                     .biospecimen _
                     .SafeQuery _
                     .ToArray
@@ -256,7 +257,7 @@ Namespace TMIC.HMDB
                     .formula = metabolite.chemical_formula,
                     .HMDB = metabolite.accession,
                     .KEGG = metabolite.kegg_id,
-                    .mass = metabolite.average_molecular_weight,
+                    .exact_mass = metabolite.average_molecular_weight,
                     .water_solubility = metabolite.experimental_properties.water_solubility,
                     .disease = disease,
                     .name = name

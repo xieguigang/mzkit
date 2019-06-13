@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::81c45ca836ea30ce107875bf5d585eef, SDF.Extensions\SDF2KCF.vb"
+﻿#Region "Microsoft.VisualBasic::6f9a3c67a45391dd8c8df92367c86f0b, SDF.Extensions\SDF2KCF.vb"
 
     ' Author:
     ' 
@@ -43,10 +43,10 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.BioDeep.Chemistry.Model
 Imports Microsoft.VisualBasic.Text.Xml.Models
-Imports SMRUCC.Chemistry.Model
-Imports KCF_atom = SMRUCC.Chemistry.Model.Atom
-Imports KCF_bound = SMRUCC.Chemistry.Model.Bound
+Imports KCF_atom = BioNovoGene.BioDeep.Chemistry.Model.Atom
+Imports KCF_bound = BioNovoGene.BioDeep.Chemistry.Model.Bound
 
 Public Module SDF2KCF
 
@@ -96,7 +96,7 @@ Public Module SDF2KCF
                 .ID = i
             },
             .Index = i,
-            .KEGGAtom = a.Atom
+            .KEGGAtom = KegAtomType.GetAtom(a.Atom)
         }
     End Function
 End Module

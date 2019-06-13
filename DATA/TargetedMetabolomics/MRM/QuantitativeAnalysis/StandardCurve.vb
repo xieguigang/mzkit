@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::360a48b196e43a5d97e9d722556444b3, TargetedMetabolomics\MRM\QuantitativeAnalysis\StandardCurve.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module StandardCurve
-    ' 
-    '     Function: GetFactor, Regression, Scan, ScanContent, ScanTPA
-    ' 
-    ' /********************************************************************************/
+' Module StandardCurve
+' 
+'     Function: GetFactor, Regression, Scan, ScanContent, ScanTPA
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -160,7 +160,7 @@ Public Module StandardCurve
     ' 在计算峰面积的时候，对于亮氨酸和异亮氨酸，会需要乘以一个系数
     ' 这个Factor参数默认为1
 
-    ReadOnly NoChange As DefaultValue(Of Double) = 1.0R
+    ReadOnly NoChange As [Default](Of Double) = 1.0R
 
     ''' <summary>
     ''' 根据扫描出来的TPA峰面积进行对标准曲线的回归建模
@@ -201,7 +201,8 @@ Public Module StandardCurve
                          End Function) _
                 .Select(Function(level)
 
-                            Dim At_i = TPA(level.Key) ' 得到峰面积Ati
+                            Dim key As String = level.Key.ToUpper
+                            Dim At_i = TPA(key) ' 得到峰面积Ati
                             Dim Ct_i = level.Value    ' 得到已知的浓度数据
                             Dim AIS#                  ' 内标的峰面积
 
@@ -218,7 +219,7 @@ Public Module StandardCurve
                                 pX = At_i
                             Else
                                 ' 需要做内标校正的情况
-                                AIS = ISA(level.Key)
+                                AIS = ISA(key)
                                 pX = At_i / AIS
                             End If
 
@@ -233,7 +234,7 @@ Public Module StandardCurve
                                 .Cti = Ct_i,
                                 .ID = ion.HMDB,
                                 .Name = ion.Name,
-                                .level = level.Key
+                                .level = key
                             }
 
                             ' 得到标准曲线之中的一个点
@@ -254,8 +255,8 @@ Public Module StandardCurve
     ''' <summary>
     ''' 从原始数据之中扫描峰面积数据，返回来的数据集之中的<see cref="DataSet.ID"/>是HMDB代谢物编号
     ''' </summary>
-    ''' <param name="raw$">``*.wiff``，转换之后的结果文件夹，其中标准曲线的数据都是默认使用``L数字``标记的。</param>
-    ''' <param name="ions$">包括离子对的定义数据以及浓度区间</param>
+    ''' <param name="raw">``*.wiff``，转换之后的结果文件夹，其中标准曲线的数据都是默认使用``L数字``标记的。</param>
+    ''' <param name="ions">包括离子对的定义数据以及浓度区间</param>
     ''' <param name="TPAFactors">
     ''' ``{<see cref="Standards.HMDB"/>, <see cref="Standards.Factor"/>}``，这个是为了计算亮氨酸和异亮氨酸这类无法被区分的物质的峰面积所需要的
     ''' </param>
@@ -303,7 +304,7 @@ Public Module StandardCurve
             ' level = level.Match("[-]L\d+", RegexICSng).Trim("-"c)
 
             For Each ion In TPA
-                ionTPAs(ion.Name).Add(level, ion.Value.TPA)
+                ionTPAs(ion.Name).Add(level.ToUpper, ion.Value.TPA)
             Next
         Next
 

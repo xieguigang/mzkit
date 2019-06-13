@@ -139,7 +139,7 @@ Namespace Chromatogram
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetChromatogramData(Optional getTitle As Func(Of ROI, String) = Nothing) As NamedCollection(Of ChromatogramTick)
-            Static defaultRtTitle As New DefaultValue(Of Func(Of ROI, String))(
+            Static defaultRtTitle As New [Default](Of Func(Of ROI, String))(
                 Function(roi)
                     Return $"[{roi.Time.Min.ToString("F0")},{roi.Time.Max.ToString("F0")}]"
                 End Function)

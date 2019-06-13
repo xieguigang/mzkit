@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::602152f44bc8c777f04fcc4086045b55, plot\MassSpectraMirrorPlot.vb"
+﻿#Region "Microsoft.VisualBasic::1c4ea4672176ed974af8bb67e43bf7e3, plot\MassSpectraMirrorPlot.vb"
 
     ' Author:
     ' 
@@ -116,4 +116,3 @@ Public Module MassSpectra
         )
     End Function
 End Module
-

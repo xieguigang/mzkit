@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f184429d216d1d2aafabce5b1398880, Massbank\InChI\InChI.vb"
+﻿#Region "Microsoft.VisualBasic::b0cc2ec1ea05d898539654bacc7924c5, Massbank\InChI\InChI.vb"
 
     ' Author:
     ' 
@@ -111,5 +111,3 @@ Namespace IUPAC
         End Function
     End Class
 End Namespace
-
-

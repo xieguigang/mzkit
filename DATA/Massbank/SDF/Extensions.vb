@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6287b29854e5a9f4b8a72fa820d8719e, Massbank\SDF\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::d9a39f3b7fee9c16fc0815e55b5e2bde, Massbank\SDF\Extensions.vb"
 
     ' Author:
     ' 
@@ -52,7 +52,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
-Imports SMRUCC.genomics.Assembly.EBI.ChEBI.XML
+Imports SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI.XML
 
 Namespace File
 
@@ -104,7 +104,7 @@ Namespace File
         ''' </summary>
         ''' <typeparam name="MetaData"></typeparam>
         ''' <param name="sdf"></param>
-        ''' <param name="properties"></param>
+        ''' <param name="properties">将<see cref="defaultKeys"/>之中的键名称映射为对应的成员属性的字典</param>
         ''' <returns></returns>
         <Extension>
         Public Function Data(Of MetaData As {New, Class})(sdf As SDF, properties As Dictionary(Of String, PropertyInfo)) As MetaData
@@ -118,45 +118,45 @@ Namespace File
             Return DirectCast(meta, MetaData)
         End Function
 
-        ReadOnly defaultKeys As DefaultValue(Of String()) = (
+        ReadOnly defaultKeys As [Default](Of String()) = (
             <json>
-            [
-              "PUBCHEM_COMPOUND_CID",
-              "PUBCHEM_COMPOUND_CANONICALIZED",
-              "PUBCHEM_CACTVS_COMPLEXITY",
-              "PUBCHEM_CACTVS_HBOND_ACCEPTOR",
-              "PUBCHEM_CACTVS_HBOND_DONOR",
-              "PUBCHEM_CACTVS_ROTATABLE_BOND",
-              "PUBCHEM_CACTVS_SUBSKEYS",
-              "PUBCHEM_IUPAC_OPENEYE_NAME",
-              "PUBCHEM_IUPAC_CAS_NAME",
-              "PUBCHEM_IUPAC_NAME",
-              "PUBCHEM_IUPAC_SYSTEMATIC_NAME",
-              "PUBCHEM_IUPAC_TRADITIONAL_NAME",
-              "PUBCHEM_IUPAC_INCHI",
-              "PUBCHEM_IUPAC_INCHIKEY",
-              "PUBCHEM_XLOGP3_AA",
-              "PUBCHEM_EXACT_MASS",
-              "PUBCHEM_MOLECULAR_FORMULA",
-              "PUBCHEM_MOLECULAR_WEIGHT",
-              "PUBCHEM_OPENEYE_CAN_SMILES",
-              "PUBCHEM_OPENEYE_ISO_SMILES",
-              "PUBCHEM_CACTVS_TPSA",
-              "PUBCHEM_MONOISOTOPIC_WEIGHT",
-              "PUBCHEM_TOTAL_CHARGE",
-              "PUBCHEM_HEAVY_ATOM_COUNT",
-              "PUBCHEM_ATOM_DEF_STEREO_COUNT",
-              "PUBCHEM_ATOM_UDEF_STEREO_COUNT",
-              "PUBCHEM_BOND_DEF_STEREO_COUNT",
-              "PUBCHEM_BOND_UDEF_STEREO_COUNT",
-              "PUBCHEM_ISOTOPIC_ATOM_COUNT",
-              "PUBCHEM_COMPONENT_COUNT",
-              "PUBCHEM_CACTVS_TAUTO_COUNT",
-              "PUBCHEM_COORDINATE_TYPE",
-              "PUBCHEM_BONDANNOTATIONS",
-              "PUBCHEM_XLOGP3",
-              "PUBCHEM_NONSTANDARDBOND"
-            ]
+[
+    "PUBCHEM_COMPOUND_CID",
+    "PUBCHEM_COMPOUND_CANONICALIZED",
+    "PUBCHEM_CACTVS_COMPLEXITY",
+    "PUBCHEM_CACTVS_HBOND_ACCEPTOR",
+    "PUBCHEM_CACTVS_HBOND_DONOR",
+    "PUBCHEM_CACTVS_ROTATABLE_BOND",
+    "PUBCHEM_CACTVS_SUBSKEYS",
+    "PUBCHEM_IUPAC_OPENEYE_NAME",
+    "PUBCHEM_IUPAC_CAS_NAME",
+    "PUBCHEM_IUPAC_NAME",
+    "PUBCHEM_IUPAC_SYSTEMATIC_NAME",
+    "PUBCHEM_IUPAC_TRADITIONAL_NAME",
+    "PUBCHEM_IUPAC_INCHI",
+    "PUBCHEM_IUPAC_INCHIKEY",
+    "PUBCHEM_XLOGP3_AA",
+    "PUBCHEM_EXACT_MASS",
+    "PUBCHEM_MOLECULAR_FORMULA",
+    "PUBCHEM_MOLECULAR_WEIGHT",
+    "PUBCHEM_OPENEYE_CAN_SMILES",
+    "PUBCHEM_OPENEYE_ISO_SMILES",
+    "PUBCHEM_CACTVS_TPSA",
+    "PUBCHEM_MONOISOTOPIC_WEIGHT",
+    "PUBCHEM_TOTAL_CHARGE",
+    "PUBCHEM_HEAVY_ATOM_COUNT",
+    "PUBCHEM_ATOM_DEF_STEREO_COUNT",
+    "PUBCHEM_ATOM_UDEF_STEREO_COUNT",
+    "PUBCHEM_BOND_DEF_STEREO_COUNT",
+    "PUBCHEM_BOND_UDEF_STEREO_COUNT",
+    "PUBCHEM_ISOTOPIC_ATOM_COUNT",
+    "PUBCHEM_COMPONENT_COUNT",
+    "PUBCHEM_CACTVS_TAUTO_COUNT",
+    "PUBCHEM_COORDINATE_TYPE",
+    "PUBCHEM_BONDANNOTATIONS",
+    "PUBCHEM_XLOGP3",
+    "PUBCHEM_NONSTANDARDBOND"
+]
             </json>
         ).Value _
          .LoadJSON(Of String())

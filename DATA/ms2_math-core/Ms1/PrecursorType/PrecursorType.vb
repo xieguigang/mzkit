@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c58045d493581bd185210c6aa7d47c2f, ms2_math-core\Ms1\PrecursorType\PrecursorType.vb"
+﻿#Region "Microsoft.VisualBasic::465318eb9a806ce95774ceecec6c491b, ms2_math-core\Ms1\PrecursorType\PrecursorType.vb"
 
     ' Author:
     ' 
@@ -64,10 +64,10 @@ Namespace Ms1.PrecursorType
         ''' </summary>
         ''' <param name="chargeMode$">+/-</param>
         ''' <param name="charge%"></param>
-        ''' <param name="PrecursorType$"></param>
+        ''' <param name="precursor_type$"></param>
         ''' <returns></returns>
-        Public Function CalcMass(chargeMode$, charge%, PrecursorType$) As Func(Of Double, Double)
-            If (PrecursorType = "[M]+" OrElse PrecursorType = "[M]-") Then
+        Public Function CalcMass(chargeMode$, charge%, precursor_type$) As Func(Of Double, Double)
+            If (precursor_type = "[M]+" OrElse precursor_type = "[M]-") Then
                 Return (Function(x) x)
             End If
 
@@ -75,7 +75,7 @@ Namespace Ms1.PrecursorType
             Dim found As MzCalculator = Nothing
 
             For Each cacl In mode.Values
-                If (cacl.name = PrecursorType) Then
+                If (cacl.name = precursor_type) Then
                     found = cacl
                     Exit For
                 End If
@@ -92,30 +92,30 @@ Namespace Ms1.PrecursorType
         ''' 计算出前体离子的加和模式
         ''' </summary>
         ''' <param name="mass">分子质量</param>
-        ''' <param name="precursorMZ">前体的m/z</param>
+        ''' <param name="precursor_mz">前体的m/z</param>
         ''' <param name="charge">电荷量</param>
         ''' <param name="chargeMode">极性</param>
         ''' <param name="tolerance">所能够容忍的质量误差</param>
         ''' <returns></returns>
-        Public Function FindPrecursorType(mass#, precursorMZ#, charge%, Optional chargeMode$ = "+", Optional tolerance As Tolerance = Nothing) As TypeMatch
+        Public Function FindPrecursorType(mass#, precursor_mz#, charge%, Optional chargeMode$ = "+", Optional tolerance As Tolerance = Nothing) As TypeMatch
             If charge = 0 Then
                 Return New TypeMatch With {
                     .errors = Double.NaN,
                     .precursorType = no_result,
                     .message = "I can't calculate the ionization mode for no charge(charge = 0)!"
                 }
-            ElseIf (mass.IsNaNImaginary OrElse precursorMZ.IsNaNImaginary) Then
+            ElseIf (mass.IsNaNImaginary OrElse precursor_mz.IsNaNImaginary) Then
                 Return New TypeMatch With {
                     .errors = Double.NaN,
                     .precursorType = no_result,
-                    .message = sprintf("  ****** mass='%s' or precursor_M/Z='%s' is an invalid value!", mass, precursorMZ)
+                    .message = sprintf("  ****** mass='%s' or precursor_M/Z='%s' is an invalid value!", mass, precursor_mz)
                 }
             Else
                 tolerance = tolerance Or Tolerance.DefaultTolerance
             End If
 
             Dim mz# = mass / sys.Abs(charge)
-            Dim ppm As Double = tolerance.MassError(precursorMZ, mz)
+            Dim ppm As Double = tolerance.MassError(precursor_mz, mz)
 
             If tolerance.MatchTolerance([error]:=ppm) Then
                 ' 本身的分子质量和前体的mz一样，说明为[M]类型
@@ -131,7 +131,7 @@ Namespace Ms1.PrecursorType
                     }
                 End If
             Else
-                Return FindPrecursorType(mass, precursorMZ, charge, Provider.Calculator(chargeMode), tolerance)
+                Return FindPrecursorType(mass, precursor_mz, charge, Provider.Calculator(chargeMode), tolerance)
             End If
         End Function
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9dc653ec473428c258076f8161d375d3, ms2_math-core\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::10743691cbed3b0f2d1b634a481c442b, ms2_math-core\Extensions.vb"
 
     ' Author:
     ' 
@@ -57,9 +57,11 @@ Public Module Extensions
     ''' <returns></returns>
     <Extension>
     Public Function Trim(ByRef library As LibraryMatrix, intoCutoff#) As LibraryMatrix
-        library = library / library.Max
-        library = library(library!intensity >= intoCutoff)
-        library = library * 100
+        If intoCutoff > 0 Then
+            library = library / library.Max
+            library = library(library!intensity >= intoCutoff)
+            library = library * 100
+        End If
 
         Return library
     End Function

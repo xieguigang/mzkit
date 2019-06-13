@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0664a308b7c03bdc7bd62ba318b85df, assembly\MarkupData\mzML\IonPair.vb"
+﻿#Region "Microsoft.VisualBasic::e0664a308b7c03bdc7bd62ba318b85df, MarkupData\mzML\IonPair.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b096e0e4ea87f3946a2fcd7c0bbbfbc, plot\GCMSscanVisual.vb"
+﻿#Region "Microsoft.VisualBasic::4d8b6ec6e14bf5c0454eb7a829be9365, plot\GCMSscanVisual.vb"
 
     ' Author:
     ' 
@@ -217,4 +217,3 @@ Public Module GCMSscanVisual
             .GraphicsPlots(padding, bg, plotInternal)
     End Function
 End Module
-

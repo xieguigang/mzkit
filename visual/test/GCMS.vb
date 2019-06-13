@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3e66b2118b7981c4ada2344a1f02b669, test\GCMS.vb"
+﻿#Region "Microsoft.VisualBasic::1a291097f8da0350bac0589fa3200057, test\GCMS.vb"
 
     ' Author:
     ' 
@@ -42,15 +42,9 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Data.csv
-Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language.UnixBash
-Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Text
-Imports SMRUCC.MassSpectrum.Math
-Imports SMRUCC.MassSpectrum.Math.App.GCMS
-Imports SMRUCC.MassSpectrum.Math.Chromatogram
-Imports SMRUCC.MassSpectrum.Visualization
+Imports SMRUCC.MassSpectrum.Math.GCMS
 
 Module GCMS
 
@@ -64,20 +58,20 @@ Module GCMS
     End Sub
 
     Sub batchExport()
-        For Each file As String In ls - l - r - "*.cdf" <= "D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\16s_contents\SCFA\SCFA测试标曲.AIA"
-            Dim gcData = QuantifyAnalysis.ReadData(file, "agilentGCMS")
-            Dim tic = {gcData.GetTIC}
-            Dim ROIlist = gcData.GetTIC.Shadows.PopulateROI.ToArray
-            Dim directory$ = file.TrimSuffix
+        'For Each file As String In ls - l - r - "*.cdf" <= "D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\16s_contents\SCFA\SCFA测试标曲.AIA"
+        '    Dim gcData = QuantifyAnalysis.ReadData(file, "agilentGCMS")
+        '    Dim tic = {gcData.GetTIC}
+        '    Dim ROIlist = gcData.GetTIC.Shadows.PopulateROI.ToArray
+        '    Dim directory$ = file.TrimSuffix
 
-            Call tic.TICplot().AsGDIImage.SaveAs($"{directory}/gcms_TICplot.png")
-            Call ROIlist.Select(Function(ROI) ROI.GetChromatogramData).ToArray.TICplot.AsGDIImage.SaveAs($"{directory}/ions.png")
-            Call ROIlist.ExportReferenceROITable(
-                raw:=gcData,
-                names:={"乙酸", "丙酸", "异丁酸", "丁酸", "异戊酸", "戊酸", "异己酸", "己酸"}
-            ).SaveTo($"{directory}\ROI.csv", Encodings.UTF8)
-        Next
+        '    Call tic.TICplot().AsGDIImage.SaveAs($"{directory}/gcms_TICplot.png")
+        '    Call ROIlist.Select(Function(ROI) ROI.GetChromatogramData).ToArray.TICplot.AsGDIImage.SaveAs($"{directory}/ions.png")
+        '    Call ROIlist.ExportReferenceROITable(
+        '        raw:=gcData,
+        '        names:={"乙酸", "丙酸", "异丁酸", "丁酸", "异戊酸", "戊酸", "异己酸", "己酸"}
+        '    ).SaveTo($"{directory}\ROI.csv", Encodings.UTF8)
+        'Next
 
-        Pause()
+        'Pause()
     End Sub
 End Module

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2020
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "runtime", "runtime", "{8411BC65-D873-4A4B-A364-75E6A73F8205}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "modules", "modules", "{8411BC65-D873-4A4B-A364-75E6A73F8205}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "assembly", "assembly\assembly.vbproj", "{95F7D65E-9DB1-4605-9FD3-25433277AF88}"
 EndProject
@@ -18,6 +18,8 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "mz", "mz\mz.vbproj", "{8163DF33-CFBC-4F60-AD2C-CC3B49CA3E04}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MassSpectrum.math-core", "..\DATA\ms2_math-core\MassSpectrum.math-core.vbproj", "{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mzkit", "mzkit", "{196FEC21-C842-4A30-BA19-DBFA555DBB1B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -883,9 +885,11 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{95F7D65E-9DB1-4605-9FD3-25433277AF88} = {196FEC21-C842-4A30-BA19-DBFA555DBB1B}
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99} = {8411BC65-D873-4A4B-A364-75E6A73F8205}
 		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB} = {8411BC65-D873-4A4B-A364-75E6A73F8205}
 		{E3367B88-5D0C-495A-8273-331656D4B5AA} = {8411BC65-D873-4A4B-A364-75E6A73F8205}
+		{A2130297-2B4A-4B02-80B2-5CFA860F6DAE} = {196FEC21-C842-4A30-BA19-DBFA555DBB1B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E640689C-3DB1-4796-B277-9426CC92EF1F}

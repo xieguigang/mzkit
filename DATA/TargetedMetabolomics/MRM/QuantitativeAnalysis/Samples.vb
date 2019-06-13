@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e424ee49387e3000d2286d8a32d214a6, TargetedMetabolomics\MRM\QuantitativeAnalysis\Samples.vb"
+﻿#Region "Microsoft.VisualBasic::6f6b133ead108b0a0e877fb52093d91c, TargetedMetabolomics\MRM\QuantitativeAnalysis\Samples.vb"
 
     ' Author:
     ' 
@@ -85,7 +85,7 @@ Public Module MRMSamples
     ''' <summary>
     ''' 默认将``-KB``和``-BLK``结尾的文件都判断为实验空白
     ''' </summary>
-    ReadOnly defaultBlankNames As New DefaultValue(Of Func(Of String, Boolean))(
+    ReadOnly defaultBlankNames As New [Default](Of Func(Of String, Boolean))(
         Function(basename)
             Return InStr(basename, "-KB") > 0 OrElse InStr(basename, "-BLK") > 0
         End Function)
@@ -118,9 +118,10 @@ Public Module MRMSamples
         Dim TPAFactors = calibrates.ToDictionary(Function(ion) ion.HMDB, Function(ion) ion.Factor)
 
         ' 扫描标准曲线的样本，然后进行回归建模 
+        Dim calWiffRaw$ = externalStandardsWiff Or wiff.AsDefault
         Dim detections As NamedValue(Of (IFitted, MRMStandards(), [IS]))() =
             StandardCurve _
-            .Scan(externalStandardsWiff Or wiff.AsDefault, ions, calibrates,
+            .Scan(calWiffRaw, ions, calibrates,
                   refName:=standardNames,
                   calibrationNamedPattern:=calibrationNamedPattern,
                   levelPattern:=levelPattern,

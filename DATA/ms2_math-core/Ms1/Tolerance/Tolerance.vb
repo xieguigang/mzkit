@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc49798d4582a494794ab2a4c2854f29, ms2_math-core\Ms1\Tolerance\Tolerance.vb"
+﻿#Region "Microsoft.VisualBasic::66c7fab1571d59cdd5d5bd0c299d89aa, ms2_math-core\Ms1\Tolerance\Tolerance.vb"
 
     ' Author:
     ' 
@@ -54,7 +54,7 @@ Namespace Ms1
 
     ''' <summary>
     ''' The m/z tolerance methods.
-    ''' (可以直接使用这个对象的索引属性来进行计算判断)
+    ''' (可以直接使用这个对象的索引属性来进行计算判断,索引属性表示两个``m/z``值之间是否相等)
     ''' </summary>
     Public MustInherit Class Tolerance
 
@@ -82,7 +82,7 @@ Namespace Ms1
         ''' 默认的误差计算是小于0.3个道尔顿以内
         ''' </summary>
         ''' <returns></returns>
-        Public Shared ReadOnly Property DefaultTolerance As DefaultValue(Of Tolerance)
+        Public Shared ReadOnly Property DefaultTolerance As [Default](Of Tolerance)
 
         ''' <summary>
         ''' 分子质量误差的上限值

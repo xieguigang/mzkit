@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9e7e445fe3820ab0a8700057f06550a, assembly\MarkupData\mzML\XML\Spectrum.vb"
+﻿#Region "Microsoft.VisualBasic::f9e7e445fe3820ab0a8700057f06550a, MarkupData\mzML\XML\Spectrum.vb"
 
     ' Author:
     ' 
@@ -121,7 +121,7 @@ Namespace MarkupData.mzML
         End Property
 
         Public Overrides Function ToString() As String
-            Static noTitle As DefaultValue(Of String) = "Unknown title"
+            Static noTitle As [Default](Of String) = "Unknown title"
             Return cvParams.KeyItem("spectrum title")?.value Or noTitle
         End Function
     End Class

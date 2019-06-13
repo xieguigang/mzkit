@@ -115,7 +115,6 @@ Namespace TMIC.HMDB
         Public Property origins As origins
         Public Property biofunctions As biofunctions
         Public Property applications As applications
-        Public Property cellular_locations As cellular_locations
 
         Public Overrides Function ToString() As String
             Return status
@@ -154,11 +153,10 @@ Namespace TMIC.HMDB
 
     Public Structure cellular_locations
 
-        <XmlElement(NameOf(cellular_location))>
-        Public Property cellular_location As String()
+        <XmlElement(NameOf(cellular))> Public Property cellular As String()
 
         Public Overrides Function ToString() As String
-            Return cellular_location.GetJson
+            Return cellular.GetJson
         End Function
     End Structure
 End Namespace
