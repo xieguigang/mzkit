@@ -92,6 +92,9 @@ metaDNA <- function(identify, unknown, do.align,
 					seeds.topn = 5,
                     iterations = 20) {
 					
+	require(foreach);
+	require(doParallel);
+					
     cat("\n\n\n");
 
     # 1. Find all of the related KEGG compound by KEGG reaction link for
@@ -247,10 +250,7 @@ metaDNA.iteration <- function(identify, filter.skips,
 					NULL;
 				} else {
 				
-					# parallel
-					require(foreach);
-					require(doParallel);
-
+					# parallel			
 					envir.exports <- c("unknown.query", "unknown", "do.align", "score.cutoff");
 					cl <- makeCluster(MetaDNA::cluster.cores());
 					registerDoParallel(cl);
