@@ -282,7 +282,7 @@ metaDNA.iteration <- function(identify, filter.skips,
 							ms2.align     = do.align,						
 							score.cutoff  = score.cutoff
 						);
-					});
+					}
 					
 					stopCluster(cl);
 					
