@@ -246,6 +246,15 @@ metaDNA.iteration <- function(identify, filter.skips,
 				if (IsNothing(unknown.query)) {
 					NULL;
 				} else {
+				
+					# parallel
+					require(foreach);
+					require(doParallel);
+
+					envir.exports <- c("unknown.query", "unknown", "do.align", "score.cutoff");
+					cl <- makeCluster(MetaDNA::cluster.cores());
+					registerDoParallel(cl);
+									
 					# element structure in unknown.query:
 					#
 					# [1] "unknown.index"  "unknown.mz"     "precursor_type" "kegg"
@@ -255,7 +264,7 @@ metaDNA.iteration <- function(identify, filter.skips,
 					# unknown.mz is the corresponding m/z
 					# ppm is the ppm value for unknown mz match with the KEGG compound m/z
 					# KEGG.partners, identify.ms2, unknown, ms2.align, unknow.matches
-					lapply(identified, function(seed) {
+					infer <- foreach(seed = identified, .export = envir.exports) %dopar% {
 						trace <- seed$ref;
 						trace <- list(
 							path   = seed$trace %||% seed$feature, 
@@ -273,7 +282,13 @@ metaDNA.iteration <- function(identify, filter.skips,
 							ms2.align     = do.align,						
 							score.cutoff  = score.cutoff
 						);
-					});                
+					});
+					
+					stopCluster(cl);
+					
+					# returns the metaDNA network infer result
+					# of current iteration.
+					infer;
 				}
 			}	
 		}

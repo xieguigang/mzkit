@@ -6,6 +6,18 @@
 
 #End Region
 
+#' Get/Set cluster cores for metaDNA iteration
+#'
+cluster.cores <- function(cores = NULL) {
+	anonymous <- "metaDNA_cluster.cores_anonymous.holder";
+
+	if (!cores %=>% IsNothing) {		
+		do.call(`=`, list(anonymous, cores), envir = .GlobalEnv);
+	}
+	
+	get(anonymous, envir = .GlobalEnv);
+}
+
 #' Package loader
 #'
 .onLoad <- function(libname, pkgname) {
@@ -29,6 +41,9 @@
 
 		lockBinding(sym = "Calculator", env = global);
 		lockBinding(sym = "MolWeight",  env = global);		
+		
+		# Run metaDNA parallel in full power
+		cluster.cores(VisualBasic.R::getClusterCores(level = "full"));
 	});
 
     print("Pre-defined m/z calculator:");
@@ -47,6 +62,10 @@
     ));
 	cat("\n");
 
+	cat("\n");
+	cat(sprintf("Run metaDNA iteration use %s folk process", cluster.cores()));
+	cat("\n\n");
+	
     cat("You can acquire the toolkit's source code from github:");
     cat("\n\n");
     cat("     https://github.com/xieguigang/mzkit");
