@@ -256,10 +256,19 @@ metaDNA.iteration <- function(identify, filter.skips,
 					# ppm is the ppm value for unknown mz match with the KEGG compound m/z
 					# KEGG.partners, identify.ms2, unknown, ms2.align, unknow.matches
 					lapply(identified, function(seed) {
+						trace <- seed$ref;
+						trace <- list(
+							path   = seed$trace %||% seed$feature, 
+							parent = sprintf("%s#%s", trace$file, trace$scan)
+						);
 						metaDNA.impl(
 							unknown.query = unknown.query,
 							identify.ms2  = seed$spectra,
-							trace         = seed$trace %||% seed$feature,
+							# trace path is debug used only
+							# to visualize how the seeds extends to 
+							# other metabolite in KEGG reaction 
+							# network
+							trace         = trace,
 							unknown       = unknown,
 							ms2.align     = do.align,						
 							score.cutoff  = score.cutoff
