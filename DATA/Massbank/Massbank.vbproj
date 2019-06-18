@@ -210,6 +210,7 @@
     <Compile Include="MetaLib\Match\TreeSearch.vb" />
     <Compile Include="MetaLib\KEGGExtensions.vb" />
     <Compile Include="MetaLib\Match\MetaEquals.vb" />
+    <Compile Include="MetaLib\Models\Xref.vb" />
     <Compile Include="MetaLib\Models\ICompoundClass.vb" />
     <Compile Include="MetaLib\NaturalLanguageTerm.vb" />
     <Compile Include="MetaLib\Match\NameEquality.vb" />
