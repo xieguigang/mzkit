@@ -228,7 +228,6 @@
     <Compile Include="Public\NCBI\PubChem\Web\Models\Information.vb" />
     <Compile Include="Public\NCBI\PubChem\Web\Models\PugView.vb" />
     <Compile Include="Public\NCBI\PubChem\Web\Query\Query.vb" />
-    <Compile Include="Public\sigmaaldrich\MetaQuery.vb" />
     <Compile Include="Public\TMIC\HMDB\MetaReference\BioSamples.vb" />
     <Compile Include="Public\TMIC\HMDB\MetaReference\RepositoryExtensions.vb" />
     <Compile Include="Public\TMIC\HMDB\Spectra\Abstract.vb" />
