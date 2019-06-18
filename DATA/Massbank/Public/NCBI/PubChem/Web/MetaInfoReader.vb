@@ -74,9 +74,9 @@ Namespace NCBI.PubChem
             Dim identifier = view("Names and Identifiers")
             Dim formula = view.GetInform("/Names and Identifiers/Molecular Formula/#0")
             Dim descriptors = identifier("Computed Descriptors")
-            Dim SMILES = descriptors("Canonical SMILES").GetInformationString("Canonical SMILES")
-            Dim InChIKey = descriptors("InChI Key").GetInformationString("InChI Key")
-            Dim InChI = descriptors("InChI").GetInformationString("InChI")
+            Dim SMILES = view.GetInform("/Names and Identifiers/Computed Descriptors/Canonical SMILES/#0")
+            Dim InChIKey = descriptors("InChI Key").GetInformationString("#0")
+            Dim InChI = descriptors("InChI").GetInformationString("#0")
             Dim otherNames = identifier("Other Identifiers")
             Dim synonyms = identifier("Synonyms")("Depositor-Supplied Synonyms").GetInformationStrings(Nothing)
             Dim computedProperties = view("Chemical and Physical Properties")("Computed Properties")
@@ -106,7 +106,8 @@ Namespace NCBI.PubChem
                                                     ' KEGG编号是C开头,后面跟随5个数字
                                                     Return id.IsPattern("C\d{5}", RegexOptions.Singleline)
                                                 End Function),
-                .HMDB = view.Reference.GetHMDBId
+                .HMDB = view.Reference.GetHMDBId,
+                .SMILES = SMILES.InfoValue
             }
             Dim commonName$ = view.RecordTitle
 
