@@ -174,6 +174,11 @@ Namespace MetaLib
             Return synonym.IsPattern("CHEBI[:]\d+", RegexICSng)
         End Function
 
+        ''' <summary>
+        ''' ``XXX-XXX-XXX``
+        ''' </summary>
+        ''' <param name="synonym"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function IsCASNumber(synonym As String) As Boolean
             Return synonym.IsPattern("\d+([-]\d+)+", RegexICSng)
