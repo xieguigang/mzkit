@@ -119,8 +119,19 @@ Namespace NCBI.PubChem
                    ?.Name
             End If
 
+            ' 20190618 formula可能会存在多个的情况
+            Dim formulaStr As String = ""
+
+            If Not formula Is Nothing Then
+                If formula.InfoType Is GetType(String) Then
+                    formulaStr = formula.InfoValue
+                Else
+                    formulaStr = DirectCast(formula.InfoValue, String()).FirstOrDefault
+                End If
+            End If
+
             Return New MetaInfo With {
-                .formula = formula.InfoValue,
+                .formula = formulaStr,
                 .xref = xref,
                 .name = commonName,
                 .exact_mass = exact_mass,
