@@ -9,6 +9,12 @@ Namespace NCBI.PubChem
     <HideModuleName>
     Public Module MetaInfoReader
 
+        ''' <summary>
+        ''' 如果<paramref name="path"/>的末端是使用索引语法,则索引的起始下标是从零开始的
+        ''' </summary>
+        ''' <param name="view"></param>
+        ''' <param name="path"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function GetInform(view As PugViewRecord, path$) As Information
             Dim parts = path.Trim("/"c).Split("/"c)
@@ -36,6 +42,12 @@ Namespace NCBI.PubChem
             Return sec
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="view"></param>
+        ''' <param name="path"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function GetInformList(view As PugViewRecord, path$) As Information()
             Dim parts = path.Trim("/"c).Split("/"c)
@@ -60,7 +72,7 @@ Namespace NCBI.PubChem
         <Extension>
         Public Function GetMetaInfo(view As PugViewRecord) As MetaInfo
             Dim identifier = view("Names and Identifiers")
-            Dim formula = identifier("Molecular Formula").GetInformationString("Molecular Formula")
+            Dim formula = view.GetInform("/Names and Identifiers/Molecular Formula/#0")
             Dim descriptors = identifier("Computed Descriptors")
             Dim SMILES = descriptors("Canonical SMILES").GetInformationString("Canonical SMILES")
             Dim InChIKey = descriptors("InChI Key").GetInformationString("InChI Key")
@@ -106,7 +118,7 @@ Namespace NCBI.PubChem
             End If
 
             Return New MetaInfo With {
-                .formula = formula,
+                .formula = formula.InfoValue,
                 .xref = xref,
                 .name = commonName,
                 .exact_mass = exact_mass,
