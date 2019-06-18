@@ -62,7 +62,7 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 
-Namespace MetaLib
+Namespace MetaLib.Models
 
     Public Class MetaInfo : Implements INamedValue
         Implements IEquatable(Of MetaInfo)
@@ -114,7 +114,7 @@ Namespace MetaLib
         Public Property biofluid_locations As String()
 
         ''' <summary>
-        ''' 包含有这个物质的KEGG pathway的编号的集合，只有当<see cref="DATA.MetaLib.xref.KEGG"/>
+        ''' 包含有这个物质的KEGG pathway的编号的集合，只有当<see cref="xref.KEGG"/>
         ''' 存在值的时候才会存在这个属性
         ''' </summary>
         ''' <returns></returns>

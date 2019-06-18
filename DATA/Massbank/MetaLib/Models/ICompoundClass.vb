@@ -1,4 +1,4 @@
-﻿Namespace MetaLib
+﻿Namespace MetaLib.Models
 
     ''' <summary>
     ''' 主要是取自HMDB数据库之中的代谢物分类信息

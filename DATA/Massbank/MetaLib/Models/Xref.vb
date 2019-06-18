@@ -2,7 +2,7 @@
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace MetaLib
+Namespace MetaLib.Models
 
     ''' <summary>
     ''' 对某一个物质在数据库之间的相互引用编号

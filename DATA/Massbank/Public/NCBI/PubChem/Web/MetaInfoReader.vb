@@ -2,7 +2,8 @@
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
-Imports MetaInfo = SMRUCC.MassSpectrum.DATA.MetaLib.MetaLib
+Imports SMRUCC.MassSpectrum.DATA.MetaLib.Models
+Imports MetaInfo = SMRUCC.MassSpectrum.DATA.MetaLib.Models.MetaLib
 
 Namespace NCBI.PubChem
 
@@ -96,7 +97,7 @@ Namespace NCBI.PubChem
             End If
 
             Dim exact_mass# = computedProperties("Exact Mass").GetInformationNumber(Nothing)
-            Dim xref As New MetaLib.xref With {
+            Dim xref As New xref With {
                 .InChI = InChI,
                 .CAS = CASNumber,
                 .InChIkey = InChIKey,

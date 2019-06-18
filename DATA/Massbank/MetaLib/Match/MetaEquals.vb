@@ -46,6 +46,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports SMRUCC.MassSpectrum.DATA.MetaLib.Models
 
 Namespace MetaLib
 
