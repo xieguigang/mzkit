@@ -46,8 +46,10 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemistry.Model.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 Imports Microsoft.VisualBasic.Language
 Imports SMRUCC.MassSpectrum.Math.Spectra
+Imports NetworkNode = Microsoft.VisualBasic.Data.visualize.Network.Graph.Node
 
 ''' <summary>
 ''' Generate insilicon MS/MS data based on the GA and graph theory.
@@ -70,7 +72,8 @@ Public Module Emulator
                                       Optional intoCutoff# = -1) As LibraryMatrix
 
         Dim de# = (energy.MaxEnergy - energy.MinEnergy) / [step]
-        Dim quantity As New Dictionary(Of Double, Double) ' {mz, quantity}
+        ' {mz, quantity}
+        Dim quantity As New Dictionary(Of Double, Double)
         Dim mzlist As New Dictionary(Of String, List(Of Double))
 
         For e As Double = energy.MinEnergy To energy.MaxEnergy Step de
@@ -82,7 +85,7 @@ Public Module Emulator
             Dim percentage# = energy.PercentageLess(e)
             Dim fragmentModel As NetworkGraph = molecule.BreakBonds(energy:=e)
 
-            For Each fragment As NetworkGraph In {} ' fragmentModel.IteratesSubNetworks
+            For Each fragment As NetworkGraph In IteratesSubNetworks(fragmentModel)
                 Dim mz# = fragment.CalculateMZ
 
                 With Math.Round(mz, precision).ToString
@@ -127,9 +130,9 @@ Public Module Emulator
     ''' <returns></returns>
     <Extension>
     Public Function CalculateMZ(fragment As NetworkGraph) As Double
-        Dim mass# = Aggregate atom As Node
+        Dim mass# = Aggregate atom As NetworkNode
                     In fragment.nodes
-                    Into Sum(atom.Data.mass)
+                    Into Sum(atom.data.mass)
 
         ' 如果计算原子基团的charge电荷量？
         Dim charge# = fragment.AtomGroupCharge
@@ -156,8 +159,8 @@ Public Module Emulator
 
         ' 将键能低于能量值的边链接都删除掉
         ' 因为他们都被打断了
-        For Each edge As Edge In copy.edges.ToArray
-            If edge.Data.weight <= energy Then
+        For Each edge As Edge In copy.graphEdges.ToArray
+            If edge.data.weight <= energy Then
                 Call copy.RemoveEdge(edge)
             End If
         Next
