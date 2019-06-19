@@ -118,6 +118,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -136,6 +137,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BoundEnergy.vb" />
     <Compile Include="EnergyModel.vb" />
     <Compile Include="Emulator.vb" />
     <Compile Include="GA.vb" />
