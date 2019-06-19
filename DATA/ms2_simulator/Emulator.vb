@@ -85,7 +85,7 @@ Public Module Emulator
             Dim percentage# = energy.PercentageLess(e)
             Dim fragmentModel As NetworkGraph = molecule.BreakBonds(energy:=e)
 
-            For Each fragment As NetworkGraph In IteratesSubNetworks(fragmentModel)
+            For Each fragment As NetworkGraph In IteratesSubNetworks(Of NetworkNode, Edge, NetworkGraph)(fragmentModel)
                 Dim mz# = fragment.CalculateMZ
 
                 With Math.Round(mz, precision).ToString
