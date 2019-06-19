@@ -49,7 +49,18 @@ Imports SMRUCC.MassSpectrum.DATA.NCBI.PubChem
 
 Module pubchemTest
 
+    Sub queryMeta()
+        Dim cas$ = "285979-85-3"
+        Dim CID = PubChem.QueryCID(cas)
+        Dim pug = PubChem.FetchPugViewByCID(CID.First)
+        Dim meta = pug.GetMetaInfo
+
+        Pause()
+    End Sub
+
     Sub Main()
+
+        Call queryMeta()
 
         Dim keys = SMRUCC.MassSpectrum.DATA.File.SDF.ScanKeys("D:\Database\pubchem").ToArray
 

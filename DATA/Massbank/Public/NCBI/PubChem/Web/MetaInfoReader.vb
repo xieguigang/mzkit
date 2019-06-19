@@ -2,13 +2,20 @@
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
-Imports MetaInfo = SMRUCC.MassSpectrum.DATA.MetaLib.MetaLib
+Imports SMRUCC.MassSpectrum.DATA.MetaLib.Models
+Imports MetaInfo = SMRUCC.MassSpectrum.DATA.MetaLib.Models.MetaLib
 
 Namespace NCBI.PubChem
 
     <HideModuleName>
     Public Module MetaInfoReader
 
+        ''' <summary>
+        ''' 如果<paramref name="path"/>的末端是使用索引语法,则索引的起始下标是从零开始的
+        ''' </summary>
+        ''' <param name="view"></param>
+        ''' <param name="path"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function GetInform(view As PugViewRecord, path$) As Information
             Dim parts = path.Trim("/"c).Split("/"c)
@@ -36,6 +43,12 @@ Namespace NCBI.PubChem
             Return sec
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="view"></param>
+        ''' <param name="path"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function GetInformList(view As PugViewRecord, path$) As Information()
             Dim parts = path.Trim("/"c).Split("/"c)
@@ -60,11 +73,11 @@ Namespace NCBI.PubChem
         <Extension>
         Public Function GetMetaInfo(view As PugViewRecord) As MetaInfo
             Dim identifier = view("Names and Identifiers")
-            Dim formula = identifier("Molecular Formula").GetInformationString("Molecular Formula")
+            Dim formula = view.GetInform("/Names and Identifiers/Molecular Formula/#0")
             Dim descriptors = identifier("Computed Descriptors")
-            Dim SMILES = descriptors("Canonical SMILES").GetInformationString("Canonical SMILES")
-            Dim InChIKey = descriptors("InChI Key").GetInformationString("InChI Key")
-            Dim InChI = descriptors("InChI").GetInformationString("InChI")
+            Dim SMILES = view.GetInform("/Names and Identifiers/Computed Descriptors/Canonical SMILES/#0")
+            Dim InChIKey = descriptors("InChI Key").GetInformationString("#0")
+            Dim InChI = descriptors("InChI").GetInformationString("#0")
             Dim otherNames = identifier("Other Identifiers")
             Dim synonyms = identifier("Synonyms")("Depositor-Supplied Synonyms").GetInformationStrings(Nothing)
             Dim computedProperties = view("Chemical and Physical Properties")("Computed Properties")
@@ -84,7 +97,7 @@ Namespace NCBI.PubChem
             End If
 
             Dim exact_mass# = computedProperties("Exact Mass").GetInformationNumber(Nothing)
-            Dim xref As New MetaLib.xref With {
+            Dim xref As New xref With {
                 .InChI = InChI,
                 .CAS = CASNumber,
                 .InChIkey = InChIKey,
@@ -94,7 +107,8 @@ Namespace NCBI.PubChem
                                                     ' KEGG编号是C开头,后面跟随5个数字
                                                     Return id.IsPattern("C\d{5}", RegexOptions.Singleline)
                                                 End Function),
-                .HMDB = view.Reference.GetHMDBId
+                .HMDB = view.Reference.GetHMDBId,
+                .SMILES = SMILES.InfoValue
             }
             Dim commonName$ = view.RecordTitle
 
@@ -105,8 +119,19 @@ Namespace NCBI.PubChem
                    ?.Name
             End If
 
+            ' 20190618 formula可能会存在多个的情况
+            Dim formulaStr As String = ""
+
+            If Not formula Is Nothing Then
+                If formula.InfoType Is GetType(String) Then
+                    formulaStr = formula.InfoValue
+                Else
+                    formulaStr = DirectCast(formula.InfoValue, String()).FirstOrDefault
+                End If
+            End If
+
             Return New MetaInfo With {
-                .formula = formula,
+                .formula = formulaStr,
                 .xref = xref,
                 .name = commonName,
                 .exact_mass = exact_mass,

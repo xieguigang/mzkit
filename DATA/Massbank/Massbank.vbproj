@@ -210,6 +210,8 @@
     <Compile Include="MetaLib\Match\TreeSearch.vb" />
     <Compile Include="MetaLib\KEGGExtensions.vb" />
     <Compile Include="MetaLib\Match\MetaEquals.vb" />
+    <Compile Include="MetaLib\Models\XrefExtensions.vb" />
+    <Compile Include="MetaLib\Models\Xref.vb" />
     <Compile Include="MetaLib\Models\ICompoundClass.vb" />
     <Compile Include="MetaLib\NaturalLanguageTerm.vb" />
     <Compile Include="MetaLib\Match\NameEquality.vb" />
@@ -229,6 +231,7 @@
     <Compile Include="Public\NCBI\PubChem\Web\Models\PugView.vb" />
     <Compile Include="Public\NCBI\PubChem\Web\Query\Query.vb" />
     <Compile Include="Public\TMIC\HMDB\MetaReference\BioSamples.vb" />
+    <Compile Include="Public\TMIC\HMDB\MetaReference\WebQuery.vb" />
     <Compile Include="Public\TMIC\HMDB\MetaReference\RepositoryExtensions.vb" />
     <Compile Include="Public\TMIC\HMDB\Spectra\Abstract.vb" />
     <Compile Include="Public\TMIC\HMDB\Spectra\EIMS.vb" />

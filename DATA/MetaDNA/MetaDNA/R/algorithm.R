@@ -59,7 +59,11 @@ metaDNA.impl <- function(unknown.query, identify.ms2,
     # subset of the peaktable by using the unknown index value
 	# the peaktable subset object contains ms1 feature and ms2 feature
     unknown.features <- unknown[unknown.i];
-
+	
+	# the identify ms2 file#scan index
+	# use this index value for avoid self alignment bugs.
+	parent <- trace$parent;
+	
 	# 2019-03-29 these object is in length equals
 	#
 	# unknown.query
@@ -74,12 +78,15 @@ metaDNA.impl <- function(unknown.query, identify.ms2,
         # identify for each unknown metabolite
         kegg.query <- unknown.query[[i]];
 		feature <- unknown.features[[i]];
+		
+		# peak is files and scans
         peak <- feature$ms2;
 		result <- align_best.internal(
 		  ref = identify.ms2,
 		  peak = peak,
 		  ms2.align = ms2.align,
-		  score.cutoff = score.cutoff
+		  score.cutoff = score.cutoff,
+		  parent = parent
 		);
 
         if (!is.null(result)) {
@@ -87,7 +94,7 @@ metaDNA.impl <- function(unknown.query, identify.ms2,
 			feature$ms2 <- NULL;
 			# add reference spectra matrix data
 			result$ref <- identify.ms2;
-			result$trace <- trace;
+			result$trace <- trace$path;
 			
             list(
               feature = feature,
@@ -127,7 +134,7 @@ metaDNA.impl <- function(unknown.query, identify.ms2,
 #'     If the forward and reverse score cutoff less than score.cutoff, then this
 #'     function will returns nothing.
 #'
-align_best.internal <- function(ref, peak, ms2.align, score.cutoff = 0.8) {
+align_best.internal <- function(ref, peak, ms2.align, score.cutoff = 0.8, parent = NA) {
 
 	# Error in `colnames<-`(`*tmp*`, value = c("ProductMz", "LibraryIntensity")) :
     #  attempt to set 'colnames' on an object with less than two dimensions
@@ -147,18 +154,31 @@ align_best.internal <- function(ref, peak, ms2.align, score.cutoff = 0.8) {
     # loop each unknown ms2 for alignment best result
 	align <- lapply(names(peak), function(fileName) {
 		file <- peak[[fileName]];
-		lapply(names(file), function(scan) {
-			unknown <- file[[scan]];
-			align.scores <- ms2.align(unknown, ref);
-			ms2.name <- list(
-				file = fileName,
-				scan = scan
-            );
-
-			if (all(align.scores >= score.cutoff)) {
-				list(score = align.scores, ms2.name = ms2.name, candidate = unknown);
-			} else {
+		
+		# one raw file contains multiple ms2 scans data
+		# alignment of the seeds spectra data 
+		# with each scan in current raw file.
+		lapply(names(file), function(scan) {		
+			if (parent == sprintf("%s#%s", fileName, scan)) {
+				# This is a self alignment...
 				NULL;
+			} else {
+				unknown <- file[[scan]];
+				align.scores <- ms2.align(unknown, ref);
+				ms2.name <- list(
+					file = fileName,
+					scan = scan
+				);
+
+				if (all(align.scores >= score.cutoff)) {
+					list(
+						score     = align.scores, 
+						ms2.name  = ms2.name, 
+						candidate = unknown
+					);
+				} else {
+					NULL;
+				}
 			}
 		});
 	});
@@ -201,8 +221,8 @@ pickbest.internal <- function(align) {
 
     if (!IsNothing(score)) {
         list(candidate = candidate,
-             score = score,
-             ms2.name = ms2.name
+             score     = score,
+             ms2.name  = ms2.name
         );
     } else {
         NULL;

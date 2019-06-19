@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{656710E7-4A50-4832-8A94-B0C78E9F9855}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>test.rt_test</StartupObject>
+    <StartupObject>test.simulatorTest</StartupObject>
     <RootNamespace>test</RootNamespace>
     <AssemblyName>test</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Module1.vb" />
+    <Compile Include="simulatorTest.vb" />
     <Compile Include="rt_test.vb" />
     <Compile Include="NWAlignTest.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

@@ -134,6 +134,10 @@ Namespace NCBI.PubChem
         ''' <returns></returns>
         Public ReadOnly Property InfoType As Type
             Get
+                If Value Is Nothing Then
+                    Return Nothing
+                End If
+
                 If Not Value.Number Is Nothing Then
                     Return GetType(Double)
                 ElseIf Not Value.StringWithMarkup.IsNullOrEmpty AndAlso Value.StringWithMarkup.Length = 1 Then
@@ -150,7 +154,9 @@ Namespace NCBI.PubChem
 
         Public ReadOnly Property InfoValue As Object
             Get
-                Select Case InfoType
+                Dim type As Type = InfoType
+
+                Select Case type
                     Case GetType(Double)
                         Return Val(Value.Number)
                     Case GetType(String)

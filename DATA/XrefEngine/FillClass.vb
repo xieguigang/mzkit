@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports SMRUCC.genomics.foundation.OBO_Foundry
+Imports SMRUCC.MassSpectrum.DATA.MetaLib.Models
 
 ''' <summary>
 ''' 因为在这里填充数据是直接进行的,所以structure而言是值类型,只能够修改函数之中的副本,所以在这个模块之中,类型参数都必须要限制为引用类型

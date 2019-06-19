@@ -1,6 +1,6 @@
 ﻿Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Text.Xml.Linq
-Imports SMRUCC.MassSpectrum.DATA.MetaLib
+Imports SMRUCC.MassSpectrum.DATA.MetaLib.Models
 
 Module metaLibLoaderTest
 

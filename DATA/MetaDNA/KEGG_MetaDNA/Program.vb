@@ -124,7 +124,7 @@ Module Program
             .CLICode
     End Function
 
-    ReadOnly NA As New DefaultValue(Of String)("NA", Function(exp) CStr(exp).StringEmpty OrElse CStr(exp) = "NULL")
+    ReadOnly NA As New [Default](Of String)("NA", Function(exp) CStr(exp).StringEmpty OrElse CStr(exp) = "NULL")
 
     <Extension> Private Function BuildNetwork(repository As (reaction$, compound$), rda$) As Boolean
         Dim reactions = (ls - l - r - "*.Xml" <= repository.reaction) _

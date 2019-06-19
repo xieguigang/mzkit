@@ -50,7 +50,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
 Imports SMRUCC.MassSpectrum.Assembly.ASCII.MSP
 Imports SMRUCC.MassSpectrum.DATA.File
-Imports SMRUCC.MassSpectrum.DATA.MetaLib
+Imports SMRUCC.MassSpectrum.DATA.MetaLib.Models
 Imports SMRUCC.MassSpectrum.Math.Ms1.PrecursorType
 Imports SMRUCC.MassSpectrum.Math.Spectra
 

@@ -1,101 +1,105 @@
 ﻿#Region "Microsoft.VisualBasic::2f71cf922866e21bb87f532ba10da7a1, Massbank\Public\TMIC\HMDB\Assembly\taxonomy.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class taxonomy
-    ' 
-    '         Properties: [class], alternative_parents, description, direct_parent, kingdom
-    '                     molecular_framework, sub_class, substituents, super_class
-    ' 
-    '     Structure alternative_parents
-    ' 
-    '         Properties: alternative_parent
-    ' 
-    '     Structure substituents
-    ' 
-    '         Properties: substituent
-    ' 
-    '     Class ontology
-    ' 
-    '         Properties: applications, biofunctions, cellular_locations, origins, status
-    ' 
-    '         Function: ToString
-    ' 
-    '     Structure origins
-    ' 
-    '         Properties: origin
-    ' 
-    '         Function: ToString
-    ' 
-    '     Structure biofunctions
-    ' 
-    '         Properties: biofunction
-    ' 
-    '         Function: ToString
-    ' 
-    '     Structure applications
-    ' 
-    '         Properties: application
-    ' 
-    '         Function: ToString
-    ' 
-    '     Structure cellular_locations
-    ' 
-    '         Properties: cellular_location
-    ' 
-    '         Function: ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class taxonomy
+' 
+'         Properties: [class], alternative_parents, description, direct_parent, kingdom
+'                     molecular_framework, sub_class, substituents, super_class
+' 
+'     Structure alternative_parents
+' 
+'         Properties: alternative_parent
+' 
+'     Structure substituents
+' 
+'         Properties: substituent
+' 
+'     Class ontology
+' 
+'         Properties: applications, biofunctions, cellular_locations, origins, status
+' 
+'         Function: ToString
+' 
+'     Structure origins
+' 
+'         Properties: origin
+' 
+'         Function: ToString
+' 
+'     Structure biofunctions
+' 
+'         Properties: biofunction
+' 
+'         Function: ToString
+' 
+'     Structure applications
+' 
+'         Properties: application
+' 
+'         Function: ToString
+' 
+'     Structure cellular_locations
+' 
+'         Properties: cellular_location
+' 
+'         Function: ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports SMRUCC.MassSpectrum.DATA.MetaLib.Models
 
 Namespace TMIC.HMDB
 
-    Public Class taxonomy
+    ''' <summary>
+    ''' Metabolite compound chemical structure classification
+    ''' </summary>
+    Public Class taxonomy : Implements ICompoundClass
 
         Public Property description As String
         Public Property direct_parent As String
-        Public Property kingdom As String
-        Public Property super_class As String
-        Public Property [class] As String
-        Public Property sub_class As String
-        Public Property molecular_framework As String
+        Public Property kingdom As String Implements ICompoundClass.kingdom
+        Public Property super_class As String Implements ICompoundClass.super_class
+        Public Property [class] As String Implements ICompoundClass.class
+        Public Property sub_class As String Implements ICompoundClass.sub_class
+        Public Property molecular_framework As String Implements ICompoundClass.molecular_framework
         Public Property alternative_parents As alternative_parents
         Public Property substituents As substituents
 

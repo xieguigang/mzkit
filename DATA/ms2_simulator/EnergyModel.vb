@@ -76,6 +76,20 @@ Public Class EnergyModel
         End Get
     End Property
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="dist">
+    ''' 能量分布函数:
+    ''' 
+    ''' ```
+    ''' energy = f(x,y)
+    ''' ```
+    ''' </param>
+    ''' <param name="lower">能量积分的下限</param>
+    ''' <param name="upper">能量积分的上限</param>
+    ''' <param name="n">积分的迭代计算次数</param>
+    ''' <param name="y0">初始能量值</param>
     Sub New(dist As df, lower#, upper#, Optional n% = 50000, Optional y0# = 0)
         energy = New Sequence(lower, upper, n)
         model = New ODE With {
