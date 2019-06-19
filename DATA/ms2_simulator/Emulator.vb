@@ -131,7 +131,7 @@ Public Module Emulator
     <Extension>
     Public Function CalculateMZ(fragment As NetworkGraph) As Double
         Dim mass# = Aggregate atom As NetworkNode
-                    In fragment.nodes
+                    In fragment.vertex
                     Into Sum(atom.data.mass)
 
         ' 如果计算原子基团的charge电荷量？
