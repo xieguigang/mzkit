@@ -1,6 +1,6 @@
 ﻿Imports System.Collections.Specialized
 Imports System.Runtime.CompilerServices
-Imports SMRUCC.MassSpectrum.DATA.MetaLib
+Imports SMRUCC.MassSpectrum.DATA.MetaLib.Models
 Imports SMRUCC.MassSpectrum.Math.Spectra
 
 Public Class SpectraSection : Inherits MetaInfo

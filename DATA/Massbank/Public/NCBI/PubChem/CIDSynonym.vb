@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::7c447635e9987d38d73a36e8c9d2082b, Massbank\Public\NCBI\PubChem\CIDSynonym.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class CIDSynonym
-    ' 
-    '         Properties: CID, IsCAS, IsChEBI, IsHMDB, IsKEGG
-    '                     Synonym
-    ' 
-    '         Function: LoadMetaInfo, LoadNames, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class CIDSynonym
+' 
+'         Properties: CID, IsCAS, IsChEBI, IsHMDB, IsKEGG
+'                     Synonym
+' 
+'         Function: LoadMetaInfo, LoadNames, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -50,6 +50,7 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
 Imports SMRUCC.MassSpectrum.DATA.MetaLib
+Imports SMRUCC.MassSpectrum.DATA.MetaLib.Models
 
 Namespace NCBI.PubChem
 
@@ -152,9 +153,9 @@ Namespace NCBI.PubChem
             Next
         End Function
 
-        Public Shared Iterator Function LoadMetaInfo(file As String) As IEnumerable(Of MetaLib.MetaLib)
+        Public Shared Iterator Function LoadMetaInfo(file As String) As IEnumerable(Of Models.MetaLib)
             Dim xref As xref = Nothing
-            Dim meta As MetaLib.MetaLib = Nothing
+            Dim meta As Models.MetaLib = Nothing
             Dim cid As Integer = 0
             Dim cas As New List(Of String)
 
@@ -174,7 +175,7 @@ Namespace NCBI.PubChem
                     xref = New xref With {.pubchem = synonym.CID}
                     cas *= 0
                     cid = synonym.CID
-                    meta = New MetaLib.MetaLib With {
+                    meta = New Models.MetaLib With {
                         .ID = cid,
                         .name = synonym.Synonym,
                         .xref = xref

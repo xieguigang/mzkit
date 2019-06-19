@@ -135,6 +135,13 @@ Namespace NCBI.PubChem
             End If
         End Function
 
+        ''' <summary>
+        ''' 如果<paramref name="key"/>是使用索引语法,则索引的起始下标是从零开始的
+        ''' </summary>
+        ''' <param name="section"></param>
+        ''' <param name="key$"></param>
+        ''' <param name="multipleInfo"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function GetInformation(section As Section, key$, Optional multipleInfo As Boolean = False) As [Variant](Of Information, Information())
             If section Is Nothing Then

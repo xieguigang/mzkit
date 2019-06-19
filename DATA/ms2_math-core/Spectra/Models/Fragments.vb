@@ -57,6 +57,10 @@ Namespace Spectra
         <XmlElement>
         Public Property matrix As ms2()
 
+        ''' <summary>
+        ''' 这个质谱图内的二级碎片的数量
+        ''' </summary>
+        ''' <returns></returns>
         <ScriptIgnore>
         <XmlIgnore>
         Public ReadOnly Property length As Integer

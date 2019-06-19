@@ -50,6 +50,14 @@ Namespace TMIC.HMDB.Repository
 
     Public Module RepositoryExtensions
 
+        ReadOnly web As New Dictionary(Of String, WebQuery)
+
+        Public Function GetMetabolite(id As String, Optional cache$ = "./hmdb/", Optional offline As Boolean = False) As metabolite
+            Dim engine As WebQuery = web.ComputeIfAbsent(cache, lazyValue:=Function() New WebQuery(cache,, offline))
+            engine.offlineMode = offline
+            Return engine.Query(Of metabolite)(id)
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function PopulateHMDBMetaData(Xml As String) As IEnumerable(Of MetaReference)

@@ -53,11 +53,11 @@
 Imports System.IO
 Imports Microsoft.VisualBasic.Data.csv.IO.Linq
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
-Imports SMRUCC.MassSpectrum.DATA.MetaLib
+Imports SMRUCC.MassSpectrum.DATA.MetaLib.Models
 
 Namespace TMIC.HMDB
 
-    Public Class MetaInfo : Inherits MetaLib.MetaInfo
+    Public Class MetaInfo : Inherits MetaLib.Models.MetaInfo
 
         Public Property HMDB As String
         Public Property KEGG As String

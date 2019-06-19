@@ -148,5 +148,9 @@ Namespace NCBI.PubChem
 
             Return table
         End Function
+
+        Public Function FetchPugViewByCID(cid As String, Optional cacheFolder$ = "./pubchem_cache", Optional offline As Boolean = False) As PugViewRecord
+            Return $"{cacheFolder}/pugViews/".getQueryHandler(Of WebQuery)(offline).Query(Of PugViewRecord)(cid)
+        End Function
     End Module
 End Namespace
