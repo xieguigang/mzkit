@@ -5,7 +5,7 @@ Public Class BoundEnergy
 
     ' Bonds,H0*,bounds.n,atom1,atom2,Comments
 
-    <Column("Bounds")>
+    <Column("Bonds")>
     Public Property bound As String
     ''' <summary>
     ''' Energy consumption
@@ -26,7 +26,7 @@ Public Class BoundEnergy
     Public Shared Function GetEnergyTable() As BoundEnergy()
         Return My.Resources.Standard_bond_energies _
             .LineTokens _
-            .AsDataSource(Of BoundEnergy) _
+            .AsDataSource(Of BoundEnergy)(strict:=False) _
             .ToArray
     End Function
 
