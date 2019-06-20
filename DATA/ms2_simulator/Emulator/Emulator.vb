@@ -56,6 +56,21 @@ Imports NetworkNode = Microsoft.VisualBasic.Data.visualize.Network.Graph.Node
 ''' </summary>
 Public Module Emulator
 
+    <Extension>
+    Public Function FillBoundEnergy(model As NetworkGraph, energyTable As BoundEnergyFinder) As NetworkGraph
+        For Each bound As Edge In model.graphEdges
+            ' edge weight is the bound energy
+            Dim atom1 = bound.U.Label
+            Dim atom2 = bound.V.Label
+            Dim energy As Double = energyTable.FindByKCFAtoms(atom1, atom2)
+
+            ' The higher of bound energy, the harder for break this bound 
+            bound.data.weight = energy
+        Next
+
+        Return model
+    End Function
+
     ''' <summary>
     ''' 质谱模拟计算
     ''' </summary>
