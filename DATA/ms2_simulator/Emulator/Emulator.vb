@@ -153,6 +153,9 @@ Public Module Emulator
         ' 如果计算原子基团的charge电荷量？
         Dim charge# = fragment.AtomGroupCharge
 
+        ' 如果charge值是零的时候该怎么计算？
+        ' 中性粒子？
+
         Return mass / charge
     End Function
 
