@@ -51,7 +51,7 @@ Imports SMRUCC.MassSpectrum.Math
 ''' <summary>
 ''' The genetic algorithm core for the simulator.
 ''' </summary>
-Module GA
+Public Module GA
 
 
 End Module

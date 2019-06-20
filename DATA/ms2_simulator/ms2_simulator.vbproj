@@ -138,7 +138,8 @@
   <ItemGroup>
     <Compile Include="EnergyModel.vb" />
     <Compile Include="Emulator.vb" />
-    <Compile Include="GA.vb" />
+    <Compile Include="GA\EnergyDistribution.vb" />
+    <Compile Include="GA\GA.vb" />
     <Compile Include="RTPrediction.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

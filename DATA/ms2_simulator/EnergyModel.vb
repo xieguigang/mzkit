@@ -105,6 +105,7 @@ Public Class EnergyModel
             .Last
     End Sub
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
         Return energy.ToString
     End Function
