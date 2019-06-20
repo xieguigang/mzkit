@@ -1,4 +1,5 @@
 ﻿Imports BioNovoGene.BioDeep.Chemistry.Model
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Public Class BoundEnergyFinder
 
@@ -39,10 +40,12 @@ Public Class BoundEnergyFinder
     ''' </summary>
     ''' <param name="atom1"></param>
     ''' <param name="atom2"></param>
+    ''' <param name="n">
+    ''' Get bounds number from KCF model directly
+    ''' </param>
     ''' <returns></returns>
-    Public Function FindByKCFAtoms(atom1 As String, atom2 As String) As Double
+    Public Function FindByKCFAtoms(atom1 As String, atom2 As String, n%) As Double
         Dim link As (f$, r$)
-        Dim n As Integer = GetNumberOfBounds(atom1, atom2)
 
         atom1 = TranslateKCFAtom(atom1)
         atom2 = TranslateKCFAtom(atom2)
@@ -62,16 +65,6 @@ Public Class BoundEnergyFinder
         Else
             Throw New KeyNotFoundException()
         End If
-    End Function
-
-    ''' <summary>
-    ''' Get bounds number from KCF atoms
-    ''' </summary>
-    ''' <param name="atom1"></param>
-    ''' <param name="atom2"></param>
-    ''' <returns></returns>
-    Public Shared Function GetNumberOfBounds(atom1 As String, atom2 As String) As Integer
-        Throw New NotImplementedException
     End Function
 
     ''' <summary>

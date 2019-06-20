@@ -60,9 +60,10 @@ Public Module Emulator
     Public Function FillBoundEnergy(model As NetworkGraph, energyTable As BoundEnergyFinder) As NetworkGraph
         For Each bound As Edge In model.graphEdges
             ' edge weight is the bound energy
-            Dim atom1 = bound.U.Label
-            Dim atom2 = bound.V.Label
-            Dim energy As Double = energyTable.FindByKCFAtoms(atom1, atom2)
+            Dim atom1 = bound.U.data.label
+            Dim atom2 = bound.V.data.label
+            ' The bounds number that parsed from KCF model is store in weight value
+            Dim energy As Double = energyTable.FindByKCFAtoms(atom1, atom2, bound.data.weight)
 
             ' The higher of bound energy, the harder for break this bound 
             bound.data.weight = energy
