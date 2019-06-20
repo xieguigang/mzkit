@@ -1,4 +1,4 @@
-Bonds,?H*,bounds.n,atom1,atom2,Comments
+ï»¿Bonds,H0*,bounds.n,atom1,atom2,comments
 H-H,104.2,1,H,H,
 C-C,83,1,C,C,
 N-N,38.4,1,N,N,
@@ -60,8 +60,8 @@ P=S,70,2,P,S,(PSCl3)
 S=O,128,2,S,O,(SO2)
 S=O,93,2,S,O,(DMSO)
 P=P,84,2,P,P,
-P¡ÝP,117,3,P,P,
-C¡ÝO,258,3,C,O,
-C¡ÝC,200,3,C,C,
-N¡ÝN,226,3,N,N,
-C¡ÝN,213,3,C,N,
+Pâ‰¡P,117,3,P,P,
+Câ‰¡O,258,3,C,O,
+Câ‰¡C,200,3,C,C,
+Nâ‰¡N,226,3,N,N,
+Câ‰¡N,213,3,C,N,
