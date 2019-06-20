@@ -138,6 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Emulator\BoundEnergy.vb" />
+    <Compile Include="Emulator\BoundEnergyFinder.vb" />
     <Compile Include="Emulator\EnergyModel.vb" />
     <Compile Include="Emulator\Emulator.vb" />
     <Compile Include="GA\EnergyDistribution.vb" />

@@ -6,7 +6,9 @@ Module simulatorTest
 
     Sub Main()
         Dim boundEnergies = BoundEnergy.GetEnergyTable
-        Dim molecule = "E:\MassSpectrum-toolkits\visual\KCF\DATA\NADPH.txt".LoadKCF.CreateGraph
+        Dim boundTable As New BoundEnergyFinder
+
+        Dim molecule = "D:\MassSpectrum-toolkits\visual\KCF\DATA\NADPH.txt".LoadKCF.CreateGraph
         Dim energy As New EnergyModel(Function(x, y)
                                           Return x
                                       End Function, 0, 1000)

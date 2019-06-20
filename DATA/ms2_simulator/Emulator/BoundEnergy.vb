@@ -20,7 +20,11 @@ Public Class BoundEnergy
     Public Property comments As String
 
     Public Overrides Function ToString() As String
-        Return $"Dim {bound} = {H0}"
+        If comments.StringEmpty Then
+            Return $"Dim {bound} = {H0}"
+        Else
+            Return $"Dim {bound} = {H0}  ' ({comments})"
+        End If
     End Function
 
     Public Shared Function GetEnergyTable() As BoundEnergy()
