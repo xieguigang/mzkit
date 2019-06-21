@@ -155,7 +155,7 @@ Public Module Emulator
 
         ' 如果charge值是零的时候该怎么计算？
         ' 中性粒子？
-        If charge = 0 Then
+        If charge = 0.0 Then
             ' 默认是丢失一个电子的自身电离化的
             ' [M]+或者[M]-的数据
             Return mass
