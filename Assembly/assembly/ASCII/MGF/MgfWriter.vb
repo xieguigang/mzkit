@@ -16,8 +16,18 @@ Namespace ASCII.MGF
         End Function
 
         <Extension>
-        Public Function WriteAsciiMgf(ion As Ions, out As StreamWriter) As Boolean
+        Public Sub WriteAsciiMgf(ion As Ions, out As StreamWriter)
+            Call out.WriteLine("BEGIN IONS")
+            Call out.WriteLine("TITLE=" & ion.Title)
+            Call out.WriteLine("RTINSECONDS=" & ion.RtInSeconds)
+            Call out.WriteLine($"PEPMASS={ion.PepMass.name} {ion.PepMass.text}")
+            Call out.WriteLine("CHARGE=" & ion.Charge)
 
-        End Function
+            For Each fragment As ms2 In ion.Peaks
+                Call out.WriteLine($"{fragment.mz} {fragment.intensity}")
+            Next
+
+            Call out.WriteLine("END IONS")
+        End Sub
     End Module
 End Namespace
