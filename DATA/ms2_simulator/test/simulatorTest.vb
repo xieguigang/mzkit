@@ -17,7 +17,7 @@ Module simulatorTest
                                       End Function, 0, 1000)
         Dim result As LibraryMatrix = molecule.MolecularFragment(energy)
 
-        Using mgf As StreamWriter = "./test.txt".OpenWriter
+        Using mgf As StreamWriter = "./NADPH_insilicons.txt".OpenWriter
             Call result.MgfIon.WriteAsciiMgf(mgf)
         End Using
 
