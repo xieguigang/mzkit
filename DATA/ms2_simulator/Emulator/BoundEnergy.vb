@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Data.csv
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 
 Public Class BoundEnergy
@@ -27,6 +28,7 @@ Public Class BoundEnergy
         End If
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function GetEnergyTable() As BoundEnergy()
         Return My.Resources.Standard_bond_energies _
             .LineTokens _

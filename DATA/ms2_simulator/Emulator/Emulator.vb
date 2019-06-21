@@ -189,6 +189,17 @@ Public Module Emulator
         ' 因为他们都被打断了
         For Each edge As Edge In copy.graphEdges.ToArray
             If edge.data.weight <= energy Then
+                ' 在这里得到化学键的数量
+                ' 计算电荷量
+                Dim bounds As Integer = edge.data!bounds
+                Dim a As NetworkNode = edge.U
+                Dim b As NetworkNode = edge.V
+
+                ' 计算电荷量的变化
+                ' 电子轰击之后，电子是给了分开的各自的基团对象？
+                a.data!charge = Val(a.data!charge) + bounds
+                b.data!charge = Val(b.data!charge) + bounds
+
                 Call copy.RemoveEdge(edge)
             End If
         Next
