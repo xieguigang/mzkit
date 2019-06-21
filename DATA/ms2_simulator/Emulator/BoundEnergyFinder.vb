@@ -1,5 +1,4 @@
 ﻿Imports BioNovoGene.BioDeep.Chemistry.Model
-Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Public Class BoundEnergyFinder
 

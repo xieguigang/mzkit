@@ -45,8 +45,8 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemistry.Model.Graph
-Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.GraphTheory.Network
+Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Language
 Imports SMRUCC.MassSpectrum.Math.Spectra
 Imports NetworkNode = Microsoft.VisualBasic.Data.visualize.Network.Graph.Node
@@ -168,7 +168,10 @@ Public Module Emulator
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function MolecularFragment(molecule As Model.KCF, energy As EnergyModel, Optional step% = 100) As LibraryMatrix
-        Return molecule.CreateGraph.MolecularFragment(energy, [step])
+        Return molecule _
+            .CreateGraph _
+            .FillBoundEnergy(New BoundEnergyFinder) _
+            .MolecularFragment(energy, [step])
     End Function
 
     ''' <summary>
