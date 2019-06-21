@@ -117,6 +117,7 @@ Public Module Emulator
         Next
 
         Dim matrix As New LibraryMatrix With {
+            .Name = "Insilicons Ms/Ms matrix",
             .ms2 = quantity _
                 .Select(Function(frag)
                             Dim mz# = mzlist(frag.Key).Average
