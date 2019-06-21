@@ -1,6 +1,8 @@
-﻿Imports BioNovoGene.BioDeep.Chemistry.Model
+﻿Imports System.IO
+Imports BioNovoGene.BioDeep.Chemistry.Model
 Imports BioNovoGene.BioDeep.Chemistry.Model.Graph
 Imports ms2_simulator
+Imports SMRUCC.MassSpectrum.Assembly.ASCII.MGF
 Imports SMRUCC.MassSpectrum.Math.Spectra
 
 Module simulatorTest
@@ -15,7 +17,9 @@ Module simulatorTest
                                       End Function, 0, 1000)
         Dim result As LibraryMatrix = molecule.MolecularFragment(energy)
 
-
+        Using mgf As StreamWriter = "./test.txt".OpenWriter
+            Call result.MgfIon.WriteAsciiMgf(mgf)
+        End Using
 
         Pause()
     End Sub
