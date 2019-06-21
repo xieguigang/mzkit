@@ -98,11 +98,18 @@ Public Module Emulator
             ' 则完整的分子图会分裂为多个子图碎片
 
             ' 使用定积分求出分子能量的分布密度
-            Dim percentage# = energy.PercentageLess(e)
+            ' 分子的能量越高，高于这个能量的分子的半分比应该是越少的？
+            Dim percentage# = 1 - energy.PercentageLess(e)
             Dim fragmentModel As NetworkGraph = molecule.BreakBonds(energy:=e)
+            Dim fragments = IteratesSubNetworks(Of NetworkNode, Edge, NetworkGraph)(fragmentModel).ToArray
 
-            For Each fragment As NetworkGraph In IteratesSubNetworks(Of NetworkNode, Edge, NetworkGraph)(fragmentModel)
-                Dim mz# = fragment.CalculateMZ
+            Call $"Break into {fragments.Length} fragments under collision energy {e}".__DEBUG_ECHO
+            Call $"Quantile percentage is {(percentage * 100).ToString("F2")}%".__DEBUG_ECHO
+
+            For Each fragment As NetworkGraph In fragments
+                Dim mz As Double = fragment.CalculateMZ
+
+                Call $"  -> {mz.ToString("F2")} (m/z)".__DEBUG_ECHO
 
                 With Math.Round(mz, precision).ToString
                     If Not quantity.ContainsKey(.ByRef) Then
