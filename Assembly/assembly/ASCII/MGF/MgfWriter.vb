@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports SMRUCC.MassSpectrum.Math.Spectra
 
 Namespace ASCII.MGF
@@ -8,10 +9,23 @@ Namespace ASCII.MGF
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function MgfIon(matrix As LibraryMatrix) As Ions
+        Public Function MgfIon(matrix As LibraryMatrix, Optional precursor As ms2 = Nothing) As Ions
+            If precursor Is Nothing Then
+                precursor = New ms2 With {
+                    .mz = matrix.ms2.Max(Function(m) m.mz),
+                    .intensity = 1,
+                    .quantity = 1
+                }
+            End If
+
             Return New Ions With {
                 .Peaks = matrix.ms2,
-                .Title = matrix.Name
+                .Title = matrix.Name,
+                .Charge = 1,
+                .PepMass = New NamedValue With {
+                    .name = precursor.mz,
+                    .text = precursor.quantity
+                }
             }
         End Function
 
