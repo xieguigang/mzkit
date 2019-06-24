@@ -28,9 +28,13 @@ seeding <- function(output, rt.adjust, seeds.all) {
 				align <- feature$align;
 				cluster <- seeds[[KEGG]];
 				hit <- list(
+					# feature is the current ion ms1 name
+					feature   = feature$name,
 					spectra   = align$candidate, 
 					score     = align$score, 
+					# ref and parent is the reference template index
 					ref       = align$ms2.name,
+					parent    = align$parent,
 					rt.adjust = rt.adjust(feature$feature$rt, KEGG),
 					# append the iteration trace stack
 					trace     = append(feature$align$trace, feature$name)

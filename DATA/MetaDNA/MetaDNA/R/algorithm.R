@@ -94,7 +94,8 @@ metaDNA.impl <- function(unknown.query, identify.ms2,
 			feature$ms2 <- NULL;
 			# add reference spectra matrix data
 			result$ref <- identify.ms2;
-			result$trace <- trace$path;
+			result$trace  <- trace$path;
+			result$parent <- sprintf("%s#%s", trace$ref, trace$parent);
 			
             list(
               feature = feature,

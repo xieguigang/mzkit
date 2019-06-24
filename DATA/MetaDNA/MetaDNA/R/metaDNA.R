@@ -216,10 +216,13 @@ metaDNA.iteration <- function(identify, filter.skips,
 							  
 	do.Predicts <- function(KEGG_cpd, identified, KEGG.partners, unknown.query) {
 		do.infer <- function(seed) {
+			# get trace information of current seed
 			trace <- seed$ref;
 			trace <- list(
 				path   = seed$trace %||% seed$feature, 
-				parent = sprintf("%s#%s", trace$file, trace$scan)
+				# ms feature of current seed
+				parent = sprintf("%s#%s", trace$file, trace$scan),
+				ref    = seed$feature
 			);
 			
 			# do iteration
