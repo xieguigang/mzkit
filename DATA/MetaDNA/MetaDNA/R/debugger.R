@@ -63,5 +63,42 @@ network.trace <- function(result) {
 #' @details save network data into Xml file.
 #'
 save.network <- function(infer, outputdir) {
+	file <- sprintf("%s/MetaDNA.Xml", outputdir);
+	text <- textWriter(file);
+	
+	out <- XML.Framework(
+		write    = text$println,
+		do.write = do.write.network(infer),
+		rootName = "MetaDNA"
+	);
+	
+	text$close();
+}
 
+do.write.network <- function(infer) {
+	writer <- function(write) {
+		for (kegg_id in names(infer)) {
+			trace.cluster <- infer[[kegg_id]];
+			
+			write('<compound kegg="%s" candidates="%s">', kegg_id, length(trace.cluster));
+			
+			for (unknown_name in names(trace.cluster)) {
+				trace <- trace.cluster[[unknown_name]];
+				
+				write('<unknown name="%s" length="%s">', unknown_name, length(trace));
+				
+				for(node in trace) {
+					node <- Strings.Split(node, "\\|");
+					
+					write('<node kegg="%s">%s</node>', node[1], node[2]);
+				}
+				
+				write('</unknown>');
+			}
+			
+			write("</compound>");
+		}
+	}
+	
+	writer;
 }
