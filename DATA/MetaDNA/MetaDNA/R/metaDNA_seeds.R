@@ -39,8 +39,9 @@ seeding <- function(output, rt.adjust, seeds.all) {
 					parent    = align$parent,
 					rt.adjust = rt.adjust(feature$feature$rt, KEGG),
 					# append the iteration trace stack
-					trace     = append(feature$align$trace, feature$name)
+					trace     = feature$align$trace
 				);							
+				hit$trace <- append(hit$trace, hit %=>% trace.node);
 				
 				# try to fix the duplicated spectra data
 				# use this uid tag data

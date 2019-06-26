@@ -230,7 +230,7 @@ metaDNA.iteration <- function(identify, filter.skips,
 			trace <- seed$ref;
 			trace <- list(
 				# The unknown infer elongation path
-				path   = seed$trace %||% seed$feature, 
+				path   = seed$trace %||% (seed %=>% trace.node), 
 				KEGG   = seed$KEGG,
 				# ms feature of current seed
 				parent = sprintf("%s#%s", trace$file, trace$scan),
