@@ -1,7 +1,8 @@
-#Region "Microsoft.ROpen::df252ee88733584f15fc683d2c1ebefb, zzz.R"
+#Region "Microsoft.ROpen::b9a4619e4a1bf3b18a498f6875d84a95, zzz.R"
 
     # Summaries:
 
+    # cluster.cores <- function(cores = NULL) {...
     # .onLoad <- function(libname, pkgname) {...
 
 #End Region
