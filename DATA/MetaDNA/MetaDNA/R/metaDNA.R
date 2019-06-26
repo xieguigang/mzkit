@@ -229,7 +229,9 @@ metaDNA.iteration <- function(identify, filter.skips,
 			# the ms2 spectrum mnatrix data
 			trace <- seed$ref;
 			trace <- list(
+				# The unknown infer elongation path
 				path   = seed$trace %||% seed$feature, 
+				KEGG   = seed$KEGG,
 				# ms feature of current seed
 				parent = sprintf("%s#%s", trace$file, trace$scan),
 				ref    = seed$feature
