@@ -35,9 +35,11 @@ kegg.match.handler <- function(unknown.mz, precursor_type = c("[M+H]+", "[M]+"),
 	print("m/z will be calculate from these precursor types:");
 	print(cbind(precursor_type, mode));
 
+	# kegg.mass and kegg.ids have the same element length and 
+	# keeps the same element orders
     kegg.mass <- sapply(KEGG_meta, function(c) c$exact_mass) %=>% as.numeric;
-    kegg.ids <- sapply(KEGG_meta, function(c) c$ID) %=>% as.character;
-    kegg.mz <- get.PrecursorMZ(kegg.mass, precursor_type, mode);
+    kegg.ids  <- sapply(KEGG_meta, function(c) c$ID) %=>% as.character;
+    kegg.mz   <- get.PrecursorMZ(kegg.mass, precursor_type, mode);
     kegg.list <- KEGG_meta;
 
     function(kegg_id) {
@@ -76,14 +78,18 @@ kegg.match.handler <- function(unknown.mz, precursor_type = c("[M+H]+", "[M]+"),
 #   => unknown mz with tolerance
 #   => unknown index
 #   => unknown peak and ms2 for align
-kegg.match <- function(kegg_id, kegg.mass, kegg.ids, kegg.mz, kegg.list, 
+
+#' Match unknown feature from given KEGG partners
+#'
+#' @param partners_id The kegg partner compound id list
+#'
+kegg.match <- function(partners_id, kegg.mass, kegg.ids, kegg.mz, kegg.list, 
 	precursor_type, 
 	unknown.mz, 
 	tolerance) {
 
-	# Get kegg m/z for a given kegg_id set
-	kegg_id <- as.index(kegg_id);
-	mzi <- sapply(kegg.ids, kegg_id) %=>% as.logical;
+	# Get kegg m/z for a given kegg_id set	
+	mzi <- (kegg.ids %in% partners_id);
 	# Get corresponding kegg mz and annotation meta data
 	mz <- kegg.mz[[precursor_type]][mzi];
 	kegg <- kegg.list[mzi];
@@ -178,8 +184,7 @@ kegg.match <- function(kegg_id, kegg.mass, kegg.ids, kegg.mz, kegg.list,
 kegg.partners <- function(kegg_id) {
 	# kegg_id list could be empty???
 	is_null <- IsNothing(kegg_id);
-
-    sapply(network, function(reaction) {
+	partners <- sapply(network, function(reaction) {
 		# 2019-03-01
 		# fix for Error in if (kegg_id %in% reaction$reactants) { :
 		if (is_null) {
@@ -193,4 +198,11 @@ kegg.partners <- function(kegg_id) {
         }
 
     }) %=>% unlist %=>% as.character;
+	
+	# 20190626 due to the reason of some KEGG reaction its
+	# reactome and products are keeps the same
+	#
+	# filtering such result at here
+	yes <- kegg_id != partners;
+	partners[yes];
 }
