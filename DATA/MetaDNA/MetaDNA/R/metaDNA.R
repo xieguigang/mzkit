@@ -110,6 +110,11 @@ metaDNA <- function(identify, unknown, do.align,
 	timer <- benchmark();
 	unknown.mz <- sapply(unknown, function(x) x$mz) %=>% as.numeric;
 	filter.skips <- kegg_id.skips %=>% create_filter.skips;
+	
+	# The match.kegg lambda function implements:
+	#
+	# Query the unknown ms feature by a given KEGG partner id list
+	#
     match.kegg <- kegg.match.handler(
       unknown.mz = unknown.mz,
       precursor_type = precursor_type,
@@ -198,12 +203,13 @@ metaDNA <- function(identify, unknown, do.align,
 #' Run a metaDNA prediction iteration
 #'
 #' @param identify The seeds data for the metaDNA algorithm.
-#' @param kegg.partners A lambda function for find reaction partners for a given list of KEGG compound id.
+#' @param kegg.partners A lambda function for find reaction partners for a given list of 
+#'        KEGG compound id.
 #' @param unknown The user sample data
 #' @param do.align A lambda function that provides spectra alignment
-#' @param unknow.matches function evaluate result of \code{\link{kegg.match.handler}}, this function
-#'     descript that how to find out the unknown metabolite from a given set of identify related kegg
-#'     partners compound id set.
+#' @param unknow.matches function evaluate result of \code{\link{kegg.match.handler}}, 
+#'     this function descript that how to find out the unknown metabolite from a given 
+#'     set of identify related kegg partners compound id set.
 #'
 #' @details The \code{do.align} function should take two parameter:
 #'     The spectra matrix of query and reference and retuns a score vector
@@ -216,7 +222,11 @@ metaDNA.iteration <- function(identify, filter.skips,
 							  
 	do.Predicts <- function(KEGG_cpd, identified, KEGG.partners, unknown.query) {
 		do.infer <- function(seed) {
-			# get trace information of current seed
+			# get trace information of current seed:
+			#
+			# The seed$feature is the ms1 feature id of the identified seed
+			# The seed$ref is the ms2 index of the identified seed, used for retrive 
+			# the ms2 spectrum mnatrix data
 			trace <- seed$ref;
 			trace <- list(
 				path   = seed$trace %||% seed$feature, 

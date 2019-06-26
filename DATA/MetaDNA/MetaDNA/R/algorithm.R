@@ -53,7 +53,17 @@ metaDNA.impl <- function(unknown.query, identify.ms2,
                          ms2.align,
 						 trace,
                          score.cutoff = 0.8) {
-
+	# unknown.query is the kegg partner matched ms feature result:
+    # It contains a data structure like:
+    # {
+	#    $unknown.index (row index in peaktable)
+	#    $unknown.mz (The ms1 m/z of the unknown feature)
+	#    $precursor_type (calculate from ms1 m/z between matched KEGG partner its m/z value)
+	#    $kegg (The kegg compound annotation data, contains kegg_id, exact_mass, name, etc)
+	#    $ppm (ppm value between the unknown ms1 m/z and the matched KEGG partner m/z value)
+	#    $libmz (The m/z value that calculated from the matched KEGG partner with given precursor_type)
+	# }	
+						 
     # unknown.i integer index of the peaktable
     unknown.i <- sapply(unknown.query, function(x) x$unknown.index) %=>% unlist %=>% as.numeric;
     # subset of the peaktable by using the unknown index value

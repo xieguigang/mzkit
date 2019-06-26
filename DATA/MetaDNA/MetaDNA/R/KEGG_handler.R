@@ -18,7 +18,12 @@
 #'
 #' @return Returns the index vector in \code{unknown.mz} vector.
 #' @details \code{mass - mz - kegg_id}
-kegg.match.handler <- function(unknown.mz, precursor_type = c("[M+H]+", "[M]+"), tolerance = assert.deltaMass(0.3)) {
+#'
+kegg.match.handler <- function(
+	unknown.mz, 
+	precursor_type = c("[M+H]+", "[M]+"), 
+	tolerance      = assert.deltaMass(0.3)) {
+	
     # load kegg reaction database and kegg meta information
     # data/metaDNA_kegg.rda
     xLoad("metaDNA_kegg.rda");
@@ -81,23 +86,29 @@ kegg.match.handler <- function(unknown.mz, precursor_type = c("[M+H]+", "[M]+"),
 
 #' Match unknown feature from given KEGG partners
 #'
-#' @param partners_id The kegg partner compound id list
+#' @param partners_id The kegg partner compound id list, which is query 
+#'     from the identifed KEGG seed by the reaction network definition.
 #'
 kegg.match <- function(partners_id, kegg.mass, kegg.ids, kegg.mz, kegg.list, 
 	precursor_type, 
 	unknown.mz, 
 	tolerance) {
 
-	# Get kegg m/z for a given kegg_id set	
+	# Get index of kegg m/z for a given kegg_id set	
 	mzi <- (kegg.ids %in% partners_id);
 	# Get corresponding kegg mz and annotation meta data
+	# in given precursor_type kegg m/z calculation data
 	mz <- kegg.mz[[precursor_type]][mzi];
+	# Get corresponding kegg meta info by a given matched index list
 	kegg <- kegg.list[mzi];
 	mz.index <- 1:length(mz);
 
 	# the ms1 parameter is a m/z number of a unknown metabolite
 	# j is the index of the unknown m/z in the vector 
 	unknown.query_impl <- function(ms1, j) {
+		# mz.index is 1 -> lengthOf(kegg_matched mz) 
+		# the ppm value between unknown ms1 m/z and kegg m/z
+		# was calculated in the query lapply loop
 		query <- lapply(mz.index, function(i) {
 			# unknown metabolite ms1 m/z match
 			# kegg mz with a given tolerance
@@ -129,6 +140,9 @@ kegg.match <- function(partners_id, kegg.mass, kegg.ids, kegg.mz, kegg.list,
 					# tolerance.
 					kegg = hit$kegg,
 					ppm = hit$ppm,
+					
+					# The libmz is the corresponding m/z value of the 
+					# KEGG partner compound.
 					libmz = hit$libmz
 				);
 			});

@@ -32,7 +32,9 @@ seeding <- function(output, rt.adjust, seeds.all) {
 					feature   = feature$name,
 					spectra   = align$candidate, 
 					score     = align$score, 
+
 					# ref and parent is the reference template index
+					KEGG      = KEGG,
 					ref       = align$ms2.name,
 					parent    = align$parent,
 					rt.adjust = rt.adjust(feature$feature$rt, KEGG),
