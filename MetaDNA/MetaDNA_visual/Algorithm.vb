@@ -44,6 +44,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.visualize.Network
+Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 
 Public Module Algorithm
@@ -64,7 +65,7 @@ Public Module Algorithm
                     .label = compound.kegg,
                     .origID = compound.kegg,
                     .Properties = New Dictionary(Of String, String) From {
-                        {"type", "kegg_compound"}
+                        {NamesOf.REFLECTION_ID_MAPPING_NODETYPE, "kegg_compound"}
                     }
                 }
             }
@@ -78,7 +79,7 @@ Public Module Algorithm
                         .label = candidate.name,
                         .origID = candidate.Msn,
                         .Properties = New Dictionary(Of String, String) From {
-                            {"type", "MetaDNA.candidate"}
+                            {NamesOf.REFLECTION_ID_MAPPING_NODETYPE, "MetaDNA.candidate"}
                         }
                     }
                 }
@@ -89,7 +90,7 @@ Public Module Algorithm
                     .data = New EdgeData With {
                         .label = $"{candidate_compound.Label} infer as {kegg_compound.Label}",
                         .Properties = New Dictionary(Of String, String) From {
-                            {"type", "is_candidate"}
+                            {NamesOf.REFLECTION_ID_MAPPING_INTERACTION_TYPE, "is_candidate"}
                         }
                     }
                 }
@@ -110,7 +111,7 @@ Public Module Algorithm
                             .label = candidate.edges(Scan0).ms1,
                             .origID = candidate.edges(Scan0).ms2,
                             .Properties = New Dictionary(Of String, String) From {
-                                {"type", "seed"}
+                                {NamesOf.REFLECTION_ID_MAPPING_NODETYPE, "seed"}
                             }
                         }
                     }
@@ -124,7 +125,7 @@ Public Module Algorithm
                         .data = New EdgeData With {
                             .label = $"{candidate.edges(i).kegg} -> {candidate.edges(i + 1).kegg}",
                             .Properties = New Dictionary(Of String, String) From {
-                                {"type", "infer"}
+                                {NamesOf.REFLECTION_ID_MAPPING_INTERACTION_TYPE, "infer"}
                             }
                         },
                         .U = seedNode,
@@ -140,7 +141,7 @@ Public Module Algorithm
                     .data = New EdgeData With {
                         .label = $"{candidateParent.kegg} -> {compound.kegg}",
                         .Properties = New Dictionary(Of String, String) From {
-                            {"type", "infer"}
+                            {NamesOf.REFLECTION_ID_MAPPING_INTERACTION_TYPE, "infer"}
                         }
                     },
                     .U = g.GetNode(candidateParent.ms1),
