@@ -61,7 +61,11 @@ Public Module Algorithm
             kegg_compound = New Graph.Node With {
                 .Label = compound.kegg,
                 .data = New NodeData() With {
-                    .label = compound.kegg
+                    .label = compound.kegg,
+                    .origID = compound.kegg,
+                    .Properties = New Dictionary(Of String, String) From {
+                        {"type", "kegg_compound"}
+                    }
                 }
             }
 
@@ -72,14 +76,22 @@ Public Module Algorithm
                     .Label = candidate.name,
                     .data = New NodeData With {
                         .label = candidate.name,
-                        .origID = candidate.Msn
+                        .origID = candidate.Msn,
+                        .Properties = New Dictionary(Of String, String) From {
+                            {"type", "MetaDNA.candidate"}
+                        }
                     }
                 }
                 edge = New Edge With {
                     .U = kegg_compound,
                     .V = candidate_compound,
                     .weight = candidate.edges.Length,
-                    .data = New EdgeData
+                    .data = New EdgeData With {
+                        .label = $"{candidate_compound.Label} infer as {kegg_compound.Label}",
+                        .Properties = New Dictionary(Of String, String) From {
+                            {"type", "is_candidate"}
+                        }
+                    }
                 }
 
                 Call g.AddNode(candidate_compound)
@@ -109,7 +121,12 @@ Public Module Algorithm
                 For i As Integer = 0 To candidate.length - 2
                     seedNode = g.GetNode(candidate.edges(i).ms1)
                     edge = New Edge With {
-                        .data = New EdgeData,
+                        .data = New EdgeData With {
+                            .label = $"{candidate.edges(i).kegg} -> {candidate.edges(i + 1).kegg}",
+                            .Properties = New Dictionary(Of String, String) From {
+                                {"type", "infer"}
+                            }
+                        },
                         .U = seedNode,
                         .V = g.GetNode(candidate.edges(i + 1).ms1)
                     }
@@ -120,7 +137,12 @@ Public Module Algorithm
                 ' add edge that infer to current candidate
                 candidateParent = candidate.edges.Last
                 edge = New Edge With {
-                    .data = New EdgeData,
+                    .data = New EdgeData With {
+                        .label = $"{candidateParent.kegg} -> {compound.kegg}",
+                        .Properties = New Dictionary(Of String, String) From {
+                            {"type", "infer"}
+                        }
+                    },
                     .U = g.GetNode(candidateParent.ms1),
                     .V = g.GetNode(candidate.name)
                 }
