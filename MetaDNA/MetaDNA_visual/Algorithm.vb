@@ -54,19 +54,25 @@ Public Module Algorithm
         Dim kegg_compound As Graph.Node
         Dim candidate_compound As Graph.Node
         Dim edge As Edge
+        Dim candidateParent As node
 
-        For Each compound In metaDNA.compounds
+        For Each compound As compound In metaDNA.compounds
             kegg_compound = New Graph.Node With {
                 .Label = compound.kegg,
-                .data = New NodeData()
+                .data = New NodeData() With {
+                    .label = compound.kegg
+                }
             }
 
             Call g.AddNode(kegg_compound)
 
-            For Each candidate In compound.candidates
+            For Each candidate As unknown In compound.candidates
                 candidate_compound = New Graph.Node With {
                     .Label = candidate.name,
-                    .data = New NodeData With {.label = candidate.Msn}
+                    .data = New NodeData With {
+                        .label = candidate.name,
+                        .origID = candidate.Msn
+                    }
                 }
                 edge = New Edge With {
                     .U = kegg_compound,
@@ -89,9 +95,10 @@ Public Module Algorithm
                 Next
 
                 ' add edge that infer to current candidate
+                candidateParent = candidate.edges.Last
                 edge = New Edge With {
                     .data = New EdgeData,
-                    .U = g.GetNode(candidate.edges.Last.ms1),
+                    .U = g.GetNode(candidateParent.ms1),
                     .V = g.GetNode(candidate.name)
                 }
                 Call g.AddEdge(edge)
