@@ -68,38 +68,38 @@ save.network <- function(infer, outputdir) {
 	
 	out <- XML.Framework(
 		write    = text$println,
-		do.write = do.write.network(infer),
+		do.write = function(write) do.write.network(write, infer),
 		rootName = "MetaDNA"
 	);
 	
 	text$close();
 }
 
-do.write.network <- function(infer) {
-	writer <- function(write) {
-		for (kegg_id in names(infer)) {
-			trace.cluster <- infer[[kegg_id]];
+do.write.network <- function(write, infer) {
+	for (kegg_id in names(infer)) {
+		trace.cluster <- infer[[kegg_id]];
+		
+		write('<compound kegg="%s" candidates="%s">', kegg_id, length(trace.cluster));
+		
+		for (unknown_name in names(trace.cluster)) {
+			trace <- trace.cluster[[unknown_name]];
+			unknown_name <- Strings.Split(unknown_name, "\\|");
+			write('<unknown name="%s" Msn="%s" length="%s">', unknown_name[1], unknown_name[2], length(trace));
 			
-			write('<compound kegg="%s" candidates="%s">', kegg_id, length(trace.cluster));
-			
-			for (unknown_name in names(trace.cluster)) {
-				trace <- trace.cluster[[unknown_name]];
-				unknown_name <- Strings.Split(unknown_name, "\\|");
-				write('<unknown name="%s" Msn="%s" length="%s">', unknown_name[1], unknown_name[2], length(trace));
+			for(node in trace) {
+				node <- Strings.Split(node, "\\|");
+				id <- node[1]
+				feature <- Strings.Split(node[2], "[#]");
+				node <- sprintf("%s#%s", feature[2], feature[3]);
 				
-				for(node in trace) {
-					node <- Strings.Split(node, "\\|");
-					feature <- Strings.Split(node[2], "[#]");
-					
-					write('<node kegg="%s" ms1="">%s</node>', node[1], feature[1], sprintf("%s#%s", feature[2], feature[3]));
-				}
-				
-				write('</unknown>');
+				write('<node kegg="%s" ms1="%s">%s</node>', id, feature[1], node);
 			}
 			
-			write("</compound>");
+			write('</unknown>');
 		}
+		
+		write("</compound>");
 	}
 	
-	writer;
+	invisible(NULL);
 }
