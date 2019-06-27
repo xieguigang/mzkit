@@ -5,7 +5,7 @@ Module Module1
     Sub Main()
 
         Call dump("D:\MassSpectrum-toolkits\MetaDNA\test\human_blood.Xml")
-
+        Call dump("D:\MassSpectrum-toolkits\MetaDNA\test\urine.Xml")
 
 
         Pause()
