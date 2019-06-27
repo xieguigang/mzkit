@@ -1,0 +1,1785 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MetaDNA xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<compound kegg="C05669" candidates="1">
+<unknown name="M119T104" Msn="B-10.mzXML#590" length="1">
+<node kegg="C00099" ms1="M90T91_1">B-33.mzXML#508</node>
+</unknown>
+</compound>
+<compound kegg="C00041" candidates="2">
+<unknown name="M90T91_1" Msn="B-61.mzXML#499" length="1">
+<node kegg="C00099" ms1="M90T91_1">B-33.mzXML#508</node>
+</unknown>
+<unknown name="M90T91_1" Msn="B-67.mzXML#498" length="1">
+<node kegg="C00183" ms1="M118T108">QC1.mzXML#598</node>
+</unknown>
+</compound>
+<compound kegg="C00670" candidates="2">
+<unknown name="M258T92" Msn="B-1.mzXML#513" length="1">
+<node kegg="C00114" ms1="M104T871">B-5.mzXML#4557</node>
+</unknown>
+<unknown name="M259T91" Msn="B-40.mzXML#530" length="1">
+<node kegg="C00114" ms1="M104T871">B-5.mzXML#4557</node>
+</unknown>
+</compound>
+<compound kegg="C00740" candidates="4">
+<unknown name="M105T751" Msn="QC2.mzXML#3908" length="1">
+<node kegg="C00065" ms1="M106T91">B-27.mzXML#503</node>
+</unknown>
+<unknown name="M105T785" Msn="QC1.mzXML#4081" length="1">
+<node kegg="C00065" ms1="M106T91">B-27.mzXML#503</node>
+</unknown>
+<unknown name="M105T661" Msn="QC1.mzXML#3423" length="1">
+<node kegg="C00065" ms1="M106T91">B-27.mzXML#503</node>
+</unknown>
+<unknown name="M105T833" Msn="QC1.mzXML#4298" length="1">
+<node kegg="C00065" ms1="M106T91">B-27.mzXML#503</node>
+</unknown>
+</compound>
+<compound kegg="C03872" candidates="1">
+<unknown name="M229T486" Msn="B-60.mzXML#2591" length="1">
+<node kegg="C00065" ms1="M106T91">B-27.mzXML#503</node>
+</unknown>
+</compound>
+<compound kegg="C00180" candidates="4">
+<unknown name="M123T76_2" Msn="B-31.mzXML#394" length="1">
+<node kegg="C00261" ms1="M107T353">B-46.mzXML#1874</node>
+</unknown>
+<unknown name="M123T234" Msn="B-49.mzXML#1256" length="1">
+<node kegg="C00261" ms1="M107T353">B-46.mzXML#1874</node>
+</unknown>
+<unknown name="M123T207" Msn="B-54.mzXML#1113" length="1">
+<node kegg="C00261" ms1="M107T353">B-46.mzXML#1874</node>
+</unknown>
+<unknown name="M123T359" Msn="B-65.mzXML#1899" length="1">
+<node kegg="C00261" ms1="M107T353">B-46.mzXML#1874</node>
+</unknown>
+</compound>
+<compound kegg="C00763" candidates="5">
+<unknown name="M116T101_2" Msn="B-33.mzXML#567" length="1">
+<node kegg="C00148" ms1="M116T101_2">B-60.mzXML#567</node>
+</unknown>
+<unknown name="M116T80" Msn="B-39.mzXML#458" length="1">
+<node kegg="C00148" ms1="M116T101_2">B-60.mzXML#567</node>
+</unknown>
+<unknown name="M116T267" Msn="B-43.mzXML#1427" length="1">
+<node kegg="C00148" ms1="M116T80">B-39.mzXML#458</node>
+</unknown>
+<unknown name="M116T101_2" Msn="QC11.mzXML#583" length="1">
+<node kegg="C00148" ms1="M116T80">B-39.mzXML#458</node>
+</unknown>
+<unknown name="M116T80" Msn="B-2.mzXML#463" length="1">
+<node kegg="C00148" ms1="M116T80">B-39.mzXML#458</node>
+</unknown>
+</compound>
+<compound kegg="C00077" candidates="3">
+<unknown name="M133T81" Msn="B-37.mzXML#435" length="1">
+<node kegg="C00148" ms1="M116T80">B-39.mzXML#458</node>
+</unknown>
+<unknown name="M133T81" Msn="B-75.mzXML#446" length="1">
+<node kegg="C00062" ms1="M175T90_1">B-49.mzXML#491</node>
+</unknown>
+<unknown name="M133T81" Msn="B-12.mzXML#452" length="1">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+</unknown>
+</compound>
+<compound kegg="C20563" candidates="1">
+<unknown name="M283T886" Msn="B-54.mzXML#4560" length="1">
+<node kegg="C00148" ms1="M116T80">B-39.mzXML#458</node>
+</unknown>
+</compound>
+<compound kegg="C03741" candidates="1">
+<unknown name="M132T126" Msn="B-71.mzXML#675" length="1">
+<node kegg="C00430" ms1="M132T126">B-75.mzXML#680</node>
+</unknown>
+</compound>
+<compound kegg="C00902" candidates="2">
+<unknown name="M131T621" Msn="B-46.mzXML#3232" length="1">
+<node kegg="C01933" ms1="M132T237">B-24.mzXML#1300</node>
+</unknown>
+<unknown name="M131T680" Msn="QC5.mzXML#3563" length="1">
+<node kegg="C01933" ms1="M132T237">B-24.mzXML#1300</node>
+</unknown>
+</compound>
+<compound kegg="C00671" candidates="2">
+<unknown name="M131T621" Msn="B-46.mzXML#3232" length="1">
+<node kegg="C00407" ms1="M132T100_2">B-4.mzXML#546</node>
+</unknown>
+<unknown name="M131T680" Msn="QC5.mzXML#3563" length="1">
+<node kegg="C00407" ms1="M132T100_2">B-4.mzXML#546</node>
+</unknown>
+</compound>
+<compound kegg="C21092" candidates="3">
+<unknown name="M132T263_1" Msn="B-60.mzXML#1429" length="1">
+<node kegg="C00407" ms1="M132T100_2">B-4.mzXML#546</node>
+</unknown>
+<unknown name="M132T237" Msn="B-25.mzXML#1300" length="1">
+<node kegg="C00407" ms1="M132T100_2">B-4.mzXML#546</node>
+</unknown>
+<unknown name="M132T100_2" Msn="B-1.mzXML#544" length="1">
+<node kegg="C00407" ms1="M132T100_2">B-4.mzXML#546</node>
+</unknown>
+</compound>
+<compound kegg="C00049" candidates="2">
+<unknown name="M133T141" Msn="B-75.mzXML#762" length="1">
+<node kegg="C00402" ms1="M134T92">B-33.mzXML#509</node>
+</unknown>
+<unknown name="M133T85" Msn="B-28.mzXML#452" length="1">
+<node kegg="C00402" ms1="M134T92">B-33.mzXML#509</node>
+</unknown>
+</compound>
+<compound kegg="C20465" candidates="1">
+<unknown name="M193T552" Msn="B-49.mzXML#2876" length="1">
+<node kegg="C16930" ms1="M135T666">B-68.mzXML#3427</node>
+</unknown>
+</compound>
+<compound kegg="C00819" candidates="2">
+<unknown name="M147T91" Msn="B-21.mzXML#505" length="1">
+<node kegg="C00064" ms1="M147T91">B-35.mzXML#503</node>
+</unknown>
+<unknown name="M147T729" Msn="B-41.mzXML#3752" length="1">
+<node kegg="C00064" ms1="M147T91">B-35.mzXML#503</node>
+</unknown>
+</compound>
+<compound kegg="C00449" candidates="1">
+<unknown name="M276T101" Msn="B-18.mzXML#559" length="1">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+</unknown>
+</compound>
+<compound kegg="C00408" candidates="3">
+<unknown name="M130T80" Msn="B-22.mzXML#457" length="1">
+<node kegg="C00047" ms1="M147T81">B-27.mzXML#435</node>
+</unknown>
+<unknown name="M130T109" Msn="B-9.mzXML#603" length="1">
+<node kegg="C00047" ms1="M147T81">B-27.mzXML#435</node>
+</unknown>
+<unknown name="M130T140" Msn="B-22.mzXML#801" length="1">
+<node kegg="C00047" ms1="M147T81">B-27.mzXML#435</node>
+</unknown>
+</compound>
+<compound kegg="C03239" candidates="1">
+<unknown name="M146T94" Msn="B-63.mzXML#522" length="1">
+<node kegg="C00047" ms1="M147T81">B-27.mzXML#435</node>
+</unknown>
+</compound>
+<compound kegg="C04076" candidates="1">
+<unknown name="M146T94" Msn="B-63.mzXML#522" length="1">
+<node kegg="C00047" ms1="M147T81">B-27.mzXML#435</node>
+</unknown>
+</compound>
+<compound kegg="C00739" candidates="2">
+<unknown name="M147T81" Msn="B-37.mzXML#436" length="1">
+<node kegg="C00047" ms1="M147T81">B-27.mzXML#435</node>
+</unknown>
+<unknown name="M147T726" Msn="B-62.mzXML#3729" length="1">
+<node kegg="C00047" ms1="M147T81">B-27.mzXML#435</node>
+</unknown>
+</compound>
+<compound kegg="C01142" candidates="2">
+<unknown name="M147T81" Msn="B-37.mzXML#436" length="1">
+<node kegg="C00047" ms1="M147T81">B-27.mzXML#435</node>
+</unknown>
+<unknown name="M147T726" Msn="B-62.mzXML#3729" length="1">
+<node kegg="C00047" ms1="M147T81">B-27.mzXML#435</node>
+</unknown>
+</compound>
+<compound kegg="C20277" candidates="2">
+<unknown name="M147T81" Msn="B-37.mzXML#436" length="1">
+<node kegg="C00047" ms1="M147T81">B-27.mzXML#435</node>
+</unknown>
+<unknown name="M147T726" Msn="B-62.mzXML#3729" length="1">
+<node kegg="C00047" ms1="M147T81">B-27.mzXML#435</node>
+</unknown>
+</compound>
+<compound kegg="C02728" candidates="1">
+<unknown name="M161T89" Msn="B-69.mzXML#500" length="1">
+<node kegg="C00047" ms1="M147T81">B-27.mzXML#435</node>
+</unknown>
+</compound>
+<compound kegg="C01037" candidates="1">
+<unknown name="M189T88" Msn="B-65.mzXML#503" length="1">
+<node kegg="C00047" ms1="M147T81">B-27.mzXML#435</node>
+</unknown>
+</compound>
+<compound kegg="C02427" candidates="1">
+<unknown name="M190T103" Msn="B-75.mzXML#575" length="1">
+<node kegg="C00047" ms1="M147T81">B-27.mzXML#435</node>
+</unknown>
+</compound>
+<compound kegg="C21730" candidates="1">
+<unknown name="M276T96" Msn="B-18.mzXML#559" length="1">
+<node kegg="C00047" ms1="M147T81">B-27.mzXML#435</node>
+</unknown>
+</compound>
+<compound kegg="C00026" candidates="2">
+<unknown name="M146T107" Msn="B-2.mzXML#607" length="1">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+</unknown>
+<unknown name="M147T77" Msn="B-27.mzXML#435" length="1">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+</unknown>
+</compound>
+<compound kegg="C00217" candidates="1">
+<unknown name="M148T93" Msn="B-65.mzXML#523" length="1">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+</unknown>
+</compound>
+<compound kegg="C03618" candidates="1">
+<unknown name="M148T93" Msn="B-65.mzXML#523" length="1">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+</unknown>
+</compound>
+<compound kegg="C05574" candidates="1">
+<unknown name="M148T93" Msn="B-65.mzXML#523" length="1">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+</unknown>
+</compound>
+<compound kegg="C01046" candidates="1">
+<unknown name="M162T103" Msn="B-65.mzXML#601" length="1">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+</unknown>
+</compound>
+<compound kegg="C02727" candidates="1">
+<unknown name="M189T104" Msn="B-45.mzXML#589" length="1">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+</unknown>
+</compound>
+<compound kegg="C03846" candidates="1">
+<unknown name="M189T104" Msn="B-45.mzXML#589" length="1">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+</unknown>
+</compound>
+<compound kegg="C00855" candidates="4">
+<unknown name="M149T589" Msn="QC1.mzXML#3091" length="1">
+<node kegg="C00073" ms1="M150T141_2">B-45.mzXML#794</node>
+</unknown>
+<unknown name="M149T141_2" Msn="B-68.mzXML#785" length="1">
+<node kegg="C00073" ms1="M150T141_2">B-45.mzXML#794</node>
+</unknown>
+<unknown name="M150T141_2" Msn="B-40.mzXML#780" length="1">
+<node kegg="C00073" ms1="M150T141_2">B-45.mzXML#794</node>
+</unknown>
+<unknown name="M150T353" Msn="QC1.mzXML#1881" length="1">
+<node kegg="C00073" ms1="M150T141_2">B-45.mzXML#794</node>
+</unknown>
+</compound>
+<compound kegg="C01441" candidates="1">
+<unknown name="M322T742" Msn="B-23.mzXML#3840" length="1">
+<node kegg="C00073" ms1="M150T141_2">B-45.mzXML#794</node>
+</unknown>
+</compound>
+<compound kegg="C01180" candidates="3">
+<unknown name="M149T844" Msn="QC1.mzXML#4387" length="1">
+<node kegg="C00073" ms1="M150T141_2">B-45.mzXML#794</node>
+</unknown>
+<unknown name="M149T141_1" Msn="B-68.mzXML#785" length="1">
+<node kegg="C00073" ms1="M150T141_2">B-45.mzXML#794</node>
+</unknown>
+<unknown name="M149T413" Msn="QC1.mzXML#2189" length="1">
+<node kegg="C00073" ms1="M150T141_2">B-45.mzXML#794</node>
+</unknown>
+</compound>
+<compound kegg="C03373" candidates="1">
+<unknown name="M296T90" Msn="B-1.mzXML#502" length="1">
+<node kegg="C00073" ms1="M150T141_2">B-45.mzXML#794</node>
+</unknown>
+</compound>
+<compound kegg="C05332" candidates="1">
+<unknown name="M121T353_2" Msn="B-33.mzXML#1881" length="1">
+<node kegg="C00079" ms1="M166T353_2">B-10.mzXML#1860</node>
+</unknown>
+</compound>
+<compound kegg="C00601" candidates="1">
+<unknown name="M121T353_1" Msn="B-33.mzXML#1881" length="1">
+<node kegg="C00079" ms1="M166T353_2">B-10.mzXML#1860</node>
+</unknown>
+</compound>
+<compound kegg="C02265" candidates="2">
+<unknown name="M166T353_2" Msn="B-7.mzXML#1851" length="1">
+<node kegg="C00079" ms1="M166T353_2">B-10.mzXML#1860</node>
+</unknown>
+<unknown name="M166T716" Msn="QC3.mzXML#3735" length="1">
+<node kegg="C00079" ms1="M166T353_2">B-10.mzXML#1860</node>
+</unknown>
+</compound>
+<compound kegg="C20487" candidates="2">
+<unknown name="M166T353_2" Msn="B-7.mzXML#1851" length="1">
+<node kegg="C00079" ms1="M166T353_2">B-10.mzXML#1860</node>
+</unknown>
+<unknown name="M166T716" Msn="QC3.mzXML#3735" length="1">
+<node kegg="C00079" ms1="M166T353_2">B-10.mzXML#1860</node>
+</unknown>
+</compound>
+<compound kegg="C20488" candidates="2">
+<unknown name="M166T353_2" Msn="B-7.mzXML#1851" length="1">
+<node kegg="C00079" ms1="M166T353_2">B-10.mzXML#1860</node>
+</unknown>
+<unknown name="M166T716" Msn="QC3.mzXML#3735" length="1">
+<node kegg="C00079" ms1="M166T353_2">B-10.mzXML#1860</node>
+</unknown>
+</compound>
+<compound kegg="C01456" candidates="1">
+<unknown name="M167T699" Msn="B-10.mzXML#3621" length="1">
+<node kegg="C00079" ms1="M166T353_2">B-10.mzXML#1860</node>
+</unknown>
+</compound>
+<compound kegg="C05577" candidates="1">
+<unknown name="M169T676" Msn="B-11.mzXML#3492" length="1">
+<node kegg="C05580" ms1="M167T469">B-12.mzXML#2463</node>
+</unknown>
+</compound>
+<compound kegg="C00792" candidates="2">
+<unknown name="M175T90_1" Msn="B-68.mzXML#487" length="1">
+<node kegg="C00062" ms1="M175T90_1">B-49.mzXML#491</node>
+</unknown>
+<unknown name="M175T731" Msn="B-78.mzXML#3758" length="1">
+<node kegg="C00062" ms1="M175T90_1">B-49.mzXML#491</node>
+</unknown>
+</compound>
+<compound kegg="C04137" candidates="2">
+<unknown name="M247T390" Msn="B-49.mzXML#2049" length="1">
+<node kegg="C00062" ms1="M175T90_1">B-49.mzXML#491</node>
+</unknown>
+<unknown name="M247T440" Msn="B-1.mzXML#2331" length="1">
+<node kegg="C00062" ms1="M175T90_1">B-49.mzXML#491</node>
+</unknown>
+</compound>
+<compound kegg="C03765" candidates="3">
+<unknown name="M136T97" Msn="B-68.mzXML#535" length="1">
+<node kegg="C00082" ms1="M182T207">B-62.mzXML#1101</node>
+</unknown>
+<unknown name="M136T709" Msn="B-3.mzXML#3695" length="1">
+<node kegg="C00082" ms1="M182T207">B-62.mzXML#1101</node>
+</unknown>
+<unknown name="M136T727" Msn="QC1.mzXML#3786" length="1">
+<node kegg="C00082" ms1="M182T207">B-62.mzXML#1101</node>
+</unknown>
+</compound>
+<compound kegg="C00811" candidates="3">
+<unknown name="M165T234" Msn="B-22.mzXML#1273" length="1">
+<node kegg="C00082" ms1="M182T234_1">B-4.mzXML#1252</node>
+</unknown>
+<unknown name="M165T208" Msn="QC13.mzXML#1098" length="1">
+<node kegg="C00082" ms1="M182T207">B-62.mzXML#1101</node>
+</unknown>
+<unknown name="M165T234" Msn="B-71.mzXML#1267" length="1">
+<node kegg="C00082" ms1="M182T207">B-62.mzXML#1101</node>
+</unknown>
+</compound>
+<compound kegg="C04368" candidates="4">
+<unknown name="M182T234_1" Msn="B-21.mzXML#1246" length="1">
+<node kegg="C00082" ms1="M182T234_1">B-4.mzXML#1252</node>
+</unknown>
+<unknown name="M182T207" Msn="B-78.mzXML#1128" length="1">
+<node kegg="C00082" ms1="M182T234_1">B-4.mzXML#1252</node>
+</unknown>
+<unknown name="M182T234_1" Msn="B-68.mzXML#1234" length="1">
+<node kegg="C00082" ms1="M182T207">B-62.mzXML#1101</node>
+</unknown>
+<unknown name="M182T207" Msn="QC14.mzXML#1113" length="1">
+<node kegg="C00082" ms1="M182T207">B-62.mzXML#1101</node>
+</unknown>
+</compound>
+<compound kegg="C21308" candidates="4">
+<unknown name="M182T234_1" Msn="B-21.mzXML#1246" length="1">
+<node kegg="C00082" ms1="M182T234_1">B-4.mzXML#1252</node>
+</unknown>
+<unknown name="M182T207" Msn="B-78.mzXML#1128" length="1">
+<node kegg="C00082" ms1="M182T234_1">B-4.mzXML#1252</node>
+</unknown>
+<unknown name="M182T234_1" Msn="B-68.mzXML#1234" length="1">
+<node kegg="C00082" ms1="M182T207">B-62.mzXML#1101</node>
+</unknown>
+<unknown name="M182T207" Msn="QC14.mzXML#1113" length="1">
+<node kegg="C00082" ms1="M182T207">B-62.mzXML#1101</node>
+</unknown>
+</compound>
+<compound kegg="C21283" candidates="2">
+<unknown name="M188T409_1" Msn="B-67.mzXML#2117" length="1">
+<node kegg="C00078" ms1="M205T409_2">QC6.mzXML#2148</node>
+</unknown>
+<unknown name="M188T567" Msn="B-66.mzXML#2943" length="1">
+<node kegg="C00078" ms1="M205T409_2">QC6.mzXML#2148</node>
+</unknown>
+</compound>
+<compound kegg="C01120" candidates="1">
+<unknown name="M382T872" Msn="B-10.mzXML#4524" length="1">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+</unknown>
+</compound>
+<compound kegg="C04654" candidates="1">
+<unknown name="M353T791" Msn="B-47.mzXML#4100" length="1">
+<node kegg="C04741" ms1="M337T890">B-55.mzXML#4577</node>
+</unknown>
+</compound>
+<compound kegg="C01405" candidates="1">
+<unknown name="M181T182" Msn="B-63.mzXML#990" length="1">
+<node kegg="C00805" ms1="M139T752">B-70.mzXML#3863</node>
+</unknown>
+</compound>
+<compound kegg="C02646" candidates="1">
+<unknown name="M150T353" Msn="QC1.mzXML#1881" length="1">
+<node kegg="C05608" ms1="M149T353">B-44.mzXML#1879</node>
+</unknown>
+</compound>
+<compound kegg="C00398" candidates="3">
+<unknown name="M160T408" Msn="QC16.mzXML#2134" length="1">
+<node kegg="C00637" ms1="M160T567">B-78.mzXML#2934</node>
+</unknown>
+<unknown name="M160T96" Msn="B-73.mzXML#564" length="1">
+<node kegg="C00637" ms1="M160T409">QC16.mzXML#2134</node>
+</unknown>
+<unknown name="M160T408" Msn="B-62.mzXML#2138" length="1">
+<node kegg="C00637" ms1="M160T409">QC16.mzXML#2134</node>
+</unknown>
+</compound>
+<compound kegg="C20635" candidates="3">
+<unknown name="M189T680" Msn="B-73.mzXML#3510" length="1">
+<node kegg="C00954" ms1="M176T621">B-45.mzXML#3225</node>
+</unknown>
+<unknown name="M190T680" Msn="B-30.mzXML#3513" length="1">
+<node kegg="C00954" ms1="M176T621">B-45.mzXML#3225</node>
+</unknown>
+<unknown name="M190T763" Msn="B-46.mzXML#3947" length="1">
+<node kegg="C00954" ms1="M176T621">B-45.mzXML#3225</node>
+</unknown>
+</compound>
+<compound kegg="C11637" candidates="1">
+<unknown name="M391T814" Msn="B-7.mzXML#4230" length="1">
+<node kegg="C00695" ms1="M391T814">B-46.mzXML#4204</node>
+</unknown>
+</compound>
+<compound kegg="C03283" candidates="6">
+<unknown name="M118T101" Msn="B-22.mzXML#598" length="2">
+<node kegg="C00099" ms1="M90T91_1">B-33.mzXML#508</node>
+<node kegg="C00041" ms1="M90T91_1">B-61.mzXML#499</node>
+</unknown>
+<unknown name="M119T868" Msn="B-15.mzXML#4497" length="2">
+<node kegg="C00099" ms1="M90T91_1">B-33.mzXML#508</node>
+<node kegg="C00041" ms1="M90T91_1">B-61.mzXML#499</node>
+</unknown>
+<unknown name="M119T885" Msn="B-11.mzXML#4572" length="2">
+<node kegg="C00099" ms1="M90T91_1">B-33.mzXML#508</node>
+<node kegg="C00041" ms1="M90T91_1">B-61.mzXML#499</node>
+</unknown>
+<unknown name="M118T101" Msn="B-17.mzXML#598" length="2">
+<node kegg="C00183" ms1="M118T108">QC1.mzXML#598</node>
+<node kegg="C00041" ms1="M90T91_1">B-67.mzXML#498</node>
+</unknown>
+<unknown name="M119T868" Msn="B-4.mzXML#4529" length="2">
+<node kegg="C00183" ms1="M118T108">QC1.mzXML#598</node>
+<node kegg="C00041" ms1="M90T91_1">B-67.mzXML#498</node>
+</unknown>
+<unknown name="M119T885" Msn="B-3.mzXML#4605" length="2">
+<node kegg="C00183" ms1="M118T108">QC1.mzXML#598</node>
+<node kegg="C00041" ms1="M90T91_1">B-67.mzXML#498</node>
+</unknown>
+</compound>
+<compound kegg="C00872" candidates="2">
+<unknown name="M119T104" Msn="B-67.mzXML#576" length="2">
+<node kegg="C00099" ms1="M90T91_1">B-33.mzXML#508</node>
+<node kegg="C00041" ms1="M90T91_1">B-61.mzXML#499</node>
+</unknown>
+<unknown name="M119T104" Msn="B-11.mzXML#591" length="2">
+<node kegg="C00183" ms1="M118T108">QC1.mzXML#598</node>
+<node kegg="C00041" ms1="M90T91_1">B-67.mzXML#498</node>
+</unknown>
+</compound>
+<compound kegg="C01298" candidates="1">
+<unknown name="M220T369" Msn="B-44.mzXML#1950" length="2">
+<node kegg="C00183" ms1="M118T108">QC1.mzXML#598</node>
+<node kegg="C00041" ms1="M90T91_1">B-67.mzXML#498</node>
+</unknown>
+</compound>
+<compound kegg="C00133" candidates="2">
+<unknown name="M90T91_1" Msn="B-33.mzXML#508" length="2">
+<node kegg="C00099" ms1="M90T91_1">B-33.mzXML#508</node>
+<node kegg="C00041" ms1="M90T91_1">B-61.mzXML#499</node>
+</unknown>
+<unknown name="M90T91_1" Msn="B-3.mzXML#508" length="2">
+<node kegg="C00183" ms1="M118T108">QC1.mzXML#598</node>
+<node kegg="C00041" ms1="M90T91_1">B-67.mzXML#498</node>
+</unknown>
+</compound>
+<compound kegg="C00009" candidates="7">
+<unknown name="M99T853" Msn="B-4.mzXML#4413" length="2">
+<node kegg="C00065" ms1="M106T91">B-27.mzXML#503</node>
+<node kegg="C00740" ms1="M105T833">QC1.mzXML#4298</node>
+</unknown>
+<unknown name="M99T627" Msn="B-9.mzXML#3279" length="2">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+</unknown>
+<unknown name="M99T853" Msn="B-5.mzXML#4437" length="2">
+<node kegg="C00402" ms1="M134T92">B-33.mzXML#509</node>
+<node kegg="C00049" ms1="M133T85">B-28.mzXML#452</node>
+</unknown>
+<unknown name="M99T94" Msn="B-68.mzXML#500" length="2">
+<node kegg="C00402" ms1="M134T92">B-33.mzXML#509</node>
+<node kegg="C00049" ms1="M133T85">B-28.mzXML#452</node>
+</unknown>
+<unknown name="M99T94" Msn="B-3.mzXML#506" length="2">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+</unknown>
+<unknown name="M99T853" Msn="B-3.mzXML#4434" length="2">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+</unknown>
+<unknown name="M99T94" Msn="B-56.mzXML#503" length="2">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+</unknown>
+</compound>
+<compound kegg="C00587" candidates="1">
+<unknown name="M139T752" Msn="B-49.mzXML#3896" length="2">
+<node kegg="C00261" ms1="M107T353">B-46.mzXML#1874</node>
+<node kegg="C00180" ms1="M123T359">B-65.mzXML#1899</node>
+</unknown>
+</compound>
+<compound kegg="C17268" candidates="1">
+<unknown name="M149T353" Msn="B-46.mzXML#1879" length="2">
+<node kegg="C00261" ms1="M107T353">B-46.mzXML#1874</node>
+<node kegg="C00180" ms1="M123T359">B-65.mzXML#1899</node>
+</unknown>
+</compound>
+<compound kegg="C00423" candidates="1">
+<unknown name="M149T353" Msn="B-46.mzXML#1879" length="2">
+<node kegg="C00261" ms1="M107T353">B-46.mzXML#1874</node>
+<node kegg="C00180" ms1="M123T359">B-65.mzXML#1899</node>
+</unknown>
+</compound>
+<compound kegg="C00431" candidates="3">
+<unknown name="M117T101" Msn="B-12.mzXML#566" length="2">
+<node kegg="C00148" ms1="M116T80">B-39.mzXML#458</node>
+<node kegg="C00763" ms1="M116T101_2">QC11.mzXML#583</node>
+</unknown>
+<unknown name="M117T101" Msn="B-48.mzXML#554" length="2">
+<node kegg="C00148" ms1="M116T80">B-39.mzXML#458</node>
+<node kegg="C00763" ms1="M116T80">B-2.mzXML#463</node>
+</unknown>
+<unknown name="M117T101" Msn="B-39.mzXML#555" length="2">
+<node kegg="C00148" ms1="M116T80">B-39.mzXML#458</node>
+<node kegg="C00763" ms1="M116T267">B-43.mzXML#1427</node>
+</unknown>
+</compound>
+<compound kegg="C04210" candidates="1">
+<unknown name="M204T547" Msn="B-32.mzXML#2868" length="2">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+</unknown>
+</compound>
+<compound kegg="C00515" candidates="3">
+<unknown name="M133T81" Msn="B-2.mzXML#444" length="2">
+<node kegg="C00148" ms1="M116T80">B-39.mzXML#458</node>
+<node kegg="C00077" ms1="M133T81">B-37.mzXML#435</node>
+</unknown>
+<unknown name="M133T81" Msn="B-18.mzXML#442" length="2">
+<node kegg="C00062" ms1="M175T90_1">B-49.mzXML#491</node>
+<node kegg="C00077" ms1="M133T81">B-75.mzXML#446</node>
+</unknown>
+<unknown name="M133T81" Msn="B-7.mzXML#445" length="2">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+</unknown>
+</compound>
+<compound kegg="C00437" candidates="1">
+<unknown name="M175T103" Msn="B-70.mzXML#569" length="2">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+</unknown>
+</compound>
+<compound kegg="C06007" candidates="3">
+<unknown name="M148T353" Msn="QC6.mzXML#1893" length="2">
+<node kegg="C00407" ms1="M132T100_2">B-4.mzXML#546</node>
+<node kegg="C00671" ms1="M131T680">QC5.mzXML#3563</node>
+</unknown>
+<unknown name="M148T604" Msn="B-10.mzXML#3145" length="2">
+<node kegg="C00407" ms1="M132T100_2">B-4.mzXML#546</node>
+<node kegg="C00671" ms1="M131T621">B-46.mzXML#3232</node>
+</unknown>
+<unknown name="M148T604" Msn="QC1.mzXML#3143" length="2">
+<node kegg="C00407" ms1="M132T100_2">B-4.mzXML#546</node>
+<node kegg="C00671" ms1="M131T680">QC5.mzXML#3563</node>
+</unknown>
+</compound>
+<compound kegg="C05840" candidates="1">
+<unknown name="M132T3" Msn="QC1.mzXML#38" length="2">
+<node kegg="C00402" ms1="M134T92">B-33.mzXML#509</node>
+<node kegg="C00049" ms1="M133T141">B-75.mzXML#762</node>
+</unknown>
+</compound>
+<compound kegg="C01042" candidates="1">
+<unknown name="M175T85_2" Msn="B-48.mzXML#489" length="2">
+<node kegg="C00402" ms1="M134T92">B-33.mzXML#509</node>
+<node kegg="C00049" ms1="M133T85">B-28.mzXML#452</node>
+</unknown>
+</compound>
+<compound kegg="C20464" candidates="4">
+<unknown name="M135T868" Msn="B-72.mzXML#4446" length="2">
+<node kegg="C16930" ms1="M135T666">B-68.mzXML#3427</node>
+<node kegg="C20465" ms1="M193T552">B-49.mzXML#2876</node>
+</unknown>
+<unknown name="M135T666" Msn="B-13.mzXML#3473" length="2">
+<node kegg="C16930" ms1="M135T666">B-68.mzXML#3427</node>
+<node kegg="C20465" ms1="M193T552">B-49.mzXML#2876</node>
+</unknown>
+<unknown name="M135T885" Msn="B-57.mzXML#4550" length="2">
+<node kegg="C16930" ms1="M135T666">B-68.mzXML#3427</node>
+<node kegg="C20465" ms1="M193T552">B-49.mzXML#2876</node>
+</unknown>
+<unknown name="M135T808" Msn="B-25.mzXML#4193" length="2">
+<node kegg="C16930" ms1="M135T666">B-68.mzXML#3427</node>
+<node kegg="C20465" ms1="M193T552">B-49.mzXML#2876</node>
+</unknown>
+</compound>
+<compound kegg="C05161" candidates="4">
+<unknown name="M147T81" Msn="B-42.mzXML#437" length="2">
+<node kegg="C00047" ms1="M147T81">B-27.mzXML#435</node>
+<node kegg="C00739" ms1="M147T81">B-37.mzXML#436</node>
+</unknown>
+<unknown name="M147T726" Msn="B-62.mzXML#3729" length="2">
+<node kegg="C00047" ms1="M147T81">B-27.mzXML#435</node>
+<node kegg="C00739" ms1="M147T81">B-37.mzXML#436</node>
+</unknown>
+<unknown name="M147T81" Msn="B-27.mzXML#435" length="2">
+<node kegg="C00047" ms1="M147T81">B-27.mzXML#435</node>
+<node kegg="C00739" ms1="M147T726">B-62.mzXML#3729</node>
+</unknown>
+<unknown name="M147T726" Msn="B-68.mzXML#3728" length="2">
+<node kegg="C00047" ms1="M147T81">B-27.mzXML#435</node>
+<node kegg="C00739" ms1="M147T726">B-62.mzXML#3729</node>
+</unknown>
+</compound>
+<compound kegg="C01186" candidates="4">
+<unknown name="M147T81" Msn="B-42.mzXML#437" length="2">
+<node kegg="C00047" ms1="M147T81">B-27.mzXML#435</node>
+<node kegg="C01142" ms1="M147T81">B-37.mzXML#436</node>
+</unknown>
+<unknown name="M147T726" Msn="B-62.mzXML#3729" length="2">
+<node kegg="C00047" ms1="M147T81">B-27.mzXML#435</node>
+<node kegg="C01142" ms1="M147T81">B-37.mzXML#436</node>
+</unknown>
+<unknown name="M147T81" Msn="B-27.mzXML#435" length="2">
+<node kegg="C00047" ms1="M147T81">B-27.mzXML#435</node>
+<node kegg="C01142" ms1="M147T726">B-62.mzXML#3729</node>
+</unknown>
+<unknown name="M147T726" Msn="B-68.mzXML#3728" length="2">
+<node kegg="C00047" ms1="M147T81">B-27.mzXML#435</node>
+<node kegg="C01142" ms1="M147T726">B-62.mzXML#3729</node>
+</unknown>
+</compound>
+<compound kegg="C01879" candidates="2">
+<unknown name="M130T92" Msn="B-59.mzXML#504" length="2">
+<node kegg="C00047" ms1="M147T81">B-27.mzXML#435</node>
+<node kegg="C21730" ms1="M276T96">B-18.mzXML#559</node>
+</unknown>
+<unknown name="M130T472" Msn="B-14.mzXML#2497" length="2">
+<node kegg="C00047" ms1="M147T81">B-27.mzXML#435</node>
+<node kegg="C21730" ms1="M276T96">B-18.mzXML#559</node>
+</unknown>
+</compound>
+<compound kegg="C00233" candidates="5">
+<unknown name="M130T409" Msn="QC2.mzXML#2171" length="2">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+</unknown>
+<unknown name="M130T621" Msn="QC2.mzXML#3238" length="2">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M147T77">B-27.mzXML#435</node>
+</unknown>
+<unknown name="M130T680" Msn="QC1.mzXML#3536" length="2">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M147T77">B-27.mzXML#435</node>
+</unknown>
+<unknown name="M131T680" Msn="QC5.mzXML#3563" length="2">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+</unknown>
+<unknown name="M130T409" Msn="QC1.mzXML#2159" length="2">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M147T77">B-27.mzXML#435</node>
+</unknown>
+</compound>
+<compound kegg="C06102" candidates="5">
+<unknown name="M130T409" Msn="QC2.mzXML#2171" length="2">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+</unknown>
+<unknown name="M130T621" Msn="QC2.mzXML#3238" length="2">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M147T77">B-27.mzXML#435</node>
+</unknown>
+<unknown name="M130T680" Msn="QC1.mzXML#3536" length="2">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M147T77">B-27.mzXML#435</node>
+</unknown>
+<unknown name="M131T680" Msn="QC5.mzXML#3563" length="2">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+</unknown>
+<unknown name="M130T409" Msn="QC1.mzXML#2159" length="2">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M147T77">B-27.mzXML#435</node>
+</unknown>
+</compound>
+<compound kegg="C05572" candidates="1">
+<unknown name="M145T321" Msn="QC1.mzXML#1734" length="2">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+</unknown>
+</compound>
+<compound kegg="C06030" candidates="5">
+<unknown name="M146T107" Msn="QC4.mzXML#625" length="2">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+</unknown>
+<unknown name="M147T77" Msn="B-73.mzXML#435" length="2">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+</unknown>
+<unknown name="M146T107" Msn="B-2.mzXML#607" length="2">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C03618" ms1="M148T93">B-65.mzXML#523</node>
+</unknown>
+<unknown name="M147T77" Msn="B-37.mzXML#436" length="2">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M147T77">B-27.mzXML#435</node>
+</unknown>
+<unknown name="M147T77" Msn="B-27.mzXML#435" length="2">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C03618" ms1="M148T93">B-65.mzXML#523</node>
+</unknown>
+</compound>
+<compound kegg="C00302" candidates="3">
+<unknown name="M147T307" Msn="QC3.mzXML#1676" length="2">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+</unknown>
+<unknown name="M148T93" Msn="B-42.mzXML#518" length="2">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+</unknown>
+<unknown name="M148T93" Msn="B-68.mzXML#524" length="2">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M147T77">B-27.mzXML#435</node>
+</unknown>
+</compound>
+<compound kegg="C03277" candidates="1">
+<unknown name="M154T76_2" Msn="B-33.mzXML#431" length="2">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+</unknown>
+</compound>
+<compound kegg="C05646" candidates="2">
+<unknown name="M219T94" Msn="B-33.mzXML#517" length="2">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+</unknown>
+<unknown name="M219T94" Msn="B-36.mzXML#515" length="2">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M147T77">B-27.mzXML#435</node>
+</unknown>
+</compound>
+<compound kegg="C00250" candidates="1">
+<unknown name="M168T305" Msn="B-57.mzXML#1631" length="2">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+</unknown>
+</compound>
+<compound kegg="C01179" candidates="1">
+<unknown name="M181T182" Msn="B-73.mzXML#972" length="2">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+</unknown>
+</compound>
+<compound kegg="C03232" candidates="2">
+<unknown name="M185T883" Msn="B-68.mzXML#4535" length="2">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+</unknown>
+<unknown name="M185T111" Msn="B-22.mzXML#651" length="2">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+</unknown>
+</compound>
+<compound kegg="C02237" candidates="2">
+<unknown name="M130T92" Msn="B-59.mzXML#504" length="2">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00217" ms1="M148T93">B-65.mzXML#523</node>
+</unknown>
+<unknown name="M130T472" Msn="QC1.mzXML#2479" length="2">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00217" ms1="M148T93">B-65.mzXML#523</node>
+</unknown>
+</compound>
+<compound kegg="C02083" candidates="1">
+<unknown name="M121T353_1" Msn="B-65.mzXML#1858" length="2">
+<node kegg="C00079" ms1="M166T353_2">B-10.mzXML#1860</node>
+<node kegg="C00601" ms1="M121T353_1">B-33.mzXML#1881</node>
+</unknown>
+</compound>
+<compound kegg="C20782" candidates="1">
+<unknown name="M121T353_1" Msn="B-65.mzXML#1858" length="2">
+<node kegg="C00079" ms1="M166T353_2">B-10.mzXML#1860</node>
+<node kegg="C00601" ms1="M121T353_1">B-33.mzXML#1881</node>
+</unknown>
+</compound>
+<compound kegg="C05576" candidates="1">
+<unknown name="M170T675" Msn="QC8.mzXML#3497" length="2">
+<node kegg="C05580" ms1="M167T469">B-12.mzXML#2463</node>
+<node kegg="C05577" ms1="M169T676">B-11.mzXML#3492</node>
+</unknown>
+</compound>
+<compound kegg="C00483" candidates="2">
+<unknown name="M137T234" Msn="B-33.mzXML#1277" length="2">
+<node kegg="C00082" ms1="M182T207">B-62.mzXML#1101</node>
+<node kegg="C03765" ms1="M136T709">B-3.mzXML#3695</node>
+</unknown>
+<unknown name="M137T234" Msn="B-56.mzXML#1283" length="2">
+<node kegg="C00082" ms1="M182T207">B-62.mzXML#1101</node>
+<node kegg="C03765" ms1="M136T727">QC1.mzXML#3786</node>
+</unknown>
+</compound>
+<compound kegg="C04227" candidates="2">
+<unknown name="M154T263" Msn="QC9.mzXML#1415" length="2">
+<node kegg="C00082" ms1="M182T207">B-62.mzXML#1101</node>
+<node kegg="C03765" ms1="M136T727">QC1.mzXML#3786</node>
+</unknown>
+<unknown name="M154T237" Msn="B-57.mzXML#1269" length="2">
+<node kegg="C00082" ms1="M182T207">B-62.mzXML#1101</node>
+<node kegg="C03765" ms1="M136T727">QC1.mzXML#3786</node>
+</unknown>
+</compound>
+<compound kegg="C06213" candidates="1">
+<unknown name="M174T103" Msn="B-49.mzXML#580" length="2">
+<node kegg="C00637" ms1="M160T409">QC16.mzXML#2134</node>
+<node kegg="C00398" ms1="M160T96">B-73.mzXML#564</node>
+</unknown>
+</compound>
+<compound kegg="C09209" candidates="2">
+<unknown name="M182T234_1" Msn="B-48.mzXML#1240" length="2">
+<node kegg="C00637" ms1="M160T409">QC16.mzXML#2134</node>
+<node kegg="C00398" ms1="M160T96">B-73.mzXML#564</node>
+</unknown>
+<unknown name="M183T234" Msn="B-39.mzXML#1253" length="2">
+<node kegg="C00637" ms1="M160T409">QC16.mzXML#2134</node>
+<node kegg="C00398" ms1="M160T96">B-73.mzXML#564</node>
+</unknown>
+</compound>
+<compound kegg="C00441" candidates="5">
+<unknown name="M118T109" Msn="B-9.mzXML#598" length="3">
+<node kegg="C00099" ms1="M90T91_1">B-33.mzXML#508</node>
+<node kegg="C00041" ms1="M90T91_1">B-61.mzXML#499</node>
+<node kegg="C03283" ms1="M118T101">B-22.mzXML#598</node>
+</unknown>
+<unknown name="M118T109" Msn="QC1.mzXML#598" length="3">
+<node kegg="C00099" ms1="M90T91_1">B-33.mzXML#508</node>
+<node kegg="C00041" ms1="M90T91_1">B-61.mzXML#499</node>
+<node kegg="C03283" ms1="M119T868">B-15.mzXML#4497</node>
+</unknown>
+<unknown name="M118T109" Msn="B-10.mzXML#596" length="3">
+<node kegg="C00183" ms1="M118T108">QC1.mzXML#598</node>
+<node kegg="C00041" ms1="M90T91_1">B-67.mzXML#498</node>
+<node kegg="C03283" ms1="M119T868">B-4.mzXML#4529</node>
+</unknown>
+<unknown name="M118T109" Msn="B-61.mzXML#594" length="3">
+<node kegg="C00183" ms1="M118T108">QC1.mzXML#598</node>
+<node kegg="C00041" ms1="M90T91_1">B-67.mzXML#498</node>
+<node kegg="C03283" ms1="M118T101">B-17.mzXML#598</node>
+</unknown>
+<unknown name="M118T109" Msn="B-48.mzXML#586" length="3">
+<node kegg="C00183" ms1="M118T108">QC1.mzXML#598</node>
+<node kegg="C00041" ms1="M90T91_1">B-67.mzXML#498</node>
+<node kegg="C03283" ms1="M119T885">B-3.mzXML#4605</node>
+</unknown>
+</compound>
+<compound kegg="C19719" candidates="2">
+<unknown name="M177T361" Msn="B-60.mzXML#1932" length="3">
+<node kegg="C00099" ms1="M90T91_1">B-33.mzXML#508</node>
+<node kegg="C00041" ms1="M90T91_1">B-61.mzXML#499</node>
+<node kegg="C00133" ms1="M90T91_1">B-33.mzXML#508</node>
+</unknown>
+<unknown name="M177T361" Msn="B-63.mzXML#1875" length="3">
+<node kegg="C00183" ms1="M118T108">QC1.mzXML#598</node>
+<node kegg="C00041" ms1="M90T91_1">B-67.mzXML#498</node>
+<node kegg="C00133" ms1="M90T91_1">B-3.mzXML#508</node>
+</unknown>
+</compound>
+<compound kegg="C07649" candidates="2">
+<unknown name="M130T77_2" Msn="QC13.mzXML#417" length="3">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T853">B-3.mzXML#4434</node>
+</unknown>
+<unknown name="M130T77_2" Msn="B-69.mzXML#428" length="3">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T94">B-56.mzXML#503</node>
+</unknown>
+</compound>
+<compound kegg="C00227" candidates="20">
+<unknown name="M140T110" Msn="B-71.mzXML#640" length="3">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T94">B-56.mzXML#503</node>
+</unknown>
+<unknown name="M140T666" Msn="B-60.mzXML#3494" length="3">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T94">B-56.mzXML#503</node>
+</unknown>
+<unknown name="M140T3" Msn="QC5.mzXML#29" length="3">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T94">B-56.mzXML#503</node>
+</unknown>
+<unknown name="M140T277" Msn="B-12.mzXML#1491" length="3">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T94">B-56.mzXML#503</node>
+</unknown>
+<unknown name="M140T363" Msn="QC3.mzXML#1934" length="3">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T853">B-3.mzXML#4434</node>
+</unknown>
+<unknown name="M140T859" Msn="B-60.mzXML#4501" length="3">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T94">B-56.mzXML#503</node>
+</unknown>
+<unknown name="M140T787" Msn="B-8.mzXML#4099" length="3">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T853">B-3.mzXML#4434</node>
+</unknown>
+<unknown name="M140T695" Msn="B-2.mzXML#3641" length="3">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T853">B-3.mzXML#4434</node>
+</unknown>
+<unknown name="M140T363" Msn="QC1.mzXML#1908" length="3">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T627">B-9.mzXML#3279</node>
+</unknown>
+<unknown name="M140T695" Msn="B-60.mzXML#3638" length="3">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T94">B-56.mzXML#503</node>
+</unknown>
+<unknown name="M140T666" Msn="QC12.mzXML#3439" length="3">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-3.mzXML#506</node>
+</unknown>
+<unknown name="M140T3" Msn="B-9.mzXML#20" length="3">
+<node kegg="C00402" ms1="M134T92">B-33.mzXML#509</node>
+<node kegg="C00049" ms1="M133T85">B-28.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-68.mzXML#500</node>
+</unknown>
+<unknown name="M140T363" Msn="B-31.mzXML#1941" length="3">
+<node kegg="C00402" ms1="M134T92">B-33.mzXML#509</node>
+<node kegg="C00049" ms1="M133T85">B-28.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-68.mzXML#500</node>
+</unknown>
+<unknown name="M140T787" Msn="B-49.mzXML#4075" length="3">
+<node kegg="C00402" ms1="M134T92">B-33.mzXML#509</node>
+<node kegg="C00049" ms1="M133T85">B-28.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-68.mzXML#500</node>
+</unknown>
+<unknown name="M140T695" Msn="B-63.mzXML#3576" length="3">
+<node kegg="C00402" ms1="M134T92">B-33.mzXML#509</node>
+<node kegg="C00049" ms1="M133T85">B-28.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-68.mzXML#500</node>
+</unknown>
+<unknown name="M140T3" Msn="B-1.mzXML#27" length="3">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-3.mzXML#506</node>
+</unknown>
+<unknown name="M140T363" Msn="B-1.mzXML#1953" length="3">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-3.mzXML#506</node>
+</unknown>
+<unknown name="M140T787" Msn="B-61.mzXML#4042" length="3">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-3.mzXML#506</node>
+</unknown>
+<unknown name="M140T363" Msn="B-4.mzXML#1908" length="3">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T94">B-56.mzXML#503</node>
+</unknown>
+<unknown name="M140T787" Msn="B-64.mzXML#4053" length="3">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T94">B-56.mzXML#503</node>
+</unknown>
+</compound>
+<compound kegg="C00158" candidates="1">
+<unknown name="M192T136" Msn="B-70.mzXML#744" length="3">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T853">B-3.mzXML#4434</node>
+</unknown>
+</compound>
+<compound kegg="C03082" candidates="1">
+<unknown name="M213T674" Msn="B-11.mzXML#3516" length="3">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T94">B-56.mzXML#503</node>
+</unknown>
+</compound>
+<compound kegg="C03090" candidates="1">
+<unknown name="M229T320" Msn="B-78.mzXML#1680" length="3">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T94">B-56.mzXML#503</node>
+</unknown>
+</compound>
+<compound kegg="C00360" candidates="2">
+<unknown name="M331T118" Msn="B-66.mzXML#643" length="3">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T853">B-3.mzXML#4434</node>
+</unknown>
+<unknown name="M331T118" Msn="B-60.mzXML#656" length="3">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T94">B-56.mzXML#503</node>
+</unknown>
+</compound>
+<compound kegg="C00334" candidates="1">
+<unknown name="M104T101" Msn="B-71.mzXML#580" length="3">
+<node kegg="C00402" ms1="M134T92">B-33.mzXML#509</node>
+<node kegg="C00049" ms1="M133T85">B-28.mzXML#452</node>
+<node kegg="C00009" ms1="M99T853">B-5.mzXML#4437</node>
+</unknown>
+</compound>
+<compound kegg="C02356" candidates="1">
+<unknown name="M104T101" Msn="B-71.mzXML#580" length="3">
+<node kegg="C00402" ms1="M134T92">B-33.mzXML#509</node>
+<node kegg="C00049" ms1="M133T85">B-28.mzXML#452</node>
+<node kegg="C00009" ms1="M99T853">B-5.mzXML#4437</node>
+</unknown>
+</compound>
+<compound kegg="C00123" candidates="4">
+<unknown name="M132T100_2" Msn="B-62.mzXML#583" length="3">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T853">B-3.mzXML#4434</node>
+</unknown>
+<unknown name="M132T263_1" Msn="B-70.mzXML#1420" length="3">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+<node kegg="C00233" ms1="M131T680">QC5.mzXML#3563</node>
+</unknown>
+<unknown name="M132T237" Msn="B-43.mzXML#1267" length="3">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+<node kegg="C00233" ms1="M131T680">QC5.mzXML#3563</node>
+</unknown>
+<unknown name="M132T100_2" Msn="QC7.mzXML#586" length="3">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+<node kegg="C00233" ms1="M131T680">QC5.mzXML#3563</node>
+</unknown>
+</compound>
+<compound kegg="C00169" candidates="1">
+<unknown name="M142T110" Msn="B-64.mzXML#623" length="3">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T94">B-56.mzXML#503</node>
+</unknown>
+</compound>
+<compound kegg="C00242" candidates="1">
+<unknown name="M152T141" Msn="B-55.mzXML#806" length="3">
+<node kegg="C00065" ms1="M106T91">B-27.mzXML#503</node>
+<node kegg="C00740" ms1="M105T833">QC1.mzXML#4298</node>
+<node kegg="C00009" ms1="M99T853">B-4.mzXML#4413</node>
+</unknown>
+</compound>
+<compound kegg="C11405" candidates="3">
+<unknown name="M185T599" Msn="B-78.mzXML#3084" length="3">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T94">B-56.mzXML#503</node>
+</unknown>
+<unknown name="M185T526" Msn="B-13.mzXML#2754" length="3">
+<node kegg="C00402" ms1="M134T92">B-33.mzXML#509</node>
+<node kegg="C00049" ms1="M133T85">B-28.mzXML#452</node>
+<node kegg="C00009" ms1="M99T853">B-5.mzXML#4437</node>
+</unknown>
+<unknown name="M185T526" Msn="B-7.mzXML#2766" length="3">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T853">B-3.mzXML#4434</node>
+</unknown>
+</compound>
+<compound kegg="C00680" candidates="1">
+<unknown name="M191T100" Msn="B-25.mzXML#559" length="3">
+<node kegg="C00065" ms1="M106T91">B-27.mzXML#503</node>
+<node kegg="C00740" ms1="M105T833">QC1.mzXML#4298</node>
+<node kegg="C00009" ms1="M99T853">B-4.mzXML#4413</node>
+</unknown>
+</compound>
+<compound kegg="C20966" candidates="1">
+<unknown name="M202T456" Msn="B-65.mzXML#2376" length="3">
+<node kegg="C00065" ms1="M106T91">B-27.mzXML#503</node>
+<node kegg="C00740" ms1="M105T833">QC1.mzXML#4298</node>
+<node kegg="C00009" ms1="M99T853">B-4.mzXML#4413</node>
+</unknown>
+</compound>
+<compound kegg="C00627" candidates="2">
+<unknown name="M250T567" Msn="B-65.mzXML#2942" length="3">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T94">B-56.mzXML#503</node>
+</unknown>
+<unknown name="M250T567" Msn="B-68.mzXML#2931" length="3">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T853">B-3.mzXML#4434</node>
+</unknown>
+</compound>
+<compound kegg="C00106" candidates="4">
+<unknown name="M113T211" Msn="B-46.mzXML#1122" length="3">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T853">B-3.mzXML#4434</node>
+</unknown>
+<unknown name="M113T77_3" Msn="B-5.mzXML#452" length="3">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T853">B-3.mzXML#4434</node>
+</unknown>
+<unknown name="M113T211" Msn="B-44.mzXML#1155" length="3">
+<node kegg="C00402" ms1="M134T92">B-33.mzXML#509</node>
+<node kegg="C00049" ms1="M133T85">B-28.mzXML#452</node>
+<node kegg="C00009" ms1="M99T853">B-5.mzXML#4437</node>
+</unknown>
+<unknown name="M113T77_3" Msn="QC11.mzXML#440" length="3">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T94">B-56.mzXML#503</node>
+</unknown>
+</compound>
+<compound kegg="C00988" candidates="1">
+<unknown name="M157T655" Msn="B-23.mzXML#3416" length="3">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T94">B-56.mzXML#503</node>
+</unknown>
+</compound>
+<compound kegg="C00380" candidates="2">
+<unknown name="M111T77_2" Msn="B-73.mzXML#424" length="3">
+<node kegg="C00402" ms1="M134T92">B-33.mzXML#509</node>
+<node kegg="C00049" ms1="M133T85">B-28.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-68.mzXML#500</node>
+</unknown>
+<unknown name="M111T77_2" Msn="B-68.mzXML#427" length="3">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-3.mzXML#506</node>
+</unknown>
+</compound>
+<compound kegg="C00140" candidates="2">
+<unknown name="M221T361" Msn="B-60.mzXML#1929" length="3">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T94">B-56.mzXML#503</node>
+</unknown>
+<unknown name="M221T361" Msn="B-62.mzXML#1881" length="3">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-3.mzXML#506</node>
+</unknown>
+</compound>
+<compound kegg="C04257" candidates="2">
+<unknown name="M301T752" Msn="B-31.mzXML#3912" length="3">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-3.mzXML#506</node>
+</unknown>
+<unknown name="M301T553" Msn="B-37.mzXML#2850" length="3">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-3.mzXML#506</node>
+</unknown>
+</compound>
+<compound kegg="C04501" candidates="2">
+<unknown name="M301T752" Msn="B-31.mzXML#3912" length="3">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-3.mzXML#506</node>
+</unknown>
+<unknown name="M301T553" Msn="B-37.mzXML#2850" length="3">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-3.mzXML#506</node>
+</unknown>
+</compound>
+<compound kegg="C00031" candidates="1">
+<unknown name="M181T372" Msn="QC14.mzXML#1938" length="3">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-3.mzXML#506</node>
+</unknown>
+</compound>
+<compound kegg="C00159" candidates="1">
+<unknown name="M181T372" Msn="QC14.mzXML#1938" length="3">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-3.mzXML#506</node>
+</unknown>
+</compound>
+<compound kegg="C00095" candidates="1">
+<unknown name="M181T372" Msn="QC14.mzXML#1938" length="3">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-3.mzXML#506</node>
+</unknown>
+</compound>
+<compound kegg="C00267" candidates="1">
+<unknown name="M181T372" Msn="QC14.mzXML#1938" length="3">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-3.mzXML#506</node>
+</unknown>
+</compound>
+<compound kegg="C00921" candidates="2">
+<unknown name="M315T776" Msn="B-78.mzXML#3987" length="3">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-3.mzXML#506</node>
+</unknown>
+<unknown name="M315T753" Msn="B-47.mzXML#3903" length="3">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-3.mzXML#506</node>
+</unknown>
+</compound>
+<compound kegg="C00397" candidates="1">
+<unknown name="M468T766" Msn="B-50.mzXML#3954" length="3">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T94">B-56.mzXML#503</node>
+</unknown>
+</compound>
+<compound kegg="C01294" candidates="1">
+<unknown name="M301T553" Msn="B-37.mzXML#2850" length="3">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-3.mzXML#506</node>
+</unknown>
+</compound>
+<compound kegg="C03067" candidates="2">
+<unknown name="M123T76_2" Msn="B-29.mzXML#454" length="3">
+<node kegg="C00261" ms1="M107T353">B-46.mzXML#1874</node>
+<node kegg="C00180" ms1="M123T359">B-65.mzXML#1899</node>
+<node kegg="C00587" ms1="M139T752">B-49.mzXML#3896</node>
+</unknown>
+<unknown name="M123T359" Msn="B-65.mzXML#1899" length="3">
+<node kegg="C00261" ms1="M107T353">B-46.mzXML#1874</node>
+<node kegg="C00180" ms1="M123T359">B-65.mzXML#1899</node>
+<node kegg="C00587" ms1="M139T752">B-49.mzXML#3896</node>
+</unknown>
+</compound>
+<compound kegg="C05629" candidates="1">
+<unknown name="M150T353" Msn="QC1.mzXML#1881" length="3">
+<node kegg="C00261" ms1="M107T353">B-46.mzXML#1874</node>
+<node kegg="C00180" ms1="M123T359">B-65.mzXML#1899</node>
+<node kegg="C00423" ms1="M149T353">B-46.mzXML#1879</node>
+</unknown>
+</compound>
+<compound kegg="C03943" candidates="3">
+<unknown name="M133T81" Msn="B-37.mzXML#435" length="3">
+<node kegg="C00148" ms1="M116T80">B-39.mzXML#458</node>
+<node kegg="C00077" ms1="M133T81">B-37.mzXML#435</node>
+<node kegg="C00515" ms1="M133T81">B-2.mzXML#444</node>
+</unknown>
+<unknown name="M133T81" Msn="B-39.mzXML#438" length="3">
+<node kegg="C00062" ms1="M175T90_1">B-49.mzXML#491</node>
+<node kegg="C00077" ms1="M133T81">B-75.mzXML#446</node>
+<node kegg="C00515" ms1="M133T81">B-18.mzXML#442</node>
+</unknown>
+<unknown name="M133T81" Msn="B-1.mzXML#448" length="3">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+<node kegg="C00515" ms1="M133T81">B-7.mzXML#445</node>
+</unknown>
+</compound>
+<compound kegg="C05825" candidates="1">
+<unknown name="M146T94" Msn="B-63.mzXML#522" length="3">
+<node kegg="C00047" ms1="M147T81">B-27.mzXML#435</node>
+<node kegg="C00739" ms1="M147T726">B-62.mzXML#3729</node>
+<node kegg="C05161" ms1="M147T726">B-68.mzXML#3728</node>
+</unknown>
+</compound>
+<compound kegg="C03656" candidates="1">
+<unknown name="M146T94" Msn="B-63.mzXML#522" length="3">
+<node kegg="C00047" ms1="M147T81">B-27.mzXML#435</node>
+<node kegg="C01142" ms1="M147T726">B-62.mzXML#3729</node>
+<node kegg="C01186" ms1="M147T726">B-68.mzXML#3728</node>
+</unknown>
+</compound>
+<compound kegg="C04411" candidates="1">
+<unknown name="M176T96" Msn="B-68.mzXML#554" length="3">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+<node kegg="C00233" ms1="M131T680">QC5.mzXML#3563</node>
+</unknown>
+</compound>
+<compound kegg="C03241" candidates="17">
+<unknown name="M130T409" Msn="QC1.mzXML#2159" length="3">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+<node kegg="C06102" ms1="M130T409">QC2.mzXML#2171</node>
+</unknown>
+<unknown name="M130T621" Msn="QC3.mzXML#3261" length="3">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M147T77">B-27.mzXML#435</node>
+<node kegg="C06102" ms1="M130T409">QC1.mzXML#2159</node>
+</unknown>
+<unknown name="M130T680" Msn="QC1.mzXML#3536" length="3">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M147T77">B-27.mzXML#435</node>
+<node kegg="C06102" ms1="M130T409">QC1.mzXML#2159</node>
+</unknown>
+<unknown name="M131T621" Msn="B-78.mzXML#3207" length="3">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M147T77">B-27.mzXML#435</node>
+<node kegg="C06102" ms1="M130T409">QC1.mzXML#2159</node>
+</unknown>
+<unknown name="M131T680" Msn="QC5.mzXML#3563" length="3">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M147T77">B-27.mzXML#435</node>
+<node kegg="C06102" ms1="M130T409">QC1.mzXML#2159</node>
+</unknown>
+<unknown name="M130T409" Msn="B-25.mzXML#2129" length="3">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M147T77">B-27.mzXML#435</node>
+<node kegg="C06102" ms1="M130T621">QC2.mzXML#3238</node>
+</unknown>
+<unknown name="M130T621" Msn="QC1.mzXML#3237" length="3">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M147T77">B-27.mzXML#435</node>
+<node kegg="C06102" ms1="M130T680">QC1.mzXML#3536</node>
+</unknown>
+<unknown name="M130T680" Msn="QC3.mzXML#3583" length="3">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M147T77">B-27.mzXML#435</node>
+<node kegg="C06102" ms1="M130T621">QC2.mzXML#3238</node>
+</unknown>
+<unknown name="M131T680" Msn="QC12.mzXML#3501" length="3">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M147T77">B-27.mzXML#435</node>
+<node kegg="C06102" ms1="M130T680">QC1.mzXML#3536</node>
+</unknown>
+<unknown name="M130T409" Msn="B-23.mzXML#2163" length="3">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M147T77">B-27.mzXML#435</node>
+<node kegg="C06102" ms1="M130T680">QC1.mzXML#3536</node>
+</unknown>
+<unknown name="M130T680" Msn="QC2.mzXML#3549" length="3">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M147T77">B-27.mzXML#435</node>
+<node kegg="C06102" ms1="M130T680">QC1.mzXML#3536</node>
+</unknown>
+<unknown name="M130T409" Msn="B-31.mzXML#2175" length="3">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+<node kegg="C06102" ms1="M131T680">QC5.mzXML#3563</node>
+</unknown>
+<unknown name="M130T621" Msn="B-16.mzXML#3260" length="3">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+<node kegg="C06102" ms1="M131T680">QC5.mzXML#3563</node>
+</unknown>
+<unknown name="M130T680" Msn="B-20.mzXML#3541" length="3">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+<node kegg="C06102" ms1="M131T680">QC5.mzXML#3563</node>
+</unknown>
+<unknown name="M131T621" Msn="B-46.mzXML#3232" length="3">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+<node kegg="C06102" ms1="M131T680">QC5.mzXML#3563</node>
+</unknown>
+<unknown name="M131T680" Msn="QC6.mzXML#3536" length="3">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+<node kegg="C06102" ms1="M131T680">QC5.mzXML#3563</node>
+</unknown>
+<unknown name="M130T409" Msn="QC2.mzXML#2171" length="3">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M147T77">B-27.mzXML#435</node>
+<node kegg="C06102" ms1="M130T409">QC1.mzXML#2159</node>
+</unknown>
+</compound>
+<compound kegg="C06103" candidates="2">
+<unknown name="M132T409" Msn="B-22.mzXML#2160" length="3">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+<node kegg="C06102" ms1="M131T680">QC5.mzXML#3563</node>
+</unknown>
+<unknown name="M132T100_1" Msn="QC7.mzXML#586" length="3">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+<node kegg="C06102" ms1="M131T680">QC5.mzXML#3563</node>
+</unknown>
+</compound>
+<compound kegg="C02378" candidates="3">
+<unknown name="M132T263_1" Msn="B-70.mzXML#1420" length="3">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+<node kegg="C06102" ms1="M131T680">QC5.mzXML#3563</node>
+</unknown>
+<unknown name="M132T237" Msn="B-43.mzXML#1267" length="3">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+<node kegg="C06102" ms1="M131T680">QC5.mzXML#3563</node>
+</unknown>
+<unknown name="M132T100_2" Msn="QC7.mzXML#586" length="3">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+<node kegg="C06102" ms1="M131T680">QC5.mzXML#3563</node>
+</unknown>
+</compound>
+<compound kegg="C00643" candidates="1">
+<unknown name="M221T307" Msn="QC10.mzXML#1635" length="3">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+<node kegg="C05646" ms1="M219T94">B-33.mzXML#517</node>
+</unknown>
+</compound>
+<compound kegg="C05350" candidates="1">
+<unknown name="M181T182" Msn="B-68.mzXML#993" length="3">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+<node kegg="C01179" ms1="M181T182">B-73.mzXML#972</node>
+</unknown>
+</compound>
+<compound kegg="C20926" candidates="3">
+<unknown name="M267T621" Msn="B-67.mzXML#3212" length="3">
+<node kegg="C00082" ms1="M182T207">B-62.mzXML#1101</node>
+<node kegg="C03765" ms1="M136T727">QC1.mzXML#3786</node>
+<node kegg="C00483" ms1="M137T234">B-56.mzXML#1283</node>
+</unknown>
+<unknown name="M267T652" Msn="B-69.mzXML#3360" length="3">
+<node kegg="C00082" ms1="M182T207">B-62.mzXML#1101</node>
+<node kegg="C03765" ms1="M136T727">QC1.mzXML#3786</node>
+<node kegg="C00483" ms1="M137T234">B-56.mzXML#1283</node>
+</unknown>
+<unknown name="M267T506" Msn="B-68.mzXML#2625" length="3">
+<node kegg="C00082" ms1="M182T207">B-62.mzXML#1101</node>
+<node kegg="C03765" ms1="M136T727">QC1.mzXML#3786</node>
+<node kegg="C00483" ms1="M137T234">B-56.mzXML#1283</node>
+</unknown>
+</compound>
+<compound kegg="C00311" candidates="2">
+<unknown name="M192T107" Msn="B-53.mzXML#609" length="4">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T853">B-3.mzXML#4434</node>
+<node kegg="C00158" ms1="M192T136">B-70.mzXML#744</node>
+</unknown>
+<unknown name="M192T136" Msn="B-75.mzXML#744" length="4">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T853">B-3.mzXML#4434</node>
+<node kegg="C00158" ms1="M192T136">B-70.mzXML#744</node>
+</unknown>
+</compound>
+<compound kegg="C00559" candidates="2">
+<unknown name="M251T592" Msn="QC13.mzXML#3072" length="4">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T94">B-56.mzXML#503</node>
+<node kegg="C00360" ms1="M331T118">B-60.mzXML#656</node>
+</unknown>
+<unknown name="M251T517" Msn="B-71.mzXML#2667" length="4">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T94">B-56.mzXML#503</node>
+<node kegg="C00360" ms1="M331T118">B-60.mzXML#656</node>
+</unknown>
+</compound>
+<compound kegg="C02486" candidates="8">
+<unknown name="M132T100_2" Msn="B-78.mzXML#583" length="4">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T853">B-3.mzXML#4434</node>
+<node kegg="C00123" ms1="M132T100_2">B-62.mzXML#583</node>
+</unknown>
+<unknown name="M132T263_1" Msn="B-67.mzXML#1420" length="4">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+<node kegg="C00233" ms1="M131T680">QC5.mzXML#3563</node>
+<node kegg="C00123" ms1="M132T100_2">QC7.mzXML#586</node>
+</unknown>
+<unknown name="M132T237" Msn="B-70.mzXML#1276" length="4">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+<node kegg="C00233" ms1="M131T680">QC5.mzXML#3563</node>
+<node kegg="C00123" ms1="M132T100_2">QC7.mzXML#586</node>
+</unknown>
+<unknown name="M132T100_2" Msn="B-2.mzXML#548" length="4">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+<node kegg="C00233" ms1="M131T680">QC5.mzXML#3563</node>
+<node kegg="C00123" ms1="M132T263_1">B-70.mzXML#1420</node>
+</unknown>
+<unknown name="M132T263_1" Msn="B-19.mzXML#1393" length="4">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+<node kegg="C00233" ms1="M131T680">QC5.mzXML#3563</node>
+<node kegg="C00123" ms1="M132T237">B-43.mzXML#1267</node>
+</unknown>
+<unknown name="M132T237" Msn="B-57.mzXML#1284" length="4">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+<node kegg="C00233" ms1="M131T680">QC5.mzXML#3563</node>
+<node kegg="C00123" ms1="M132T237">B-43.mzXML#1267</node>
+</unknown>
+<unknown name="M132T100_2" Msn="B-1.mzXML#544" length="4">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+<node kegg="C00233" ms1="M131T680">QC5.mzXML#3563</node>
+<node kegg="C00123" ms1="M132T237">B-43.mzXML#1267</node>
+</unknown>
+<unknown name="M132T100_2" Msn="B-14.mzXML#594" length="4">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+<node kegg="C00233" ms1="M131T680">QC5.mzXML#3563</node>
+<node kegg="C00123" ms1="M132T100_2">QC7.mzXML#586</node>
+</unknown>
+</compound>
+<compound kegg="C02710" candidates="1">
+<unknown name="M174T103" Msn="B-49.mzXML#580" length="4">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+<node kegg="C00233" ms1="M131T680">QC5.mzXML#3563</node>
+<node kegg="C00123" ms1="M132T100_2">QC7.mzXML#586</node>
+</unknown>
+</compound>
+<compound kegg="C00666" candidates="1">
+<unknown name="M191T100" Msn="B-51.mzXML#553" length="4">
+<node kegg="C00065" ms1="M106T91">B-27.mzXML#503</node>
+<node kegg="C00740" ms1="M105T833">QC1.mzXML#4298</node>
+<node kegg="C00009" ms1="M99T853">B-4.mzXML#4413</node>
+<node kegg="C00680" ms1="M191T100">B-25.mzXML#559</node>
+</unknown>
+</compound>
+<compound kegg="C00526" candidates="2">
+<unknown name="M228T467" Msn="B-11.mzXML#2452" length="4">
+<node kegg="C00402" ms1="M134T92">B-33.mzXML#509</node>
+<node kegg="C00049" ms1="M133T85">B-28.mzXML#452</node>
+<node kegg="C00009" ms1="M99T853">B-5.mzXML#4437</node>
+<node kegg="C00106" ms1="M113T211">B-44.mzXML#1155</node>
+</unknown>
+<unknown name="M228T408" Msn="QC13.mzXML#2163" length="4">
+<node kegg="C00402" ms1="M134T92">B-33.mzXML#509</node>
+<node kegg="C00049" ms1="M133T85">B-28.mzXML#452</node>
+<node kegg="C00009" ms1="M99T853">B-5.mzXML#4437</node>
+<node kegg="C00106" ms1="M113T211">B-44.mzXML#1155</node>
+</unknown>
+</compound>
+<compound kegg="C00429" candidates="2">
+<unknown name="M115T141" Msn="B-17.mzXML#776" length="4">
+<node kegg="C00402" ms1="M134T92">B-33.mzXML#509</node>
+<node kegg="C00049" ms1="M133T85">B-28.mzXML#452</node>
+<node kegg="C00009" ms1="M99T853">B-5.mzXML#4437</node>
+<node kegg="C00106" ms1="M113T211">B-44.mzXML#1155</node>
+</unknown>
+<unknown name="M115T75" Msn="B-37.mzXML#444" length="4">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T853">B-3.mzXML#4434</node>
+<node kegg="C00106" ms1="M113T77_3">B-5.mzXML#452</node>
+</unknown>
+</compound>
+<compound kegg="C00299" candidates="1">
+<unknown name="M245T104" Msn="B-74.mzXML#579" length="4">
+<node kegg="C00402" ms1="M134T92">B-33.mzXML#509</node>
+<node kegg="C00049" ms1="M133T85">B-28.mzXML#452</node>
+<node kegg="C00009" ms1="M99T853">B-5.mzXML#4437</node>
+<node kegg="C00106" ms1="M113T211">B-44.mzXML#1155</node>
+</unknown>
+</compound>
+<compound kegg="C03030" candidates="2">
+<unknown name="M156T77_2" Msn="B-35.mzXML#444" length="4">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T94">B-56.mzXML#503</node>
+<node kegg="C00106" ms1="M113T77_3">QC11.mzXML#440</node>
+</unknown>
+<unknown name="M157T76" Msn="B-16.mzXML#455" length="4">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T94">B-56.mzXML#503</node>
+<node kegg="C00106" ms1="M113T77_3">QC11.mzXML#440</node>
+</unknown>
+</compound>
+<compound kegg="C00329" candidates="1">
+<unknown name="M179T553" Msn="B-49.mzXML#2874" length="4">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-3.mzXML#506</node>
+<node kegg="C00140" ms1="M221T361">B-62.mzXML#1881</node>
+</unknown>
+</compound>
+<compound kegg="C00645" candidates="4">
+<unknown name="M221T307" Msn="B-65.mzXML#1628" length="4">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-3.mzXML#506</node>
+<node kegg="C00140" ms1="M221T361">B-62.mzXML#1881</node>
+</unknown>
+<unknown name="M221T361" Msn="B-77.mzXML#1869" length="4">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-3.mzXML#506</node>
+<node kegg="C00140" ms1="M221T361">B-62.mzXML#1881</node>
+</unknown>
+<unknown name="M221T361" Msn="B-76.mzXML#1869" length="4">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-3.mzXML#506</node>
+<node kegg="C04257" ms1="M301T752">B-31.mzXML#3912</node>
+</unknown>
+<unknown name="M221T361" Msn="B-78.mzXML#1884" length="4">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-3.mzXML#506</node>
+<node kegg="C04257" ms1="M301T553">B-37.mzXML#2850</node>
+</unknown>
+</compound>
+<compound kegg="C00357" candidates="2">
+<unknown name="M301T752" Msn="B-74.mzXML#3887" length="4">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-3.mzXML#506</node>
+<node kegg="C04501" ms1="M301T752">B-31.mzXML#3912</node>
+</unknown>
+<unknown name="M301T553" Msn="B-31.mzXML#2888" length="4">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-3.mzXML#506</node>
+<node kegg="C04501" ms1="M301T553">B-37.mzXML#2850</node>
+</unknown>
+</compound>
+<compound kegg="C00137" candidates="3">
+<unknown name="M180T478" Msn="B-40.mzXML#2514" length="4">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-3.mzXML#506</node>
+<node kegg="C00031" ms1="M181T372">QC14.mzXML#1938</node>
+</unknown>
+<unknown name="M181T401" Msn="B-58.mzXML#2103" length="4">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-3.mzXML#506</node>
+<node kegg="C00031" ms1="M181T372">QC14.mzXML#1938</node>
+</unknown>
+<unknown name="M181T372" Msn="B-19.mzXML#1976" length="4">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-3.mzXML#506</node>
+<node kegg="C00031" ms1="M181T372">QC14.mzXML#1938</node>
+</unknown>
+</compound>
+<compound kegg="C06468" candidates="3">
+<unknown name="M180T478" Msn="B-40.mzXML#2514" length="4">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-3.mzXML#506</node>
+<node kegg="C00095" ms1="M181T372">QC14.mzXML#1938</node>
+</unknown>
+<unknown name="M181T401" Msn="B-58.mzXML#2103" length="4">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-3.mzXML#506</node>
+<node kegg="C00095" ms1="M181T372">QC14.mzXML#1938</node>
+</unknown>
+<unknown name="M181T372" Msn="B-19.mzXML#1976" length="4">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-3.mzXML#506</node>
+<node kegg="C00095" ms1="M181T372">QC14.mzXML#1938</node>
+</unknown>
+</compound>
+<compound kegg="C00221" candidates="3">
+<unknown name="M180T478" Msn="B-40.mzXML#2514" length="4">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-3.mzXML#506</node>
+<node kegg="C00267" ms1="M181T372">QC14.mzXML#1938</node>
+</unknown>
+<unknown name="M181T401" Msn="B-58.mzXML#2103" length="4">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-3.mzXML#506</node>
+<node kegg="C00267" ms1="M181T372">QC14.mzXML#1938</node>
+</unknown>
+<unknown name="M181T372" Msn="B-19.mzXML#1976" length="4">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-3.mzXML#506</node>
+<node kegg="C00267" ms1="M181T372">QC14.mzXML#1938</node>
+</unknown>
+</compound>
+<compound kegg="C18001" candidates="1">
+<unknown name="M510T744" Msn="B-21.mzXML#3867" length="4">
+<node kegg="C00836" ms1="M302T862">B-43.mzXML#4449</node>
+<node kegg="C01120" ms1="M382T872">B-10.mzXML#4524</node>
+<node kegg="C00009" ms1="M99T94">B-56.mzXML#503</node>
+<node kegg="C00397" ms1="M468T766">B-50.mzXML#3954</node>
+</unknown>
+</compound>
+<compound kegg="C04280" candidates="1">
+<unknown name="M221T361" Msn="B-78.mzXML#1884" length="4">
+<node kegg="C00327" ms1="M176T93">B-39.mzXML#519</node>
+<node kegg="C00077" ms1="M133T81">B-12.mzXML#452</node>
+<node kegg="C00009" ms1="M99T94">B-3.mzXML#506</node>
+<node kegg="C01294" ms1="M301T553">B-37.mzXML#2850</node>
+</unknown>
+</compound>
+<compound kegg="C02504" candidates="4">
+<unknown name="M176T238" Msn="QC1.mzXML#1311" length="4">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+<node kegg="C00233" ms1="M131T680">QC5.mzXML#3563</node>
+<node kegg="C04411" ms1="M176T96">B-68.mzXML#554</node>
+</unknown>
+<unknown name="M176T263" Msn="B-17.mzXML#1407" length="4">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+<node kegg="C00233" ms1="M131T680">QC5.mzXML#3563</node>
+<node kegg="C04411" ms1="M176T96">B-68.mzXML#554</node>
+</unknown>
+<unknown name="M176T96" Msn="B-57.mzXML#549" length="4">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+<node kegg="C00233" ms1="M131T680">QC5.mzXML#3563</node>
+<node kegg="C04411" ms1="M176T96">B-68.mzXML#554</node>
+</unknown>
+<unknown name="M177T263" Msn="B-16.mzXML#1405" length="4">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+<node kegg="C00233" ms1="M131T680">QC5.mzXML#3563</node>
+<node kegg="C04411" ms1="M176T96">B-68.mzXML#554</node>
+</unknown>
+</compound>
+<compound kegg="C01880" candidates="1">
+<unknown name="M115T507" Msn="B-64.mzXML#2624" length="4">
+<node kegg="C00025" ms1="M148T93">B-57.mzXML#524</node>
+<node kegg="C00026" ms1="M146T107">B-2.mzXML#607</node>
+<node kegg="C06102" ms1="M131T680">QC5.mzXML#3563</node>
+<node kegg="C06103" ms1="M132T100_1">QC7.mzXML#586</node>
+</unknown>
+</compound>
+</MetaDNA>
