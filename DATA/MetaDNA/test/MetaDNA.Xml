@@ -1,0 +1,1118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MetaDNA xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<compound kegg="C00763" candidates="37">
+<unknown name="M116T97" Msn="lxy-CID30.mzXML#321" length="1">
+<node kegg="C00148" ms1="M116T82">lxy-CID30.mzXML#269</node>
+</unknown>
+<unknown name="M116T124" Msn="lxy-CID30.mzXML#407" length="1">
+<node kegg="C00148" ms1="M116T97">lxy-CID30.mzXML#321</node>
+</unknown>
+<unknown name="M116T423" Msn="lxy-CID30.mzXML#1394" length="1">
+<node kegg="C00148" ms1="M116T97">lxy-CID30.mzXML#321</node>
+</unknown>
+<unknown name="M116T441" Msn="lxy-CID30.mzXML#1456" length="1">
+<node kegg="C00148" ms1="M116T97">lxy-CID30.mzXML#321</node>
+</unknown>
+<unknown name="M116T464" Msn="lxy-CID30.mzXML#1531" length="1">
+<node kegg="C00148" ms1="M116T97">lxy-CID30.mzXML#321</node>
+</unknown>
+<unknown name="M116T486" Msn="lxy-CID30.mzXML#1604" length="1">
+<node kegg="C00148" ms1="M116T97">lxy-CID30.mzXML#321</node>
+</unknown>
+<unknown name="M116T503" Msn="lxy-CID30.mzXML#1658" length="1">
+<node kegg="C00148" ms1="M116T97">lxy-CID30.mzXML#321</node>
+</unknown>
+<unknown name="M116T528" Msn="lxy-CID30.mzXML#1740" length="1">
+<node kegg="C00148" ms1="M116T97">lxy-CID30.mzXML#321</node>
+</unknown>
+<unknown name="M116T544" Msn="lxy-CID30.mzXML#1795" length="1">
+<node kegg="C00148" ms1="M116T97">lxy-CID30.mzXML#321</node>
+</unknown>
+<unknown name="M116T566" Msn="lxy-CID30.mzXML#1866" length="1">
+<node kegg="C00148" ms1="M116T97">lxy-CID30.mzXML#321</node>
+</unknown>
+<unknown name="M116T582" Msn="lxy-CID30.mzXML#1919" length="1">
+<node kegg="C00148" ms1="M116T97">lxy-CID30.mzXML#321</node>
+</unknown>
+<unknown name="M116T604" Msn="lxy-CID30.mzXML#1991" length="1">
+<node kegg="C00148" ms1="M116T97">lxy-CID30.mzXML#321</node>
+</unknown>
+<unknown name="M116T621" Msn="lxy-CID30.mzXML#2046" length="1">
+<node kegg="C00148" ms1="M116T97">lxy-CID30.mzXML#321</node>
+</unknown>
+<unknown name="M116T639" Msn="lxy-CID30.mzXML#2108" length="1">
+<node kegg="C00148" ms1="M116T97">lxy-CID30.mzXML#321</node>
+</unknown>
+<unknown name="M116T660" Msn="lxy-CID30.mzXML#2176" length="1">
+<node kegg="C00148" ms1="M116T97">lxy-CID30.mzXML#321</node>
+</unknown>
+<unknown name="M116T676" Msn="lxy-CID30.mzXML#2229" length="1">
+<node kegg="C00148" ms1="M116T97">lxy-CID30.mzXML#321</node>
+</unknown>
+<unknown name="M116T701" Msn="lxy-CID30.mzXML#2311" length="1">
+<node kegg="C00148" ms1="M116T97">lxy-CID30.mzXML#321</node>
+</unknown>
+<unknown name="M116T720" Msn="lxy-CID30.mzXML#2374" length="1">
+<node kegg="C00148" ms1="M116T97">lxy-CID30.mzXML#321</node>
+</unknown>
+<unknown name="M116T736" Msn="lxy-CID30.mzXML#2426" length="1">
+<node kegg="C00148" ms1="M116T97">lxy-CID30.mzXML#321</node>
+</unknown>
+<unknown name="M116T753" Msn="lxy-CID30.mzXML#2483" length="1">
+<node kegg="C00148" ms1="M116T97">lxy-CID30.mzXML#321</node>
+</unknown>
+<unknown name="M116T770" Msn="lxy-CID30.mzXML#2537" length="1">
+<node kegg="C00148" ms1="M116T97">lxy-CID30.mzXML#321</node>
+</unknown>
+<unknown name="M116T786" Msn="lxy-CID30.mzXML#2590" length="1">
+<node kegg="C00148" ms1="M116T97">lxy-CID30.mzXML#321</node>
+</unknown>
+<unknown name="M116T801" Msn="lxy-CID30.mzXML#2641" length="1">
+<node kegg="C00148" ms1="M116T97">lxy-CID30.mzXML#321</node>
+</unknown>
+<unknown name="M116T818" Msn="lxy-CID30.mzXML#2696" length="1">
+<node kegg="C00148" ms1="M116T97">lxy-CID30.mzXML#321</node>
+</unknown>
+<unknown name="M116T834" Msn="lxy-CID30.mzXML#2749" length="1">
+<node kegg="C00148" ms1="M116T97">lxy-CID30.mzXML#321</node>
+</unknown>
+<unknown name="M116T851" Msn="lxy-CID30.mzXML#2804" length="1">
+<node kegg="C00148" ms1="M116T97">lxy-CID30.mzXML#321</node>
+</unknown>
+<unknown name="M116T867" Msn="lxy-CID30.mzXML#2857" length="1">
+<node kegg="C00148" ms1="M116T97">lxy-CID30.mzXML#321</node>
+</unknown>
+<unknown name="M116T883" Msn="lxy-CID30.mzXML#2909" length="1">
+<node kegg="C00148" ms1="M116T97">lxy-CID30.mzXML#321</node>
+</unknown>
+<unknown name="M116T899" Msn="lxy-CID30.mzXML#2961" length="1">
+<node kegg="C00148" ms1="M116T97">lxy-CID30.mzXML#321</node>
+</unknown>
+<unknown name="M116T915" Msn="lxy-CID30.mzXML#3013" length="1">
+<node kegg="C00148" ms1="M116T97">lxy-CID30.mzXML#321</node>
+</unknown>
+<unknown name="M116T931" Msn="lxy-CID30.mzXML#3066" length="1">
+<node kegg="C00148" ms1="M116T97">lxy-CID30.mzXML#321</node>
+</unknown>
+<unknown name="M116T946" Msn="lxy-CID30.mzXML#3117" length="1">
+<node kegg="C00148" ms1="M116T97">lxy-CID30.mzXML#321</node>
+</unknown>
+<unknown name="M116T962" Msn="lxy-CID30.mzXML#3170" length="1">
+<node kegg="C00148" ms1="M116T97">lxy-CID30.mzXML#321</node>
+</unknown>
+<unknown name="M116T978" Msn="lxy-CID30.mzXML#3222" length="1">
+<node kegg="C00148" ms1="M116T97">lxy-CID30.mzXML#321</node>
+</unknown>
+<unknown name="M116T994" Msn="lxy-CID30.mzXML#3274" length="1">
+<node kegg="C00148" ms1="M116T97">lxy-CID30.mzXML#321</node>
+</unknown>
+<unknown name="M116T1010" Msn="lxy-CID30.mzXML#3326" length="1">
+<node kegg="C00148" ms1="M116T97">lxy-CID30.mzXML#321</node>
+</unknown>
+<unknown name="M116T82" Msn="lxy-CID30.mzXML#269" length="1">
+<node kegg="C00148" ms1="M116T97">lxy-CID30.mzXML#321</node>
+</unknown>
+</compound>
+<compound kegg="C01026" candidates="1">
+<unknown name="M104T88" Msn="lxy-CID30.mzXML#289" length="1">
+<node kegg="C00719" ms1="M118T75">lxy-CID30.mzXML#246</node>
+</unknown>
+</compound>
+<compound kegg="C00109" candidates="2">
+<unknown name="M102T83" Msn="lxy-CID30.mzXML#276" length="1">
+<node kegg="C00188" ms1="M120T72">lxy-CID30.mzXML#238</node>
+</unknown>
+<unknown name="M102T968" Msn="lxy-CID30.mzXML#3189" length="1">
+<node kegg="C00188" ms1="M120T72">lxy-CID30.mzXML#238</node>
+</unknown>
+</compound>
+<compound kegg="C21092" candidates="63">
+<unknown name="M132T10" Msn="lxy-CID30.mzXML#33" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T26" Msn="lxy-CID30.mzXML#85" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T42" Msn="lxy-CID30.mzXML#138" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T96" Msn="lxy-CID30.mzXML#317" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T128" Msn="lxy-CID30.mzXML#421" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T144" Msn="lxy-CID30.mzXML#476" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T161" Msn="lxy-CID30.mzXML#530" length="1">
+<node kegg="C00407" ms1="M132T144">lxy-CID30.mzXML#476</node>
+</unknown>
+<unknown name="M132T177" Msn="lxy-CID30.mzXML#582" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T194" Msn="lxy-CID30.mzXML#633" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T209" Msn="lxy-CID30.mzXML#685" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T214" Msn="lxy-CID30.mzXML#704" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T224" Msn="lxy-CID30.mzXML#737" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T240" Msn="lxy-CID30.mzXML#789" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T256" Msn="lxy-CID30.mzXML#841" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T272" Msn="lxy-CID30.mzXML#894" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T287" Msn="lxy-CID30.mzXML#945" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T303" Msn="lxy-CID30.mzXML#998" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T319" Msn="lxy-CID30.mzXML#1049" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T334" Msn="lxy-CID30.mzXML#1101" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T350" Msn="lxy-CID30.mzXML#1154" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T366" Msn="lxy-CID30.mzXML#1206" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T382" Msn="lxy-CID30.mzXML#1257" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T397" Msn="lxy-CID30.mzXML#1309" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T413" Msn="lxy-CID30.mzXML#1361" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T429" Msn="lxy-CID30.mzXML#1413" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T444" Msn="lxy-CID30.mzXML#1465" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T460" Msn="lxy-CID30.mzXML#1518" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T476" Msn="lxy-CID30.mzXML#1569" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T492" Msn="lxy-CID30.mzXML#1621" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T508" Msn="lxy-CID30.mzXML#1673" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T523" Msn="lxy-CID30.mzXML#1725" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T539" Msn="lxy-CID30.mzXML#1778" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T555" Msn="lxy-CID30.mzXML#1829" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T571" Msn="lxy-CID30.mzXML#1881" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T586" Msn="lxy-CID30.mzXML#1933" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T602" Msn="lxy-CID30.mzXML#1985" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T618" Msn="lxy-CID30.mzXML#2037" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T634" Msn="lxy-CID30.mzXML#2089" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T650" Msn="lxy-CID30.mzXML#2141" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T665" Msn="lxy-CID30.mzXML#2193" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T681" Msn="lxy-CID30.mzXML#2245" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T697" Msn="lxy-CID30.mzXML#2298" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T713" Msn="lxy-CID30.mzXML#2349" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T729" Msn="lxy-CID30.mzXML#2401" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T744" Msn="lxy-CID30.mzXML#2453" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T760" Msn="lxy-CID30.mzXML#2505" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T776" Msn="lxy-CID30.mzXML#2558" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T792" Msn="lxy-CID30.mzXML#2609" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T807" Msn="lxy-CID30.mzXML#2661" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T823" Msn="lxy-CID30.mzXML#2713" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T839" Msn="lxy-CID30.mzXML#2766" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T855" Msn="lxy-CID30.mzXML#2817" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T871" Msn="lxy-CID30.mzXML#2871" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T888" Msn="lxy-CID30.mzXML#2926" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T904" Msn="lxy-CID30.mzXML#2979" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T923" Msn="lxy-CID30.mzXML#3041" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T939" Msn="lxy-CID30.mzXML#3094" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T955" Msn="lxy-CID30.mzXML#3146" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T971" Msn="lxy-CID30.mzXML#3198" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T988" Msn="lxy-CID30.mzXML#3256" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T1019" Msn="lxy-CID30.mzXML#3356" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T1044" Msn="lxy-CID30.mzXML#3439" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+<unknown name="M132T112" Msn="lxy-CID30.mzXML#370" length="1">
+<node kegg="C00407" ms1="M132T161">lxy-CID30.mzXML#530</node>
+</unknown>
+</compound>
+<compound kegg="C02486" candidates="64">
+<unknown name="M132T10" Msn="lxy-CID30.mzXML#33" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T26" Msn="lxy-CID30.mzXML#85" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T42" Msn="lxy-CID30.mzXML#138" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T96" Msn="lxy-CID30.mzXML#317" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T112" Msn="lxy-CID30.mzXML#370" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T128" Msn="lxy-CID30.mzXML#421" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T144" Msn="lxy-CID30.mzXML#476" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T161" Msn="lxy-CID30.mzXML#530" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T177" Msn="lxy-CID30.mzXML#582" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T194" Msn="lxy-CID30.mzXML#643" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T209" Msn="lxy-CID30.mzXML#685" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T214" Msn="lxy-CID30.mzXML#704" length="1">
+<node kegg="C00123" ms1="M132T287">lxy-CID30.mzXML#945</node>
+</unknown>
+<unknown name="M132T224" Msn="lxy-CID30.mzXML#737" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T240" Msn="lxy-CID30.mzXML#789" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T256" Msn="lxy-CID30.mzXML#841" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T272" Msn="lxy-CID30.mzXML#894" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T287" Msn="lxy-CID30.mzXML#945" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T303" Msn="lxy-CID30.mzXML#998" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T319" Msn="lxy-CID30.mzXML#1049" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T334" Msn="lxy-CID30.mzXML#1101" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T350" Msn="lxy-CID30.mzXML#1154" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T366" Msn="lxy-CID30.mzXML#1206" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T382" Msn="lxy-CID30.mzXML#1257" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T397" Msn="lxy-CID30.mzXML#1309" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T413" Msn="lxy-CID30.mzXML#1361" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T429" Msn="lxy-CID30.mzXML#1413" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T444" Msn="lxy-CID30.mzXML#1465" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T460" Msn="lxy-CID30.mzXML#1518" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T476" Msn="lxy-CID30.mzXML#1569" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T492" Msn="lxy-CID30.mzXML#1621" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T508" Msn="lxy-CID30.mzXML#1673" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T523" Msn="lxy-CID30.mzXML#1725" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T539" Msn="lxy-CID30.mzXML#1778" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T555" Msn="lxy-CID30.mzXML#1829" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T571" Msn="lxy-CID30.mzXML#1881" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T586" Msn="lxy-CID30.mzXML#1933" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T602" Msn="lxy-CID30.mzXML#1985" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T618" Msn="lxy-CID30.mzXML#2037" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T634" Msn="lxy-CID30.mzXML#2089" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T650" Msn="lxy-CID30.mzXML#2141" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T665" Msn="lxy-CID30.mzXML#2193" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T681" Msn="lxy-CID30.mzXML#2245" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T697" Msn="lxy-CID30.mzXML#2298" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T713" Msn="lxy-CID30.mzXML#2349" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T729" Msn="lxy-CID30.mzXML#2401" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T744" Msn="lxy-CID30.mzXML#2453" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T760" Msn="lxy-CID30.mzXML#2505" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T776" Msn="lxy-CID30.mzXML#2558" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T792" Msn="lxy-CID30.mzXML#2609" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T807" Msn="lxy-CID30.mzXML#2661" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T823" Msn="lxy-CID30.mzXML#2713" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T839" Msn="lxy-CID30.mzXML#2766" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T855" Msn="lxy-CID30.mzXML#2817" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T871" Msn="lxy-CID30.mzXML#2871" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T888" Msn="lxy-CID30.mzXML#2926" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T904" Msn="lxy-CID30.mzXML#2979" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T923" Msn="lxy-CID30.mzXML#3041" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T939" Msn="lxy-CID30.mzXML#3094" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T955" Msn="lxy-CID30.mzXML#3146" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T971" Msn="lxy-CID30.mzXML#3198" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T988" Msn="lxy-CID30.mzXML#3256" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T1019" Msn="lxy-CID30.mzXML#3356" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T1044" Msn="lxy-CID30.mzXML#3439" length="1">
+<node kegg="C00123" ms1="M132T214">lxy-CID30.mzXML#704</node>
+</unknown>
+<unknown name="M132T194" Msn="lxy-CID30.mzXML#633" length="1">
+<node kegg="C00123" ms1="M132T287">lxy-CID30.mzXML#945</node>
+</unknown>
+</compound>
+<compound kegg="C00680" candidates="1">
+<unknown name="M190T632" Msn="lxy-CID30.mzXML#2083" length="1">
+<node kegg="C00047" ms1="M147T65">lxy-CID30.mzXML#213</node>
+</unknown>
+</compound>
+<compound kegg="C00666" candidates="1">
+<unknown name="M190T632" Msn="lxy-CID30.mzXML#2083" length="1">
+<node kegg="C00025" ms1="M148T89">lxy-CID30.mzXML#294</node>
+</unknown>
+</compound>
+<compound kegg="C00855" candidates="13">
+<unknown name="M150T122" Msn="lxy-CID30.mzXML#402" length="1">
+<node kegg="C00073" ms1="M150T138">lxy-CID30.mzXML#454</node>
+</unknown>
+<unknown name="M150T138" Msn="lxy-CID30.mzXML#454" length="1">
+<node kegg="C00073" ms1="M150T122">lxy-CID30.mzXML#402</node>
+</unknown>
+<unknown name="M150T626" Msn="lxy-CID30.mzXML#2064" length="1">
+<node kegg="C00073" ms1="M150T138">lxy-CID30.mzXML#454</node>
+</unknown>
+<unknown name="M150T677" Msn="lxy-CID30.mzXML#2232" length="1">
+<node kegg="C00073" ms1="M150T138">lxy-CID30.mzXML#454</node>
+</unknown>
+<unknown name="M150T741" Msn="lxy-CID30.mzXML#2443" length="1">
+<node kegg="C00073" ms1="M150T138">lxy-CID30.mzXML#454</node>
+</unknown>
+<unknown name="M150T771" Msn="lxy-CID30.mzXML#2543" length="1">
+<node kegg="C00073" ms1="M150T138">lxy-CID30.mzXML#454</node>
+</unknown>
+<unknown name="M150T791" Msn="lxy-CID30.mzXML#2608" length="1">
+<node kegg="C00073" ms1="M150T138">lxy-CID30.mzXML#454</node>
+</unknown>
+<unknown name="M150T891" Msn="lxy-CID30.mzXML#2934" length="1">
+<node kegg="C00073" ms1="M150T138">lxy-CID30.mzXML#454</node>
+</unknown>
+<unknown name="M150T908" Msn="lxy-CID30.mzXML#2991" length="1">
+<node kegg="C00073" ms1="M150T138">lxy-CID30.mzXML#454</node>
+</unknown>
+<unknown name="M150T931" Msn="lxy-CID30.mzXML#3068" length="1">
+<node kegg="C00073" ms1="M150T138">lxy-CID30.mzXML#454</node>
+</unknown>
+<unknown name="M150T950" Msn="lxy-CID30.mzXML#3131" length="1">
+<node kegg="C00073" ms1="M150T138">lxy-CID30.mzXML#454</node>
+</unknown>
+<unknown name="M150T970" Msn="lxy-CID30.mzXML#3196" length="1">
+<node kegg="C00073" ms1="M150T138">lxy-CID30.mzXML#454</node>
+</unknown>
+<unknown name="M150T105" Msn="lxy-CID30.mzXML#347" length="1">
+<node kegg="C00073" ms1="M150T138">lxy-CID30.mzXML#454</node>
+</unknown>
+</compound>
+<compound kegg="C01181" candidates="1">
+<unknown name="M146T81" Msn="lxy-CID30.mzXML#265" length="1">
+<node kegg="C00318" ms1="M162T76">lxy-CID30.mzXML#249</node>
+</unknown>
+</compound>
+<compound kegg="C04114" candidates="1">
+<unknown name="M144T125" Msn="lxy-CID30.mzXML#413" length="1">
+<node kegg="C00318" ms1="M162T76">lxy-CID30.mzXML#249</node>
+</unknown>
+</compound>
+<compound kegg="C02265" candidates="10">
+<unknown name="M166T286" Msn="lxy-CID30.mzXML#942" length="1">
+<node kegg="C00079" ms1="M166T270">lxy-CID30.mzXML#889</node>
+</unknown>
+<unknown name="M166T834" Msn="lxy-CID30.mzXML#2748" length="1">
+<node kegg="C00079" ms1="M166T286">lxy-CID30.mzXML#942</node>
+</unknown>
+<unknown name="M166T853" Msn="lxy-CID30.mzXML#2812" length="1">
+<node kegg="C00079" ms1="M166T286">lxy-CID30.mzXML#942</node>
+</unknown>
+<unknown name="M166T895" Msn="lxy-CID30.mzXML#2949" length="1">
+<node kegg="C00079" ms1="M166T286">lxy-CID30.mzXML#942</node>
+</unknown>
+<unknown name="M166T930" Msn="lxy-CID30.mzXML#3063" length="1">
+<node kegg="C00079" ms1="M166T286">lxy-CID30.mzXML#942</node>
+</unknown>
+<unknown name="M166T947" Msn="lxy-CID30.mzXML#3119" length="1">
+<node kegg="C00079" ms1="M166T286">lxy-CID30.mzXML#942</node>
+</unknown>
+<unknown name="M166T964" Msn="lxy-CID30.mzXML#3176" length="1">
+<node kegg="C00079" ms1="M166T286">lxy-CID30.mzXML#942</node>
+</unknown>
+<unknown name="M166T982" Msn="lxy-CID30.mzXML#3235" length="1">
+<node kegg="C00079" ms1="M166T286">lxy-CID30.mzXML#942</node>
+</unknown>
+<unknown name="M166T1000" Msn="lxy-CID30.mzXML#3295" length="1">
+<node kegg="C00079" ms1="M166T286">lxy-CID30.mzXML#942</node>
+</unknown>
+<unknown name="M166T270" Msn="lxy-CID30.mzXML#889" length="1">
+<node kegg="C00079" ms1="M166T286">lxy-CID30.mzXML#942</node>
+</unknown>
+</compound>
+<compound kegg="C20487" candidates="10">
+<unknown name="M166T286" Msn="lxy-CID30.mzXML#942" length="1">
+<node kegg="C00079" ms1="M166T270">lxy-CID30.mzXML#889</node>
+</unknown>
+<unknown name="M166T834" Msn="lxy-CID30.mzXML#2748" length="1">
+<node kegg="C00079" ms1="M166T286">lxy-CID30.mzXML#942</node>
+</unknown>
+<unknown name="M166T853" Msn="lxy-CID30.mzXML#2812" length="1">
+<node kegg="C00079" ms1="M166T286">lxy-CID30.mzXML#942</node>
+</unknown>
+<unknown name="M166T895" Msn="lxy-CID30.mzXML#2949" length="1">
+<node kegg="C00079" ms1="M166T286">lxy-CID30.mzXML#942</node>
+</unknown>
+<unknown name="M166T930" Msn="lxy-CID30.mzXML#3063" length="1">
+<node kegg="C00079" ms1="M166T286">lxy-CID30.mzXML#942</node>
+</unknown>
+<unknown name="M166T947" Msn="lxy-CID30.mzXML#3119" length="1">
+<node kegg="C00079" ms1="M166T286">lxy-CID30.mzXML#942</node>
+</unknown>
+<unknown name="M166T964" Msn="lxy-CID30.mzXML#3176" length="1">
+<node kegg="C00079" ms1="M166T286">lxy-CID30.mzXML#942</node>
+</unknown>
+<unknown name="M166T982" Msn="lxy-CID30.mzXML#3235" length="1">
+<node kegg="C00079" ms1="M166T286">lxy-CID30.mzXML#942</node>
+</unknown>
+<unknown name="M166T1000" Msn="lxy-CID30.mzXML#3295" length="1">
+<node kegg="C00079" ms1="M166T286">lxy-CID30.mzXML#942</node>
+</unknown>
+<unknown name="M166T270" Msn="lxy-CID30.mzXML#889" length="1">
+<node kegg="C00079" ms1="M166T286">lxy-CID30.mzXML#942</node>
+</unknown>
+</compound>
+<compound kegg="C20488" candidates="10">
+<unknown name="M166T286" Msn="lxy-CID30.mzXML#942" length="1">
+<node kegg="C00079" ms1="M166T270">lxy-CID30.mzXML#889</node>
+</unknown>
+<unknown name="M166T834" Msn="lxy-CID30.mzXML#2748" length="1">
+<node kegg="C00079" ms1="M166T286">lxy-CID30.mzXML#942</node>
+</unknown>
+<unknown name="M166T853" Msn="lxy-CID30.mzXML#2812" length="1">
+<node kegg="C00079" ms1="M166T286">lxy-CID30.mzXML#942</node>
+</unknown>
+<unknown name="M166T895" Msn="lxy-CID30.mzXML#2949" length="1">
+<node kegg="C00079" ms1="M166T286">lxy-CID30.mzXML#942</node>
+</unknown>
+<unknown name="M166T930" Msn="lxy-CID30.mzXML#3063" length="1">
+<node kegg="C00079" ms1="M166T286">lxy-CID30.mzXML#942</node>
+</unknown>
+<unknown name="M166T947" Msn="lxy-CID30.mzXML#3119" length="1">
+<node kegg="C00079" ms1="M166T286">lxy-CID30.mzXML#942</node>
+</unknown>
+<unknown name="M166T964" Msn="lxy-CID30.mzXML#3176" length="1">
+<node kegg="C00079" ms1="M166T286">lxy-CID30.mzXML#942</node>
+</unknown>
+<unknown name="M166T982" Msn="lxy-CID30.mzXML#3235" length="1">
+<node kegg="C00079" ms1="M166T286">lxy-CID30.mzXML#942</node>
+</unknown>
+<unknown name="M166T1000" Msn="lxy-CID30.mzXML#3295" length="1">
+<node kegg="C00079" ms1="M166T286">lxy-CID30.mzXML#942</node>
+</unknown>
+<unknown name="M166T270" Msn="lxy-CID30.mzXML#889" length="1">
+<node kegg="C00079" ms1="M166T286">lxy-CID30.mzXML#942</node>
+</unknown>
+</compound>
+<compound kegg="C17235" candidates="1">
+<unknown name="M180T361" Msn="lxy-CID30.mzXML#1190" length="1">
+<node kegg="C00079" ms1="M166T286">lxy-CID30.mzXML#942</node>
+</unknown>
+</compound>
+<compound kegg="C04368" candidates="5">
+<unknown name="M182T175" Msn="lxy-CID30.mzXML#575" length="1">
+<node kegg="C00082" ms1="M182T224">lxy-CID30.mzXML#736</node>
+</unknown>
+<unknown name="M182T207" Msn="lxy-CID30.mzXML#681" length="1">
+<node kegg="C00082" ms1="M182T224">lxy-CID30.mzXML#736</node>
+</unknown>
+<unknown name="M182T224" Msn="lxy-CID30.mzXML#736" length="1">
+<node kegg="C00082" ms1="M182T207">lxy-CID30.mzXML#681</node>
+</unknown>
+<unknown name="M182T193" Msn="lxy-CID30.mzXML#629" length="1">
+<node kegg="C00082" ms1="M182T224">lxy-CID30.mzXML#736</node>
+</unknown>
+<unknown name="M182T88" Msn="lxy-CID30.mzXML#292" length="1">
+<node kegg="C00082" ms1="M182T224">lxy-CID30.mzXML#736</node>
+</unknown>
+</compound>
+<compound kegg="C21308" candidates="5">
+<unknown name="M182T175" Msn="lxy-CID30.mzXML#575" length="1">
+<node kegg="C00082" ms1="M182T224">lxy-CID30.mzXML#736</node>
+</unknown>
+<unknown name="M182T207" Msn="lxy-CID30.mzXML#681" length="1">
+<node kegg="C00082" ms1="M182T224">lxy-CID30.mzXML#736</node>
+</unknown>
+<unknown name="M182T224" Msn="lxy-CID30.mzXML#736" length="1">
+<node kegg="C00082" ms1="M182T207">lxy-CID30.mzXML#681</node>
+</unknown>
+<unknown name="M182T193" Msn="lxy-CID30.mzXML#629" length="1">
+<node kegg="C00082" ms1="M182T224">lxy-CID30.mzXML#736</node>
+</unknown>
+<unknown name="M182T88" Msn="lxy-CID30.mzXML#292" length="1">
+<node kegg="C00082" ms1="M182T224">lxy-CID30.mzXML#736</node>
+</unknown>
+</compound>
+<compound kegg="C01252" candidates="2">
+<unknown name="M208T305" Msn="lxy-CID30.mzXML#1003" length="1">
+<node kegg="C01717" ms1="M190T551">lxy-CID30.mzXML#1817</node>
+</unknown>
+<unknown name="M208T406" Msn="lxy-CID30.mzXML#1340" length="1">
+<node kegg="C01717" ms1="M190T551">lxy-CID30.mzXML#1817</node>
+</unknown>
+</compound>
+<compound kegg="C05645" candidates="1">
+<unknown name="M224T266" Msn="lxy-CID30.mzXML#874" length="1">
+<node kegg="C02470" ms1="M206T299">lxy-CID30.mzXML#983</node>
+</unknown>
+</compound>
+<compound kegg="C00858" candidates="1">
+<unknown name="M269T235" Msn="lxy-CID30.mzXML#772" length="1">
+<node kegg="C10208" ms1="M255T590">lxy-CID30.mzXML#1945</node>
+</unknown>
+</compound>
+<compound kegg="C12125" candidates="1">
+<unknown name="M269T235" Msn="lxy-CID30.mzXML#772" length="1">
+<node kegg="C10208" ms1="M255T590">lxy-CID30.mzXML#1945</node>
+</unknown>
+</compound>
+<compound kegg="C15567" candidates="1">
+<unknown name="M273T152" Msn="lxy-CID30.mzXML#500" length="1">
+<node kegg="C10208" ms1="M255T590">lxy-CID30.mzXML#1945</node>
+</unknown>
+</compound>
+<compound kegg="C01454" candidates="5">
+<unknown name="M137T170" Msn="lxy-CID30.mzXML#560" length="1">
+<node kegg="C06758" ms1="M121T1038">lxy-CID30.mzXML#3419</node>
+</unknown>
+<unknown name="M137T197" Msn="lxy-CID30.mzXML#648" length="1">
+<node kegg="C06758" ms1="M121T1038">lxy-CID30.mzXML#3419</node>
+</unknown>
+<unknown name="M137T741" Msn="lxy-CID30.mzXML#2444" length="1">
+<node kegg="C06758" ms1="M121T1038">lxy-CID30.mzXML#3419</node>
+</unknown>
+<unknown name="M137T1026" Msn="lxy-CID30.mzXML#3380" length="1">
+<node kegg="C06758" ms1="M121T1038">lxy-CID30.mzXML#3419</node>
+</unknown>
+<unknown name="M137T104" Msn="lxy-CID30.mzXML#344" length="1">
+<node kegg="C06758" ms1="M121T1038">lxy-CID30.mzXML#3419</node>
+</unknown>
+</compound>
+<compound kegg="C02083" candidates="48">
+<unknown name="M121T6" Msn="lxy-CID30.mzXML#19" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T23" Msn="lxy-CID30.mzXML#74" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T39" Msn="lxy-CID30.mzXML#126" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T55" Msn="lxy-CID30.mzXML#179" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T88" Msn="lxy-CID30.mzXML#291" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T105" Msn="lxy-CID30.mzXML#345" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T121" Msn="lxy-CID30.mzXML#397" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T137" Msn="lxy-CID30.mzXML#449" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T153" Msn="lxy-CID30.mzXML#504" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T170" Msn="lxy-CID30.mzXML#558" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T185" Msn="lxy-CID30.mzXML#609" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T201" Msn="lxy-CID30.mzXML#661" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T217" Msn="lxy-CID30.mzXML#713" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T233" Msn="lxy-CID30.mzXML#765" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T249" Msn="lxy-CID30.mzXML#818" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T264" Msn="lxy-CID30.mzXML#869" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T280" Msn="lxy-CID30.mzXML#921" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T296" Msn="lxy-CID30.mzXML#976" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T328" Msn="lxy-CID30.mzXML#1081" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T344" Msn="lxy-CID30.mzXML#1134" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T360" Msn="lxy-CID30.mzXML#1186" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T376" Msn="lxy-CID30.mzXML#1238" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T392" Msn="lxy-CID30.mzXML#1290" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T423" Msn="lxy-CID30.mzXML#1396" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T442" Msn="lxy-CID30.mzXML#1458" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T459" Msn="lxy-CID30.mzXML#1515" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T476" Msn="lxy-CID30.mzXML#1571" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T493" Msn="lxy-CID30.mzXML#1627" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T512" Msn="lxy-CID30.mzXML#1688" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T528" Msn="lxy-CID30.mzXML#1742" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T545" Msn="lxy-CID30.mzXML#1796" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T561" Msn="lxy-CID30.mzXML#1851" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T583" Msn="lxy-CID30.mzXML#1921" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T599" Msn="lxy-CID30.mzXML#1975" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T616" Msn="lxy-CID30.mzXML#2032" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T633" Msn="lxy-CID30.mzXML#2085" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T649" Msn="lxy-CID30.mzXML#2137" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T664" Msn="lxy-CID30.mzXML#2190" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T686" Msn="lxy-CID30.mzXML#2260" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T703" Msn="lxy-CID30.mzXML#2316" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T727" Msn="lxy-CID30.mzXML#2396" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T749" Msn="lxy-CID30.mzXML#2468" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T768" Msn="lxy-CID30.mzXML#2530" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T802" Msn="lxy-CID30.mzXML#2643" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T958" Msn="lxy-CID30.mzXML#3156" length="1">
+<node kegg="C00601" ms1="M121T703">lxy-CID30.mzXML#2316</node>
+</unknown>
+<unknown name="M121T1021" Msn="lxy-CID30.mzXML#3363" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T1038" Msn="lxy-CID30.mzXML#3419" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T407" Msn="lxy-CID30.mzXML#1342" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+</compound>
+<compound kegg="C20782" candidates="48">
+<unknown name="M121T6" Msn="lxy-CID30.mzXML#19" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T23" Msn="lxy-CID30.mzXML#74" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T39" Msn="lxy-CID30.mzXML#126" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T55" Msn="lxy-CID30.mzXML#179" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T88" Msn="lxy-CID30.mzXML#291" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T105" Msn="lxy-CID30.mzXML#345" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T121" Msn="lxy-CID30.mzXML#397" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T137" Msn="lxy-CID30.mzXML#449" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T153" Msn="lxy-CID30.mzXML#504" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T170" Msn="lxy-CID30.mzXML#558" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T185" Msn="lxy-CID30.mzXML#609" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T201" Msn="lxy-CID30.mzXML#661" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T217" Msn="lxy-CID30.mzXML#713" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T233" Msn="lxy-CID30.mzXML#765" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T249" Msn="lxy-CID30.mzXML#818" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T264" Msn="lxy-CID30.mzXML#869" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T280" Msn="lxy-CID30.mzXML#921" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T296" Msn="lxy-CID30.mzXML#976" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T328" Msn="lxy-CID30.mzXML#1081" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T344" Msn="lxy-CID30.mzXML#1134" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T360" Msn="lxy-CID30.mzXML#1186" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T376" Msn="lxy-CID30.mzXML#1238" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T392" Msn="lxy-CID30.mzXML#1290" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T423" Msn="lxy-CID30.mzXML#1396" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T442" Msn="lxy-CID30.mzXML#1458" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T459" Msn="lxy-CID30.mzXML#1515" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T476" Msn="lxy-CID30.mzXML#1571" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T493" Msn="lxy-CID30.mzXML#1627" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T512" Msn="lxy-CID30.mzXML#1688" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T528" Msn="lxy-CID30.mzXML#1742" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T545" Msn="lxy-CID30.mzXML#1796" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T561" Msn="lxy-CID30.mzXML#1851" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T583" Msn="lxy-CID30.mzXML#1921" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T599" Msn="lxy-CID30.mzXML#1975" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T616" Msn="lxy-CID30.mzXML#2032" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T633" Msn="lxy-CID30.mzXML#2085" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T649" Msn="lxy-CID30.mzXML#2137" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T664" Msn="lxy-CID30.mzXML#2190" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T686" Msn="lxy-CID30.mzXML#2260" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T703" Msn="lxy-CID30.mzXML#2316" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T727" Msn="lxy-CID30.mzXML#2396" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T749" Msn="lxy-CID30.mzXML#2468" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T768" Msn="lxy-CID30.mzXML#2530" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T802" Msn="lxy-CID30.mzXML#2643" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T958" Msn="lxy-CID30.mzXML#3156" length="1">
+<node kegg="C00601" ms1="M121T703">lxy-CID30.mzXML#2316</node>
+</unknown>
+<unknown name="M121T1021" Msn="lxy-CID30.mzXML#3363" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T1038" Msn="lxy-CID30.mzXML#3419" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M121T407" Msn="lxy-CID30.mzXML#1342" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+</compound>
+<compound kegg="C07086" candidates="6">
+<unknown name="M137T104" Msn="lxy-CID30.mzXML#344" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M137T170" Msn="lxy-CID30.mzXML#560" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M137T197" Msn="lxy-CID30.mzXML#648" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M137T741" Msn="lxy-CID30.mzXML#2444" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M137T1026" Msn="lxy-CID30.mzXML#3380" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+<unknown name="M137T13" Msn="lxy-CID30.mzXML#43" length="1">
+<node kegg="C00601" ms1="M121T958">lxy-CID30.mzXML#3156</node>
+</unknown>
+</compound>
+<compound kegg="C11637" candidates="9">
+<unknown name="M391T592" Msn="lxy-CID30.mzXML#1950" length="1">
+<node kegg="C00695" ms1="M391T868">lxy-CID30.mzXML#2861</node>
+</unknown>
+<unknown name="M391T636" Msn="lxy-CID30.mzXML#2096" length="1">
+<node kegg="C00695" ms1="M391T868">lxy-CID30.mzXML#2861</node>
+</unknown>
+<unknown name="M391T694" Msn="lxy-CID30.mzXML#2287" length="1">
+<node kegg="C00695" ms1="M391T868">lxy-CID30.mzXML#2861</node>
+</unknown>
+<unknown name="M391T729" Msn="lxy-CID30.mzXML#2402" length="1">
+<node kegg="C00695" ms1="M391T837">lxy-CID30.mzXML#2757</node>
+</unknown>
+<unknown name="M391T853" Msn="lxy-CID30.mzXML#2810" length="1">
+<node kegg="C00695" ms1="M391T868">lxy-CID30.mzXML#2861</node>
+</unknown>
+<unknown name="M391T868" Msn="lxy-CID30.mzXML#2861" length="1">
+<node kegg="C00695" ms1="M391T837">lxy-CID30.mzXML#2757</node>
+</unknown>
+<unknown name="M391T900" Msn="lxy-CID30.mzXML#2967" length="1">
+<node kegg="C00695" ms1="M391T868">lxy-CID30.mzXML#2861</node>
+</unknown>
+<unknown name="M391T917" Msn="lxy-CID30.mzXML#3023" length="1">
+<node kegg="C00695" ms1="M391T868">lxy-CID30.mzXML#2861</node>
+</unknown>
+<unknown name="M391T837" Msn="lxy-CID30.mzXML#2757" length="1">
+<node kegg="C00695" ms1="M391T868">lxy-CID30.mzXML#2861</node>
+</unknown>
+</compound>
+<compound kegg="C03871" candidates="2">
+<unknown name="M190T159" Msn="lxy-CID30.mzXML#523" length="2">
+<node kegg="C00047" ms1="M147T65">lxy-CID30.mzXML#213</node>
+<node kegg="C00680" ms1="M190T632">lxy-CID30.mzXML#2083</node>
+</unknown>
+<unknown name="M190T176" Msn="lxy-CID30.mzXML#580" length="2">
+<node kegg="C00047" ms1="M147T65">lxy-CID30.mzXML#213</node>
+<node kegg="C00680" ms1="M190T632">lxy-CID30.mzXML#2083</node>
+</unknown>
+</compound>
+<compound kegg="C03227" candidates="1">
+<unknown name="M224T309" Msn="lxy-CID30.mzXML#1018" length="2">
+<node kegg="C02470" ms1="M206T299">lxy-CID30.mzXML#983</node>
+<node kegg="C05645" ms1="M224T266">lxy-CID30.mzXML#874</node>
+</unknown>
+</compound>
+<compound kegg="C12123" candidates="1">
+<unknown name="M255T590" Msn="lxy-CID30.mzXML#1945" length="2">
+<node kegg="C10208" ms1="M255T590">lxy-CID30.mzXML#1945</node>
+<node kegg="C15567" ms1="M273T152">lxy-CID30.mzXML#500</node>
+</unknown>
+</compound>
+</MetaDNA>
