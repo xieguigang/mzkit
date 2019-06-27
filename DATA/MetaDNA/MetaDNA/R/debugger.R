@@ -84,13 +84,14 @@ do.write.network <- function(infer) {
 			
 			for (unknown_name in names(trace.cluster)) {
 				trace <- trace.cluster[[unknown_name]];
-				
-				write('<unknown name="%s" length="%s">', unknown_name, length(trace));
+				unknown_name <- Strings.Split(unknown_name, "\\|");
+				write('<unknown name="%s" Msn="%s" length="%s">', unknown_name[1], unknown_name[2], length(trace));
 				
 				for(node in trace) {
 					node <- Strings.Split(node, "\\|");
+					feature <- Strings.Split(node[2], "[#]");
 					
-					write('<node kegg="%s">%s</node>', node[1], node[2]);
+					write('<node kegg="%s" ms1="">%s</node>', node[1], feature[1], sprintf("%s#%s", feature[2], feature[3]));
 				}
 				
 				write('</unknown>');
