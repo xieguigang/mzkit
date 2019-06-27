@@ -44,6 +44,8 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
 ''' KEGG knowledge base for MetaDNA algorithm.
@@ -51,7 +53,15 @@ Imports System.Xml.Serialization
 ''' 
 <XmlRoot("MetaDNA")> Public Class XML
 
-    <XmlElement("compound")> Public Property compounds As compound()
+    <XmlElement("compound")>
+    Public Property compounds As compound()
+
+    Public Overrides Function ToString() As String
+        Return compounds _
+            .SafeQuery _
+            .Select(Function(c) c.kegg) _
+            .GetJson
+    End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function LoadDocument(file As String) As XML
@@ -69,18 +79,28 @@ Public Class compound
     <XmlElement("unknown")>
     Public Property candidates As unknown()
 
+    Public Overrides Function ToString() As String
+        Return $"{kegg} have {candidates.Length} candidates: {candidates.Select(Function(c) c.name).GetJson}"
+    End Function
+
 End Class
 
 Public Class unknown
+
     <XmlAttribute> Public Property name As String
     <XmlAttribute> Public Property Msn As String
     <XmlAttribute> Public Property length As Integer
 
     <XmlElement("node")>
     Public Property edges As node()
+
+    Public Overrides Function ToString() As String
+        Return $"{name}: {edges.Select(Function(n) n.kegg).JoinBy(" -> ")}"
+    End Function
 End Class
 
 Public Class node
+
     <XmlAttribute> Public Property kegg As String
     <XmlAttribute> Public Property ms1 As String
 
@@ -90,4 +110,9 @@ Public Class node
     ''' <returns></returns>
     <XmlText>
     Public Property ms2 As String
+
+    Public Overrides Function ToString() As String
+        Return $"Dim {kegg} = ""{ms1}|{ms2}"""
+    End Function
+
 End Class
