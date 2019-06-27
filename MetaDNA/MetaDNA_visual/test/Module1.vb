@@ -1,9 +1,11 @@
-﻿Module Module1
+﻿Imports MetaDNA.visual
+
+Module Module1
 
     Sub Main()
 
-        Dim model = Global.MetaDNA.visual.XML.LoadDocument("D:\MassSpectrum-toolkits\DATA\MetaDNA\test\MetaDNA.Xml")
-
+        Dim model = Global.MetaDNA.visual.XML.LoadDocument("D:\MassSpectrum-toolkits\MetaDNA\test\MetaDNA.Xml")
+        Dim graph = model.CreateGraph
 
         Pause()
     End Sub
