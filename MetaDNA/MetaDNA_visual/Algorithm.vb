@@ -43,12 +43,61 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.visualize.Network
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 
 Public Module Algorithm
 
     <Extension>
     Public Function CreateGraph(metaDNA As XML) As NetworkGraph
+        Dim g As New NetworkGraph
+        Dim kegg_compound As Graph.Node
+        Dim candidate_compound As Graph.Node
+        Dim edge As Edge
 
+        For Each compound In metaDNA.compounds
+            kegg_compound = New Graph.Node With {
+                .Label = compound.kegg,
+                .data = New NodeData()
+            }
+
+            Call g.AddNode(kegg_compound)
+
+            For Each candidate In compound.candidates
+                candidate_compound = New Graph.Node With {
+                    .Label = candidate.name,
+                    .data = New NodeData With {.label = candidate.Msn}
+                }
+                edge = New Edge With {
+                    .U = kegg_compound,
+                    .V = candidate_compound,
+                    .weight = candidate.edges.Length,
+                    .data = New EdgeData
+                }
+
+                Call g.AddNode(candidate_compound)
+                Call g.AddEdge(edge)
+
+                For i As Integer = 0 To candidate.length - 2
+                    edge = New Edge With {
+                        .data = New EdgeData,
+                        .U = g.GetNode(candidate.edges(i).ms1),
+                        .V = g.GetNode(candidate.edges(i + 1).ms1)
+                    }
+
+                    Call g.AddEdge(edge)
+                Next
+
+                ' add edge that infer to current candidate
+                edge = New Edge With {
+                    .data = New EdgeData,
+                    .U = g.GetNode(candidate.edges.Last.ms1),
+                    .V = g.GetNode(candidate.name)
+                }
+                Call g.AddEdge(edge)
+            Next
+        Next
+
+        Return g
     End Function
 End Module
