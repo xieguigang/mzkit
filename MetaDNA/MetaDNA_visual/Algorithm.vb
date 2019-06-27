@@ -55,6 +55,7 @@ Public Module Algorithm
         Dim candidate_compound As Graph.Node
         Dim edge As Edge
         Dim candidateParent As node
+        Dim seedNode As Graph.Node
 
         For Each compound As compound In metaDNA.compounds
             kegg_compound = New Graph.Node With {
@@ -84,10 +85,32 @@ Public Module Algorithm
                 Call g.AddNode(candidate_compound)
                 Call g.AddEdge(edge)
 
+                ' add common seed node
+                ' is a metaDNA seed from reference library
+                ' spectrum alignment result
+                seedNode = g.GetNode(candidate.edges(Scan0).ms1)
+
+                If seedNode Is Nothing Then
+                    ' 还没有添加进入网络之中
+                    seedNode = New Graph.Node With {
+                        .Label = candidate.edges(Scan0).ms1,
+                        .data = New NodeData With {
+                            .label = candidate.edges(Scan0).ms1,
+                            .origID = candidate.edges(Scan0).ms2,
+                            .Properties = New Dictionary(Of String, String) From {
+                                {"type", "seed"}
+                            }
+                        }
+                    }
+
+                    Call g.AddNode(seedNode)
+                End If
+
                 For i As Integer = 0 To candidate.length - 2
+                    seedNode = g.GetNode(candidate.edges(i).ms1)
                     edge = New Edge With {
                         .data = New EdgeData,
-                        .U = g.GetNode(candidate.edges(i).ms1),
+                        .U = seedNode,
                         .V = g.GetNode(candidate.edges(i + 1).ms1)
                     }
 
