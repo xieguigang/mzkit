@@ -42,6 +42,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 
 ''' <summary>
@@ -52,6 +53,10 @@ Imports System.Xml.Serialization
 
     <XmlElement("compound")> Public Property compounds As compound()
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Function LoadDocument(file As String) As XML
+        Return file.SolveStream.LoadFromXml(Of XML)
+    End Function
 End Class
 
 Public Class compound
