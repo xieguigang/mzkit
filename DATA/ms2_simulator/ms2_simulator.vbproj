@@ -99,11 +99,12 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Biodeep\</OutputPath>
     <DocumentationFile>ms2_simulator.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|x86'">
     <DefineTrace>true</DefineTrace>
@@ -137,10 +138,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BoundEnergy.vb" />
-    <Compile Include="EnergyModel.vb" />
-    <Compile Include="Emulator.vb" />
-    <Compile Include="GA.vb" />
+    <Compile Include="Emulator\BoundEnergy.vb" />
+    <Compile Include="Emulator\BoundEnergyFinder.vb" />
+    <Compile Include="Emulator\EnergyModel.vb" />
+    <Compile Include="Emulator\Emulator.vb" />
+    <Compile Include="GA\EnergyDistribution.vb" />
+    <Compile Include="GA\GA.vb" />
     <Compile Include="RTPrediction.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -201,7 +204,7 @@
     </ProjectReference>
     <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Graph\GraphTheory.vbproj">
       <Project>{203BC68F-A0CD-443A-AB62-4AF4110F752F}</Project>
-      <Name>Graph</Name>
+      <Name>GraphTheory</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\ODE\ODEsSolver.vbproj">
       <Project>{14e0b048-3a0d-4fd6-aa79-9b815d6f1b30}</Project>
