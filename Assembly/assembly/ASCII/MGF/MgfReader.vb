@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Language
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports SMRUCC.MassSpectrum.Math.Spectra
@@ -46,16 +47,13 @@ Namespace ASCII.MGF
             Dim title$ = getValue("TITLE")
             Dim meta As Dictionary(Of String, String)
 
-            With r.Match(title, regexp_META, RegexICSng).Value
+            With title.Replace(title.Split.First, "").Trim
                 If .StringEmpty Then
                     ' 没有添加其他的注释信息
                     meta = New Dictionary(Of String, String)
                 Else
-                    title = title.Replace(.ByRef, "")
-                    meta = .StringSplit(",\s+") _
-                        .Select(Function(s) s.GetTagValue(":")) _
-                        .ToDictionary(Function(key) key.Name,
-                                      Function(val) val.Value.Trim(""""c))
+                    title = title.Replace(.ByRef, "").Trim
+                    meta = .parseMetaInfo
                 End If
             End With
 
@@ -71,6 +69,16 @@ Namespace ASCII.MGF
                 .Meta = meta,
                 .Charge = CInt(Val(getValue("CHARGE"))) Or 1.AsDefault
             }
+        End Function
+
+        <Extension>
+        Private Function parseMetaInfo(substr As String) As Dictionary(Of String, String)
+            Return substr.StringSplit(",\s+") _
+                .Select(Function(s) s.GetTagValue(":")) _
+                .ToDictionary(Function(key) key.Name,
+                              Function(val)
+                                  Return val.Value.Trim(""""c)
+                              End Function)
         End Function
     End Module
 End Namespace

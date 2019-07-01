@@ -34,7 +34,7 @@ Namespace ASCII.MGF
             If ion.Meta.IsNullOrEmpty Then
                 Return ion.Title
             Else
-                Return $"{ion.Title} {ion.Meta.Select(Function(m) $"{m.Key}:""{m.Value}""").JoinBy(" ")}"
+                Return $"{ion.Title} {ion.Meta.Select(Function(m) $"{m.Key}:""{m.Value}""").JoinBy(", ")}"
             End If
         End Function
 
