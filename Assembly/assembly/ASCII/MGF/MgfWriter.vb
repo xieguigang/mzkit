@@ -30,9 +30,18 @@ Namespace ASCII.MGF
         End Function
 
         <Extension>
+        Private Function ionTitle(ion As Ions) As String
+            If ion.Meta.IsNullOrEmpty Then
+                Return ion.Title
+            Else
+                Return $"{ion.Title} {ion.Meta.Select(Function(m) $"{m.Key}:""{m.Value}""").JoinBy(" ")}"
+            End If
+        End Function
+
+        <Extension>
         Public Sub WriteAsciiMgf(ion As Ions, out As StreamWriter)
             Call out.WriteLine("BEGIN IONS")
-            Call out.WriteLine("TITLE=" & ion.Title)
+            Call out.WriteLine("TITLE=" & ion.ionTitle)
             Call out.WriteLine("RTINSECONDS=" & ion.RtInSeconds)
             Call out.WriteLine($"PEPMASS={ion.PepMass.name} {ion.PepMass.text}")
             Call out.WriteLine("CHARGE=" & ion.Charge)
