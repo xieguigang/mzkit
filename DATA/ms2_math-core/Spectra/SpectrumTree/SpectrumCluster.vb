@@ -52,13 +52,22 @@ Namespace Spectra
 
     Public Class SpectrumCluster : Implements IEnumerable(Of PeakMs2)
 
+        ''' <summary>
+        ''' 当前的这个质谱图聚类之中的代表性质谱图
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Representative As PeakMs2
+
         ''' <summary>
         ''' 在这个属性之中也会通过包含有<see cref="Representative"/>代表质谱图
         ''' </summary>
         ''' <returns></returns>
         Public Property cluster As PeakMs2()
 
+        ''' <summary>
+        ''' <see cref="cluster"/> members count
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Length As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
