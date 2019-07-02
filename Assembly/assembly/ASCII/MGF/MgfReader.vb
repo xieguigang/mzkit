@@ -46,16 +46,15 @@ Namespace ASCII.MGF
             Dim mass As NamedValue
             Dim title$ = getValue("TITLE")
             Dim meta As Dictionary(Of String, String)
+            Dim metaStr$ = title.Replace(title.Split.First, "").Trim
 
-            With title.Replace(title.Split.First, "").Trim
-                If .StringEmpty Then
-                    ' 没有添加其他的注释信息
-                    meta = New Dictionary(Of String, String)
-                Else
-                    title = title.Replace(.ByRef, "").Trim
-                    meta = .parseMetaInfo
-                End If
-            End With
+            If metaStr.StringEmpty Then
+                ' 没有添加其他的注释信息
+                meta = New Dictionary(Of String, String)
+            Else
+                title = title.Split.First
+                meta = metaStr.parseMetaInfo
+            End If
 
             With getValue("PEPMASS").StringSplit("\s+")
                 mass = New NamedValue(.First, .Last)
