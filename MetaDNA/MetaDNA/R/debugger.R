@@ -43,9 +43,15 @@ network.trace <- function(result) {
 				# produced by ``trace.node`` function.
 				#
 				trace   <- feature$align$trace;
+				scores  <- feature$align$score;
 				kegg_id <- feature$kegg.info$kegg$ID;
 				hit     <- feature$align$ms2.name;
-				hit     <- sprintf("%s|%s#%s", feature$name, hit$file, hit$scan);
+				hit     <- sprintf(
+					"%s|%s#%s|%s|%s,%s", 
+					feature$name, hit$file, hit$scan, 
+					feature$feature$maxinto, 
+					scores[1], scores[2]
+				);
 				
 				paralog <- infer.routine[[kegg_id]] %||% list();
 				paralog[[hit]] <- trace;
@@ -83,8 +89,18 @@ do.write.network <- function(write, infer) {
 		
 		for (unknown_name in names(trace.cluster)) {
 			trace <- trace.cluster[[unknown_name]];
+			# `M137T1026|lxy-CID30.mzXML#3380|29188.0625|0.889599165343844,0.821310092994763`
+			# id|ms2_index|maxinto|forward,reverse
 			unknown_name <- Strings.Split(unknown_name, "\\|");
-			write('<unknown name="%s" Msn="%s" length="%s">', unknown_name[1], unknown_name[2], length(trace));
+			align_scores <- Strings.Split(unknown_name[4], ",");
+			
+			write('<unknown name="%s" Msn="%s" length="%s" intensity="%s" scores="%s">', 
+				unknown_name[1], 
+				unknown_name[2], 
+				length(trace), 
+				unknown_name[3], 
+				sprintf("%s %s", align_scores[1], align_scores[2])
+			);
 			
 			for(node in trace) {
 				node <- Strings.Split(node, "\\|");
