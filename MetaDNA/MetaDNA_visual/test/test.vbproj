@@ -154,6 +154,10 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Microsoft.VisualBasic.Imaging.vbproj">
+      <Project>{85e71b4b-9276-4ec8-aadc-c849205f1ea8}</Project>
+      <Name>Microsoft.VisualBasic.Imaging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MetaDNA_visual.vbproj">
       <Project>{7b4a6d81-24d4-481c-8b6b-3129136b57a0}</Project>
       <Name>MetaDNA_visual</Name>
