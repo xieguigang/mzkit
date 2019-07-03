@@ -20,7 +20,7 @@ Module Module1
 
     Private Sub visualNet(file As String)
         Dim model = MetaDNA.visual.XML.LoadDocument(file)
-        Dim graph = model.CreateGraph.doForceLayout(iterations:=2000)
+        Dim graph = model.CreateGraph.doForceLayout(iterations:=2000, showProgress:=True)
 
         Call graph.Draw().Save(file.ChangeSuffix("png"))
     End Sub
