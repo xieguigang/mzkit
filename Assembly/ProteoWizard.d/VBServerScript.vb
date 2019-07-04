@@ -254,9 +254,8 @@ Public Class VBServerScript : Inherits WebApp
         ' url decoding for restore the original file path value
         Dim path$ = EnsureZipExtract(normalizePath(request.URLParameters("path")))
         Dim out$ = path.ParentPath & "/msconvert"
-        Dim args$ = $"{path.CLIPath} --mz64 --mzXML --zlib --filter ""msLevel 1-2"" --ignoreUnknownInstrumentError -o {out.CLIPath}"
 
-        Call New IORedirectFile(BIN, args).Run()
+        Call New ProteoWizardCLI(BIN).Convert2mzML(path, out, ProteoWizardCLI.OutFileTypes.mzXML)
         Call "Task complete!".__INFO_ECHO
 
         If Not response Is Nothing Then
@@ -288,7 +287,7 @@ Public Class VBServerScript : Inherits WebApp
         Dim path$ = EnsureZipExtract(normalPath)
         Dim out$ = normalizePath(request.URLParameters("to").UrlDecode) Or $"{path.ParentPath}/msconvert".AsDefault
 
-        Call New ProteoWizardCLI(BIN).Convert2mzML(path, out)
+        Call New ProteoWizardCLI(BIN).Convert2mzML(path, out, ProteoWizardCLI.OutFileTypes.mzML)
         Call "Task complete!".__INFO_ECHO
 
         If Not response Is Nothing Then
