@@ -5,8 +5,12 @@ Module batchConvertor
     Sub Main()
         Dim cli As New ProteoWizardCLI(App.GetVariable("bin"))
 
-        For Each file As String In App.CommandLine.Name.EnumerateFiles("*.raw")
-            Call cli.Convert2mzML(file, App.CommandLine.Name, ProteoWizardCLI.OutFileTypes.mzXML)
+        For Each dir As String In App.CommandLine.Name.ListDirectory
+            For Each file As String In dir.EnumerateFiles("*.raw")
+                If Not file.ChangeSuffix("mzXML").FileLength > 1024 Then
+                    Call cli.Convert2mzML(file, dir, ProteoWizardCLI.OutFileTypes.mzXML)
+                End If
+            Next
         Next
     End Sub
 End Module
