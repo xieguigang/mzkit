@@ -10,6 +10,8 @@ Module batchConvertor
                 If Not file.ChangeSuffix("mzXML").FileLength > 1024 Then
                     Call cli.Convert2mzML(file, dir, ProteoWizardCLI.OutFileTypes.mzXML)
                 End If
+
+                Call file.Warning
             Next
         Next
     End Sub
