@@ -44,6 +44,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -69,10 +70,10 @@ Imports Microsoft.VisualBasic.Serialization.JSON
     End Function
 End Class
 
-Public Class compound
+Public Class compound : Implements INamedValue
 
     <XmlAttribute>
-    Public Property kegg As String
+    Public Property kegg As String Implements INamedValue.Key
     <XmlAttribute("candidates")>
     Public Property size As Integer
 

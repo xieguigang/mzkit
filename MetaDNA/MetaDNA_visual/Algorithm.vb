@@ -65,7 +65,8 @@ Public Module Algorithm
                     .label = compound.kegg,
                     .origID = compound.kegg,
                     .Properties = New Dictionary(Of String, String) From {
-                        {NamesOf.REFLECTION_ID_MAPPING_NODETYPE, "kegg_compound"}
+                        {NamesOf.REFLECTION_ID_MAPPING_NODETYPE, "kegg_compound"},
+                        {"candidates", compound.size}
                     }
                 }
             }
@@ -79,7 +80,9 @@ Public Module Algorithm
                         .label = candidate.name,
                         .origID = candidate.Msn,
                         .Properties = New Dictionary(Of String, String) From {
-                            {NamesOf.REFLECTION_ID_MAPPING_NODETYPE, "MetaDNA.candidate"}
+                            {NamesOf.REFLECTION_ID_MAPPING_NODETYPE, "MetaDNA.candidate"},
+                            {"intensity", candidate.intensity},
+                            {"infer.depth", candidate.length}
                         }
                     }
                 }
@@ -90,7 +93,9 @@ Public Module Algorithm
                     .data = New EdgeData With {
                         .label = $"{candidate_compound.Label} infer as {kegg_compound.Label}",
                         .Properties = New Dictionary(Of String, String) From {
-                            {NamesOf.REFLECTION_ID_MAPPING_INTERACTION_TYPE, "is_candidate"}
+                            {NamesOf.REFLECTION_ID_MAPPING_INTERACTION_TYPE, "is_candidate"},
+                            {"score.forward", candidate.scores.ElementAtOrNull(0)},
+                            {"score.reverse", candidate.scores.ElementAtOrNull(1)}
                         }
                     }
                 }
