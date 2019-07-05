@@ -7,6 +7,25 @@ Namespace ASCII.MGF
 
     Public Module MgfWriter
 
+        <Extension>
+        Public Function MgfIon(matrix As PeakMs2) As Ions
+            Return New Ions With {
+                .Charge = 1,
+                .Peaks = matrix.mzInto.Array,
+                .PepMass = New NamedValue With {
+                    .name = matrix.mz,
+                    .text = matrix.Ms2Intensity
+                },
+                .RtInSeconds = matrix.rt,
+                .Title = $"{matrix.file}#{matrix.scan}",
+                .Meta = New Dictionary(Of String, String) From {
+                    {"rawfile", matrix.file},
+                    {"collisionEnergy", matrix.collisionEnergy},
+                    {"activation", matrix.activation}
+                }
+            }
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function MgfIon(matrix As LibraryMatrix, Optional precursor As ms2 = Nothing) As Ions

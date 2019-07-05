@@ -100,7 +100,7 @@ Namespace TMIC.HMDB
         ''' hmdb的主编号
         ''' </summary>
         ''' <returns></returns>
-        Public Property accession As String Implements IKeyedEntity(Of String).Key, IMolecule.ID
+        Public Property accession As String Implements IKeyedEntity(Of String).Key, IMolecule.EntryId
         Public Property secondary_accessions As secondary_accessions
         Public Property name As String Implements IMolecule.Name
         Public Property description As String
