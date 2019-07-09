@@ -211,7 +211,12 @@ Module Program
         End If
 
         Using mgfWriter As StreamWriter = out.OpenWriter(Encodings.ASCII, append:=False)
-            For Each ms2Scan As scan In mzXML.XML.LoadScans([in]).Where(Function(s) s.msLevel = "2")
+            For Each ms2Scan As scan In mzXML.XML _
+                .LoadScans([in]) _
+                .Where(Function(s)
+                           Return s.msLevel = "2"
+                       End Function)
+
                 peak = ms2Scan.ScanData(basename)
                 peak.MgfIon.WriteAsciiMgf(mgfWriter)
             Next
