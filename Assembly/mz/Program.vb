@@ -56,6 +56,7 @@ Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzXML
 Imports SMRUCC.MassSpectrum.Math.Ms1.PrecursorType
 Imports SMRUCC.MassSpectrum.Math.Spectra
 Imports SMRUCC.MassSpectrum.Assembly.ASCII.MGF
+
 Module Program
 
     Public Function Main() As Integer
@@ -202,7 +203,7 @@ Module Program
     <Usage("/mgf /in <rawdata.mzXML> [/out <ions.mgf>]")>
     Public Function DumpMs2(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
-        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.mgf/"
+        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.mgf"
         Dim peak As PeakMs2
         Dim basename$ = [in].FileName
 
