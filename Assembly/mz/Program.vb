@@ -46,18 +46,20 @@ Imports System.ComponentModel
 Imports System.IO
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine
+Imports Microsoft.VisualBasic.CommandLine.InteropService.SharedORM
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Text
+Imports SMRUCC.MassSpectrum.Assembly.ASCII.MGF
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzXML
 Imports SMRUCC.MassSpectrum.Math.Ms1.PrecursorType
 Imports SMRUCC.MassSpectrum.Math.Spectra
-Imports SMRUCC.MassSpectrum.Assembly.ASCII.MGF
 
-Module Program
+<CLI> Module Program
 
     Public Function Main() As Integer
         Return GetType(Program).RunCLI(App.CommandLine)
@@ -224,6 +226,23 @@ Module Program
         End Using
 
         Return 0
+    End Function
+
+    <ExportAPI("/mgf.batch")>
+    <Usage("/mgf.batch /in <data.directory> [/out <data.directory>]")>
+    Public Function DumpMs2Batch(args As CommandLine) As Integer
+        Dim in$ = (args <= "/in").GetDirectoryFullPath
+        Dim out$ = args("/out") Or [in]
+        Dim outMgf$
+        Dim index As New List(Of String)
+
+        For Each rawfile As String In ls - l - r - "*.mzXML" <= [in]
+            outMgf = rawfile.Replace([in], "")
+            outMgf = outMgf.ChangeSuffix("mgf")
+            outMgf = $"{out}/{outMgf}"
+
+
+        Next
     End Function
 End Module
 
