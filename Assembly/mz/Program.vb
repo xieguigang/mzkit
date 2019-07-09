@@ -46,16 +46,22 @@ Imports System.ComponentModel
 Imports System.IO
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine
+Imports Microsoft.VisualBasic.CommandLine.InteropService.SharedORM
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.GraphTheory
+Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.MIME.application.json.JSONSerializer
+Imports Microsoft.VisualBasic.Text
+Imports SMRUCC.MassSpectrum.Assembly.ASCII.MGF
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzXML
 Imports SMRUCC.MassSpectrum.Math.Ms1.PrecursorType
 Imports SMRUCC.MassSpectrum.Math.Spectra
 
-Module Program
+<CLI> Module Program
 
     Public Function Main() As Integer
         Return GetType(Program).RunCLI(App.CommandLine)
@@ -205,17 +211,61 @@ Module Program
     ''' </summary>
     ''' <param name="args"></param>
     ''' <returns></returns>
-    <ExportAPI("/Dump.ms2")>
-    <Usage("/Dump.ms2 /in <lib.mzXML> [/out <out.directory>]")>
+    <ExportAPI("/mgf")>
+    <Description("Export all of the ms2 ions in target mzXML file and save as mgf file format.")>
+    <Usage("/mgf /in <rawdata.mzXML> [/out <ions.mgf>]")>
     Public Function DumpMs2(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
-        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.dump/"
-        Dim allMs2Scans = mzXML.XML.LoadScans([in]) _
-            .Where(Function(s) s.msLevel = "2") _
-            .ToArray
+        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.mgf"
+        Dim peak As PeakMs2
+        Dim basename$ = [in].FileName
 
-        ' 首先按照m/z分组
+        If [in].GetFullPath = out.GetFullPath Then
+            Throw New InvalidDataException("Input and output can not be the same file!")
+        End If
 
+        Using mgfWriter As StreamWriter = out.OpenWriter(Encodings.ASCII, append:=False)
+            For Each ms2Scan As scan In mzXML.XML _
+                .LoadScans([in]) _
+                .Where(Function(s)
+                           Return s.msLevel = "2"
+                       End Function)
+
+                peak = ms2Scan.ScanData(basename)
+                peak.MgfIon.WriteAsciiMgf(mgfWriter)
+            Next
+        End Using
+
+        Return 0
+    End Function
+
+    <ExportAPI("/mgf.batch")>
+    <Usage("/mgf.batch /in <data.directory> [/out <data.directory>]")>
+    Public Function DumpMs2Batch(args As CommandLine) As Integer
+        Dim in$ = (args <= "/in").GetDirectoryFullPath
+        Dim out$ = args("/out") Or [in]
+        Dim outMgf$
+        Dim index As New TermTree(Of String) With {
+            .ID = 0,
+            .Childs = New Dictionary(Of String, Tree(Of String, String)),
+            .Data = "#",
+            .Label = "/",
+            .Parent = Nothing
+        }
+        Dim this = CLI.mz.FromEnvironment(App.HOME)
+
+        For Each rawfile As String In ls - l - r - "*.mzXML" <= [in]
+            outMgf = rawfile.Replace("\", "/").Replace([in], "")
+            outMgf = outMgf.ChangeSuffix("mgf")
+
+            Call index.Add(outMgf, outMgf.FileName)
+            Call this.DumpMs2(rawfile, $"{out}/{outMgf}")
+        Next
+
+        Return index _
+            .GetJson(maskReadonly:=True) _
+            .SaveTo($"{out}/index.json") _
+            .CLICode
     End Function
 End Module
 
