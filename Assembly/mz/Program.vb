@@ -254,7 +254,7 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
         Next
 
         Return index _
-            .GetJson _
+            .GetJson(maskReadonly:=True) _
             .SaveTo($"{out}/index.json") _
             .CLICode
     End Function
