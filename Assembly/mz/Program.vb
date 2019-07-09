@@ -51,7 +51,9 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 Imports SMRUCC.MassSpectrum.Assembly.ASCII.MGF
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData
@@ -234,15 +236,27 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
         Dim in$ = (args <= "/in").GetDirectoryFullPath
         Dim out$ = args("/out") Or [in]
         Dim outMgf$
-        Dim index As New List(Of String)
+        Dim index As New TermTree(Of String) With {
+            .ID = 0,
+            .Childs = New Dictionary(Of String, Tree(Of String, String)),
+            .Data = "#",
+            .Label = "/",
+            .Parent = Nothing
+        }
+        Dim this = CLI.mz.FromEnvironment(App.HOME)
 
         For Each rawfile As String In ls - l - r - "*.mzXML" <= [in]
             outMgf = rawfile.Replace([in], "")
             outMgf = outMgf.ChangeSuffix("mgf")
-            outMgf = $"{out}/{outMgf}"
 
-
+            Call index.Add(outMgf, outMgf.FileName)
+            Call this.DumpMs2(rawfile, $"{out}/{outMgf}")
         Next
+
+        Return index _
+            .GetJson _
+            .SaveTo($"{out}/index.json") _
+            .CLICode
     End Function
 End Module
 
