@@ -53,7 +53,6 @@ Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Language.UnixBash
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 Imports SMRUCC.MassSpectrum.Assembly.ASCII.MGF
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData
@@ -250,7 +249,7 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
             outMgf = outMgf.ChangeSuffix("mgf")
 
             Call index.Add(outMgf, outMgf.FileName)
-            Call this.DumpMs2(rawfile, $"{out}/{outMgf}")
+            ' Call this.DumpMs2(rawfile, $"{out}/{outMgf}")
         Next
 
         Return index _
