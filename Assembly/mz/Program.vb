@@ -66,6 +66,12 @@ Module Program
     <Argument("/out", True, CLITypes.File, PipelineTypes.std_out,
               AcceptTypes:={GetType(String)},
               Description:="If this argument is not config in cli input, then result will be print on console.")>
+    <Argument("/mass", False, CLITypes.Double,
+              AcceptTypes:={GetType(Double)},
+              Description:="The exact mass value.")>
+    <Argument("/mode", True, CLITypes.String,
+              AcceptTypes:={GetType(String)},
+              Description:="The polarity mode, except of value +/-, and the value of pos/neg/p/n is also accepts.")>
     Public Function Calculator(args As CommandLine) As Integer
         Dim mass# = args("/mass")
         Dim mode$ = args("/mode") Or "+"
@@ -144,6 +150,9 @@ Module Program
     <ExportAPI("/export")>
     <Usage("/export /in <data.mzXML> /scan <ms2_scan> [/out <out.txt>]")>
     <Description("Export a single ms2 scan data.")>
+    <Argument("/scan", False, CLITypes.Integer,
+              AcceptTypes:={GetType(Integer)},
+              Description:="The scan index number.")>
     Public Function MGF(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim scan& = args <= "/scan"
