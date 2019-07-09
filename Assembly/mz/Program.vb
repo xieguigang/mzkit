@@ -250,7 +250,7 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
             outMgf = outMgf.ChangeSuffix("mgf")
 
             Call index.Add(outMgf, outMgf.FileName)
-            ' Call this.DumpMs2(rawfile, $"{out}/{outMgf}")
+            Call this.DumpMs2(rawfile, $"{out}/{outMgf}")
         Next
 
         Return index _
