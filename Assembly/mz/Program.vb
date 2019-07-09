@@ -260,6 +260,7 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
 
             Call index.Add(outMgf, outMgf.FileName)
             Call this.DumpMs2(rawfile, $"{out}/{outMgf}")
+            ' Call rawfile.__DEBUG_ECHO
         Next
 
         Return index _
