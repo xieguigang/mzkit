@@ -170,6 +170,10 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\mime\application%25json\application.json.vbproj">
+      <Project>{32228818-26f1-44df-8d40-347136c743cd}</Project>
+      <Name>application.json</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\DATA\ms2_math-core\MassSpectrum.math-core.vbproj">
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
       <Name>MassSpectrum.math-core</Name>

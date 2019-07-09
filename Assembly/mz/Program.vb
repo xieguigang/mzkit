@@ -53,6 +53,7 @@ Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.MIME.application.json.JSONSerializer
 Imports Microsoft.VisualBasic.Text
 Imports SMRUCC.MassSpectrum.Assembly.ASCII.MGF
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData
