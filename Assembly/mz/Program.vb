@@ -240,7 +240,7 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
     End Function
 
     <ExportAPI("/mgf.batch")>
-    <Usage("/mgf.batch /in <data.directory> [/out <data.directory>]")>
+    <Usage("/mgf.batch /in <data.directory> [/index_only /out <data.directory>]")>
     Public Function DumpMs2Batch(args As CommandLine) As Integer
         Dim in$ = (args <= "/in").GetDirectoryFullPath
         Dim out$ = args("/out") Or [in]
@@ -253,14 +253,19 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
             .Parent = Nothing
         }
         Dim this = CLI.mz.FromEnvironment(App.HOME)
+        Dim indexOnly As Boolean = args("/index_only")
 
         For Each rawfile As String In ls - l - r - "*.mzXML" <= [in]
             outMgf = rawfile.Replace("\", "/").Replace([in], "")
             outMgf = outMgf.ChangeSuffix("mgf")
 
             Call index.Add(outMgf, outMgf.FileName)
-            Call this.DumpMs2(rawfile, $"{out}/{outMgf}")
-            ' Call rawfile.__DEBUG_ECHO
+
+            If Not indexOnly Then
+                Call this.DumpMs2(rawfile, $"{out}/{outMgf}")
+            Else
+                Call rawfile.__DEBUG_ECHO
+            End If
         Next
 
         Return index _
