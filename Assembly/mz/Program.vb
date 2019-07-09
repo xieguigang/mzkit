@@ -246,7 +246,7 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
         Dim this = CLI.mz.FromEnvironment(App.HOME)
 
         For Each rawfile As String In ls - l - r - "*.mzXML" <= [in]
-            outMgf = rawfile.Replace([in], "")
+            outMgf = rawfile.Replace("\", "/").Replace([in], "")
             outMgf = outMgf.ChangeSuffix("mgf")
 
             Call index.Add(outMgf, outMgf.FileName)
