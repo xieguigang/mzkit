@@ -131,6 +131,7 @@ Namespace MarkupData.mzXML
         ''' <param name="basename"></param>
         ''' <param name="shrinkTolerance">
         ''' If this tolerance value is not nothing, then the fragment with mz inside this given tolerance will be merge.
+        ''' Otherwise all of the raw data will be keeps.
         ''' </param>
         ''' <returns></returns>
         Public Function ScanData(Optional basename$ = Nothing, Optional shrinkTolerance As Tolerance = Nothing) As PeakMs2
