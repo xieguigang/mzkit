@@ -23,7 +23,14 @@ trace.node <- function(seed) {
 network.trace <- function(result) {
 	infer.routine <- list();
 	
+	tick <- tick.helper(length(result));
+	cat("\n");
+	cat("\n");
+	cat("  Progress%: ");
+	
 	for (cluster in result) {
+		tick();
+	
 		if (cluster %=>% IsNothing) {
 			next;
 		}
@@ -61,6 +68,8 @@ network.trace <- function(result) {
 		}
 	}
 	
+	cat("\n\n");
+	
 	infer.routine;
 }
 
@@ -82,8 +91,15 @@ save.network <- function(infer, outputdir) {
 }
 
 do.write.network <- function(write, infer) {
+	totals <- names(infer) %=>% length;
+	n <- 0;
+	
 	for (kegg_id in names(infer)) {
 		trace.cluster <- infer[[kegg_id]];
+		
+		if (debug.echo) {
+			print(sprintf("  [%s/%s] %s", n, totals, kegg_id));
+		}
 		
 		write('<compound kegg="%s" candidates="%s">', kegg_id, length(trace.cluster));
 		
