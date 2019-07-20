@@ -72,6 +72,12 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
     <Argument("/out", True, CLITypes.File, PipelineTypes.std_out,
               AcceptTypes:={GetType(String)},
               Description:="If this argument is not config in cli input, then result will be print on console.")>
+    <Argument("/mass", False, CLITypes.Double,
+              AcceptTypes:={GetType(Double)},
+              Description:="The exact mass value.")>
+    <Argument("/mode", True, CLITypes.String,
+              AcceptTypes:={GetType(String)},
+              Description:="The polarity mode, except of value +/-, and the value of pos/neg/p/n is also accepts.")>
     Public Function Calculator(args As CommandLine) As Integer
         Dim mass# = args("/mass")
         Dim mode$ = args("/mode") Or "+"
@@ -150,6 +156,9 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
     <ExportAPI("/export")>
     <Usage("/export /in <data.mzXML> /scan <ms2_scan> [/out <out.txt>]")>
     <Description("Export a single ms2 scan data.")>
+    <Argument("/scan", False, CLITypes.Integer,
+              AcceptTypes:={GetType(Integer)},
+              Description:="The scan index number.")>
     Public Function MGF(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim scan& = args <= "/scan"
@@ -231,7 +240,7 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
     End Function
 
     <ExportAPI("/mgf.batch")>
-    <Usage("/mgf.batch /in <data.directory> [/out <data.directory>]")>
+    <Usage("/mgf.batch /in <data.directory> [/index_only /out <data.directory>]")>
     Public Function DumpMs2Batch(args As CommandLine) As Integer
         Dim in$ = (args <= "/in").GetDirectoryFullPath
         Dim out$ = args("/out") Or [in]
@@ -244,13 +253,19 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
             .Parent = Nothing
         }
         Dim this = CLI.mz.FromEnvironment(App.HOME)
+        Dim indexOnly As Boolean = args("/index_only")
 
         For Each rawfile As String In ls - l - r - "*.mzXML" <= [in]
             outMgf = rawfile.Replace("\", "/").Replace([in], "")
             outMgf = outMgf.ChangeSuffix("mgf")
 
             Call index.Add(outMgf, outMgf.FileName)
-            Call this.DumpMs2(rawfile, $"{out}/{outMgf}")
+
+            If Not indexOnly Then
+                Call this.DumpMs2(rawfile, $"{out}/{outMgf}")
+            Else
+                Call rawfile.__DEBUG_ECHO
+            End If
         Next
 
         Return index _

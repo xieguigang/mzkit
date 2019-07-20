@@ -115,6 +115,8 @@ Namespace Ms1
         ''' <param name="mz2#"></param>
         ''' <returns></returns>
         Public MustOverride Function MassError(mz1#, mz2#) As Double
+        Public MustOverride Function MassErrorDescription(mz1#, mz2#) As String
+
         ''' <summary>
         ''' 判断目标分子质量误差是否符合当前的误差要求
         ''' </summary>

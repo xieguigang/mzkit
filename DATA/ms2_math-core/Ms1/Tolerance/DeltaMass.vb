@@ -76,5 +76,9 @@ Namespace Ms1
         Public Overrides Function ToString() As String
             Return $"|mz1 - mz2| <= {Threshold}"
         End Function
+
+        Public Overrides Function MassErrorDescription(mz1 As Double, mz2 As Double) As String
+            Return $"{MassError(mz1, mz2)} da"
+        End Function
     End Class
 End Namespace

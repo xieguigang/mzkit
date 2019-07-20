@@ -3,7 +3,6 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports SMRUCC.MassSpectrum.Math.Spectra
-Imports r = System.Text.RegularExpressions.Regex
 
 Namespace ASCII.MGF
 
