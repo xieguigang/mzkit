@@ -111,6 +111,7 @@ do.write.network <- function(write, infer) {
 
 		if (debug.echo) {
 			print(sprintf("  [%s/%s] %s", n, totals, kegg_id));
+		    n <- n + 1;
 		}
 
 		write('<compound kegg="%s" candidates="%s">', kegg_id, length(trace.cluster));
