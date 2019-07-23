@@ -146,5 +146,7 @@ do.write.network <- function(write, infer) {
 		write("</compound>");
 	}
 
+	cat("\n\n");
+
 	invisible(NULL);
 }
