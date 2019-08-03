@@ -87,6 +87,7 @@ Public Module StandardCurve
             .ToDictionary(Function(ion) ion.Name,
                           Function(A) A.Value)
         Dim names As Dictionary(Of String, IonPair) = ions.ToDictionary(Function(i) i.AccID)
+        Dim C#
 
         raw = raw.FileName
 
@@ -113,9 +114,15 @@ Public Module StandardCurve
                 End If
             End If
 
-            ' 利用峰面积比计算出浓度结果数据
-            ' 然后通过X轴的数据就可以通过标准曲线的线性回归模型计算出浓度了
-            Dim C# = metabolite.LinearRegression(X)
+            If metabolite.LinearRegression Is Nothing Then
+                Call $"Missing metabolite {metabolite.Name} in raw file!".Warning
+
+                Continue For
+            Else
+                ' 利用峰面积比计算出浓度结果数据
+                ' 然后通过X轴的数据就可以通过标准曲线的线性回归模型计算出浓度了
+                C# = metabolite.LinearRegression(X)
+            End If
 
             ' 这里的C是相当于 cIS/ct = C，则样品的浓度结果应该为 ct = cIS/C
             ' C = Val(info!cIS) / C
