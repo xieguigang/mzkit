@@ -148,6 +148,7 @@
     <Compile Include="Chromatogram\Quantile.vb" />
     <Compile Include="Chromatogram\ROI.vb" />
     <Compile Include="Extensions.vb" />
+    <Compile Include="Ms1\Ms1FeatureExtensions.vb" />
     <Compile Include="Ms1\PolarityData.vb" />
     <Compile Include="Ms1\PrecursorType\Extensions.vb" />
     <Compile Include="Ms1\PrecursorType\Formula\Negative.vb" />
