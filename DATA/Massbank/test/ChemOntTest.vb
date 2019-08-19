@@ -9,7 +9,7 @@ Public Module ChemOntTest
         Dim table = ClassyfireInfoTable.PopulateMolecules(anno, ChemOnt).ToArray
 
 
-        Call table.SaveTo("D:\Database\CID-Synonym-filtered\class\HMDB_36_classyfire_21_annotations_infoTable.csv")
+        Call ClassyfireInfoTable.Unique(table).ToArray.SaveTo("D:\Database\CID-Synonym-filtered\class\HMDB_36_classyfire_21_annotations_infoTable.csv")
 
         Pause()
     End Sub

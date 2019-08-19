@@ -1,5 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.ComponentModel
 Imports SMRUCC.genomics.foundation.OBO_Foundry.Tree
 Imports SMRUCC.MassSpectrum.DATA.MetaLib.Models
 
@@ -30,7 +30,13 @@ Public Class ClassyfireInfoTable : Implements ICompoundClass
                 End With
             Next
 
-            For Each classy In lineages.Values
+            For Each classy As NamedCollection(Of GenericTree) In lineages _
+                .Values _
+                .GroupBy(Function(l) l(5).name) _
+                .Select(Function(lg)
+                            Return lg.First
+                        End Function)
+
                 Yield New ClassyfireInfoTable With {
                     .CompoundID = compound.Key,
                     .kingdom = classy(1).name,
@@ -40,6 +46,49 @@ Public Class ClassyfireInfoTable : Implements ICompoundClass
                     .molecular_framework = classy(5).name
                 }
             Next
+        Next
+    End Function
+
+    Public Shared Iterator Function Unique(table As IEnumerable(Of ClassyfireInfoTable)) As IEnumerable(Of ClassyfireInfoTable)
+        Dim classyfire = table.ToArray
+        Dim kingdoms = classyfire.Select(Function(c) c.kingdom).TokenCount
+        Dim super_classs = classyfire.Select(Function(c) c.super_class).TokenCount
+        Dim classs = classyfire.Select(Function(c) c.class).TokenCount
+        Dim sub_class = classyfire.Select(Function(c) c.sub_class).TokenCount
+        Dim molecular_framework = classyfire.Select(Function(c) c.molecular_framework).TokenCount
+        Dim groupBy As Map(Of Func(Of ClassyfireInfoTable, String), Dictionary(Of String, Integer))() = {
+            New Map(Of Func(Of ClassyfireInfoTable, String), Dictionary(Of String, Integer))(Function(c) c.kingdom, kingdoms),
+            New Map(Of Func(Of ClassyfireInfoTable, String), Dictionary(Of String, Integer))(Function(c) c.super_class, super_classs),
+            New Map(Of Func(Of ClassyfireInfoTable, String), Dictionary(Of String, Integer))(Function(c) c.class, classs),
+            New Map(Of Func(Of ClassyfireInfoTable, String), Dictionary(Of String, Integer))(Function(c) c.sub_class, sub_class),
+            New Map(Of Func(Of ClassyfireInfoTable, String), Dictionary(Of String, Integer))(Function(c) c.molecular_framework, molecular_framework)
+        }
+        Dim uniqueMax As ClassyfireInfoTable() = Nothing
+
+        For Each compound In classyfire.GroupBy(Function(c) c.CompoundID)
+            If compound.Count = 1 Then
+                Yield compound.First
+            Else
+                Dim doYield As Boolean = False
+
+                For Each method In groupBy
+                    uniqueMax = compound _
+                        .GroupBy(method.Key) _
+                        .OrderByDescending(Function(g) method.Maps(g.Key)) _
+                        .First _
+                        .ToArray
+
+                    If uniqueMax.Length = 1 Then
+                        Yield uniqueMax.First
+                        doYield = True
+                        Exit For
+                    End If
+                Next
+
+                If Not doYield Then
+                    Yield uniqueMax.First
+                End If
+            End If
         Next
     End Function
 End Class
