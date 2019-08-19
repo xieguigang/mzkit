@@ -11,7 +11,9 @@ Public Module Ms1FeatureExtensions
     ''' </summary>
     ''' <param name="mzrt"></param>
     ''' <returns></returns>
-    ''' 
+    ''' <remarks>
+    ''' 利用得到的编号列表从另外的一个物质表中选取对应的feature
+    ''' </remarks>
     <Extension>
     Public Function peakGroup(mzrt As String, Optional dt% = 5) As NamedValue(Of Index(Of String))
         Dim mz = mzrt.Match("M\d+")
