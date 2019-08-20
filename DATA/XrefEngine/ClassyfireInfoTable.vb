@@ -22,7 +22,13 @@ Public Class ClassyfireInfoTable : Implements ICompoundClass
         For Each compound In anno.GroupBy(Function(a) a.CompoundID)
             lineages.Clear()
 
-            For Each term In compound
+            For Each term As ClassyfireAnnotation In compound _
+                .Where(Function(row)
+                           ' 20190820 classyfire的数据库文件格式存在一些错误
+                           ' 所以会需要在这里进行一下判断, 否则会出现无法找到键名称的问题
+                           Return row.ChemOntID.IsPattern("CHEMONTID[:]\d+")
+                       End Function)
+
                 With chemOntClassify.GetLineages(term.ChemOntID)
                     For Each line In .Where(Function(node) node.value.Length >= 6)
                         lineages(line.description) = line
