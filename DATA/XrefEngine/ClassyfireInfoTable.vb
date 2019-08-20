@@ -30,20 +30,14 @@ Public Class ClassyfireInfoTable : Implements ICompoundClass
                 End With
             Next
 
-            For Each classy As NamedCollection(Of GenericTree) In lineages _
-                .Values _
-                .GroupBy(Function(l) l(5).name) _
-                .Select(Function(lg)
-                            Return lg.First
-                        End Function)
-
+            For Each classy As NamedCollection(Of GenericTree) In lineages.Values
                 Yield New ClassyfireInfoTable With {
                     .CompoundID = compound.Key,
                     .kingdom = classy(1).name,
                     .super_class = classy(2).name,
                     .[class] = classy(3).name,
                     .sub_class = classy(4).name,
-                    .molecular_framework = classy(5).name
+                    .molecular_framework = classy.Last.name
                 }
             Next
         Next

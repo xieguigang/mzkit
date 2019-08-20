@@ -1,7 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports SMRUCC.genomics.foundation.OBO_Foundry
+Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.MassSpectrum.DATA.MetaLib.Models
 
 ''' <summary>
@@ -34,35 +33,22 @@ Public Module FillClass
              classifyObo As ChemOntClassify,
              getKey As Func(Of cpd, String)) As Func(Of cpd, cpd)
 
-        Dim annotations = anno _
-           .GroupBy(Function(a) a.CompoundID) _
-           .ToDictionary(Function(a) a.Key,
-                         Function(a)
-                             Return a.ToArray
-                         End Function)
-        Dim kingdom As Index(Of String) = classifyObo.kingdom.TermIndex
-        Dim super_class As Index(Of String) = classifyObo.superClass.TermIndex
-        Dim [class] As Index(Of String) = classifyObo.class.TermIndex
-        Dim sub_class As Index(Of String) = classifyObo.subClass.TermIndex
-        Dim molecular_framework = classifyObo.molecularFramework.TermIndex
+        Dim annotations = ClassyfireInfoTable.PopulateMolecules(anno, classifyObo) _
+            .DoCall(Function(mols) ClassyfireInfoTable.Unique(mols)) _
+            .ToDictionary(Function(c) c.CompoundID)
 
         Return Function(compound) As cpd
                    Dim compoundKey As String = getKey(compound)
 
                    If annotations.ContainsKey(compoundKey) Then
-                       Dim classyfire As ClassyfireAnnotation() = annotations(compoundKey)
-                       Dim getByLevel = Function(level As Index(Of String)) As String
-                                            Return classyfire _
-                                                .FirstOrDefault(Function(a) a.ChemOntID Like level) _
-                                               ?.ParentName
-                                        End Function
+                       Dim classyfire As ClassyfireInfoTable = annotations(compoundKey)
 
                        With compound
-                           .class = getByLevel([class])
-                           .kingdom = getByLevel(kingdom)
-                           .molecular_framework = getByLevel(molecular_framework)
-                           .sub_class = getByLevel(sub_class)
-                           .super_class = getByLevel(super_class)
+                           .class = classyfire.class
+                           .kingdom = classyfire.kingdom
+                           .molecular_framework = classyfire.molecular_framework
+                           .sub_class = classyfire.sub_class
+                           .super_class = classyfire.super_class
                        End With
                    End If
 
