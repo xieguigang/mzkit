@@ -51,6 +51,11 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
 
 Namespace ASCII.MGF
 
+    ''' <summary>
+    ''' Data model of a mgf ion
+    ''' 
+    ''' > http://www.matrixscience.com/help/data_file_help.html
+    ''' </summary>
     Public Class Ions
 
         Public Property Title As String
@@ -65,6 +70,28 @@ Namespace ASCII.MGF
         ''' <returns></returns>
         Public Property RtInSeconds As Double
         Public Property Charge As Integer
+        ''' <summary>
+        ''' Database entries to be searched
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Accession As String
+        Public Property Instrument As String
+        Public Property Rawfile As String
+        ''' <summary>
+        ''' Hierarchical scan range identifier
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Locus As String
+        ''' <summary>
+        ''' Element sequence
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Sequence As String
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Database As String
         Public Property PepMass As NamedValue
         ''' <summary>
         ''' MS/MS peaks

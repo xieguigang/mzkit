@@ -65,7 +65,13 @@ Namespace ASCII.MGF
                 .PepMass = mass,
                 .Title = title,
                 .Meta = meta,
-                .Charge = CInt(Val(getValue("CHARGE"))) Or 1.AsDefault
+                .Charge = CInt(Val(getValue("CHARGE"))) Or 1.AsDefault,
+                .Accession = getValue("ACCESSION"),
+                .Rawfile = getValue("RAWFILE"),
+                .Instrument = getValue("INSTRUMENT"),
+                .Locus = getValue("LOCUS"),
+                .Sequence = getValue("SEQ"),
+                .Database = getValue("DB")
             }
         End Function
 

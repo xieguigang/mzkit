@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{2223FB63-E148-4342-87E6-495571B2898E}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>test.HMDBqueryTest</StartupObject>
+    <StartupObject>test.ChemOntTest</StartupObject>
     <RootNamespace>test</RootNamespace>
     <AssemblyName>test</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -91,6 +91,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChemOntTest.vb" />
     <Compile Include="Module1.vb" />
     <Compile Include="inchiTest.vb" />
     <Compile Include="metaLibLoaderTest.vb" />
@@ -145,6 +146,10 @@
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\XrefEngine\XrefEngine.vbproj">
+      <Project>{1EE9CB3A-4625-4406-9E9D-CD2E471CD67A}</Project>
+      <Name>XrefEngine</Name>
     </ProjectReference>
     <ProjectReference Include="..\Massbank.vbproj">
       <Project>{a686bdf5-077f-47f5-a8dd-c73e6e88363c}</Project>
