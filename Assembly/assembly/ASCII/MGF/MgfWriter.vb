@@ -79,6 +79,9 @@ Namespace ASCII.MGF
             Call out.writeIf("ACCESSION", ion.Accession)
             Call out.writeIf("INSTRUMENT", ion.Instrument)
             Call out.writeIf("RAWFILE", ion.Rawfile)
+            Call out.writeIf("DB", ion.Database)
+            Call out.writeIf("SEQ", ion.Sequence)
+            Call out.writeIf("LOCUS", ion.Locus)
 
             For Each fragment As ms2 In ion.Peaks
                 Call out.WriteLine($"{fragment.mz} {fragment.intensity}")

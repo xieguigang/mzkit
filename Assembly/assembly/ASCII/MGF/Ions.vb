@@ -77,6 +77,21 @@ Namespace ASCII.MGF
         Public Property Accession As String
         Public Property Instrument As String
         Public Property Rawfile As String
+        ''' <summary>
+        ''' Hierarchical scan range identifier
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Locus As String
+        ''' <summary>
+        ''' Element sequence
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Sequence As String
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Database As String
         Public Property PepMass As NamedValue
         ''' <summary>
         ''' MS/MS peaks
