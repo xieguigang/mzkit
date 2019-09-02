@@ -134,7 +134,10 @@ Namespace MarkupData.mzXML
         ''' Otherwise all of the raw data will be keeps.
         ''' </param>
         ''' <returns></returns>
-        Public Function ScanData(Optional basename$ = Nothing, Optional shrinkTolerance As Tolerance = Nothing) As PeakMs2
+        Public Function ScanData(Optional basename$ = Nothing,
+                                 Optional shrinkTolerance As Tolerance = Nothing,
+                                 Optional raw As Boolean = False) As PeakMs2
+
             Dim mzInto As LibraryMatrix = peaks _
                 .ExtractMzI _
                 .Where(Function(p) p.intensity > 0) _
@@ -151,7 +154,9 @@ Namespace MarkupData.mzXML
                 mzInto = mzInto.Shrink(shrinkTolerance)
             End If
 
-            mzInto = mzInto / mzInto.Max
+            If Not raw Then
+                mzInto = mzInto / mzInto.Max
+            End If
 
             Return New PeakMs2 With {
                 .mz = precursorMz,

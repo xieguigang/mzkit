@@ -213,12 +213,16 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
     ''' <returns></returns>
     <ExportAPI("/mgf")>
     <Description("Export all of the ms2 ions in target mzXML file and save as mgf file format.")>
-    <Usage("/mgf /in <rawdata.mzXML> [/out <ions.mgf>]")>
+    <Usage("/mgf /in <rawdata.mzXML> [/relative /out <ions.mgf>]")>
+    <Argument("/relative", True, CLITypes.Boolean,
+              AcceptTypes:={GetType(Boolean)},
+              Description:="Dumping the relative intensity value instead of the raw intensity value.")>
     Public Function DumpMs2(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim out$ = args("/out") Or $"{[in].TrimSuffix}.mgf"
         Dim peak As PeakMs2
         Dim basename$ = [in].FileName
+        Dim relativeInto As Boolean = args("/relative")
 
         If [in].GetFullPath = out.GetFullPath Then
             Throw New InvalidDataException("Input and output can not be the same file!")
@@ -231,8 +235,8 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
                            Return s.msLevel = "2"
                        End Function)
 
-                peak = ms2Scan.ScanData(basename)
-                peak.MgfIon.WriteAsciiMgf(mgfWriter)
+                peak = ms2Scan.ScanData(basename, raw:=Not relativeInto)
+                peak.MgfIon.WriteAsciiMgf(mgfWriter, relativeInto)
             Next
         End Using
 

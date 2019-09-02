@@ -69,7 +69,7 @@ Namespace ASCII.MGF
         End Sub
 
         <Extension>
-        Public Sub WriteAsciiMgf(ion As Ions, out As StreamWriter)
+        Public Sub WriteAsciiMgf(ion As Ions, out As StreamWriter, Optional relativeIntensity As Boolean = False)
             Call out.WriteLine("BEGIN IONS")
             Call out.WriteLine("TITLE=" & ion.ionTitle)
             Call out.WriteLine("RTINSECONDS=" & ion.RtInSeconds)
@@ -84,8 +84,13 @@ Namespace ASCII.MGF
             Call out.writeIf("SEQ", ion.Sequence)
             Call out.writeIf("LOCUS", ion.Locus)
 
+            Dim mz, into As Double
+
             For Each fragment As ms2 In ion.Peaks
-                Call out.WriteLine($"{fragment.mz} {fragment.intensity}")
+                mz = fragment.mz
+                into = If(relativeIntensity, fragment.quantity, fragment.intensity)
+
+                Call out.WriteLine($"{mz} {into}")
             Next
 
             Call out.WriteLine("END IONS")
