@@ -236,7 +236,9 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
                        End Function)
 
                 peak = ms2Scan.ScanData(basename, raw:=Not relativeInto)
-                peak.MgfIon.WriteAsciiMgf(mgfWriter, relativeInto)
+                peak _
+                    .MgfIon _
+                    .WriteAsciiMgf(mgfWriter, relativeInto)
             Next
         End Using
 
