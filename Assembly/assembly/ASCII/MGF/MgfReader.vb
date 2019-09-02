@@ -56,7 +56,8 @@ Namespace ASCII.MGF
                 .Select(Function(l)
                             Return New ms2 With {
                                 .mz = l(0),
-                                .intensity = l(1)
+                                .intensity = l(1),
+                                .quantity = .intensity
                             }
                         End Function) _
                 .ToArray
