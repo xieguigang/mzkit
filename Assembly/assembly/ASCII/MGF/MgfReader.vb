@@ -10,10 +10,24 @@ Namespace ASCII.MGF
 
         Const regexp_META$ = "((,\s*)?\S+[:]"".*?"")+"
 
+        <Extension>
+        Public Function IonPeaks(ions As IEnumerable(Of Ions)) As IEnumerable(Of PeakMs2)
+            Return ions _
+                .Select(Function(ion)
+                            Return New PeakMs2 With {.activation = ion.Meta.TryGetValue("activation")}
+                        End Function)
+        End Function
+
         Public Iterator Function StreamParser(path$) As IEnumerable(Of Ions)
             Dim lines$() = path.ReadAllLines
+            Dim ionBlocks = lines _
+                .Split(delimiter:=Function(s)
+                                      Return s = "END IONS"
+                                  End Function,
+                       deliPosition:=DelimiterLocation.NotIncludes
+                )
 
-            For Each ion As String() In lines.Split(Function(s) s = "END IONS", DelimiterLocation.NotIncludes)
+            For Each ion As String() In ionBlocks
                 Yield ParseIonBlock(ion)
             Next
         End Function
