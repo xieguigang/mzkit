@@ -14,7 +14,18 @@ Namespace ASCII.MGF
         Public Function IonPeaks(ions As IEnumerable(Of Ions)) As IEnumerable(Of PeakMs2)
             Return ions _
                 .Select(Function(ion)
-                            Return New PeakMs2 With {.activation = ion.Meta.TryGetValue("activation")}
+                            Return New PeakMs2 With {
+                                .activation = ion.Meta.TryGetValue("activation"),
+                                .collisionEnergy = ion.Meta.TryGetValue("collisionEnergy"),
+                                .file = ion.Rawfile,
+                                .mz = ion.PepMass.name,
+                                .mzInto = New LibraryMatrix With {
+                                    .ms2 = ion.Peaks,
+                                    .Name = ion.Title
+                                },
+                                .rt = ion.RtInSeconds,
+                                .scan = ion.Meta.TryGetValue("scan")
+                            }
                         End Function)
         End Function
 
