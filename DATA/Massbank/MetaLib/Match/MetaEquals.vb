@@ -100,7 +100,7 @@ Namespace MetaLib
         End Function
 
         Private Function comparesInteger(yes As Action, no As Action) As Action(Of String, String)
-            Dim intId As VBInteger = 0
+            Dim intId As i32 = 0
 
             Return Sub(a$, b$)
                        a = Strings.Trim(a)

@@ -126,7 +126,7 @@ Module Program
         End With
 
         Using dataset As New DataSetWriter(Of MetaLib)(out)
-            Dim i As VBInteger = 0
+            Dim i As i32 = 0
 
             For Each meta As MetaLib In CIDSynonym _
                 .LoadMetaInfo([in]) _
@@ -171,7 +171,7 @@ Module Program
         Dim in$ = args <= "/in"
         Dim db$ = args <= "/db"
         Dim out$ = args("/out") Or $"{[in].TrimSuffix}.{db}.csv"
-        Dim i As VBInteger = 0
+        Dim i As i32 = 0
 
         Using table As New WriteStream(Of SIDMap)(out)
             For Each sid As SIDMap In SIDMap.GetMaps([in])
