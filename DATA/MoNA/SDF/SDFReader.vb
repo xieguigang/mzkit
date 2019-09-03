@@ -73,7 +73,7 @@ Public Module SDFReader
                 Return commonName
             Else
                 ' 还会包含分子式
-                prefix = r.Match(commonName, "^[CHOP0-9]+[_]", RegexOptions.Multiline)
+                prefix = r.Match(commonName, "^[CHOPNS0-9]+[_]", RegexOptions.Multiline)
 
                 If prefix.Success Then
                     commonName = commonName.Replace(prefix.Value, "")
