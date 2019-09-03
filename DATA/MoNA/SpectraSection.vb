@@ -7,7 +7,6 @@ Public Class SpectraSection : Inherits MetaInfo
 
     Public Property SpectraInfo As SpectraInfo
     Public Property Comment As NameValueCollection
-    Public Property MassPeaks As ms2()
 
     ''' <summary>
     ''' MoNA里面都主要是讲注释的信息放在<see cref="Comment"/>字段里面的。
@@ -31,6 +30,7 @@ Public Class SpectraSection : Inherits MetaInfo
 End Class
 
 Public Class SpectraInfo
+
     Public Property MsLevel As String
     Public Property mz As Double
     Public Property precursor_type As String
@@ -47,4 +47,6 @@ Public Class SpectraInfo
     Public Property retention_time As String
     Public Property solvent_a As String
     Public Property solvent_b As String
+
+    Public Property MassPeaks As ms2()
 End Class

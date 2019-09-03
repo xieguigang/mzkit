@@ -81,7 +81,6 @@ Public Module SDFReader
         For Each mol As SDF In SDF.IterateParser(path, parseStruct:=False)
             Dim M As Func(Of String, String) = mol.readMeta
             Dim commentMeta = mol.MetaData!COMMENT.ToTable
-            Dim ms2 As ms2() = Nothing
             Dim info As SpectraInfo = Nothing
             Dim commonName$ = Strings.Trim(M("NAME")).Trim(ASCII.Quot)
             Dim exact_mass# = M("EXACT MASS")
@@ -99,7 +98,8 @@ Public Module SDFReader
 
             If Not skipSpectraInfo Then
                 info = M.readSpectraInfo.FixMzType(exact_mass, recalculateMz)
-                ms2 = mol.MetaData("MASS SPECTRAL PEAKS") _
+                info.MassPeaks = mol _
+                    .MetaData("MASS SPECTRAL PEAKS") _
                     .Select(Function(line) line.Split) _
                     .Select(Function(line)
                                 Return New ms2 With {
@@ -117,7 +117,6 @@ Public Module SDFReader
                 .Comment = commentMeta,
                 .formula = M("FORMULA"),
                 .exact_mass = exact_mass,
-                .MassPeaks = ms2,
                 .xref = xref,
                 .SpectraInfo = info
             }
