@@ -61,6 +61,29 @@ Imports r = System.Text.RegularExpressions.Regex
 ''' </summary>
 Public Module SDFReader
 
+    Private Function TrimGNPSName(commonName As String) As String
+        Dim prefix = r.Match(commonName, "^[A-Z]+\d+[-]\d+[!_]", RegexOptions.Multiline)
+
+        If Not prefix.Success Then
+            Return commonName
+        Else
+            commonName = commonName.Replace(prefix.Value, "")
+
+            If prefix.Value.Last = "!" Then
+                Return commonName
+            Else
+                ' 还会包含分子式
+                prefix = r.Match(commonName, "^[CHOP0-9]+[_]", RegexOptions.Multiline)
+
+                If prefix.Success Then
+                    commonName = commonName.Replace(prefix.Value, "")
+                End If
+
+                Return commonName
+            End If
+        End If
+    End Function
+
     ''' <summary>
     ''' 
     ''' </summary>
@@ -89,7 +112,7 @@ Public Module SDFReader
 
             ' fix naming bugs in GNPS library
             If InStr(xrefID, "CCMSLIB") = 1 Then
-                commonName = r.Replace(commonName, "^[A-Z]+\d+[-]\d+[!_]", "", RegexOptions.Multiline)
+                commonName = TrimGNPSName(commonName)
 
                 If commonName.StringEmpty AndAlso xref.IsEmpty(xref) Then
                     Continue For
