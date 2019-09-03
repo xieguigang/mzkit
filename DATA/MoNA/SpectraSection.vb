@@ -29,3 +29,22 @@ Public Class SpectraSection : Inherits MetaInfo
         End Get
     End Property
 End Class
+
+Public Class SpectraInfo
+    Public Property MsLevel As String
+    Public Property mz As Double
+    Public Property precursor_type As String
+    Public Property instrument_type As String
+    Public Property instrument As String
+    Public Property collision_energy As String
+    Public Property ion_mode As String
+    Public Property ionization As String
+    Public Property fragmentation_mode As String
+    Public Property resolution As String
+    Public Property column As String
+    Public Property flow_gradient As String
+    Public Property flow_rate As String
+    Public Property retention_time As String
+    Public Property solvent_a As String
+    Public Property solvent_b As String
+End Class
