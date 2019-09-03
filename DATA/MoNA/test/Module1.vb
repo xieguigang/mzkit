@@ -8,7 +8,7 @@ Module Module1
     End Sub
 
     Sub exportIdList()
-        Dim idlist = SDFReader.ParseFile("D:\Database\MoNA\MoNA-export-GNPS-sdf\MoNA-export-GNPS.sdf", skipSpectraInfo:=True).Select(Function(s) s.ID).Distinct.ToArray
+        Dim idlist = SDFReader.ParseFile("D:\Database\MoNA\MoNA-export-GNPS-sdf\MoNA-export-GNPS.sdf", skipSpectraInfo:=True).ToDictionary(Function(s) s.ID, Function(s) s.name)
 
         Call idlist.GetJson.SaveTo("D:\Database\MoNA\GNPS.json")
     End Sub
