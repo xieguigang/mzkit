@@ -8,6 +8,11 @@ Imports SMRUCC.MassSpectrum.DATA.NCBI.PubChem
 
 Public Module StorageProcedure
 
+    ''' <summary>
+    ''' Convert the pubchem sdf repository to mysql database file.
+    ''' </summary>
+    ''' <param name="repository$"></param>
+    ''' <param name="mysql$"></param>
     Public Sub CreateMySqlDatabase(repository$, mysql$)
         Call SDF.MoleculePopulator(directory:=repository, takes:=3) _
             .PopulateData _
