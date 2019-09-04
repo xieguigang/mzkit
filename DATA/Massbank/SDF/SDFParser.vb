@@ -68,9 +68,12 @@ Namespace File
                 .Split(Function(s) s = "$$$$", includes:=False)
 
                 offset = block.solveOffset()
-                block = block _
-                    .Skip(offset) _
-                    .ToArray
+
+                If offset > 0 Then
+                    block = block _
+                        .Skip(offset) _
+                        .ToArray
+                End If
 
                 Yield SDFParser.StreamParser(block, parseStruct)
             Next
@@ -82,7 +85,8 @@ Namespace File
         Private Iterator Function SplitMolData(block As String()) As IEnumerable(Of String())
             For i As Integer = 3 To block.Length - 1
                 If block(i) = MolEndMarks OrElse (InStr(block(i), ">") = 1) Then
-                    Dim mol$() = block.Skip(3).Take(i - 3).ToArray
+                    Dim addCurrent As Integer = If(block(i) = MolEndMarks, 1, 0)
+                    Dim mol$() = block.Skip(3).Take(i - 3 + addCurrent).ToArray
 
                     ' 抛出分子结构数据部分的文本数据行
                     If block(i) <> MolEndMarks Then
@@ -92,7 +96,7 @@ Namespace File
                     End If
 
                     ' 抛出分子物质注释信息部分的文本行数据
-                    Yield block.Skip(i).ToArray
+                    Yield block.Skip(i + addCurrent).ToArray
 
                     Exit For
                 ElseIf block(i) = "No Structure" Then
@@ -129,7 +133,11 @@ Namespace File
             Dim metas$()
             Dim mol$()
 
-            With block.SplitMolData
+            ' 使用iterator必须要注意
+            ' 调用一次linq函数会调用一次迭代器函数
+            ' 所以没有ToArray的时候下面的两个linq拓展函数会重新调用两次迭代器函数，浪费计算性能
+            ' 所以下面的代码必须要加上ToArray
+            With block.SplitMolData.ToArray
                 mol = .First
                 metas = .Last
             End With
