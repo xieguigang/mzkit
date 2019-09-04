@@ -6,6 +6,9 @@ Imports Oracle.LinuxCompatibility.MySQL
 Imports SMRUCC.MassSpectrum.DATA.File
 Imports SMRUCC.MassSpectrum.DATA.NCBI.PubChem
 
+''' <summary>
+''' Save pubchem sdf data files into mysql database format.
+''' </summary>
 Public Module StorageProcedure
 
     Public Sub CreateMySqlDatabase(repository$, mysql$)
