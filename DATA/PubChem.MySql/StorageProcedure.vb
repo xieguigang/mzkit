@@ -1,7 +1,9 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text.Xml.Linq
 Imports Oracle.LinuxCompatibility.MySQL
 Imports SMRUCC.MassSpectrum.DATA.File
 Imports SMRUCC.MassSpectrum.DATA.MetaLib.Models
@@ -10,7 +12,18 @@ Imports SMRUCC.MassSpectrum.DATA.NCBI.PubChem
 Public Module StorageProcedure
 
     Private Function LoadXref(xmlfile As String) As Func(Of String, MetaLib)
+        Dim empty As New MetaLib With {.xref = New xref}
+        Dim database As BucketDictionary(Of String, MetaLib) = xmlfile _
+            .LoadUltraLargeXMLDataSet(Of MetaLib)() _
+            .CreateBuckets(Function(m) m.ID)
 
+        Return Function(cid)
+                   If database.ContainsKey(cid) Then
+                       Return database(cid)
+                   Else
+                       Return empty
+                   End If
+               End Function
     End Function
 
     ''' <summary>
