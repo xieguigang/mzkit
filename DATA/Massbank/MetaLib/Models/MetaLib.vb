@@ -96,12 +96,18 @@ Namespace MetaLib.Models
     ''' </summary>
     Public Class MetaLib : Inherits MetaInfo
         Implements IEquatable(Of MetaLib)
+        Implements ICompoundClass
 
-        ''' <summary>
-        ''' 化合物分类
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property compound_class As String
+#Region "化合物分类"
+
+        Public Property kingdom As String Implements ICompoundClass.kingdom
+        Public Property super_class As String Implements ICompoundClass.super_class
+        Public Property [class] As String Implements ICompoundClass.class
+        Public Property sub_class As String Implements ICompoundClass.sub_class
+        Public Property molecular_framework As String Implements ICompoundClass.molecular_framework
+
+#End Region
+
         ''' <summary>
         ''' 仅限于人体内环境，这个化合物所存在的组织列表
         ''' </summary>
