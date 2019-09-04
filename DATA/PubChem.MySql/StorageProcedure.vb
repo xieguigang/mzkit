@@ -19,6 +19,15 @@ Public Module StorageProcedure
         For Each molecule As SDF In source
             Dim descriptor As ChemicalDescriptor = molecule.ChemicalProperties
 
+            Yield New mysql.descriptor With {
+                .atom_def_stereo_count = 0,
+                .cid = molecule.CID,
+                .complexity = descriptor.Complexity,
+                .hbond_acceptor = descriptor.HydrogenAcceptor,
+                .hbond_donor = descriptor.HydrogenDonors,
+                .xlogp3_aa = descriptor.XLogP3_AA,
+                .tpsa = descriptor.TopologicalPolarSurfaceArea
+            }
         Next
     End Function
 End Module
