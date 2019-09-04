@@ -16,6 +16,13 @@ Namespace NCBI.PubChem.PCCompound
                 Call .Replace("PC-Compound_", "")
                 Call .Replace("PC-Count_", "")
                 Call .Replace("PC-CompoundType_", "")
+                Call .Replace("PC-Atoms_", "")
+                Call .Replace("PC-AtomInt_", "")
+                Call .Replace("PC-Bonds_", "")
+                Call .Replace("PC-StereoTetrahedral_", "")
+                Call .Replace("PC-Coordinates_", "")
+                Call .Replace("PC-Conformer_", "")
+                Call .Replace("PC-DrawAnnotations_", "")
 
                 Return .ToString
             End With
