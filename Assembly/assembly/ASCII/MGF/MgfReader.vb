@@ -10,10 +10,35 @@ Namespace ASCII.MGF
 
         Const regexp_META$ = "((,\s*)?\S+[:]"".*?"")+"
 
+        <Extension>
+        Public Function IonPeaks(ions As IEnumerable(Of Ions)) As IEnumerable(Of PeakMs2)
+            Return ions _
+                .Select(Function(ion)
+                            Return New PeakMs2 With {
+                                .activation = ion.Meta.TryGetValue("activation"),
+                                .collisionEnergy = ion.Meta.TryGetValue("collisionEnergy"),
+                                .file = ion.Rawfile,
+                                .mz = ion.PepMass.name,
+                                .mzInto = New LibraryMatrix With {
+                                    .ms2 = ion.Peaks,
+                                    .Name = ion.Title
+                                },
+                                .rt = ion.RtInSeconds,
+                                .scan = ion.Meta.TryGetValue("scan")
+                            }
+                        End Function)
+        End Function
+
         Public Iterator Function StreamParser(path$) As IEnumerable(Of Ions)
             Dim lines$() = path.ReadAllLines
+            Dim ionBlocks = lines _
+                .Split(delimiter:=Function(s)
+                                      Return s = "END IONS"
+                                  End Function,
+                       deliPosition:=DelimiterLocation.NotIncludes
+                )
 
-            For Each ion As String() In lines.Split(Function(s) s = "END IONS", DelimiterLocation.NotIncludes)
+            For Each ion As String() In ionBlocks
                 Yield ParseIonBlock(ion)
             Next
         End Function
@@ -31,7 +56,8 @@ Namespace ASCII.MGF
                 .Select(Function(l)
                             Return New ms2 With {
                                 .mz = l(0),
-                                .intensity = l(1)
+                                .intensity = l(1),
+                                .quantity = .intensity
                             }
                         End Function) _
                 .ToArray

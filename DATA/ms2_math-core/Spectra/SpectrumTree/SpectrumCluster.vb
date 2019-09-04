@@ -87,6 +87,12 @@ Namespace Spectra
             End Get
         End Property
 
+        Public ReadOnly Property MaxIntensity As Double
+            Get
+                Return cluster.Max(Function(peak) peak.Ms2Intensity)
+            End Get
+        End Property
+
         Public Overrides Function ToString() As String
             Return Representative.ToString & $"  with {cluster.Length} cluster members."
         End Function

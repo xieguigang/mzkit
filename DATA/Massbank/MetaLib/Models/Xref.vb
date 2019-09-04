@@ -33,6 +33,34 @@ Namespace MetaLib.Models
         Public Property InChI As String
         Public Property SMILES As String
 
+        Public Shared Function IsEmpty(xref As xref, Optional includeStruct As Boolean = False) As Boolean
+            If Not xref.chebi.StringEmpty Then
+                Return False
+            ElseIf Not xref.KEGG.StringEmpty Then
+                Return False
+            ElseIf Not xref.pubchem.StringEmpty Then
+                Return False
+            ElseIf Not xref.HMDB.StringEmpty Then
+                Return False
+            ElseIf Not xref.metlin.StringEmpty Then
+                Return False
+            ElseIf Not xref.Wikipedia.StringEmpty Then
+                Return False
+            ElseIf Not xref.CAS.IsNullOrEmpty Then
+                Return False
+            ElseIf includeStruct Then
+                If Not xref.InChI.StringEmpty Then
+                    Return False
+                ElseIf Not xref.InChIkey.StringEmpty Then
+                    Return False
+                ElseIf Not xref.SMILES.StringEmpty Then
+                    Return False
+                End If
+            End If
+
+            Return True
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function IsChEBI(synonym As String) As Boolean
             Return synonym.IsPattern("CHEBI[:]\d+", RegexICSng)
