@@ -4,30 +4,36 @@ Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Oracle.LinuxCompatibility.MySQL
 Imports SMRUCC.MassSpectrum.DATA.File
+Imports SMRUCC.MassSpectrum.DATA.MetaLib.Models
 Imports SMRUCC.MassSpectrum.DATA.NCBI.PubChem
 
 Public Module StorageProcedure
+
+    Private Function LoadXref(xmlfile As String) As Func(Of String, MetaLib)
+
+    End Function
 
     ''' <summary>
     ''' Convert the pubchem sdf repository to mysql database file.
     ''' </summary>
     ''' <param name="repository$"></param>
     ''' <param name="mysql$"></param>
-    Public Sub CreateMySqlDatabase(repository$, mysql$)
+    Public Sub CreateMySqlDatabase(repository$, mysql$, metalib$)
         Call SDF.MoleculePopulator(directory:=repository, takes:=3) _
-            .PopulateData _
+            .PopulateData(getMetaByCID:=LoadXref(xmlfile:=metalib)) _
             .DoCall(Sub(data)
                         Call LinqExports.ProjectDumping(data, EXPORT:=mysql)
                     End Sub)
     End Sub
 
     <Extension>
-    Private Iterator Function PopulateData(source As IEnumerable(Of SDF)) As IEnumerable(Of MySQLTable)
+    Private Iterator Function PopulateData(source As IEnumerable(Of SDF), getMetaByCID As Func(Of String, MetaLib)) As IEnumerable(Of MySQLTable)
         For Each molecule As SDF In source
             Dim descriptor As ChemicalDescriptor = molecule.ChemicalProperties
             Dim readStr = molecule.getOne
             Dim readStrings = molecule.getAll
             Dim molJSON$ = molecule.Structure.GetJson
+            Dim metainfo As MetaLib = getMetaByCID(molecule.ID)
 
             Yield New mysql.descriptor With {
                 .atom_def_stereo_count = readStr("PUBCHEM_ATOM_DEF_STEREO_COUNT"),
@@ -58,7 +64,11 @@ Public Module StorageProcedure
             Yield New mysql.compound With {
                 .canonicalized = readStr("PUBCHEM_COMPOUND_CANONICALIZED"),
                 .cid = molecule.ID,
-                .inchi_key = readStr("RDHQFKQIGNGIED-UHFFFAOYSA-N")
+                .inchi_key = readStr("RDHQFKQIGNGIED-UHFFFAOYSA-N"),
+                .chebi = metainfo?.xref?.chebi,
+                .common_name = metainfo?.name,
+                .hmdb = metainfo?.xref.HMDB,
+                .kegg = metainfo?.xref.KEGG
             }
 
             Yield New mysql.IUPAC With {
