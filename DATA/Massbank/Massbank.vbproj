@@ -218,6 +218,9 @@
     <Compile Include="MetaLib\Models\MetaLib.vb" />
     <Compile Include="Concentration.vb" />
     <Compile Include="Public\lipidMAPS\SDF.vb" />
+    <Compile Include="Public\NCBI\PubChem\PCXml\Elements.vb" />
+    <Compile Include="Public\NCBI\PubChem\PCXml\Extensions.vb" />
+    <Compile Include="Public\NCBI\PubChem\PCXml\PC-Compound.vb" />
     <Compile Include="Public\NCBI\PubChem\Web\MetaInfoReader.vb" />
     <Compile Include="Public\NCBI\PubChem\Web\Query\WebQuery.vb" />
     <Compile Include="Public\NCBI\SDFExtensions.vb" />
