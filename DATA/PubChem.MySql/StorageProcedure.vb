@@ -25,13 +25,29 @@ Public Module StorageProcedure
             Dim molJSON$ = molecule.Structure.GetJson
 
             Yield New mysql.descriptor With {
-                .atom_def_stereo_count = 0,
+                .atom_def_stereo_count = readStr("PUBCHEM_ATOM_DEF_STEREO_COUNT"),
                 .cid = molecule.CID,
                 .complexity = descriptor.Complexity,
                 .hbond_acceptor = descriptor.HydrogenAcceptor,
                 .hbond_donor = descriptor.HydrogenDonors,
                 .xlogp3_aa = descriptor.XLogP3_AA,
-                .tpsa = descriptor.TopologicalPolarSurfaceArea
+                .tpsa = descriptor.TopologicalPolarSurfaceArea,
+                .formula = readStr("PUBCHEM_MOLECULAR_FORMULA"),
+                .can_smiles = readStr("PUBCHEM_OPENEYE_CAN_SMILES"),
+                .iso_smiles = readStr("PUBCHEM_OPENEYE_ISO_SMILES"),
+                .exact_mass = readStr("PUBCHEM_EXACT_MASS"),
+                .molecular_weight = readStr("PUBCHEM_MOLECULAR_WEIGHT"),
+                .subkeys = readStr("PUBCHEM_CACTVS_SUBSKEYS"),
+                .tauto_count = readStr("PUBCHEM_CACTVS_TAUTO_COUNT"),
+                .rotatable_bond = descriptor.RotatableBonds,
+                .heavy_atom_count = descriptor.HeavyAtoms,
+                .atom_udef_stereo_count = readStr("PUBCHEM_ATOM_UDEF_STEREO_COUNT"),
+                .bond_def_stereo_count = readStr("PUBCHEM_BOND_DEF_STEREO_COUNT"),
+                .bond_udef_stereo_count = readStr("PUBCHEM_BOND_UDEF_STEREO_COUNT"),
+                .component_count = readStr("PUBCHEM_COMPONENT_COUNT"),
+                .isotopic_atom_count = readStr("PUBCHEM_ISOTOPIC_ATOM_COUNT"),
+                .monoisotopic_weight = readStr("PUBCHEM_MONOISOTOPIC_WEIGHT"),
+                .total_charge = readStr("PUBCHEM_TOTAL_CHARGE")
             }
 
             Yield New mysql.compound With {
