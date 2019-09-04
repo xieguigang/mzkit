@@ -1,5 +1,5 @@
-﻿Imports System.Xml.Serialization
-Imports SMRUCC.MassSpectrum.DATA.NCBI.PubChem.PCCompound.Elements
+﻿Imports System.Runtime.CompilerServices
+Imports System.Xml.Serialization
 
 Namespace NCBI.PubChem.PCCompound
 
@@ -8,12 +8,9 @@ Namespace NCBI.PubChem.PCCompound
         Public Property id As PC.id
         Public Property count As PC.count
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function LoadFromXml(xml As String) As Compound
-            xml = xml.Replace("PC-Compound_", "")
-            xml = xml.Replace("PC-Count_", "")
-            xml = xml.Replace("PC-CompoundType_", "")
-
-            Return xml.LoadFromXml(Of Compound)
+            Return TrimXml(xml).LoadFromXml(Of Compound)
         End Function
     End Class
 
