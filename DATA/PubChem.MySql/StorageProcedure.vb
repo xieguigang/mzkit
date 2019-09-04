@@ -35,6 +35,15 @@ Public Module StorageProcedure
             Dim molJSON$ = molecule.Structure.GetJson
             Dim metainfo As MetaLib = getMetaByCID(molecule.ID)
 
+            If Not metainfo.xref.CAS.IsNullOrEmpty Then
+                For Each cas As String In metainfo.xref.CAS
+                    Yield New mysql.cas_registry With {
+                        .cas_number = cas,
+                        .cid = molecule.ID
+                    }
+                Next
+            End If
+
             Yield New mysql.descriptor With {
                 .atom_def_stereo_count = readStr("PUBCHEM_ATOM_DEF_STEREO_COUNT"),
                 .cid = molecule.CID,
