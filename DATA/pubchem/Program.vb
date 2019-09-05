@@ -88,6 +88,9 @@ Module Program
     <ExportAPI("/unify.metalib")>
     <Usage("/unify.metalib /in <CID-Synonym-filtered.txt> /SID <SID-Map.txt> [/cas /out <out.Xml>]")>
     <Description("Create a unify xref database file.")>
+    <Argument("/cas", True, CLITypes.Boolean,
+              AcceptTypes:={GetType(Boolean)},
+              Description:="If this argument is presented in the commandline input, then it means the each output compound annotation data should have one registry id at least.")>
     Public Function PubchemUnifyMetaLib(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim sidMap$ = args <= "/SID"
