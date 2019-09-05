@@ -9,6 +9,9 @@ Imports SMRUCC.MassSpectrum.DATA.File
 Imports SMRUCC.MassSpectrum.DATA.MetaLib.Models
 Imports SMRUCC.MassSpectrum.DATA.NCBI.PubChem
 
+''' <summary>
+''' Save pubchem sdf data files into mysql database format.
+''' </summary>
 Public Module StorageProcedure
 
     Private Function LoadXref(xmlfile As String) As Func(Of String, MetaLib)
