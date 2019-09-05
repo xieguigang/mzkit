@@ -68,7 +68,8 @@ Public Module MassSpectra
                                Optional size$ = "1200,800",
                                Optional margin$ = "padding: 100px 30px 50px 100px;",
                                Optional intoCutoff# = 0.05,
-                               Optional titles$() = Nothing) As GraphicsData
+                               Optional titles$() = Nothing,
+                               Optional plotTitle$ = "BioDeep™ MS/MS alignment Viewer") As GraphicsData
 
         Dim a As New LibraryMatrix With {.ms2 = library.ms2, .Name = titles.ElementAtOrDefault(0, library.Name)}
         Dim b As New LibraryMatrix With {.ms2 = library.ms2, .Name = titles.ElementAtOrDefault(1, library.Name)}
@@ -77,14 +78,16 @@ Public Module MassSpectra
             a, b,
             size:=size,
             intoCutoff:=intoCutoff,
-            margin:=margin
+            margin:=margin,
+            title:=plotTitle
         )
     End Function
 
     Public Function AlignMirrorPlot(query As LibraryMatrix, ref As LibraryMatrix,
                                     Optional size$ = "1200,800",
                                     Optional margin$ = "padding: 100px 30px 50px 100px;",
-                                    Optional intoCutoff# = 0.05) As GraphicsData
+                                    Optional intoCutoff# = 0.05,
+                                    Optional title$ = "BioDeep™ MS/MS alignment Viewer") As GraphicsData
 
         Dim mzRange As DoubleRange = query _
             .Trim(intoCutoff) _
@@ -108,7 +111,7 @@ Public Module MassSpectra
             size:=size, padding:=margin,
             xlab:="M/Z ratio",
             ylab:="Relative Intensity(%)",
-            title:="BioDeep™ MS/MS alignment Viewer",
+            title:=title,
             titleCSS:=CSSFont.Win7Large,
             format:="F0",
             yAxislabelPosition:=YlabelPosition.LeftCenter,

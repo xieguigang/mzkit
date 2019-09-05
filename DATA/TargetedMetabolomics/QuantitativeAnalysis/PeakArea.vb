@@ -227,7 +227,7 @@ Public Module PeakArea
         Dim windows = points _
             .SlideWindows(2) _
             .ToArray
-        Dim p As VBInteger = 0
+        Dim p As i32 = 0
         Dim current As DoubleRange = Nothing
         Dim tangent As fx = Nothing
         Dim moveNext = Sub()
