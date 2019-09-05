@@ -20,6 +20,8 @@ Public Module StorageProcedure
             .LoadUltraLargeXMLDataSet(Of MetaLib)() _
             .CreateBuckets(Function(m) m.ID)
 
+        Call database.ToString.__DEBUG_ECHO
+
         Return Function(cid)
                    If database.ContainsKey(cid) Then
                        Return database(cid)
@@ -35,7 +37,7 @@ Public Module StorageProcedure
     ''' <param name="repository$"></param>
     ''' <param name="mysql$"></param>
     Public Sub CreateMySqlDatabase(repository$, mysql$, metalib$)
-        Call SDF.MoleculePopulator(directory:=repository, takes:=3) _
+        Call SDF.MoleculePopulator(directory:=repository) _
             .PopulateData(getMetaByCID:=LoadXref(xmlfile:=metalib)) _
             .DoCall(Sub(data)
                         Call LinqExports.ProjectDumping(data, EXPORT:=mysql)
