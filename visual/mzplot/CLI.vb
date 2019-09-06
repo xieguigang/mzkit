@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.CommandLine
+﻿Imports System.ComponentModel
+Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.InteropService.SharedORM
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -12,6 +13,11 @@ Imports SMRUCC.MassSpectrum.Visualization
 
     <ExportAPI("/TIC")>
     <Usage("/TIC /in <data.csv> [/out <plot.png>]")>
+    <Description("Do TIC plot based on the given chromatogram table data.")>
+    <Argument("/in", False, CLITypes.File,
+              AcceptTypes:={GetType(TICPoint)},
+              Extensions:="*.csv",
+              Description:="The mzXML dump data.")>
     Public Function TICplot(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim out$ = args("/out") Or $"{[in].TrimSuffix}.TIC.png"
