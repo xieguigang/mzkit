@@ -183,5 +183,23 @@ Namespace Ms1
         Public Shared Narrowing Operator CType(tolerance As Tolerance) As GenericLambda(Of Double).IEquals
             Return AddressOf tolerance.Assert
         End Operator
+
+        ''' <summary>
+        ''' + da:xxx
+        ''' + ppm:xxx
+        ''' </summary>
+        ''' <param name="script"></param>
+        ''' <returns></returns>
+        Public Shared Function ParseScript(script As String) As Tolerance
+            Dim tokens = script.GetTagValue(":", trim:=True)
+            Dim method = tokens.Name.ToLower
+            Dim tolerance# = tokens.Value.ParseDouble
+
+            If method = "da" Then
+                Return DeltaMass(da:=tolerance)
+            Else
+                Return PPM(value:=tolerance)
+            End If
+        End Function
     End Class
 End Namespace
