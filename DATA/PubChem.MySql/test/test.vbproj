@@ -132,6 +132,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj">
+      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
+      <Name>47-dotnet_Microsoft.VisualBasic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Massbank\Massbank.vbproj">
+      <Project>{a686bdf5-077f-47f5-a8dd-c73e6e88363c}</Project>
+      <Name>Massbank</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PubChem.MySql.vbproj">
       <Project>{7b5a271a-e853-4b60-9c64-b2a01ce8de97}</Project>
       <Name>PubChem.MySql</Name>
