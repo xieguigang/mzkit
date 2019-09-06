@@ -21,9 +21,10 @@ Imports SMRUCC.MassSpectrum.Visualization
     Public Function TICplot(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim out$ = args("/out") Or $"{[in].TrimSuffix}.TIC.png"
-        Dim ppm20 = Tolerance.PPM(20)
+        Dim da03 = Tolerance.DeltaMass(0.3)
         Dim data = [in].LoadCsv(Of TICPoint) _
-            .GroupBy(Function(p) p.mz, Function(a, b) True = ppm20(a, b)) _
+            .GroupBy(Function(p) p.mz, Function(a, b) True = da03(a, b)) _
+            .AsParallel _
             .Select(Function(ion)
                         Return New NamedCollection(Of ChromatogramTick) With {
                             .name = $"m/z {ion.First.mz.ToString("F4")}",
@@ -34,11 +35,19 @@ Imports SMRUCC.MassSpectrum.Visualization
                                                 .Intensity = t.intensity
                                             }
                                         End Function) _
+                                .OrderBy(Function(p) p.Time) _
                                 .ToArray
                         }
                     End Function) _
             .ToArray
 
-        Return data.TICplot().Save(out).CLICode
+        Call "Do TIC plot...".__INFO_ECHO
+
+        Return data.TICplot(
+            showLabels:=False,
+            showLegends:=False,
+            fillCurve:=False
+        ).Save(out) _
+         .CLICode
     End Function
 End Module
