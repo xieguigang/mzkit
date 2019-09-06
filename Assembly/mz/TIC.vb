@@ -12,8 +12,8 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
 
 Partial Module Program
 
-    <ExportAPI("/selective.TIC")>
-    <Usage("/selective.TIC /mz <mz.list> /raw <raw.mzXML> [/tolerance <default=ppm:20> /out <TIC.png>]")>
+    <ExportAPI("/XIC")>
+    <Usage("/XIC /mz <mz.list> /raw <raw.mzXML> [/tolerance <default=ppm:20> /out <TIC.png>]")>
     <Description("Do TIC plot on a given list of selective parent ions.")>
     <Argument("/mz", False, CLITypes.File, PipelineTypes.std_in,
               AcceptTypes:={GetType(String)},
@@ -22,10 +22,10 @@ Partial Module Program
     <Argument("/out", True, CLITypes.File,
               Extensions:="*.png, *.svg",
               Description:="The output TIC plot image file path.")>
-    Public Function SelectiveTIC(args As CommandLine) As Integer
+    Public Function XIC(args As CommandLine) As Integer
         Dim mz$ = args <= "/mz"
         Dim raw$ = args <= "/raw"
-        Dim out$ = args("/out") Or $"{mz.TrimSuffix}-{raw.FileName}_TIC.png"
+        Dim out$ = args("/out") Or $"{mz.TrimSuffix}-{raw.FileName}_XIC.png"
         Dim mzlist As Double() = mz.ReadAllLines.AsDouble
 
         Call "Load all ms1 scans".__DEBUG_ECHO
