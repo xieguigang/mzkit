@@ -28,11 +28,12 @@ Partial Module Program
         Dim raw$ = args <= "/raw"
         Dim out$ = args("/out") Or $"{mz.TrimSuffix}-{raw.FileName}_TIC.png"
         Dim mzlist As Double() = mz.ReadAllLines.AsDouble
-        Dim ms1Scans As mzXML.scan() = mzXML.XML.LoadScans(raw) _
-            .Where(Function(scan) scan.msLevel = "1") _
-            .ToArray
+
+        Call "Load all ms1 scans".__DEBUG_ECHO
         Dim tolerance As Tolerance = Tolerance.ParseScript(args("/tolerance") Or "ppm:20")
-        Dim chromatogram = ms1Scans _
+        Dim chromatogram = mzXML.XML.LoadScans(raw) _
+            .Where(Function(scan) scan.msLevel = "1") _
+            .AsParallel _
             .Select(Function(scan)
                         Dim peaks = scan.ExtractMzI.peaks
                         Dim rt# = PeakMs2.RtInSecond(scan.retentionTime)

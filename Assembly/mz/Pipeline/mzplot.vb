@@ -9,13 +9,13 @@ Imports Microsoft.VisualBasic.ApplicationServices
 
 ' 
 '  // 
+'  // Data visualization for mzXML file data
 '  // 
-'  // 
-'  // VERSION:   1.0.0.0
-'  // ASSEMBLY:  mzplot, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-'  // COPYRIGHT: Copyright ©  2019
+'  // VERSION:   2.342.7188.28268
+'  // ASSEMBLY:  mzplot, Version=2.342.7188.28268, Culture=neutral, PublicKeyToken=null
+'  // COPYRIGHT: Copyright © mzkit 2019
 '  // GUID:      26fba577-47cd-4da1-a2bb-fccd493c9ff1
-'  // BUILT:     1/1/2000 12:00:00 AM
+'  // BUILT:     9/6/2019 3:42:16 PM
 '  // 
 ' 
 ' 
@@ -27,7 +27,7 @@ Imports Microsoft.VisualBasic.ApplicationServices
 ' 
 ' All of the command that available in this program has been list below:
 ' 
-'  /TIC:     
+'  /TIC:     Do TIC plot based on the given chromatogram table data.
 ' 
 ' 
 ' ----------------------------------------------------------------------------------------------------
@@ -60,6 +60,7 @@ Public Class mzplot : Inherits InteropService
 ''' ```
 ''' /TIC /in &lt;data.csv> [/out &lt;plot.png>]
 ''' ```
+''' Do TIC plot based on the given chromatogram table data.
 ''' </summary>
 '''
 Public Function TICplot([in] As String, Optional out As String = "") As Integer
