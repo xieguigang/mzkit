@@ -11,9 +11,11 @@ Imports Microsoft.VisualBasic.ApplicationServices
 '  // 
 '  // 
 '  // 
-'  // VERSION:   1.0.0.0
-'  // COPYRIGHT: Copyright © Microsoft 2018
+'  // VERSION:   2.3.7188.26508
+'  // ASSEMBLY:  mz, Version=2.3.7188.26508, Culture=neutral, PublicKeyToken=null
+'  // COPYRIGHT: Copyright © BioNovogene 2018
 '  // GUID:      2b91aac7-8c37-4662-b38a-daebec27c539
+'  // BUILT:     9/6/2019 2:43:36 PM
 '  // 
 ' 
 ' 
@@ -25,10 +27,12 @@ Imports Microsoft.VisualBasic.ApplicationServices
 ' 
 ' All of the command that available in this program has been list below:
 ' 
-'  /export:           Export a single ms2 scan data.
-'  /mgf:              Export all of the ms2 ions in target mzXML file and save as mgf file format.
-'  /mz.calculate:     
-'  /waves:            Export the ms1 intensity matrix.
+'  /export:            Export a single ms2 scan data.
+'  /mgf:               Export all of the ms2 ions in target mzXML file and save as mgf file format.
+'  /mgf.batch:         
+'  /mz.calculate:      
+'  /selective.TIC:     Do TIC plot on a given list of selective parent ions.
+'  /waves:             Export the ms1 intensity matrix.
 ' 
 ' 
 ' ----------------------------------------------------------------------------------------------------
@@ -81,17 +85,43 @@ End Function
 
 ''' <summary>
 ''' ```
-''' /mgf /in &lt;rawdata.mzXML> [/out &lt;ions.mgf>]
+''' /mgf /in &lt;rawdata.mzXML> [/relative /out &lt;ions.mgf>]
 ''' ```
 ''' Export all of the ms2 ions in target mzXML file and save as mgf file format.
 ''' </summary>
 '''
-Public Function DumpMs2([in] As String, Optional out As String = "") As Integer
+Public Function DumpMs2([in] As String, Optional out As String = "", Optional relative As Boolean = False) As Integer
     Dim CLI As New StringBuilder("/mgf")
     Call CLI.Append(" ")
     Call CLI.Append("/in " & """" & [in] & """ ")
     If Not out.StringEmpty Then
             Call CLI.Append("/out " & """" & out & """ ")
+    End If
+    If relative Then
+        Call CLI.Append("/relative ")
+    End If
+     Call CLI.Append("/@set --internal_pipeline=TRUE ")
+
+
+    Dim proc As IIORedirectAbstract = RunDotNetApp(CLI.ToString())
+    Return proc.Run()
+End Function
+
+''' <summary>
+''' ```
+''' /mgf.batch /in &lt;data.directory> [/index_only /out &lt;data.directory>]
+''' ```
+''' </summary>
+'''
+Public Function DumpMs2Batch([in] As String, Optional out As String = "", Optional index_only As Boolean = False) As Integer
+    Dim CLI As New StringBuilder("/mgf.batch")
+    Call CLI.Append(" ")
+    Call CLI.Append("/in " & """" & [in] & """ ")
+    If Not out.StringEmpty Then
+            Call CLI.Append("/out " & """" & out & """ ")
+    End If
+    If index_only Then
+        Call CLI.Append("/index_only ")
     End If
      Call CLI.Append("/@set --internal_pipeline=TRUE ")
 
@@ -113,6 +143,28 @@ Public Function Calculator(mass As String, Optional mode As String = "+", Option
     If Not mode.StringEmpty Then
             Call CLI.Append("/mode " & """" & mode & """ ")
     End If
+    If Not out.StringEmpty Then
+            Call CLI.Append("/out " & """" & out & """ ")
+    End If
+     Call CLI.Append("/@set --internal_pipeline=TRUE ")
+
+
+    Dim proc As IIORedirectAbstract = RunDotNetApp(CLI.ToString())
+    Return proc.Run()
+End Function
+
+''' <summary>
+''' ```
+''' /selective.TIC /mz &lt;mz.list> /raw &lt;raw.mzXML> [/out &lt;TIC.png>]
+''' ```
+''' Do TIC plot on a given list of selective parent ions.
+''' </summary>
+'''
+Public Function SelectiveTIC(mz As String, raw As String, Optional out As String = "") As Integer
+    Dim CLI As New StringBuilder("/selective.TIC")
+    Call CLI.Append(" ")
+    Call CLI.Append("/mz " & """" & mz & """ ")
+    Call CLI.Append("/raw " & """" & raw & """ ")
     If Not out.StringEmpty Then
             Call CLI.Append("/out " & """" & out & """ ")
     End If
