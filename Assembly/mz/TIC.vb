@@ -1,6 +1,7 @@
 ﻿Imports System.ComponentModel
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.Runtime
@@ -51,8 +52,19 @@ Partial Module Program
                                     End Function)
                     End Function) _
             .IteratesALL _
-            .GroupBy(Function(parent) parent.mz, AddressOf tolerance.Assert)
+            .Select(Function(parent)
+                        Return New TICPoint With {
+                            .mz = parent.mz,
+                            .time = parent.tick.Time,
+                            .intensity = parent.tick.Intensity
+                        }
+                    End Function) _
+            .ToArray
 
+        Dim datafile = out.TrimSuffix & ".points.csv"
 
+        Call chromatogram.SaveTo(datafile)
+
+        Return CLI.mzplot.FromEnvironment(App.HOME).TICplot(datafile, out:=out)
     End Function
 End Module
