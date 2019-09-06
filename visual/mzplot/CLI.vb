@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.CommandLine
+Imports Microsoft.VisualBasic.CommandLine.InteropService.SharedORM
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
@@ -7,7 +8,7 @@ Imports SMRUCC.MassSpectrum.Math.Chromatogram
 Imports SMRUCC.MassSpectrum.Math.Ms1
 Imports SMRUCC.MassSpectrum.Visualization
 
-Module CLI
+<CLI> Module CLI
 
     <ExportAPI("/TIC")>
     <Usage("/TIC /in <data.csv> [/out <plot.png>]")>
