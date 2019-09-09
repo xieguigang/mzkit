@@ -5,6 +5,7 @@ Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text.Xml.Linq
 Imports Oracle.LinuxCompatibility.MySQL
+Imports Oracle.LinuxCompatibility.MySQL.Scripting
 Imports SMRUCC.MassSpectrum.DATA.File
 Imports SMRUCC.MassSpectrum.DATA.MetaLib.Models
 Imports SMRUCC.MassSpectrum.DATA.NCBI.PubChem
@@ -61,6 +62,14 @@ Public Module StorageProcedure
                     }
                 Next
             End If
+            If Not metainfo.synonym.IsNullOrEmpty Then
+                For Each name As String In metainfo.synonym
+                    Yield New mysql.synonym With {
+                        .cid = molecule.ID,
+                        .synonym_name = name.MySqlEscaping
+                    }
+                Next
+            End If
 
             Yield New mysql.descriptor With {
                 .atom_def_stereo_count = readStr("PUBCHEM_ATOM_DEF_STEREO_COUNT"),
@@ -93,20 +102,20 @@ Public Module StorageProcedure
                 .cid = molecule.ID,
                 .inchi_key = readStr("RDHQFKQIGNGIED-UHFFFAOYSA-N"),
                 .chebi = metainfo?.xref?.chebi,
-                .common_name = metainfo?.name,
+                .common_name = metainfo?.name.MySqlEscaping,
                 .hmdb = metainfo?.xref.HMDB,
                 .kegg = metainfo?.xref.KEGG
             }
 
             Yield New mysql.IUPAC With {
-                .cas_name = readStr("PUBCHEM_IUPAC_CAS_NAME"),
+                .cas_name = readStr("PUBCHEM_IUPAC_CAS_NAME").MySqlEscaping,
                 .cid = molecule.ID,
                 .inchi = readStr("PUBCHEM_IUPAC_INCHI"),
-                .name = readStr("PUBCHEM_IUPAC_NAME"),
-                .name_markup = readStr("PUBCHEM_IUPAC_NAME_MARKUP"),
-                .openeye_name = readStr("PUBCHEM_IUPAC_OPENEYE_NAME"),
-                .systematic_name = readStr("PUBCHEM_IUPAC_SYSTEMATIC_NAME"),
-                .traditional_name = readStr("PUBCHEM_IUPAC_TRADITIONAL_NAME")
+                .name = readStr("PUBCHEM_IUPAC_NAME").MySqlEscaping,
+                .name_markup = readStr("PUBCHEM_IUPAC_NAME_MARKUP").MySqlEscaping,
+                .openeye_name = readStr("PUBCHEM_IUPAC_OPENEYE_NAME").MySqlEscaping,
+                .systematic_name = readStr("PUBCHEM_IUPAC_SYSTEMATIC_NAME").MySqlEscaping,
+                .traditional_name = readStr("PUBCHEM_IUPAC_TRADITIONAL_NAME").MySqlEscaping
             }
 
             Yield New mysql.structure With {

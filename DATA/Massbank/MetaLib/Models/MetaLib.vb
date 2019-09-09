@@ -76,6 +76,10 @@ Namespace MetaLib.Models
         <XmlAttribute> Public Property exact_mass As Double
 
         Public Property name As String
+
+        <XmlElement>
+        Public Property synonym As String()
+
         Public Property xref As xref
 
         Public Overrides Function ToString() As String
