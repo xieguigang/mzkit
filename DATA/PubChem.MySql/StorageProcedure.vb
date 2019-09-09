@@ -19,7 +19,10 @@ Public Module StorageProcedure
         Dim empty As New MetaLib With {.xref = New xref}
         Dim database As BucketDictionary(Of String, MetaLib) = xmlfile _
             .LoadUltraLargeXMLDataSet(Of MetaLib)() _
-            .CreateBuckets(Function(m) m.ID)
+            .CreateBuckets(
+                getKey:=Function(m) m.ID,
+                overridesDuplicates:=True
+             )
 
         Call database.ToString.__DEBUG_ECHO
 
