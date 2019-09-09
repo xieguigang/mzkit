@@ -7,6 +7,7 @@
     End Sub
 
     Sub parserTest()
+
         Dim line$ = "2.0000-9999.9999    0.0000 I   0  0  0  0  0  0  0  0  0  0  0  0"
         Dim line2 = "4.9966   -1.2250    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0"
         Dim atom2 = SMRUCC.MassSpectrum.DATA.File.Atom.Parse(line2)

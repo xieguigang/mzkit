@@ -67,13 +67,22 @@ Namespace File
             Return $"({Coordination}) {Atom}"
         End Function
 
+        ''' <summary>
+        ''' 三维坐标的轴的值只有4位小数
+        ''' </summary>
+        ''' <param name="tokens"></param>
+        ''' <returns></returns>
         Private Shared Iterator Function ensureValidFormat(tokens As String()) As IEnumerable(Of String)
             ' deal with the incorrect format like
             ' 2.0000-9999.9999    0.0000 I   0  0  0  0  0  0  0  0  0  0  0  0
+            ' 99999.999949999.1992
             Dim i As Integer = 0
+            Dim countDots As Integer
 
             For Each t As String In tokens
                 If i < 3 Then
+                    countDots = t.Count("."c)
+
                     If t.IndexOf("-"c) > 0 Then
                         With t.Split("-"c)
                             Yield .First
@@ -82,6 +91,19 @@ Namespace File
                                 Yield "-" & token
                             Next
                         End With
+                    ElseIf countDots > 1 Then
+                        Dim posDot As Integer
+                        Dim axis As String
+
+                        For j As Integer = 0 To countDots - 2
+                            posDot = InStr(t, ".")
+                            axis = Mid(t, 1, posDot + 4)
+                            t = Mid(t, axis.Length)
+
+                            Yield axis
+                        Next
+
+                        Yield t
                     Else
                         Yield t
                     End If
