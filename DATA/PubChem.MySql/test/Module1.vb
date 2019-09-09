@@ -1,9 +1,9 @@
 ﻿Module Module1
 
     Sub Main()
-        Call parserTest()
+        ' Call parserTest()
 
-        ' Call PubChem.MySql.CreateMySqlDatabase("N:\pubchem\raw\SDF\uncompress", "N:\pubchem\raw\mysql", "N:\pubchem\raw\extras\metalib.Xml")
+        Call PubChem.MySql.CreateMySqlDatabase("N:\pubchem\raw\SDF\uncompress", "N:\pubchem\raw\mysql", "N:\pubchem\raw\extras\metalib.Xml")
     End Sub
 
     Sub parserTest()
@@ -14,6 +14,10 @@
         Dim atom3 = SMRUCC.MassSpectrum.DATA.File.Atom.Parse(line3)
         Dim atom2 = SMRUCC.MassSpectrum.DATA.File.Atom.Parse(line2)
         Dim atom1 = SMRUCC.MassSpectrum.DATA.File.Atom.Parse(line)
+
+        Call atom1.__DEBUG_ECHO
+        Call atom2.__DEBUG_ECHO
+        Call atom3.__DEBUG_ECHO
 
         Pause()
     End Sub

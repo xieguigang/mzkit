@@ -84,6 +84,44 @@ Namespace File
             Yield t
         End Function
 
+        Private Shared Iterator Function splitJointNegativeNum(t As String) As IEnumerable(Of String)
+            Dim offset As Integer = 0
+            Dim countDots As Integer
+
+            With t.Split("-"c)
+                t = .First
+
+                If String.IsNullOrEmpty(t) Then
+                    ' 第一个数是负数
+                    t = "-" & .ByRef()(1)
+                    offset = 1
+                End If
+
+                countDots = t.Count("."c)
+
+                If countDots > 1 Then
+                    For Each number As String In splitJointNum(t)
+                        Yield number
+                    Next
+                Else
+                    Yield t
+                End If
+
+                For Each token As String In .Skip(1 + offset)
+                    t = "-" & token
+                    countDots = t.Count("."c)
+
+                    If countDots > 1 Then
+                        For Each number As String In splitJointNum(t)
+                            Yield number
+                        Next
+                    Else
+                        Yield t
+                    End If
+                Next
+            End With
+        End Function
+
         ''' <summary>
         ''' 三维坐标的轴的值只有4位小数
         ''' </summary>
@@ -101,41 +139,9 @@ Namespace File
                     countDots = t.Count("."c)
 
                     If t.LastIndexOf("-"c) > 0 AndAlso t.Count("-"c) > 1 Then
-                        Dim offset As Integer = 0
-
-                        With t.Split("-"c)
-                            t = .First
-
-                            If String.IsNullOrEmpty(t) Then
-                                ' 第一个数是负数
-                                t = "-" & .ByRef()(1)
-                                offset = 1
-                            End If
-
-                            countDots = t.Count("."c)
-
-                            If countDots > 1 Then
-                                For Each number As String In splitJointNum(t)
-                                    Yield number
-                                Next
-                            Else
-                                Yield t
-                            End If
-
-                            For Each token As String In .Skip(1 + offset)
-                                t = "-" & token
-
-                                countDots = t.Count("."c)
-
-                                If countDots > 1 Then
-                                    For Each number As String In splitJointNum(t)
-                                        Yield number
-                                    Next
-                                Else
-                                    Yield t
-                                End If
-                            Next
-                        End With
+                        For Each number As String In splitJointNegativeNum(t)
+                            Yield number
+                        Next
                     ElseIf countDots > 1 Then
                         For Each number As String In splitJointNum(t)
                             Yield number
