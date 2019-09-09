@@ -53,6 +53,7 @@
 
 Imports System.Windows.Media.Media3D
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
 Namespace File
@@ -67,6 +68,22 @@ Namespace File
             Return $"({Coordination}) {Atom}"
         End Function
 
+        Private Shared Iterator Function splitJointNum(t As String) As IEnumerable(Of String)
+            Dim posDot As Integer
+            Dim axis As String
+            Dim countDots = t.Count("."c)
+
+            For j As Integer = 0 To countDots - 2
+                posDot = InStr(t, ".")
+                axis = Mid(t, 1, posDot + 4)
+                t = Mid(t, axis.Length + 1)
+
+                Yield axis
+            Next
+
+            Yield t
+        End Function
+
         ''' <summary>
         ''' 三维坐标的轴的值只有4位小数
         ''' </summary>
@@ -75,7 +92,7 @@ Namespace File
         Private Shared Iterator Function ensureValidFormat(tokens As String()) As IEnumerable(Of String)
             ' deal with the incorrect format like
             ' 2.0000-9999.9999    0.0000 I   0  0  0  0  0  0  0  0  0  0  0  0
-            ' 99999.999949999.1992
+            ' -96589-9999.999949999.1992 H   0  0  0  0  0  0  0  0  0  0  0  0
             Dim i As Integer = 0
             Dim countDots As Integer
 
@@ -83,27 +100,46 @@ Namespace File
                 If i < 3 Then
                     countDots = t.Count("."c)
 
-                    If t.IndexOf("-"c) > 0 Then
-                        With t.Split("-"c)
-                            Yield .First
+                    If t.LastIndexOf("-"c) > 0 AndAlso t.Count("-"c) > 1 Then
+                        Dim offset As Integer = 0
 
-                            For Each token As String In .Skip(1)
-                                Yield "-" & token
+                        With t.Split("-"c)
+                            t = .First
+
+                            If String.IsNullOrEmpty(t) Then
+                                ' 第一个数是负数
+                                t = "-" & .ByRef()(1)
+                                offset = 1
+                            End If
+
+                            countDots = t.Count("."c)
+
+                            If countDots > 1 Then
+                                For Each number As String In splitJointNum(t)
+                                    Yield number
+                                Next
+                            Else
+                                Yield t
+                            End If
+
+                            For Each token As String In .Skip(1 + offset)
+                                t = "-" & token
+
+                                countDots = t.Count("."c)
+
+                                If countDots > 1 Then
+                                    For Each number As String In splitJointNum(t)
+                                        Yield number
+                                    Next
+                                Else
+                                    Yield t
+                                End If
                             Next
                         End With
                     ElseIf countDots > 1 Then
-                        Dim posDot As Integer
-                        Dim axis As String
-
-                        For j As Integer = 0 To countDots - 2
-                            posDot = InStr(t, ".")
-                            axis = Mid(t, 1, posDot + 4)
-                            t = Mid(t, axis.Length)
-
-                            Yield axis
+                        For Each number As String In splitJointNum(t)
+                            Yield number
                         Next
-
-                        Yield t
                     Else
                         Yield t
                     End If
