@@ -29,6 +29,11 @@ Namespace ASCII.MGF
                         End Function)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function ReadIons(ParamArray files As String()) As IEnumerable(Of Ions)
+            Return files.Select(AddressOf StreamParser).IteratesALL
+        End Function
+
         Public Iterator Function StreamParser(path$) As IEnumerable(Of Ions)
             Dim lines$() = path.ReadAllLines
             Dim ionBlocks = lines _
