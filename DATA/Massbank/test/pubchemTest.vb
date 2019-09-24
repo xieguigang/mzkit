@@ -58,8 +58,17 @@ Module pubchemTest
         Pause()
     End Sub
 
+    Sub xmlLoaderTest()
+
+        Dim xml = "D:\MassSpectrum-toolkits\DATA\DATA\pubchem_ftp_xml.Xml".ReadAllText
+        Dim data = PCCompound.Compound.LoadFromXml(xml)
+
+        Pause()
+    End Sub
+
     Sub Main()
 
+        Call xmlLoaderTest()
         Call queryMeta()
 
         Dim keys = SMRUCC.MassSpectrum.DATA.File.SDF.ScanKeys("D:\Database\pubchem").ToArray

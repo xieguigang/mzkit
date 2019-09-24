@@ -132,7 +132,7 @@ Namespace Massbank
             pk.PEAK = node(NameOf(pk.PEAK)) _
                 .Select(Function(s$)
                             Dim t$() = s.Split
-                            Dim i As VBInteger = Scan0
+                            Dim i As i32 = Scan0
 
                             Return New PeakData With {
                                 .mz = t(++i),

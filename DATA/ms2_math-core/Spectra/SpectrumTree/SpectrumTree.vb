@@ -89,6 +89,13 @@ Namespace Spectra
             End If
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="tolerance">By default is m/z tolerance with ppm20</param>
+        ''' <param name="equalsScore">判断两个质谱图是相同的所需的最低得分</param>
+        ''' <param name="gtScore">将质谱图划分到二叉树的右节点的所需要的最低得分</param>
+        ''' <returns></returns>
         Public Shared Function SSMCompares(Optional tolerance As Tolerance = Nothing, Optional equalsScore# = 0.85, Optional gtScore# = 0.6) As Comparison(Of PeakMs2)
             If equalsScore < 0 OrElse equalsScore > 1 Then
                 Throw New InvalidConstraintException("Scores for spectra equals is invalid, it should be in range (0, 1].")

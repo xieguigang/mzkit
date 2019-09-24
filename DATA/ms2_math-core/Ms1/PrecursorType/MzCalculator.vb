@@ -74,6 +74,10 @@ Namespace Ms1.PrecursorType
         ''' 是可能会出现负数的加和结果，例如[M-H2O]的adducts为-18
         ''' </summary>
         Public Property adducts As Double
+        ''' <summary>
+        ''' +/-
+        ''' </summary>
+        ''' <returns></returns>
         Public Property mode As Char
 
         Public ReadOnly Property IsEmpty As Boolean

@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "47-dotnet_Microsoft.VisualBasic", "..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj", "{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "runtime", "runtime", "{8411BC65-D873-4A4B-A364-75E6A73F8205}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "modules", "modules", "{8411BC65-D873-4A4B-A364-75E6A73F8205}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "assembly", "assembly\assembly.vbproj", "{95F7D65E-9DB1-4605-9FD3-25433277AF88}"
 EndProject

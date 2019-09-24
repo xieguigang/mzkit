@@ -1,0 +1,13 @@
+{
+        "Data": "#",
+        "Childs": {
+                "003_Ex2_Orbitrap_CID.mgf": {
+                        "Data": "003_Ex2_Orbitrap_CID.mgf",
+                        "Childs": {},
+                        "Label": "003_Ex2_Orbitrap_CID.mgf",
+                        "ID": 0
+                }
+        },
+        "Label": "\/",
+        "ID": 0
+}

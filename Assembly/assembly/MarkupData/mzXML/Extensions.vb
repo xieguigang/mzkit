@@ -44,11 +44,13 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports SMRUCC.MassSpectrum.Math.Spectra
+Imports r = System.Text.RegularExpressions.Regex
 
 Namespace MarkupData.mzXML
 
-    Public Module Extensions
+    <HideModuleName> Public Module Extensions
 
         ''' <summary>
         ''' 解析出色谱峰数据
@@ -82,7 +84,7 @@ Namespace MarkupData.mzXML
         ''' </param>
         ''' <returns></returns>
         <Extension> Public Function ExtractMzI(scan As scan) As (name$, peaks As ms2())
-            Dim name$ = scan.__getName
+            Dim name$ = scan.getName
             Dim peaks As ms2()
 
             If scan.peaksCount = 0 Then
@@ -94,9 +96,21 @@ Namespace MarkupData.mzXML
             Return (name, peaks)
         End Function
 
-        <Extension> Private Function __getName(scan As scan) As String
+        <Extension> Private Function getName(scan As scan) As String
             Dim level$ = If(scan.msLevel = 1, "MS1", "MS/MS")
             Return $"[{level}] {scan.scanType} Scan, ({scan.polarity}) mz={scan.precursorMz.value}, into={scan.precursorMz.precursorIntensity} / retentionTime={scan.retentionTime}"
+        End Function
+
+        ''' <summary>
+        ''' Check if the given <paramref name="mzXML"/> raw data file is intact or not?
+        ''' </summary>
+        ''' <param name="mzXML">The file path of the mzXML raw data file.</param>
+        ''' <returns></returns>
+        Public Function IsIntact(mzXML As String) As Boolean
+            Dim tails As String = LargeTextFile.Tails(mzXML, 1024, Encoding.UTF8).Trim
+
+            Return InStr(tails, "</mzXML>", CompareMethod.Binary) > 0 AndAlso
+                r.Match(tails, "[<]sha1[>].+?[<]/sha1[>]", RegexICSng).Success
         End Function
     End Module
 End Namespace

@@ -218,6 +218,10 @@
     <Compile Include="MetaLib\Models\MetaLib.vb" />
     <Compile Include="Concentration.vb" />
     <Compile Include="Public\lipidMAPS\SDF.vb" />
+    <Compile Include="Public\NCBI\NamespaceDoc.vb" />
+    <Compile Include="Public\NCBI\PubChem\PCXml\Elements.vb" />
+    <Compile Include="Public\NCBI\PubChem\PCXml\Extensions.vb" />
+    <Compile Include="Public\NCBI\PubChem\PCXml\PC-Compound.vb" />
     <Compile Include="Public\NCBI\PubChem\Web\MetaInfoReader.vb" />
     <Compile Include="Public\NCBI\PubChem\Web\Query\WebQuery.vb" />
     <Compile Include="Public\NCBI\SDFExtensions.vb" />
@@ -242,6 +246,7 @@
     <Compile Include="Public\TMIC\HMDB\Spectra\CMS.vb" />
     <Compile Include="Public\TMIC\HMDB\Tables\ChemicalDescriptor.vb" />
     <Compile Include="SDF\ChemicalDescriptor.vb" />
+    <Compile Include="SDF\NamespaceDoc.vb" />
     <Compile Include="SDF\SDFParser.vb" />
     <Compile Include="SDF\Struct\Enums.vb" />
     <Compile Include="SDF\Struct\Elements.vb" />

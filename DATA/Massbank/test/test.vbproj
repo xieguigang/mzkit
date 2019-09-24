@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{2223FB63-E148-4342-87E6-495571B2898E}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>test.HMDBqueryTest</StartupObject>
+    <StartupObject>test.pubchemTest</StartupObject>
     <RootNamespace>test</RootNamespace>
     <AssemblyName>test</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -91,6 +91,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChemOntTest.vb" />
     <Compile Include="Module1.vb" />
     <Compile Include="inchiTest.vb" />
     <Compile Include="metaLibLoaderTest.vb" />

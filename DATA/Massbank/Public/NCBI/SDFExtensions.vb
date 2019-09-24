@@ -3,7 +3,7 @@ Imports SMRUCC.MassSpectrum.DATA.File
 
 Namespace NCBI.PubChem
 
-    Public Module SDFExtensions
+    <HideModuleName> Public Module SDFExtensions
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>

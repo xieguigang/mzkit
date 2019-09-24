@@ -8,12 +8,12 @@ Imports System.Runtime.InteropServices
 
 '查看程序集特性的值
 
-<Assembly: AssemblyTitle("mz")>
+<Assembly: AssemblyTitle("m/z toolkit")>
 <Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("Microsoft")>
+<Assembly: AssemblyCompany("BioNovogene")>
 <Assembly: AssemblyProduct("mz")>
-<Assembly: AssemblyCopyright("Copyright © Microsoft 2018")>
-<Assembly: AssemblyTrademark("")>
+<Assembly: AssemblyCopyright("Copyright © BioNovogene 2018")>
+<Assembly: AssemblyTrademark("mzkit")>
 
 <Assembly: ComVisible(False)>
 
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' 方法是按如下所示使用“*”: :
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("1.0.0.0")>
-<Assembly: AssemblyFileVersion("1.0.0.0")>
+<Assembly: AssemblyVersion("2.3.*")>
+<Assembly: AssemblyFileVersion("1.9.*")>

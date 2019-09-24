@@ -44,6 +44,7 @@
 
 Imports System.Collections.Specialized
 Imports System.Runtime.CompilerServices
+Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -53,30 +54,35 @@ Imports SMRUCC.MassSpectrum.DATA.File
 Imports SMRUCC.MassSpectrum.DATA.MetaLib.Models
 Imports SMRUCC.MassSpectrum.Math.Ms1.PrecursorType
 Imports SMRUCC.MassSpectrum.Math.Spectra
-
-Public Class SpectraInfo
-    Public Property MsLevel As String
-    Public Property mz As Double
-    Public Property precursor_type As String
-    Public Property instrument_type As String
-    Public Property instrument As String
-    Public Property collision_energy As String
-    Public Property ion_mode As String
-    Public Property ionization As String
-    Public Property fragmentation_mode As String
-    Public Property resolution As String
-    Public Property column As String
-    Public Property flow_gradient As String
-    Public Property flow_rate As String
-    Public Property retention_time As String
-    Public Property solvent_a As String
-    Public Property solvent_b As String
-End Class
+Imports r = System.Text.RegularExpressions.Regex
 
 ''' <summary>
 ''' Reader for file ``MoNA-export-LC-MS-MS_Spectra.sdf``
 ''' </summary>
 Public Module SDFReader
+
+    Private Function TrimGNPSName(commonName As String) As String
+        Dim prefix = r.Match(commonName, "^[A-Z]+\d+[-]\d+[!_]", RegexOptions.Multiline)
+
+        If Not prefix.Success Then
+            Return commonName
+        Else
+            commonName = commonName.Replace(prefix.Value, "")
+
+            If prefix.Value.Last = "!" Then
+                Return commonName
+            Else
+                ' 还会包含分子式
+                prefix = r.Match(commonName, "^[CHOPNS0-9]+[_]", RegexOptions.Multiline)
+
+                If prefix.Success Then
+                    commonName = commonName.Replace(prefix.Value, "")
+                End If
+
+                Return commonName
+            End If
+        End If
+    End Function
 
     ''' <summary>
     ''' 
@@ -98,14 +104,25 @@ Public Module SDFReader
         For Each mol As SDF In SDF.IterateParser(path, parseStruct:=False)
             Dim M As Func(Of String, String) = mol.readMeta
             Dim commentMeta = mol.MetaData!COMMENT.ToTable
-            Dim ms2 As ms2() = Nothing
             Dim info As SpectraInfo = Nothing
             Dim commonName$ = Strings.Trim(M("NAME")).Trim(ASCII.Quot)
             Dim exact_mass# = M("EXACT MASS")
+            Dim xrefID$ = M("ID").Trim
+            Dim xref As xref = commentMeta.readXref(M)
+
+            ' fix naming bugs in GNPS library
+            If InStr(xrefID, "CCMSLIB") = 1 Then
+                commonName = TrimGNPSName(commonName)
+
+                If commonName.StringEmpty AndAlso xref.IsEmpty(xref) Then
+                    Continue For
+                End If
+            End If
 
             If Not skipSpectraInfo Then
                 info = M.readSpectraInfo.FixMzType(exact_mass, recalculateMz)
-                ms2 = mol.MetaData("MASS SPECTRAL PEAKS") _
+                info.MassPeaks = mol _
+                    .MetaData("MASS SPECTRAL PEAKS") _
                     .Select(Function(line) line.Split) _
                     .Select(Function(line)
                                 Return New ms2 With {
@@ -119,12 +136,11 @@ Public Module SDFReader
 
             Yield New SpectraSection With {
                 .name = commonName,
-                .ID = M("ID"),
+                .ID = xrefID,
                 .Comment = commentMeta,
                 .formula = M("FORMULA"),
                 .exact_mass = exact_mass,
-                .MassPeaks = ms2,
-                .xref = commentMeta.readXref(M),
+                .xref = xref,
                 .SpectraInfo = info
             }
         Next

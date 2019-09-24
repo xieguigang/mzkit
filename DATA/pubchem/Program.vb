@@ -88,6 +88,9 @@ Module Program
     <ExportAPI("/unify.metalib")>
     <Usage("/unify.metalib /in <CID-Synonym-filtered.txt> /SID <SID-Map.txt> [/cas /out <out.Xml>]")>
     <Description("Create a unify xref database file.")>
+    <Argument("/cas", True, CLITypes.Boolean,
+              AcceptTypes:={GetType(Boolean)},
+              Description:="If this argument is presented in the commandline input, then it means the each output compound annotation data should have one registry id at least.")>
     Public Function PubchemUnifyMetaLib(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim sidMap$ = args <= "/SID"
@@ -126,7 +129,7 @@ Module Program
         End With
 
         Using dataset As New DataSetWriter(Of MetaLib)(out)
-            Dim i As VBInteger = 0
+            Dim i As i32 = 0
 
             For Each meta As MetaLib In CIDSynonym _
                 .LoadMetaInfo([in]) _
@@ -171,7 +174,7 @@ Module Program
         Dim in$ = args <= "/in"
         Dim db$ = args <= "/db"
         Dim out$ = args("/out") Or $"{[in].TrimSuffix}.{db}.csv"
-        Dim i As VBInteger = 0
+        Dim i As i32 = 0
 
         Using table As New WriteStream(Of SIDMap)(out)
             For Each sid As SIDMap In SIDMap.GetMaps([in])

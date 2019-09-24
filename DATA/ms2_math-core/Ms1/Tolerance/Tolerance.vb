@@ -115,6 +115,8 @@ Namespace Ms1
         ''' <param name="mz2#"></param>
         ''' <returns></returns>
         Public MustOverride Function MassError(mz1#, mz2#) As Double
+        Public MustOverride Function MassErrorDescription(mz1#, mz2#) As String
+
         ''' <summary>
         ''' 判断目标分子质量误差是否符合当前的误差要求
         ''' </summary>
@@ -181,5 +183,23 @@ Namespace Ms1
         Public Shared Narrowing Operator CType(tolerance As Tolerance) As GenericLambda(Of Double).IEquals
             Return AddressOf tolerance.Assert
         End Operator
+
+        ''' <summary>
+        ''' + da:xxx
+        ''' + ppm:xxx
+        ''' </summary>
+        ''' <param name="script"></param>
+        ''' <returns></returns>
+        Public Shared Function ParseScript(script As String) As Tolerance
+            Dim tokens = script.GetTagValue(":", trim:=True)
+            Dim method = tokens.Name.ToLower
+            Dim tolerance# = tokens.Value.ParseDouble
+
+            If method = "da" Then
+                Return DeltaMass(da:=tolerance)
+            Else
+                Return PPM(value:=tolerance)
+            End If
+        End Function
     End Class
 End Namespace
