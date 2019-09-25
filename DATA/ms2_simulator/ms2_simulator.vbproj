@@ -144,6 +144,7 @@
     <Compile Include="Emulator\Emulator.vb" />
     <Compile Include="GA\EnergyDistribution.vb" />
     <Compile Include="GA\GA.vb" />
+    <Compile Include="FragmentSamples.vb" />
     <Compile Include="RTPrediction.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
