@@ -191,6 +191,10 @@
       <Project>{216acc2d-c7a5-4c27-9dc9-bdfa4dbb6a37}</Project>
       <Name>Bio.Repository</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\MachineLearning\MachineLearning\MachineLearning.vbproj">
+      <Project>{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}</Project>
+      <Name>MachineLearning</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFittings\DataFittings.vbproj">
       <Project>{fc125b0d-1942-496f-b502-9c0eb80e35b6}</Project>
       <Name>DataFittings</Name>
