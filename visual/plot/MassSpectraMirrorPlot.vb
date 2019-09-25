@@ -69,7 +69,8 @@ Public Module MassSpectra
                                Optional margin$ = "padding: 100px 30px 50px 100px;",
                                Optional intoCutoff# = 0.05,
                                Optional titles$() = Nothing,
-                               Optional plotTitle$ = "BioDeep™ MS/MS alignment Viewer") As GraphicsData
+                               Optional plotTitle$ = "BioDeep™ MS/MS alignment Viewer",
+                               Optional labelDisplayIntensity# = 0.3) As GraphicsData
 
         Dim a As New LibraryMatrix With {.ms2 = library.ms2, .Name = titles.ElementAtOrDefault(0, library.Name)}
         Dim b As New LibraryMatrix With {.ms2 = library.ms2, .Name = titles.ElementAtOrDefault(1, library.Name)}
@@ -79,7 +80,8 @@ Public Module MassSpectra
             size:=size,
             intoCutoff:=intoCutoff,
             margin:=margin,
-            title:=plotTitle
+            title:=plotTitle,
+            labelDisplayIntensity:=labelDisplayIntensity
         )
     End Function
 
@@ -87,7 +89,8 @@ Public Module MassSpectra
                                     Optional size$ = "1200,800",
                                     Optional margin$ = "padding: 100px 30px 50px 100px;",
                                     Optional intoCutoff# = 0.05,
-                                    Optional title$ = "BioDeep™ MS/MS alignment Viewer") As GraphicsData
+                                    Optional title$ = "BioDeep™ MS/MS alignment Viewer",
+                                    Optional labelDisplayIntensity# = 0.3) As GraphicsData
 
         Dim mzRange As DoubleRange = query _
             .Trim(intoCutoff) _
@@ -115,7 +118,7 @@ Public Module MassSpectra
             titleCSS:=CSSFont.Win7Large,
             format:="F0",
             yAxislabelPosition:=YlabelPosition.LeftCenter,
-            labelPlotStrength:=0.3
+            labelPlotStrength:=labelDisplayIntensity
         )
     End Function
 End Module
