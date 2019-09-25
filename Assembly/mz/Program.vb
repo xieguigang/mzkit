@@ -212,11 +212,18 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
     ''' <param name="args"></param>
     ''' <returns></returns>
     <ExportAPI("/mgf")>
-    <Description("Export all of the ms2 ions in target mzXML file and save as mgf file format.")>
+    <Description("Export all of the ms2 ions in target mzXML file and save as mgf file format. Load data from mgf file is more faster than mzXML raw data file.")>
     <Usage("/mgf /in <rawdata.mzXML> [/relative /out <ions.mgf>]")>
     <Argument("/relative", True, CLITypes.Boolean,
               AcceptTypes:={GetType(Boolean)},
               Description:="Dumping the relative intensity value instead of the raw intensity value.")>
+    <Argument("/in", False, CLITypes.File, PipelineTypes.std_in,
+              Extensions:="*.mzXML",
+              Description:="File path of the mzXML raw data file.")>
+    <Argument("/out", True, CLITypes.File, PipelineTypes.std_out,
+              AcceptTypes:={GetType(Ions)},
+              Extensions:="*.txt,*.mgf",
+              Description:="The file path for mgf text output.")>
     Public Function DumpMs2(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim out$ = args("/out") Or $"{[in].TrimSuffix}.mgf"
