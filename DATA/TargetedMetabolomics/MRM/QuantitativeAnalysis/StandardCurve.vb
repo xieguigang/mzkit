@@ -274,8 +274,8 @@ Public Module StandardCurve
                          peakAreaMethod As PeakArea.Methods,
                          TPAFactors As Dictionary(Of String, Double),
                          Optional ByRef refName$() = Nothing,
-                         Optional calibrationNamedPattern$ = ".+[-]L\d+",
-                         Optional levelPattern$ = "[-]L\d+") As DataSet()
+                         Optional calibrationNamedPattern$ = ".+[-]CAL\d+",
+                         Optional levelPattern$ = "[-]CAL\d+") As DataSet()
 
         Dim rawName$ = raw.BaseName
         Dim ionTPAs As New Dictionary(Of String, Dictionary(Of String, Double))

@@ -92,6 +92,8 @@ Public Module MRMSamples
 
     ''' <summary>
     ''' 通过标准曲线对样品进行定量结果数据的获取
+    ''' 
+    ''' 这个函数对参考标曲的大小写不敏感,只需要名称的pattern正确就可以正常工作
     ''' </summary>
     ''' <param name="wiff$"></param>
     ''' <param name="model">标准曲线线性回归模型</param>
