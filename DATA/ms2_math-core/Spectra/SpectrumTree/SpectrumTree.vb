@@ -1,51 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::5beb48505c016e818bf12ef8533dbfbc, ms2_math-core\Spectra\SpectrumTree\SpectrumTree.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class SpectrumTreeCluster
-    ' 
-    '         Properties: allMs2Scans
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: doCluster, PopulateClusters, SSMCompares
-    ' 
-    '         Sub: clusterInternal
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class SpectrumTreeCluster
+' 
+'         Properties: allMs2Scans
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: doCluster, PopulateClusters, SSMCompares
+' 
+'         Sub: clusterInternal
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -133,6 +133,21 @@ Namespace Spectra
                         .ToArray
                 }
             Next
+        End Function
+
+        ''' <summary>
+        ''' Get the top score cluster with a given <paramref name="score"/> evaluation function.
+        ''' </summary>
+        ''' <param name="score"></param>
+        ''' <returns></returns>
+        Public Function Best(score As Func(Of SpectrumCluster, Double)) As SpectrumCluster
+            If allMs2Scans.Count = 0 Then
+                Return Nothing
+            Else
+                Return PopulateClusters _
+                    .OrderByDescending(score) _
+                    .First
+            End If
         End Function
 
         Private Sub clusterInternal(ms2list As PeakMs2(), tick As Action)
