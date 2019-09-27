@@ -12,7 +12,7 @@ Namespace Chromatogram
         ''' 
         <Extension>
         Public Function GetPeakGroups(mzpoints As IEnumerable(Of TICPoint)) As IEnumerable(Of PeakFeature)
-
+            Dim timepoints = mzpoints.OrderBy(Function(p) p.time).ToArray
         End Function
     End Module
 
