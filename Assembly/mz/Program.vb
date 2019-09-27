@@ -213,7 +213,7 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
     ''' <returns></returns>
     <ExportAPI("/mgf")>
     <Description("Export all of the ms2 ions in target mzXML file and save as mgf file format. Load data from mgf file is more faster than mzXML raw data file.")>
-    <Usage("/mgf /in <rawdata.mzXML> [/relative /out <ions.mgf>]")>
+    <Usage("/mgf /in <rawdata.mzXML> [/relative /ms1 /out <ions.mgf>]")>
     <Argument("/relative", True, CLITypes.Boolean,
               AcceptTypes:={GetType(Boolean)},
               Description:="Dumping the relative intensity value instead of the raw intensity value.")>
@@ -230,6 +230,7 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
         Dim peak As PeakMs2
         Dim basename$ = [in].FileName
         Dim relativeInto As Boolean = args("/relative")
+        Dim includesMs1 As Boolean = args("/ms1")
 
         If [in].GetFullPath = out.GetFullPath Then
             Throw New InvalidDataException("Input and output can not be the same file!")
@@ -239,10 +240,20 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
             For Each ms2Scan As scan In mzXML.XML _
                 .LoadScans([in]) _
                 .Where(Function(s)
-                           Return s.msLevel = "2"
+                           If includesMs1 Then
+                               Return True
+                           Else
+                               Return s.msLevel = 2
+                           End If
                        End Function)
 
-                peak = ms2Scan.ScanData(basename, raw:=Not relativeInto)
+                If ms2Scan.msLevel = 1 Then
+                    ' ms1的数据总是使用raw intensity值
+                    peak = ms2Scan.ScanData(basename, raw:=True)
+                Else
+                    peak = ms2Scan.ScanData(basename, raw:=Not relativeInto)
+                End If
+
                 peak _
                     .MgfIon _
                     .WriteAsciiMgf(mgfWriter, relativeInto)
