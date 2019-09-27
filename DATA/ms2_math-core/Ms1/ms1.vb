@@ -116,11 +116,17 @@ Public Class MetaInfo : Inherits Ms1Feature
 
 End Class
 
-Public Class ms1_scan : Implements IMs1
+Public Interface IMs1Scan : Inherits IMs1
+
+    Property intensity As Double
+
+End Interface
+
+Public Class ms1_scan : Implements IMs1, IMs1Scan
 
     <XmlAttribute> Public Property mz As Double Implements IMs1.mz
     <XmlAttribute> Public Property scan_time As Double Implements IMs1.rt
-    <XmlAttribute> Public Property intensity As Double
+    <XmlAttribute> Public Property intensity As Double Implements IMs1Scan.intensity
 
     Public Overrides Function ToString() As String
         Return $"{mz.ToString("F4")}@{sys.Round(scan_time)} ({intensity})"
