@@ -52,12 +52,17 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.GraphTheory
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.application.json.JSONSerializer
 Imports Microsoft.VisualBasic.Text
 Imports SMRUCC.MassSpectrum.Assembly.ASCII.MGF
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzXML
+Imports SMRUCC.MassSpectrum.Math.Chromatogram
+Imports SMRUCC.MassSpectrum.Math.Ms1
 Imports SMRUCC.MassSpectrum.Math.Ms1.PrecursorType
 Imports SMRUCC.MassSpectrum.Math.Spectra
 
@@ -151,6 +156,44 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
         Return timeScans _
             .SaveTo(out, metaBlank:=0, tsv:=True) _
             .CLICode
+    End Function
+
+    ''' <summary>
+    ''' 进行数据的解卷积
+    ''' </summary>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
+    <ExportAPI("/peaktable")>
+    <Usage("/peaktable /in <raw.mzXML> [/ms2 /tolerance <default=da:0.3> /out <peaktable.xls>]")>
+    <Argument("/ms2", True, CLITypes.Boolean,
+              AcceptTypes:={GetType(Boolean)},
+              Description:="Use ms2 data for the calculation of the peaktable.")>
+    Public Function GetPeaktable(args As CommandLine) As Integer
+        Dim in$ = args <= "/in"
+        Dim useMs2 As Boolean = args("/ms2")
+        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.peaktable.csv"
+        Dim allScans = mzXML.XML.ReadSingleFile([in], 1 Or 2.When(useMs2))
+        Dim tolerance As Tolerance = Tolerance.ParseScript(args("/tolerance") Or "da:0.3")
+
+        ' create ticks
+        Dim basename$ = [in].FileName
+        Dim ticks = allScans _
+            .Select(Function(scan)
+                        Dim peaks = scan.ScanData(basename,, raw:=True)
+                        Dim rt As Double = peaks.rt
+                        Dim mz = peaks.mzInto _
+                            .Select(Function(frag)
+                                        Return New TICPoint With {
+                                            .mz = frag.mz,
+                                            .intensity = frag.quantity,
+                                            .time = rt
+                                        }
+                                    End Function)
+
+                        Return mz
+                    End Function) _
+            .IteratesALL _
+            .GroupBy(Function(t) t.mz, AddressOf tolerance.Assert)
     End Function
 
     <ExportAPI("/export")>
@@ -273,7 +316,7 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
             .ID = 0,
             .Childs = New Dictionary(Of String, Tree(Of String, String)),
             .Data = "#",
-            .Label = "/",
+            .label = "/",
             .Parent = Nothing
         }
         Dim this = CLI.mz.FromEnvironment(App.HOME)
