@@ -178,7 +178,8 @@ Public Module StandardCurve
     <Extension>
     Public Iterator Function Regression(ionTPA As Dictionary(Of DataSet),
                                         calibrates As Standards(),
-                                        [ISvector] As [IS]()) As IEnumerable(Of NamedValue(Of (IFitted, MRMStandards(), [IS])))
+                                        [ISvector] As [IS](),
+                                        Optional weighted As Boolean = False) As IEnumerable(Of NamedValue(Of (IFitted, MRMStandards(), [IS])))
 
         Dim [IS] As Dictionary(Of String, [IS]) = ISvector.ToDictionary(Function(i) i.ID)
 
@@ -249,7 +250,7 @@ Public Module StandardCurve
                         End Function) _
                 .ToArray
 
-            Dim fit As WeightedFit = FitModel.CreateLinearRegression(line, True)
+            Dim fit As IFitted = FitModel.CreateLinearRegression(line, weighted)
             Dim out As New NamedValue(Of (IFitted, MRMStandards(), [IS])) With {
                 .Name = ion.HMDB,
                 .Value = (fit, points.ToArray, IsIon)

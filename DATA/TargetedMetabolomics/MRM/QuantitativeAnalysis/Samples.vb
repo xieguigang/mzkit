@@ -115,7 +115,8 @@ Public Module MRMSamples
                                          Optional levelPattern$ = "[-]L\d+",
                                          Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum,
                                          Optional externalStandardsWiff$ = Nothing,
-                                         Optional isBlank As Func(Of String, Boolean) = Nothing) As IEnumerable(Of DataSet)
+                                         Optional isBlank As Func(Of String, Boolean) = Nothing,
+                                         Optional weighted As Boolean = False) As IEnumerable(Of DataSet)
         Dim standardNames$() = Nothing
         Dim TPAFactors = calibrates.ToDictionary(Function(ion) ion.HMDB, Function(ion) ion.Factor)
 
@@ -131,7 +132,7 @@ Public Module MRMSamples
                   TPAFactors:=TPAFactors
             ) _
             .ToDictionary _
-            .Regression(calibrates, ISvector:=[IS]) _
+            .Regression(calibrates, ISvector:=[IS], weighted:=weighted) _
             .ToArray
 
         X = New List(Of DataSet)
