@@ -125,7 +125,7 @@ Namespace Spectra
         Public Property Annotation As String
 
         Public Overrides Function ToString() As String
-            If intensity < 1 Then
+            If intensity <= 1 Then
                 Return $"{mz} ({Fix(intensity * 100%)}%)"
             Else
                 Return $"{mz} ({Fix(intensity)}%)"

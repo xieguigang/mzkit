@@ -50,11 +50,12 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Terminal.ProgressBar
 Imports SMRUCC.MassSpectrum.Math
 Imports SMRUCC.MassSpectrum.Math.Ms1
 Imports SMRUCC.MassSpectrum.Math.Spectra
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace Spectra
 
@@ -78,7 +79,7 @@ Namespace Spectra
         ''' 
         ''' </summary>
         ''' <param name="compares">
-        ''' By default is SSM method <see cref="SSMCompares(Tolerance, Double, Double)"/>
+        ''' By default is SSM method <see cref="SSMCompares(Tolerance, Double, Double, Func(Of Double, Double, Double))"/>
         ''' </param>
         ''' <param name="showReport">Show progress report?</param>
         Sub New(Optional compares As Comparison(Of PeakMs2) = Nothing, Optional showReport As Boolean = True)
@@ -96,7 +97,13 @@ Namespace Spectra
         ''' <param name="equalsScore">判断两个质谱图是相同的所需的最低得分</param>
         ''' <param name="gtScore">将质谱图划分到二叉树的右节点的所需要的最低得分</param>
         ''' <returns></returns>
-        Public Shared Function SSMCompares(Optional tolerance As Tolerance = Nothing, Optional equalsScore# = 0.85, Optional gtScore# = 0.6) As Comparison(Of PeakMs2)
+        Public Shared Function SSMCompares(Optional tolerance As Tolerance = Nothing,
+                                           Optional equalsScore# = 0.85,
+                                           Optional gtScore# = 0.6,
+                                           Optional scoreAggregate As Func(Of Double, Double, Double) = Nothing) As Comparison(Of PeakMs2)
+
+            Static scoreMin As New [Default](Of Func(Of Double, Double, Double))(AddressOf stdNum.Min)
+
             If equalsScore < 0 OrElse equalsScore > 1 Then
                 Throw New InvalidConstraintException("Scores for spectra equals is invalid, it should be in range (0, 1].")
             End If
@@ -105,14 +112,15 @@ Namespace Spectra
             End If
 
             tolerance = tolerance Or ppm20
+            scoreAggregate = scoreAggregate Or scoreMin
 
-            Return Function(x, y) As Integer
+            Return Function(x As PeakMs2, y As PeakMs2) As Integer
                        Dim score = GlobalAlignment.TwoDirectionSSM(x.mzInto.ms2, y.mzInto.ms2, tolerance)
-                       Dim min = sys.Min(score.forward, score.reverse)
+                       Dim scoreVal = scoreAggregate(score.forward, score.reverse)
 
-                       If min >= equalsScore Then
+                       If scoreVal >= equalsScore Then
                            Return 0
-                       ElseIf min >= gtScore Then
+                       ElseIf scoreVal >= gtScore Then
                            Return 1
                        Else
                            Return -1

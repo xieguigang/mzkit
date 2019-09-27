@@ -31,7 +31,12 @@ Namespace ASCII.MGF
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function ReadIons(ParamArray files As String()) As IEnumerable(Of Ions)
-            Return files.Select(AddressOf StreamParser).IteratesALL
+            Return files _
+                .Select(Function(filepath)
+                            Call filepath.__INFO_ECHO
+                            Return StreamParser(filepath)
+                        End Function) _
+                .IteratesALL
         End Function
 
         Public Iterator Function StreamParser(path$) As IEnumerable(Of Ions)
