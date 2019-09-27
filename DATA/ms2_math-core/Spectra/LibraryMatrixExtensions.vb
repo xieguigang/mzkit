@@ -53,6 +53,8 @@ Namespace Spectra
     ''' <summary>
     ''' Library matrix math
     ''' </summary>
+    ''' 
+    <HideModuleName>
     Public Module LibraryMatrixExtensions
 
         ''' <summary>
