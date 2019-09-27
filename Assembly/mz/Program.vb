@@ -176,6 +176,7 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
         Dim tolerance As Tolerance = Tolerance.ParseScript(args("/tolerance") Or "da:0.3")
 
         ' create ticks
+        ' and group by mz
         Dim basename$ = [in].FileName
         Dim ticks = allScans _
             .Select(Function(scan)
@@ -193,7 +194,12 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
                         Return mz
                     End Function) _
             .IteratesALL _
-            .GroupBy(Function(t) t.mz, AddressOf tolerance.Assert)
+            .GroupBy(Function(t) t.mz, AddressOf tolerance.Assert) _
+            .Select(Function(mz) mz.GetPeakGroups) _
+            .IteratesALL _
+            .ToArray
+
+        Return ticks.SaveTo(out).CLICode
     End Function
 
     <ExportAPI("/export")>
