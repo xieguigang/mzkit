@@ -11,9 +11,9 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyTitle("m/z assembly file toolkit")>
 <Assembly: AssemblyDescription("m/z assembly file toolkit")>
 <Assembly: AssemblyCompany("BioNovogene")>
-<Assembly: AssemblyProduct("mz")>
+<Assembly: AssemblyProduct("mzkit")>
 <Assembly: AssemblyCopyright("Copyright © BioNovogene 2019")>
-<Assembly: AssemblyTrademark("mzkit")>
+<Assembly: AssemblyTrademark("BioDeep")>
 
 <Assembly: ComVisible(False)>
 
