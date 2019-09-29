@@ -256,6 +256,43 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
     End Function
 
     ''' <summary>
+    ''' 在所给定的误差范围内将原始数据进行简化
+    ''' </summary>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
+    ''' 
+    <ExportAPI("/centroid")>
+    <Usage("/centroid /mgf <raw.mgf> [/ms2.tolerance <default=da:0.1> /into.cutoff <default=0.05> /out <simple.mgf>]")>
+    <Description("Removes low abundance fragment details from the ms2 peaks from the profile mode raw data.")>
+    <Argument("/into.cutoff", True, CLITypes.Double,
+              AcceptTypes:={GetType(Double)},
+              Description:="A relative intensity cutoff value for removes low abundance ms2 fragments. 
+              This cutoff value should be in range of ``[0, 1)``.")>
+    Public Function CentroidPeaksData(args As CommandLine) As Integer
+        Dim in$ = args <= "/mgf"
+        Dim ms2Tolerance As Tolerance = Tolerance.ParseScript(args("/ms2.tolerance") Or "da:0.1")
+        Dim intoCutoff# = args("/into.cutoff") Or 0.05
+        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.centroid.mgf"
+        Dim centroidIons = MgfReader.StreamParser([in]) _
+            .Select(Function(p)
+                        Dim peaks As New LibraryMatrix With {.ms2 = p.Peaks}
+                        Dim simplify = peaks.Shrink(ms2Tolerance)
+
+                        simplify = simplify / simplify.Max
+                        p.Peaks = simplify(simplify!intensity >= intoCutoff).ToArray
+
+                        Return p
+                    End Function) _
+            .ToArray
+
+        Using mgfWriter As StreamWriter = out.OpenWriter(Encodings.ASCII, append:=False)
+            For Each ion In centroidIons
+                Call ion.WriteAsciiMgf(mgfWriter, False)
+            Next
+        End Using
+    End Function
+
+    ''' <summary>
     ''' 将二级碎片数据按照m/z分组导出
     ''' </summary>
     ''' <param name="args"></param>

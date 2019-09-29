@@ -68,6 +68,12 @@ Namespace ASCII.MGF
             End If
         End Sub
 
+        ''' <summary>
+        ''' 将目标<see cref="Ions"/>对象序列化为mgf文件格式的文本段然后写入所给定的文件流数据<paramref name="out"/>之中
+        ''' </summary>
+        ''' <param name="ion"></param>
+        ''' <param name="out"></param>
+        ''' <param name="relativeIntensity"></param>
         <Extension>
         Public Sub WriteAsciiMgf(ion As Ions, out As StreamWriter, Optional relativeIntensity As Boolean = False)
             Call out.WriteLine("BEGIN IONS")
