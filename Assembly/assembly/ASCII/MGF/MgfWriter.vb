@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports SMRUCC.MassSpectrum.Math.Spectra
 
@@ -91,12 +92,26 @@ Namespace ASCII.MGF
             Call out.writeIf("LOCUS", ion.Locus)
 
             Dim mz, into As Double
+            Dim getInto As Func(Of ms2, Double)
+
+            If relativeIntensity Then
+                Dim peaks As LibraryMatrix = ion.Peaks
+
+                getInto = Function(m) m.intensity
+                peaks = peaks / peaks.Max
+                ion = New Ions With {
+                    .Peaks = peaks.ToArray
+                }
+            Else
+                getInto = Function(m) m.quantity
+            End If
 
             For Each fragment As ms2 In ion.Peaks
                 mz = fragment.mz
-                into = If(relativeIntensity, fragment.quantity, fragment.intensity)
+                into = getInto(fragment)
 
-                Call out.WriteLine($"{mz} {into}")
+                ' write mgf text file data
+                Call $"{mz} {into}".DoCall(AddressOf out.WriteLine)
             Next
 
             Call out.WriteLine("END IONS")
