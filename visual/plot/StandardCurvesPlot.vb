@@ -48,7 +48,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports SMRUCC.MassSpectrum.Math
 
-Public Module viz
+Public Module StandardCurvesPlot
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>

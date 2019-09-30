@@ -185,6 +185,10 @@
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
       <Name>MassSpectrum.math-core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\DATA\TargetedMetabolomics\TargetedMetabolomics.vbproj">
+      <Project>{a8a71b32-dac6-4fa7-a5c1-0f5e5d5c9eb7}</Project>
+      <Name>TargetedMetabolomics</Name>
+    </ProjectReference>
     <ProjectReference Include="..\plot\msData-visualize.vbproj">
       <Project>{f2147043-7c16-48f8-838b-3d2cf14b0a7b}</Project>
       <Name>msData-visualize</Name>
