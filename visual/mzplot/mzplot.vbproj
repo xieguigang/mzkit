@@ -96,6 +96,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -156,6 +157,10 @@
     <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj">
       <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
       <Name>47_dotnet_ms-vb_data.framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFittings\DataFittings.vbproj">
+      <Project>{FC125B0D-1942-496F-B502-9C0EB80E35B6}</Project>
+      <Name>DataFittings</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\Plots-statistics\Plots.Statistics.vbproj">
       <Project>{368ee92f-7aa0-47df-be48-2ae150369a4c}</Project>

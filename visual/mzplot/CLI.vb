@@ -3,10 +3,12 @@ Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.InteropService.SharedORM
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports SMRUCC.MassSpectrum.Math
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
 Imports SMRUCC.MassSpectrum.Math.Ms1
 Imports SMRUCC.MassSpectrum.Visualization
@@ -84,7 +86,21 @@ Imports SMRUCC.MassSpectrum.Visualization
         Dim title$ = args("/title") Or "LinearFittings"
         Dim isWeighted As Boolean = args <= "/weighted"
         Dim out$ = args("/out") Or "./"
+        Dim points = StandardCurve.CreateModelPoints(ref, tpa, tpaIS, 5).ToArray
+        Dim fit As IFitted = FitModel.CreateLinearRegression(points, isWeighted)
+        Dim model As New FitModel With {
+            .LinearRegression = fit,
+            .Name = title,
+            .[IS] = New MRM.Models.IS With {
+                .CIS = 5,
+                .ID = "IS",
+                .name = "IS"
+            }
+        }
 
+        Call model.StandardCurves().Save($"{out}/standard_curve.png")
+        Call model.LinearRegression.ErrorTest.SaveTo($"{out}/input.csv")
 
+        Return 0
     End Function
 End Module
