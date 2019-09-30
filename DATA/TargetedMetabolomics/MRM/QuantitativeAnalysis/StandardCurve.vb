@@ -201,55 +201,18 @@ Public Module StandardCurve
             ' 标准曲线数据
             ' 从实验数据之中产生线性回归计算所需要的点的集合
             ' 注意，这些点之间是具有先后顺序的
-            Dim line As PointF() = ion _
+            Dim rawLevels = ion _
                 .C _
                 .OrderBy(Function(l)
                              ' 按照标曲编号从小到大进行排序
                              Return Val(l.Key.Match("\d+"))
                          End Function) _
-                .Select(Function(level)
-
-                            Dim key As String = level.Key.ToUpper
-                            Dim At_i = TPA(key) ' 得到峰面积Ati
-                            Dim Ct_i = level.Value    ' 得到已知的浓度数据
-                            Dim AIS#                  ' 内标的峰面积
-
-                            ' X 为峰面积，这样子在后面计算的时候就可以直接将离子对的峰面积带入方程计算出浓度结果了
-                            Dim pX#
-                            ' 20181106
-                            ' 因为CIS是假设恒定不变的，所以在这里就直接使用标准曲线的点的浓度来作为Y轴的值了
-                            Dim pY# = Ct_i ' / CIS   
-
-                            If ISA Is Nothing Then
-                                ' 不需要进行内标校正的情况
-                                ' 直接使用样本的峰面积作为X轴数据
-                                AIS = 0
-                                pX = At_i
-                            Else
-                                ' 需要做内标校正的情况
-                                AIS = ISA(key)
-                                pX = At_i / AIS
-                            End If
-
-                            ' C = f(A/AIS) = a * X + b
-                            ' 在进行计算的时候，直接将 样本的峰面积除以内标的峰面积 作为X
-                            ' 然后代入标准曲线公式即可得到Y，即样本的浓度
-
-                            points += New MRMStandards With {
-                                .AIS = AIS,
-                                .Ati = At_i,
-                                .cIS = CIS,
-                                .Cti = Ct_i,
-                                .ID = ion.HMDB,
-                                .Name = ion.Name,
-                                .level = key
-                            }
-
-                            ' 得到标准曲线之中的一个点
-                            Return New PointF(pX, pY)
-                        End Function) _
                 .ToArray
 
+            Dim C = rawLevels.Select(Function(L) L.Value).ToArray
+            Dim A = rawLevels.Select(TPA.getByLevel).ToArray
+            Dim ISTPA = rawLevels.Select(ISA.getByLevel).ToArray
+            Dim line As PointF() = StandardCurve.CreateModelPoints(C, A, ISTPA, CIS, ion.HMDB, ion.Name, points).ToArray
             Dim fit As IFitted = FitModel.CreateLinearRegression(line, weighted)
             Dim out As New NamedValue(Of (IFitted, MRMStandards(), [IS])) With {
                 .Name = ion.HMDB,
@@ -257,6 +220,85 @@ Public Module StandardCurve
             }
 
             Yield out
+        Next
+    End Function
+
+    ''' <summary>
+    ''' 得到峰面积Ati
+    ''' </summary>
+    ''' <param name="ref"></param>
+    ''' <returns></returns>
+    <Extension>
+    Private Function getByLevel(ref As DataSet) As Func(Of KeyValuePair(Of String, Double), Double)
+        Return Function(L)
+                   Dim key As String = L.Key.ToUpper
+                   Dim At_i = ref(key)
+
+                   Return At_i
+               End Function
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="points">如果这个参数为空值, 说明不需要返回测试数据</param>
+    ''' <returns></returns>
+    <Extension>
+    Public Iterator Function CreateModelPoints(C#(), A#(),
+                                               Optional ISA#() = Nothing,
+                                               Optional CIS# = 0,
+                                               Optional id$ = Nothing,
+                                               Optional name$ = Nothing,
+                                               Optional points As List(Of MRMStandards) = Nothing) As IEnumerable(Of PointF)
+        Dim AIS#
+
+        If points Is Nothing Then
+            points = New List(Of MRMStandards)
+        Else
+            points *= 0
+        End If
+
+        If ISA.IsNullOrEmpty Then
+            ISA = Nothing
+        End If
+
+        For i As Integer = 0 To C.Length - 1
+            Dim Ct_i = C(i)
+            Dim At_i = A(i)
+
+            ' X 为峰面积，这样子在后面计算的时候就可以直接将离子对的峰面积带入方程计算出浓度结果了
+            Dim pX#
+            ' 20181106
+            ' 因为CIS是假设恒定不变的，所以在这里就直接使用标准曲线的点的浓度来作为Y轴的值了
+            Dim pY# = Ct_i ' / CIS   
+
+            ' 获取内标的峰面积以及进行内标矫正
+            If ISA Is Nothing Then
+                ' 不需要进行内标校正的情况
+                ' 直接使用样本的峰面积作为X轴数据
+                AIS = 0
+                pX = At_i
+            Else
+                ' 需要做内标校正的情况
+                AIS = ISA(i)
+                pX = At_i / AIS
+            End If
+
+            ' C = f(A/AIS) = a * X + b
+            ' 在进行计算的时候，直接将 样本的峰面积除以内标的峰面积 作为X
+            ' 然后代入标准曲线公式即可得到Y，即样本的浓度
+            points += New MRMStandards With {
+                .AIS = AIS,
+                .Ati = At_i,
+                .cIS = CIS,
+                .Cti = Ct_i,
+                .ID = id,
+                .Name = name,
+                .level = "L" & i
+            }
+
+            ' 得到标准曲线之中的一个点
+            Yield New PointF(pX, pY)
         Next
     End Function
 
@@ -355,7 +397,7 @@ Public Module StandardCurve
                             baselineQuantile,
                             peakAreaMethod,
                             integratorTicks,
-                            TPAFactors.GetFactor(ion.Name)
+                            TPAFactors.GetFactor(ion.name)
                         )
                     End Function) _
             .ToArray
