@@ -65,7 +65,7 @@ Public Module StandardCurvesPlot
                       size:="1600,1100",
                       predictedX:=samples,
                       xAxisTickFormat:="F2",
-                      yAxisTickFormat:="F0",
+                      yAxisTickFormat:="F2",
                       showErrorBand:=False,
                       title:=name,
                       margin:="padding: 100px 100px 100px 200px"
@@ -79,7 +79,7 @@ Public Module StandardCurvesPlot
                       size:="1600,1100",
                       predictedX:=samples,
                       xAxisTickFormat:="G2",
-                      yAxisTickFormat:="F0",
+                      yAxisTickFormat:="F2",
                       showErrorBand:=False,
                       title:=name,
                       margin:="padding: 100px 100px 100px 200px"
