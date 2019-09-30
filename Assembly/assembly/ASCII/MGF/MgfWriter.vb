@@ -116,5 +116,25 @@ Namespace ASCII.MGF
 
             Call out.WriteLine("END IONS")
         End Sub
+
+        <Extension>
+        Public Function SaveTo(ion As Ions, file$) As Boolean
+            Using write As StreamWriter = file.OpenWriter
+                Call ion.WriteAsciiMgf(write)
+            End Using
+
+            Return True
+        End Function
+
+        <Extension>
+        Public Function SaveTo(ions As IEnumerable(Of Ions), file$) As Boolean
+            Using write As StreamWriter = file.OpenWriter
+                For Each ion As Ions In ions
+                    Call ion.WriteAsciiMgf(write)
+                Next
+            End Using
+
+            Return True
+        End Function
     End Module
 End Namespace
