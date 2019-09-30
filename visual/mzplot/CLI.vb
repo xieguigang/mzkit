@@ -98,8 +98,8 @@ Imports SMRUCC.MassSpectrum.Visualization
             }
         }
 
-        Call model.StandardCurves().Save($"{out}/standard_curve.png")
         Call model.LinearRegression.ErrorTest.SaveTo($"{out}/input.csv")
+        Call model.StandardCurves().Save($"{out}/standard_curve.png")
 
         Return 0
     End Function
