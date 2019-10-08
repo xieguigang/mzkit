@@ -87,7 +87,7 @@ Namespace File
 
             line = Mid(line, 1, line.Length - 6)
             t = line _
-                .Split(parTokens:=3) _
+                .Split(partitionSize:=3) _
                 .Select(Function(b) New String(b).Trim) _
                 .ToArray
 
