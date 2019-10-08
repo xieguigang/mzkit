@@ -52,7 +52,7 @@ Partial Module CLI
             If includeImage Then
                 For Each id As String In cid
                     Call ImageFly _
-                        .GetImage(id, 500, 500) _
+                        .GetImage(id, 500, 500, doBgTransparent:=False) _
                         .SaveAs($"{out}/{id}.png")
                     Call Thread.Sleep(1000)
                 Next
