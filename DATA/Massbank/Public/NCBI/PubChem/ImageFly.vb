@@ -44,6 +44,7 @@
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.Runtime
@@ -82,6 +83,8 @@ Namespace NCBI.PubChem
 
             If Not wget.Download(url, save:=tmp) Then
                 Return Nothing
+            ElseIf Not doBgTransparent Then
+                Return tmp.LoadImage
             End If
 
             Dim white As Color = Color.FromArgb(245, 245, 245)
