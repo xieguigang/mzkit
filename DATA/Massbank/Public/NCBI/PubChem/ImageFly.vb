@@ -46,10 +46,25 @@
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Net.Http
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace NCBI.PubChem
 
     Public Module ImageFly
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="cid"></param>
+        ''' <param name="doBgTransparent">
+        ''' 是否将得到的图片的背景设置为透明
+        ''' </param>
+        ''' <returns></returns>
+        Public Function GetImage(cid$, Optional size$ = "300,300", Optional doBgTransparent As Boolean = True) As Bitmap
+            With size.SizeParser
+                Return GetImage(cid, .Width, .Height, doBgTransparent)
+            End With
+        End Function
 
         ''' <summary>
         ''' 

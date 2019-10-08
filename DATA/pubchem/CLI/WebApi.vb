@@ -8,13 +8,18 @@ Imports SMRUCC.MassSpectrum.DATA.NCBI.PubChem
 Partial Module CLI
 
     <ExportAPI("/image.fly")>
-    <Usage("/image.fly /cid <cid> [/out <save.png>]")>
+    <Usage("/image.fly /cid <cid> [/transparent /size <w,h default=300,300> /out <save.png>]")>
     <Group(Program.WebApiCli)>
+    <Argument("/transparent", True, CLITypes.Boolean,
+              AcceptTypes:={GetType(Boolean)},
+              Description:="Make the image transparent?")>
     Public Function ImageFlyCLI(args As CommandLine) As Integer
         Dim cid$ = args("/cid")
-        Dim out$ = args("/out") Or $"./{cid}.png"
+        Dim size$ = args("/size") Or "300,300"
+        Dim out$ = args("/out") Or $"./{cid}_size={size}.png"
+        Dim doTransparent As Boolean = args("/transparent")
 
-        Return ImageFly.GetImage(cid) _
+        Return ImageFly.GetImage(cid, size, doTransparent) _
             .SaveAs(out) _
             .CLICode
     End Function
