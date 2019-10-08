@@ -44,6 +44,8 @@
 
 Module Program
 
+    Public Const WebApiCli$ = "PubChem Web Api"
+
     Public Function Main() As Integer
         Return GetType(CLI).RunCLI(App.CommandLine)
     End Function

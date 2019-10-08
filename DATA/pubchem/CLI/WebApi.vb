@@ -8,6 +8,7 @@ Partial Module CLI
 
     <ExportAPI("/image.fly")>
     <Usage("/image.fly /cid <cid> [/out <save.png>]")>
+    <Group(Program.WebApiCli)>
     Public Function ImageFlyCLI(args As CommandLine) As Integer
         Dim cid$ = args("/cid")
         Dim out$ = args("/out") Or $"./{cid}.png"
@@ -20,6 +21,7 @@ Partial Module CLI
     <ExportAPI("/query")>
     <Description("Do pubchem database query.")>
     <Usage("/query /terms <list.txt/json/xml> [/include.image /out <directory>]")>
+    <Group(Program.WebApiCli)>
     <Argument("/terms", False, CLITypes.File, PipelineTypes.std_in,
               AcceptTypes:={GetType(String())},
               Extensions:="*.txt, *.json, *.xml",
