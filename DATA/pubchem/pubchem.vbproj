@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{D35A0E14-1588-46DC-90DC-6A6EB4CADB4D}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>pubchem.Program</StartupObject>
-    <RootNamespace>pubchem</RootNamespace>
+    <StartupObject>pubchem_cli.Program</StartupObject>
+    <RootNamespace>pubchem_cli</RootNamespace>
     <AssemblyName>pubchem</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Console</MyType>
