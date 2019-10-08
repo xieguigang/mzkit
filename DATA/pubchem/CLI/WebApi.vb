@@ -1,4 +1,5 @@
 ﻿Imports System.ComponentModel
+Imports System.Threading
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Imaging
@@ -53,6 +54,7 @@ Partial Module CLI
                     Call ImageFly _
                         .GetImage(id, 500, 500) _
                         .SaveAs($"{out}/{id}.png")
+                    Call Thread.Sleep(1000)
                 Next
             End If
         Next

@@ -86,7 +86,7 @@ Namespace NCBI.PubChem
 
             Dim white As Color = Color.FromArgb(245, 245, 245)
             Dim bitmap As Bitmap = New Bitmap(tmp) _
-                .CorpBlank(margin:=5, blankColor:=white) _
+                .CorpBlank(margin:=20, blankColor:=white) _
                 .ColorReplace(white, Color.Transparent)
 
             Return bitmap
