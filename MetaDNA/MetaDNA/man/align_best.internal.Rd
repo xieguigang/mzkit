@@ -4,7 +4,8 @@
 \alias{align_best.internal}
 \title{Pick the best alignment result}
 \usage{
-align_best.internal(ref, peak, ms2.align, score.cutoff = 0.8, parent = NA)
+align_best.internal(ref, peak, ms2.align, score.cutoff = 0.8,
+  parent = NA)
 }
 \arguments{
 \item{ref}{The identify metabolite ms2 matrix}
@@ -24,4 +25,3 @@ Returns the alignment result, which is a R list object with members:
 \description{
 Pick the best alignment result for unknown metabolite.
 }
-

@@ -24,4 +24,3 @@ output debug info onto the console screen?}
 \description{
 Calculate all of the m/z value by enumerate all of the precursor types.
 }
-

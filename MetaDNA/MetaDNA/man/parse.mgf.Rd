@@ -9,4 +9,3 @@ parse.mgf(buffer)
 \description{
 Parse mgf ion data from text buffer.
 }
-
