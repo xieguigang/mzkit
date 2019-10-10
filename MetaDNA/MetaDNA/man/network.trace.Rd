@@ -12,4 +12,3 @@ network.trace(result)
 \description{
 Network Visualize of the MetaDNA result
 }
-

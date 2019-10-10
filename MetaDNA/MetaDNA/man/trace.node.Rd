@@ -21,4 +21,3 @@ Create debug data of metaDNA network elongation.
       \item \code{ref} is the ms2 spectrum matrix reference index value, which should contains two member: \code{file} and \code{scan}
    }
 }
-

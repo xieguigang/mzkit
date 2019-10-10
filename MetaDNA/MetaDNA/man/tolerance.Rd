@@ -21,4 +21,3 @@ This function returns a list object with members:
 \description{
 \code{m/z} tolerance helper
 }
-

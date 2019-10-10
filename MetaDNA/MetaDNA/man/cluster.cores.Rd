@@ -9,4 +9,3 @@ cluster.cores(cores = NULL)
 \description{
 Get/Set cluster cores for metaDNA iteration
 }
-

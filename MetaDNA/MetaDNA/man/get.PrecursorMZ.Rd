@@ -22,4 +22,3 @@ test and warn
 \description{
 Calculate m/z with given charge mode
 }
-
