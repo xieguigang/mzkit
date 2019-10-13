@@ -60,7 +60,7 @@ Imports SMRUCC.MassSpectrum.Visualization
             Dim tic = EntityObject _
                 .LoadDataSet([in]) _
                 .Select(Function(d As EntityObject)
-                            Dim rt As Double = Val(d(rt))
+                            Dim rt As Double = Val(d(rtField))
                             Dim into As Double = Val(d(intoField))
 
                             Return New ChromatogramTick With {
@@ -68,6 +68,7 @@ Imports SMRUCC.MassSpectrum.Visualization
                                 .Time = rt
                             }
                         End Function) _
+                .OrderBy(Function(p) p.Time) _
                 .ToArray
 
             data = {
