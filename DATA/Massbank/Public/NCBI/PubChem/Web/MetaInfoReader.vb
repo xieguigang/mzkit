@@ -65,6 +65,36 @@ Namespace NCBI.PubChem
             "MassBank of North America (MoNA)"
         }
 
+        <Extension>
+        Private Iterator Function getSynonyms(names As Section) As IEnumerable(Of String)
+            Dim depositor = names("Depositor-Supplied Synonyms")
+            Dim mesh = names("MeSH Entry Terms")
+
+            If Not depositor Is Nothing Then
+                For Each info As Information In depositor.Information
+                    If info.InfoType Is GetType(String) Then
+                        Yield info.InfoValue
+                    Else
+                        For Each value As String In DirectCast(info.InfoValue, String())
+                            Yield value
+                        Next
+                    End If
+                Next
+            End If
+
+            If Not mesh Is Nothing Then
+                For Each info As Information In mesh.Information
+                    If info.InfoType Is GetType(String) Then
+                        Yield info.InfoValue
+                    Else
+                        For Each value As String In DirectCast(info.InfoValue, String())
+                            Yield value
+                        Next
+                    End If
+                Next
+            End If
+        End Function
+
         ''' <summary>
         ''' 从pubchem数据库之中提取注释所需要的必须基本信息
         ''' </summary>
@@ -72,14 +102,14 @@ Namespace NCBI.PubChem
         ''' 
         <Extension>
         Public Function GetMetaInfo(view As PugViewRecord) As MetaInfo
-            Dim identifier = view("Names and Identifiers")
+            Dim identifier As Section = view("Names and Identifiers")
             Dim formula = view.GetInform("/Names and Identifiers/Molecular Formula/#0")
             Dim descriptors = identifier("Computed Descriptors")
             Dim SMILES = view.GetInform("/Names and Identifiers/Computed Descriptors/Canonical SMILES/#0")
             Dim InChIKey = descriptors("InChI Key").GetInformationString("#0")
             Dim InChI = descriptors("InChI").GetInformationString("#0")
             Dim otherNames = identifier("Other Identifiers")
-            Dim synonyms = identifier("Synonyms")("Depositor-Supplied Synonyms").GetInformationStrings(Nothing)
+            Dim synonyms = identifier("Synonyms").getSynonyms.Distinct.OrderBy(Function(s) s).ToArray
             Dim computedProperties = view("Chemical and Physical Properties")("Computed Properties")
             ' Dim properties = Table.ToDictionary(computedProperties)
             Dim CASNumber$()
@@ -135,8 +165,26 @@ Namespace NCBI.PubChem
                 .xref = xref,
                 .name = commonName,
                 .exact_mass = exact_mass,
-                .ID = view.RecordNumber
+                .ID = view.RecordNumber,
+                .synonym = synonyms.removesDbEntry.ToArray
             }
+        End Function
+
+        <Extension>
+        Private Iterator Function removesDbEntry(synonyms As String()) As IEnumerable(Of String)
+            For Each name As String In synonyms
+                If name.IsPattern("\d+") Then
+                    Continue For
+                End If
+                If name.Match("\d+").Length > 2 Then
+                    Continue For
+                End If
+                If xref.IsCASNumber(name) Then
+                    Continue For
+                End If
+
+                Yield name
+            Next
         End Function
     End Module
 End Namespace
