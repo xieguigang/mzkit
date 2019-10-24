@@ -29,3 +29,4 @@ The \code{do.align} function should take two parameter:
     The spectra matrix of query and reference and retuns a score vector
     which produced by forward and reverse spectra alignment.
 }
+

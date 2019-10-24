@@ -11,3 +11,4 @@ precursorType.MatchImpl(mass, precursorMZ, charge, chargeMode, tolerance,
 Calculate for each precursor type, and then returns the
 min tolerance type as the match result
 }
+

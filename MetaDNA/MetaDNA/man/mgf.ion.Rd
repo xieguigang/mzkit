@@ -17,3 +17,4 @@ mgf.ion(mz, rt, ms2, charge = "1", title = "Unknown name ion",
 \description{
 Generate mgf ion from data.
 }
+

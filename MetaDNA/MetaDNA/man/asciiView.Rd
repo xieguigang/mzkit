@@ -23,3 +23,4 @@ The text of the spectra viewer result, you should use \code{cat}
 \description{
 ASCII View of Spectra Matrix
 }
+
