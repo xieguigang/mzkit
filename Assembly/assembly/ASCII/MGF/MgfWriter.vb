@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports SMRUCC.MassSpectrum.Math.Spectra
 
@@ -68,6 +69,12 @@ Namespace ASCII.MGF
             End If
         End Sub
 
+        ''' <summary>
+        ''' 将目标<see cref="Ions"/>对象序列化为mgf文件格式的文本段然后写入所给定的文件流数据<paramref name="out"/>之中
+        ''' </summary>
+        ''' <param name="ion"></param>
+        ''' <param name="out"></param>
+        ''' <param name="relativeIntensity"></param>
         <Extension>
         Public Sub WriteAsciiMgf(ion As Ions, out As StreamWriter, Optional relativeIntensity As Boolean = False)
             Call out.WriteLine("BEGIN IONS")
@@ -85,15 +92,49 @@ Namespace ASCII.MGF
             Call out.writeIf("LOCUS", ion.Locus)
 
             Dim mz, into As Double
+            Dim getInto As Func(Of ms2, Double)
+
+            If relativeIntensity Then
+                Dim peaks As LibraryMatrix = ion.Peaks
+
+                getInto = Function(m) m.intensity
+                peaks = peaks / peaks.Max
+                ion = New Ions With {
+                    .Peaks = peaks.ToArray
+                }
+            Else
+                getInto = Function(m) m.quantity
+            End If
 
             For Each fragment As ms2 In ion.Peaks
                 mz = fragment.mz
-                into = If(relativeIntensity, fragment.quantity, fragment.intensity)
+                into = getInto(fragment)
 
-                Call out.WriteLine($"{mz} {into}")
+                ' write mgf text file data
+                Call $"{mz} {into}".DoCall(AddressOf out.WriteLine)
             Next
 
             Call out.WriteLine("END IONS")
         End Sub
+
+        <Extension>
+        Public Function SaveTo(ion As Ions, file$) As Boolean
+            Using write As StreamWriter = file.OpenWriter
+                Call ion.WriteAsciiMgf(write)
+            End Using
+
+            Return True
+        End Function
+
+        <Extension>
+        Public Function SaveTo(ions As IEnumerable(Of Ions), file$) As Boolean
+            Using write As StreamWriter = file.OpenWriter
+                For Each ion As Ions In ions
+                    Call ion.WriteAsciiMgf(write)
+                Next
+            End Using
+
+            Return True
+        End Function
     End Module
 End Namespace

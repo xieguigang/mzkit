@@ -51,6 +51,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Xml.Linq
 Imports SMRUCC.MassSpectrum.Math
 Imports SMRUCC.MassSpectrum.Math.Spectra
+Imports r = System.Text.RegularExpressions.Regex
 
 Namespace MarkupData.mzXML
 
@@ -82,6 +83,25 @@ Namespace MarkupData.mzXML
                     Yield scan
                 Next
             Next
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="file$"></param>
+        ''' <param name="levels">The scan level</param>
+        ''' <returns></returns>
+        Public Shared Function ReadSingleFile(file$, Optional levels% = -1) As IEnumerable(Of scan)
+            Dim filter As Func(Of String, Boolean) = Nothing
+            Dim msLevel$ = $"msLevel\s*=\s*""{levels}"""
+
+            If levels > 0 Then
+                filter = Function(elementXml)
+                             Return Not r.Match(elementXml, msLevel).Success
+                         End Function
+            End If
+
+            Return file.LoadXmlDataSet(Of scan)(, xmlns:=mzXMLSchema, elementFilter:=filter)
         End Function
 
         ''' <summary>

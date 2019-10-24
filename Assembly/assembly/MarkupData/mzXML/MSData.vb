@@ -1,74 +1,75 @@
 ﻿#Region "Microsoft.VisualBasic::2c77f9f5eac4c366b2be6556db4cf3de, MarkupData\mzXML\MSData.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class MSData
-    ' 
-    '         Properties: dataProcessing, endTime, msInstrument, parentFile, scanCount
-    '                     scans, startTime
-    ' 
-    '     Class scan
-    ' 
-    '         Properties: basePeakIntensity, basePeakMz, centroided, collisionEnergy, highMz
-    '                     lowMz, msInstrumentID, msLevel, num, peaks
-    '                     peaksCount, polarity, precursorMz, retentionTime, scanType
-    '                     totIonCurrent
-    ' 
-    '         Function: ScanData, ToString
-    ' 
-    '     Class peaks
-    ' 
-    '         Properties: byteOrder, compressedLen, compressionType, contentType, precision
-    '                     value
-    ' 
-    '         Function: GetCompressionType, GetPrecision, ToString
-    ' 
-    '     Structure precursorMz
-    ' 
-    '         Properties: activationMethod, precursorCharge, precursorIntensity, precursorScanNum, value
-    '                     windowWideness
-    ' 
-    '         Function: CompareTo, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class MSData
+' 
+'         Properties: dataProcessing, endTime, msInstrument, parentFile, scanCount
+'                     scans, startTime
+' 
+'     Class scan
+' 
+'         Properties: basePeakIntensity, basePeakMz, centroided, collisionEnergy, highMz
+'                     lowMz, msInstrumentID, msLevel, num, peaks
+'                     peaksCount, polarity, precursorMz, retentionTime, scanType
+'                     totIonCurrent
+' 
+'         Function: ScanData, ToString
+' 
+'     Class peaks
+' 
+'         Properties: byteOrder, compressedLen, compressionType, contentType, precision
+'                     value
+' 
+'         Function: GetCompressionType, GetPrecision, ToString
+' 
+'     Structure precursorMz
+' 
+'         Properties: activationMethod, precursorCharge, precursorIntensity, precursorScanNum, value
+'                     windowWideness
+' 
+'         Function: CompareTo, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.MassSpectrum.Math.Ms1
 Imports SMRUCC.MassSpectrum.Math.Spectra
@@ -106,7 +107,7 @@ Namespace MarkupData.mzXML
         ''' 当前的质谱碎片的等级,一级质谱,二级质谱或者msn等级的质谱
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property msLevel As String
+        <XmlAttribute> Public Property msLevel As Integer
         <XmlAttribute> Public Property peaksCount As Integer
         <XmlAttribute> Public Property polarity As String
         <XmlAttribute> Public Property retentionTime As String
@@ -150,7 +151,10 @@ Namespace MarkupData.mzXML
                         End Function) _
                 .ToArray
 
-            If Not shrinkTolerance Is Nothing Then
+            Static ms1 As [Default](Of String) = "ms1"
+
+            ' 合并碎片只针对2级碎片有效
+            If (msLevel > 1) AndAlso Not shrinkTolerance Is Nothing Then
                 mzInto = mzInto.Shrink(shrinkTolerance)
             End If
 
@@ -164,7 +168,7 @@ Namespace MarkupData.mzXML
                 .scan = num,
                 .file = basename,
                 .mzInto = mzInto,
-                .activation = precursorMz.activationMethod,
+                .activation = precursorMz.activationMethod Or ms1,
                 .collisionEnergy = Val(collisionEnergy)
             }
         End Function

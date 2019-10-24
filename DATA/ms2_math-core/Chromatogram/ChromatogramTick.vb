@@ -54,18 +54,18 @@ Namespace Chromatogram
     ''' <summary>
     ''' The chromatogram signal ticks (``{time => intensity}``)
     ''' </summary>
-    Public Class ChromatogramTick
+    Public Class ChromatogramTick : Implements ITimePoint
 
         ''' <summary>
         ''' The signal tick time in second
         ''' </summary>
         ''' <returns></returns>
-        Public Property Time As Double
+        Public Property Time As Double Implements ITimePoint.time
         ''' <summary>
         ''' number of detector counts
         ''' </summary>
         ''' <returns></returns>
-        Public Property Intensity As Double
+        Public Property Intensity As Double Implements ITimePoint.intensity
 
         Sub New()
         End Sub
@@ -84,4 +84,9 @@ Namespace Chromatogram
             Return New PointF(tick.Time, tick.Intensity)
         End Operator
     End Class
+
+    Public Interface ITimePoint
+        Property time As Double
+        Property intensity As Double
+    End Interface
 End Namespace

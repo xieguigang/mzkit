@@ -72,6 +72,9 @@ Public Module Emulator
         Return model
     End Function
 
+    ' 需要一个电压到能量的转换函数
+    ' 这部分的转换过程对应的是质谱仪器设备平台相关的模型参数
+
     ''' <summary>
     ''' 质谱模拟计算
     ''' </summary>
@@ -204,7 +207,14 @@ Public Module Emulator
                 Dim b As NetworkNode = edge.V
 
                 ' 计算电荷量的变化
-                ' 电子轰击之后，电子是给了分开的各自的基团对象？
+                ' 电子轰击之后，因为化学键的断裂的能量的来源是具有能量的电子给与的
+                ' 两个原子之间产生化学键是因为各自离子状态下会多出或者缺少电子,二者在一起刚好互相补充电子的缺失或者过饱和
+                ' 化学键的数量就是这些互补的电子的数量
+                ' 当化学键断裂之后, 电子是给了分开的各自的基团对象？
+                '
+                ' charge assign
+                ' 根据人为的定义来填充电子的缺失情况
+
                 a.data!charge = Val(a.data!charge) + bounds
                 b.data!charge = Val(b.data!charge) + bounds
 

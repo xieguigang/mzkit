@@ -1,60 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::5beb48505c016e818bf12ef8533dbfbc, ms2_math-core\Spectra\SpectrumTree\SpectrumTree.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class SpectrumTreeCluster
-    ' 
-    '         Properties: allMs2Scans
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: doCluster, PopulateClusters, SSMCompares
-    ' 
-    '         Sub: clusterInternal
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class SpectrumTreeCluster
+' 
+'         Properties: allMs2Scans
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: doCluster, PopulateClusters, SSMCompares
+' 
+'         Sub: clusterInternal
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Terminal.ProgressBar
 Imports SMRUCC.MassSpectrum.Math
 Imports SMRUCC.MassSpectrum.Math.Ms1
 Imports SMRUCC.MassSpectrum.Math.Spectra
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace Spectra
 
@@ -78,7 +79,7 @@ Namespace Spectra
         ''' 
         ''' </summary>
         ''' <param name="compares">
-        ''' By default is SSM method <see cref="SSMCompares(Tolerance, Double, Double)"/>
+        ''' By default is SSM method <see cref="SSMCompares(Tolerance, Double, Double, Func(Of Double, Double, Double))"/>
         ''' </param>
         ''' <param name="showReport">Show progress report?</param>
         Sub New(Optional compares As Comparison(Of PeakMs2) = Nothing, Optional showReport As Boolean = True)
@@ -96,7 +97,13 @@ Namespace Spectra
         ''' <param name="equalsScore">判断两个质谱图是相同的所需的最低得分</param>
         ''' <param name="gtScore">将质谱图划分到二叉树的右节点的所需要的最低得分</param>
         ''' <returns></returns>
-        Public Shared Function SSMCompares(Optional tolerance As Tolerance = Nothing, Optional equalsScore# = 0.85, Optional gtScore# = 0.6) As Comparison(Of PeakMs2)
+        Public Shared Function SSMCompares(Optional tolerance As Tolerance = Nothing,
+                                           Optional equalsScore# = 0.85,
+                                           Optional gtScore# = 0.6,
+                                           Optional scoreAggregate As Func(Of Double, Double, Double) = Nothing) As Comparison(Of PeakMs2)
+
+            Static scoreMin As New [Default](Of Func(Of Double, Double, Double))(AddressOf stdNum.Min)
+
             If equalsScore < 0 OrElse equalsScore > 1 Then
                 Throw New InvalidConstraintException("Scores for spectra equals is invalid, it should be in range (0, 1].")
             End If
@@ -105,14 +112,15 @@ Namespace Spectra
             End If
 
             tolerance = tolerance Or ppm20
+            scoreAggregate = scoreAggregate Or scoreMin
 
-            Return Function(x, y) As Integer
+            Return Function(x As PeakMs2, y As PeakMs2) As Integer
                        Dim score = GlobalAlignment.TwoDirectionSSM(x.mzInto.ms2, y.mzInto.ms2, tolerance)
-                       Dim min = sys.Min(score.forward, score.reverse)
+                       Dim scoreVal = scoreAggregate(score.forward, score.reverse)
 
-                       If min >= equalsScore Then
+                       If scoreVal >= equalsScore Then
                            Return 0
-                       ElseIf min >= gtScore Then
+                       ElseIf scoreVal >= gtScore Then
                            Return 1
                        Else
                            Return -1
@@ -133,6 +141,21 @@ Namespace Spectra
                         .ToArray
                 }
             Next
+        End Function
+
+        ''' <summary>
+        ''' Get the top score cluster with a given <paramref name="score"/> evaluation function.
+        ''' </summary>
+        ''' <param name="score"></param>
+        ''' <returns></returns>
+        Public Function Best(score As Func(Of SpectrumCluster, Double)) As SpectrumCluster
+            If allMs2Scans.Count = 0 Then
+                Return Nothing
+            Else
+                Return PopulateClusters _
+                    .OrderByDescending(score) _
+                    .First
+            End If
         End Function
 
         Private Sub clusterInternal(ms2list As PeakMs2(), tick As Action)

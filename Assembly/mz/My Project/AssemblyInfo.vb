@@ -8,12 +8,12 @@ Imports System.Runtime.InteropServices
 
 '查看程序集特性的值
 
-<Assembly: AssemblyTitle("m/z toolkit")>
-<Assembly: AssemblyDescription("")>
+<Assembly: AssemblyTitle("m/z assembly file toolkit")>
+<Assembly: AssemblyDescription("m/z assembly file toolkit")>
 <Assembly: AssemblyCompany("BioNovogene")>
-<Assembly: AssemblyProduct("mz")>
-<Assembly: AssemblyCopyright("Copyright © BioNovogene 2018")>
-<Assembly: AssemblyTrademark("mzkit")>
+<Assembly: AssemblyProduct("mzkit")>
+<Assembly: AssemblyCopyright("Copyright © BioNovogene 2019")>
+<Assembly: AssemblyTrademark("BioDeep")>
 
 <Assembly: ComVisible(False)>
 

@@ -19,4 +19,3 @@ A subset of the input \code{dataframe} with all KEGG column
 Removes all of the rows in a given \code{dataframe}
      which its \code{KEGG} column value is string empty.
 }
-

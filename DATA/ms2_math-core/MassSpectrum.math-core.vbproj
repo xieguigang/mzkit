@@ -104,6 +104,7 @@
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <DebugSymbols>true</DebugSymbols>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|x86'">
     <DefineTrace>true</DefineTrace>
@@ -145,6 +146,7 @@
     <Compile Include="Chromatogram\AccumulateROI.vb" />
     <Compile Include="Chromatogram\Chromatogram.vb" />
     <Compile Include="Chromatogram\ChromatogramTick.vb" />
+    <Compile Include="Chromatogram\Deconvolution\Deconvolution.vb" />
     <Compile Include="Chromatogram\TICPoint.vb" />
     <Compile Include="Chromatogram\Quantile.vb" />
     <Compile Include="Chromatogram\ROI.vb" />

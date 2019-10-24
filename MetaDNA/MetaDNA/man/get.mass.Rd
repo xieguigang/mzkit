@@ -17,4 +17,3 @@ Returns a function for calculate mass from \code{m/z} value.
 \description{
 Get mass calculator
 }
-

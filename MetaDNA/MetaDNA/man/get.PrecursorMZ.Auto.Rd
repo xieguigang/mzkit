@@ -18,4 +18,3 @@ it is convenient, but inefficient when in batch mode.}
 \description{
 Calculate \code{m/z} for mass by given precursor type
 }
-

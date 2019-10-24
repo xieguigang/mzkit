@@ -48,7 +48,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports SMRUCC.MassSpectrum.Math
 
-Public Module viz
+Public Module StandardCurvesPlot
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
@@ -65,7 +65,7 @@ Public Module viz
                       size:="1600,1100",
                       predictedX:=samples,
                       xAxisTickFormat:="F2",
-                      yAxisTickFormat:="F0",
+                      yAxisTickFormat:="F2",
                       showErrorBand:=False,
                       title:=name,
                       margin:="padding: 100px 100px 100px 200px"
@@ -79,7 +79,7 @@ Public Module viz
                       size:="1600,1100",
                       predictedX:=samples,
                       xAxisTickFormat:="G2",
-                      yAxisTickFormat:="F0",
+                      yAxisTickFormat:="F2",
                       showErrorBand:=False,
                       title:=name,
                       margin:="padding: 100px 100px 100px 200px"

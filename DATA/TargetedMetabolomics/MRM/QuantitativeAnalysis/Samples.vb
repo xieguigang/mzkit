@@ -92,6 +92,8 @@ Public Module MRMSamples
 
     ''' <summary>
     ''' 通过标准曲线对样品进行定量结果数据的获取
+    ''' 
+    ''' 这个函数对参考标曲的大小写不敏感,只需要名称的pattern正确就可以正常工作
     ''' </summary>
     ''' <param name="wiff$"></param>
     ''' <param name="model">标准曲线线性回归模型</param>
@@ -113,7 +115,8 @@ Public Module MRMSamples
                                          Optional levelPattern$ = "[-]L\d+",
                                          Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum,
                                          Optional externalStandardsWiff$ = Nothing,
-                                         Optional isBlank As Func(Of String, Boolean) = Nothing) As IEnumerable(Of DataSet)
+                                         Optional isBlank As Func(Of String, Boolean) = Nothing,
+                                         Optional weighted As Boolean = False) As IEnumerable(Of DataSet)
         Dim standardNames$() = Nothing
         Dim TPAFactors = calibrates.ToDictionary(Function(ion) ion.HMDB, Function(ion) ion.Factor)
 
@@ -129,7 +132,7 @@ Public Module MRMSamples
                   TPAFactors:=TPAFactors
             ) _
             .ToDictionary _
-            .Regression(calibrates, ISvector:=[IS]) _
+            .Regression(calibrates, ISvector:=[IS], weighted:=weighted) _
             .ToArray
 
         X = New List(Of DataSet)

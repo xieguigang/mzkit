@@ -52,12 +52,17 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.GraphTheory
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.application.json.JSONSerializer
 Imports Microsoft.VisualBasic.Text
 Imports SMRUCC.MassSpectrum.Assembly.ASCII.MGF
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzXML
+Imports SMRUCC.MassSpectrum.Math.Chromatogram
+Imports SMRUCC.MassSpectrum.Math.Ms1
 Imports SMRUCC.MassSpectrum.Math.Ms1.PrecursorType
 Imports SMRUCC.MassSpectrum.Math.Spectra
 
@@ -153,6 +158,50 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
             .CLICode
     End Function
 
+    ''' <summary>
+    ''' 进行数据的解卷积
+    ''' </summary>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
+    <ExportAPI("/peaktable")>
+    <Usage("/peaktable /in <raw.mzXML> [/ms2 /tolerance <default=da:0.3> /out <peaktable.xls>]")>
+    <Argument("/ms2", True, CLITypes.Boolean,
+              AcceptTypes:={GetType(Boolean)},
+              Description:="Use ms2 data for the calculation of the peaktable.")>
+    Public Function GetPeaktable(args As CommandLine) As Integer
+        Dim in$ = args <= "/in"
+        Dim useMs2 As Boolean = args("/ms2")
+        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.peaktable.csv"
+        Dim allScans = mzXML.XML.ReadSingleFile([in], 1 Or 2.When(useMs2))
+        Dim tolerance As Tolerance = Tolerance.ParseScript(args("/tolerance") Or "da:0.3")
+
+        ' create ticks
+        ' and group by mz
+        Dim basename$ = [in].FileName
+        Dim ticks = allScans _
+            .Select(Function(scan)
+                        Dim peaks = scan.ScanData(basename,, raw:=True)
+                        Dim rt As Double = peaks.rt
+                        Dim mz = peaks.mzInto _
+                            .Select(Function(frag)
+                                        Return New TICPoint With {
+                                            .mz = frag.mz,
+                                            .intensity = frag.quantity,
+                                            .time = rt
+                                        }
+                                    End Function)
+
+                        Return mz
+                    End Function) _
+            .IteratesALL _
+            .GroupBy(Function(t) t.mz, AddressOf tolerance.Assert) _
+            .Select(Function(mz) mz.GetPeakGroups) _
+            .IteratesALL _
+            .ToArray
+
+        Return ticks.SaveTo(out).CLICode
+    End Function
+
     <ExportAPI("/export")>
     <Usage("/export /in <data.mzXML> /scan <ms2_scan> [/out <out.txt>]")>
     <Description("Export a single ms2 scan data.")>
@@ -207,22 +256,67 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
     End Function
 
     ''' <summary>
+    ''' 在所给定的误差范围内将原始数据进行简化
+    ''' </summary>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
+    ''' 
+    <ExportAPI("/centroid")>
+    <Usage("/centroid /mgf <raw.mgf> [/ms2.tolerance <default=da:0.1> /into.cutoff <default=0.05> /out <simple.mgf>]")>
+    <Description("Removes low abundance fragment details from the ms2 peaks from the profile mode raw data.")>
+    <Argument("/into.cutoff", True, CLITypes.Double,
+              AcceptTypes:={GetType(Double)},
+              Description:="A relative intensity cutoff value for removes low abundance ms2 fragments. 
+              This cutoff value should be in range of ``[0, 1)``.")>
+    Public Function CentroidPeaksData(args As CommandLine) As Integer
+        Dim in$ = args <= "/mgf"
+        Dim ms2Tolerance As Tolerance = Tolerance.ParseScript(args("/ms2.tolerance") Or "da:0.1")
+        Dim intoCutoff# = args("/into.cutoff") Or 0.05
+        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.centroid.mgf"
+        Dim centroidIons = MgfReader.StreamParser([in]) _
+            .Select(Function(p)
+                        Dim peaks As New LibraryMatrix With {.ms2 = p.Peaks}
+                        Dim simplify = peaks.Shrink(ms2Tolerance)
+
+                        simplify = simplify / simplify.Max
+                        p.Peaks = simplify(simplify!intensity >= intoCutoff).ToArray
+
+                        Return p
+                    End Function) _
+            .ToArray
+
+        Using mgfWriter As StreamWriter = out.OpenWriter(Encodings.ASCII, append:=False)
+            For Each ion In centroidIons
+                Call ion.WriteAsciiMgf(mgfWriter, False)
+            Next
+        End Using
+    End Function
+
+    ''' <summary>
     ''' 将二级碎片数据按照m/z分组导出
     ''' </summary>
     ''' <param name="args"></param>
     ''' <returns></returns>
     <ExportAPI("/mgf")>
-    <Description("Export all of the ms2 ions in target mzXML file and save as mgf file format.")>
-    <Usage("/mgf /in <rawdata.mzXML> [/relative /out <ions.mgf>]")>
+    <Description("Export all of the ms2 ions in target mzXML file and save as mgf file format. Load data from mgf file is more faster than mzXML raw data file.")>
+    <Usage("/mgf /in <rawdata.mzXML> [/relative /ms1 /out <ions.mgf>]")>
     <Argument("/relative", True, CLITypes.Boolean,
               AcceptTypes:={GetType(Boolean)},
               Description:="Dumping the relative intensity value instead of the raw intensity value.")>
+    <Argument("/in", False, CLITypes.File, PipelineTypes.std_in,
+              Extensions:="*.mzXML",
+              Description:="File path of the mzXML raw data file.")>
+    <Argument("/out", True, CLITypes.File, PipelineTypes.std_out,
+              AcceptTypes:={GetType(Ions)},
+              Extensions:="*.txt,*.mgf",
+              Description:="The file path for mgf text output.")>
     Public Function DumpMs2(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim out$ = args("/out") Or $"{[in].TrimSuffix}.mgf"
         Dim peak As PeakMs2
         Dim basename$ = [in].FileName
         Dim relativeInto As Boolean = args("/relative")
+        Dim includesMs1 As Boolean = args("/ms1")
 
         If [in].GetFullPath = out.GetFullPath Then
             Throw New InvalidDataException("Input and output can not be the same file!")
@@ -232,10 +326,20 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
             For Each ms2Scan As scan In mzXML.XML _
                 .LoadScans([in]) _
                 .Where(Function(s)
-                           Return s.msLevel = "2"
+                           If includesMs1 Then
+                               Return True
+                           Else
+                               Return s.msLevel = 2
+                           End If
                        End Function)
 
-                peak = ms2Scan.ScanData(basename, raw:=Not relativeInto)
+                If ms2Scan.msLevel = 1 Then
+                    ' ms1的数据总是使用raw intensity值
+                    peak = ms2Scan.ScanData(basename, raw:=True)
+                Else
+                    peak = ms2Scan.ScanData(basename, raw:=Not relativeInto)
+                End If
+
                 peak _
                     .MgfIon _
                     .WriteAsciiMgf(mgfWriter, relativeInto)
@@ -255,7 +359,7 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
             .ID = 0,
             .Childs = New Dictionary(Of String, Tree(Of String, String)),
             .Data = "#",
-            .Label = "/",
+            .label = "/",
             .Parent = Nothing
         }
         Dim this = CLI.mz.FromEnvironment(App.HOME)

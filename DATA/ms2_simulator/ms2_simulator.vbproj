@@ -105,6 +105,7 @@
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <DebugSymbols>true</DebugSymbols>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|x86'">
     <DefineTrace>true</DefineTrace>
@@ -144,6 +145,7 @@
     <Compile Include="Emulator\Emulator.vb" />
     <Compile Include="GA\EnergyDistribution.vb" />
     <Compile Include="GA\GA.vb" />
+    <Compile Include="FragmentSamples.vb" />
     <Compile Include="RTPrediction.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -189,6 +191,10 @@
     <ProjectReference Include="..\..\..\GCModeller\src\GCModeller\core\Bio.Repository\Bio.Repository.vbproj">
       <Project>{216acc2d-c7a5-4c27-9dc9-bdfa4dbb6a37}</Project>
       <Name>Bio.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\MachineLearning\MachineLearning\MachineLearning.vbproj">
+      <Project>{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}</Project>
+      <Name>MachineLearning</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFittings\DataFittings.vbproj">
       <Project>{fc125b0d-1942-496f-b502-9c0eb80e35b6}</Project>
