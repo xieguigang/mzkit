@@ -112,6 +112,7 @@ positive <- function() {
     pos$"2M+ACN+H"	     <- .addKey("[2M+ACN+H]+",       charge = 1, M = 2, adducts = "2M+ACN+H"      ); # 2M + 42.033823	    1+	2.00	42.033823	1748.695603	1710.606177
     pos$"2M+ACN+Na"	     <- .addKey("[2M+ACN+Na]+",      charge = 1, M = 2, adducts = "2M+ACN+Na"     ); # 2M + 64.015765	    1+	2.00	64.015765	1770.677545	1688.624235
 	pos$"M"              <- .addKey("[M]+",              charge = 1, M = 1, adducts = 0);
+	pos$"M+H-H2O"        <- .addKey("[M+H-H2O]+",        charge = 1, M = 1, adducts = "M+H-H2O");
 	
     pos;
 }

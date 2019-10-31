@@ -4,8 +4,8 @@
 \alias{kegg.match}
 \title{Match unknown feature from given KEGG partners}
 \usage{
-kegg.match(partners_id, kegg.mass, kegg.ids, kegg.mz, kegg.list,
-  precursor_type, unknown.mz, tolerance)
+kegg.match(partners_id, kegg.mass, kegg.ids, kegg.mz, kegg.list, precursor_type,
+  unknown.mz, tolerance)
 }
 \arguments{
 \item{partners_id}{The kegg partner compound id list, which is query 
@@ -14,3 +14,4 @@ from the identifed KEGG seed by the reaction network definition.}
 \description{
 Match unknown feature from given KEGG partners
 }
+

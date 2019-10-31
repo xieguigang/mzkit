@@ -5,6 +5,8 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.Runtime
@@ -16,34 +18,66 @@ Imports SMRUCC.MassSpectrum.Visualization
 <CLI> Module CLI
 
     <ExportAPI("/TIC")>
-    <Usage("/TIC /in <data.csv> [/out <plot.png>]")>
+    <Usage("/TIC /in <data.csv> [/XIC /rt <rt_fieldName, default=rt> /into <intensity_fieldName, default=intensity> /out <plot.png>]")>
     <Description("Do TIC plot based on the given chromatogram table data.")>
     <Argument("/in", False, CLITypes.File,
-              AcceptTypes:={GetType(TICPoint)},
+              AcceptTypes:={GetType(TICPoint), GetType(ms1_scan)},
               Extensions:="*.csv",
               Description:="The mzXML dump data.")>
+    <Argument("/XIC", True, CLITypes.Boolean,
+              AcceptTypes:={GetType(Boolean)},
+              Description:="If this option enabled, then will do mz group at first.")>
     Public Function TICplot(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
-        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.TIC.png"
-        Dim da03 = Tolerance.DeltaMass(0.3)
-        Dim data = [in].LoadCsv(Of TICPoint) _
-            .GroupBy(Function(p) p.mz, Function(a, b) True = da03(a, b)) _
-            .AsParallel _
-            .Select(Function(ion)
-                        Return New NamedCollection(Of ChromatogramTick) With {
-                            .name = $"m/z {ion.First.mz.ToString("F4")}",
-                            .value = ion _
-                                .Select(Function(t)
-                                            Return New ChromatogramTick With {
-                                                .Time = t.time,
-                                                .Intensity = t.intensity
-                                            }
-                                        End Function) _
-                                .OrderBy(Function(p) p.Time) _
-                                .ToArray
-                        }
-                    End Function) _
-            .ToArray
+        Dim isXIC As Boolean = args("/XIC")
+        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.{"TIC" Or "XIC".When(isXIC)}.png"
+        Dim data As NamedCollection(Of ChromatogramTick)()
+
+        If isXIC Then
+            Dim da03 = Tolerance.DeltaMass(0.3)
+
+            data = [in].LoadCsv(Of TICPoint) _
+                .GroupBy(Function(p) p.mz, Function(a, b) True = da03(a, b)) _
+                .AsParallel _
+                .Select(Function(ion)
+                            Return New NamedCollection(Of ChromatogramTick) With {
+                                .name = $"m/z {ion.First.mz.ToString("F4")}",
+                                .value = ion _
+                                    .Select(Function(t)
+                                                Return New ChromatogramTick With {
+                                                    .Time = t.time,
+                                                    .Intensity = t.intensity
+                                                }
+                                            End Function) _
+                                    .OrderBy(Function(p) p.Time) _
+                                    .ToArray
+                            }
+                        End Function) _
+                .ToArray
+        Else
+            Dim rtField = args("/rt") Or "rt"
+            Dim intoField = args("/into") Or "intensity"
+            Dim tic = EntityObject _
+                .LoadDataSet([in]) _
+                .Select(Function(d As EntityObject)
+                            Dim rt As Double = Val(d(rtField))
+                            Dim into As Double = Val(d(intoField))
+
+                            Return New ChromatogramTick With {
+                                .Intensity = into,
+                                .Time = rt
+                            }
+                        End Function) _
+                .OrderBy(Function(p) p.Time) _
+                .ToArray
+
+            data = {
+                New NamedCollection(Of ChromatogramTick) With {
+                    .name = [in].BaseName,
+                    .value = tic
+                }
+            }
+        End If
 
         Call "Do TIC plot...".__INFO_ECHO
 

@@ -12,3 +12,4 @@ metaDNA.score(hit)
 \description{
 Seeds score evaluation
 }
+

@@ -38,3 +38,4 @@ PrecursorType.Match(853.33089, 2560.999946, charge = -1, chargeMode = "-") # neg
 PrecursorType.Match(853.33089, 852.323614,  charge = -1, chargeMode = "-") # neg "[M-H]-"    charge = -1, 852.323614
 
 }
+
