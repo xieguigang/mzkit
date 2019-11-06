@@ -310,6 +310,9 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
               AcceptTypes:={GetType(Ions)},
               Extensions:="*.txt,*.mgf",
               Description:="The file path for mgf text output.")>
+    <Argument("/ms1", True, CLITypes.Boolean,
+              AcceptTypes:={GetType(Boolean)},
+              Description:="The mgf file will also includes ms1 data.")>
     Public Function DumpAsMgf(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim out$ = args("/out") Or $"{[in].TrimSuffix}.mgf"
