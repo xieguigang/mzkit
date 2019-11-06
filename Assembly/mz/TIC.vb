@@ -33,7 +33,7 @@ Partial Module Program
 
         Call ions.SaveTo(datafile)
 
-        Return CLI.mzplot.FromEnvironment(App.HOME).TICplot(datafile, out:=out)
+        Return CLI.mzplot.FromEnvironment(App.HOME).TICplot(datafile, rt:=NameOf(TICPoint.time), into:=NameOf(TICPoint.intensity), out:=out)
     End Function
 
     <ExportAPI("/XIC")>

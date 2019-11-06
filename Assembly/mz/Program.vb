@@ -375,7 +375,7 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
             Call index.Add(outMgf, outMgf.FileName)
 
             If Not indexOnly Then
-                Call this.DumpMs2(rawfile, $"{out}/{outMgf}")
+                Call this.DumpAsMgf(rawfile, $"{out}/{outMgf}")
             Else
                 Call rawfile.__DEBUG_ECHO
             End If
