@@ -14,7 +14,7 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
 Partial Module Program
 
     <ExportAPI("/mgf.XIC")>
-    <Usage("/mgf.TIC /raw <data.mgf> [/out <XIC.png>]")>
+    <Usage("/mgf.XIC /raw <data.mgf> [/out <XIC.png>]")>
     <Argument("/raw", False, CLITypes.File,
               Extensions:="*.mgf",
               Description:="This parameter could be file name list use comma symbol as delimiter.")>
