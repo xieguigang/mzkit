@@ -11,11 +11,11 @@ Imports Microsoft.VisualBasic.ApplicationServices
 '  // 
 '  // Data visualization for mzXML file data
 '  // 
-'  // VERSION:   2.342.7249.24183
-'  // ASSEMBLY:  mzplot, Version=2.342.7249.24183, Culture=neutral, PublicKeyToken=null
+'  // VERSION:   2.342.7249.24919
+'  // ASSEMBLY:  mzplot, Version=2.342.7249.24919, Culture=neutral, PublicKeyToken=null
 '  // COPYRIGHT: Copyright © mzkit 2019
 '  // GUID:      26fba577-47cd-4da1-a2bb-fccd493c9ff1
-'  // BUILT:     11/6/2019 1:26:06 PM
+'  // BUILT:     11/6/2019 1:50:38 PM
 '  // 
 ' 
 ' 
@@ -29,6 +29,7 @@ Imports Microsoft.VisualBasic.ApplicationServices
 ' 
 '  /linear:     Test of the targetted metabolism quantify program.
 '  /TIC:        Do TIC plot based on the given chromatogram table data.
+'  /XIC:        
 ' 
 ' 
 ' ----------------------------------------------------------------------------------------------------
@@ -110,6 +111,26 @@ Public Function TICplot([in] As String, Optional rt As String = "rt", Optional i
     End If
     If xic Then
         Call CLI.Append("/xic ")
+    End If
+     Call CLI.Append("/@set --internal_pipeline=TRUE ")
+
+
+    Dim proc As IIORedirectAbstract = RunDotNetApp(CLI.ToString())
+    Return proc.Run()
+End Function
+
+''' <summary>
+''' ```bash
+''' /XIC /data &lt;points.csv&gt; [/out &lt;XIC.png&gt;]
+''' ```
+''' </summary>
+'''
+Public Function mzIntoXIC(data As String, Optional out As String = "") As Integer
+    Dim CLI As New StringBuilder("/XIC")
+    Call CLI.Append(" ")
+    Call CLI.Append("/data " & """" & data & """ ")
+    If Not out.StringEmpty Then
+            Call CLI.Append("/out " & """" & out & """ ")
     End If
      Call CLI.Append("/@set --internal_pipeline=TRUE ")
 

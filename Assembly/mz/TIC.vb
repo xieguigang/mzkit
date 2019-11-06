@@ -45,10 +45,15 @@ Partial Module Program
             .ToArray
 
         Dim datafile = out.TrimSuffix & ".points.csv"
+        Dim plot = CLI.mzplot.FromEnvironment(App.HOME)
 
         Call ions.SaveTo(datafile)
 
-        Return CLI.mzplot.FromEnvironment(App.HOME).TICplot(datafile, rt:=NameOf(TICPoint.time), into:=NameOf(TICPoint.intensity), out:=out)
+        If ismzX Then
+            Return plot.mzIntoXIC(datafile)
+        Else
+            Return plot.TICplot(datafile, rt:=NameOf(TICPoint.time), into:=NameOf(TICPoint.intensity), out:=out)
+        End If
     End Function
 
     <ExportAPI("/XIC")>
