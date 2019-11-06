@@ -171,16 +171,17 @@ Public Module ChromatogramPlot
                             Optional axisTickFont$ = CSSFont.Win10NormalLarger,
                             Optional showLegends As Boolean = True,
                             Optional legendFontCSS$ = CSSFont.Win10Normal,
-                            Optional deln% = 10) As GraphicsData
+                            Optional deln% = 10,
+                            Optional isXIC As Boolean = False) As GraphicsData
 
         Dim labelFont As Font = CSSFont.TryParse(labelFontStyle)
         Dim labelConnector As Pen = Stroke.TryParse(labelConnectorStroke)
 
         For Each ion As NamedCollection(Of ChromatogramTick) In ionData
-            Dim base = ion.Value.Baseline(quantile:=0.65)
-            Dim max# = ion.Value.Shadows!Intensity.Max
+            Dim base = ion.value.Baseline(quantile:=0.65)
+            Dim max# = ion.value.Shadows!Intensity.Max
 
-            Call $"{ion.Name}: {base}/{max} = {(100 * base / max).ToString("F2")}%".__DEBUG_ECHO
+            Call $"{ion.name}: {base}/{max} = {(100 * base / max).ToString("F2")}%".__DEBUG_ECHO
         Next
 
         Dim colors As LoopArray(Of Pen)
@@ -204,7 +205,7 @@ Public Module ChromatogramPlot
 
         Dim XTicks = ionData _
             .Select(Function(ion)
-                        Return ion.Value.TimeArray
+                        Return ion.value.TimeArray
                     End Function) _
             .IteratesALL _
             .AsVector _
@@ -212,7 +213,7 @@ Public Module ChromatogramPlot
             .CreateAxisTicks  ' time
         Dim YTicks = ionData _
             .Select(Function(ion)
-                        Return ion.Value.IntensityArray
+                        Return ion.value.IntensityArray
                     End Function) _
             .IteratesALL _
             .AsVector _
@@ -233,7 +234,7 @@ Public Module ChromatogramPlot
 
                 Call g.DrawAxis(
                     region, scaler, showGrid:=False,
-                    xlabel:="Time (s)",
+                    xlabel:=If(isXIC, "m/z ratio", "Time (s)"),
                     ylabel:="Intensity",
                     htmlLabel:=False,
                     YtickFormat:="G2",
@@ -247,16 +248,16 @@ Public Module ChromatogramPlot
                 For i As Integer = 0 To ionData.Length - 1
                     Dim curvePen As Pen = colors.Next
                     Dim line = ionData(i)
-                    Dim chromatogram = line.Value
+                    Dim chromatogram = line.value
 
                     legends += New Legend With {
-                        .title = line.Name,
+                        .title = line.name,
                         .color = curvePen.Color.ToHtmlColor,
                         .fontstyle = legendFontCSS,
                         .style = LegendStyles.Rectangle
                     }
                     peakTimes += New NamedValue(Of ChromatogramTick) With {
-                        .Name = line.Name,
+                        .Name = line.name,
                         .Value = chromatogram(Which.Max(chromatogram.Shadows!Intensity))
                     }
 

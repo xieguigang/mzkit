@@ -14,19 +14,23 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
 Partial Module Program
 
     <ExportAPI("/TIC")>
-    <Usage("/TIC /raw <data.mgf> [/out <TIC.png>]")>
+    <Usage("/TIC /raw <data.mgf> [/mz /out <TIC.png>]")>
     <Argument("/raw", False, CLITypes.File,
               Extensions:="*.mgf",
               Description:="This parameter could be file name list use comma symbol as delimiter.")>
+    <Argument("/mz", True, CLITypes.Boolean,
+              AcceptTypes:={GetType(Boolean)},
+              Description:="The m/z value as x axis.")>
     Public Function TIC(args As CommandLine) As Integer
         Dim raw$ = args <= "/raw"
         Dim files = CLITools.GetFileList(raw).ToArray
         Dim out$
+        Dim ismzX As Boolean = args("/mz")
 
         If files.Length = 1 Then
             out = args("/out") Or $"{raw.TrimSuffix}.plot.png"
         Else
-            out = args("/out") Or $"{files.Select(Function(file) file.BaseName).JoinBy(",")}.plot.png"
+            out = args("/out") Or $"{files.First.ParentPath}/{files.Select(Function(file) file.BaseName).JoinBy(",")}.plot.png"
         End If
 
         Dim ions = MgfReader.ReadIons(files) _
