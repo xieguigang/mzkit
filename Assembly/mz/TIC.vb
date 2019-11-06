@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports SMRUCC.MassSpectrum.Assembly.ASCII.MGF
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzXML
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
@@ -12,8 +13,31 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
 
 Partial Module Program
 
+    <ExportAPI("/TIC")>
+    <Usage("/TIC /raw <data.mgf> [/out <TIC.png>]")>
+    Public Function TIC(args As CommandLine) As Integer
+        Dim raw$ = args <= "/raw"
+        Dim out$ = args("/out") Or $"{raw.TrimSuffix}.plot.png"
+        Dim ions = MgfReader.StreamParser(path:=raw) _
+            .Select(Function(ion)
+                        Return New TICPoint With {
+                            .intensity = ion.PepMass.text,
+                            .mz = ion.PepMass.name,
+                            .time = ion.RtInSeconds
+                        }
+                    End Function) _
+            .OrderBy(Function(p) p.time) _
+            .ToArray
+
+        Dim datafile = out.TrimSuffix & ".points.csv"
+
+        Call ions.SaveTo(datafile)
+
+        Return CLI.mzplot.FromEnvironment(App.HOME).TICplot(datafile, out:=out)
+    End Function
+
     <ExportAPI("/XIC")>
-    <Usage("/XIC /mz <mz.list> /raw <raw.mzXML> [/tolerance <default=ppm:20> /out <TIC.png>]")>
+    <Usage("/XIC /mz <mz.list> /raw <raw.mzXML> [/tolerance <default=ppm:20> /out <XIC.png>]")>
     <Description("Do TIC plot on a given list of selective parent ions.")>
     <Argument("/mz", False, CLITypes.File, PipelineTypes.std_in,
               AcceptTypes:={GetType(String)},
