@@ -15,10 +15,21 @@ Partial Module Program
 
     <ExportAPI("/TIC")>
     <Usage("/TIC /raw <data.mgf> [/out <TIC.png>]")>
+    <Argument("/raw", False, CLITypes.File,
+              Extensions:="*.mgf",
+              Description:="This parameter could be file name list use comma symbol as delimiter.")>
     Public Function TIC(args As CommandLine) As Integer
         Dim raw$ = args <= "/raw"
-        Dim out$ = args("/out") Or $"{raw.TrimSuffix}.plot.png"
-        Dim ions = MgfReader.StreamParser(path:=raw) _
+        Dim files = CLITools.GetFileList(raw).ToArray
+        Dim out$
+
+        If files.Length = 1 Then
+            out = args("/out") Or $"{raw.TrimSuffix}.plot.png"
+        Else
+            out = args("/out") Or $"{files.Select(Function(file) file.BaseName).JoinBy(",")}.plot.png"
+        End If
+
+        Dim ions = MgfReader.ReadIons(files) _
             .Select(Function(ion)
                         Return New TICPoint With {
                             .intensity = ion.PepMass.text,
