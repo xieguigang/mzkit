@@ -15,4 +15,3 @@ Function returns character \code{+} or \code{-}.
 \description{
 Get ionlization mode from a given precursor type name
 }
-

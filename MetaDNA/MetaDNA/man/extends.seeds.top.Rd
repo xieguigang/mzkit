@@ -17,4 +17,3 @@ The subset of the input seeds collection.
 \description{
 Subset of the seeds by top scores
 }
-
