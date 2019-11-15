@@ -140,6 +140,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ASCII\MGF\MetaData.vb" />
     <Compile Include="ASCII\MGF\Ions.vb" />
     <Compile Include="ASCII\MGF\MgfWriter.vb" />
     <Compile Include="ASCII\MGF\MgfReader.vb" />

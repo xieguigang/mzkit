@@ -20,11 +20,11 @@ Namespace ASCII.MGF
                 },
                 .RtInSeconds = matrix.rt,
                 .Title = $"{matrix.file}#{matrix.scan}",
-                .Meta = New Dictionary(Of String, String) From {
-                    {"rawfile", matrix.file},
-                    {"collisionEnergy", matrix.collisionEnergy},
-                    {"activation", matrix.activation},
-                    {"scan", matrix.scan}
+                .Meta = New MetaData With {
+                    .rawfile = matrix.file,
+                    .collisionEnergy = matrix.collisionEnergy,
+                    .activation = matrix.activation,
+                    .scan = matrix.scan
                 },
                 .Rawfile = matrix.file,
                 .Accession = $"{matrix.file}#{matrix.scan}"
