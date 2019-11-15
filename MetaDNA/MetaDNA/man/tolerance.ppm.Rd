@@ -18,4 +18,3 @@ Function returns a lambda function that can be using for
 \description{
 Tolerance in PPM mode
 }
-

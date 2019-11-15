@@ -16,4 +16,3 @@ all the same. so no needs for rt.adjust score at here
 
 we just required compare the best dot product score at here
 }
-

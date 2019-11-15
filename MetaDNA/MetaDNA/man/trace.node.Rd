@@ -22,4 +22,3 @@ Create debug data of metaDNA network elongation.
                  \code{file} and \code{scan}
    }
 }
-

@@ -9,4 +9,3 @@ PPM(measured, actualValue)
 \description{
 PPM value between two mass value
 }
-

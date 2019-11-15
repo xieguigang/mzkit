@@ -208,7 +208,7 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
     <Argument("/scan", False, CLITypes.Integer,
               AcceptTypes:={GetType(Integer)},
               Description:="The scan index number.")>
-    Public Function MGF(args As CommandLine) As Integer
+    Public Function printMatrix(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim scan& = args <= "/scan"
         Dim out$ = args("/out") Or $"{[in]}#{scan}.txt"
@@ -310,7 +310,10 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
               AcceptTypes:={GetType(Ions)},
               Extensions:="*.txt,*.mgf",
               Description:="The file path for mgf text output.")>
-    Public Function DumpMs2(args As CommandLine) As Integer
+    <Argument("/ms1", True, CLITypes.Boolean,
+              AcceptTypes:={GetType(Boolean)},
+              Description:="The mgf file will also includes ms1 data.")>
+    Public Function DumpAsMgf(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim out$ = args("/out") Or $"{[in].TrimSuffix}.mgf"
         Dim peak As PeakMs2
@@ -372,7 +375,7 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
             Call index.Add(outMgf, outMgf.FileName)
 
             If Not indexOnly Then
-                Call this.DumpMs2(rawfile, $"{out}/{outMgf}")
+                Call this.DumpAsMgf(rawfile, $"{out}/{outMgf}")
             Else
                 Call rawfile.__DEBUG_ECHO
             End If

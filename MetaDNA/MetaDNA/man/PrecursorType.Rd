@@ -50,4 +50,3 @@ This helper function returns a list, with members:
 Evaluate adducts text to molecular weight.
 Calculate m/z
 }
-
