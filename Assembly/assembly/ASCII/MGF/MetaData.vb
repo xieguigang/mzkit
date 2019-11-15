@@ -43,6 +43,51 @@ Namespace ASCII.MGF
                 meta("scan") = value
             End Set
         End Property
+
+        Public Property name As String
+            Get
+                Return meta.TryGetValue("name")
+            End Get
+            Set(value As String)
+                meta("name") = value
+            End Set
+        End Property
+
+        Public Property compound_class As String
+            Get
+                Return meta.TryGetValue("compound_class")
+            End Get
+            Set(value As String)
+                meta("compound_class") = value
+            End Set
+        End Property
+
+        Public Property formula As String
+            Get
+                Return meta.TryGetValue("formula")
+            End Get
+            Set(value As String)
+                meta("formula") = value
+            End Set
+        End Property
+
+        Public Property mass As Double
+            Get
+                Return meta.TryGetValue("mass")
+            End Get
+            Set(value As Double)
+                meta("mass") = value
+            End Set
+        End Property
+
+        Public Property kegg As String
+            Get
+                Return meta.TryGetValue("kegg")
+            End Get
+            Set(value As String)
+                meta("kegg") = value
+            End Set
+        End Property
 #End Region
 
         Public ReadOnly Property MetaTable As Dictionary(Of String, String)
