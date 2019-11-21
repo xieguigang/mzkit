@@ -22,11 +22,11 @@ Public Module lm
         model = WeightedLinearRegression.Regress(measure, ref, weight, 1)
         bestfit = model
 
-        If model.CorrelationCoefficient > R2 Then
+        If Not model Is Nothing AndAlso model.CorrelationCoefficient > R2 Then
             R2 = model.CorrelationCoefficient
             bestfit = model
 
-            If R2 > 0.99 Then
+            If R2 > 0.999 Then
                 Return bestfit
             End If
         End If
@@ -45,7 +45,7 @@ Public Module lm
                 weight = 1 / X ^ 2
                 model = WeightedLinearRegression.Regress(X, Y, weight, 1)
 
-                If model.CorrelationCoefficient > RMax Then
+                If Not model Is Nothing AndAlso model.CorrelationCoefficient > RMax Then
                     RMax = model.CorrelationCoefficient
                     modelBest = model
                     bestX = X
@@ -59,7 +59,7 @@ Public Module lm
                 measure = bestX
                 ref = bestY
 
-                If R2 > 0.99 Then
+                If R2 > 0.999 Then
                     Return bestfit
                 End If
             End If
