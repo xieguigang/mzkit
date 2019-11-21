@@ -9,13 +9,13 @@ Imports Microsoft.VisualBasic.ApplicationServices
 
 ' 
 '  // 
+'  // m/z assembly file toolkit
 '  // 
-'  // 
-'  // VERSION:   2.3.7188.26508
-'  // ASSEMBLY:  mz, Version=2.3.7188.26508, Culture=neutral, PublicKeyToken=null
-'  // COPYRIGHT: Copyright © BioNovogene 2018
+'  // VERSION:   2.3.7249.23804
+'  // ASSEMBLY:  mz, Version=2.3.7249.23804, Culture=neutral, PublicKeyToken=null
+'  // COPYRIGHT: Copyright © BioNovogene 2019
 '  // GUID:      2b91aac7-8c37-4662-b38a-daebec27c539
-'  // BUILT:     9/6/2019 2:43:36 PM
+'  // BUILT:     11/6/2019 1:13:28 PM
 '  // 
 ' 
 ' 
@@ -27,12 +27,17 @@ Imports Microsoft.VisualBasic.ApplicationServices
 ' 
 ' All of the command that available in this program has been list below:
 ' 
-'  /export:            Export a single ms2 scan data.
-'  /mgf:               Export all of the ms2 ions in target mzXML file and save as mgf file format.
-'  /mgf.batch:         
-'  /mz.calculate:      
-'  /selective.TIC:     Do TIC plot on a given list of selective parent ions.
-'  /waves:             Export the ms1 intensity matrix.
+'  /centroid:         Removes low abundance fragment details from the ms2 peaks from the profile mode
+'                     raw data.
+'  /export:           Export a single ms2 scan data.
+'  /mgf:              Export all of the ms2 ions in target mzXML file and save as mgf file format. Load
+'                     data from mgf file is more faster than mzXML raw data file.
+'  /mgf.batch:        
+'  /mz.calculate:     
+'  /peaktable:        
+'  /TIC:              
+'  /waves:            Export the ms1 intensity matrix.
+'  /XIC:              Do TIC plot on a given list of selective parent ions.
 ' 
 ' 
 ' ----------------------------------------------------------------------------------------------------
@@ -62,13 +67,40 @@ Public Class mz : Inherits InteropService
      End Function
 
 ''' <summary>
+''' ```bash
+''' /centroid /mgf &lt;raw.mgf&gt; [/ms2.tolerance &lt;default=da:0.1&gt; /into.cutoff &lt;default=0.05&gt; /out &lt;simple.mgf&gt;]
 ''' ```
-''' /export /in &lt;data.mzXML> /scan &lt;ms2_scan> [/out &lt;out.txt>]
+''' Removes low abundance fragment details from the ms2 peaks from the profile mode raw data.
+''' </summary>
+'''
+Public Function CentroidPeaksData(mgf As String, Optional ms2_tolerance As String = "da:0.1", Optional into_cutoff As String = "0.05", Optional out As String = "") As Integer
+    Dim CLI As New StringBuilder("/centroid")
+    Call CLI.Append(" ")
+    Call CLI.Append("/mgf " & """" & mgf & """ ")
+    If Not ms2_tolerance.StringEmpty Then
+            Call CLI.Append("/ms2.tolerance " & """" & ms2_tolerance & """ ")
+    End If
+    If Not into_cutoff.StringEmpty Then
+            Call CLI.Append("/into.cutoff " & """" & into_cutoff & """ ")
+    End If
+    If Not out.StringEmpty Then
+            Call CLI.Append("/out " & """" & out & """ ")
+    End If
+     Call CLI.Append("/@set --internal_pipeline=TRUE ")
+
+
+    Dim proc As IIORedirectAbstract = RunDotNetApp(CLI.ToString())
+    Return proc.Run()
+End Function
+
+''' <summary>
+''' ```bash
+''' /export /in &lt;data.mzXML&gt; /scan &lt;ms2_scan&gt; [/out &lt;out.txt&gt;]
 ''' ```
 ''' Export a single ms2 scan data.
 ''' </summary>
 '''
-Public Function MGF([in] As String, scan As String, Optional out As String = "") As Integer
+Public Function printMatrix([in] As String, scan As String, Optional out As String = "") As Integer
     Dim CLI As New StringBuilder("/export")
     Call CLI.Append(" ")
     Call CLI.Append("/in " & """" & [in] & """ ")
@@ -84,13 +116,13 @@ Public Function MGF([in] As String, scan As String, Optional out As String = "")
 End Function
 
 ''' <summary>
+''' ```bash
+''' /mgf /in &lt;rawdata.mzXML&gt; [/relative /ms1 /out &lt;ions.mgf&gt;]
 ''' ```
-''' /mgf /in &lt;rawdata.mzXML> [/relative /out &lt;ions.mgf>]
-''' ```
-''' Export all of the ms2 ions in target mzXML file and save as mgf file format.
+''' Export all of the ms2 ions in target mzXML file and save as mgf file format. Load data from mgf file is more faster than mzXML raw data file.
 ''' </summary>
 '''
-Public Function DumpMs2([in] As String, Optional out As String = "", Optional relative As Boolean = False) As Integer
+Public Function DumpAsMgf([in] As String, Optional out As String = "", Optional relative As Boolean = False, Optional ms1 As Boolean = False) As Integer
     Dim CLI As New StringBuilder("/mgf")
     Call CLI.Append(" ")
     Call CLI.Append("/in " & """" & [in] & """ ")
@@ -100,6 +132,9 @@ Public Function DumpMs2([in] As String, Optional out As String = "", Optional re
     If relative Then
         Call CLI.Append("/relative ")
     End If
+    If ms1 Then
+        Call CLI.Append("/ms1 ")
+    End If
      Call CLI.Append("/@set --internal_pipeline=TRUE ")
 
 
@@ -108,8 +143,8 @@ Public Function DumpMs2([in] As String, Optional out As String = "", Optional re
 End Function
 
 ''' <summary>
-''' ```
-''' /mgf.batch /in &lt;data.directory> [/index_only /out &lt;data.directory>]
+''' ```bash
+''' /mgf.batch /in &lt;data.directory&gt; [/index_only /out &lt;data.directory&gt;]
 ''' ```
 ''' </summary>
 '''
@@ -131,8 +166,8 @@ Public Function DumpMs2Batch([in] As String, Optional out As String = "", Option
 End Function
 
 ''' <summary>
-''' ```
-''' /mz.calculate /mass &lt;mass> [/mode &lt;+/-, default=+> /out &lt;out.csv/html/txt>]
+''' ```bash
+''' /mz.calculate /mass &lt;mass&gt; [/mode &lt;+/-, default=+&gt; /out &lt;out.csv/html/txt&gt;]
 ''' ```
 ''' </summary>
 '''
@@ -154,16 +189,40 @@ Public Function Calculator(mass As String, Optional mode As String = "+", Option
 End Function
 
 ''' <summary>
+''' ```bash
+''' /peaktable /in &lt;raw.mzXML&gt; [/ms2 /tolerance &lt;default=da:0.3&gt; /out &lt;peaktable.xls&gt;]
 ''' ```
-''' /selective.TIC /mz &lt;mz.list> /raw &lt;raw.mzXML> [/out &lt;TIC.png>]
-''' ```
-''' Do TIC plot on a given list of selective parent ions.
 ''' </summary>
 '''
-Public Function SelectiveTIC(mz As String, raw As String, Optional out As String = "") As Integer
-    Dim CLI As New StringBuilder("/selective.TIC")
+Public Function GetPeaktable([in] As String, Optional tolerance As String = "da:0.3", Optional out As String = "", Optional ms2 As Boolean = False) As Integer
+    Dim CLI As New StringBuilder("/peaktable")
     Call CLI.Append(" ")
-    Call CLI.Append("/mz " & """" & mz & """ ")
+    Call CLI.Append("/in " & """" & [in] & """ ")
+    If Not tolerance.StringEmpty Then
+            Call CLI.Append("/tolerance " & """" & tolerance & """ ")
+    End If
+    If Not out.StringEmpty Then
+            Call CLI.Append("/out " & """" & out & """ ")
+    End If
+    If ms2 Then
+        Call CLI.Append("/ms2 ")
+    End If
+     Call CLI.Append("/@set --internal_pipeline=TRUE ")
+
+
+    Dim proc As IIORedirectAbstract = RunDotNetApp(CLI.ToString())
+    Return proc.Run()
+End Function
+
+''' <summary>
+''' ```bash
+''' /TIC /raw &lt;data.mgf&gt; [/out &lt;TIC.png&gt;]
+''' ```
+''' </summary>
+'''
+Public Function TIC(raw As String, Optional out As String = "") As Integer
+    Dim CLI As New StringBuilder("/TIC")
+    Call CLI.Append(" ")
     Call CLI.Append("/raw " & """" & raw & """ ")
     If Not out.StringEmpty Then
             Call CLI.Append("/out " & """" & out & """ ")
@@ -176,8 +235,8 @@ Public Function SelectiveTIC(mz As String, raw As String, Optional out As String
 End Function
 
 ''' <summary>
-''' ```
-''' /waves /in &lt;data.mzXML> [/mz.range &lt;[min, max], default is all> /mz.round &lt;default=5> /out &lt;data.xls>]
+''' ```bash
+''' /waves /in &lt;data.mzXML&gt; [/mz.range &lt;[min, max], default is all&gt; /mz.round &lt;default=5&gt; /out &lt;data.xls&gt;]
 ''' ```
 ''' Export the ms1 intensity matrix.
 ''' </summary>
@@ -201,5 +260,31 @@ Public Function MzWaves([in] As String, Optional mz_range As String = "", Option
     Dim proc As IIORedirectAbstract = RunDotNetApp(CLI.ToString())
     Return proc.Run()
 End Function
+
+''' <summary>
+''' ```bash
+''' /XIC /mz &lt;mz.list&gt; /raw &lt;raw.mzXML&gt; [/tolerance &lt;default=ppm:20&gt; /out &lt;XIC.png&gt;]
+''' ```
+''' Do TIC plot on a given list of selective parent ions.
+''' </summary>
+'''
+Public Function XIC(mz As String, raw As String, Optional tolerance As String = "ppm:20", Optional out As String = "") As Integer
+    Dim CLI As New StringBuilder("/XIC")
+    Call CLI.Append(" ")
+    Call CLI.Append("/mz " & """" & mz & """ ")
+    Call CLI.Append("/raw " & """" & raw & """ ")
+    If Not tolerance.StringEmpty Then
+            Call CLI.Append("/tolerance " & """" & tolerance & """ ")
+    End If
+    If Not out.StringEmpty Then
+            Call CLI.Append("/out " & """" & out & """ ")
+    End If
+     Call CLI.Append("/@set --internal_pipeline=TRUE ")
+
+
+    Dim proc As IIORedirectAbstract = RunDotNetApp(CLI.ToString())
+    Return proc.Run()
+End Function
 End Class
 End Namespace
+

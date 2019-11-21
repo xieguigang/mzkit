@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports SMRUCC.MassSpectrum.Assembly.ASCII.MGF
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzXML
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
@@ -12,8 +13,100 @@ Imports SMRUCC.MassSpectrum.Math.Spectra
 
 Partial Module Program
 
+    <ExportAPI("/mgf.XIC")>
+    <Usage("/mgf.XIC /raw <data.mgf> [/out <XIC.png>]")>
+    <Argument("/raw", False, CLITypes.File,
+              Extensions:="*.mgf",
+              Description:="This parameter could be file name list use comma symbol as delimiter.")>
+    Public Function XICMgf(args As CommandLine) As Integer
+        Dim raw$ = args <= "/raw"
+        Dim files = CLITools.GetFileList(raw).ToArray
+        Dim out$
+
+        If files.Length = 1 Then
+            out = args("/out") Or $"{raw.TrimSuffix}.plot.png"
+        Else
+            out = args("/out") Or $"{files.First.ParentPath}/{files.Select(Function(file) file.BaseName).JoinBy(",")}.plot.png"
+        End If
+
+        Dim ions = MgfReader.ReadIons(files) _
+            .Select(Function(ion)
+                        If ion.Meta.TryGetValue("activation", [default]:="") = "ms1" Then
+                            Return ion.Peaks _
+                                .Select(Function(peak)
+                                            Return New TICPoint With {
+                                                .intensity = peak.intensity,
+                                                .mz = peak.mz,
+                                                .time = ion.RtInSeconds
+                                            }
+                                        End Function)
+                        Else
+                            Return {
+                                New TICPoint With {
+                                    .intensity = ion.PepMass.text,
+                                    .mz = ion.PepMass.name,
+                                    .time = ion.RtInSeconds
+                                }
+                            }
+                        End If
+                    End Function) _
+            .IteratesALL _
+            .OrderBy(Function(p) p.time) _
+            .ToArray
+
+        Dim datafile = out.TrimSuffix & ".points.csv"
+        Dim plot = CLI.mzplot.FromEnvironment(App.HOME)
+
+        Call ions.SaveTo(datafile)
+
+        Return plot.mzIntoXIC(datafile)
+    End Function
+
+    <ExportAPI("/TIC")>
+    <Usage("/TIC /raw <data.mgf> [/mz /out <TIC.png>]")>
+    <Argument("/raw", False, CLITypes.File,
+              Extensions:="*.mgf",
+              Description:="This parameter could be file name list use comma symbol as delimiter.")>
+    <Argument("/mz", True, CLITypes.Boolean,
+              AcceptTypes:={GetType(Boolean)},
+              Description:="The m/z value as x axis.")>
+    Public Function TIC(args As CommandLine) As Integer
+        Dim raw$ = args <= "/raw"
+        Dim files = CLITools.GetFileList(raw).ToArray
+        Dim out$
+        Dim ismzX As Boolean = args("/mz")
+
+        If files.Length = 1 Then
+            out = args("/out") Or $"{raw.TrimSuffix}.plot.png"
+        Else
+            out = args("/out") Or $"{files.First.ParentPath}/{files.Select(Function(file) file.BaseName).JoinBy(",")}.plot.png"
+        End If
+
+        Dim ions = MgfReader.ReadIons(files) _
+            .Select(Function(ion)
+                        Return New TICPoint With {
+                            .intensity = ion.PepMass.text,
+                            .mz = ion.PepMass.name,
+                            .time = ion.RtInSeconds
+                        }
+                    End Function) _
+            .OrderBy(Function(p) p.time) _
+            .ToArray
+
+        Dim datafile = out.TrimSuffix & ".points.csv"
+        Dim plot = CLI.mzplot.FromEnvironment(App.HOME)
+
+        Call ions.SaveTo(datafile)
+
+        If ismzX Then
+            Return plot.mzIntoXIC(datafile)
+        Else
+            Return plot.TICplot(datafile, rt:=NameOf(TICPoint.time), into:=NameOf(TICPoint.intensity), out:=out)
+        End If
+    End Function
+
     <ExportAPI("/XIC")>
-    <Usage("/XIC /mz <mz.list> /raw <raw.mzXML> [/tolerance <default=ppm:20> /out <TIC.png>]")>
+    <Usage("/XIC /mz <mz.list> /raw <raw.mzXML> [/tolerance <default=ppm:20> /out <XIC.png>]")>
     <Description("Do TIC plot on a given list of selective parent ions.")>
     <Argument("/mz", False, CLITypes.File, PipelineTypes.std_in,
               AcceptTypes:={GetType(String)},

@@ -93,11 +93,20 @@ Namespace Ms1.PrecursorType
         Sub New()
         End Sub
 
-        Sub New(type$, charge%, M#, adducts#)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="type$"></param>
+        ''' <param name="charge%"></param>
+        ''' <param name="M#"></param>
+        ''' <param name="adducts#"></param>
+        ''' <param name="mode">只允许``+/-``这两种符号出现</param>
+        Sub New(type$, charge%, M#, adducts#, Optional mode As Char = Nothing)
             Me.name = type
             Me.charge = charge
             Me.M = M
             Me.adducts = adducts
+            Me.mode = mode
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

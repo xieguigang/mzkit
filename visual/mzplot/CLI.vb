@@ -17,6 +17,34 @@ Imports SMRUCC.MassSpectrum.Visualization
 
 <CLI> Module CLI
 
+    <ExportAPI("/XIC")>
+    <Usage("/XIC /data <points.csv> [/out <XIC.png>]")>
+    Public Function mzIntoXIC(args As CommandLine) As Integer
+        Dim in$ = args <= "/data"
+        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.XIC.png"
+        Dim data = [in].LoadCsv(Of TICPoint).ToArray
+        Dim XIC = data _
+            .Select(Function(p)
+                        Return New ChromatogramTick With {
+                            .Time = p.mz,
+                            .Intensity = p.intensity
+                        }
+                    End Function) _
+            .OrderBy(Function(p) p.Time) _
+            .ToArray
+        Dim XICdata As New NamedCollection(Of ChromatogramTick) With {.name = "XIC", .value = XIC}
+
+        Call "Do TIC plot...".__INFO_ECHO
+
+        Return {XICdata}.TICplot(
+            showLabels:=False,
+            showLegends:=False,
+            fillCurve:=False,
+            isXIC:=True
+        ).Save(out) _
+         .CLICode
+    End Function
+
     <ExportAPI("/TIC")>
     <Usage("/TIC /in <data.csv> [/XIC /rt <rt_fieldName, default=rt> /into <intensity_fieldName, default=intensity> /out <plot.png>]")>
     <Description("Do TIC plot based on the given chromatogram table data.")>

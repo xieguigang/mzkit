@@ -17,4 +17,3 @@ This function returns a lambda function that can determine the
 \description{
 Create skips handler for KEGG id
 }
-
