@@ -26,7 +26,7 @@ Module Program
 
         For Each metabolite As DataSet In reference
             Dim refData As DataSet = data(metabolite.ID)
-            Dim fit As IFitted = LmMath.lm.CreateLinearModel(metabolite, refData)
+            Dim fit As IFitted = LmMath.lm.CreateLinearModel(refData, metabolite)
             Dim modelFit As New EntityObject With {
                 .ID = metabolite.ID,
                 .Properties = New Dictionary(Of String, String) From {
