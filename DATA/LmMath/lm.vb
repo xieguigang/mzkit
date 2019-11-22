@@ -31,7 +31,7 @@ Public Module lm
             End If
         End If
 
-        For p As Integer = 0 To 2
+        For p As Integer = 0 To 1
             ' 循环删除一个点，取R2最大的
             Dim X, Y As Vector
             Dim RMax As Double = -9999
