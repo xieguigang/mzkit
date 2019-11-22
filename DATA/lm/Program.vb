@@ -35,7 +35,7 @@ Module Program
                 .ID = metabolite.ID,
                 .Properties = New Dictionary(Of String, String) From {
                     {"R2", fit.CorrelationCoefficient},
-                    {"formula", "f(x)=" & fit.Polynomial.ToString}
+                    {"formula", "f(x)=" & fit.Polynomial.ToString("G4")}
                 }
             }
         Next
