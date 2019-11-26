@@ -20,11 +20,11 @@ Namespace ASCII.MGF
                 },
                 .RtInSeconds = matrix.rt,
                 .Title = $"{matrix.file}#{matrix.scan}",
-                .Meta = New Dictionary(Of String, String) From {
-                    {"rawfile", matrix.file},
-                    {"collisionEnergy", matrix.collisionEnergy},
-                    {"activation", matrix.activation},
-                    {"scan", matrix.scan}
+                .Meta = New MetaData With {
+                    .rawfile = matrix.file,
+                    .collisionEnergy = matrix.collisionEnergy,
+                    .activation = matrix.activation,
+                    .scan = matrix.scan
                 },
                 .Rawfile = matrix.file,
                 .Accession = $"{matrix.file}#{matrix.scan}"
@@ -58,7 +58,14 @@ Namespace ASCII.MGF
             If ion.Meta.IsNullOrEmpty Then
                 Return ion.Title
             Else
-                Return $"{ion.Title} {ion.Meta.Select(Function(m) $"{m.Key}:""{m.Value}""").JoinBy(", ")}"
+                Dim metaStr As String = ion.Meta _
+                    .Where(Function(t) Not t.Value.StringEmpty) _
+                    .Select(Function(m)
+                                Return $"{m.Key}:""{m.Value}"""
+                            End Function) _
+                    .JoinBy(", ")
+
+                Return $"{ion.Title} {metaStr}"
             End If
         End Function
 

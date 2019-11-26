@@ -14,17 +14,20 @@ Namespace ASCII.MGF
         Public Function IonPeaks(ions As IEnumerable(Of Ions)) As IEnumerable(Of PeakMs2)
             Return ions _
                 .Select(Function(ion)
+                            Dim meta As New MetaData(ion.Meta)
+                            Dim spectrum As New LibraryMatrix With {
+                                .ms2 = ion.Peaks,
+                                .Name = ion.Title
+                            }
+
                             Return New PeakMs2 With {
-                                .activation = ion.Meta.TryGetValue("activation"),
-                                .collisionEnergy = ion.Meta.TryGetValue("collisionEnergy"),
+                                .activation = meta.activation,
+                                .collisionEnergy = meta.collisionEnergy,
                                 .file = ion.Rawfile,
                                 .mz = ion.PepMass.name,
-                                .mzInto = New LibraryMatrix With {
-                                    .ms2 = ion.Peaks,
-                                    .Name = ion.Title
-                                },
+                                .mzInto = spectrum,
                                 .rt = ion.RtInSeconds,
-                                .scan = ion.Meta.TryGetValue("scan")
+                                .scan = meta.scan
                             }
                         End Function)
         End Function
