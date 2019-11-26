@@ -8,6 +8,10 @@ from xml.dom import minidom
 def read_mzXML(path, msLevel):
     "Parse mz data from mzxml document file."
 
+    print("summary:")
+    print("file: ", path)
+    print("msLevel filter: ", msLevel)
+
     # parse xml document and then load all scan data
     doc = minidom.parse(path)
     scans = doc.getElementsByTagName('scan')
