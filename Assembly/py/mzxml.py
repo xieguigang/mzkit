@@ -9,27 +9,27 @@ def read_mzXML(path, msLevel):
     "Parse mz data from mzxml document file."
 
     # parse xml document and then load all scan data
-    doc = minidom.parse(path);
-    scans = doc.getElementsByTagName('scan');
-    msLevelFilter = (scan for scan in scans if scan.attributes["msLevel"].value == msLevel);
+    doc = minidom.parse(path)
+    scans = doc.getElementsByTagName('scan')
+    msLevelFilter = (scan for scan in scans if scan.attributes["msLevel"].value == msLevel)
 
-    return msLevelFilter;
+    return msLevelFilter
 
 def decode_scan(scan):
     "Decode mz-int data in a scan."
 
-    peaks = scan.getElementsByTagName('peaks');
-    peaks = peaks[1];
-    peakBase64 = peaks.text;
+    peaks = scan.getElementsByTagName('peaks')
+    peaks = peaks[1]
+    peakBase64 = peaks.text
 
     # decode base64 text in scan peaks
     # and get zip compressed bytes data
-    zip = base64.b64decode(peakBase64);
+    zip = base64.b64decode(peakBase64)
     # uncompress this zip package
-    buffer = zlib.decompress(zip, -zlib.MAX_WBITS);
-    buffer = parse_peaks(buffer);
+    buffer = zlib.decompress(zip, -zlib.MAX_WBITS)
+    buffer = parse_peaks(buffer)
 
-    return buffer;
+    return buffer
 
 def parse_peaks(peaks_decoded):
     # Based on code by Taejoon Kwon (https://code.google.com/archive/p/massspec-toolbox/)
@@ -52,3 +52,12 @@ def parse_peaks(peaks_decoded):
         idx += 1
 
     return mz_list, intensity_list
+
+def parse_scan_rt(scan):
+    "Parse rt in seconds value for a given scan object."
+
+    rt = scan.attributes["retentionTime"].value
+    rt = rt.replace("PT", "", 3)
+    rt = rt.replace("S", "", 3)
+
+    return float(rt)
