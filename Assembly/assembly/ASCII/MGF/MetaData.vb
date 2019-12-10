@@ -35,6 +35,15 @@ Namespace ASCII.MGF
             End Set
         End Property
 
+        Public Property precursor_type As String
+            Get
+                Return meta.TryGetValue("precursor_type")
+            End Get
+            Set(value As String)
+                meta("precursor_type") = value
+            End Set
+        End Property
+
         Public Property scan As String
             Get
                 Return meta.TryGetValue("scan")
@@ -88,6 +97,25 @@ Namespace ASCII.MGF
                 meta("kegg") = value
             End Set
         End Property
+
+        Public Property mzcloud As String
+            Get
+                Return meta.TryGetValue("mzcloud")
+            End Get
+            Set(value As String)
+                meta("mzcloud") = value
+            End Set
+        End Property
+
+        Public Property polarity As String
+            Get
+                Return meta.TryGetValue("polarity")
+            End Get
+            Set(value As String)
+                meta("polarity") = value
+            End Set
+        End Property
+
 #End Region
 
         Public ReadOnly Property MetaTable As Dictionary(Of String, String)
