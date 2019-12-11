@@ -117,6 +117,7 @@ read.mgf <- function(fileName) {
 		ions[[index]] <- buffer %=>% parse.mgf;
 	}
 
+	names(ions) <- sapply(ions, function(i) i$title);
 	ions;
 }
 
