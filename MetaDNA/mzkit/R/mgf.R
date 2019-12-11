@@ -173,22 +173,26 @@ parse.mgf <- function(buffer) {
 	);
 }
 
+#' Parse meta data contains in title
+#'
+#' @param title The title string text
+#'
 parse.mgf.title_meta <- function(title) {
 	title_string <- Strings.Split(title, " ")[1];
 	title_meta <- Strings.Replace(title, title_string, "") %=>% Trim;
-	
+
 	if (Strings.Len(title_meta) == 0) {
 		meta <- list();
 	} else {
 		title_meta <- Strings.Split(title_meta, '", ');
 		title_meta <- GetTagValue(title_meta, ':"');
-		
+
 		meta <- list();
-		
+
 		for(attr in title_meta) {
 			meta[[attr$name]] <- Strings.Trim(attr$value, "\"");
 		}
 	}
-	
+
 	list(title_string = title_string, meta = meta);
 }
