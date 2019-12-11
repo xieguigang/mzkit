@@ -92,6 +92,8 @@ mgf.ion <- function(mz, rt, ms2, charge = "1", title = "Unknown name ion", ms1.i
 
 #' Read a given mgf file
 #'
+#' @param fileName A single mgf data file its file path.
+#'
 #' @return Returns a list of mgf ions that parsed from the given mgf spectrum data file.
 #'
 read.mgf <- function(fileName) {
@@ -159,12 +161,34 @@ parse.mgf <- function(buffer) {
 
 	ms2 <- data.frame(mz = mz, into = into);
 	mz  <- strsplit(meta[["PEPMASS"]], "\\s+")[[1]];
+	title <- parse.mgf.title_meta(meta[["TITLE"]]);
 
 	list(mz1      = mz[1]                 %=>% as.numeric,
 		 ms1.into = mz[2]                 %=>% as.numeric,
 		 rt       = meta[["RTINSECONDS"]] %=>% as.numeric,
-		 title    = meta[["TITLE"]],
+		 title    = title$title_string,
+		 meta     = title$meta,
 		 charge   = meta[["CHARGE"]],
 		 ms2      = ms2
 	);
+}
+
+parse.mgf.title_meta <- function(title) {
+	title_string <- Strings.Split(title, " ")[1];
+	title_meta <- Strings.Replace(title, title_string, "") %=>% Trim;
+	
+	if (Strings.Len(title_meta) == 0) {
+		meta <- list();
+	} else {
+		title_meta <- Strings.Split(title_meta, '", ');
+		title_meta <- GetTagValue(title_meta, ':"');
+		
+		meta <- list();
+		
+		for(attr in title_meta) {
+			meta[[attr$name]] <- Strings.Trim(attr$value, "\"");
+		}
+	}
+	
+	list(title_string = title_string, meta = meta);
 }
