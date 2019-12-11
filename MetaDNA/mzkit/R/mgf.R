@@ -160,7 +160,10 @@ parse.mgf <- function(buffer) {
 		}
 	}
 
-	ms2 <- data.frame(mz = mz, into = into);
+	# 20191211 The mz and into parse from mgf file is string 
+	# will change to factor by data.frame
+	# change mode to numeric at first to avoid such bug problem in R language.
+	ms2 <- data.frame(mz = as.numeric(mz), into = as.numeric(into));
 	mz  <- strsplit(meta[["PEPMASS"]], "\\s+")[[1]];
 	title <- parse.mgf.title_meta(meta[["TITLE"]]);
 
