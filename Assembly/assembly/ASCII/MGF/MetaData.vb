@@ -8,15 +8,6 @@ Namespace ASCII.MGF
 
 #Region "MetaData getter/setter"
 
-        Public Property rawfile As String
-            Get
-                Return meta.TryGetValue("rawfile")
-            End Get
-            Set(value As String)
-                meta("rawfile") = value
-            End Set
-        End Property
-
         Public Property collisionEnergy As String
             Get
                 Return meta.TryGetValue("collisionEnergy")
