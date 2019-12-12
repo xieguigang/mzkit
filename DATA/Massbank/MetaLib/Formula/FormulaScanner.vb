@@ -75,7 +75,7 @@ Namespace MetaLib
                 ElseIf c = "("c Then
                     ' 遇到了一个堆栈
                     ' 对这个分子基团进行函数递归
-                    Dim group = scaner.DoCall(AddressOf ScanFormula)
+                    Dim group As FormulaComposition = New FormulaScanner().ScanFormula(scaner)
 
                     Call push(c)
                     ' 后面必定会跟着数字
