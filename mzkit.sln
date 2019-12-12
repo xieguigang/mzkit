@@ -1295,8 +1295,8 @@ Global
 		{3A35AC34-F313-4F72-89E9-EACCA217BC8D}.Biodeep_UNIX_x64|x86.Build.0 = Rsharp_app_release|Any CPU
 		{3A35AC34-F313-4F72-89E9-EACCA217BC8D}.Biodeep|Any CPU.ActiveCfg = Rsharp_app_release|Any CPU
 		{3A35AC34-F313-4F72-89E9-EACCA217BC8D}.Biodeep|Any CPU.Build.0 = Rsharp_app_release|Any CPU
-		{3A35AC34-F313-4F72-89E9-EACCA217BC8D}.Biodeep|x64.ActiveCfg = Rsharp_app_release|x64
-		{3A35AC34-F313-4F72-89E9-EACCA217BC8D}.Biodeep|x64.Build.0 = Rsharp_app_release|x64
+		{3A35AC34-F313-4F72-89E9-EACCA217BC8D}.Biodeep|x64.ActiveCfg = Biodeep|x64
+		{3A35AC34-F313-4F72-89E9-EACCA217BC8D}.Biodeep|x64.Build.0 = Biodeep|x64
 		{3A35AC34-F313-4F72-89E9-EACCA217BC8D}.Biodeep|x86.ActiveCfg = Rsharp_app_release|Any CPU
 		{3A35AC34-F313-4F72-89E9-EACCA217BC8D}.Biodeep|x86.Build.0 = Rsharp_app_release|Any CPU
 		{3A35AC34-F313-4F72-89E9-EACCA217BC8D}.Biostack|Any CPU.ActiveCfg = Rsharp_app_release|Any CPU
