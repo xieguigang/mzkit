@@ -1,8 +1,8 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Text.Parser
 
 Namespace MetaLib
 
@@ -17,7 +17,7 @@ Namespace MetaLib
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function ScanFormula(formula As String) As FormulaComposition
-            Return New FormulaScanner().ScanFormula(New Pointer(Of Char)(formula))
+            Return New FormulaScanner().ScanFormula(New CharPtr(formula))
         End Function
 
         Dim composition As New Dictionary(Of String, Counter)
@@ -45,11 +45,14 @@ Namespace MetaLib
             formula += buf
             formula += digits
             buf *= 0
-            buf += c
             digits *= 0
+
+            If c <> "("c AndAlso c <> ")"c Then
+                buf += c
+            End If
         End Sub
 
-        Private Function ScanFormula(scaner As Pointer(Of Char)) As FormulaComposition
+        Private Function ScanFormula(scaner As CharPtr) As FormulaComposition
             Dim c As Char
 
             Do While Not scaner.EndRead

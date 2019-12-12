@@ -208,7 +208,7 @@
     <Compile Include="InChI\Extensions.vb" />
     <Compile Include="InChI\Components.vb" />
     <Compile Include="InChI\InChIKey.vb" />
-    <Compile Include="MetaLib\Formula\FormulaCompare.vb" />
+    <Compile Include="MetaLib\Formula\FormulaScanner.vb" />
     <Compile Include="MetaLib\Formula\FormulaComposition.vb" />
     <Compile Include="MetaLib\Match\TreeSearch.vb" />
     <Compile Include="MetaLib\KEGGExtensions.vb" />
