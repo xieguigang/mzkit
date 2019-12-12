@@ -48,6 +48,7 @@ Imports XmlLinq = Microsoft.VisualBasic.Text.Xml.Linq.Data
 
 Namespace TMIC.HMDB.Repository
 
+    <HideModuleName>
     Public Module RepositoryExtensions
 
         ReadOnly web As New Dictionary(Of String, WebQuery)

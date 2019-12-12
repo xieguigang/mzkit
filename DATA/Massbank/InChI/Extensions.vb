@@ -45,6 +45,7 @@
 
 Namespace IUPAC
 
+    <HideModuleName>
     Module Extensions
 
     End Module
