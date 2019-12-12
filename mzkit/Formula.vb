@@ -19,7 +19,7 @@ Module Formula
     End Function
 
     <ExportAPI("scan.formula")>
-    Public Function ScanFormula(formula As String) As FormulaComposition
-        Return FormulaScanner.ScanFormula(formula)
+    Public Function ScanFormula(formula$, Optional n% = 9999) As FormulaComposition
+        Return FormulaScanner.ScanFormula(formula, n)
     End Function
 End Module

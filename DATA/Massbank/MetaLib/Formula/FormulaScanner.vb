@@ -8,7 +8,14 @@ Namespace MetaLib
 
     Public NotInheritable Class FormulaScanner
 
-        Private Sub New()
+        ''' <summary>
+        ''' 处理在化学式之中遇到的小字母``n``设置的一个默认值
+        ''' 设置这个值主要是应用于化学式比较
+        ''' </summary>
+        Dim n As String
+
+        Private Sub New(n As Integer)
+            Me.n = n
         End Sub
 
         ' H2O
@@ -16,8 +23,8 @@ Namespace MetaLib
         ' (CH3)4C
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function ScanFormula(formula As String) As FormulaComposition
-            Return New FormulaScanner().ScanFormula(New CharPtr(formula))
+        Public Shared Function ScanFormula(formula$, Optional n% = 9999) As FormulaComposition
+            Return New FormulaScanner(n).ScanFormula(New CharPtr(formula))
         End Function
 
         Dim composition As New Dictionary(Of String, Counter)
@@ -75,16 +82,18 @@ Namespace MetaLib
                 ElseIf c = "("c Then
                     ' 遇到了一个堆栈
                     ' 对这个分子基团进行函数递归
-                    Dim group As FormulaComposition = New FormulaScanner().ScanFormula(scaner)
+                    Dim group As FormulaComposition = New FormulaScanner(n).ScanFormula(scaner)
 
                     Call push(c)
                     ' 后面必定会跟着数字
                     c = ++scaner
 
-                    If Not Char.IsDigit(c) Then
-                        Throw New SyntaxErrorException(scaner.RawBuffer.CharString)
-                    Else
+                    If Char.IsDigit(c) Then
                         digits += c
+                    ElseIf c = "n"c Then
+                        digits += Me.n
+                    Else
+                        Throw New SyntaxErrorException(scaner.RawBuffer.CharString)
                     End If
 
                     Do While Not scaner.EndRead
