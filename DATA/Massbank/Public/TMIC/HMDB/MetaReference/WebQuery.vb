@@ -1,5 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports SMRUCC.genomics.ComponentModel
+Imports Microsoft.VisualBasic.Net.Http
 Imports SMRUCC.MassSpectrum.DATA.MetaLib.Models
 
 Namespace TMIC.HMDB.Repository
