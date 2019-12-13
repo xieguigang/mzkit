@@ -1,4 +1,6 @@
-﻿Imports Microsoft.VisualBasic.Data.Trinity
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.Trinity
+Imports Microsoft.VisualBasic.Linq
 
 Namespace MetaLib
 
@@ -30,8 +32,14 @@ Namespace MetaLib
             Return Me
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function FindCandidateCompounds(name As String) As IEnumerable(Of T)
             Return bin.FindMatches(name)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function FindCandidateCompounds(names As IEnumerable(Of String)) As IEnumerable(Of T)
+            Return names.Distinct.Select(Function(name) bin.FindMatches(name)).IteratesALL
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
