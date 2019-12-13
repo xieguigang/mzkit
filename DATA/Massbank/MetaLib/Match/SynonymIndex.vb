@@ -18,15 +18,19 @@ Namespace MetaLib
             bin = New WordSimilarityIndex(Of T)(New WordSimilarity(equalsName))
         End Sub
 
+        Public Sub Add(compound As T)
+            For Each name As String In compound.GetSynonym
+                If Not bin.HaveKey(name) Then
+                    Call bin.AddTerm(name, compound)
+                Else
+                    Call $"{name} ({compound})".Warning
+                End If
+            Next
+        End Sub
+
         Public Function BuildIndex(compounds As IEnumerable(Of T)) As SynonymIndex(Of T)
             For Each compound As T In compounds
-                For Each name As String In compound.GetSynonym
-                    If Not bin.HaveKey(name) Then
-                        Call bin.AddTerm(name, compound)
-                    Else
-                        Call $"{name} ({compound})".Warning
-                    End If
-                Next
+                Call Add(compound)
             Next
 
             Return Me
