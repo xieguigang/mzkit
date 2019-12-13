@@ -19,7 +19,11 @@ Namespace MetaLib
         Public Function BuildIndex(compounds As IEnumerable(Of T)) As SynonymIndex(Of T)
             For Each compound As T In compounds
                 For Each name As String In compound.GetSynonym
-                    Call bin.AddTerm(name, compound)
+                    If Not bin.HaveKey(name) Then
+                        Call bin.AddTerm(name, compound)
+                    Else
+                        Call $"{name} ({compound})".Warning
+                    End If
                 Next
             Next
 
