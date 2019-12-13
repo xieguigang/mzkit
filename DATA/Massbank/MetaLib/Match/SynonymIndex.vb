@@ -8,7 +8,7 @@ Namespace MetaLib
 
     End Interface
 
-    Public Class SynonymIndex(Of T As ICompoundNames)
+    Public Class SynonymIndex(Of T As ICompoundNames) : Implements IEnumerable(Of T)
 
         ReadOnly bin As WordSimilarityIndex(Of T)
 
@@ -28,6 +28,16 @@ Namespace MetaLib
 
         Public Function FindCandidateCompounds(name As String) As IEnumerable(Of T)
             Return bin.FindMatches(name)
+        End Function
+
+        Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
+            For Each item As T In bin.AllValues
+                Yield item
+            Next
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield GetEnumerator()
         End Function
     End Class
 End Namespace
