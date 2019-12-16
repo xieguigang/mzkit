@@ -140,8 +140,8 @@ Namespace TMIC.HMDB
             Return New MetaDb With {
                 .accession = metabolite.accession,
                 .secondary_accessions = metabolite.secondary_accessions.accession,
-                .chebi_id = metabolite.chebi_id,
-                .pubchem_cid = metabolite.pubchem_compound_id,
+                .chebi_id = Strings.Trim(metabolite.chebi_id).Split(":"c).Last.ParseInteger,
+                .pubchem_cid = Strings.Trim(metabolite.pubchem_compound_id).ParseInteger,
                 .chemical_formula = metabolite.chemical_formula,
                 .kegg_id = metabolite.kegg_id,
                 .wikipedia_id = metabolite.wikipedia_id,
