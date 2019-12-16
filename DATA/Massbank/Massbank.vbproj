@@ -242,6 +242,7 @@
     <Compile Include="InChI\InChIKey.vb" />
     <Compile Include="MetaLib\Formula\FormulaScanner.vb" />
     <Compile Include="MetaLib\Formula\FormulaComposition.vb" />
+    <Compile Include="MetaLib\Match\ComparesIdXrefInteger.vb" />
     <Compile Include="MetaLib\Match\SynonymIndex.vb" />
     <Compile Include="MetaLib\Match\TreeSearch.vb" />
     <Compile Include="MetaLib\KEGGExtensions.vb" />
