@@ -57,6 +57,13 @@ Module Massbank
         Return SecondaryIDSolver.FromMaps(mapping).AsRReturn
     End Function
 
+    ''' <summary>
+    ''' Save id mapping file in json file format
+    ''' </summary>
+    ''' <param name="mapping"></param>
+    ''' <param name="file">``*.json`` file name.</param>
+    ''' <param name="envir"></param>
+    ''' <returns></returns>
     <ExportAPI("save.mapping")>
     Public Function saveIDMapping(mapping As Dictionary(Of String, String()), file$, Optional envir As Environment = Nothing) As Object
         If mapping Is Nothing Then
