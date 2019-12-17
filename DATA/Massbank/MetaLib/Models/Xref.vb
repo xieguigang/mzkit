@@ -5,6 +5,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI
 Imports SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI.XML
+Imports SMRUCC.MassSpectrum.DATA.TMIC
 
 Namespace MetaLib.Models
 
@@ -52,6 +53,17 @@ Namespace MetaLib.Models
                 .Where(Function(r) r.type = "CAS Registry Number") _
                 .Select(Function(r) r.data) _
                 .ToArray
+        End Sub
+
+        Sub New(meta As HMDB.MetaDb)
+            Me.chebi = "CHEBI:" & meta.chebi_id
+            Me.KEGG = meta.kegg_id
+            Me.Wikipedia = meta.wikipedia_id
+            Me.SMILES = meta.smiles
+            Me.InChI = meta.inchi
+            Me.InChIkey = meta.inchikey
+            Me.CAS = {meta.CAS}
+            Me.HMDB = meta.accession
         End Sub
 
         ''' <summary>
