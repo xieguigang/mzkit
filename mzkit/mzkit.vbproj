@@ -107,6 +107,7 @@
   <ItemGroup>
     <Compile Include="Assembly.vb" />
     <Compile Include="Formula.vb" />
+    <Compile Include="Massbank.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
