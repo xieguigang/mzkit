@@ -1,7 +1,10 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI
+Imports SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI.XML
 
 Namespace MetaLib.Models
 
@@ -33,6 +36,23 @@ Namespace MetaLib.Models
         Public Property InChIkey As String
         Public Property InChI As String
         Public Property SMILES As String
+
+        Sub New()
+        End Sub
+
+        Sub New(chebi As ChEBIEntity)
+            Me.chebi = chebi.chebiId
+            Me.KEGG = chebi.FindDatabaseLinkValue(AccessionTypes.KEGG_Compound)
+            Me.Wikipedia = chebi.FindDatabaseLinkValue(AccessionTypes.Wikipedia)
+            Me.SMILES = chebi.smiles
+            Me.InChI = chebi.inchi
+            Me.InChIkey = chebi.inchiKey
+            Me.CAS = chebi.RegistryNumbers _
+                .SafeQuery _
+                .Where(Function(r) r.type = "CAS Registry Number") _
+                .Select(Function(r) r.data) _
+                .ToArray
+        End Sub
 
         ''' <summary>
         ''' This function will fill current <see cref="xref"/> object with 
