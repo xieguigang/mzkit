@@ -87,10 +87,16 @@ Namespace MetaLib.Models
         End Function
 
         Public Overloads Function Equals(other As MetaInfo) As Boolean Implements IEquatable(Of MetaInfo).Equals
+            Static metaEquals As MetaEquals
+
+            If metaEquals Is Nothing Then
+                metaEquals = New MetaEquals
+            End If
+
             If other Is Nothing Then
                 Return False
             Else
-                Return MetaEquals.Equals(Me, other)
+                Return metaEquals.Equals(Me, other)
             End If
         End Function
     End Class
@@ -140,10 +146,16 @@ Namespace MetaLib.Models
         ''' <param name="other"></param>
         ''' <returns></returns>
         Public Overloads Function Equals(other As MetaLib) As Boolean Implements IEquatable(Of MetaLib).Equals
+            Static metaEquals As MetaEquals
+
+            If metaEquals Is Nothing Then
+                metaEquals = New MetaEquals
+            End If
+
             If other Is Nothing Then
                 Return False
             Else
-                Return MetaEquals.Equals(Me, other)
+                Return metaEquals.Equals(Me, other)
             End If
         End Function
     End Class

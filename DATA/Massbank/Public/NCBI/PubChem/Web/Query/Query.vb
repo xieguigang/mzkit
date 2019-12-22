@@ -62,7 +62,7 @@
 Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports Microsoft.VisualBasic.Linq
-Imports SMRUCC.genomics.ComponentModel
+Imports Microsoft.VisualBasic.Net.Http
 
 Namespace NCBI.PubChem
 

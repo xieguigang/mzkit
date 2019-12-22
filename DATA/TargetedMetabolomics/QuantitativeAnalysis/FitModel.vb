@@ -55,11 +55,19 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports SMRUCC.MassSpectrum.Math.MRM.Models
 
 ''' <summary>
-''' 标准曲线模型
+''' The linear model of the targeted metabolism model data.(标准曲线模型)
 ''' </summary>
 Public Class FitModel : Implements INamedValue
 
+    ''' <summary>
+    ''' The metabolite name or database id
+    ''' </summary>
+    ''' <returns></returns>
     Public Property Name As String Implements IKeyedEntity(Of String).Key
+    ''' <summary>
+    ''' The internal standards
+    ''' </summary>
+    ''' <returns></returns>
     Public Property [IS] As [IS]
 
     ''' <summary>
@@ -69,13 +77,20 @@ Public Class FitModel : Implements INamedValue
     Public Property LinearRegression As IFitted
 
     ''' <summary>
-    ''' 在进行线性回归计算的时候是否需要内标校正？
+    ''' This linear model is required calibration by internal standards or not?
+    ''' (在进行线性回归计算的时候是否需要内标校正？)
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property RequireISCalibration As Boolean
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return Not [IS] Is Nothing AndAlso Not [IS].ID.StringEmpty AndAlso [IS].CIS > 0
+        End Get
+    End Property
+
+    Public ReadOnly Property isWeighted As Boolean
+        Get
+            Return TypeOf LinearRegression Is WeightedFit
         End Get
     End Property
 
@@ -93,10 +108,12 @@ Public Class FitModel : Implements INamedValue
     ''' <param name="line"></param>
     ''' <returns></returns>
     Public Shared Function CreateLinearRegression(line As PointF(), weighted As Boolean) As IFitted
-        Dim lineData = line.DeleteOutlier.ToArray
-        ' X是实验值，可能会因为标准曲线溶液配制的问题出现，所以这个可能会需要使用异常点检测
+        Dim lineData As PointF() = line.DeleteOutlier.ToArray
+        ' X是实验值，可能会因为标准曲线溶液配制的问题出现，
+        ' 所以这个可能会需要使用异常点检测
         Dim X As Vector = lineData.X.AsVector
-        ' Y是从文件之中读取出来的浓度梯度信息，认为这个除非文件录入有错，否则将不会出现异常点
+        ' Y是从文件之中读取出来的浓度梯度信息，'
+        ' 认为这个除非文件录入有错， 否则将不会出现异常点
         Dim Y As Vector = lineData.Y.AsVector
         Dim fit As IFitted
 

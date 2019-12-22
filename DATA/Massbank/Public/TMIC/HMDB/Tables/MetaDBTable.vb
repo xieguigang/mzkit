@@ -53,6 +53,8 @@
 Imports System.IO
 Imports Microsoft.VisualBasic.Data.csv.IO.Linq
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
+Imports Microsoft.VisualBasic.Linq
+Imports SMRUCC.MassSpectrum.DATA.MetaLib
 Imports SMRUCC.MassSpectrum.DATA.MetaLib.Models
 
 Namespace TMIC.HMDB
@@ -91,7 +93,7 @@ Namespace TMIC.HMDB
         End Function
     End Class
 
-    Public Class MetaDb : Implements ICompoundClass
+    Public Class MetaDb : Implements ICompoundClass, ICompoundNames
 
         Public Property accession As String
         Public Property secondary_accessions As String()
@@ -100,6 +102,7 @@ Namespace TMIC.HMDB
         Public Property exact_mass As Double
         Public Property iupac_name As String
         Public Property traditional_iupac As String
+        Public Property synonyms As String()
         Public Property CAS As String
         Public Property smiles As String
         Public Property inchi As String
@@ -118,6 +121,17 @@ Namespace TMIC.HMDB
         Public Property pubchem_cid As Long
         Public Property kegg_id As String
         Public Property wikipedia_id As String
+        Public Property description As String
+
+        Public Iterator Function GetSynonym() As IEnumerable(Of String) Implements ICompoundNames.GetSynonym
+            Yield name
+            Yield iupac_name
+            Yield traditional_iupac
+
+            For Each name As String In synonyms.SafeQuery
+                Yield name
+            Next
+        End Function
 
         Public Shared Function FromMetabolite(metabolite As metabolite) As MetaDb
             Dim metabolite_taxonomy = metabolite.taxonomy
@@ -126,8 +140,8 @@ Namespace TMIC.HMDB
             Return New MetaDb With {
                 .accession = metabolite.accession,
                 .secondary_accessions = metabolite.secondary_accessions.accession,
-                .chebi_id = metabolite.chebi_id,
-                .pubchem_cid = metabolite.pubchem_compound_id,
+                .chebi_id = Strings.Trim(metabolite.chebi_id).Split(":"c).Last.ParseInteger,
+                .pubchem_cid = Strings.Trim(metabolite.pubchem_compound_id).ParseInteger,
                 .chemical_formula = metabolite.chemical_formula,
                 .kegg_id = metabolite.kegg_id,
                 .wikipedia_id = metabolite.wikipedia_id,
@@ -148,7 +162,9 @@ Namespace TMIC.HMDB
                 .[class] = metabolite_taxonomy?.class,
                 .biospecimen = biosample?.biospecimen_locations.biospecimen,
                 .cellular_locations = biosample?.cellular_locations.cellular,
-                .tissue = biosample?.tissue_locations.tissue
+                .tissue = biosample?.tissue_locations.tissue,
+                .synonyms = metabolite.synonyms.synonym,
+                .description = metabolite.description
             }
         End Function
 

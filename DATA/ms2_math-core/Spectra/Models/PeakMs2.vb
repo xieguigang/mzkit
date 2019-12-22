@@ -47,7 +47,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports SMRUCC.MassSpectrum.Math.Ms1
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace Spectra
 
@@ -57,7 +57,8 @@ Namespace Spectra
     Public Structure PeakMs2
 
         ''' <summary>
-        ''' 一级母离子的``m/z``
+        ''' The precursor ``m/z`` value.
+        ''' (一级母离子的``m/z``)
         ''' </summary>
         Dim mz As Double
         ''' <summary>
@@ -74,10 +75,23 @@ Namespace Spectra
         Dim scan As Integer
         Dim activation As String
         Dim collisionEnergy As Double
+
+        ''' <summary>
+        ''' A unique variable name, meaning could be different with <see cref="LibraryMatrix.Name" />. 
+        ''' </summary>
+        Dim lib_guid As String
+
+        ''' <summary>
+        ''' adducts type of the <see cref="mz"/> value.
+        ''' </summary>
+        Dim precursor_type As String
+
         ''' <summary>
         ''' 二级碎片信息
         ''' </summary>
         Dim mzInto As LibraryMatrix
+
+        Dim meta As Dictionary(Of String, String)
 
         ''' <summary>
         ''' 获取得到二级碎片的响应强度值的和,这个响应强度值是和其对应的一级母离子的响应强度值是呈正相关的
@@ -103,7 +117,7 @@ Namespace Spectra
         End Function
 
         Public Overrides Function ToString() As String
-            Return $"M{sys.Round(mz)}T{sys.Round(rt)} intensity={Ms2Intensity.ToString("G3")} {file}#{scan}"
+            Return $"M{stdNum.Round(mz)}T{stdNum.Round(rt)} intensity={Ms2Intensity.ToString("G3")} {file}#{scan}"
         End Function
 
         ''' <summary>

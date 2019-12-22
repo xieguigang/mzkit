@@ -7,6 +7,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports SMRUCC.MassSpectrum.Assembly.ASCII.MSP
 
+<HideModuleName>
 Public Module Extensions
 
     <Extension>
