@@ -69,7 +69,7 @@ Namespace ASCII.MGF
         End Function
 
         <Extension>
-        Private Sub writeIf(out As StreamWriter, key$, value$)
+        Private Sub writeIf(out As TextWriter, key$, value$)
             If Not value.StringEmpty Then
                 Call out.WriteLine($"{key}={value}")
             End If
@@ -82,7 +82,7 @@ Namespace ASCII.MGF
         ''' <param name="out"></param>
         ''' <param name="relativeIntensity"></param>
         <Extension>
-        Public Sub WriteAsciiMgf(ion As Ions, out As StreamWriter, Optional relativeIntensity As Boolean = False)
+        Public Sub WriteAsciiMgf(ion As Ions, out As TextWriter, Optional relativeIntensity As Boolean = False)
             Call out.WriteLine("BEGIN IONS")
             Call out.WriteLine("TITLE=" & ion.ionTitle)
             Call out.WriteLine("RTINSECONDS=" & ion.RtInSeconds)
