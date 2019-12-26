@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.779
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29521.150
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "mzkit", "mzkit\mzkit.vbproj", "{7A42D5A0-8058-459C-A139-195B6022A710}"
 EndProject
@@ -113,8 +113,8 @@ Global
 		{7A42D5A0-8058-459C-A139-195B6022A710}.Biodeep|x86.Build.0 = Release|Any CPU
 		{7A42D5A0-8058-459C-A139-195B6022A710}.Biostack|Any CPU.ActiveCfg = Release|Any CPU
 		{7A42D5A0-8058-459C-A139-195B6022A710}.Biostack|Any CPU.Build.0 = Release|Any CPU
-		{7A42D5A0-8058-459C-A139-195B6022A710}.Biostack|x64.ActiveCfg = Release|Any CPU
-		{7A42D5A0-8058-459C-A139-195B6022A710}.Biostack|x64.Build.0 = Release|Any CPU
+		{7A42D5A0-8058-459C-A139-195B6022A710}.Biostack|x64.ActiveCfg = Biostack|x64
+		{7A42D5A0-8058-459C-A139-195B6022A710}.Biostack|x64.Build.0 = Biostack|x64
 		{7A42D5A0-8058-459C-A139-195B6022A710}.Biostack|x86.ActiveCfg = Release|Any CPU
 		{7A42D5A0-8058-459C-A139-195B6022A710}.Biostack|x86.Build.0 = Release|Any CPU
 		{7A42D5A0-8058-459C-A139-195B6022A710}.Biostack-Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -125,8 +125,8 @@ Global
 		{7A42D5A0-8058-459C-A139-195B6022A710}.Biostack-Debug|x86.Build.0 = Debug|Any CPU
 		{7A42D5A0-8058-459C-A139-195B6022A710}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7A42D5A0-8058-459C-A139-195B6022A710}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7A42D5A0-8058-459C-A139-195B6022A710}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{7A42D5A0-8058-459C-A139-195B6022A710}.Debug|x64.Build.0 = Debug|Any CPU
+		{7A42D5A0-8058-459C-A139-195B6022A710}.Debug|x64.ActiveCfg = Debug|x64
+		{7A42D5A0-8058-459C-A139-195B6022A710}.Debug|x64.Build.0 = Debug|x64
 		{7A42D5A0-8058-459C-A139-195B6022A710}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{7A42D5A0-8058-459C-A139-195B6022A710}.Debug|x86.Build.0 = Debug|Any CPU
 		{7A42D5A0-8058-459C-A139-195B6022A710}.DEMO|Any CPU.ActiveCfg = Debug|Any CPU
@@ -377,8 +377,8 @@ Global
 		{0C2EB77C-39F2-460D-A3F8-CE905F867637}.Biodeep|x86.Build.0 = Rsharp_app_release|Any CPU
 		{0C2EB77C-39F2-460D-A3F8-CE905F867637}.Biostack|Any CPU.ActiveCfg = Rsharp_app_release|Any CPU
 		{0C2EB77C-39F2-460D-A3F8-CE905F867637}.Biostack|Any CPU.Build.0 = Rsharp_app_release|Any CPU
-		{0C2EB77C-39F2-460D-A3F8-CE905F867637}.Biostack|x64.ActiveCfg = Rsharp_app_release|x64
-		{0C2EB77C-39F2-460D-A3F8-CE905F867637}.Biostack|x64.Build.0 = Rsharp_app_release|x64
+		{0C2EB77C-39F2-460D-A3F8-CE905F867637}.Biostack|x64.ActiveCfg = Biostack|x64
+		{0C2EB77C-39F2-460D-A3F8-CE905F867637}.Biostack|x64.Build.0 = Biostack|x64
 		{0C2EB77C-39F2-460D-A3F8-CE905F867637}.Biostack|x86.ActiveCfg = Rsharp_app_release|Any CPU
 		{0C2EB77C-39F2-460D-A3F8-CE905F867637}.Biostack|x86.Build.0 = Rsharp_app_release|Any CPU
 		{0C2EB77C-39F2-460D-A3F8-CE905F867637}.Biostack-Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -509,8 +509,8 @@ Global
 		{95F7D65E-9DB1-4605-9FD3-25433277AF88}.Biodeep|x86.Build.0 = Biodeep|x86
 		{95F7D65E-9DB1-4605-9FD3-25433277AF88}.Biostack|Any CPU.ActiveCfg = Biodeep|Any CPU
 		{95F7D65E-9DB1-4605-9FD3-25433277AF88}.Biostack|Any CPU.Build.0 = Biodeep|Any CPU
-		{95F7D65E-9DB1-4605-9FD3-25433277AF88}.Biostack|x64.ActiveCfg = Biodeep|x64
-		{95F7D65E-9DB1-4605-9FD3-25433277AF88}.Biostack|x64.Build.0 = Biodeep|x64
+		{95F7D65E-9DB1-4605-9FD3-25433277AF88}.Biostack|x64.ActiveCfg = Biostack|x64
+		{95F7D65E-9DB1-4605-9FD3-25433277AF88}.Biostack|x64.Build.0 = Biostack|x64
 		{95F7D65E-9DB1-4605-9FD3-25433277AF88}.Biostack|x86.ActiveCfg = Biodeep|x86
 		{95F7D65E-9DB1-4605-9FD3-25433277AF88}.Biostack|x86.Build.0 = Biodeep|x86
 		{95F7D65E-9DB1-4605-9FD3-25433277AF88}.Biostack-Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -641,8 +641,8 @@ Global
 		{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}.Biodeep|x86.Build.0 = Biodeep|x86
 		{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}.Biostack|Any CPU.ActiveCfg = Biodeep|Any CPU
 		{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}.Biostack|Any CPU.Build.0 = Biodeep|Any CPU
-		{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}.Biostack|x64.ActiveCfg = Biodeep|x64
-		{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}.Biostack|x64.Build.0 = Biodeep|x64
+		{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}.Biostack|x64.ActiveCfg = Biostack|x64
+		{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}.Biostack|x64.Build.0 = Biostack|x64
 		{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}.Biostack|x86.ActiveCfg = Biodeep|x86
 		{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}.Biostack|x86.Build.0 = Biodeep|x86
 		{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}.Biostack-Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -1037,8 +1037,8 @@ Global
 		{A686BDF5-077F-47F5-A8DD-C73E6E88363C}.Biodeep|x86.Build.0 = Biodeep|x86
 		{A686BDF5-077F-47F5-A8DD-C73E6E88363C}.Biostack|Any CPU.ActiveCfg = Biodeep_UNIX_x64|Any CPU
 		{A686BDF5-077F-47F5-A8DD-C73E6E88363C}.Biostack|Any CPU.Build.0 = Biodeep_UNIX_x64|Any CPU
-		{A686BDF5-077F-47F5-A8DD-C73E6E88363C}.Biostack|x64.ActiveCfg = Biodeep_UNIX_x64|x64
-		{A686BDF5-077F-47F5-A8DD-C73E6E88363C}.Biostack|x64.Build.0 = Biodeep_UNIX_x64|x64
+		{A686BDF5-077F-47F5-A8DD-C73E6E88363C}.Biostack|x64.ActiveCfg = Biostack|x64
+		{A686BDF5-077F-47F5-A8DD-C73E6E88363C}.Biostack|x64.Build.0 = Biostack|x64
 		{A686BDF5-077F-47F5-A8DD-C73E6E88363C}.Biostack|x86.ActiveCfg = Biodeep_UNIX_x64|x86
 		{A686BDF5-077F-47F5-A8DD-C73E6E88363C}.Biostack|x86.Build.0 = Biodeep_UNIX_x64|x86
 		{A686BDF5-077F-47F5-A8DD-C73E6E88363C}.Biostack-Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -1169,8 +1169,8 @@ Global
 		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.Biodeep|x86.Build.0 = Biodeep|x86
 		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.Biostack|Any CPU.ActiveCfg = Biostack-Debug|Any CPU
 		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.Biostack|Any CPU.Build.0 = Biostack-Debug|Any CPU
-		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.Biostack|x64.ActiveCfg = Biostack-Debug|x64
-		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.Biostack|x64.Build.0 = Biostack-Debug|x64
+		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.Biostack|x64.ActiveCfg = Biostack|x64
+		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.Biostack|x64.Build.0 = Biostack|x64
 		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.Biostack|x86.ActiveCfg = Biostack-Debug|x86
 		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.Biostack|x86.Build.0 = Biostack-Debug|x86
 		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.Biostack-Debug|Any CPU.ActiveCfg = Biostack-Debug|Any CPU
@@ -1301,8 +1301,8 @@ Global
 		{3A35AC34-F313-4F72-89E9-EACCA217BC8D}.Biodeep|x86.Build.0 = Rsharp_app_release|Any CPU
 		{3A35AC34-F313-4F72-89E9-EACCA217BC8D}.Biostack|Any CPU.ActiveCfg = Rsharp_app_release|Any CPU
 		{3A35AC34-F313-4F72-89E9-EACCA217BC8D}.Biostack|Any CPU.Build.0 = Rsharp_app_release|Any CPU
-		{3A35AC34-F313-4F72-89E9-EACCA217BC8D}.Biostack|x64.ActiveCfg = Rsharp_app_release|x64
-		{3A35AC34-F313-4F72-89E9-EACCA217BC8D}.Biostack|x64.Build.0 = Rsharp_app_release|x64
+		{3A35AC34-F313-4F72-89E9-EACCA217BC8D}.Biostack|x64.ActiveCfg = Biostack|x64
+		{3A35AC34-F313-4F72-89E9-EACCA217BC8D}.Biostack|x64.Build.0 = Biostack|x64
 		{3A35AC34-F313-4F72-89E9-EACCA217BC8D}.Biostack|x86.ActiveCfg = Rsharp_app_release|Any CPU
 		{3A35AC34-F313-4F72-89E9-EACCA217BC8D}.Biostack|x86.Build.0 = Rsharp_app_release|Any CPU
 		{3A35AC34-F313-4F72-89E9-EACCA217BC8D}.Biostack-Debug|Any CPU.ActiveCfg = Debug|Any CPU

@@ -10,6 +10,7 @@ Namespace MetaLib
 
         ReadOnly metaTree As AVLTree(Of MetaInfo, MetaInfo)
         ReadOnly cutoff#
+        ReadOnly metaEquals As New MetaEquals
 
         ''' <summary>
         ''' 
@@ -21,7 +22,7 @@ Namespace MetaLib
         End Sub
 
         Public Function CompareAnnotation(a As MetaInfo, b As MetaInfo) As Integer
-            Dim score = MetaEquals.Agreement(a, b)
+            Dim score = metaEquals.Agreement(a, b)
 
             If score >= cutoff Then
                 Return 0

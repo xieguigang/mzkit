@@ -1,6 +1,11 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI
+Imports SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI.XML
+Imports SMRUCC.MassSpectrum.DATA.TMIC
 
 Namespace MetaLib.Models
 
@@ -32,6 +37,85 @@ Namespace MetaLib.Models
         Public Property InChIkey As String
         Public Property InChI As String
         Public Property SMILES As String
+
+        Sub New()
+        End Sub
+
+        Sub New(chebi As ChEBIEntity)
+            Me.chebi = chebi.chebiId
+            Me.KEGG = chebi.FindDatabaseLinkValue(AccessionTypes.KEGG_Compound)
+            Me.Wikipedia = chebi.FindDatabaseLinkValue(AccessionTypes.Wikipedia)
+            Me.SMILES = chebi.smiles
+            Me.InChI = chebi.inchi
+            Me.InChIkey = chebi.inchiKey
+            Me.CAS = chebi.RegistryNumbers _
+                .SafeQuery _
+                .Where(Function(r) r.type = "CAS Registry Number") _
+                .Select(Function(r) r.data) _
+                .ToArray
+        End Sub
+
+        Sub New(meta As HMDB.MetaDb)
+            Me.chebi = "CHEBI:" & meta.chebi_id
+            Me.KEGG = meta.kegg_id
+            Me.Wikipedia = meta.wikipedia_id
+            Me.SMILES = meta.smiles
+            Me.InChI = meta.inchi
+            Me.InChIkey = meta.inchikey
+            Me.CAS = {meta.CAS}
+            Me.HMDB = meta.accession
+        End Sub
+
+        ''' <summary>
+        ''' This function will fill current <see cref="xref"/> object with 
+        ''' additional property data from <paramref name="add"/> data object.
+        ''' </summary>
+        ''' <param name="add"></param>
+        ''' <returns></returns>
+        Public Function Join(add As xref) As xref
+            If IsEmptyXrefId(chebi) Then
+                chebi = add.chebi
+            End If
+            If KEGG.StringEmpty Then
+                KEGG = add.KEGG
+            End If
+            If IsEmptyXrefId(pubchem) Then
+                pubchem = add.pubchem
+            End If
+            If HMDB.StringEmpty Then
+                HMDB = add.HMDB
+            End If
+            If IsEmptyXrefId(metlin) Then
+                metlin = add.metlin
+            End If
+            If Wikipedia.StringEmpty Then
+                Wikipedia = add.Wikipedia
+            End If
+            If CAS.IsNullOrEmpty Then
+                CAS = add.CAS.ToArray
+            End If
+            If InChI.StringEmpty Then
+                InChI = add.InChI
+                InChIkey = add.InChIkey
+            End If
+            If SMILES.StringEmpty Then
+                SMILES = add.SMILES
+            End If
+
+            Return Me
+        End Function
+
+        Shared ReadOnly emptySymbols As Index(Of String) = {"null", "na", "n/a", "inf", "nan"}
+
+        Public Shared Function IsEmptyXrefId(id As String) As Boolean
+            If id.StringEmpty OrElse id.ToLower Like emptySymbols Then
+                Return True
+            ElseIf id.Match("\d+").ParseInteger <= 0 Then
+                Return True
+            End If
+
+            Return False
+        End Function
 
         Public Shared Function IsEmpty(xref As xref, Optional includeStruct As Boolean = False) As Boolean
             If Not xref.chebi.StringEmpty Then

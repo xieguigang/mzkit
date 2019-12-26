@@ -116,7 +116,7 @@ Namespace ASCII.MGF
 
         <Extension>
         Private Function parseMetaInfo(substr As String) As Dictionary(Of String, String)
-            Return substr.StringSplit(",\s+") _
+            Return substr.StringSplit("[""],\s+") _
                 .Select(Function(s) s.GetTagValue(":")) _
                 .ToDictionary(Function(key) key.Name,
                               Function(val)

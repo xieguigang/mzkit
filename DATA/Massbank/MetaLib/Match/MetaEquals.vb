@@ -43,21 +43,25 @@
 
 #End Region
 
-Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.MassSpectrum.DATA.MetaLib.Models
 
 Namespace MetaLib
 
-    Module MetaEquals
+    Public Class MetaEquals
 
-        Public Function Equals(meta As MetaInfo, other As MetaInfo) As Boolean
-            Return Agreement(meta, other) >= 0.45
+        Dim threshold As Double
+
+        Sub New(Optional threshold As Double = 0.45)
+            Me.threshold = threshold
+        End Sub
+
+        Public Overloads Function Equals(meta As MetaInfo, other As MetaInfo) As Boolean
+            Return Agreement(meta, other) >= threshold
         End Function
 
-        Public Function Agreement(meta As MetaInfo, other As MetaInfo) As Double
-            Dim xref As xref = meta.xref
+        Public Function CompareXref(xref As xref, otherXref As xref) As Double
             Dim agree As Integer
             Dim total As Integer
             Dim yes = Sub()
@@ -66,27 +70,43 @@ Namespace MetaLib
                       End Sub
             Dim no = Sub() total += 1
 
-            Dim compareInteger = comparesInteger(yes, no)
+            Call agreementInternal(xref, otherXref, yes, no)
 
-            If Math.Abs(meta.exact_mass - other.exact_mass) > 0.3 Then
-                no()
-            End If
+            Return agree / total
+        End Function
+
+        Private Sub agreementInternal(xref As xref, otherXref As xref, yes As Action, no As Action)
+            Dim compareInteger As New ComparesIdXrefInteger(yes, no)
 
             ' 下面的这个几个数据库编号可能都是没有的
-            Call compareInteger(xref.chebi, other.xref.chebi)
-            Call compareInteger(xref.KEGG, other.xref.KEGG)
-            Call compareInteger(xref.pubchem, other.xref.pubchem)
-            Call compareInteger(xref.HMDB, other.xref.HMDB)
+            Call compareInteger.DoCompares(xref.chebi, otherXref.chebi)
+            Call compareInteger.DoCompares(xref.KEGG, otherXref.KEGG)
+            Call compareInteger.DoCompares(xref.pubchem, otherXref.pubchem)
+            Call compareInteger.DoCompares(xref.HMDB, otherXref.HMDB)
 
-            If xref.CAS.SafeQuery.Any(Function(id) other.xref.CAS.IndexOf(id) > -1) Then
+            If xref.CAS.SafeQuery.Any(Function(id) otherXref.CAS.IndexOf(id) > -1) Then
                 yes()
             Else
                 no()
             End If
 
-            If xref.InChIkey = other.xref.InChIkey Then
+            If xref.InChIkey = otherXref.InChIkey Then
                 yes()
             Else
+                no()
+            End If
+        End Sub
+
+        Public Function Agreement(meta As MetaInfo, other As MetaInfo) As Double
+            Dim agree As Integer
+            Dim total As Integer
+            Dim yes = Sub()
+                          agree += 1
+                          total += 1
+                      End Sub
+            Dim no = Sub() total += 1
+
+            If Math.Abs(meta.exact_mass - other.exact_mass) > 0.3 Then
                 no()
             End If
 
@@ -96,56 +116,9 @@ Namespace MetaLib
                 yes()
             End If
 
+            Call agreementInternal(meta.xref, other.xref, yes, no)
+
             Return agree / total
         End Function
-
-        Private Function comparesInteger(yes As Action, no As Action) As Action(Of String, String)
-            Dim intId As i32 = 0
-
-            Return Sub(a$, b$)
-                       a = Strings.Trim(a)
-                       b = Strings.Trim(b)
-
-                       ' 2019-03-25
-                       ' 都没有该数据库的编号,即改数据库之中还没有登录该物质
-                       ' 则不应该认为是不一样的
-                       If a = b AndAlso a = "NA" Then
-                           yes()
-                           Return
-                       ElseIf (a.StringEmpty OrElse b.StringEmpty) AndAlso (a = "NA" OrElse b = "NA") Then
-                           yes()
-                           Return
-                       End If
-
-                       If a = b AndAlso Not a.StringEmpty Then
-                           yes()
-                           Return
-                       ElseIf a.StringEmpty OrElse b.StringEmpty Then
-                           no()
-                           Return
-                       End If
-
-                       If ((intId = ParseInteger(a)) = ParseInteger(b)) Then
-                           If intId.Equals(0) Then
-                               no()
-                           Else
-                               yes()
-                           End If
-                       Else
-                           no()
-                       End If
-                   End Sub
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Function ParseInteger(xref As String) As Integer
-            With xref.Match("\d+")
-                If .StringEmpty Then
-                    Return 0
-                Else
-                    Return Integer.Parse(.ByRef)
-                End If
-            End With
-        End Function
-    End Module
+    End Class
 End Namespace

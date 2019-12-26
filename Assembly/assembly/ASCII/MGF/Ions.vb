@@ -45,6 +45,8 @@
 
 #End Region
 
+Imports System.IO
+Imports System.Text
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports SMRUCC.MassSpectrum.Math.Spectra
@@ -101,6 +103,16 @@ Namespace ASCII.MGF
 
         Public Overrides Function ToString() As String
             Return $"{Title} ({Peaks.SafeQuery.Count} peaks)"
+        End Function
+
+        Public Function CreateDocs() As String
+            Dim text As New StringBuilder
+
+            Using writer As New StringWriter(text)
+                Call Me.WriteAsciiMgf(out:=writer)
+            End Using
+
+            Return text.ToString
         End Function
 
     End Class
