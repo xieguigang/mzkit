@@ -73,7 +73,8 @@ Public Module Statistics
                     coverages(refMap.EntryId) = (
                         .Where(Function(id) list(id.name) > -1) _
                         .Count,
-                        .Length)
+                        .Length
+                    )
                 End With
             End If
         Next

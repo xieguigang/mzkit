@@ -13,6 +13,10 @@ Imports REnv = SMRUCC.Rsharp.Runtime.Internal.Invokes.base
 <Package("mzkit.massbank")>
 Module Massbank
 
+    Public Function KEGGPathwayCoverages()
+
+    End Function
+
     <ExportAPI("chebi.secondary2main.mapping")>
     Public Function chebiSecondary2Main(repository As String) As Dictionary(Of String, String())
         Return ChEBIRepo.ScanEntities(repository) _
