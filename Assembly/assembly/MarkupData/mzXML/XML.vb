@@ -123,7 +123,7 @@ Namespace MarkupData.mzXML
             Next
         End Function
 
-        Public Shared Function ExportPeaktable(mzXML As String) As Peaktable()
+        Public Shared Function ExportPeaktable(mzXML As String) As Math.Peaktable()
             Dim ms1 As New List(Of scan)   ' peaktable
             Dim msms As New List(Of scan)  ' ms1 scan为msms scan的母离子
             Dim sample$ = mzXML.BaseName
