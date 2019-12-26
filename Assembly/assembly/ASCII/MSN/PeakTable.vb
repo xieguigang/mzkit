@@ -23,7 +23,11 @@ Namespace ASCII.MSN
         End Function
 
         Friend Shared Function ParseTable(file As String) As PeakTable()
-            Dim lines As String() = file.IterateAllLines.SkipWhile(Function(l) l.First = "#"c).Skip(1).ToArray
+            Dim lines As String() = file _
+                .IterateAllLines _
+                .SkipWhile(Function(l) l.First = "#"c) _
+                .Skip(1) _
+                .ToArray
             Dim peaks As PeakTable() = lines _
                 .Select(Function(l)
                             Return l.Split(ANSI.TAB).DoCall(AddressOf GetPeakAnnotation)
