@@ -52,6 +52,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
 Imports SMRUCC.MassSpectrum.Math
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
+Imports SMRUCC.MassSpectrum.Math.MRM.Data
 Imports SMRUCC.MassSpectrum.Math.MRM.Models
 Imports REnv = SMRUCC.Rsharp.Runtime.Internal
 Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
@@ -178,8 +179,23 @@ Public Module MRMkit
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("linears")>
-    Public Function Linears(rawScan As DataSet(), calibrates As Standards(), [ISvector] As [IS](), Optional autoWeighted As Boolean = True)
+    Public Function Linears(rawScan As DataSet(), calibrates As Standards(), [ISvector] As [IS](), Optional autoWeighted As Boolean = True) As StandardCurve()
         Return rawScan.ToDictionary.Regression(calibrates, ISvector, weighted:=autoWeighted).ToArray
+    End Function
+
+    <ExportAPI("points")>
+    Public Function GetLinearPoints(linears As StandardCurve(), name$) As MRMStandards()
+        Dim line As StandardCurve = linears _
+            .Where(Function(l)
+                       Return l.name = name
+                   End Function) _
+            .FirstOrDefault
+
+        If line Is Nothing Then
+            Return Nothing
+        Else
+            Return line.points
+        End If
     End Function
 End Module
 
