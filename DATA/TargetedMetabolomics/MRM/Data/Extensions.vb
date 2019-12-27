@@ -51,6 +51,7 @@ Imports SMRUCC.MassSpectrum.Math.Chromatogram
 
 Namespace MRM.Data
 
+    <HideModuleName>
     Public Module Extensions
 
         <Extension>

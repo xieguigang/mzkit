@@ -353,44 +353,29 @@ Public Module StandardCurve
                          Optional ByRef refName$() = Nothing,
                          Optional levelPattern$ = "[-]CAL\d+") As DataSet()
 
-        Dim ionTPAs As New Dictionary(Of String, Dictionary(Of String, Double))
-        Dim refNames As New List(Of String)
+        Dim levelName As Func(Of KeyValuePair(Of String, Double), String) =
+            Function(file) As String
+                Return file.Key _
+                    .Match(levelPattern, RegexICSng) _
+                    .Trim("-"c) _
+                    .ToUpper
+            End Function
 
-        For Each ion As IonPair In ions
-            ionTPAs(ion.accession) = New Dictionary(Of String, Double)
-        Next
-
-        For Each file As String In mzMLRawFiles
-            ' 得到当前的这个原始文件之中的峰面积数据
-            Dim TPA() = file.ScanTPA(
-                ionpairs:=ions,
-                peakAreaMethod:=peakAreaMethod,
-                TPAFactors:=TPAFactors
-            )
-
-            ' 从文件名之中得到浓度的等级，以方便查找出相应的浓度数据
-            Dim level$ = file.BaseName _
-                             .Match(levelPattern, RegexICSng) _
-                             .Trim("-"c)
-
-            refNames += file.BaseName
-
-            ' level = level.Match("[-]L\d+", RegexICSng).Trim("-"c)
-
-            For Each ion In TPA
-                ionTPAs(ion.name).Add(level.ToUpper, ion.area)
-            Next
-        Next
-
-        refName = refNames
-
-        Return ionTPAs _
+        ' get reference data
+        Dim result As DataSet() = WiffRaw _
+            .Scan(mzMLRawFiles, ions, peakAreaMethod, TPAFactors, refName, False) _
             .Select(Function(ion)
                         Return New DataSet With {
-                            .ID = ion.Key,
-                            .Properties = ion.Value
+                            .ID = ion.ID,
+                            .Properties = ion.Properties _
+                                .ToDictionary(levelName,
+                                              Function(file)
+                                                  Return file.Value
+                                              End Function)
                         }
                     End Function) _
             .ToArray
+
+        Return result
     End Function
 End Module
