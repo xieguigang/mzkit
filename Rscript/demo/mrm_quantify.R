@@ -2,11 +2,22 @@ imports "mzkit.mrm" from "mzkit.quantitative.dll";
 
 let mrmInfo as string = "T:\_ref\MetaCardio_STD_v5.xlsx";
 let ions = read.ion_pairs(mrmInfo, "ion pairs");
+let ref = read.reference(mrmInfo, "coordinates");
+let is = read.IS(mrmInfo, "IS");
+
 let wiff as string = "T:\test\Data20190522liaoning-Cal";
 
-list.files(wiff, pattern = "*.mzML")
-:> wiff.scans(ions,peakAreaMethod= 0, TPAFactors = NULL) 
+let CAL = list.files(wiff, pattern = "*.mzML")
+:> wiff.scans(ions,peakAreaMethod= 0, TPAFactors = NULL);
+
+CAL 
 :> write.csv(file = "T:\test\L.csv");
+
+ref <- CAL :> linears(ref, is);
+
+for(line in ref) {
+	print(line);
+}
 
 for(mzML in list.files(wiff, pattern = "*.mzML")) {
 	let fileName = basename(mzML);

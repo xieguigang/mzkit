@@ -48,6 +48,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
 Imports SMRUCC.MassSpectrum.Math
@@ -118,6 +119,38 @@ Public Module MRMkit
         End If
     End Function
 
+    <ExportAPI("read.reference")>
+    Public Function readCompoundReference(file$, Optional sheetName$ = "Sheet1") As Standards()
+        Dim reference As Standards()
+
+        If file.ExtensionSuffix("xlsx") Then
+            reference = Xlsx.Open(path:=file) _
+                .GetTable(sheetName) _
+                .AsDataSource(Of Standards) _
+                .ToArray
+        Else
+            reference = file.LoadCsv(Of Standards)
+        End If
+
+        For i As Integer = 0 To reference.Length - 1
+            reference(i).C = reference(i).C.ToLower
+        Next
+
+        Return reference
+    End Function
+
+    <ExportAPI("read.IS")>
+    Public Function readIS(file$, Optional sheetName$ = "Sheet1") As [IS]()
+        If file.ExtensionSuffix("xlsx") Then
+            Return Xlsx.Open(path:=file) _
+                .GetTable(sheetName) _
+                .AsDataSource(Of [IS]) _
+                .ToArray
+        Else
+            Return file.LoadCsv(Of [IS])
+        End If
+    End Function
+
     <ExportAPI("MRM.peaks")>
     Public Function ScanPeakTable(mzML$, ions As IonPair(),
                                   Optional peakAreaMethod% = 1,
@@ -170,7 +203,7 @@ Public Module MRMkit
     ''' <summary>
     ''' Create linear fitting based on the wiff raw scan data.
     ''' </summary>
-    ''' <param name="rawScan">The wiff raw scan data</param>
+    ''' <param name="rawScan">The wiff raw scan data which are extract by function: ``wiff.scans``.</param>
     ''' <param name="calibrates"></param>
     ''' <param name="[ISvector]"></param>
     ''' <param name="autoWeighted">
@@ -181,6 +214,11 @@ Public Module MRMkit
     <ExportAPI("linears")>
     Public Function Linears(rawScan As DataSet(), calibrates As Standards(), [ISvector] As [IS](), Optional autoWeighted As Boolean = True) As StandardCurve()
         Return rawScan.ToDictionary.Regression(calibrates, ISvector, weighted:=autoWeighted).ToArray
+    End Function
+
+    <ExportAPI("models")>
+    Public Function Models(detections As StandardCurve()) As FitModel()
+        Return detections.DoCall(AddressOf StandardCurve.GetFitModels)
     End Function
 
     <ExportAPI("points")>

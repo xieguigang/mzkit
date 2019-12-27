@@ -213,8 +213,8 @@ Public Module StandardCurveWorker
             '                   Not ionTPA(i.IS).Properties.Count < i.C.Count ' 标曲文件之中只有7个点，但是实际上打了10个点，剩下的三个点可以不要了
             '        End Function)
 
-            Dim TPA As DataSet = ionTPA(ion.HMDB)                             ' 得到标准曲线实验数据
-            Dim ISA As DataSet = ionTPA(ion.IS)                               ' 得到内标的实验数据，如果是空值的话，说明不需要内标进行校正
+            Dim TPA = ionTPA(ion.HMDB).Properties.ToLower                     ' 得到标准曲线实验数据
+            Dim ISA = ionTPA(ion.IS).Properties.ToLower                       ' 得到内标的实验数据，如果是空值的话，说明不需要内标进行校正
             Dim IsIon As [IS] = [IS].TryGetValue(ion.IS, [default]:=New [IS]) ' 尝试得到内标的数据
             Dim CIS# = IsIon?.CIS                                             ' 内标的浓度，是不变的，所以就只有一个值
             Dim points As New List(Of MRMStandards)
@@ -252,9 +252,9 @@ Public Module StandardCurveWorker
     ''' <param name="ref"></param>
     ''' <returns></returns>
     <Extension>
-    Private Function getByLevel(ref As DataSet) As Func(Of KeyValuePair(Of String, Double), Double)
+    Private Function getByLevel(ref As Dictionary(Of String, Double)) As Func(Of KeyValuePair(Of String, Double), Double)
         Return Function(L)
-                   Dim key As String = L.Key.ToUpper
+                   Dim key As String = L.Key.ToLower
                    Dim At_i = ref(key)
 
                    Return At_i
