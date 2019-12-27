@@ -269,6 +269,11 @@ Public Module MRMkit
         Return fileScans.Select(Function(file) file.quantify).ToArray
     End Function
 
+    ''' <summary>
+    ''' Get result of ``AIS/At``
+    ''' </summary>
+    ''' <param name="fileScans"></param>
+    ''' <returns></returns>
     <ExportAPI("scans.X")>
     Public Function GetRawX(fileScans As QuantifyScan()) As DataSet()
         Return fileScans.Select(Function(file) file.rawX).ToArray

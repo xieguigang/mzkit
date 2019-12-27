@@ -43,7 +43,11 @@ for(sample.mzML in list.files(wiff, pattern = "*.mzML")) {
 	
 	print(basename(sample.mzML));
 	
-	result :> as.object :> do.call("MRMPeaks") :> write.MRMpeaks(file = peakfile);
+	result 
+	:> as.object 
+	:> do.call("MRMPeaks") 
+	:> write.MRMpeaks(file = peakfile);
+	
 	scans <- scans << result;
 }
 
