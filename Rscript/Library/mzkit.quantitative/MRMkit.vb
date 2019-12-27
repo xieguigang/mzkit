@@ -6,9 +6,22 @@ Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
 Imports SMRUCC.MassSpectrum.Math
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
 Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
+Imports REnv = SMRUCC.Rsharp.Runtime.Internal
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 
 <Package("mzkit.mrm")>
 Public Module MRMkit
+
+    Sub New()
+        REnv.ConsolePrinter.AttachConsoleFormatter(Of IonPair())(AddressOf printIonPairs)
+    End Sub
+
+    Private Function printIonPairs(ions As IonPair()) As String
+        Dim csv = ions.ToCsvDoc
+        Dim printContent = csv.Print(addBorder:=False)
+
+        Return printContent
+    End Function
 
     ''' <summary>
     ''' Extract ion peaks

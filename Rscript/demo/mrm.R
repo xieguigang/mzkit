@@ -5,3 +5,5 @@ let mrmInfo as string = "T:\_ref\MetaCardio_STD_v5.xlsx";
 let ions = read.ion_pairs(mrmInfo, "ion pairs");
 
 let mrm.ions = extract.ions(mzML, ions);
+
+print(ions);

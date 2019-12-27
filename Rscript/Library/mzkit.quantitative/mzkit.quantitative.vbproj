@@ -146,6 +146,10 @@
       <Project>{c5c3428c-d64c-4e79-b239-77adc66b1156}</Project>
       <Name>R.graphics</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\R#\R.vbproj">
+      <Project>{0c2eb77c-39f2-460d-a3f8-ce905f867637}</Project>
+      <Name>R</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj">
       <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
       <Name>47_dotnet_ms-vb_data.framework</Name>
