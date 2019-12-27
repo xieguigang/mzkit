@@ -214,7 +214,7 @@ Public Module StandardCurveWorker
             '        End Function)
 
             Dim TPA = ionTPA(ion.HMDB).Properties.ToLower                     ' 得到标准曲线实验数据
-            Dim ISA = ionTPA(ion.IS).Properties.ToLower                       ' 得到内标的实验数据，如果是空值的话，说明不需要内标进行校正
+            Dim ISA = ionTPA.getIS(ion)                                       ' 得到内标的实验数据，如果是空值的话，说明不需要内标进行校正
             Dim IsIon As [IS] = [IS].TryGetValue(ion.IS, [default]:=New [IS]) ' 尝试得到内标的数据
             Dim CIS# = IsIon?.CIS                                             ' 内标的浓度，是不变的，所以就只有一个值
             Dim points As New List(Of MRMStandards)
@@ -244,6 +244,15 @@ Public Module StandardCurveWorker
 
             Yield out
         Next
+    End Function
+
+    <Extension>
+    Private Function getIS(ionTPA As Dictionary(Of DataSet), ion As Standards) As Dictionary(Of String, Double)
+        If ion.IS.StringEmpty Then
+            Return New Dictionary(Of String, Double)
+        Else
+            Return ionTPA(ion.IS).Properties.ToLower
+        End If
     End Function
 
     ''' <summary>
