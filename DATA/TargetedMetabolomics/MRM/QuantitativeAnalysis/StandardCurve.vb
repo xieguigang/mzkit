@@ -312,13 +312,46 @@ Public Module StandardCurve
     ''' <returns></returns>
     Public Function Scan(raw$,
                          ions As IonPair(),
-                         peakAreaMethod As PeakArea.Methods,
-                         TPAFactors As Dictionary(Of String, Double),
+                         Optional peakAreaMethod As PeakArea.Methods = PeakArea.Methods.NetPeakSum,
+                         Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
                          Optional ByRef refName$() = Nothing,
                          Optional calibrationNamedPattern$ = ".+[-]CAL\d+",
                          Optional levelPattern$ = "[-]CAL\d+") As DataSet()
 
-        Dim rawName$ = raw.BaseName
+        ' 扫描所有的符合命名规则要求的原始文件
+        ' 假设这些符合命名规则的文件都是标准曲线文件
+        Dim mzMLRawFiles As String() = (ls - l - r - "*.mzML" <= raw.ParentPath) _
+            .Where(Function(path)
+                       Return path _
+                           .BaseName _
+                           .IsPattern(calibrationNamedPattern, RegexICSng)
+                   End Function)
+
+        If mzMLRawFiles.IsNullOrEmpty Then
+            Throw New InvalidExpressionException($"No mzML file could be match by given regexp patterns: '{calibrationNamedPattern}'")
+        Else
+            Return mzMLRawFiles.Scan(ions, peakAreaMethod, TPAFactors, refName, levelPattern)
+        End If
+    End Function
+
+    ''' <summary>
+    ''' 从原始数据之中扫描峰面积数据，返回来的数据集之中的<see cref="DataSet.ID"/>是HMDB代谢物编号
+    ''' </summary>
+    ''' <param name="mzMLRawFiles">``*.wiff``，转换之后的结果文件夹，其中标准曲线的数据都是默认使用``L数字``标记的。</param>
+    ''' <param name="ions">包括离子对的定义数据以及浓度区间</param>
+    ''' <param name="TPAFactors">
+    ''' ``{<see cref="Standards.HMDB"/>, <see cref="Standards.Factor"/>}``，这个是为了计算亮氨酸和异亮氨酸这类无法被区分的物质的峰面积所需要的
+    ''' </param>
+    ''' <returns></returns>
+    ''' 
+    <Extension>
+    Public Function Scan(mzMLRawFiles$(),
+                         ions As IonPair(),
+                         peakAreaMethod As PeakArea.Methods,
+                         TPAFactors As Dictionary(Of String, Double),
+                         Optional ByRef refName$() = Nothing,
+                         Optional levelPattern$ = "[-]CAL\d+") As DataSet()
+
         Dim ionTPAs As New Dictionary(Of String, Dictionary(Of String, Double))
         Dim refNames As New List(Of String)
 
@@ -326,15 +359,7 @@ Public Module StandardCurve
             ionTPAs(ion.accession) = New Dictionary(Of String, Double)
         Next
 
-        ' 扫描所有的符合命名规则要求的原始文件
-        ' 假设这些符合命名规则的文件都是标准曲线文件
-        For Each file As String In (ls - l - r - "*.mzML" <= raw.ParentPath) _
-            .Where(Function(path)
-                       Return path _
-                           .BaseName _
-                           .IsPattern(calibrationNamedPattern, RegexICSng)
-                   End Function)
-
+        For Each file As String In mzMLRawFiles
             ' 得到当前的这个原始文件之中的峰面积数据
             Dim TPA() = file.ScanTPA(
                 ionpairs:=ions,
