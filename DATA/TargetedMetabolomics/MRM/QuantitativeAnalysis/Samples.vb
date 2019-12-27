@@ -124,7 +124,7 @@ Public Module MRMSamples
         Dim calWiffRaw$ = externalStandardsWiff Or wiff.AsDefault
         Dim detections As NamedValue(Of (IFitted, MRMStandards(), [IS]))() =
             StandardCurve _
-            .Scan(calWiffRaw, ions, calibrates,
+            .Scan(calWiffRaw, ions,
                   refName:=standardNames,
                   calibrationNamedPattern:=calibrationNamedPattern,
                   levelPattern:=levelPattern,

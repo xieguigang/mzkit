@@ -312,7 +312,6 @@ Public Module StandardCurve
     ''' <returns></returns>
     Public Function Scan(raw$,
                          ions As IonPair(),
-                         calibrates As Standards(),
                          peakAreaMethod As PeakArea.Methods,
                          TPAFactors As Dictionary(Of String, Double),
                          Optional ByRef refName$() = Nothing,
