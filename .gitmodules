@@ -1,5 +1,5 @@
 [submodule "visual/KCF"]
-	path = visual/KCF
+	path = src/visualize/KCF
 	url = https://github.com/xieguigang/KEGG.molDraw.git
 [submodule "visual/KEGG_canvas"]
 	path = visual/KEGG_canvas
