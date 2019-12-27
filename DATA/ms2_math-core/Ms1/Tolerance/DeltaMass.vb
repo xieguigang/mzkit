@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2a110227acfc1d9f59ebe98f5fe1bce, ms2_math-core\Ms1\Tolerance\DeltaMass.vb"
+﻿#Region "Microsoft.VisualBasic::173b92e01ee227fe10fc2378acb44807, DATA\ms2_math-core\Ms1\Tolerance\DeltaMass.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     '     Class DAmethod
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: AsScore, Assert, MassError, ToString
+    '         Function: AsScore, Assert, MassError, MassErrorDescription, ToString
     ' 
     ' 
     ' /********************************************************************************/

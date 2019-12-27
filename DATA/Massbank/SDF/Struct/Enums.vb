@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3acb08e999f6373a9bf7349916ba5125, Massbank\SDF\Struct\Enums.vb"
+﻿#Region "Microsoft.VisualBasic::1bc96b6d7cc80b768223adb2b5dbc763, DATA\Massbank\SDF\Struct\Enums.vb"
 
     ' Author:
     ' 

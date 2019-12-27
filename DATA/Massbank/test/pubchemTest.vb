@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2faca1df65f64724ca439c1862f4409c, Massbank\test\pubchemTest.vb"
+﻿#Region "Microsoft.VisualBasic::a81753c132bee569700b407d9df51442, DATA\Massbank\test\pubchemTest.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
 
     ' Module pubchemTest
     ' 
-    '     Sub: fileTest, Main, sdfParserTest
+    '     Sub: fileTest, Main, queryMeta, sdfParserTest, xmlLoaderTest
     ' 
     ' /********************************************************************************/
 

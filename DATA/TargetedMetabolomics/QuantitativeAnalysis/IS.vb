@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::64c716189cd647b22058f0b9f863efb1, TargetedMetabolomics\QuantitativeAnalysis\IS.vb"
+﻿#Region "Microsoft.VisualBasic::64c716189cd647b22058f0b9f863efb1, DATA\TargetedMetabolomics\QuantitativeAnalysis\IS.vb"
 
     ' Author:
     ' 

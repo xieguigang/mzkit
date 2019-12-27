@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3219b5c3329440d592758fd530572632, SpectrumTree.vb"
+﻿#Region "Microsoft.VisualBasic::cf52640c4112dc67a8fd45f68161380b, Assembly\assembly\SpectrumTree.vb"
 
     ' Author:
     ' 
@@ -83,4 +83,3 @@ Public Class SpectrumTree : Inherits Spectra.SpectrumTreeCluster
         Return New SpectrumTree(showReport:=True).doCluster(allMs2Scans, file.FileName)
     End Function
 End Class
-

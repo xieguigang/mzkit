@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5eb9bfef4498a7d9fbf375d4b6897067, Massbank\Statistics.vb"
+﻿#Region "Microsoft.VisualBasic::c64819608322987f1f20562250f37881, DATA\Massbank\Statistics.vb"
 
     ' Author:
     ' 
@@ -73,7 +73,8 @@ Public Module Statistics
                     coverages(refMap.EntryId) = (
                         .Where(Function(id) list(id.name) > -1) _
                         .Count,
-                        .Length)
+                        .Length
+                    )
                 End With
             End If
         Next

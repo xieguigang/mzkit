@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb357db6b1b68b5d56dd7878e952005e, ms2_math-core\Spectra\SpectraEncoder.vb"
+﻿#Region "Microsoft.VisualBasic::c4989c1b878f3e6a1412f959705d47c9, DATA\ms2_math-core\Spectra\SpectraEncoder.vb"
 
     ' Author:
     ' 

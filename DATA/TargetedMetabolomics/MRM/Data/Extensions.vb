@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::94d7e83086b2de56ff908a29608bc4d0, TargetedMetabolomics\MRM\Data\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::1c46afff31150c39a03545d027b20c44, DATA\TargetedMetabolomics\MRM\Data\Extensions.vb"
 
     ' Author:
     ' 
@@ -51,6 +51,7 @@ Imports SMRUCC.MassSpectrum.Math.Chromatogram
 
 Namespace MRM.Data
 
+    <HideModuleName>
     Public Module Extensions
 
         <Extension>

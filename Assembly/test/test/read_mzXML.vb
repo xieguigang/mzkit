@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a638757652acfa7a52d41fd3fbe6fa8, test\test\read_mzXML.vb"
+﻿#Region "Microsoft.VisualBasic::f14a34c0d0d962f88606a6f0640b17ec, Assembly\test\test\read_mzXML.vb"
 
     ' Author:
     ' 
@@ -85,4 +85,3 @@ Module read_mzXML
         Pause()
     End Sub
 End Module
-

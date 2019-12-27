@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::360a48b196e43a5d97e9d722556444b3, TargetedMetabolomics\MRM\QuantitativeAnalysis\StandardCurve.vb"
+﻿#Region "Microsoft.VisualBasic::5ce2771b53add01f7ad2e5f5d0c46e5a, DATA\TargetedMetabolomics\MRM\QuantitativeAnalysis\StandardCurve.vb"
 
 ' Author:
 ' 
@@ -36,7 +36,7 @@
 
 ' Module StandardCurve
 ' 
-'     Function: GetFactor, Regression, Scan, ScanContent, ScanTPA
+'     Function: CreateModelPoints, getByLevel, Regression, (+2 Overloads) Scan, ScanContent
 ' 
 ' /********************************************************************************/
 
@@ -46,7 +46,6 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
@@ -57,10 +56,32 @@ Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
 Imports SMRUCC.MassSpectrum.Math.MRM.Data
 Imports SMRUCC.MassSpectrum.Math.MRM.Models
 
+Public Class StandardCurve
+
+    Public Property name As String
+    Public Property linear As IFitted
+    Public Property points As MRMStandards()
+    Public Property [IS] As [IS]
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Function GetFitModels(detections As StandardCurve()) As FitModel()
+        Return detections _
+            .Select(Function(i)
+                        Return New FitModel With {
+                            .Name = i.name,
+                            .LinearRegression = i.linear,
+                            .IS = i.IS
+                        }
+                    End Function) _
+            .ToArray
+    End Function
+
+End Class
+
 ''' <summary>
 ''' 对当前批次的标准曲线进行回归建模
 ''' </summary>
-Public Module StandardCurve
+Public Module StandardCurveWorker
 
     ''' <summary>
     ''' 根据建立起来的线性回归模型进行样品数据的扫描，根据曲线的结果得到浓度数据
@@ -84,16 +105,16 @@ Public Module StandardCurve
                      peakAreaMethod:=peakAreaMethod,
                      TPAFactors:=TPAFactors
             ) _
-            .ToDictionary(Function(ion) ion.Name,
-                          Function(A) A.Value)
-        Dim names As Dictionary(Of String, IonPair) = ions.ToDictionary(Function(i) i.AccID)
+            .ToDictionary(Function(ion) ion.name)
+
+        Dim names As Dictionary(Of String, IonPair) = ions.ToDictionary(Function(i) i.accession)
         Dim C#
 
         raw = raw.FileName
 
         ' 遍历得到的所有的标准曲线，进行样本之中的浓度的计算
         For Each metabolite As FitModel In model.Where(Function(m) TPA.ContainsKey(m.Name))
-            Dim AIS As (ROI As DoubleRange, TPA#, baseline#, maxinto#)
+            Dim AIS As New IonTPA  ' (ROI As DoubleRange, TPA#, baseline#, maxinto#)
             Dim X#
             ' 得到样品之中的峰面积
             Dim A = TPA(metabolite.Name)
@@ -101,7 +122,7 @@ Public Module StandardCurve
             If Not metabolite.RequireISCalibration Then
                 ' 不需要内标进行校正
                 ' 则X轴的数据直接是代谢物的峰面积数据
-                X = A.TPA
+                X = A.area
             Else
                 ' 数据存在丢失
                 If Not TPA.ContainsKey(metabolite.IS.ID) Then
@@ -110,7 +131,7 @@ Public Module StandardCurve
                     ' 得到与样品混在一起的内标的峰面积
                     ' X轴数据需要做内标校正
                     AIS = TPA(metabolite.IS.ID)
-                    X# = A.TPA / AIS.TPA
+                    X# = A.area / AIS.area
                 End If
             End If
 
@@ -132,15 +153,15 @@ Public Module StandardCurve
                 .content = C,
                 .ID = metabolite.Name,
                 .raw = raw,
-                .rtmax = A.ROI.Max,
-                .rtmin = A.ROI.Min,
+                .rtmax = A.peakROI.Max,
+                .rtmin = A.peakROI.Min,
                 .Name = names(metabolite.Name).name,
-                .TPA = A.TPA,
-                .TPA_IS = AIS.TPA,
+                .TPA = A.area,
+                .TPA_IS = AIS.area,
                 .base = A.baseline,
-                .IS = If([IS] Is Nothing, "", $"{[IS].AccID} ({[IS].name})"),
-                .maxinto = A.maxinto,
-                .maxinto_IS = AIS.maxinto
+                .IS = If([IS] Is Nothing, "", $"{[IS].accession} ({[IS].name})"),
+                .maxinto = A.maxPeakHeight,
+                .maxinto_IS = AIS.maxPeakHeight
             }
 
             Yield New ContentResult(Of MRMPeakTable) With {
@@ -179,7 +200,7 @@ Public Module StandardCurve
     Public Iterator Function Regression(ionTPA As Dictionary(Of DataSet),
                                         calibrates As Standards(),
                                         [ISvector] As [IS](),
-                                        Optional weighted As Boolean = False) As IEnumerable(Of NamedValue(Of (IFitted, MRMStandards(), [IS])))
+                                        Optional weighted As Boolean = False) As IEnumerable(Of StandardCurve)
 
         Dim [IS] As Dictionary(Of String, [IS]) = ISvector.ToDictionary(Function(i) i.ID)
 
@@ -192,8 +213,8 @@ Public Module StandardCurve
             '                   Not ionTPA(i.IS).Properties.Count < i.C.Count ' 标曲文件之中只有7个点，但是实际上打了10个点，剩下的三个点可以不要了
             '        End Function)
 
-            Dim TPA As DataSet = ionTPA(ion.HMDB)                             ' 得到标准曲线实验数据
-            Dim ISA As DataSet = ionTPA(ion.IS)                               ' 得到内标的实验数据，如果是空值的话，说明不需要内标进行校正
+            Dim TPA = ionTPA(ion.HMDB).Properties.ToLower                     ' 得到标准曲线实验数据
+            Dim ISA = ionTPA.getIS(ion)                                       ' 得到内标的实验数据，如果是空值的话，说明不需要内标进行校正
             Dim IsIon As [IS] = [IS].TryGetValue(ion.IS, [default]:=New [IS]) ' 尝试得到内标的数据
             Dim CIS# = IsIon?.CIS                                             ' 内标的浓度，是不变的，所以就只有一个值
             Dim points As New List(Of MRMStandards)
@@ -211,16 +232,38 @@ Public Module StandardCurve
 
             Dim C = rawLevels.Select(Function(L) L.Value).ToArray
             Dim A = rawLevels.Select(TPA.getByLevel).ToArray
-            Dim ISTPA = rawLevels.Select(ISA.getByLevel).ToArray
-            Dim line As PointF() = StandardCurve.CreateModelPoints(C, A, ISTPA, CIS, ion.HMDB, ion.Name, points).ToArray
+            Dim ISTPA As Double()
+
+            If ISA Is Nothing Then
+                ISTPA = Nothing
+            Else
+                ISTPA = rawLevels _
+                    .Select(ISA.getByLevel) _
+                    .ToArray
+            End If
+
+            Dim line As PointF() = StandardCurveWorker _
+                .CreateModelPoints(C, A, ISTPA, CIS, ion.HMDB, ion.Name, points) _
+                .ToArray
             Dim fit As IFitted = FitModel.CreateLinearRegression(line, weighted)
-            Dim out As New NamedValue(Of (IFitted, MRMStandards(), [IS])) With {
-                .Name = ion.HMDB,
-                .Value = (fit, points.ToArray, IsIon)
+            Dim out As New StandardCurve With {
+                .name = ion.HMDB,
+                .linear = fit,
+                .points = points.ToArray,
+                .[IS] = IsIon
             }
 
             Yield out
         Next
+    End Function
+
+    <Extension>
+    Private Function getIS(ionTPA As Dictionary(Of DataSet), ion As Standards) As Dictionary(Of String, Double)
+        If ion.IS.StringEmpty Then
+            Return Nothing
+        Else
+            Return ionTPA(ion.IS).Properties.ToLower
+        End If
     End Function
 
     ''' <summary>
@@ -229,9 +272,9 @@ Public Module StandardCurve
     ''' <param name="ref"></param>
     ''' <returns></returns>
     <Extension>
-    Private Function getByLevel(ref As DataSet) As Func(Of KeyValuePair(Of String, Double), Double)
+    Private Function getByLevel(ref As Dictionary(Of String, Double)) As Func(Of KeyValuePair(Of String, Double), Double)
         Return Function(L)
-                   Dim key As String = L.Key.ToUpper
+                   Dim key As String = L.Key.ToLower
                    Dim At_i = ref(key)
 
                    Return At_i
@@ -313,115 +356,70 @@ Public Module StandardCurve
     ''' <returns></returns>
     Public Function Scan(raw$,
                          ions As IonPair(),
-                         calibrates As Standards(),
-                         peakAreaMethod As PeakArea.Methods,
-                         TPAFactors As Dictionary(Of String, Double),
+                         Optional peakAreaMethod As PeakArea.Methods = PeakArea.Methods.NetPeakSum,
+                         Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
                          Optional ByRef refName$() = Nothing,
                          Optional calibrationNamedPattern$ = ".+[-]CAL\d+",
                          Optional levelPattern$ = "[-]CAL\d+") As DataSet()
 
-        Dim rawName$ = raw.BaseName
-        Dim ionTPAs As New Dictionary(Of String, Dictionary(Of String, Double))
-        Dim refNames As New List(Of String)
-
-        For Each ion As IonPair In ions
-            ionTPAs(ion.AccID) = New Dictionary(Of String, Double)
-        Next
-
         ' 扫描所有的符合命名规则要求的原始文件
         ' 假设这些符合命名规则的文件都是标准曲线文件
-        For Each file As String In (ls - l - r - "*.mzML" <= raw.ParentPath) _
+        Dim mzMLRawFiles As String() = (ls - l - r - "*.mzML" <= raw.ParentPath) _
             .Where(Function(path)
                        Return path _
                            .BaseName _
                            .IsPattern(calibrationNamedPattern, RegexICSng)
-                   End Function)
-
-            ' 得到当前的这个原始文件之中的峰面积数据
-            Dim TPA() = file.ScanTPA(
-                ionpairs:=ions,
-                peakAreaMethod:=peakAreaMethod,
-                TPAFactors:=TPAFactors
-            )
-
-            ' 从文件名之中得到浓度的等级，以方便查找出相应的浓度数据
-            Dim level$ = file.BaseName _
-                             .Match(levelPattern, RegexICSng) _
-                             .Trim("-"c)
-
-            refNames += file.BaseName
-
-            ' level = level.Match("[-]L\d+", RegexICSng).Trim("-"c)
-
-            For Each ion In TPA
-                ionTPAs(ion.Name).Add(level.ToUpper, ion.Value.TPA)
-            Next
-        Next
-
-        refName = refNames
-
-        Return ionTPAs _
-            .Select(Function(ion)
-                        Return New DataSet With {
-                            .ID = ion.Key,
-                            .Properties = ion.Value
-                        }
-                    End Function) _
+                   End Function) _
             .ToArray
+
+        If mzMLRawFiles.IsNullOrEmpty Then
+            Throw New InvalidExpressionException($"No mzML file could be match by given regexp patterns: '{calibrationNamedPattern}'")
+        Else
+            Return mzMLRawFiles.Scan(ions, peakAreaMethod, TPAFactors, refName, levelPattern)
+        End If
     End Function
 
     ''' <summary>
-    ''' 从一个原始文件之中扫描出给定的离子对的峰面积数据
+    ''' 从原始数据之中扫描峰面积数据，返回来的数据集之中的<see cref="DataSet.ID"/>是HMDB代谢物编号
     ''' </summary>
-    ''' <param name="raw$">``*.mzML``原始样本数据文件</param>
-    ''' <param name="ionpairs"></param>
+    ''' <param name="mzMLRawFiles">``*.wiff``，转换之后的结果文件夹，其中标准曲线的数据都是默认使用``L数字``标记的。</param>
+    ''' <param name="ions">包括离子对的定义数据以及浓度区间</param>
     ''' <param name="TPAFactors">
     ''' ``{<see cref="Standards.HMDB"/>, <see cref="Standards.Factor"/>}``，这个是为了计算亮氨酸和异亮氨酸这类无法被区分的物质的峰面积所需要的
     ''' </param>
     ''' <returns></returns>
+    ''' 
     <Extension>
-    Public Function ScanTPA(raw$, ionpairs As IonPair(), TPAFactors As Dictionary(Of String, Double),
-                            Optional baselineQuantile# = 0.65,
-                            Optional integratorTicks% = 5000,
-                            Optional peakAreaMethod As PeakArea.Methods = Methods.Integrator) As NamedValue(Of (ROI As DoubleRange, TPA#, baseline#, maxinto#))()
+    Public Function Scan(mzMLRawFiles$(),
+                         ions As IonPair(),
+                         peakAreaMethod As PeakArea.Methods,
+                         TPAFactors As Dictionary(Of String, Double),
+                         Optional ByRef refName$() = Nothing,
+                         Optional levelPattern$ = "[-]CAL\d+") As DataSet()
 
-        ' 从原始文件之中读取出所有指定的离子对数据
-        Dim ionData = ionpairs.ExtractIonData(
-            mzML:=raw,
-            assignName:=Function(ion) ion.AccID
-        )
-        ' 进行最大峰的查找，然后计算出净峰面积，用于回归建模
-        Dim TPA = ionData _
+        Dim levelName As Func(Of KeyValuePair(Of String, Double), String) =
+            Function(file) As String
+                Return file.Key _
+                    .Match(levelPattern, RegexICSng) _
+                    .Trim("-"c) _
+                    .ToUpper
+            End Function
+
+        ' get reference data
+        Dim result As DataSet() = WiffRaw _
+            .Scan(mzMLRawFiles, ions, peakAreaMethod, TPAFactors, refName, False) _
             .Select(Function(ion)
-                        Return ion.ionTPA(
-                            baselineQuantile,
-                            peakAreaMethod,
-                            integratorTicks,
-                            TPAFactors.GetFactor(ion.name)
-                        )
+                        Return New DataSet With {
+                            .ID = ion.ID,
+                            .Properties = ion.Properties _
+                                .ToDictionary(levelName,
+                                              Function(file)
+                                                  Return file.Value
+                                              End Function)
+                        }
                     End Function) _
             .ToArray
 
-        Return TPA
-    End Function
-
-    <Extension>
-    Public Function GetFactor(TPAFactors As Dictionary(Of String, Double), ionName$, Optional default# = 1) As Double
-        Dim factor#
-
-        If TPAFactors.ContainsKey(ionName) Then
-            factor = TPAFactors(ionName)
-
-            ' factor列可能没有设置值，则加载之后会被默认转换为零
-            ' 在这里将其设置为默认值1
-            If factor = 0 Then
-                factor = [default]
-            End If
-        Else
-            ' 没有值的时候，默认是1，即不做处理
-            factor = [default]
-        End If
-
-        Return factor
+        Return result
     End Function
 End Module

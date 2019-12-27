@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::92a3940336a7bc56251f6625a44f76fc, Massbank\Public\NCBI\PubChem\Web\Information.vb"
+﻿#Region "Microsoft.VisualBasic::eb50529949b746b17bd0061f54ce123e, DATA\Massbank\Public\NCBI\PubChem\Web\Models\Information.vb"
 
     ' Author:
     ' 
@@ -43,6 +43,8 @@
     ' 
     '         Properties: [String], Markups
     ' 
+    '         Function: ToString
+    ' 
     '     Class Markup
     ' 
     '         Properties: Extra, Length, Start, Type, URL
@@ -66,8 +68,8 @@
     ' 
     '     Class Reference
     ' 
-    '         Properties: Description, Name, ReferenceNumber, SourceID, SourceName
-    '                     URL
+    '         Properties: ANID, Description, IsToxnet, Name, ReferenceNumber
+    '                     SourceID, SourceName, URL
     ' 
     '         Function: ToString
     ' 

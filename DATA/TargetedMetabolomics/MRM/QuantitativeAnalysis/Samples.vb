@@ -1,44 +1,44 @@
-﻿#Region "Microsoft.VisualBasic::6f6b133ead108b0a0e877fb52093d91c, TargetedMetabolomics\MRM\QuantitativeAnalysis\Samples.vb"
+﻿#Region "Microsoft.VisualBasic::2810ba77052857e491f75b7b1d9e403b, DATA\TargetedMetabolomics\MRM\QuantitativeAnalysis\Samples.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module MRMSamples
-    ' 
-    '     Function: ExtractIonData, QuantitativeAnalysis
-    ' 
-    ' /********************************************************************************/
+' Module MRMSamples
+' 
+'     Function: ExtractIonData, QuantitativeAnalysis
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -46,11 +46,11 @@ Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
 Imports SMRUCC.MassSpectrum.Math.MRM.Data
@@ -74,9 +74,9 @@ Public Module MRMSamples
                         Dim ion As IonPair = ionData.ion
                         Dim note$ = ion.name & $" [{ion.precursor}/{ion.product}]"
                         Return New NamedCollection(Of ChromatogramTick) With {
-                            .Name = assignName(ion),
-                            .Description = note,
-                            .Value = ionData.chromatogram.Ticks
+                            .name = assignName(ion),
+                            .description = note,
+                            .value = ionData.chromatogram.Ticks
                         }
                     End Function) _
             .ToArray
@@ -122,9 +122,9 @@ Public Module MRMSamples
 
         ' 扫描标准曲线的样本，然后进行回归建模 
         Dim calWiffRaw$ = externalStandardsWiff Or wiff.AsDefault
-        Dim detections As NamedValue(Of (IFitted, MRMStandards(), [IS]))() =
-            StandardCurve _
-            .Scan(calWiffRaw, ions, calibrates,
+        Dim detections As StandardCurve() =
+            StandardCurveWorker _
+            .Scan(calWiffRaw, ions,
                   refName:=standardNames,
                   calibrationNamedPattern:=calibrationNamedPattern,
                   levelPattern:=levelPattern,
@@ -137,18 +137,10 @@ Public Module MRMSamples
 
         X = New List(Of DataSet)
         isBlank = isBlank Or defaultBlankNames
-        model = detections _
-            .Select(Function(i)
-                        Return New FitModel With {
-                            .Name = i.Name,
-                            .LinearRegression = i.Value.Item1,
-                            .IS = i.Value.Item3
-                        }
-                    End Function) _
-            .ToArray
+        model = detections.DoCall(AddressOf StandardCurve.GetFitModels)
         standardPoints = detections _
             .Select(Function(i)
-                        Return New NamedValue(Of MRMStandards())(i.Name, i.Value.Item2)
+                        Return New NamedValue(Of MRMStandards())(i.name, i.points)
                     End Function) _
             .ToArray
 
@@ -156,6 +148,7 @@ Public Module MRMSamples
         Dim out As New List(Of DataSet)
         Dim mrmPeaktable As New List(Of MRMPeakTable)
         Dim allSamples As List(Of String) = (ls - l - r - "*.mzML" <= wiff.ParentPath).AsList
+        Dim scan As QuantifyScan
 
         If Not externalStandardsWiff.StringEmpty AndAlso externalStandardsWiff.ParentPath.DirectoryExists Then
             allSamples += (ls - l - r - "*.mzML" <= externalStandardsWiff.ParentPath)
@@ -171,47 +164,75 @@ Public Module MRMSamples
 
             Call file.ToFileURL.__INFO_ECHO
 
-            ' 使用离子对信息扫面当前的这个原始数据文件
-            ' 得到峰面积等定量计算所需要的结果信息
-            Dim result As ContentResult(Of MRMPeakTable)() = model _
-                .ScanContent(
-                    raw:=file,
-                    ions:=ions,
-                    peakAreaMethod:=peakAreaMethod,
-                    TPAFactors:=TPAFactors
-                ) _
-                .ToArray
-
-            For Each metabolite As ContentResult(Of MRMPeakTable) In result
-                mrmPeaktable += metabolite.Peaktable
-            Next
-
-            If result.Length = 0 Then
-                Call $"[NO_DATA] {file.ToFileURL} found nothing!".Warning
-            Else
-                ' 这个是浓度结果数据
-                out += New DataSet With {
-                    .ID = file.BaseName,
-                    .Properties = result _
-                        .ToDictionary(Function(i) i.Name,
-                                      Function(i)
-                                          Return i.Content
-                                      End Function)
-                }
-                ' 这个是峰面积比 AIS/At 数据
-                X += New DataSet With {
-                    .ID = file.BaseName,
-                    .Properties = result _
-                        .ToDictionary(Function(i) i.Name,
-                                      Function(i)
-                                          Return i.X
-                                      End Function)
-                }
-            End If
+            scan = model.SampleQuantify(file, ions, peakAreaMethod, TPAFactors)
+            mrmPeaktable += scan.MRMPeaks
+            X += scan.rawX
+            out += scan.quantify
         Next
 
         peaktable = mrmPeaktable
 
         Return out
     End Function
+
+    <Extension>
+    Public Function SampleQuantify(model As FitModel(), file$, ions As IonPair(),
+                                   Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum,
+                                   Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As QuantifyScan
+
+        ' 使用离子对信息扫面当前的这个原始数据文件
+        ' 得到峰面积等定量计算所需要的结果信息
+        Dim result As ContentResult(Of MRMPeakTable)() = model _
+            .ScanContent(
+                raw:=file,
+                ions:=ions,
+                peakAreaMethod:=peakAreaMethod,
+                TPAFactors:=If(TPAFactors, New Dictionary(Of String, Double))
+            ) _
+            .ToArray
+        Dim MRMPeakTable As New List(Of MRMPeakTable)
+
+        For Each metabolite As ContentResult(Of MRMPeakTable) In result
+            MRMPeakTable += metabolite.Peaktable
+        Next
+
+        If result.Length = 0 Then
+            Call $"[NO_DATA] {file.ToFileURL} found nothing!".Warning
+            Return Nothing
+        Else
+            ' 这个是浓度结果数据
+            Dim quantify As New DataSet With {
+                .ID = file.BaseName,
+                .Properties = result _
+                    .ToDictionary(Function(i) i.Name,
+                                  Function(i)
+                                      Return i.Content
+                                  End Function)
+            }
+            ' 这个是峰面积比 AIS/At 数据
+            Dim X As New DataSet With {
+                .ID = file.BaseName,
+                .Properties = result _
+                    .ToDictionary(Function(i) i.Name,
+                                  Function(i)
+                                      Return i.X
+                                  End Function)
+            }
+
+            Return New QuantifyScan With {
+                .MRMPeaks = MRMPeakTable,
+                .quantify = quantify,
+                .rawX = X
+            }
+        End If
+    End Function
+
 End Module
+
+Public Class QuantifyScan
+
+    Public Property MRMPeaks As MRMPeakTable()
+    Public Property quantify As DataSet
+    Public Property rawX As DataSet
+
+End Class
