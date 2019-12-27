@@ -65,12 +65,20 @@ Public Module MRMkit
         End If
     End Function
 
-    <ExportAPI("wiff.standard_curve")>
+    ''' <summary>
+    ''' Scan the raw file data
+    ''' </summary>
+    ''' <param name="wiffConverts$"></param>
+    ''' <param name="ions"></param>
+    ''' <param name="peakAreaMethod%"></param>
+    ''' <param name="TPAFactors"></param>
+    ''' <param name="removesWiffName"></param>
+    ''' <returns></returns>
+    <ExportAPI("wiff.scans")>
     Public Function ScanStandardCurve(wiffConverts$(), ions As IonPair(),
                                       Optional peakAreaMethod% = 1,
                                       Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
-                                      Optional calibrationNamedPattern$ = ".+[-]CAL\d+",
-                                      Optional levelPattern$ = "[-]CAL\d+") As DataSet()
+                                      Optional removesWiffName As Boolean = True) As DataSet()
 
         Dim method As PeakArea.Methods = CType(peakAreaMethod, PeakArea.Methods)
 
@@ -80,26 +88,14 @@ Public Module MRMkit
 
         If wiffConverts.IsNullOrEmpty Then
             Throw New ArgumentNullException(NameOf(wiffConverts))
-        End If
-
-        If wiffConverts.Length = 1 Then
-            Return StandardCurve.Scan(
-                raw:=wiffConverts(Scan0),
-                ions:=ions,
-                peakAreaMethod:=method,
-                TPAFactors:=TPAFactors,
-                refName:=Nothing,
-                calibrationNamedPattern:=calibrationNamedPattern,
-                levelPattern:=levelPattern
-            )
         Else
-            Return StandardCurve.Scan(
+            Return WiffRaw.Scan(
                 mzMLRawFiles:=wiffConverts,
                 ions:=ions,
                 peakAreaMethod:=method,
                 TPAFactors:=TPAFactors,
                 refName:=Nothing,
-                levelPattern:=levelPattern
+                removesWiffName:=removesWiffName
             )
         End If
     End Function
