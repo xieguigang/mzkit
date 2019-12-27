@@ -161,6 +161,10 @@
       <Project>{FC125B0D-1942-496F-B502-9C0EB80E35B6}</Project>
       <Name>DataFittings</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Microsoft.VisualBasic.Imaging.vbproj">
+      <Project>{85E71B4B-9276-4EC8-AADC-C849205F1EA8}</Project>
+      <Name>Microsoft.VisualBasic.Imaging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
@@ -180,6 +184,10 @@
     <ProjectReference Include="..\..\..\DATA\TargetedMetabolomics\TargetedMetabolomics.vbproj">
       <Project>{a8a71b32-dac6-4fa7-a5c1-0f5e5d5c9eb7}</Project>
       <Name>TargetedMetabolomics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\visual\plot\msData-visualize.vbproj">
+      <Project>{F2147043-7C16-48F8-838B-3D2CF14B0A7B}</Project>
+      <Name>msData-visualize</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
