@@ -35,3 +35,19 @@ list.files(wiff, pattern = "*.mzML")
 :> wiff.scans(ions,peakAreaMethod= 0, TPAFactors = NULL) 
 :> write.csv(file = "T:\test\samples.csv");
 
+let scans = [];
+
+for(sample.mzML in list.files(wiff, pattern = "*.mzML")) {
+	let result = ref :> sample.quantify(sample.mzML, ions, 0, NULL);
+	let peakfile = `T:\test\samples/${basename(sample.mzML)}.csv`;
+	
+	print(basename(sample.mzML));
+	
+	result :> as.object :> do.call("MRMPeaks") :> write.MRMpeaks(file = peakfile);
+	scans <- scans << result;
+}
+
+print(length(scans));
+
+result(scans) :> write.csv(file = "T:\test\quantify.csv");
+scans.X(scans) :> write.csv(file = "T:\test\rawX.csv");

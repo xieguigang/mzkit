@@ -258,5 +258,20 @@ Public Module MRMkit
                                    Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As QuantifyScan
         Return MRMSamples.SampleQuantify(model, file, ions, peakAreaMethod, TPAFactors)
     End Function
+
+    <ExportAPI("write.MRMpeaks")>
+    Public Function writeMRMpeaktable(MRMPeaks As MRMPeakTable(), file$) As Boolean
+        Return MRMPeaks.SaveTo(file, silent:=True)
+    End Function
+
+    <ExportAPI("result")>
+    Public Function GetQuantifyResult(fileScans As QuantifyScan()) As DataSet()
+        Return fileScans.Select(Function(file) file.quantify).ToArray
+    End Function
+
+    <ExportAPI("scans.X")>
+    Public Function GetRawX(fileScans As QuantifyScan()) As DataSet()
+        Return fileScans.Select(Function(file) file.rawX).ToArray
+    End Function
 End Module
 
