@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::2ee324534ad078e776c957485ad4b497, Rscript\Library\mzkit.quantitative\MRMkit.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module MRMkit
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: ExtractIonData, ExtractPeakROI, printIonPairs, readIonPairs, ScanStandardCurve
-    ' 
-    ' /********************************************************************************/
+' Module MRMkit
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: ExtractIonData, ExtractPeakROI, printIonPairs, readIonPairs, ScanStandardCurve
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -52,6 +52,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
 Imports SMRUCC.MassSpectrum.Math
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
+Imports SMRUCC.MassSpectrum.Math.MRM.Models
 Imports REnv = SMRUCC.Rsharp.Runtime.Internal
 Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
 
@@ -163,6 +164,22 @@ Public Module MRMkit
                 removesWiffName:=removesWiffName
             )
         End If
+    End Function
+
+    ''' <summary>
+    ''' Create linear fitting based on the wiff raw scan data.
+    ''' </summary>
+    ''' <param name="rawScan">The wiff raw scan data</param>
+    ''' <param name="calibrates"></param>
+    ''' <param name="[ISvector]"></param>
+    ''' <param name="autoWeighted">
+    ''' If the unweighted R2 value of target standard curve is less than 0.99, 
+    ''' then the quantify program will try weighted linear fitting. 
+    ''' </param>
+    ''' <returns></returns>
+    <ExportAPI("linears")>
+    Public Function Linears(rawScan As DataSet(), calibrates As Standards(), [ISvector] As [IS](), Optional autoWeighted As Boolean = True)
+        Return rawScan.ToDictionary.Regression(calibrates, ISvector, weighted:=autoWeighted).ToArray
     End Function
 End Module
 

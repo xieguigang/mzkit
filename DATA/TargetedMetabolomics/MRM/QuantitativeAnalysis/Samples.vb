@@ -122,8 +122,8 @@ Public Module MRMSamples
 
         ' 扫描标准曲线的样本，然后进行回归建模 
         Dim calWiffRaw$ = externalStandardsWiff Or wiff.AsDefault
-        Dim detections As NamedValue(Of (IFitted, MRMStandards(), [IS]))() =
-            StandardCurve _
+        Dim detections As StandardCurve() =
+            StandardCurveWorker _
             .Scan(calWiffRaw, ions,
                   refName:=standardNames,
                   calibrationNamedPattern:=calibrationNamedPattern,
@@ -140,15 +140,15 @@ Public Module MRMSamples
         model = detections _
             .Select(Function(i)
                         Return New FitModel With {
-                            .Name = i.Name,
-                            .LinearRegression = i.Value.Item1,
-                            .IS = i.Value.Item3
+                            .Name = i.name,
+                            .LinearRegression = i.linear,
+                            .IS = i.IS
                         }
                     End Function) _
             .ToArray
         standardPoints = detections _
             .Select(Function(i)
-                        Return New NamedValue(Of MRMStandards())(i.Name, i.Value.Item2)
+                        Return New NamedValue(Of MRMStandards())(i.name, i.points)
                     End Function) _
             .ToArray
 

@@ -56,10 +56,19 @@ Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
 Imports SMRUCC.MassSpectrum.Math.MRM.Data
 Imports SMRUCC.MassSpectrum.Math.MRM.Models
 
+Public Class StandardCurve
+
+    Public Property name As String
+    Public Property linear As IFitted
+    Public Property points As MRMStandards()
+    Public Property [IS] As [IS]
+
+End Class
+
 ''' <summary>
 ''' 对当前批次的标准曲线进行回归建模
 ''' </summary>
-Public Module StandardCurve
+Public Module StandardCurveWorker
 
     ''' <summary>
     ''' 根据建立起来的线性回归模型进行样品数据的扫描，根据曲线的结果得到浓度数据
@@ -178,7 +187,7 @@ Public Module StandardCurve
     Public Iterator Function Regression(ionTPA As Dictionary(Of DataSet),
                                         calibrates As Standards(),
                                         [ISvector] As [IS](),
-                                        Optional weighted As Boolean = False) As IEnumerable(Of NamedValue(Of (IFitted, MRMStandards(), [IS])))
+                                        Optional weighted As Boolean = False) As IEnumerable(Of StandardCurve)
 
         Dim [IS] As Dictionary(Of String, [IS]) = ISvector.ToDictionary(Function(i) i.ID)
 
@@ -211,11 +220,13 @@ Public Module StandardCurve
             Dim C = rawLevels.Select(Function(L) L.Value).ToArray
             Dim A = rawLevels.Select(TPA.getByLevel).ToArray
             Dim ISTPA = rawLevels.Select(ISA.getByLevel).ToArray
-            Dim line As PointF() = StandardCurve.CreateModelPoints(C, A, ISTPA, CIS, ion.HMDB, ion.Name, points).ToArray
+            Dim line As PointF() = StandardCurveWorker.CreateModelPoints(C, A, ISTPA, CIS, ion.HMDB, ion.Name, points).ToArray
             Dim fit As IFitted = FitModel.CreateLinearRegression(line, weighted)
-            Dim out As New NamedValue(Of (IFitted, MRMStandards(), [IS])) With {
-                .Name = ion.HMDB,
-                .Value = (fit, points.ToArray, IsIon)
+            Dim out As New StandardCurve With {
+                .name = ion.HMDB,
+                .linear = fit,
+                .points = points.ToArray,
+                .[IS] = IsIon
             }
 
             Yield out

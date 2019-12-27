@@ -159,7 +159,7 @@
     <Compile Include="MRM\Standards.vb" />
     <Compile Include="QuantitativeAnalysis\IS.vb" />
     <Compile Include="MRM\QuantitativeAnalysis\Samples.vb" />
-    <Compile Include="MRM\QuantitativeAnalysis\StandardCurve.vb" />
+    <Compile Include="MRM\QuantitativeAnalysis\StandardCurveWorker.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
