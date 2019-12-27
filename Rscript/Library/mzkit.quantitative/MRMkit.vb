@@ -18,7 +18,7 @@ Public Module MRMkit
     ''' <returns></returns>
     <ExportAPI("extract.ions")>
     Public Function ExtractIonData(mzML$, ionpairs As IonPair()) As NamedCollection(Of ChromatogramTick)()
-        Return MRMSamples.ExtractIonData(ionpairs, mzML, Function(i) i.AccID)
+        Return MRMSamples.ExtractIonData(ionpairs, mzML, Function(i) i.accession)
     End Function
 
     <ExportAPI("read.ion_pairs")>

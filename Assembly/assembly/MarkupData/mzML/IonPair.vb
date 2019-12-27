@@ -59,7 +59,7 @@ Namespace MarkupData.mzML
         ''' </summary>
         ''' <returns></returns>
         <Column(Name:="ID")>
-        Public Property AccID As String
+        Public Property accession As String
         ''' <summary>
         ''' The display title name
         ''' </summary>
