@@ -52,6 +52,34 @@ Imports SMRUCC.MassSpectrum.Math.MRM.Models
 
 Public Module WiffRaw
 
+    Public Function ScanPeakTable(mzML$, ions As IonPair(),
+                                  Optional peakAreaMethod As PeakArea.Methods = PeakArea.Methods.NetPeakSum,
+                                  Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As DataSet()
+
+        ' 得到当前的这个原始文件之中的峰面积数据
+        Dim TPA() = mzML.ScanTPA(
+            ionpairs:=ions,
+            peakAreaMethod:=peakAreaMethod,
+            TPAFactors:=TPAFactors
+        )
+        Dim peaktable As DataSet() = TPA _
+            .Select(Function(ion)
+                        Return New DataSet With {
+                            .ID = ion.name,
+                            .Properties = New Dictionary(Of String, Double) From {
+                                {"rtmin", ion.peakROI.Min},
+                                {"rtmax", ion.peakROI.Max},
+                                {"area", ion.area},
+                                {"baseline", ion.baseline},
+                                {"maxinto", ion.maxPeakHeight}
+                            }
+                        }
+                    End Function) _
+            .ToArray
+
+        Return peaktable
+    End Function
+
     ''' <summary>
     ''' 从原始数据之中扫描峰面积数据，返回来的数据集之中的<see cref="DataSet.ID"/>是HMDB代谢物编号
     ''' </summary>

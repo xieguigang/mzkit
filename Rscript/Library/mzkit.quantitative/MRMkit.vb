@@ -116,6 +116,20 @@ Public Module MRMkit
         End If
     End Function
 
+    <ExportAPI("MRM.peaks")>
+    Public Function ScanPeakTable(mzML$, ions As IonPair(),
+                                  Optional peakAreaMethod% = 1,
+                                  Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As DataSet()
+
+        Dim method As PeakArea.Methods = CType(peakAreaMethod, PeakArea.Methods)
+
+        If TPAFactors Is Nothing Then
+            TPAFactors = New Dictionary(Of String, Double)
+        End If
+
+        Return WiffRaw.ScanPeakTable(mzML, ions, method, TPAFactors)
+    End Function
+
     ''' <summary>
     ''' Scan the raw file data
     ''' </summary>
