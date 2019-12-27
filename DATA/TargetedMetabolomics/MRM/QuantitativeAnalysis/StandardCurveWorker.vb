@@ -232,8 +232,19 @@ Public Module StandardCurveWorker
 
             Dim C = rawLevels.Select(Function(L) L.Value).ToArray
             Dim A = rawLevels.Select(TPA.getByLevel).ToArray
-            Dim ISTPA = rawLevels.Select(ISA.getByLevel).ToArray
-            Dim line As PointF() = StandardCurveWorker.CreateModelPoints(C, A, ISTPA, CIS, ion.HMDB, ion.Name, points).ToArray
+            Dim ISTPA As Double()
+
+            If ISA Is Nothing Then
+                ISTPA = Nothing
+            Else
+                ISTPA = rawLevels _
+                    .Select(ISA.getByLevel) _
+                    .ToArray
+            End If
+
+            Dim line As PointF() = StandardCurveWorker _
+                .CreateModelPoints(C, A, ISTPA, CIS, ion.HMDB, ion.Name, points) _
+                .ToArray
             Dim fit As IFitted = FitModel.CreateLinearRegression(line, weighted)
             Dim out As New StandardCurve With {
                 .name = ion.HMDB,
@@ -249,7 +260,7 @@ Public Module StandardCurveWorker
     <Extension>
     Private Function getIS(ionTPA As Dictionary(Of DataSet), ion As Standards) As Dictionary(Of String, Double)
         If ion.IS.StringEmpty Then
-            Return New Dictionary(Of String, Double)
+            Return Nothing
         Else
             Return ionTPA(ion.IS).Properties.ToLower
         End If
