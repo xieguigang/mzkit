@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::79f77cb483b0aaafd3d974b50b0dab31, plot\viz.vb"
+﻿#Region "Microsoft.VisualBasic::f2d39d6255e9dd0533aa4bffd8bc3edd, visual\plot\StandardCurvesPlot.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
 
     ' Summaries:
 
-    ' Module viz
+    ' Module StandardCurvesPlot
     ' 
     '     Function: StandardCurves
     ' 

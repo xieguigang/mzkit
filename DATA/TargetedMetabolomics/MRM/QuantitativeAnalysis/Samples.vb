@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6f6b133ead108b0a0e877fb52093d91c, TargetedMetabolomics\MRM\QuantitativeAnalysis\Samples.vb"
+﻿#Region "Microsoft.VisualBasic::2810ba77052857e491f75b7b1d9e403b, DATA\TargetedMetabolomics\MRM\QuantitativeAnalysis\Samples.vb"
 
     ' Author:
     ' 

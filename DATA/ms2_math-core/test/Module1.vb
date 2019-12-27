@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8807776b6cc0ed6d210b96b728fc168c, ms2_math-core\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::7f6861e4e0153b87c1b20e1b8977be45, DATA\ms2_math-core\test\Module1.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
 
     ' Module Module1
     ' 
-    '     Sub: Main
+    '     Sub: Main, parserTest
     ' 
     ' /********************************************************************************/
 

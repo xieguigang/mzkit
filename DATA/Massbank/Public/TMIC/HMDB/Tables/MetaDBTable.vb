@@ -1,52 +1,65 @@
-﻿#Region "Microsoft.VisualBasic::70af44b5992c1a69715aab5ceb74de3b, Massbank\Public\TMIC\HMDB\BriefTable.vb"
+﻿#Region "Microsoft.VisualBasic::073ca8c51d857ef4ece2535141c092de, DATA\Massbank\Public\TMIC\HMDB\Tables\MetaDBTable.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class MetaInfo
-' 
-'         Properties: CAS, chebi, HMDB, KEGG
-' 
-'     Class BriefTable
-' 
-'         Properties: AdultConcentrationAbnormal, AdultConcentrationNormal, ChildrenConcentrationAbnormal, ChildrenConcentrationNormal, disease
-'                     NewbornConcentrationAbnormal, NewbornConcentrationNormal, Sample, water_solubility
-' 
-'         Function: Clone
-' 
-' 
-' /********************************************************************************/
+    '     Class MetaInfo
+    ' 
+    '         Properties: CAS, chebi, HMDB, KEGG
+    ' 
+    '     Class BriefTable
+    ' 
+    '         Properties: AdultConcentrationAbnormal, AdultConcentrationNormal, ChildrenConcentrationAbnormal, ChildrenConcentrationNormal, disease
+    '                     NewbornConcentrationAbnormal, NewbornConcentrationNormal, Sample, water_solubility
+    ' 
+    '         Function: Clone
+    ' 
+    '     Class MetaDb
+    ' 
+    '         Properties: [class], accession, biospecimen, CAS, cellular_locations
+    '                     chebi_id, chemical_formula, description, direct_parent, exact_mass
+    '                     inchi, inchikey, iupac_name, kegg_id, kingdom
+    '                     molecular_framework, name, pubchem_cid, secondary_accessions, smiles
+    '                     state, sub_class, super_class, synonyms, tissue
+    '                     traditional_iupac, wikipedia_id
+    ' 
+    '         Function: FromMetabolite, GetSynonym
+    ' 
+    '         Sub: WriteTable
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

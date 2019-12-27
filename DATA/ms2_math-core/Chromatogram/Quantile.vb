@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8af31f12471b7e8ba214e025be981e12, ms2_math-core\Chromatogram\Quantile.vb"
+﻿#Region "Microsoft.VisualBasic::8af31f12471b7e8ba214e025be981e12, DATA\ms2_math-core\Chromatogram\Quantile.vb"
 
     ' Author:
     ' 

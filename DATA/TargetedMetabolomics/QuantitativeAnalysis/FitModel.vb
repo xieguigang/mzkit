@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5168913bf5a6758a27ab7a77ee33b0d1, TargetedMetabolomics\QuantitativeAnalysis\FitModel.vb"
+﻿#Region "Microsoft.VisualBasic::de668d367450a611c28ceef93bc1aa52, DATA\TargetedMetabolomics\QuantitativeAnalysis\FitModel.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
 
     ' Class FitModel
     ' 
-    '     Properties: [IS], LinearRegression, Name, RequireISCalibration
+    '     Properties: [IS], isWeighted, LinearRegression, Name, RequireISCalibration
     ' 
     '     Function: CreateLinearRegression, ToString
     ' 

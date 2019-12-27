@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0664a308b7c03bdc7bd62ba318b85df, MarkupData\mzML\IonPair.vb"
+﻿#Region "Microsoft.VisualBasic::0c847a26e2f36f3868d376499211f99c, Assembly\assembly\MarkupData\mzML\IonPair.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
 
     '     Class IonPair
     ' 
-    '         Properties: AccID, name, precursor, product
+    '         Properties: accession, name, precursor, product
     ' 
     '         Function: Assert, ToString
     ' 

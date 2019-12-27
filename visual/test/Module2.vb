@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4b91264996c66d3ec6e4ef66738ed26b, test\Module2.vb"
+﻿#Region "Microsoft.VisualBasic::a58f92c0aed71924e286eddb36bc1733, visual\test\Module2.vb"
 
     ' Author:
     ' 
@@ -66,4 +66,3 @@ Module Module2
         Call SMRUCC.MassSpectrum.Visualization.AlignMirrorPlot(B, ref).Save("./B.png")
     End Sub
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c473e387f0f2c1916a63c56455f6a3e1, FooDB\FooDB\mysql\compound_external_descriptors.vb"
+﻿#Region "Microsoft.VisualBasic::c473e387f0f2c1916a63c56455f6a3e1, DATA\FooDB\FooDB\mysql\compound_external_descriptors.vb"
 
     ' Author:
     ' 

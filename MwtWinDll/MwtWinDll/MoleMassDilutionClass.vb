@@ -1,3 +1,115 @@
+﻿#Region "Microsoft.VisualBasic::18181c290cd7371ff0b60b5f41016528, MwtWinDll\MwtWinDll\MoleMassDilutionClass.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class MWMoleMassDilutionClass
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Enum acdAutoComputeDilutionModeConstants
+    ' 
+    '         acdFindFinalConcentration, acdFindInitialConcentration, acdFindRequiredTotalVolume
+    ' 
+    ' 
+    ' 
+    '     Enum acqAutoComputeQuantityModeConstants
+    ' 
+    '         acqFindConcentration, acqFindVolume
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum uamUnitsAmountConstants
+    ' 
+    '         uamAttoMoles, uamDeciLiters, uamFemtoMoles, uamGallons, uamGrams
+    '         uamKilograms, uamLiters, uamMicrograms, uamMicroLiters, uamMicroMoles
+    '         uamMilligrams, uamMilliLiters, uamMillimoles, uamNanoLiters, uamNanoMoles
+    '         uamOunces, uamPicoLiters, uamPicoMoles, uamPints, uamPounds
+    '         uamQuarts
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum uevUnitsExtendedVolumeConstants
+    ' 
+    '         uevDL, uevGallons, uevML, uevNL, uevPints
+    '         uevPL, uevQuarts, uevUL
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum ummcUnitsMoleMassConcentrationConstants
+    ' 
+    '         ummcAttoMolar, ummcFemtoMolar, ummcMgPerDL, ummcMgPerML, ummcMicroMolar
+    '         ummcMilliMolar, ummcNanoMolar, ummcNgPerML, ummcNgPerUL, ummcPicoMolar
+    '         ummcUgPerML, ummcUgPerUL
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Structure udtMoleMassQuantityType
+    ' 
+    ' 
+    ' 
+    '     Structure udtMoleMassDilutionValuesType
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    '     Properties: AmountsUnitListCount, AmountsUnitListVolumeIndexEnd, AmountsUnitListVolumeIndexStart
+    ' 
+    '     Function: ComputeDilutionFinalConcentration, ComputeDilutionInitialConcentration, ComputeDilutionRequiredStockAndDilutingSolventVolumes, ComputeDilutionTotalVolume, ComputeQuantityAmount
+    '               ComputeQuantityConcentration, ComputeQuantityVolume, ConvertAmount, ConvertConcentration, ConvertVolumeExtended
+    '               FactorAmount, FactorConcentration, FactorVolumeExtended, GetAutoComputeDilutionEnabled, GetAutoComputeDilutionMode
+    '               GetAutoComputeQuantityEnabled, GetAutoComputeQuantityMode, GetDilutionFinalConcentration, GetDilutionInitialConcentration, GetDilutionTotalFinalVolume
+    '               GetDilutionVolumeDilutingSolvent, GetDilutionVolumeStockSolution, GetQuantityAmount, GetQuantityConcentration, GetQuantityVolume
+    '               GetSampleDensity, GetSampleMass
+    ' 
+    '     Sub: CheckAutoComputeDilution, CheckAutoComputeQuantity, InitializeClass, SetAutoComputeDilutionEnabled, SetAutoComputeDilutionMode
+    '          SetAutoComputeQuantityEnabled, SetAutoComputeQuantityMode, SetDilutionFinalConcentration, SetDilutionInitialConcentration, SetDilutionTotalFinalVolume
+    '          SetDilutionVolumeDilutingSolvent, SetDilutionVolumeStockSolution, SetQuantityAmount, SetQuantityConcentration, SetQuantityVolume
+    '          SetSampleDensity, SetSampleMass
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 
 
 Public Class MWMoleMassDilutionClass

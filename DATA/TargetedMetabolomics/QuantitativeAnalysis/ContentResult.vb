@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc2f2ab3c0b59fcd44c58c777d66f0a5, TargetedMetabolomics\QuantitativeAnalysis\ContentResult.vb"
+﻿#Region "Microsoft.VisualBasic::bc2f2ab3c0b59fcd44c58c777d66f0a5, DATA\TargetedMetabolomics\QuantitativeAnalysis\ContentResult.vb"
 
     ' Author:
     ' 

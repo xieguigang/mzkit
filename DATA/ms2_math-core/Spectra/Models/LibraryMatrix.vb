@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::665ee76fb123dd5b24bec3d671074ef7, ms2_math-core\Spectra\Models\LibraryMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::9103eb9a900791e715bc2fd60a633659, DATA\ms2_math-core\Spectra\Models\LibraryMatrix.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,6 @@
 
     ' Summaries:
 
-    '     Class Library
-    ' 
-    '         Properties: ID, LibraryIntensity, Name, PrecursorMz, ProductMz
-    ' 
-    '         Function: ToString
-    ' 
-    '     Class ms2
-    ' 
-    '         Properties: intensity, mz, quantity
-    ' 
-    '         Function: ToString
-    ' 
     '     Class LibraryMatrix
     ' 
     '         Properties: intensity, ms2, Name

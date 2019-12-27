@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8742f4fe9100e9442b359d7140b1adfd, FooDB\FooDB\StoredProcedure.vb"
+﻿#Region "Microsoft.VisualBasic::e257d9886eb1b27f3dbbd876c1f01a55, DATA\FooDB\FooDB\StoredProcedure.vb"
 
     ' Author:
     ' 

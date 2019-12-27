@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9589414a62f5f6849269d0dc64cdb1bc, Massbank\Public\TMIC\HMDB\MetaReference\RepositoryExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::0e4abc0ccfba0c10c0da212f95ab7819, DATA\Massbank\Public\TMIC\HMDB\MetaReference\RepositoryExtensions.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
 
     '     Module RepositoryExtensions
     ' 
-    '         Function: EnumerateNames, PopulateHMDBMetaData
+    '         Function: EnumerateNames, GetMetabolite, PopulateHMDBMetaData
     ' 
     ' 
     ' /********************************************************************************/

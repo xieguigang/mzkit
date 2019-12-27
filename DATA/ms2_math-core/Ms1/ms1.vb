@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::262403d2edccfdf55bfb4d6a2d8d700b, ms2_math-core\Ms1\ms1.vb"
+﻿#Region "Microsoft.VisualBasic::fbef7d4a45eb01777e2b216116403f5f, DATA\ms2_math-core\Ms1\ms1.vb"
 
     ' Author:
     ' 
@@ -51,6 +51,10 @@
     ' Class MetaInfo
     ' 
     '     Properties: name, xref
+    ' 
+    ' Interface IMs1Scan
+    ' 
+    '     Properties: intensity
     ' 
     ' Class ms1_scan
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32900b121fb177e75cc901b6db3c084b, FooDB\FooDB\mysql\compound_substituents.vb"
+﻿#Region "Microsoft.VisualBasic::32900b121fb177e75cc901b6db3c084b, DATA\FooDB\FooDB\mysql\compound_substituents.vb"
 
     ' Author:
     ' 

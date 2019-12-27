@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18b6b4b9c911fbe96bbdb839efe5b66b, Massbank\Public\Massbank\DATA\Record.vb"
+﻿#Region "Microsoft.VisualBasic::18b6b4b9c911fbe96bbdb839efe5b66b, DATA\Massbank\Public\Massbank\DATA\Record.vb"
 
     ' Author:
     ' 

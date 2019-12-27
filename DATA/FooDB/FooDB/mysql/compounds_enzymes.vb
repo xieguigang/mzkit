@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::293b516c04a4874f65fc437fd6d95c28, FooDB\FooDB\mysql\compounds_enzymes.vb"
+﻿#Region "Microsoft.VisualBasic::293b516c04a4874f65fc437fd6d95c28, DATA\FooDB\FooDB\mysql\compounds_enzymes.vb"
 
     ' Author:
     ' 

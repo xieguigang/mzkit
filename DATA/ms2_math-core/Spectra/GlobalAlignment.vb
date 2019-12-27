@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b053cb28d70f437d1234bc3654447410, ms2_math-core\Spectra\GlobalAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::b0ff0f03eefb9af976979b7153baf307, DATA\ms2_math-core\Spectra\GlobalAlignment.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     ' 
     '         Properties: ppm20
     ' 
-    '         Function: Align, AlignMatrix, SharedPeakCount, TwoDirectionSSM
+    '         Function: Align, AlignMatrix, SharedPeakCount, TopPeaks, TwoDirectionSSM
     ' 
     ' 
     ' /********************************************************************************/

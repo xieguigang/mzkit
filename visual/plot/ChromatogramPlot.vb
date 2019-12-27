@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::996c2300923ed5833d39055bd88758d7, plot\ChromatogramPlot.vb"
+﻿#Region "Microsoft.VisualBasic::f968d925090d2e498fdf241273e87370, visual\plot\ChromatogramPlot.vb"
 
     ' Author:
     ' 

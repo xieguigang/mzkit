@@ -1,54 +1,54 @@
-﻿#Region "Microsoft.VisualBasic::0b1300936662d1857af23b43b66058f1, Massbank\Public\NCBI\PubChem\MetaData.vb"
+﻿#Region "Microsoft.VisualBasic::01f1acbcfd3320d1983ebba2bdbbf823, DATA\Massbank\Public\NCBI\PubChem\MetaData.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class MetaData
-' 
-'         Properties: PUBCHEM_ATOM_DEF_STEREO_COUNT, PUBCHEM_ATOM_UDEF_STEREO_COUNT, PUBCHEM_BOND_DEF_STEREO_COUNT, PUBCHEM_BOND_UDEF_STEREO_COUNT, PUBCHEM_BONDANNOTATIONS
-'                     PUBCHEM_CACTVS_COMPLEXITY, PUBCHEM_CACTVS_HBOND_ACCEPTOR, PUBCHEM_CACTVS_HBOND_DONOR, PUBCHEM_CACTVS_ROTATABLE_BOND, PUBCHEM_CACTVS_SUBSKEYS
-'                     PUBCHEM_CACTVS_TAUTO_COUNT, PUBCHEM_CACTVS_TPSA, PUBCHEM_COMPONENT_COUNT, PUBCHEM_COMPOUND_CANONICALIZED, PUBCHEM_COMPOUND_CID
-'                     PUBCHEM_COORDINATE_TYPE, PUBCHEM_EXACT_MASS, PUBCHEM_HEAVY_ATOM_COUNT, PUBCHEM_ISOTOPIC_ATOM_COUNT, PUBCHEM_IUPAC_CAS_NAME
-'                     PUBCHEM_IUPAC_INCHI, PUBCHEM_IUPAC_INCHIKEY, PUBCHEM_IUPAC_NAME, PUBCHEM_IUPAC_OPENEYE_NAME, PUBCHEM_IUPAC_SYSTEMATIC_NAME
-'                     PUBCHEM_IUPAC_TRADITIONAL_NAME, PUBCHEM_MOLECULAR_FORMULA, PUBCHEM_MOLECULAR_WEIGHT, PUBCHEM_MONOISOTOPIC_WEIGHT, PUBCHEM_OPENEYE_CAN_SMILES
-'                     PUBCHEM_OPENEYE_ISO_SMILES, PUBCHEM_TOTAL_CHARGE, PUBCHEM_XLOGP3_AA
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: Data
-' 
-' 
-' /********************************************************************************/
+    '     Class MetaData
+    ' 
+    '         Properties: PUBCHEM_ATOM_DEF_STEREO_COUNT, PUBCHEM_ATOM_UDEF_STEREO_COUNT, PUBCHEM_BOND_DEF_STEREO_COUNT, PUBCHEM_BOND_UDEF_STEREO_COUNT, PUBCHEM_BONDANNOTATIONS
+    '                     PUBCHEM_CACTVS_COMPLEXITY, PUBCHEM_CACTVS_HBOND_ACCEPTOR, PUBCHEM_CACTVS_HBOND_DONOR, PUBCHEM_CACTVS_ROTATABLE_BOND, PUBCHEM_CACTVS_SUBSKEYS
+    '                     PUBCHEM_CACTVS_TAUTO_COUNT, PUBCHEM_CACTVS_TPSA, PUBCHEM_COMPONENT_COUNT, PUBCHEM_COMPOUND_CANONICALIZED, PUBCHEM_COMPOUND_CID
+    '                     PUBCHEM_COORDINATE_TYPE, PUBCHEM_EXACT_MASS, PUBCHEM_HEAVY_ATOM_COUNT, PUBCHEM_ISOTOPIC_ATOM_COUNT, PUBCHEM_IUPAC_CAS_NAME
+    '                     PUBCHEM_IUPAC_INCHI, PUBCHEM_IUPAC_INCHIKEY, PUBCHEM_IUPAC_NAME, PUBCHEM_IUPAC_OPENEYE_NAME, PUBCHEM_IUPAC_SYSTEMATIC_NAME
+    '                     PUBCHEM_IUPAC_TRADITIONAL_NAME, PUBCHEM_MOLECULAR_FORMULA, PUBCHEM_MOLECULAR_WEIGHT, PUBCHEM_MONOISOTOPIC_WEIGHT, PUBCHEM_OPENEYE_CAN_SMILES
+    '                     PUBCHEM_OPENEYE_ISO_SMILES, PUBCHEM_TOTAL_CHARGE, PUBCHEM_XLOGP3_AA
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Data
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

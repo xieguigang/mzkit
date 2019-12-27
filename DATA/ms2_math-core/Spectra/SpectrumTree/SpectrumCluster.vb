@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::653b6af39e7a3326d01111f08744d235, ms2_math-core\Spectra\SpectrumTree\SpectrumCluster.vb"
+﻿#Region "Microsoft.VisualBasic::58e8608c82069c95d520bc24fb38ed6e, DATA\ms2_math-core\Spectra\SpectrumTree\SpectrumCluster.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,8 @@
 
     '     Class SpectrumCluster
     ' 
-    '         Properties: cluster, Length, MID, Representative, RepresentativeFeature
+    '         Properties: cluster, Length, MaxIntensity, MID, Representative
+    '                     RepresentativeFeature
     ' 
     '         Function: GetEnumerator, IEnumerable_GetEnumerator, ToString
     ' 

@@ -1,4 +1,81 @@
-﻿Imports System.Runtime.InteropServices
+﻿#Region "Microsoft.VisualBasic::32af129f241b1fbd81df7e126f7e7db4, MwtWinDll\MwtWinDll\Formula\FormulaFinder.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class MWFormulaFinder
+    ' 
+    ' 
+    '     Structure udtCandidateElementTolerances
+    ' 
+    ' 
+    ' 
+    '     Structure udtElementNumType
+    ' 
+    ' 
+    ' 
+    '     Structure udtBoundedSearchRangeType
+    ' 
+    ' 
+    ' 
+    '     Enum eCalculationMode
+    ' 
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    '     Properties: CandidateElements, EchoMessagesToConsole, MaximumHits, PercentComplete
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: BoundedSearch, CheckMtoZWithTarget, Combinatorial, ComputeSortKey, ConstructAndVerifyCompound
+    '               ConstructAndVerifyCompoundRecursive, ConstructAndVerifyCompoundWork, ConvertElementPointersToElementStats, CorrectChargeEmpirical, EmpiricalFormulaHasElementCounts
+    '               Factorial, (+3 Overloads) FindMatchesByMass, (+2 Overloads) FindMatchesByMassPPM, FindMatchesByPercentComposition, FindMatchesByPercentCompositionWork
+    '               (+2 Overloads) GetCandidateElements, (+3 Overloads) GetDefaultCandidateElementTolerance, GetElementCountArray, GetSearchResult, GetTotalPercentComposition
+    '               OldFormulaFinder, ValidateSettings
+    ' 
+    '     Sub: AbortProcessingNow, (+4 Overloads) AddCandidateElement, AppendPercentCompositionResult, AppendToEmpiricalFormula, ComputeSortKeys
+    '          ConstructAndVerifyAddIfValid, EstimateNumberOfOperations, MultipleSearchMath, RecursiveMWFinder, RecursivePCompFinder
+    '          ReportError, ReportWarning, Reset, ShowMessage, SortCandidateElements
+    '          UpdateStatus, ValidateBoundedSearchValues, ValidatePercentCompositionValues
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.InteropServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Language
 Imports SMRUCC.proteomics.PNL.OMICS.MwtWinDll.MolecularWeightCalculator
@@ -2133,3 +2210,4 @@ Public Class MWFormulaFinder
 
     End Function
 End Class
+

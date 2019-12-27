@@ -1,3 +1,160 @@
+﻿#Region "Microsoft.VisualBasic::ec5f5b07e15e9e3150f90e72f25164a1, MwtWinDll\MwtWinDll\ElementAndMassRoutines.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class MWElementAndMassRoutines
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Enum emElementModeConstants
+    ' 
+    ' 
+    ' 
+    ' 
+    '     Enum smStdDevModeConstants
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum ccCaseConversionConstants
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum smtSymbolMatchTypeConstants
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum eMessageTypeConstants
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Structure udtOptionsType
+    ' 
+    ' 
+    ' 
+    '     Structure usrIsotopicAtomInfoType
+    ' 
+    ' 
+    ' 
+    '     Structure udtElementUseStatsType
+    ' 
+    ' 
+    ' 
+    '     Structure udtPctCompType
+    ' 
+    '         Function: ToString
+    ' 
+    '     Structure udtComputationStatsType
+    ' 
+    '         Sub: Initialize
+    ' 
+    '     Structure udtIsotopeInfoType
+    ' 
+    '         Function: ToString
+    ' 
+    '     Structure udtElementStatsType
+    ' 
+    '         Function: ToString
+    ' 
+    '         Sub: Initialize
+    ' 
+    '     Structure udtAbbrevStatsType
+    ' 
+    '         Function: ToString
+    ' 
+    '     Structure udtErrorDescriptionType
+    ' 
+    '         Function: ToString
+    ' 
+    '     Structure udtIsoResultsByElementType
+    ' 
+    ' 
+    ' 
+    '     Structure udtIsoResultsOverallType
+    ' 
+    ' 
+    ' 
+    '     Structure udtAbbrevSymbolStackType
+    ' 
+    ' 
+    ' 
+    '     Structure udtXYDataType
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    '     Properties: AbortProcessing, ElementModeInternal, LogFilePath, LogFolderPath, LogMessagesToFile
+    '                 ProgressPercentComplete, ProgressStepDescription, ShowErrorMessageDialogs
+    ' 
+    '     Function: CheckElemAndAbbrev, ComputeFormulaWeight, (+2 Overloads) ComputeIsotopicAbundances, ComputeIsotopicAbundancesInternal, ConvertFormulaToEmpirical
+    '               ConvertStickDataToGaussian2DArray, (+3 Overloads) ConvoluteMassInternal, ExpandAbbreviationsInFormula, Factorial, FindCombosPredictIterations
+    '               FindCombosRecurse, FindIndexForNominalMass, GetAbbreviationCountInternal, (+2 Overloads) GetAbbreviationIDInternal, (+2 Overloads) GetAbbreviationInternal
+    '               GetAbbreviationMass, GetAminoAcidSymbolConversionInternal, GetCautionDescription, GetCautionStatementCountInternal, GetCautionStatementIDInternal
+    '               GetCautionStatementInternal, GetChargeCarrierMassInternal, GetElementCountInternal, GetElementIDInternal, GetElementInternal
+    '               GetElementIsotopesInternal, GetElementModeInternal, GetElements, GetElementStatInternal, GetElementSymbolInternal
+    '               GetErrorCharacter, GetErrorDescription, GetErrorID, GetErrorPosition, GetMessageStatementCountInternal
+    '               (+2 Overloads) GetMessageStatementInternal, IsModSymbolInternal, IsPresentInAbbrevSymbolStack, IsStringAllLetters, IsValidElementSymbol
+    '               LookupCautionStatement, (+2 Overloads) LookupMessage, MassToPPMInternal, (+2 Overloads) MonoMassToMZInternal, (+3 Overloads) ParseFormulaPublic
+    '               ParseFormulaRecursive, ParseNum, (+4 Overloads) PlainTextToRtfInternal, RemoveAbbreviationByIDInternal, RemoveAbbreviationInternal
+    '               RemoveCautionStatementInternal, (+3 Overloads) ReturnFormattedMassAndStdDev, RoundToEvenMultiple, RoundToMultipleOf10, (+4 Overloads) SetAbbreviationByIDInternal
+    '               (+4 Overloads) SetAbbreviationInternal, SetCautionStatementInternal, (+2 Overloads) SetElementInternal, SetElementIsotopesInternal, SetMessageStatementInternal
+    '               SpacePad, SpacePadFront, ValidateAllAbbreviationsInternal
+    ' 
+    '     Sub: AbbrevSymbolStackAdd, AbbrevSymbolStackAddRemoveMostRecent, AbortProcessingNow, AddAbbreviationWork, AddToCautionDescription
+    '          CatchParsenumError, CheckCaution, ComputePercentComposition, ConstructMasterSymbolsList, ConvoluteMasses
+    '          (+2 Overloads) GeneralErrorHandler, Initialize, InitializeAbbrevSymbolStack, InitializeComputationStats, (+2 Overloads) LogMessage
+    '          MemoryLoadAbbreviations, MemoryLoadAll, MemoryLoadCautionStatements, (+2 Overloads) MemoryLoadElements, MemoryLoadIsotopes
+    '          MemoryLoadMessageStatements, MwtWinDllErrorHandler, OperationComplete, RecomputeAbbreviationMassesInternal, RemoveAllAbbreviationsInternal
+    '          RemoveAllCautionStatementsInternal, ResetErrorParamsInternal, (+2 Overloads) ResetProgress, SetChargeCarrierMassInternal, (+2 Overloads) SetElementModeInternal
+    '          SetShowErrorMessageDialogs, ShellSortSymbols, ShellSortSymbolsWork, SortAbbreviationsInternal, (+3 Overloads) UpdateProgress
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
@@ -5725,3 +5882,4 @@ Public Class MWElementAndMassRoutines
     End Function
 
 End Class
+

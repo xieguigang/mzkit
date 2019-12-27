@@ -1,3 +1,79 @@
+ï»¿#Region "Microsoft.VisualBasic::f028d85bad430529b4d9ad1c36e9ba7b, MwtWinDll\MwtWinDll\MwtWin.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class MolecularWeightCalculator
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Enum arAbbrevRecognitionModeConstants
+    ' 
+    ' 
+    ' 
+    ' 
+    '     Enum esElementStatsConstants
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    '     Properties: AbbreviationRecognitionMode, AppDate, AppVersion, BracketsTreatedAsParentheses, CaseConversionMode
+    '                 DecimalSeparator, ErrorCharacter, ErrorDescription, ErrorID, ErrorPosition
+    '                 LogFilePath, LogFolderPath, LogMessagesToFile, ProgressPercentComplete, ProgressStepDescription
+    '                 RtfFontName, RtfFontSize, ShowErrorDialogs, StdDevMode
+    ' 
+    '     Function: (+4 Overloads) ComputeIsotopicAbundances, ComputeMass, (+2 Overloads) ConvertStickDataToGaussian2DArray, (+3 Overloads) ConvoluteMass, DetermineDecimalPoint
+    '               (+3 Overloads) GetAbbreviation, GetAbbreviationCount, GetAbbreviationCountMax, GetAbbreviationID, GetAminoAcidSymbolConversion
+    '               GetCautionStatement, GetCautionStatementCount, GetCautionStatementID, GetChargeCarrierMass, GetElement
+    '               GetElementCount, GetElementID, GetElementIsotopes, GetElementMode, GetElementStat
+    '               GetElementSymbol, (+2 Overloads) GetMessageStatement, GetMessageStatementCount, IsModSymbol, MassToPPM
+    '               (+2 Overloads) MonoMassToMZ, RemoveAbbreviation, RemoveAbbreviationByID, RemoveCautionStatement, (+3 Overloads) SetAbbreviation
+    '               (+2 Overloads) SetAbbreviationByID, SetCautionStatement, (+2 Overloads) SetElement, SetElementIsotopes, SetMessageStatement
+    '               (+4 Overloads) TextToRTF, ValidateAllAbbreviations
+    ' 
+    '     Sub: ClearError, Finalize, LoadDefaults, mElementAndMassRoutines_ProgressChanged, mElementAndMassRoutines_ProgressComplete
+    '          mElementAndMassRoutines_ProgressReset, RecomputeAbbreviationMasses, RemoveAllAbbreviations, RemoveAllCautionStatements, ResetAbbreviations
+    '          ResetCautionStatements, ResetElement, ResetMessageStatements, SetChargeCarrierMass, (+2 Overloads) SetElementMode
+    '          SortAbbreviations
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 
 
 Imports System.Collections.Generic
@@ -8,7 +84,7 @@ Public Class MolecularWeightCalculator
     ' Based on Molecular Weight Calculator, v6.20 code (VB6), written by Matthew Monroe 1995-2002
     '
     ' ActiveX Dll version written by Matthew Monroe in Richland, WA (2002)
-    ' Ported to VB.NET by Nikša Blonder in Richland, WA (2005)
+    ' Ported to VB.NET by Nikï¿½a Blonder in Richland, WA (2005)
 
     ' -------------------------------------------------------------------------------
     ' Written by Matthew Monroe for the Department of Energy (PNNL, Richland, WA)

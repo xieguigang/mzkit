@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68ba5751df61b84dc4bc87be8683dbbb, ms2_math-core\Chromatogram\ChromatogramTick.vb"
+﻿#Region "Microsoft.VisualBasic::b6b56aca6f4a97fc209e349b41be1ec2, DATA\ms2_math-core\Chromatogram\ChromatogramTick.vb"
 
     ' Author:
     ' 
@@ -40,6 +40,10 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: ToString
+    ' 
+    '     Interface ITimePoint
+    ' 
+    '         Properties: intensity, time
     ' 
     ' 
     ' /********************************************************************************/

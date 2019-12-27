@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a18008fa689162bd31ea05fe65ebfeda, TargetedMetabolomics\QuantitativeAnalysis\TPAExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::cf58d896634b9d7e2db27cfc9cdac0e8, DATA\TargetedMetabolomics\QuantitativeAnalysis\TPAExtensions.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,10 @@
 
     ' Summaries:
 
+    ' Class IonTPA
+    ' 
+    '     Properties: area, baseline, maxPeakHeight, name, peakROI
+    ' 
     ' Module TPAExtensions
     ' 
     '     Function: ionTPA, TPAIntegrator

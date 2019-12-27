@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba9723c2ee82d04abb608765056d3bc4, FooDB\FooDB\mysql\pathways.vb"
+﻿#Region "Microsoft.VisualBasic::ba9723c2ee82d04abb608765056d3bc4, DATA\FooDB\FooDB\mysql\pathways.vb"
 
     ' Author:
     ' 
