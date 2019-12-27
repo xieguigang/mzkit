@@ -48,6 +48,9 @@ Imports SMRUCC.MassSpectrum.Assembly.MarkupData
 Imports SMRUCC.MassSpectrum.Math
 Imports SMRUCC.MassSpectrum.Math.Spectra
 
+''' <summary>
+''' Clustering of the ms2 spectrum by SSM similarity.
+''' </summary>
 Public Class SpectrumTree : Inherits Spectra.SpectrumTreeCluster
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -55,6 +58,12 @@ Public Class SpectrumTree : Inherits Spectra.SpectrumTreeCluster
         Call MyBase.New(compares, showReport)
     End Sub
 
+    ''' <summary>
+    ''' Clustering of the raw ms2 spectrum data
+    ''' </summary>
+    ''' <param name="ms2list"></param>
+    ''' <param name="fileName"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overloads Function doCluster(ms2list As mzXML.scan(), fileName$) As SpectrumTree
         Return doCluster(ms2list _
