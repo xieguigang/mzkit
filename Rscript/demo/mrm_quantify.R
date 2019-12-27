@@ -1,4 +1,4 @@
-imports "mzkit.mrm" from "mzkit.quantitative.dll";
+imports ["mzkit.mrm", "mzkit.quantify.visual"] from "mzkit.quantitative.dll";
 
 let wiff as string = "T:\test\Data20190522liaoning-Cal";
 let mrmInfo as string = "T:\_ref\MetaCardio_STD_v5.xlsx";
@@ -18,8 +18,17 @@ ref <- CAL
 :> linears(ref, is) 
 :> models;
 
+# print model summary and then do standard curve plot
 for(line in ref) {
 	print(line);
+	
+	let id as string = line 
+	:> as.object 
+	:> do.call("Name");
+	
+	line
+	:> standard_curve
+	:> save.graphics(file = `T:\test/${id}.png`);
 }
 
 for(mzML in list.files(wiff, pattern = "*.mzML")) {
