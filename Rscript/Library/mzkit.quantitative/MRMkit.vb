@@ -53,6 +53,12 @@ Public Module MRMkit
         )
     End Function
 
+    ''' <summary>
+    ''' Get ion pair definition data from a given table file.
+    ''' </summary>
+    ''' <param name="file">A csv file or xlsx Excel data sheet</param>
+    ''' <param name="sheetName">The sheet name in excel tables.</param>
+    ''' <returns></returns>
     <ExportAPI("read.ion_pairs")>
     Public Function readIonPairs(file$, Optional sheetName$ = "Sheet1") As IonPair()
         If file.ExtensionSuffix("xlsx") Then
@@ -68,9 +74,9 @@ Public Module MRMkit
     ''' <summary>
     ''' Scan the raw file data
     ''' </summary>
-    ''' <param name="wiffConverts$"></param>
-    ''' <param name="ions"></param>
-    ''' <param name="peakAreaMethod%"></param>
+    ''' <param name="wiffConverts">A directory that contains the mzML files which are converts from the given wiff raw file.</param>
+    ''' <param name="ions">Ion pairs definition data.</param>
+    ''' <param name="peakAreaMethod"></param>
     ''' <param name="TPAFactors"></param>
     ''' <param name="removesWiffName"></param>
     ''' <returns></returns>
