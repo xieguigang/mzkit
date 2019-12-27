@@ -205,6 +205,9 @@
     <Compile Include="ASCII\MGF\Ions.vb" />
     <Compile Include="ASCII\MGF\MgfWriter.vb" />
     <Compile Include="ASCII\MGF\MgfReader.vb" />
+    <Compile Include="ASCII\MSN\FileReader.vb" />
+    <Compile Include="ASCII\MSN\PeakTable.vb" />
+    <Compile Include="ASCII\MSN\MsnList.vb" />
     <Compile Include="ASCII\MSP\MspParser.vb" />
     <Compile Include="ASCII\MSP\Comments.vb" />
     <Compile Include="ASCII\MSP\MspData.vb" />
