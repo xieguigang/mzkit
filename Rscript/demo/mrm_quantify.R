@@ -8,7 +8,7 @@ let MRM.info as string = ?"--MRM"    || stop("Missing MRM information table file
 let dir as string      = ?"--export" || `${wiff :> trim(" ")}-result/`;
 
 # read MRM, standard curve and IS information from the given file
-let [ions, ref, is]    = MRM.info :> [
+let [ions, ref, is] = MRM.info :> [
 	read.ion_pairs("ion pairs"), 
 	read.reference("coordinates"), 
 	read.IS("IS")
@@ -30,23 +30,30 @@ ref <- CAL
 :> models;
 
 # print model summary and then do standard curve plot
-for(line in ref) {
-	print(line);
-	
+let printModel as function(line) {
+	# get compound id name
 	let id as string = line 
 	:> as.object 
 	:> do.call("Name");
+	
+	# view summary result
+	print(line);
 	
 	line
 	:> standard_curve
 	:> save.graphics(file = `${dir}/standard_curves/${id}.png`);
 }
 
+for(line in ref) {
+	line :> printModel;
+}
+
 for(mzML in list.files(wiff, pattern = "*.mzML")) {
 	let fileName = basename(mzML);
 	let peaks = MRM.peaks(mzML, ions, peakAreaMethod = 0, TPAFactors = NULL);
 	
-	write.csv( peaks, file = `${dir}/peaktables/${fileName}.csv`);
+	# save peaktable for given rawfile
+	write.csv(peaks, file = `${dir}/peaktables/${fileName}.csv`);
 }
 
 wiff <- sample;
@@ -58,8 +65,9 @@ list.files(wiff, pattern = "*.mzML")
 let scans = [];
 
 for(sample.mzML in list.files(wiff, pattern = "*.mzML")) {
-	let result = ref :> sample.quantify(sample.mzML, ions, 0, NULL);
-	let peakfile = `T:\test\samples/${basename(sample.mzML)}.csv`;
+	let peakfile as string = `{dir}/${basename(sample.mzML)}.csv`;
+	let result = ref 
+		:> sample.quantify(sample.mzML, ions, 0, NULL);
 	
 	print(basename(sample.mzML));
 	
@@ -73,5 +81,7 @@ for(sample.mzML in list.files(wiff, pattern = "*.mzML")) {
 
 print(length(scans));
 
-result(scans) :> write.csv(file = "T:\test\quantify.csv");
-scans.X(scans) :> write.csv(file = "T:\test\rawX.csv");
+# save the MRM quantify result
+# base on the linear fitting
+result(scans)  :> write.csv(file = `${dir}\quantify.csv`);
+scans.X(scans) :> write.csv(file = `${dir}\rawX.csv`);
