@@ -325,7 +325,8 @@ Public Module StandardCurve
                        Return path _
                            .BaseName _
                            .IsPattern(calibrationNamedPattern, RegexICSng)
-                   End Function)
+                   End Function) _
+            .ToArray
 
         If mzMLRawFiles.IsNullOrEmpty Then
             Throw New InvalidExpressionException($"No mzML file could be match by given regexp patterns: '{calibrationNamedPattern}'")
