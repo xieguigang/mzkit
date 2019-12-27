@@ -34,6 +34,24 @@ Public Module MRMkit
         Return MRMSamples.ExtractIonData(ionpairs, mzML, Function(i) i.accession)
     End Function
 
+    <ExportAPI("extract.peakROI")>
+    Public Function ExtractPeakROI(mzML$, ionpairs As IonPair(),
+                                   Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
+                                   Optional baselineQuantile# = 0.65,
+                                   Optional integratorTicks% = 5000,
+                                   Optional peakAreaMethod As Integer = 1) As IonTPA()
+
+        Dim method As PeakArea.Methods = CType(peakAreaMethod, PeakArea.Methods)
+
+        If TPAFactors Is Nothing Then
+            TPAFactors = New Dictionary(Of String, Double)
+        End If
+
+        Return StandardCurve.ScanTPA(
+            mzML, ionpairs, TPAFactors, baselineQuantile, integratorTicks, method
+        )
+    End Function
+
     <ExportAPI("read.ion_pairs")>
     Public Function readIonPairs(file$, Optional sheetName$ = "Sheet1") As IonPair()
         If file.ExtensionSuffix("xlsx") Then
