@@ -251,5 +251,12 @@ Public Module MRMkit
             Return line.points
         End If
     End Function
+
+    <ExportAPI("sample.quantify")>
+    Public Function SampleQuantify(model As FitModel(), file$, ions As IonPair(),
+                                   Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum,
+                                   Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As QuantifyScan
+        Return MRMSamples.SampleQuantify(model, file, ions, peakAreaMethod, TPAFactors)
+    End Function
 End Module
 
