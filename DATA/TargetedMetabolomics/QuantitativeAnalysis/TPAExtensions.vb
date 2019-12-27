@@ -50,6 +50,19 @@ Imports Microsoft.VisualBasic.Math.Scripting
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
 Imports SMRUCC.MassSpectrum.Math.MRM.Models
 
+''' <summary>
+''' ROI Peak data of the given ion
+''' </summary>
+Public Class IonTPA
+
+    Public Property name As String
+    Public Property peakROI As DoubleRange
+    Public Property area As Double
+    Public Property baseline As Double
+    Public Property maxPeakHeight As Double
+
+End Class
+
 Public Module TPAExtensions
 
     ''' <summary>
@@ -68,9 +81,9 @@ Public Module TPAExtensions
                            baselineQuantile#,
                            peakAreaMethod As PeakArea.Methods,
                            Optional integratorTicks% = 5000,
-                           Optional TPAFactor# = 1) As NamedValue(Of (DoubleRange, Double, Double, Double))
+                           Optional TPAFactor# = 1) As IonTPA
 
-        Dim vector As IVector(Of ChromatogramTick) = ion.Value.Shadows
+        Dim vector As IVector(Of ChromatogramTick) = ion.value.Shadows
         Dim ROIData = vector _
             .PopulateROI _
             .OrderByDescending(Function(ROI)
@@ -83,9 +96,9 @@ Public Module TPAExtensions
 
 
         If ROIData.Length = 0 Then
-            Return New NamedValue(Of (DoubleRange, Double, Double, Double)) With {
-                .Name = ion.Name,
-                .Value = (New DoubleRange(0, 0), 0, 0, 0)
+            Return New IonTPA With {
+                .name = ion.name,
+                .peakROI = New DoubleRange(0, 0)
             }
         Else
             Dim peak As DoubleRange = ROIData _
@@ -97,9 +110,12 @@ Public Module TPAExtensions
                 data = (peak, .Item1, .Item2, .Item3)
             End With
 
-            Return New NamedValue(Of (DoubleRange, Double, Double, Double)) With {
-                .Name = ion.Name,
-                .Value = data
+            Return New IonTPA With {
+                .name = ion.name,
+                .peakROI = data.peak,
+                .area = data.area,
+                .baseline = data.baseline,
+                .maxPeakHeight = data.maxPeakHeight
             }
         End If
     End Function

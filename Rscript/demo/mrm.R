@@ -6,4 +6,6 @@ let ions = read.ion_pairs(mrmInfo, "ion pairs");
 
 let mrm.ions = extract.ions(mzML, ions);
 
-print(ions);
+# for(ion in mrm.ions) {
+	# print(ion :> as.object :> do.call(calls = "name"));
+# }

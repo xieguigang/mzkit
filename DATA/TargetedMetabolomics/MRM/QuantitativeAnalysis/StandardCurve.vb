@@ -84,8 +84,8 @@ Public Module StandardCurve
                      peakAreaMethod:=peakAreaMethod,
                      TPAFactors:=TPAFactors
             ) _
-            .ToDictionary(Function(ion) ion.Name,
-                          Function(A) A.Value)
+            .ToDictionary(Function(ion) ion.name)
+
         Dim names As Dictionary(Of String, IonPair) = ions.ToDictionary(Function(i) i.accession)
         Dim C#
 
@@ -93,7 +93,7 @@ Public Module StandardCurve
 
         ' 遍历得到的所有的标准曲线，进行样本之中的浓度的计算
         For Each metabolite As FitModel In model.Where(Function(m) TPA.ContainsKey(m.Name))
-            Dim AIS As (ROI As DoubleRange, TPA#, baseline#, maxinto#)
+            Dim AIS As New IonTPA  ' (ROI As DoubleRange, TPA#, baseline#, maxinto#)
             Dim X#
             ' 得到样品之中的峰面积
             Dim A = TPA(metabolite.Name)
@@ -101,7 +101,7 @@ Public Module StandardCurve
             If Not metabolite.RequireISCalibration Then
                 ' 不需要内标进行校正
                 ' 则X轴的数据直接是代谢物的峰面积数据
-                X = A.TPA
+                X = A.area
             Else
                 ' 数据存在丢失
                 If Not TPA.ContainsKey(metabolite.IS.ID) Then
@@ -110,7 +110,7 @@ Public Module StandardCurve
                     ' 得到与样品混在一起的内标的峰面积
                     ' X轴数据需要做内标校正
                     AIS = TPA(metabolite.IS.ID)
-                    X# = A.TPA / AIS.TPA
+                    X# = A.area / AIS.area
                 End If
             End If
 
@@ -132,15 +132,15 @@ Public Module StandardCurve
                 .content = C,
                 .ID = metabolite.Name,
                 .raw = raw,
-                .rtmax = A.ROI.Max,
-                .rtmin = A.ROI.Min,
+                .rtmax = A.peakROI.Max,
+                .rtmin = A.peakROI.Min,
                 .Name = names(metabolite.Name).name,
-                .TPA = A.TPA,
-                .TPA_IS = AIS.TPA,
+                .TPA = A.area,
+                .TPA_IS = AIS.area,
                 .base = A.baseline,
                 .IS = If([IS] Is Nothing, "", $"{[IS].accession} ({[IS].name})"),
-                .maxinto = A.maxinto,
-                .maxinto_IS = AIS.maxinto
+                .maxinto = A.maxPeakHeight,
+                .maxinto_IS = AIS.maxPeakHeight
             }
 
             Yield New ContentResult(Of MRMPeakTable) With {
@@ -354,7 +354,7 @@ Public Module StandardCurve
             ' level = level.Match("[-]L\d+", RegexICSng).Trim("-"c)
 
             For Each ion In TPA
-                ionTPAs(ion.Name).Add(level.ToUpper, ion.Value.TPA)
+                ionTPAs(ion.name).Add(level.ToUpper, ion.area)
             Next
         Next
 
@@ -383,7 +383,7 @@ Public Module StandardCurve
     Public Function ScanTPA(raw$, ionpairs As IonPair(), TPAFactors As Dictionary(Of String, Double),
                             Optional baselineQuantile# = 0.65,
                             Optional integratorTicks% = 5000,
-                            Optional peakAreaMethod As PeakArea.Methods = Methods.Integrator) As NamedValue(Of (ROI As DoubleRange, TPA#, baseline#, maxinto#))()
+                            Optional peakAreaMethod As PeakArea.Methods = Methods.Integrator) As IonTPA()
 
         ' 从原始文件之中读取出所有指定的离子对数据
         Dim ionData = ionpairs.ExtractIonData(
