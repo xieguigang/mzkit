@@ -47,7 +47,7 @@ Public Module MRMkit
             TPAFactors = New Dictionary(Of String, Double)
         End If
 
-        Return StandardCurve.ScanTPA(
+        Return ScanOfTPA.ScanTPA(
             mzML, ionpairs, TPAFactors, baselineQuantile, integratorTicks, method
         )
     End Function
