@@ -66,7 +66,7 @@ Public Module MRMkit
     End Function
 
     <ExportAPI("wiff.standard_curve")>
-    Public Function ScanStandardCurve(wiffConverts$, ions As IonPair(),
+    Public Function ScanStandardCurve(wiffConverts$(), ions As IonPair(),
                                       Optional peakAreaMethod% = 1,
                                       Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
                                       Optional calibrationNamedPattern$ = ".+[-]CAL\d+",
@@ -78,14 +78,29 @@ Public Module MRMkit
             TPAFactors = New Dictionary(Of String, Double)
         End If
 
-        Return StandardCurve.Scan(
-            raw:=wiffConverts,
-            ions:=ions,
-            peakAreaMethod:=method,
-            TPAFactors:=TPAFactors,
-            refName:=Nothing,
-            calibrationNamedPattern:=calibrationNamedPattern,
-            levelPattern:=levelPattern
-        )
+        If wiffConverts.IsNullOrEmpty Then
+            Throw New ArgumentNullException(NameOf(wiffConverts))
+        End If
+
+        If wiffConverts.Length = 1 Then
+            Return StandardCurve.Scan(
+                raw:=wiffConverts(Scan0),
+                ions:=ions,
+                peakAreaMethod:=method,
+                TPAFactors:=TPAFactors,
+                refName:=Nothing,
+                calibrationNamedPattern:=calibrationNamedPattern,
+                levelPattern:=levelPattern
+            )
+        Else
+            Return StandardCurve.Scan(
+                mzMLRawFiles:=wiffConverts,
+                ions:=ions,
+                peakAreaMethod:=method,
+                TPAFactors:=TPAFactors,
+                refName:=Nothing,
+                levelPattern:=levelPattern
+            )
+        End If
     End Function
 End Module
