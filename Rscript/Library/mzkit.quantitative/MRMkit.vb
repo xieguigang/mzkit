@@ -63,6 +63,8 @@ Public Module MRMkit
 
     Sub New()
         REnv.ConsolePrinter.AttachConsoleFormatter(Of IonPair())(AddressOf printIonPairs)
+        REnv.ConsolePrinter.AttachConsoleFormatter(Of FitModel)(AddressOf printLineModel)
+        REnv.ConsolePrinter.AttachConsoleFormatter(Of StandardCurve)(AddressOf printLineModel)
     End Sub
 
     Private Function printIonPairs(ions As IonPair()) As String
@@ -70,6 +72,20 @@ Public Module MRMkit
         Dim printContent = csv.Print(addBorder:=False)
 
         Return printContent
+    End Function
+
+    Private Function printLineModel(line As Object) As String
+        If line Is Nothing Then
+            Return "NULL"
+        ElseIf line.GetType Is GetType(FitModel) Then
+            With DirectCast(line, FitModel)
+                Return $"{ .Name}: { .LinearRegression.ToString}"
+            End With
+        Else
+            With DirectCast(line, StandardCurve)
+                Return $"{ .name}: { .linear.ToString}"
+            End With
+        End If
     End Function
 
     ''' <summary>
