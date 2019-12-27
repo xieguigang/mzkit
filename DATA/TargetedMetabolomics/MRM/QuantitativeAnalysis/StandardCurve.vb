@@ -86,7 +86,7 @@ Public Module StandardCurve
             ) _
             .ToDictionary(Function(ion) ion.Name,
                           Function(A) A.Value)
-        Dim names As Dictionary(Of String, IonPair) = ions.ToDictionary(Function(i) i.AccID)
+        Dim names As Dictionary(Of String, IonPair) = ions.ToDictionary(Function(i) i.accession)
         Dim C#
 
         raw = raw.FileName
@@ -138,7 +138,7 @@ Public Module StandardCurve
                 .TPA = A.TPA,
                 .TPA_IS = AIS.TPA,
                 .base = A.baseline,
-                .IS = If([IS] Is Nothing, "", $"{[IS].AccID} ({[IS].name})"),
+                .IS = If([IS] Is Nothing, "", $"{[IS].accession} ({[IS].name})"),
                 .maxinto = A.maxinto,
                 .maxinto_IS = AIS.maxinto
             }
@@ -325,7 +325,7 @@ Public Module StandardCurve
         Dim refNames As New List(Of String)
 
         For Each ion As IonPair In ions
-            ionTPAs(ion.AccID) = New Dictionary(Of String, Double)
+            ionTPAs(ion.accession) = New Dictionary(Of String, Double)
         Next
 
         ' 扫描所有的符合命名规则要求的原始文件
@@ -388,7 +388,7 @@ Public Module StandardCurve
         ' 从原始文件之中读取出所有指定的离子对数据
         Dim ionData = ionpairs.ExtractIonData(
             mzML:=raw,
-            assignName:=Function(ion) ion.AccID
+            assignName:=Function(ion) ion.accession
         )
         ' 进行最大峰的查找，然后计算出净峰面积，用于回归建模
         Dim TPA = ionData _
