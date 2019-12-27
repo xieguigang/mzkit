@@ -1,13 +1,14 @@
-﻿Imports Microsoft.VisualBasic.CommandLine.Reflection
+﻿Imports Microsoft.VisualBasic.ApplicationServices.Terminal
+Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
 Imports SMRUCC.MassSpectrum.Math
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
-Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
 Imports REnv = SMRUCC.Rsharp.Runtime.Internal
-Imports Microsoft.VisualBasic.ApplicationServices.Terminal
+Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
 
 <Package("mzkit.mrm")>
 Public Module MRMkit
@@ -62,5 +63,29 @@ Public Module MRMkit
         Else
             Return file.LoadCsv(Of IonPair)
         End If
+    End Function
+
+    <ExportAPI("wiff.standard_curve")>
+    Public Function ScanStandardCurve(wiffConverts$, ions As IonPair(),
+                                      Optional peakAreaMethod% = 1,
+                                      Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
+                                      Optional calibrationNamedPattern$ = ".+[-]CAL\d+",
+                                      Optional levelPattern$ = "[-]CAL\d+") As DataSet()
+
+        Dim method As PeakArea.Methods = CType(peakAreaMethod, PeakArea.Methods)
+
+        If TPAFactors Is Nothing Then
+            TPAFactors = New Dictionary(Of String, Double)
+        End If
+
+        Return StandardCurve.Scan(
+            raw:=wiffConverts,
+            ions:=ions,
+            peakAreaMethod:=method,
+            TPAFactors:=TPAFactors,
+            refName:=Nothing,
+            calibrationNamedPattern:=calibrationNamedPattern,
+            levelPattern:=levelPattern
+        )
     End Function
 End Module
