@@ -1,17 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2036
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29609.76
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ms2_simulator", "ms2_simulator\ms2_simulator.vbproj", "{77683884-EDF0-4C48-9D7C-B4343A561FD7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "KCF", "KCF", "{DE15B5F9-9720-4090-9FFA-71D9BBD6A692}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "runtime", "runtime", "{070E6669-5418-459E-94AD-AD1B61900B60}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "modules", "modules", "{070E6669-5418-459E-94AD-AD1B61900B60}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "KCF.IO", "..\visual\KCF\KCF.IO\KCF.IO.vbproj", "{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "KCF.IO", "..\visualize\KCF\KCF.IO\KCF.IO.vbproj", "{1BAFA2BC-68B2-4EE0-9235-C60FAE3377A0}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "KCF.Graph", "..\visual\KCF\KCF.Graph\KCF.Graph.vbproj", "{C60416D4-B3E2-45E5-BFE0-90D5021647F9}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "KCF.Graph", "..\visualize\KCF\KCF.Graph\KCF.Graph.vbproj", "{C60416D4-B3E2-45E5-BFE0-90D5021647F9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Math", "Math", "{D15174FF-365D-4CC3-A6D3-8ED0361CA215}"
 EndProject
@@ -19,25 +19,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Model", "Model", "{AD324D7D
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "test", "ms2_simulator\test\test.vbproj", "{656710E7-4A50-4832-8A94-B0C78E9F9855}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Network.GraphTheory", "..\..\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Datavisualization.Network\Network.GraphTheory.vbproj", "{076315EE-B598-40DC-9280-C71CDF9B6A48}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Network.GraphTheory", "..\..\..\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Datavisualization.Network\Network.GraphTheory.vbproj", "{076315EE-B598-40DC-9280-C71CDF9B6A48}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "GraphTheory", "..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Graph\GraphTheory.vbproj", "{203BC68F-A0CD-443A-AB62-4AF4110F752F}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "GraphTheory", "..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Graph\GraphTheory.vbproj", "{203BC68F-A0CD-443A-AB62-4AF4110F752F}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "47-dotnet_Microsoft.VisualBasic", "..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj", "{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "47-dotnet_Microsoft.VisualBasic", "..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj", "{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "47_dotnet_ms-vb_data.framework", "..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj", "{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "47_dotnet_ms-vb_data.framework", "..\..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj", "{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "math-core", "..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\math-core.vbproj", "{E3367B88-5D0C-495A-8273-331656D4B5AA}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "math-core", "..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\math-core.vbproj", "{E3367B88-5D0C-495A-8273-331656D4B5AA}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ODEsSolver", "..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\ODE\ODEsSolver.vbproj", "{14E0B048-3A0D-4FD6-AA79-9B815D6F1B30}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ODEsSolver", "..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\ODE\ODEsSolver.vbproj", "{14E0B048-3A0D-4FD6-AA79-9B815D6F1B30}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "physics", "..\..\GCModeller\src\runtime\sciBASIC#\gr\physics\physics.vbproj", "{3291389C-EA87-4B33-A9A5-65A2D60BA3E2}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "physics", "..\..\..\GCModeller\src\runtime\sciBASIC#\gr\physics\physics.vbproj", "{3291389C-EA87-4B33-A9A5-65A2D60BA3E2}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DataFittings", "..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFittings\DataFittings.vbproj", "{FC125B0D-1942-496F-B502-9C0EB80E35B6}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DataFittings", "..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFittings\DataFittings.vbproj", "{FC125B0D-1942-496F-B502-9C0EB80E35B6}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Bio.Assembly", "..\..\GCModeller\src\GCModeller\core\Bio.Assembly\Bio.Assembly.vbproj", "{C699D311-9923-4C19-BF70-5048D0E2CF5D}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Bio.Assembly", "..\..\..\GCModeller\src\GCModeller\core\Bio.Assembly\Bio.Assembly.vbproj", "{C699D311-9923-4C19-BF70-5048D0E2CF5D}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Bio.Repository", "..\..\GCModeller\src\GCModeller\core\Bio.Repository\Bio.Repository.vbproj", "{216ACC2D-C7A5-4C27-9DC9-BDFA4DBB6A37}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Bio.Repository", "..\..\..\GCModeller\src\GCModeller\core\Bio.Repository\Bio.Repository.vbproj", "{216ACC2D-C7A5-4C27-9DC9-BDFA4DBB6A37}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MassSpectrum.math-core", "ms2_math-core\MassSpectrum.math-core.vbproj", "{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}"
 EndProject
@@ -45,9 +45,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mzkit", "mzkit", "{209CE49A
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "assembly", "..\Assembly\assembly\assembly.vbproj", "{95F7D65E-9DB1-4605-9FD3-25433277AF88}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MachineLearning", "..\..\GCModeller\src\runtime\sciBASIC#\Data_science\MachineLearning\MachineLearning\MachineLearning.vbproj", "{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MachineLearning", "..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\MachineLearning\MachineLearning\MachineLearning.vbproj", "{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DataMining", "..\..\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\DataMining\DataMining.vbproj", "{1B42809B-603F-4CEA-A0DB-91276582B9CA}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DataMining", "..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\DataMining\DataMining.vbproj", "{1B42809B-603F-4CEA-A0DB-91276582B9CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
