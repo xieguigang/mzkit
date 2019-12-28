@@ -46,61 +46,64 @@ Imports System.Runtime.CompilerServices
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
 Imports SMRUCC.MassSpectrum.Math.MRM.Models
 
-Public Module ScanOfTPA
+Namespace MRM
 
-    ''' <summary>
-    ''' 从一个原始文件之中扫描出给定的离子对的峰面积数据
-    ''' </summary>
-    ''' <param name="raw$">``*.mzML``原始样本数据文件</param>
-    ''' <param name="ionpairs"></param>
-    ''' <param name="TPAFactors">
-    ''' ``{<see cref="Standards.HMDB"/>, <see cref="Standards.Factor"/>}``，这个是为了计算亮氨酸和异亮氨酸这类无法被区分的物质的峰面积所需要的
-    ''' </param>
-    ''' <returns></returns>
-    <Extension>
-    Public Function ScanTPA(raw$, ionpairs As IonPair(), TPAFactors As Dictionary(Of String, Double),
+    Public Module ScanOfTPA
+
+        ''' <summary>
+        ''' 从一个原始文件之中扫描出给定的离子对的峰面积数据
+        ''' </summary>
+        ''' <param name="raw$">``*.mzML``原始样本数据文件</param>
+        ''' <param name="ionpairs"></param>
+        ''' <param name="TPAFactors">
+        ''' ``{<see cref="Standards.HMDB"/>, <see cref="Standards.Factor"/>}``，这个是为了计算亮氨酸和异亮氨酸这类无法被区分的物质的峰面积所需要的
+        ''' </param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function ScanTPA(raw$, ionpairs As IonPair(), TPAFactors As Dictionary(Of String, Double),
                             Optional baselineQuantile# = 0.65,
                             Optional integratorTicks% = 5000,
                             Optional peakAreaMethod As PeakArea.Methods = Methods.Integrator) As IonTPA()
 
-        ' 从原始文件之中读取出所有指定的离子对数据
-        Dim ionData = ionpairs.ExtractIonData(
-            mzML:=raw,
-            assignName:=Function(ion) ion.accession
-        )
-        ' 进行最大峰的查找，然后计算出净峰面积，用于回归建模
-        Dim TPA = ionData _
-            .Select(Function(ion)
-                        Return ion.ionTPA(
-                            baselineQuantile,
-                            peakAreaMethod,
-                            integratorTicks,
-                            TPAFactors.GetFactor(ion.name)
-                        )
-                    End Function) _
-            .ToArray
+            ' 从原始文件之中读取出所有指定的离子对数据
+            Dim ionData = ionpairs.ExtractIonData(
+                mzML:=raw,
+                assignName:=Function(ion) ion.accession
+            )
+            ' 进行最大峰的查找，然后计算出净峰面积，用于回归建模
+            Dim TPA = ionData _
+                .Select(Function(ion)
+                            Return ion.ionTPA(
+                                baselineQuantile,
+                                peakAreaMethod,
+                                integratorTicks,
+                                TPAFactors.GetFactor(ion.name)
+                            )
+                        End Function) _
+                .ToArray
 
-        Return TPA
-    End Function
+            Return TPA
+        End Function
 
-    <Extension>
-    Public Function GetFactor(TPAFactors As Dictionary(Of String, Double), ionName$, Optional default# = 1) As Double
-        Dim factor#
+        <Extension>
+        Public Function GetFactor(TPAFactors As Dictionary(Of String, Double), ionName$, Optional default# = 1) As Double
+            Dim factor#
 
-        If TPAFactors.ContainsKey(ionName) Then
-            factor = TPAFactors(ionName)
+            If TPAFactors.ContainsKey(ionName) Then
+                factor = TPAFactors(ionName)
 
-            ' factor列可能没有设置值，则加载之后会被默认转换为零
-            ' 在这里将其设置为默认值1
-            If factor = 0 Then
+                ' factor列可能没有设置值，则加载之后会被默认转换为零
+                ' 在这里将其设置为默认值1
+                If factor = 0 Then
+                    factor = [default]
+                End If
+            Else
+                ' 没有值的时候，默认是1，即不做处理
                 factor = [default]
             End If
-        Else
-            ' 没有值的时候，默认是1，即不做处理
-            factor = [default]
-        End If
 
-        Return factor
-    End Function
-End Module
+            Return factor
+        End Function
+    End Module
 
+End Namespace
