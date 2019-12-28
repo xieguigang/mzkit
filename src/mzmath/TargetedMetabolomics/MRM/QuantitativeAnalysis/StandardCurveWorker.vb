@@ -56,28 +56,6 @@ Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
 Imports SMRUCC.MassSpectrum.Math.MRM.Data
 Imports SMRUCC.MassSpectrum.Math.MRM.Models
 
-Public Class StandardCurve
-
-    Public Property name As String
-    Public Property linear As IFitted
-    Public Property points As MRMStandards()
-    Public Property [IS] As [IS]
-
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Shared Function GetFitModels(detections As StandardCurve()) As FitModel()
-        Return detections _
-            .Select(Function(i)
-                        Return New FitModel With {
-                            .Name = i.name,
-                            .LinearRegression = i.linear,
-                            .IS = i.IS
-                        }
-                    End Function) _
-            .ToArray
-    End Function
-
-End Class
-
 ''' <summary>
 ''' 对当前批次的标准曲线进行回归建模
 ''' </summary>

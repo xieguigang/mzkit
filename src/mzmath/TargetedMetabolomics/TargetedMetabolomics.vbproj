@@ -152,6 +152,7 @@
     <Compile Include="MRM\Data\Extensions.vb" />
     <Compile Include="MRM\Data\TargetQuantification.vb" />
     <Compile Include="MRM\QuantitativeAnalysis\MRMPeak.vb" />
+    <Compile Include="QuantitativeAnalysis\StandardCurve.vb" />
     <Compile Include="QuantitativeAnalysis\ContentResult.vb" />
     <Compile Include="QuantitativeAnalysis\NamespaceDoc.vb" />
     <Compile Include="QuantitativeAnalysis\TPAExtensions.vb" />
@@ -175,7 +176,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="QuantitativeAnalysis\FitModel.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
