@@ -47,13 +47,46 @@
 
 Namespace MRM.Models
 
+    ''' <summary>
+    ''' mzML raw files from wiff converts output
+    ''' </summary>
     Public Class RawFile
 
         Public Property samples As String()
         Public Property standards As String()
 
-        Sub New(directory As String)
+        Public ReadOnly Property allSamples As String()
+            Get
+                Return standards.AsList + samples
+            End Get
+        End Property
 
+        Sub New(directory$, Optional patternOfRefer$ = ".+[-]CAL[-]?\d+")
+            Dim mzML As String() = directory _
+                .ListFiles("*.mzML") _
+                .ToArray
+
+            standards = mzML _
+                .Where(Function(path)
+                           Return hasPatternOf(path, patternOfRefer)
+                       End Function) _
+                .ToArray
+            samples = mzML _
+                .Where(Function(path)
+                           Return Not hasPatternOf(path, patternOfRefer)
+                       End Function) _
+                .ToArray
         End Sub
+
+        Private Shared Function hasPatternOf(path$, pattern As String) As Boolean
+            Return Not path _
+                .BaseName _
+                .Match(pattern, RegexICSng) _
+                .StringEmpty
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return $"{samples.Length} samples with {standards.Length} reference point."
+        End Function
     End Class
 End Namespace

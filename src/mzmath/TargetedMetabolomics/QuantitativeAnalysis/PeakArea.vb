@@ -63,7 +63,7 @@ Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Public Module PeakArea
 
@@ -198,7 +198,7 @@ Public Module PeakArea
                 Dim t0 = rawPoints(0)
                 Dim i% = chromatogram _
                     .Which(Function(t)
-                               Return sys.Abs(t0.X - t.Time) <= 0.1
+                               Return stdNum.Abs(t0.X - t.Time) <= 0.1
                            End Function) _
                     (0)
 
@@ -210,7 +210,7 @@ Public Module PeakArea
                 Dim t1 = rawPoints(1)
                 Dim i% = chromatogram _
                     .Which(Function(t)
-                               Return sys.Abs(t1.X - t.Time) <= 0.1
+                               Return stdNum.Abs(t1.X - t.Time) <= 0.1
                            End Function) _
                     (0)
 
