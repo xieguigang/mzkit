@@ -97,7 +97,7 @@ Module test
                 .Where(Function(ion) Not ion.chromatogram Is Nothing) _
                 .Select(Function(ion)
                             Return New NamedValue(Of ChromatogramTick()) With {
-                                .Name = ion.ion.AccID,
+                                .Name = ion.ion.accession,
                                 .Description = ion.ion.ToString,
                                 .Value = ion.chromatogram.Ticks
                             }
