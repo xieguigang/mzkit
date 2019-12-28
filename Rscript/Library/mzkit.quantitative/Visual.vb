@@ -10,7 +10,7 @@ Imports SMRUCC.MassSpectrum.Visualization
 Module Visual
 
     <ExportAPI("standard_curve")>
-    Public Function DrawStandardCurve(model As FitModel, Optional name$ = "", Optional samples As NamedValue(Of Double)() = Nothing) As GraphicsData
+    Public Function DrawStandardCurve(model As StandardCurve, Optional name$ = "", Optional samples As NamedValue(Of Double)() = Nothing) As GraphicsData
         Return StandardCurvesPlot.StandardCurves(model, samples, name)
     End Function
 End Module

@@ -63,7 +63,6 @@ Public Module MRMkit
 
     Sub New()
         REnv.ConsolePrinter.AttachConsoleFormatter(Of IonPair())(AddressOf printIonPairs)
-        REnv.ConsolePrinter.AttachConsoleFormatter(Of FitModel)(AddressOf printLineModel)
         REnv.ConsolePrinter.AttachConsoleFormatter(Of StandardCurve)(AddressOf printLineModel)
     End Sub
 
@@ -77,10 +76,6 @@ Public Module MRMkit
     Private Function printLineModel(line As Object) As String
         If line Is Nothing Then
             Return "NULL"
-        ElseIf line.GetType Is GetType(FitModel) Then
-            With DirectCast(line, FitModel)
-                Return $"{ .Name}: { .LinearRegression.ToString}"
-            End With
         Else
             With DirectCast(line, StandardCurve)
                 Return $"{ .name}: { .linear.ToString}"
@@ -232,11 +227,6 @@ Public Module MRMkit
         Return rawScan.ToDictionary.Regression(calibrates, ISvector, weighted:=autoWeighted).ToArray
     End Function
 
-    <ExportAPI("models")>
-    Public Function Models(detections As StandardCurve()) As FitModel()
-        Return detections.DoCall(AddressOf StandardCurve.GetFitModels)
-    End Function
-
     <ExportAPI("points")>
     Public Function GetLinearPoints(linears As StandardCurve(), name$) As MRMStandards()
         Dim line As StandardCurve = linears _
@@ -253,7 +243,7 @@ Public Module MRMkit
     End Function
 
     <ExportAPI("sample.quantify")>
-    Public Function SampleQuantify(model As FitModel(), file$, ions As IonPair(),
+    Public Function SampleQuantify(model As StandardCurve(), file$, ions As IonPair(),
                                    Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum,
                                    Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As QuantifyScan
         Return MRMSamples.SampleQuantify(model, file, ions, peakAreaMethod, TPAFactors)

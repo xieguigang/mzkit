@@ -70,7 +70,7 @@ Namespace GCMS.QuantifyAnalysis
                             Return New PointF(p.data.TPACalibration, p.content)
                         End Function) _
                 .ToArray
-            Dim model As IFitted = FitModel.CreateLinearRegression(line, True)
+            Dim model As IFitted = Math.StandardCurve.CreateLinearRegression(line, True)
             Return model
         End Function
 
@@ -92,7 +92,7 @@ Namespace GCMS.QuantifyAnalysis
         Public Function LoadStandardCurve(dir$, standards As ROITable(), [IS] As [IS](),
                                           Optional scale As ContentUnits = ContentUnits.ppb,
                                           Optional angleThreshold# = 5,
-                                          Optional snThreshold As Double = 1) As (peaktable As ChromatographyPeaktable(), FitModel())
+                                          Optional snThreshold As Double = 1) As (peaktable As ChromatographyPeaktable(), Math.StandardCurve())
 
             ' 默认这个dir文件夹之中所有的cdf文件都是标准品参考曲线的结果文件
             Dim contentFiles As Dictionary(Of String, UnitValue(Of ContentUnits)) =
@@ -162,16 +162,16 @@ Namespace GCMS.QuantifyAnalysis
 
             ' 将峰面积和浓度数据之间建立线型关系
             Dim standardsTable = standards.ToDictionary(Function(s) s.ID)
-            Dim lines As FitModel() = TPA _
+            Dim lines As Math.StandardCurve() = TPA _
                 .Where(Function(ion) Not ISTable.ContainsKey(ion.Key)) _
                 .Select(Function(target)
                             Dim name$ = target.Key
                             Dim curve = target.Value.ToArray.LinearRegression
                             Dim ISName$ = standardsTable(name).IS
 
-                            Return New FitModel With {
-                                .Name = name,
-                                .LinearRegression = curve,
+                            Return New Math.StandardCurve With {
+                                .name = name,
+                                .linear = curve,
                                 .[IS] = ISTable.TryGetValue(ISName)
                             }
                         End Function) _

@@ -107,7 +107,7 @@ Public Module MRMSamples
     ''' </param>
     ''' <returns>经过定量计算得到的浓度数据</returns>
     Public Function QuantitativeAnalysis(wiff$, ions As IonPair(), calibrates As Standards(), [IS] As [IS](),
-                                         <Out> Optional ByRef model As FitModel() = Nothing,
+                                         <Out> Optional ByRef model As StandardCurve() = Nothing,
                                          <Out> Optional ByRef standardPoints As NamedValue(Of MRMStandards())() = Nothing,
                                          <Out> Optional ByRef X As List(Of DataSet) = Nothing,
                                          <Out> Optional ByRef peaktable As MRMPeakTable() = Nothing,
@@ -119,11 +119,10 @@ Public Module MRMSamples
                                          Optional weighted As Boolean = False) As IEnumerable(Of DataSet)
         Dim standardNames$() = Nothing
         Dim TPAFactors = calibrates.ToDictionary(Function(ion) ion.HMDB, Function(ion) ion.Factor)
-
         ' 扫描标准曲线的样本，然后进行回归建模 
         Dim calWiffRaw$ = externalStandardsWiff Or wiff.AsDefault
-        Dim detections As StandardCurve() =
-            StandardCurveWorker _
+
+        model = StandardCurveWorker _
             .Scan(calWiffRaw, ions,
                   refName:=standardNames,
                   calibrationNamedPattern:=calibrationNamedPattern,
@@ -137,8 +136,7 @@ Public Module MRMSamples
 
         X = New List(Of DataSet)
         isBlank = isBlank Or defaultBlankNames
-        model = detections.DoCall(AddressOf StandardCurve.GetFitModels)
-        standardPoints = detections _
+        standardPoints = model _
             .Select(Function(i)
                         Return New NamedValue(Of MRMStandards())(i.name, i.points)
                     End Function) _
@@ -176,7 +174,7 @@ Public Module MRMSamples
     End Function
 
     <Extension>
-    Public Function SampleQuantify(model As FitModel(), file$, ions As IonPair(),
+    Public Function SampleQuantify(model As StandardCurve(), file$, ions As IonPair(),
                                    Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum,
                                    Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As QuantifyScan
 

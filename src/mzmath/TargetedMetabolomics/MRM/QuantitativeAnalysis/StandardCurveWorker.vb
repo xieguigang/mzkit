@@ -72,7 +72,7 @@ Public Module StandardCurveWorker
     ''' <see cref="NamedValue(Of Double).Description"/>则是AIS/A的结果，即X轴的数据
     ''' </returns>
     <Extension>
-    Public Iterator Function ScanContent(model As FitModel(),
+    Public Iterator Function ScanContent(model As StandardCurve(),
                                          raw$,
                                          ions As IonPair(),
                                          peakAreaMethod As PeakArea.Methods,
@@ -91,13 +91,13 @@ Public Module StandardCurveWorker
         raw = raw.FileName
 
         ' 遍历得到的所有的标准曲线，进行样本之中的浓度的计算
-        For Each metabolite As FitModel In model.Where(Function(m) TPA.ContainsKey(m.Name))
+        For Each metabolite As StandardCurve In model.Where(Function(m) TPA.ContainsKey(m.name))
             Dim AIS As New IonTPA  ' (ROI As DoubleRange, TPA#, baseline#, maxinto#)
             Dim X#
             ' 得到样品之中的峰面积
-            Dim A = TPA(metabolite.Name)
+            Dim A = TPA(metabolite.name)
 
-            If Not metabolite.RequireISCalibration Then
+            If Not metabolite.requireISCalibration Then
                 ' 不需要内标进行校正
                 ' 则X轴的数据直接是代谢物的峰面积数据
                 X = A.area
@@ -113,14 +113,14 @@ Public Module StandardCurveWorker
                 End If
             End If
 
-            If metabolite.LinearRegression Is Nothing Then
-                Call $"Missing metabolite {metabolite.Name} in raw file!".Warning
+            If metabolite.linear Is Nothing Then
+                Call $"Missing metabolite {metabolite.name} in raw file!".Warning
 
                 Continue For
             Else
                 ' 利用峰面积比计算出浓度结果数据
                 ' 然后通过X轴的数据就可以通过标准曲线的线性回归模型计算出浓度了
-                C# = metabolite.LinearRegression(X)
+                C# = metabolite.linear(X)
             End If
 
             ' 这里的C是相当于 cIS/ct = C，则样品的浓度结果应该为 ct = cIS/C
@@ -129,11 +129,11 @@ Public Module StandardCurveWorker
             Dim [IS] As IonPair = names.TryGetValue(metabolite.IS.ID)
             Dim peaktable As New MRMPeakTable With {
                 .content = C,
-                .ID = metabolite.Name,
+                .ID = metabolite.name,
                 .raw = raw,
                 .rtmax = A.peakROI.Max,
                 .rtmin = A.peakROI.Min,
-                .Name = names(metabolite.Name).name,
+                .Name = names(metabolite.name).name,
                 .TPA = A.area,
                 .TPA_IS = AIS.area,
                 .base = A.baseline,
@@ -143,7 +143,7 @@ Public Module StandardCurveWorker
             }
 
             Yield New ContentResult(Of MRMPeakTable) With {
-                .Name = metabolite.Name,
+                .Name = metabolite.name,
                 .Content = C,
                 .X = X,
                 .Peaktable = peaktable
@@ -223,7 +223,7 @@ Public Module StandardCurveWorker
             Dim line As PointF() = StandardCurveWorker _
                 .CreateModelPoints(C, A, ISTPA, CIS, ion.HMDB, ion.Name, points) _
                 .ToArray
-            Dim fit As IFitted = FitModel.CreateLinearRegression(line, weighted)
+            Dim fit As IFitted = StandardCurve.CreateLinearRegression(line, weighted)
             Dim out As New StandardCurve With {
                 .name = ion.HMDB,
                 .linear = fit,
