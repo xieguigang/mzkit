@@ -25,9 +25,7 @@ let CAL = list.files(wiff, pattern = "*.mzML")
 CAL 
 :> write.csv(file = `${dir}/CAL.csv`);
 
-ref <- CAL 
-:> linears(ref, is) 
-:> models;
+ref <- linears(CAL, ref, is);
 
 # print model summary and then do standard curve plot
 let printModel as function(line) {
