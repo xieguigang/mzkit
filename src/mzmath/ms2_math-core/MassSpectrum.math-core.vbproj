@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7A42D5A0-8058-459C-A139-195B6022A710}</ProjectGuid>
+    <ProjectGuid>{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>mzkit</RootNamespace>
-    <AssemblyName>mzkit</AssemblyName>
+    <RootNamespace>SMRUCC.MassSpectrum.Math</RootNamespace>
+    <AssemblyName>SMRUCC.MassSpectrum.Math</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
-    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -19,7 +18,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>mzkit.xml</DocumentationFile>
+    <DocumentationFile>SMRUCC.MassSpectrum.Math.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -28,7 +27,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>mzkit.xml</DocumentationFile>
+    <DocumentationFile>SMRUCC.MassSpectrum.Math.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -48,7 +47,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Debug\</OutputPath>
-    <DocumentationFile>mzkit.xml</DocumentationFile>
+    <DocumentationFile>SMRUCC.MassSpectrum.Math.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -57,17 +56,38 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Release\</OutputPath>
-    <DocumentationFile>mzkit.xml</DocumentationFile>
+    <DocumentationFile>SMRUCC.MassSpectrum.Math.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DocumentationFile>SMRUCC.MassSpectrum.Math.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DocumentationFile>SMRUCC.MassSpectrum.Math.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Biodeep\</OutputPath>
-    <DocumentationFile>mzkit.xml</DocumentationFile>
+    <DocumentationFile>SMRUCC.MassSpectrum.Math.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -76,18 +96,33 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|x64'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\App\</OutputPath>
-    <DocumentationFile>mzkit.xml</DocumentationFile>
+    <OutputPath>bin\x64\Biodeep\</OutputPath>
+    <DocumentationFile>SMRUCC.MassSpectrum.Math.xml</DocumentationFile>
+    <Optimize>false</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <DebugSymbols>true</DebugSymbols>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Biodeep\</OutputPath>
+    <DocumentationFile>SMRUCC.MassSpectrum.Math.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biostack|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Biostack\</OutputPath>
-    <DocumentationFile>mzkit.xml</DocumentationFile>
+    <DocumentationFile>SMRUCC.MassSpectrum.Math.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -95,19 +130,30 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biostack|x64'">
+    <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\App\</OutputPath>
-    <DocumentationFile>mzkit.xml</DocumentationFile>
+    <OutputPath>bin\x64\Biostack\</OutputPath>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>SMRUCC.MassSpectrum.Math.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biostack|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Biostack\</OutputPath>
+    <DocumentationFile>SMRUCC.MassSpectrum.Math.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BioDeep_database|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\BioDeep_database\</OutputPath>
-    <DocumentationFile>mzkit.xml</DocumentationFile>
+    <DocumentationFile>SMRUCC.MassSpectrum.Math.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -115,19 +161,30 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BioDeep_database|x64'">
+    <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\biodeep\biodeepdb_v3\Rscript\R\Library\</OutputPath>
-    <DocumentationFile>mzkit.xml</DocumentationFile>
+    <OutputPath>bin\x64\BioDeep_database\</OutputPath>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>SMRUCC.MassSpectrum.Math.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BioDeep_database|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\BioDeep_database\</OutputPath>
+    <DocumentationFile>SMRUCC.MassSpectrum.Math.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep_UNIX_x64|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Biodeep_UNIX_x64\</OutputPath>
-    <DocumentationFile>mzkit.xml</DocumentationFile>
+    <DocumentationFile>SMRUCC.MassSpectrum.Math.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -135,18 +192,32 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep_UNIX_x64|x64'">
+    <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\..\dist\bin\</OutputPath>
-    <DocumentationFile>mzkit.xml</DocumentationFile>
+    <OutputPath>bin\x64\Biodeep_UNIX_x64\</OutputPath>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>SMRUCC.MassSpectrum.Math.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep_UNIX_x64|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Biodeep_UNIX_x64\</OutputPath>
+    <DocumentationFile>SMRUCC.MassSpectrum.Math.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -165,9 +236,33 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assembly.vb" />
-    <Compile Include="Formula.vb" />
-    <Compile Include="Massbank.vb" />
+    <Compile Include="Chromatogram\AccumulateROI.vb" />
+    <Compile Include="Chromatogram\Chromatogram.vb" />
+    <Compile Include="Chromatogram\ChromatogramTick.vb" />
+    <Compile Include="Chromatogram\Deconvolution\Deconvolution.vb" />
+    <Compile Include="Chromatogram\TICPoint.vb" />
+    <Compile Include="Chromatogram\Quantile.vb" />
+    <Compile Include="Chromatogram\ROI.vb" />
+    <Compile Include="Extensions.vb" />
+    <Compile Include="Ms1\Ms1FeatureExtensions.vb" />
+    <Compile Include="Ms1\PolarityData.vb" />
+    <Compile Include="Ms1\PrecursorType\Extensions.vb" />
+    <Compile Include="Ms1\PrecursorType\Formula\Negative.vb" />
+    <Compile Include="Ms1\PrecursorType\Formula\Positive.vb" />
+    <Compile Include="Ms1\PrecursorType\Provider.vb" />
+    <Compile Include="Ms1\PrecursorType\MolWeight.vb" />
+    <Compile Include="Ms1\PrecursorType\MzCalculator.vb" />
+    <Compile Include="Ms1\Tolerance\PPM.vb" />
+    <Compile Include="Ms1\Tolerance\DeltaMass.vb" />
+    <Compile Include="Ms1\Tolerance\Tolerance.vb" />
+    <Compile Include="Spectra\Models\Fragments.vb" />
+    <Compile Include="Spectra\SpectraEncoder.vb" />
+    <Compile Include="Spectra\Models\PeakMs2.vb" />
+    <Compile Include="Spectra\LibraryMatrixExtensions.vb" />
+    <Compile Include="Spectra\GlobalAlignment.vb" />
+    <Compile Include="Spectra\Models\ms2AlignMatrix.vb" />
+    <Compile Include="Spectra\Models\LibraryMatrix.vb" />
+    <Compile Include="Ms1\ms1.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -183,6 +278,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Ms1\Peaktable.vb" />
+    <Compile Include="Ms1\PrecursorType\PrecursorType.vb" />
+    <Compile Include="Spectra\SpectrumTree\SpectrumCluster.vb" />
+    <Compile Include="Spectra\SpectrumTree\SpectrumTree.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -204,38 +303,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\core\Bio.Assembly\Bio.Assembly.vbproj">
-      <Project>{c699d311-9923-4c19-bf70-5048d0e2cf5d}</Project>
-      <Name>Bio.Assembly</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\Library\R.base\R.base.vbproj">
-      <Project>{6ec3d3f5-f19d-4899-af88-161f6238e6e8}</Project>
-      <Name>R.base</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\Library\R.graphics\R.graphics.vbproj">
-      <Project>{c5c3428c-d64c-4e79-b239-77adc66b1156}</Project>
-      <Name>R.graphics</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\R#\R.vbproj">
-      <Project>{0c2eb77c-39f2-460d-a3f8-ce905f867637}</Project>
-      <Name>R</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\R-terminal\R-cmd.vbproj">
-      <Project>{3a35ac34-f313-4f72-89e9-eacca217bc8d}</Project>
-      <Name>R-cmd</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\BinaryData.vbproj">
-      <Project>{487d7c92-d05a-4908-bf81-e6baba0bf592}</Project>
-      <Name>BinaryData</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\DataStorage\DataStorage.vbproj">
-      <Project>{3c79ae03-a766-4b61-bdc4-824d78481b53}</Project>
-      <Name>DataStorage</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj">
-      <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
-      <Name>47_dotnet_ms-vb_data.framework</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\math-core.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
       <Name>math-core</Name>
@@ -244,18 +311,7 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\src\assembly\assembly\assembly.vbproj">
-      <Project>{95f7d65e-9db1-4605-9fd3-25433277af88}</Project>
-      <Name>assembly</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\src\metadb\Massbank\Massbank.vbproj">
-      <Project>{a686bdf5-077f-47f5-a8dd-c73e6e88363c}</Project>
-      <Name>Massbank</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\src\mzmath\ms2_math-core\MassSpectrum.math-core.vbproj">
-      <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
-      <Name>MassSpectrum.math-core</Name>
-    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
