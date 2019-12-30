@@ -240,14 +240,20 @@ Public Class ProteoWizardCLI : Inherits InteropService
         End If
     End Sub
 
+    Public Shared Function IsAvaiable() As Boolean
+        Return BIN.FileExists(True)
+    End Function
+
+    Const WARN$ = "ProteoWizard is missing or invalid program file format, this web app will not working unless you put ProteoWizard to the location '{0}'!"
+
     Public Shared Sub ConfigProgram(bin As String)
         ProteoWizardCLI._BIN = bin
 
         ' debug echo
-        Call $"msconvert={bin}".__INFO_ECHO
-
-        If Not bin.FileExists Then
-            Call $"ProteoWizard is missing, this web app will not working unless you put ProteoWizard to the location {bin}".Warning
+        If Not IsAvaiable() Then
+            Call WARN.FormatString(bin).Warning
+        Else
+            Call $"msconvert={bin}".__INFO_ECHO
         End If
     End Sub
 
