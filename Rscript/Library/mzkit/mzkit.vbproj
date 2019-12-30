@@ -166,6 +166,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assembly.vb" />
+    <Compile Include="ProteoWizard.vb" />
     <Compile Include="Formula.vb" />
     <Compile Include="Massbank.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -247,6 +248,10 @@
     <ProjectReference Include="..\..\..\src\assembly\assembly\assembly.vbproj">
       <Project>{95f7d65e-9db1-4605-9fd3-25433277af88}</Project>
       <Name>assembly</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\assembly\ProteoWizard.Interop\ProteoWizard.Interop.vbproj">
+      <Project>{ca3ec2d0-bf06-4005-95b7-b73fe39bf336}</Project>
+      <Name>ProteoWizard.Interop</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\src\metadb\Massbank\Massbank.vbproj">
       <Project>{a686bdf5-077f-47f5-a8dd-c73e6e88363c}</Project>
