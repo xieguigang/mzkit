@@ -258,6 +258,8 @@ Public Class ProteoWizardCLI : Inherits InteropService
     End Sub
 
     Public Function Convert2mzML(input$, output$, Optional type As OutFileTypes = OutFileTypes.mzXML) As String
+        Call output.ParentPath.MkDIR
+
         If Strings.LCase(input).EndsWith(".raw.zip") Then
             Return convertWatersRawFile(input, output, type)
         Else
