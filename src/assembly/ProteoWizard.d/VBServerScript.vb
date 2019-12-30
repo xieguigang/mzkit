@@ -213,13 +213,6 @@ Imports SMRUCC.WebCloud.HTTPInternal.Platform
 <[Namespace]("ProteoWizard.d")>
 Public Class VBServerScript : Inherits WebApp
 
-    ''' <summary>
-    ''' + msconvert
-    ''' 
-    ''' ProteoWizard命令行程序的位置
-    ''' </summary>
-    ReadOnly BIN$
-
     Dim taskPool As New ThreadPool
 
     ''' <summary>
@@ -228,13 +221,6 @@ Public Class VBServerScript : Inherits WebApp
     ''' <param name="main"></param>
     Sub New(main As PlatformEngine)
         Call MyBase.New(main)
-
-        BIN = App.GetVariable("bin")
-        Call $"msconvert={BIN}".__INFO_ECHO
-
-        If Not BIN.FileExists Then
-            Call $"ProteoWizard is missing, this web app will not working unless you put ProteoWizard to the location {BIN}".Warning
-        End If
     End Sub
 
     ''' <summary>
@@ -252,7 +238,7 @@ Public Class VBServerScript : Inherits WebApp
         Dim path$ = EnsureZipExtract(NormalizeOSSPath(request.URLParameters("path")))
         Dim out$ = path.ParentPath & "/msconvert"
 
-        Call New ProteoWizardCLI(BIN).Convert2mzML(path, out, ProteoWizardCLI.OutFileTypes.mzXML)
+        Call New ProteoWizardCLI().Convert2mzML(path, out, ProteoWizardCLI.OutFileTypes.mzXML)
         Call "Task complete!".__INFO_ECHO
 
         If Not response Is Nothing Then
@@ -284,7 +270,7 @@ Public Class VBServerScript : Inherits WebApp
         Dim path$ = EnsureZipExtract(normalPath)
         Dim out$ = NormalizeOSSPath(request.URLParameters("to").UrlDecode) Or $"{path.ParentPath}/msconvert".AsDefault
 
-        Call New ProteoWizardCLI(BIN).Convert2mzML(path, out, ProteoWizardCLI.OutFileTypes.mzML)
+        Call New ProteoWizardCLI().Convert2mzML(path, out, ProteoWizardCLI.OutFileTypes.mzML)
         Call "Task complete!".__INFO_ECHO
 
         If Not response Is Nothing Then
