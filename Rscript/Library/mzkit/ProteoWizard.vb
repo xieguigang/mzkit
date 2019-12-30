@@ -21,10 +21,14 @@ Module ProteoWizard
     ''' <returns></returns>
     <ExportAPI("msconvert.ready")>
     Public Function Ready(Optional env As Environment = Nothing) As Boolean
-        If Not ProteoWizardCLI.IsAvaiable Then
+        VBDebugger.Mute = True
+
+        If Not ProteoWizardCLI.IsAvaiable OrElse Not GetServices(env).IsAvailable Then
+            VBDebugger.Mute = False
             Call env.AddMessage(ErrMsg, MSG_TYPES.WRN)
             Return False
         Else
+            VBDebugger.Mute = False
             Return True
         End If
     End Function
