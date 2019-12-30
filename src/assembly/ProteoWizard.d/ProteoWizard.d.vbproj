@@ -177,6 +177,10 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ProteoWizard.Interop\ProteoWizard.Interop.vbproj">
+      <Project>{ca3ec2d0-bf06-4005-95b7-b73fe39bf336}</Project>
+      <Name>ProteoWizard.Interop</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

@@ -102,7 +102,7 @@ Public Class ProteoWizardCLI : Inherits InteropService
     Private Function convertWatersRawFile(input$, output$, type As OutFileTypes) As String
         Dim std$ = ""
 
-        For Each part In MassWolf.SplitDirectory(waters:=input)
+        For Each part In SplitDirectory(waters:=input)
             Dim args$ = New ScriptBuilder(part.In.GetFullPath.CLIPath) +
                 " " +
                 "--mz64" +

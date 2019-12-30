@@ -47,6 +47,7 @@ Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Parallel.Threads
+Imports ProteoWizard.Interop
 Imports SMRUCC.WebCloud.HTTPInternal
 Imports SMRUCC.WebCloud.HTTPInternal.AppEngine
 Imports SMRUCC.WebCloud.HTTPInternal.AppEngine.APIMethods
@@ -79,8 +80,8 @@ Public Class MassWolf : Inherits WebApp
     <Usage("/MassWolf.d/mzXML.vbs?path=<path>")>
     <[GET](GetType(String))>
     Public Function ConvertWatersRaw(request As HttpRequest, response As HttpResponse) As Boolean
-        Dim path$ = EnsureZipExtract(normalizePath(request.URLParameters("path")))
-        Dim out$ = normalizePath(request.URLParameters("to")) Or $"{path.ParentPath}/msconvert".AsDefault
+        Dim path$ = EnsureZipExtract(NormalizeOSSPath(request.URLParameters("path")))
+        Dim out$ = NormalizeOSSPath(request.URLParameters("to")) Or $"{path.ParentPath}/msconvert".AsDefault
 
         For Each part In SplitDirectory(waters:=path)
             Dim args = $"--mzXML {part.In.CLIPath} {(out & "/" & part.Out).CLIPath}"
@@ -92,28 +93,5 @@ Public Class MassWolf : Inherits WebApp
         Call response.SuccessMsg("Run MassWolf task complete!")
 
         Return True
-    End Function
-
-    Public Shared Iterator Function SplitDirectory(waters$) As IEnumerable(Of (In$, Out$))
-        Dim idx = waters.EnumerateFiles("*.IDX") _
-                        .Select(AddressOf BaseName) _
-                        .ToArray
-
-        For Each idxName As String In idx
-            Dim dir$ = App.GetAppSysTempFile(, App.PID) & $"/{idxName}.RAW/"
-            Dim files = waters.EnumerateFiles() _
-                              .Where(Function(file)
-                                         Return file.BaseName.TextEquals(idxName)
-                                     End Function) _
-                              .ToArray
-            Call files.DoEach(Sub(path) path.FileCopy(dir))
-            Call {
-                "_extern.inf", "_FUNCTNS.INF", "_HEADER.TXT", "_INLET.INF"
-            }.DoEach(Sub(path)
-                         Call $"{waters}/{path}".FileCopy(dir)
-                     End Sub)
-
-            Yield (dir.Trim("/"c), $"{idxName}.mzXML")
-        Next
     End Function
 End Class

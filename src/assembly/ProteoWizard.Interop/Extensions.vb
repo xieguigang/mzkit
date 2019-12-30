@@ -80,12 +80,35 @@ Public Module Extensions
         Return path
     End Function
 
-    Friend Function normalizePath(path As String) As String
+    Public Function NormalizeOSSPath(path As String) As String
         ' Add OSS drive location if the given path is a relative path
         If InStr(path, ":\") = 0 AndAlso InStr(path, ":/") = 0 Then
             path = OSS_ROOT & "/" & path
         End If
 
         Return path
+    End Function
+
+    Public Iterator Function SplitDirectory(waters$) As IEnumerable(Of (In$, Out$))
+        Dim idx = waters.EnumerateFiles("*.IDX") _
+                        .Select(AddressOf BaseName) _
+                        .ToArray
+
+        For Each idxName As String In idx
+            Dim dir$ = App.GetAppSysTempFile(, App.PID) & $"/{idxName}.RAW/"
+            Dim files = waters.EnumerateFiles() _
+                              .Where(Function(file)
+                                         Return file.BaseName.TextEquals(idxName)
+                                     End Function) _
+                              .ToArray
+            Call files.DoEach(Sub(path) path.FileCopy(dir))
+            Call {
+                "_extern.inf", "_FUNCTNS.INF", "_HEADER.TXT", "_INLET.INF"
+            }.DoEach(Sub(path)
+                         Call $"{waters}/{path}".FileCopy(dir)
+                     End Sub)
+
+            Yield (dir.Trim("/"c), $"{idxName}.mzXML")
+        Next
     End Function
 End Module

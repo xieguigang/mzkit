@@ -1,51 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::44452a6116208d040e99b3f9b4ef2efa, Assembly\ProteoWizard.d\VBServerScript.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class VBServerScript
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: ConvertTomzXML, ConvertTomzXMLTask, MRMTask
-    ' 
-    ' /********************************************************************************/
+' Class VBServerScript
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: ConvertTomzXML, ConvertTomzXMLTask, MRMTask
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Parallel.Threads
+Imports ProteoWizard.Interop
 Imports SMRUCC.WebCloud.HTTPInternal
 Imports SMRUCC.WebCloud.HTTPInternal.AppEngine
 Imports SMRUCC.WebCloud.HTTPInternal.AppEngine.APIMethods
@@ -248,7 +249,7 @@ Public Class VBServerScript : Inherits WebApp
     Public Function ConvertTomzXML(request As HttpRequest, response As HttpResponse) As Boolean
         ' Deal with the space in file path by url encoding
         ' url decoding for restore the original file path value
-        Dim path$ = EnsureZipExtract(normalizePath(request.URLParameters("path")))
+        Dim path$ = EnsureZipExtract(NormalizeOSSPath(request.URLParameters("path")))
         Dim out$ = path.ParentPath & "/msconvert"
 
         Call New ProteoWizardCLI(BIN).Convert2mzML(path, out, ProteoWizardCLI.OutFileTypes.mzXML)
@@ -279,9 +280,9 @@ Public Class VBServerScript : Inherits WebApp
     Public Function MRMTask(request As HttpRequest, response As HttpResponse) As Boolean
         ' Deal with the space in file path by url encoding
         ' url decoding for restore the original file path value
-        Dim normalPath$ = normalizePath(request.URLParameters("path").UrlDecode)
+        Dim normalPath$ = NormalizeOSSPath(request.URLParameters("path").UrlDecode)
         Dim path$ = EnsureZipExtract(normalPath)
-        Dim out$ = normalizePath(request.URLParameters("to").UrlDecode) Or $"{path.ParentPath}/msconvert".AsDefault
+        Dim out$ = NormalizeOSSPath(request.URLParameters("to").UrlDecode) Or $"{path.ParentPath}/msconvert".AsDefault
 
         Call New ProteoWizardCLI(BIN).Convert2mzML(path, out, ProteoWizardCLI.OutFileTypes.mzML)
         Call "Task complete!".__INFO_ECHO
