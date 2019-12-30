@@ -229,14 +229,7 @@ Public Class ProteoWizardCLI : Inherits InteropService
     End Enum
 
     Shared Sub New()
-        BIN = App.GetVariable("bin")
-
-        ' debug echo
-        Call $"msconvert={BIN}".__INFO_ECHO
-
-        If Not BIN.FileExists Then
-            Call $"ProteoWizard is missing, this web app will not working unless you put ProteoWizard to the location {BIN}".Warning
-        End If
+        Call ProteoWizardCLI.ConfigProgram(bin:=App.GetVariable("bin"))
     End Sub
 
     Sub New(Optional bin$ = Nothing)
@@ -244,6 +237,17 @@ Public Class ProteoWizardCLI : Inherits InteropService
             Me._executableAssembly = ProteoWizardCLI.BIN
         Else
             Me._executableAssembly = bin
+        End If
+    End Sub
+
+    Public Shared Sub ConfigProgram(bin As String)
+        ProteoWizardCLI._BIN = bin
+
+        ' debug echo
+        Call $"msconvert={bin}".__INFO_ECHO
+
+        If Not bin.FileExists Then
+            Call $"ProteoWizard is missing, this web app will not working unless you put ProteoWizard to the location {bin}".Warning
         End If
     End Sub
 
