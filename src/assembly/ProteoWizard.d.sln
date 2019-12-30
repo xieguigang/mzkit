@@ -1,19 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2036
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29521.150
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "modules", "modules", "{8411BC65-D873-4A4B-A364-75E6A73F8205}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ProteoWizard.d", "ProteoWizard.d\ProteoWizard.d.vbproj", "{A70CE8FD-3AFE-47B8-9958-CED1ACD720D9}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "47-dotnet_Microsoft.VisualBasic", "..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj", "{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "47-dotnet_Microsoft.VisualBasic", "..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj", "{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "test", "ProteoWizard.d\test\test.vbproj", "{833A2776-804A-441A-A8B4-6C3612082861}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SMRUCC.WebCloud.HTTPInternal", "..\..\GCModeller\src\runtime\httpd\WebCloud\SMRUCC.HTTPInternal\SMRUCC.WebCloud.HTTPInternal.vbproj", "{FBFC1455-B232-4F16-AFC7-4054A8B864AB}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SMRUCC.WebCloud.HTTPInternal", "..\..\..\GCModeller\src\runtime\httpd\WebCloud\SMRUCC.HTTPInternal\SMRUCC.WebCloud.HTTPInternal.vbproj", "{FBFC1455-B232-4F16-AFC7-4054A8B864AB}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "httpd", "..\..\GCModeller\src\runtime\httpd\httpd\httpd.vbproj", "{CE825E49-0386-4AB1-B452-B104ED3F7DEB}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "httpd", "..\..\..\GCModeller\src\runtime\httpd\httpd\httpd.vbproj", "{CE825E49-0386-4AB1-B452-B104ED3F7DEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
