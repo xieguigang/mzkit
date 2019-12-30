@@ -178,6 +178,10 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\ProteoWizard.Interop\ProteoWizard.Interop.vbproj">
+      <Project>{CA3EC2D0-BF06-4005-95B7-B73FE39BF336}</Project>
+      <Name>ProteoWizard.Interop</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ProteoWizard.d.vbproj">
       <Project>{a70ce8fd-3afe-47b8-9958-ced1acd720d9}</Project>
       <Name>ProteoWizard.d</Name>
