@@ -1,7 +1,7 @@
 require(ProteoWizard);
 
 let sample as string = ?"--samples" || stop("No wiff raw samples data directory provided!");
-let output as string = ?"-output" || `${dirname(sample)}/{basename(sample)}.mzML/` ;
+let output as string = ?"--output"  || `${dirname(sample)}/{basename(sample)}.mzML/` ;
 let wiff as string   = list.files(sample, "*.wiff");
 
 print(`we have ${length(wiff)} raw files data for convert to mzML files`);

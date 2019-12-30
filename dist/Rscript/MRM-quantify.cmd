@@ -1,6 +1,6 @@
 @echo off
 
-SET R="bin/R#.exe"
+SET R="../bin/R#.exe"
 
 SET CAL=""
 SET data=""
