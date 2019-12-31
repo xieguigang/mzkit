@@ -1,60 +1,64 @@
-﻿#Region "Microsoft.VisualBasic::44452a6116208d040e99b3f9b4ef2efa, Assembly\ProteoWizard.d\VBServerScript.vb"
+﻿#Region "Microsoft.VisualBasic::6d3b225f8279c5c31272cd6e4253c410, Assembly\ProteoWizard.d\ProteoWizardCLI.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Class VBServerScript
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Function: ConvertTomzXML, ConvertTomzXMLTask, MRMTask
-' 
-' /********************************************************************************/
+    ' Class ProteoWizardCLI
+    ' 
+    ' 
+    '     Enum OutFileTypes
+    ' 
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: Convert2mzML, convertThermoRawFile, convertWatersRawFile
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
-Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Parallel.Threads
-Imports ProteoWizard.Interop
-Imports SMRUCC.WebCloud.HTTPInternal
-Imports SMRUCC.WebCloud.HTTPInternal.AppEngine
-Imports SMRUCC.WebCloud.HTTPInternal.AppEngine.APIMethods
-Imports SMRUCC.WebCloud.HTTPInternal.Core
-Imports SMRUCC.WebCloud.HTTPInternal.Platform
+Imports System.ComponentModel
+Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.CommandLine.InteropService
+Imports Microsoft.VisualBasic.FileIO
+Imports Microsoft.VisualBasic.Scripting.SymbolBuilder
 
 ''' <summary>
-''' VB server script
+''' 
 ''' </summary>
 ''' <remarks>
 ''' Usage: msconvert [options] [filemasks]
@@ -210,73 +214,111 @@ Imports SMRUCC.WebCloud.HTTPInternal.Platform
 ''' ProteoWizard Analysis: 3.0.10650 (2017-3-27)
 ''' Build date: Mar 28 2017 00:21:42
 ''' </remarks>
-<[Namespace]("ProteoWizard.d")>
-Public Class VBServerScript : Inherits WebApp
-
-    Dim taskPool As New ThreadPool
+Public Class ProteoWizardCLI : Inherits InteropService
 
     ''' <summary>
-    ''' 在这个模块之中只负责调用格式转换程序的命令行接口
+    ''' + msconvert
+    ''' 
+    ''' ProteoWizard命令行程序的位置
     ''' </summary>
-    ''' <param name="main"></param>
-    Sub New(main As PlatformEngine)
-        Call MyBase.New(main)
+    Public Shared ReadOnly Property BIN As String
+
+    Public Enum OutFileTypes
+        <Description("--mzXML")> mzXML
+        <Description("--mzML")> mzML
+    End Enum
+
+    Shared Sub New()
+        Call ProteoWizardCLI.ConfigProgram(bin:=App.GetVariable("bin"))
     End Sub
 
-    ''' <summary>
-    ''' 如果源文件是``.D``文件夹，则在这个函数的输入文件必须是一个zip文件
-    ''' </summary>
-    ''' <param name="request"></param>
-    ''' <param name="response"></param>
-    ''' <returns></returns>
-    <ExportAPI("/ProteoWizard.d/mzXML.vbs")>
-    <Usage("/ProteoWizard.d/mzXML.vbs?path=<path>")>
-    <[GET](GetType(String))>
-    Public Function ConvertTomzXML(request As HttpRequest, response As HttpResponse) As Boolean
-        ' Deal with the space in file path by url encoding
-        ' url decoding for restore the original file path value
-        Dim path$ = EnsureZipExtract(NormalizeOSSPath(request.URLParameters("path")))
-        Dim out$ = path.ParentPath & "/msconvert"
-
-        Call New ProteoWizardCLI().Convert2mzML(path, out, ProteoWizardCLI.OutFileTypes.mzXML)
-        Call "Task complete!".__INFO_ECHO
-
-        If Not response Is Nothing Then
-            Call response.SuccessMsg("Task complete!")
+    Sub New(Optional bin$ = Nothing)
+        If bin.StringEmpty Then
+            Me._executableAssembly = ProteoWizardCLI.BIN
+        Else
+            Me._executableAssembly = bin
         End If
+    End Sub
 
-        Return True
+    Public Shared Function IsAvaiable() As Boolean
+        Return BIN.FileExists(True)
     End Function
 
-    <ExportAPI("/ProteoWizard.d/mzXML.task.vbs")>
-    <Usage("/ProteoWizard.d/mzXML.task.vbs?path=<path>")>
-    <[GET](GetType(String))>
-    Public Function ConvertTomzXMLTask(request As HttpRequest, response As HttpResponse) As Boolean
-        Dim task = Sub() ConvertTomzXML(request, Nothing)
+    Const WARN$ = "ProteoWizard is missing or invalid program file format, this web app will not working unless you put ProteoWizard to the location '{0}'!"
 
-        Call taskPool.RunTask(task)
-        Call response.SuccessMsg("Task pending...")
+    Public Shared Sub ConfigProgram(bin As String)
+        ProteoWizardCLI._BIN = bin
 
-        Return True
+        ' debug echo
+        If Not IsAvaiable() Then
+            Call WARN.FormatString(bin).Warning
+        Else
+            Call $"msconvert={bin}".__INFO_ECHO
+        End If
+    End Sub
+
+    Public Function Convert2mzML(input$, output$, Optional type As OutFileTypes = OutFileTypes.mzXML) As String
+        Call output.ParentPath.MkDIR
+
+        If Strings.LCase(input).EndsWith(".raw.zip") Then
+            Return convertWatersRawFile(input, output, type)
+        Else
+            Return convertThermoRawFile(input, output, type)
+        End If
     End Function
 
-    <ExportAPI("/ProteoWizard.d/MRM.vbs")>
-    <Usage("/ProteoWizard.d/MRM.vbs?path=<path>&to=<path>")>
-    <[GET](GetType(String))>
-    Public Function MRMTask(request As HttpRequest, response As HttpResponse) As Boolean
-        ' Deal with the space in file path by url encoding
-        ' url decoding for restore the original file path value
-        Dim normalPath$ = NormalizeOSSPath(request.URLParameters("path").UrlDecode)
-        Dim path$ = EnsureZipExtract(normalPath)
-        Dim out$ = NormalizeOSSPath(request.URLParameters("to").UrlDecode) Or $"{path.ParentPath}/msconvert".AsDefault
+    Private Function convertThermoRawFile(input$, output$, type As OutFileTypes) As String
+        Dim std$ = ""
 
-        Call New ProteoWizardCLI().Convert2mzML(path, out, ProteoWizardCLI.OutFileTypes.mzML)
-        Call "Task complete!".__INFO_ECHO
+        Dim args$ = New ScriptBuilder(input.GetFullPath.CLIPath) +
+               " " +
+               "--mz64" +
+               type.Description +
+               "--zlib" +
+               "--filter" +
+               """msLevel 1-2""" +
+               "--ignoreUnknownInstrumentError" +
+              $"-o {output.GetDirectoryFullPath.CLIPath}"
 
-        If Not response Is Nothing Then
-            Call response.SuccessMsg("Task complete!")
-        End If
+        Call input.__INFO_ECHO
+        Call args.SetValue(args.TrimNewLine(" "))
 
-        Return True
+        Dim proc = Me.RunProgram(args, )
+        proc.Run()
+        std = proc.StandardOutput
+
+        Return std
+    End Function
+
+    Private Function convertWatersRawFile(input$, output$, type As OutFileTypes) As String
+        Dim std$ = ""
+
+        For Each part In SplitDirectory(waters:=input)
+            Dim args$ = New ScriptBuilder(part.In.GetFullPath.CLIPath) +
+                " " +
+                "--mz64" +
+                type.Description +
+                "--zlib" +
+                "--filter" +
+                """msLevel 1-2""" +
+                "--ignoreUnknownInstrumentError" +
+               $"-o {output.GetDirectoryFullPath.CLIPath}"
+
+            Call part.Out.__INFO_ECHO
+            Call args.SetValue(args.TrimNewLine(" "))
+
+            Dim proc = Me.RunProgram(args,)
+            proc.Run()
+            std = std & vbCrLf & proc.StandardOutput
+
+            ' cleanup filesystem for avoid file system crash
+            Try
+                Call FileSystem.DeleteDirectory(part.In.GetFullPath, DeleteDirectoryOption.DeleteAllContents)
+            Catch ex As Exception
+
+            End Try
+        Next
+
+        Return std
     End Function
 End Class

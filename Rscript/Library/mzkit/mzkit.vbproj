@@ -96,13 +96,15 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biostack|x64'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\App\</OutputPath>
+    <OutputPath>..\..\..\dist\bin\</OutputPath>
     <DocumentationFile>mzkit.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BioDeep_database|AnyCPU'">
     <DefineTrace>true</DefineTrace>
@@ -166,6 +168,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assembly.vb" />
+    <Compile Include="ProteoWizard.vb" />
     <Compile Include="Formula.vb" />
     <Compile Include="Massbank.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -240,6 +243,10 @@
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
       <Name>math-core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Datavisualization.Network\Network.GraphTheory.vbproj">
+      <Project>{076315ee-b598-40dc-9280-c71cdf9b6a48}</Project>
+      <Name>Network.GraphTheory</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
@@ -248,6 +255,10 @@
       <Project>{95f7d65e-9db1-4605-9fd3-25433277af88}</Project>
       <Name>assembly</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\src\assembly\ProteoWizard.Interop\ProteoWizard.Interop.vbproj">
+      <Project>{ca3ec2d0-bf06-4005-95b7-b73fe39bf336}</Project>
+      <Name>ProteoWizard.Interop</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\src\metadb\Massbank\Massbank.vbproj">
       <Project>{a686bdf5-077f-47f5-a8dd-c73e6e88363c}</Project>
       <Name>Massbank</Name>
@@ -255,6 +266,14 @@
     <ProjectReference Include="..\..\..\src\mzmath\ms2_math-core\MassSpectrum.math-core.vbproj">
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
       <Name>MassSpectrum.math-core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\visualize\KCF\KCF.Graph\KCF.Graph.vbproj">
+      <Project>{c60416d4-b3e2-45e5-bfe0-90d5021647f9}</Project>
+      <Name>KCF.Graph</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\visualize\KCF\KCF.IO\KCF.IO.vbproj">
+      <Project>{1bafa2bc-68b2-4ee0-9235-c60fae3377a0}</Project>
+      <Name>KCF.IO</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

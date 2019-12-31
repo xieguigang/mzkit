@@ -56,6 +56,23 @@ Namespace ASCII.MSN
             Dim metaPeaksFile As String = $"{data.ParentPath}/{data.BaseName.BaseName}.peak-table.txt"
             Dim peaks As PeakTable() = PeakTable.ParseTable(metaPeaksFile)
             Dim ions As Dictionary(Of String, MsnList) = MsnList.GetMsnList(data).ToDictionary(Function(p) p.id)
+            Dim ionMsn As MsnList
+
+            For Each peak As PeakTable In peaks
+                ionMsn = ions.TryGetValue(peak.id)
+
+                If ionMsn Is Nothing Then
+                    Call $"Missing msn peaks for '{peak.id}'!".Warning
+                    Continue For
+                End If
+
+                Dim ion As New MGF.Ions With {
+                    .Peaks = ionMsn.ms2,
+                    .Accession = peak.id
+                }
+
+                Yield ion
+            Next
         End Function
     End Module
 End Namespace

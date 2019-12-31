@@ -56,7 +56,11 @@ Imports SMRUCC.MassSpectrum.Math.Chromatogram
 Imports SMRUCC.MassSpectrum.Math.MRM
 Imports SMRUCC.MassSpectrum.Math.MRM.Data
 Imports SMRUCC.MassSpectrum.Math.MRM.Models
+Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Interop
 Imports REnv = SMRUCC.Rsharp.Runtime.Internal
+Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
 Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
 
 <Package("mzkit.mrm")>
@@ -163,6 +167,50 @@ Public Module MRMkit
         End If
     End Function
 
+    ''' <summary>
+    ''' Create model of the MRM raw files
+    ''' </summary>
+    ''' <param name="convertDir">A directory data for read MRM sample raw files.</param>
+    ''' <param name="patternOfRef">File name pattern for filter reference data.</param>
+    ''' <param name="patternOfBlank">File name pattern for filter blank controls.</param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("wiff.rawfiles")>
+    Public Function WiffRawFile(<RRawVectorArgument>
+                                convertDir As Object,
+                                Optional patternOfRef$ = ".+[-]CAL[-]?\d+",
+                                Optional patternOfBlank$ = "KB[-]?\d+",
+                                Optional env As Environment = Nothing) As Object
+
+        If REnv.Invokes.isEmpty(convertDir) Then
+            Return REnv.debug.stop("No raw files data provided!", env)
+        End If
+
+        Dim dataType As Type = convertDir.GetType
+
+        If dataType Is GetType(String) Then
+            Return New RawFile(convertDir, patternOfRef, patternOfBlank)
+        ElseIf dataType Is GetType(String()) Then
+            With DirectCast(convertDir, String())
+                If .Length = 1 Then
+                    Return New RawFile(.GetValue(Scan0), patternOfRef, patternOfBlank)
+                Else
+                    Return New RawFile(.GetValue(0), .GetValue(1), patternOfRef, patternOfBlank)
+                End If
+            End With
+        ElseIf dataType Is GetType(Rlist) Then
+            ' samples/reference
+            With DirectCast(convertDir, Rlist)
+                Dim samples As String = convertDir!samples
+                Dim reference As String = convertDir!reference
+
+                Return New RawFile(samples, reference, patternOfRef, patternOfBlank)
+            End With
+        Else
+            Return Message.InCompatibleType(GetType(String()), dataType, env)
+        End If
+    End Function
+
     <ExportAPI("MRM.peaks")>
     Public Function ScanPeakTable(mzML$, ions As IonPair(),
                                   Optional peakAreaMethod% = 1,
@@ -228,6 +276,12 @@ Public Module MRMkit
         Return rawScan.ToDictionary.Regression(calibrates, ISvector, weighted:=autoWeighted).ToArray
     End Function
 
+    ''' <summary>
+    ''' Get reference input points
+    ''' </summary>
+    ''' <param name="linears"></param>
+    ''' <param name="name">The metabolite id</param>
+    ''' <returns></returns>
     <ExportAPI("points")>
     Public Function GetLinearPoints(linears As StandardCurve(), name$) As MRMStandards()
         Dim line As StandardCurve = linears _
@@ -243,6 +297,15 @@ Public Module MRMkit
         End If
     End Function
 
+    ''' <summary>
+    ''' Do sample quantify
+    ''' </summary>
+    ''' <param name="model"></param>
+    ''' <param name="file">The sample raw file its file path.</param>
+    ''' <param name="ions"></param>
+    ''' <param name="peakAreaMethod"></param>
+    ''' <param name="TPAFactors"></param>
+    ''' <returns></returns>
     <ExportAPI("sample.quantify")>
     Public Function SampleQuantify(model As StandardCurve(), file$, ions As IonPair(),
                                    Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum,
@@ -250,11 +313,22 @@ Public Module MRMkit
         Return MRMSamples.SampleQuantify(model, file, ions, peakAreaMethod, TPAFactors)
     End Function
 
+    ''' <summary>
+    ''' Write peak data which is extract from the raw file with given ion pairs data
+    ''' </summary>
+    ''' <param name="MRMPeaks"></param>
+    ''' <param name="file">The output csv file path</param>
+    ''' <returns></returns>
     <ExportAPI("write.MRMpeaks")>
     Public Function writeMRMpeaktable(MRMPeaks As MRMPeakTable(), file$) As Boolean
         Return MRMPeaks.SaveTo(file, silent:=True)
     End Function
 
+    ''' <summary>
+    ''' Get quantify result
+    ''' </summary>
+    ''' <param name="fileScans"></param>
+    ''' <returns></returns>
     <ExportAPI("result")>
     Public Function GetQuantifyResult(fileScans As QuantifyScan()) As DataSet()
         Return fileScans.Select(Function(file) file.quantify).ToArray

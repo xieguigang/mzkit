@@ -54,6 +54,9 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Imports ChEBIRepo = SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI.DATA
 Imports REnv = SMRUCC.Rsharp.Runtime.Internal.Invokes.base
 
+''' <summary>
+''' Metabolite annotation database toolkit
+''' </summary>
 <Package("mzkit.massbank")>
 Module Massbank
 

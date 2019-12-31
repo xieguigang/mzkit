@@ -1,5 +1,5 @@
 # imports mzkit library modules
-imports ["mzkit.mrm", "mzkit.quantify.visual"] from "mzkit.quantitative.dll";
+imports ["mzkit.mrm", "mzkit.quantify.visual"] from "mzkit.quantify.dll";
 
 # config of the standard curve data files
 let wiff as string     = ?"--Cal"    || stop("No standard curve data provides!");
@@ -32,7 +32,7 @@ let printModel as function(line) {
 	# get compound id name
 	let id as string = line 
 	:> as.object 
-	:> do.call("Name");
+	:> do.call("name");
 	
 	# view summary result
 	print(line);
@@ -63,7 +63,7 @@ list.files(wiff, pattern = "*.mzML")
 let scans = [];
 
 for(sample.mzML in list.files(wiff, pattern = "*.mzML")) {
-	let peakfile as string = `{dir}/${basename(sample.mzML)}.csv`;
+	let peakfile as string = `${dir}/${basename(sample.mzML)}.csv`;
 	let result = ref 
 		:> sample.quantify(sample.mzML, ions, 0, NULL);
 	
@@ -77,6 +77,7 @@ for(sample.mzML in list.files(wiff, pattern = "*.mzML")) {
 	scans <- scans << result;
 }
 
+print("Sample raw files that we scans:");
 print(length(scans));
 
 # save the MRM quantify result

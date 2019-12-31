@@ -8,17 +8,17 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("Chemoinformatics toolkit for mass spectrum data analysis")>
-<Assembly: AssemblyDescription("Chemoinformatics toolkit for mass spectrum data analysis")>
-<Assembly: AssemblyCompany("BioNovoGene")>
-<Assembly: AssemblyProduct("mzkit")>
-<Assembly: AssemblyCopyright("Copyright © BioNovoGene 2019")>
-<Assembly: AssemblyTrademark("mzkit")>
+<Assembly: AssemblyTitle("ProteoWizard.Interop")>
+<Assembly: AssemblyDescription("")>
+<Assembly: AssemblyCompany("")>
+<Assembly: AssemblyProduct("ProteoWizard.Interop")>
+<Assembly: AssemblyCopyright("Copyright ©  2019")>
+<Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>
 
 'The following GUID is for the ID of the typelib if this project is exposed to COM
-<Assembly: Guid("cb13fde5-50c9-4dd3-a626-f00b88cde59d")>
+<Assembly: Guid("15a973ee-a9e9-4e23-b03b-9871b21d742b")>
 
 ' Version information for an assembly consists of the following four values:
 '

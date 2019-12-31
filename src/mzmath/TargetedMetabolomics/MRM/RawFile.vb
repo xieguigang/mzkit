@@ -54,6 +54,11 @@ Namespace MRM.Models
 
         Public Property samples As String()
         Public Property standards As String()
+        ''' <summary>
+        ''' Blank controls of the <see cref="standards"/> reference
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property blanks As String()
 
         Public ReadOnly Property allSamples As String()
             Get
@@ -61,7 +66,7 @@ Namespace MRM.Models
             End Get
         End Property
 
-        Sub New(directory$, Optional patternOfRefer$ = ".+[-]CAL[-]?\d+")
+        Sub New(directory$, Optional patternOfRefer$ = ".+[-]CAL[-]?\d+", Optional patternOfBlanks$ = "KB[-]?\d+")
             Dim mzML As String() = directory _
                 .ListFiles("*.mzML") _
                 .ToArray
@@ -71,12 +76,46 @@ Namespace MRM.Models
                            Return hasPatternOf(path, patternOfRefer)
                        End Function) _
                 .ToArray
+            blanks = mzML _
+                .Where(Function(path)
+                           Return hasPatternOf(path, patternOfBlanks)
+                       End Function) _
+                .ToArray
             samples = mzML _
                 .Where(Function(path)
-                           Return Not hasPatternOf(path, patternOfRefer)
+                           Return Not hasPatternOf(path, patternOfRefer) AndAlso
+                                  Not hasPatternOf(path, patternOfBlanks)
                        End Function) _
                 .ToArray
         End Sub
+
+        Sub New(sampleDir$, referenceDir$, Optional patternOfRefer$ = ".+[-]CAL[-]?\d+", Optional patternOfBlanks$ = "KB[-]?\d+")
+            Dim mzML = referenceDir.ListFiles("*.mzML").ToArray
+
+            samples = sampleDir.ListFiles("*.mzML").ToArray
+            standards = mzML _
+               .Where(Function(path)
+                          Return hasPatternOf(path, patternOfRefer)
+                      End Function) _
+               .ToArray
+            blanks = mzML _
+                .Where(Function(path)
+                           Return hasPatternOf(path, patternOfBlanks)
+                       End Function) _
+                .ToArray
+        End Sub
+
+        ''' <summary>
+        ''' Get raw file list
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function GetRawFileList() As Dictionary(Of String, String())
+            Return New Dictionary(Of String, String()) From {
+                {NameOf(standards), standards},
+                {NameOf(blanks), blanks},
+                {NameOf(samples), samples}
+            }
+        End Function
 
         Private Shared Function hasPatternOf(path$, pattern As String) As Boolean
             Return Not path _
@@ -86,7 +125,11 @@ Namespace MRM.Models
         End Function
 
         Public Overrides Function ToString() As String
-            Return $"{samples.Length} samples with {standards.Length} reference point."
+            If blanks.IsNullOrEmpty Then
+                Return $"{samples.Length} samples with {standards.Length} reference point."
+            Else
+                Return $"{samples.Length} samples with {standards.Length} reference point and {blanks.Length} blanks."
+            End If
         End Function
     End Class
 End Namespace
