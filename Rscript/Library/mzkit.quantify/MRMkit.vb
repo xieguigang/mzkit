@@ -163,6 +163,11 @@ Public Module MRMkit
         End If
     End Function
 
+    <ExportAPI("wiff.rawfiles")>
+    Public Function WiffRawFile(convertDir$, Optional patternOfRef$ = ".+[-]CAL[-]?\d+", Optional patternOfBlank$ = "KB[-]?\d+") As RawFile
+        Return New RawFile(convertDir, patternOfRef, patternOfBlank)
+    End Function
+
     <ExportAPI("MRM.peaks")>
     Public Function ScanPeakTable(mzML$, ions As IonPair(),
                                   Optional peakAreaMethod% = 1,
