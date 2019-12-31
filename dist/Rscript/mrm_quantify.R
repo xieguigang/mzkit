@@ -77,6 +77,7 @@ for(sample.mzML in list.files(wiff, pattern = "*.mzML")) {
 	scans <- scans << result;
 }
 
+print("Sample raw files that we scans:");
 print(length(scans));
 
 # save the MRM quantify result
