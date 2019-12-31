@@ -8,12 +8,12 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("mzkit")>
-<Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("")>
+<Assembly: AssemblyTitle("Chemoinformatics toolkit for mass spectrum data analysis")>
+<Assembly: AssemblyDescription("Chemoinformatics toolkit for mass spectrum data analysis")>
+<Assembly: AssemblyCompany("BioNovoGene")>
 <Assembly: AssemblyProduct("mzkit")>
-<Assembly: AssemblyCopyright("Copyright ©  2019")>
-<Assembly: AssemblyTrademark("")>
+<Assembly: AssemblyCopyright("Copyright © BioNovoGene 2019")>
+<Assembly: AssemblyTrademark("mzkit")>
 
 <Assembly: ComVisible(False)>
 
