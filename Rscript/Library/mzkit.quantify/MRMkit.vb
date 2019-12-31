@@ -276,6 +276,12 @@ Public Module MRMkit
         Return rawScan.ToDictionary.Regression(calibrates, ISvector, weighted:=autoWeighted).ToArray
     End Function
 
+    ''' <summary>
+    ''' Get reference input points
+    ''' </summary>
+    ''' <param name="linears"></param>
+    ''' <param name="name">The metabolite id</param>
+    ''' <returns></returns>
     <ExportAPI("points")>
     Public Function GetLinearPoints(linears As StandardCurve(), name$) As MRMStandards()
         Dim line As StandardCurve = linears _
@@ -291,6 +297,15 @@ Public Module MRMkit
         End If
     End Function
 
+    ''' <summary>
+    ''' Do sample quantify
+    ''' </summary>
+    ''' <param name="model"></param>
+    ''' <param name="file">The sample raw file its file path.</param>
+    ''' <param name="ions"></param>
+    ''' <param name="peakAreaMethod"></param>
+    ''' <param name="TPAFactors"></param>
+    ''' <returns></returns>
     <ExportAPI("sample.quantify")>
     Public Function SampleQuantify(model As StandardCurve(), file$, ions As IonPair(),
                                    Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum,
@@ -298,11 +313,22 @@ Public Module MRMkit
         Return MRMSamples.SampleQuantify(model, file, ions, peakAreaMethod, TPAFactors)
     End Function
 
+    ''' <summary>
+    ''' Write peak data which is extract from the raw file with given ion pairs data
+    ''' </summary>
+    ''' <param name="MRMPeaks"></param>
+    ''' <param name="file">The output csv file path</param>
+    ''' <returns></returns>
     <ExportAPI("write.MRMpeaks")>
     Public Function writeMRMpeaktable(MRMPeaks As MRMPeakTable(), file$) As Boolean
         Return MRMPeaks.SaveTo(file, silent:=True)
     End Function
 
+    ''' <summary>
+    ''' Get quantify result
+    ''' </summary>
+    ''' <param name="fileScans"></param>
+    ''' <returns></returns>
     <ExportAPI("result")>
     Public Function GetQuantifyResult(fileScans As QuantifyScan()) As DataSet()
         Return fileScans.Select(Function(file) file.quantify).ToArray
