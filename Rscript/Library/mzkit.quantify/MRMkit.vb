@@ -176,7 +176,8 @@ Public Module MRMkit
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("wiff.rawfiles")>
-    Public Function WiffRawFile(<RRawVectorArgument> convertDir As Object,
+    Public Function WiffRawFile(<RRawVectorArgument>
+                                convertDir As Object,
                                 Optional patternOfRef$ = ".+[-]CAL[-]?\d+",
                                 Optional patternOfBlank$ = "KB[-]?\d+",
                                 Optional env As Environment = Nothing) As Object
