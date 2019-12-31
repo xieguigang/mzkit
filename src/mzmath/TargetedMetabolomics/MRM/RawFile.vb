@@ -89,6 +89,22 @@ Namespace MRM.Models
                 .ToArray
         End Sub
 
+        Sub New(sampleDir$, referenceDir$, Optional patternOfRefer$ = ".+[-]CAL[-]?\d+", Optional patternOfBlanks$ = "KB[-]?\d+")
+            Dim mzML = referenceDir.ListFiles("*.mzML").ToArray
+
+            samples = sampleDir.ListFiles("*.mzML").ToArray
+            standards = mzML _
+               .Where(Function(path)
+                          Return hasPatternOf(path, patternOfRefer)
+                      End Function) _
+               .ToArray
+            blanks = mzML _
+                .Where(Function(path)
+                           Return hasPatternOf(path, patternOfBlanks)
+                       End Function) _
+                .ToArray
+        End Sub
+
         ''' <summary>
         ''' Get raw file list
         ''' </summary>

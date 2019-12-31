@@ -56,7 +56,11 @@ Imports SMRUCC.MassSpectrum.Math.Chromatogram
 Imports SMRUCC.MassSpectrum.Math.MRM
 Imports SMRUCC.MassSpectrum.Math.MRM.Data
 Imports SMRUCC.MassSpectrum.Math.MRM.Models
+Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Interop
 Imports REnv = SMRUCC.Rsharp.Runtime.Internal
+Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
 Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
 
 <Package("mzkit.mrm")>
@@ -164,8 +168,34 @@ Public Module MRMkit
     End Function
 
     <ExportAPI("wiff.rawfiles")>
-    Public Function WiffRawFile(convertDir$, Optional patternOfRef$ = ".+[-]CAL[-]?\d+", Optional patternOfBlank$ = "KB[-]?\d+") As RawFile
-        Return New RawFile(convertDir, patternOfRef, patternOfBlank)
+    Public Function WiffRawFile(<RRawVectorArgument> convertDir As Object,
+                                Optional patternOfRef$ = ".+[-]CAL[-]?\d+",
+                                Optional patternOfBlank$ = "KB[-]?\d+",
+                                Optional env As Environment = Nothing) As Object
+
+        If REnv.Invokes.isEmpty(convertDir) Then
+            Return REnv.debug.stop("No raw files data provided!", env)
+        End If
+
+        Dim dataType As Type = convertDir.GetType
+
+        If dataType Is GetType(String) Then
+            Return New RawFile(convertDir, patternOfRef, patternOfBlank)
+        ElseIf dataType Is GetType(String()) Then
+            With DirectCast(convertDir, String())
+                Return New RawFile(.GetValue(0), .GetValue(1), patternOfRef, patternOfBlank)
+            End With
+        ElseIf dataType Is GetType(Rlist) Then
+            ' samples/reference
+            With DirectCast(convertDir, Rlist)
+                Dim samples As String = convertDir!samples
+                Dim reference As String = convertDir!reference
+
+                Return New RawFile(samples, reference, patternOfRef, patternOfBlank)
+            End With
+        Else
+            Return Message.InCompatibleType(GetType(String()), dataType, env)
+        End If
     End Function
 
     <ExportAPI("MRM.peaks")>
