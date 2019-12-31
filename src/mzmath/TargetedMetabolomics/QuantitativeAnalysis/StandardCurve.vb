@@ -4,7 +4,6 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports SMRUCC.MassSpectrum.Math.MRM.Data
-Imports SMRUCC.MassSpectrum.Math.MRM.Models
 
 ''' <summary>
 ''' The linear model of the targeted metabolism model data.(标准曲线模型)

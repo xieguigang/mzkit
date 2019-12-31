@@ -8,8 +8,8 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("mzkit.quantitative")>
-<Assembly: AssemblyDescription("")>
+<Assembly: AssemblyTitle("Targeted Metabolomics")>
+<Assembly: AssemblyDescription("Library of quantify module from mzkit")>
 <Assembly: AssemblyCompany("")>
 <Assembly: AssemblyProduct("mzkit.quantitative")>
 <Assembly: AssemblyCopyright("Copyright ©  2019")>
