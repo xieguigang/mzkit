@@ -23,7 +23,7 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "R-cmd", "..\..\GCModeller\s
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "R", "R", "{F5A1DAFA-58B8-485A-813E-EADD23E1B80F}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "mzkit.quantify", "Library\mzkit.quantitative\mzkit.quantify.vbproj", "{77BA269A-2995-4737-80D3-EF533BAA69CD}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "mzkit.quantify", "Library\mzkit.quantify\mzkit.quantify.vbproj", "{77BA269A-2995-4737-80D3-EF533BAA69CD}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "R.base", "..\..\GCModeller\src\R-sharp\Library\R.base\R.base.vbproj", "{6EC3D3F5-F19D-4899-AF88-161F6238E6E8}"
 EndProject
