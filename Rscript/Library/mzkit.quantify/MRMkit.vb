@@ -192,7 +192,11 @@ Public Module MRMkit
             Return New RawFile(convertDir, patternOfRef, patternOfBlank)
         ElseIf dataType Is GetType(String()) Then
             With DirectCast(convertDir, String())
-                Return New RawFile(.GetValue(0), .GetValue(1), patternOfRef, patternOfBlank)
+                If .Length = 1 Then
+                    Return New RawFile(.GetValue(Scan0), patternOfRef, patternOfBlank)
+                Else
+                    Return New RawFile(.GetValue(0), .GetValue(1), patternOfRef, patternOfBlank)
+                End If
             End With
         ElseIf dataType Is GetType(Rlist) Then
             ' samples/reference
