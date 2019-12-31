@@ -167,6 +167,14 @@ Public Module MRMkit
         End If
     End Function
 
+    ''' <summary>
+    ''' Create model of the MRM raw files
+    ''' </summary>
+    ''' <param name="convertDir">A directory data for read MRM sample raw files.</param>
+    ''' <param name="patternOfRef">File name pattern for filter reference data.</param>
+    ''' <param name="patternOfBlank">File name pattern for filter blank controls.</param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("wiff.rawfiles")>
     Public Function WiffRawFile(<RRawVectorArgument> convertDir As Object,
                                 Optional patternOfRef$ = ".+[-]CAL[-]?\d+",
