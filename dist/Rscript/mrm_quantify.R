@@ -32,7 +32,7 @@ let printModel as function(line) {
 	# get compound id name
 	let id as string = line 
 	:> as.object 
-	:> do.call("Name");
+	:> do.call("name");
 	
 	# view summary result
 	print(line);
@@ -63,7 +63,7 @@ list.files(wiff, pattern = "*.mzML")
 let scans = [];
 
 for(sample.mzML in list.files(wiff, pattern = "*.mzML")) {
-	let peakfile as string = `{dir}/${basename(sample.mzML)}.csv`;
+	let peakfile as string = `${dir}/${basename(sample.mzML)}.csv`;
 	let result = ref 
 		:> sample.quantify(sample.mzML, ions, 0, NULL);
 	
