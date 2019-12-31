@@ -1,5 +1,5 @@
 # imports mzkit library modules
-imports ["mzkit.mrm", "mzkit.quantify.visual"] from "mzkit.quantitative.dll";
+imports ["mzkit.mrm", "mzkit.quantify.visual"] from "mzkit.quantify.dll";
 
 # config of the standard curve data files
 let wiff as string     = ?"--Cal"    || stop("No standard curve data provides!");
