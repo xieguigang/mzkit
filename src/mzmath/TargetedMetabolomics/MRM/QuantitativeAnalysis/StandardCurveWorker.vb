@@ -235,11 +235,18 @@ Namespace MRM
                 Dim ISTPA As Double()
 
                 If ISA Is Nothing Then
-                    ISTPA = Nothing
+                    ISTPA = {}
                 Else
                     ISTPA = rawLevels _
                         .Select(ISA.getByLevel) _
                         .ToArray
+                End If
+
+                If blankPoints.Length > 0 Then
+                    Dim baseline = blankPoints.Average
+
+                    A = A.Select(Function(xa) xa - baseline).ToArray
+                    ISTPA = ISTPA.Select(Function(xa) xa - baseline).ToArray
                 End If
 
                 Dim line As PointF() = StandardCurveWorker _
@@ -274,10 +281,14 @@ Namespace MRM
         <Extension>
         Private Function getByLevel(ref As Dictionary(Of String, Double)) As Func(Of KeyValuePair(Of String, Double), Double)
             Return Function(L)
-                       Dim key As String = L.Key.ToLower
-                       Dim At_i = ref(key)
+                       If ref.Count = 0 Then
+                           Return 0
+                       Else
+                           Dim key As String = L.Key.ToLower
+                           Dim At_i = ref(key)
 
-                       Return At_i
+                           Return At_i
+                       End If
                    End Function
         End Function
 
