@@ -18,14 +18,10 @@ wiff <- list(samples = sample, reference = wiff)
 :> wiff.rawfiles("[-]?LM[-]?\d+") 
 :> as.object;
 
-# Get raw scan data for given ions
+print("Reference standards:");
+print(basename(wiff$standards));
+
 let blanks <- NULL;
-let CAL    <- wiff$standards # list.files(wiff, pattern = "*.mzML")
-:> wiff.scans(
-	ions           = ions, 
-	peakAreaMethod = 0, 
-	TPAFactors     = NULL
-);
 
 if (wiff$hasBlankControls) {
 	blanks = wiff$blanks :> wiff.scans(
@@ -37,65 +33,75 @@ if (wiff$hasBlankControls) {
 	print("Target reference data have no blank controls.");
 }
 
-CAL 
-:> write.csv(file = `${dir}/CAL.csv`);
+let doLinears as function(wiff_standards, subdir = "") {
+	# Get raw scan data for given ions
+	let CAL <- wiff$standards # list.files(wiff, pattern = "*.mzML")
+	:> wiff.scans(
+		ions           = ions, 
+		peakAreaMethod = 0, 
+		TPAFactors     = NULL
+	);
 
-ref <- linears(CAL, ref, is, autoWeighted = TRUE, blankControls = blanks);
+	CAL 
+	:> write.csv(file = `${dir}/CAL.csv`);
 
-# print model summary and then do standard curve plot
-let printModel as function(line) {
-	# get compound id name
-	let id as string = line 
-	:> as.object 
-	:> do.call("name");
-	
-	# view summary result
-	print(line);
-	
-	line
-	:> standard_curve
-	:> save.graphics(file = `${dir}/standard_curves/${id}.png`);
+	ref <- linears(CAL, ref, is, autoWeighted = TRUE, blankControls = blanks);
+
+	# print model summary and then do standard curve plot
+	let printModel as function(line) {
+		# get compound id name
+		let id as string = line 
+		:> as.object 
+		:> do.call("name");
+		
+		# view summary result
+		print(line);
+		
+		line
+		:> standard_curve
+		:> save.graphics(file = `${dir}/standard_curves/${id}.png`);
+	}
+
+	for(line in ref) {
+		line :> printModel;
+	}
+
+	for(mzML in list.files(wiff, pattern = "*.mzML")) {
+		let fileName = basename(mzML);
+		let peaks = MRM.peaks(mzML, ions, peakAreaMethod = 0, TPAFactors = NULL);
+		
+		# save peaktable for given rawfile
+		write.csv(peaks, file = `${dir}/peaktables/${fileName}.csv`);
+	}
+
+	wiff <- sample;
+
+	list.files(wiff, pattern = "*.mzML")
+	:> wiff.scans(ions,peakAreaMethod= 0, TPAFactors = NULL) 
+	:> write.csv(file = `${dir}\samples.csv`);
+
+	let scans = [];
+
+	for(sample.mzML in list.files(wiff, pattern = "*.mzML")) {
+		let peakfile as string = `${dir}/${basename(sample.mzML)}.csv`;
+		let result = ref 
+			:> sample.quantify(sample.mzML, ions, 0, NULL);
+		
+		print(basename(sample.mzML));
+		
+		result 
+		:> as.object 
+		:> do.call("MRMPeaks") 
+		:> write.MRMpeaks(file = peakfile);
+		
+		scans <- scans << result;
+	}
+
+	print("Sample raw files that we scans:");
+	print(length(scans));
+
+	# save the MRM quantify result
+	# base on the linear fitting
+	result(scans)  :> write.csv(file = `${dir}\quantify.csv`);
+	scans.X(scans) :> write.csv(file = `${dir}\rawX.csv`);
 }
-
-for(line in ref) {
-	line :> printModel;
-}
-
-for(mzML in list.files(wiff, pattern = "*.mzML")) {
-	let fileName = basename(mzML);
-	let peaks = MRM.peaks(mzML, ions, peakAreaMethod = 0, TPAFactors = NULL);
-	
-	# save peaktable for given rawfile
-	write.csv(peaks, file = `${dir}/peaktables/${fileName}.csv`);
-}
-
-wiff <- sample;
-
-list.files(wiff, pattern = "*.mzML")
-:> wiff.scans(ions,peakAreaMethod= 0, TPAFactors = NULL) 
-:> write.csv(file = `${dir}\samples.csv`);
-
-let scans = [];
-
-for(sample.mzML in list.files(wiff, pattern = "*.mzML")) {
-	let peakfile as string = `${dir}/${basename(sample.mzML)}.csv`;
-	let result = ref 
-		:> sample.quantify(sample.mzML, ions, 0, NULL);
-	
-	print(basename(sample.mzML));
-	
-	result 
-	:> as.object 
-	:> do.call("MRMPeaks") 
-	:> write.MRMpeaks(file = peakfile);
-	
-	scans <- scans << result;
-}
-
-print("Sample raw files that we scans:");
-print(length(scans));
-
-# save the MRM quantify result
-# base on the linear fitting
-result(scans)  :> write.csv(file = `${dir}\quantify.csv`);
-scans.X(scans) :> write.csv(file = `${dir}\rawX.csv`);
