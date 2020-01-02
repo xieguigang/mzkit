@@ -48,6 +48,12 @@ Public Class StandardCurve : Implements INamedValue
         End Get
     End Property
 
+    Public ReadOnly Property isValid As Boolean
+        Get
+            Return Not linear.CorrelationCoefficient.IsNaNImaginary
+        End Get
+    End Property
+
     Public Overrides Function ToString() As String
         Return $"[{name}] {linear}"
     End Function

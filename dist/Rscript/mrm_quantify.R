@@ -8,7 +8,7 @@ let MRM.info as string = ?"--MRM"    || stop("Missing MRM information table file
 let dir as string      = ?"--export" || `${wiff :> trim(" ")}-result/`;
 
 # read MRM, standard curve and IS information from the given file
-let [ions, ref, is] = MRM.info :> [
+let [ions, reference, is] = MRM.info :> [
 	read.ion_pairs("ion pairs"), 
 	read.reference("coordinates"), 
 	read.IS("IS")
@@ -46,10 +46,9 @@ let doLinears as function(wiff_standards, subdir = "") {
 	 	TPAFactors     = NULL
 	 );
 
-	CAL 
-	:> write.csv(file = `${dir}/${subdir}/CAL.csv`);
+	CAL :> write.csv(file = `${dir}/${subdir}/CAL.csv`);
 
-	ref <- linears(CAL, ref, is, autoWeighted = TRUE, blankControls = blanks);
+	let ref <- linears(CAL, reference, is, autoWeighted = TRUE, blankControls = blanks);
 
 	# print model summary and then do standard curve plot
 	let printModel as function(line) {
@@ -67,7 +66,9 @@ let doLinears as function(wiff_standards, subdir = "") {
 	}
 
 	for(line in ref) {
-		line :> printModel;
+		if (line :> as.object :> do.call("isValid")) {
+			line :> printModel;
+		}
 	}
 
 	for(mzML in wiff_standards) {
@@ -86,7 +87,7 @@ let doLinears as function(wiff_standards, subdir = "") {
 	let scans = [];
 
 	for(sample.mzML in wiff$samples) {
-		let peakfile as string = `${dir}/${subdir}/${basename(sample.mzML)}.csv`;
+		let peakfile as string = `${dir}/${subdir}/samples_peaktable/${basename(sample.mzML)}.csv`;
 		let result = ref 
 			:> sample.quantify(sample.mzML, ions, 0, NULL);
 		
