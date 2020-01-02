@@ -24,6 +24,9 @@ print(basename(wiff$standards));
 let blanks <- NULL;
 
 if (wiff$hasBlankControls) {
+	print(`There are ${length(wiff$blanks)} blank controls in wiff raw data!`);
+	print(wiff$blanks);
+
 	blanks = wiff$blanks :> wiff.scans(
 		ions           = ions, 
 		peakAreaMethod = 0, 
@@ -35,15 +38,16 @@ if (wiff$hasBlankControls) {
 
 let doLinears as function(wiff_standards, subdir = "") {
 	# Get raw scan data for given ions
-	let CAL <- wiff$standards # list.files(wiff, pattern = "*.mzML")
-	:> wiff.scans(
-		ions           = ions, 
-		peakAreaMethod = 0, 
-		TPAFactors     = NULL
-	);
+	let CAL <- wiff$standards 
+	# list.files(wiff, pattern = "*.mzML")
+	 :> wiff.scans(
+ 		ions           = ions, 
+ 		peakAreaMethod = 0, 
+	 	TPAFactors     = NULL
+	 );
 
 	CAL 
-	:> write.csv(file = `${dir}/CAL.csv`);
+	:> write.csv(file = `${dir}/${subdir}/CAL.csv`);
 
 	ref <- linears(CAL, ref, is, autoWeighted = TRUE, blankControls = blanks);
 
@@ -59,7 +63,7 @@ let doLinears as function(wiff_standards, subdir = "") {
 		
 		line
 		:> standard_curve
-		:> save.graphics(file = `${dir}/standard_curves/${id}.png`);
+		:> save.graphics(file = `${dir}/${subdir}/standard_curves/${id}.png`);
 	}
 
 	for(line in ref) {
@@ -71,19 +75,19 @@ let doLinears as function(wiff_standards, subdir = "") {
 		let peaks = MRM.peaks(mzML, ions, peakAreaMethod = 0, TPAFactors = NULL);
 		
 		# save peaktable for given rawfile
-		write.csv(peaks, file = `${dir}/peaktables/${fileName}.csv`);
+		write.csv(peaks, file = `${dir}/${subdir}/peaktables/${fileName}.csv`);
 	}
 
 	wiff <- sample;
 
 	list.files(wiff, pattern = "*.mzML")
 	:> wiff.scans(ions,peakAreaMethod= 0, TPAFactors = NULL) 
-	:> write.csv(file = `${dir}\samples.csv`);
+	:> write.csv(file = `${dir}/${subdir}\samples.csv`);
 
 	let scans = [];
 
 	for(sample.mzML in list.files(wiff, pattern = "*.mzML")) {
-		let peakfile as string = `${dir}/${basename(sample.mzML)}.csv`;
+		let peakfile as string = `${dir}/${subdir}/${basename(sample.mzML)}.csv`;
 		let result = ref 
 			:> sample.quantify(sample.mzML, ions, 0, NULL);
 		
@@ -102,6 +106,20 @@ let doLinears as function(wiff_standards, subdir = "") {
 
 	# save the MRM quantify result
 	# base on the linear fitting
-	result(scans)  :> write.csv(file = `${dir}\quantify.csv`);
-	scans.X(scans) :> write.csv(file = `${dir}\rawX.csv`);
+	result(scans)  :> write.csv(file = `${dir}/${subdir}\quantify.csv`);
+	scans.X(scans) :> write.csv(file = `${dir}/${subdir}\rawX.csv`);
 }
+
+if (wiff$numberOfStandardReference > 1) {
+	# test for multiple standard curves
+	let groups = wiff$GetLinearGroups() :> as.list;
+	
+	for(linear_groupKey in names(groups)) {
+		doLinears(groups[[linear_groupKey]], linear_groupKey);
+	}	
+	
+} else {
+	wiff$standards :> doLinears();
+}
+
+print("MRM quantify [JOB DONE!]");
