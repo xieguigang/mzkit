@@ -233,8 +233,8 @@ Public Module MRMkit
         ElseIf dataType Is GetType(Rlist) Then
             ' samples/reference
             With DirectCast(convertDir, Rlist)
-                Dim samples As String = !samples
-                Dim reference As String = !reference
+                Dim samples As String = RRuntime.getFirst(!samples)
+                Dim reference As String = RRuntime.getFirst(!reference)
 
                 Return New RawFile(samples, reference, patternOfRef, patternOfBlank)
             End With
