@@ -243,17 +243,36 @@ Namespace MRM
                         .ToArray
                 End If
 
+                Dim line As PointF()
+                Dim fit As IFitted
+
                 If blankPoints.Length > 0 Then
                     Dim baseline = blankPoints.Average
+                    Dim netArea = A.Select(Function(xa) xa - baseline).ToArray
+                    Dim fitNetArea As IFitted
+                    Dim netAreaPoints As New List(Of MRMStandards)
 
-                    A = A.Select(Function(xa) xa - baseline).ToArray
-                    ISTPA = ISTPA.Select(Function(xa) xa - baseline).ToArray
+                    line = StandardCurveWorker _
+                       .CreateModelPoints(C, netArea, ISTPA, CIS, ion.HMDB, ion.Name, netAreaPoints) _
+                       .ToArray
+                    fitNetArea = StandardCurve.CreateLinearRegression(line, weighted)
+
+                    line = StandardCurveWorker _
+                       .CreateModelPoints(C, A, ISTPA, CIS, ion.HMDB, ion.Name, points) _
+                       .ToArray
+                    fit = StandardCurve.CreateLinearRegression(line, weighted)
+
+                    If fitNetArea.CorrelationCoefficient > fit.CorrelationCoefficient Then
+                        fit = fitNetArea
+                        points = netAreaPoints
+                    End If
+                Else
+                    line = StandardCurveWorker _
+                       .CreateModelPoints(C, A, ISTPA, CIS, ion.HMDB, ion.Name, points) _
+                       .ToArray
+                    fit = StandardCurve.CreateLinearRegression(line, weighted)
                 End If
 
-                Dim line As PointF() = StandardCurveWorker _
-                    .CreateModelPoints(C, A, ISTPA, CIS, ion.HMDB, ion.Name, points) _
-                    .ToArray
-                Dim fit As IFitted = StandardCurve.CreateLinearRegression(line, weighted)
                 Dim out As New StandardCurve With {
                     .name = ion.HMDB,
                     .linear = fit,
