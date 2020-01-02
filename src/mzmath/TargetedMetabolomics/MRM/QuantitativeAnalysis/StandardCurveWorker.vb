@@ -56,6 +56,7 @@ Imports Microsoft.VisualBasic.Math.Quantile
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
 Imports SMRUCC.MassSpectrum.Math.MRM.Data
 Imports SMRUCC.MassSpectrum.Math.MRM.Models
+Imports regexp = System.Text.RegularExpressions.Regex
 
 Namespace MRM
 
@@ -280,12 +281,25 @@ Namespace MRM
         ''' <returns></returns>
         <Extension>
         Private Function getByLevel(ref As Dictionary(Of String, Double)) As Func(Of KeyValuePair(Of String, Double), Double)
+            Dim getLevelNumber = Function(level As String) As String
+                                     Return regexp.Replace(level, "^\d+[-]", "", RegexICMul) _
+                                        .Trim("-"c, " "c) _
+                                        .Match("\d+")
+                                 End Function
+            Dim refPoints = ref _
+                .ToDictionary(Function(level)
+                                  Return getLevelNumber(level.Key)
+                              End Function,
+                              Function(level)
+                                  Return level.Value
+                              End Function)
+
             Return Function(L)
                        If ref.Count = 0 Then
                            Return 0
                        Else
-                           Dim key As String = L.Key.ToLower
-                           Dim At_i = ref(key)
+                           Dim key As String = getLevelNumber(L.Key)
+                           Dim At_i = refPoints(key)
 
                            Return At_i
                        End If

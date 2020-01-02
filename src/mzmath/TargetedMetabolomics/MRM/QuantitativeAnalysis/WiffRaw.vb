@@ -129,6 +129,7 @@ Namespace MRM
 
                 If removesWiffName Then
                     level = level.Replace(wiffName, "").Trim("-"c, " "c)
+                    ' level = r.Replace(level, "^\d+[-]", "", RegexICMul).Trim("-"c, " "c)
                 End If
 
                 For Each ion In TPA
