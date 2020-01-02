@@ -38,7 +38,7 @@ if (wiff$hasBlankControls) {
 
 let doLinears as function(wiff_standards, subdir = "") {
 	# Get raw scan data for given ions
-	let CAL <- wiff$standards 
+	let CAL <- wiff_standards 
 	# list.files(wiff, pattern = "*.mzML")
 	 :> wiff.scans(
  		ions           = ions, 
@@ -70,7 +70,7 @@ let doLinears as function(wiff_standards, subdir = "") {
 		line :> printModel;
 	}
 
-	for(mzML in list.files(wiff, pattern = "*.mzML")) {
+	for(mzML in wiff_standards) {
 		let fileName = basename(mzML);
 		let peaks = MRM.peaks(mzML, ions, peakAreaMethod = 0, TPAFactors = NULL);
 		
@@ -78,15 +78,14 @@ let doLinears as function(wiff_standards, subdir = "") {
 		write.csv(peaks, file = `${dir}/${subdir}/peaktables/${fileName}.csv`);
 	}
 
-	wiff <- sample;
-
-	list.files(wiff, pattern = "*.mzML")
+	wiff$samples
+	# list.files(wiff, pattern = "*.mzML")
 	:> wiff.scans(ions,peakAreaMethod= 0, TPAFactors = NULL) 
 	:> write.csv(file = `${dir}/${subdir}\samples.csv`);
 
 	let scans = [];
 
-	for(sample.mzML in list.files(wiff, pattern = "*.mzML")) {
+	for(sample.mzML in wiff$samples) {
 		let peakfile as string = `${dir}/${subdir}/${basename(sample.mzML)}.csv`;
 		let result = ref 
 			:> sample.quantify(sample.mzML, ions, 0, NULL);
@@ -114,7 +113,13 @@ if (wiff$numberOfStandardReference > 1) {
 	# test for multiple standard curves
 	let groups = wiff$GetLinearGroups() :> as.list;
 	
+	print("We get linear groups:");
+	print(groups);
+	
 	for(linear_groupKey in names(groups)) {
+		print(`Run linear profiles for '${linear_groupKey}'`);
+		print(groups[[linear_groupKey]]);
+	
 		doLinears(groups[[linear_groupKey]], linear_groupKey);
 	}	
 	
