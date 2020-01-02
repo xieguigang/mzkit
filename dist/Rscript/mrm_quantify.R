@@ -14,6 +14,9 @@ let [ions, reference, is] = MRM.info :> [
 	read.IS("IS")
 ];
 
+print("View reference standard levels data:");
+print(reference);
+
 wiff <- list(samples = sample, reference = wiff) 
 :> wiff.rawfiles("[-]?LM[-]?\d+") 
 :> as.object;

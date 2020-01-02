@@ -61,8 +61,8 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports REnv = SMRUCC.Rsharp.Runtime.Internal
 Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
-Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
 Imports RRuntime = SMRUCC.Rsharp.Runtime
+Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
 
 ''' <summary>
 ''' MRM Targeted Metabolomics
@@ -71,12 +71,20 @@ Imports RRuntime = SMRUCC.Rsharp.Runtime
 Public Module MRMkit
 
     Sub New()
-        REnv.ConsolePrinter.AttachConsoleFormatter(Of IonPair())(AddressOf printIonPairs)
         REnv.ConsolePrinter.AttachConsoleFormatter(Of StandardCurve)(AddressOf printLineModel)
+        REnv.ConsolePrinter.AttachConsoleFormatter(Of IonPair())(AddressOf printIonPairs)
+        REnv.ConsolePrinter.AttachConsoleFormatter(Of Standards())(AddressOf printStandards)
     End Sub
 
-    Private Function printIonPairs(ions As IonPair()) As String
-        Dim csv = ions.ToCsvDoc
+    Private Function printStandards(obj As Object) As String
+        Dim csv = DirectCast(obj, Standards()).ToCsvDoc.ToMatrix.RowIterator.ToArray
+        Dim printContent = csv.Print(addBorder:=False)
+
+        Return printContent
+    End Function
+
+    Private Function printIonPairs(obj As Object) As String
+        Dim csv = DirectCast(obj, IonPair()).ToCsvDoc.ToMatrix.RowIterator.ToArray
         Dim printContent = csv.Print(addBorder:=False)
 
         Return printContent
@@ -145,7 +153,7 @@ Public Module MRMkit
                 .AsDataSource(Of IonPair) _
                 .ToArray
         Else
-            Return file.LoadCsv(Of IonPair)
+            Return file.LoadCsv(Of IonPair).ToArray
         End If
     End Function
 
@@ -165,12 +173,8 @@ Public Module MRMkit
                 .AsDataSource(Of Standards) _
                 .ToArray
         Else
-            reference = file.LoadCsv(Of Standards)
+            reference = file.LoadCsv(Of Standards).ToArray
         End If
-
-        For i As Integer = 0 To reference.Length - 1
-            reference(i).C = reference(i).C.ToLower
-        Next
 
         Return reference
     End Function
@@ -191,7 +195,7 @@ Public Module MRMkit
                 .AsDataSource(Of [IS]) _
                 .ToArray
         Else
-            Return file.LoadCsv(Of [IS])
+            Return file.LoadCsv(Of [IS]).ToArray
         End If
     End Function
 
