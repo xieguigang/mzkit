@@ -62,6 +62,7 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Imports REnv = SMRUCC.Rsharp.Runtime.Internal
 Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
 Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
+Imports RRuntime = SMRUCC.Rsharp.Runtime
 
 ''' <summary>
 ''' MRM Targeted Metabolomics
@@ -259,14 +260,17 @@ Public Module MRMkit
     ''' <summary>
     ''' Scan the raw file data
     ''' </summary>
-    ''' <param name="wiffConverts">A directory that contains the mzML files which are converts from the given wiff raw file.</param>
+    ''' <param name="wiffConverts">
+    ''' A directory that contains the mzML files which are converts from the given wiff raw file.
+    ''' </param>
     ''' <param name="ions">Ion pairs definition data.</param>
     ''' <param name="peakAreaMethod"></param>
     ''' <param name="TPAFactors"></param>
     ''' <param name="removesWiffName"></param>
     ''' <returns></returns>
     <ExportAPI("wiff.scans")>
-    Public Function ScanStandardCurve(wiffConverts$(), ions As IonPair(),
+    Public Function ScanStandardCurve(<RRawVectorArgument>
+                                      wiffConverts As Object, ions As IonPair(),
                                       Optional peakAreaMethod% = 1,
                                       Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
                                       Optional removesWiffName As Boolean = True) As DataSet()
@@ -277,18 +281,34 @@ Public Module MRMkit
             TPAFactors = New Dictionary(Of String, Double)
         End If
 
-        If wiffConverts.IsNullOrEmpty Then
+        If wiffConverts Is Nothing Then
             Throw New ArgumentNullException(NameOf(wiffConverts))
-        Else
-            Return WiffRaw.Scan(
-                mzMLRawFiles:=wiffConverts,
-                ions:=ions,
-                peakAreaMethod:=method,
-                TPAFactors:=TPAFactors,
-                refName:=Nothing,
-                removesWiffName:=removesWiffName
-            )
+        ElseIf RRuntime.isVector(Of String)(wiffConverts) Then
+            Dim stringVec As Array = RRuntime.asVector(Of String)(wiffConverts)
+
+            If stringVec.Length = 1 Then
+                wiffConverts = stringVec.GetValue(Scan0) _
+                        .ToString _
+                        .ListFiles("*.mzML") _
+                        .ToArray _
+                        .DoCall(Function(files)
+                                    Return RawFile.WrapperForStandards(files, "CAL[-]?\d+")
+                                End Function)
+            Else
+                wiffConverts = RawFile.WrapperForStandards(stringVec, "CAL[-]?\d+")
+            End If
         End If
+
+        Dim raw As RawFile = DirectCast(wiffConverts, RawFile)
+
+        Return WiffRaw.Scan(
+            mzMLRawFiles:=raw.standards,
+            ions:=ions,
+            peakAreaMethod:=method,
+            TPAFactors:=TPAFactors,
+            refName:=Nothing,
+            removesWiffName:=removesWiffName
+        )
     End Function
 
     ''' <summary>
