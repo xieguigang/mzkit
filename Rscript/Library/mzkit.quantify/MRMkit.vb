@@ -197,7 +197,11 @@ Public Module MRMkit
     ''' <summary>
     ''' Create model of the MRM raw files
     ''' </summary>
-    ''' <param name="convertDir">A directory data for read MRM sample raw files.</param>
+    ''' <param name="convertDir">
+    ''' A directory data object for read MRM sample raw files. If the parameter value is
+    ''' a ``list``, then it should contains at least two fields: ``samples`` and ``reference``.
+    ''' The balnks raw data should be contains in reference files directory.
+    ''' </param>
     ''' <param name="patternOfRef">File name pattern for filter reference data.</param>
     ''' <param name="patternOfBlank">File name pattern for filter blank controls.</param>
     ''' <param name="env"></param>
