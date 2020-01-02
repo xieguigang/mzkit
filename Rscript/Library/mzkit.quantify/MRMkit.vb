@@ -63,6 +63,9 @@ Imports REnv = SMRUCC.Rsharp.Runtime.Internal
 Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
 Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
 
+''' <summary>
+''' MRM Targeted Metabolomics
+''' </summary>
 <Package("mzkit.mrm")>
 Public Module MRMkit
 
@@ -91,14 +94,24 @@ Public Module MRMkit
     ''' <summary>
     ''' Extract ion peaks
     ''' </summary>
-    ''' <param name="mzML$"></param>
-    ''' <param name="ionpairs"></param>
+    ''' <param name="mzML">A mzML raw file</param>
+    ''' <param name="ionpairs">metabolite targets</param>
     ''' <returns></returns>
     <ExportAPI("extract.ions")>
     Public Function ExtractIonData(mzML$, ionpairs As IonPair()) As NamedCollection(Of ChromatogramTick)()
         Return MRMSamples.ExtractIonData(ionpairs, mzML, Function(i) i.accession)
     End Function
 
+    ''' <summary>
+    ''' Exact ``regions of interested`` based on the given ion pair as targets.
+    ''' </summary>
+    ''' <param name="mzML">A mzML raw data file</param>
+    ''' <param name="ionpairs">MRM ion pairs</param>
+    ''' <param name="TPAFactors">Peak factors</param>
+    ''' <param name="baselineQuantile#"></param>
+    ''' <param name="integratorTicks%"></param>
+    ''' <param name="peakAreaMethod"></param>
+    ''' <returns></returns>
     <ExportAPI("extract.peakROI")>
     Public Function ExtractPeakROI(mzML$, ionpairs As IonPair(),
                                    Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
@@ -135,6 +148,12 @@ Public Module MRMkit
         End If
     End Function
 
+    ''' <summary>
+    ''' Read reference points
+    ''' </summary>
+    ''' <param name="file$"></param>
+    ''' <param name="sheetName$"></param>
+    ''' <returns></returns>
     <ExportAPI("read.reference")>
     Public Function readCompoundReference(file$, Optional sheetName$ = "Sheet1") As Standards()
         Dim reference As Standards()
@@ -155,6 +174,14 @@ Public Module MRMkit
         Return reference
     End Function
 
+    ''' <summary>
+    ''' Read the definition of internal standards
+    ''' </summary>
+    ''' <param name="file">A csv file or xlsx file</param>
+    ''' <param name="sheetName">
+    ''' The sheet name that contains data of the IS data if the given file is a xlsx file.
+    ''' </param>
+    ''' <returns></returns>
     <ExportAPI("read.IS")>
     Public Function readIS(file$, Optional sheetName$ = "Sheet1") As [IS]()
         If file.ExtensionSuffix("xlsx") Then
