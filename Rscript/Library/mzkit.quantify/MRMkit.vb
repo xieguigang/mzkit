@@ -331,7 +331,12 @@ Public Module MRMkit
                             Optional blankControls As DataSet() = Nothing) As StandardCurve()
 
         Return rawScan.ToDictionary _
-            .Regression(calibrates, ISvector, weighted:=autoWeighted) _
+            .Regression(
+                calibrates:=calibrates,
+                ISvector:=ISvector,
+                weighted:=autoWeighted,
+                blankControls:=blankControls
+            ) _
             .ToArray
     End Function
 

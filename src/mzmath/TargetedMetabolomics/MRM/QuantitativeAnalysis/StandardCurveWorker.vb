@@ -52,6 +52,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Quantile
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
 Imports SMRUCC.MassSpectrum.Math.MRM.Data
 Imports SMRUCC.MassSpectrum.Math.MRM.Models
@@ -170,6 +171,19 @@ Namespace MRM
 
         ReadOnly NoChange As [Default](Of Double) = 1.0R
 
+        <Extension>
+        Private Function getBlankControls(blanks As DataSet) As Double()
+            If blanks Is Nothing OrElse blanks.Properties.Count = 0 Then
+                Return {}
+            Else
+                Dim baseline As Double() = blanks.Properties.Values.ToArray
+                ' removes outlier by quantile
+                Dim q As DataQuartile = baseline.Quartile
+
+                Return q.Outlier(samples:=baseline).normal
+            End If
+        End Function
+
         ''' <summary>
         ''' 根据扫描出来的TPA峰面积进行对标准曲线的回归建模
         ''' </summary>
@@ -180,9 +194,15 @@ Namespace MRM
         Public Iterator Function Regression(ionTPA As Dictionary(Of DataSet),
                                             calibrates As Standards(),
                                             [ISvector] As [IS](),
-                                            Optional weighted As Boolean = False) As IEnumerable(Of StandardCurve)
+                                            Optional weighted As Boolean = False,
+                                            Optional blankControls As DataSet() = Nothing) As IEnumerable(Of StandardCurve)
 
             Dim [IS] As Dictionary(Of String, [IS]) = ISvector.ToDictionary(Function(i) i.ID)
+            Dim blanks As New Dictionary(Of String, DataSet)
+
+            If Not blankControls.IsNullOrEmpty Then
+                blanks = blankControls.ToDictionary(Function(metabolite) metabolite.ID)
+            End If
 
             For Each ion As Standards In calibrates
                 ' 20181106 如果没有内标，则不进行内标校正
@@ -198,6 +218,7 @@ Namespace MRM
                 Dim IsIon As [IS] = [IS].TryGetValue(ion.IS, [default]:=New [IS]) ' 尝试得到内标的数据
                 Dim CIS# = IsIon?.CIS                                             ' 内标的浓度，是不变的，所以就只有一个值
                 Dim points As New List(Of MRMStandards)
+                Dim blankPoints = blanks.TryGetValue(ion.HMDB).getBlankControls
 
                 ' 标准曲线数据
                 ' 从实验数据之中产生线性回归计算所需要的点的集合
