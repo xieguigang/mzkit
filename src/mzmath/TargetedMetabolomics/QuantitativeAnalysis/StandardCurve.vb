@@ -21,6 +21,9 @@ Public Class StandardCurve : Implements INamedValue
     ''' <returns></returns>
     Public Property linear As IFitted
     Public Property points As MRMStandards()
+
+    Public Property blankControls As Double()
+
     ''' <summary>
     ''' The internal standards
     ''' </summary>

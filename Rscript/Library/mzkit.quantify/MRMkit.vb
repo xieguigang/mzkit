@@ -323,8 +323,13 @@ Public Module MRMkit
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("linears")>
-    Public Function Linears(rawScan As DataSet(), calibrates As Standards(), [ISvector] As [IS](), Optional autoWeighted As Boolean = True) As StandardCurve()
-        Return rawScan.ToDictionary.Regression(calibrates, ISvector, weighted:=autoWeighted).ToArray
+    Public Function Linears(rawScan As DataSet(), calibrates As Standards(), [ISvector] As [IS](),
+                            Optional autoWeighted As Boolean = True,
+                            Optional blankControls As DataSet() = Nothing) As StandardCurve()
+
+        Return rawScan.ToDictionary _
+            .Regression(calibrates, ISvector, weighted:=autoWeighted) _
+            .ToArray
     End Function
 
     ''' <summary>
