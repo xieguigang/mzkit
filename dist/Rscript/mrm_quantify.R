@@ -61,7 +61,7 @@ let doLinears as function(wiff_standards, subdir = "") {
 		print(line);
 		
 		line
-		:> standard_curve
+		:> standard_curve(title = `Standard Curve Of ${id}`)
 		:> save.graphics(file = `${dir}/${subdir}/standard_curves/${id}.png`);
 	}
 

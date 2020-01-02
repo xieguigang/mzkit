@@ -17,7 +17,18 @@ Module Visual
     ''' <param name="samples">The point data of samples</param>
     ''' <returns></returns>
     <ExportAPI("standard_curve")>
-    Public Function DrawStandardCurve(model As StandardCurve, Optional title$ = "", Optional samples As NamedValue(Of Double)() = Nothing) As GraphicsData
-        Return StandardCurvesPlot.StandardCurves(model, samples, title)
+    Public Function DrawStandardCurve(model As StandardCurve,
+                                      Optional title$ = "",
+                                      Optional samples As NamedValue(Of Double)() = Nothing,
+                                      Optional size$ = "1600,1200",
+                                      Optional margin$ = "padding: 200px 100px 200px 200px") As GraphicsData
+
+        Return StandardCurvesPlot.StandardCurves(
+            model:=model,
+            samples:=samples,
+            name:=title,
+            size:=size,
+            margin:=margin
+        )
     End Function
 End Module

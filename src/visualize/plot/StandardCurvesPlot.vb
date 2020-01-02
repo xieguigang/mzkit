@@ -54,7 +54,9 @@ Public Module StandardCurvesPlot
     <Extension>
     Public Function StandardCurves(model As StandardCurve,
                                    Optional samples As IEnumerable(Of NamedValue(Of Double)) = Nothing,
-                                   Optional name$ = "") As GraphicsData
+                                   Optional name$ = "",
+                                   Optional size$ = "1600,1200",
+                                   Optional margin$ = "padding: 100px 100px 100px 200px") As GraphicsData
 
         If model.requireISCalibration Then
             ' 如果进行内标校正的话，则应该是[峰面积比, 浓度比]之间的线性关系
@@ -62,13 +64,13 @@ Public Module StandardCurvesPlot
                 .linear _
                 .Plot(xLabel:="Peak area ratio (AIS/Ati)",
                       yLabel:="(CIS/Cti u mol/L) ratio",
-                      size:="1600,1100",
+                      size:=size,
                       predictedX:=samples,
                       xAxisTickFormat:="F2",
                       yAxisTickFormat:="F2",
                       showErrorBand:=False,
                       title:=name,
-                      margin:="padding: 100px 100px 100px 200px"
+                      margin:=margin
                 )
         Else
             ' 如果不做内标校正的话，则是直接[峰面积, 浓度]之间的线性关系了
@@ -76,13 +78,13 @@ Public Module StandardCurvesPlot
                 .linear _
                 .Plot(xLabel:="Peak area(Ati)",
                       yLabel:="Cti u mol/L",
-                      size:="1600,1100",
+                      size:=size,
                       predictedX:=samples,
                       xAxisTickFormat:="G2",
-                      yAxisTickFormat:="F2",
+                      yAxisTickFormat:="G2",
                       showErrorBand:=False,
                       title:=name,
-                      margin:="padding: 100px 100px 100px 200px"
+                      margin:=margin
                 )
         End If
     End Function
