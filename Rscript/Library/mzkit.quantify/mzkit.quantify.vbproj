@@ -129,6 +129,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GCMS.vb" />
     <Compile Include="Visual.vb" />
     <Compile Include="MRMkit.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
