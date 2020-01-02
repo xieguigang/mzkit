@@ -8,12 +8,12 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("math.MRM")>
-<Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("Microsoft")>
-<Assembly: AssemblyProduct("math.MRM")>
-<Assembly: AssemblyCopyright("Copyright © Microsoft 2018")>
-<Assembly: AssemblyTrademark("")>
+<Assembly: AssemblyTitle("TargetedMetabolomics Math")>
+<Assembly: AssemblyDescription("TargetedMetabolomics Math")>
+<Assembly: AssemblyCompany("BioNovoGene")>
+<Assembly: AssemblyProduct("mzkit")>
+<Assembly: AssemblyCopyright("Copyright © BioNovoGene 2020")>
+<Assembly: AssemblyTrademark("BioDeep")>
 
 <Assembly: ComVisible(False)>
 

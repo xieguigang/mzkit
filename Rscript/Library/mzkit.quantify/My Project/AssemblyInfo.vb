@@ -10,10 +10,10 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyTitle("Targeted Metabolomics")>
 <Assembly: AssemblyDescription("Library of quantify module from mzkit")>
-<Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("mzkit.quantitative")>
-<Assembly: AssemblyCopyright("Copyright ©  2019")>
-<Assembly: AssemblyTrademark("")>
+<Assembly: AssemblyCompany("BioNovoGene")>
+<Assembly: AssemblyProduct("mzkit")>
+<Assembly: AssemblyCopyright("Copyright © BioNovoGene 2019")>
+<Assembly: AssemblyTrademark("BioDeep")>
 
 <Assembly: ComVisible(False)>
 
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("1.0.0.0")>
-<Assembly: AssemblyFileVersion("1.0.0.0")>
+<Assembly: AssemblyVersion("1.10.*")>
+<Assembly: AssemblyFileVersion("1.34.*")>

@@ -14,18 +14,33 @@ let [ions, ref, is] = MRM.info :> [
 	read.IS("IS")
 ];
 
+wiff <- list(samples = sample, reference = wiff) 
+:> wiff.rawfiles("[-]?LM[-]?\d+") 
+:> as.object;
+
 # Get raw scan data for given ions
-let CAL = list.files(wiff, pattern = "*.mzML")
+let blanks <- NULL;
+let CAL    <- wiff$standards # list.files(wiff, pattern = "*.mzML")
 :> wiff.scans(
 	ions           = ions, 
 	peakAreaMethod = 0, 
 	TPAFactors     = NULL
 );
 
+if (wiff$hasBlankControls) {
+	blanks = wiff$blanks :> wiff.scans(
+		ions           = ions, 
+		peakAreaMethod = 0, 
+		TPAFactors     = NULL
+	);
+} else {
+	print("Target reference data have no blank controls.");
+}
+
 CAL 
 :> write.csv(file = `${dir}/CAL.csv`);
 
-ref <- linears(CAL, ref, is);
+ref <- linears(CAL, ref, is, autoWeighted = TRUE, blankControls = blanks);
 
 # print model summary and then do standard curve plot
 let printModel as function(line) {
