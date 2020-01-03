@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a67cae0d1b69afaafb1338f1c12bff92, DATA\Massbank\test\foodbQuery.vb"
+﻿#Region "Microsoft.VisualBasic::a67cae0d1b69afaafb1338f1c12bff92, src\metadb\Massbank\test\foodbQuery.vb"
 
     ' Author:
     ' 

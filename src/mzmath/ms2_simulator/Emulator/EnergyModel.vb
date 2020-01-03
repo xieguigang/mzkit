@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8388eaf6426a9b3511ae692f6ed1cc9d, DATA\ms2_simulator\Emulator\EnergyModel.vb"
+﻿#Region "Microsoft.VisualBasic::8388eaf6426a9b3511ae692f6ed1cc9d, src\mzmath\ms2_simulator\Emulator\EnergyModel.vb"
 
     ' Author:
     ' 

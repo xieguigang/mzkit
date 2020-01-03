@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::454aa71120c85d25d015b1ed34da361b, DATA\Massbank\SDF\Struct\Mol.vb"
+﻿#Region "Microsoft.VisualBasic::454aa71120c85d25d015b1ed34da361b, src\metadb\Massbank\SDF\Struct\Mol.vb"
 
     ' Author:
     ' 

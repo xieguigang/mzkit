@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a7a00c3617d341de990d9b22e50dd766, DATA\ms2_math-core\Ms1\PrecursorType\MolWeight.vb"
+﻿#Region "Microsoft.VisualBasic::a7a00c3617d341de990d9b22e50dd766, src\mzmath\ms2_math-core\Ms1\PrecursorType\MolWeight.vb"
 
     ' Author:
     ' 

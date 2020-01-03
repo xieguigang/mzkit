@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09ccea91db8ffbefe6bb2b2e31b4dcb0, DATA\XrefEngine\ClassyfireInfoTable.vb"
+﻿#Region "Microsoft.VisualBasic::b0dabec85da3edfd6cbed0d967e2623b, src\metadb\XrefEngine\ClassyfireInfoTable.vb"
 
     ' Author:
     ' 
@@ -139,4 +139,3 @@ Public Class ClassyfireInfoTable : Implements ICompoundClass
         Next
     End Function
 End Class
-

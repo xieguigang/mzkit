@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e36a19dff6ce9f940643a13bcc4a03e3, visual\plot\MassSpectraMirrorPlot.vb"
+﻿#Region "Microsoft.VisualBasic::e36a19dff6ce9f940643a13bcc4a03e3, src\visualize\plot\MassSpectraMirrorPlot.vb"
 
     ' Author:
     ' 

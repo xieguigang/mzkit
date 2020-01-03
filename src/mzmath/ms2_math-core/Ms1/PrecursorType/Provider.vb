@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9bb55c45580b001eecce10758619e422, DATA\ms2_math-core\Ms1\PrecursorType\Provider.vb"
+﻿#Region "Microsoft.VisualBasic::9bb55c45580b001eecce10758619e422, src\mzmath\ms2_math-core\Ms1\PrecursorType\Provider.vb"
 
     ' Author:
     ' 

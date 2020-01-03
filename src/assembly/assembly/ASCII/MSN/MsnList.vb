@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::474bb85b3b85b4ce6c270ffa9be4ce8e, Assembly\assembly\ASCII\MSN\MsnList.vb"
+﻿#Region "Microsoft.VisualBasic::474bb85b3b85b4ce6c270ffa9be4ce8e, src\assembly\assembly\ASCII\MSN\MsnList.vb"
 
     ' Author:
     ' 

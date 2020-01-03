@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3def07499abf0a96af8cbb99f390ebbf, DATA\ms2_math-core\Ms1\Tolerance\Tolerance.vb"
+﻿#Region "Microsoft.VisualBasic::3def07499abf0a96af8cbb99f390ebbf, src\mzmath\ms2_math-core\Ms1\Tolerance\Tolerance.vb"
 
     ' Author:
     ' 

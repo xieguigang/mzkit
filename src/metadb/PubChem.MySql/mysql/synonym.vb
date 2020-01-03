@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be43751c0813dd8d873c0d12b3a6b327, DATA\PubChem.MySql\mysql\synonym.vb"
+﻿#Region "Microsoft.VisualBasic::c34bed20cb1a5e2d7d8e8020d4f765ba, src\metadb\PubChem.MySql\mysql\synonym.vb"
 
     ' Author:
     ' 
@@ -184,4 +184,3 @@ End Class
 
 
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e57528ae5d42a648cd160bfbd4a30fe, DATA\ms2_simulator\Emulator\Emulator.vb"
+﻿#Region "Microsoft.VisualBasic::8e57528ae5d42a648cd160bfbd4a30fe, src\mzmath\ms2_simulator\Emulator\Emulator.vb"
 
     ' Author:
     ' 

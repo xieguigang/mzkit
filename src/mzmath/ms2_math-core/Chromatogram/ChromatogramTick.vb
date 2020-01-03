@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b6b56aca6f4a97fc209e349b41be1ec2, DATA\ms2_math-core\Chromatogram\ChromatogramTick.vb"
+﻿#Region "Microsoft.VisualBasic::b6b56aca6f4a97fc209e349b41be1ec2, src\mzmath\ms2_math-core\Chromatogram\ChromatogramTick.vb"
 
     ' Author:
     ' 

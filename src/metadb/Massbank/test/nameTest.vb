@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29d2c7a251e43d09606f9fb7350c6850, DATA\Massbank\test\nameTest.vb"
+﻿#Region "Microsoft.VisualBasic::11e6d73633ffe0b3889c6af8b2d5c5a9, src\metadb\Massbank\test\nameTest.vb"
 
     ' Author:
     ' 
@@ -57,4 +57,3 @@ Module nameTest
     End Sub
 
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4acd1e05d8d3b6d1d38cfea8c59e40b7, DATA\MoNA\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::b2ccbd399a1be2c0904fbe24f5a134f9, src\metadb\MoNA\test\Module1.vb"
 
     ' Author:
     ' 
@@ -57,4 +57,3 @@ Module Module1
         Call idlist.GetJson.SaveTo("D:\Database\MoNA\GNPS.json")
     End Sub
 End Module
-

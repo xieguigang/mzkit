@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf52640c4112dc67a8fd45f68161380b, Assembly\assembly\SpectrumTree.vb"
+﻿#Region "Microsoft.VisualBasic::ef92baf0edf6b50325731f04d77675d3, src\assembly\assembly\SpectrumTree.vb"
 
     ' Author:
     ' 

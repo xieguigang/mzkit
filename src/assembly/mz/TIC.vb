@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::59490d2706730413b2dbde88416e526e, Assembly\mz\TIC.vb"
+﻿#Region "Microsoft.VisualBasic::84e0353f59931421888a125b92167a50, src\assembly\mz\TIC.vb"
 
     ' Author:
     ' 
@@ -205,4 +205,3 @@ Partial Module Program
         Return CLI.mzplot.FromEnvironment(App.HOME).TICplot(datafile, out:=out)
     End Function
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f81b3bc3a53ee82f93ac2e491b7f45be, DATA\TargetedMetabolomics\MRM\QuantitativeAnalysis\ScanOfTPA.vb"
+﻿#Region "Microsoft.VisualBasic::4aebc19be4aac7cb09e247ea9965fa91, src\mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\ScanOfTPA.vb"
 
     ' Author:
     ' 
@@ -34,9 +34,10 @@
 
     ' Summaries:
 
-    ' Module ScanOfTPA
+    '     Module ScanOfTPA
     ' 
-    '     Function: GetFactor, ScanTPA
+    '         Function: GetFactor, ScanTPA
+    ' 
     ' 
     ' /********************************************************************************/
 

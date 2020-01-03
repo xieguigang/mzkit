@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::22ca430d88f88457eba3532c6d4a3e3d, Rscript\Library\mzkit\Assembly.vb"
+﻿#Region "Microsoft.VisualBasic::f8b0d7b208db7bde6ad1880e97058ebf, Rscript\Library\mzkit\Assembly.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,6 @@
 
 #End Region
 
-
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.MassSpectrum.Assembly.ASCII.MGF
@@ -60,4 +59,3 @@ Module Assembly
 
 
 End Module
-

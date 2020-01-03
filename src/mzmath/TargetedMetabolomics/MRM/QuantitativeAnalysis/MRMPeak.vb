@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d42724b5ccd09fb6a6826d580232158b, DATA\TargetedMetabolomics\MRM\QuantitativeAnalysis\MRMPeak.vb"
+﻿#Region "Microsoft.VisualBasic::1052968558d4935714a462b717dd83e8, src\mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\MRMPeak.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,19 @@
 
     ' Summaries:
 
-    ' Module MRMPeak
+    '     Module MRMPeak
     ' 
-    '     Function: MRMPeak
-    '     Enum MRMPeakExtensionMethods
+    '         Function: MRMPeak
+    '         Enum MRMPeakExtensionMethods
     ' 
-    '         BaselineMatch, TriangleMatch
+    '             BaselineMatch, TriangleMatch
     ' 
     ' 
     ' 
     '  
     ' 
     '     Function: MakeBaselineExtension, MakeExtension
+    ' 
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f198078b4634fa057c7535e8e3936fa, DATA\Massbank\MetaLib\Match\NameEquality.vb"
+﻿#Region "Microsoft.VisualBasic::4f198078b4634fa057c7535e8e3936fa, src\metadb\Massbank\MetaLib\Match\NameEquality.vb"
 
     ' Author:
     ' 

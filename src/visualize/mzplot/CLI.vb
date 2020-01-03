@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b008ee6eccf796347f9043a0b0d86e9, visual\mzplot\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::680a17b1bb8a0ffdce66e89516cc23fc, src\visualize\mzplot\CLI.vb"
 
     ' Author:
     ' 
@@ -210,4 +210,3 @@ Imports SMRUCC.MassSpectrum.Visualization
         Return 0
     End Function
 End Module
-

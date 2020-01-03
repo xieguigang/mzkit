@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95400e8c35a4346ba06b0c6d57eafeba, DATA\Massbank\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::95400e8c35a4346ba06b0c6d57eafeba, src\metadb\Massbank\test\Module1.vb"
 
     ' Author:
     ' 

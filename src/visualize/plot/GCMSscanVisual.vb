@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d8b6ec6e14bf5c0454eb7a829be9365, visual\plot\GCMSscanVisual.vb"
+﻿#Region "Microsoft.VisualBasic::4d8b6ec6e14bf5c0454eb7a829be9365, src\visualize\plot\GCMSscanVisual.vb"
 
     ' Author:
     ' 

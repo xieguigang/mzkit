@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e45f294d223877b82485b801a5753358, MetaDNA\MetaDNA_visual\viz.vb"
+﻿#Region "Microsoft.VisualBasic::f69b351b466c85837419fd82be0f472f, src\metadna\MetaDNA_visual\viz.vb"
 
     ' Author:
     ' 
@@ -64,4 +64,3 @@ Public Module viz
         Return metaDNA.DrawImage(size, defaultColor:=defaultColor.TranslateColor)
     End Function
 End Module
-

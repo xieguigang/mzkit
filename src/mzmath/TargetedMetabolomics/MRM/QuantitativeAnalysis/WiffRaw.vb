@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8698578f53144e4b8b5c580c52d637c3, DATA\TargetedMetabolomics\MRM\QuantitativeAnalysis\WiffRaw.vb"
+﻿#Region "Microsoft.VisualBasic::87f1f2e781376cdd953d9c31429bffab, src\mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\WiffRaw.vb"
 
     ' Author:
     ' 
@@ -34,9 +34,10 @@
 
     ' Summaries:
 
-    ' Module WiffRaw
+    '     Module WiffRaw
     ' 
-    '     Function: Scan
+    '         Function: Scan, ScanPeakTable
+    ' 
     ' 
     ' /********************************************************************************/
 

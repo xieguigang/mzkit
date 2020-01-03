@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34987e78d1ff6124509edacc3337e532, DATA\PubChem.MySql\StorageProcedure.vb"
+﻿#Region "Microsoft.VisualBasic::30ebe21c1ab8731b65fd3e0143de60a0, src\metadb\PubChem.MySql\StorageProcedure.vb"
 
     ' Author:
     ' 
@@ -203,4 +203,3 @@ Public Module StorageProcedure
                End Function
     End Function
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d37d97245eeb879f93a238cd8e933487, DATA\LmMath\lm.vb"
+﻿#Region "Microsoft.VisualBasic::5cccc52790eff37c6b0978c4a3c344fd, src\mzmath\LmMath\lm.vb"
 
     ' Author:
     ' 
@@ -112,4 +112,3 @@ Public Module lm
         Return bestfit
     End Function
 End Module
-

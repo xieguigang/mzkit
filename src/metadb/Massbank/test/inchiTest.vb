@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9275ace31ff5355a37a7bb836c5f773c, DATA\Massbank\test\inchiTest.vb"
+﻿#Region "Microsoft.VisualBasic::9275ace31ff5355a37a7bb836c5f773c, src\metadb\Massbank\test\inchiTest.vb"
 
     ' Author:
     ' 

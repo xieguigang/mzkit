@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::00a4e8ba6c2988026601f22d4d460a0b, MwtWinDll\MwtWin\frmTextbrowser.vb"
+﻿#Region "Microsoft.VisualBasic::171c1224018392aaa3264e7a49d7cd2c, src\mzmath\MwtWinDll\MwtWin\frmTextbrowser.vb"
 
     ' Author:
     ' 
@@ -317,4 +317,3 @@ Public Class frmTextbrowser
 #End Region
 
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31f0f6c04cc77fd09f456ceb1365b98d, DATA\Massbank\MetaLib\Formula\FormulaScanner.vb"
+﻿#Region "Microsoft.VisualBasic::31f0f6c04cc77fd09f456ceb1365b98d, src\metadb\Massbank\MetaLib\Formula\FormulaScanner.vb"
 
     ' Author:
     ' 

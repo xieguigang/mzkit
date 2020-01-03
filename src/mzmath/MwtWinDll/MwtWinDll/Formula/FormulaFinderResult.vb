@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c430d0d6d28a0964be80105d1781afe, MwtWinDll\MwtWinDll\Formula\FormulaFinderResult.vb"
+﻿#Region "Microsoft.VisualBasic::bac34fc1ad81800a6cf24972eb778361, src\mzmath\MwtWinDll\MwtWinDll\Formula\FormulaFinderResult.vb"
 
     ' Author:
     ' 
@@ -150,4 +150,3 @@ Public Class FormulaFinderResult : Inherits FormulaComposition
         Return list.JoinBy(ASCII.TAB)
     End Function
 End Class
-

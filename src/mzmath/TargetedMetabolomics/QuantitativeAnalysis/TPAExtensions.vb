@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf58d896634b9d7e2db27cfc9cdac0e8, DATA\TargetedMetabolomics\QuantitativeAnalysis\TPAExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::cf58d896634b9d7e2db27cfc9cdac0e8, src\mzmath\TargetedMetabolomics\QuantitativeAnalysis\TPAExtensions.vb"
 
     ' Author:
     ' 

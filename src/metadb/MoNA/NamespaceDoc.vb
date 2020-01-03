@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::67683ac7ba6257678f646785a9fd00a1, DATA\MoNA\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::802e5994cbe3c73822a32a86a1cba847, src\metadb\MoNA\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,6 @@
 
 #End Region
 
-
 ''' <summary>
 ''' 这个模块是专门用于读取MoNA数据库文件的, 包括二级质谱图数据以及相对应的物质注释信息相关
 ''' </summary>
@@ -50,4 +49,3 @@ Friend NotInheritable Class NamespaceDoc
     Private Sub New()
     End Sub
 End Class
-

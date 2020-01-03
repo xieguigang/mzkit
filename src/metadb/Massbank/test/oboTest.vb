@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f762c3574e122f4ec75ebbb665e19fe, DATA\Massbank\test\oboTest.vb"
+﻿#Region "Microsoft.VisualBasic::68d2aa7bb3e3315255f64e76a00631d8, src\metadb\Massbank\test\oboTest.vb"
 
     ' Author:
     ' 
@@ -69,4 +69,3 @@ Module oboTest
         Pause()
     End Sub
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a6844cc77a07b2822577b9b31b0be91, DATA\Massbank\SDF\Struct\Elements.vb"
+﻿#Region "Microsoft.VisualBasic::0a6844cc77a07b2822577b9b31b0be91, src\metadb\Massbank\SDF\Struct\Elements.vb"
 
     ' Author:
     ' 
