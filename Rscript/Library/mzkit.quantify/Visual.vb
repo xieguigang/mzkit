@@ -3,7 +3,9 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
 Imports SMRUCC.MassSpectrum.Math
+Imports SMRUCC.MassSpectrum.Math.Chromatogram
 Imports SMRUCC.MassSpectrum.Visualization
 
 <Package("mzkit.quantify.visual")>
@@ -29,6 +31,20 @@ Module Visual
             name:=title,
             size:=size,
             margin:=margin
+        )
+    End Function
+
+    <ExportAPI("chromatogram.plot")>
+    Public Function chromatogramPlot(mzML$, ions As IonPair()) As GraphicsData
+        Return ions.MRMChromatogramPlot(mzML)
+    End Function
+
+    <ExportAPI("MRM.chromatogramPeaks.plot")>
+    Public Function MRMchromatogramPeakPlot(chromatogram As ChromatogramTick(), Optional title$ = "MRM Chromatogram Peak Plot") As GraphicsData
+        Return chromatogram.Plot(
+            title:=title,
+            showMRMRegion:=True,
+            showAccumulateLine:=True
         )
     End Function
 End Module
