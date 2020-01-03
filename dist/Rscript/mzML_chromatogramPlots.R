@@ -1,6 +1,13 @@
 imports ["mzkit.mrm", "mzkit.quantify.visual"] from "mzkit.quantify.dll";
 
+# The ``--mzML`` raw data file parameter its value can be 
+# the file path of a single mzML raw data file, or could
+# be a directory path which the directory contains multiple
+# mzML raw data files. 
 let file.mzML as string  = ?"--mzML"   || stop("Missing the MRM mzML raw data file!");
+# Only requires the ion pairs data in this data table file
+# The table file could be a csv plain text file or xlsx 
+# datasheet
 let MRM.xlsx as string   = ?"--MRM"    || stop("No mrm information provided!");
 let output.dir as string = ?"--output" || `${dirname(file.mzML)}/${basename(file.mzML)}.chromatogramPlots`;
 	
