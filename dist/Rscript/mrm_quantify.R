@@ -18,7 +18,8 @@ print("View reference standard levels data:");
 print(reference);
 
 wiff <- list(samples = sample, reference = wiff) 
-:> wiff.rawfiles("[-]?LM[-]?\d+") 
+# :> wiff.rawfiles("[-]?LM[-]?\d+") 
+:> wiff.rawfiles("[-]?Cal[-]?\d+") 
 :> as.object;
 
 print("Reference standards:");
