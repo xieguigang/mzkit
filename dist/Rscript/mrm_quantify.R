@@ -2,10 +2,11 @@
 imports ["mzkit.mrm", "mzkit.quantify.visual"] from "mzkit.quantify.dll";
 
 # config of the standard curve data files
-let wiff as string     = ?"--Cal"    || stop("No standard curve data provides!");
-let sample as string   = ?"--data"   || stop("No sample data files provided!");
-let MRM.info as string = ?"--MRM"    || stop("Missing MRM information table file!");
-let dir as string      = ?"--export" || `${wiff :> trim(" ")}-result/`;
+let wiff as string     = ?"--Cal"          || stop("No standard curve data provides!");
+let sample as string   = ?"--data"         || stop("No sample data files provided!");
+let MRM.info as string = ?"--MRM"          || stop("Missing MRM information table file!");
+let dir as string      = ?"--export"       || `${wiff :> trim(" ")}-result/`;
+let patternOf.ref      = ?"--patternOfRef" || '[-]?Cal[-]?\d+';
 
 # read MRM, standard curve and IS information from the given file
 let [ions, reference, is] = MRM.info :> [
@@ -14,12 +15,19 @@ let [ions, reference, is] = MRM.info :> [
 	read.IS("IS")
 ];
 
+# print debug message
 print("View reference standard levels data:");
 print(reference);
+print("Internal standards:");
+print(is);
+print("Ion pairs for each required metabolites:");
+print(ions);
+
+print(`The reference data raw files will be matches by name pattern: [${patternOf.ref}]`);
 
 wiff <- list(samples = sample, reference = wiff) 
 # :> wiff.rawfiles("[-]?LM[-]?\d+") 
-:> wiff.rawfiles("[-]?Cal[-]?\d+") 
+:> wiff.rawfiles(patternOf.ref) 
 :> as.object;
 
 print("Reference standards:");

@@ -77,10 +77,18 @@ Public Module MRMkit
         REnv.ConsolePrinter.AttachConsoleFormatter(Of StandardCurve)(AddressOf printLineModel)
         REnv.ConsolePrinter.AttachConsoleFormatter(Of IonPair())(AddressOf printIonPairs)
         REnv.ConsolePrinter.AttachConsoleFormatter(Of Standards())(AddressOf printStandards)
+        REnv.ConsolePrinter.AttachConsoleFormatter(Of [IS]())(AddressOf printIS)
     End Sub
 
     Private Function printStandards(obj As Object) As String
         Dim csv = DirectCast(obj, Standards()).ToCsvDoc.ToMatrix.RowIterator.ToArray
+        Dim printContent = csv.Print(addBorder:=False)
+
+        Return printContent
+    End Function
+
+    Private Function printIS(obj As Object) As String
+        Dim csv = DirectCast(obj, [IS]()).ToCsvDoc.ToMatrix.RowIterator.ToArray
         Dim printContent = csv.Print(addBorder:=False)
 
         Return printContent
