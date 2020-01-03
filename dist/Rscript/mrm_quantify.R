@@ -58,7 +58,7 @@ let linears.standard_curve as function(wiff_standards, subdir) {
 	 	TPAFactors     = NULL
 	 );
 
-	CAL :> write.csv(file = `${dir}/${subdir}/CAL.csv`);
+	CAL :> write.csv(file = `${dir}/${subdir}/referencePoints(peakarea).csv`);
 
 	let ref <- linears(CAL, reference, is, autoWeighted = TRUE, blankControls = blanks);
 

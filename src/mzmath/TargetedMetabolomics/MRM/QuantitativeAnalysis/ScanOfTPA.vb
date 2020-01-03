@@ -72,7 +72,7 @@ Namespace MRM
                 assignName:=Function(ion) ion.accession
             )
             ' 进行最大峰的查找，然后计算出净峰面积，用于回归建模
-            Dim TPA = ionData _
+            Dim TPA As IonTPA() = ionData _
                 .Select(Function(ion)
                             Return ion.ionTPA(
                                 baselineQuantile,

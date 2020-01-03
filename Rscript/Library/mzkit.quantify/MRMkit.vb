@@ -273,10 +273,14 @@ Public Module MRMkit
     End Function
 
     ''' <summary>
-    ''' Scan the raw file data
+    ''' # Scan the raw file data
+    ''' 
+    ''' Get the peak area data of the metabolites in each given sample 
+    ''' data files
     ''' </summary>
     ''' <param name="wiffConverts">
-    ''' A directory that contains the mzML files which are converts from the given wiff raw file.
+    ''' A directory that contains the mzML files which are converts from 
+    ''' the given wiff raw file.
     ''' </param>
     ''' <param name="ions">Ion pairs definition data.</param>
     ''' <param name="peakAreaMethod"></param>

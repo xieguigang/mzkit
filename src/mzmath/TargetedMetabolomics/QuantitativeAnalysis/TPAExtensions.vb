@@ -53,6 +53,7 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports SMRUCC.MassSpectrum.Math.Chromatogram
 Imports SMRUCC.MassSpectrum.Math.MRM.Models
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' ROI Peak data of the given ion
@@ -64,6 +65,10 @@ Public Class IonTPA
     Public Property area As Double
     Public Property baseline As Double
     Public Property maxPeakHeight As Double
+
+    Public Overrides Function ToString() As String
+        Return $"{name}[{peakROI.Min}, {stdNum.Round(peakROI.Max)}] = {area}"
+    End Function
 
 End Class
 

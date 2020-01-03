@@ -80,6 +80,7 @@ Namespace MRM
                 .Select(Function(ionData)
                             Dim ion As IonPair = ionData.ion
                             Dim note$ = ion.name & $" [{ion.precursor}/{ion.product}]"
+
                             Return New NamedCollection(Of ChromatogramTick) With {
                                 .name = assignName(ion),
                                 .description = note,
