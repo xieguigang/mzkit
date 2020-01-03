@@ -40,7 +40,7 @@ if (wiff$hasBlankControls) {
 	print("Target reference data have no blank controls.");
 }
 
-let doLinears as function(wiff_standards, subdir = "") {
+let linears.standard_curve as function(wiff_standards, subdir) {
 	# Get raw scan data for given ions
 	let CAL <- wiff_standards 
 	# list.files(wiff, pattern = "*.mzML")
@@ -83,17 +83,24 @@ let doLinears as function(wiff_standards, subdir = "") {
 		write.csv(peaks, file = `${dir}/${subdir}/peaktables/${fileName}.csv`);
 	}
 
-	wiff$samples
-	# list.files(wiff, pattern = "*.mzML")
-	:> wiff.scans(ions,peakAreaMethod= 0, TPAFactors = NULL) 
-	:> write.csv(file = `${dir}/${subdir}\samples.csv`);
+	return ref;
+}
 
+let doLinears as function(wiff_standards, subdir = "") {
 	let scans = [];
+	let ref   = linears.standard_curve(wiff_standards, subdir);
 
+	# Write raw scan data of the user sample data
+	wiff$samples
+		# list.files(wiff, pattern = "*.mzML")
+		:> wiff.scans(ions, peakAreaMethod = 0, TPAFactors = NULL) 
+		:> write.csv(file = `${dir}/${subdir}\samples.csv`);
+
+	# create ion quantify result for each metabolites
+	# that defined in ion pairs data
 	for(sample.mzML in wiff$samples) {
 		let peakfile as string = `${dir}/${subdir}/samples_peaktable/${basename(sample.mzML)}.csv`;
-		let result = ref 
-			:> sample.quantify(sample.mzML, ions, 0, NULL);
+		let result = ref :> sample.quantify(sample.mzML, ions, 0, NULL);
 		
 		print(basename(sample.mzML));
 		
