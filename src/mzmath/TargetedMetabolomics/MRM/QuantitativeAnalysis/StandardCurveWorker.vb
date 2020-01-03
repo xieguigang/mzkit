@@ -54,6 +54,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Quantile
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
 Imports SMRUCC.MassSpectrum.Math.MRM.Data
@@ -67,10 +68,19 @@ Namespace MRM
     ''' </summary>
     Public Module StandardCurveWorker
 
+        <Extension>
+        Private Function reverseModel(model As StandardCurve) As Func(Of Double, Double)
+            Dim fx As Polynomial = model.linear.Polynomial
+            Dim a As Double = fx.Factors(1)
+            Dim b As Double = fx.Factors(Scan0)
+
+            Return Function(y) (y - b) / a
+        End Function
+
         ''' <summary>
         ''' 根据建立起来的线性回归模型进行样品数据的扫描，根据曲线的结果得到浓度数据
         ''' </summary>
-        ''' <param name="model">标准曲线线性回归模型，X为峰面积</param>
+        ''' <param name="linearModels">标准曲线线性回归模型，X为峰面积</param>
         ''' <param name="raw$"></param>
         ''' <param name="ions"></param>
         ''' <returns>
@@ -78,7 +88,7 @@ Namespace MRM
         ''' <see cref="NamedValue(Of Double).Description"/>则是AIS/A的结果，即X轴的数据
         ''' </returns>
         <Extension>
-        Public Iterator Function ScanContent(model As StandardCurve(),
+        Public Iterator Function ScanContent(linearModels As StandardCurve(),
                                              raw$,
                                              ions As IonPair(),
                                              peakAreaMethod As PeakArea.Methods,
@@ -96,43 +106,52 @@ Namespace MRM
 
             raw = raw.FileName
 
+            ' model -> y = ax + b
+            ' in_calculation -> x = (y-b)/a
+            Dim quantifyLinears = linearModels _
+                .Select(Function(line)
+                            Return (fx:=line.reverseModel, linearModels:=line, name:=line.name)
+                        End Function) _
+                .ToArray
+
             ' 遍历得到的所有的标准曲线，进行样本之中的浓度的计算
-            For Each metabolite As StandardCurve In model.Where(Function(m) TPA.ContainsKey(m.name))
+            For Each metabolite As (fx As Func(Of Double, Double), model As StandardCurve, name$) In quantifyLinears.Where(Function(m) TPA.ContainsKey(m.name))
                 Dim AIS As New IonTPA  ' (ROI As DoubleRange, TPA#, baseline#, maxinto#)
                 Dim X#
                 ' 得到样品之中的峰面积
                 Dim A = TPA(metabolite.name)
+                Dim model As StandardCurve = metabolite.model
 
-                If Not metabolite.requireISCalibration Then
+                If Not model.requireISCalibration Then
                     ' 不需要内标进行校正
                     ' 则X轴的数据直接是代谢物的峰面积数据
                     X = A.area
                 Else
                     ' 数据存在丢失
-                    If Not TPA.ContainsKey(metabolite.IS.ID) Then
+                    If Not TPA.ContainsKey(model.IS.ID) Then
                         Continue For
                     Else
                         ' 得到与样品混在一起的内标的峰面积
                         ' X轴数据需要做内标校正
-                        AIS = TPA(metabolite.IS.ID)
+                        AIS = TPA(model.IS.ID)
                         X# = A.area / AIS.area
                     End If
                 End If
 
-                If metabolite.linear Is Nothing Then
+                If model.linear Is Nothing Then
                     Call $"Missing metabolite {metabolite.name} in raw file!".Warning
 
                     Continue For
                 Else
                     ' 利用峰面积比计算出浓度结果数据
                     ' 然后通过X轴的数据就可以通过标准曲线的线性回归模型计算出浓度了
-                    C# = metabolite.linear(X)
+                    C# = metabolite.fx(X)
                 End If
 
                 ' 这里的C是相当于 cIS/ct = C，则样品的浓度结果应该为 ct = cIS/C
                 ' C = Val(info!cIS) / C
 
-                Dim [IS] As IonPair = names.TryGetValue(metabolite.IS.ID)
+                Dim [IS] As IonPair = names.TryGetValue(model.IS.ID)
                 Dim peaktable As New MRMPeakTable With {
                     .content = C,
                     .ID = metabolite.name,
@@ -387,7 +406,13 @@ Namespace MRM
                 }
 
                 ' 得到标准曲线之中的一个点
-                Yield New PointF(pX, pY)
+
+                ' 20200103
+                '
+                ' it's wired that axis X should be the content and 
+                ' Y Is the peak area ratio in targeted quantify 
+                ' analysis
+                Yield New PointF(pY, pX)
             Next
         End Function
 

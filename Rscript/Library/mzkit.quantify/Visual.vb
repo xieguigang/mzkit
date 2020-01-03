@@ -67,14 +67,16 @@ Module Visual
                                       Optional title$ = "",
                                       Optional samples As NamedValue(Of Double)() = Nothing,
                                       Optional size$ = "1600,1200",
-                                      Optional margin$ = "padding: 200px 100px 200px 200px") As GraphicsData
+                                      Optional margin$ = "padding: 200px 100px 150px 150px",
+                                      Optional factorFormat$ = "G4") As GraphicsData
 
         Return StandardCurvesPlot.StandardCurves(
             model:=model,
             samples:=samples,
             name:=title,
             size:=size,
-            margin:=margin
+            margin:=margin,
+            factorFormat:=factorFormat
         )
     End Function
 
