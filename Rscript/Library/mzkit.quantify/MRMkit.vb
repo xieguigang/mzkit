@@ -161,10 +161,10 @@ Public Module MRMkit
         If file.ExtensionSuffix("xlsx") Then
             Return Xlsx.Open(path:=file) _
                 .GetTable(sheetName) _
-                .AsDataSource(Of IonPair) _
+                .AsDataSource(Of IonPair)(silent:=True) _
                 .ToArray
         Else
-            Return file.LoadCsv(Of IonPair).ToArray
+            Return file.LoadCsv(Of IonPair)(mute:=True).ToArray
         End If
     End Function
 
@@ -181,10 +181,10 @@ Public Module MRMkit
         If file.ExtensionSuffix("xlsx") Then
             reference = Xlsx.Open(path:=file) _
                 .GetTable(sheetName) _
-                .AsDataSource(Of Standards) _
+                .AsDataSource(Of Standards)(silent:=True) _
                 .ToArray
         Else
-            reference = file.LoadCsv(Of Standards).ToArray
+            reference = file.LoadCsv(Of Standards)(mute:=True).ToArray
         End If
 
         Return reference
@@ -203,10 +203,10 @@ Public Module MRMkit
         If file.ExtensionSuffix("xlsx") Then
             Return Xlsx.Open(path:=file) _
                 .GetTable(sheetName) _
-                .AsDataSource(Of [IS]) _
+                .AsDataSource(Of [IS])(silent:=True) _
                 .ToArray
         Else
-            Return file.LoadCsv(Of [IS]).ToArray
+            Return file.LoadCsv(Of [IS])(mute:=True).ToArray
         End If
     End Function
 

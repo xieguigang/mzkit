@@ -6,7 +6,7 @@ let wiff as string     = ?"--Cal"          || stop("No standard curve data provi
 let sample as string   = ?"--data"         || stop("No sample data files provided!");
 let MRM.info as string = ?"--MRM"          || stop("Missing MRM information table file!");
 let dir as string      = ?"--export"       || `${wiff :> trim(" ")}-result/`;
-let patternOf.ref      = ?"--patternOfRef" || '[-]?Cal[-]?\d+';
+let patternOf.ref      = ?"--patternOfRef" || '[-]?LM[-]?\d+';
 
 # read MRM, standard curve and IS information from the given file
 let [ions, reference, is] = MRM.info :> [
