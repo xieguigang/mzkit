@@ -95,18 +95,21 @@ let linears.standard_curve as function(wiff_standards, subdir) {
 }
 
 let doLinears as function(wiff_standards, subdir = "") {
-	let scans = [];
-	let ref   = linears.standard_curve(wiff_standards, subdir);
+	let scans        = [];
+	let ref          = linears.standard_curve(wiff_standards, subdir);
+	# calculate standards points as well for quality controls
+	# and result data verification
+	let sample.files = wiff$samples << wiff_standards; 
 
 	# Write raw scan data of the user sample data
-	wiff$samples
+	sample.files
 		# list.files(wiff, pattern = "*.mzML")
 		:> wiff.scans(ions, peakAreaMethod = 0, TPAFactors = NULL) 
 		:> write.csv(file = `${dir}/${subdir}\samples.csv`);
 
 	# create ion quantify result for each metabolites
 	# that defined in ion pairs data
-	for(sample.mzML in wiff$samples) {
+	for(sample.mzML in sample.files) {
 		let peakfile as string = `${dir}/${subdir}/samples_peaktable/${basename(sample.mzML)}.csv`;
 		let result = ref :> sample.quantify(sample.mzML, ions, 0, NULL);
 		
