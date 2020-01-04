@@ -49,7 +49,7 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language.UnixBash
 
-Namespace File
+Namespace SDF
 
     ''' <summary>
     ''' An internal file parser module
@@ -167,8 +167,8 @@ Namespace File
                 .ID = ID.Trim,
                 .[Structure] = struct,
                 .Software = program.Trim,
-                .Comment = comment.Trim,
-                .MetaData = metaData
+                .comment = comment.Trim,
+                .metaData = metaData
             }
         End Function
 

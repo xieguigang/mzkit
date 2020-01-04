@@ -48,7 +48,7 @@
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
 
-Namespace File
+Namespace SDF.Models
 
     ''' <summary>
     ''' The molecular structure.

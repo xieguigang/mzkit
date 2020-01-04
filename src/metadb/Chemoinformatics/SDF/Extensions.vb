@@ -54,7 +54,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 Imports SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI.XML
 
-Namespace File
+Namespace SDF
 
     Public Module SDFExtensions
 

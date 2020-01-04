@@ -52,7 +52,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Language
 
-Namespace File
+Namespace SDF
 
     ' https://pubchemdocs.ncbi.nlm.nih.gov/data-specification
 

@@ -56,7 +56,7 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
-Namespace File
+Namespace SDF.Models
 
     Public Class Atom
 

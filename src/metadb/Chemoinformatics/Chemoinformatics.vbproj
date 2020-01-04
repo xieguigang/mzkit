@@ -44,8 +44,10 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Presentation" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -86,7 +88,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="SDF\ChemicalDescriptor.vb" />
+    <Compile Include="ChemicalDescriptor.vb" />
     <Compile Include="SDF\Extensions.vb" />
     <Compile Include="SDF\NamespaceDoc.vb" />
     <Compile Include="SDF\SDF.vb" />
