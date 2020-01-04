@@ -53,9 +53,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Terminal.ProgressBar
-Imports SMRUCC.MassSpectrum.Math
-Imports SMRUCC.MassSpectrum.Math.Ms1
-Imports SMRUCC.MassSpectrum.Math.Spectra
 Imports stdNum = System.Math
 
 Namespace Spectra

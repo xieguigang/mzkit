@@ -48,7 +48,6 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Language
-Imports SMRUCC.MassSpectrum.Math.MRM.Models
 
 Namespace GCMS.QuantifyAnalysis
 
