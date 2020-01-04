@@ -53,7 +53,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Parser
 
-Namespace MetaLib
+Namespace Formula
 
     Public NotInheritable Class FormulaScanner
 

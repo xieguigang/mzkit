@@ -49,7 +49,7 @@
 
 Imports System.Runtime.CompilerServices
 
-Namespace MetaLib
+Namespace Formula
 
     Public Class FormulaComposition
 
