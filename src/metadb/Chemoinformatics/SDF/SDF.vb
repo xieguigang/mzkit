@@ -93,6 +93,8 @@ Namespace SDF
         ''' <returns></returns>
         <XmlAttribute> Public Property Software As String
 
+        Public Property name As String
+
         <XmlText>
         Public Property Comment As String
         Public Property [Structure] As [Structure]
