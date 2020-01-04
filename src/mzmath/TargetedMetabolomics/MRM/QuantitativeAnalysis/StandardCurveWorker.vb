@@ -46,6 +46,8 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Bootstrapping
@@ -57,8 +59,6 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Quantile
 Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
-Imports SMRUCC.MassSpectrum.Math.MRM.Data
-Imports SMRUCC.MassSpectrum.Math.MRM.Models
 Imports regexp = System.Text.RegularExpressions.Regex
 
 Namespace MRM
