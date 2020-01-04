@@ -259,6 +259,10 @@
       <Project>{ca3ec2d0-bf06-4005-95b7-b73fe39bf336}</Project>
       <Name>ProteoWizard.Interop</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\src\metadb\Chemoinformatics\Chemoinformatics.vbproj">
+      <Project>{c3faf972-2d6d-4fcb-8e1f-a66fe130d485}</Project>
+      <Name>Chemoinformatics</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\src\metadb\Massbank\Massbank.vbproj">
       <Project>{a686bdf5-077f-47f5-a8dd-c73e6e88363c}</Project>
       <Name>Massbank</Name>
