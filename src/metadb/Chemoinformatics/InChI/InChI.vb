@@ -48,7 +48,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.BioDeep.Chemistry.IUPAC.InChILayers
+Imports BioNovoGene.BioDeep.Chemoinformatics.IUPAC.InChILayers
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 
 Namespace IUPAC

@@ -65,7 +65,7 @@
 
 #End Region
 
-Imports BioNovoGene.BioDeep.Chemistry.File
+Imports BioNovoGene.BioDeep.Chemoinformatics.SDF.Models
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Parser
