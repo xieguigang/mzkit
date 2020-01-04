@@ -219,9 +219,9 @@
       <Project>{a8a71b32-dac6-4fa7-a5c1-0f5e5d5c9eb7}</Project>
       <Name>TargetedMetabolomics</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\src\visualize\plot\msData-visualize.vbproj">
+    <ProjectReference Include="..\..\..\src\visualize\plot\msplots.vbproj">
       <Project>{f2147043-7c16-48f8-838b-3d2cf14b0a7b}</Project>
-      <Name>msData-visualize</Name>
+      <Name>msplots</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
