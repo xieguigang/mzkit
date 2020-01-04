@@ -46,6 +46,7 @@
 Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemistry.Model.Graph
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports BioNovoGene.BioDeep.Chemoinformatics.SDF
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -96,5 +97,15 @@ Module Formula
     <ExportAPI("KCF.graph")>
     Public Function CreateGraph(kcf As Model.KCF) As NetworkGraph
         Return kcf.CreateGraph
+    End Function
+
+    <ExportAPI("read.SDF")>
+    Public Function readSDF(data As String, Optional parseStruct As Boolean = True) As SDF
+        Return SDF.ParseSDF(data.SolveStream, parseStruct)
+    End Function
+
+    <ExportAPI("SDF.convertKCF")>
+    Public Function SDF2KCF(sdfModel As SDF) As Model.KCF
+        Return sdfModel.ToKCF
     End Function
 End Module

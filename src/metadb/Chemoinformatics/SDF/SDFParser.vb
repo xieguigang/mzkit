@@ -129,7 +129,7 @@ Namespace SDF
             Throw New BadImageFormatException
         End Function
 
-        Private Function StreamParser(block$(), parseStruct As Boolean) As SDF
+        Public Function StreamParser(block$(), parseStruct As Boolean) As SDF
             Dim ID$ = block(0), program$ = block(1)
             Dim comment$ = block(2)
             Dim metas$()

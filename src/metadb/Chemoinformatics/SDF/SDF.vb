@@ -130,5 +130,9 @@ Namespace SDF
         Public Shared Function MoleculePopulator(directory$, Optional takes% = -1, Optional echo As Boolean = True) As IEnumerable(Of SDF)
             Return SDFParser.MoleculePopulator(directory, takes, echo)
         End Function
+
+        Public Shared Function ParseSDF(data$, Optional parseStruct As Boolean = True) As SDF
+            Return SDFParser.StreamParser(data.LineTokens, parseStruct)
+        End Function
     End Class
 End Namespace
