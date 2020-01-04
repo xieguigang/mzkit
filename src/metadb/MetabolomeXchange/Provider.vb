@@ -66,7 +66,7 @@ Public Module Provider
 
     Public Function GetAllDataSet(Optional provider$ = "mtbls") As DataSet()
         Return GetAllDataSetJson(provider) _
-            .LoadObject(Of response) _
+            .LoadJSON(Of response) _
             .datasets _
             .Values _
             .ToArray
