@@ -279,6 +279,10 @@
       <Project>{1bafa2bc-68b2-4ee0-9235-c60fae3377a0}</Project>
       <Name>KCF.IO</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\src\visualize\SDF.Extensions\SDF.Extensions.vbproj">
+      <Project>{203506ab-8cb6-454c-98db-2e27ac94cb17}</Project>
+      <Name>SDF.Extensions</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

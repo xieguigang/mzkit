@@ -44,7 +44,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.BioDeep.Chemistry.Model
-Imports BioNovoGene.BioDeep.Chemoinformatics.SDF
 Imports BioNovoGene.BioDeep.Chemoinformatics.SDF.Models
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports Atom = BioNovoGene.BioDeep.Chemoinformatics.SDF.Models.Atom
