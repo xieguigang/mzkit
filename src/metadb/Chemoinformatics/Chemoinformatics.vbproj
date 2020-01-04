@@ -89,7 +89,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ChemicalDescriptor.vb" />
-    <Compile Include="SDF\Extensions.vb" />
     <Compile Include="SDF\NamespaceDoc.vb" />
     <Compile Include="SDF\SDF.vb" />
     <Compile Include="SDF\SDFParser.vb" />
