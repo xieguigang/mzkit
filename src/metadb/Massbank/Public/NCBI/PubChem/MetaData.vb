@@ -54,7 +54,7 @@
 
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.BioDeep.Chemistry.File
+Imports BioNovoGene.BioDeep.Chemoinformatics.SDF
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Namespace NCBI.PubChem

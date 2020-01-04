@@ -50,7 +50,7 @@
 #End Region
 
 Imports System.Reflection
-Imports BioNovoGene.BioDeep.Chemistry.File
+Imports BioNovoGene.BioDeep.Chemoinformatics.SDF
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Namespace LipidMaps
