@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b83bf63602de555bca1a1ee9a654ea1e, Rscript\Library\mzkit.quantify\GCMS.vb"
+﻿#Region "Microsoft.VisualBasic::0b95bef54a7cb5170cd71695d89cad95, Rscript\Library\mzkit.quantify\GCMS.vb"
 
     ' Author:
     ' 
@@ -42,11 +42,9 @@
 
 #End Region
 
-
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 <Package("mzkit.gcms")>
 Module GCMS
 
 End Module
-

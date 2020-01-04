@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34e70e0f1445b9858ea1f0aa360c94b0, Rscript\Library\mzkit\ProteoWizard.vb"
+﻿#Region "Microsoft.VisualBasic::9636ce4bceaae067925b8871f3b9bca8, Rscript\Library\mzkit\ProteoWizard.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -116,4 +115,3 @@ Module ProteoWizard
             .ToArray
     End Function
 End Module
-
