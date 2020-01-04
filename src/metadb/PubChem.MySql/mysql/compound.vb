@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::63573bba8d5070ae8c31b8d0c06c0b5c, DATA\PubChem.MySql\mysql\compound.vb"
+﻿#Region "Microsoft.VisualBasic::48f955585ff0e8a5954df76b34684970, src\metadb\PubChem.MySql\mysql\compound.vb"
 
     ' Author:
     ' 
@@ -203,4 +203,3 @@ End Class
 
 
 End Namespace
-

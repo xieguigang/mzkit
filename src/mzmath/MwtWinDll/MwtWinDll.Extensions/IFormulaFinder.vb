@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::83fe26fb8a4d2b863d3a40ac709e88d8, MwtWinDll\MwtWinDll.Extensions\IFormulaFinder.vb"
+﻿#Region "Microsoft.VisualBasic::e9b893fffbfbc53c89d173fd1d5c5e1d, src\mzmath\MwtWinDll\MwtWinDll.Extensions\IFormulaFinder.vb"
 
     ' Author:
     ' 
@@ -188,4 +188,3 @@ Public Module IFormulaFinder
         End With
     End Function
 End Module
-

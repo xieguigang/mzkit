@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d91754733471e431e1fe192d8e9d1b17, DATA\TargetedMetabolomics\MRM\RawFile.vb"
+﻿#Region "Microsoft.VisualBasic::1ebb160bb8143b8232e1232994b33bb8, src\mzmath\TargetedMetabolomics\MRM\RawFile.vb"
 
     ' Author:
     ' 
@@ -36,14 +36,19 @@
 
     '     Class RawFile
     ' 
-    '         Properties: samples, standards
+    '         Properties: allSamples, blanks, hasBlankControls, numberOfStandardReference, patternOfRefer
+    '                     samples, standards
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
+    '         Function: GetLinearGroups, getLinearsGroup, GetRawFileList, hasPatternOf, ToString
+    '                   WrapperForStandards
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
+
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Namespace MRM.Models
 
@@ -66,6 +71,26 @@ Namespace MRM.Models
             End Get
         End Property
 
+        Public ReadOnly Property hasBlankControls As Boolean
+            Get
+                Return Not blanks.IsNullOrEmpty
+            End Get
+        End Property
+
+        Public ReadOnly Property numberOfStandardReference As Integer
+            Get
+                Return getLinearsGroup(standards, patternOfRefer).Count
+            End Get
+        End Property
+
+        Public Property patternOfRefer As String
+
+        Private Sub New()
+            samples = {}
+            standards = {}
+            blanks = {}
+        End Sub
+
         Sub New(directory$, Optional patternOfRefer$ = ".+[-]CAL[-]?\d+", Optional patternOfBlanks$ = "KB[-]?\d+")
             Dim mzML As String() = directory _
                 .ListFiles("*.mzML") _
@@ -87,6 +112,8 @@ Namespace MRM.Models
                                   Not hasPatternOf(path, patternOfBlanks)
                        End Function) _
                 .ToArray
+
+            Me.patternOfRefer = patternOfRefer
         End Sub
 
         Sub New(sampleDir$, referenceDir$, Optional patternOfRefer$ = ".+[-]CAL[-]?\d+", Optional patternOfBlanks$ = "KB[-]?\d+")
@@ -103,7 +130,15 @@ Namespace MRM.Models
                            Return hasPatternOf(path, patternOfBlanks)
                        End Function) _
                 .ToArray
+
+            Me.patternOfRefer = patternOfRefer
         End Sub
+
+        Public Function GetLinearGroups() As Dictionary(Of String, String())
+            Return getLinearsGroup(standards, patternOfRefer) _
+                .ToDictionary _
+                .FlatTable
+        End Function
 
         ''' <summary>
         ''' Get raw file list
@@ -122,6 +157,28 @@ Namespace MRM.Models
                 .BaseName _
                 .Match(pattern, RegexICSng) _
                 .StringEmpty
+        End Function
+
+        Private Shared Iterator Function getLinearsGroup(standards As IEnumerable(Of String), patternOfRefer$) As IEnumerable(Of NamedValue(Of String()))
+            Dim groups = standards _
+                .GroupBy(Function(fileName)
+                             Return fileName.BaseName.StringReplace(patternOfRefer, "")
+                         End Function) _
+                .ToArray
+
+            For Each group As IGrouping(Of String, String) In groups
+                Yield New NamedValue(Of String()) With {
+                    .Name = group.Key,
+                    .Value = group.ToArray
+                }
+            Next
+        End Function
+
+        Public Shared Function WrapperForStandards(standards As String(), patternOfRefer$) As RawFile
+            Return New RawFile With {
+                .patternOfRefer = patternOfRefer,
+                .standards = standards
+            }
         End Function
 
         Public Overrides Function ToString() As String

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c4e7a0e493c41fe2426e577c257abbe5, DATA\Massbank\MetaLib\Formula\FormulaComposition.vb"
+﻿#Region "Microsoft.VisualBasic::c4e7a0e493c41fe2426e577c257abbe5, src\metadb\Massbank\MetaLib\Formula\FormulaComposition.vb"
 
     ' Author:
     ' 

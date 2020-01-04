@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e10482514bae9a79f29db4540f099378, DATA\FooDB\FooDB\mysql\health_effects.vb"
+﻿#Region "Microsoft.VisualBasic::e10482514bae9a79f29db4540f099378, src\metadb\FooDB\FooDB\mysql\health_effects.vb"
 
     ' Author:
     ' 

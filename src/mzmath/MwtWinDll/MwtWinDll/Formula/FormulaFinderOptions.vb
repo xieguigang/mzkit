@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::81cc22f1780681c1bdcc9e09db67f076, MwtWinDll\MwtWinDll\Formula\FormulaFinderOptions.vb"
+﻿#Region "Microsoft.VisualBasic::3ead28ef0714adf720cb663bc97d8169, src\mzmath\MwtWinDll\MwtWinDll\Formula\FormulaFinderOptions.vb"
 
     ' Author:
     ' 
@@ -159,4 +159,3 @@ Public Class FormulaFinderOptions
         VerifyHydrogens = True
     End Sub
 End Class
-

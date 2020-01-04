@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::44e8a72cea578bc2b9bada2231de3cfb, DATA\TargetedMetabolomics\MRM\Data\MRMPeakTable.vb"
+﻿#Region "Microsoft.VisualBasic::44e8a72cea578bc2b9bada2231de3cfb, src\mzmath\TargetedMetabolomics\MRM\Data\MRMPeakTable.vb"
 
     ' Author:
     ' 

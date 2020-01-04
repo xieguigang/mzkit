@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::191c46577fc0b4aade95833fd85cb583, MetaDNA\MetaDNA_visual\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::b391aab534f43f930f2ca71e757cc8be, src\metadna\MetaDNA_visual\test\Module1.vb"
 
     ' Author:
     ' 
@@ -76,4 +76,3 @@ Module Module1
     End Sub
 
 End Module
-

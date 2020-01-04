@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::974582786c890b9e67b5156894ba797a, DATA\ms2_math-core\Ms1\PolarityData.vb"
+﻿#Region "Microsoft.VisualBasic::188519f7e5c42ae9ddbf56299d2a58ac, src\mzmath\ms2_math-core\Ms1\PolarityData.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports SMRUCC.MassSpectrum.Math.Ms1.PrecursorType
 

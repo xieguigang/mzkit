@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::049850f267f44470e8bbfd138dcc7f04, Assembly\test\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::049850f267f44470e8bbfd138dcc7f04, src\assembly\assembly\test\Module1.vb"
 
     ' Author:
     ' 

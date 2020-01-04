@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::79edf148685cf9907d196fb60e6c28b1, DATA\TargetedMetabolomics\test\test.vb"
+﻿#Region "Microsoft.VisualBasic::0e5d7c90756fb15e48960170fc7a3ff3, src\mzmath\TargetedMetabolomics\test\test.vb"
 
     ' Author:
     ' 

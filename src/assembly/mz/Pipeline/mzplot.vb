@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0955fdd37f9267a065515a4e9ec62a0, Assembly\mz\Pipeline\mzplot.vb"
+﻿#Region "Microsoft.VisualBasic::2333338c74a7979da45908cefbe14c4d, src\assembly\mz\Pipeline\mzplot.vb"
 
     ' Author:
     ' 
@@ -186,5 +186,3 @@ Public Function mzIntoXIC(data As String, Optional out As String = "") As Intege
 End Function
 End Class
 End Namespace
-
-

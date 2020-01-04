@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a6d8d69927c0b6a1cade2c351d219647, MwtWinDll\MwtWinConsole\Program.vb"
+﻿#Region "Microsoft.VisualBasic::0739eb5636a4ea9effad3a1ce188091c, src\mzmath\MwtWinDll\MwtWinConsole\Program.vb"
 
     ' Author:
     ' 
@@ -92,4 +92,3 @@ Module Program
     End Sub
 
 End Module
-

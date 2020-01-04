@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae7ee499616b887f4ddd6adea34b5dde, DATA\ms2_math-core\Chromatogram\Deconvolution\Deconvolution.vb"
+﻿#Region "Microsoft.VisualBasic::ae7ee499616b887f4ddd6adea34b5dde, src\mzmath\ms2_math-core\Chromatogram\Deconvolution\Deconvolution.vb"
 
     ' Author:
     ' 

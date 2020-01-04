@@ -1,45 +1,48 @@
-﻿#Region "Microsoft.VisualBasic::2ee324534ad078e776c957485ad4b497, Rscript\Library\mzkit.quantitative\MRMkit.vb"
+﻿#Region "Microsoft.VisualBasic::fbb9f26d0479297c2c8d6222e521680f, Rscript\Library\mzkit.quantify\MRMkit.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Module MRMkit
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Function: ExtractIonData, ExtractPeakROI, printIonPairs, readIonPairs, ScanStandardCurve
-' 
-' /********************************************************************************/
+    ' Module MRMkit
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: ExtractIonData, ExtractPeakROI, GetLinearPoints, GetQuantifyResult, GetRawX
+    '               Linears, printIonPairs, printLineModel, printStandards, readCompoundReference
+    '               readIonPairs, readIS, SampleQuantify, ScanPeakTable, ScanWiffRaw
+    '               WiffRawFile, writeMRMpeaktable
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -61,18 +64,38 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports REnv = SMRUCC.Rsharp.Runtime.Internal
 Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
+Imports RRuntime = SMRUCC.Rsharp.Runtime
 Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
 
+''' <summary>
+''' MRM Targeted Metabolomics
+''' </summary>
 <Package("mzkit.mrm")>
 Public Module MRMkit
 
     Sub New()
-        REnv.ConsolePrinter.AttachConsoleFormatter(Of IonPair())(AddressOf printIonPairs)
         REnv.ConsolePrinter.AttachConsoleFormatter(Of StandardCurve)(AddressOf printLineModel)
+        REnv.ConsolePrinter.AttachConsoleFormatter(Of IonPair())(AddressOf printIonPairs)
+        REnv.ConsolePrinter.AttachConsoleFormatter(Of Standards())(AddressOf printStandards)
+        REnv.ConsolePrinter.AttachConsoleFormatter(Of [IS]())(AddressOf printIS)
     End Sub
 
-    Private Function printIonPairs(ions As IonPair()) As String
-        Dim csv = ions.ToCsvDoc
+    Private Function printStandards(obj As Object) As String
+        Dim csv = DirectCast(obj, Standards()).ToCsvDoc.ToMatrix.RowIterator.ToArray
+        Dim printContent = csv.Print(addBorder:=False)
+
+        Return printContent
+    End Function
+
+    Private Function printIS(obj As Object) As String
+        Dim csv = DirectCast(obj, [IS]()).ToCsvDoc.ToMatrix.RowIterator.ToArray
+        Dim printContent = csv.Print(addBorder:=False)
+
+        Return printContent
+    End Function
+
+    Private Function printIonPairs(obj As Object) As String
+        Dim csv = DirectCast(obj, IonPair()).ToCsvDoc.ToMatrix.RowIterator.ToArray
         Dim printContent = csv.Print(addBorder:=False)
 
         Return printContent
@@ -91,14 +114,24 @@ Public Module MRMkit
     ''' <summary>
     ''' Extract ion peaks
     ''' </summary>
-    ''' <param name="mzML$"></param>
-    ''' <param name="ionpairs"></param>
+    ''' <param name="mzML">A mzML raw file</param>
+    ''' <param name="ionpairs">metabolite targets</param>
     ''' <returns></returns>
     <ExportAPI("extract.ions")>
     Public Function ExtractIonData(mzML$, ionpairs As IonPair()) As NamedCollection(Of ChromatogramTick)()
         Return MRMSamples.ExtractIonData(ionpairs, mzML, Function(i) i.accession)
     End Function
 
+    ''' <summary>
+    ''' Exact ``regions of interested`` based on the given ion pair as targets.
+    ''' </summary>
+    ''' <param name="mzML">A mzML raw data file</param>
+    ''' <param name="ionpairs">MRM ion pairs</param>
+    ''' <param name="TPAFactors">Peak factors</param>
+    ''' <param name="baselineQuantile#"></param>
+    ''' <param name="integratorTicks%"></param>
+    ''' <param name="peakAreaMethod"></param>
+    ''' <returns></returns>
     <ExportAPI("extract.peakROI")>
     Public Function ExtractPeakROI(mzML$, ionpairs As IonPair(),
                                    Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
@@ -128,13 +161,19 @@ Public Module MRMkit
         If file.ExtensionSuffix("xlsx") Then
             Return Xlsx.Open(path:=file) _
                 .GetTable(sheetName) _
-                .AsDataSource(Of IonPair) _
+                .AsDataSource(Of IonPair)(silent:=True) _
                 .ToArray
         Else
-            Return file.LoadCsv(Of IonPair)
+            Return file.LoadCsv(Of IonPair)(mute:=True).ToArray
         End If
     End Function
 
+    ''' <summary>
+    ''' Read reference points
+    ''' </summary>
+    ''' <param name="file$"></param>
+    ''' <param name="sheetName$"></param>
+    ''' <returns></returns>
     <ExportAPI("read.reference")>
     Public Function readCompoundReference(file$, Optional sheetName$ = "Sheet1") As Standards()
         Dim reference As Standards()
@@ -142,35 +181,43 @@ Public Module MRMkit
         If file.ExtensionSuffix("xlsx") Then
             reference = Xlsx.Open(path:=file) _
                 .GetTable(sheetName) _
-                .AsDataSource(Of Standards) _
+                .AsDataSource(Of Standards)(silent:=True) _
                 .ToArray
         Else
-            reference = file.LoadCsv(Of Standards)
+            reference = file.LoadCsv(Of Standards)(mute:=True).ToArray
         End If
-
-        For i As Integer = 0 To reference.Length - 1
-            reference(i).C = reference(i).C.ToLower
-        Next
 
         Return reference
     End Function
 
+    ''' <summary>
+    ''' Read the definition of internal standards
+    ''' </summary>
+    ''' <param name="file">A csv file or xlsx file</param>
+    ''' <param name="sheetName">
+    ''' The sheet name that contains data of the IS data if the given file is a xlsx file.
+    ''' </param>
+    ''' <returns></returns>
     <ExportAPI("read.IS")>
     Public Function readIS(file$, Optional sheetName$ = "Sheet1") As [IS]()
         If file.ExtensionSuffix("xlsx") Then
             Return Xlsx.Open(path:=file) _
                 .GetTable(sheetName) _
-                .AsDataSource(Of [IS]) _
+                .AsDataSource(Of [IS])(silent:=True) _
                 .ToArray
         Else
-            Return file.LoadCsv(Of [IS])
+            Return file.LoadCsv(Of [IS])(mute:=True).ToArray
         End If
     End Function
 
     ''' <summary>
     ''' Create model of the MRM raw files
     ''' </summary>
-    ''' <param name="convertDir">A directory data for read MRM sample raw files.</param>
+    ''' <param name="convertDir">
+    ''' A directory data object for read MRM sample raw files. If the parameter value is
+    ''' a ``list``, then it should contains at least two fields: ``samples`` and ``reference``.
+    ''' The balnks raw data should be contains in reference files directory.
+    ''' </param>
     ''' <param name="patternOfRef">File name pattern for filter reference data.</param>
     ''' <param name="patternOfBlank">File name pattern for filter blank controls.</param>
     ''' <param name="env"></param>
@@ -201,8 +248,8 @@ Public Module MRMkit
         ElseIf dataType Is GetType(Rlist) Then
             ' samples/reference
             With DirectCast(convertDir, Rlist)
-                Dim samples As String = convertDir!samples
-                Dim reference As String = convertDir!reference
+                Dim samples As String = RRuntime.getFirst(!samples)
+                Dim reference As String = RRuntime.getFirst(!reference)
 
                 Return New RawFile(samples, reference, patternOfRef, patternOfBlank)
             End With
@@ -226,19 +273,25 @@ Public Module MRMkit
     End Function
 
     ''' <summary>
-    ''' Scan the raw file data
+    ''' # Scan the raw file data
+    ''' 
+    ''' Get the peak area data of the metabolites in each given sample 
+    ''' data files
     ''' </summary>
-    ''' <param name="wiffConverts">A directory that contains the mzML files which are converts from the given wiff raw file.</param>
+    ''' <param name="wiffConverts">
+    ''' A directory that contains the mzML files which are converts from 
+    ''' the given wiff raw file.
+    ''' </param>
     ''' <param name="ions">Ion pairs definition data.</param>
     ''' <param name="peakAreaMethod"></param>
     ''' <param name="TPAFactors"></param>
     ''' <param name="removesWiffName"></param>
     ''' <returns></returns>
     <ExportAPI("wiff.scans")>
-    Public Function ScanStandardCurve(wiffConverts$(), ions As IonPair(),
-                                      Optional peakAreaMethod% = 1,
-                                      Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
-                                      Optional removesWiffName As Boolean = True) As DataSet()
+    Public Function ScanWiffRaw(wiffConverts As String(), ions As IonPair(),
+                                Optional peakAreaMethod% = 1,
+                                Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
+                                Optional removesWiffName As Boolean = True) As DataSet()
 
         Dim method As PeakArea.Methods = CType(peakAreaMethod, PeakArea.Methods)
 
@@ -246,18 +299,38 @@ Public Module MRMkit
             TPAFactors = New Dictionary(Of String, Double)
         End If
 
-        If wiffConverts.IsNullOrEmpty Then
+        If wiffConverts Is Nothing Then
             Throw New ArgumentNullException(NameOf(wiffConverts))
-        Else
-            Return WiffRaw.Scan(
-                mzMLRawFiles:=wiffConverts,
-                ions:=ions,
-                peakAreaMethod:=method,
-                TPAFactors:=TPAFactors,
-                refName:=Nothing,
-                removesWiffName:=removesWiffName
-            )
         End If
+
+        'If wiffConverts Is Nothing Then
+        '    Throw New ArgumentNullException(NameOf(wiffConverts))
+        'ElseIf RRuntime.isVector(Of String)(wiffConverts) Then
+        '    Dim stringVec As Array = RRuntime.asVector(Of String)(wiffConverts)
+
+        '    If stringVec.Length = 1 Then
+        '        wiffConverts = stringVec.GetValue(Scan0) _
+        '                .ToString _
+        '                .ListFiles("*.mzML") _
+        '                .ToArray _
+        '                .DoCall(Function(files)
+        '                            Return RawFile.WrapperForStandards(files, "CAL[-]?\d+")
+        '                        End Function)
+        '    Else
+        '        wiffConverts = RawFile.WrapperForStandards(stringVec, "CAL[-]?\d+")
+        '    End If
+        'End If
+
+        'Dim raw As RawFile = DirectCast(wiffConverts, RawFile)
+
+        Return WiffRaw.Scan(
+            mzMLRawFiles:=wiffConverts,
+            ions:=ions,
+            peakAreaMethod:=method,
+            TPAFactors:=TPAFactors,
+            refName:=Nothing,
+            removesWiffName:=removesWiffName
+        )
     End Function
 
     ''' <summary>
@@ -272,8 +345,18 @@ Public Module MRMkit
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("linears")>
-    Public Function Linears(rawScan As DataSet(), calibrates As Standards(), [ISvector] As [IS](), Optional autoWeighted As Boolean = True) As StandardCurve()
-        Return rawScan.ToDictionary.Regression(calibrates, ISvector, weighted:=autoWeighted).ToArray
+    Public Function Linears(rawScan As DataSet(), calibrates As Standards(), [ISvector] As [IS](),
+                            Optional autoWeighted As Boolean = True,
+                            Optional blankControls As DataSet() = Nothing) As StandardCurve()
+
+        Return rawScan.ToDictionary _
+            .Regression(
+                calibrates:=calibrates,
+                ISvector:=ISvector,
+                weighted:=autoWeighted,
+                blankControls:=blankControls
+            ) _
+            .ToArray
     End Function
 
     ''' <summary>
@@ -344,4 +427,3 @@ Public Module MRMkit
         Return fileScans.Select(Function(file) file.rawX).ToArray
     End Function
 End Module
-

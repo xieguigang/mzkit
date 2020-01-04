@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d33c9b6509aa7b31f973388098e21d9d, DATA\Massbank\test\HMDBqueryTest.vb"
+﻿#Region "Microsoft.VisualBasic::99378113d397ba189c436626cb09fcc1, src\metadb\Massbank\test\HMDBqueryTest.vb"
 
     ' Author:
     ' 
@@ -50,4 +50,3 @@ Module HMDBqueryTest
         Pause()
     End Sub
 End Module
-

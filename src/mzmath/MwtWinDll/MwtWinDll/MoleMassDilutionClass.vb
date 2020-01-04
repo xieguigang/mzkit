@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18181c290cd7371ff0b60b5f41016528, MwtWinDll\MwtWinDll\MoleMassDilutionClass.vb"
+﻿#Region "Microsoft.VisualBasic::351c65c1c3c428e36973c24ca921b6fb, src\mzmath\MwtWinDll\MwtWinDll\MoleMassDilutionClass.vb"
 
     ' Author:
     ' 
@@ -109,8 +109,6 @@
     ' /********************************************************************************/
 
 #End Region
-
-
 
 Public Class MWMoleMassDilutionClass
 

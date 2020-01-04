@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e92502ba0f4c41259dfe7807185bf69, MetaDNA\MetaDNA_visual\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::9a79c81f3596b1dd9cd51e884d974565, src\metadna\MetaDNA_visual\Extensions.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,6 @@
 
 #End Region
 
-
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
@@ -70,4 +69,3 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
         Return metaDNA.Tabular({"candidates", "intensity", "infer.depth", "score.forward", "score.reverse"})
     End Function
 End Module
-

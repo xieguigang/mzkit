@@ -13,7 +13,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyCompany("BioNovoGene")>
 <Assembly: AssemblyProduct("mzkit")>
 <Assembly: AssemblyCopyright("Copyright © BioNovoGene 2019")>
-<Assembly: AssemblyTrademark("mzkit")>
+<Assembly: AssemblyTrademark("BioDeep")>
 
 <Assembly: ComVisible(False)>
 

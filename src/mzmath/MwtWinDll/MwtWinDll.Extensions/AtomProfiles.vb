@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8a257369468aa046e22fbd133c7f0312, MwtWinDll\MwtWinDll.Extensions\AtomProfiles.vb"
+﻿#Region "Microsoft.VisualBasic::8a257369468aa046e22fbd133c7f0312, src\mzmath\MwtWinDll\MwtWinDll.Extensions\AtomProfiles.vb"
 
     ' Author:
     ' 

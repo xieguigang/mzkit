@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::59e039ab03ed375be65fce271787559a, DATA\FooDB\FooDB\mysql\compound_synonyms.vb"
+﻿#Region "Microsoft.VisualBasic::59e039ab03ed375be65fce271787559a, src\metadb\FooDB\FooDB\mysql\compound_synonyms.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eea8f4fd76b038d4e2471967b1ccd759, DATA\Massbank\test\metaLibLoaderTest.vb"
+﻿#Region "Microsoft.VisualBasic::373db7410d93e245ae62f03aa9e62139, src\metadb\Massbank\test\metaLibLoaderTest.vb"
 
     ' Author:
     ' 
@@ -69,4 +69,3 @@ Public Class DataSetOfMetaLib
     Public Property MetaLib As MetaLib()
 
 End Class
-

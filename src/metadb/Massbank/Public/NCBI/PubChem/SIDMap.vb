@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::07b03c3cab6d8b37f5766225beeeda9d, DATA\Massbank\Public\NCBI\PubChem\SIDMap.vb"
+﻿#Region "Microsoft.VisualBasic::07b03c3cab6d8b37f5766225beeeda9d, src\metadb\Massbank\Public\NCBI\PubChem\SIDMap.vb"
 
     ' Author:
     ' 

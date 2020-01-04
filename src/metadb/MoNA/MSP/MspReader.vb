@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7bc84d39e9472923e1f92d254637713c, DATA\MoNA\MSP\MspReader.vb"
+﻿#Region "Microsoft.VisualBasic::a3173cbde69932ed1e7e9dc29d8d7e44, src\metadb\MoNA\MSP\MspReader.vb"
 
     ' Author:
     ' 
@@ -48,4 +48,3 @@ Public Module MspReader
 
     End Function
 End Module
-

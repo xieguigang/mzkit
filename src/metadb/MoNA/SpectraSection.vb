@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0ab7579d758d3c0547953c6a87b300b6, DATA\MoNA\SpectraSection.vb"
+﻿#Region "Microsoft.VisualBasic::0ab7579d758d3c0547953c6a87b300b6, src\metadb\MoNA\SpectraSection.vb"
 
     ' Author:
     ' 

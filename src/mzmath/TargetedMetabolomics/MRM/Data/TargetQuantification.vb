@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::48a48761611bd554a34966387a05141a, DATA\TargetedMetabolomics\MRM\Data\TargetQuantification.vb"
+﻿#Region "Microsoft.VisualBasic::48a48761611bd554a34966387a05141a, src\mzmath\TargetedMetabolomics\MRM\Data\TargetQuantification.vb"
 
     ' Author:
     ' 

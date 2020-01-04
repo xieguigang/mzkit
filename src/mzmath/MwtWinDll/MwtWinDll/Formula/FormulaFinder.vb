@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32af129f241b1fbd81df7e126f7e7db4, MwtWinDll\MwtWinDll\Formula\FormulaFinder.vb"
+﻿#Region "Microsoft.VisualBasic::b361f681ff91ecc972dd7e2330fb9c39, src\mzmath\MwtWinDll\MwtWinDll\Formula\FormulaFinder.vb"
 
     ' Author:
     ' 
@@ -2210,4 +2210,3 @@ Public Class MWFormulaFinder
 
     End Function
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7bfd04fabcc9b91e248241021b4ef52b, Rscript\Library\mzkit\Massbank.vb"
+﻿#Region "Microsoft.VisualBasic::ad4c77478ec37814e6d5f5bcde7c3900, Rscript\Library\mzkit\Massbank.vb"
 
     ' Author:
     ' 
@@ -126,4 +126,3 @@ Module Massbank
         Return mapping.GetJson.SaveTo(file)
     End Function
 End Module
-

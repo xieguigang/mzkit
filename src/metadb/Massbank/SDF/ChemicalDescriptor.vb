@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f1f7e4e5b541b2f0dc6b40c9f6e6e640, DATA\Massbank\SDF\ChemicalDescriptor.vb"
+﻿#Region "Microsoft.VisualBasic::f1f7e4e5b541b2f0dc6b40c9f6e6e640, src\metadb\Massbank\SDF\ChemicalDescriptor.vb"
 
     ' Author:
     ' 

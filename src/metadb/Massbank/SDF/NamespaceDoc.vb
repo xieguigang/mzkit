@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2bff9df9c9205ecc5d5a9e7bfcb1d9c, DATA\Massbank\SDF\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::c2bff9df9c9205ecc5d5a9e7bfcb1d9c, src\metadb\Massbank\SDF\NamespaceDoc.vb"
 
     ' Author:
     ' 

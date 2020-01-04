@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::699c80709012b57194b19e068c3a30c1, DATA\ms2_simulator\GA\EnergyDistribution.vb"
+﻿#Region "Microsoft.VisualBasic::84b833f549a7616bffd701175985bfda, src\mzmath\ms2_simulator\GA\EnergyDistribution.vb"
 
     ' Author:
     ' 
@@ -42,11 +42,9 @@
 
 #End Region
 
-
 ''' <summary>
 ''' The distribution function of the collision energy, a chromosome model in GA algorithm.
 ''' </summary>
 Public Class EnergyDistribution
 
 End Class
-

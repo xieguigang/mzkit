@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4d1c2af3372f833c95877c0518fc104, Assembly\assembly\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::0a4535512e4e252f9dcf32435399cd08, src\assembly\assembly\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -49,4 +49,3 @@ Friend NotInheritable Class NamespaceDoc
     Private Sub New()
     End Sub
 End Class
-

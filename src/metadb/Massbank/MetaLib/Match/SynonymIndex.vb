@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5aec44abf7cc5ea1f166ce43b970ceb, DATA\Massbank\MetaLib\Match\SynonymIndex.vb"
+﻿#Region "Microsoft.VisualBasic::e5aec44abf7cc5ea1f166ce43b970ceb, src\metadb\Massbank\MetaLib\Match\SynonymIndex.vb"
 
     ' Author:
     ' 

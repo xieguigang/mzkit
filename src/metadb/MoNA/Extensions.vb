@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::acbcd11fadc8694b0d42e9fa1fd1b4b9, DATA\MoNA\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::daeaa965a4c41e47fd5226edbfba40db, src\metadb\MoNA\Extensions.vb"
 
     ' Author:
     ' 
@@ -147,4 +147,3 @@ Public Module Extensions
         Return DirectCast(meta, MetaData)
     End Function
 End Module
-

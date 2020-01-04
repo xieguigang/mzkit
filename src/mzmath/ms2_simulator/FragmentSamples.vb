@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31c546ba7cd453308bb6d9a917650e2b, DATA\ms2_simulator\FragmentSamples.vb"
+﻿#Region "Microsoft.VisualBasic::b15f156615cbe77b78438fb7f30f3887, src\mzmath\ms2_simulator\FragmentSamples.vb"
 
     ' Author:
     ' 
@@ -137,4 +137,3 @@ Public Module FragmentSamples
         Next
     End Function
 End Module
-

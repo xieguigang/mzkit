@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9b5f06e168af998bfdb49500f9f04bf, DATA\Massbank\Public\NCBI\PubChem\CIDSynonym.vb"
+﻿#Region "Microsoft.VisualBasic::f9b5f06e168af998bfdb49500f9f04bf, src\metadb\Massbank\Public\NCBI\PubChem\CIDSynonym.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a988678a96566eb80ca0e178e8c080f, Assembly\assembly\MarkupData\mzML\XML\Spectrum.vb"
+﻿#Region "Microsoft.VisualBasic::4a988678a96566eb80ca0e178e8c080f, src\assembly\assembly\MarkupData\mzML\XML\Spectrum.vb"
 
     ' Author:
     ' 

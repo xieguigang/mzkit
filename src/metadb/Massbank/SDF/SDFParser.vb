@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c530f790367501707c7e3b81539eeef, DATA\Massbank\SDF\SDFParser.vb"
+﻿#Region "Microsoft.VisualBasic::0c530f790367501707c7e3b81539eeef, src\metadb\Massbank\SDF\SDFParser.vb"
 
     ' Author:
     ' 

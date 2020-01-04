@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db035f68b10133aa700e3b68582d351f, DATA\TargetedMetabolomics\QuantitativeAnalysis\PeakArea.vb"
+﻿#Region "Microsoft.VisualBasic::a7bad83ae3069a130864f5e81e370605, src\mzmath\TargetedMetabolomics\QuantitativeAnalysis\PeakArea.vb"
 
     ' Author:
     ' 

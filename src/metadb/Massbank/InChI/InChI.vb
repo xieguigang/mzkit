@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::138aaaa8d90958c29fbab8a07a5a2155, DATA\Massbank\InChI\InChI.vb"
+﻿#Region "Microsoft.VisualBasic::138aaaa8d90958c29fbab8a07a5a2155, src\metadb\Massbank\InChI\InChI.vb"
 
     ' Author:
     ' 

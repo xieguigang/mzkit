@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::07b4f8bb69393e11c1eaa7c44f59374b, MwtWinDll\MwtWinDll.Extensions\FormulaCompare.vb"
+﻿#Region "Microsoft.VisualBasic::b848eeaa7d3c3fde6157bdcd7f54617e, src\mzmath\MwtWinDll\MwtWinDll.Extensions\FormulaCompare.vb"
 
     ' Author:
     ' 
@@ -164,4 +164,3 @@ Public Module FormulaCompare
         Return Conversion.Val(digits.CharString)
     End Function
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c1c03e02685249adb65033c242c22938, DATA\Massbank\Public\TMIC\HMDB\Assembly\taxonomy.vb"
+﻿#Region "Microsoft.VisualBasic::c1c03e02685249adb65033c242c22938, src\metadb\Massbank\Public\TMIC\HMDB\Assembly\taxonomy.vb"
 
     ' Author:
     ' 
