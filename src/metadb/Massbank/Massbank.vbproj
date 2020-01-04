@@ -267,13 +267,6 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="InChI\Layers.vb" />
-    <Compile Include="InChI\InChI.vb" />
-    <Compile Include="InChI\Extensions.vb" />
-    <Compile Include="InChI\Components.vb" />
-    <Compile Include="InChI\InChIKey.vb" />
-    <Compile Include="MetaLib\Formula\FormulaScanner.vb" />
-    <Compile Include="MetaLib\Formula\FormulaComposition.vb" />
     <Compile Include="MetaLib\Match\ComparesIdXrefInteger.vb" />
     <Compile Include="MetaLib\Match\SynonymIndex.vb" />
     <Compile Include="MetaLib\Match\TreeSearch.vb" />
@@ -314,18 +307,10 @@
     <Compile Include="Public\TMIC\HMDB\Spectra\MSMS.vb" />
     <Compile Include="Public\TMIC\HMDB\Spectra\CMS.vb" />
     <Compile Include="Public\TMIC\HMDB\Tables\ChemicalDescriptor.vb" />
-    <Compile Include="SDF\ChemicalDescriptor.vb" />
-    <Compile Include="SDF\NamespaceDoc.vb" />
-    <Compile Include="SDF\SDFParser.vb" />
-    <Compile Include="SDF\Struct\Enums.vb" />
-    <Compile Include="SDF\Struct\Elements.vb" />
-    <Compile Include="SDF\Extensions.vb" />
     <Compile Include="Public\TMIC\HMDB\Tables\MetaDBTable.vb" />
     <Compile Include="Public\TMIC\HMDB\Assembly\property.vb" />
     <Compile Include="Public\TMIC\HMDB\Assembly\disease.vb" />
     <Compile Include="Public\lipidMAPS\MapsHelper.vb" />
-    <Compile Include="SDF\Struct\Mol.vb" />
-    <Compile Include="SDF\SDF.vb" />
     <Compile Include="Public\TMIC\HMDB\Tables\NameValue.vb" />
     <Compile Include="Public\TMIC\HMDB\Extensions.vb" />
     <Compile Include="Public\TMIC\HMDB\Assembly\taxonomy.vb" />
