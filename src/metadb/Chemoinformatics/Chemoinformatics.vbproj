@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Chemoinformatics</RootNamespace>
-    <AssemblyName>Chemoinformatics</AssemblyName>
+    <RootNamespace>BioNovoGene.BioDeep.Chemoinformatics</RootNamespace>
+    <AssemblyName>BioNovoGene.BioDeep.Chemoinformatics</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
@@ -19,7 +19,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>Chemoinformatics.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.BioDeep.Chemoinformatics.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -28,7 +28,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>Chemoinformatics.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.BioDeep.Chemoinformatics.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
