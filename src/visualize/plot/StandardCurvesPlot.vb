@@ -43,10 +43,10 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics
 Imports Microsoft.VisualBasic.Imaging.Driver
-Imports SMRUCC.MassSpectrum.Math
 
 Public Module StandardCurvesPlot
 
