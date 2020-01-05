@@ -52,6 +52,8 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.Rsharp.Runtime.Internal.Object
+Imports REnv = SMRUCC.Rsharp.Runtime
 
 <Package("mzkit.quantify.visual")>
 Module Visual
@@ -121,6 +123,21 @@ Module Visual
                 Return data
             Case GetType(MGF.Ions)
                 Return DirectCast(data, MGF.Ions).GetLibrary
+            Case GetType(dataframe)
+                Dim matrix As dataframe = DirectCast(data, dataframe)
+                Dim mz As Double() = REnv.asVector(Of Double)(matrix.GetColumnVector("mz"))
+                Dim into As Double() = REnv.asVector(Of Double)(matrix.GetColumnVector("into"))
+                Dim ms2 As ms2() = mz _
+                    .Select(Function(m, i)
+                                Return New ms2 With {
+                                    .mz = m,
+                                    .intensity = into(i),
+                                    .quantity = into(i)
+                                }
+                            End Function) _
+                    .ToArray
+
+                Return New LibraryMatrix With {.ms2 = ms2, .Name = "Mass Spectrum"}
             Case Else
                 Throw New NotImplementedException
         End Select
