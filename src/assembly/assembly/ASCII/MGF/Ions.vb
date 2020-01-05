@@ -117,5 +117,12 @@ Namespace ASCII.MGF
             Return text.ToString
         End Function
 
+        Public Function GetLibrary() As LibraryMatrix
+            Return New LibraryMatrix With {
+                .ms2 = Peaks,
+                .Name = Title
+            }
+        End Function
+
     End Class
 End Namespace
