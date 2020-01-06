@@ -58,11 +58,16 @@ Module MRMLinearReport
                     <div class="col-xl-10">
                         <h2><%= title %></h2>
 
-                        <ul>
-                            <li>ID: <%= line.name %></li>
-                            <li>Linear: %s</li>
-                            <li>R<sup>2</sup>: <%= line.linear.CorrelationCoefficient %></li>
-                        </ul>
+                        <div class="panel panel-success">
+                            <div class="panel-heading">Linear</div>
+                            <div style="padding:10px">
+                                <ul>
+                                    <li>ID: <%= line.name %></li>
+                                    <li>Linear: <i>f(x)</i>=%s</li>
+                                    <li>R<sup>2</sup>: <%= line.linear.CorrelationCoefficient %></li>
+                                </ul>
+                            </div>
+                        </div>
 
                         <p>
                             <img src=<%= New DataURI(image) %> style="width: 60%;"/>

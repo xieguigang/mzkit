@@ -438,7 +438,7 @@ Public Module MRMkit
                             .ID = line.name,
                             .Properties = New Dictionary(Of String, String) From {
                                 {"name", line.points(Scan0).Name},
-                                {"equation", line.linear.Polynomial.ToString("G5", False)},
+                                {"equation", "f(x)=" & line.linear.Polynomial.ToString("G5", False)},
                                 {"R2", line.linear.CorrelationCoefficient},
                                 {"is.weighted", line.isWeighted},
                                 {"IS.calibration", line.requireISCalibration},
