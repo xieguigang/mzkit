@@ -30,7 +30,7 @@ Module MRMLinearReport
                     <!-- Bootstrap CSS -->
                     <link rel="stylesheet" href="http://cdn.biodeep.cn:8848/styles/bootstrap-4.3.1-dist/css/bootstrap.min.css" crossorigin="anonymous"/>
                 </head>
-                <body>
+                <body class="container-fluid">
                     <h1>MRM Quantification Linear Models</h1>
 
                     {$linears}
@@ -54,24 +54,26 @@ Module MRMLinearReport
             title = line.points(Scan0).Name
             image = Visual.DrawStandardCurve(line, title).AsGDIImage
             linears +=
-                <div>
-                    <h2><%= title %></h2>
+                <div class="row">
+                    <div class="col-xl-10">
+                        <h2><%= title %></h2>
 
-                    <ul>
-                        <li>ID: <%= line.name %></li>
-                        <li>Linear: %s</li>
-                        <li>R<sup>2</sup>: <%= line.linear.CorrelationCoefficient %></li>
-                    </ul>
+                        <ul>
+                            <li>ID: <%= line.name %></li>
+                            <li>Linear: %s</li>
+                            <li>R<sup>2</sup>: <%= line.linear.CorrelationCoefficient %></li>
+                        </ul>
 
-                    <p>
-                        <img src=<%= New DataURI(image) %> style="width: 50%;"/>
-                    </p>
+                        <p>
+                            <img src=<%= New DataURI(image) %> style="width: 60%;"/>
+                        </p>
 
-                    <h3>Reference Points</h3>
+                        <h3>Reference Points</h3>
 
-                    <p>
-                        %s
-                    </p>
+                        <p>%s</p>
+
+                        <hr/>
+                    </div>
                 </div>
         Next
 
@@ -88,7 +90,12 @@ Module MRMLinearReport
     Private Function asset(e As XElement, line As StandardCurve) As String
         Dim equation$ = line.linear.Polynomial.ToString("G4", html:=True)
         Dim title = line.points(Scan0).Name
-        Dim pointTable$ = line.points.ToHTML(title, $"Linear Model Reference Points of '{title}'")
+        Dim pointTable$ = line.points.ToHTMLTable(
+            className:="table",
+            width:="100%",
+            title:=title,
+            alt:=$"Linear Model Reference Points of '{title}'"
+        )
 
         Return sprintf(e, equation, pointTable)
     End Function
