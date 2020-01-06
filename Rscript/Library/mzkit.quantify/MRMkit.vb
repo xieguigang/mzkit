@@ -359,6 +359,9 @@ Public Module MRMkit
     ''' + positive means the max allowed point numbers for auto deletion by the program
     ''' </param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' 20200106 checked, test success
+    ''' </remarks>
     <ExportAPI("linears")>
     Public Function Linears(rawScan As DataSet(), calibrates As Standards(), [ISvector] As [IS](),
                             Optional autoWeighted As Boolean = True,
