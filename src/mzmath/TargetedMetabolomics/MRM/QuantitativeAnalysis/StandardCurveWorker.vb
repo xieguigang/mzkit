@@ -309,7 +309,7 @@ Namespace MRM
                 Dim out As New StandardCurve With {
                     .name = ion.HMDB,
                     .linear = fit,
-                    .points = points.ToArray,
+                    .points = points.PopAll,
                     .[IS] = IsIon
                 }
 
