@@ -30,8 +30,12 @@ Module MRMLinearReport
                     <!-- Bootstrap CSS -->
                     <link rel="stylesheet" href="http://cdn.biodeep.cn:8848/styles/bootstrap-4.3.1-dist/css/bootstrap.min.css" crossorigin="anonymous"/>
                 </head>
-                <body class="container-fluid">
+                <body class="container">
                     <h1>MRM Quantification Linear Models</h1>
+                    <hr/>
+                    <h2>Table Of Content</h2>
+                    {$TOC}
+                    <hr/>
 
                     {$linears}
                 </body>
@@ -54,7 +58,7 @@ Module MRMLinearReport
             title = line.points(Scan0).Name
             image = Visual.DrawStandardCurve(line, title).AsGDIImage
             linears +=
-                <div class="row">
+                <div class="row" id=<%= line.name %>>
                     <div class="col-xl-10">
                         <h2><%= title %></h2>
 
@@ -82,6 +86,7 @@ Module MRMLinearReport
                 </div>
         Next
 
+        report("TOC") = standardCurves.TOC
         report("linears") = linears _
             .Select(Function(e, i)
                         Return e.asset(standardCurves(i))
@@ -89,6 +94,37 @@ Module MRMLinearReport
             .JoinBy(vbCrLf)
 
         Return "<!doctype html>" & report.ToString
+    End Function
+
+    <Extension>
+    Private Function TOC(lines As StandardCurve()) As String
+        Dim rows As String() = lines _
+            .Select(Function(line)
+                        Return <tr>
+                                   <td>
+                                       <a href=<%= "#" & line.name %>><%= line.name %></a>
+                                   </td>
+                                   <td><%= line.points(Scan0).Name %></td>
+                                   <td><%= line.linear.Polynomial.ToString("G5", False) %></td>
+                                   <td><%= line.linear.CorrelationCoefficient %></td>
+                               </tr>
+                    End Function) _
+            .Select(Function(e) e.ToString) _
+            .ToArray
+
+        Return sprintf(<table class="table">
+                           <thead>
+                               <tr>
+                                   <th>ID</th>
+                                   <th>name</th>
+                                   <th><i>f(x)</i></th>
+                                   <th>R<sup>2</sup></th>
+                               </tr>
+                           </thead>
+                           <tbody>
+                               %s
+                           </tbody>
+                       </table>, rows.JoinBy(vbCrLf))
     End Function
 
     <Extension>
