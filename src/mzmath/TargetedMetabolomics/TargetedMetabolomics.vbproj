@@ -173,6 +173,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MRM\Data\MRMStandards.vb" />
+    <Compile Include="MRM\QuantitativeAnalysis\QuantificationWorker.vb" />
     <Compile Include="QuantitativeAnalysis\ContentUnits.vb" />
     <Compile Include="GCMS\ChromatographyPeaktable.vb" />
     <Compile Include="GCMS\QuantifyAnalysis\ReferenceLibrary.vb" />
