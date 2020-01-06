@@ -431,7 +431,7 @@ Public Module MRMkit
     End Function
 
     <ExportAPI("lines.table")>
-    Public Function StandardCurveDataSet(lines As StandardCurve(), file$) As EntityObject()
+    Public Function StandardCurveDataSet(lines As StandardCurve()) As EntityObject()
         Return lines _
             .Select(Function(line)
                         Return New EntityObject With {
