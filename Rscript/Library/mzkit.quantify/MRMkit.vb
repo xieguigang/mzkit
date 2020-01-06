@@ -430,7 +430,26 @@ Public Module MRMkit
         Return MRMPeaks.SaveTo(file, silent:=True)
     End Function
 
-    <ExportAPI("write.standard_curve")>
+    <ExportAPI("lines.table")>
+    Public Function StandardCurveDataSet(lines As StandardCurve(), file$) As EntityObject()
+        Return lines _
+            .Select(Function(line)
+                        Return New EntityObject With {
+                            .ID = line.name,
+                            .Properties = New Dictionary(Of String, String) From {
+                                {"name", line.points(Scan0).Name},
+                                {"equation", line.linear.Polynomial.ToString("G5", False)},
+                                {"R2", line.linear.CorrelationCoefficient},
+                                {"is.weighted", line.isWeighted},
+                                {"IS.calibration", line.requireISCalibration},
+                                {"IS", line.IS.name}
+                            }
+                        }
+                    End Function) _
+            .ToArray
+    End Function
+
+    <ExportAPI("write.points")>
     Public Function writeStandardCurve(points As MRMStandards(), file$) As Boolean
         Return points.SaveTo(file, silent:=True)
     End Function

@@ -80,7 +80,7 @@ let linears.standard_curve as function(wiff_standards, subdir) {
 		# save reference points
 		line
 		:> points(name = id)
-		:> write.standard_curve(file = `${dir}/${subdir}/standard_curves/${id}.csv`)
+		:> write.points(file = `${dir}/${subdir}/standard_curves/${id}.csv`)
 		;
 	}
 
@@ -90,14 +90,20 @@ let linears.standard_curve as function(wiff_standards, subdir) {
 		}
 	}
 
+	# save linear models summary
+	ref
+	:> lines.table
+	:> write.csv(file = `${dir}/${subdir}/linears.csv`)
+	;
+
 	for(mzML in wiff_standards) {
 		let fileName = basename(mzML);
 		let peaks = MRM.peaks(mzML, ions, peakAreaMethod = 0, TPAFactors = NULL);
 		
 		# save peaktable for given rawfile
 		write.csv(peaks, file = `${dir}/${subdir}/peaktables/${fileName}.csv`);
-	}
-
+	}	
+	
 	return ref;
 }
 
