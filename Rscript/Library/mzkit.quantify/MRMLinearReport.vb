@@ -20,15 +20,27 @@ Module MRMLinearReport
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Function getBlankReport() As ScriptBuilder
         Return New ScriptBuilder(
-            <html>
+            <html lang="zh-CN">
                 <head>
+                    <meta charset="utf-8"/>
+                    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
                     <title>Linear Models</title>
+
+                    <!-- Bootstrap CSS -->
+                    <link rel="stylesheet" href="http://cdn.biodeep.cn:8848/styles/bootstrap-4.3.1-dist/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous"/>
                 </head>
                 <body>
                     <h1>MRM Quantification Linear Models</h1>
 
                     {$linears}
                 </body>
+
+                <!-- Optional JavaScript -->
+                <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+                <script src="http://cdn.biodeep.cn:8848/vendor/jquery-3.2.1.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+                <script src="http://cdn.biodeep.cn:8848/vendor/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+                <script src="http://cdn.biodeep.cn:8848/styles/bootstrap-4.3.1-dist/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
             </html>)
     End Function
 
@@ -69,7 +81,7 @@ Module MRMLinearReport
                     End Function) _
             .JoinBy(vbCrLf)
 
-        Return report.ToString
+        Return "<!doctype html>" & report.ToString
     End Function
 
     <Extension>
