@@ -159,6 +159,14 @@ Namespace MRM.Data
         ''' </summary>
         ''' <returns></returns>
         Public Property Cti As Double
+        Public Property fitted As Double
+        Public Property [error] As Double
+
+        Public ReadOnly Property [Variant] As Double
+            Get
+                Return [error] / Cti
+            End Get
+        End Property
 
         ''' <summary>
         ''' 浓度梯度水平的名称，例如：``L1, L2, L3, ...``

@@ -60,6 +60,7 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Quantile
 Imports regexp = System.Text.RegularExpressions.Regex
+Imports stdNum = System.Math
 
 Namespace MRM
 
@@ -312,6 +313,19 @@ Namespace MRM
                     .points = points.PopAll,
                     .[IS] = IsIon
                 }
+                Dim fy As Func(Of Double, Double) = out.reverseModel
+                Dim ptY#
+
+                For Each pt As MRMStandards In points
+                    If pt.AIS > 0 Then
+                        ptY = pt.Ati / pt.AIS
+                    Else
+                        ptY = pt.Ati
+                    End If
+
+                    pt.fitted = fy(ptY)
+                    pt.error = stdNum.Abs(pt.fitted - pt.Cti)
+                Next
 
                 Yield out
             Next
@@ -414,7 +428,7 @@ Namespace MRM
                     .Cti = Ct_i,
                     .ID = id,
                     .Name = name,
-                    .level = "L" & i
+                    .level = "L" & (i + 1)
                 }
 
                 ' 得到标准曲线之中的一个点
