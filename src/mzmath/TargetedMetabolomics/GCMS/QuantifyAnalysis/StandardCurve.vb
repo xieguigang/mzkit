@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d989b1c4e556bf889dd135256a36fff, src\mzmath\TargetedMetabolomics\GCMS\QuantifyAnalysis\StandardCurve.vb"
+﻿#Region "Microsoft.VisualBasic::afef64b82e7193b57d860961401781cf, src\mzmath\TargetedMetabolomics\GCMS\QuantifyAnalysis\StandardCurve.vb"
 
     ' Author:
     ' 
@@ -48,7 +48,6 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Language
-Imports SMRUCC.MassSpectrum.Math.MRM.Models
 
 Namespace GCMS.QuantifyAnalysis
 

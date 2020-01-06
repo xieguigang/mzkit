@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a9663d0a92096496ac0f7c3dcbe9efb, src\mzmath\ms2_math-core\Ms1\Peaktable.vb"
+﻿#Region "Microsoft.VisualBasic::3d23265170e4819ac6dcde4997e6c4aa, src\mzmath\ms2_math-core\Ms1\Peaktable.vb"
 
     ' Author:
     ' 
@@ -48,7 +48,7 @@
 #End Region
 
 Imports System.Data.Linq.Mapping
-Imports SMRUCC.MassSpectrum.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 
 ''' <summary>
 ''' 一级信息表

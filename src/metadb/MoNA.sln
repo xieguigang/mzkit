@@ -1,31 +1,33 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.572
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29609.76
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MoNA", "MoNA\MoNA.vbproj", "{94E1A3B2-05C7-4D80-8385-4EAEF4400F9B}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "47-dotnet_Microsoft.VisualBasic", "..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj", "{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "47-dotnet_Microsoft.VisualBasic", "..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj", "{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "modules", "modules", "{3149A5F3-5626-4C4D-A220-29D98739D062}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "47_dotnet_ms-vb_data.framework", "..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj", "{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "47_dotnet_ms-vb_data.framework", "..\..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj", "{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GCModeller", "GCModeller", "{414ECE4F-8B00-4C1F-92F1-88DCFFD4D930}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Bio.Assembly", "..\..\GCModeller\src\GCModeller\core\Bio.Assembly\Bio.Assembly.vbproj", "{C699D311-9923-4C19-BF70-5048D0E2CF5D}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Bio.Assembly", "..\..\..\GCModeller\src\GCModeller\core\Bio.Assembly\Bio.Assembly.vbproj", "{C699D311-9923-4C19-BF70-5048D0E2CF5D}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "math-core", "..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\math-core.vbproj", "{E3367B88-5D0C-495A-8273-331656D4B5AA}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "math-core", "..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\math-core.vbproj", "{E3367B88-5D0C-495A-8273-331656D4B5AA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mzkit", "mzkit", "{846781DC-ECAC-47AC-8796-551557BB42F2}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "assembly", "..\Assembly\assembly\assembly.vbproj", "{95F7D65E-9DB1-4605-9FD3-25433277AF88}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MassSpectrum.math-core", "ms2_math-core\MassSpectrum.math-core.vbproj", "{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MassSpectrum.math-core", "..\mzmath\ms2_math-core\MassSpectrum.math-core.vbproj", "{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Massbank", "Massbank\Massbank.vbproj", "{A686BDF5-077F-47F5-A8DD-C73E6E88363C}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "test", "MoNA\test\test.vbproj", "{C57A097E-C3A2-4472-B8CA-08F19DD34C82}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Chemoinformatics", "Chemoinformatics\Chemoinformatics.vbproj", "{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +67,9 @@ Global
 		mysqli_X64_release|Any CPU = mysqli_X64_release|Any CPU
 		mysqli_X64_release|x64 = mysqli_X64_release|x64
 		mysqli_X64_release|x86 = mysqli_X64_release|x86
+		mzkit|Any CPU = mzkit|Any CPU
+		mzkit|x64 = mzkit|x64
+		mzkit|x86 = mzkit|x86
 		node-debug|Any CPU = node-debug|Any CPU
 		node-debug|x64 = node-debug|x64
 		node-debug|x86 = node-debug|x86
@@ -163,6 +168,12 @@ Global
 		{94E1A3B2-05C7-4D80-8385-4EAEF4400F9B}.mysqli_X64_release|x64.Build.0 = Release|x64
 		{94E1A3B2-05C7-4D80-8385-4EAEF4400F9B}.mysqli_X64_release|x86.ActiveCfg = Release|Any CPU
 		{94E1A3B2-05C7-4D80-8385-4EAEF4400F9B}.mysqli_X64_release|x86.Build.0 = Release|Any CPU
+		{94E1A3B2-05C7-4D80-8385-4EAEF4400F9B}.mzkit|Any CPU.ActiveCfg = BioDeep_database|Any CPU
+		{94E1A3B2-05C7-4D80-8385-4EAEF4400F9B}.mzkit|Any CPU.Build.0 = BioDeep_database|Any CPU
+		{94E1A3B2-05C7-4D80-8385-4EAEF4400F9B}.mzkit|x64.ActiveCfg = BioDeep_database|x64
+		{94E1A3B2-05C7-4D80-8385-4EAEF4400F9B}.mzkit|x64.Build.0 = BioDeep_database|x64
+		{94E1A3B2-05C7-4D80-8385-4EAEF4400F9B}.mzkit|x86.ActiveCfg = BioDeep_database|Any CPU
+		{94E1A3B2-05C7-4D80-8385-4EAEF4400F9B}.mzkit|x86.Build.0 = BioDeep_database|Any CPU
 		{94E1A3B2-05C7-4D80-8385-4EAEF4400F9B}.node-debug|Any CPU.ActiveCfg = Release|Any CPU
 		{94E1A3B2-05C7-4D80-8385-4EAEF4400F9B}.node-debug|Any CPU.Build.0 = Release|Any CPU
 		{94E1A3B2-05C7-4D80-8385-4EAEF4400F9B}.node-debug|x64.ActiveCfg = Release|x64
@@ -283,6 +294,12 @@ Global
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.mysqli_X64_release|x64.Build.0 = mysqli_X64_release|x64
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.mysqli_X64_release|x86.ActiveCfg = mysqli_X64_release|x86
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.mysqli_X64_release|x86.Build.0 = mysqli_X64_release|x86
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.mzkit|Any CPU.Build.0 = mzkit|Any CPU
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.mzkit|x64.ActiveCfg = mzkit|x64
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.mzkit|x64.Build.0 = mzkit|x64
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.mzkit|x86.ActiveCfg = mzkit|x86
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.mzkit|x86.Build.0 = mzkit|x86
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.node-debug|Any CPU.ActiveCfg = node-debug|Any CPU
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.node-debug|Any CPU.Build.0 = node-debug|Any CPU
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.node-debug|x64.ActiveCfg = node-debug|x64
@@ -403,6 +420,12 @@ Global
 		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.mysqli_X64_release|x64.Build.0 = node-debug|x64
 		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.mysqli_X64_release|x86.ActiveCfg = node-debug|x86
 		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.mysqli_X64_release|x86.Build.0 = node-debug|x86
+		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
+		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.mzkit|Any CPU.Build.0 = mzkit|Any CPU
+		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.mzkit|x64.ActiveCfg = mzkit|x64
+		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.mzkit|x64.Build.0 = mzkit|x64
+		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.mzkit|x86.ActiveCfg = mzkit|x86
+		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.mzkit|x86.Build.0 = mzkit|x86
 		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.node-debug|Any CPU.ActiveCfg = node-debug|Any CPU
 		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.node-debug|Any CPU.Build.0 = node-debug|Any CPU
 		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.node-debug|x64.ActiveCfg = node-debug|x64
@@ -523,6 +546,12 @@ Global
 		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.mysqli_X64_release|x64.Build.0 = Biostack-Debug|x64
 		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.mysqli_X64_release|x86.ActiveCfg = Biostack-Debug|x86
 		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.mysqli_X64_release|x86.Build.0 = Biostack-Debug|x86
+		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
+		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.mzkit|Any CPU.Build.0 = mzkit|Any CPU
+		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.mzkit|x64.ActiveCfg = mzkit|x64
+		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.mzkit|x64.Build.0 = mzkit|x64
+		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.mzkit|x86.ActiveCfg = mzkit|x86
+		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.mzkit|x86.Build.0 = mzkit|x86
 		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.node-debug|Any CPU.ActiveCfg = Biostack-Debug|Any CPU
 		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.node-debug|Any CPU.Build.0 = Biostack-Debug|Any CPU
 		{C699D311-9923-4C19-BF70-5048D0E2CF5D}.node-debug|x64.ActiveCfg = Biostack-Debug|x64
@@ -643,6 +672,12 @@ Global
 		{E3367B88-5D0C-495A-8273-331656D4B5AA}.mysqli_X64_release|x64.Build.0 = Biostack|x64
 		{E3367B88-5D0C-495A-8273-331656D4B5AA}.mysqli_X64_release|x86.ActiveCfg = Biostack|x86
 		{E3367B88-5D0C-495A-8273-331656D4B5AA}.mysqli_X64_release|x86.Build.0 = Biostack|x86
+		{E3367B88-5D0C-495A-8273-331656D4B5AA}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
+		{E3367B88-5D0C-495A-8273-331656D4B5AA}.mzkit|Any CPU.Build.0 = mzkit|Any CPU
+		{E3367B88-5D0C-495A-8273-331656D4B5AA}.mzkit|x64.ActiveCfg = mzkit|x64
+		{E3367B88-5D0C-495A-8273-331656D4B5AA}.mzkit|x64.Build.0 = mzkit|x64
+		{E3367B88-5D0C-495A-8273-331656D4B5AA}.mzkit|x86.ActiveCfg = mzkit|x86
+		{E3367B88-5D0C-495A-8273-331656D4B5AA}.mzkit|x86.Build.0 = mzkit|x86
 		{E3367B88-5D0C-495A-8273-331656D4B5AA}.node-debug|Any CPU.ActiveCfg = node-debug|Any CPU
 		{E3367B88-5D0C-495A-8273-331656D4B5AA}.node-debug|Any CPU.Build.0 = node-debug|Any CPU
 		{E3367B88-5D0C-495A-8273-331656D4B5AA}.node-debug|x64.ActiveCfg = node-debug|x64
@@ -763,6 +798,12 @@ Global
 		{95F7D65E-9DB1-4605-9FD3-25433277AF88}.mysqli_X64_release|x64.Build.0 = Biodeep|x64
 		{95F7D65E-9DB1-4605-9FD3-25433277AF88}.mysqli_X64_release|x86.ActiveCfg = Biodeep|x86
 		{95F7D65E-9DB1-4605-9FD3-25433277AF88}.mysqli_X64_release|x86.Build.0 = Biodeep|x86
+		{95F7D65E-9DB1-4605-9FD3-25433277AF88}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
+		{95F7D65E-9DB1-4605-9FD3-25433277AF88}.mzkit|Any CPU.Build.0 = mzkit|Any CPU
+		{95F7D65E-9DB1-4605-9FD3-25433277AF88}.mzkit|x64.ActiveCfg = mzkit|x64
+		{95F7D65E-9DB1-4605-9FD3-25433277AF88}.mzkit|x64.Build.0 = mzkit|x64
+		{95F7D65E-9DB1-4605-9FD3-25433277AF88}.mzkit|x86.ActiveCfg = mzkit|x86
+		{95F7D65E-9DB1-4605-9FD3-25433277AF88}.mzkit|x86.Build.0 = mzkit|x86
 		{95F7D65E-9DB1-4605-9FD3-25433277AF88}.node-debug|Any CPU.ActiveCfg = Biodeep|Any CPU
 		{95F7D65E-9DB1-4605-9FD3-25433277AF88}.node-debug|Any CPU.Build.0 = Biodeep|Any CPU
 		{95F7D65E-9DB1-4605-9FD3-25433277AF88}.node-debug|x64.ActiveCfg = Biodeep|x64
@@ -883,6 +924,12 @@ Global
 		{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}.mysqli_X64_release|x64.Build.0 = Biodeep|x64
 		{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}.mysqli_X64_release|x86.ActiveCfg = Biodeep|x86
 		{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}.mysqli_X64_release|x86.Build.0 = Biodeep|x86
+		{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
+		{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}.mzkit|Any CPU.Build.0 = mzkit|Any CPU
+		{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}.mzkit|x64.ActiveCfg = mzkit|x64
+		{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}.mzkit|x64.Build.0 = mzkit|x64
+		{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}.mzkit|x86.ActiveCfg = mzkit|x86
+		{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}.mzkit|x86.Build.0 = mzkit|x86
 		{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}.node-debug|Any CPU.ActiveCfg = Biodeep|Any CPU
 		{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}.node-debug|Any CPU.Build.0 = Biodeep|Any CPU
 		{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}.node-debug|x64.ActiveCfg = Biodeep|x64
@@ -1003,6 +1050,12 @@ Global
 		{A686BDF5-077F-47F5-A8DD-C73E6E88363C}.mysqli_X64_release|x64.Build.0 = Biodeep_UNIX_x64|x64
 		{A686BDF5-077F-47F5-A8DD-C73E6E88363C}.mysqli_X64_release|x86.ActiveCfg = Biodeep_UNIX_x64|x86
 		{A686BDF5-077F-47F5-A8DD-C73E6E88363C}.mysqli_X64_release|x86.Build.0 = Biodeep_UNIX_x64|x86
+		{A686BDF5-077F-47F5-A8DD-C73E6E88363C}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
+		{A686BDF5-077F-47F5-A8DD-C73E6E88363C}.mzkit|Any CPU.Build.0 = mzkit|Any CPU
+		{A686BDF5-077F-47F5-A8DD-C73E6E88363C}.mzkit|x64.ActiveCfg = mzkit|x64
+		{A686BDF5-077F-47F5-A8DD-C73E6E88363C}.mzkit|x64.Build.0 = mzkit|x64
+		{A686BDF5-077F-47F5-A8DD-C73E6E88363C}.mzkit|x86.ActiveCfg = mzkit|x86
+		{A686BDF5-077F-47F5-A8DD-C73E6E88363C}.mzkit|x86.Build.0 = mzkit|x86
 		{A686BDF5-077F-47F5-A8DD-C73E6E88363C}.node-debug|Any CPU.ActiveCfg = Biodeep_UNIX_x64|Any CPU
 		{A686BDF5-077F-47F5-A8DD-C73E6E88363C}.node-debug|Any CPU.Build.0 = Biodeep_UNIX_x64|Any CPU
 		{A686BDF5-077F-47F5-A8DD-C73E6E88363C}.node-debug|x64.ActiveCfg = Biodeep_UNIX_x64|x64
@@ -1123,6 +1176,12 @@ Global
 		{C57A097E-C3A2-4472-B8CA-08F19DD34C82}.mysqli_X64_release|x64.Build.0 = Release|Any CPU
 		{C57A097E-C3A2-4472-B8CA-08F19DD34C82}.mysqli_X64_release|x86.ActiveCfg = Release|Any CPU
 		{C57A097E-C3A2-4472-B8CA-08F19DD34C82}.mysqli_X64_release|x86.Build.0 = Release|Any CPU
+		{C57A097E-C3A2-4472-B8CA-08F19DD34C82}.mzkit|Any CPU.ActiveCfg = Biodeep|Any CPU
+		{C57A097E-C3A2-4472-B8CA-08F19DD34C82}.mzkit|Any CPU.Build.0 = Biodeep|Any CPU
+		{C57A097E-C3A2-4472-B8CA-08F19DD34C82}.mzkit|x64.ActiveCfg = Release|x64
+		{C57A097E-C3A2-4472-B8CA-08F19DD34C82}.mzkit|x64.Build.0 = Release|x64
+		{C57A097E-C3A2-4472-B8CA-08F19DD34C82}.mzkit|x86.ActiveCfg = Biodeep|Any CPU
+		{C57A097E-C3A2-4472-B8CA-08F19DD34C82}.mzkit|x86.Build.0 = Biodeep|Any CPU
 		{C57A097E-C3A2-4472-B8CA-08F19DD34C82}.node-debug|Any CPU.ActiveCfg = Release|Any CPU
 		{C57A097E-C3A2-4472-B8CA-08F19DD34C82}.node-debug|Any CPU.Build.0 = Release|Any CPU
 		{C57A097E-C3A2-4472-B8CA-08F19DD34C82}.node-debug|x64.ActiveCfg = Release|Any CPU
@@ -1171,6 +1230,132 @@ Global
 		{C57A097E-C3A2-4472-B8CA-08F19DD34C82}.Yilia-Release_x64|x64.Build.0 = Release|Any CPU
 		{C57A097E-C3A2-4472-B8CA-08F19DD34C82}.Yilia-Release_x64|x86.ActiveCfg = Release|Any CPU
 		{C57A097E-C3A2-4472-B8CA-08F19DD34C82}.Yilia-Release_x64|x86.Build.0 = Release|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Biodeep_UNIX_x64|Any CPU.ActiveCfg = Biostack|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Biodeep_UNIX_x64|Any CPU.Build.0 = Biostack|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Biodeep_UNIX_x64|x64.ActiveCfg = Biostack|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Biodeep_UNIX_x64|x64.Build.0 = Biostack|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Biodeep_UNIX_x64|x86.ActiveCfg = Biostack|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Biodeep_UNIX_x64|x86.Build.0 = Biostack|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Biodeep|Any CPU.ActiveCfg = Biostack|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Biodeep|Any CPU.Build.0 = Biostack|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Biodeep|x64.ActiveCfg = Biostack|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Biodeep|x64.Build.0 = Biostack|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Biodeep|x86.ActiveCfg = Biostack|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Biodeep|x86.Build.0 = Biostack|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Biostack|Any CPU.ActiveCfg = Biostack|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Biostack|Any CPU.Build.0 = Biostack|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Biostack|x64.ActiveCfg = Biostack|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Biostack|x64.Build.0 = Biostack|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Biostack|x86.ActiveCfg = Biostack|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Biostack|x86.Build.0 = Biostack|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Biostack-Debug|Any CPU.ActiveCfg = Biostack|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Biostack-Debug|Any CPU.Build.0 = Biostack|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Biostack-Debug|x64.ActiveCfg = Biostack|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Biostack-Debug|x64.Build.0 = Biostack|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Biostack-Debug|x86.ActiveCfg = Biostack|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Biostack-Debug|x86.Build.0 = Biostack|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Debug|x64.ActiveCfg = Debug|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Debug|x64.Build.0 = Debug|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Debug|x86.Build.0 = Debug|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.DEMO|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.DEMO|Any CPU.Build.0 = Debug|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.DEMO|x64.ActiveCfg = Debug|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.DEMO|x64.Build.0 = Debug|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.DEMO|x86.ActiveCfg = Debug|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.DEMO|x86.Build.0 = Debug|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.docs|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.docs|Any CPU.Build.0 = Debug|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.docs|x64.ActiveCfg = Debug|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.docs|x64.Build.0 = Debug|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.docs|x86.ActiveCfg = Debug|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.docs|x86.Build.0 = Debug|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.GCModeller(Release_X64)|Any CPU.ActiveCfg = Release|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.GCModeller(Release_X64)|Any CPU.Build.0 = Release|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.GCModeller(Release_X64)|x64.ActiveCfg = Release|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.GCModeller(Release_X64)|x64.Build.0 = Release|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.GCModeller(Release_X64)|x86.ActiveCfg = Release|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.GCModeller(Release_X64)|x86.Build.0 = Release|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.GCModeller(UNIX-Release_X64)|Any CPU.ActiveCfg = Release|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.GCModeller(UNIX-Release_X64)|Any CPU.Build.0 = Release|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.GCModeller(UNIX-Release_X64)|x64.ActiveCfg = Release|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.GCModeller(UNIX-Release_X64)|x64.Build.0 = Release|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.GCModeller(UNIX-Release_X64)|x86.ActiveCfg = Release|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.GCModeller(UNIX-Release_X64)|x86.Build.0 = Release|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.GTA5-game-test|Any CPU.ActiveCfg = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.GTA5-game-test|Any CPU.Build.0 = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.GTA5-game-test|x64.ActiveCfg = mzkit|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.GTA5-game-test|x64.Build.0 = mzkit|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.GTA5-game-test|x86.ActiveCfg = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.GTA5-game-test|x86.Build.0 = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.installer_x64|Any CPU.ActiveCfg = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.installer_x64|Any CPU.Build.0 = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.installer_x64|x64.ActiveCfg = mzkit|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.installer_x64|x64.Build.0 = mzkit|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.installer_x64|x86.ActiveCfg = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.installer_x64|x86.Build.0 = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.mysqli_X64_release|Any CPU.ActiveCfg = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.mysqli_X64_release|Any CPU.Build.0 = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.mysqli_X64_release|x64.ActiveCfg = mzkit|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.mysqli_X64_release|x64.Build.0 = mzkit|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.mysqli_X64_release|x86.ActiveCfg = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.mysqli_X64_release|x86.Build.0 = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.mzkit|Any CPU.Build.0 = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.mzkit|x64.ActiveCfg = mzkit|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.mzkit|x64.Build.0 = mzkit|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.mzkit|x86.ActiveCfg = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.mzkit|x86.Build.0 = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.node-debug|Any CPU.ActiveCfg = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.node-debug|Any CPU.Build.0 = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.node-debug|x64.ActiveCfg = mzkit|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.node-debug|x64.Build.0 = mzkit|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.node-debug|x86.ActiveCfg = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.node-debug|x86.Build.0 = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.ProteoWizard.d|Any CPU.ActiveCfg = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.ProteoWizard.d|Any CPU.Build.0 = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.ProteoWizard.d|x64.ActiveCfg = mzkit|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.ProteoWizard.d|x64.Build.0 = mzkit|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.ProteoWizard.d|x86.ActiveCfg = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.ProteoWizard.d|x86.Build.0 = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Publish|Any CPU.ActiveCfg = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Publish|Any CPU.Build.0 = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Publish|x64.ActiveCfg = mzkit|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Publish|x64.Build.0 = mzkit|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Publish|x86.ActiveCfg = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Publish|x86.Build.0 = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Release|x64.ActiveCfg = Release|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Release|x64.Build.0 = Release|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Release|x86.ActiveCfg = Release|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Release|x86.Build.0 = Release|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.sciBASIC.NET-test-release|Any CPU.ActiveCfg = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.sciBASIC.NET-test-release|Any CPU.Build.0 = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.sciBASIC.NET-test-release|x64.ActiveCfg = mzkit|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.sciBASIC.NET-test-release|x64.Build.0 = mzkit|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.sciBASIC.NET-test-release|x86.ActiveCfg = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.sciBASIC.NET-test-release|x86.Build.0 = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Surveillance-of-infectious-diseases|Any CPU.ActiveCfg = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Surveillance-of-infectious-diseases|Any CPU.Build.0 = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Surveillance-of-infectious-diseases|x64.ActiveCfg = mzkit|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Surveillance-of-infectious-diseases|x64.Build.0 = mzkit|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Surveillance-of-infectious-diseases|x86.ActiveCfg = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Surveillance-of-infectious-diseases|x86.Build.0 = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.WebAssembly|Any CPU.ActiveCfg = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.WebAssembly|Any CPU.Build.0 = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.WebAssembly|x64.ActiveCfg = mzkit|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.WebAssembly|x64.Build.0 = mzkit|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.WebAssembly|x86.ActiveCfg = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.WebAssembly|x86.Build.0 = mzkit|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Yilia-Release_x64|Any CPU.ActiveCfg = Release|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Yilia-Release_x64|Any CPU.Build.0 = Release|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Yilia-Release_x64|x64.ActiveCfg = Release|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Yilia-Release_x64|x64.Build.0 = Release|x64
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Yilia-Release_x64|x86.ActiveCfg = Release|Any CPU
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}.Yilia-Release_x64|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1185,6 +1370,7 @@ Global
 		{95F7D65E-9DB1-4605-9FD3-25433277AF88} = {846781DC-ECAC-47AC-8796-551557BB42F2}
 		{A2130297-2B4A-4B02-80B2-5CFA860F6DAE} = {846781DC-ECAC-47AC-8796-551557BB42F2}
 		{A686BDF5-077F-47F5-A8DD-C73E6E88363C} = {846781DC-ECAC-47AC-8796-551557BB42F2}
+		{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485} = {846781DC-ECAC-47AC-8796-551557BB42F2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3C39C398-054B-4CA6-AD2E-1192034DC504}

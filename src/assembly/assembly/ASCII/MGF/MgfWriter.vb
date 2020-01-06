@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84024a29d1eb820b7e3f678beea19482, src\assembly\assembly\ASCII\MGF\MgfWriter.vb"
+﻿#Region "Microsoft.VisualBasic::642d90829dfefe11e7c696c0fe713fb6, src\assembly\assembly\ASCII\MGF\MgfWriter.vb"
 
     ' Author:
     ' 
@@ -47,9 +47,9 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Xml.Models
-Imports SMRUCC.MassSpectrum.Math.Spectra
 
 Namespace ASCII.MGF
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fbef7d4a45eb01777e2b216116403f5f, src\mzmath\ms2_math-core\Ms1\ms1.vb"
+﻿#Region "Microsoft.VisualBasic::49a9c7c353e33db711d396c78788b751, src\mzmath\ms2_math-core\Ms1\ms1.vb"
 
     ' Author:
     ' 
@@ -68,10 +68,10 @@
 
 Imports System.Data.Linq.Mapping
 Imports System.Xml.Serialization
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Math
-Imports SMRUCC.MassSpectrum.Math.Ms1
 Imports sys = System.Math
 
 ''' <summary>

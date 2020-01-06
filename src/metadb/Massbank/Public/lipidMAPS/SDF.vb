@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::023ae9545fd66a40006c68e60f1a22d2, src\metadb\Massbank\Public\lipidMAPS\SDF.vb"
+﻿#Region "Microsoft.VisualBasic::a38ba5ef24abecdba25269b2d63d8f91, src\metadb\Massbank\Public\lipidMAPS\SDF.vb"
 
     ' Author:
     ' 
@@ -50,8 +50,8 @@
 #End Region
 
 Imports System.Reflection
+Imports BioNovoGene.BioDeep.Chemoinformatics.SDF
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports SMRUCC.MassSpectrum.DATA.File
 
 Namespace LipidMaps
 

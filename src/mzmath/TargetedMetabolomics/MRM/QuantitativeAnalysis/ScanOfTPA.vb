@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4aebc19be4aac7cb09e247ea9965fa91, src\mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\ScanOfTPA.vb"
+﻿#Region "Microsoft.VisualBasic::20d97403a05975b1009b7a461ce44227, src\mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\ScanOfTPA.vb"
 
     ' Author:
     ' 
@@ -44,8 +44,8 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
-Imports SMRUCC.MassSpectrum.Math.MRM.Models
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 
 Namespace MRM
 

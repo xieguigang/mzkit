@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cbbb39eef56a5b486942d55b5cf0d10b, src\assembly\assembly\MarkupData\MS1.vb"
+﻿#Region "Microsoft.VisualBasic::c2ee95b5b674f5822e9e348745786735, src\assembly\assembly\MarkupData\MS1.vb"
 
     ' Author:
     ' 
@@ -44,12 +44,12 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Quantile
-Imports SMRUCC.MassSpectrum.Math.Chromatogram
-Imports SMRUCC.MassSpectrum.Math.Ms1
 
 Namespace MarkupData
 

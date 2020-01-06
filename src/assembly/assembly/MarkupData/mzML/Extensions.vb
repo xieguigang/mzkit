@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c00fa768ebde4344c0fd715db09bb02, src\assembly\assembly\MarkupData\mzML\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::93962374c6018c46c0322fb9fd578304, src\assembly\assembly\MarkupData\mzML\Extensions.vb"
 
     ' Author:
     ' 
@@ -45,11 +45,11 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Text.Xml.Linq
-Imports SMRUCC.MassSpectrum.Math.Chromatogram
-Imports SMRUCC.MassSpectrum.Math.Spectra
 
 Namespace MarkupData.mzML
 

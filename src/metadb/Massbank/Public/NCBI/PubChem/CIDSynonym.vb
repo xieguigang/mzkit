@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9b5f06e168af998bfdb49500f9f04bf, src\metadb\Massbank\Public\NCBI\PubChem\CIDSynonym.vb"
+﻿#Region "Microsoft.VisualBasic::7e74028fcef40889d8514c489d732468, src\metadb\Massbank\Public\NCBI\PubChem\CIDSynonym.vb"
 
     ' Author:
     ' 
@@ -47,10 +47,10 @@
 #End Region
 
 Imports System.Xml.Serialization
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
-Imports SMRUCC.MassSpectrum.DATA.MetaLib
-Imports SMRUCC.MassSpectrum.DATA.MetaLib.Models
 
 Namespace NCBI.PubChem
 

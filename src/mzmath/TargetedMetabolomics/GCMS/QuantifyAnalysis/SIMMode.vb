@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d3ecb84b32040312ddc6f61e0f481ca, src\mzmath\TargetedMetabolomics\GCMS\QuantifyAnalysis\SIMMode.vb"
+﻿#Region "Microsoft.VisualBasic::6cc2e41eeb531b20fcc943bead7e7581, src\mzmath\TargetedMetabolomics\GCMS\QuantifyAnalysis\SIMMode.vb"
 
     ' Author:
     ' 
@@ -44,6 +44,8 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Language
@@ -51,11 +53,6 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Text
-Imports SMRUCC.MassSpectrum.Math
-Imports SMRUCC.MassSpectrum.Math.Chromatogram
-Imports SMRUCC.MassSpectrum.Math.GCMS
-Imports SMRUCC.MassSpectrum.Math.GCMS.QuantifyAnalysis
-Imports SMRUCC.MassSpectrum.Math.Ms1
 
 Namespace GCMS.QuantifyAnalysis
 

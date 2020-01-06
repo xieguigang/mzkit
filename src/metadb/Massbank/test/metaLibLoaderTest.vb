@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::373db7410d93e245ae62f03aa9e62139, src\metadb\Massbank\test\metaLibLoaderTest.vb"
+﻿#Region "Microsoft.VisualBasic::656a857748f2ac4455cc464d700bf096, src\metadb\Massbank\test\metaLibLoaderTest.vb"
 
     ' Author:
     ' 
@@ -47,14 +47,14 @@
 #End Region
 
 Imports System.Xml.Serialization
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports Microsoft.VisualBasic.Text.Xml.Linq
-Imports SMRUCC.MassSpectrum.DATA.MetaLib.Models
 
 Module metaLibLoaderTest
 
     Sub Main()
 
-        Dim libs = Data.LoadUltraLargeXMLDataSet(Of MetaLib)(path:="D:\Database\CID-Synonym-filtered\CID-Synonym-filtered.metlib_kegg.Xml").ToArray
+        Dim libs = LoadUltraLargeXMLDataSet(Of MetaLib)(path:="D:\Database\CID-Synonym-filtered\CID-Synonym-filtered.metlib_kegg.Xml").ToArray
 
         Dim libs2 = "D:\Database\CID-Synonym-filtered\CID-Synonym-filtered.metlib_cas.Xml".LoadXml(Of DataSetOfMetaLib)
 

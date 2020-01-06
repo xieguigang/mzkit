@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5fc86ee2a6ae651836a8d13de8067711, Rscript\Library\mzkit\Formula.vb"
+﻿#Region "Microsoft.VisualBasic::7c19f83adacec6da32f9a806ba3539f5, Rscript\Library\mzkit\Formula.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,8 @@
     ' Module Formula
     ' 
     '     Constructor: (+1 Overloads) Sub New
-    '     Function: CreateGraph, FormulaCompositionString, readKCF, ScanFormula
+    '     Function: CreateGraph, FormulaCompositionString, readKCF, readSDF, ScanFormula
+    '               SDF2KCF
     ' 
     ' /********************************************************************************/
 
@@ -45,11 +46,12 @@
 
 Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemistry.Model.Graph
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports BioNovoGene.BioDeep.Chemoinformatics.SDF
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports SMRUCC.MassSpectrum.DATA.MetaLib
 Imports REnv = SMRUCC.Rsharp.Runtime.Internal.ConsolePrinter
 
 ''' <summary>
@@ -96,5 +98,15 @@ Module Formula
     <ExportAPI("KCF.graph")>
     Public Function CreateGraph(kcf As Model.KCF) As NetworkGraph
         Return kcf.CreateGraph
+    End Function
+
+    <ExportAPI("read.SDF")>
+    Public Function readSDF(data As String, Optional parseStruct As Boolean = True) As SDF
+        Return SDF.ParseSDF(data.SolveStream, parseStruct)
+    End Function
+
+    <ExportAPI("SDF.convertKCF")>
+    Public Function SDF2KCF(sdfModel As SDF) As Model.KCF
+        Return sdfModel.ToKCF
     End Function
 End Module

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99378113d397ba189c436626cb09fcc1, src\metadb\Massbank\test\HMDBqueryTest.vb"
+﻿#Region "Microsoft.VisualBasic::761eebaff03386d6180691a1d1d177ad, src\metadb\Massbank\test\HMDBqueryTest.vb"
 
     ' Author:
     ' 
@@ -42,10 +42,12 @@
 
 #End Region
 
+Imports BioNovoGene.BioDeep.Chemistry
+
 Module HMDBqueryTest
 
     Sub Main()
-        Dim metabolite = SMRUCC.MassSpectrum.DATA.TMIC.HMDB.Repository.GetMetabolite("HMDB0014118")
+        Dim metabolite = TMIC.HMDB.Repository.GetMetabolite("HMDB0014118")
 
         Pause()
     End Sub

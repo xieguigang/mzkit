@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0ff0f03eefb9af976979b7153baf307, src\mzmath\ms2_math-core\Spectra\GlobalAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::fd75e5e8119765167c3223ccd89a232c, src\mzmath\ms2_math-core\Spectra\GlobalAlignment.vb"
 
     ' Author:
     ' 
@@ -46,12 +46,12 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Extensions
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports SMRUCC.MassSpectrum.Math.Ms1
 
 Namespace Spectra
 

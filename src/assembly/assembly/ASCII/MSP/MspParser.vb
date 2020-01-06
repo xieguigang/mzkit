@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f3c6b6bd2adb1f04a3a898a49fbbcb8, src\assembly\assembly\ASCII\MSP\MspParser.vb"
+﻿#Region "Microsoft.VisualBasic::2e65f32d5bc8e2c37a9b5fa3defa7ccd, src\assembly\assembly\ASCII\MSP\MspParser.vb"
 
     ' Author:
     ' 
@@ -47,9 +47,8 @@
 
 Imports System.Collections.Specialized
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Serialization.JSON
-Imports SMRUCC.MassSpectrum.Math.Spectra
 
 Namespace ASCII.MSP
 

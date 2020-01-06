@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::361f6c0b18af11d3ad8422f7926f9435, src\metadb\pubchem\CLI\DatabaseCLI.vb"
+﻿#Region "Microsoft.VisualBasic::0e9264eafdac9a333210bd94217db6f2, src\metadb\pubchem\CLI\DatabaseCLI.vb"
 
     ' Author:
     ' 
@@ -47,6 +47,10 @@ Imports System.ComponentModel
 Imports System.IO
 Imports System.IO.Compression
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
+Imports BioNovoGene.BioDeep.Chemistry.NCBI.PubChem
+Imports BioNovoGene.BioDeep.Chemoinformatics
+Imports BioNovoGene.BioDeep.Chemoinformatics.SDF
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.InteropService.SharedORM
@@ -59,9 +63,6 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Xml.Linq
-Imports SMRUCC.MassSpectrum.DATA.File
-Imports SMRUCC.MassSpectrum.DATA.MetaLib.Models
-Imports SMRUCC.MassSpectrum.DATA.NCBI.PubChem
 
 <CLI> Module CLI
 

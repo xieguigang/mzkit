@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::073ca8c51d857ef4ece2535141c092de, src\metadb\Massbank\Public\TMIC\HMDB\Tables\MetaDBTable.vb"
+﻿#Region "Microsoft.VisualBasic::44d5d50e895021028ea5aec4fe4a16eb, src\metadb\Massbank\Public\TMIC\HMDB\Tables\MetaDBTable.vb"
 
     ' Author:
     ' 
@@ -64,11 +64,11 @@
 #End Region
 
 Imports System.IO
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports Microsoft.VisualBasic.Data.csv.IO.Linq
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Linq
-Imports SMRUCC.MassSpectrum.DATA.MetaLib
-Imports SMRUCC.MassSpectrum.DATA.MetaLib.Models
 
 Namespace TMIC.HMDB
 

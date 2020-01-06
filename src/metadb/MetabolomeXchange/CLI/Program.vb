@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::7941edf2f17daf33613c020629c2fd2a, src\metadb\MetabolomeXchange\CLI\Program.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Program
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: DumpTable, GetJson, Main, ToTable
-    ' 
-    ' /********************************************************************************/
+' Module Program
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: DumpTable, GetJson, Main, ToTable
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -52,7 +52,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.application.json
-Imports Microsoft.VisualBasic.MIME.application.json.Parser
+Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module Program
@@ -101,14 +101,14 @@ Module Program
         Dim in$ = args <= "/in"
         Dim out$ = (args <= "/out") Or ([in].TrimSuffix & ".csv").AsDefault
 
-        Dim model = [in].ReadAllText.ParseJsonStr
+        Dim model = [in].ReadAllText.ParseJson
         Return model _
             .ToTable() _
             .ToArray _
             .SaveTo(out, encoding:=Encoding.UTF8) _
             .CLICode
 
-        Dim json = [in].ReadAllText.LoadObject(Of Dictionary(Of String, DataSet))
+        Dim json = [in].ReadAllText.LoadJSON(Of Dictionary(Of String, DataSet))
         Return json _
             .Values _
             .ToTable _
@@ -123,7 +123,7 @@ Module Program
         For Each node As JsonObject In datasets.Values
             Dim meta As JsonObject = node!meta
             Dim metabolites$()() = meta!metabolites.AsStringVector().Split(100)
-            Dim i As int = 0
+            Dim i As i32 = 0
 
             Yield New DataTable With {
                 .analysis = meta!analysis.AsString,

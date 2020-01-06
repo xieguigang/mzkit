@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::847ded1a0ba8f87530b3d9a76bb067be, src\metadb\Massbank\Public\Massbank\PeakDataHelper.vb"
+﻿#Region "Microsoft.VisualBasic::6090b4399058fd9badf1f8af8b4162fd, src\metadb\Massbank\Public\Massbank\PeakDataHelper.vb"
 
     ' Author:
     ' 
@@ -53,8 +53,8 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.BioDeep.Chemistry.Massbank.DATA
 Imports Microsoft.VisualBasic.ComponentModel.TagData
-Imports SMRUCC.MassSpectrum.DATA.Massbank.DATA
 
 Namespace Massbank
 
@@ -68,7 +68,7 @@ Namespace Massbank
         <Extension>
         Public Function Join(peakData As IEnumerable(Of DoubleTagged(Of Double))) As String
             Return peakData _
-            .Select(Function(pk) $"{pk.Tag},{pk.value}") _
+            .Select(Function(pk) $"{pk.Tag},{pk.Value}") _
             .JoinBy(" ")
         End Function
 
@@ -113,7 +113,7 @@ Namespace Massbank
             .Select(Function(pk)
                         Return New DoubleTagged(Of Double) With {
                             .Tag = pk.mz,
-                            .value = pk.relint / base
+                            .Value = pk.relint / base
                         }
                     End Function).ToArray
             Return out

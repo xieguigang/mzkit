@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e86b68d265ce268b7f21bc66cd32ef75, src\metadb\Massbank\Public\Massbank\Model.vb"
+﻿#Region "Microsoft.VisualBasic::f22a02e1e8541ed07d10e1e06c6509c9, src\metadb\Massbank\Public\Massbank\Model.vb"
 
     ' Author:
     ' 
@@ -45,8 +45,8 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.BioDeep.Chemistry.Massbank.DATA
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports SMRUCC.MassSpectrum.DATA.Massbank.DATA
 
 Namespace Massbank
 

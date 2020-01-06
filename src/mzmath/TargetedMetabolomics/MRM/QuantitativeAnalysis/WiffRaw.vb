@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::87f1f2e781376cdd953d9c31429bffab, src\mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\WiffRaw.vb"
+﻿#Region "Microsoft.VisualBasic::2c3c7f942a5d4d0dd194433a741a36d7, src\mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\WiffRaw.vb"
 
     ' Author:
     ' 
@@ -44,12 +44,12 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Math
-Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
-Imports SMRUCC.MassSpectrum.Math.MRM.Models
 
 Namespace MRM
 

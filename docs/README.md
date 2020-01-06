@@ -21,3 +21,8 @@ The ``mzkit.quantify`` library module apply for the quantitative targeting analy
 
 For learning the MRM analysis using mzkit, please read this document: 
 
+
+
+This open source project is brought to you by BioNovoGene corporation:
+
+[![BioNovoGene](BioNovoGene.png)](http://www.bionovogene.com/)

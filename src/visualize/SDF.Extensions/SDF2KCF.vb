@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec90748e62f36de4ce7be76f71b2fcec, src\visualize\SDF.Extensions\SDF2KCF.vb"
+﻿#Region "Microsoft.VisualBasic::75326cf67d700c5aedb9ae411c6f2e12, src\visualize\SDF.Extensions\SDF2KCF.vb"
 
     ' Author:
     ' 
@@ -44,7 +44,10 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.BioDeep.Chemistry.Model
+Imports BioNovoGene.BioDeep.Chemoinformatics.SDF.Models
 Imports Microsoft.VisualBasic.Text.Xml.Models
+Imports Atom = BioNovoGene.BioDeep.Chemoinformatics.SDF.Models.Atom
+Imports Bound = BioNovoGene.BioDeep.Chemoinformatics.SDF.Models.Bound
 Imports KCF_atom = BioNovoGene.BioDeep.Chemistry.Model.Atom
 Imports KCF_bound = BioNovoGene.BioDeep.Chemistry.Model.Bound
 

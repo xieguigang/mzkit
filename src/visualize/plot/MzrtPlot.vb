@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::979a0ce6170b4b30e6041707237eb636, src\visualize\plot\MzrtPlot.vb"
+﻿#Region "Microsoft.VisualBasic::ade45ffcd4edb40824cf72094e7bf31f, src\visualize\plot\MzrtPlot.vb"
 
     ' Author:
     ' 
@@ -43,12 +43,12 @@
 #End Region
 
 Imports System.Drawing
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
-Imports SMRUCC.MassSpectrum.Math
 
 ''' <summary>
 ''' 横坐标为rt，纵坐标为m/z的散点图绘制

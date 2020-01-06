@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7138ed070e95270ff442264163889846, src\visualize\plot\ChromatogramPeakPlot.vb"
+﻿#Region "Microsoft.VisualBasic::828ca2f616afa97bf89cc014836f925a, src\visualize\plot\ChromatogramPeakPlot.vb"
 
     ' Author:
     ' 
@@ -44,6 +44,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
@@ -56,7 +57,6 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports SMRUCC.MassSpectrum.Math.Chromatogram
 
 ''' <summary>
 ''' time -> into

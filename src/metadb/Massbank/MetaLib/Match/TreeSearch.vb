@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af1b674222bd08ad16f447037daa0854, src\metadb\Massbank\MetaLib\Match\TreeSearch.vb"
+﻿#Region "Microsoft.VisualBasic::e28da0efd53a1da305026dd02b834abc, src\metadb\Massbank\MetaLib\Match\TreeSearch.vb"
 
     ' Author:
     ' 
@@ -44,8 +44,8 @@
 
 #End Region
 
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
-Imports SMRUCC.MassSpectrum.DATA.MetaLib.Models
 
 Namespace MetaLib
 

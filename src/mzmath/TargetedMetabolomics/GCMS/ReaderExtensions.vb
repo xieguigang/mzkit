@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::92e44df869d48d2fb3b9c933206ba666, src\mzmath\TargetedMetabolomics\GCMS\ReaderExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::695427c7854307591558c7dfa3a1c849, src\mzmath\TargetedMetabolomics\GCMS\ReaderExtensions.vb"
 
     ' Author:
     ' 
@@ -44,15 +44,15 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.GCMS.Vendors
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Text
-Imports SMRUCC.MassSpectrum.Math.Chromatogram
-Imports SMRUCC.MassSpectrum.Math.GCMS.Vendors
-Imports SMRUCC.MassSpectrum.Math.Spectra
 
 Namespace GCMS
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5dacf526ebb19a7da3620db7ed7a1776, src\visualize\plot\ChromatogramPlot.vb"
+﻿#Region "Microsoft.VisualBasic::c5aff51c7f3013cc7a2be4a7f85043b6, src\visualize\plot\ChromatogramPlot.vb"
 
     ' Author:
     ' 
@@ -44,6 +44,9 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
@@ -61,9 +64,6 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
-Imports SMRUCC.MassSpectrum.Math.Chromatogram
-Imports SMRUCC.MassSpectrum.Math.MRM
 
 Public Module ChromatogramPlot
 

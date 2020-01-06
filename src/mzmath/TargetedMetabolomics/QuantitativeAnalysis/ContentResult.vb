@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc2f2ab3c0b59fcd44c58c777d66f0a5, src\mzmath\TargetedMetabolomics\QuantitativeAnalysis\ContentResult.vb"
+﻿#Region "Microsoft.VisualBasic::50e61c39021f5bff057de8faf3402c2c, src\mzmath\TargetedMetabolomics\QuantitativeAnalysis\ContentResult.vb"
 
     ' Author:
     ' 
@@ -44,9 +44,9 @@
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
-Imports SMRUCC.MassSpectrum.Math.Chromatogram
 
 ''' <summary>
 ''' 客户的实验样本数据之中的某一种目标代谢物质的浓度计算结果

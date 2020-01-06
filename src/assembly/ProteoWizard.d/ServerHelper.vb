@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3d776531f3e2c46cfd1d5b4d3a967d0, src\assembly\ProteoWizard.d\ServerHelper.vb"
+﻿#Region "Microsoft.VisualBasic::8acd45f9178da9f31ecdea9de3a19bc9, src\assembly\ProteoWizard.d\ServerHelper.vb"
 
     ' Author:
     ' 
@@ -69,4 +69,3 @@ Module ServerHelper
         Return path
     End Function
 End Module
-

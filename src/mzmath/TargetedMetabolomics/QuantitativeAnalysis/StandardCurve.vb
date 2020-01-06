@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e7a6e819df904813dd6ba7a05ba64cb, src\mzmath\TargetedMetabolomics\QuantitativeAnalysis\StandardCurve.vb"
+﻿#Region "Microsoft.VisualBasic::db3afbd293a71e92383ec7dedfd3b52c, src\mzmath\TargetedMetabolomics\QuantitativeAnalysis\StandardCurve.vb"
 
     ' Author:
     ' 
@@ -47,10 +47,10 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Data.Bootstrapping
-Imports SMRUCC.MassSpectrum.Math.MRM.Data
 
 ''' <summary>
 ''' The linear model of the targeted metabolism model data.(标准曲线模型)

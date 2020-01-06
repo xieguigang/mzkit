@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf58d896634b9d7e2db27cfc9cdac0e8, src\mzmath\TargetedMetabolomics\QuantitativeAnalysis\TPAExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::2fe96072e6fb607f07b7d9f14337147b, src\mzmath\TargetedMetabolomics\QuantitativeAnalysis\TPAExtensions.vb"
 
     ' Author:
     ' 
@@ -38,6 +38,8 @@
     ' 
     '     Properties: area, baseline, maxPeakHeight, name, peakROI
     ' 
+    '     Function: ToString
+    ' 
     ' Module TPAExtensions
     ' 
     '     Function: ionTPA, TPAIntegrator
@@ -47,12 +49,12 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Scripting
-Imports SMRUCC.MassSpectrum.Math.Chromatogram
-Imports SMRUCC.MassSpectrum.Math.MRM.Models
 Imports stdNum = System.Math
 
 ''' <summary>

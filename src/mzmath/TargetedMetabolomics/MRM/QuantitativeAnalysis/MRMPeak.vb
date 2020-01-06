@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1052968558d4935714a462b717dd83e8, src\mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\MRMPeak.vb"
+﻿#Region "Microsoft.VisualBasic::dc41d00bf94674a2a64e35b817dd3d2d, src\mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\MRMPeak.vb"
 
     ' Author:
     ' 
@@ -53,6 +53,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
@@ -60,7 +61,6 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
-Imports SMRUCC.MassSpectrum.Math.Chromatogram
 
 Namespace MRM
 

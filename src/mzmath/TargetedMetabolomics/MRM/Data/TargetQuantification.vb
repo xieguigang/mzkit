@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::48a48761611bd554a34966387a05141a, src\mzmath\TargetedMetabolomics\MRM\Data\TargetQuantification.vb"
+﻿#Region "Microsoft.VisualBasic::ce6b314beb7cd561b32e38c35fe15ed0, src\mzmath\TargetedMetabolomics\MRM\Data\TargetQuantification.vb"
 
     ' Author:
     ' 
@@ -50,9 +50,9 @@
 #End Region
 
 Imports System.Xml.Serialization
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
-Imports SMRUCC.MassSpectrum.Math.Chromatogram
-Imports SMRUCC.MassSpectrum.Math.MRM.Models
 
 Namespace MRM.Data
 

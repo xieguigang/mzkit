@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::188519f7e5c42ae9ddbf56299d2a58ac, src\mzmath\ms2_math-core\Ms1\PolarityData.vb"
+﻿#Region "Microsoft.VisualBasic::9f93a8ed12ae3c7febbafe5a60e69ee6, src\mzmath\ms2_math-core\Ms1\PolarityData.vb"
 
     ' Author:
     ' 
@@ -44,7 +44,7 @@
 
 #End Region
 
-Imports SMRUCC.MassSpectrum.Math.Ms1.PrecursorType
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 
 Public Class PolarityData(Of T)
 

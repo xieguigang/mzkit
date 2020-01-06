@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c64819608322987f1f20562250f37881, src\metadb\Massbank\Statistics.vb"
+﻿#Region "Microsoft.VisualBasic::146c86f00a2fee256597c35fd3dae058, src\metadb\Massbank\Statistics.vb"
 
     ' Author:
     ' 
@@ -43,11 +43,11 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.BioDeep.Chemistry.TMIC.HMDB
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports SMRUCC.genomics.ComponentModel.DBLinkBuilder
-Imports SMRUCC.MassSpectrum.DATA.TMIC.HMDB
 
 Public Module Statistics
 

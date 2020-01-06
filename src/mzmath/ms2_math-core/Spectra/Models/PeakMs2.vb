@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9733e15331c7aa1b5c3c49e67f38807b, src\mzmath\ms2_math-core\Spectra\Models\PeakMs2.vb"
+﻿#Region "Microsoft.VisualBasic::2b8496a4e37d97d594d322006b3c61ac, src\mzmath\ms2_math-core\Spectra\Models\PeakMs2.vb"
 
     ' Author:
     ' 
@@ -46,7 +46,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports SMRUCC.MassSpectrum.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports stdNum = System.Math
 
 Namespace Spectra

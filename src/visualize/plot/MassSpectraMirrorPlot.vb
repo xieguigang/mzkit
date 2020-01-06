@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e36a19dff6ce9f940643a13bcc4a03e3, src\visualize\plot\MassSpectraMirrorPlot.vb"
+﻿#Region "Microsoft.VisualBasic::043acd1d41804ad83fb2150eeee83d96, src\visualize\plot\MassSpectraMirrorPlot.vb"
 
     ' Author:
     ' 
@@ -43,13 +43,13 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
-Imports SMRUCC.MassSpectrum.Math
-Imports SMRUCC.MassSpectrum.Math.Spectra
 
 Public Module MassSpectra
 

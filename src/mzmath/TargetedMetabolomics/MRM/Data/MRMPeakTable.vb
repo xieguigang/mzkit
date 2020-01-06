@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::44e8a72cea578bc2b9bada2231de3cfb, src\mzmath\TargetedMetabolomics\MRM\Data\MRMPeakTable.vb"
+﻿#Region "Microsoft.VisualBasic::b7b9a6ad043e5c0e3c4aab584d71413a, src\mzmath\TargetedMetabolomics\MRM\Data\MRMPeakTable.vb"
 
     ' Author:
     ' 
@@ -55,8 +55,8 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
-Imports SMRUCC.MassSpectrum.Math.Chromatogram
 
 Namespace MRM.Data
 

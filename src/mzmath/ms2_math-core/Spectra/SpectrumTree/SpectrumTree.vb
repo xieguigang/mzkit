@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a283740686e712d11e4c6529ebd0635c, src\mzmath\ms2_math-core\Spectra\SpectrumTree\SpectrumTree.vb"
+﻿#Region "Microsoft.VisualBasic::4a683368ddca70c0126b3b1f7dbe4cbf, src\mzmath\ms2_math-core\Spectra\SpectrumTree\SpectrumTree.vb"
 
     ' Author:
     ' 
@@ -49,12 +49,10 @@
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Terminal.ProgressBar
-Imports SMRUCC.MassSpectrum.Math
-Imports SMRUCC.MassSpectrum.Math.Ms1
-Imports SMRUCC.MassSpectrum.Math.Spectra
 Imports stdNum = System.Math
 
 Namespace Spectra

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::60509614f823b6055dc04f38ba51bb0a, src\metadb\Massbank\MetaLib\Models\Xref.vb"
+﻿#Region "Microsoft.VisualBasic::6dd4c25b2184fccfa01e4a4bddca8bda, src\metadb\Massbank\MetaLib\Models\Xref.vb"
 
     ' Author:
     ' 
@@ -50,12 +50,12 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+Imports BioNovoGene.BioDeep.Chemistry.TMIC
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI
 Imports SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI.XML
-Imports SMRUCC.MassSpectrum.DATA.TMIC
 
 Namespace MetaLib.Models
 
