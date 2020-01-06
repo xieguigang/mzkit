@@ -316,15 +316,14 @@ Namespace MRM
                 Dim fy As Func(Of Double, Double) = out.reverseModel
                 Dim ptY#
 
-                For Each pt As MRMStandards In points
+                For Each pt As MRMStandards In out.points
                     If pt.AIS > 0 Then
                         ptY = pt.Ati / pt.AIS
                     Else
                         ptY = pt.Ati
                     End If
 
-                    pt.fitted = fy(ptY)
-                    pt.error = stdNum.Abs(pt.fitted - pt.Cti)
+                    pt.yfit = stdNum.Round(fy(ptY), 5)
                 Next
 
                 Yield out
