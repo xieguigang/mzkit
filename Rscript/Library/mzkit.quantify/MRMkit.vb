@@ -350,18 +350,28 @@ Public Module MRMkit
     ''' If the unweighted R2 value of target standard curve is less than 0.99, 
     ''' then the quantify program will try weighted linear fitting. 
     ''' </param>
+    ''' <param name="maxDeletions">
+    ''' Max number of the reference points that delete automatically by 
+    ''' the linear modelling program.
+    ''' 
+    ''' + negative value means auto
+    ''' + zero means no deletion
+    ''' + positive means the max allowed point numbers for auto deletion by the program
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("linears")>
     Public Function Linears(rawScan As DataSet(), calibrates As Standards(), [ISvector] As [IS](),
                             Optional autoWeighted As Boolean = True,
-                            Optional blankControls As DataSet() = Nothing) As StandardCurve()
+                            Optional blankControls As DataSet() = Nothing,
+                            Optional maxDeletions As Integer = 1) As StandardCurve()
 
         Return rawScan.ToDictionary _
             .Regression(
                 calibrates:=calibrates,
                 ISvector:=ISvector,
                 weighted:=autoWeighted,
-                blankControls:=blankControls
+                blankControls:=blankControls,
+                maxDeletions:=maxDeletions
             ) _
             .ToArray
     End Function

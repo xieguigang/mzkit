@@ -217,7 +217,8 @@ Namespace MRM
                                             calibrates As Standards(),
                                             [ISvector] As [IS](),
                                             Optional weighted As Boolean = False,
-                                            Optional blankControls As DataSet() = Nothing) As IEnumerable(Of StandardCurve)
+                                            Optional blankControls As DataSet() = Nothing,
+                                            Optional maxDeletions As Integer = 1) As IEnumerable(Of StandardCurve)
 
             Dim [IS] As Dictionary(Of String, [IS]) = ISvector.ToDictionary(Function(i) i.ID)
             Dim blanks As New Dictionary(Of String, DataSet)
@@ -276,12 +277,12 @@ Namespace MRM
                     line = StandardCurveWorker _
                        .CreateModelPoints(C, netArea, ISTPA, CIS, ion.HMDB, ion.Name, netAreaPoints) _
                        .ToArray
-                    fitNetArea = StandardCurve.CreateLinearRegression(line, weighted)
+                    fitNetArea = StandardCurve.CreateLinearRegression(line, weighted, maxDeletions)
 
                     line = StandardCurveWorker _
                        .CreateModelPoints(C, A, ISTPA, CIS, ion.HMDB, ion.Name, points) _
                        .ToArray
-                    fit = StandardCurve.CreateLinearRegression(line, weighted)
+                    fit = StandardCurve.CreateLinearRegression(line, weighted, maxDeletions)
 
                     If fitNetArea.CorrelationCoefficient > fit.CorrelationCoefficient Then
                         fit = fitNetArea
@@ -291,7 +292,7 @@ Namespace MRM
                     line = StandardCurveWorker _
                        .CreateModelPoints(C, A, ISTPA, CIS, ion.HMDB, ion.Name, points) _
                        .ToArray
-                    fit = StandardCurve.CreateLinearRegression(line, weighted)
+                    fit = StandardCurve.CreateLinearRegression(line, weighted, maxDeletions)
                 End If
 
                 Dim out As New StandardCurve With {
