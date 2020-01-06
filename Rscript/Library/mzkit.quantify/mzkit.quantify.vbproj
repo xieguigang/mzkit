@@ -131,6 +131,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -228,6 +229,10 @@
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\application%25vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\application.vnd.openxmlformats-officedocument.spreadsheetml.sheet.vbproj">
       <Project>{e695d793-c970-422b-ba74-703ee43194fc}</Project>
       <Name>application.vnd.openxmlformats-officedocument.spreadsheetml.sheet</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\text%25html\MIME-htmls.vbproj">
+      <Project>{2DD4BE80-DDC3-4767-94A7-10F1C3395716}</Project>
+      <Name>MIME-htmls</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\src\assembly\assembly\assembly.vbproj">
       <Project>{95f7d65e-9db1-4605-9fd3-25433277af88}</Project>
