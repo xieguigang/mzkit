@@ -60,7 +60,7 @@ let linears.standard_curve as function(wiff_standards, subdir) {
 
 	CAL :> write.csv(file = `${dir}/${subdir}/referencePoints(peakarea).csv`);
 
-	let ref <- linears(CAL, reference, is, autoWeighted = TRUE, blankControls = blanks);
+	let ref <- linears(CAL, reference, is, autoWeighted = TRUE, blankControls = blanks, maxDeletions = 1);
 
 	# print model summary and then do standard curve plot
 	let printModel as function(line) {

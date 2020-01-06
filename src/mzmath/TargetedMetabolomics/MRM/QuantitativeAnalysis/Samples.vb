@@ -183,8 +183,8 @@ Namespace MRM
 
         <Extension>
         Public Function SampleQuantify(model As StandardCurve(), file$, ions As IonPair(),
-                                   Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum,
-                                   Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As QuantifyScan
+                                       Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum,
+                                       Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As QuantifyScan
 
             ' 使用离子对信息扫面当前的这个原始数据文件
             ' 得到峰面积等定量计算所需要的结果信息
