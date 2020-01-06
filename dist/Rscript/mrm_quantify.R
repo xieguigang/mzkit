@@ -137,6 +137,9 @@ let doLinears as function(wiff_standards, subdir = "") {
 	# base on the linear fitting
 	result(scans)  :> write.csv(file = `${dir}/${subdir}\quantify.csv`);
 	scans.X(scans) :> write.csv(file = `${dir}/${subdir}\rawX.csv`);
+	
+	# save linear regression html report
+	html(ref) :> writeLines(con = `${dir}/${subdir}/index.html`);
 }
 
 if (wiff$numberOfStandardReference > 1) {

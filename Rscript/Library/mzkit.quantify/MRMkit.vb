@@ -81,6 +81,9 @@ Public Module MRMkit
         REnv.ConsolePrinter.AttachConsoleFormatter(Of Standards())(AddressOf printStandards)
         REnv.ConsolePrinter.AttachConsoleFormatter(Of [IS]())(AddressOf printIS)
 
+        ' create linear regression report
+        REnv.htmlPrinter.AttachHtmlFormatter(Of StandardCurve())(AddressOf MRMLinearReport.CreateHtml)
+
         Dim toolkit As AssemblyInfo = GetType(MRMkit).Assembly.FromAssembly
 
         Call VBDebugger.WaitOutput()
