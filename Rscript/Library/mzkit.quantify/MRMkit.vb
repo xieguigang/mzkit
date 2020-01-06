@@ -427,6 +427,11 @@ Public Module MRMkit
         Return MRMPeaks.SaveTo(file, silent:=True)
     End Function
 
+    <ExportAPI("write.standard_curve")>
+    Public Function writeStandardCurve(points As MRMStandards(), file$) As Boolean
+        Return points.SaveTo(file, silent:=True)
+    End Function
+
     ''' <summary>
     ''' Get quantify result
     ''' </summary>

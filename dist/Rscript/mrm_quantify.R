@@ -74,7 +74,14 @@ let linears.standard_curve as function(wiff_standards, subdir) {
 		
 		line
 		:> standard_curve(title = `Standard Curve Of ${id}`)
-		:> save.graphics(file = `${dir}/${subdir}/standard_curves/${id}.png`);
+		:> save.graphics(file = `${dir}/${subdir}/standard_curves/${id}.png`)
+		;
+		
+		# save reference points
+		line
+		:> points(name = id)
+		:> write.standard_curve(file = `${dir}/${subdir}/standard_curves/${id}.csv`)
+		;
 	}
 
 	for(line in ref) {
