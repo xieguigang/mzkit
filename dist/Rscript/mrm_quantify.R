@@ -8,6 +8,9 @@ let MRM.info as string = ?"--MRM"          || stop("Missing MRM information tabl
 let dir as string      = ?"--export"       || `${wiff :> trim(" ")}-result/`;
 let patternOf.ref      = ?"--patternOfRef" || '[-]?LM[-]?\d+';
 
+# peak are intergration calculation method
+let integrator as string = ?"--integrator" || "NetPeakSum";
+
 # read MRM, standard curve and IS information from the given file
 let [ions, reference, is] = MRM.info :> [
 	read.ion_pairs("ion pairs"), 
@@ -41,7 +44,7 @@ if (wiff$hasBlankControls) {
 
 	blanks = wiff$blanks :> wiff.scans(
 		ions           = ions, 
-		peakAreaMethod = 0, 
+		peakAreaMethod = integrator, 
 		TPAFactors     = NULL
 	);
 } else {
@@ -54,13 +57,13 @@ let linears.standard_curve as function(wiff_standards, subdir) {
 	# list.files(wiff, pattern = "*.mzML")
 	 :> wiff.scans(
  		ions           = ions, 
- 		peakAreaMethod = 0, 
+ 		peakAreaMethod = integrator, 
 	 	TPAFactors     = NULL
 	 );
 
 	CAL :> write.csv(file = `${dir}/${subdir}/referencePoints(peakarea).csv`);
 
-	let ref <- linears(CAL, reference, is, autoWeighted = TRUE, blankControls = NULL, maxDeletions = 1);
+	let ref <- linears(CAL, reference, is, autoWeighted = TRUE, blankControls = blanks, maxDeletions = 1);
 
 	# print model summary and then do standard curve plot
 	let printModel as function(line) {

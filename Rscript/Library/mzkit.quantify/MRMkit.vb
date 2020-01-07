@@ -147,16 +147,13 @@ Public Module MRMkit
                                    Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
                                    Optional baselineQuantile# = 0.65,
                                    Optional integratorTicks% = 5000,
-                                   Optional peakAreaMethod As Integer = 1) As IonTPA()
-
-        Dim method As PeakArea.Methods = CType(peakAreaMethod, PeakArea.Methods)
-
+                                   Optional peakAreaMethod As PeakArea.Methods = PeakArea.Methods.NetPeakSum) As IonTPA()
         If TPAFactors Is Nothing Then
             TPAFactors = New Dictionary(Of String, Double)
         End If
 
         Return ScanOfTPA.ScanTPA(
-            mzML, ionpairs, TPAFactors, baselineQuantile, integratorTicks, method
+            mzML, ionpairs, TPAFactors, baselineQuantile, integratorTicks, peakAreaMethod
         )
     End Function
 
@@ -270,16 +267,13 @@ Public Module MRMkit
 
     <ExportAPI("MRM.peaks")>
     Public Function ScanPeakTable(mzML$, ions As IonPair(),
-                                  Optional peakAreaMethod% = 1,
+                                  Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum,
                                   Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As DataSet()
-
-        Dim method As PeakArea.Methods = CType(peakAreaMethod, PeakArea.Methods)
-
         If TPAFactors Is Nothing Then
             TPAFactors = New Dictionary(Of String, Double)
         End If
 
-        Return WiffRaw.ScanPeakTable(mzML, ions, method, TPAFactors)
+        Return WiffRaw.ScanPeakTable(mzML, ions, peakAreaMethod, TPAFactors)
     End Function
 
     ''' <summary>
@@ -299,11 +293,9 @@ Public Module MRMkit
     ''' <returns></returns>
     <ExportAPI("wiff.scans")>
     Public Function ScanWiffRaw(wiffConverts As String(), ions As IonPair(),
-                                Optional peakAreaMethod% = 1,
+                                Optional peakAreaMethod As PeakArea.Methods = PeakArea.Methods.NetPeakSum,
                                 Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
                                 Optional removesWiffName As Boolean = True) As DataSet()
-
-        Dim method As PeakArea.Methods = CType(peakAreaMethod, PeakArea.Methods)
 
         If TPAFactors Is Nothing Then
             TPAFactors = New Dictionary(Of String, Double)
@@ -336,7 +328,7 @@ Public Module MRMkit
         Return WiffRaw.Scan(
             mzMLRawFiles:=wiffConverts,
             ions:=ions,
-            peakAreaMethod:=method,
+            peakAreaMethod:=peakAreaMethod,
             TPAFactors:=TPAFactors,
             refName:=Nothing,
             removesWiffName:=removesWiffName
