@@ -167,7 +167,7 @@ let doLinears as function(wiff_standards, subdir = "") {
 	scans.X(scans) :> write.csv(file = `${dir}/${subdir}\rawX.csv`);
 	
 	# save linear regression html report
-	html(ref) :> writeLines(con = `${dir}/${subdir}/index.html`);
+	html(mrm.dataset(ref, scans)) :> writeLines(con = `${dir}/${subdir}/index.html`);
 }
 
 if (wiff$numberOfStandardReference > 1) {

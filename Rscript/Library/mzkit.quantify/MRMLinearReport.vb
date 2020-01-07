@@ -10,8 +10,16 @@ Imports Microsoft.VisualBasic.Text.Xml
 
 Module MRMLinearReport
 
+    Private Function getStandardCurve(obj As Object) As StandardCurve()
+        If obj.GetType Is GetType(MRMDataSet) Then
+            Return DirectCast(obj, MRMDataSet).StandardCurve
+        Else
+            Return DirectCast(obj, StandardCurve())
+        End If
+    End Function
+
     Public Function CreateHtml(obj As Object) As String
-        Dim standardCurves As StandardCurve() = DirectCast(obj, StandardCurve())
+        Dim standardCurves As StandardCurve() = getStandardCurve(obj)
         Dim report As ScriptBuilder = getBlankReport()
 
         Return report.doReport(standardCurves)

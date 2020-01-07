@@ -73,7 +73,14 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
 ''' MRM Targeted Metabolomics
 ''' </summary>
 <Package("mzkit.mrm")>
-Public Module MRMkit
+Module MRMkit
+
+    Public Class MRMDataSet
+
+        Public StandardCurve As StandardCurve()
+        Public Samples As QuantifyScan()
+
+    End Class
 
     Sub New()
         REnv.ConsolePrinter.AttachConsoleFormatter(Of StandardCurve)(AddressOf printLineModel)
@@ -83,6 +90,7 @@ Public Module MRMkit
 
         ' create linear regression report
         REnv.htmlPrinter.AttachHtmlFormatter(Of StandardCurve())(AddressOf MRMLinearReport.CreateHtml)
+        REnv.htmlPrinter.AttachHtmlFormatter(Of MRMDataSet)(AddressOf MRMLinearReport.CreateHtml)
 
         Dim toolkit As AssemblyInfo = GetType(MRMkit).Assembly.FromAssembly
 
@@ -466,5 +474,19 @@ Public Module MRMkit
     <ExportAPI("scans.X")>
     Public Function GetRawX(fileScans As QuantifyScan()) As DataSet()
         Return fileScans.Select(Function(file) file.rawX).ToArray
+    End Function
+
+    ''' <summary>
+    ''' Create MRM dataset object for do MRM quantification data report.
+    ''' </summary>
+    ''' <param name="standardCurve"></param>
+    ''' <param name="samples"></param>
+    ''' <returns></returns>
+    <ExportAPI("mrm.dataset")>
+    Public Function CreateMRMDataSet(standardCurve As StandardCurve(), samples As QuantifyScan()) As MRMDataSet
+        Return New MRMDataSet With {
+            .StandardCurve = standardCurve,
+            .Samples = samples
+        }
     End Function
 End Module

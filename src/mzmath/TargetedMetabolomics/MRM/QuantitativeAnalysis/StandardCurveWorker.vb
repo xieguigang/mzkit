@@ -170,13 +170,14 @@ Namespace MRM
                     Else
                         Dim blankISBase# = blankISPoints.Average
 
+                        ISTPA = {}
                         nA = A _
                             .Select(Function(xa, i) xa / ISTPA(i) - baseline / blankISBase) _
                             .ToArray
                     End If
 
                     line = StandardCurveWorker _
-                       .CreateModelPoints(C, nA, {}, CIS, ion.HMDB, ion.Name, points) _
+                       .CreateModelPoints(C, nA, ISTPA, CIS, ion.HMDB, ion.Name, points) _
                        .ToArray
                     fit = StandardCurve.CreateLinearRegression(line, weighted, maxDeletions)
                 Else
