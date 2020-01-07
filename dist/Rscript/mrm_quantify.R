@@ -108,7 +108,7 @@ let linears.standard_curve as function(wiff_standards, subdir) {
 
 	for(mzML in wiff_standards) {
 		let fileName = basename(mzML);
-		let peaks = MRM.peaks(mzML, ions, peakAreaMethod = 0, TPAFactors = NULL);
+		let peaks = MRM.peaks(mzML, ions, peakAreaMethod = integrator, TPAFactors = NULL);
 		
 		# save peaktable for given rawfile
 		write.csv(peaks, file = `${dir}/${subdir}/peaktables/${fileName}.csv`);
@@ -127,14 +127,14 @@ let doLinears as function(wiff_standards, subdir = "") {
 	# Write raw scan data of the user sample data
 	sample.files
 		# list.files(wiff, pattern = "*.mzML")
-		:> wiff.scans(ions, peakAreaMethod = 0, TPAFactors = NULL) 
+		:> wiff.scans(ions, peakAreaMethod = integrator, TPAFactors = NULL) 
 		:> write.csv(file = `${dir}/${subdir}\samples.csv`);
 
 	# create ion quantify result for each metabolites
 	# that defined in ion pairs data
 	for(sample.mzML in sample.files) {
 		let peakfile as string = `${dir}/${subdir}/samples_peaktable/${basename(sample.mzML)}.csv`;
-		let result = ref :> sample.quantify(sample.mzML, ions, 0, NULL);
+		let result = ref :> sample.quantify(sample.mzML, ions, integrator, NULL);
 		
 		print(basename(sample.mzML));
 		
