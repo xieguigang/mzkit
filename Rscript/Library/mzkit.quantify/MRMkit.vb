@@ -361,7 +361,8 @@ Public Module MRMkit
     Public Function Linears(rawScan As DataSet(), calibrates As Standards(), [ISvector] As [IS](),
                             Optional autoWeighted As Boolean = True,
                             Optional blankControls As DataSet() = Nothing,
-                            Optional maxDeletions As Integer = 1) As StandardCurve()
+                            Optional maxDeletions As Integer = 1,
+                            Optional isWorkCurveMode As Boolean = True) As StandardCurve()
 
         Return rawScan.ToDictionary _
             .Regression(
@@ -369,7 +370,8 @@ Public Module MRMkit
                 ISvector:=ISvector,
                 weighted:=autoWeighted,
                 blankControls:=blankControls,
-                maxDeletions:=maxDeletions
+                maxDeletions:=maxDeletions,
+                isWorkCurveMode:=isWorkCurveMode
             ) _
             .ToArray
     End Function

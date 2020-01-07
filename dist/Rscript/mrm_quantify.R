@@ -8,6 +8,13 @@ let MRM.info as string = ?"--MRM"          || stop("Missing MRM information tabl
 let dir as string      = ?"--export"       || `${wiff :> trim(" ")}-result/`;
 let patternOf.ref      = ?"--patternOfRef" || '[-]?LM[-]?\d+';
 
+# let Methods as integer = {
+      # NetPeakSum = 0;
+      # Integrator = 1;
+      # SumAll = 2;
+      # MaxPeakHeight = 3;
+# }
+
 # peak area intergration calculation method
 # these api functions that required of the integrator parameter
 #
@@ -16,14 +23,12 @@ let patternOf.ref      = ?"--patternOfRef" || '[-]?LM[-]?\d+';
 # 3. MRM.peaks
 # 4. extract.peakROI
 #
-let integrator as string = ?"--integrator" || "NetPeakSum";
+let integrator as string   = ?"--integrator" || "NetPeakSum";
+let isWorkCurve as boolean = ?"--workMode";
 
-# let Methods as integer = {
-      # NetPeakSum = 0;
-      # Integrator = 1;
-      # SumAll = 2;
-      # MaxPeakHeight = 3;
-# }
+if (isWorkCurve) {
+	print("Linear Modelling will running in work curve mode!");
+}
 
 # read MRM, standard curve and IS information from the given file
 let [ions, reference, is] = MRM.info :> [
@@ -77,7 +82,7 @@ let linears.standard_curve as function(wiff_standards, subdir) {
 
 	CAL :> write.csv(file = `${dir}/${subdir}/referencePoints(peakarea).csv`);
 
-	let ref <- linears(CAL, reference, is, autoWeighted = TRUE, blankControls = blanks, maxDeletions = -1);
+	let ref <- linears(CAL, reference, is, autoWeighted = TRUE, blankControls = blanks, maxDeletions = -1, isWorkCurveMode = isWorkCurve);
 
 	# print model summary and then do standard curve plot
 	let printModel as function(line) {

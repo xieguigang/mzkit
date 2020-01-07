@@ -109,7 +109,8 @@ Namespace MRM
                                             [ISvector] As [IS](),
                                             Optional weighted As Boolean = False,
                                             Optional blankControls As DataSet() = Nothing,
-                                            Optional maxDeletions As Integer = 1) As IEnumerable(Of StandardCurve)
+                                            Optional maxDeletions As Integer = 1,
+                                            Optional isWorkCurveMode As Boolean = True) As IEnumerable(Of StandardCurve)
 
             Dim [IS] As Dictionary(Of String, [IS]) = ISvector.ToDictionary(Function(i) i.ID)
             Dim blanks As New Dictionary(Of String, DataSet)
@@ -164,7 +165,7 @@ Namespace MRM
                     Dim baseline = blankPoints.Average
                     Dim nA As Double()
 
-                    If blankISPoints.IsNullOrEmpty Then
+                    If blankISPoints.IsNullOrEmpty OrElse Not isWorkCurveMode Then
                         nA = A.Select(Function(xa) xa - baseline).ToArray
                     Else
                         Dim blankISBase# = blankISPoints.Average
