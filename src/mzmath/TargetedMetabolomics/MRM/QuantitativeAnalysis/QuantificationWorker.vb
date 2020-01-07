@@ -4,7 +4,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports stdNum = System.Math
 
 Namespace MRM
 
@@ -16,7 +15,7 @@ Namespace MRM
             Dim a As Double = fx.Factors(1)
             Dim b As Double = fx.Factors(Scan0)
 
-            Return Function(y) stdNum.Abs(y - b) / a
+            Return Function(y) (y - b) / a
         End Function
 
         ''' <summary>

@@ -233,7 +233,7 @@ Public Module MRMkit
     Public Function WiffRawFile(<RRawVectorArgument>
                                 convertDir As Object,
                                 Optional patternOfRef$ = ".+[-]CAL[-]?\d+",
-                                Optional patternOfBlank$ = "KB[-]?\d+",
+                                Optional patternOfBlank$ = "KB[-]?(\d+)?",
                                 Optional env As Environment = Nothing) As Object
 
         If REnv.Invokes.isEmpty(convertDir) Then

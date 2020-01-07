@@ -8,6 +8,9 @@ SET EXPORT1=S:\2018\WYL\20191230_WYL_MRM\MeiZhou\result
 SET DATA1=S:\2018\WYL\20191230_WYL_MRM\MeiZhou\raw
 
 %R% %RUN% --Cal "%DATA1%\20191224cal" --data "%DATA1%\20191224sample" --MRM %MRM% --export "%EXPORT1%\20191224sample"
+
+EXIT 0
+
 %R% %RUN% --Cal "%DATA1%\20191225cal" --data "%DATA1%\20191225sample" --MRM %MRM% --export "%EXPORT1%\20191225sample"
 %R% %RUN% --Cal "%DATA1%\20191223cal" --data "%DATA1%\20191223sample" --MRM %MRM% --export "%EXPORT1%\20191223sample"
 
