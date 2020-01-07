@@ -133,6 +133,7 @@ Namespace MRM
                 Dim CIS# = IsIon?.CIS                                             ' 内标的浓度，是不变的，所以就只有一个值
                 Dim points As New List(Of MRMStandards)
                 Dim blankPoints = blanks.TryGetValue(ion.HMDB).getBlankControls
+                Dim blankISPoints = blanks.TryGetValue(ion.IS).getBlankControls
 
                 ' 标准曲线数据
                 ' 从实验数据之中产生线性回归计算所需要的点的集合
@@ -161,24 +162,22 @@ Namespace MRM
 
                 If blankPoints.Length > 0 Then
                     Dim baseline = blankPoints.Average
-                    Dim netArea = A.Select(Function(xa) xa - baseline).ToArray
-                    Dim fitNetArea As IFitted
-                    Dim netAreaPoints As New List(Of MRMStandards)
+                    Dim nA As Double()
+
+                    If blankISPoints.IsNullOrEmpty Then
+                        nA = A.Select(Function(xa) xa - baseline).ToArray
+                    Else
+                        Dim blankISBase# = blankISPoints.Average
+
+                        nA = A _
+                            .Select(Function(xa, i) xa / ISTPA(i) - baseline / blankISBase) _
+                            .ToArray
+                    End If
 
                     line = StandardCurveWorker _
-                       .CreateModelPoints(C, netArea, ISTPA, CIS, ion.HMDB, ion.Name, netAreaPoints) _
-                       .ToArray
-                    fitNetArea = StandardCurve.CreateLinearRegression(line, weighted, maxDeletions)
-
-                    line = StandardCurveWorker _
-                       .CreateModelPoints(C, A, ISTPA, CIS, ion.HMDB, ion.Name, points) _
+                       .CreateModelPoints(C, nA, {}, CIS, ion.HMDB, ion.Name, points) _
                        .ToArray
                     fit = StandardCurve.CreateLinearRegression(line, weighted, maxDeletions)
-
-                    If fitNetArea.CorrelationCoefficient > fit.CorrelationCoefficient Then
-                        fit = fitNetArea
-                        points = netAreaPoints
-                    End If
                 Else
                     line = StandardCurveWorker _
                        .CreateModelPoints(C, A, ISTPA, CIS, ion.HMDB, ion.Name, points) _
