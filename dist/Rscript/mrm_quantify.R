@@ -18,6 +18,13 @@ let patternOf.ref      = ?"--patternOfRef" || '[-]?LM[-]?\d+';
 #
 let integrator as string = ?"--integrator" || "NetPeakSum";
 
+# let Methods as integer = {
+      # NetPeakSum = 0;
+      # Integrator = 1;
+      # SumAll = 2;
+      # MaxPeakHeight = 3;
+# }
+
 # read MRM, standard curve and IS information from the given file
 let [ions, reference, is] = MRM.info :> [
 	read.ion_pairs("ion pairs"), 
