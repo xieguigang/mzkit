@@ -1,3 +1,5 @@
+#!REnv
+
 # imports mzkit library modules
 imports ["mzkit.mrm", "mzkit.quantify.visual"] from "mzkit.quantify.dll";
 
