@@ -8,7 +8,14 @@ let MRM.info as string = ?"--MRM"          || stop("Missing MRM information tabl
 let dir as string      = ?"--export"       || `${wiff :> trim(" ")}-result/`;
 let patternOf.ref      = ?"--patternOfRef" || '[-]?LM[-]?\d+';
 
-# peak are intergration calculation method
+# peak area intergration calculation method
+# these api functions that required of the integrator parameter
+#
+# 1. sample.quantify
+# 2. wiff.scans
+# 3. MRM.peaks
+# 4. extract.peakROI
+#
 let integrator as string = ?"--integrator" || "NetPeakSum";
 
 # read MRM, standard curve and IS information from the given file
