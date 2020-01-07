@@ -1,6 +1,7 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM
 Imports Microsoft.VisualBasic.Data.csv.DATA
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
@@ -21,8 +22,13 @@ Module MRMLinearReport
     Public Function CreateHtml(obj As Object) As String
         Dim standardCurves As StandardCurve() = getStandardCurve(obj)
         Dim report As ScriptBuilder = getBlankReport()
+        Dim samples As QuantifyScan() = Nothing
 
-        Return report.doReport(standardCurves)
+        If obj.GetType Is GetType(MRMDataSet) Then
+            samples = DirectCast(obj, MRMDataSet).Samples
+        End If
+
+        Return report.doReport(standardCurves, samples)
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -57,14 +63,16 @@ Module MRMLinearReport
     End Function
 
     <Extension>
-    Private Function doReport(report As ScriptBuilder, standardCurves As StandardCurve()) As String
+    Private Function doReport(report As ScriptBuilder, standardCurves As StandardCurve(), samples As QuantifyScan()) As String
         Dim linears As New List(Of XElement)
         Dim image As Image
         Dim title$
+        Dim R2#
 
         For Each line As StandardCurve In standardCurves
             title = line.points(Scan0).Name
             image = Visual.DrawStandardCurve(line, title).AsGDIImage
+            R2 = line.linear.CorrelationCoefficient
             linears +=
                 <div class="row" id=<%= line.name %>>
                     <div class="col-xl-10">
@@ -76,7 +84,7 @@ Module MRMLinearReport
                                 <ul>
                                     <li>ID: <%= line.name %></li>
                                     <li>Linear: <i>f(x)</i>=%s</li>
-                                    <li>R<sup>2</sup>: <%= line.linear.CorrelationCoefficient %></li>
+                                    <li>R<sup>2</sup>: <%= R2 %></li>
                                 </ul>
                             </div>
                         </div>
@@ -88,6 +96,7 @@ Module MRMLinearReport
                         <h3>Reference Points</h3>
 
                         <p>%s</p>
+                        <p>{$samples}</p>
 
                         <hr/>
                     </div>
@@ -97,12 +106,42 @@ Module MRMLinearReport
         report("TOC") = standardCurves.TOC
         report("linears") = linears _
             .Select(Function(e, i)
-                        Return e.asset(standardCurves(i))
+                        Dim line As StandardCurve = standardCurves(i)
+                        Dim reportHtml As New ScriptBuilder(e.asset(line))
+
+                        reportHtml("samples") = ""
+
+                        'If samples.IsNullOrEmpty Then
+                        '    reportHtml("samples") = ""
+                        'Else
+                        '    reportHtml("samples") = samples _
+                        '        .Select(Function(s)
+                        '                    Return New NamedValue(Of Double) With {
+                        '                        .Name = s.quantify.ID,
+                        '                        .Value = s.quantify(line.name)
+                        '                    }
+                        '                End Function) _
+                        '        .samplePlots(line) _
+                        '        .ToString
+                        'End If
+
+                        Return reportHtml.ToString
                     End Function) _
             .JoinBy(vbCrLf)
 
         Return "<!doctype html>" & report.ToString
     End Function
+
+    '<Extension>
+    'Private Function samplePlots(samples As IEnumerable(Of NamedValue(Of Double)), line As StandardCurve) As XElement
+    '    Dim sampleData = samples.ToArray
+    '    Dim title$ = line.points(Scan0).Name
+    '    Dim curvesPlot = Visual.DrawStandardCurve(line, $"Samples Of {title}", sampleData).AsGDIImage
+
+    '    Return <div>
+    '               <img src=<%= New DataURI(curvesPlot) %> style="width: 100%;"/>
+    '           </div>
+    'End Function
 
     <Extension>
     Private Function TOC(lines As StandardCurve()) As String
