@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::22ca430d88f88457eba3532c6d4a3e3d, Rscript\Library\mzkit\Assembly.vb"
+﻿#Region "Microsoft.VisualBasic::5a2a2f146594d35f7caba2fc0c32ffc4, Rscript\Library\mzkit\Assembly.vb"
 
     ' Author:
     ' 
@@ -42,10 +42,9 @@
 
 #End Region
 
-
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports SMRUCC.MassSpectrum.Assembly.ASCII.MGF
 
 ''' <summary>
 ''' The mass spectrum assembly file read/write library module.
@@ -60,4 +59,3 @@ Module Assembly
 
 
 End Module
-

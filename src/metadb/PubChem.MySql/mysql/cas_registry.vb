@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b0b0dbabeac0e4822c43ecfafbea3aa, DATA\PubChem.MySql\mysql\cas_registry.vb"
+﻿#Region "Microsoft.VisualBasic::040cbe579d2a287d14bf9c6fdd678506, src\metadb\PubChem.MySql\mysql\cas_registry.vb"
 
     ' Author:
     ' 
@@ -184,4 +184,3 @@ End Class
 
 
 End Namespace
-

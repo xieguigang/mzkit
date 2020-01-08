@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e1310d94782f21489e28967e4f5db2e, DATA\ms2_simulator\test\NWAlignTest.vb"
+﻿#Region "Microsoft.VisualBasic::2e1310d94782f21489e28967e4f5db2e, src\mzmath\ms2_simulator\test\NWAlignTest.vb"
 
     ' Author:
     ' 

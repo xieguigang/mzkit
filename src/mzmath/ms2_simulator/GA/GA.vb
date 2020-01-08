@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84d199653bb466c7f4dcf8dc477867a3, DATA\ms2_simulator\GA\GA.vb"
+﻿#Region "Microsoft.VisualBasic::84d199653bb466c7f4dcf8dc477867a3, src\mzmath\ms2_simulator\GA\GA.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76356c50a539b7196025b7e2fa654729, Assembly\ProteoWizard.d\MassWolf.vb"
+﻿#Region "Microsoft.VisualBasic::da1b1c841361d2e579f967a0ee58ec23, src\assembly\ProteoWizard.d\MassWolf.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' Class MassWolf
     ' 
     '     Constructor: (+1 Overloads) Sub New
-    '     Function: ConvertWatersRaw, SplitDirectory
+    '     Function: ConvertWatersRaw
     ' 
     ' /********************************************************************************/
 

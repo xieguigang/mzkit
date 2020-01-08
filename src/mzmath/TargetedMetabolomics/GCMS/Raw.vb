@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a6c8425150bf6f9aac87deb373aa1c41, DATA\TargetedMetabolomics\GCMS\Raw.vb"
+﻿#Region "Microsoft.VisualBasic::615c179f63abd993420116725916b01f, src\mzmath\TargetedMetabolomics\GCMS\Raw.vb"
 
     ' Author:
     ' 
@@ -46,11 +46,11 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Linq
-Imports SMRUCC.MassSpectrum.Math.Chromatogram
 
 Namespace GCMS
 
@@ -83,8 +83,8 @@ Namespace GCMS
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetTIC() As NamedCollection(Of ChromatogramTick)
             Return New NamedCollection(Of ChromatogramTick) With {
-                .Name = title,
-                .Value = times _
+                .name = title,
+                .value = times _
                     .Select(Function(time, i)
                                 Return New ChromatogramTick(time, tic(i))
                             End Function) _

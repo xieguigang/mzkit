@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9804d10c01d226746e3d95fa545217c6, Assembly\assembly\ASCII\MSP\MspData.vb"
+﻿#Region "Microsoft.VisualBasic::4821717fb72812748e1a9ab7ad1e894a, src\assembly\assembly\ASCII\MSP\MspData.vb"
 
     ' Author:
     ' 
@@ -50,7 +50,7 @@
 Imports System.Collections.Specialized
 Imports System.Data.Linq.Mapping
 Imports System.Runtime.CompilerServices
-Imports SMRUCC.MassSpectrum.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 
 Namespace ASCII.MSP
 

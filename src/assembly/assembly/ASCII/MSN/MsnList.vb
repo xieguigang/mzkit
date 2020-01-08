@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::474bb85b3b85b4ce6c270ffa9be4ce8e, Assembly\assembly\ASCII\MSN\MsnList.vb"
+﻿#Region "Microsoft.VisualBasic::d594a29fe27c44a5564365b1714b7757, src\assembly\assembly\ASCII\MSN\MsnList.vb"
 
     ' Author:
     ' 
@@ -46,9 +46,9 @@
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Emit.Marshal
-Imports SMRUCC.MassSpectrum.Math.Spectra
 Imports ANSI = Microsoft.VisualBasic.Text.ASCII
 
 Namespace ASCII.MSN

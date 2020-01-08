@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db035f68b10133aa700e3b68582d351f, DATA\TargetedMetabolomics\QuantitativeAnalysis\PeakArea.vb"
+﻿#Region "Microsoft.VisualBasic::f755ee93bc64739e5ea68674736b1d8e, src\mzmath\TargetedMetabolomics\QuantitativeAnalysis\PeakArea.vb"
 
     ' Author:
     ' 
@@ -54,6 +54,7 @@
 Imports System.Drawing
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language
@@ -62,7 +63,6 @@ Imports Microsoft.VisualBasic.Math.Calculus
 Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
-Imports SMRUCC.MassSpectrum.Math.Chromatogram
 Imports stdNum = System.Math
 
 Public Module PeakArea
@@ -270,7 +270,7 @@ Public Module PeakArea
             n:=resolution,
             a:=points.First.X,
             b:=points.Last.X)
-        Dim areaValue = area.Y.Vector.Last
+        Dim areaValue = area.Y.vector.Last
 
         Return areaValue
     End Function

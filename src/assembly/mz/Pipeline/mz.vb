@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd8264fb18963f4be15eb0e96ec53af6, Assembly\mz\Pipeline\mz.vb"
+﻿#Region "Microsoft.VisualBasic::ca48b9eb49e9e984616afb002c43f32b, src\assembly\mz\Pipeline\mz.vb"
 
     ' Author:
     ' 
@@ -333,5 +333,3 @@ Public Function XIC(mz As String, raw As String, Optional tolerance As String = 
 End Function
 End Class
 End Namespace
-
-

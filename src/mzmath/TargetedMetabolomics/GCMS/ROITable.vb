@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::549546d6449d252e08ffb0dc1f3ad49c, DATA\TargetedMetabolomics\GCMS\ROITable.vb"
+﻿#Region "Microsoft.VisualBasic::540c269144155f25d296e2406cae10cd, src\mzmath\TargetedMetabolomics\GCMS\ROITable.vb"
 
     ' Author:
     ' 
@@ -46,7 +46,7 @@
 #End Region
 
 Imports System.Data.Linq.Mapping
-Imports SMRUCC.MassSpectrum.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 
 Namespace GCMS
 

@@ -55,20 +55,20 @@ Imports(Microsoft.VisualBasic.Language);
 #'
 #' @param do.align The MS/MS alignment method, which is in format like: \code{function(q, s)}
 #'      Where \code{q} and \code{s} is a ms2 spectra matrix. Due to the reason of the \code{q}
-#'      and \code{s} spectra data is comes from the same sample and same instrument, so that 
-#'      using the \code{SSM} spectra alignment algorithm for this parameter is recommended. 
+#'      and \code{s} spectra data is comes from the same sample and same instrument, so that
+#'      using the \code{SSM} spectra alignment algorithm for this parameter is recommended.
 #'
 #' @param kegg_id.skips You can put the kegg compound ids in this character vector
 #'       If you don't want some specific metabolite was indeified from this
 #'       metaDNA algorithm function.
-#' @param rt.adjust The rt adjust lambda function, it takes two parameter:  
+#' @param rt.adjust The rt adjust lambda function, it takes two parameter:
 #'    \enumerate{
 #'        \item \code{rt}, the rt of unidentified sample ms1 feature,
 #'        \item \code{KEGG_id} the KEGG_cpd that assigned to current unidentified sample ms1 feature.
 #'    }
-#'    and then returns a rt alignment score. If this parameter is ignored, 
+#'    and then returns a rt alignment score. If this parameter is ignored,
 #'    then will use score 1 as default means no rt adjustment score.
-#' 
+#'
 #' @return A \code{identify} parameter data structure like metabolite identify
 #'      result for \code{unknown} parameter input data
 #'
@@ -91,18 +91,18 @@ metaDNA <- function(identify, unknown, do.align,
 					seeds.all = TRUE,
 					seeds.topn = 5,
                     iterations = 20) {
-					
+
 	require(foreach);
 	require(doParallel);
-					
-    cat("\n\n\n");
+
+    cat("\n\n");
 
     # 1. Find all of the related KEGG compound by KEGG reaction link for
     #    identify metabolites
     # 2. Search for unknown by using ms1 precursor_m/z compare with the
     #    KEGG compound molecule weight in a given precursor_type mode.
 
-    print(" [metaDNA] pipline....");
+    print(" RUN [metaDNA] pipline....");
     cat("\n\n");
     print("KEGG compound match with tolerance:");
     print(tolerance);
@@ -110,7 +110,7 @@ metaDNA <- function(identify, unknown, do.align,
 	timer <- benchmark();
 	unknown.mz <- sapply(unknown, function(x) x$mz) %=>% as.numeric;
 	filter.skips <- kegg_id.skips %=>% create_filter.skips;
-	
+
 	# The match.kegg lambda function implements:
 	#
 	# Query the unknown ms feature by a given KEGG partner id list
@@ -120,7 +120,7 @@ metaDNA <- function(identify, unknown, do.align,
       precursor_type = precursor_type,
       tolerance = tolerance
     );
-	
+
 	if (seeds.all && seeds.topn > 0) {
 		print(sprintf("metaDNA only used top %s best hit as seeds...", seeds.topn));
 	} else if (seeds.all) {
@@ -128,7 +128,7 @@ metaDNA <- function(identify, unknown, do.align,
 	} else {
 		print("metaDNA will used the top best hit as seeds...");
 	}
-	
+
 	print("do First iteration....");
 
     output <- metaDNA.iteration(
@@ -137,65 +137,65 @@ metaDNA <- function(identify, unknown, do.align,
         match.kegg,
         score.cutoff
     );
-	
+
 	memory.sample("[metaDNA]    do First iteration...");
-	
+
 	seeds <- extends.seeds(output, rt.adjust, seeds.all, seeds.topn = seeds.topn);
 	metaDNA.out <- output;
 	stats <- NULL;
 	totals <- 0;
 	kegg_id.skips <- append(kegg_id.skips, names(seeds));
-	filter.skips <- kegg_id.skips %=>% create_filter.skips;	
-	
+	filter.skips <- kegg_id.skips %=>% create_filter.skips;
+
 	n <- length(seeds);
 	totals <- totals + n;
 	stats <- rbind(stats, c(0, n, totals, timer()$since_last));
-	
+
 	if (iterations > 1) {
 	    for(i in 1:iterations) {
 			print(sprintf("   do metaDNA Iteration %s ...", i));
-		
+
 			output <- metaDNA.iteration(
-				identify = seeds,            
+				identify = seeds,
 				filter.skips = filter.skips,
 				unknown = unknown,
 				do.align = do.align,
 				match.kegg = match.kegg,
-				score.cutoff = score.cutoff				
+				score.cutoff = score.cutoff
 			);
-			metaDNA.out <- append(metaDNA.out, output);				
-			
+			metaDNA.out <- append(metaDNA.out, output);
+
 			# using identify output as seeds for next iteration
 			seeds <- extends.seeds(output, rt.adjust, seeds.all, seeds.topn = seeds.topn);
 			n <- length(seeds);
-			
+
 			if (n == 0) {
 				if (debug.echo) {
 					print("No more metabolite can be predicted, exit iterations...");
 				}
-			
+
 				break;
 			} else {
 				print(sprintf("  Found %s kegg compound:", n));
 				# print(names(seeds));
-				
+
 				kegg_id.skips <- append(kegg_id.skips, names(seeds));
-				filter.skips <- create_filter.skips(kegg_id.skips, FALSE);			
+				filter.skips <- create_filter.skips(kegg_id.skips, FALSE);
 				totals <- totals + n;
 				stats <- rbind(stats, c(i, n, totals, timer()$since_last));
 			}
-			
+
 			memory.sample(sprintf("[metaDNA]    do metaDNA Iteration %s ...", i));
 		}
 
 		if (!is.null(stats)) {
 			colnames(stats) <- c("Iteration", "Predicts", "Total", "Elapsed(ms)");
 			rownames(stats) <- stats[, "Iteration"];
-			
+
 			print(stats);
-		}	
+		}
 	}
-	
+
     # at last returns the prediction result
     metaDNA.out;
 }
@@ -203,12 +203,12 @@ metaDNA <- function(identify, unknown, do.align,
 #' Run a metaDNA prediction iteration
 #'
 #' @param identify The seeds data for the metaDNA algorithm.
-#' @param kegg.partners A lambda function for find reaction partners for a given list of 
+#' @param kegg.partners A lambda function for find reaction partners for a given list of
 #'        KEGG compound id.
 #' @param unknown The user sample data
 #' @param do.align A lambda function that provides spectra alignment
-#' @param unknow.matches function evaluate result of \code{\link{kegg.match.handler}}, 
-#'     this function descript that how to find out the unknown metabolite from a given 
+#' @param unknow.matches function evaluate result of \code{\link{kegg.match.handler}},
+#'     this function descript that how to find out the unknown metabolite from a given
 #'     set of identify related kegg partners compound id set.
 #'
 #' @details The \code{do.align} function should take two parameter:
@@ -219,39 +219,39 @@ metaDNA.iteration <- function(identify, filter.skips,
                               unknown, do.align,
                               match.kegg,
                               score.cutoff) {
-							  
+
 	do.Predicts <- function(KEGG_cpd, identified, KEGG.partners, unknown.query) {
 		do.infer <- function(seed) {
 			# get trace information of current seed:
 			#
 			# The seed$feature is the ms1 feature id of the identified seed
-			# The seed$ref is the ms2 index of the identified seed, used for retrive 
+			# The seed$ref is the ms2 index of the identified seed, used for retrive
 			# the ms2 spectrum mnatrix data
 			trace <- seed$ref;
 			trace <- list(
 				# The unknown infer elongation path
-				path   = seed$trace %||% (seed %=>% trace.node), 
+				path   = seed$trace %||% (seed %=>% trace.node),
 				KEGG   = seed$KEGG,
 				# ms feature of current seed
 				parent = sprintf("%s#%s", trace$file, trace$scan),
 				ref    = seed$feature
 			);
-			
+
 			# do iteration
 			metaDNA.impl(
 				unknown.query = unknown.query,
 				identify.ms2  = seed$spectra,
 				# trace path is debug used only
-				# to visualize how the seeds extends to 
-				# other metabolite in KEGG reaction 
+				# to visualize how the seeds extends to
+				# other metabolite in KEGG reaction
 				# network
 				trace         = trace,
 				unknown       = unknown,
-				ms2.align     = do.align,						
+				ms2.align     = do.align,
 				score.cutoff  = score.cutoff
 			);
-		}		
-											
+		}
+
 		# element structure in unknown.query:
 		#
 		# [1] "unknown.index"  "unknown.mz"     "precursor_type" "kegg"
@@ -260,41 +260,41 @@ metaDNA.iteration <- function(identify, filter.skips,
 		# unknown.index is the index of the unknown metabolite in input sequence
 		# unknown.mz is the corresponding m/z
 		# ppm is the ppm value for unknown mz match with the KEGG compound m/z
-		# KEGG.partners, identify.ms2, unknown, ms2.align, unknow.matches										
+		# KEGG.partners, identify.ms2, unknown, ms2.align, unknow.matches
 		infer <- if (length(identified) > (2 * MetaDNA::cluster.cores())) {
-			# parallel			
+			# parallel
 			envir.exports <- c("unknown.query", "unknown", "do.align", "score.cutoff", "do.infer");
 			cl <- makeCluster(MetaDNA::cluster.cores());
 			registerDoParallel(cl);
-		
+
 			output <- foreach(seed = identified, .export = envir.exports) %dopar% {
 				do.infer(seed);
 			}
-			
-			stopCluster(cl);						
+
+			stopCluster(cl);
 			output;
 		} else {
 			lapply(identified, do.infer);
-		} 				
-							
+		}
+
 		# returns the metaDNA network infer result
 		# of current iteration.
 		infer;
 	}
-							  
+
     # tick.each
     # lapply
 	seeds.KEGG_id <- names(identify);
     seeds <- tick.each(seeds.KEGG_id, function(KEGG_cpd) {
-	
+
         # Get all of the kegg reaction partner metabolite id
         # for current identified kegg metabolite id
-		# 
+		#
 		# this seeds data contains multiple hits
 		if (KEGG_cpd %=>% IsNothing) {
 			NULL;
 		} else {
-		
+
 		    identified <- identify[[KEGG_cpd]];
 			# find KEGG reaction partner for current identify KEGG compound
 			KEGG.partners <- KEGG_cpd %=>% kegg.partners %=>% filter.skips %=>% unique;
@@ -319,9 +319,9 @@ metaDNA.iteration <- function(identify, filter.skips,
 				if (IsNothing(unknown.query)) {
 					NULL;
 				} else {
-					do.Predicts(KEGG_cpd, identified, KEGG.partners, unknown.query);				
+					do.Predicts(KEGG_cpd, identified, KEGG.partners, unknown.query);
 				}
-			}	
+			}
 		}
     });
 

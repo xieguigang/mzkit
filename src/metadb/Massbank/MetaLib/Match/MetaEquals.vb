@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::382fd58b4ab9645b9cb8e1bb53a7086b, DATA\Massbank\MetaLib\Match\MetaEquals.vb"
+﻿#Region "Microsoft.VisualBasic::4d5bb77f3afd33be3357bb6e02d9b15a, src\metadb\Massbank\MetaLib\Match\MetaEquals.vb"
 
     ' Author:
     ' 
@@ -47,9 +47,9 @@
 
 #End Region
 
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports SMRUCC.MassSpectrum.DATA.MetaLib.Models
 
 Namespace MetaLib
 

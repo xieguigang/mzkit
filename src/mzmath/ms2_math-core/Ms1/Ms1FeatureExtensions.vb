@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c61151148aa331f9f00ba0b3d8d74759, DATA\ms2_math-core\Ms1\Ms1FeatureExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::7ed6bda26ef5f6d5f05052915d007c32, src\mzmath\ms2_math-core\Ms1\Ms1FeatureExtensions.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -86,4 +85,3 @@ Public Module Ms1FeatureExtensions
         }
     End Function
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2f70f6e4227c1d34e47573af6d2fedc, Assembly\assembly\MarkupData\mzXML\XML.vb"
+﻿#Region "Microsoft.VisualBasic::cc2cba748954f3ed8ff60ece424237df, src\assembly\assembly\MarkupData\mzXML\XML.vb"
 
     ' Author:
     ' 
@@ -46,11 +46,11 @@
 #End Region
 
 Imports System.Xml.Serialization
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Xml.Linq
-Imports SMRUCC.MassSpectrum.Math
-Imports SMRUCC.MassSpectrum.Math.Spectra
 Imports r = System.Text.RegularExpressions.Regex
 
 Namespace MarkupData.mzXML

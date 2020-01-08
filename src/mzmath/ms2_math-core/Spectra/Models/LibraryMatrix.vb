@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9103eb9a900791e715bc2fd60a633659, DATA\ms2_math-core\Spectra\Models\LibraryMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::ab3fb7fec56ad41389969a851c685030, src\mzmath\ms2_math-core\Spectra\Models\LibraryMatrix.vb"
 
     ' Author:
     ' 
@@ -48,11 +48,11 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
-Imports SMRUCC.MassSpectrum.Math.Ms1
 Imports WhichSelector = Microsoft.VisualBasic.Linq.Which
 
 Namespace Spectra

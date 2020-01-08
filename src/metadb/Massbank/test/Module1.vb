@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95400e8c35a4346ba06b0c6d57eafeba, DATA\Massbank\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::50a2772776f043228bac7b62c91ce30e, src\metadb\Massbank\test\Module1.vb"
 
     ' Author:
     ' 
@@ -42,9 +42,8 @@
 
 #End Region
 
+Imports BioNovoGene.BioDeep.Chemistry
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
-Imports Microsoft.VisualBasic.Serialization.JSON
-Imports SMRUCC.MassSpectrum.DATA
 
 Module Module1
 
@@ -74,7 +73,7 @@ Module Module1
 
     Sub dumpPubChem()
 
-        Call SMRUCC.MassSpectrum.DATA.File.DumpingPubChemAnnotations("D:\Database\pubchem", "D:\Database\pubchem.sdk_keys.csv")
+        Call DumpingPubChemAnnotations("D:\Database\pubchem", "D:\Database\pubchem.sdk_keys.csv")
 
 
         Pause()

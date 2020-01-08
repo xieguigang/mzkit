@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae2d67856a298e7ec7a4ba5b8fda75ae, MwtWinDll\MwtWinDll\PeptideClass.vb"
+﻿#Region "Microsoft.VisualBasic::1b3d95b4a799f2b8643679a476945add, src\mzmath\MwtWinDll\MwtWinDll\PeptideClass.vb"
 
     ' Author:
     ' 
@@ -105,8 +105,6 @@
     ' /********************************************************************************/
 
 #End Region
-
-
 
 Imports System.Collections.Generic
 

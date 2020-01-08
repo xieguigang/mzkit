@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c50e993dafadb844e153dc23d46f1932, DATA\TargetedMetabolomics\GCMS\QuantifyAnalysis\StandardCurve.vb"
+﻿#Region "Microsoft.VisualBasic::afef64b82e7193b57d860961401781cf, src\mzmath\TargetedMetabolomics\GCMS\QuantifyAnalysis\StandardCurve.vb"
 
     ' Author:
     ' 
@@ -48,7 +48,6 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Language
-Imports SMRUCC.MassSpectrum.Math.MRM.Models
 
 Namespace GCMS.QuantifyAnalysis
 
@@ -60,7 +59,7 @@ Namespace GCMS.QuantifyAnalysis
         ''' <param name="raw"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function LinearRegression(raw As (content#, data As ChromatographyPeaktable)()) As IFitted
+        Public Function LinearRegression(raw As (content#, data As ChromatographyPeaktable)(), Optional maxDeletions% = -1) As IFitted
             Dim line As PointF() = raw _
                 .OrderBy(Function(p)
                              ' 从小到大进行排序
@@ -70,7 +69,7 @@ Namespace GCMS.QuantifyAnalysis
                             Return New PointF(p.data.TPACalibration, p.content)
                         End Function) _
                 .ToArray
-            Dim model As IFitted = Math.StandardCurve.CreateLinearRegression(line, True)
+            Dim model As IFitted = Math.StandardCurve.CreateLinearRegression(line, True, maxDeletions)
             Return model
         End Function
 

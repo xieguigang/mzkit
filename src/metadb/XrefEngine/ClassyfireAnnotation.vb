@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e649f915e9fb6a9ee6ff4dab0ff61fb5, DATA\XrefEngine\ClassyfireAnnotation.vb"
+﻿#Region "Microsoft.VisualBasic::f6bbad1b014e5a75109e762113c50437, src\metadb\XrefEngine\ClassyfireAnnotation.vb"
 
     ' Author:
     ' 
@@ -44,7 +44,6 @@
 
 #End Region
 
-
 ''' <summary>
 ''' Parser for file download from https://jcheminf.biomedcentral.com/articles/10.1186/s13321-016-0174-y
 ''' </summary>
@@ -67,4 +66,3 @@ Public Class ClassyfireAnnotation
         Return $"Dim {CompoundID} As {ChemOntID} = ""{ParentName}"""
     End Function
 End Class
-

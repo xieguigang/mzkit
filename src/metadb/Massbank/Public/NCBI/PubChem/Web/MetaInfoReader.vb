@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6f540129bf0e7487f4f37a9889d45a28, DATA\Massbank\Public\NCBI\PubChem\Web\MetaInfoReader.vb"
+﻿#Region "Microsoft.VisualBasic::f3f11ff87d3a91984ecfc63b343a5d27, src\metadb\Massbank\Public\NCBI\PubChem\Web\MetaInfoReader.vb"
 
     ' Author:
     ' 
@@ -46,10 +46,10 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
-Imports SMRUCC.MassSpectrum.DATA.MetaLib.Models
-Imports MetaInfo = SMRUCC.MassSpectrum.DATA.MetaLib.Models.MetaLib
+Imports MetaInfo = BioNovoGene.BioDeep.Chemistry.MetaLib.Models.MetaLib
 
 Namespace NCBI.PubChem
 
@@ -209,7 +209,7 @@ Namespace NCBI.PubChem
             Return New MetaInfo With {
                 .formula = formulaStr,
                 .xref = xref,
-                .name = commonName,
+                .Name = commonName,
                 .exact_mass = exact_mass,
                 .ID = view.RecordNumber,
                 .synonym = synonyms.removesDbEntry.ToArray

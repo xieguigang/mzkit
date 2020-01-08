@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc4ebbceb464de7ba19edfbaa97da4c9, DATA\Massbank\Public\NCBI\PubChem\PCXml\Elements.vb"
+﻿#Region "Microsoft.VisualBasic::bc4ebbceb464de7ba19edfbaa97da4c9, src\metadb\Massbank\Public\NCBI\PubChem\PCXml\Elements.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29d2c7a251e43d09606f9fb7350c6850, DATA\Massbank\test\nameTest.vb"
+﻿#Region "Microsoft.VisualBasic::3557bf5483260775412fdc6081d1eeb9, src\metadb\Massbank\test\nameTest.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,7 @@
 
 #End Region
 
-Imports SMRUCC.MassSpectrum.DATA.MetaLib
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib
 
 Module nameTest
 
@@ -57,4 +57,3 @@ Module nameTest
     End Sub
 
 End Module
-

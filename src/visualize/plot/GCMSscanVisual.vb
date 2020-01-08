@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d8b6ec6e14bf5c0454eb7a829be9365, visual\plot\GCMSscanVisual.vb"
+﻿#Region "Microsoft.VisualBasic::0037f75575db4d81aca42d7cfde3dd57, src\visualize\plot\GCMSscanVisual.vb"
 
     ' Author:
     ' 
@@ -44,6 +44,10 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.GCMS
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D.Device
@@ -57,10 +61,6 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports SMRUCC.MassSpectrum.Math
-Imports SMRUCC.MassSpectrum.Math.Chromatogram
-Imports SMRUCC.MassSpectrum.Math.GCMS
-Imports SMRUCC.MassSpectrum.Math.Spectra
 
 Public Module GCMSscanVisual
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea288fefea017f055315967acf32e7d0, DATA\XrefEngine\ChemOntClassify.vb"
+﻿#Region "Microsoft.VisualBasic::1a3cbfd09687cdaa62bc72a65c8f2a2d, src\metadb\XrefEngine\ChemOntClassify.vb"
 
     ' Author:
     ' 
@@ -162,4 +162,3 @@ Public Class ChemOntClassify
             .ToArray
     End Function
 End Class
-

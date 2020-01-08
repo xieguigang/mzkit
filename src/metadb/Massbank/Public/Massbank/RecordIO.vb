@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8ee6a0dab383465ce9e68f5df36f9b80, DATA\Massbank\Public\Massbank\RecordIO.vb"
+﻿#Region "Microsoft.VisualBasic::08246ef670739ace777efa32a604e3ac, src\metadb\Massbank\Public\Massbank\RecordIO.vb"
 
     ' Author:
     ' 
@@ -44,13 +44,13 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.BioDeep.Chemistry.Massbank.DATA
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Xml.Linq
-Imports SMRUCC.MassSpectrum.DATA.Massbank.DATA
 Imports Node =
     System.Collections.Generic.Dictionary(Of
         String,

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa366fbe2eb32010a83026e62833840a, DATA\Massbank\Public\NCBI\SDFExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::5933ca95c2d747e823e0c000fce02ed0, src\metadb\Massbank\Public\NCBI\SDFExtensions.vb"
 
     ' Author:
     ' 
@@ -44,7 +44,8 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports SMRUCC.MassSpectrum.DATA.File
+Imports BioNovoGene.BioDeep.Chemoinformatics
+Imports BioNovoGene.BioDeep.Chemoinformatics.SDF
 
 Namespace NCBI.PubChem
 

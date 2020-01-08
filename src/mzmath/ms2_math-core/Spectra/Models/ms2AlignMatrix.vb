@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6021481facb77f2fdc5c241a2422a82c, DATA\ms2_math-core\Spectra\Models\ms2AlignMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::6021481facb77f2fdc5c241a2422a82c, src\mzmath\ms2_math-core\Spectra\Models\ms2AlignMatrix.vb"
 
     ' Author:
     ' 

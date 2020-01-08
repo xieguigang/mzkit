@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d3b225f8279c5c31272cd6e4253c410, Assembly\ProteoWizard.d\ProteoWizardCLI.vb"
+﻿#Region "Microsoft.VisualBasic::d0651cd8a19fe8cc5354f989f0c8f7ea, src\assembly\ProteoWizard.Interop\ProteoWizardCLI.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
 
     ' Class ProteoWizardCLI
     ' 
-    ' 
+    '     Properties: BIN
     '     Enum OutFileTypes
     ' 
     ' 
@@ -44,8 +44,11 @@
     ' 
     '  
     ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: Convert2mzML, convertThermoRawFile, convertWatersRawFile
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Function: Convert2mzML, convertThermoRawFile, convertWatersRawFile, IsAvaiable
+    ' 
+    '     Sub: ConfigProgram
     ' 
     ' /********************************************************************************/
 

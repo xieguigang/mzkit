@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a4759518e4a91550b6a521216b8437c, MetaDNA\KEGG_MetaDNA\Program.vb"
+﻿#Region "Microsoft.VisualBasic::9a4759518e4a91550b6a521216b8437c, src\metadna\KEGG_MetaDNA\Program.vb"
 
     ' Author:
     ' 

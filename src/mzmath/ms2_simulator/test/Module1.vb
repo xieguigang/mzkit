@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f91da97c2052ea7de3b039dbf341ce6, DATA\ms2_simulator\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::0f91da97c2052ea7de3b039dbf341ce6, src\mzmath\ms2_simulator\test\Module1.vb"
 
     ' Author:
     ' 

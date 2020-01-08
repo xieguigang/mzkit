@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c9fac64f487f9f91f6d5fe1487dcd882, visual\mzplot\Program.vb"
+﻿#Region "Microsoft.VisualBasic::af9ff03c42be51b57e6114c5b30de2a4, src\visualize\mzplot\Program.vb"
 
     ' Author:
     ' 
@@ -49,4 +49,3 @@ Module Program
     End Function
 
 End Module
-

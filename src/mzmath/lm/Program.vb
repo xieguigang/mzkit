@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::54fd94fb42d78ef7d511946fd25b9649, DATA\lm\Program.vb"
+﻿#Region "Microsoft.VisualBasic::aae3c4e05d937f65d8f7c4b0855d6f01, src\mzmath\lm\Program.vb"
 
     ' Author:
     ' 
@@ -123,4 +123,3 @@ Module Program
     End Function
 
 End Module
-

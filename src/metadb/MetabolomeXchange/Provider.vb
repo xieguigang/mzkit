@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2edbe6a599b7e4c263f5de684d0c82a, DATA\MetabolomeXchange\Provider.vb"
+﻿#Region "Microsoft.VisualBasic::a2edbe6a599b7e4c263f5de684d0c82a, src\metadb\MetabolomeXchange\Provider.vb"
 
     ' Author:
     ' 
@@ -66,7 +66,7 @@ Public Module Provider
 
     Public Function GetAllDataSet(Optional provider$ = "mtbls") As DataSet()
         Return GetAllDataSetJson(provider) _
-            .LoadObject(Of response) _
+            .LoadJSON(Of response) _
             .datasets _
             .Values _
             .ToArray

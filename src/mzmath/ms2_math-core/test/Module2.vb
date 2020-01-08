@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a0f53e5664112adf31cd1cb2c74c64fa, DATA\ms2_math-core\test\Module2.vb"
+﻿#Region "Microsoft.VisualBasic::b52b92184281112d68fc94cdc7ec9d87, src\mzmath\ms2_math-core\test\Module2.vb"
 
     ' Author:
     ' 
@@ -66,4 +66,3 @@ Module Module2
         Pause()
     End Sub
 End Module
-

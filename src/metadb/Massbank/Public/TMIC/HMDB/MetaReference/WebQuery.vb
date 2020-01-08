@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::87baaa39e6c61a671f2515a7c5b0261a, DATA\Massbank\Public\TMIC\HMDB\MetaReference\WebQuery.vb"
+﻿#Region "Microsoft.VisualBasic::f34a6b0fa9e664d199ad0b50c92b35d5, src\metadb\Massbank\Public\TMIC\HMDB\MetaReference\WebQuery.vb"
 
     ' Author:
     ' 
@@ -45,8 +45,8 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports Microsoft.VisualBasic.Net.Http
-Imports SMRUCC.MassSpectrum.DATA.MetaLib.Models
 
 Namespace TMIC.HMDB.Repository
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf52640c4112dc67a8fd45f68161380b, Assembly\assembly\SpectrumTree.vb"
+﻿#Region "Microsoft.VisualBasic::10600fac39ee3fa811ce45c84ce52db3, src\assembly\assembly\SpectrumTree.vb"
 
     ' Author:
     ' 
@@ -44,9 +44,9 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports SMRUCC.MassSpectrum.Assembly.MarkupData
-Imports SMRUCC.MassSpectrum.Math
-Imports SMRUCC.MassSpectrum.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 
 ''' <summary>
 ''' Clustering of the ms2 spectrum by SSM similarity.

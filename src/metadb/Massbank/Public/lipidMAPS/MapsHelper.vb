@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d97c6ebe7576250140a8960ff2fe8412, DATA\Massbank\Public\lipidMAPS\MapsHelper.vb"
+﻿#Region "Microsoft.VisualBasic::582e624bf902fe455109a672ac04d71b, src\metadb\Massbank\Public\lipidMAPS\MapsHelper.vb"
 
     ' Author:
     ' 
@@ -45,10 +45,10 @@
 
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.BioDeep.Chemoinformatics.SDF
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Language
-Imports SMRUCC.MassSpectrum.DATA.File
 
 Namespace LipidMaps
 

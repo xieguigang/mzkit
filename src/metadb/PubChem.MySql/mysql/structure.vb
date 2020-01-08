@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d960262894f705c886c6e6c20b7fa11f, DATA\PubChem.MySql\mysql\structure.vb"
+﻿#Region "Microsoft.VisualBasic::759e662ed1ef32dbec18532c156c4e83, src\metadb\PubChem.MySql\mysql\structure.vb"
 
     ' Author:
     ' 
@@ -197,4 +197,3 @@ End Class
 
 
 End Namespace
-

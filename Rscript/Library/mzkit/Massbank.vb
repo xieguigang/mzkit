@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7bfd04fabcc9b91e248241021b4ef52b, Rscript\Library\mzkit\Massbank.vb"
+﻿#Region "Microsoft.VisualBasic::536ddf09422d0fa655d70eb44f4e228f, Rscript\Library\mzkit\Massbank.vb"
 
     ' Author:
     ' 
@@ -42,12 +42,12 @@
 
 #End Region
 
+Imports BioNovoGene.BioDeep.Chemistry.TMIC
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.genomics.ComponentModel.DBLinkBuilder
-Imports SMRUCC.MassSpectrum.DATA.TMIC
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Interop
@@ -126,4 +126,3 @@ Module Massbank
         Return mapping.GetJson.SaveTo(file)
     End Function
 End Module
-

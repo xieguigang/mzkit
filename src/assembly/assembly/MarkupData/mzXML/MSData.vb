@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb3a8ae0cfe0d1c1c13dacfd2401d98c, Assembly\assembly\MarkupData\mzXML\MSData.vb"
+﻿#Region "Microsoft.VisualBasic::beaa9ed1c617f55097b7c15641577595, src\assembly\assembly\MarkupData\mzXML\MSData.vb"
 
     ' Author:
     ' 
@@ -69,10 +69,10 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports SMRUCC.MassSpectrum.Math.Ms1
-Imports SMRUCC.MassSpectrum.Math.Spectra
 
 Namespace MarkupData.mzXML
 

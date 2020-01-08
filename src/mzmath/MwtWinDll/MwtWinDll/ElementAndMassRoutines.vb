@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec5f5b07e15e9e3150f90e72f25164a1, MwtWinDll\MwtWinDll\ElementAndMassRoutines.vb"
+﻿#Region "Microsoft.VisualBasic::17d65758736f17b169930b9ccd0bc7f1, src\mzmath\MwtWinDll\MwtWinDll\ElementAndMassRoutines.vb"
 
     ' Author:
     ' 
@@ -5882,4 +5882,3 @@ Public Class MWElementAndMassRoutines
     End Function
 
 End Class
-

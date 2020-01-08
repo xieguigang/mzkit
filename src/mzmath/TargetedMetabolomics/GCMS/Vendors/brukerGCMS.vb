@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::039728efbb73abcae67ca613ac20c9eb, DATA\TargetedMetabolomics\GCMS\Vendors\brukerGCMS.vb"
+﻿#Region "Microsoft.VisualBasic::039728efbb73abcae67ca613ac20c9eb, src\mzmath\TargetedMetabolomics\GCMS\Vendors\brukerGCMS.vb"
 
     ' Author:
     ' 

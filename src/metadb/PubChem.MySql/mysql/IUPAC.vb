@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e95e279a9e13d8f7dc8bc729d51b3a1e, DATA\PubChem.MySql\mysql\IUPAC.vb"
+﻿#Region "Microsoft.VisualBasic::ad65c7094ef6a8998a4fb2818ee582b3, src\metadb\PubChem.MySql\mysql\IUPAC.vb"
 
     ' Author:
     ' 
@@ -198,4 +198,3 @@ End Class
 
 
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2183b89734b2278c5446011058e1e985, DATA\ms2_math-core\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::baad4b89bf17910a2660c4d8fd2e46d9, src\mzmath\ms2_math-core\Extensions.vb"
 
     ' Author:
     ' 
@@ -44,11 +44,11 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
-Imports SMRUCC.MassSpectrum.Math.Chromatogram
-Imports SMRUCC.MassSpectrum.Math.Ms1
-Imports SMRUCC.MassSpectrum.Math.Spectra
 Imports stdNum = System.Math
 
 <HideModuleName> Public Module Extensions

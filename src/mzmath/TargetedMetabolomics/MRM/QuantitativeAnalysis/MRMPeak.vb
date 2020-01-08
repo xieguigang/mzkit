@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d42724b5ccd09fb6a6826d580232158b, DATA\TargetedMetabolomics\MRM\QuantitativeAnalysis\MRMPeak.vb"
+﻿#Region "Microsoft.VisualBasic::dc41d00bf94674a2a64e35b817dd3d2d, src\mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\MRMPeak.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Summaries:
 
-    ' Module MRMPeak
+    '     Module MRMPeak
     ' 
-    '     Function: MRMPeak
-    '     Enum MRMPeakExtensionMethods
+    '         Function: MRMPeak
+    '         Enum MRMPeakExtensionMethods
     ' 
-    '         BaselineMatch, TriangleMatch
+    '             BaselineMatch, TriangleMatch
     ' 
     ' 
     ' 
@@ -47,11 +47,13 @@
     ' 
     '     Function: MakeBaselineExtension, MakeExtension
     ' 
+    ' 
     ' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
@@ -59,7 +61,6 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
-Imports SMRUCC.MassSpectrum.Math.Chromatogram
 
 Namespace MRM
 

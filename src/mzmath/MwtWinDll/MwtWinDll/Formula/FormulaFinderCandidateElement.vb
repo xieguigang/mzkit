@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76009c63366349fe1339843f9d669b76, MwtWinDll\MwtWinDll\Formula\FormulaFinderCandidateElement.vb"
+﻿#Region "Microsoft.VisualBasic::ec5c779a9ebd084cc907c0d049dc1915, src\mzmath\MwtWinDll\MwtWinDll\Formula\FormulaFinderCandidateElement.vb"
 
     ' Author:
     ' 
@@ -81,4 +81,3 @@ Friend Class FormulaFinderCandidateElement
         End If
     End Function
 End Class
-

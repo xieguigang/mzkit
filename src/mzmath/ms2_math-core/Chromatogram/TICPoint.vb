@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::743edcb2d34f15306c686d57f9940ca4, DATA\ms2_math-core\Chromatogram\TICPoint.vb"
+﻿#Region "Microsoft.VisualBasic::743edcb2d34f15306c686d57f9940ca4, src\mzmath\ms2_math-core\Chromatogram\TICPoint.vb"
 
     ' Author:
     ' 

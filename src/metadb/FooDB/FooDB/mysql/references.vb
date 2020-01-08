@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::473502dc25680b2249108ceb59d1d90f, DATA\FooDB\FooDB\mysql\references.vb"
+﻿#Region "Microsoft.VisualBasic::473502dc25680b2249108ceb59d1d90f, src\metadb\FooDB\FooDB\mysql\references.vb"
 
     ' Author:
     ' 

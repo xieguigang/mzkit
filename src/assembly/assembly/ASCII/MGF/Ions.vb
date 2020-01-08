@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d85d928d477a723a7053d1a66eb284b3, Assembly\assembly\ASCII\MGF\Ions.vb"
+﻿#Region "Microsoft.VisualBasic::419a870a506b1d876ff3ec05aa93cf74, src\assembly\assembly\ASCII\MGF\Ions.vb"
 
     ' Author:
     ' 
@@ -49,9 +49,9 @@
 
 Imports System.IO
 Imports System.Text
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Xml.Models
-Imports SMRUCC.MassSpectrum.Math.Spectra
 
 Namespace ASCII.MGF
 
@@ -115,6 +115,13 @@ Namespace ASCII.MGF
             End Using
 
             Return text.ToString
+        End Function
+
+        Public Function GetLibrary() As LibraryMatrix
+            Return New LibraryMatrix With {
+                .ms2 = Peaks,
+                .Name = Title
+            }
         End Function
 
     End Class

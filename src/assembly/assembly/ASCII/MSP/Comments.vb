@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95caf88ffbc2d837d121663c7c0d2ccf, Assembly\assembly\ASCII\MSP\Comments.vb"
+﻿#Region "Microsoft.VisualBasic::95caf88ffbc2d837d121663c7c0d2ccf, src\assembly\assembly\ASCII\MSP\Comments.vb"
 
     ' Author:
     ' 

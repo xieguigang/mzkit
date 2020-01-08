@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::60ee298e5df72bb804cba363a3801885, DATA\pubchem\CLI\WebApi.vb"
+﻿#Region "Microsoft.VisualBasic::021c1099d00b3d88d67545c573498540, src\metadb\pubchem\CLI\WebApi.vb"
 
     ' Author:
     ' 
@@ -44,11 +44,11 @@
 
 Imports System.ComponentModel
 Imports System.Threading
+Imports BioNovoGene.BioDeep.Chemistry.NCBI
+Imports BioNovoGene.BioDeep.Chemistry.NCBI.PubChem
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Imaging
-Imports SMRUCC.MassSpectrum.DATA.NCBI
-Imports SMRUCC.MassSpectrum.DATA.NCBI.PubChem
 
 Partial Module CLI
 

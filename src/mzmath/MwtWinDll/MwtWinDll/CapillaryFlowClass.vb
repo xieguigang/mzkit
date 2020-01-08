@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8ea224640a2cee03eb2a339109218343, MwtWinDll\MwtWinDll\CapillaryFlowClass.vb"
+﻿#Region "Microsoft.VisualBasic::d1256b998c4c218510714478d2419404, src\mzmath\MwtWinDll\MwtWinDll\CapillaryFlowClass.vb"
 
     ' Author:
     ' 
@@ -190,8 +190,6 @@
     ' /********************************************************************************/
 
 #End Region
-
-
 
 Public Class MWCapillaryFlowClass
 

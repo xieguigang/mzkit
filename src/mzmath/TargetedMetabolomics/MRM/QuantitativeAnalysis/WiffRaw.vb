@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8698578f53144e4b8b5c580c52d637c3, DATA\TargetedMetabolomics\MRM\QuantitativeAnalysis\WiffRaw.vb"
+﻿#Region "Microsoft.VisualBasic::2c3c7f942a5d4d0dd194433a741a36d7, src\mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\WiffRaw.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,22 @@
 
     ' Summaries:
 
-    ' Module WiffRaw
+    '     Module WiffRaw
     ' 
-    '     Function: Scan
+    '         Function: Scan, ScanPeakTable
+    ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Math
-Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
-Imports SMRUCC.MassSpectrum.Math.MRM.Models
 
 Namespace MRM
 
@@ -129,6 +130,7 @@ Namespace MRM
 
                 If removesWiffName Then
                     level = level.Replace(wiffName, "").Trim("-"c, " "c)
+                    ' level = r.Replace(level, "^\d+[-]", "", RegexICMul).Trim("-"c, " "c)
                 End If
 
                 For Each ion In TPA

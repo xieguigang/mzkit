@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a81753c132bee569700b407d9df51442, DATA\Massbank\test\pubchemTest.vb"
+﻿#Region "Microsoft.VisualBasic::fc3c888d2369eb44529dac69fa475979, src\metadb\Massbank\test\pubchemTest.vb"
 
     ' Author:
     ' 
@@ -42,10 +42,10 @@
 
 #End Region
 
+Imports BioNovoGene.BioDeep.Chemistry.NCBI
+Imports BioNovoGene.BioDeep.Chemistry.NCBI.PubChem
+Imports BioNovoGene.BioDeep.Chemoinformatics.SDF
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports SMRUCC.MassSpectrum.DATA.File
-Imports SMRUCC.MassSpectrum.DATA.NCBI
-Imports SMRUCC.MassSpectrum.DATA.NCBI.PubChem
 
 Module pubchemTest
 
@@ -71,7 +71,7 @@ Module pubchemTest
         Call xmlLoaderTest()
         Call queryMeta()
 
-        Dim keys = SMRUCC.MassSpectrum.DATA.File.SDF.ScanKeys("D:\Database\pubchem").ToArray
+        Dim keys = SDF.ScanKeys("D:\Database\pubchem").ToArray
 
         Call keys.GetJson.SaveTo("D:\Database\pubchem_sdf_keys.json")
 

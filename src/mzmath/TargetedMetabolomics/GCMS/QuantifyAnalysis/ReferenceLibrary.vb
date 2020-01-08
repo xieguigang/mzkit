@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb70595cb031ff310eb5a51676d65421, DATA\TargetedMetabolomics\GCMS\QuantifyAnalysis\ReferenceLibrary.vb"
+﻿#Region "Microsoft.VisualBasic::842831d35401ad5d361bb8f01c370612, src\mzmath\TargetedMetabolomics\GCMS\QuantifyAnalysis\ReferenceLibrary.vb"
 
     ' Author:
     ' 
@@ -44,12 +44,10 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
-Imports SMRUCC.MassSpectrum.Math.Chromatogram
-Imports SMRUCC.MassSpectrum.Math.GCMS
-Imports SMRUCC.MassSpectrum.Math.GCMS.QuantifyAnalysis
 
 Namespace GCMS.QuantifyAnalysis
 

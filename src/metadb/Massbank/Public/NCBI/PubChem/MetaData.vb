@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::01f1acbcfd3320d1983ebba2bdbbf823, DATA\Massbank\Public\NCBI\PubChem\MetaData.vb"
+﻿#Region "Microsoft.VisualBasic::a4b262792cadfc5115b47d1f2607373b, src\metadb\Massbank\Public\NCBI\PubChem\MetaData.vb"
 
     ' Author:
     ' 
@@ -54,8 +54,8 @@
 
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.BioDeep.Chemoinformatics.SDF
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports SMRUCC.MassSpectrum.DATA.File
 
 Namespace NCBI.PubChem
 

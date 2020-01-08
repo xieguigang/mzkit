@@ -1,60 +1,64 @@
-﻿#Region "Microsoft.VisualBasic::5ce2771b53add01f7ad2e5f5d0c46e5a, DATA\TargetedMetabolomics\MRM\QuantitativeAnalysis\StandardCurve.vb"
+﻿#Region "Microsoft.VisualBasic::f6d8fdda4b5fbf64757b18360c9bfe7c, src\mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\StandardCurveWorker.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Module StandardCurve
-' 
-'     Function: CreateModelPoints, getByLevel, Regression, (+2 Overloads) Scan, ScanContent
-' 
-' /********************************************************************************/
+    '     Module StandardCurveWorker
+    ' 
+    '         Function: CreateModelPoints, getBlankControls, getByLevel, getIS, Regression
+    '                   reverseModel, (+2 Overloads) Scan, ScanContent
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Math
-Imports SMRUCC.MassSpectrum.Assembly.MarkupData.mzML
-Imports SMRUCC.MassSpectrum.Math.MRM.Data
-Imports SMRUCC.MassSpectrum.Math.MRM.Models
+Imports Microsoft.VisualBasic.Math.Quantile
+Imports regexp = System.Text.RegularExpressions.Regex
+Imports stdNum = System.Math
 
 Namespace MRM
 
@@ -62,96 +66,6 @@ Namespace MRM
     ''' 对当前批次的标准曲线进行回归建模
     ''' </summary>
     Public Module StandardCurveWorker
-
-        ''' <summary>
-        ''' 根据建立起来的线性回归模型进行样品数据的扫描，根据曲线的结果得到浓度数据
-        ''' </summary>
-        ''' <param name="model">标准曲线线性回归模型，X为峰面积</param>
-        ''' <param name="raw$"></param>
-        ''' <param name="ions"></param>
-        ''' <returns>
-        ''' <see cref="NamedValue(Of Double).Value"/>是指定的代谢物的浓度结果数据，
-        ''' <see cref="NamedValue(Of Double).Description"/>则是AIS/A的结果，即X轴的数据
-        ''' </returns>
-        <Extension>
-        Public Iterator Function ScanContent(model As StandardCurve(),
-                                             raw$,
-                                             ions As IonPair(),
-                                             peakAreaMethod As PeakArea.Methods,
-                                             TPAFactors As Dictionary(Of String, Double)) As IEnumerable(Of ContentResult(Of MRMPeakTable))
-            Dim baseline# = 0
-            Dim TPA = raw _
-                .ScanTPA(ionpairs:=ions,
-                         peakAreaMethod:=peakAreaMethod,
-                         TPAFactors:=TPAFactors
-                ) _
-                .ToDictionary(Function(ion) ion.name)
-
-            Dim names As Dictionary(Of String, IonPair) = ions.ToDictionary(Function(i) i.accession)
-            Dim C#
-
-            raw = raw.FileName
-
-            ' 遍历得到的所有的标准曲线，进行样本之中的浓度的计算
-            For Each metabolite As StandardCurve In model.Where(Function(m) TPA.ContainsKey(m.name))
-                Dim AIS As New IonTPA  ' (ROI As DoubleRange, TPA#, baseline#, maxinto#)
-                Dim X#
-                ' 得到样品之中的峰面积
-                Dim A = TPA(metabolite.name)
-
-                If Not metabolite.requireISCalibration Then
-                    ' 不需要内标进行校正
-                    ' 则X轴的数据直接是代谢物的峰面积数据
-                    X = A.area
-                Else
-                    ' 数据存在丢失
-                    If Not TPA.ContainsKey(metabolite.IS.ID) Then
-                        Continue For
-                    Else
-                        ' 得到与样品混在一起的内标的峰面积
-                        ' X轴数据需要做内标校正
-                        AIS = TPA(metabolite.IS.ID)
-                        X# = A.area / AIS.area
-                    End If
-                End If
-
-                If metabolite.linear Is Nothing Then
-                    Call $"Missing metabolite {metabolite.name} in raw file!".Warning
-
-                    Continue For
-                Else
-                    ' 利用峰面积比计算出浓度结果数据
-                    ' 然后通过X轴的数据就可以通过标准曲线的线性回归模型计算出浓度了
-                    C# = metabolite.linear(X)
-                End If
-
-                ' 这里的C是相当于 cIS/ct = C，则样品的浓度结果应该为 ct = cIS/C
-                ' C = Val(info!cIS) / C
-
-                Dim [IS] As IonPair = names.TryGetValue(metabolite.IS.ID)
-                Dim peaktable As New MRMPeakTable With {
-                    .content = C,
-                    .ID = metabolite.name,
-                    .raw = raw,
-                    .rtmax = A.peakROI.Max,
-                    .rtmin = A.peakROI.Min,
-                    .Name = names(metabolite.name).name,
-                    .TPA = A.area,
-                    .TPA_IS = AIS.area,
-                    .base = A.baseline,
-                    .IS = If([IS] Is Nothing, "", $"{[IS].accession} ({[IS].name})"),
-                    .maxinto = A.maxPeakHeight,
-                    .maxinto_IS = AIS.maxPeakHeight
-                }
-
-                Yield New ContentResult(Of MRMPeakTable) With {
-                    .Name = metabolite.name,
-                    .Content = C,
-                    .X = X,
-                    .Peaktable = peaktable
-                }
-            Next
-        End Function
 
         ' 实验采用内标法定量。配制5个不同浓度的标准系列，系列中目标分析物浓度(cti)呈梯度变化
         ' (ct1, ct2, ct3, ct4, ct5)，
@@ -170,6 +84,19 @@ Namespace MRM
 
         ReadOnly NoChange As [Default](Of Double) = 1.0R
 
+        <Extension>
+        Private Function getBlankControls(blanks As DataSet) As Double()
+            If blanks Is Nothing OrElse blanks.Properties.Count = 0 Then
+                Return {}
+            Else
+                Dim baseline As Double() = blanks.Properties.Values.ToArray
+                ' removes outlier by quantile
+                Dim q As DataQuartile = baseline.Quartile
+
+                Return q.Outlier(samples:=baseline).normal
+            End If
+        End Function
+
         ''' <summary>
         ''' 根据扫描出来的TPA峰面积进行对标准曲线的回归建模
         ''' </summary>
@@ -180,9 +107,17 @@ Namespace MRM
         Public Iterator Function Regression(ionTPA As Dictionary(Of DataSet),
                                             calibrates As Standards(),
                                             [ISvector] As [IS](),
-                                            Optional weighted As Boolean = False) As IEnumerable(Of StandardCurve)
+                                            Optional weighted As Boolean = False,
+                                            Optional blankControls As DataSet() = Nothing,
+                                            Optional maxDeletions As Integer = 1,
+                                            Optional isWorkCurveMode As Boolean = True) As IEnumerable(Of StandardCurve)
 
             Dim [IS] As Dictionary(Of String, [IS]) = ISvector.ToDictionary(Function(i) i.ID)
+            Dim blanks As New Dictionary(Of String, DataSet)
+
+            If Not blankControls.IsNullOrEmpty Then
+                blanks = blankControls.ToDictionary(Function(metabolite) metabolite.ID)
+            End If
 
             For Each ion As Standards In calibrates
                 ' 20181106 如果没有内标，则不进行内标校正
@@ -198,6 +133,8 @@ Namespace MRM
                 Dim IsIon As [IS] = [IS].TryGetValue(ion.IS, [default]:=New [IS]) ' 尝试得到内标的数据
                 Dim CIS# = IsIon?.CIS                                             ' 内标的浓度，是不变的，所以就只有一个值
                 Dim points As New List(Of MRMStandards)
+                Dim blankPoints = blanks.TryGetValue(ion.HMDB).getBlankControls
+                Dim blankISPoints = blanks.TryGetValue(ion.IS).getBlankControls
 
                 ' 标准曲线数据
                 ' 从实验数据之中产生线性回归计算所需要的点的集合
@@ -214,23 +151,60 @@ Namespace MRM
                 Dim ISTPA As Double()
 
                 If ISA Is Nothing Then
-                    ISTPA = Nothing
+                    ISTPA = {}
                 Else
                     ISTPA = rawLevels _
                         .Select(ISA.getByLevel) _
                         .ToArray
                 End If
 
-                Dim line As PointF() = StandardCurveWorker _
-                    .CreateModelPoints(C, A, ISTPA, CIS, ion.HMDB, ion.Name, points) _
-                    .ToArray
-                Dim fit As IFitted = StandardCurve.CreateLinearRegression(line, weighted)
+                Dim line As PointF()
+                Dim fit As IFitted
+
+                If blankPoints.Length > 0 Then
+                    Dim baseline = blankPoints.Average
+                    Dim nA As Double()
+
+                    If blankISPoints.IsNullOrEmpty OrElse Not isWorkCurveMode Then
+                        nA = A.Select(Function(xa) xa - baseline).ToArray
+                    Else
+                        Dim blankISBase# = blankISPoints.Average
+
+                        ISTPA = {}
+                        nA = A _
+                            .Select(Function(xa, i) xa / ISTPA(i) - baseline / blankISBase) _
+                            .ToArray
+                    End If
+
+                    line = StandardCurveWorker _
+                       .CreateModelPoints(C, nA, ISTPA, CIS, ion.HMDB, ion.Name, points) _
+                       .ToArray
+                    fit = StandardCurve.CreateLinearRegression(line, weighted, maxDeletions)
+                Else
+                    line = StandardCurveWorker _
+                       .CreateModelPoints(C, A, ISTPA, CIS, ion.HMDB, ion.Name, points) _
+                       .ToArray
+                    fit = StandardCurve.CreateLinearRegression(line, weighted, maxDeletions)
+                End If
+
                 Dim out As New StandardCurve With {
                     .name = ion.HMDB,
                     .linear = fit,
-                    .points = points.ToArray,
+                    .points = points.PopAll,
                     .[IS] = IsIon
                 }
+                Dim fy As Func(Of Double, Double) = out.reverseModel
+                Dim ptY#
+
+                For Each pt As MRMStandards In out.points
+                    If pt.AIS > 0 Then
+                        ptY = pt.Ati / pt.AIS
+                    Else
+                        ptY = pt.Ati
+                    End If
+
+                    pt.yfit = stdNum.Round(fy(ptY), 5)
+                Next
 
                 Yield out
             Next
@@ -252,11 +226,28 @@ Namespace MRM
         ''' <returns></returns>
         <Extension>
         Private Function getByLevel(ref As Dictionary(Of String, Double)) As Func(Of KeyValuePair(Of String, Double), Double)
-            Return Function(L)
-                       Dim key As String = L.Key.ToLower
-                       Dim At_i = ref(key)
+            Dim getLevelNumber = Function(level As String) As String
+                                     Return regexp.Replace(level, "^\d+[-]", "", RegexICMul) _
+                                        .Trim("-"c, " "c) _
+                                        .Match("\d+")
+                                 End Function
+            Dim refPoints = ref _
+                .ToDictionary(Function(level)
+                                  Return "L" & getLevelNumber(level.Key)
+                              End Function,
+                              Function(level)
+                                  Return level.Value
+                              End Function)
 
-                       Return At_i
+            Return Function(L)
+                       If ref.Count = 0 Then
+                           Return 0
+                       Else
+                           Dim key As String = "L" & getLevelNumber(L.Key)
+                           Dim At_i = refPoints(key)
+
+                           Return At_i
+                       End If
                    End Function
         End Function
 
@@ -316,11 +307,17 @@ Namespace MRM
                     .Cti = Ct_i,
                     .ID = id,
                     .Name = name,
-                    .level = "L" & i
+                    .level = "L" & (i + 1)
                 }
 
                 ' 得到标准曲线之中的一个点
-                Yield New PointF(pX, pY)
+
+                ' 20200103
+                '
+                ' it's wired that axis X should be the content and 
+                ' Y Is the peak area ratio in targeted quantify 
+                ' analysis
+                Yield New PointF(pY, pX)
             Next
         End Function
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7941052ea67c0fca55b0f467b2d86f0f, Assembly\mz\Program.vb"
+﻿#Region "Microsoft.VisualBasic::7941052ea67c0fca55b0f467b2d86f0f, src\assembly\mz\Program.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f028d85bad430529b4d9ad1c36e9ba7b, MwtWinDll\MwtWinDll\MwtWin.vb"
+﻿#Region "Microsoft.VisualBasic::92f940c38cb05db58e9b5ef4739244aa, src\mzmath\MwtWinDll\MwtWinDll\MwtWin.vb"
 
     ' Author:
     ' 
@@ -73,8 +73,6 @@
     ' /********************************************************************************/
 
 #End Region
-
-
 
 Imports System.Collections.Generic
 
