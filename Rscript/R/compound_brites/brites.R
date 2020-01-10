@@ -10,6 +10,8 @@ let kegg_id as string <- [
 ];
 let brites <- lapply(kegg_id, id -> id :> brite.parse :> brite.as.table);
 
+names(brites) <- kegg_id;
+
 for(id in names(brites)) {
 	print(id);
 	
