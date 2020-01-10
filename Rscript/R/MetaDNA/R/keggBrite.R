@@ -38,23 +38,38 @@ append.KEGG_brite <- function(table, col = "KEGG", name = "*") {
         brites <- .as.list(brites);
         names(brites) <- sapply(brites, function(t) t$ID);
 
-        append.brites <- NULL;
+        append.brites <- list();
         empty <- rep("NULL", length(brites[[1]]));
+        names(empty) <- names(brites[[1]]);
+
+        i <- 1
 
         for(key in table.keggIndex) {
             r <- brites[[key]];
 
             if (is.null(r)) {
-                append.brites <- rbind(append.brites, empty);
+                append.brites[[i]] <- empty;
             } else {
-                append.brites <- rbind(append.brites, r);
+                append.brites[[i]] <- r;
             }
         }
 
-        cols <- colnames(append.brites);
+        right <- NULL;
+
+        # fix for Error in write.table(table, file = "S:\\mzCloudPlants\\MetaCluster\\DD2019041513001-<U+8336><U+6811>\\doMSMSalignment.report1_kegg_class.csv",  :
+        # unimplemented type 'list' in 'EncodeElement'
+        for(col in names(empty)) {
+            right <- cbind(right, as.vector(sapply(append.brites, function(r) r[[col]])));
+        }
+
+        append.brites <- right;
+
+        cols <- names(empty);
         cols <- sprintf("[%s].%s", brite_names[[id]], cols);
         colnames(append.brites) <- cols;
         rownames(append.brites) <- NULL;
+
+        print(head(append.brites));
 
         table <- cbind(table, append.brites);
     }
