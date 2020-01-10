@@ -24,6 +24,7 @@ cluster.cores <- function(cores = NULL) {
 .onLoad <- function(libname, pkgname) {
 
     require(VisualBasic.R);
+	require(mzkit);
 
 	global <- globalenv();
 
