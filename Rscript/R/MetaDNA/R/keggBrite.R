@@ -35,6 +35,8 @@ append.KEGG_brite <- function(table, col = "KEGG", name = "*") {
 
     for(id in names(table.list)) {
         brites <- get(id);
+        brites[, "entry"] <- NULL;
+        brites[, "name"]  <- NULL;
         brites <- .as.list(brites);
         names(brites) <- sapply(brites, function(t) t$ID);
 
@@ -48,10 +50,12 @@ append.KEGG_brite <- function(table, col = "KEGG", name = "*") {
             r <- brites[[key]];
 
             if (is.null(r)) {
-                append.brites[[i]] <- empty;
+                append.brites[[sprintf("X%s", i)]] <- empty;
             } else {
-                append.brites[[i]] <- r;
+                append.brites[[sprintf("X%s", i)]] <- r;
             }
+
+            i <- i + 1;
         }
 
         right <- NULL;
