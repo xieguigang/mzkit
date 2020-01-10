@@ -1,4 +1,4 @@
-﻿ID,class,category,subcategory,order,entry,name
+ID,class,category,subcategory,order,entry,name
 C06800,Group 1: Carcinogenic to humans,Compounds,,,C06800,Aflatoxin B1	Liver and bile duct
 C10998,Group 1: Carcinogenic to humans,Compounds,,,C10998,4-Aminobiphenyl	Urinary bladder
 C08469,Group 1: Carcinogenic to humans,Compounds,,,C08469,Aristolochic acid	Renal pelvis and ureter
@@ -55,76 +55,6 @@ C19557,Group 1: Carcinogenic to humans,Compounds,,,C19557,Treosulfan	Leukaemia a
 C06790,Group 1: Carcinogenic to humans,Compounds,,,C06790,Trichloroethene	Kidney
 C06793,Group 1: Carcinogenic to humans,Compounds,,,C06793,Vinyl chloride	Liver and bile duct
 ,Group 1: Carcinogenic to humans,Exposure circimstances / Environment,,,,"Acid mists, strong inorganic	Larynx"
-,Group 1: Carcinogenic to humans,Exposure circimstances / Environment,,,,"Aluminium production	Lung, urinary bladder"
-,Group 1: Carcinogenic to humans,Exposure circimstances / Environment,,,,Auramine production	Urinary bladder
-,Group 1: Carcinogenic to humans,Exposure circimstances / Environment,,,,"Benzidine, dyes metabolized to"
-,Group 1: Carcinogenic to humans,Exposure circimstances / Environment,,,,"Coal, indoor emissions from household combustion of	Lung"
-,Group 1: Carcinogenic to humans,Exposure circimstances / Environment,,,,Coal gasification	Lung
-,Group 1: Carcinogenic to humans,Exposure circimstances / Environment,,,,Coal-tar distillation	Skin (malignant neoplasms except melanoma)
-,Group 1: Carcinogenic to humans,Exposure circimstances / Environment,,,,Coke production	Lung
-,Group 1: Carcinogenic to humans,Exposure circimstances / Environment,,,,"Engine exhaust, diesel	Lung"
-,Group 1: Carcinogenic to humans,Exposure circimstances / Environment,,,,Ethanol in alcoholic beverages
-,Group 1: Carcinogenic to humans,Exposure circimstances / Environment,,,,Haematite mining (underground)
-,Group 1: Carcinogenic to humans,Exposure circimstances / Environment,,,,Ionizing radiation (all types)
-,Group 1: Carcinogenic to humans,Exposure circimstances / Environment,,,,Iron and steel founding (occupational exposure during)	Lung
-,Group 1: Carcinogenic to humans,Exposure circimstances / Environment,,,,Isopropyl alcohol manufacture using strong acids	Nasal cavity and paranasal sinus
-,Group 1: Carcinogenic to humans,Exposure circimstances / Environment,,,,Leather dust	Nasal cavity and paranasal sinus
-,Group 1: Carcinogenic to humans,Exposure circimstances / Environment,,,,Magenta production	Urinary bladder
-,Group 1: Carcinogenic to humans,Exposure circimstances / Environment,,,,Methoxsalen (8-methoxypsoralen) plus ultraviolet A radiation
-,Group 1: Carcinogenic to humans,Exposure circimstances / Environment,,,,Neutron radiation
-,Group 1: Carcinogenic to humans,Exposure circimstances / Environment,,,,"Painter (occupational exposure as a)	Lung, mesothelium (pleura and peritoneum), urinary bladder"
-,Group 1: Carcinogenic to humans,Exposure circimstances / Environment,,,,"Radioiodines, including iodine-131	Thyroid"
-,Group 1: Carcinogenic to humans,Exposure circimstances / Environment,,,,"Radionuclides, alpha-particle-emitting, internally deposited"
-,Group 1: Carcinogenic to humans,Exposure circimstances / Environment,,,,"Radionuclides, beta-particle-emitting, internally deposited"
-,Group 1: Carcinogenic to humans,Exposure circimstances / Environment,,,,"Rubber manufacturing industry	Stomach, lung, urinary bladder, leukaemia and/or lymphoma"
-,Group 1: Carcinogenic to humans,Exposure circimstances / Environment,,,,"Solar radiation	Skin (melanoma), skin (malignant neoplasms except melanoma)"
-,Group 1: Carcinogenic to humans,Exposure circimstances / Environment,,,,"Soot (as found in occupational exposure of chimney sweeps)	Lung, skin (malignant neoplasms except melanoma)"
-,Group 1: Carcinogenic to humans,Exposure circimstances / Environment,,,,"Ultraviolet radiation (wavelengths 100-400 nm, encompassing UVA, UVB, and UVC)"
-,Group 1: Carcinogenic to humans,Exposure circimstances / Environment,,,,"Ultraviolet-emitting tanning devices	Skin (melanoma), eye"
-,Group 1: Carcinogenic to humans,Exposure circimstances / Environment,,,,"X- and Gamma-Radiation	Salivary gland, oesophagus, stomach, colon and rectum, lung, bone, skin (malignant neoplasms except melanoma), breast, kidney, urinary bladder, brain and central nervous system, thyroid, leukaemia and/or lymphoma, multiple sites (unspecified)"
-,Group 1: Carcinogenic to humans,Infection,,,,Clonorchis sinensis (infection with)	Liver and bile duct
-,Group 1: Carcinogenic to humans,Infection,,,,"Epstein-Barr virus	Nasopharynx, leukaemia and/or lymphoma"
-,Group 1: Carcinogenic to humans,Infection,,,,"Helicobacter pylori (infection with) [GN:hpy hpj hpa]	Stomach, leukaemia and/or lymphoma"
-,Group 1: Carcinogenic to humans,Infection,,,,Hepatitis B virus (chronic infection with)	Liver and bile duct
-,Group 1: Carcinogenic to humans,Infection,,,,"Hepatitis C virus (chronic infection with)	Liver and bile duct, leukaemia and/or lymphoma"
-,Group 1: Carcinogenic to humans,Infection,,,,"Human immunodeficiency virus type 1 (infection with)	Anus, endothelium (Kaposi sarcoma), uterine cervix, eye, leukaemia and/or lymphoma"
-,Group 1: Carcinogenic to humans,Infection,,,,"Human papillomavirus types 16, 18, 31, 33, 35, 39, 45,51, 52, 56, 58, 59	Oral cavity, tonsil, pharynx, anus, vulva, vagina, uterine cervix, penis (type 16)"
-,Group 1: Carcinogenic to humans,Infection,,,,Human T-cell lymphotropic virus type I	Leukaemia and/or lymphoma
-,Group 1: Carcinogenic to humans,Infection,,,,"Kaposi sarcoma herpesvirus	Endothelium (Kaposi sarcoma), leukaemia and/or lymphoma"
-,Group 1: Carcinogenic to humans,Infection,,,,Opisthorchis viverrini (infection with)	Liver and bile duct
-,Group 1: Carcinogenic to humans,Infection,,,,Schistosoma haematobium (infection with)	Urinary bladder
-,Group 1: Carcinogenic to humans,Mixtures / Group of agents,,,,"Acetaldehyde associated with consumption of alcoholic beverages	Digestive tract, upper, oesophagus"
-,Group 1: Carcinogenic to humans,Mixtures / Group of agents,,,,Aflatoxins	Liver and bile duct
-,Group 1: Carcinogenic to humans,Mixtures / Group of agents,,,,"Aristolochic acid, plants containing	Renal pelvis and ureter"
-,Group 1: Carcinogenic to humans,Mixtures / Group of agents,,,,"Arsenic and inorganic arsenic compounds	Lung, skin (malignant neoplasms except melanoma), urinary bladder"
-,Group 1: Carcinogenic to humans,Mixtures / Group of agents,,,,Beryllium and beryllium compounds	Lung
-,Group 1: Carcinogenic to humans,Mixtures / Group of agents,,,,"Betel quid with tobacco	Oral cavity, pharynx, oesophagus"
-,Group 1: Carcinogenic to humans,Mixtures / Group of agents,,,,"Betel quid without tobacco	Oral cavity, oesophagus"
-,Group 1: Carcinogenic to humans,Mixtures / Group of agents,,,,Cadmium and cadmium compounds	Lung
-,Group 1: Carcinogenic to humans,Mixtures / Group of agents,,,,Chromium (VI) compounds	Lung
-,Group 1: Carcinogenic to humans,Mixtures / Group of agents,,,,Etoposide in combination with cisplatin and bleomycin	Leukaemia and/or lymphoma
-,Group 1: Carcinogenic to humans,Mixtures / Group of agents,,,,"Fission products, including strontium-90	Leukaemia and/or lymphoma, multiple sites (unspecified)"
-,Group 1: Carcinogenic to humans,Mixtures / Group of agents,,,,"Nickel compounds	Nasal cavity and paranasal sinus, lung"
-,Group 1: Carcinogenic to humans,Mixtures / Group of agents,,,,"Phenacetin, analgesic mixtures containing	Renal pelvis and ureter"
-,Group 1: Carcinogenic to humans,Mixtures / Group of agents,,,,Radium-224 and its decay products	Bone
-,Group 1: Carcinogenic to humans,Mixtures / Group of agents,,,,"Radium-226 and its decay products	Bone, Nasal cavity and paranasal sinus"
-,Group 1: Carcinogenic to humans,Mixtures / Group of agents,,,,"Radium-228 and its decay products	Bone, Nasal cavity and paranasal sinus"
-,Group 1: Carcinogenic to humans,Mixtures / Group of agents,,,,Radon-222 and its decay products	Lung
-,Group 1: Carcinogenic to humans,Mixtures / Group of agents,,,,Shale oils
-,Group 1: Carcinogenic to humans,Mixtures / Group of agents,,,,"Silica dust, crystalline, in the form of quartz or cristobalite	Lung"
-,Group 1: Carcinogenic to humans,Mixtures / Group of agents,,,,"Thorium-232 and its decay products	Liver and bile duct, gallbladder, leukaemia and/or lymphoma"
-,Group 1: Carcinogenic to humans,Others,,,,"Alcoholic beverages	Oral cavity, pharynx, oesophagus, colon and rectum, liver and bile duct, larynx, breast"
-,Group 1: Carcinogenic to humans,Others,,,,Areca nut
-,Group 1: Carcinogenic to humans,Others,,,,"Estrogen therapy, postmenopausal	Endometrium, ovary"
-,Group 1: Carcinogenic to humans,Others,,,,"Estrogen-progestogen menopausal therapy (combined)	Breast, endometrium"
-,Group 1: Carcinogenic to humans,Others,,,,"Estrogen-progestogen oral contraceptives (combined)	Liver and bile duct, breast, uterine cervix"
-,Group 1: Carcinogenic to humans,Others,,,,"Mineral oils, untreated or mildly treated	Skin (malignant neoplasms except melanoma)"
-,Group 1: Carcinogenic to humans,Others,,,,"MOPP and other combined chemotherapy including alkylating agents	Lung, leukaemia and/or lymphoma"
-,Group 1: Carcinogenic to humans,Others,,,,"Salted fish, Chinese-style	Nasopharynx"
-,Group 1: Carcinogenic to humans,Others,,,,"Tobacco, smokeless	Oral cavity, oesophagus, pancreas"
-,Group 1: Carcinogenic to humans,Others,,,,"Tobacco smoke,second-hand	Lung"
-,Group 1: Carcinogenic to humans,Others,,,,"Tobacco smoking	Oral cavity, pharynx, nasopharynx, oesophagus, stomach, colon and rectum, liver and bile duct, pancreas, nasal cavity and paranasal sinus, larynx, lung, uterine cervix, ovary, kidney, renal pelvis and ureter, urinary bladder, leukaemia and/or lymphoma"
-,Group 1: Carcinogenic to humans,Others,,,,"Wood dust	Nasopharynx, nasal cavity and paranasal sinus"
 C01659,Group 2A: Probably carcinogenic to humans,Compounds,,,C01659,Acrylamide
 C01661,Group 2A: Probably carcinogenic to humans,Compounds,,,C01661,Adriamycin
 C11262,Group 2A: Probably carcinogenic to humans,Compounds,,,C11262,5-Azacytidine
@@ -176,25 +106,6 @@ C14400,Group 2A: Probably carcinogenic to humans,Compounds,,,C14400,"1,2,3-Trich
 C19182,Group 2A: Probably carcinogenic to humans,Compounds,,,C19182,"Tris(2,3-dibromopropyl) phosphate"
 C19184,Group 2A: Probably carcinogenic to humans,Compounds,,,C19184,Vinyl bromide
 C19185,Group 2A: Probably carcinogenic to humans,Compounds,,,C19185,Vinyl fluoride
-,Group 2A: Probably carcinogenic to humans,Mixtures / Group of agents,,,,Androgenic steroids
-,Group 2A: Probably carcinogenic to humans,Mixtures / Group of agents,,,,alpha-Chlorinated toluenes
-,Group 2A: Probably carcinogenic to humans,Mixtures / Group of agents,,,,"Bitumens, occupational exposure to oxidized bitumens and their emissions during roofing"
-,Group 2A: Probably carcinogenic to humans,Mixtures / Group of agents,,,,Cobalt metal with tungsten carbide
-,Group 2A: Probably carcinogenic to humans,Mixtures / Group of agents,,,,"Lead compounds, inorganic"
-,Group 2A: Probably carcinogenic to humans,Mixtures / Group of agents,,,,Non-arsenical insecticides (occupational exposures in spraying and application of)
-,Group 2A: Probably carcinogenic to humans,Mixtures / Group of agents,,,,Polychlorinated biphenyls
-,Group 2A: Probably carcinogenic to humans,Exposure circimstances / Environment,,,,"Art glass, glass containers and pressed ware (manufacture of)"
-,Group 2A: Probably carcinogenic to humans,Exposure circimstances / Environment,,,,"Biomass fuel (primarily wood), indoor emissions from household combustion of"
-,Group 2A: Probably carcinogenic to humans,Exposure circimstances / Environment,,,,Carbon electrode manufacture
-,Group 2A: Probably carcinogenic to humans,Exposure circimstances / Environment,,,,"Engine exhaust, diesel	Lung"
-,Group 2A: Probably carcinogenic to humans,Exposure circimstances / Environment,,,,Hairdresser or barber (occupational exposure as a)
-,Group 2A: Probably carcinogenic to humans,Exposure circimstances / Environment,,,,Nitrate or nitrite (ingested) under conditions that result in endogenous nitrosation
-,Group 2A: Probably carcinogenic to humans,Exposure circimstances / Environment,,,,Petroleum refining (occupational exposures in)
-,Group 2A: Probably carcinogenic to humans,Exposure circimstances / Environment,,,,Shiftwork that involves circadian disruption
-,Group 2A: Probably carcinogenic to humans,Infection,,,,Human papillomavirus type 68
-,Group 2A: Probably carcinogenic to humans,Infection,,,,Malaria
-,Group 2A: Probably carcinogenic to humans,Infection,,,,Merkel cell polyomavirus (MCV)
-,Group 2A: Probably carcinogenic to humans,Others,,,,"Mate, hot"
 C19186,Group 2B: Possibly carcinogenic to humans,Compounds,,,C19186,A-alpha-C
 C00084,Group 2B: Possibly carcinogenic to humans,Compounds,,,C00084,Acetaldehyde
 C06244,Group 2B: Possibly carcinogenic to humans,Compounds,,,C06244,Acetamide
@@ -280,7 +191,6 @@ C14399,Group 2B: Possibly carcinogenic to humans,Compounds,,,C14399,"1,3-Dichlor
 C18627,Group 2B: Possibly carcinogenic to humans,Compounds,,,C18627,"1,3-Dichloropropene"
 C14430,Group 2B: Possibly carcinogenic to humans,Compounds,,,C14430,Dichlorvos
 C06772,Group 2B: Possibly carcinogenic to humans,Compounds,,,C06772,Diethanolamine
-C03690,Group 2B: Possibly carcinogenic to humans,Compounds,,,C03690,Di(2-ethylhexyl)phthalate
 C19227,Group 2B: Possibly carcinogenic to humans,Compounds,,,C19227,"1,2-Diethylhydrazine"
 C19228,Group 2B: Possibly carcinogenic to humans,Compounds,,,C19228,Diglycidyl resorcinol ether
 C19229,Group 2B: Possibly carcinogenic to humans,Compounds,,,C19229,Dihydrosafrole
@@ -434,48 +344,6 @@ C19310,Group 2B: Possibly carcinogenic to humans,Compounds,,,C19310,4-Vinylcyclo
 C19311,Group 2B: Possibly carcinogenic to humans,Compounds,,,C19311,4-Vinylcyclohexene diepoxide
 C07207,Group 2B: Possibly carcinogenic to humans,Compounds,,,C07207,Zalcitabine
 C07210,Group 2B: Possibly carcinogenic to humans,Compounds,,,C07210,Zidovudine
-,Group 2B: Possibly carcinogenic to humans,Mixtures / Group of agents,,,,"Bitumens, occupational exposure to hard bitumens and their emissions during mastic asphalt work"
-,Group 2B: Possibly carcinogenic to humans,Mixtures / Group of agents,,,,"Bitumens, occupational exposure to straight-run bitumens and their emissions during road paving"
-,Group 2B: Possibly carcinogenic to humans,Mixtures / Group of agents,,,,Chlorinated paraffins of average carbon chain length C12 and average degree of chlorination approximately 60%
-,Group 2B: Possibly carcinogenic to humans,Mixtures / Group of agents,,,,Chlorophenoxy herbicides
-,Group 2B: Possibly carcinogenic to humans,Mixtures / Group of agents,,,,Cobalt and cobalt compounds
-,Group 2B: Possibly carcinogenic to humans,Mixtures / Group of agents,,,,Cobalt metal without tungsten carbide
-,Group 2B: Possibly carcinogenic to humans,Mixtures / Group of agents,,,,Cobalt sulfate and other soluble cobalt(II) salts
-,Group 2B: Possibly carcinogenic to humans,Mixtures / Group of agents,,,,Coconut oil diethanolamine condensate
-,Group 2B: Possibly carcinogenic to humans,Mixtures / Group of agents,,,,"Fusarium moniliforme, toxins derived from (fumonisin B1, fumonisin B2, and fusarin C)"
-,Group 2B: Possibly carcinogenic to humans,Mixtures / Group of agents,,,,Hexachlorocyclohexanes
-,Group 2B: Possibly carcinogenic to humans,Mixtures / Group of agents,,,,"Magnetic fields, extremely low-frequency"
-,Group 2B: Possibly carcinogenic to humans,Mixtures / Group of agents,,,,Methylmercury compounds
-,Group 2B: Possibly carcinogenic to humans,Mixtures / Group of agents,,,,"Nickel, metallic and alloys"
-,Group 2B: Possibly carcinogenic to humans,Mixtures / Group of agents,,,,Polybrominated biphenyls
-,Group 2B: Possibly carcinogenic to humans,Mixtures / Group of agents,,,,Polychlorophenols and their sodium salts (mixed exposures)
-,Group 2B: Possibly carcinogenic to humans,Mixtures / Group of agents,,,,Progestins
-,Group 2B: Possibly carcinogenic to humans,Mixtures / Group of agents,,,,Progestogen-only contraceptives
-,Group 2B: Possibly carcinogenic to humans,Mixtures / Group of agents,,,,Talc-based body powder (perineal use of)
-,Group 2B: Possibly carcinogenic to humans,Exposure circimstances / Environment,,,,Carpentry and joinery
-,Group 2B: Possibly carcinogenic to humans,Exposure circimstances / Environment,,,,"Diesel fuel, marine"
-,Group 2B: Possibly carcinogenic to humans,Exposure circimstances / Environment,,,,Dry cleaning (occupational exposures in)
-,Group 2B: Possibly carcinogenic to humans,Exposure circimstances / Environment,,,,"Engine exhaust, gasoline"
-,Group 2B: Possibly carcinogenic to humans,Exposure circimstances / Environment,,,,Firefighter (occupational exposure as a)
-,Group 2B: Possibly carcinogenic to humans,Exposure circimstances / Environment,,,,"Fuel oils, residual (heavy)"
-,Group 2B: Possibly carcinogenic to humans,Exposure circimstances / Environment,,,,Gasoline
-,Group 2B: Possibly carcinogenic to humans,Exposure circimstances / Environment,,,,Printing processes (occupational exposures in)
-,Group 2B: Possibly carcinogenic to humans,Exposure circimstances / Environment,,,,Radiofrequency electromagnetic fields
-,Group 2B: Possibly carcinogenic to humans,Exposure circimstances / Environment,,,,Refractory ceramic fibres
-,Group 2B: Possibly carcinogenic to humans,Exposure circimstances / Environment,,,,Textilemanufacturing industry (work in)
-,Group 2B: Possibly carcinogenic to humans,Exposure circimstances / Environment,,,,Welding fumes	Eye
-,Group 2B: Possibly carcinogenic to humans,Infection,,,,BK polyomavirus (BKV)
-,Group 2B: Possibly carcinogenic to humans,Infection,,,,Human immunodeficiency virus type 2 (infection with)
-,Group 2B: Possibly carcinogenic to humans,Infection,,,,Human papillomavirus types 5 and 8 (in patients with epidermodysplasia verruciformis)
-,Group 2B: Possibly carcinogenic to humans,Infection,,,,"Human papillomavirus types 26, 53, 66, 67, 70, 73, 82"
-,Group 2B: Possibly carcinogenic to humans,Infection,,,,"Human papillomavirus types 30, 34, 69, 85, 97"
-,Group 2B: Possibly carcinogenic to humans,Infection,,,,JC polyomavirus (JCV)
-,Group 2B: Possibly carcinogenic to humans,Infection,,,,Schistosoma japonicum (infection with)
-,Group 2B: Possibly carcinogenic to humans,Others,,,,Bracken fern
-,Group 2B: Possibly carcinogenic to humans,Others,,,,Coffee (urinary bladder)
-,Group 2B: Possibly carcinogenic to humans,Others,,,,Pickled vegetables (traditional in Asia)
-,Group 2B: Possibly carcinogenic to humans,Others,,,,Special-purpose fibres such as E-glass and '475' glass fibres
-,Group 2B: Possibly carcinogenic to humans,Others,,,,Surgical implants and other foreign bodies
 C19312,Group 3: Not classifiable as to its carcinogenicity to humans,Compounds,,,C19312,Acenaphthene
 C19314,Group 3: Not classifiable as to its carcinogenicity to humans,Compounds,,,C19314,Acepyrene
 C06810,Group 3: Not classifiable as to its carcinogenicity to humans,Compounds,,,C06810,Acyclovir
@@ -572,7 +440,6 @@ C19365,Group 3: Not classifiable as to its carcinogenicity to humans,Compounds,,
 C14407,Group 3: Not classifiable as to its carcinogenicity to humans,Compounds,,,C14407,2-Chloronitrobenzene
 C19364,Group 3: Not classifiable as to its carcinogenicity to humans,Compounds,,,C19364,1-Chloro-3-nitrobenzene
 C14456,Group 3: Not classifiable as to its carcinogenicity to humans,Compounds,,,C14456,4-Chloronitrobenzene
-C19365,Group 3: Not classifiable as to its carcinogenicity to humans,Compounds,,,C19365,4-Chloro-meta-phenylenediamine
 C14506,Group 3: Not classifiable as to its carcinogenicity to humans,Compounds,,,C14506,Chlorpropham
 C07625,Group 3: Not classifiable as to its carcinogenicity to humans,Compounds,,,C07625,Chloroquine
 C19366,Group 3: Not classifiable as to its carcinogenicity to humans,Compounds,,,C19366,5-Chloro-ortho-toluidine
@@ -634,7 +501,6 @@ C13718,Group 3: Not classifiable as to its carcinogenicity to humans,Compounds,,
 C14240,Group 3: Not classifiable as to its carcinogenicity to humans,Compounds,,,C14240,Di(2-ethylhexyl) adipate
 C19400,Group 3: Not classifiable as to its carcinogenicity to humans,Compounds,,,C19400,"N,N'-Diethylthiourea"
 C19401,Group 3: Not classifiable as to its carcinogenicity to humans,Compounds,,,C19401,Dihydroaceanthrylene
-C19289,Group 3: Not classifiable as to its carcinogenicity to humans,Compounds,,,C19289,Dihydroxymethylfuratrizine
 C19402,Group 3: Not classifiable as to its carcinogenicity to humans,Compounds,,,C19402,Dimethoxane
 C19403,Group 3: Not classifiable as to its carcinogenicity to humans,Compounds,,,C19403,"3,3'-Dimethoxybenzidine-4,4'-diisocyanate"
 C19404,Group 3: Not classifiable as to its carcinogenicity to humans,Compounds,,,C19404,"4,4'-Dimethylangelicin (plus ultraviolet A radiation)"
@@ -794,7 +660,6 @@ C15713,Group 3: Not classifiable as to its carcinogenicity to humans,Compounds,,
 C19492,Group 3: Not classifiable as to its carcinogenicity to humans,Compounds,,,C19492,Nylon 6
 C19493,Group 3: Not classifiable as to its carcinogenicity to humans,Compounds,,,C19493,Oestradiol mustard
 C19494,Group 3: Not classifiable as to its carcinogenicity to humans,Compounds,,,C19494,Oxyphenbutazone
-C19288,Group 3: Not classifiable as to its carcinogenicity to humans,Compounds,,,C19288,Palygorskite (fibre < 5 micrometres)
 C06804,Group 3: Not classifiable as to its carcinogenicity to humans,Compounds,,,C06804,Paracetamol
 C08502,Group 3: Not classifiable as to its carcinogenicity to humans,Compounds,,,C08502,Parasorbic acid
 C06604,Group 3: Not classifiable as to its carcinogenicity to humans,Compounds,,,C06604,Parathion
@@ -934,67 +799,4 @@ C09981,Group 3: Not classifiable as to its carcinogenicity to humans,Compounds,,
 C19576,Group 3: Not classifiable as to its carcinogenicity to humans,Compounds,,,C19576,Zeolites (other than Erionite)
 C15232,Group 3: Not classifiable as to its carcinogenicity to humans,Compounds,,,C15232,Zineb
 C15229,Group 3: Not classifiable as to its carcinogenicity to humans,Compounds,,,C15229,Ziram
-,Group 3: Not classifiable as to its carcinogenicity to humans,Mixtures / Group of agents,,,,Arsenobetaine and other organic arsenic compounds that are not metabolized in humans
-,Group 3: Not classifiable as to its carcinogenicity to humans,Mixtures / Group of agents,,,,Bisulfites
-,Group 3: Not classifiable as to its carcinogenicity to humans,Mixtures / Group of agents,,,,Chloronitrobenzenes
-,Group 3: Not classifiable as to its carcinogenicity to humans,Mixtures / Group of agents,,,,Chromium (III) compounds
-,Group 3: Not classifiable as to its carcinogenicity to humans,Mixtures / Group of agents,,,,Crude oil
-,Group 3: Not classifiable as to its carcinogenicity to humans,Mixtures / Group of agents,,,,Hypochlorite salts
-,Group 3: Not classifiable as to its carcinogenicity to humans,Mixtures / Group of agents,,,,Iron sorbitol-citric acid complex
-,Group 3: Not classifiable as to its carcinogenicity to humans,Mixtures / Group of agents,,,,Jet fuel
-,Group 3: Not classifiable as to its carcinogenicity to humans,Mixtures / Group of agents,,,,Isopropyl oils
-,Group 3: Not classifiable as to its carcinogenicity to humans,Mixtures / Group of agents,,,,"Lead compounds, organic"
-,Group 3: Not classifiable as to its carcinogenicity to humans,Mixtures / Group of agents,,,,Mercury and inorganic mercury compounds
-,Group 3: Not classifiable as to its carcinogenicity to humans,Mixtures / Group of agents,,,,Metabisulfites
-,Group 3: Not classifiable as to its carcinogenicity to humans,Mixtures / Group of agents,,,,Nitrotoluenes
-,Group 3: Not classifiable as to its carcinogenicity to humans,Mixtures / Group of agents,,,,"Polychlorinated dibenzo-para-dioxins (other than 2,3,7,8- tetrachlorodibenzo-para-dioxin)"
-,Group 3: Not classifiable as to its carcinogenicity to humans,Mixtures / Group of agents,,,,Polychlorinated dibenzofurans
-,Group 3: Not classifiable as to its carcinogenicity to humans,Mixtures / Group of agents,,,,Selenium and selenium compounds
-,Group 3: Not classifiable as to its carcinogenicity to humans,Mixtures / Group of agents,,,,Talc not containing asbestos or asbestiform fibres
-,Group 3: Not classifiable as to its carcinogenicity to humans,Mixtures / Group of agents,,,,Tetrakis(hydroxymethyl)phosphonium salts
-,Group 3: Not classifiable as to its carcinogenicity to humans,Mixtures / Group of agents,,,,Vinylidene chloride-vinyl chloride copolymers
-,Group 3: Not classifiable as to its carcinogenicity to humans,Exposure circimstances / Environment,,,,Calcium carbide production
-,Group 3: Not classifiable as to its carcinogenicity to humans,Exposure circimstances / Environment,,,,"Electric fields, extremely low-frequency"
-,Group 3: Not classifiable as to its carcinogenicity to humans,Exposure circimstances / Environment,,,,"Electric fields, static"
-,Group 3: Not classifiable as to its carcinogenicity to humans,Exposure circimstances / Environment,,,,"Fluorides (inorganic, used in drinking-water)"
-,Group 3: Not classifiable as to its carcinogenicity to humans,Exposure circimstances / Environment,,,,Hair colouring products (personal use of)
-,Group 3: Not classifiable as to its carcinogenicity to humans,Exposure circimstances / Environment,,,,Leather goods manufacture
-,Group 3: Not classifiable as to its carcinogenicity to humans,Exposure circimstances / Environment,,,,Leather tanning and processing
-,Group 3: Not classifiable as to its carcinogenicity to humans,Exposure circimstances / Environment,,,,Lumber and sawmill industries (including logging)
-,Group 3: Not classifiable as to its carcinogenicity to humans,Exposure circimstances / Environment,,,,5-Methylangelicin plus ultraviolet A radiation
-,Group 3: Not classifiable as to its carcinogenicity to humans,Exposure circimstances / Environment,,,,Paint manufacture (occupational exposure in)
-,Group 3: Not classifiable as to its carcinogenicity to humans,Exposure circimstances / Environment,,,,Pulp and paper manufacture
-,Group 3: Not classifiable as to its carcinogenicity to humans,Infection,,,,Hepatitis D virus
-,Group 3: Not classifiable as to its carcinogenicity to humans,Infection,,,,Human papillomavirus genus beta (except types 5 and 8) and genus gamma
-,Group 3: Not classifiable as to its carcinogenicity to humans,Infection,,,,Human papillomavirus type 6 and 11
-,Group 3: Not classifiable as to its carcinogenicity to humans,Infection,,,,Human T-cell lymphotropic virus type II
-,Group 3: Not classifiable as to its carcinogenicity to humans,Infection,,,,Opisthorchis felineus (infection with)
-,Group 3: Not classifiable as to its carcinogenicity to humans,Infection,,,,Schistosoma mansoni (infection with) [GN:smm]
-,Group 3: Not classifiable as to its carcinogenicity to humans,Infection,,,,SV40 polyomavirus
-,Group 3: Not classifiable as to its carcinogenicity to humans,Others,,,,Acrylic fibres
-,Group 3: Not classifiable as to its carcinogenicity to humans,Others,,,,Acrylonitrile-butadiene-styrene copolymers
-,Group 3: Not classifiable as to its carcinogenicity to humans,Others,,,,"Anaesthetics, volatile"
-,Group 3: Not classifiable as to its carcinogenicity to humans,Others,,,,Chlorinated drinking-water
-,Group 3: Not classifiable as to its carcinogenicity to humans,Others,,,,Coal dust
-,Group 3: Not classifiable as to its carcinogenicity to humans,Others,,,,"Diesel fuels, distillate (light)"
-,Group 3: Not classifiable as to its carcinogenicity to humans,Others,,,,Flat-glass and specialty glass (manufacture of)
-,Group 3: Not classifiable as to its carcinogenicity to humans,Others,,,,Fluorescent lighting
-,Group 3: Not classifiable as to its carcinogenicity to humans,Others,,,,"Fuel oils, distillate (light)"
-,Group 3: Not classifiable as to its carcinogenicity to humans,Others,,,,"Fusarium graminearum, F. culmorum, and F. crookwellense, toxins derived from (zearalenone,deoxynivalenol, nivalenol, and fusarenone X)"
-,Group 3: Not classifiable as to its carcinogenicity to humans,Others,,,,"Fusarium sporotrichioides, toxins derived from (T-2 toxin)"
-,Group 3: Not classifiable as to its carcinogenicity to humans,Others,,,,"Glass filament, continuous"
-,Group 3: Not classifiable as to its carcinogenicity to humans,Others,,,,Insulation glass wool
-,Group 3: Not classifiable as to its carcinogenicity to humans,Others,,,,Madder root (Rubia tinctorum)
-,Group 3: Not classifiable as to its carcinogenicity to humans,Others,,,,"Magnetic fields, static"
-,Group 3: Not classifiable as to its carcinogenicity to humans,Others,,,,Mate
-,Group 3: Not classifiable as to its carcinogenicity to humans,Others,,,,Microcystis extracts
-,Group 3: Not classifiable as to its carcinogenicity to humans,Others,,,,"Mineral oils, highly-refined"
-,Group 3: Not classifiable as to its carcinogenicity to humans,Others,,,,Modacrylic fibres
-,Group 3: Not classifiable as to its carcinogenicity to humans,Others,,,,Petroleum solvents
-,Group 3: Not classifiable as to its carcinogenicity to humans,Others,,,,Printing inks
-,Group 3: Not classifiable as to its carcinogenicity to humans,Others,,,,Proflavine salts
-,Group 3: Not classifiable as to its carcinogenicity to humans,Others,,,,Rock (stone) wool
-,Group 3: Not classifiable as to its carcinogenicity to humans,Others,,,,Slag wool
-,Group 3: Not classifiable as to its carcinogenicity to humans,Others,,,,Sulfites
-,Group 3: Not classifiable as to its carcinogenicity to humans,Others,,,,Tea
 C06593,Group 4: Probably not carcinogenic to humans,Compound,,,C06593,epsilon-Caprolactam

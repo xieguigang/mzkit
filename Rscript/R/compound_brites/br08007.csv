@@ -1,4 +1,4 @@
-﻿ID,class,category,subcategory,order,entry,name
+ID,class,category,subcategory,order,entry,name
 C18498,Pesticides,Fungicides,Aliphatic nitrogen fungicides,,C18498,Cymoxanil
 C18723,Pesticides,Fungicides,Aliphatic nitrogen fungicides,,C18723,Dodine
 C18568,Pesticides,Fungicides,Aliphatic nitrogen fungicides,,C18568,Iminoctadine acetate
@@ -120,7 +120,6 @@ C18407,Pesticides,Fungicides,Organophosphorus fungicides,,C18407,Tolclofos-methy
 C18728,Pesticides,Fungicides,Organotin fungicides,,C18728,Fentin acetate
 C18729,Pesticides,Fungicides,Organotin fungicides,,C18729,Fentin hydroxide
 C18578,Pesticides,Fungicides,Pyridine fungicides,,C18578,Fluazinam
-C22042,Pesticides,Fungicides,Pyridine fungicides,,C22042,Pyribencarb
 C18804,Pesticides,Fungicides,Pyridine fungicides,,C18804,Pyrifenox
 C10914,Pesticides,Fungicides,Pyrimidine fungicides,,C10914,Cyprodinil
 C18776,Pesticides,Fungicides,Pyrimidine fungicides,,C18776,Bupirimate
@@ -136,7 +135,6 @@ C11017,Pesticides,Fungicides,Strobilurin fungicides,,C11017,Kresoxim-methyl
 C18559,Pesticides,Fungicides,Strobilurin fungicides,,C18559,Metominostrobin
 C18560,Pesticides,Fungicides,Strobilurin fungicides,,C18560,Orysastrobin
 C18561,Pesticides,Fungicides,Strobilurin fungicides,,C18561,Pyraclostrobin
-C22042,Pesticides,Fungicides,Strobilurin fungicides,,C22042,Pyribencarb
 C18562,Pesticides,Fungicides,Strobilurin fungicides,,C18562,Trifloxystrobin
 C18752,Pesticides,Fungicides,Thiazole fungicides,,C18752,Octhilinone
 C07131,Pesticides,Fungicides,Thiazole fungicides,,C07131,Thiabendazole

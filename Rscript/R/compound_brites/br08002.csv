@@ -1,4 +1,4 @@
-﻿ID,class,category,subcategory,order,entry,name
+ID,class,category,subcategory,order,entry,name
 C00058,FA  Fatty acyls,FA01 Fatty Acids and Conjugates,FA0101 Straight chain fatty acids,N/A,C00058,Formic acid
 C00033,FA  Fatty acyls,FA01 Fatty Acids and Conjugates,FA0101 Straight chain fatty acids,N/A,C00033,Acetic acid
 C00163,FA  Fatty acyls,FA01 Fatty Acids and Conjugates,FA0101 Straight chain fatty acids,N/A,C00163,Propanoic acid
@@ -95,7 +95,6 @@ C05984,FA  Fatty acyls,FA01 Fatty Acids and Conjugates,FA0105 Hydroxy fatty acid
 C02774,FA  Fatty acyls,FA01 Fatty Acids and Conjugates,FA0105 Hydroxy fatty acids,N/A,C02774,4-Hydroxybutanoic acid
 C06103,FA  Fatty acyls,FA01 Fatty Acids and Conjugates,FA0105 Hydroxy fatty acids,N/A,C06103,6-Hydroxyhexanoic acid
 C06762,FA  Fatty acyls,FA01 Fatty Acids and Conjugates,FA0105 Hydroxy fatty acids,N/A,C06762,4-Hydroxy-2-oxohexanoic acid
-C02774,FA  Fatty acyls,FA01 Fatty Acids and Conjugates,FA0105 Hydroxy fatty acids,N/A,C02774,10-Hydroxydecanoic acid
 C08317,FA  Fatty acyls,FA01 Fatty Acids and Conjugates,FA0105 Hydroxy fatty acids,N/A,C08317,12-Hydroxydodecanoic acid
 C13790,FA  Fatty acyls,FA01 Fatty Acids and Conjugates,FA0105 Hydroxy fatty acids,N/A,C13790,2S-Hydroxytetradecanoic acid
 C08285,FA  Fatty acyls,FA01 Fatty Acids and Conjugates,FA0105 Hydroxy fatty acids,N/A,C08285,"10,16-Dihydroxyhexadecanoic acid"
@@ -141,7 +140,6 @@ C12027,FA  Fatty acyls,FA01 Fatty Acids and Conjugates,FA0106 Oxo fatty acids,N/
 C00909,FA  Fatty acyls,FA01 Fatty Acids and Conjugates,FA0107 Epoxy fatty acids,N/A,C00909,"(7E,9E,11Z,14Z)-(5S,6S)-5,6-Epoxyeicosa-7,9,11,14-tetraenoic acid"
 C04594,FA  Fatty acyls,FA01 Fatty Acids and Conjugates,FA0107 Epoxy fatty acids,N/A,C04594,"(9Z)-(13S)-12,13-Epoxyoctadeca-9,11-dienoic acid"
 C04672,FA  Fatty acyls,FA01 Fatty Acids and Conjugates,FA0107 Epoxy fatty acids,N/A,C04672,"(9Z,15Z)-(13S)-12,13-Epoxyoctadeca-9,11,15-trienoic acid"
-C04834,FA  Fatty acyls,FA01 Fatty Acids and Conjugates,FA0107 Epoxy fatty acids,N/A,C04834,"(2E,6E)-(10R,11S)-10,11-Epoxy-3,7,11-trimethyltrideca-2,6-dienoic acid"
 C04849,FA  Fatty acyls,FA01 Fatty Acids and Conjugates,FA0107 Epoxy fatty acids,N/A,C04849,"(5Z,9E,14Z)-(8xi,11R,12S)-11,12-Epoxy-8-hydroxyicosa-5,9,14-trienoic acid"
 C08368,FA  Fatty acyls,FA01 Fatty Acids and Conjugates,FA0107 Epoxy fatty acids,N/A,C08368,"(9Z)-(12S,13R)-12,13-Epoxyoctadecenoic acid"
 C13792,FA  Fatty acyls,FA01 Fatty Acids and Conjugates,FA0108 Methoxy fatty acids,N/A,C13792,(5Z)-2-Methoxyhexadecenoic acid
@@ -164,8 +162,6 @@ C05520,FA  Fatty acyls,FA01 Fatty Acids and Conjugates,FA0110 Amino fatty acids,
 C05715,FA  Fatty acyls,FA01 Fatty Acids and Conjugates,FA0110 Amino fatty acids,N/A,C05715,4-Amino-4-cyanobutanoic acid
 C05717,FA  Fatty acyls,FA01 Fatty Acids and Conjugates,FA0110 Amino fatty acids,N/A,C05717,2-Amino-4-cyanobutanoic acid
 C17962,FA  Fatty acyls,FA01 Fatty Acids and Conjugates,FA0110 Amino fatty acids,N/A,C17962,(2S)-2-Amino-4-(hydroxyphosphinyl)butanoic acid
-C05715,FA  Fatty acyls,FA01 Fatty Acids and Conjugates,FA0111 Cyano fatty acids,N/A,C05715,4-Amino-4-cyanobutanoic acid
-C05717,FA  Fatty acyls,FA01 Fatty Acids and Conjugates,FA0111 Cyano fatty acids,N/A,C05717,2-Amino-4-cyanobutanoic acid
 C13800,FA  Fatty acyls,FA01 Fatty Acids and Conjugates,FA0112 Nitro fatty acids,N/A,C13800,"(9Z,12Z)-10-Nitrooctadeca-9,12-dienoic acid"
 C13958,FA  Fatty acyls,FA01 Fatty Acids and Conjugates,FA0112 Nitro fatty acids,N/A,C13958,"(9Z,12Z)-12-Nitrooctadeca-9,12-dienoic acid"
 C16593,FA  Fatty acyls,FA01 Fatty Acids and Conjugates,FA0113 Thia fatty acids,N/A,C16593,7-Mercaptoheptanoic acid
@@ -183,7 +179,6 @@ C00489,FA  Fatty acyls,FA01 Fatty Acids and Conjugates,FA0117 Dicarboxylic acids
 C02656,FA  Fatty acyls,FA01 Fatty Acids and Conjugates,FA0117 Dicarboxylic acids,N/A,C02656,Heptanedioic acid
 C02678,FA  Fatty acyls,FA01 Fatty Acids and Conjugates,FA0117 Dicarboxylic acids,N/A,C02678,Dodecanedioic acid
 C03981,FA  Fatty acyls,FA01 Fatty Acids and Conjugates,FA0117 Dicarboxylic acids,N/A,C03981,2-Hydroxybut-2-enedioic acid
-C05601,FA  Fatty acyls,FA01 Fatty Acids and Conjugates,FA0117 Dicarboxylic acids,N/A,C05601,4-Hydroxy-2-oxoheptanedioic acid
 C06201,FA  Fatty acyls,FA01 Fatty Acids and Conjugates,FA0117 Dicarboxylic acids,N/A,C06201,"2,4-Dihydroxyhept-2-enedioc acid"
 C08261,FA  Fatty acyls,FA01 Fatty Acids and Conjugates,FA0117 Dicarboxylic acids,N/A,C08261,Nonanedioic acid
 C08277,FA  Fatty acyls,FA01 Fatty Acids and Conjugates,FA0117 Dicarboxylic acids,N/A,C08277,Decanedioic acid
@@ -247,7 +242,6 @@ C01312,FA  Fatty acyls,FA03 Eicosanoids,FA0301 Prostaglandins,N/A,C01312,Prostag
 C05957,FA  Fatty acyls,FA03 Eicosanoids,FA0301 Prostaglandins,N/A,C05957,Prostaglandin J2
 C05958,FA  Fatty acyls,FA03 Eicosanoids,FA0301 Prostaglandins,N/A,C05958,delta-12-Prostaglandin J2
 C14717,FA  Fatty acyls,FA03 Eicosanoids,FA0301 Prostaglandins,N/A,C14717,"15-Deoxy-delta-12,14-Prostaglandin J2"
-C00909,FA  Fatty acyls,FA03 Eicosanoids,FA0302 Leukotrienes,N/A,C00909,Leukotriene A4
 C02165,FA  Fatty acyls,FA03 Eicosanoids,FA0302 Leukotrienes,N/A,C02165,Leukotriene B4
 C02166,FA  Fatty acyls,FA03 Eicosanoids,FA0302 Leukotrienes,N/A,C02166,Leukotriene C4
 C05951,FA  Fatty acyls,FA03 Eicosanoids,FA0302 Leukotrienes,N/A,C05951,Leukotriene D4
@@ -273,14 +267,11 @@ C14774,FA  Fatty acyls,FA03 Eicosanoids,FA0305 Hydroxy/hydroperoxyeicosatrienoic
 C14775,FA  Fatty acyls,FA03 Eicosanoids,FA0305 Hydroxy/hydroperoxyeicosatrienoic acids,N/A,C14775,"14,15-DHET"
 C14782,FA  Fatty acyls,FA03 Eicosanoids,FA0305 Hydroxy/hydroperoxyeicosatrienoic acids,N/A,C14782,"11,12,15-THETA"
 C14814,FA  Fatty acyls,FA03 Eicosanoids,FA0305 Hydroxy/hydroperoxyeicosatrienoic acids,N/A,C14814,"11,14,15-THETA"
-C05356,FA  Fatty acyls,FA03 Eicosanoids,FA0306 Hydroxy/hydroperoxyeicosatetraenoic acids,N/A,C05356,5(S)-HPETE
 C14823,FA  Fatty acyls,FA03 Eicosanoids,FA0306 Hydroxy/hydroperoxyeicosatetraenoic acids,N/A,C14823,8(S)-HPETE
 C04822,FA  Fatty acyls,FA03 Eicosanoids,FA0306 Hydroxy/hydroperoxyeicosatetraenoic acids,N/A,C04822,8(R)-HPETE
 C14821,FA  Fatty acyls,FA03 Eicosanoids,FA0306 Hydroxy/hydroperoxyeicosatetraenoic acids,N/A,C14821,9(S)-HPETE
 C14820,FA  Fatty acyls,FA03 Eicosanoids,FA0306 Hydroxy/hydroperoxyeicosatetraenoic acids,N/A,C14820,11(R)-HPETE
-C05965,FA  Fatty acyls,FA03 Eicosanoids,FA0306 Hydroxy/hydroperoxyeicosatetraenoic acids,N/A,C05965,12(S)-HPETE
 C14812,FA  Fatty acyls,FA03 Eicosanoids,FA0306 Hydroxy/hydroperoxyeicosatetraenoic acids,N/A,C14812,12(R)-HPETE
-C05966,FA  Fatty acyls,FA03 Eicosanoids,FA0306 Hydroxy/hydroperoxyeicosatetraenoic acids,N/A,C05966,15(S)-HPETE
 C04805,FA  Fatty acyls,FA03 Eicosanoids,FA0306 Hydroxy/hydroperoxyeicosatetraenoic acids,N/A,C04805,5(S)-HETE
 C14776,FA  Fatty acyls,FA03 Eicosanoids,FA0306 Hydroxy/hydroperoxyeicosatetraenoic acids,N/A,C14776,8(S)-HETE
 C14824,FA  Fatty acyls,FA03 Eicosanoids,FA0306 Hydroxy/hydroperoxyeicosatetraenoic acids,N/A,C14824,8(R)-HETE
@@ -303,7 +294,6 @@ C18176,FA  Fatty acyls,FA03 Eicosanoids,FA0307 Hydroxy/hydroperoxyeicosapentaeno
 C18177,FA  Fatty acyls,FA03 Eicosanoids,FA0307 Hydroxy/hydroperoxyeicosapentaenoic acids,N/A,C18177,18R-HEPE
 C14813,FA  Fatty acyls,FA03 Eicosanoids,FA0308 Epoxyeicosatrienoic acids,N/A,C14813,"11-Hydroxy-14,15-EETA"
 C14781,FA  Fatty acyls,FA03 Eicosanoids,FA0308 Epoxyeicosatrienoic acids,N/A,C14781,"15-Hydroxy-11,12-EETA"
-C04849,FA  Fatty acyls,FA03 Eicosanoids,FA0309 Hepoxilins,N/A,C04849,Hepoxilin A3
 C04843,FA  Fatty acyls,FA03 Eicosanoids,FA0309 Hepoxilins,N/A,C04843,Trioxilin A3
 C14808,FA  Fatty acyls,FA03 Eicosanoids,FA0309 Hepoxilins,N/A,C14808,Hepoxilin A3
 C14810,FA  Fatty acyls,FA03 Eicosanoids,FA0309 Hepoxilins,N/A,C14810,Hepoxilin B3
@@ -312,7 +302,6 @@ C14811,FA  Fatty acyls,FA03 Eicosanoids,FA0309 Hepoxilins,N/A,C14811,Trioxilin B
 C13807,FA  Fatty acyls,FA03 Eicosanoids,FA0310 Levuglandins,N/A,C13807,Levuglandin E2
 C13808,FA  Fatty acyls,FA03 Eicosanoids,FA0310 Levuglandins,N/A,C13808,Levuglandin D2
 C13809,FA  Fatty acyls,FA03 Eicosanoids,FA0311 Isoprostanes,N/A,C13809,8-Isoprostaglandin F2alpha
-C14794,FA  Fatty acyls,FA03 Eicosanoids,FA0311 Isoprostanes,N/A,C14794,"2,3-Dinor-8-iso prostaglandin F2alpha"
 C13810,FA  Fatty acyls,FA03 Eicosanoids,FA0312 Clavulones and derivatives,N/A,C13810,Clavulone I
 C13812,FA  Fatty acyls,FA03 Eicosanoids,FA0312 Clavulones and derivatives,N/A,C13812,Clavulone II
 C13813,FA  Fatty acyls,FA03 Eicosanoids,FA0312 Clavulones and derivatives,N/A,C13813,Clavulone III
@@ -320,11 +309,6 @@ C13814,FA  Fatty acyls,FA03 Eicosanoids,FA0312 Clavulones and derivatives,N/A,C1
 C13843,FA  Fatty acyls,FA03 Eicosanoids,FA0300 Other Eicosanoids,N/A,C13843,"17R,18S-Epoxy-5Z,8Z,11Z,14Z-icosatetraenoic acid"
 C18178,FA  Fatty acyls,FA04 Docosanoids,N/A,N/A,C18178,Resolvin D1
 C18179,FA  Fatty acyls,FA04 Docosanoids,N/A,N/A,C18179,Resolvin D2
-C16533,FA  Fatty acyls,FA04 Docosanoids,N/A,N/A,C16533,"(13Z,16Z)-Docosa-13,16-dienoic acid"
-C16534,FA  Fatty acyls,FA04 Docosanoids,N/A,N/A,C16534,"(13E,16E,19E)-Docosa-13,16,19-trienoic acid"
-C16527,FA  Fatty acyls,FA04 Docosanoids,N/A,N/A,C16527,"(7Z,10Z,13Z,16Z)-Docosa-7,10,13,16-tetraenoic acid"
-C16513,FA  Fatty acyls,FA04 Docosanoids,N/A,N/A,C16513,"(7Z,10Z,13Z,16Z,19Z)-Docosa-7,10,13,16,19-pentaenoic acid"
-C06429,FA  Fatty acyls,FA04 Docosanoids,N/A,N/A,C06429,"(4Z,7Z,10Z,13Z,16Z,19Z)-Docosahexaenoic acid"
 C16185,FA  Fatty acyls,FA04 Docosanoids,N/A,N/A,C16185,"(4Z,7Z,10Z,13Z,16Z,19Z)-Docosahexaenoic acid ethyl ester"
 C00823,FA  Fatty acyls,FA05 Fatty alcohols,N/A,N/A,C00823,1-Hexadecanol
 C01633,FA  Fatty acyls,FA05 Fatty alcohols,N/A,N/A,C01633,1-Decanol
@@ -513,27 +497,17 @@ C15989,FA  Fatty acyls,FA00 Other Fatty Acyls,N/A,N/A,C15989,"(9S,10S)-10-Hydrox
 C12216,FA  Fatty acyls,FA00 Other Fatty Acyls,N/A,N/A,C12216,Mycobactin S
 C01885,GL  Glycerolipids,GL01 Monoradylglycerols,GL0101 Monoacylglycerols,N/A,C01885,1-acyl-sn-glycerol
 C02112,GL  Glycerolipids,GL01 Monoradylglycerols,GL0101 Monoacylglycerols,N/A,C02112,2-acyl-sn-glycerol
-C13854,GL  Glycerolipids,GL01 Monoradylglycerols,GL0101 Monoacylglycerols,N/A,C13854,1-Dodecanoyl-sn-glycerol
-C13859,GL  Glycerolipids,GL01 Monoradylglycerols,GL0101 Monoacylglycerols,N/A,C13859,1-O-Hexadecyl-sn-glycerol
 C13860,GL  Glycerolipids,GL01 Monoradylglycerols,GL0101 Monoacylglycerols,N/A,C13860,1-O-Octadec-9-enyl glycerol
-C13856,GL  Glycerolipids,GL01 Monoradylglycerols,GL0101 Monoacylglycerols,N/A,C13856,2-Arachidonoyl-sn-glycerol
-C13857,GL  Glycerolipids,GL01 Monoradylglycerols,GL0101 Monoacylglycerols,N/A,C13857,1-Arachidonoyl-sn-glycerol
 C02773,GL  Glycerolipids,GL01 Monoradylglycerols,GL0102 Monoalkylglycerols,N/A,C02773,1-O-Alkyl-sn-glycerol
-C13858,GL  Glycerolipids,GL01 Monoradylglycerols,GL0102 Monoalkylglycerols,N/A,C13858,1-O-Octadecyl-sn-glycerol
-C13859,GL  Glycerolipids,GL01 Monoradylglycerols,GL0102 Monoalkylglycerols,N/A,C13859,1-O-Hexadecyl-sn-glycerol
 GL0103,GL  Glycerolipids,GL01 Monoradylglycerols,N/A,N/A,GL0103,Mono-(1Z-alkenyl)-glycerols
 C00165,GL  Glycerolipids,GL02 Diradylglycerols,GL0201 Diacylglycerols,N/A,C00165,Diacylglycerol
 C00641,GL  Glycerolipids,GL02 Diradylglycerols,GL0201 Diacylglycerols,N/A,C00641,"1,2-Diacyl-sn-glycerol"
-C03199,GL  Glycerolipids,GL02 Diradylglycerols,GL0201 Diacylglycerols,N/A,C03199,"1,2-Didecanoyl-sn-glycerol"
 C16667,GL  Glycerolipids,GL02 Diradylglycerols,GL0201 Diacylglycerols,N/A,C16667,"1,2-Dimyristyl-sn-glycerol"
 C06437,GL  Glycerolipids,GL02 Diradylglycerols,GL0201 Diacylglycerols,N/A,C06437,"1,3-Diacyl-sn-glycerol"
 C13861,GL  Glycerolipids,GL02 Diradylglycerols,GL0201 Diacylglycerols,N/A,C13861,1-Hexadecanoyl-2-(9Z-octadecenoyl)-sn-glycerol
 C03201,GL  Glycerolipids,GL02 Diradylglycerols,"GL0202 1-alkyl,2-acylglycerols",N/A,C03201,1-Alkyl-2-acyl-sn-glycerol
 C03820,GL  Glycerolipids,GL02 Diradylglycerols,"GL0202 1-alkyl,2-acylglycerols",N/A,C03820,1-Alkyl-2-acetyl-sn-glycerol
-C13862,GL  Glycerolipids,GL02 Diradylglycerols,"GL0202 1-alkyl,2-acylglycerols",N/A,C13862,1-O-Hexadecyl-2-(9Z-octadecenoyl)-sn-glycerol
-C13863,GL  Glycerolipids,GL02 Diradylglycerols,GL0203 Dialkylglycerols,N/A,C13863,"2,3-Di-O-phytanyl-sn-glycerol"
 C03454,GL  Glycerolipids,GL02 Diradylglycerols,GL0204 1Z-alkenylacylglycerols,N/A,C03454,1-Alkenyl-2-acyl-sn-glycerol
-C13864,GL  Glycerolipids,GL02 Diradylglycerols,GL0204 1Z-alkenylacylglycerols,N/A,C13864,1-O-(1Z-Tetradecenyl)-2-(9Z-octadecenoyl)-sn-glycerol
 C13872,GL  Glycerolipids,GL02 Diradylglycerols,GL0205 Di-glycerol tetraethers,N/A,C13872,Caldarchaeol
 C13874,GL  Glycerolipids,GL02 Diradylglycerols,GL0206 Di-glycerol tetraether glycans,N/A,C13874,Gentiobiosyl-caldarchaeol
 GL0207,GL  Glycerolipids,GL02 Diradylglycerols,N/A,N/A,GL0207,"1-acyl,2-alkylglycerols"
@@ -842,7 +816,6 @@ C06127,SP  Sphingolipids,SP06 Acidic glycosphingolipids,SP0602 Sulfoglycosphingo
 G12554,SP  Sphingolipids,SP06 Acidic glycosphingolipids,SP0603 Glucuronosphingolipids,N/A,G12554,GlcA-beta1->1'Cer
 SP0604,SP  Sphingolipids,SP06 Acidic glycosphingolipids,N/A,N/A,SP0604,Phosphoglycosphingolipids
 SP0600,SP  Sphingolipids,SP06 Acidic glycosphingolipids,N/A,N/A,SP0600,Other Acidic glycosphingolipids
-C01747,SP  Sphingolipids,SP07 Basic glycosphingolipids,N/A,N/A,C01747,Psychosine
 C02744,SP  Sphingolipids,SP08 Amphoteric glycosphingolipids,N/A,N/A,C02744,Psychosine sulfate
 C13937,SP  Sphingolipids,SP08 Amphoteric glycosphingolipids,N/A,N/A,C13937,Cholinephosphorylmannosylneogalabiaosylceramide
 C13938,SP  Sphingolipids,SP08 Amphoteric glycosphingolipids,N/A,N/A,C13938,Cholinephosphorylneogalatriaosylceramide
@@ -896,7 +869,6 @@ C02530,ST  Sterol lipids,ST01 Sterols,ST0102 Cholesteryl esters,N/A,C02530,Chole
 C11251,ST  Sterol lipids,ST01 Sterols,ST0102 Cholesteryl esters,N/A,C11251,Cholesteryl palmitate
 C15441,ST  Sterol lipids,ST01 Sterols,ST0102 Cholesteryl esters,N/A,C15441,Cholesteryl linoleate
 C01694,ST  Sterol lipids,ST01 Sterols,ST0103 Ergosterols and C24-methyl derivatives,N/A,C01694,Ergosterol
-C04525,ST  Sterol lipids,ST01 Sterols,ST0103 Ergosterols and C24-methyl derivatives,N/A,C04525,Fecosterol
 C01789,ST  Sterol lipids,ST01 Sterols,ST0103 Ergosterols and C24-methyl derivatives,N/A,C01789,Campesterol
 C08813,ST  Sterol lipids,ST01 Sterols,ST0103 Ergosterols and C24-methyl derivatives,N/A,C08813,Brassicasterol
 C15781,ST  Sterol lipids,ST01 Sterols,ST0103 Ergosterols and C24-methyl derivatives,N/A,C15781,24-Methylenecholesterol
@@ -943,7 +915,6 @@ C08810,ST  Sterol lipids,ST01 Sterols,ST0104 Stigmasterols and C24-ethyl derivat
 C08816,ST  Sterol lipids,ST01 Sterols,ST0104 Stigmasterols and C24-ethyl derivatives,N/A,C08816,Cyasterone
 C15782,ST  Sterol lipids,ST01 Sterols,ST0104 Stigmasterols and C24-ethyl derivatives,N/A,C15782,delta7-Avenasterol
 C15783,ST  Sterol lipids,ST01 Sterols,ST0104 Stigmasterols and C24-ethyl derivatives,N/A,C15783,5-Dehydroavenasterol
-C11523,ST  Sterol lipids,ST01 Sterols,ST0104 Stigmasterols and C24-ethyl derivatives,N/A,C11523,24-Ethylidene lophenol
 ST0105,ST  Sterol lipids,ST01 Sterols,N/A,N/A,ST0105,C24-propyl sterols and derivatives
 ST0106,ST  Sterol lipids,ST01 Sterols,N/A,N/A,ST0106,Gorgosterols and derivatives
 ST0107,ST  Sterol lipids,ST01 Sterols,N/A,N/A,ST0107,Furostanols and derivatives
@@ -1091,9 +1062,6 @@ C12888,ST  Sterol lipids,ST02 Steroids,"ST0203 C21 steroids (gluco/mineralocorti
 C13037,ST  Sterol lipids,ST02 Steroids,"ST0203 C21 steroids (gluco/mineralocorticoids, progestogens) and derivatives",N/A,C13037,Lynestrenol
 C13358,ST  Sterol lipids,ST02 Steroids,"ST0203 C21 steroids (gluco/mineralocorticoids, progestogens) and derivatives",N/A,C13358,Hydrocortisone butyrate propionate
 C13422,ST  Sterol lipids,ST02 Steroids,"ST0203 C21 steroids (gluco/mineralocorticoids, progestogens) and derivatives",N/A,C13422,Hydrocortisone caproate
-C01694,ST  Sterol lipids,ST03 Secosteroids,ST0301 Vitamin D2 and derivatives,N/A,C01694,Ergosterol
-C04416,ST  Sterol lipids,ST03 Secosteroids,ST0301 Vitamin D2 and derivatives,N/A,C04416,"5alpha-Ergosta-7,22-diene-3beta,5-diol"
-C05440,ST  Sterol lipids,ST03 Secosteroids,ST0301 Vitamin D2 and derivatives,N/A,C05440,"Ergosta-5,7,22,24(28)-tetraen-3beta-ol"
 C05441,ST  Sterol lipids,ST03 Secosteroids,ST0301 Vitamin D2 and derivatives,N/A,C05441,Vitamin D2
 C06957,ST  Sterol lipids,ST03 Secosteroids,ST0301 Vitamin D2 and derivatives,N/A,C06957,Dihydrotachysterol
 C08127,ST  Sterol lipids,ST03 Secosteroids,ST0301 Vitamin D2 and derivatives,N/A,C08127,Paricalcitol
@@ -1145,38 +1113,10 @@ ST0405,ST  Sterol lipids,ST04 Bile acids and derivatives,N/A,N/A,ST0405,"C22 bil
 ST0406,ST  Sterol lipids,ST04 Bile acids and derivatives,N/A,N/A,ST0406,"C23 bile acids, alcohols, and derivatives"
 ST0407,ST  Sterol lipids,ST04 Bile acids and derivatives,N/A,N/A,ST0407,"C25 bile acids, alcohols, and derivatives"
 ST0408,ST  Sterol lipids,ST04 Bile acids and derivatives,N/A,N/A,ST0408,"C29 bile acids, alcohols, and derivatives"
-C04300,ST  Sterol lipids,ST05 Steroid conjugates,ST0501 Glucuronides,N/A,C04300,Estradiol-17alpha 3-D-glucuronoside
-C04806,ST  Sterol lipids,ST05 Steroid conjugates,ST0501 Glucuronides,N/A,C04806,17alpha-(N-Acetyl-D-glucosaminyl)-estradiol 3-D-glucuronoside
-C05503,ST  Sterol lipids,ST05 Steroid conjugates,ST0501 Glucuronides,N/A,C05503,17beta-Estradiol 3-(beta-D-glucuronide)
-C05504,ST  Sterol lipids,ST05 Steroid conjugates,ST0501 Glucuronides,N/A,C05504,"16alpha,17beta-Estriol 16-(beta-D-glucuronide)"
-C11131,ST  Sterol lipids,ST05 Steroid conjugates,ST0501 Glucuronides,N/A,C11131,2-Methoxy-estradiol-17beta 3-glucuronide
-C11132,ST  Sterol lipids,ST05 Steroid conjugates,ST0501 Glucuronides,N/A,C11132,2-Methoxyestrone 3-glucuronide
-C11133,ST  Sterol lipids,ST05 Steroid conjugates,ST0501 Glucuronides,N/A,C11133,Estrone 3-glucuronide
-C11134,ST  Sterol lipids,ST05 Steroid conjugates,ST0501 Glucuronides,N/A,C11134,Testosterone glucuronide
-C11135,ST  Sterol lipids,ST05 Steroid conjugates,ST0501 Glucuronides,N/A,C11135,Androsterone 3-glucuronide
 C11136,ST  Sterol lipids,ST05 Steroid conjugates,ST0501 Glucuronides,N/A,C11136,Etiocholan-3alpha-ol-17-one 3-glucuronide
-C11237,ST  Sterol lipids,ST05 Steroid conjugates,ST0501 Glucuronides,N/A,C11237,17beta-Estradiol 17-(beta-D-glucuronide)
 C11246,ST  Sterol lipids,ST05 Steroid conjugates,ST0501 Glucuronides,N/A,C11246,6alpha-Glucuronosylhyodeoxycholate
-C11288,ST  Sterol lipids,ST05 Steroid conjugates,ST0501 Glucuronides,N/A,C11288,"16alpha,17beta-Estriol 3-(beta-D-glucuronide)"
-C11289,ST  Sterol lipids,ST05 Steroid conjugates,ST0501 Glucuronides,N/A,C11289,17beta-Estradiol 3-sulfate-17-(beta-D-glucuronide)
-C11346,ST  Sterol lipids,ST05 Steroid conjugates,ST0501 Glucuronides,N/A,C11346,"16alpha,17beta-Estriol 17-(beta-D-glucuronide)"
-C02538,ST  Sterol lipids,ST05 Steroid conjugates,ST0502 Sulfates,N/A,C02538,Estrone 3-sulfate
-C02822,ST  Sterol lipids,ST05 Steroid conjugates,ST0502 Sulfates,N/A,C02822,Cortisol 21-sulfate
-C03642,ST  Sterol lipids,ST05 Steroid conjugates,ST0502 Sulfates,N/A,C03642,Taurolithocholate sulfate
-C04555,ST  Sterol lipids,ST05 Steroid conjugates,ST0502 Sulfates,N/A,C04555,3beta-Hydroxyandrost-5-en-17-one 3-sulfate
 C05468,ST  Sterol lipids,ST05 Steroid conjugates,ST0502 Sulfates,N/A,C05468,5beta-Cyprinolsulfate
-C08357,ST  Sterol lipids,ST05 Steroid conjugates,ST0502 Sulfates,N/A,C08357,Estradiol-17beta 3-sulfate
-C08358,ST  Sterol lipids,ST05 Steroid conjugates,ST0502 Sulfates,N/A,C08358,2-Methoxyestrone 3-sulfate
-C08359,ST  Sterol lipids,ST05 Steroid conjugates,ST0502 Sulfates,N/A,C08359,2-Methoxyestradiol-17beta 3-sulfate
-C11289,ST  Sterol lipids,ST05 Steroid conjugates,ST0502 Sulfates,N/A,C11289,17beta-Estradiol 3-sulfate-17-(beta-D-glucuronide)
-C01921,ST  Sterol lipids,ST05 Steroid conjugates,ST0503 Glycine conjugates,N/A,C01921,Glycocholate
-C05464,ST  Sterol lipids,ST05 Steroid conjugates,ST0503 Glycine conjugates,N/A,C05464,Glycodeoxycholate
-C11301,ST  Sterol lipids,ST05 Steroid conjugates,ST0503 Glycine conjugates,N/A,C11301,Sulfoglycolithocholate
-C02592,ST  Sterol lipids,ST05 Steroid conjugates,ST0504 Taurine conjugates,N/A,C02592,Taurolithocholate
-C03642,ST  Sterol lipids,ST05 Steroid conjugates,ST0504 Taurine conjugates,N/A,C03642,Taurolithocholate sulfate
-C05122,ST  Sterol lipids,ST05 Steroid conjugates,ST0504 Taurine conjugates,N/A,C05122,Taurocholate
 C05463,ST  Sterol lipids,ST05 Steroid conjugates,ST0504 Taurine conjugates,N/A,C05463,Taurodeoxycholate
-C05465,ST  Sterol lipids,ST05 Steroid conjugates,ST0504 Taurine conjugates,N/A,C05465,Taurochenodeoxycholate
 ST00,ST  Sterol lipids,N/A,N/A,N/A,ST00,Other Sterol lipids
 C00129,PR  Prenol lipids,PR01 Isoprenoids,PR0101 C5 isoprenoids (hemiterpenes),N/A,C00129,Isopentenyl diphosphate
 C00235,PR  Prenol lipids,PR01 Isoprenoids,PR0101 C5 isoprenoids (hemiterpenes),N/A,C00235,Dimethylallyl diphosphate
@@ -1344,7 +1284,6 @@ C11338,PR  Prenol lipids,PR01 Isoprenoids,PR0102 C10 isoprenoids (monoterpenes),
 C02344,PR  Prenol lipids,PR01 Isoprenoids,PR0102 C10 isoprenoids (monoterpenes),PR010212 Bicyclic monoterpenoids,C02344,(-)-endo-Fenchol
 C16777,PR  Prenol lipids,PR01 Isoprenoids,PR0102 C10 isoprenoids (monoterpenes),PR010212 Bicyclic monoterpenoids,C16777,Sabinene
 C02462,PR  Prenol lipids,PR01 Isoprenoids,PR0102 C10 isoprenoids (monoterpenes),PR010212 Bicyclic monoterpenoids,C02462,Sabinene hydrate
-C02213,PR  Prenol lipids,PR01 Isoprenoids,PR0102 C10 isoprenoids (monoterpenes),PR010212 Bicyclic monoterpenoids,C02213,(+)-cis-Sabinol
 C01868,PR  Prenol lipids,PR01 Isoprenoids,PR0102 C10 isoprenoids (monoterpenes),PR010212 Bicyclic monoterpenoids,C01868,(+)-Sabinone
 C09880,PR  Prenol lipids,PR01 Isoprenoids,PR0102 C10 isoprenoids (monoterpenes),PR010212 Bicyclic monoterpenoids,C09880,alpha-Pinene
 C06306,PR  Prenol lipids,PR01 Isoprenoids,PR0102 C10 isoprenoids (monoterpenes),PR010212 Bicyclic monoterpenoids,C06306,(+)-alpha-Pinene
@@ -1512,7 +1451,6 @@ PR010384,PR  Prenol lipids,PR01 Isoprenoids,PR0103 C15 isoprenoids (sesquiterpen
 PR010385,PR  Prenol lipids,PR01 Isoprenoids,PR0103 C15 isoprenoids (sesquiterpenes),N/A,PR010385,Rotundane sesquiterpenoids
 C09740,PR  Prenol lipids,PR01 Isoprenoids,PR0103 C15 isoprenoids (sesquiterpenes),PR010386 Thujopsane sesquiterpenoids,C09740,Thujopsene
 PR010387,PR  Prenol lipids,PR01 Isoprenoids,PR0103 C15 isoprenoids (sesquiterpenes),N/A,PR010387,Bourbonane sesquiterpenoids
-C09723,PR  Prenol lipids,PR01 Isoprenoids,PR0103 C15 isoprenoids (sesquiterpenes),PR010388 Gymnomitrane sesquiterpenoids,C09723,beta-Selinene
 PR010389,PR  Prenol lipids,PR01 Isoprenoids,PR0103 C15 isoprenoids (sesquiterpenes),N/A,PR010389,Other sesquiterpenoids
 C00353,PR  Prenol lipids,PR01 Isoprenoids,PR0104 C20 isoprenoids (diterpenes),PR010401 Acyclic diterpenoids,C00353,Geranylgeranyl diphosphate
 C01389,PR  Prenol lipids,PR01 Isoprenoids,PR0104 C20 isoprenoids (diterpenes),PR010401 Acyclic diterpenoids,C01389,Phytol
@@ -1645,7 +1583,6 @@ C07601,PR  Prenol lipids,PR01 Isoprenoids,PR0104 C20 isoprenoids (diterpenes),PR
 C07602,PR  Prenol lipids,PR01 Isoprenoids,PR0104 C20 isoprenoids (diterpenes),PR010454 Ginkgolides and Bilobalides,C07602,Ginkgolide B
 C07603,PR  Prenol lipids,PR01 Isoprenoids,PR0104 C20 isoprenoids (diterpenes),PR010454 Ginkgolides and Bilobalides,C07603,Ginkgolide C
 C07604,PR  Prenol lipids,PR01 Isoprenoids,PR0104 C20 isoprenoids (diterpenes),PR010454 Ginkgolides and Bilobalides,C07604,Ginkgolide J
-C11875,PR  Prenol lipids,PR01 Isoprenoids,PR0104 C20 isoprenoids (diterpenes),PR010454 Ginkgolides and Bilobalides,C11875,ent-7alpha-Hydroxykaur-16-en-19-oic acid
 PR010455,PR  Prenol lipids,PR01 Isoprenoids,PR0104 C20 isoprenoids (diterpenes),N/A,PR010455,Other diterpenoids
 C04217,PR  Prenol lipids,PR01 Isoprenoids,PR0105 C25 isoprenoids (sesterterpenes),PR010501 Acyclic sesterterpenoids,C04217,all-trans-Pentaprenyl diphosphate
 C17435,PR  Prenol lipids,PR01 Isoprenoids,PR0105 C25 isoprenoids (sesterterpenes),PR010501 Acyclic sesterterpenoids,C17435,"di-trans,poly-cis-Pentaprenyl diphosphate"
@@ -1905,9 +1842,7 @@ C06024,SL  Saccharolipids,SL02 Acylaminosugar glycans,N/A,N/A,C06024,KDO-lipid I
 C06025,SL  Saccharolipids,SL02 Acylaminosugar glycans,N/A,N/A,C06025,KDO2-lipid IV(A)
 C06026,SL  Saccharolipids,SL02 Acylaminosugar glycans,N/A,N/A,C06026,KDO2-lipid A
 C06251,SL  Saccharolipids,SL02 Acylaminosugar glycans,N/A,N/A,C06251,Lauroyl-KDO2-lipid IV(A)
-C04218,SL  Saccharolipids,SL03 Acyltrehaloses,N/A,N/A,C04218,"alpha,alpha'-Trehalose 6-mycolate"
 C04265,SL  Saccharolipids,SL03 Acyltrehaloses,N/A,N/A,C04265,"alpha,alpha'-Trehalose 6-palmitate"
-C04465,SL  Saccharolipids,SL03 Acyltrehaloses,N/A,N/A,C04465,"alpha,alpha'-Trehalose 6,6'-bismycolate"
 SL04,SL  Saccharolipids,N/A,N/A,N/A,SL04,Acyltrehalose glycans
 SL05,SL  Saccharolipids,N/A,N/A,N/A,SL05,Other acyl sugars
 SL00,SL  Saccharolipids,N/A,N/A,N/A,SL00,Other Saccharolipids
@@ -2042,7 +1977,6 @@ C16307,PK  Polyketides,PK12 Flavonoids,PK1201 Anthocyanidins,N/A,C16307,Delphini
 C16312,PK  Polyketides,PK12 Flavonoids,PK1201 Anthocyanidins,N/A,C16312,Delphin
 C16313,PK  Polyketides,PK12 Flavonoids,PK1201 Anthocyanidins,N/A,C16313,Delphinidin 3-glucoside 5-caffoyl-glucoside
 C16314,PK  Polyketides,PK12 Flavonoids,PK1201 Anthocyanidins,N/A,C16314,"Delphinidin 3,5,3'-triglucoside"
-C16315,PK  Polyketides,PK12 Flavonoids,PK1201 Anthocyanidins,N/A,C16315,Tulipanin
 C16351,PK  Polyketides,PK12 Flavonoids,PK1201 Anthocyanidins,N/A,C16351,Delphinidin 3-O-beta-D-glucoside 5-O-(6-coumaroyl-beta-D-glucoside)
 C16367,PK  Polyketides,PK12 Flavonoids,PK1201 Anthocyanidins,N/A,C16367,Delphinidin 3-O-(6-caffeoyl-beta-D-glucoside)
 C16370,PK  Polyketides,PK12 Flavonoids,PK1201 Anthocyanidins,N/A,C16370,Delphinidin 3-(6-p-coumaroyl)glucoside

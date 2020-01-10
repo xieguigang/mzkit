@@ -1,4 +1,4 @@
-﻿ID,class,category,subcategory,order,entry,name
+ID,class,category,subcategory,order,entry,name
 C07473,Fungal toxins,Mushroom toxins,Alkaloids,,C07473,Muscarine
 C08311,Fungal toxins,Mushroom toxins,Alkaloids,,C08311,Muscimol
 C19959,Fungal toxins,Mushroom toxins,Alkaloids,,C19959,Orellanine
@@ -235,7 +235,6 @@ C20016,Marine biotoxins,Neurotoxic Shellfish Poison; NSP,Cyclic polyethers,,C200
 C16855,Marine biotoxins,Paralytic shellfish poisoning; PSP,Carbamate derivatives,,C16855,Gonyautoxin 1
 C16856,Marine biotoxins,Paralytic shellfish poisoning; PSP,Carbamate derivatives,,C16856,Gonyautoxin 2
 C17208,Marine biotoxins,Paralytic shellfish poisoning; PSP,Carbamate derivatives,,C17208,Neosaxitoxin
-C13757,Marine biotoxins,Paralytic shellfish poisoning; PSP,Carbamate derivatives,,C13757,Saxitoxin
 C20021,Marine biotoxins,Paralytic shellfish poisoning; PSP,Decarbamoyl derivatives,,C20021,Decarbamoylsaxitoxin
 C20022,Marine biotoxins,Paralytic shellfish poisoning; PSP,Decarbamoyl derivatives,,C20022,Decarbamoylgonyautoxin 1
 C20018,Marine biotoxins,Paralytic shellfish poisoning; PSP,N-Sulfo-carbamoyl derivatives,,C20018,Gonyautoxin 5

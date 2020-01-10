@@ -1,4 +1,4 @@
-﻿ID,class,category,subcategory,order,entry,name
+ID,class,category,subcategory,order,entry,name
 C00058,Organic acids,Carboxylic acids [Fig],Monocarboxylic acids,,C00058,Formate; Methanoate
 C00033,Organic acids,Carboxylic acids [Fig],Monocarboxylic acids,,C00033,Acetate; Ethanoate
 C00163,Organic acids,Carboxylic acids [Fig],Monocarboxylic acids,,C00163,Propionate; Propanoate
@@ -39,9 +39,6 @@ C00149,Organic acids,Carboxylic acids [Fig],Hydroxycarboxylic acids,,C00149,Mala
 C01013,Organic acids,Carboxylic acids [Fig],Hydroxycarboxylic acids,,C01013,3-Hydroxypropanoate
 C01089,Organic acids,Carboxylic acids [Fig],Hydroxycarboxylic acids,,C01089,(R)-3-Hydroxybutanoate
 C00989,Organic acids,Carboxylic acids [Fig],Hydroxycarboxylic acids,,C00989,4-Hydroxybutanoate
-C00246,Lipids,Fatty acids [Fig],Saturated fatty acids,,C00246,Butyric acid (4:0)
-C01585,Lipids,Fatty acids [Fig],Saturated fatty acids,,C01585,Caproic acid (6:0)
-C06423,Lipids,Fatty acids [Fig],Saturated fatty acids,,C06423,Caprylic acid (8:0)
 C01571,Lipids,Fatty acids [Fig],Saturated fatty acids,,C01571,Capric acid (10:0)
 C02679,Lipids,Fatty acids [Fig],Saturated fatty acids,,C02679,Lauric acid (12:0)
 C06424,Lipids,Fatty acids [Fig],Saturated fatty acids,,C06424,Myristic acid (14:0)
@@ -354,8 +351,6 @@ C03145,Peptides,Amino acids,Other amino acids [Fig],,C03145,N-Formylmethionine
 C00189,Peptides,Amines,Biogenic amines [Fig],,C00189,Ethanolamine
 C01678,Peptides,Amines,Biogenic amines [Fig],,C01678,Cysteamine
 C03194,Peptides,Amines,Biogenic amines [Fig],,C03194,Aminopropanol
-C00099,Peptides,Amines,Biogenic amines [Fig],,C00099,beta-Alanine
-C00334,Peptides,Amines,Biogenic amines [Fig],,C00334,gamma-Aminobutyric acid (GABA)
 C00134,Peptides,Amines,Biogenic amines [Fig],,C00134,Putrescine
 C00388,Peptides,Amines,Biogenic amines [Fig],,C00388,Histamine
 C03758,Peptides,Amines,Biogenic amines [Fig],,C03758,Dopamine
@@ -389,8 +384,6 @@ C00010,Vitamins and Cofactors,Cofactors,Coenzymes [Fig],,C00010,CoA
 C00018,Vitamins and Cofactors,Cofactors,Coenzymes [Fig],,C00018,PLP
 C00101,Vitamins and Cofactors,Cofactors,Coenzymes [Fig],,C00101,THF
 C00194,Vitamins and Cofactors,Cofactors,Coenzymes [Fig],,C00194,Cobamamide
-C00002,Vitamins and Cofactors,Cofactors,Coenzymes [Fig],,C00002,ATP
-C00063,Vitamins and Cofactors,Cofactors,Coenzymes [Fig],,C00063,CTP
 C00019,Vitamins and Cofactors,Cofactors,Coenzymes [Fig],,C00019,SAM
 C00029,Vitamins and Cofactors,Cofactors,Coenzymes [Fig],,C00029,UDP-glucose
 C04628,Vitamins and Cofactors,Cofactors,Coenzymes [Fig],,C04628,Coenzyme B
@@ -559,53 +552,23 @@ C00306,Hormones and transmitters,Peptide hormones,Bradykinin [KO:K03898],,C00306
 C18188,Hormones and transmitters,Peptide hormones,Leptin [KO:K05424],,C18188,Leptin
 C18189,Hormones and transmitters,Peptide hormones,Adiponectin [KO:K07296],,C18189,Adiponectin
 C18190,Hormones and transmitters,Peptide hormones,Resistin [KO:K13438],,C18190,Resistin
-C00280,Hormones and transmitters,Steroid hormones,Androgens,,C00280,Androstenedione
 C05291,Hormones and transmitters,Steroid hormones,Androgens,,C05291,7alpha-Hydroxytestosterone
-C00535,Hormones and transmitters,Steroid hormones,Androgens,,C00535,Testosterone
-C01227,Hormones and transmitters,Steroid hormones,Androgens,,C01227,Dehydroepiandrosterone
-C03917,Hormones and transmitters,Steroid hormones,Androgens,,C03917,Dihydrotestosterone
 C04555,Hormones and transmitters,Steroid hormones,Androgens,,C04555,Dehydroepiandrosterone sulfate
 C05294,Hormones and transmitters,Steroid hormones,Androgens,,C05294,19-Hydroxytestosterone
-C00468,Hormones and transmitters,Steroid hormones,Estrogens,,C00468,Estrone
-C00951,Hormones and transmitters,Steroid hormones,Estrogens,,C00951,Estradiol-17beta
 C02538,Hormones and transmitters,Steroid hormones,Estrogens,,C02538,Estrone 3-sulfate
-C05141,Hormones and transmitters,Steroid hormones,Estrogens,,C05141,Estriol
 C05300,Hormones and transmitters,Steroid hormones,Estrogens,,C05300,16alpha-Hydroxyestrone
-C00410,Hormones and transmitters,Steroid hormones,Progestagens,,C00410,Progesterone
 C01176,Hormones and transmitters,Steroid hormones,Progestagens,,C01176,17alpha-Hydroxyprogesterone
-C01953,Hormones and transmitters,Steroid hormones,Progestagens,,C01953,Pregnenolone
 C05138,Hormones and transmitters,Steroid hormones,Progestagens,,C05138,17alpha-Hydroxypregnenolone
-C00735,Hormones and transmitters,Steroid hormones,Glucocorticoids,,C00735,Cortisol
-C00762,Hormones and transmitters,Steroid hormones,Glucocorticoids,,C00762,Cortisone
 C05488,Hormones and transmitters,Steroid hormones,Glucocorticoids,,C05488,11-Deoxycortisol
 C05470,Hormones and transmitters,Steroid hormones,Glucocorticoids,,C05470,Tetrahydrocortisone
 C05497,Hormones and transmitters,Steroid hormones,Glucocorticoids,,C05497,21-Deoxycortisol
 C01124,Hormones and transmitters,Steroid hormones,Mineralocorticoids,,C01124,18-Hydroxycorticosterone
-C01780,Hormones and transmitters,Steroid hormones,Mineralocorticoids,,C01780,Aldosterone
-C02140,Hormones and transmitters,Steroid hormones,Mineralocorticoids,,C02140,Corticosterone
-C03205,Hormones and transmitters,Steroid hormones,Mineralocorticoids,,C03205,11-Deoxycorticosterone
 C05490,Hormones and transmitters,Steroid hormones,Mineralocorticoids,,C05490,11-Dehydrocorticosterone
 C01673,Hormones and transmitters,Steroid hormones,Others,,C01673,Calcitriol (Vitamin D)
-C00477,Hormones and transmitters,Steroid hormones,Others,,C00477,Ecdysone
 C01598,Hormones and transmitters,Other hormones,Melatonin,,C01598,Melatonin
-C01829,Hormones and transmitters,Other hormones,Thyroid hormones,,C01829,Thyroxine
-C02465,Hormones and transmitters,Other hormones,Thyroid hormones,,C02465,Triiodothyronine
 C00788,Hormones and transmitters,Other hormones,Adrenalines,,C00788,Adrenaline
 C00547,Hormones and transmitters,Other hormones,Adrenalines,,C00547,Noradrenaline
-C03758,Hormones and transmitters,Other hormones,Dopamine,,C03758,Dopamine
-C00388,Hormones and transmitters,Other hormones,Histamine,,C00388,Histamine
 C01996,Hormones and transmitters,Neurotransmitters [Fig],Acetylcholine,,C01996,Acetylcholine
-C00037,Hormones and transmitters,Neurotransmitters [Fig],Amino acids,,C00037,Glycine
-C00049,Hormones and transmitters,Neurotransmitters [Fig],Amino acids,,C00049,Aspartate
-C00025,Hormones and transmitters,Neurotransmitters [Fig],Amino acids,,C00025,Glutamate
-C00334,Hormones and transmitters,Neurotransmitters [Fig],Amino acids,,C00334,GABA
-C00355,Hormones and transmitters,Neurotransmitters [Fig],Amino acids,,C00355,Dopa
-C01829,Hormones and transmitters,Neurotransmitters [Fig],Amino acids,,C01829,Thyroxine
-C03758,Hormones and transmitters,Neurotransmitters [Fig],Biogenic amines,,C03758,Dopamine
-C00788,Hormones and transmitters,Neurotransmitters [Fig],Biogenic amines,,C00788,Epinephrine; Adrenaline
-C00547,Hormones and transmitters,Neurotransmitters [Fig],Biogenic amines,,C00547,Norepinephrine; Noradrenaline
-C00780,Hormones and transmitters,Neurotransmitters [Fig],Biogenic amines,,C00780,Serotonin
-C00388,Hormones and transmitters,Neurotransmitters [Fig],Biogenic amines,,C00388,Histamine
 C05551,Antibiotics,beta-Lactams [Fig],Penams,,C05551,Penicillin G
 C06574,Antibiotics,beta-Lactams [Fig],Penams,,C06574,Ampicillin
 C00916,Antibiotics,beta-Lactams [Fig],Cephems,,C00916,Cephalosporin C

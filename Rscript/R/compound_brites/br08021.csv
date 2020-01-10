@@ -1,4 +1,4 @@
-﻿ID,class,category,subcategory,order,entry,name
+ID,class,category,subcategory,order,entry,name
 C06186,O-glycosides,Phenolic glycosides,N/A,N/A,C06186,Arbutin
 C01451,O-glycosides,Phenolic glycosides,N/A,N/A,C01451,Salicin
 C06188,O-glycosides,Phenolic glycosides,N/A,N/A,C06188,Salicin 6-phosphate
@@ -57,7 +57,6 @@ C16372,O-glycosides,Anthocyanin glycosides,Glycosylated cyanidin,,C16372,Cyanidi
 C16298,O-glycosides,Anthocyanin glycosides,Glycosylated cyanidin,,C16298,Cyanidin 5-O-glucoside
 C08612,O-glycosides,Anthocyanin glycosides,Glycosylated cyanidin,,C08612,Cyanidin 3-O-(6''-glucosyl-2''-xylosylgalactoside)
 C08639,O-glycosides,Anthocyanin glycosides,Glycosylated cyanidin,,C08639,Cyanin
-C16373,O-glycosides,Anthocyanin glycosides,Glycosylated cyanidin,,C16373,Cyanidin-3-O-(6''-O-malonyl-2''-O-glucuronyl)glucoside
 C20493,O-glycosides,Anthocyanin glycosides,Glycosylated cyanidin,,C20493,Cyanidin 5-O-beta-D-glucoside 3-O-beta-D-sambubioside
 C08642,O-glycosides,Anthocyanin glycosides,Glycosylated cyanidin,,C08642,Heavenly blue anthocyanin
 C16299,O-glycosides,Anthocyanin glycosides,Glycosylated cyanidin,,C16299,Malonylshisonin
@@ -302,7 +301,6 @@ C17768,O-glycosides,Saponins,Steroid,,C17768,Condurango glycoside A0
 C08892,O-glycosides,Saponins,Steroid,,C08892,Convallamaroside
 C08860,O-glycosides,Saponins,Steroid,,C08860,Decoside
 C08895,O-glycosides,Saponins,Steroid,,C08895,Deltoside
-C10803,O-glycosides,Saponins,Steroid,,C10803,Demissine
 C00765,O-glycosides,Saponins,Steroid,,C00765,Digitonin
 C08897,O-glycosides,Saponins,Steroid,,C08897,Dioscin
 C20785,O-glycosides,Saponins,Steroid,,C20785,Eleutheroside A
@@ -324,8 +322,6 @@ C17536,O-glycosides,Saponins,Steroid,,C17536,Sibiricoside A
 C17537,O-glycosides,Saponins,Steroid,,C17537,Sibiricoside B
 C03641,O-glycosides,Saponins,Steroid,,C03641,Sterol 3-beta-D-glucoside
 C08917,O-glycosides,Saponins,Steroid,,C08917,Trigonelloside C
-C10796,O-glycosides,Saponins,Steroid,,C10796,alpha-Chaconine
-C08921,O-glycosides,Saponins,Triterpenoid,,C08921,Aescin
 C08920,O-glycosides,Saponins,Triterpenoid,,C08920,Abrusoside A
 C08922,O-glycosides,Saponins,Triterpenoid,,C08922,Aridanin
 C08923,O-glycosides,Saponins,Triterpenoid,,C08923,Arvensoside A
@@ -410,7 +406,6 @@ C01957,O-glycosides,Iridoid glycosides,N/A,N/A,C01957,Secologanate
 C01852,O-glycosides,Iridoid glycosides,N/A,N/A,C01852,Secologanin
 C11654,O-glycosides,Iridoid glycosides,N/A,N/A,C11654,Tarennoside
 C17068,O-glycosides,Iridoid glycosides,N/A,N/A,C17068,Valerosidatum
-C09802,O-glycosides,Iridoid glycosides,N/A,N/A,C09802,Verbenalin
 C09802,O-glycosides,Iridoid glycosides,N/A,N/A,C09802,Verbenalin
 C00212,N-glycosides,N/A,N/A,N/A,C00212,Adenosine
 C00008,N-glycosides,N/A,N/A,N/A,C00008,ADP

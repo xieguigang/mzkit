@@ -1,34 +1,17 @@
-﻿ID,class,category,subcategory,order,entry,name
+ID,class,category,subcategory,order,entry,name
 C14127,G Protein-coupled receptors,Rhodopsin family: amine receptors,Acetylcholine (muscarinic),muscarinic cholinergic receptor M1 [HSA:1128] [KO:K04129],C14127,Acotiamide	Antagonist
 C09084,G Protein-coupled receptors,Rhodopsin family: amine receptors,Acetylcholine (muscarinic),muscarinic cholinergic receptor M1 [HSA:1128] [KO:K04129],C09084,Brucine	Agonist
-C14127,G Protein-coupled receptors,Rhodopsin family: amine receptors,Acetylcholine (muscarinic),muscarinic cholinergic receptor M2 [HSA:1129] [KO:K04130],C14127,Acotiamide	Antagonist
-C09084,G Protein-coupled receptors,Rhodopsin family: amine receptors,Acetylcholine (muscarinic),muscarinic cholinergic receptor M3 [HSA:1131] [KO:K04131],C09084,Brucine	Agonist
 C08307,G Protein-coupled receptors,Rhodopsin family: amine receptors,Acetylcholine (muscarinic),muscarinic cholinergic receptor M3 [HSA:1131] [KO:K04131],C08307,Hordatine A	Antagonist
-C09084,G Protein-coupled receptors,Rhodopsin family: amine receptors,Acetylcholine (muscarinic),muscarinic cholinergic receptor M4 [HSA:1132] [KO:K04132],C09084,Brucine	Agonist
 C07471,G Protein-coupled receptors,Rhodopsin family: amine receptors,Acetylcholine (muscarinic),muscarinic cholinergic receptor [HSA:1128 1129 1131 1132 1133] [KO:K04129 K04130 K04131 K04132 K04133],C07471,Methacholine	Agonist
 C07485,G Protein-coupled receptors,Rhodopsin family: amine receptors,Acetylcholine (muscarinic),muscarinic cholinergic receptor [HSA:1128 1129 1131 1132 1133] [KO:K04129 K04130 K04131 K04132 K04133],C07485,Oxotremorine	Agonist
 C07506,G Protein-coupled receptors,Rhodopsin family: amine receptors,Acetylcholine (muscarinic),muscarinic cholinergic receptor [HSA:1128 1129 1131 1132 1133] [KO:K04129 K04130 K04131 K04132 K04133],C07506,Propantheline	Antagonist
 C08202,G Protein-coupled receptors,Rhodopsin family: amine receptors,Acetylcholine (muscarinic),muscarinic cholinergic receptor [HSA:1128 1129 1131 1132 1133] [KO:K04129 K04130 K04131 K04132 K04133],C08202,Bethanechol chloride	Agonist
 C12814,G Protein-coupled receptors,Rhodopsin family: amine receptors,Acetylcholine (muscarinic),muscarinic cholinergic receptor [HSA:1128 1129 1131 1132 1133] [KO:K04129 K04130 K04131 K04132 K04133],C12814,Prifinium bromide	Antagonist
 C13639,G Protein-coupled receptors,Rhodopsin family: amine receptors,Adrenaline,alpha1a-adrenergic receptor [HSA:148] [KO:K04135],C13639,dl-Methylephedrine hydrochloride	Agonist
-C13639,G Protein-coupled receptors,Rhodopsin family: amine receptors,Adrenaline,alpha1b-adrenergic receptor [HSA:147] [KO:K04136],C13639,dl-Methylephedrine hydrochloride	Agonist
 C19980,G Protein-coupled receptors,Rhodopsin family: amine receptors,Adrenaline,alpha1d-adrenergic receptor [HSA:146] [KO:K04137],C19980,Domesticine	Antagonist
-C13639,G Protein-coupled receptors,Rhodopsin family: amine receptors,Adrenaline,alpha1d-adrenergic receptor [HSA:146] [KO:K04137],C13639,dl-Methylephedrine hydrochloride	Agonist
 C00179,G Protein-coupled receptors,Rhodopsin family: amine receptors,Adrenaline,alpha2a-adrenergic receptor [HSA:150] [KO:K04138],C00179,Agmatine	Agonist
-C13639,G Protein-coupled receptors,Rhodopsin family: amine receptors,Adrenaline,alpha2a-adrenergic receptor [HSA:150] [KO:K04138],C13639,dl-Methylephedrine hydrochloride	Agonist
 C09256,G Protein-coupled receptors,Rhodopsin family: amine receptors,Adrenaline,alpha2a-adrenergic receptor [HSA:150] [KO:K04138],C09256,Yohimbine	Antagonist
-C00179,G Protein-coupled receptors,Rhodopsin family: amine receptors,Adrenaline,alpha2b-adrenergic receptor [HSA:151] [KO:K04139],C00179,Agmatine	Agonist
-C13639,G Protein-coupled receptors,Rhodopsin family: amine receptors,Adrenaline,alpha2b-adrenergic receptor [HSA:151] [KO:K04139],C13639,dl-Methylephedrine hydrochloride	Agonist
-C09256,G Protein-coupled receptors,Rhodopsin family: amine receptors,Adrenaline,alpha2b-adrenergic receptor [HSA:151] [KO:K04139],C09256,Yohimbine	Antagonist
 C17925,G Protein-coupled receptors,Rhodopsin family: amine receptors,Adrenaline,alpha2b-adrenergic receptor [HSA:151] [KO:K04139],C17925,Nordephrine	Antagonist
-C13639,G Protein-coupled receptors,Rhodopsin family: amine receptors,Adrenaline,alpha2c-adrenergic receptor [HSA:152] [KO:K04140],C13639,dl-Methylephedrine hydrochloride	Agonist
-C00179,G Protein-coupled receptors,Rhodopsin family: amine receptors,Adrenaline,alpha2c-adrenergic receptor [HSA:152] [KO:K04140],C00179,Agmatine	Agonist
-C09256,G Protein-coupled receptors,Rhodopsin family: amine receptors,Adrenaline,alpha2c-adrenergic receptor [HSA:152] [KO:K04140],C09256,Yohimbine	Antagonist
-C17925,G Protein-coupled receptors,Rhodopsin family: amine receptors,Adrenaline,alpha2-adrenergic receptor [HSA:150 151 152] [KO:K04138 K04139 K04140],C17925,Nordephrine	Agonist
-C13639,G Protein-coupled receptors,Rhodopsin family: amine receptors,Adrenaline,beta1-adrenergic receptor [HSA:153] [KO:K04141],C13639,dl-Methylephedrine hydrochloride	Agonist
-C13639,G Protein-coupled receptors,Rhodopsin family: amine receptors,Adrenaline,beta2-adrenergic receptor [HSA:154] [KO:K04142],C13639,dl-Methylephedrine hydrochloride	Agonist
-C17925,G Protein-coupled receptors,Rhodopsin family: amine receptors,Adrenaline,beta3-adrenergic receptor [HSA:155] [KO:K04143],C17925,Nordephrine   Antagonist
-C13639,G Protein-coupled receptors,Rhodopsin family: amine receptors,Adrenaline,beta3-adrenergic receptor [HSA:155] [KO:K04143],C13639,dl-Methylephedrine hydrochloride	Agonist
 C07780,G Protein-coupled receptors,Rhodopsin family: amine receptors,Histamine,H1-receptor [HSA:3269] [KO:K04149],C07780,Chlorpheniramine maleate	Antagonist
 C17928,G Protein-coupled receptors,Rhodopsin family: amine receptors,Histamine,H1-receptor [HSA:3269] [KO:K04149],C17928,2-Methylhistamine	Agonist
 C17926,G Protein-coupled receptors,Rhodopsin family: amine receptors,Histamine,H1-receptor [HSA:3269] [KO:K04149],C17926,2-Pyridinemethanamine	Agonist
@@ -47,10 +30,8 @@ C13494,G Protein-coupled receptors,Rhodopsin family: amine receptors,Serotonin,5
 C01505,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Bradykinin,bradykinin B1 receptor [HSA:623] [KO:K03915],C01505,Kallidin	Agonist
 C20010,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Bradykinin,bradykinin B2 receptor [HSA:624] [KO:K03916],C20010,Anatibant	Antagonist
 C00306,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Bradykinin,bradykinin B2 receptor [HSA:624] [KO:K03916],C00306,Bradykinin	Agonist
-C01505,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Bradykinin,bradykinin B2 receptor [HSA:624] [KO:K03916],C01505,Kallidin	Agonist
 C20266,G Protein-coupled receptors,Rhodopsin family: peptide receptors,CXC Chemokine,C-X-C chemokine receptor type 4 [HSA:7852] [KO:K04189],C20266,AMD 070	Inhibitor
 C16114,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Cholecystokinin,cholecystokinin A / gastrin receptor [HSA:886] [KO:K04194],C16114,Cholecystokinin-8	Agonist
-C16114,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Cholecystokinin,cholecystokinin B / gastrin receptor [HSA:887] [KO:K04195],C16114,Cholecystokinin-8	Agonist
 C16133,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Cholecystokinin,cholecystokinin B / gastrin receptor [HSA:887] [KO:K04195],C16133,Cholecystokinin-33	Agonist
 C18186,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Cholecystokinin,cholecystokinin / gastrin receptor [HSA:886 887] [KO:K04194 K04195],C18186,Gastrin-14	Agonist
 C16113,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Cholecystokinin,cholecystokinin / gastrin receptor [HSA:886 887] [KO:K04194 K04195],C16113,Gastrin-17	Agonist
@@ -74,41 +55,25 @@ C18128,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,de
 C01574,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,kappa-opioid receptor [HSA:4986] [KO:K04214],C01574,Dynorphin A	Agonist
 C16135,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,kappa-opioid receptor [HSA:4986] [KO:K04214],C16135,Dynorphin B	Agonist
 C11795,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,kappa-opioid receptor [HSA:4986] [KO:K04214],C11795,Ethylketocyclazocine	Agonist
-C11793,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,kappa-opioid receptor [HSA:4986] [KO:K04214],C11793,Etorphine	Agonist
-C08014,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,kappa-opioid receptor [HSA:4986] [KO:K04214],C08014,Levorphanol	Agonist
 C18130,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,kappa-opioid receptor [HSA:4986] [KO:K04214],C18130,Norbinaltorphimine	Antagonist
 C20196,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,kappa-opioid receptor [HSA:4986] [KO:K04214],C20196,Salvinorin A	Agonist
 C20168,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,kappa-opioid receptor [HSA:4986] [KO:K04214],C20168,(-)TAN-67	Agonist
 C11796,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,kappa-opioid receptor [HSA:4986] [KO:K04214],C11796,U 50488	Agonist
 C20160,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,mu-opioid receptor [HSA:4988] [KO:K04215],C20160,CTOP	Antagonist
-C20030,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,mu-opioid receptor [HSA:4988] [KO:K04215],C20030,Dermorphin	Agonist
-C01574,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,mu-opioid receptor [HSA:4988] [KO:K04215],C01574,Dynorphin	Agonist
-C02210,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,mu-opioid receptor [HSA:4988] [KO:K04215],C02210,beta-Endorphin	Agonist
 C15890,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,mu-opioid receptor [HSA:4988] [KO:K04215],C15890,Endomorphin-1	Agonist
 C15891,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,mu-opioid receptor [HSA:4988] [KO:K04215],C15891,Endomorphin-2	Agonist
-C16041,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,mu-opioid receptor [HSA:4988] [KO:K04215],C16041,Leu-enkephalin	Agonist
-C11684,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,mu-opioid receptor [HSA:4988] [KO:K04215],C11684,MET-enkephalin	Agonist
-C11793,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,mu-opioid receptor [HSA:4988] [KO:K04215],C11793,Etorphine	Agonist
 C18127,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,mu-opioid receptor [HSA:4988] [KO:K04215],C18127,beta-Funaltrexamine	Antagonist
-C08014,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,mu-opioid receptor [HSA:4988] [KO:K04215],C08014,Levorphanol	Agonist
 C16044,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,nociceptin receptor [HSA:4987] [KO:K04216],C16044,Nociceptin	Agonist
 C18365,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Oxytocin,oxytocin receptor [HSA:5021] [KO:K04229],C18365,Carbetocin	Agonist
-C14127,G Protein-coupled receptors,Rhodopsin family: other receptors,Adenosine,adenosine A1 receptor [HSA:134] [KO:K04265],C14127,Acotiamide	Antagonist
 C13747,G Protein-coupled receptors,Rhodopsin family: other receptors,Adenosine,adenosine A1 receptor [HSA:134] [KO:K04265],C13747,"1,7-Dimethylxanthine	Antagonist"
-C13747,G Protein-coupled receptors,Rhodopsin family: other receptors,Adenosine,adenosine A2a receptor [HSA:135] [KO:K04266],C13747,"1,7-Dimethylxanthine	Antagonist"
-C13747,G Protein-coupled receptors,Rhodopsin family: other receptors,Adenosine,adenosine A2b receptor [HSA:136] [KO:K04267],C13747,"1,7-Dimethylxanthine	Antagonist"
 C20220,G Protein-coupled receptors,Rhodopsin family: other receptors,Cannabinoid,cannabinoid receptor 1 [HSA:1268] [KO:K04277],C20220,AM251	Antagonist
 C07580,G Protein-coupled receptors,Rhodopsin family: other receptors,Cannabinoid,cannabinoid receptor 1 [HSA:1268] [KO:K04277],C07580,Cannabinol	Agonist
 C06972,G Protein-coupled receptors,Rhodopsin family: other receptors,Cannabinoid,cannabinoid receptor 1 [HSA:1268] [KO:K04277],C06972,Dronabinol	Agonist
 C14319,G Protein-coupled receptors,Rhodopsin family: other receptors,Cannabinoid,cannabinoid receptor 1 [HSA:1268] [KO:K04277],C14319,SR 141716	Antagonist
-C06972,G Protein-coupled receptors,Rhodopsin family: other receptors,Cannabinoid,cannabinoid receptor 2 [HSA:1269] [KO:K04278],C06972,Dronabinol	Agonist
 C19914,G Protein-coupled receptors,Rhodopsin family: other receptors,Lysosphingolipid and LPA (EDG),sphingosine 1-phosphate receptor 1 [HSA:1901] [KO:K04288],C19914,Myriocin	Agonist
 C14777,G Protein-coupled receptors,Rhodopsin family: other receptors,Leukotriene B4 receptor,leukotriene B4 receptor 1 [HSA:1241] [KO:K04296],C14777,12(S)-HETE	Agonist
 C20388,G Protein-coupled receptors,Rhodopsin family: other receptors,Leukotriene B4 receptor,leukotriene B4 receptor 1 [HSA:1241] [KO:K04296],C20388,12(S)-HHT	Agonist
 C18171,G Protein-coupled receptors,Rhodopsin family: other receptors,Leukotriene B4 receptor,leukotriene B4 receptor 1 [HSA:1241] [KO:K04296],C18171,Resolvin E1	Agonist
-C14777,G Protein-coupled receptors,Rhodopsin family: other receptors,Leukotriene B4 receptor,leukotriene B4 receptor 2 [HSA:56413] [KO:K04297],C14777,12(S)-HETE	Agonist
-C20388,G Protein-coupled receptors,Rhodopsin family: other receptors,Leukotriene B4 receptor,leukotriene B4 receptor 2 [HSA:56413] [KO:K04297],C20388,12(S)-HHT	Agonist
-C18171,G Protein-coupled receptors,Rhodopsin family: other receptors,Leukotriene B4 receptor,leukotriene B4 receptor 2 [HSA:56413] [KO:K04297],C18171,Resolvin E1	Agonist
 C13856,G Protein-coupled receptors,Rhodopsin family: other receptors,Lysophosphatidylinositol,G protein-coupled receptor 55 [HSA:9290] [KO:K08413],C13856,2-Arachidonoylglycerol	Agonist
 C16512,G Protein-coupled receptors,Rhodopsin family: other receptors,Lysophosphatidylinositol,G protein-coupled receptor 55 [HSA:9290] [KO:K08413],C16512,Palmitoylethanolamide	Agonist
 C00186,G Protein-coupled receptors,Rhodopsin family: other receptors,Lactate,G protein-coupled receptor 81 [HSA:27198] [KO:K08401],C00186,(S)-Lactate	Agonist
@@ -116,7 +81,6 @@ C06314,G Protein-coupled receptors,Rhodopsin family: other receptors,Cysteinyl l
 C06315,G Protein-coupled receptors,Rhodopsin family: other receptors,Cysteinyl leukotriene,cysteinyl leukotriene receptor 1 [HSA:10800] [KO:K04322],C06315,Lipoxin B4	Antagonist
 C15894,G Protein-coupled receptors,Secretin family,Glucagon,glucagon-like peptide 1 receptor [HSA:2740] [KO:K04581],C15894,Exendin-4	Agonist
 C19415,G Protein-coupled receptors,Metabotropic glutamate family,Taste receptors (T1R),taste receptor type 1 member 2 [HSA:80834] [KO:K04625],C19415,Dulcin	Agonist
-C19415,G Protein-coupled receptors,Metabotropic glutamate family,Taste receptors (T1R),taste receptor type 1 member 3 [HSA:80835] [KO:K04626],C19415,Dulcin	Agonist
 C07058,Nuclear receptors,Thyroid hormone like receptors,Retinoic acid receptor,"NR1B; nuclear receptor, subfamily 1, group B [HSA:5914 5915 5916] [KO:K08527 K08528 K08529]",C07058,13-cis-Retinoic acid	Agonist
 C15493,Nuclear receptors,Thyroid hormone like receptors,Retinoic acid receptor,"NR1B; nuclear receptor, subfamily 1, group B [HSA:5914 5915 5916] [KO:K08527 K08528 K08529]",C15493,9-cis-Retinoic acid	Agonist
 C00473,Nuclear receptors,Thyroid hormone like receptors,Retinoic acid receptor,"NR1B; nuclear receptor, subfamily 1, group B [HSA:5914 5915 5916] [KO:K08527 K08528 K08529]",C00473,Retinol	Agonist
@@ -127,17 +91,10 @@ C15632,Nuclear receptors,Thyroid hormone like receptors,Liver X receptor like re
 C15631,Nuclear receptors,Thyroid hormone like receptors,Liver X receptor like receptor,liver X receptor alpha [HSA:10062] [KO:K08536],C15631,GW 3965	Agonist
 C05502,Nuclear receptors,Thyroid hormone like receptors,Liver X receptor like receptor,liver X receptor alpha [HSA:10062] [KO:K08536],C05502,22(R)-Hydroxycholesterol	Agonist
 C15630,Nuclear receptors,Thyroid hormone like receptors,Liver X receptor like receptor,liver X receptor alpha [HSA:10062] [KO:K08536],C15630,T 0901317	Agonist
-C13550,Nuclear receptors,Thyroid hormone like receptors,Liver X receptor like receptor,liver X receptor beta [HSA:7376] [KO:K08535],C13550,Cerebrosterol Agonist
-C15610,Nuclear receptors,Thyroid hormone like receptors,Liver X receptor like receptor,liver X receptor beta [HSA:7376] [KO:K08535],C15610,"Cholest-5-ene-3beta,26-diol	Agonist"
-C05502,Nuclear receptors,Thyroid hormone like receptors,Liver X receptor like receptor,liver X receptor beta [HSA:7376] [KO:K08535],C05502,22beta-Hydroxycholesterol
-C15630,Nuclear receptors,Thyroid hormone like receptors,Liver X receptor like receptor,liver X receptor beta [HSA:7376] [KO:K08535],C15630,T 0901317	Agonist
-C15631,Nuclear receptors,Thyroid hormone like receptors,Liver X receptor like receptor,liver X receptor beta [HSA:7376] [KO:K08535],C15631,GW 3965	Agonist
-C15632,Nuclear receptors,Thyroid hormone like receptors,Liver X receptor like receptor,liver X receptor beta [HSA:7376] [KO:K08535],C15632,"24(S),25-Epoxycholesterol	Agonist"
 C02528,Nuclear receptors,Thyroid hormone like receptors,Liver X receptor like receptor,farnesoid X receptor [HSA:9971] [KO:K08537],C02528,Chenodeoxycholate	Agonist
 C15649,Nuclear receptors,Thyroid hormone like receptors,Liver X receptor like receptor,farnesoid X receptor [HSA:9971] [KO:K08537],C15649,Fexaramine	Agonist
 C15635,Nuclear receptors,Thyroid hormone like receptors,Liver X receptor like receptor,farnesoid X receptor [HSA:9971] [KO:K08537],C15635,GW 4064	Agonist
 C00477,Nuclear receptors,Thyroid hormone like receptors,Liver X receptor like receptor,ecdysone receptor [KO:K14034],C00477,Ecdysone	Agonist
-C01607,Nuclear receptors,Hepatocyte nuclear factor 4 like receptors,Retinoid X receptor (RXR),retinoid receptor [HSA:6256 6257 6258] [KO:K08524 K08525 K06258],C01607,Phytanate	Agonist
 C00951,Nuclear receptors,Estrogen like receptors,Estrogen receptor,"estrogen receptor 1, 2 [HSA:2099 2100] [KO:K08550 K08551]",C00951,Estradiol-17beta	Agonist
 C13444,Nuclear receptors,Estrogen like receptors,Estrogen receptor,"estrogen receptor 1, 2 [HSA:2099 2100] [KO:K08550 K08551]",C13444,Estradiol benzoate	Agonist
 C12729,Nuclear receptors,Estrogen like receptors,3-Ketosteroid receptor,progesterone receptor [HSA:5241] [KO:K08556],C12729,Chlormadinone acetate	Antagonist
@@ -164,9 +121,6 @@ C13667,Ion channels,Glutamate-gated cation channels,"Glutamate (ionotropic), non
 C13668,Ion channels,Glutamate-gated cation channels,"Glutamate (ionotropic), non-NMDA",AMPA receptor [HSA:2890 2891 2892 2893] [KO:K05197 K05198 K05199 K05200],C13668,"6-Cyano-7-nitroquinoxaline-2,3-dione	Antagonist"
 C13672,Ion channels,Glutamate-gated cation channels,"Glutamate (ionotropic), non-NMDA",AMPA receptor [HSA:2890 2891 2892 2893] [KO:K05197 K05198 K05199 K05200],C13672,(S)-AMPA	Agonist
 C12819,Ion channels,Glutamate-gated cation channels,"Glutamate (ionotropic), non-NMDA",kainate receptor [HSA:2897 2898 2899 2900 2901] [KO:K05201 K05202 K05203 K05204 K05205],C12819,Kainic acid	Agonist
-C13667,Ion channels,Glutamate-gated cation channels,"Glutamate (ionotropic), non-NMDA",kainate receptor [HSA:2897 2898 2899 2900 2901] [KO:K05201 K05202 K05203 K05204 K05205],C13667,"2,3-Dioxo-6-nitro-7-sulfamoylbenzo[f]quinoxaline	Antagonist"
-C13668,Ion channels,Glutamate-gated cation channels,"Glutamate (ionotropic), non-NMDA",kainate receptor [HSA:2897 2898 2899 2900 2901] [KO:K05201 K05202 K05203 K05204 K05205],C13668,"6-Cyano-7-nitroquinoxaline-2,3-dione	Antagonist"
-C08014,Ion channels,Glutamate-gated cation channels,"Glutamate (ionotropic), NMDA",N-methyl-D-aspartate receptor [HSA:2902 2903 2904 2905 2906] [KO:K05208 K05209 K05210 K05211 K05212],C08014,Levorphanol	Antagonist
 C07843,Ion channels,Glutamate-gated cation channels,"Glutamate (ionotropic), NMDA",N-methyl-D-aspartate receptor [HSA:2902 2903 2904 2905 2906] [KO:K05208 K05209 K05210 K05211 K05212],C07843,Ketamine hydrochloride	Antagonist
 C12269,Ion channels,Glutamate-gated cation channels,"Glutamate (ionotropic), NMDA",N-methyl-D-aspartate receptor [HSA:2902 2903 2904 2905 2906] [KO:K05208 K05209 K05210 K05211 K05212],C12269,N-Methyl-D-aspartic acid	Agonist
 C13750,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C13750,Batrachotoxin	Opener
@@ -214,9 +168,6 @@ C19906,Ion channels,Voltage-gated cation channels,"Ca2+ channel, CACN alpha-1, C
 C13776,Ion channels,Voltage-gated cation channels,"K+ channel, KCNH, Kv10-12.x (Ether-a-go-go)","potassium voltage-gated channel, subfamily H (eag-related), member 2 [HSA:3757] [KO:K04905]",C13776,E-4031	Blocker
 C13820,Ion channels,Voltage-gated cation channels,"K+ channel, KCNQ, Kv7.x (KQT-like)","potassium voltage-gated channel, KQT-like subfamily, member 1 [HSA:3784] [KO:K04926]",C13820,Chromanol 293B	Blocker
 C20048,Ion channels,Voltage-gated cation channels,"K+ channel, KCNN, KCa2-3.x (Small conductance)","potassium intermediate/small conductance calcium-activated channel, subfamily N, member 1 [HSA:3780] [KO:K04942]",C20048,Apamine	Blocker
-C20048,Ion channels,Voltage-gated cation channels,"K+ channel, KCNN, KCa2-3.x (Small conductance)","potassium intermediate/small conductance calcium-activated channel, subfamily N, member 2 [HSA:3781] [KO:K04943]",C20048,Apamine	Blocker
-C20048,Ion channels,Voltage-gated cation channels,"K+ channel, KCNN, KCa2-3.x (Small conductance)","potassium intermediate/small conductance calcium-activated channel, subfamily N, member 3 [HSA:3782] [KO:K04944]",C20048,Apamine	Blocker
-C07894,Ion channels,Related to voltage-gated cation channels,Ryanodine receptor (RYR),ryanodine receptor [HSA:6261 6262 6263] [KO:K04961 K04962 K04963],C07894,Procaine hydrochloride	Blocker
 C03882,Ion channels,Related to voltage-gated cation channels,"Transient receptor potential family, TRPV (Vanilloid)","transient receptor potential cation channel, subfamily V, member 1 [HSA:7442] [KO:K05222]",C03882,Piperine	Agonist
 C06866,Ion channels,Related to voltage-gated cation channels,"Transient receptor potential family, TRPV (Vanilloid)","transient receptor potential cation channel, subfamily V, member 1 [HSA:7442] [KO:K05222]",C06866,Capsaicin	Agonist
 C16952,Ion channels,Related to voltage-gated cation channels,"Transient receptor potential family, TRPV (Vanilloid)","transient receptor potential cation channel, subfamily V, member 1 [HSA:7442] [KO:K05222]",C16952,Dihydrocapsaicin	Agonist
@@ -231,14 +182,9 @@ C19317,Ion channels,Related to voltage-gated cation channels,"Transient receptor
 C20170,Ion channels,Related to voltage-gated cation channels,"Transient receptor potential family, TRPA (ANKTM1)","transient receptor potential cation channel, subfamily A, member 1 [HSA:8989] [KO:K04984]",C20170,Benzoyl isothiocyanate	Agonist
 C03098,Ion channels,Related to voltage-gated cation channels,"Transient receptor potential family, TRPA (ANKTM1)","transient receptor potential cation channel, subfamily A, member 1 [HSA:8989] [KO:K04984]",C03098,Benzyl isothiocyanate	Agonist
 C00903,Ion channels,Related to voltage-gated cation channels,"Transient receptor potential family, TRPA (ANKTM1)","transient receptor potential cation channel, subfamily A, member 1 [HSA:8989] [KO:K04984]",C00903,Cinnamaldehyde	Agonist
-C20171,Ion channels,Related to voltage-gated cation channels,"Transient receptor potential family, TRPA (ANKTM1)","transient receptor potential cation channel, subfamily A, member 1 [HSA:8989] [KO:K04984]",C20171,Icilin	Agonist
 C11819,Ion channels,Related to inward rectifier K+ channels,Inward rectifier channel (Kir),"potassium inwardly-rectifying channel, subfamily J, member 11 [HSA:3767] [KO:K05004]",C11819,Cromakalim	Opener
-C11819,Transporters,ABC Transporters,"ATP-binding cassette,  subfamily C (CFTR/MRP),  member 8 [HSA:6833] [KO:K05032]",N/A,C11819,Cromakalim	Opener
 C01604,Transporters,Solute carrier family,SLC5,SLC5A1 (SGLT1) [HSA:6523] [KO:K14158],C01604,Phlorizin	Inhibitor
-C01604,Transporters,Solute carrier family,SLC5,SLC5A2 (SGLT2) [HSA:6524] [KO:K14382],C01604,Phlorizin	Inhibitor
 C07577,Transporters,Solute carrier family,SLC6,SLC6A4 [HSA:6532] [KO:K05037],C07577,"3,4-Methylenedioxymethamphetamine	Inhibitor"
-C13665,Transporters,Solute carrier family,SLC6,SLC6A4 [HSA:6532] [KO:K05037],C13665,2-Methyl-5-hydroxytryptamine	Inhibitor
-C07017,Transporters,Solute carrier family,SLC12,SLC12A2 [HSA:6558] [KO:K10951],C07017,Furosemide	Inhibitor
 C00389,Transporters,Solute carrier family,SLC22,SLC22A8 [HSA:9376] [KO:K08205],C00389,Quercetin	Inhibitor
 C20439,Transporters,Solute carrier family,SLC29,SLC29A1 [HSA:2030] [KO:K15014],C20439,NBMPR	Inhibitor
 C08271,Enzymes,Oxidoreductases,aldehyde dehydrogenase [EC:1.2.1.3],N/A,C08271,Coprine	Inhibitor
@@ -261,9 +207,6 @@ C18363,Enzymes,Oxidoreductases,prostaglandin-endoperoxide synthase 1 [HSA:5742] 
 C18364,Enzymes,Oxidoreductases,prostaglandin-endoperoxide synthase 1 [HSA:5742] [KO:K00509] [EC:1.14.99.1],N/A,C18364,Carprofen	Inhibitor
 C07587,Enzymes,Oxidoreductases,prostaglandin-endoperoxide synthase 1 [HSA:5742] [KO:K00509] [EC:1.14.99.1],N/A,C07587,Sodium salicylate	Inhibitor
 C06991,Enzymes,Oxidoreductases,prostaglandin-endoperoxide synthase 2 [HSA:5743] [KO:K11987] [EC:1.14.99.1],N/A,C06991,Etodolac	Inhibitor
-C18363,Enzymes,Oxidoreductases,prostaglandin-endoperoxide synthase 2 [HSA:5743] [KO:K11987] [EC:1.14.99.1],N/A,C18363,Firocoxib	Inhibitor
-C18364,Enzymes,Oxidoreductases,prostaglandin-endoperoxide synthase 2 [HSA:5743] [KO:K11987] [EC:1.14.99.1],N/A,C18364,Carprofen	Inhibitor
-C07587,Enzymes,Oxidoreductases,prostaglandin-endoperoxide synthase 2 [HSA:5743] [KO:K11987] [EC:1.14.99.1],N/A,C07587,Sodium salicylate	Inhibitor
 C01108,Enzymes,Transferases,catechol O-methyltransferase [HSA:1312] [KO:K00545] [EC:2.1.1.6],N/A,C01108,"1,2,3-Trihydroxybenzene	Inhibitor"
 C15474,Enzymes,Transferases,catechol O-methyltransferase [HSA:1312] [KO:K00545] [EC:2.1.1.6],N/A,C15474,Tropolone	Inhibitor
 C15475,Enzymes,Transferases,catechol O-methyltransferase [HSA:1312] [KO:K00545] [EC:2.1.1.6],N/A,C15475,U 0521	Inhibitor
@@ -275,7 +218,6 @@ C10721,Enzymes,Transferases,novel protein kinase C delta [HSA:5580] [KO:K06068] 
 C14123,Enzymes,Transferases,cyclin-dependent kinase 2 [HSA:1017] [KO:K02206] [EC:2.7.11.22],N/A,C14123,BMS-268770	Inhibitor
 C11198,Enzymes,Hydrolases,phospholipase A2 [EC:3.1.1.4],N/A,C11198,Melitten	Stimulator
 C14426,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C14426,Acephate	Inhibitor
-C14127,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C14127,Acotiamide	Inhibitor
 C18414,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18414,Alanycarb	Inhibitor
 C18906,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18906,Aldoxycarb	Inhibitor
 C11015,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C11015,Aldicarb	Inhibitor
@@ -375,10 +317,8 @@ C18957,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.
 C18666,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18666,Vamidothion	Inhibitor
 C18771,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18771,XMC	Inhibitor
 C14579,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C14579,Xylylcarb	Inhibitor
-C06535,Enzymes,Hydrolases,BCHE; cholinesterase [HSA:590] [KO:K01050] [EC:3.1.1.8],N/A,C06535,Physostigmine	Inhibitor
 C12959,Enzymes,Hydrolases,BCHE; cholinesterase [HSA:590] [KO:K01050] [EC:3.1.1.8],N/A,C12959,Dimetacrine tartrate	Inhibitor
 C11766,Enzymes,Hydrolases,BCHE; cholinesterase [HSA:590] [KO:K01050] [EC:3.1.1.8],N/A,C11766,Rivastigmine	Inhibitor
-C00202,Enzymes,Hydrolases,BCHE; cholinesterase [HSA:590] [KO:K01050] [EC:3.1.1.8],N/A,C00202,Isoflurophate	Inhibitor
 C07708,Enzymes,Hydrolases,alpha-glucosidase [HSA:2548 2595 8972] [KO:K12316 K12317 K12047] [EC:3.2.1.20],N/A,C07708,Miglitol	Inhibitor
 C07701,Enzymes,Hydrolases,ACE; peptidyl-dipeptidase A [HSA:1636] [KO:K01283] [EC:3.4.15.1],N/A,C07701,Benazepril hydrochloride	Inhibitor
 C00773,Enzymes,Hydrolases,Aspartate protease,N/A,C00773,Pepstatin	Inhibitor
