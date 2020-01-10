@@ -35,10 +35,12 @@ append.KEGG_brite <- function(table, col = "KEGG", name = "*") {
 
     for(id in names(table.list)) {
         brites <- get(id);
+        kegg_id <- brites[, "ID"] %=>% as.vector;
         brites[, "entry"] <- NULL;
         brites[, "name"]  <- NULL;
+        brites[, "ID"]    <- NULL;
         brites <- .as.list(brites);
-        names(brites) <- sapply(brites, function(t) t$ID);
+        names(brites) <- kegg_id;
 
         append.brites <- list();
         empty <- rep("NULL", length(brites[[1]]));
