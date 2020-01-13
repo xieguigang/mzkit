@@ -83,7 +83,8 @@ Namespace MarkupData.mzXML
         ''' + 2, MS/MS 二级质谱信号数据
         ''' </param>
         ''' <returns></returns>
-        <Extension> Public Function ExtractMzI(scan As scan) As (name$, peaks As ms2())
+        <Extension>
+        Public Function ExtractMzI(scan As scan) As (name$, peaks As ms2())
             Dim name$ = scan.getName
             Dim peaks As ms2()
 

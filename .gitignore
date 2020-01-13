@@ -260,3 +260,4 @@ paket-files/
 /App
 /Rscript/biodeep/biodeepdb_v3/Rscript/R/Library
 /Rscript/R/compound_brites/.R_logs
+/src/assembly/Apps
