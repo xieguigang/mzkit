@@ -102,6 +102,18 @@ Namespace MarkupData.mzXML
         ''' <returns></returns>
         <XmlAttribute> Public Property num As Integer
         <XmlAttribute> Public Property scanType As String
+
+        ''' <summary>
+        ''' ``profile`` and ``centroid`` in Mass Spectrometry?
+        ''' 
+        ''' 1. Profile means the continuous wave form in a mass spectrum.
+        '''   + Number of data points Is large.
+        ''' 2. Centroid means the peaks in a profile data Is changed to bars.
+        '''   + location of the bar Is center of the profile peak.
+        '''   + height of the bar Is area of the profile peak.  
+        '''   
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property centroided As String
         ''' <summary>
         ''' 当前的质谱碎片的等级,一级质谱,二级质谱或者msn等级的质谱

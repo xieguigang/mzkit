@@ -43,6 +43,7 @@
 #End Region
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -77,33 +78,56 @@ Module Assembly
     End Function
 
     ''' <summary>
+    ''' Converts profiles peak data to peak data in centroid mode.
+    ''' 
+    ''' profile and centroid in Mass Spectrometry?
+    ''' 
+    ''' 1. Profile means the continuous wave form in a mass spectrum.
+    '''   + Number of data points Is large.
+    ''' 2. Centroid means the peaks in a profile data Is changed to bars.
+    '''   + location of the bar Is center of the profile peak.
+    '''   + height of the bar Is area of the profile peak.
+    '''   
+    ''' </summary>
+    ''' <param name="ions"></param>
+    ''' <returns>
+    ''' Peaks data in centroid mode.
+    ''' </returns>
+    <ExportAPI("centroid")>
+    Public Function centroid(ions As pipeline, Optional intoCutoff As Double = 0.05) As pipeline
+
+    End Function
+
+    ''' <summary>
     ''' Convert mzxml file as mgf ions.
     ''' </summary>
     ''' <param name="mzXML"></param>
     ''' <returns></returns>
     <ExportAPI("mzxml.mgf")>
     Public Function mzXML2Mgf(mzXML$, Optional relativeInto As Boolean = False, Optional includesMs1 As Boolean = False) As pipeline
+        Return New pipeline(mzXML.scanLoader(relativeInto, includesMs1), GetType(PeakMs2))
+    End Function
+
+    <Extension>
+    Private Iterator Function scanLoader(mzXML$, relativeInto As Boolean, includesMs1 As Boolean) As IEnumerable(Of PeakMs2)
         Dim basename$ = mzXML.FileName
-        Dim loader = Iterator Function() As IEnumerable(Of PeakMs2)
-                         For Each ms2Scan As scan In mzXMLAssembly.XML _
-                            .LoadScans(mzXML) _
-                            .Where(Function(s)
-                                       If includesMs1 Then
-                                           Return True
-                                       Else
-                                           Return s.msLevel = 2
-                                       End If
-                                   End Function)
 
-                             If ms2Scan.msLevel = 1 Then
-                                 ' ms1的数据总是使用raw intensity值
-                                 Yield ms2Scan.ScanData(basename, raw:=True)
-                             Else
-                                 Yield ms2Scan.ScanData(basename, raw:=Not relativeInto)
-                             End If
-                         Next
-                     End Function
+        For Each ms2Scan As scan In mzXMLAssembly.XML _
+            .LoadScans(mzXML) _
+            .Where(Function(s)
+                       If includesMs1 Then
+                           Return True
+                       Else
+                           Return s.msLevel = 2
+                       End If
+                   End Function)
 
-        Return New pipeline(loader(), GetType(PeakMs2))
+            If ms2Scan.msLevel = 1 Then
+                ' ms1的数据总是使用raw intensity值
+                Yield ms2Scan.ScanData(basename, raw:=True)
+            Else
+                Yield ms2Scan.ScanData(basename, raw:=Not relativeInto)
+            End If
+        Next
     End Function
 End Module
