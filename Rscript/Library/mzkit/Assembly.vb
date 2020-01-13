@@ -95,7 +95,7 @@ Module Assembly
     ''' Peaks data in centroid mode.
     ''' </returns>
     <ExportAPI("centroid")>
-    Public Function centroid(ions As pipeline, Optional intoCutoff As Double = 0.05) As pipeline
+    Public Function centroid(ions As pipeline, Optional intoCutoff As Double = 0.05, Optional parallel As Boolean = False) As pipeline
         Dim converter = Iterator Function() As IEnumerable(Of PeakMs2)
                             For Each peak As PeakMs2 In ions.populates(Of PeakMs2)
                                 If Not peak.mzInto.centroid Then
@@ -108,7 +108,11 @@ Module Assembly
                             Next
                         End Function
 
-        Return New pipeline(converter(), GetType(PeakMs2))
+        If parallel Then
+            Return New pipeline(converter().AsParallel, GetType(PeakMs2))
+        Else
+            Return New pipeline(converter(), GetType(PeakMs2))
+        End If
     End Function
 
     ''' <summary>
