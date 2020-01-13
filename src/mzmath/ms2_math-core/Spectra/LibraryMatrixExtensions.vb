@@ -120,6 +120,7 @@ Namespace Spectra
                 .Select(Function(p)
                             Return New ChromatogramTick(p.mz, p.intensity)
                         End Function) _
+                .OrderBy(Function(m) m.Time) _
                 .Shadows _
                 .PopulateROI
 

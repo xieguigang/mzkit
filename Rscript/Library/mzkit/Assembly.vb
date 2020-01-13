@@ -48,6 +48,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
@@ -97,7 +98,10 @@ Module Assembly
     Public Function centroid(ions As pipeline, Optional intoCutoff As Double = 0.05) As pipeline
         Dim converter = Iterator Function() As IEnumerable(Of PeakMs2)
                             For Each peak As PeakMs2 In ions.populates(Of PeakMs2)
-                                peak.mzInto.ms2 = peak.mzInto.ms2.Centroid(intoCutoff)
+                                peak.mzInto.ms2 = peak.mzInto.ms2 _
+                                    .Centroid(intoCutoff) _
+                                    .ToArray
+
                                 Yield peak
                             Next
                         End Function
@@ -112,7 +116,12 @@ Module Assembly
     ''' <returns></returns>
     <ExportAPI("mzxml.mgf")>
     Public Function mzXML2Mgf(mzXML$, Optional relativeInto As Boolean = False, Optional includesMs1 As Boolean = False) As pipeline
-        Return New pipeline(mzXML.scanLoader(relativeInto, includesMs1), GetType(PeakMs2))
+        Return mzXML _
+            .scanLoader(relativeInto, includesMs1) _
+            .Where(Function(peak) peak.mzInto.Length > 0) _
+            .DoCall(Function(scans)
+                        Return New pipeline(scans, GetType(PeakMs2))
+                    End Function)
     End Function
 
     <Extension>

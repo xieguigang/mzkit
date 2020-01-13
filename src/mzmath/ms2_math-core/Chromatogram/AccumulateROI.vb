@@ -86,7 +86,10 @@ Namespace Chromatogram
         End Function
 
         ''' <summary>
-        ''' 在这个函数之中，只是查找出了色谱峰的时间范围，但是并未对峰面积做积分计算
+        ''' The input data parameter <paramref name="chromatogram"/> for this function should be 
+        ''' sort in asc order at first!
+        ''' 
+        ''' (在这个函数之中，只是查找出了色谱峰的时间范围，但是并未对峰面积做积分计算)
         ''' </summary>
         ''' <param name="angleThreshold#">区分色谱峰的累加线切线角度的阈值，单位为度</param>
         ''' <returns></returns>
