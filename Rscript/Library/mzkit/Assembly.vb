@@ -98,9 +98,11 @@ Module Assembly
     Public Function centroid(ions As pipeline, Optional intoCutoff As Double = 0.05) As pipeline
         Dim converter = Iterator Function() As IEnumerable(Of PeakMs2)
                             For Each peak As PeakMs2 In ions.populates(Of PeakMs2)
-                                peak.mzInto.ms2 = peak.mzInto.ms2 _
-                                    .Centroid(intoCutoff) _
-                                    .ToArray
+                                If Not peak.mzInto.centroid Then
+                                    peak.mzInto.ms2 = peak.mzInto.ms2 _
+                                        .Centroid(intoCutoff) _
+                                        .ToArray
+                                End If
 
                                 Yield peak
                             Next

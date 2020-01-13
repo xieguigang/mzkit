@@ -91,7 +91,7 @@ Namespace Spectra
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Shrink(matrix As LibraryMatrix, tolerance As Tolerance) As LibraryMatrix
-            Return matrix _
+            Dim ms2Peaks As ms2() = matrix _
                 .GroupBy(Function(ms2) ms2.mz, AddressOf tolerance.Assert) _
                 .Select(Function(g)
                             ' 合并在一起的二级碎片的相应强度取最高的为结果
@@ -102,6 +102,12 @@ Namespace Spectra
                             Return max
                         End Function) _
                 .ToArray
+
+            Return New LibraryMatrix With {
+                .ms2 = ms2Peaks,
+                .name = matrix.name,
+                .centroid = matrix.centroid
+            }
         End Function
 
         <Extension>

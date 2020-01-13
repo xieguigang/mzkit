@@ -77,7 +77,12 @@ Namespace Spectra
             End Set
         End Property
 
-        Public Property Name As String Implements IKeyedEntity(Of String).Key
+        Public Property name As String Implements IKeyedEntity(Of String).Key
+        ''' <summary>
+        ''' mass spectrometry data in centroid mode? 
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property centroid As Boolean
 
         Default Public Overloads ReadOnly Property Item(booleans As IEnumerable(Of Boolean)) As LibraryMatrix
             <MethodImpl(MethodImplOptions.AggressiveInlining)>

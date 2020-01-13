@@ -151,7 +151,7 @@ Namespace MarkupData.mzXML
                                  Optional shrinkTolerance As Tolerance = Nothing,
                                  Optional raw As Boolean = False) As PeakMs2
 
-            Dim mzInto As LibraryMatrix = peaks _
+            Dim ms2 As ms2() = peaks _
                 .ExtractMzI _
                 .Where(Function(p) p.intensity > 0) _
                 .Select(Function(p)
@@ -162,6 +162,11 @@ Namespace MarkupData.mzXML
                             }
                         End Function) _
                 .ToArray
+            Dim mzInto As New LibraryMatrix With {
+                .centroid = If(centroided = "1", True, False),
+                .ms2 = ms2,
+                .name = ToString()
+            }
 
             Static ms1 As [Default](Of String) = "ms1"
 
