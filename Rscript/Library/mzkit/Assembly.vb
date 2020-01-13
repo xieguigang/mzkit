@@ -95,7 +95,14 @@ Module Assembly
     ''' </returns>
     <ExportAPI("centroid")>
     Public Function centroid(ions As pipeline, Optional intoCutoff As Double = 0.05) As pipeline
+        Dim converter = Iterator Function() As IEnumerable(Of PeakMs2)
+                            For Each peak As PeakMs2 In ions.populates(Of PeakMs2)
+                                peak.mzInto.ms2 = peak.mzInto.ms2.Centroid(intoCutoff)
+                                Yield peak
+                            Next
+                        End Function
 
+        Return New pipeline(converter(), GetType(PeakMs2))
     End Function
 
     ''' <summary>

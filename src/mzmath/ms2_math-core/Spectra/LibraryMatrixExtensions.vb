@@ -104,6 +104,7 @@ Namespace Spectra
                 .ToArray
         End Function
 
+        <Extension>
         Public Iterator Function Centroid(peaks As ms2(), Optional intoCutoff# = 0.05) As IEnumerable(Of ms2)
             Dim maxInto = peaks.Select(Function(p) p.intensity).Max
 
