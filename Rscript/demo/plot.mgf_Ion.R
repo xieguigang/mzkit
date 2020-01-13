@@ -11,3 +11,11 @@ ions[1]
 :> mass_spectrum.plot
 :> save.graphics(file = "./HCD_profiles.png")
 ;
+
+ions
+:> mgf.ion_peaks
+:> centroid
+:> first
+:> mass_spectrum.plot
+:> save.graphics(file = "./HCD_centroided.png")
+;

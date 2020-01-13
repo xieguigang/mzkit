@@ -51,6 +51,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
+Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports mzXMLAssembly = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 
@@ -63,6 +64,22 @@ Module Assembly
     <ExportAPI("read.mgf")>
     Public Function ReadMgfIons(file As String) As Ions()
         Return MgfReader.StreamParser(path:=file).ToArray
+    End Function
+
+    <ExportAPI("mgf.ion_peaks")>
+    Public Function IonPeaks(ions As Object, Optional env As Environment = Nothing) As Object
+        Dim inputType As Type = ions.GetType
+
+        Select Case inputType
+            Case GetType(Ions)
+                Return {DirectCast(ions, Ions)}.IonPeaks.ToArray
+            Case GetType(Ions())
+                Return DirectCast(ions, Ions()).IonPeaks.ToArray
+            Case GetType(pipeline)
+                Return New pipeline(DirectCast(ions, pipeline).populates(Of Ions).IonPeaks, GetType(PeakMs2))
+            Case Else
+                Return Internal.debug.stop(New InvalidCastException(inputType.FullName), env)
+        End Select
     End Function
 
     <ExportAPI("write.mgf")>
@@ -95,23 +112,40 @@ Module Assembly
     ''' Peaks data in centroid mode.
     ''' </returns>
     <ExportAPI("centroid")>
-    Public Function centroid(ions As pipeline, Optional intoCutoff As Double = 0.05, Optional parallel As Boolean = False) As pipeline
-        Dim converter = Iterator Function() As IEnumerable(Of PeakMs2)
-                            For Each peak As PeakMs2 In ions.populates(Of PeakMs2)
-                                If Not peak.mzInto.centroid Then
-                                    peak.mzInto.ms2 = peak.mzInto.ms2 _
-                                        .Centroid(intoCutoff) _
-                                        .ToArray
-                                End If
+    Public Function centroid(ions As Object, Optional intoCutoff As Double = 0.05, Optional parallel As Boolean = False, Optional env As Environment = Nothing) As Object
+        Dim inputType As Type = ions.GetType
 
-                                Yield peak
-                            Next
-                        End Function
+        If inputType Is GetType(pipeline) OrElse inputType Is GetType(PeakMs2()) Then
+            Dim source As IEnumerable(Of PeakMs2) = If(inputType Is GetType(pipeline), DirectCast(ions, pipeline).populates(Of PeakMs2), DirectCast(ions, PeakMs2()))
+            Dim converter = Iterator Function() As IEnumerable(Of PeakMs2)
+                                For Each peak As PeakMs2 In source
+                                    If Not peak.mzInto.centroid Then
+                                        peak.mzInto.ms2 = peak.mzInto.ms2 _
+                                            .Centroid(intoCutoff) _
+                                            .ToArray
+                                    End If
 
-        If parallel Then
-            Return New pipeline(converter().AsParallel, GetType(PeakMs2))
+                                    Yield peak
+                                Next
+                            End Function
+
+            If parallel Then
+                Return New pipeline(converter().AsParallel, GetType(PeakMs2))
+            Else
+                Return New pipeline(converter(), GetType(PeakMs2))
+            End If
+        ElseIf inputType Is GetType(PeakMs2) Then
+            Dim ms2Peak As PeakMs2 = DirectCast(ions, PeakMs2)
+
+            If Not ms2Peak.mzInto.centroid Then
+                ms2Peak.mzInto.ms2 = ms2Peak.mzInto.ms2 _
+                    .Centroid(intoCutoff) _
+                    .ToArray
+            End If
+
+            Return ms2Peak
         Else
-            Return New pipeline(converter(), GetType(PeakMs2))
+            Return Internal.debug.stop(New InvalidCastException(inputType.FullName), env)
         End If
     End Function
 

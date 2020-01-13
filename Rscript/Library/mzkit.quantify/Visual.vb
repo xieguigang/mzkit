@@ -137,9 +137,11 @@ Module Visual
                             End Function) _
                     .ToArray
 
-                Return New LibraryMatrix With {.ms2 = ms2, .Name = "Mass Spectrum"}
+                Return New LibraryMatrix With {.ms2 = ms2, .name = "Mass Spectrum"}
+            Case GetType(PeakMs2)
+                Return DirectCast(data, PeakMs2).mzInto
             Case Else
-                Throw New NotImplementedException
+                Throw New NotImplementedException(type.FullName)
         End Select
     End Function
 End Module
