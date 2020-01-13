@@ -57,5 +57,13 @@ Module Assembly
         Return MgfReader.StreamParser(path:=file).ToArray
     End Function
 
+    ''' <summary>
+    ''' Convert mzxml file as mgf ions.
+    ''' </summary>
+    ''' <param name="mzXML"></param>
+    ''' <returns></returns>
+    <ExportAPI("mzxml.mgf")>
+    Public Function mzXML2Mgf(mzXML As String) As Ions()
 
+    End Function
 End Module
