@@ -1,4 +1,4 @@
-#Region "Microsoft.ROpen::2b258552fec2f50609a07cb5f07272a9, mgf.R"
+#Region "Microsoft.ROpen::54175876760b25fe784751f40a477758, mgf.R"
 
     # Summaries:
 
@@ -6,6 +6,7 @@
     # mgf.ion <- function(mz, rt, ms2, charge = "1", title = "Unknown name ion", ms1.into = 100) {...
     # read.mgf <- function(fileName) {...
     # parse.mgf <- function(buffer) {...
+    # parse.mgf.title_meta <- function(title) {...
 
 #End Region
 

@@ -1,3 +1,13 @@
+#Region "Microsoft.ROpen::554e3043130cd51dffe2c8ebffda289a, centroid.R"
+
+    # Summaries:
+
+    # centroid.2 <- function(profile, peakwidth = 0.3, angle.threshold = 0.5) {if (!(c("mz", "into") %in% colnames(profile))) {...
+    # angle <- function(p1, p2) {...
+    # peak.accumulateLine <- function(into) {...
+
+#End Region
+
 #' Convert profile data to centroid
 #'
 #' @details Convert the profiles spectrum data matrix to centroid data mode.

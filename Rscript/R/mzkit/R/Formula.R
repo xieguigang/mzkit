@@ -1,3 +1,11 @@
+#Region "Microsoft.ROpen::5937bfe31fd8262f3dac0bdbcb978586, Formula.R"
+
+    # Summaries:
+
+    # Enumerate.Formula.mass <- function(mass, charges = NULL, tolerance = function(m1, m2) abs(m1 - m2) <= 0.3) {}Enumerate.Formula.MZ <- function(mz, tolerance = function(mz1, mz2) ppm(mz1 - mz2) <= 20) {...
+
+#End Region
+
 # Hello, world!
 #
 # This is an example function named 'hello' 

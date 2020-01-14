@@ -1,9 +1,9 @@
-#Region "Microsoft.ROpen::3f3edc3157844755e929b0e8ed80d940, asciiView.R"
+#Region "Microsoft.ROpen::65e6df594237eed3012943702a3930bb, asciiView.R"
 
-# Summaries:
+    # Summaries:
 
-# asciiView <- function(spectra,into.cutoff = 0.05,maxWidth = 80,show.mz.labels = TRUE) {...
-# lenOf <- function(x) {if (x < 10) {...
+    # asciiView <- function(spectra,into.cutoff = 0.05,maxWidth = 80,show.mz.labels = TRUE) {...
+    # lenOf <- function(x) {if (x < 10) {...
 
 #End Region
 
