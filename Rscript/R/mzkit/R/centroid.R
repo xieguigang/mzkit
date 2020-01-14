@@ -9,10 +9,11 @@
 #'    will throw an exception
 #' 
 #' @param profile A 2D spectra data matrix in profile mode
+#' @param peakwidth The spectra peak width in ``da`` unit
 #' 
 #' @return A 2D spectra data matrix in simple centroid mode.
 #'
-centroid.2 <- function(profile) {
+centroid.2 <- function(profile, peakwidth = 0.3, angle.threshold = 5) {
     if (!(c("mz", "into") %in% colnames(profile))) {
         stop("Invalid prpfile spectra data matrix object!");
     }
@@ -27,5 +28,58 @@ centroid.2 <- function(profile) {
     #
     # due to the reason of the ms2 profiles peaks is not overlapping 
     # each other
+    accumulates <- peak.accumulateLine(into);
+    windowSlices <- slide.windows(win_size = 2, step = 1, mz = mz, into = into);
+    
+    cmz   <- c();
+    cinto <- c();
+    bmz   <- c();
+    binto <- c();
 
+    for(slide in windowSlices) {
+        p1 <- c(slide$mz[1], slide$into[1]);
+        p2 <- c(slide$mz[2], slide$into[2]);
+        a <- angle(p1, p2);
+
+        if (a <= angle.threshold) {
+            # we get a spectra peak
+            i <- which.max(binto);
+            cmz <- append(cmz, bmz[i]);
+            cinto <- append(cinto, binto[i]);
+            bmz   <- c();
+            binto <- c();
+        } else {
+            if (is.null(bmz)) {
+                bmz <- slide$mz;
+                binto <- slide$into;
+            } else {
+                bmz <- append(bmz, slide$mz[2]);
+                binto <- append(binto, slide$into[2]);
+            }
+        }
+    }
+
+    if (length(bmz) > 0) {
+        # we get a spectra peak
+        i <- which.max(binto);
+        cmz <- append(cmz, bmz[i]);
+        cinto <- append(cinto, binto[i]);
+    }
+
+    # we get a ms2 spectra peaks data in centroid mode
+    data.frame(mz = cmz, into = cinto);
+}
+
+angle <- function(p1, p2) {
+    xydiff <- p2 - p1;
+    a <- atan2(xydiff[2], xydiff[1]);
+    a <- a * 180 / pi;
+
+    180 - (a - 90);
+}
+
+peak.accumulateLine <- function(into) {
+    sum.all <- sum(into);
+    accumulates <- reduce(into, aggregate = function(a, b) a + b) / sum.all;
+    accumulates;
 }
