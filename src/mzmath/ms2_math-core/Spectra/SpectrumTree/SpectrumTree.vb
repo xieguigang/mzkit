@@ -1,51 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::4a683368ddca70c0126b3b1f7dbe4cbf, src\mzmath\ms2_math-core\Spectra\SpectrumTree\SpectrumTree.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class SpectrumTreeCluster
-    ' 
-    '         Properties: allMs2Scans
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: Best, doCluster, PopulateClusters, SSMCompares
-    ' 
-    '         Sub: clusterInternal
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class SpectrumTreeCluster
+' 
+'         Properties: allMs2Scans
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: Best, doCluster, PopulateClusters, SSMCompares
+' 
+'         Sub: clusterInternal
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -157,7 +157,6 @@ Namespace Spectra
         End Function
 
         Private Sub clusterInternal(ms2list As PeakMs2(), tick As Action)
-            Dim shrinkTolerance As Tolerance = Tolerance.DeltaMass(0.1)
             Dim matrix As LibraryMatrix
             Dim simply As PeakMs2
 
@@ -165,9 +164,7 @@ Namespace Spectra
             tree = New AVLTree(Of PeakMs2, PeakMs2)(Ms2Compares, Function(x) x.ToString)
 
             For Each ms2 As PeakMs2 In ms2list
-                matrix = ms2.mzInto _
-                    .Shrink(shrinkTolerance) _
-                    .Trim(0.05)
+                matrix = ms2.mzInto.CentroidMode(0.05)
                 simply = New PeakMs2 With {
                     .mz = ms2.mz,
                     .file = ms2.file,

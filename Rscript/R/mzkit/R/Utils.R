@@ -1,9 +1,7 @@
-#Region "Microsoft.ROpen::a636d2f7ee1f3195eb2c98256ce2815f, Utils.R"
+#Region "Microsoft.ROpen::abb7e506af6ab834aebf6bd2ed2a593b, Utils.R"
 
     # Summaries:
 
-    # Delete.EmptyKEGG <- function(dataframe, col.name = "KEGG") {...
-    # PPM <- function(measured, actualValue) {...
     # getPolarity <- function(type) {...
     # get.mass <- function(chargeMode, PrecursorType) {if (PrecursorType %in% c("[M]+", "[M]-")) {...
     # get.PrecursorMZ.Auto <- function(M, precursorType) {...
@@ -11,17 +9,6 @@
     # notFound.warn <- function(mz, precursorType) {if ((mz == -1) %=>% all) {...
 
 #End Region
-
-#' PPM value between two mass value
-#'
-PPM <- function(measured, actualValue) {
-	# 2018-7-8 without abs function for entir value, this may cause bugs in metaDNA
-	# for unknown query when actualValue is negative
-
-    # |(measure - reference)| / measure * 1000000
-    abs(((measured - actualValue) / actualValue) * 1000000);
-}
-
 
 #' Get ionlization mode
 #'

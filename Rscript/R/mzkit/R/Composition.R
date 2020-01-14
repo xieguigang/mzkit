@@ -1,3 +1,11 @@
+#Region "Microsoft.ROpen::7085176c814cc787e4113887f5a43cdc, Composition.R"
+
+    # Summaries:
+
+    # element.numbers <- function(composition) {}element.ratio.H_C <- function(composition) {} element.ratio.heteroatom <- function(composition) {}element.probability <- function(composition) {...
+
+#End Region
+
 # Hello, world!
 #
 # This is an example function named 'hello' 

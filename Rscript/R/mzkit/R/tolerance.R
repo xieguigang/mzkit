@@ -1,7 +1,8 @@
-#Region "Microsoft.ROpen::7525a79285d260495e582aa394765ec7, tolerance.R"
+#Region "Microsoft.ROpen::6fae11bed7a2c40ddf79d286e61fbcb1, tolerance.R"
 
     # Summaries:
 
+    # PPM <- function(measured, actualValue) {...
     # tolerance.deltaMass <- function(da = 0.3) {...
     # tolerance.ppm <- function(ppm = 20) {...
     # assert.deltaMass <- function(da = 0.3) {...
@@ -9,6 +10,16 @@
     # tolerance <- function(threshold = 0.3, method = c("da", "ppm")) {if (method[1] == "da") {...
 
 #End Region
+
+#' PPM value between two mass value
+#'
+PPM <- function(measured, actualValue) {
+	# 2018-7-8 without abs function for entir value, this may cause bugs in metaDNA
+	# for unknown query when actualValue is negative
+
+    # |(measure - reference)| / measure * 1000000
+    abs(((measured - actualValue) / actualValue) * 1000000);
+}
 
 #' Tolerance in Mass delta mode
 #'

@@ -1,3 +1,12 @@
+#Region "Microsoft.ROpen::ce52f2e8874159c26d2842bd8395936b, keggBrite.R"
+
+    # Summaries:
+
+    # KEGG.brites <- function() {...
+    # append.KEGG_brite <- function(table, col = "KEGG", name = "*") {...
+
+#End Region
+
 KEGG.brites <- function() {
     list(
         br08001 = 'Compounds with biological roles',

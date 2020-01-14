@@ -1,19 +1,29 @@
+#Region "Microsoft.ROpen::554e3043130cd51dffe2c8ebffda289a, centroid.R"
+
+    # Summaries:
+
+    # centroid.2 <- function(profile, peakwidth = 0.3, angle.threshold = 0.5) {if (!(c("mz", "into") %in% colnames(profile))) {...
+    # angle <- function(p1, p2) {...
+    # peak.accumulateLine <- function(into) {...
+
+#End Region
+
 #' Convert profile data to centroid
-#' 
+#'
 #' @details Convert the profiles spectrum data matrix to centroid data mode.
-#'    The matrix data for this function shoule be a dataframe object which 
+#'    The matrix data for this function shoule be a dataframe object which
 #'    at least contains 2 column data, where:
 #'       \code{profile <- data.frame(mz = mzlist, into = intolist);}
-#' 
+#'
 #'    If the \code{mz} or \code{into} data column is missing, then this function
 #'    will throw an exception
-#' 
+#'
 #' @param profile A 2D spectra data matrix in profile mode
-#' @param peakwidth The spectra peak width in ``da`` unit
-#' 
+#' @param peakwidth The spectra peak width in \code{da} unit
+#'
 #' @return A 2D spectra data matrix in simple centroid mode.
 #'
-centroid.2 <- function(profile, peakwidth = 0.3, angle.threshold = 5) {
+centroid.2 <- function(profile, peakwidth = 0.3, angle.threshold = 0.5) {
     if (!(c("mz", "into") %in% colnames(profile))) {
         stop("Invalid prpfile spectra data matrix object!");
     }
@@ -21,16 +31,25 @@ centroid.2 <- function(profile, peakwidth = 0.3, angle.threshold = 5) {
     mz <- as.numeric(as.vector(profile[, "mz"]));
     into <- as.numeric(as.vector(profile[, "into"]));
 
+	# reorder in asc order
+	i <- order(mz);
+	mz <- mz[i];
+	into <- into[i];
+
+	i <- (into / max(into)) >= 0.05;
+	mz <- mz[i];
+	into <- into[i];
+
     # reduce the spectra data size from profiles data to centroid data
     # algorithm by peak detection
     #
     # https://github.com/xieguigang/mzkit/blob/master/src/mzmath/ms2_math-core/Chromatogram/AccumulateROI.vb
     #
-    # due to the reason of the ms2 profiles peaks is not overlapping 
+    # due to the reason of the ms2 profiles peaks is not overlapping
     # each other
     accumulates <- peak.accumulateLine(into);
     windowSlices <- slide.windows(win_size = 2, step = 1, mz = mz, into = into);
-    
+
     cmz   <- c();
     cinto <- c();
     bmz   <- c();
@@ -41,11 +60,14 @@ centroid.2 <- function(profile, peakwidth = 0.3, angle.threshold = 5) {
         p2 <- c(slide$mz[2], slide$into[2]);
         a <- angle(p1, p2);
 
-        if (a <= angle.threshold) {
+        if (abs(a - 360) <= angle.threshold) {
+			if(length(bmz) > 0) {
             # we get a spectra peak
             i <- which.max(binto);
             cmz <- append(cmz, bmz[i]);
-            cinto <- append(cinto, binto[i]);
+            cinto <- append(cinto, binto[i]);			
+			}
+
             bmz   <- c();
             binto <- c();
         } else {
@@ -75,7 +97,7 @@ angle <- function(p1, p2) {
     a <- atan2(xydiff[2], xydiff[1]);
     a <- a * 180 / pi;
 
-    180 - (a - 90);
+    abs(180 - (a - 90));
 }
 
 peak.accumulateLine <- function(into) {

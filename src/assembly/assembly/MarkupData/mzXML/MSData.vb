@@ -139,16 +139,12 @@ Namespace MarkupData.mzXML
         End Function
 
         ''' <summary>
-        ''' 这个函数根据<paramref name="shrinkTolerance"/>参数值可能会合并碎片
+        ''' 
         ''' </summary>
         ''' <param name="basename"></param>
-        ''' <param name="shrinkTolerance">
-        ''' If this tolerance value is not nothing, then the fragment with mz inside this given tolerance will be merge.
-        ''' Otherwise all of the raw data will be keeps.
-        ''' </param>
         ''' <returns></returns>
         Public Function ScanData(Optional basename$ = Nothing,
-                                 Optional shrinkTolerance As Tolerance = Nothing,
+                                 Optional centroid As Boolean = False,
                                  Optional raw As Boolean = False) As PeakMs2
 
             Dim ms2 As ms2() = peaks _
@@ -171,8 +167,8 @@ Namespace MarkupData.mzXML
             Static ms1 As [Default](Of String) = "ms1"
 
             ' 合并碎片只针对2级碎片有效
-            If (msLevel > 1) AndAlso Not shrinkTolerance Is Nothing Then
-                mzInto = mzInto.Shrink(shrinkTolerance)
+            If (msLevel > 1) AndAlso centroid Then
+                mzInto = mzInto.CentroidMode(0.001)
             End If
 
             If Not raw Then
