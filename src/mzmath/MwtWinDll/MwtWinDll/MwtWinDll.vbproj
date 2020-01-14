@@ -224,6 +224,8 @@
     <Compile Include="Formula\FormulaFinder.vb" />
     <Compile Include="Formula\FormulaFinderCandidateElement.vb" />
     <Compile Include="Formula\FormulaFinderOptions.vb" />
+    <Compile Include="Formula\FormulaComposition.vb" />
+    <Compile Include="Formula\eSearchMode.vb" />
     <Compile Include="Formula\FormulaFinderResult.vb" />
     <Compile Include="MoleMassDilutionClass.vb">
       <SubType>Code</SubType>
