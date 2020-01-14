@@ -128,7 +128,7 @@ Namespace Spectra
                         End Function) _
                 .OrderBy(Function(m) m.Time) _
                 .Shadows _
-                .PopulateROI
+                .PopulateROI(baselineQuantile:=0)
 
                 Yield New ms2 With {
                     .mz = peak.rt,

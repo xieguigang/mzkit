@@ -127,7 +127,7 @@ Namespace Chromatogram
             End If
 
             For Each window As SlideWindow(Of PointF)() In peaks
-                Dim rtmin# = Fix(window.First()(0).X)
+                Dim rtmin# = window.First()(0).X
                 Dim rtmax# = window.Last()(-1).X + 1
                 Dim peak = chromatogram((time >= rtmin) & (time <= rtmax))
                 ' 因为Y是累加曲线的值，所以可以近似的看作为峰面积积分值
