@@ -1,16 +1,16 @@
 #' Convert profile data to centroid
-#' 
+#'
 #' @details Convert the profiles spectrum data matrix to centroid data mode.
-#'    The matrix data for this function shoule be a dataframe object which 
+#'    The matrix data for this function shoule be a dataframe object which
 #'    at least contains 2 column data, where:
 #'       \code{profile <- data.frame(mz = mzlist, into = intolist);}
-#' 
+#'
 #'    If the \code{mz} or \code{into} data column is missing, then this function
 #'    will throw an exception
-#' 
+#'
 #' @param profile A 2D spectra data matrix in profile mode
-#' @param peakwidth The spectra peak width in ``da`` unit
-#' 
+#' @param peakwidth The spectra peak width in \code{da} unit
+#'
 #' @return A 2D spectra data matrix in simple centroid mode.
 #'
 centroid.2 <- function(profile, peakwidth = 0.3, angle.threshold = 5) {
@@ -26,11 +26,11 @@ centroid.2 <- function(profile, peakwidth = 0.3, angle.threshold = 5) {
     #
     # https://github.com/xieguigang/mzkit/blob/master/src/mzmath/ms2_math-core/Chromatogram/AccumulateROI.vb
     #
-    # due to the reason of the ms2 profiles peaks is not overlapping 
+    # due to the reason of the ms2 profiles peaks is not overlapping
     # each other
     accumulates <- peak.accumulateLine(into);
     windowSlices <- slide.windows(win_size = 2, step = 1, mz = mz, into = into);
-    
+
     cmz   <- c();
     cinto <- c();
     bmz   <- c();
