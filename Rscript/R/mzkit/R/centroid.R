@@ -13,13 +13,22 @@
 #'
 #' @return A 2D spectra data matrix in simple centroid mode.
 #'
-centroid.2 <- function(profile, peakwidth = 0.3, angle.threshold = 5) {
+centroid.2 <- function(profile, peakwidth = 0.3, angle.threshold = 0.5) {
     if (!(c("mz", "into") %in% colnames(profile))) {
         stop("Invalid prpfile spectra data matrix object!");
     }
 
     mz <- as.numeric(as.vector(profile[, "mz"]));
     into <- as.numeric(as.vector(profile[, "into"]));
+
+	# reorder in asc order
+	i <- order(mz);
+	mz <- mz[i];
+	into <- into[i];
+
+	i <- (into / max(into)) >= 0.05;
+	mz <- mz[i];
+	into <- into[i];
 
     # reduce the spectra data size from profiles data to centroid data
     # algorithm by peak detection
@@ -41,11 +50,14 @@ centroid.2 <- function(profile, peakwidth = 0.3, angle.threshold = 5) {
         p2 <- c(slide$mz[2], slide$into[2]);
         a <- angle(p1, p2);
 
-        if (a <= angle.threshold) {
+        if (abs(a - 360) <= angle.threshold) {
+			if(length(bmz) > 0) {
             # we get a spectra peak
             i <- which.max(binto);
             cmz <- append(cmz, bmz[i]);
-            cinto <- append(cinto, binto[i]);
+            cinto <- append(cinto, binto[i]);			
+			}
+
             bmz   <- c();
             binto <- c();
         } else {
@@ -75,7 +87,7 @@ angle <- function(p1, p2) {
     a <- atan2(xydiff[2], xydiff[1]);
     a <- a * 180 / pi;
 
-    180 - (a - 90);
+    abs(180 - (a - 90));
 }
 
 peak.accumulateLine <- function(into) {
