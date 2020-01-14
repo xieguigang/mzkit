@@ -10,6 +10,16 @@
 
 #End Region
 
+#' PPM value between two mass value
+#'
+PPM <- function(measured, actualValue) {
+	# 2018-7-8 without abs function for entir value, this may cause bugs in metaDNA
+	# for unknown query when actualValue is negative
+
+    # |(measure - reference)| / measure * 1000000
+    abs(((measured - actualValue) / actualValue) * 1000000);
+}
+
 #' Tolerance in Mass delta mode
 #'
 #' @param da The mass delta value. By default if two mass value which
