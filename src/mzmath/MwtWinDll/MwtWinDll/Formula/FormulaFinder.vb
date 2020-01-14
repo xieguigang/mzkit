@@ -353,14 +353,15 @@ Public Class MWFormulaFinder
     ''' <param name="searchOptions"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public Function FindMatchesByMass(targetMass As Double, massToleranceDa As Double, searchOptions As FormulaFinderOptions) As List(Of FormulaFinderResult)
-        If searchOptions Is Nothing Then searchOptions = New FormulaFinderOptions()
+    Public Function FindMatchesByMass(targetMass As Double, massToleranceDa As Double, Optional searchOptions As FormulaFinderOptions = Nothing) As List(Of FormulaFinderResult)
+        If searchOptions Is Nothing Then
+            searchOptions = New FormulaFinderOptions()
+        End If
 
         Dim lstResults = FindMatchesByMass(targetMass, massToleranceDa, searchOptions, False)
 
         Dim sortedResults = LinqAPI.MakeList(Of FormulaFinderResult) <= From item In lstResults Order By item.SortKey Select item
         Return sortedResults
-
     End Function
 
     Public Function FindMatchesByPercentComposition(

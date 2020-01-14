@@ -57,7 +57,6 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports MwtWin = SMRUCC.proteomics.PNL.OMICS.MwtWinDll
 Imports MwtWinFormula = SMRUCC.proteomics.PNL.OMICS.MwtWinDll.FormulaFinderResult
-Imports MwtWinFormulaStr = SMRUCC.proteomics.PNL.OMICS.MwtWinDll.FormulaComposition
 Imports REnv = SMRUCC.Rsharp.Runtime.Internal.ConsolePrinter
 
 ''' <summary>
@@ -109,14 +108,15 @@ Module Formula
             Call oMwtWin.FormulaFinder.AddCandidateElement(element)
         Next
 
-        Dim searchOptions = New MwtWin.FormulaFinderOptions()
-
-        searchOptions.LimitChargeRange = False
-        searchOptions.ChargeMin = 1
-        searchOptions.ChargeMax = 1
-        searchOptions.FindTargetMZ = False
-
-        Dim results As MwtWinFormula() = oMwtWin.FormulaFinder.FindMatchesByMass(mass, tolerance, searchOptions).ToArray
+        Dim searchOptions As New MwtWin.FormulaFinderOptions() With {
+            .LimitChargeRange = False,
+            .ChargeMin = 1,
+            .ChargeMax = 1,
+            .FindTargetMZ = False
+        }
+        Dim results As MwtWinFormula() = oMwtWin.FormulaFinder _
+            .FindMatchesByMass(mass, tolerance, searchOptions) _
+            .ToArray
 
         Return results
     End Function
