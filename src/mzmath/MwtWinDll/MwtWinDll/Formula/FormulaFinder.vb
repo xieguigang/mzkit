@@ -1100,7 +1100,7 @@ Namespace FormulaFinder
 
             Dim sortedElementStats = LinqAPI.MakeList(Of FormulaFinderCandidateElement) <= From item In candidateElementsStats Order By item.Mass Descending Select item
 
-            If searchOptions.SearchMode = FormulaFinderOptions.eSearchMode.Thorough Then
+            If searchOptions.SearchMode = eSearchMode.Thorough Then
                 ' Thorough search
 
                 EstimateNumberOfOperations(sortedElementStats.Count)
@@ -1178,7 +1178,7 @@ Namespace FormulaFinder
             Order By item.Mass Descending
             Select item
 
-            If searchOptions.SearchMode = FormulaFinderOptions.eSearchMode.Thorough Then
+            If searchOptions.SearchMode = eSearchMode.Thorough Then
                 ' Thorough search
 
                 EstimateNumberOfOperations(sortedElementStats.Count)
