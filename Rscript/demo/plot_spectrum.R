@@ -17,3 +17,9 @@ read.csv("mz_centroid.csv")
 :> mass_spectrum.plot()
 :> save.graphics(file = "./HCD_centroid_bymzkit.png")
 ;
+
+
+read.csv("mzi_matrix.csv")
+:> mass_spectrum.plot()
+:> save.graphics(file = "./HCD_mzi_matrix.png")
+;
