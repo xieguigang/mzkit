@@ -277,10 +277,7 @@ Imports Microsoft.VisualBasic.Text
         Dim centroidIons = MgfReader.StreamParser([in]) _
             .Select(Function(p)
                         Dim peaks As New LibraryMatrix With {.ms2 = p.Peaks}
-                        Dim simplify = peaks.Shrink(ms2Tolerance)
-
-                        simplify = simplify / simplify.Max
-                        p.Peaks = simplify(simplify!intensity >= intoCutoff).ToArray
+                        Dim simplify = peaks.CentroidMode(intoCutoff)
 
                         Return p
                     End Function) _
