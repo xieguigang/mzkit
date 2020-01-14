@@ -62,6 +62,9 @@ Imports Microsoft.VisualBasic.Text
 
 Public Class FormulaComposition
 
+    Public ReadOnly Property CountsByElement As Dictionary(Of String, Integer)
+    Public ReadOnly Property EmpiricalFormula As String
+
     Default Public ReadOnly Property GetAtomCount(atom As String) As Integer
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
@@ -69,20 +72,21 @@ Public Class FormulaComposition
         End Get
     End Property
 
-    Public ReadOnly Property CountsByElement As Dictionary(Of String, Integer)
-    Public ReadOnly Property EmpiricalFormula As String
-
     Sub New(counts As IDictionary(Of String, Integer), Optional formula$ = Nothing)
         CountsByElement = New Dictionary(Of String, Integer)(counts)
 
         If formula.StringEmpty Then
-            EmpiricalFormula = CountsByElement _
-                .Select(Function(e) If(e.Value = 1, e.Key, e.Key & e.Value)) _
-                .JoinBy("")
+            EmpiricalFormula = GetEmpiricalFormula(composition:=CountsByElement)
         Else
             EmpiricalFormula = formula
         End If
     End Sub
+
+    Public Shared Function GetEmpiricalFormula(composition As IDictionary(Of String, Integer)) As String
+        Return composition _
+            .Select(Function(e) If(e.Value = 1, e.Key, e.Key & e.Value)) _
+            .JoinBy("")
+    End Function
 
     Public Overrides Function ToString() As String
         Return EmpiricalFormula
