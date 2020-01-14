@@ -81,7 +81,7 @@ Module Formula
         oMwtWin.SetElementMode(elementMode)
         oMwtWin.FormulaFinder.CandidateElements.Clear()
 
-        For Each element As String In candidateElements
+        For Each element As String In DirectCast(candidateElements, String())
             Call oMwtWin.FormulaFinder.AddCandidateElement(element)
         Next
 
