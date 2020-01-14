@@ -15,6 +15,10 @@ Currently the mzkit contains two library module:
 + ``mzkit.dll``
 + ``mzkit.quantify.dll``
 
+### Basic Knowledge in Mass Spectrometry
+
++ [``m/z`` value and ``precursor type``](mzkit/mz.MD)
+
 ### Quantitative targeting
 
 The ``mzkit.quantify`` library module apply for the quantitative targeting analysis for the Targeted Metabolomics analysis. The analysis protocols in this library module is apply to the MRM data and the GCMS SIM data.

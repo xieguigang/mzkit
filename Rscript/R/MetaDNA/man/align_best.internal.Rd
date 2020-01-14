@@ -17,7 +17,7 @@ align_best.internal(ref, peak, ms2.align, score.cutoff = 0.8,
 \value{
 Returns the alignment result, which is a R list object with members:
 
-    \code{list((ms2.matrix)ref, (ms2.matrix)candidate, score = [forward, reverse])}
+    \code{list((string)[unknown feature]ms2.name, (ms2.matrix)[unknown feature]candidate, score = [forward, reverse])}
 
     If the forward and reverse score cutoff less than score.cutoff, then this
     function will returns nothing.

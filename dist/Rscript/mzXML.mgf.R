@@ -1,0 +1,23 @@
+imports "mzkit.assembly" from "mzkit.dll"; 
+
+let mzxml as string        = ?"--mzxml";
+let mgf as string          = ?"--out" || `${dirname(mzxml)}/${basename(mzxml)}.mgf`;
+let ms1 as boolean         = ?"--and.ms1";
+let to.centroid as boolean = ?"--centroid";
+
+if (ms1) {
+	print(`Ms1 peaks will also dump from raw file: ${basename(mzxml)} to target mgf file.`);
+}
+if (to.centroid) {
+	print("Ms2 data will also be convert to centroid data.");
+}
+
+print(`Mgf ions data will be written to: ${mgf}`);
+
+if (to.centroid) {
+	mzxml.mgf(mzxml, FALSE, ms1) 
+	:> centroid
+	:> write.mgf(file = mgf);
+} else {
+	mzxml.mgf(mzxml, FALSE, ms1) :> write.mgf(file = mgf);
+}

@@ -1,0 +1,95 @@
+ID,class,category,subcategory,order,entry,name
+C11015,Pesticides and herbicides,Carbamate pesticides,,,C11015,Aldicarb
+C10896,Pesticides and herbicides,Carbamate pesticides,,,C10896,Benlate
+C07491,Pesticides and herbicides,Carbamate pesticides,,,C07491,Carbaryl
+C11196,Pesticides and herbicides,Carbamate pesticides,,,C11196,Methomyl
+C10981,Pesticides and herbicides,Carbamate pesticides,,,C10981,Vinclozolin
+C15225,Pesticides and herbicides,Dithiocarbamate pesticides,,,C15225,Mancozeb
+C15231,Pesticides and herbicides,Dithiocarbamate pesticides,,,C15231,Maneb
+C18144,Pesticides and herbicides,Dithiocarbamate pesticides,,,C18144,Metiram
+C15232,Pesticides and herbicides,Dithiocarbamate pesticides,,,C15232,Zineb
+C15229,Pesticides and herbicides,Dithiocarbamate pesticides,,,C15229,Ziram
+C07552,Pesticides and herbicides,Organochlorine pesticides,,,C07552,Aldrin
+C13718,Pesticides and herbicides,Organochlorine pesticides,,,C13718,Dieldrin
+C14176,Pesticides and herbicides,Organochlorine pesticides,,,C14176,Chlordane
+C14185,Pesticides and herbicides,Organochlorine pesticides,,,C14185,Heptachlor
+C14327,Pesticides and herbicides,Organochlorine pesticides,,,C14327,Heptachlor epoxide
+C18145,Pesticides and herbicides,Organochlorine pesticides,,,C18145,trans-Nonachlor
+C18146,Pesticides and herbicides,Organochlorine pesticides,,,C18146,Oxychlordane
+C04623,Pesticides and herbicides,Organochlorine pesticides,,,C04623,DDT
+C06636,Pesticides and herbicides,Organochlorine pesticides,,,C06636,DDD
+C04596,Pesticides and herbicides,Organochlorine pesticides,,,C04596,DDE
+C18124,Pesticides and herbicides,Organochlorine pesticides,,,C18124,Endrin
+C11090,Pesticides and herbicides,Organochlorine pesticides,,,C11090,Endosulfan
+C15214,Pesticides and herbicides,Organochlorine pesticides,,,C15214,alpha-Hexachlorocyclohexane
+C01792,Pesticides and herbicides,Organochlorine pesticides,,,C01792,Chlordecone
+C11043,Pesticides and herbicides,Organochlorine pesticides,,,C11043,Methoxychlor
+C14184,Pesticides and herbicides,Organochlorine pesticides,,,C14184,Mirex
+C15470,Pesticides and herbicides,Organochlorine pesticides,,,C15470,Toxaphene
+C10984,Pesticides and herbicides,Pyrethroid pesticides,,,C10984,Cypermethrin
+C18147,Pesticides and herbicides,Pyrethroid pesticides,,,C18147,Esfenvalerate
+C10988,Pesticides and herbicides,Pyrethroid pesticides,,,C10988,Fenvalerate
+C14388,Pesticides and herbicides,Pyrethroid pesticides,,,C14388,Permethrin
+C06551,Pesticides and herbicides,Triazine herbicides,,,C06551,Atrazine
+C14332,Pesticides and herbicides,Triazine herbicides,,,C14332,Metribuzin
+C11172,Pesticides and herbicides,Triazine herbicides,,,C11172,Simazine
+C03664,Pesticides and herbicides,Phenoxy herbicides,,,C03664,"2,4-Dichlorophenoxyacetate"
+C07100,Pesticides and herbicides,Phenoxy herbicides,,,C07100,"2,4,5-Trichlorophenoxyacetic acid"
+C10928,Pesticides and herbicides,Others,,,C10928,Alachlor
+C11261,Pesticides and herbicides,Others,,,C11261,Amitrole
+C14336,Pesticides and herbicides,Others,,,C14336,Dibromochloropropane
+C02625,Pesticides and herbicides,Others,,,C02625,"2,4-Dichlorophenol"
+C06604,Pesticides and herbicides,Others,,,C06604,Parathion
+C11042,Pesticides and herbicides,Others,,,C11042,Hexachlorobenzene
+C14301,Pesticides and herbicides,Others,,,C14301,Dicofol
+C07497,Pesticides and herbicides,Others,,,C07497,Malathion
+C11065,Pesticides and herbicides,Others,,,C11065,Nitrofen
+C02575,Pesticides and herbicides,Others,,,C02575,Pentachlorophenol
+C14343,Pesticides and herbicides,Others,,,C14343,Trifluralin
+C14211,Plasticizers and plastics,Phthalates,,,C14211,Butylbenzyl phthalate
+C14214,Plasticizers and plastics,Phthalates,,,C14214,Dibutyl phthalate
+C14529,Plasticizers and plastics,Phthalates,,,C14529,Dicyclohexyl phthalate
+C03690,Plasticizers and plastics,Phthalates,,,C03690,Diethylhexyl phthalate
+C14175,Plasticizers and plastics,Phthalates,,,C14175,Diethyl phthalate
+C14504,Plasticizers and plastics,Phthalates,,,C14504,Di-n-hexyl phthalate
+C14300,Plasticizers and plastics,Phthalates,,,C14300,Di-n-pentyl phthalate
+C14469,Plasticizers and plastics,Phthalates,,,C14469,Di-n-propylphthalate
+C14240,Plasticizers and plastics,Phthalates,,,C14240,Diethylhexyl adipate
+C13624,Plasticizers and plastics,Bisphenols,,,C13624,Bisphenol A
+C14993,Plasticizers and plastics,Alkylphenols,,,C14993,Nonylphenol
+C14132,Plasticizers and plastics,Alkylphenols,,,C14132,4-Octylphenol
+C07083,Plasticizers and plastics,Styrenes,,,C07083,Styrene
+C18148,Plasticizers and plastics,Styrenes,,,C18148,Octachlorostyrene
+C18205,Flame retardants,PBDEs,,,C18205,"2,2',4,4'-Tetrabromodiphenyl ether (PBDE 47)"
+C18204,Flame retardants,PBDEs,,,C18204,"2,2',4,5'-Tetrabromodiphenyl ether (PBDE 49)"
+C18203,Flame retardants,PBDEs,,,C18203,"2,2',4,4',5-Pentabromodiphenyl ether (PBDE 99)"
+C18138,Flame retardants,PBDEs,,,C18138,"2,2',4,4',5,6'-Hexabromodiphenyl ether (PBDE 154)"
+C07557,Dioxins and dioxin-like compounds,PCDDs,,,C07557,"2,3,7,8-Tetrachlorodibenzodioxin (PCDD 48)"
+C18099,Dioxins and dioxin-like compounds,PCDDs,,,C18099,"1,2,3,7,8-Pentachlorodibenzodioxin (PCDD 54)"
+C18100,Dioxins and dioxin-like compounds,PCDDs,,,C18100,"1,2,3,4,7,8-Hexachlorodibenzodioxin (PCDD 66)"
+C18101,Dioxins and dioxin-like compounds,PCDDs,,,C18101,"1,2,3,6,7,8-Hexachlorodibenzodioxin (PCDD 67)"
+C18102,Dioxins and dioxin-like compounds,PCDDs,,,C18102,"1,2,3,7,8,9-Hexachlorodibenzodioxin (PCDD 70)"
+C18103,Dioxins and dioxin-like compounds,PCDDs,,,C18103,"1,2,3,4,6,7,8-Heptachlorodibenzodioxin (PCDD 73)"
+C18180,Dioxins and dioxin-like compounds,PCDDs,,,C18180,"1,2,3,4,6,7,8,9-Octachlorodibenzo-p-dioxin (PCDD 75)"
+C18104,Dioxins and dioxin-like compounds,PCDFs,,,C18104,"2,3,7,8-Tetrachlorodibenzofuran (PCDF 83)"
+C18105,Dioxins and dioxin-like compounds,PCDFs,,,C18105,"1,2,3,7,8-Pentachlorodibenzofuran (PCDF 94)"
+C18106,Dioxins and dioxin-like compounds,PCDFs,,,C18106,"2,3,4,7,8-Pentachlorodibenzofuran (PCDF 114)"
+C18107,Dioxins and dioxin-like compounds,PCDFs,,,C18107,"1,2,3,4,7,8-Hexachlorodibenzofuran (PCDF 118)"
+C18109,Dioxins and dioxin-like compounds,PCDFs,,,C18109,"1,2,3,6,7,8-Hexachlorodibenzofuran (PCDF 121)"
+C18108,Dioxins and dioxin-like compounds,PCDFs,,,C18108,"1,2,3,7,8,9-Hexachlorodibenzofuran (PCDF 124)"
+C18110,Dioxins and dioxin-like compounds,PCDFs,,,C18110,"2,3,4,6,7,8-Hexachlorodibenzofuran (PCDF 130)"
+C18111,Dioxins and dioxin-like compounds,PCDFs,,,C18111,"1,2,3,4,6,7,8-Heptachlorodibenzofuran (PCDF 131)"
+C18112,Dioxins and dioxin-like compounds,PCDFs,,,C18112,"1,2,3,4,7,8,9-Heptachlorodibenzofuran (PCDF 134)"
+C18113,Dioxins and dioxin-like compounds,PCDFs,,,C18113,"1,2,3,4,6,7,8,9-Octachlorodibenzofuran (PCDF 135)"
+C11057,Dioxins and dioxin-like compounds,Non-ortho (coplanar) PCBs,,,C11057,"3,4,3',4'-Tetrachlorobiphenyl (PCB 77)"
+C18114,Dioxins and dioxin-like compounds,Non-ortho (coplanar) PCBs,,,C18114,"3,4,4',5-Tetrachlorobiphenyl (PDB 81)"
+C14573,Dioxins and dioxin-like compounds,Non-ortho (coplanar) PCBs,,,C14573,"3,3',4,4',5-Pentachlorobiphenyl (PCB 126)"
+C18115,Dioxins and dioxin-like compounds,Non-ortho (coplanar) PCBs,,,C18115,"3,4,5,3',4',5'-Hexachlorobiphenyl (PCB 169)"
+C18116,Dioxins and dioxin-like compounds,Mono-ortho PCBs,,,C18116,"2,3,4,3',4'-Pentachlorobiphenyl (PCB 105)"
+C18117,Dioxins and dioxin-like compounds,Mono-ortho PCBs,,,C18117,"2,3,4,4',5-Pentachlorobiphenyl (PCB 114)"
+C18118,Dioxins and dioxin-like compounds,Mono-ortho PCBs,,,C18118,"2,3',4,4',5-Pentachlorobiphenyl (PCB 118)"
+C18119,Dioxins and dioxin-like compounds,Mono-ortho PCBs,,,C18119,"2,3',4,4',5'-Pentachlorobiphenyl (PCB 123)"
+C18120,Dioxins and dioxin-like compounds,Mono-ortho PCBs,,,C18120,"2,3,3',4,4',5-Hexachlorobiphenyl (PCB 156)"
+C18121,Dioxins and dioxin-like compounds,Mono-ortho PCBs,,,C18121,"2,3,3',4,4',5'-Hexachlorobiphenyl (PCB 157)"
+C18122,Dioxins and dioxin-like compounds,Mono-ortho PCBs,,,C18122,"2,3',4,4',5,5'-Hexachlorobiphenyl (PCB 167)"
+C18123,Dioxins and dioxin-like compounds,Mono-ortho PCBs,,,C18123,"2,3,3',4,4',5,5'-Heptachlorobiphenyl (PCB 189)"

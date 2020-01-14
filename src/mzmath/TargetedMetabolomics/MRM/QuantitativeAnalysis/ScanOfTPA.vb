@@ -62,9 +62,9 @@ Namespace MRM
         ''' <returns></returns>
         <Extension>
         Public Function ScanTPA(raw$, ionpairs As IonPair(), TPAFactors As Dictionary(Of String, Double),
-                            Optional baselineQuantile# = 0.65,
-                            Optional integratorTicks% = 5000,
-                            Optional peakAreaMethod As PeakArea.Methods = Methods.Integrator) As IonTPA()
+                                Optional baselineQuantile# = 0.65,
+                                Optional integratorTicks% = 5000,
+                                Optional peakAreaMethod As PeakArea.Methods = Methods.Integrator) As IonTPA()
 
             ' 从原始文件之中读取出所有指定的离子对数据
             Dim ionData = ionpairs.ExtractIonData(

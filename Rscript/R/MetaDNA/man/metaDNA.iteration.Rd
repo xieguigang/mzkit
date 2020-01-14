@@ -14,11 +14,11 @@ metaDNA.iteration(identify, filter.skips, unknown, do.align, match.kegg,
 
 \item{do.align}{A lambda function that provides spectra alignment}
 
-\item{kegg.partners}{A lambda function for find reaction partners for a given list of 
+\item{kegg.partners}{A lambda function for find reaction partners for a given list of
 KEGG compound id.}
 
-\item{unknow.matches}{function evaluate result of \code{\link{kegg.match.handler}}, 
-this function descript that how to find out the unknown metabolite from a given 
+\item{unknow.matches}{function evaluate result of \code{\link{kegg.match.handler}},
+this function descript that how to find out the unknown metabolite from a given
 set of identify related kegg partners compound id set.}
 }
 \description{
