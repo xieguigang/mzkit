@@ -42,6 +42,10 @@
             Me.timeRange = timeRange
         End Sub
 
+        Sub New(start#, stop#)
+            Me.timeRange = $"[{start}, {[stop]}]"
+        End Sub
+
         Protected Overrides Function getFilterName() As String
             Return NameOf(scanTime)
         End Function

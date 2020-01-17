@@ -116,6 +116,22 @@ Module ProteoWizard
             .ToArray
     End Function
 
+    <ExportAPI("filter.msLevel")>
+    Public Function msLevelFilter(level As String) As filter
+        Return New msLevel(level)
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="start">Start time in time unit of seconds</param>
+    ''' <param name="stop">Stop time in time unit of seconds</param>
+    ''' <returns></returns>
+    <ExportAPI("filter.scanTime")>
+    Public Function scanTimeFilter(start#, stop#) As filter
+        Return New scanTime(start, [stop])
+    End Function
+
     ''' <summary>
     ''' Convert thermo raw files to mzXML files
     ''' </summary>
