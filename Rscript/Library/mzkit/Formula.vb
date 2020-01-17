@@ -44,6 +44,7 @@
 
 #End Region
 
+Imports System.Threading
 Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemistry.Model.Graph
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
@@ -52,8 +53,10 @@ Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports MwtWin = SMRUCC.proteomics.PNL.OMICS.MwtWinDll
 Imports MwtWinFormula = SMRUCC.proteomics.PNL.OMICS.MwtWinDll.FormulaFinder.FormulaFinderResult
@@ -161,5 +164,17 @@ Module Formula
     <ExportAPI("SDF.convertKCF")>
     Public Function SDF2KCF(sdfModel As SDF) As Model.KCF
         Return sdfModel.ToKCF
+    End Function
+
+    <ExportAPI("download.kcf")>
+    Public Function DownloadKCF(keggcompoundIDs As String(), save$) As Object
+        Dim result As New List(Of Object)
+
+        For Each id As String In keggcompoundIDs.SafeQuery
+            Call result.Add(Compound.DownloadKCF(id, saveDIR:=save))
+            Call Thread.Sleep(1000)
+        Next
+
+        Return result.ToArray
     End Function
 End Module
