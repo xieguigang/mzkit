@@ -6,7 +6,13 @@
         Protected MustOverride Function getFilterArgs() As String
 
         Public Overrides Function ToString() As String
-            Return $"{getFilterName()} {getFilterArgs()}"
+            Return $"--filter ""{getFilterName()} {getFilterArgs()}"""
+        End Function
+
+        Public Shared Function GetFilters(filters As IEnumerable(Of filter)) As String
+            ' multiple filters: Select scan numbers And recalculate precursors
+            ' msconvert data.RAW --filter "scanNumber [500,1000]" --filter "precursorRecalculation"
+            Return filters.JoinBy(" ")
         End Function
 
     End Class
