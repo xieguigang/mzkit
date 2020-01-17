@@ -23,11 +23,10 @@ let times = 30:1000 step 120;
 print (times);
 
 let doConvert as function(range) {
+	let filters = [filter.msLevel("1-2"), filter.scanTime(range, range + 120)];
+	let time.output = `${output}/${range}-${range+120}/`;
 
-let filters = [filter.msLevel("1-2"), filter.scanTime(range, range + 120)];
-let time.output = `${output}/${range}-${range+120}/`;
-
-convert.thermo.raw(raw, time.output, "mzXML", filters);
+	convert.thermo.raw(raw, time.output, "mzXML", filters);
 }
 
 for(range in times) {
