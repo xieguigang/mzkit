@@ -169,9 +169,12 @@ Module Formula
     <ExportAPI("download.kcf")>
     Public Function DownloadKCF(keggcompoundIDs As String(), save$) As Object
         Dim result As New List(Of Object)
+        Dim KCF$
 
         For Each id As String In keggcompoundIDs.SafeQuery
-            Call result.Add(Compound.DownloadKCF(id, saveDIR:=save))
+            KCF = Compound.DownloadKCF(id, saveDIR:=save)
+
+            Call result.Add(KCF)
             Call Thread.Sleep(1000)
         Next
 
