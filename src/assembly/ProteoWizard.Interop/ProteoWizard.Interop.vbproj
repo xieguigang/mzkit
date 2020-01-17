@@ -169,6 +169,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions.vb" />
+    <Compile Include="filters.vb" />
+    <Compile Include="OutFileTypes.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

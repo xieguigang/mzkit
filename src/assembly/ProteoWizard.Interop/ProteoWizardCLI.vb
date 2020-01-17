@@ -226,11 +226,6 @@ Public Class ProteoWizardCLI : Inherits InteropService
     ''' </summary>
     Public Shared ReadOnly Property BIN As String
 
-    Public Enum OutFileTypes
-        <Description("--mzXML")> mzXML
-        <Description("--mzML")> mzML
-    End Enum
-
     Shared Sub New()
         Call ProteoWizardCLI.ConfigProgram(bin:=App.GetVariable("bin"))
     End Sub
