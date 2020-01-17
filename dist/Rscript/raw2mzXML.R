@@ -1,7 +1,7 @@
 require(ProteoWizard);
 
 let sample as string = ?"--samples" || stop("No raw samples data directory provided!");
-let output as string = ?"--output"  || `${dirname(sample)}/mzXML/` ;
+let output as string = ?"--output"  || `${dirname(sample)}/${basename(sample)}.mzXML/` ;
 let raw as string   = list.files(sample, "*.raw");
 
 if (!msconvert.ready()) {
@@ -17,3 +17,11 @@ if (!msconvert.ready()) {
 
 print(`we have ${length(raw)} raw files data for convert to mzXML files`);
 print(basename(raw, TRUE));
+
+for(range in 30:1000 step 120) {
+let filters = [filter.msLevel("1-2"), filter.scanTime(range, range + 120)];
+let time.output = `${output}/${range}-${range+120}/`
+
+convert.thermo.raw(raw, time.output, "mzXML", filters);
+}
+
