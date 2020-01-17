@@ -107,7 +107,7 @@ Module ProteoWizard
                 output = wiff.TrimSuffix
             End If
 
-            bin.Convert2mzML(wiff, output, ProteoWizardCLI.OutFileTypes.mzML)
+            bin.Convert2mzML(wiff, output, OutFileTypes.mzML)
         End If
 
         Return output _
