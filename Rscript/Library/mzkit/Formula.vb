@@ -172,7 +172,7 @@ Module Formula
         Dim KCF$
 
         For Each id As String In keggcompoundIDs.SafeQuery
-            KCF = Compound.DownloadKCF(id, saveDIR:=save)
+            KCF = MetaboliteWebApi.DownloadKCF(id, saveDIR:=save)
 
             Call result.Add(KCF)
             Call Thread.Sleep(1000)
