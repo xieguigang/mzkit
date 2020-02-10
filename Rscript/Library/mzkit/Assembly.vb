@@ -83,14 +83,22 @@ Module Assembly
     End Function
 
     <ExportAPI("write.mgf")>
-    Public Function writeMgfIons(ions As pipeline, file$, Optional relativeInto As Boolean = False) As Boolean
-        Using mgfWriter As StreamWriter = file.OpenWriter(Encodings.ASCII, append:=False)
-            For Each ionPeak As PeakMs2 In ions.populates(Of PeakMs2)
-                Call ionPeak _
+    Public Function writeMgfIons(ions As Object, file$, Optional relativeInto As Boolean = False) As Boolean
+        If ions.GetType() Is GetType(pipeline) Then
+            Using mgfWriter As StreamWriter = file.OpenWriter(Encodings.ASCII, append:=False)
+                For Each ionPeak As PeakMs2 In DirectCast(ions, pipeline).populates(Of PeakMs2)
+                    Call ionPeak _
+                        .MgfIon _
+                        .WriteAsciiMgf(mgfWriter, relativeInto)
+                Next
+            End Using
+        ElseIf ions.GetType Is GetType(LibraryMatrix) Then
+            Using mgf As StreamWriter = file.OpenWriter
+                Call DirectCast(ions, LibraryMatrix) _
                     .MgfIon _
-                    .WriteAsciiMgf(mgfWriter, relativeInto)
-            Next
-        End Using
+                    .WriteAsciiMgf(mgf)
+            End Using
+        End If
 
         Return True
     End Function

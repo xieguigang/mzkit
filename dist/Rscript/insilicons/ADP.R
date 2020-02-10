@@ -1,3 +1,4 @@
+imports ["mzkit.assembly"] from "mzkit.dll";
 imports ["mzkit.simulator"] from "mzkit.insilicons.dll";
 
 setwd(!script$dir);
@@ -13,5 +14,6 @@ print(energyMax);
 
 mol
 :> fragmentation(energy = energy.normal(10, 0.05, energyMax),nIntervals=100)
+:> centroid
 :> write.mgf(file = "ADP.mgf")
 ;
