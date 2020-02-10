@@ -1,4 +1,6 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Insilicon
+﻿Imports System.IO
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Insilicon
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemistry.Model
 Imports BioNovoGene.BioDeep.Chemistry.Model.Graph
@@ -35,5 +37,14 @@ Module ms2_simulator
         Return New EnergyModel(Function(x, y)
                                    Return pnorm.ProbabilityDensity(x, mu, delta)
                                End Function, 0, 1000)
+    End Function
+
+    <ExportAPI("write.mgf")>
+    Public Function writeMgf(fragments As LibraryMatrix, file$) As Boolean
+        Using mgf As StreamWriter = file.OpenWriter
+            Call fragments.MgfIon.WriteAsciiMgf(mgf)
+        End Using
+
+        Return True
     End Function
 End Module
