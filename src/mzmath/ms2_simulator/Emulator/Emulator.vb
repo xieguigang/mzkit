@@ -92,14 +92,12 @@ Public Module Emulator
     ''' </param>
     ''' <param name="nintervals">计算能量分布的间隔区间数量</param>
     ''' <param name="precision"></param>
-    ''' <param name="intoCutoff">``[0, 1]``, zero or negative value means no cutoff.</param>
     ''' <returns></returns>
     <Extension>
     Public Function MolecularFragment(molecule As NetworkGraph, energy As EnergyModel,
                                       Optional nintervals% = 100,
                                       Optional precision% = 4,
-                                      Optional intoCutoff# = -1,
-                                      Optional verbose As Boolean = False) As LibraryMatrix
+                                      Optional verbose As Boolean = True) As LibraryMatrix
 
         Dim de# = (energy.MaxEnergy - energy.MinEnergy) / nintervals
         ' {mz, quantity}
@@ -113,9 +111,7 @@ Public Module Emulator
 
             ' 使用定积分求出分子能量的分布密度
             ' 分子的能量越高，高于这个能量的分子的百分比应该是越少的？
-            Dim percentage# = energy.Percentage(e, e + de) * 100
-            Dim fragmentModel As NetworkGraph = molecule.BreakBonds(energy:=e)
-            Dim fragments = IteratesSubNetworks(Of NetworkNode, Edge, NetworkGraph)(fragmentModel, singleNodeAsGraph:=True).ToArray
+            Dim percentage# = energy.Percentage(e, e + de, nintervals) * nintervals
 
             If verbose Then
                 Call $"Energy: {e}|{percentage}%".__INFO_ECHO
@@ -124,6 +120,12 @@ Public Module Emulator
             If percentage <= 0 Then
                 Continue For
             End If
+
+            Dim fragmentModel As NetworkGraph = molecule.BreakBonds(energy:=e)
+            Dim fragments As NetworkGraph() = IteratesSubNetworks(Of NetworkNode, Edge, NetworkGraph)(
+                network:=fragmentModel,
+                singleNodeAsGraph:=True
+            ).ToArray
 
             For Each fragment As NetworkGraph In fragments
                 Dim mz As Double = fragment.CalculateMZ
@@ -158,13 +160,6 @@ Public Module Emulator
                 .OrderByDescending(Function(m) m.mz) _
                 .ToArray
         }
-
-        ' 进行归一化计算出每一个分子碎片的相对响应度百分比
-        matrix = (matrix / Max(matrix)) * 100
-
-        If intoCutoff > 0 Then
-            matrix = matrix(matrix!intensity >= intoCutoff).ToArray
-        End If
 
         Return matrix
     End Function

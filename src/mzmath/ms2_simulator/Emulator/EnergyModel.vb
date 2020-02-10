@@ -48,6 +48,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math.Calculus
 Imports Microsoft.VisualBasic.Text.Xml.Models
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' 分子的能量分布模型
@@ -105,11 +106,14 @@ Public Class EnergyModel
             .Last
     End Sub
 
-    Public Function Percentage(min#, max#) As Double
-        Dim lower# = model.RK4(energy.n, MinEnergy, min).Y.vector.Last
-        Dim upper# = model.RK4(energy.n, MinEnergy, max).Y.vector.Last
+    Public Function Percentage(min#, max#, nIntervals%) As Double
+        Dim lower# = model.RK4(energy.n / nIntervals, MinEnergy, min).Y.vector.Last
+        Dim upper# = model.RK4(energy.n / nIntervals, MinEnergy, max).Y.vector.Last
 
-        Return (upper - lower) / totalArea
+        ' 因为对于递减区间而言
+        ' max的计算结果值可能会小于min的计算结果值
+        ' 所以在这里需要使用绝对值来消除这个错误
+        Return stdNum.Abs(upper - lower) / totalArea
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>

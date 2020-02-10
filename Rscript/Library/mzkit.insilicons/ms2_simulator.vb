@@ -45,9 +45,8 @@ Module ms2_simulator
     <ExportAPI("fragmentation")>
     Public Function MolecularFragmentation(mol As NetworkGraph, energy As EnergyModel,
                                            Optional nIntervals% = 10,
-                                           Optional precision% = 4,
-                                           Optional intoCutoff# = -1) As LibraryMatrix
-        Return mol.MolecularFragment(energy, nIntervals, precision, intoCutoff)
+                                           Optional precision% = 4) As LibraryMatrix
+        Return mol.MolecularFragment(energy, nIntervals, precision)
     End Function
 
     <ExportAPI("energy.normal")>
