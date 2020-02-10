@@ -64,9 +64,9 @@ Namespace My
     Friend Module MySettingsProperty
         
         <Global.System.ComponentModel.Design.HelpKeywordAttribute("My.Settings")>  _
-        Friend ReadOnly Property Settings() As Global.PNL.OMICS.MwtWinDll.Extensions.My.MySettings
+        Friend ReadOnly Property Settings() As Global.PNNL.OMICS.MwtWinDll.Extensions.My.MySettings
             Get
-                Return Global.PNL.OMICS.MwtWinDll.Extensions.My.MySettings.Default
+                Return Global.PNNL.OMICS.MwtWinDll.Extensions.My.MySettings.Default
             End Get
         End Property
     End Module

@@ -74,7 +74,7 @@
 
 #End Region
 
-Imports PNL.OMICS.MwtWinDll.FormulaFinder
+Imports PNNL.OMICS.MwtWinDll.FormulaFinder
 
 Public Class MolecularWeightCalculator
 

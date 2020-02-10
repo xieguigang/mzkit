@@ -51,7 +51,6 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Matrix
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
-Imports SMRUCC.genomics.Data
 
 ''' <summary>
 ''' Prediciton of the relative LC-MS retention time for measuring ``rt.error``
@@ -127,11 +126,11 @@ Public Module RTPrediction
     ''' <returns></returns>
     ''' 
     <Extension>
-    Public Function ScanMLRModel(metadb As IEnumerable(Of MetaInfo), kegg As CompoundRepository) As MLRFit
+    Public Function ScanMLRModel(metadb As IEnumerable(Of MetaInfo), kegg As Dictionary(Of String, Compound)) As MLRFit
         ' 无效数据过滤
         Dim valids = metadb _
             .Where(Function(m)
-                       Dim a = Not m.xref!KEGG.StringEmpty AndAlso kegg.Exists(key:=m.xref!KEGG)
+                       Dim a = Not m.xref!KEGG.StringEmpty AndAlso kegg.ContainsKey(key:=m.xref!KEGG)
                        Dim b = m.rt >= 0
                        Dim c = Not m.rt.IsNaNImaginary
 
@@ -142,9 +141,7 @@ Public Module RTPrediction
             .ToArray
         Dim inputs = valids _
             .Select(Function(meta)
-                        Dim compound As Compound = kegg _
-                            .GetByKey(meta.xref!KEGG) _
-                            .Entity
+                        Dim compound As Compound = kegg(meta.xref!KEGG)
                         Dim KCF As KCF = IO.LoadKCF(stream:=compound.KCF)
 
                         Return (KCF, meta.rt)

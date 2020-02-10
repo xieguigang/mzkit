@@ -78,7 +78,7 @@
 Imports System.Runtime.InteropServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Language
-Imports PNL.OMICS.MwtWinDll.MolecularWeightCalculator
+Imports PNNL.OMICS.MwtWinDll.MolecularWeightCalculator
 
 Namespace FormulaFinder
 

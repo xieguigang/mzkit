@@ -221,10 +221,6 @@
       <Project>{c699d311-9923-4c19-bf70-5048d0e2cf5d}</Project>
       <Name>Bio.Assembly</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\core\Bio.Repository\Bio.Repository.vbproj">
-      <Project>{216acc2d-c7a5-4c27-9dc9-bdfa4dbb6a37}</Project>
-      <Name>Bio.Repository</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj">
       <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
       <Name>47_dotnet_ms-vb_data.framework</Name>
@@ -280,10 +276,6 @@
     <ProjectReference Include="..\ms2_math-core\MassSpectrum.math-core.vbproj">
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
       <Name>MassSpectrum.math-core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MwtWinDll\MwtWinDll.Extensions\MwtWinDll.Extensions.vbproj">
-      <Project>{1b7c8c1b-b794-4f0a-8d6c-0f32f6d4e927}</Project>
-      <Name>MwtWinDll.Extensions</Name>
     </ProjectReference>
     <ProjectReference Include="..\MwtWinDll\MwtWinDll\MwtWinDll.vbproj">
       <Project>{78332537-7ecc-4b74-8aa9-ba66ab296af0}</Project>
