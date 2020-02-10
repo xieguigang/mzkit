@@ -154,7 +154,8 @@ Public Module Emulator
 
                             Return New ms2 With {
                                 .mz = mz,
-                                .quantity = frag.Value
+                                .quantity = frag.Value,
+                                .intensity = frag.Value
                             }
                         End Function) _
                 .OrderByDescending(Function(m) m.mz) _
