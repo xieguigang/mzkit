@@ -1,3 +1,10 @@
+#Region "Microsoft.ROpen::0939b08fe05398792e44db93126624c4, zzz.R"
+
+    # Summaries:
+
+    # .onLoad <- function(libname, pkgname) {...
+
+#End Region
 
 #' Package loader
 #'

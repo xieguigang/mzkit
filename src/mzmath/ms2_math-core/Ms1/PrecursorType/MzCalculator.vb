@@ -58,7 +58,7 @@ Imports System.Data.Linq.Mapping
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace Ms1.PrecursorType
 
@@ -152,7 +152,7 @@ Namespace Ms1.PrecursorType
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function AdductMZ(mass#, adduct#, charge%) As Double
-            Return (mass / sys.Abs(charge) + adduct)
+            Return (mass / stdNum.Abs(charge) + adduct)
         End Function
 
         ''' <summary>
@@ -166,9 +166,15 @@ Namespace Ms1.PrecursorType
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function ReverseMass(mz#, M#, charge%, adduct#) As Double
-            Return ((mz - adduct) * sys.Abs(charge) / M)
+            Return ((mz - adduct) * stdNum.Abs(charge) / M)
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="mass#"></param>
+        ''' <param name="mode"><see cref="ParseIonMode"/></param>
+        ''' <returns></returns>
         Public Shared Iterator Function Calculate(mass#, mode As String) As IEnumerable(Of MzReport)
             For Each type In Provider.Calculator(mode).Values
                 Yield New MzReport With {

@@ -1,0 +1,344 @@
+ID,class,category,subcategory,order,entry,name
+C07473,Fungal toxins,Mushroom toxins,Alkaloids,,C07473,Muscarine
+C08311,Fungal toxins,Mushroom toxins,Alkaloids,,C08311,Muscimol
+C19959,Fungal toxins,Mushroom toxins,Alkaloids,,C19959,Orellanine
+C08312,Fungal toxins,Mushroom toxins,Alkaloids,,C08312,Psilocin
+C07576,Fungal toxins,Mushroom toxins,Alkaloids,,C07576,Psilocybin
+C08438,Fungal toxins,Mushroom toxins,Cyclic peptides,,C08438,alpha-Amanitin
+C08439,Fungal toxins,Mushroom toxins,Cyclic peptides,,C08439,Phalloidin
+C19957,Fungal toxins,Mushroom toxins,Terpenoids,,C19957,Fasciculol E
+C19958,Fungal toxins,Mushroom toxins,Terpenoids,,C19958,Fasciculol F
+C09687,Fungal toxins,Mushroom toxins,Terpenoids,,C09687,Illudin M
+C09688,Fungal toxins,Mushroom toxins,Terpenoids,,C09688,Illudin S
+C19956,Fungal toxins,Mushroom toxins,Terpenoids,,C19956,Neoilludin A
+C19949,Fungal toxins,Mushroom toxins,Others,,C19949,Acromelic acid A
+C19977,Fungal toxins,Mushroom toxins,Others,,C19977,Clitidine
+C08271,Fungal toxins,Mushroom toxins,Others,,C08271,Coprine
+C08305,Fungal toxins,Mushroom toxins,Others,,C08305,Gyromitrin
+C10600,Fungal toxins,Mushroom toxins,Others,,C10600,Ibotenic acid
+C19978,Fungal toxins,Mushroom toxins,Others,,C19978,Sclerocitrin
+C06047,Fungal toxins,Mushroom toxins,Others,,C06047,Stizolobate
+C06048,Fungal toxins,Mushroom toxins,Others,,C06048,Stizolobinate
+C19979,Fungal toxins,Mushroom toxins,Others,,C19979,Ustalic acid
+C19976,Fungal toxins,Mushroom toxins,Others,,C19976,Valinopine
+C06800,Fungal toxins,Mycotoxins,Aflatoxins,,C06800,Aflatoxin B1
+C16753,Fungal toxins,Mycotoxins,Aflatoxins,,C16753,Aflatoxin B2
+C16754,Fungal toxins,Mycotoxins,Aflatoxins,,C16754,Aflatoxin G2
+C16755,Fungal toxins,Mycotoxins,Aflatoxins,,C16755,Aflatoxin G1
+C16756,Fungal toxins,Mycotoxins,Aflatoxins,,C16756,Aflatoxin M1
+C09662,Fungal toxins,Mycotoxins,Trichothecenes,,C09662,Diacetoxyscirpenol
+C19952,Fungal toxins,Mycotoxins,Trichothecenes,,C19952,HT-2 Toxin
+C09738,Fungal toxins,Mycotoxins,Trichothecenes,,C09738,T-2 Toxin
+C19583,Fungal toxins,Mycotoxins,Trichothecenes,,C19583,Fusarenone X
+C06080,Fungal toxins,Mycotoxins,Trichothecenes,,C06080,Nivalenol
+C09747,Fungal toxins,Mycotoxins,Trichothecenes,,C09747,Vomitoxin
+C20017,Fungal toxins,Mycotoxins,Trichothecenes,,C20017,Satratoxin H
+C19241,Fungal toxins,Mycotoxins,Fumonisins,,C19241,Fumonisin B1
+C19242,Fungal toxins,Mycotoxins,Fumonisins,,C19242,Fumonisin B2
+C09023,Fungal toxins,Mycotoxins,Ergot alkaloids,,C09023,Agroclavine
+C09162,Fungal toxins,Mycotoxins,Ergot alkaloids,,C09162,Ergocornine
+C09164,Fungal toxins,Mycotoxins,Ergot alkaloids,,C09164,Ergocristine
+C07545,Fungal toxins,Mycotoxins,Ergot alkaloids,,C07545,alpha-Ergocryptine
+C20590,Fungal toxins,Mycotoxins,Ergot alkaloids,,C20590,beta-Ergocryptine
+C07543,Fungal toxins,Mycotoxins,Ergot alkaloids,,C07543,Ergonovine
+C07544,Fungal toxins,Mycotoxins,Ergot alkaloids,,C07544,Ergotamine
+C20555,Fungal toxins,Mycotoxins,Indole diterpene alkaloids,,C20555,Aflatrem
+C20527,Fungal toxins,Mycotoxins,Indole diterpene alkaloids,,C20527,Emindole SB
+C20600,Fungal toxins,Mycotoxins,Indole diterpene alkaloids,,C20600,Janthitrem B
+C20601,Fungal toxins,Mycotoxins,Indole diterpene alkaloids,,C20601,Janthitrem C
+C20551,Fungal toxins,Mycotoxins,Indole diterpene alkaloids,,C20551,Lolitrem B
+C20530,Fungal toxins,Mycotoxins,Indole diterpene alkaloids,,C20530,Paspaline
+C20553,Fungal toxins,Mycotoxins,Indole diterpene alkaloids,,C20553,Paspalicine
+C20554,Fungal toxins,Mycotoxins,Indole diterpene alkaloids,,C20554,Paspalinine
+C13782,Fungal toxins,Mycotoxins,Indole diterpene alkaloids,,C13782,Paxilline
+C20070,Fungal toxins,Mycotoxins,Indole diterpene alkaloids,,C20070,Penitrem A
+C20731,Fungal toxins,Mycotoxins,Indole diterpene alkaloids,,C20731,Penitrem B
+C20795,Fungal toxins,Mycotoxins,Indole diterpene alkaloids,,C20795,Penitrem C
+C20596,Fungal toxins,Mycotoxins,Indole diterpene alkaloids,,C20596,Penitrem D
+C20597,Fungal toxins,Mycotoxins,Indole diterpene alkaloids,,C20597,Penitrem E
+C20598,Fungal toxins,Mycotoxins,Indole diterpene alkaloids,,C20598,Penitrem F
+C20599,Fungal toxins,Mycotoxins,Indole diterpene alkaloids,,C20599,Pennigritrem
+C20546,Fungal toxins,Mycotoxins,Indole diterpene alkaloids,,C20546,Terpendole C
+C16765,Fungal toxins,Mycotoxins,Others,,C16765,Citrinin
+C09955,Fungal toxins,Mycotoxins,Others,,C09955,Ochratoxin A
+C16748,Fungal toxins,Mycotoxins,Others,,C16748,Patulin
+C09981,Fungal toxins,Mycotoxins,Others,,C09981,Zearalenone
+C16838,Fungal toxins,Mycotoxins,Others,,C16838,Alternariol
+C08511,Fungal toxins,Mycotoxins,Others,,C08511,Tenuazonic acid
+C08441,Fungal toxins,Mycotoxins,Others,,C08441,Tentoxin
+C11590,Fungal toxins,Mycotoxins,Others,,C11590,Beauvericin
+C15740,Fungal toxins,Mycotoxins,Others,,C15740,Enniatin B
+C15757,Fungal toxins,Mycotoxins,Others,,C15757,Enniatin D
+C20591,Fungal toxins,Mycotoxins,Others,,C20591,Fusaproliferin
+C20592,Fungal toxins,Mycotoxins,Others,,C20592,Moniliformin
+C16766,Fungal toxins,Mycotoxins,Others,,C16766,Citreoviridin
+C19379,Fungal toxins,Mycotoxins,Others,,C19379,Cyclochlorotine
+C03032,Fungal toxins,Mycotoxins,Others,,C03032,Cyclopiazonic acid
+C19953,Fungal toxins,Mycotoxins,Others,,C19953,Cytochalasin A
+C19954,Fungal toxins,Mycotoxins,Others,,C19954,Cytochalasin B
+C10595,Fungal toxins,Mycotoxins,Others,,C10595,Gliotoxin
+C16763,Fungal toxins,Mycotoxins,Others,,C16763,Luteoskyrin
+C20046,Fungal toxins,Mycotoxins,Others,,C20046,Mollicellin C
+C16804,Fungal toxins,Mycotoxins,Others,,C16804,Penicillic acid
+C19955,Fungal toxins,Mycotoxins,Others,,C19955,Phomopsin A
+C06079,Fungal toxins,Mycotoxins,Others,,C06079,PR-toxin
+C16767,Fungal toxins,Mycotoxins,Others,,C16767,Rubratoxin B
+C16764,Fungal toxins,Mycotoxins,Others,,C16764,Rugulosin
+C16768,Fungal toxins,Mycotoxins,Others,,C16768,Sporidesmin J
+C00961,Fungal toxins,Mycotoxins,Others,,C00961,Sterigmatocystin
+C20045,Fungal toxins,Mycotoxins,Others,,C20045,Verruculogen
+C14752,Fungal toxins,Mycotoxins,Others,,C14752,alpha-Zearalanol
+C14750,Fungal toxins,Mycotoxins,Others,,C14750,alpha-Zearalenol
+C14751,Fungal toxins,Mycotoxins,Others,,C14751,beta-Zearalenol
+C09084,Phytotoxins,Alkaloids,Indole alkaloids,,C09084,Brucine
+C09144,Phytotoxins,Alkaloids,Indole alkaloids,,C09144,C-Curarine
+C09246,Phytotoxins,Alkaloids,Indole alkaloids,,C09246,C-Toxiferine I
+C09154,Phytotoxins,Alkaloids,Indole alkaloids,,C09154,Ellipticine
+C19982,Phytotoxins,Alkaloids,Indole alkaloids,,C19982,Gelsedine
+C09203,Phytotoxins,Alkaloids,Indole alkaloids,,C09203,Gelsemicine
+C09207,Phytotoxins,Alkaloids,Indole alkaloids,,C09207,Gelsemine
+C09240,Phytotoxins,Alkaloids,Indole alkaloids,,C09240,Sempervirine
+C06522,Phytotoxins,Alkaloids,Indole alkaloids,,C06522,Strychnine
+C07201,Phytotoxins,Alkaloids,Indole alkaloids,,C07201,Vinblastine
+C07204,Phytotoxins,Alkaloids,Indole alkaloids,,C07204,Vincristine
+C01626,Phytotoxins,Alkaloids,Indole alkaloids,,C01626,Vindoline
+C08469,Phytotoxins,Alkaloids,Isoquinoline alkaloids,,C08469,Aristolochic acid
+C09364,Phytotoxins,Alkaloids,Isoquinoline alkaloids,,C09364,Bicuculline
+C12242,Phytotoxins,Alkaloids,Isoquinoline alkaloids,,C12242,Chelidonine
+C07592,Phytotoxins,Alkaloids,Isoquinoline alkaloids,,C07592,Colchicine
+C17426,Phytotoxins,Alkaloids,Isoquinoline alkaloids,,C17426,Dicentrine
+C19980,Phytotoxins,Alkaloids,Isoquinoline alkaloids,,C19980,Domesticine
+C08526,Phytotoxins,Alkaloids,Isoquinoline alkaloids,,C08526,Galanthamine
+C19981,Phytotoxins,Alkaloids,Isoquinoline alkaloids,,C19981,Gloriosine
+C09549,Phytotoxins,Alkaloids,Isoquinoline alkaloids,,C09549,Isocorydine
+C08532,Phytotoxins,Alkaloids,Isoquinoline alkaloids,,C08532,Lycorine
+C05189,Phytotoxins,Alkaloids,Isoquinoline alkaloids,,C05189,Protopine
+C06162,Phytotoxins,Alkaloids,Isoquinoline alkaloids,,C06162,Sanguinarine
+C12179,Phytotoxins,Alkaloids,Isoquinoline alkaloids,,C12179,Tazettine
+C07547,Phytotoxins,Alkaloids,Isoquinoline alkaloids,,C07547,Tubocurarine
+C06523,Phytotoxins,Alkaloids,Piperidine alkaloids,,C06523,Coniine
+C19983,Phytotoxins,Alkaloids,Piperidine alkaloids,,C19983,Conhydrine
+C10138,Phytotoxins,Alkaloids,Piperidine alkaloids,,C10138,gamma-Coniceine
+C10159,Phytotoxins,Alkaloids,Piperidine alkaloids,,C10159,Methylconiine
+C10168,Phytotoxins,Alkaloids,Piperidine alkaloids,,C10168,Pseudoconhydrine
+C10299,Phytotoxins,Alkaloids,Pyrrolizidine alkaloids,,C10299,Echimidine
+C06177,Phytotoxins,Alkaloids,Pyrrolizidine alkaloids,,C06177,Retronecine
+C10341,Phytotoxins,Alkaloids,Pyrrolizidine alkaloids,,C10341,Lasiocarpine
+C06176,Phytotoxins,Alkaloids,Pyrrolizidine alkaloids,,C06176,Senecionine
+C10396,Phytotoxins,Alkaloids,Pyrrolizidine alkaloids,,C10396,Senkirkine
+C10796,Phytotoxins,Alkaloids,Steroid alkaloids,,C10796,alpha-Chaconine
+C10798,Phytotoxins,Alkaloids,Steroid alkaloids,,C10798,Cyclopamine
+C10811,Phytotoxins,Alkaloids,Steroid alkaloids,,C10811,Jervine
+C10815,Phytotoxins,Alkaloids,Steroid alkaloids,,C10815,Protoveratrine A
+C10816,Phytotoxins,Alkaloids,Steroid alkaloids,,C10816,Protoveratrine B
+C10820,Phytotoxins,Alkaloids,Steroid alkaloids,,C10820,Solanine
+C10829,Phytotoxins,Alkaloids,Steroid alkaloids,,C10829,Veratramine
+C06544,Phytotoxins,Alkaloids,Steroid alkaloids,,C06544,Veratridine
+C01479,Phytotoxins,Alkaloids,Tropan alkaloids,,C01479,Atropine
+C02046,Phytotoxins,Alkaloids,Tropan alkaloids,,C02046,L-Hyoscyamine
+C01851,Phytotoxins,Alkaloids,Tropan alkaloids,,C01851,Scopolamine
+C10573,Phytotoxins,Alkaloids,Others,,C10573,Calycanthine
+C19984,Phytotoxins,Alkaloids,Others,,C19984,Cerberin
+C12227,Phytotoxins,Alkaloids,Others,,C12227,Chelerythrine
+C08677,Phytotoxins,Alkaloids,Others,,C08677,Delphinine
+C10660,Phytotoxins,Alkaloids,Others,,C10660,Dictamnine
+C10774,Phytotoxins,Alkaloids,Others,,C10774,Matrine
+C19985,Phytotoxins,Alkaloids,Others,,C19985,Nantenine
+C00745,Phytotoxins,Alkaloids,Others,,C00745,Nicotine
+C08705,Phytotoxins,Alkaloids,Others,,C08705,Ryanodine
+C08847,Phytotoxins,Glycosides,Cardiac glycosides,,C08847,alpha-Antiarin
+C08858,Phytotoxins,Glycosides,Cardiac glycosides,,C08858,Convallatoxin
+C19986,Phytotoxins,Glycosides,Cardiac glycosides,,C19986,Convalloside
+C06955,Phytotoxins,Glycosides,Cardiac glycosides,,C06955,Digitoxin
+C06956,Phytotoxins,Glycosides,Cardiac glycosides,,C06956,Digoxin
+C19987,Phytotoxins,Glycosides,Cardiac glycosides,,C19987,Oleandrin
+C01443,Phytotoxins,Glycosides,Cardiac glycosides,,C01443,Ouabain
+C08877,Phytotoxins,Glycosides,Cardiac glycosides,,C08877,Rhodexin A
+C19988,Phytotoxins,Glycosides,Cardiac glycosides,,C19988,Strophanthidin
+C08325,Phytotoxins,Glycosides,Cyanogenic glycosides,,C08325,Amygdalin
+C01418,Phytotoxins,Glycosides,Cyanogenic glycosides,,C01418,Cycasin
+C00844,Phytotoxins,Glycosides,Cyanogenic glycosides,,C00844,Prunasin
+C19990,Phytotoxins,Terpenoids,Diterpenoids,,C19990,Aconine
+C06091,Phytotoxins,Terpenoids,Diterpenoids,,C06091,Aconitine
+C09063,Phytotoxins,Terpenoids,Diterpenoids,,C09063,Asebotoxin II
+C11700,Phytotoxins,Terpenoids,Diterpenoids,,C11700,10-Deacetylbaccatin III
+C19991,Phytotoxins,Terpenoids,Diterpenoids,,C19991,Euphornin
+C09103,Phytotoxins,Terpenoids,Diterpenoids,,C09103,Grayanotoxin I
+C08698,Phytotoxins,Terpenoids,Diterpenoids,,C08698,Mesaconitine
+C07394,Phytotoxins,Terpenoids,Diterpenoids,,C07394,Paclitaxel
+C09155,Phytotoxins,Terpenoids,Diterpenoids,,C09155,Phorbol
+C19992,Phytotoxins,Terpenoids,Diterpenoids,,C19992,Rhodojaponin I
+C10619,Phytotoxins,Terpenoids,Diterpenoids,,C10619,Taxine A
+C19989,Phytotoxins,Terpenoids,Diterpenoids,,C19989,Taxine B
+C09294,Phytotoxins,Terpenoids,Sesquiterpenoids,,C09294,Anisatin
+C09379,Phytotoxins,Terpenoids,Sesquiterpenoids,,C09379,Coriamyrtin
+C09529,Phytotoxins,Terpenoids,Sesquiterpenoids,,C09529,Picrotoxinin
+C09570,Phytotoxins,Terpenoids,Sesquiterpenoids,,C09570,Tutin
+C08402,Phytotoxins,Others,Polyynes,,C08402,Cicutoxin
+C20044,Phytotoxins,Others,Polyynes,,C20044,Enanthotoxin
+C19993,Phytotoxins,Others,Polyynes,,C19993,Virol A
+C19994,Phytotoxins,Others,Polyynes,,C19994,Virol B
+C20068,Phytotoxins,Others,Proteins,,C20068,Abrin
+C01362,Phytotoxins,Others,Proteins,,C01362,Ricin
+C08287,Phytotoxins,Others,Others,,C08287,Hypoglycin
+C08280,Phytotoxins,Others,Others,,C08280,Hypoglycin B
+C10737,Phytotoxins,Others,Others,,C10737,Phrymarolin I
+C10874,Phytotoxins,Others,Others,,C10874,Podophyllotoxin
+C07090,Phytotoxins,Others,Others,,C07090,Protoanemonin
+C19515,Phytotoxins,Others,Others,,C19515,Ptaquiloside
+C08512,Phytotoxins,Others,Others,,C08512,Ranunculin
+C10839,Phytotoxins,Others,Others,,C10839,Urushiol III
+C10841,Cyanotoxins,Alkaloids,Anatoxins,,C10841,Anatoxin a
+C19998,Cyanotoxins,Alkaloids,Anatoxins,,C19998,Anatoxin a(s)
+C16769,Cyanotoxins,Alkaloids,Aplysiatoxins,,C16769,Aplysiatoxin
+C16770,Cyanotoxins,Alkaloids,Aplysiatoxins,,C16770,19-Bromoaplysiatoxin
+C05148,Cyanotoxins,Alkaloids,Aplysiatoxins,,C05148,Debromoaplysiatoxin
+C19999,Cyanotoxins,Alkaloids,Others,,C19999,Cylindrospermopsin
+C15720,Cyanotoxins,Alkaloids,Others,,C15720,Lyngbyatoxin
+C13757,Cyanotoxins,Alkaloids,Others,,C13757,Saxitoxin
+C05371,Cyanotoxins,Peptides,Microcystins,,C05371,Microcystin LR
+C19995,Cyanotoxins,Peptides,Microcystins,,C19995,Microcystin RR
+C19996,Cyanotoxins,Peptides,Microcystins,,C19996,Microcystin RA
+C19997,Cyanotoxins,Peptides,Microcystins,,C19997,Microcystin YR
+C15713,Cyanotoxins,Peptides,Others,,C15713,Nodularin
+C13732,Marine biotoxins,Amnesic Shellfish Poisoning; ASP,Kainoids,,C13732,Domoic acid
+C20027,Marine biotoxins,Amnesic Shellfish Poisoning; ASP,Kainoids,,C20027,Isodomoic acid A
+C16762,Marine biotoxins,Ciguatera fish poisoning; CFP,Cyclic polyethers,,C16762,Ciguatoxin I
+C20003,Marine biotoxins,Ciguatera fish poisoning; CFP,Cyclic polyethers,,C20003,Caribbean ciguatoxin 1
+C20001,Marine biotoxins,Ciguatera fish poisoning; CFP,Cyclic polyethers,,C20001,CTX 3C
+C20002,Marine biotoxins,Ciguatera fish poisoning; CFP,Cyclic polyethers,,C20002,Ciguatoxin 4A
+C16885,Marine biotoxins,Ciguatera fish poisoning; CFP,Cyclic polyethers,,C16885,Gambieric acid A
+C16886,Marine biotoxins,Ciguatera fish poisoning; CFP,Cyclic polyethers,,C16886,Gambieric acid B
+C16887,Marine biotoxins,Ciguatera fish poisoning; CFP,Cyclic polyethers,,C16887,Gambieric acid C
+C16888,Marine biotoxins,Ciguatera fish poisoning; CFP,Cyclic polyethers,,C16888,Gambieric acid D
+C20004,Marine biotoxins,Ciguatera fish poisoning; CFP,Cyclic polyethers,,C20004,Gambierol
+C16852,Marine biotoxins,Ciguatera fish poisoning; CFP,Cyclic polyethers,,C16852,Gambiertoxin 4b
+C16854,Marine biotoxins,Ciguatera fish poisoning; CFP,Cyclic polyethers,,C16854,Maitotoxin
+C01945,Marine biotoxins,Diarrhetic shellfish poisoning; DSP,Okadaic acid and derivatives,,C01945,Okadaic acid
+C20006,Marine biotoxins,Diarrhetic shellfish poisoning; DSP,Okadaic acid and derivatives,,C20006,Acanthifolicin
+C16870,Marine biotoxins,Diarrhetic shellfish poisoning; DSP,Okadaic acid and derivatives,,C16870,Dinophysistoxin 1
+C20005,Marine biotoxins,Diarrhetic shellfish poisoning; DSP,Okadaic acid and derivatives,,C20005,Dinophysistoxin 4
+C20011,Marine biotoxins,Diarrhetic shellfish poisoning; DSP,Cyclic polyethers,,C20011,Homoyessotoxin
+C16872,Marine biotoxins,Diarrhetic shellfish poisoning; DSP,Cyclic polyethers,,C16872,Yessotoxin
+C20007,Marine biotoxins,Diarrhetic shellfish poisoning; DSP,Macrolides,,C20007,Caribenolide I
+C16899,Marine biotoxins,Diarrhetic shellfish poisoning; DSP,Macrolides,,C16899,Goniodomin A
+C20008,Marine biotoxins,Diarrhetic shellfish poisoning; DSP,Macrolides,,C20008,Hoffmanniolide
+C20009,Marine biotoxins,Diarrhetic shellfish poisoning; DSP,Macrolides,,C20009,Iriomoteolide 1a
+C16871,Marine biotoxins,Diarrhetic shellfish poisoning; DSP,Others,,C16871,Pectenotoxin 1
+C20012,Marine biotoxins,Diarrhetic shellfish poisoning; DSP,Others,,C20012,Pectenotoxin 2
+C16839,Marine biotoxins,Neurotoxic Shellfish Poison; NSP,Cyclic polyethers,,C16839,Brevetoxin A
+C16857,Marine biotoxins,Neurotoxic Shellfish Poison; NSP,Cyclic polyethers,,C16857,Brevetoxin B
+C20013,Marine biotoxins,Neurotoxic Shellfish Poison; NSP,Cyclic polyethers,,C20013,Brevetoxin B1
+C20014,Marine biotoxins,Neurotoxic Shellfish Poison; NSP,Cyclic polyethers,,C20014,Brevetoxin B2
+C20015,Marine biotoxins,Neurotoxic Shellfish Poison; NSP,Cyclic polyethers,,C20015,Brevetoxin C
+C20016,Marine biotoxins,Neurotoxic Shellfish Poison; NSP,Cyclic polyethers,,C20016,Hemibrevetoxin B
+C16855,Marine biotoxins,Paralytic shellfish poisoning; PSP,Carbamate derivatives,,C16855,Gonyautoxin 1
+C16856,Marine biotoxins,Paralytic shellfish poisoning; PSP,Carbamate derivatives,,C16856,Gonyautoxin 2
+C17208,Marine biotoxins,Paralytic shellfish poisoning; PSP,Carbamate derivatives,,C17208,Neosaxitoxin
+C20021,Marine biotoxins,Paralytic shellfish poisoning; PSP,Decarbamoyl derivatives,,C20021,Decarbamoylsaxitoxin
+C20022,Marine biotoxins,Paralytic shellfish poisoning; PSP,Decarbamoyl derivatives,,C20022,Decarbamoylgonyautoxin 1
+C20018,Marine biotoxins,Paralytic shellfish poisoning; PSP,N-Sulfo-carbamoyl derivatives,,C20018,Gonyautoxin 5
+C20019,Marine biotoxins,Paralytic shellfish poisoning; PSP,N-Sulfo-carbamoyl derivatives,,C20019,Gonyautoxin 6
+C20020,Marine biotoxins,Paralytic shellfish poisoning; PSP,N-Sulfo-carbamoyl derivatives,,C20020,Gonyautoxin 8
+C16851,Marine biotoxins,Others,Palytoxins,,C16851,Palytoxin
+C20028,Marine biotoxins,Others,Palytoxins,,C20028,Ostreocin D
+C11692,Marine biotoxins,Others,Tetrodotoxins,,C11692,Tetrodotoxin
+C20026,Marine biotoxins,Others,Tetrodotoxins,,C20026,11-Deoxytetrodotoxin
+C16907,Marine biotoxins,Others,Others,,C16907,Azaspiracid
+C20025,Marine biotoxins,Others,Others,,C20025,Gymnodimine
+C16761,Marine biotoxins,Others,Others,,C16761,Neosurugatoxin
+C20023,Marine biotoxins,Others,Others,,C20023,Prorocentrolide
+C20024,Marine biotoxins,Others,Others,,C20024,Prorocentrolide B
+C18064,Marine biotoxins,Others,Others,,C18064,Pyropheophorbide a
+C20047,Venoms,Bee venoms,Peptides,,C20047,Adolapin
+C20048,Venoms,Bee venoms,Peptides,,C20048,Apamine
+C20080,Venoms,Bee venoms,Peptides,,C20080,Bombolitin I
+C20051,Venoms,Bee venoms,Peptides,,C20051,Mandaratoxin
+C20049,Venoms,Bee venoms,Peptides,,C20049,Mast cell degranulating peptide
+C15947,Venoms,Bee venoms,Peptides,,C15947,Mastoparan
+C11198,Venoms,Bee venoms,Peptides,,C11198,Melitten
+C20078,Venoms,Bee venoms,Neurotoxins,,C20078,alpha-Pompilidotoxin
+C20079,Venoms,Bee venoms,Neurotoxins,,C20079,beta-Pompilidotoxin
+C20050,Venoms,Bee venoms,Wasp kinins,,C20050,Polisteskinin JT
+C20077,Venoms,Bee venoms,Wasp kinins,,C20077,Megascoliakinin
+C20081,Venoms,Bee venoms,Wasp kinins,,C20081,Vespakinin M
+C20052,Venoms,Bee venoms,Others,,C20052,Philanthotoxin
+C13806,Venoms,Bee venoms,Others,,C13806,Philanthotoxin 343
+C20053,Venoms,Bee venoms,Others,,C20053,Tertiapin
+C11690,Venoms,Frog venoms,Alkaloids,,C11690,Epibatidine
+C13750,Venoms,Frog venoms,Alkaloids,,C13750,Batrachotoxin
+C20032,Venoms,Frog venoms,Alkaloids,,C20032,Batrachotoxinin A
+C20034,Venoms,Frog venoms,Alkaloids,,C20034,Allopumiliotoxin 267A
+C20033,Venoms,Frog venoms,Alkaloids,,C20033,Pumiliotoxin A
+C20031,Venoms,Frog venoms,Alkaloids,,C20031,Pumiliotoxin 251D
+C13683,Venoms,Frog venoms,Alkaloids,,C13683,Histrionicotoxin
+C20035,Venoms,Frog venoms,Bufotoxins,,C20035,Arenobufagin
+C16922,Venoms,Frog venoms,Bufotoxins,,C16922,Bufalin
+C16923,Venoms,Frog venoms,Bufotoxins,,C16923,Bufotalin
+C16932,Venoms,Frog venoms,Bufotoxins,,C16932,Cinobufotalin
+C20036,Venoms,Frog venoms,Bufotoxins,,C20036,Marinobufagenin
+C08299,Venoms,Frog venoms,Others,,C08299,Bufotenine
+C20030,Venoms,Frog venoms,Others,,C20030,Dermorphin
+C19906,Venoms,Mollusk venoms,Peptides,,C19906,omega-Conotoxin
+C20084,Venoms,Mollusk venoms,Peptides,,C20084,Contulakin G
+C20029,Venoms,Mollusk venoms,Peptides,,C20029,Eledoisin
+C20000,Venoms,Mollusk venoms,Others,,C20000,Onchidal
+C20056,Venoms,Scorpion venoms,Peptides,,C20056,Agitoxin 1
+C20063,Venoms,Scorpion venoms,Peptides,,C20063,Bestoxin
+C20069,Venoms,Scorpion venoms,Peptides,,C20069,Charybdotoxin
+C20064,Venoms,Scorpion venoms,Peptides,,C20064,kappa-Hefutoxin 1
+C20055,Venoms,Scorpion venoms,Peptides,,C20055,Iberiotoxin
+C20058,Venoms,Scorpion venoms,Peptides,,C20058,Leiurotoxin I
+C20065,Venoms,Scorpion venoms,Peptides,,C20065,Maurotoxin
+C20057,Venoms,Scorpion venoms,Peptides,,C20057,Margatoxin
+C20066,Venoms,Scorpion venoms,Peptides,,C20066,Slotoxin
+C20037,Venoms,Snake venoms,Neurotoxins,,C20037,alpha-Bungarotoxin
+C20038,Venoms,Snake venoms,Neurotoxins,,C20038,beta-Bungarotoxin
+C20041,Venoms,Snake venoms,Neurotoxins,,C20041,Calciseptine
+C20042,Venoms,Snake venoms,Neurotoxins,,C20042,Cardiotoxin III
+C20039,Venoms,Snake venoms,Neurotoxins,,C20039,Dendrotoxin
+C20040,Venoms,Snake venoms,Neurotoxins,,C20040,Fasciculin
+C20043,Venoms,Snake venoms,Neurotoxins,,C20043,Taicatoxin
+C20085,Venoms,Snake venoms,Hemorrhagins,,C20085,Botrocetin
+C20086,Venoms,Snake venoms,Hemorrhagins,,C20086,Crotalase
+C20087,Venoms,Snake venoms,Hemorrhagins,,C20087,Crotalocytin
+C20088,Venoms,Snake venoms,Hemorrhagins,,C20088,Echistatin
+C20089,Venoms,Snake venoms,Hemorrhagins,,C20089,Gabonase
+C21791,Venoms,Snake venoms,Hemorrhagins,,C21791,Rhodocytin
+C20090,Venoms,Spider venoms,Agatoxins,,C20090,Toxin omega-Aga-IA
+C20091,Venoms,Spider venoms,Agatoxins,,C20091,Toxin omega-Aga-IIIA
+C20092,Venoms,Spider venoms,Agatoxins,,C20092,Toxin omega-Aga-IVA
+C20093,Venoms,Spider venoms,Argiopinins,,C20093,Argiopinin I
+C20094,Venoms,Spider venoms,Argiopinins,,C20094,Argiopinin II
+C20095,Venoms,Spider venoms,Argiopinins,,C20095,Argiopinin III
+C13929,Venoms,Spider venoms,Argiopinins,,C13929,Argiotoxin 659
+C20096,Venoms,Spider venoms,Argiopinins,,C20096,Pseudoargiopinin I
+C20097,Venoms,Spider venoms,Argiopinins,,C20097,Pseudoargiopinin III
+C20098,Venoms,Spider venoms,Cupiennins,,C20098,Cupiennin 1a
+C20099,Venoms,Spider venoms,Cupiennins,,C20099,Cupiennin 1b
+C20100,Venoms,Spider venoms,Jingzhaotoxins,,C20100,Jingzhaotoxin I
+C20101,Venoms,Spider venoms,Jingzhaotoxins,,C20101,Jingzhaotoxin III
+C20102,Venoms,Spider venoms,Jingzhaotoxins,,C20102,Jingzhaotoxin V
+C20103,Venoms,Spider venoms,Latarcins,,C20103,Latarcin 1
+C20104,Venoms,Spider venoms,Latarcins,,C20104,Latarcin 2a
+C20105,Venoms,Spider venoms,Latarcins,,C20105,Latarcin 3a
+C20106,Venoms,Spider venoms,Lycocitins,,C20106,Lycocitin 1
+C20107,Venoms,Spider venoms,Lycocitins,,C20107,Lycocitin 2
+C20108,Venoms,Spider venoms,Lycocitins,,C20108,Lycocitin 3
+C20109,Venoms,Spider venoms,Lycotoxins,,C20109,Lycotoxin I
+C20110,Venoms,Spider venoms,Lycotoxins,,C20110,Lycotoxin II
+C20111,Venoms,Spider venoms,Oxyopinins,,C20111,Oxyopinin 1
+C20112,Venoms,Spider venoms,Oxyopinins,,C20112,Oxyopinin 2a
+C20113,Venoms,Spider venoms,Phrixotoxins,,C20113,Phrixotoxin 1
+C20114,Venoms,Spider venoms,Phrixotoxins,,C20114,Phrixotoxin 2
+C20115,Venoms,Spider venoms,Others,,C20115,Agelenin
+C20116,Venoms,Spider venoms,Others,,C20116,Hanatoxin 1
+C20117,Venoms,Spider venoms,Others,,C20117,Huwentoxin-XI
+C20054,Venoms,Spider venoms,Others,,C20054,alpha-Latrotoxin
+C20118,Venoms,Spider venoms,Others,,C20118,Robustoxin
+C20067,Venoms,Spider venoms,Others,,C20067,Stromatoxin 1
+C19950,Venoms,Others,Salamandra venoms,,C19950,Samandarine
+C19951,Venoms,Others,Salamandra venoms,,C19951,Samandarone
+C20059,Venoms,Others,Salamandra venoms,,C20059,Samandenone
+C20060,Venoms,Others,Others,,C20060,Cephalostatin 1
+C20061,Venoms,Others,Others,,C20061,Ritterazine A

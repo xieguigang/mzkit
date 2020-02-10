@@ -37,7 +37,7 @@ metaDNA(identify, unknown, do.align, precursor_type = c("[M+H]+",
 
 \item{do.align}{The MS/MS alignment method, which is in format like: \code{function(q, s)}
 Where \code{q} and \code{s} is a ms2 spectra matrix. Due to the reason of the \code{q}
-and \code{s} spectra data is comes from the same sample and same instrument, so that 
+and \code{s} spectra data is comes from the same sample and same instrument, so that
 using the \code{SSM} spectra alignment algorithm for this parameter is recommended.}
 
 \item{precursor_type}{By default is positive mode with the \code{H+} adduct for
@@ -51,7 +51,7 @@ by default is less than ppm 20.}
     \item \code{rt}, the rt of unidentified sample ms1 feature,
     \item \code{KEGG_id} the KEGG_cpd that assigned to current unidentified sample ms1 feature.
 }
-and then returns a rt alignment score. If this parameter is ignored, 
+and then returns a rt alignment score. If this parameter is ignored,
 then will use score 1 as default means no rt adjustment score.}
 
 \item{score.cutoff}{MS/MS similarity cutoff for identify ms2 alignment with unknown ms2}

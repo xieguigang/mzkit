@@ -73,13 +73,24 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
 ''' MRM Targeted Metabolomics
 ''' </summary>
 <Package("mzkit.mrm")>
-Public Module MRMkit
+Module MRMkit
+
+    Public Class MRMDataSet
+
+        Public StandardCurve As StandardCurve()
+        Public Samples As QuantifyScan()
+
+    End Class
 
     Sub New()
         REnv.ConsolePrinter.AttachConsoleFormatter(Of StandardCurve)(AddressOf printLineModel)
         REnv.ConsolePrinter.AttachConsoleFormatter(Of IonPair())(AddressOf printIonPairs)
         REnv.ConsolePrinter.AttachConsoleFormatter(Of Standards())(AddressOf printStandards)
         REnv.ConsolePrinter.AttachConsoleFormatter(Of [IS]())(AddressOf printIS)
+
+        ' create linear regression report
+        REnv.htmlPrinter.AttachHtmlFormatter(Of StandardCurve())(AddressOf MRMLinearReport.CreateHtml)
+        REnv.htmlPrinter.AttachHtmlFormatter(Of MRMDataSet)(AddressOf MRMLinearReport.CreateHtml)
 
         Dim toolkit As AssemblyInfo = GetType(MRMkit).Assembly.FromAssembly
 
@@ -144,16 +155,13 @@ Public Module MRMkit
                                    Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
                                    Optional baselineQuantile# = 0.65,
                                    Optional integratorTicks% = 5000,
-                                   Optional peakAreaMethod As Integer = 1) As IonTPA()
-
-        Dim method As PeakArea.Methods = CType(peakAreaMethod, PeakArea.Methods)
-
+                                   Optional peakAreaMethod As PeakArea.Methods = PeakArea.Methods.NetPeakSum) As IonTPA()
         If TPAFactors Is Nothing Then
             TPAFactors = New Dictionary(Of String, Double)
         End If
 
         Return ScanOfTPA.ScanTPA(
-            mzML, ionpairs, TPAFactors, baselineQuantile, integratorTicks, method
+            mzML, ionpairs, TPAFactors, baselineQuantile, integratorTicks, peakAreaMethod
         )
     End Function
 
@@ -233,7 +241,7 @@ Public Module MRMkit
     Public Function WiffRawFile(<RRawVectorArgument>
                                 convertDir As Object,
                                 Optional patternOfRef$ = ".+[-]CAL[-]?\d+",
-                                Optional patternOfBlank$ = "KB[-]?\d+",
+                                Optional patternOfBlank$ = "KB[-]?(\d+)?",
                                 Optional env As Environment = Nothing) As Object
 
         If REnv.Invokes.isEmpty(convertDir) Then
@@ -267,16 +275,13 @@ Public Module MRMkit
 
     <ExportAPI("MRM.peaks")>
     Public Function ScanPeakTable(mzML$, ions As IonPair(),
-                                  Optional peakAreaMethod% = 1,
+                                  Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum,
                                   Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As DataSet()
-
-        Dim method As PeakArea.Methods = CType(peakAreaMethod, PeakArea.Methods)
-
         If TPAFactors Is Nothing Then
             TPAFactors = New Dictionary(Of String, Double)
         End If
 
-        Return WiffRaw.ScanPeakTable(mzML, ions, method, TPAFactors)
+        Return WiffRaw.ScanPeakTable(mzML, ions, peakAreaMethod, TPAFactors)
     End Function
 
     ''' <summary>
@@ -296,11 +301,9 @@ Public Module MRMkit
     ''' <returns></returns>
     <ExportAPI("wiff.scans")>
     Public Function ScanWiffRaw(wiffConverts As String(), ions As IonPair(),
-                                Optional peakAreaMethod% = 1,
+                                Optional peakAreaMethod As PeakArea.Methods = PeakArea.Methods.NetPeakSum,
                                 Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
                                 Optional removesWiffName As Boolean = True) As DataSet()
-
-        Dim method As PeakArea.Methods = CType(peakAreaMethod, PeakArea.Methods)
 
         If TPAFactors Is Nothing Then
             TPAFactors = New Dictionary(Of String, Double)
@@ -333,7 +336,7 @@ Public Module MRMkit
         Return WiffRaw.Scan(
             mzMLRawFiles:=wiffConverts,
             ions:=ions,
-            peakAreaMethod:=method,
+            peakAreaMethod:=peakAreaMethod,
             TPAFactors:=TPAFactors,
             refName:=Nothing,
             removesWiffName:=removesWiffName
@@ -350,18 +353,33 @@ Public Module MRMkit
     ''' If the unweighted R2 value of target standard curve is less than 0.99, 
     ''' then the quantify program will try weighted linear fitting. 
     ''' </param>
+    ''' <param name="maxDeletions">
+    ''' Max number of the reference points that delete automatically by 
+    ''' the linear modelling program.
+    ''' 
+    ''' + negative value means auto
+    ''' + zero means no deletion
+    ''' + positive means the max allowed point numbers for auto deletion by the program
+    ''' </param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' 20200106 checked, test success
+    ''' </remarks>
     <ExportAPI("linears")>
     Public Function Linears(rawScan As DataSet(), calibrates As Standards(), [ISvector] As [IS](),
                             Optional autoWeighted As Boolean = True,
-                            Optional blankControls As DataSet() = Nothing) As StandardCurve()
+                            Optional blankControls As DataSet() = Nothing,
+                            Optional maxDeletions As Integer = 1,
+                            Optional isWorkCurveMode As Boolean = True) As StandardCurve()
 
         Return rawScan.ToDictionary _
             .Regression(
                 calibrates:=calibrates,
                 ISvector:=ISvector,
                 weighted:=autoWeighted,
-                blankControls:=blankControls
+                blankControls:=blankControls,
+                maxDeletions:=maxDeletions,
+                isWorkCurveMode:=isWorkCurveMode
             ) _
             .ToArray
     End Function
@@ -414,6 +432,30 @@ Public Module MRMkit
         Return MRMPeaks.SaveTo(file, silent:=True)
     End Function
 
+    <ExportAPI("lines.table")>
+    Public Function StandardCurveDataSet(lines As StandardCurve()) As EntityObject()
+        Return lines _
+            .Select(Function(line)
+                        Return New EntityObject With {
+                            .ID = line.name,
+                            .Properties = New Dictionary(Of String, String) From {
+                                {"name", line.points(Scan0).Name},
+                                {"equation", "f(x)=" & line.linear.Polynomial.ToString("G5", False)},
+                                {"R2", line.linear.CorrelationCoefficient},
+                                {"is.weighted", line.isWeighted},
+                                {"IS.calibration", line.requireISCalibration},
+                                {"IS", line.IS.name}
+                            }
+                        }
+                    End Function) _
+            .ToArray
+    End Function
+
+    <ExportAPI("write.points")>
+    Public Function writeStandardCurve(points As MRMStandards(), file$) As Boolean
+        Return points.SaveTo(file, silent:=True)
+    End Function
+
     ''' <summary>
     ''' Get quantify result
     ''' </summary>
@@ -432,5 +474,19 @@ Public Module MRMkit
     <ExportAPI("scans.X")>
     Public Function GetRawX(fileScans As QuantifyScan()) As DataSet()
         Return fileScans.Select(Function(file) file.rawX).ToArray
+    End Function
+
+    ''' <summary>
+    ''' Create MRM dataset object for do MRM quantification data report.
+    ''' </summary>
+    ''' <param name="standardCurve"></param>
+    ''' <param name="samples"></param>
+    ''' <returns></returns>
+    <ExportAPI("mrm.dataset")>
+    Public Function CreateMRMDataSet(standardCurve As StandardCurve(), samples As QuantifyScan()) As MRMDataSet
+        Return New MRMDataSet With {
+            .StandardCurve = standardCurve,
+            .Samples = samples
+        }
     End Function
 End Module

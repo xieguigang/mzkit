@@ -59,7 +59,7 @@ Namespace GCMS.QuantifyAnalysis
         ''' <param name="raw"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function LinearRegression(raw As (content#, data As ChromatographyPeaktable)()) As IFitted
+        Public Function LinearRegression(raw As (content#, data As ChromatographyPeaktable)(), Optional maxDeletions% = -1) As IFitted
             Dim line As PointF() = raw _
                 .OrderBy(Function(p)
                              ' 从小到大进行排序
@@ -69,7 +69,7 @@ Namespace GCMS.QuantifyAnalysis
                             Return New PointF(p.data.TPACalibration, p.content)
                         End Function) _
                 .ToArray
-            Dim model As IFitted = Math.StandardCurve.CreateLinearRegression(line, True)
+            Dim model As IFitted = Math.StandardCurve.CreateLinearRegression(line, True, maxDeletions)
             Return model
         End Function
 

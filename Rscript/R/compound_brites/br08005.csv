@@ -1,0 +1,182 @@
+ID,class,category,subcategory,order,entry,name
+C16094,Neuropeptides,Tachykinin,,,C16094,Substance P
+C16095,Neuropeptides,Tachykinin,,,C16095,Neuropeptide K
+C16096,Neuropeptides,Tachykinin,,,C16096,Neuropeptide gamma
+C16097,Neuropeptides,Tachykinin,,,C16097,Neurokinin A
+C16098,Neuropeptides,Tachykinin,,,C16098,Neurokinin B
+C16099,Neuropeptides,Tachykinin,,,C16099,Endokinin A/B
+C16100,Neuropeptides,Tachykinin,,,C16100,Endokinin C
+C16101,Neuropeptides,Tachykinin,,,C16101,Endokinin D
+C01836,Neuropeptides,Neurotensin,,,C01836,Neurotensin
+C15868,Neuropeptides,Neurotensin,,,C15868,Neuromedin N
+C16025,Neuropeptides,Feeding-related peptide,,,C16025,Ghrelin
+C15901,Neuropeptides,Feeding-related peptide,,,C15901,Galanin
+C16046,Neuropeptides,Feeding-related peptide,,,C16046,Galanin-like peptide
+C16102,Neuropeptides,Feeding-related peptide,,,C16102,Obestatin
+C16027,Neuropeptides,Feeding-related peptide,,,C16027,Cocaine- and amphetamine-regulated transcript (1-39)
+C16029,Neuropeptides,Feeding-related peptide,,,C16029,Cocaine- and amphetamine-regulated transcript (42-89)
+C16103,Neuropeptides,Feeding-related peptide,,,C16103,Agouti related protein (87-132)
+C16030,Neuropeptides,Feeding-related peptide,,,C16030,Melanin-concentrating hormone
+C16031,Neuropeptides,Feeding-related peptide,,,C16031,Neuropeptide GE
+C16104,Neuropeptides,Feeding-related peptide,,,C16104,Neuropeptide EI
+C16105,Neuropeptides,Feeding-related peptide,,,C16105,Orexin A
+C16106,Neuropeptides,Feeding-related peptide,,,C16106,Orexin B
+C16115,Neuropeptides,Feeding-related peptide,,,C16115,Gastrin-releasing peptide
+C15866,Neuropeptides,Feeding-related peptide,,,C15866,Neuromedin C
+C15869,Neuropeptides,Feeding-related peptide,,,C15869,Neuromedin U
+C16107,Neuropeptides,Feeding-related peptide,,,C16107,Neuromedin S
+C15949,Neuropeptides,Feeding-related peptide,,,C15949,Neuropeptide Y
+C16032,Neuropeptides,Feeding-related peptide,,,C16032,Neuropeptide W-30
+C16033,Neuropeptides,Feeding-related peptide,,,C16033,Neuropeptide W-23
+C16034,Neuropeptides,Feeding-related peptide,,,C16034,Neuropeptide B-29
+C16035,Neuropeptides,Feeding-related peptide,,,C16035,Neuropeptide B-23
+C15865,Neuropeptides,Feeding-related peptide,,,C15865,Neuromedin B
+C16036,Neuropeptides,Feeding-related peptide,,,C16036,Neuropeptide S
+C16037,Neuropeptides,Endogenous opioid peptide,,,C16037,Leumorphin
+C01574,Neuropeptides,Endogenous opioid peptide,,,C01574,Dynorphin A
+C16135,Neuropeptides,Endogenous opioid peptide,,,C16135,Dynorphin B
+C16039,Neuropeptides,Endogenous opioid peptide,,,C16039,Neoendorphin alpha
+C16040,Neuropeptides,Endogenous opioid peptide,,,C16040,Neoendorphin beta
+C16041,Neuropeptides,Endogenous opioid peptide,,,C16041,Leu-enkephalin
+C11684,Neuropeptides,Endogenous opioid peptide,,,C11684,Met-enkephalin
+C16042,Neuropeptides,Endogenous opioid peptide,,,C16042,Met-enkephalin-Arg-Gly-Leu
+C16043,Neuropeptides,Endogenous opioid peptide,,,C16043,Met-enkephalin-Arg-Phe
+C16108,Neuropeptides,Endogenous opioid peptide,,,C16108,Adrenorphin
+C15890,Neuropeptides,Endogenous opioid peptide,,,C15890,Endomorphin-1
+C15891,Neuropeptides,Endogenous opioid peptide,,,C15891,Endomorphin-2
+C16044,Neuropeptides,Endogenous opioid peptide,,,C16044,Nociceptin
+C15871,Neuropeptides,Endogenous opioid peptide,,,C15871,Nocistatin
+C15863,Neuropeptides,Other neuropeptides,,,C15863,Cerebellin
+C16109,Neuropeptides,Other neuropeptides,,,C16109,RFamide-related peptide 1
+C16045,Neuropeptides,Other neuropeptides,,,C16045,RFamide-related peptide 2
+C16110,Neuropeptides,Other neuropeptides,,,C16110,RFamide-related peptide 3
+C16111,Neuropeptides,Other neuropeptides,,,C16111,Neuropeptide AF
+C16112,Neuropeptides,Other neuropeptides,,,C16112,Neuropeptide FF
+C00873,Cardiovascular peptides,Angiotensin,,,C00873,Angiotensin I
+C02135,Cardiovascular peptides,Angiotensin,,,C02135,Angiotensin II
+C15848,Cardiovascular peptides,Angiotensin,,,C15848,Angiotensin III
+C15849,Cardiovascular peptides,Angiotensin,,,C15849,Angiotensin IV
+C15851,Cardiovascular peptides,Angiotensin,,,C15851,Angiotensin (1-9)
+C15850,Cardiovascular peptides,Angiotensin,,,C15850,Angiotensin (1-7)
+C15852,Cardiovascular peptides,Angiotensin,,,C15852,Angiotensin (1-5)
+C20970,Cardiovascular peptides,Angiotensin,,,C20970,Angiotensin A
+C20971,Cardiovascular peptides,Angiotensin,,,C20971,Alamandine
+C16008,Cardiovascular peptides,Bradykinin,,,C16008,T-kinin
+C01505,Cardiovascular peptides,Bradykinin,,,C01505,Kallidin
+C00306,Cardiovascular peptides,Bradykinin,,,C00306,Bradykinin
+C00952,Cardiovascular peptides,Fibrinopeptide,,,C00952,Fibrinopeptide A
+C02404,Cardiovascular peptides,Fibrinopeptide,,,C02404,Fibrinopeptide B
+C16000,Cardiovascular peptides,Natriuretic peptide,,,C16000,Urodilatin
+C16003,Cardiovascular peptides,Natriuretic peptide,,,C16003,Atrial natriuretic peptide
+C16004,Cardiovascular peptides,Natriuretic peptide,,,C16004,Brain natriuretic peptide
+C16005,Cardiovascular peptides,Natriuretic peptide,,,C16005,C-Type natriuretic peptide
+C16006,Cardiovascular peptides,Guanylin,,,C16006,Uroguanylin
+C16007,Cardiovascular peptides,Guanylin,,,C16007,Guanylin
+C16009,Cardiovascular peptides,Endothelin,,,C16009,Big endothelin
+C16010,Cardiovascular peptides,Endothelin,,,C16010,Endothelin-1
+C16012,Cardiovascular peptides,Endothelin,,,C16012,Endothelin-2
+C16013,Cardiovascular peptides,Endothelin,,,C16013,Endothelin-3
+C16076,Cardiovascular peptides,Urotensin,,,C16076,Urotensin I
+C16016,Cardiovascular peptides,Urotensin,,,C16016,Urotensin II
+C16127,Cardiovascular peptides,Adrenomedullin,,,C16127,Adrenomedullin
+C16128,Cardiovascular peptides,Adrenomedullin,,,C16128,Adrenomedullin-2
+C18198,Cardiovascular peptides,Adrenomedullin,,,C18198,Proadrenomedullin N-terminal 20 peptide
+C06865,Calcium-regulating peptides,Thyroid peptide hormone,,,C06865,Calcitonin
+C16125,Calcium-regulating peptides,Thyroid peptide hormone,,,C16125,Calcitonin gene-related peptide 1
+C16126,Calcium-regulating peptides,Thyroid peptide hormone,,,C16126,Calcitonin gene-related peptide 2
+C16051,Calcium-regulating peptides,parathyroid peptide hormone,,,C16051,Parathyroid hormone
+C15876,Calcium-regulating peptides,Others,,,C15876,Katacalcin
+C16129,Calcium-regulating peptides,Others,,,C16129,Calcitonin receptor-stimulating peptide 1
+C16052,Calcium-regulating peptides,Others,,,C16052,Parathyroid hormone-related peptide (1-36)
+C16053,Calcium-regulating peptides,Others,,,C16053,Tuberoinfundibular peptide of 39 residues
+C18181,Pituitary hormones,Anterior pituitary hormone,,,C18181,Growth hormone
+C18182,Pituitary hormones,Anterior pituitary hormone,,,C18182,Thyroid stimulating hormone
+C18183,Pituitary hormones,Anterior pituitary hormone,,,C18183,Luteinizing hormone
+C18184,Pituitary hormones,Anterior pituitary hormone,,,C18184,Follicle stimulating hormone
+C18201,Pituitary hormones,Anterior pituitary hormone,,,C18201,Prolactin
+C00746,Pituitary hormones,Posterior pituitary hormone,,,C00746,Oxytocin
+C13662,Pituitary hormones,Posterior pituitary hormone,,,C13662,Arg-vasopressin
+C07105,Pituitary hormones,Posterior pituitary hormone,,,C07105,Lys-vasopressin
+C16077,Pituitary hormones,Posterior pituitary hormone,,,C16077,Neurophysin I
+C16078,Pituitary hormones,Posterior pituitary hormone,,,C16078,Neurophysin II
+C02017,Pituitary hormones,Proopiomelanocortin-derived peptide,,,C02017,Corticotropin
+C16134,Pituitary hormones,Proopiomelanocortin-derived peptide,,,C16134,Corticotropin-like intermediary peptide
+C16017,Pituitary hormones,Proopiomelanocortin-derived peptide,,,C16017,Endorphin alpha
+C02210,Pituitary hormones,Proopiomelanocortin-derived peptide,,,C02210,Endorphin beta
+C16018,Pituitary hormones,Proopiomelanocortin-derived peptide,,,C16018,Endorphin gamma
+C16019,Pituitary hormones,Proopiomelanocortin-derived peptide,,,C16019,Lipotropin beta
+C16020,Pituitary hormones,Proopiomelanocortin-derived peptide,,,C16020,Lipotropin gamma
+C02758,Pituitary hormones,Proopiomelanocortin-derived peptide,,,C02758,Melanotropin alpha
+C16136,Pituitary hormones,Proopiomelanocortin-derived peptide,,,C16136,Melanotropin beta
+C16137,Pituitary hormones,Proopiomelanocortin-derived peptide,,,C16137,Melanotropin gamma
+C16079,Hypothalamic hormones,Corticotropin-releasing hormone,,,C16079,Corticotropin releasing hormone
+C16080,Hypothalamic hormones,Corticotropin-releasing hormone,,,C16080,Urocortin I
+C16081,Hypothalamic hormones,Corticotropin-releasing hormone,,,C16081,Urocortin II
+C16082,Hypothalamic hormones,Corticotropin-releasing hormone,,,C16082,Urocortin III
+C07607,Hypothalamic hormones,Gonadotropin-releasing hormone,,,C07607,Gonadotropin-releasing hormone I
+C16084,Hypothalamic hormones,Gonadotropin-releasing hormone,,,C16084,Gonadotropin-releasing hormone II
+C16085,Hypothalamic hormones,Growth hormone-releasing hormone / Somatostatin,,,C16085,Growth hormone-releasing hormone
+C16021,Hypothalamic hormones,Growth hormone-releasing hormone / Somatostatin,,,C16021,Somatostatin-28
+C16022,Hypothalamic hormones,Growth hormone-releasing hormone / Somatostatin,,,C16022,Somatostatin-14
+C16023,Hypothalamic hormones,Growth hormone-releasing hormone / Somatostatin,,,C16023,Cortistatin-29
+C16024,Hypothalamic hormones,Growth hormone-releasing hormone / Somatostatin,,,C16024,Cortistatin-17
+C03958,Hypothalamic hormones,Thyrotropin-releasing hormone,,,C03958,Thyrotropin-releasing hormone
+C16086,Hypothalamic hormones,Prolactin-releasing peptide,,,C16086,Prolactin-releasing peptide-31
+C16087,Hypothalamic hormones,Prolactin-releasing peptide,,,C16087,Prolactin-releasing peptide-20
+C16088,Hypothalamic hormones,Pituitary adenylate cyclase-activating peptide,,,C16088,Pituitary adenylate cyclase-activating peptide-38
+C16089,Hypothalamic hormones,Pituitary adenylate cyclase-activating peptide,,,C16089,Pituitary adenylate cyclase-activating peptide-27
+C16090,Hypothalamic hormones,Metastin,,,C16090,Metastin
+C16091,Hypothalamic hormones,Metastin,,,C16091,Kisspeptin-14
+C16092,Hypothalamic hormones,Metastin,,,C16092,Kisspeptin-13
+C16093,Hypothalamic hormones,Metastin,,,C16093,Kisspeptin-10
+C00723,Pancreatic peptides,Insulin / C-peptide,,,C00723,Insulin
+C16120,Pancreatic peptides,Insulin / C-peptide,,,C16120,C-peptide
+C16131,Pancreatic peptides,Insulin / C-peptide,,,C16131,Insulin-like growth factor I
+C16132,Pancreatic peptides,Insulin / C-peptide,,,C16132,Insulin-like growth factor II
+C16121,Pancreatic peptides,Relaxin,,,C16121,Relaxin-1
+C16122,Pancreatic peptides,Relaxin,,,C16122,Relaxin-2
+C16123,Pancreatic peptides,Relaxin,,,C16123,Relaxin-3
+C16124,Pancreatic peptides,Relaxin,,,C16124,Relaxin-like factor
+C16178,Pancreatic peptides,Relaxin,,,C16178,Insulin-like peptide 5
+C01501,Pancreatic peptides,Glucagon,,,C01501,Glucagon
+C16048,Pancreatic peptides,Glucagon,,,C16048,Glucagon-like peptide 1
+C16049,Pancreatic peptides,Glucagon,,,C16049,Glucagon-like peptide 2
+C16050,Pancreatic peptides,Glucagon,,,C16050,Glicentin
+C18197,Pancreatic peptides,Glucagon,,,C18197,Oxyntomodulin
+C16130,Pancreatic peptides,Amylin,,,C16130,Amylin
+C18185,Gonadal peptides,Placental peptide,,,C18185,Chorionic gonadotropin
+C17813,Gonadal peptides,Placental peptide,,,C17813,Activin A
+C18208,Gonadal peptides,Placental peptide,,,C18208,Activin AB
+C18209,Gonadal peptides,Placental peptide,,,C18209,Activin B
+C18210,Gonadal peptides,Placental peptide,,,C18210,Placental lactogen
+C18186,Non-endocrine glands secretion peptides,Gut peptide,,,C18186,Gastrin-14
+C16113,Non-endocrine glands secretion peptides,Gut peptide,,,C16113,Gastrin-17
+C18187,Non-endocrine glands secretion peptides,Gut peptide,,,C18187,Gastrin-34
+C16133,Non-endocrine glands secretion peptides,Gut peptide,,,C16133,Cholecystokinin-33
+C16114,Non-endocrine glands secretion peptides,Gut peptide,,,C16114,Cholecystokinin-8
+C16047,Non-endocrine glands secretion peptides,Gut peptide,,,C16047,Motilin
+C15906,Non-endocrine glands secretion peptides,Gut peptide,,,C15906,Gastric inhibitory polypeptide
+C16117,Non-endocrine glands secretion peptides,Gut peptide,,,C16117,Pancreatic polypeptide
+C16118,Non-endocrine glands secretion peptides,Gut peptide,,,C16118,Peptide YY
+C16119,Non-endocrine glands secretion peptides,Gut peptide,,,C16119,Vasoactive intestinal peptide
+C13523,Non-endocrine glands secretion peptides,Gut peptide,,,C13523,Secretin
+C15856,Non-endocrine glands secretion peptides,Gut peptide,,,C15856,Apelin-36
+C15855,Non-endocrine glands secretion peptides,Gut peptide,,,C15855,Apelin-13
+C18200,Non-endocrine glands secretion peptides,Renal peptide,,,C18200,Erythropoietin
+C18188,Non-endocrine glands secretion peptides,Adipocytes secretion peptide,,,C18188,Leptin
+C18189,Non-endocrine glands secretion peptides,Adipocytes secretion peptide,,,C18189,Adiponectin
+C18190,Non-endocrine glands secretion peptides,Adipocytes secretion peptide,,,C18190,Resistin
+C16054,Others,Microbicidal and cytotoxic peptide,,,C16054,Defensin alpha-1
+C16055,Others,Microbicidal and cytotoxic peptide,,,C16055,Defensin alpha-2
+C16056,Others,Microbicidal and cytotoxic peptide,,,C16056,Defensin alpha-3
+C16057,Others,Microbicidal and cytotoxic peptide,,,C16057,Defensin alpha-4
+C16058,Others,Microbicidal and cytotoxic peptide,,,C16058,Defensin alpha-5
+C16059,Others,Microbicidal and cytotoxic peptide,,,C16059,Defensin beta-1
+C16060,Others,Microbicidal and cytotoxic peptide,,,C16060,Defensin beta-2
+C16061,Others,Microbicidal and cytotoxic peptide,,,C16061,Defensin beta-3
+C16062,Others,Microbicidal and cytotoxic peptide,,,C16062,Defensin beta-4
+C16063,Others,Microbicidal and cytotoxic peptide,,,C16063,Liver-expressed antimicrobial peptide 1
+C16064,Others,Microbicidal and cytotoxic peptide,,,C16064,Liver-expressed antimicrobial peptide 2
+C18313,Others,Microbicidal and cytotoxic peptide,,,C18313,Cathelicidin LL-37
+C15922,Others,Microbicidal and cytotoxic peptide,,,C15922,Indolicidin
+C15921,Others,Microbicidal and cytotoxic peptide,,,C15921,Histatin 5

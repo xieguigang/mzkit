@@ -50,16 +50,15 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Math
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Quantile
 Imports regexp = System.Text.RegularExpressions.Regex
+Imports stdNum = System.Math
 
 Namespace MRM
 
@@ -67,114 +66,6 @@ Namespace MRM
     ''' 对当前批次的标准曲线进行回归建模
     ''' </summary>
     Public Module StandardCurveWorker
-
-        <Extension>
-        Private Function reverseModel(model As StandardCurve) As Func(Of Double, Double)
-            Dim fx As Polynomial = model.linear.Polynomial
-            Dim a As Double = fx.Factors(1)
-            Dim b As Double = fx.Factors(Scan0)
-
-            Return Function(y) (y - b) / a
-        End Function
-
-        ''' <summary>
-        ''' 根据建立起来的线性回归模型进行样品数据的扫描，根据曲线的结果得到浓度数据
-        ''' </summary>
-        ''' <param name="linearModels">标准曲线线性回归模型，X为峰面积</param>
-        ''' <param name="raw$"></param>
-        ''' <param name="ions"></param>
-        ''' <returns>
-        ''' <see cref="NamedValue(Of Double).Value"/>是指定的代谢物的浓度结果数据，
-        ''' <see cref="NamedValue(Of Double).Description"/>则是AIS/A的结果，即X轴的数据
-        ''' </returns>
-        <Extension>
-        Public Iterator Function ScanContent(linearModels As StandardCurve(),
-                                             raw$,
-                                             ions As IonPair(),
-                                             peakAreaMethod As PeakArea.Methods,
-                                             TPAFactors As Dictionary(Of String, Double)) As IEnumerable(Of ContentResult(Of MRMPeakTable))
-            Dim baseline# = 0
-            Dim TPA = raw _
-                .ScanTPA(ionpairs:=ions,
-                         peakAreaMethod:=peakAreaMethod,
-                         TPAFactors:=TPAFactors
-                ) _
-                .ToDictionary(Function(ion) ion.name)
-
-            Dim names As Dictionary(Of String, IonPair) = ions.ToDictionary(Function(i) i.accession)
-            Dim C#
-
-            raw = raw.FileName
-
-            ' model -> y = ax + b
-            ' in_calculation -> x = (y-b)/a
-            Dim quantifyLinears = linearModels _
-                .Select(Function(line)
-                            Return (fx:=line.reverseModel, linearModels:=line, name:=line.name)
-                        End Function) _
-                .ToArray
-
-            ' 遍历得到的所有的标准曲线，进行样本之中的浓度的计算
-            For Each metabolite As (fx As Func(Of Double, Double), model As StandardCurve, name$) In quantifyLinears.Where(Function(m) TPA.ContainsKey(m.name))
-                Dim AIS As New IonTPA  ' (ROI As DoubleRange, TPA#, baseline#, maxinto#)
-                Dim X#
-                ' 得到样品之中的峰面积
-                Dim A = TPA(metabolite.name)
-                Dim model As StandardCurve = metabolite.model
-
-                If Not model.requireISCalibration Then
-                    ' 不需要内标进行校正
-                    ' 则X轴的数据直接是代谢物的峰面积数据
-                    X = A.area
-                Else
-                    ' 数据存在丢失
-                    If Not TPA.ContainsKey(model.IS.ID) Then
-                        Continue For
-                    Else
-                        ' 得到与样品混在一起的内标的峰面积
-                        ' X轴数据需要做内标校正
-                        AIS = TPA(model.IS.ID)
-                        X# = A.area / AIS.area
-                    End If
-                End If
-
-                If model.linear Is Nothing Then
-                    Call $"Missing metabolite {metabolite.name} in raw file!".Warning
-
-                    Continue For
-                Else
-                    ' 利用峰面积比计算出浓度结果数据
-                    ' 然后通过X轴的数据就可以通过标准曲线的线性回归模型计算出浓度了
-                    C# = metabolite.fx(X)
-                End If
-
-                ' 这里的C是相当于 cIS/ct = C，则样品的浓度结果应该为 ct = cIS/C
-                ' C = Val(info!cIS) / C
-
-                Dim [IS] As IonPair = names.TryGetValue(model.IS.ID)
-                Dim peaktable As New MRMPeakTable With {
-                    .content = C,
-                    .ID = metabolite.name,
-                    .raw = raw,
-                    .rtmax = A.peakROI.Max,
-                    .rtmin = A.peakROI.Min,
-                    .Name = names(metabolite.name).name,
-                    .TPA = A.area,
-                    .TPA_IS = AIS.area,
-                    .base = A.baseline,
-                    .IS = If([IS] Is Nothing, "", $"{[IS].accession} ({[IS].name})"),
-                    .maxinto = A.maxPeakHeight,
-                    .maxinto_IS = AIS.maxPeakHeight
-                }
-
-                Yield New ContentResult(Of MRMPeakTable) With {
-                    .Name = metabolite.name,
-                    .Content = C,
-                    .X = X,
-                    .Peaktable = peaktable
-                }
-            Next
-        End Function
 
         ' 实验采用内标法定量。配制5个不同浓度的标准系列，系列中目标分析物浓度(cti)呈梯度变化
         ' (ct1, ct2, ct3, ct4, ct5)，
@@ -217,7 +108,9 @@ Namespace MRM
                                             calibrates As Standards(),
                                             [ISvector] As [IS](),
                                             Optional weighted As Boolean = False,
-                                            Optional blankControls As DataSet() = Nothing) As IEnumerable(Of StandardCurve)
+                                            Optional blankControls As DataSet() = Nothing,
+                                            Optional maxDeletions As Integer = 1,
+                                            Optional isWorkCurveMode As Boolean = True) As IEnumerable(Of StandardCurve)
 
             Dim [IS] As Dictionary(Of String, [IS]) = ISvector.ToDictionary(Function(i) i.ID)
             Dim blanks As New Dictionary(Of String, DataSet)
@@ -241,6 +134,7 @@ Namespace MRM
                 Dim CIS# = IsIon?.CIS                                             ' 内标的浓度，是不变的，所以就只有一个值
                 Dim points As New List(Of MRMStandards)
                 Dim blankPoints = blanks.TryGetValue(ion.HMDB).getBlankControls
+                Dim blankISPoints = blanks.TryGetValue(ion.IS).getBlankControls
 
                 ' 标准曲线数据
                 ' 从实验数据之中产生线性回归计算所需要的点的集合
@@ -269,37 +163,53 @@ Namespace MRM
 
                 If blankPoints.Length > 0 Then
                     Dim baseline = blankPoints.Average
-                    Dim netArea = A.Select(Function(xa) xa - baseline).ToArray
-                    Dim fitNetArea As IFitted
-                    Dim netAreaPoints As New List(Of MRMStandards)
+                    Dim nA As Double()
 
-                    line = StandardCurveWorker _
-                       .CreateModelPoints(C, netArea, ISTPA, CIS, ion.HMDB, ion.Name, netAreaPoints) _
-                       .ToArray
-                    fitNetArea = StandardCurve.CreateLinearRegression(line, weighted)
+                    If blankISPoints.IsNullOrEmpty OrElse Not isWorkCurveMode Then
+                        nA = A.Select(Function(xa) xa - baseline).ToArray
+                    Else
+                        Dim blankISBase# = blankISPoints.Average
 
-                    line = StandardCurveWorker _
-                       .CreateModelPoints(C, A, ISTPA, CIS, ion.HMDB, ion.Name, points) _
-                       .ToArray
-                    fit = StandardCurve.CreateLinearRegression(line, weighted)
-
-                    If fitNetArea.CorrelationCoefficient > fit.CorrelationCoefficient Then
-                        fit = fitNetArea
-                        points = netAreaPoints
+                        ISTPA = {}
+                        nA = A _
+                            .Select(Function(xa, i) xa / ISTPA(i) - baseline / blankISBase) _
+                            .ToArray
                     End If
+
+                    line = StandardCurveWorker _
+                       .CreateModelPoints(C, nA, ISTPA, CIS, ion.HMDB, ion.Name, points) _
+                       .ToArray
+                    fit = StandardCurve.CreateLinearRegression(line, weighted, maxDeletions)
                 Else
                     line = StandardCurveWorker _
                        .CreateModelPoints(C, A, ISTPA, CIS, ion.HMDB, ion.Name, points) _
                        .ToArray
-                    fit = StandardCurve.CreateLinearRegression(line, weighted)
+                    fit = StandardCurve.CreateLinearRegression(line, weighted, maxDeletions)
+                End If
+
+                If fit Is Nothing Then
+                    Call $"Missing {ion.ToString}!".Warning
+                    Continue For
                 End If
 
                 Dim out As New StandardCurve With {
                     .name = ion.HMDB,
                     .linear = fit,
-                    .points = points.ToArray,
+                    .points = points.PopAll,
                     .[IS] = IsIon
                 }
+                Dim fy As Func(Of Double, Double) = out.reverseModel
+                Dim ptY#
+
+                For Each pt As MRMStandards In out.points
+                    If pt.AIS > 0 Then
+                        ptY = pt.Ati / pt.AIS
+                    Else
+                        ptY = pt.Ati
+                    End If
+
+                    pt.yfit = stdNum.Round(fy(ptY), 5)
+                Next
 
                 Yield out
             Next
@@ -402,7 +312,7 @@ Namespace MRM
                     .Cti = Ct_i,
                     .ID = id,
                     .Name = name,
-                    .level = "L" & i
+                    .level = "L" & (i + 1)
                 }
 
                 ' 得到标准曲线之中的一个点

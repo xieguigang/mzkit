@@ -1,0 +1,332 @@
+ID,class,category,subcategory,order,entry,name
+C14127,G Protein-coupled receptors,Rhodopsin family: amine receptors,Acetylcholine (muscarinic),muscarinic cholinergic receptor M1 [HSA:1128] [KO:K04129],C14127,Acotiamide	Antagonist
+C09084,G Protein-coupled receptors,Rhodopsin family: amine receptors,Acetylcholine (muscarinic),muscarinic cholinergic receptor M1 [HSA:1128] [KO:K04129],C09084,Brucine	Agonist
+C08307,G Protein-coupled receptors,Rhodopsin family: amine receptors,Acetylcholine (muscarinic),muscarinic cholinergic receptor M3 [HSA:1131] [KO:K04131],C08307,Hordatine A	Antagonist
+C07471,G Protein-coupled receptors,Rhodopsin family: amine receptors,Acetylcholine (muscarinic),muscarinic cholinergic receptor [HSA:1128 1129 1131 1132 1133] [KO:K04129 K04130 K04131 K04132 K04133],C07471,Methacholine	Agonist
+C07485,G Protein-coupled receptors,Rhodopsin family: amine receptors,Acetylcholine (muscarinic),muscarinic cholinergic receptor [HSA:1128 1129 1131 1132 1133] [KO:K04129 K04130 K04131 K04132 K04133],C07485,Oxotremorine	Agonist
+C07506,G Protein-coupled receptors,Rhodopsin family: amine receptors,Acetylcholine (muscarinic),muscarinic cholinergic receptor [HSA:1128 1129 1131 1132 1133] [KO:K04129 K04130 K04131 K04132 K04133],C07506,Propantheline	Antagonist
+C08202,G Protein-coupled receptors,Rhodopsin family: amine receptors,Acetylcholine (muscarinic),muscarinic cholinergic receptor [HSA:1128 1129 1131 1132 1133] [KO:K04129 K04130 K04131 K04132 K04133],C08202,Bethanechol chloride	Agonist
+C12814,G Protein-coupled receptors,Rhodopsin family: amine receptors,Acetylcholine (muscarinic),muscarinic cholinergic receptor [HSA:1128 1129 1131 1132 1133] [KO:K04129 K04130 K04131 K04132 K04133],C12814,Prifinium bromide	Antagonist
+C13639,G Protein-coupled receptors,Rhodopsin family: amine receptors,Adrenaline,alpha1a-adrenergic receptor [HSA:148] [KO:K04135],C13639,dl-Methylephedrine hydrochloride	Agonist
+C19980,G Protein-coupled receptors,Rhodopsin family: amine receptors,Adrenaline,alpha1d-adrenergic receptor [HSA:146] [KO:K04137],C19980,Domesticine	Antagonist
+C00179,G Protein-coupled receptors,Rhodopsin family: amine receptors,Adrenaline,alpha2a-adrenergic receptor [HSA:150] [KO:K04138],C00179,Agmatine	Agonist
+C09256,G Protein-coupled receptors,Rhodopsin family: amine receptors,Adrenaline,alpha2a-adrenergic receptor [HSA:150] [KO:K04138],C09256,Yohimbine	Antagonist
+C17925,G Protein-coupled receptors,Rhodopsin family: amine receptors,Adrenaline,alpha2b-adrenergic receptor [HSA:151] [KO:K04139],C17925,Nordephrine	Antagonist
+C07780,G Protein-coupled receptors,Rhodopsin family: amine receptors,Histamine,H1-receptor [HSA:3269] [KO:K04149],C07780,Chlorpheniramine maleate	Antagonist
+C17928,G Protein-coupled receptors,Rhodopsin family: amine receptors,Histamine,H1-receptor [HSA:3269] [KO:K04149],C17928,2-Methylhistamine	Agonist
+C17926,G Protein-coupled receptors,Rhodopsin family: amine receptors,Histamine,H1-receptor [HSA:3269] [KO:K04149],C17926,2-Pyridinemethanamine	Agonist
+C17927,G Protein-coupled receptors,Rhodopsin family: amine receptors,Histamine,H1-receptor [HSA:3269] [KO:K04149],C17927,Thiazolylethylamine	Agonist
+C17930,G Protein-coupled receptors,Rhodopsin family: amine receptors,Histamine,H2-receptor [HSA:3274] [KO:K04150],C17930,Dimaprit	Agonist
+C17929,G Protein-coupled receptors,Rhodopsin family: amine receptors,Histamine,H2-receptor [HSA:3274] [KO:K04150],C17929,4-Methylhistamine	Agonist
+C17934,G Protein-coupled receptors,Rhodopsin family: amine receptors,Histamine,H3-receptor [HSA:11255] [KO:K04151],C17934,Clobenpropit	Antagonist
+C06545,G Protein-coupled receptors,Rhodopsin family: amine receptors,Histamine,H3-receptor [HSA:11255] [KO:K04151],C06545,Conessine	Antagonist
+C17931,G Protein-coupled receptors,Rhodopsin family: amine receptors,Histamine,H3-receptor [HSA:11255] [KO:K04151],C17931,Imetit	Agonist
+C17932,G Protein-coupled receptors,Rhodopsin family: amine receptors,Histamine,H3-receptor [HSA:11255] [KO:K04151],C17932,Immepip	Agonist
+C17933,G Protein-coupled receptors,Rhodopsin family: amine receptors,Histamine,H3-receptor [HSA:11255] [KO:K04151],C17933,Thioperamide	Antagonist
+C07542,G Protein-coupled receptors,Rhodopsin family: amine receptors,Serotonin,5-HT2A-receptor [HSA:3356] [KO:K04157],C07542,Lysergic acid diethylamide	Agonist
+C13665,G Protein-coupled receptors,Rhodopsin family: amine receptors,Serotonin,5-HT2A-receptor [HSA:3356] [KO:K04157],C13665,2-Methyl-5-hydroxytryptamine	Agonist
+C11738,G Protein-coupled receptors,Rhodopsin family: amine receptors,Serotonin,5-HT2C-receptor [HSA:3358] [KO:K04157],C11738,m-Chlorophenylpiperazine	Agonist
+C13494,G Protein-coupled receptors,Rhodopsin family: amine receptors,Serotonin,5-HT4-receptor [HSA:3360] [KO:K04160],C13494,Mosapride citrate hydrate	Agonist
+C01505,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Bradykinin,bradykinin B1 receptor [HSA:623] [KO:K03915],C01505,Kallidin	Agonist
+C20010,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Bradykinin,bradykinin B2 receptor [HSA:624] [KO:K03916],C20010,Anatibant	Antagonist
+C00306,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Bradykinin,bradykinin B2 receptor [HSA:624] [KO:K03916],C00306,Bradykinin	Agonist
+C20266,G Protein-coupled receptors,Rhodopsin family: peptide receptors,CXC Chemokine,C-X-C chemokine receptor type 4 [HSA:7852] [KO:K04189],C20266,AMD 070	Inhibitor
+C16114,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Cholecystokinin,cholecystokinin A / gastrin receptor [HSA:886] [KO:K04194],C16114,Cholecystokinin-8	Agonist
+C16133,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Cholecystokinin,cholecystokinin B / gastrin receptor [HSA:887] [KO:K04195],C16133,Cholecystokinin-33	Agonist
+C18186,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Cholecystokinin,cholecystokinin / gastrin receptor [HSA:886 887] [KO:K04194 K04195],C18186,Gastrin-14	Agonist
+C16113,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Cholecystokinin,cholecystokinin / gastrin receptor [HSA:886 887] [KO:K04194 K04195],C16113,Gastrin-17	Agonist
+C18187,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Cholecystokinin,cholecystokinin / gastrin receptor [HSA:886 887] [KO:K04194 K04195],C18187,Gastrin-34 	Agonist
+C16103,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Melanocortin,melanocortin receptor [HSA:4157 4158 4160 4159 4161] [KO:K04199 K04200 K04201 K04202 K04203],C16103,Agouti related protein (87-132)	Antagonist
+C16109,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Neuropeptide FF,neuropeptide FF receptor 1 [HSA:64106] [KO:K04240],C16109,RFamide-related peptide 1	Agonist
+C16110,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Neuropeptide FF,neuropeptide FF receptor 1 [HSA:64106] [KO:K04240],C16110,RFamide-related peptide 3	Agonist
+C20167,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,delta-opioid receptor [HSA:4985] [KO:K04213],C20167,7-Benzylidenenaltrexone	Antagonist
+C20030,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,delta-opioid receptor [HSA:4985] [KO:K04213],C20030,Dermorphin	Agonist
+C18010,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,delta-opioid receptor [HSA:4985] [KO:K04213],C18010,Deltorphin A	Agonist
+C18095,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,delta-opioid receptor [HSA:4985] [KO:K04213],C18095,Deltorphin B	Agonist
+C18097,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,delta-opioid receptor [HSA:4985] [KO:K04213],C18097,Deltorphin C	Agonist
+C20165,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,delta-opioid receptor [HSA:4985] [KO:K04213],C20165,DSLET	Agonist
+C11684,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,delta-opioid receptor [HSA:4985] [KO:K04213],C11684,Met-enkephalin	Agonist
+C16041,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,delta-opioid receptor [HSA:4985] [KO:K04213],C16041,Leu-enkephalin	Agonist
+C02210,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,delta-opioid receptor [HSA:4985] [KO:K04213],C02210,beta-Endorphin	Agonist
+C11793,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,delta-opioid receptor [HSA:4985] [KO:K04213],C11793,Etorphine	Agonist
+C08014,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,delta-opioid receptor [HSA:4985] [KO:K04213],C08014,Levorphanol	Agonist
+C20166,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,delta-opioid receptor [HSA:4985] [KO:K04213],C20166,Naltriben	Antagonist
+C18128,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,delta-opioid receptor [HSA:4985] [KO:K04213],C18128,Naltrindole	Antagonist
+C01574,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,kappa-opioid receptor [HSA:4986] [KO:K04214],C01574,Dynorphin A	Agonist
+C16135,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,kappa-opioid receptor [HSA:4986] [KO:K04214],C16135,Dynorphin B	Agonist
+C11795,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,kappa-opioid receptor [HSA:4986] [KO:K04214],C11795,Ethylketocyclazocine	Agonist
+C18130,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,kappa-opioid receptor [HSA:4986] [KO:K04214],C18130,Norbinaltorphimine	Antagonist
+C20196,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,kappa-opioid receptor [HSA:4986] [KO:K04214],C20196,Salvinorin A	Agonist
+C20168,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,kappa-opioid receptor [HSA:4986] [KO:K04214],C20168,(-)TAN-67	Agonist
+C11796,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,kappa-opioid receptor [HSA:4986] [KO:K04214],C11796,U 50488	Agonist
+C20160,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,mu-opioid receptor [HSA:4988] [KO:K04215],C20160,CTOP	Antagonist
+C15890,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,mu-opioid receptor [HSA:4988] [KO:K04215],C15890,Endomorphin-1	Agonist
+C15891,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,mu-opioid receptor [HSA:4988] [KO:K04215],C15891,Endomorphin-2	Agonist
+C18127,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,mu-opioid receptor [HSA:4988] [KO:K04215],C18127,beta-Funaltrexamine	Antagonist
+C16044,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Opioid,nociceptin receptor [HSA:4987] [KO:K04216],C16044,Nociceptin	Agonist
+C18365,G Protein-coupled receptors,Rhodopsin family: peptide receptors,Oxytocin,oxytocin receptor [HSA:5021] [KO:K04229],C18365,Carbetocin	Agonist
+C13747,G Protein-coupled receptors,Rhodopsin family: other receptors,Adenosine,adenosine A1 receptor [HSA:134] [KO:K04265],C13747,"1,7-Dimethylxanthine	Antagonist"
+C20220,G Protein-coupled receptors,Rhodopsin family: other receptors,Cannabinoid,cannabinoid receptor 1 [HSA:1268] [KO:K04277],C20220,AM251	Antagonist
+C07580,G Protein-coupled receptors,Rhodopsin family: other receptors,Cannabinoid,cannabinoid receptor 1 [HSA:1268] [KO:K04277],C07580,Cannabinol	Agonist
+C06972,G Protein-coupled receptors,Rhodopsin family: other receptors,Cannabinoid,cannabinoid receptor 1 [HSA:1268] [KO:K04277],C06972,Dronabinol	Agonist
+C14319,G Protein-coupled receptors,Rhodopsin family: other receptors,Cannabinoid,cannabinoid receptor 1 [HSA:1268] [KO:K04277],C14319,SR 141716	Antagonist
+C19914,G Protein-coupled receptors,Rhodopsin family: other receptors,Lysosphingolipid and LPA (EDG),sphingosine 1-phosphate receptor 1 [HSA:1901] [KO:K04288],C19914,Myriocin	Agonist
+C14777,G Protein-coupled receptors,Rhodopsin family: other receptors,Leukotriene B4 receptor,leukotriene B4 receptor 1 [HSA:1241] [KO:K04296],C14777,12(S)-HETE	Agonist
+C20388,G Protein-coupled receptors,Rhodopsin family: other receptors,Leukotriene B4 receptor,leukotriene B4 receptor 1 [HSA:1241] [KO:K04296],C20388,12(S)-HHT	Agonist
+C18171,G Protein-coupled receptors,Rhodopsin family: other receptors,Leukotriene B4 receptor,leukotriene B4 receptor 1 [HSA:1241] [KO:K04296],C18171,Resolvin E1	Agonist
+C13856,G Protein-coupled receptors,Rhodopsin family: other receptors,Lysophosphatidylinositol,G protein-coupled receptor 55 [HSA:9290] [KO:K08413],C13856,2-Arachidonoylglycerol	Agonist
+C16512,G Protein-coupled receptors,Rhodopsin family: other receptors,Lysophosphatidylinositol,G protein-coupled receptor 55 [HSA:9290] [KO:K08413],C16512,Palmitoylethanolamide	Agonist
+C00186,G Protein-coupled receptors,Rhodopsin family: other receptors,Lactate,G protein-coupled receptor 81 [HSA:27198] [KO:K08401],C00186,(S)-Lactate	Agonist
+C06314,G Protein-coupled receptors,Rhodopsin family: other receptors,Cysteinyl leukotriene,cysteinyl leukotriene receptor 1 [HSA:10800] [KO:K04322],C06314,Lipoxin A4	Antagonist
+C06315,G Protein-coupled receptors,Rhodopsin family: other receptors,Cysteinyl leukotriene,cysteinyl leukotriene receptor 1 [HSA:10800] [KO:K04322],C06315,Lipoxin B4	Antagonist
+C15894,G Protein-coupled receptors,Secretin family,Glucagon,glucagon-like peptide 1 receptor [HSA:2740] [KO:K04581],C15894,Exendin-4	Agonist
+C19415,G Protein-coupled receptors,Metabotropic glutamate family,Taste receptors (T1R),taste receptor type 1 member 2 [HSA:80834] [KO:K04625],C19415,Dulcin	Agonist
+C07058,Nuclear receptors,Thyroid hormone like receptors,Retinoic acid receptor,"NR1B; nuclear receptor, subfamily 1, group B [HSA:5914 5915 5916] [KO:K08527 K08528 K08529]",C07058,13-cis-Retinoic acid	Agonist
+C15493,Nuclear receptors,Thyroid hormone like receptors,Retinoic acid receptor,"NR1B; nuclear receptor, subfamily 1, group B [HSA:5914 5915 5916] [KO:K08527 K08528 K08529]",C15493,9-cis-Retinoic acid	Agonist
+C00473,Nuclear receptors,Thyroid hormone like receptors,Retinoic acid receptor,"NR1B; nuclear receptor, subfamily 1, group B [HSA:5914 5915 5916] [KO:K08527 K08528 K08529]",C00473,Retinol	Agonist
+C01607,Nuclear receptors,Thyroid hormone like receptors,Peroxisome proliferator-activated receptor,"nuclear receptor, subfamily 1, group C, member 1 [HSA:5465] [KO:K07294]",C01607,Phytanate	Agonist
+C13550,Nuclear receptors,Thyroid hormone like receptors,Liver X receptor like receptor,liver X receptor alpha [HSA:10062] [KO:K08536],C13550,Cerebrosterol	Agonist
+C15610,Nuclear receptors,Thyroid hormone like receptors,Liver X receptor like receptor,liver X receptor alpha [HSA:10062] [KO:K08536],C15610,"Cholest-5-ene-3beta,26-diol	Agonist"
+C15632,Nuclear receptors,Thyroid hormone like receptors,Liver X receptor like receptor,liver X receptor alpha [HSA:10062] [KO:K08536],C15632,"24(S),25-Epoxycholesterol	Agonist"
+C15631,Nuclear receptors,Thyroid hormone like receptors,Liver X receptor like receptor,liver X receptor alpha [HSA:10062] [KO:K08536],C15631,GW 3965	Agonist
+C05502,Nuclear receptors,Thyroid hormone like receptors,Liver X receptor like receptor,liver X receptor alpha [HSA:10062] [KO:K08536],C05502,22(R)-Hydroxycholesterol	Agonist
+C15630,Nuclear receptors,Thyroid hormone like receptors,Liver X receptor like receptor,liver X receptor alpha [HSA:10062] [KO:K08536],C15630,T 0901317	Agonist
+C02528,Nuclear receptors,Thyroid hormone like receptors,Liver X receptor like receptor,farnesoid X receptor [HSA:9971] [KO:K08537],C02528,Chenodeoxycholate	Agonist
+C15649,Nuclear receptors,Thyroid hormone like receptors,Liver X receptor like receptor,farnesoid X receptor [HSA:9971] [KO:K08537],C15649,Fexaramine	Agonist
+C15635,Nuclear receptors,Thyroid hormone like receptors,Liver X receptor like receptor,farnesoid X receptor [HSA:9971] [KO:K08537],C15635,GW 4064	Agonist
+C00477,Nuclear receptors,Thyroid hormone like receptors,Liver X receptor like receptor,ecdysone receptor [KO:K14034],C00477,Ecdysone	Agonist
+C00951,Nuclear receptors,Estrogen like receptors,Estrogen receptor,"estrogen receptor 1, 2 [HSA:2099 2100] [KO:K08550 K08551]",C00951,Estradiol-17beta	Agonist
+C13444,Nuclear receptors,Estrogen like receptors,Estrogen receptor,"estrogen receptor 1, 2 [HSA:2099 2100] [KO:K08550 K08551]",C13444,Estradiol benzoate	Agonist
+C12729,Nuclear receptors,Estrogen like receptors,3-Ketosteroid receptor,progesterone receptor [HSA:5241] [KO:K08556],C12729,Chlormadinone acetate	Antagonist
+C00535,Nuclear receptors,Estrogen like receptors,3-Ketosteroid receptor,androgen receptor [HSA:367] [KO:K08557],C00535,Testosterone	Agonist
+C07017,Ion channels,Cys-loop superfamily,GABA-A,GABAA-receptor alpha [HSA:2554 2555 2556 2557 2558 2559] [KO:K05175 K05176 K05177 K05178 K05179 K05180],C07017,Furosemide	Antagonist
+C09364,Ion channels,Cys-loop superfamily,GABA-A,GABAA-receptor [HSA:2554 2555 2556 2557 2558 2559 2560 2561 2562 2563 2564 2565 2566 2567 2568 55879] [KO:K05175 K05176 K05177 K05178 K05179 K05180 K05181 K05182 K05183 K05184 K05185 K05186 K05187 K05188 K05189 K05192],C09364,Bicuculline	Antagonist
+C09529,Ion channels,Cys-loop superfamily,GABA-A,GABAA-receptor [HSA:2554 2555 2556 2557 2558 2559 2560 2561 2562 2563 2564 2565 2566 2567 2568 55879] [KO:K05175 K05176 K05177 K05178 K05179 K05180 K05181 K05182 K05183 K05184 K05185 K05186 K05187 K05188 K05189 K05192],C09529,Picrotoxinin	Antagonist
+C03349,Ion channels,Cys-loop superfamily,GABA-A,GABAA-receptor [HSA:2554 2555 2556 2557 2558 2559 2560 2561 2562 2563 2564 2565 2566 2567 2568 55879] [KO:K05175 K05176 K05177 K05178 K05179 K05180 K05181 K05182 K05183 K05184 K05185 K05186 K05187 K05188 K05189 K05192],C03349,3-Aminopropanesulfonate	Agonist
+C13694,Ion channels,Cys-loop superfamily,GABA-A,GABAA-receptor [HSA:2554 2555 2556 2557 2558 2559 2560 2561 2562 2563 2564 2565 2566 2567 2568 55879] [KO:K05175 K05176 K05177 K05178 K05179 K05180 K05181 K05182 K05183 K05184 K05185 K05186 K05187 K05188 K05189 K05192],C13694,Isoguvacine	Agonist
+C13693,Ion channels,Cys-loop superfamily,GABA-A,GABAA-receptor [HSA:2554 2555 2556 2557 2558 2559 2560 2561 2562 2563 2564 2565 2566 2567 2568 55879] [KO:K05175 K05176 K05177 K05178 K05179 K05180 K05181 K05182 K05183 K05184 K05185 K05186 K05187 K05188 K05189 K05192],C13693,"4,5,6,7-Tetrahydroisoxazolo(5,4-c)pyridin-3-ol	Agonist"
+C19930,Ion channels,Cys-loop superfamily,GABA-A,GABAA-receptor [HSA:2554 2555 2556 2557 2558 2559 2560 2561 2562 2563 2564 2565 2566 2567 2568 55879] [KO:K05175 K05176 K05177 K05178 K05179 K05180 K05181 K05182 K05183 K05184 K05185 K05186 K05187 K05188 K05189 K05192],C19930,tert-Butylbicyclophosphorothionate     Antagonist
+C06522,Ion channels,Cys-loop superfamily,Glycine,glycine receptor alpha-1 [HSA:2741] [KO:K05193],C06522,Strychnine	Antagonist
+C20037,Ion channels,Cys-loop superfamily,Acetylcholine (nicotinic),nicotinic acetylcholine receptor alpha-7 [HSA:1139] [KO:K04809],C20037,alpha-Bungarotoxin	Antagonist
+C11733,Ion channels,Cys-loop superfamily,Acetylcholine (nicotinic),muscle-type nicotinic cholinergic receptor [HSA:1134 1140 1144 1145 1146] [KO:K04803 K04812 K04816 K04817 K04818],C11733,Decamethonium	Antagonist
+C13683,Ion channels,Cys-loop superfamily,Acetylcholine (nicotinic),muscle-type nicotinic cholinergic receptor [HSA:1134 1140 1144 1145 1146] [KO:K04803 K04812 K04816 K04817 K04818],C13683,Histrionicotoxin	Antagonist
+C07546,Ion channels,Cys-loop superfamily,Acetylcholine (nicotinic),muscle-type nicotinic cholinergic receptor [HSA:1134 1140 1144 1145 1146] [KO:K04803 K04812 K04816 K04817 K04818],C07546,Succinylcholine	Antagonist
+C11690,Ion channels,Cys-loop superfamily,Acetylcholine (nicotinic),nicotinic cholinergic receptor [HSA:1134 1135 1136 1137 1138 8973 1139 55584 57053 1140 1141 1142 1143 1144 1145 1146] [KO:K04803 K04804 K04805 K04806 K04807 K04808 K04809 K04810 K04811 K04812 K04813 K04814 K04815 K04816 K04817 K04818],C11690,Epibatidine	Agonist
+C00745,Ion channels,Cys-loop superfamily,Acetylcholine (nicotinic),nicotinic cholinergic receptor [HSA:1134 1135 1136 1137 1138 8973 1139 55584 57053 1140 1141 1142 1143 1144 1145 1146] [KO:K04803 K04804 K04805 K04806 K04807 K04808 K04809 K04810 K04811 K04812 K04813 K04814 K04815 K04816 K04817 K04818],C00745,Nicotine	Antagonist
+C07547,Ion channels,Cys-loop superfamily,Acetylcholine (nicotinic),nicotinic cholinergic receptor [HSA:1134 1135 1136 1137 1138 8973 1139 55584 57053 1140 1141 1142 1143 1144 1145 1146] [KO:K04803 K04804 K04805 K04806 K04807 K04808 K04809 K04810 K04811 K04812 K04813 K04814 K04815 K04816 K04817 K04818],C07547,Tubocurarine	Antagonist
+C13646,Ion channels,Cys-loop superfamily,Serotonin (5-HT3),5-HT3-receptor [HSA:3359 9177 170572 200909 285242] [KO:K04819],C13646,m-Chlorophenylbiguanide	Agonist
+C13670,Ion channels,Glutamate-gated cation channels,"Glutamate (ionotropic), non-NMDA",AMPA receptor [HSA:2890 2891 2892 2893] [KO:K05197 K05198 K05199 K05200],C13670,Talampanel	Antagonist
+C08296,Ion channels,Glutamate-gated cation channels,"Glutamate (ionotropic), non-NMDA",AMPA receptor [HSA:2890 2891 2892 2893] [KO:K05197 K05198 K05199 K05200],C08296,Quisqualic acid	Agonist
+C13667,Ion channels,Glutamate-gated cation channels,"Glutamate (ionotropic), non-NMDA",AMPA receptor [HSA:2890 2891 2892 2893] [KO:K05197 K05198 K05199 K05200],C13667,"2,3-Dioxo-6-nitro-7-sulfamoylbenzo[f]quinoxaline	Antagonist"
+C13668,Ion channels,Glutamate-gated cation channels,"Glutamate (ionotropic), non-NMDA",AMPA receptor [HSA:2890 2891 2892 2893] [KO:K05197 K05198 K05199 K05200],C13668,"6-Cyano-7-nitroquinoxaline-2,3-dione	Antagonist"
+C13672,Ion channels,Glutamate-gated cation channels,"Glutamate (ionotropic), non-NMDA",AMPA receptor [HSA:2890 2891 2892 2893] [KO:K05197 K05198 K05199 K05200],C13672,(S)-AMPA	Agonist
+C12819,Ion channels,Glutamate-gated cation channels,"Glutamate (ionotropic), non-NMDA",kainate receptor [HSA:2897 2898 2899 2900 2901] [KO:K05201 K05202 K05203 K05204 K05205],C12819,Kainic acid	Agonist
+C07843,Ion channels,Glutamate-gated cation channels,"Glutamate (ionotropic), NMDA",N-methyl-D-aspartate receptor [HSA:2902 2903 2904 2905 2906] [KO:K05208 K05209 K05210 K05211 K05212],C07843,Ketamine hydrochloride	Antagonist
+C12269,Ion channels,Glutamate-gated cation channels,"Glutamate (ionotropic), NMDA",N-methyl-D-aspartate receptor [HSA:2902 2903 2904 2905 2906] [KO:K05208 K05209 K05210 K05211 K05212],C12269,N-Methyl-D-aspartic acid	Agonist
+C13750,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C13750,Batrachotoxin	Opener
+C13852,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C13852,Sipatrigine	Blocker
+C04623,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C04623,DDT	Modulator
+C11043,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C11043,Methoxychlor	Modulator
+C10980,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C10980,Bifenthrin	Modulator
+C10982,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C10982,Cyfluthrin	Modulator
+C10983,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C10983,Cyhalothrin	Modulator
+C10984,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C10984,Cypermethrin	Modulator
+C07894,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C07894,Procaine hydrochloride	Blocker
+C10985,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C10985,Deltamethrin	Modulator
+C10988,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C10988,Fenvalerate	Modulator
+C10991,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C10991,Resmethrin	Modulator
+C10992,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C10992,Tefluthrin	Modulator
+C12962,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C12962,Cyphenothrin	Modulator
+C13410,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C13410,Transfluthrin	Modulator
+C14387,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C14387,Phenothrin	Modulator
+C14388,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C14388,Permethrin	Modulator
+C14524,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C14524,Flucythrinate	Modulator
+C18373,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C18373,Tetramethrin	Modulator
+C18408,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C18408,Acrinathrin	Modulator
+C18409,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C18409,Cycloprothrin	Modulator
+C18410,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C18410,Etofenprox	Modulator
+C18411,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C18411,Fenpropathrin	Modulator
+C18412,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C18412,Silafluofen	Modulator
+C18413,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C18413,Tralomethrin	Modulator
+C18147,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C18147,Esfenvalerate	Modulator
+C18715,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C18715,alpha-Cypermethrin	Modulator
+C18790,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C18790,tau-Fluvalinate	Modulator
+C07594,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C07594,Pyrethrin I
+C09894,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C09894,Pyrethrin II	Modulator
+C09845,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C09845,Cinerin I	Modulator
+C09846,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C09846,Cinerin II	Modulator
+C16780,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C16780,Jasmolin I	Modulator
+C16781,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C16781,Jasmolin II	Modulator
+C13757,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C13757,Saxitoxin	Blocker
+C14337,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C14337,Bioallethrin	Modulator
+C16810,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C16810,Bioresmethrin	Modulator
+C10989,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C10989,Fluvalinate
+C18524,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C18524,Empenthrin	Modulator
+C09103,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",voltage-gated sodium channel [HSA:6323 6326 6328 6329 6331 6334 6335] [KO:K04833 K04834 K04836 K04837 K04838 K04840 K04841],C09103,Grayanotoxin I	Opener
+C11692,Ion channels,Voltage-gated cation channels,"Na+ channel, SCN alpha, NaV1.x",tetrodotoxin-sensitive voltage-gated sodium channel,C11692,Tetrodotoxin  Blocker
+C19906,Ion channels,Voltage-gated cation channels,"Ca2+ channel, CACN alpha-1, CaVx.x",voltage-dependent calcium channel N type alpha-1B [HSA:774] [KO:K04849],C19906,omega-Conotoxin	Blocker
+C13776,Ion channels,Voltage-gated cation channels,"K+ channel, KCNH, Kv10-12.x (Ether-a-go-go)","potassium voltage-gated channel, subfamily H (eag-related), member 2 [HSA:3757] [KO:K04905]",C13776,E-4031	Blocker
+C13820,Ion channels,Voltage-gated cation channels,"K+ channel, KCNQ, Kv7.x (KQT-like)","potassium voltage-gated channel, KQT-like subfamily, member 1 [HSA:3784] [KO:K04926]",C13820,Chromanol 293B	Blocker
+C20048,Ion channels,Voltage-gated cation channels,"K+ channel, KCNN, KCa2-3.x (Small conductance)","potassium intermediate/small conductance calcium-activated channel, subfamily N, member 1 [HSA:3780] [KO:K04942]",C20048,Apamine	Blocker
+C03882,Ion channels,Related to voltage-gated cation channels,"Transient receptor potential family, TRPV (Vanilloid)","transient receptor potential cation channel, subfamily V, member 1 [HSA:7442] [KO:K05222]",C03882,Piperine	Agonist
+C06866,Ion channels,Related to voltage-gated cation channels,"Transient receptor potential family, TRPV (Vanilloid)","transient receptor potential cation channel, subfamily V, member 1 [HSA:7442] [KO:K05222]",C06866,Capsaicin	Agonist
+C16952,Ion channels,Related to voltage-gated cation channels,"Transient receptor potential family, TRPV (Vanilloid)","transient receptor potential cation channel, subfamily V, member 1 [HSA:7442] [KO:K05222]",C16952,Dihydrocapsaicin	Agonist
+C09201,Ion channels,Related to voltage-gated cation channels,"Transient receptor potential family, TRPV (Vanilloid)","transient receptor potential cation channel, subfamily V, member 1 [HSA:7442] [KO:K05222]",C09201,Tinyatoxin	Agonist
+C09179,Ion channels,Related to voltage-gated cation channels,"Transient receptor potential family, TRPV (Vanilloid)","transient receptor potential cation channel, subfamily V, member 1 [HSA:7442] [KO:K05222]",C09179,Resiniferatoxin	Agonist
+C10494,Ion channels,Related to voltage-gated cation channels,"Transient receptor potential family, TRPV (Vanilloid)","transient receptor potential cation channel, subfamily V, member 1 [HSA:7442] [KO:K05222]",C10494,[6]-Shogaol	Agonist
+C09840,Ion channels,Related to voltage-gated cation channels,"Transient receptor potential family, TRPV (Vanilloid)","transient receptor potential cation channel,  subfamily V, member 3 [HSA:162514] [KO:K04972]",C09840,Carvacrol	Agonist
+C20171,Ion channels,Related to voltage-gated cation channels,"Transient receptor potential family, TRPM (Melastatin/Long TRP)","transient receptor potential cation channel, subfamily M, member 8 [HSA:79054] [KO:K04983]",C20171,Icilin	Activator
+C01471,Ion channels,Related to voltage-gated cation channels,"Transient receptor potential family, TRPA (ANKTM1)","transient receptor potential cation channel, subfamily A, member 1 [HSA:8989] [KO:K04984]",C01471,Acrolein	Agonist
+C07600,Ion channels,Related to voltage-gated cation channels,"Transient receptor potential family, TRPA (ANKTM1)","transient receptor potential cation channel, subfamily A, member 1 [HSA:8989] [KO:K04984]",C07600,Allicin	Agonist
+C19317,Ion channels,Related to voltage-gated cation channels,"Transient receptor potential family, TRPA (ANKTM1)","transient receptor potential cation channel, subfamily A, member 1 [HSA:8989] [KO:K04984]",C19317,Allyl isothiocyanate	Agonist
+C20170,Ion channels,Related to voltage-gated cation channels,"Transient receptor potential family, TRPA (ANKTM1)","transient receptor potential cation channel, subfamily A, member 1 [HSA:8989] [KO:K04984]",C20170,Benzoyl isothiocyanate	Agonist
+C03098,Ion channels,Related to voltage-gated cation channels,"Transient receptor potential family, TRPA (ANKTM1)","transient receptor potential cation channel, subfamily A, member 1 [HSA:8989] [KO:K04984]",C03098,Benzyl isothiocyanate	Agonist
+C00903,Ion channels,Related to voltage-gated cation channels,"Transient receptor potential family, TRPA (ANKTM1)","transient receptor potential cation channel, subfamily A, member 1 [HSA:8989] [KO:K04984]",C00903,Cinnamaldehyde	Agonist
+C11819,Ion channels,Related to inward rectifier K+ channels,Inward rectifier channel (Kir),"potassium inwardly-rectifying channel, subfamily J, member 11 [HSA:3767] [KO:K05004]",C11819,Cromakalim	Opener
+C01604,Transporters,Solute carrier family,SLC5,SLC5A1 (SGLT1) [HSA:6523] [KO:K14158],C01604,Phlorizin	Inhibitor
+C07577,Transporters,Solute carrier family,SLC6,SLC6A4 [HSA:6532] [KO:K05037],C07577,"3,4-Methylenedioxymethamphetamine	Inhibitor"
+C00389,Transporters,Solute carrier family,SLC22,SLC22A8 [HSA:9376] [KO:K08205],C00389,Quercetin	Inhibitor
+C20439,Transporters,Solute carrier family,SLC29,SLC29A1 [HSA:2030] [KO:K15014],C20439,NBMPR	Inhibitor
+C08271,Enzymes,Oxidoreductases,aldehyde dehydrogenase [EC:1.2.1.3],N/A,C08271,Coprine	Inhibitor
+C06536,Enzymes,Oxidoreductases,monoamine oxidase A (MAO-A) [HSA:4128] [KO:K00274] [EC:1.4.3.4],N/A,C06536,Harmaline	Inhibitor
+C15476,Enzymes,Oxidoreductases,monoamine oxidase B (MAO-B) [HSA:4129] [KO:K00274] [EC:1.4.3.4],N/A,C15476,Norselegiline	Inhibitor
+C20157,Enzymes,Oxidoreductases,monoamine oxidase B (MAO-B) [HSA:4129] [KO:K00274] [EC:1.4.3.4],N/A,C20157,beta-Carboline	Inhibitor
+C14470,Enzymes,Oxidoreductases,"cytochrome P450, family 1, subfamily A, polypeptide 1 [HSA:1543] [KO:K07408] [EC:1.14.14.1]",N/A,C14470,3-Methylcholanthrene	Inducer
+C06186,Enzymes,Oxidoreductases,tyrosinase [HSA:7299] [KO:K00505] [EC:1.14.18.1],N/A,C06186,Arbutin	Inhibitor
+C18342,Enzymes,Oxidoreductases,tyrosinase [HSA:7299] [KO:K00505] [EC:1.14.18.1],N/A,C18342,3-O-Ethyl-L-ascorbic acid	Inhibitor
+C18339,Enzymes,Oxidoreductases,tyrosinase [HSA:7299] [KO:K00505] [EC:1.14.18.1],N/A,C18339,L-Ascorbic acid-2-glucoside	Inhibitor
+C18340,Enzymes,Oxidoreductases,tyrosinase [HSA:7299] [KO:K00505] [EC:1.14.18.1],N/A,C18340,Magnesium L-ascorbic acid-2-phosphate	Inhibitor
+C18341,Enzymes,Oxidoreductases,tyrosinase [HSA:7299] [KO:K00505] [EC:1.14.18.1],N/A,C18341,Sodium L-ascorbic acid 2-phosphate	Inhibitor
+C10788,Enzymes,Oxidoreductases,tyrosinase [HSA:7299] [KO:K00505] [EC:1.14.18.1],N/A,C10788,Ellagic acid	Inhibitor
+C14516,Enzymes,Oxidoreductases,tyrosinase [HSA:7299] [KO:K00505] [EC:1.14.18.1],N/A,C14516,Kojic acid	Inhibitor
+C01595,Enzymes,Oxidoreductases,tyrosinase [HSA:7299] [KO:K00505] [EC:1.14.18.1],N/A,C01595,Linoleate	Inhibitor
+C18346,Enzymes,Oxidoreductases,tyrosinase [HSA:7299] [KO:K00505] [EC:1.14.18.1],N/A,C18346,4-Methoxy potassium salicylate	Inhibitor
+C17690,Enzymes,Oxidoreductases,tyrosinase [HSA:7299] [KO:K00505] [EC:1.14.18.1],N/A,C17690,4-(4-Hydroxyphenyl)-2-butanol	Inhibitor
+C18343,Enzymes,Oxidoreductases,tyrosinase-related protein 1 [HSA:7306] [KO:K00506] [EC:1.14.18.-],N/A,C18343,4-n-Butylresorcinol	Inhibitor
+C18363,Enzymes,Oxidoreductases,prostaglandin-endoperoxide synthase 1 [HSA:5742] [KO:K00509] [EC:1.14.99.1],N/A,C18363,Firocoxib	Inhibitor
+C18364,Enzymes,Oxidoreductases,prostaglandin-endoperoxide synthase 1 [HSA:5742] [KO:K00509] [EC:1.14.99.1],N/A,C18364,Carprofen	Inhibitor
+C07587,Enzymes,Oxidoreductases,prostaglandin-endoperoxide synthase 1 [HSA:5742] [KO:K00509] [EC:1.14.99.1],N/A,C07587,Sodium salicylate	Inhibitor
+C06991,Enzymes,Oxidoreductases,prostaglandin-endoperoxide synthase 2 [HSA:5743] [KO:K11987] [EC:1.14.99.1],N/A,C06991,Etodolac	Inhibitor
+C01108,Enzymes,Transferases,catechol O-methyltransferase [HSA:1312] [KO:K00545] [EC:2.1.1.6],N/A,C01108,"1,2,3-Trihydroxybenzene	Inhibitor"
+C15474,Enzymes,Transferases,catechol O-methyltransferase [HSA:1312] [KO:K00545] [EC:2.1.1.6],N/A,C15474,Tropolone	Inhibitor
+C15475,Enzymes,Transferases,catechol O-methyltransferase [HSA:1312] [KO:K00545] [EC:2.1.1.6],N/A,C15475,U 0521	Inhibitor
+C15477,Enzymes,Transferases,catechol O-methyltransferase [HSA:1312] [KO:K00545] [EC:2.1.1.6],N/A,C15477,CGP 28014	Inhibitor
+C20132,Enzymes,Transferases,3-oxoacyl-[acyl-carrier-protein] synthase II [HSA:54995] [KO:K09458] [EC:2.3.1.179],N/A,C20132,Platensimycin	Inhibitor
+C07185,Enzymes,Transferases,4-aminobutyrate aminotransferase [HSA:18] [KO:K13524] [EC:2.6.1.19 2.6.1.22],N/A,C07185,Valproic acid	Inhibitor
+C12110,Enzymes,Transferases,4-aminobutyrate aminotransferase [HSA:18] [KO:K13524] [EC:2.6.1.19 2.6.1.22],N/A,C12110,Gabaculine	Inhibitor
+C10721,Enzymes,Transferases,novel protein kinase C delta [HSA:5580] [KO:K06068] [EC:2.7.11.13],N/A,C10721,Rottlerin	Inhibitor
+C14123,Enzymes,Transferases,cyclin-dependent kinase 2 [HSA:1017] [KO:K02206] [EC:2.7.11.22],N/A,C14123,BMS-268770	Inhibitor
+C11198,Enzymes,Hydrolases,phospholipase A2 [EC:3.1.1.4],N/A,C11198,Melitten	Stimulator
+C14426,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C14426,Acephate	Inhibitor
+C18414,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18414,Alanycarb	Inhibitor
+C18906,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18906,Aldoxycarb	Inhibitor
+C11015,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C11015,Aldicarb	Inhibitor
+C11071,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C11071,Aminocarb	Inhibitor
+C06605,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C06605,Aminoparathion	Inhibitor
+C10841,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C10841,Anatoxin a	Inhibitor
+C19998,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C19998,Anatoxin a(s)	Inhibitor
+C18702,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18702,Azamethiphos	Inhibitor
+C18644,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18644,Azinphos-ethyl	Inhibitor
+C11018,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C11018,Azinphos-methyl	Inhibitor
+C18948,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18948,Bufencarb	Inhibitor
+C14433,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C14433,Bendiocarb	Inhibitor
+C11073,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C11073,Benfuracarb	Inhibitor
+C18645,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18645,Butocarboxim	Inhibitor
+C18646,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18646,Butoxycarboxim	Inhibitor
+C18395,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18395,Cadusafos	Inhibitor
+C07491,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C07491,Carbaryl	Inhibitor
+C14291,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C14291,Carbofuran	Inhibitor
+C18416,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18416,Carbosulfan	Inhibitor
+C18654,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18654,Chlorfenvinphos	Inhibitor
+C18677,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18677,Chlorethoxyfos	Inhibitor
+C18686,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18686,Chlormephos	Inhibitor
+C14322,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C14322,Chlorpyrifos	Inhibitor
+C14520,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C14520,Chlorpyrifos-methyl	Inhibitor
+C18397,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18397,Cyanophos	Inhibitor
+C14324,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C14324,Diazinon	Inhibitor
+C18655,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18655,Demeton-S-methyl	Inhibitor
+C14430,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C14430,Dichlorvos	Inhibitor
+C18656,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18656,Dicrotophos	Inhibitor
+C14326,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C14326,Dimethoate	Inhibitor
+C18400,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18400,Disulfoton	Inhibitor
+C18953,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18953,Dioxacarb	Inhibitor
+C14434,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C14434,EPN	Inhibitor
+C18649,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18649,Ethiofencarb	Inhibitor
+C18725,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18725,Ethion	Inhibitor
+C18687,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18687,Ethoprophos	Inhibitor
+C18658,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18658,Famphur	Inhibitor
+C14442,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C14442,Fenitrothion	Inhibitor
+C14425,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C14425,Fenobucarb	Inhibitor
+C14420,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C14420,Fenthion	Inhibitor
+C18668,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18668,Formetanate	Inhibitor
+C18650,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18650,Furathiocarb	Inhibitor
+C08526,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C08526,Galanthamine	Inhibitor
+C18660,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18660,Heptenophos	Inhibitor
+C00202,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C00202,Isoflurophate	Inhibitor
+C18418,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18418,Isoprocarb	Inhibitor
+C14580,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C14580,Isoxathion	Inhibitor
+C07497,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C07497,Malathion	Inhibitor
+C18661,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18661,Mecarbam	Inhibitor
+C18745,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18745,Methacrifos	Inhibitor
+C18667,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18667,Methamidophos	Inhibitor
+C14431,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C14431,Methidathion	Inhibitor
+C18651,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18651,Methiocarb	Inhibitor
+C18747,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18747,Metolcarb	Inhibitor
+C11196,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C11196,Methomyl	Inhibitor
+C07971,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C07971,Metrifonate	Inhibitor
+C18688,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18688,Mevinphos	Inhibitor
+C18663,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18663,Monocrotophos	Inhibitor
+C18749,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18749,Naled	Inhibitor
+C08200,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C08200,Neostigmine methylsulfate	Inhibitor
+C20000,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C20000,Onchidal	Inhibitor
+C18419,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18419,Oxamyl	Inhibitor
+C18662,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18662,Omethoate	Inhibitor
+C18664,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18664,Oxydemeton-methyl	Inhibitor
+C06604,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C06604,Parathion	Inhibitor
+C14228,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C14228,Parathion-methyl	Inhibitor
+C06606,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C06606,Paraoxon	Inhibitor
+C14429,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C14429,Phenthoate	Inhibitor
+C11028,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C11028,Phosalone	Inhibitor
+C06535,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C06535,Physostigmine	Inhibitor
+C18689,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18689,Phosphamidon	Inhibitor
+C11079,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C11079,Pirimicarb	Inhibitor
+C19012,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C19012,Pirimiphos-ethyl	Inhibitor
+C18403,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18403,Pirimiphos-methyl	Inhibitor
+C18404,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18404,Profenofos	Inhibitor
+C18405,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18405,Prothiofos	Inhibitor
+C18406,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18406,Pyraclofos	Inhibitor
+C18956,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18956,Promecarb	Inhibitor
+C14334,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C14334,Propoxur	Inhibitor
+C18756,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18756,Phosmet	Inhibitor
+C18690,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18690,Phorate	Inhibitor
+C18757,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18757,Phoxim	Inhibitor
+C18762,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18762,Pyridafenthion	Inhibitor
+C11030,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C11030,Quinalphos	Inhibitor
+C11764,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C11764,Sarin	Inhibitor
+C07494,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C07494,Soman	Inhibitor
+C18691,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18691,Sulfotep	Inhibitor
+C18692,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18692,Tebupirimfos	Inhibitor
+C18809,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18809,Temefos	Inhibitor
+C18693,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18693,Terbufos	Inhibitor
+C14513,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C14513,Tetrachlorvinphos	Inhibitor
+C18423,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18423,Thiodicarb	Inhibitor
+C18652,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18652,Thiofanox	Inhibitor
+C18665,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18665,Thiometon	Inhibitor
+C18657,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18657,Triazophos	Inhibitor
+C18957,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18957,"2,3,5-Trimethacarb	Inhibitor"
+C18666,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18666,Vamidothion	Inhibitor
+C18771,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C18771,XMC	Inhibitor
+C14579,Enzymes,Hydrolases,ACHE; acetylcholinesterase [HSA:43] [KO:K01049] [EC:3.1.1.7],N/A,C14579,Xylylcarb	Inhibitor
+C12959,Enzymes,Hydrolases,BCHE; cholinesterase [HSA:590] [KO:K01050] [EC:3.1.1.8],N/A,C12959,Dimetacrine tartrate	Inhibitor
+C11766,Enzymes,Hydrolases,BCHE; cholinesterase [HSA:590] [KO:K01050] [EC:3.1.1.8],N/A,C11766,Rivastigmine	Inhibitor
+C07708,Enzymes,Hydrolases,alpha-glucosidase [HSA:2548 2595 8972] [KO:K12316 K12317 K12047] [EC:3.2.1.20],N/A,C07708,Miglitol	Inhibitor
+C07701,Enzymes,Hydrolases,ACE; peptidyl-dipeptidase A [HSA:1636] [KO:K01283] [EC:3.4.15.1],N/A,C07701,Benazepril hydrochloride	Inhibitor
+C00773,Enzymes,Hydrolases,Aspartate protease,N/A,C00773,Pepstatin	Inhibitor
+C07770,Enzymes,Hydrolases,beta-lactamase [EC:3.5.2.6],N/A,C07770,Sulbactam	Inhibitor
+C07771,Enzymes,Hydrolases,beta-lactamase [EC:3.5.2.6],N/A,C07771,Tazobactam	Inhibitor
+C03032,Enzymes,Hydrolases,calcium pump  [EC:3.6.3.8],N/A,C03032,Cyclopiazonic acid	Inhibitor
+C09076,Enzymes,Lyases,adenylate cyclase [EC:4.6.1.1],N/A,C09076,Coleonol	Activator
+C16007,Enzymes,Lyases,guanylate cyclase 2C (heat stable enterotoxin receptor) [HSA:2984] [KO:K12320] [EC:4.6.1.2],N/A,C16007,Guanylin	Agonist
+C11173,Enzymes,Isomerases,DNA topoisomerase I [HSA:7150] [KO:K03163] [EC:5.99.1.2],N/A,C11173,SN-38	Inhibitor
+C11689,Others,Cytoskeleton proteins,beta-tubulin [HSA:10381 10382 10383 203068 347688 347733 56604 7280 81027 84617] [KO:K07375],N/A,C11689,Curacin A	Inhibitor
+C10886,Others,Cytoskeleton proteins,beta-tubulin [HSA:10381 10382 10383 203068 347688 347733 56604 7280 81027 84617] [KO:K07375],N/A,C10886,Steganacin	Inhibitor

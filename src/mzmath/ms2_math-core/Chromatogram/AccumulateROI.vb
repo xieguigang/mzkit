@@ -86,7 +86,10 @@ Namespace Chromatogram
         End Function
 
         ''' <summary>
-        ''' 在这个函数之中，只是查找出了色谱峰的时间范围，但是并未对峰面积做积分计算
+        ''' The input data parameter <paramref name="chromatogram"/> for this function should be 
+        ''' sort in asc order at first!
+        ''' 
+        ''' (在这个函数之中，只是查找出了色谱峰的时间范围，但是并未对峰面积做积分计算)
         ''' </summary>
         ''' <param name="angleThreshold#">区分色谱峰的累加线切线角度的阈值，单位为度</param>
         ''' <returns></returns>
@@ -124,7 +127,7 @@ Namespace Chromatogram
             End If
 
             For Each window As SlideWindow(Of PointF)() In peaks
-                Dim rtmin# = Fix(window.First()(0).X)
+                Dim rtmin# = window.First()(0).X
                 Dim rtmax# = window.Last()(-1).X + 1
                 Dim peak = chromatogram((time >= rtmin) & (time <= rtmax))
                 ' 因为Y是累加曲线的值，所以可以近似的看作为峰面积积分值

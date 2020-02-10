@@ -238,7 +238,7 @@ Public Class VBServerScript : Inherits WebApp
         Dim path$ = EnsureZipExtract(NormalizeOSSPath(request.URLParameters("path")))
         Dim out$ = path.ParentPath & "/msconvert"
 
-        Call New ProteoWizardCLI().Convert2mzML(path, out, ProteoWizardCLI.OutFileTypes.mzXML)
+        Call New ProteoWizardCLI().Convert2mzML(path, out, OutFileTypes.mzXML)
         Call "Task complete!".__INFO_ECHO
 
         If Not response Is Nothing Then
@@ -270,7 +270,7 @@ Public Class VBServerScript : Inherits WebApp
         Dim path$ = EnsureZipExtract(normalPath)
         Dim out$ = NormalizeOSSPath(request.URLParameters("to").UrlDecode) Or $"{path.ParentPath}/msconvert".AsDefault
 
-        Call New ProteoWizardCLI().Convert2mzML(path, out, ProteoWizardCLI.OutFileTypes.mzML)
+        Call New ProteoWizardCLI().Convert2mzML(path, out, OutFileTypes.mzML)
         Call "Task complete!".__INFO_ECHO
 
         If Not response Is Nothing Then

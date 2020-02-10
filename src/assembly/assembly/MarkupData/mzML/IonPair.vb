@@ -48,7 +48,7 @@
 Imports System.Data.Linq.Mapping
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace MarkupData.mzML
 
@@ -81,7 +81,7 @@ Namespace MarkupData.mzML
             Dim pro = chromatogram.product.MRMTargetMz
 
             ' less than 0.3da or 20ppm??
-            If sys.Abs(Val(pre) - precursor) <= 0.3 AndAlso sys.Abs(Val(pro) - product) <= 0.3 Then
+            If stdNum.Abs(Val(pre) - precursor) <= 0.3 AndAlso stdNum.Abs(Val(pro) - product) <= 0.3 Then
                 Return True
             Else
                 Return False

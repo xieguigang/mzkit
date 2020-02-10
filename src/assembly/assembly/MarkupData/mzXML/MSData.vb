@@ -102,6 +102,18 @@ Namespace MarkupData.mzXML
         ''' <returns></returns>
         <XmlAttribute> Public Property num As Integer
         <XmlAttribute> Public Property scanType As String
+
+        ''' <summary>
+        ''' ``profile`` and ``centroid`` in Mass Spectrometry?
+        ''' 
+        ''' 1. Profile means the continuous wave form in a mass spectrum.
+        '''   + Number of data points Is large.
+        ''' 2. Centroid means the peaks in a profile data Is changed to bars.
+        '''   + location of the bar Is center of the profile peak.
+        '''   + height of the bar Is area of the profile peak.  
+        '''   
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property centroided As String
         ''' <summary>
         ''' 当前的质谱碎片的等级,一级质谱,二级质谱或者msn等级的质谱
@@ -127,19 +139,15 @@ Namespace MarkupData.mzXML
         End Function
 
         ''' <summary>
-        ''' 这个函数根据<paramref name="shrinkTolerance"/>参数值可能会合并碎片
+        ''' 
         ''' </summary>
         ''' <param name="basename"></param>
-        ''' <param name="shrinkTolerance">
-        ''' If this tolerance value is not nothing, then the fragment with mz inside this given tolerance will be merge.
-        ''' Otherwise all of the raw data will be keeps.
-        ''' </param>
         ''' <returns></returns>
         Public Function ScanData(Optional basename$ = Nothing,
-                                 Optional shrinkTolerance As Tolerance = Nothing,
+                                 Optional centroid As Boolean = False,
                                  Optional raw As Boolean = False) As PeakMs2
 
-            Dim mzInto As LibraryMatrix = peaks _
+            Dim ms2 As ms2() = peaks _
                 .ExtractMzI _
                 .Where(Function(p) p.intensity > 0) _
                 .Select(Function(p)
@@ -150,12 +158,17 @@ Namespace MarkupData.mzXML
                             }
                         End Function) _
                 .ToArray
+            Dim mzInto As New LibraryMatrix With {
+                .centroid = If(centroided = "1", True, False),
+                .ms2 = ms2,
+                .name = ToString()
+            }
 
             Static ms1 As [Default](Of String) = "ms1"
 
             ' 合并碎片只针对2级碎片有效
-            If (msLevel > 1) AndAlso Not shrinkTolerance Is Nothing Then
-                mzInto = mzInto.Shrink(shrinkTolerance)
+            If (msLevel > 1) AndAlso centroid Then
+                mzInto = mzInto.CentroidMode(0.001)
             End If
 
             If Not raw Then

@@ -1,4 +1,4 @@
-#Region "Microsoft.ROpen::ca10db5223585ac59c8e26435afb4019, algorithm.R"
+#Region "Microsoft.ROpen::7d5dd9923664345a608ab75dca892ae4, algorithm.R"
 
     # Summaries:
 
@@ -140,7 +140,7 @@ metaDNA.impl <- function(unknown.query, identify.ms2,
 #'
 #' @return Returns the alignment result, which is a R list object with members:
 #'
-#'     \code{list((ms2.matrix)ref, (ms2.matrix)candidate, score = [forward, reverse])}
+#'     \code{list((string)[unknown feature]ms2.name, (ms2.matrix)[unknown feature]candidate, score = [forward, reverse])}
 #'
 #'     If the forward and reverse score cutoff less than score.cutoff, then this
 #'     function will returns nothing.
@@ -182,6 +182,7 @@ align_best.internal <- function(ref, peak, ms2.align, score.cutoff = 0.8, parent
 				);
 
 				if (all(align.scores >= score.cutoff)) {
+					# [ms2matrix<unknown feature>, reference<unknown>, score]
 					list(
 						score     = align.scores, 
 						ms2.name  = ms2.name, 

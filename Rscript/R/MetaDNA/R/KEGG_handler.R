@@ -1,13 +1,32 @@
-#Region "Microsoft.ROpen::2af419f8066470294d3870344224c0a1, KEGG_handler.R"
+#Region "Microsoft.ROpen::059c8ef5a9fd9d03ca8ed9ebc9e80172, KEGG_handler.R"
 
     # Summaries:
 
+    # Delete.EmptyKEGG <- function(dataframe, col.name = "KEGG") {...
     # kegg.match.handler <- function(unknown.mz, precursor_type = c("[M+H]+", "[M]+"), tolerance= assert.deltaMass(0.3)) {...
     # kegg.match <- function(partners_id, kegg.mass, kegg.ids, kegg.mz, kegg.list,precursor_type,unknown.mz,tolerance) {...
     # unknown.query_impl <- function(ms1, j) {# mz.index is 1 -> lengthOf(kegg_matched mz) # the ppm value between unknown ms1 m/z and kegg m/z# was calculated in the query lapply loopquery <- lapply(mz.index, function(i) {	# unknown metabolite ms1 m/z match	# kegg mz with a given tolerance	if ((!IsNothing(mz[i])) && tolerance(ms1, mz[i])) {...
     # kegg.partners <- function(kegg_id) {...
 
 #End Region
+
+#' Removes empty \code{KEGG} row
+#'
+#' @description Removes all of the rows in a given \code{dataframe}
+#'      which its \code{KEGG} column value is string empty.
+#'
+#' @param d A \code{dataframe} object which contains the metabolite
+#'      annotation result data. This dataframe must contains a column
+#'      which is named \code{KEGG}.
+#'
+#' @return A subset of the input \code{dataframe} with all KEGG column
+#'     value non-empty.
+Delete.EmptyKEGG <- function(dataframe, col.name = "KEGG") {
+    KEGG <- dataframe[, col.name] %=>% as.vector;
+	test <- !Strings.Empty(KEGG, TRUE);
+
+    dataframe[test, ];
+}
 
 #' Match unknown by mass
 #'

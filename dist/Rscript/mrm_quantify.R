@@ -1,3 +1,5 @@
+#!REnv
+
 # imports mzkit library modules
 imports ["mzkit.mrm", "mzkit.quantify.visual"] from "mzkit.quantify.dll";
 
@@ -7,6 +9,28 @@ let sample as string   = ?"--data"         || stop("No sample data files provide
 let MRM.info as string = ?"--MRM"          || stop("Missing MRM information table file!");
 let dir as string      = ?"--export"       || `${wiff :> trim(" ")}-result/`;
 let patternOf.ref      = ?"--patternOfRef" || '[-]?LM[-]?\d+';
+
+# let Methods as integer = {
+      # NetPeakSum = 0;
+      # Integrator = 1;
+      # SumAll = 2;
+      # MaxPeakHeight = 3;
+# }
+
+# peak area intergration calculation method
+# these api functions that required of the integrator parameter
+#
+# 1. sample.quantify
+# 2. wiff.scans
+# 3. MRM.peaks
+# 4. extract.peakROI
+#
+let integrator as string   = ?"--integrator" || "NetPeakSum";
+let isWorkCurve as boolean = ?"--workMode";
+
+if (isWorkCurve) {
+	print("Linear Modelling will running in work curve mode!");
+}
 
 # read MRM, standard curve and IS information from the given file
 let [ions, reference, is] = MRM.info :> [
@@ -41,7 +65,7 @@ if (wiff$hasBlankControls) {
 
 	blanks = wiff$blanks :> wiff.scans(
 		ions           = ions, 
-		peakAreaMethod = 0, 
+		peakAreaMethod = integrator, 
 		TPAFactors     = NULL
 	);
 } else {
@@ -54,13 +78,13 @@ let linears.standard_curve as function(wiff_standards, subdir) {
 	# list.files(wiff, pattern = "*.mzML")
 	 :> wiff.scans(
  		ions           = ions, 
- 		peakAreaMethod = 0, 
+ 		peakAreaMethod = integrator, 
 	 	TPAFactors     = NULL
 	 );
 
 	CAL :> write.csv(file = `${dir}/${subdir}/referencePoints(peakarea).csv`);
 
-	let ref <- linears(CAL, reference, is, autoWeighted = TRUE, blankControls = blanks);
+	let ref <- linears(CAL, reference, is, autoWeighted = TRUE, blankControls = blanks, maxDeletions = -1, isWorkCurveMode = isWorkCurve);
 
 	# print model summary and then do standard curve plot
 	let printModel as function(line) {
@@ -74,7 +98,14 @@ let linears.standard_curve as function(wiff_standards, subdir) {
 		
 		line
 		:> standard_curve(title = `Standard Curve Of ${id}`)
-		:> save.graphics(file = `${dir}/${subdir}/standard_curves/${id}.png`);
+		:> save.graphics(file = `${dir}/${subdir}/standard_curves/${id}.png`)
+		;
+		
+		# save reference points
+		line
+		:> points(name = id)
+		:> write.points(file = `${dir}/${subdir}/standard_curves/${id}.csv`)
+		;
 	}
 
 	for(line in ref) {
@@ -83,14 +114,20 @@ let linears.standard_curve as function(wiff_standards, subdir) {
 		}
 	}
 
+	# save linear models summary
+	ref
+	:> lines.table
+	:> write.csv(file = `${dir}/${subdir}/linears.csv`)
+	;
+
 	for(mzML in wiff_standards) {
 		let fileName = basename(mzML);
-		let peaks = MRM.peaks(mzML, ions, peakAreaMethod = 0, TPAFactors = NULL);
+		let peaks = MRM.peaks(mzML, ions, peakAreaMethod = integrator, TPAFactors = NULL);
 		
 		# save peaktable for given rawfile
 		write.csv(peaks, file = `${dir}/${subdir}/peaktables/${fileName}.csv`);
-	}
-
+	}	
+	
 	return ref;
 }
 
@@ -104,14 +141,14 @@ let doLinears as function(wiff_standards, subdir = "") {
 	# Write raw scan data of the user sample data
 	sample.files
 		# list.files(wiff, pattern = "*.mzML")
-		:> wiff.scans(ions, peakAreaMethod = 0, TPAFactors = NULL) 
+		:> wiff.scans(ions, peakAreaMethod = integrator, TPAFactors = NULL) 
 		:> write.csv(file = `${dir}/${subdir}\samples.csv`);
 
 	# create ion quantify result for each metabolites
 	# that defined in ion pairs data
 	for(sample.mzML in sample.files) {
 		let peakfile as string = `${dir}/${subdir}/samples_peaktable/${basename(sample.mzML)}.csv`;
-		let result = ref :> sample.quantify(sample.mzML, ions, 0, NULL);
+		let result = ref :> sample.quantify(sample.mzML, ions, integrator, NULL);
 		
 		print(basename(sample.mzML));
 		
@@ -130,6 +167,9 @@ let doLinears as function(wiff_standards, subdir = "") {
 	# base on the linear fitting
 	result(scans)  :> write.csv(file = `${dir}/${subdir}\quantify.csv`);
 	scans.X(scans) :> write.csv(file = `${dir}/${subdir}\rawX.csv`);
+	
+	# save linear regression html report
+	html(mrm.dataset(ref, scans)) :> writeLines(con = `${dir}/${subdir}/index.html`);
 }
 
 if (wiff$numberOfStandardReference > 1) {

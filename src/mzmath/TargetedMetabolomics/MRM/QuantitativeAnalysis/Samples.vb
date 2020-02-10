@@ -183,8 +183,8 @@ Namespace MRM
 
         <Extension>
         Public Function SampleQuantify(model As StandardCurve(), file$, ions As IonPair(),
-                                   Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum,
-                                   Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As QuantifyScan
+                                       Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum,
+                                       Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As QuantifyScan
 
             ' 使用离子对信息扫面当前的这个原始数据文件
             ' 得到峰面积等定量计算所需要的结果信息
@@ -205,32 +205,33 @@ Namespace MRM
             If result.Length = 0 Then
                 Call $"[NO_DATA] {file.ToFileURL} found nothing!".Warning
                 Return Nothing
-            Else
-                ' 这个是浓度结果数据
-                Dim quantify As New DataSet With {
-                    .ID = file.BaseName,
-                    .Properties = result _
-                        .ToDictionary(Function(i) i.Name,
-                                      Function(i)
-                                          Return i.Content
-                                      End Function)
-                }
-                ' 这个是峰面积比 AIS/At 数据
-                Dim X As New DataSet With {
-                    .ID = file.BaseName,
-                    .Properties = result _
-                        .ToDictionary(Function(i) i.Name,
-                                      Function(i)
-                                          Return i.X
-                                      End Function)
-                }
-
-                Return New QuantifyScan With {
-                    .MRMPeaks = MRMPeakTable,
-                    .quantify = quantify,
-                    .rawX = X
-                }
             End If
+
+            ' 这个是浓度结果数据
+            Dim quantify As New DataSet With {
+                .ID = file.BaseName,
+                .Properties = result _
+                    .ToDictionary(Function(i) i.Name,
+                                    Function(i)
+                                        Return i.Content
+                                    End Function)
+            }
+
+            ' 这个是峰面积比 AIS/At 数据
+            Dim X As New DataSet With {
+                .ID = file.BaseName,
+                .Properties = result _
+                    .ToDictionary(Function(i) i.Name,
+                                    Function(i)
+                                        Return i.X
+                                    End Function)
+            }
+
+            Return New QuantifyScan With {
+                .MRMPeaks = MRMPeakTable,
+                .quantify = quantify,
+                .rawX = X
+            }
         End Function
 
     End Module
