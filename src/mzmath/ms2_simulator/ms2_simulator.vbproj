@@ -139,6 +139,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PeakAnnotation.vb" />
     <Compile Include="Emulator\BoundEnergy.vb" />
     <Compile Include="Emulator\BoundEnergyFinder.vb" />
     <Compile Include="Emulator\EnergyModel.vb" />
@@ -247,6 +248,14 @@
     <ProjectReference Include="..\ms2_math-core\MassSpectrum.math-core.vbproj">
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
       <Name>MassSpectrum.math-core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MwtWinDll\MwtWinDll.Extensions\MwtWinDll.Extensions.vbproj">
+      <Project>{1b7c8c1b-b794-4f0a-8d6c-0f32f6d4e927}</Project>
+      <Name>MwtWinDll.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MwtWinDll\MwtWinDll\MwtWinDll.vbproj">
+      <Project>{78332537-7ecc-4b74-8aa9-ba66ab296af0}</Project>
+      <Name>MwtWinDll</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

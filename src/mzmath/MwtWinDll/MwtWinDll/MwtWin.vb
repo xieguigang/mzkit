@@ -74,7 +74,7 @@
 
 #End Region
 
-Imports SMRUCC.proteomics.PNL.OMICS.MwtWinDll.FormulaFinder
+Imports PNL.OMICS.MwtWinDll.FormulaFinder
 
 Public Class MolecularWeightCalculator
 
