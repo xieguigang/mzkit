@@ -15,14 +15,17 @@ let energyMax = (mol :> energy.range :> as.object)$Max;
 print("Max energy of current molecular bounds:");
 print(energyMax);
 
+let mu = 100;
+let sd = 15;
+
 let lib <- mol
-:> fragmentation(energy = energy.normal(100, 15, energyMax),nIntervals=100)
+:> fragmentation(energy = energy.normal(mu, sd, energyMax),nIntervals=100)
 :> centroid
 ;
 
-# plot(x -> x ^2 , x= 1: 16 step 0.5)
-# :> save.graphics(file = "demo-math-plot.png")
-# ;
+plot(x -> (1/(sd * sqrt(2* PI))) * exp(-( ( x-mu )^2 )/( 2*(sd ^ 2) ))   , x= 0: energyMax step 1)
+:> save.graphics(file = "energy.png")
+;
 
 lib :> write.mgf(file = "ADP.mgf");
 
