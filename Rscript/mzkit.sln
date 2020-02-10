@@ -117,7 +117,15 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MachineLearning", "..\..\GC
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "math", "math", "{7BA90EF9-D3FD-4C1C-9678-133A56AC17A1}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "R_graphic.interop", "..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.shproj", "{53AF2B13-CCD5-4F73-94D5-612191E785A9}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{1579d1a8-73c4-4f97-bb57-3d1e62343599}*SharedItemsImports = 4
+		..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{53af2b13-ccd5-4f73-94d5-612191e785a9}*SharedItemsImports = 13
+		..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{a4db87f1-8b06-4398-af22-4bf0bafbd87a}*SharedItemsImports = 4
+		..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{c5c3428c-d64c-4e79-b239-77adc66b1156}*SharedItemsImports = 4
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		BioDeep_database|Any CPU = BioDeep_database|Any CPU
 		BioDeep_database|x64 = BioDeep_database|x64
@@ -7015,6 +7023,7 @@ Global
 		{77683884-EDF0-4C48-9D7C-B4343A561FD7} = {7BA90EF9-D3FD-4C1C-9678-133A56AC17A1}
 		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577} = {B14A5CD9-9069-4676-B700-55E4F9887FDC}
 		{7BA90EF9-D3FD-4C1C-9678-133A56AC17A1} = {8691D724-E832-4D0B-B795-391031CC697E}
+		{53AF2B13-CCD5-4F73-94D5-612191E785A9} = {F5A1DAFA-58B8-485A-813E-EADD23E1B80F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F28DA09D-7571-4210-9657-2E4D45F4DC4D}
