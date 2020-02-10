@@ -146,6 +146,14 @@
       <Project>{203BC68F-A0CD-443A-AB62-4AF4110F752F}</Project>
       <Name>GraphTheory</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\math-core.vbproj">
+      <Project>{E3367B88-5D0C-495A-8273-331656D4B5AA}</Project>
+      <Name>math-core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\ODE\ODEsSolver.vbproj">
+      <Project>{14E0B048-3A0D-4FD6-AA79-9B815D6F1B30}</Project>
+      <Name>ODEsSolver</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Datavisualization.Network\Network.GraphTheory.vbproj">
       <Project>{076315EE-B598-40DC-9280-C71CDF9B6A48}</Project>
       <Name>Network.GraphTheory</Name>

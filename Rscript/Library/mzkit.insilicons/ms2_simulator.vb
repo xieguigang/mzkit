@@ -4,6 +4,7 @@ Imports BioNovoGene.BioDeep.Chemistry.Model
 Imports BioNovoGene.BioDeep.Chemistry.Model.Graph
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 <Package("mzkit.simulator")>
@@ -27,5 +28,12 @@ Module ms2_simulator
                                            Optional precision% = 4,
                                            Optional intoCutoff# = -1) As LibraryMatrix
         Return mol.MolecularFragment(energy, [step], precision, intoCutoff)
+    End Function
+
+    <ExportAPI("energy.normal")>
+    Public Function energyModel_normalDist(mu#, delta#) As EnergyModel
+        Return New EnergyModel(Function(x, y)
+                                   Return pnorm.ProbabilityDensity(x, mu, delta)
+                               End Function, 0, 1000)
     End Function
 End Module
