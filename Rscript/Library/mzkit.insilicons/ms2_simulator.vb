@@ -6,7 +6,9 @@ Imports BioNovoGene.BioDeep.Chemistry.Model
 Imports BioNovoGene.BioDeep.Chemistry.Model.Graph
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Distributions
+Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 <Package("mzkit.simulator")>
@@ -18,18 +20,29 @@ Module ms2_simulator
     End Function
 
     <ExportAPI("molecular.graph")>
-    Public Function MolecularGraph(mol As KCF) As NetworkGraph
-        Return mol _
+    Public Function MolecularGraph(mol As KCF, Optional verbose As Boolean = False) As NetworkGraph
+        Dim g As NetworkGraph = mol _
            .CreateGraph _
            .FillBoundEnergy(New BoundEnergyFinder)
+
+        If verbose Then
+            Dim energies As Double() = g.graphEdges _
+                .Select(Function(e) e.data.weight) _
+                .ToArray
+            Dim quantile As DataQuartile = energies.Quartile
+
+            Call Console.WriteLine($"energy range: {quantile.ToString}")
+        End If
+
+        Return g
     End Function
 
     <ExportAPI("fragmentation")>
     Public Function MolecularFragmentation(mol As NetworkGraph, energy As EnergyModel,
-                                           Optional step% = 100,
+                                           Optional nIntervals% = 10,
                                            Optional precision% = 4,
                                            Optional intoCutoff# = -1) As LibraryMatrix
-        Return mol.MolecularFragment(energy, [step], precision, intoCutoff)
+        Return mol.MolecularFragment(energy, nIntervals, precision, intoCutoff)
     End Function
 
     <ExportAPI("energy.normal")>

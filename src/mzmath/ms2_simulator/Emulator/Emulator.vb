@@ -57,6 +57,12 @@ Imports stdNum = System.Math
 ''' </summary>
 Public Module Emulator
 
+    ''' <summary>
+    ''' 会将能量写入<see cref="EdgeData.weight"/>属性之中
+    ''' </summary>
+    ''' <param name="model"></param>
+    ''' <param name="energyTable"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function FillBoundEnergy(model As NetworkGraph, energyTable As BoundEnergyFinder) As NetworkGraph
         For Each bound As Edge In model.graphEdges
@@ -80,18 +86,21 @@ Public Module Emulator
     ''' 质谱模拟计算
     ''' </summary>
     ''' <param name="molecule"></param>
-    ''' <param name="energy"></param>
-    ''' <param name="step%"></param>
-    ''' <param name="precision%"></param>
+    ''' <param name="energy">
+    ''' 能量的范围值是从碰撞电压转换过来的
+    ''' 这个能量参数表示某一个给定的电压下所产生的能量分布
+    ''' </param>
+    ''' <param name="nintervals">计算能量分布的间隔区间数量</param>
+    ''' <param name="precision"></param>
     ''' <param name="intoCutoff">``[0, 1]``, zero or negative value means no cutoff.</param>
     ''' <returns></returns>
     <Extension>
     Public Function MolecularFragment(molecule As NetworkGraph, energy As EnergyModel,
-                                      Optional step% = 100,
+                                      Optional nintervals% = 100,
                                       Optional precision% = 4,
                                       Optional intoCutoff# = -1) As LibraryMatrix
 
-        Dim de# = (energy.MaxEnergy - energy.MinEnergy) / [step]
+        Dim de# = (energy.MaxEnergy - energy.MinEnergy) / nintervals
         ' {mz, quantity}
         Dim quantity As New Dictionary(Of Double, Double)
         Dim mzlist As New Dictionary(Of String, List(Of Double))
@@ -102,10 +111,10 @@ Public Module Emulator
             ' 则完整的分子图会分裂为多个子图碎片
 
             ' 使用定积分求出分子能量的分布密度
-            ' 分子的能量越高，高于这个能量的分子的半分比应该是越少的？
+            ' 分子的能量越高，高于这个能量的分子的百分比应该是越少的？
             Dim percentage# = 1 - energy.PercentageLess(e)
             Dim fragmentModel As NetworkGraph = molecule.BreakBonds(energy:=e)
-            Dim fragments = IteratesSubNetworks(Of NetworkNode, Edge, NetworkGraph)(fragmentModel).ToArray
+            Dim fragments = IteratesSubNetworks(Of NetworkNode, Edge, NetworkGraph)(fragmentModel, singleNodeAsGraph:=True).ToArray
 
             Call $"Break into {fragments.Length} fragments under collision energy {e}".__DEBUG_ECHO
             Call $"Quantile percentage is {(percentage * 100).ToString("F2")}%".__DEBUG_ECHO
