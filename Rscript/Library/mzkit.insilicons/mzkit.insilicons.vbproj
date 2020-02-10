@@ -154,6 +154,10 @@
       <Project>{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\src\mzmath\ms2_math-core\MassSpectrum.math-core.vbproj">
+      <Project>{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}</Project>
+      <Name>MassSpectrum.math-core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\src\mzmath\ms2_simulator\ms2_simulator.vbproj">
       <Project>{77683884-EDF0-4C48-9D7C-B4343A561FD7}</Project>
       <Name>ms2_simulator</Name>
