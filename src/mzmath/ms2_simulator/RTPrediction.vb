@@ -52,7 +52,6 @@ Imports Microsoft.VisualBasic.Math.Matrix
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports SMRUCC.genomics.Data
-Imports SMRUCC.MassSpectrum.Math
 
 ''' <summary>
 ''' Prediciton of the relative LC-MS retention time for measuring ``rt.error``
