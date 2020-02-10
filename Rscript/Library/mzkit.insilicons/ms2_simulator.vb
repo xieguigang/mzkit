@@ -5,6 +5,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemistry.Model
 Imports BioNovoGene.BioDeep.Chemistry.Model.Graph
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Distributions
@@ -26,15 +27,19 @@ Module ms2_simulator
            .FillBoundEnergy(New BoundEnergyFinder)
 
         If verbose Then
-            Dim energies As Double() = g.graphEdges _
-                .Select(Function(e) e.data.weight) _
-                .ToArray
-            Dim quantile As DataQuartile = energies.Quartile
-
-            Call Console.WriteLine($"energy range: {quantile.ToString}")
+            Call Console.WriteLine($"energy range: {energyRange(g).ToString}")
         End If
 
         Return g
+    End Function
+
+    <ExportAPI("energy.range")>
+    Public Function energyRange(mol As NetworkGraph) As DoubleRange
+        Dim energies As Double() = mol.graphEdges _
+            .Select(Function(e) e.data.weight) _
+            .ToArray
+
+        Return energies
     End Function
 
     <ExportAPI("fragmentation")>
@@ -46,10 +51,10 @@ Module ms2_simulator
     End Function
 
     <ExportAPI("energy.normal")>
-    Public Function energyModel_normalDist(mu#, delta#) As EnergyModel
+    Public Function energyModel_normalDist(mu#, delta#, Optional max# = 1000) As EnergyModel
         Return New EnergyModel(Function(x, y)
                                    Return pnorm.ProbabilityDensity(x, mu, delta)
-                               End Function, 0, 1000)
+                               End Function, 0, max, n:=10000)
     End Function
 
     <ExportAPI("write.mgf")>

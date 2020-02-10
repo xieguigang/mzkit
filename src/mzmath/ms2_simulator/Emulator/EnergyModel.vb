@@ -105,36 +105,15 @@ Public Class EnergyModel
             .Last
     End Sub
 
+    Public Function Percentage(min#, max#) As Double
+        Dim lower# = model.RK4(energy.n, MinEnergy, min).Y.vector.Last
+        Dim upper# = model.RK4(energy.n, MinEnergy, max).Y.vector.Last
+
+        Return (upper - lower) / totalArea
+    End Function
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
         Return energy.ToString
-    End Function
-
-    ''' <summary>
-    ''' 求出大于或者等于指定的能量值的概率的百分比
-    ''' </summary>
-    ''' <param name="energy#"></param>
-    ''' <returns></returns>
-    Public Function PercentageGreater(energy#) As Double
-        Dim integrate As ODEOutput = model _
-            .RK4(Me.energy.n, energy, Me.energy.range.Max)
-        Dim area = integrate _
-            .Y _
-            .vector _
-            .Last
-
-        ' Call integrate.DataFrame.Save($"./{energy}.csv", Encodings.ASCII)
-
-        Return area / totalArea
-    End Function
-
-    ''' <summary>
-    ''' 求出小于或者等于指定的能量值的概率的百分比
-    ''' </summary>
-    ''' <param name="energy#"></param>
-    ''' <returns></returns>
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function PercentageLess(energy#) As Double
-        Return 1 - PercentageGreater(energy)
     End Function
 End Class

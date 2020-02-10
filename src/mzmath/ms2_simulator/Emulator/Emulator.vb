@@ -98,7 +98,8 @@ Public Module Emulator
     Public Function MolecularFragment(molecule As NetworkGraph, energy As EnergyModel,
                                       Optional nintervals% = 100,
                                       Optional precision% = 4,
-                                      Optional intoCutoff# = -1) As LibraryMatrix
+                                      Optional intoCutoff# = -1,
+                                      Optional verbose As Boolean = False) As LibraryMatrix
 
         Dim de# = (energy.MaxEnergy - energy.MinEnergy) / nintervals
         ' {mz, quantity}
@@ -112,17 +113,24 @@ Public Module Emulator
 
             ' 使用定积分求出分子能量的分布密度
             ' 分子的能量越高，高于这个能量的分子的百分比应该是越少的？
-            Dim percentage# = 1 - energy.PercentageLess(e)
+            Dim percentage# = energy.Percentage(e, e + de) * 100
             Dim fragmentModel As NetworkGraph = molecule.BreakBonds(energy:=e)
             Dim fragments = IteratesSubNetworks(Of NetworkNode, Edge, NetworkGraph)(fragmentModel, singleNodeAsGraph:=True).ToArray
 
-            Call $"Break into {fragments.Length} fragments under collision energy {e}".__DEBUG_ECHO
-            Call $"Quantile percentage is {(percentage * 100).ToString("F2")}%".__DEBUG_ECHO
+            If verbose Then
+                Call $"Energy: {e}|{percentage}%".__INFO_ECHO
+            End If
+
+            If percentage <= 0 Then
+                Continue For
+            End If
 
             For Each fragment As NetworkGraph In fragments
                 Dim mz As Double = fragment.CalculateMZ
 
-                Call $"  -> {mz.ToString("F2")} (m/z)".__DEBUG_ECHO
+                If verbose Then
+                    Call $"  -> {mz.ToString("F2")} (m/z)".__DEBUG_ECHO
+                End If
 
                 With stdNum.Round(mz, precision).ToString
                     If Not quantity.ContainsKey(.ByRef) Then
@@ -147,6 +155,7 @@ Public Module Emulator
                                 .quantity = frag.Value
                             }
                         End Function) _
+                .OrderByDescending(Function(m) m.mz) _
                 .ToArray
         }
 
