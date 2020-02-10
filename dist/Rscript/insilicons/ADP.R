@@ -1,6 +1,8 @@
 imports ["mzkit.assembly"] from "mzkit.dll";
 imports ["mzkit.simulator"] from "mzkit.insilicons.dll";
 imports ["mzkit.quantify.visual"] from "mzkit.quantify.dll";
+# load debug api
+imports "plot.charts" from "R.plot.dll";
 
 setwd(!script$dir);
 
@@ -17,6 +19,10 @@ let lib <- mol
 :> fragmentation(energy = energy.normal(100, 15, energyMax),nIntervals=100)
 :> centroid
 ;
+
+# plot(x -> x ^2 , x= 1: 16 step 0.5)
+# :> save.graphics(file = "demo-math-plot.png")
+# ;
 
 lib :> write.mgf(file = "ADP.mgf");
 
