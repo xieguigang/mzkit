@@ -145,6 +145,14 @@ Module Assembly
             End If
 
             Return ms2Peak
+        ElseIf inputType Is GetType(LibraryMatrix) Then
+            Dim ms2 As LibraryMatrix = DirectCast(ions, LibraryMatrix)
+
+            If Not ms2.centroid Then
+                ms2 = ms2.CentroidMode(intoCutoff)
+            End If
+
+            Return ms2
         Else
             Return Internal.debug.stop(New InvalidCastException(inputType.FullName), env)
         End If
