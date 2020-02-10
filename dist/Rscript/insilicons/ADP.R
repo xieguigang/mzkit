@@ -15,8 +15,8 @@ let energyMax = (mol :> energy.range :> as.object)$Max;
 print("Max energy of current molecular bounds:");
 print(energyMax);
 
-let mu = 100;
-let sd = 15;
+let mu = 60;
+let sd = 10;
 
 let lib <- mol
 :> fragmentation(energy = energy.normal(mu, sd, energyMax),nIntervals=100)
