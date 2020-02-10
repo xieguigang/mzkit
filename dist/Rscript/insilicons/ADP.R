@@ -14,7 +14,7 @@ print("Max energy of current molecular bounds:");
 print(energyMax);
 
 let lib <- mol
-:> fragmentation(energy = energy.normal(10, 0.05, energyMax),nIntervals=100)
+:> fragmentation(energy = energy.normal(100, 5, energyMax),nIntervals=100)
 :> centroid
 ;
 

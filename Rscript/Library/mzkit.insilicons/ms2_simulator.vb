@@ -51,9 +51,9 @@ Module ms2_simulator
 
     <ExportAPI("energy.normal")>
     Public Function energyModel_normalDist(mu#, delta#, Optional max# = 1000) As EnergyModel
-        Return New EnergyModel(Function(x, y)
+        Return New EnergyModel(Function(x)
                                    Return pnorm.ProbabilityDensity(x, mu, delta)
-                               End Function, 0, max, n:=10000)
+                               End Function, 0, max)
     End Function
 
     <ExportAPI("write.mgf")>
