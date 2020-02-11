@@ -144,6 +144,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\R#\R.vbproj">
+      <Project>{0C2EB77C-39F2-460D-A3F8-CE905F867637}</Project>
+      <Name>R</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Graph\GraphTheory.vbproj">
       <Project>{203BC68F-A0CD-443A-AB62-4AF4110F752F}</Project>
       <Name>GraphTheory</Name>

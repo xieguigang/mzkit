@@ -11,6 +11,8 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.Rsharp.Interpreter.ExecuteEngine
+Imports SMRUCC.Rsharp.Runtime
 
 <Package("mzkit.simulator")>
 Module ms2_simulator
@@ -54,6 +56,14 @@ Module ms2_simulator
         Return New EnergyModel(Function(x)
                                    Return pnorm.ProbabilityDensity(x, mu, delta)
                                End Function, 0, max)
+    End Function
+
+    <ExportAPI("energy.custom")>
+    Public Function energyModel_custom(fun As DeclareLambdaFunction, max#, Optional env As Environment = Nothing) As EnergyModel
+        Dim math As Func(Of Double, Double) = fun.CreateLambda(Of Double, Double)(env)
+        Dim energy As New EnergyModel(math, 0, max)
+
+        Return energy
     End Function
 
     <ExportAPI("write.mgf")>
