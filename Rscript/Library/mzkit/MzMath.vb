@@ -8,6 +8,7 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports REnv = SMRUCC.Rsharp.Runtime.Internal
+Imports Microsoft.VisualBasic.Data.csv
 
 <Package("mzkit.math")>
 Module MzMath
@@ -20,7 +21,18 @@ Module MzMath
     End Sub
 
     Private Function peaktable(x As PeakFeature(), env As Environment) As dataframe
+        Dim dataset = x.ToCsvDoc
+        Dim table As New dataframe With {
+            .columns = New Dictionary(Of String, Array)
+        }
 
+        For Each col As String() In dataset.Columns
+            table.columns.Add(col(Scan0), col.Skip(1).ToArray)
+        Next
+
+        table.rownames = table.columns(NameOf(PeakFeature.xcms_id))
+
+        Return table
     End Function
 
     Private Function XICTable(x As MzGroup, env As Environment) As dataframe

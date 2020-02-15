@@ -1,6 +1,8 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
@@ -24,14 +26,30 @@ Public Module Deconvolution
     ''' <returns></returns>
     ''' <remarks>实际的解卷积操作步骤：应用于处理复杂的样本数据</remarks>
     <Extension>
-    Public Function GetPeakGroups(mzpoints As MzGroup, Optional quantile# = 0.65) As IEnumerable(Of PeakFeature)
-        Dim baseline As Double = mzpoints.XIC.Baseline(quantile)
-        Dim XIC As ChromatogramTick() = mzpoints.XIC _
-            .Where(Function(t)
-                       Return t.Intensity >= baseline
-                   End Function) _
-            .ToArray
+    Public Iterator Function GetPeakGroups(mzpoints As MzGroup, Optional quantile# = 0.65) As IEnumerable(Of PeakFeature)
+        For Each ROI In mzpoints.XIC.Shadows.PopulateROI(, baselineQuantile:=quantile)
+            Yield New PeakFeature With {
+                .mz = mzpoints.mz,
+                .Baseline = ROI.Baseline,
+                .Integration = ROI.Integration,
+                .MaxInto = ROI.MaxInto,
+                .Noise = ROI.Noise,
+                .rt = ROI.rt,
+                .rtmax = ROI.Time.Max,
+                .rtmin = ROI.Time.Min
+            }
+        Next
+    End Function
 
+
+    <Extension>
+    Private Function localMax(window As IEnumerable(Of ChromatogramTick)) As ChromatogramTick
+        Return window.OrderByDescending(Function(t) t.Intensity).First
+    End Function
+
+    <Extension>
+    Private Function localMin(window As IEnumerable(Of ChromatogramTick)) As ChromatogramTick
+        Return window.OrderBy(Function(t) t.Intensity).First
     End Function
 
     ''' <summary>
@@ -70,7 +88,30 @@ Public Module Deconvolution
     End Function
 
     <Extension>
-    Public Function DecoMzGroups(mzgroups As IEnumerable(Of MzGroup), Optional quantile# = 0.65) As IEnumerable(Of PeakFeature)
-        Return mzgroups.Select(Function(mz) mz.GetPeakGroups(quantile)).IteratesALL
+    Public Iterator Function DecoMzGroups(mzgroups As IEnumerable(Of MzGroup), Optional quantile# = 0.65) As IEnumerable(Of PeakFeature)
+        Dim mzfeatures = mzgroups.AsParallel.Select(Function(mz) mz.GetPeakGroups(quantile)).IteratesALL.GroupBy(Function(m) stdNum.Round(m.mz).ToString).ToArray
+        Dim guid As New Dictionary(Of String, Counter)
+
+        For Each mzidgroup In mzfeatures
+            Dim mId = mzidgroup.Key
+            Dim rtIdgroup = mzidgroup.GroupBy(Function(m) stdNum.Round(m.rt).ToString).ToArray
+
+            For Each rtgroup In rtIdgroup
+                Dim uid = $"M{mId}T{rtgroup.Key}"
+                guid(uid) = 0
+
+                For Each feature In rtgroup
+                    If guid(uid).Value = 0 Then
+                        feature.xcms_id = uid
+                    Else
+                        feature.xcms_id = uid & "_" & guid(uid).ToString
+                    End If
+
+                    guid(uid).Hit()
+
+                    Yield feature
+                Next
+            Next
+        Next
     End Function
 End Module
