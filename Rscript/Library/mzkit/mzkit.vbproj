@@ -302,7 +302,7 @@
       <Name>MwtWinDll</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\src\mzmath\mz_deco\mz_deco.vbproj">
-      <Project>{4921196C-A7F1-487E-A008-F31C25CB65F3}</Project>
+      <Project>{4921196c-a7f1-487e-a008-f31c25cb65f3}</Project>
       <Name>mz_deco</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\src\visualize\KCF\KCF.Graph\KCF.Graph.vbproj">

@@ -33,7 +33,9 @@ Public Module Deconvolution
     ''' </summary>
     ''' <param name="scans"></param>
     ''' <returns></returns>
-    Public Iterator Function GetMzGroup(scans As IEnumerable(Of scan), Optional tolerance As Tolerance = Nothing) As IEnumerable(Of MzGroup)
+    ''' 
+    <Extension>
+    Public Iterator Function GetMzGroups(scans As IEnumerable(Of scan), Optional tolerance As Tolerance = Nothing) As IEnumerable(Of MzGroup)
         For Each group As NamedCollection(Of scan) In scans.GroupBy(Function(t) t.mz, AddressOf (tolerance Or Tolerance.DefaultTolerance).Assert)
             Dim timePoints As scan() = group.ToArray
             Dim xic As ChromatogramTick() = timePoints _

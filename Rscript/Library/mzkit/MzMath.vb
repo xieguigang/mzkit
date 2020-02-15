@@ -40,6 +40,19 @@ Module MzMath
     <ExportAPI("mz.deco")>
     <RApiReturn(GetType(PeakFeature()))>
     Public Function mz_deco(<RRawVectorArgument> ms1 As Object, Optional tolerance As Tolerance = Nothing) As Object
+        Dim ms1_scans As IEnumerable(Of IMs1Scan)
 
+        If ms1 Is Nothing Then
+            Return Nothing
+        ElseIf ms1.GetType Is GetType(ms1_scan()) Then
+            ms1_scans = DirectCast(ms1, ms1_scan()).Select(Function(t) DirectCast(t, IMs1Scan))
+        Else
+            Throw New NotImplementedException
+        End If
+
+        Return ms1_scans _
+            .GetMzGroups(tolerance) _
+            .DecoMzGroups _
+            .ToArray
     End Function
 End Module
