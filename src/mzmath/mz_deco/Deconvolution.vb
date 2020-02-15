@@ -5,6 +5,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports scan = BioNovoGene.Analytical.MassSpectrometry.Math.IMs1Scan
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' #### 解卷积计算步骤
@@ -43,18 +44,22 @@ Public Module Deconvolution
     <Extension>
     Public Iterator Function GetMzGroups(scans As IEnumerable(Of scan), Optional tolerance As Tolerance = Nothing) As IEnumerable(Of MzGroup)
         For Each group As NamedCollection(Of scan) In scans.GroupBy(Function(t) t.mz, AddressOf (tolerance Or Tolerance.DefaultTolerance).Assert)
-            Dim timePoints As scan() = group.ToArray
+            Dim rawGroup As scan() = group.ToArray
+            Dim timePoints As NamedCollection(Of scan)() = rawGroup.GroupBy(Function(t) t.rt, Function(a, b) stdNum.Abs(a - b) <= 0.05).ToArray
             Dim xic As ChromatogramTick() = timePoints _
                 .Select(Function(t)
+                            Dim rt As Double = Aggregate p As scan In t Into Average(p.rt)
+                            Dim into As Double = Aggregate p As scan In t Into Max(p.intensity)
+
                             Return New ChromatogramTick With {
-                                .Time = t.rt,
-                                .Intensity = t.intensity
+                                .Time = rt,
+                                .Intensity = into
                             }
                         End Function) _
                 .OrderBy(Function(t) t.Time) _
                 .ToArray
             Dim mz As Double = Aggregate t As scan
-                               In timePoints
+                               In rawGroup
                                Into Average(t.mz)
 
             Yield New MzGroup With {
