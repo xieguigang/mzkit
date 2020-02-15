@@ -24,7 +24,13 @@ Public Module Deconvolution
     ''' <remarks>实际的解卷积操作步骤：应用于处理复杂的样本数据</remarks>
     <Extension>
     Public Function GetPeakGroups(mzpoints As MzGroup, Optional quantile# = 0.65) As IEnumerable(Of PeakFeature)
-        Dim baseline# = mzpoints.XIC.Baseline(quantile)
+        Dim baseline As Double = mzpoints.XIC.Baseline(quantile)
+        Dim XIC As ChromatogramTick() = mzpoints.XIC _
+            .Where(Function(t)
+                       Return t.Intensity >= baseline
+                   End Function) _
+            .ToArray
+
     End Function
 
     ''' <summary>
