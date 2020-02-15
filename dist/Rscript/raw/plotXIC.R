@@ -7,4 +7,4 @@ let mz <- ms1.scans(raw) :> mz.groups();
 
 mz[1]
 :> as.data.frame
-:> write.csv(file = `./XIC.csv`);
+:> write.csv(file = `./XIC_mz=${as.object(mz[1])$mz}.csv`);
