@@ -1,17 +1,26 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
-Imports REnv = SMRUCC.Rsharp.Runtime.Internal.ConsolePrinter
+Imports REnv = SMRUCC.Rsharp.Runtime.Internal
 
 <Package("mzkit.math")>
 Module MzMath
 
     Sub New()
-        Call REnv.AttachConsoleFormatter(Of MzReport())(AddressOf printMzTable)
+        Call REnv.ConsolePrinter.AttachConsoleFormatter(Of MzReport())(AddressOf printMzTable)
+
+        Call REnv.Object.Converts.addHandler(GetType(PeakFeature()), AddressOf peaktable)
     End Sub
+
+    Private Function peaktable(x As PeakFeature(), env As Environment) As dataframe
+
+    End Function
 
     Private Function printMzTable(obj As Object) As String
         Return DirectCast(obj, MzReport()).Print(addBorder:=False)
@@ -29,6 +38,7 @@ Module MzMath
     ''' <param name="tolerance"></param>
     ''' <returns></returns>
     <ExportAPI("mz.deco")>
+    <RApiReturn(GetType(PeakFeature()))>
     Public Function mz_deco(<RRawVectorArgument> ms1 As Object, Optional tolerance As Tolerance = Nothing) As Object
 
     End Function
