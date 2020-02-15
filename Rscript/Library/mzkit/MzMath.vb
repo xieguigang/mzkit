@@ -39,7 +39,7 @@ Module MzMath
     ''' <returns></returns>
     <ExportAPI("mz.deco")>
     <RApiReturn(GetType(PeakFeature()))>
-    Public Function mz_deco(<RRawVectorArgument> ms1 As Object, Optional tolerance As Tolerance = Nothing) As Object
+    Public Function mz_deco(<RRawVectorArgument> ms1 As Object, Optional tolerance As Tolerance = Nothing, Optional baseline# = 0.65) As Object
         Dim ms1_scans As IEnumerable(Of IMs1Scan)
 
         If ms1 Is Nothing Then
@@ -52,7 +52,7 @@ Module MzMath
 
         Return ms1_scans _
             .GetMzGroups(tolerance) _
-            .DecoMzGroups _
+            .DecoMzGroups(quantile:=baseline) _
             .ToArray
     End Function
 End Module
