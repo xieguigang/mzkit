@@ -1,6 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports Microsoft.VisualBasic.Math
 Imports scan = BioNovoGene.Analytical.MassSpectrometry.Math.IMs1Scan
 
 ''' <summary>
@@ -32,6 +33,7 @@ Public Module Deconvolution
     ''' <param name="scans"></param>
     ''' <returns></returns>
     Public Function GetMzGroup(scans As IEnumerable(Of scan), Optional tolerance As Tolerance = Nothing) As IEnumerable(Of scan())
+        Dim mz_groups = scans.GroupBy(Function(t) t.mz, AddressOf tolerance.Assert)
 
     End Function
 
