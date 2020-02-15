@@ -16,10 +16,26 @@ Module MzMath
         Call REnv.ConsolePrinter.AttachConsoleFormatter(Of MzReport())(AddressOf printMzTable)
 
         Call REnv.Object.Converts.addHandler(GetType(PeakFeature()), AddressOf peaktable)
+        Call REnv.Object.Converts.addHandler(GetType(MzGroup), AddressOf XICTable)
     End Sub
 
     Private Function peaktable(x As PeakFeature(), env As Environment) As dataframe
 
+    End Function
+
+    Private Function XICTable(x As MzGroup, env As Environment) As dataframe
+        Dim mz As Array = {x.mz}
+        Dim into As Array = x.XIC.Select(Function(t) t.Intensity).ToArray
+        Dim rt As Array = x.XIC.Select(Function(t) t.Time).ToArray
+        Dim table As New dataframe With {
+            .columns = New Dictionary(Of String, Array) From {
+                {"m/z", mz},
+                {"rt", rt},
+                {"into", into}
+            }
+        }
+
+        Return table
     End Function
 
     Private Function printMzTable(obj As Object) As String
