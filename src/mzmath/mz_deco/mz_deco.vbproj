@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{4921196C-A7F1-487E-A008-F31C25CB65F3}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>mz_deco</RootNamespace>
-    <AssemblyName>mz_deco</AssemblyName>
+    <RootNamespace>BioNovoGene.Analytical.MassSpectrometry.Math</RootNamespace>
+    <AssemblyName>BioNovoGene.Analytical.MassSpectrometry.Math.Deconvolution</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
@@ -19,7 +19,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>mz_deco.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.Deconvolution.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -28,7 +28,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>mz_deco.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Math.Deconvolution.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
