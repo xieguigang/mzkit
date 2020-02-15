@@ -2,6 +2,7 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports scan = BioNovoGene.Analytical.MassSpectrometry.Math.IMs1Scan
 
@@ -20,23 +21,43 @@ Public Module Deconvolution
     ''' </summary>
     ''' <param name="mzpoints"></param>
     ''' <returns></returns>
-    ''' <remarks>应用于处理复杂的样本数据</remarks>
+    ''' <remarks>实际的解卷积操作步骤：应用于处理复杂的样本数据</remarks>
     <Extension>
-    Public Function GetPeakGroups(mzpoints As IEnumerable(Of TICPoint)) As IEnumerable(Of PeakFeature)
-        Dim timepoints = mzpoints.OrderBy(Function(p) p.time).ToArray
+    Public Function GetPeakGroups(mzpoints As MzGroup) As IEnumerable(Of PeakFeature)
 
-        Throw New NotImplementedException
     End Function
 
     ''' <summary>
-    ''' 进行原始数据的mz分组操作，然后进行rt的升序排序
+    ''' Separation of mass signals.
+    ''' (进行原始数据的mz分组操作，然后进行rt的升序排序)
     ''' </summary>
     ''' <param name="scans"></param>
     ''' <returns></returns>
-    Public Iterator Function GetMzGroup(scans As IEnumerable(Of scan), Optional tolerance As Tolerance = Nothing) As IEnumerable(Of scan())
-        For Each group As NamedCollection(Of scan) In scans.GroupBy(Function(t) t.mz, AddressOf tolerance.Assert)
+    Public Iterator Function GetMzGroup(scans As IEnumerable(Of scan), Optional tolerance As Tolerance = Nothing) As IEnumerable(Of MzGroup)
+        For Each group As NamedCollection(Of scan) In scans.GroupBy(Function(t) t.mz, AddressOf (tolerance Or Tolerance.DefaultTolerance).Assert)
+            Dim timePoints As scan() = group.ToArray
+            Dim xic As ChromatogramTick() = timePoints _
+                .Select(Function(t)
+                            Return New ChromatogramTick With {
+                                .Time = t.rt,
+                                .Intensity = t.intensity
+                            }
+                        End Function) _
+                .OrderBy(Function(t) t.Time) _
+                .ToArray
+            Dim mz As Double = Aggregate t As scan
+                               In timePoints
+                               Into Average(t.mz)
 
+            Yield New MzGroup With {
+                .mz = mz,
+                .XIC = xic
+            }
         Next
     End Function
 
+    <Extension>
+    Public Function DecoMzGroups(mzgroups As IEnumerable(Of MzGroup)) As IEnumerable(Of PeakFeature)
+        Return mzgroups.Select(Function(mz) mz.GetPeakGroups()).IteratesALL
+    End Function
 End Module
