@@ -30,13 +30,14 @@ Public Module Deconvolution
         For Each ROI In mzpoints.XIC.Shadows.PopulateROI(, baselineQuantile:=quantile)
             Yield New PeakFeature With {
                 .mz = mzpoints.mz,
-                .Baseline = ROI.Baseline,
-                .Integration = ROI.Integration,
-                .MaxInto = ROI.MaxInto,
-                .Noise = ROI.Noise,
+                .baseline = ROI.Baseline,
+                .integration = ROI.Integration,
+                .maxInto = ROI.MaxInto,
+                .noise = ROI.Noise,
                 .rt = ROI.rt,
                 .rtmax = ROI.Time.Max,
-                .rtmin = ROI.Time.Min
+                .rtmin = ROI.Time.Min,
+                .nticks = ROI.Ticks.Length
             }
         Next
     End Function
