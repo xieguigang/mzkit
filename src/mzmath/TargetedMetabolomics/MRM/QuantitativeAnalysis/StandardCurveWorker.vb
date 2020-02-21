@@ -187,6 +187,11 @@ Namespace MRM
                     fit = StandardCurve.CreateLinearRegression(line, weighted, maxDeletions)
                 End If
 
+                If fit Is Nothing Then
+                    Call $"Missing {ion.ToString}!".Warning
+                    Continue For
+                End If
+
                 Dim out As New StandardCurve With {
                     .name = ion.HMDB,
                     .linear = fit,

@@ -118,7 +118,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BioDeep_database|x64'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\biodeep\biodeepdb_v3\Rscript\R\Library\</OutputPath>
+    <OutputPath>..\..\..\..\biodeep\biodeepdb_v3\Rscript\R\</OutputPath>
     <DocumentationFile>mzkit.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
@@ -292,6 +292,18 @@
     <ProjectReference Include="..\..\..\src\mzmath\ms2_math-core\MassSpectrum.math-core.vbproj">
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
       <Name>MassSpectrum.math-core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\mzmath\MwtWinDll\MwtWinDll.Extensions\MwtWinDll.Extensions.vbproj">
+      <Project>{1b7c8c1b-b794-4f0a-8d6c-0f32f6d4e927}</Project>
+      <Name>MwtWinDll.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\mzmath\MwtWinDll\MwtWinDll\MwtWinDll.vbproj">
+      <Project>{78332537-7ecc-4b74-8aa9-ba66ab296af0}</Project>
+      <Name>MwtWinDll</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\mzmath\mz_deco\mz_deco.vbproj">
+      <Project>{4921196c-a7f1-487e-a008-f31c25cb65f3}</Project>
+      <Name>mz_deco</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\src\visualize\KCF\KCF.Graph\KCF.Graph.vbproj">
       <Project>{c60416d4-b3e2-45e5-bfe0-90d5021647f9}</Project>

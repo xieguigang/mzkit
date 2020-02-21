@@ -1,0 +1,974 @@
+﻿<?xml version="1.0" encoding="utf-16"?>
+<Compound xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:KEGG="http://www.kegg.jp/dbget-bin/www_bget?cpd:compound_id" entry="C00008">
+  <!--
+     model:     SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.Compound
+     assembly:  SMRUCC.genomics.Core, Version=2.0.33.28494, Culture=neutral, PublicKeyToken=null
+     version:   2.0.33.28494
+     built:     2/3/2000 3:49:48 PM
+     md5:       F5C2DE7E29FB1B26E8EC09E15268689C0E8C93E08C29E69A0FD29A55F74F7200
+     timestamp: 12/13/2019 3:49:51 PM
+  -->
+  <commonNames>
+    <string>ADP</string>
+    <string>Adenosine 5'-diphosphate</string>
+  </commonNames>
+  <formula>C10H15N5O10P2</formula>
+  <molWeight>427.2011</molWeight>
+  <exactMass>427.0294</exactMass>
+  <reactionId>
+    <string>R00002</string>
+    <string>R00076</string>
+    <string>R00086</string>
+    <string>R00104</string>
+    <string>R00105</string>
+    <string>R00122</string>
+    <string>R00123</string>
+    <string>R00124</string>
+    <string>R00125</string>
+    <string>R00126</string>
+    <string>R00127</string>
+    <string>R00129</string>
+    <string>R00130</string>
+    <string>R00139</string>
+    <string>R00140</string>
+    <string>R00141</string>
+    <string>R00149</string>
+    <string>R00150</string>
+    <string>R00156</string>
+    <string>R00157</string>
+    <string>R00158</string>
+    <string>R00162</string>
+    <string>R00174</string>
+    <string>R00185</string>
+    <string>R00187</string>
+    <string>R00200</string>
+    <string>R00229</string>
+    <string>R00239</string>
+    <string>R00241</string>
+    <string>R00251</string>
+    <string>R00253</string>
+    <string>R00283</string>
+    <string>R00299</string>
+    <string>R00315</string>
+    <string>R00330</string>
+    <string>R00331</string>
+    <string>R00332</string>
+    <string>R00333</string>
+    <string>R00334</string>
+    <string>R00341</string>
+    <string>R00344</string>
+    <string>R00352</string>
+    <string>R00405</string>
+    <string>R00437</string>
+    <string>R00480</string>
+    <string>R00482</string>
+    <string>R00497</string>
+    <string>R00509</string>
+    <string>R00512</string>
+    <string>R00513</string>
+    <string>R00518</string>
+    <string>R00530</string>
+    <string>R00549</string>
+    <string>R00554</string>
+    <string>R00570</string>
+    <string>R00571</string>
+    <string>R00573</string>
+    <string>R00575</string>
+    <string>R00616</string>
+    <string>R00617</string>
+    <string>R00722</string>
+    <string>R00742</string>
+    <string>R00756</string>
+    <string>R00760</string>
+    <string>R00774</string>
+    <string>R00847</string>
+    <string>R00866</string>
+    <string>R00867</string>
+    <string>R00894</string>
+    <string>R00910</string>
+    <string>R00912</string>
+    <string>R00920</string>
+    <string>R00942</string>
+    <string>R00943</string>
+    <string>R00949</string>
+    <string>R00964</string>
+    <string>R01011</string>
+    <string>R01021</string>
+    <string>R01050</string>
+    <string>R01051</string>
+    <string>R01052</string>
+    <string>R01053</string>
+    <string>R01059</string>
+    <string>R01092</string>
+    <string>R01121</string>
+    <string>R01131</string>
+    <string>R01137</string>
+    <string>R01150</string>
+    <string>R01164</string>
+    <string>R01201</string>
+    <string>R01228</string>
+    <string>R01256</string>
+    <string>R01322</string>
+    <string>R01326</string>
+    <string>R01353</string>
+    <string>R01395</string>
+    <string>R01417</string>
+    <string>R01441</string>
+    <string>R01468</string>
+    <string>R01476</string>
+    <string>R01495</string>
+    <string>R01512</string>
+    <string>R01514</string>
+    <string>R01523</string>
+    <string>R01526</string>
+    <string>R01541</string>
+    <string>R01547</string>
+    <string>R01567</string>
+    <string>R01568</string>
+    <string>R01573</string>
+    <string>R01585</string>
+    <string>R01600</string>
+    <string>R01639</string>
+    <string>R01654</string>
+    <string>R01665</string>
+    <string>R01666</string>
+    <string>R01688</string>
+    <string>R01724</string>
+    <string>R01737</string>
+    <string>R01754</string>
+    <string>R01771</string>
+    <string>R01786</string>
+    <string>R01843</string>
+    <string>R01844</string>
+    <string>R01857</string>
+    <string>R01859</string>
+    <string>R01881</string>
+    <string>R01888</string>
+    <string>R01901</string>
+    <string>R01902</string>
+    <string>R01909</string>
+    <string>R01917</string>
+    <string>R01926</string>
+    <string>R01961</string>
+    <string>R01967</string>
+    <string>R01980</string>
+    <string>R01991</string>
+    <string>R02017</string>
+    <string>R02071</string>
+    <string>R02089</string>
+    <string>R02090</string>
+    <string>R02093</string>
+    <string>R02094</string>
+    <string>R02098</string>
+    <string>R02099</string>
+    <string>R02134</string>
+    <string>R02136</string>
+    <string>R02184</string>
+    <string>R02225</string>
+    <string>R02227</string>
+    <string>R02237</string>
+    <string>R02238</string>
+    <string>R02240</string>
+    <string>R02245</string>
+    <string>R02301</string>
+    <string>R02303</string>
+    <string>R02324</string>
+    <string>R02326</string>
+    <string>R02331</string>
+    <string>R02402</string>
+    <string>R02404</string>
+    <string>R02412</string>
+    <string>R02420</string>
+    <string>R02421</string>
+    <string>R02430</string>
+    <string>R02439</string>
+    <string>R02451</string>
+    <string>R02493</string>
+    <string>R02575</string>
+    <string>R02584</string>
+    <string>R02625</string>
+    <string>R02626</string>
+    <string>R02649</string>
+    <string>R02650</string>
+    <string>R02658</string>
+    <string>R02664</string>
+    <string>R02705</string>
+    <string>R02732</string>
+    <string>R02741</string>
+    <string>R02750</string>
+    <string>R02757</string>
+    <string>R02758</string>
+    <string>R02783</string>
+    <string>R02786</string>
+    <string>R02788</string>
+    <string>R02848</string>
+    <string>R02865</string>
+    <string>R02884</string>
+    <string>R02903</string>
+    <string>R02927</string>
+    <string>R02929</string>
+    <string>R02971</string>
+    <string>R02976</string>
+    <string>R02980</string>
+    <string>R03014</string>
+    <string>R03018</string>
+    <string>R03095</string>
+    <string>R03142</string>
+    <string>R03150</string>
+    <string>R03157</string>
+    <string>R03161</string>
+    <string>R03182</string>
+    <string>R03187</string>
+    <string>R03193</string>
+    <string>R03236</string>
+    <string>R03241</string>
+    <string>R03245</string>
+    <string>R03272</string>
+    <string>R03274</string>
+    <string>R03286</string>
+    <string>R03298</string>
+    <string>R03315</string>
+    <string>R03347</string>
+    <string>R03361</string>
+    <string>R03362</string>
+    <string>R03384</string>
+    <string>R03387</string>
+    <string>R03395</string>
+    <string>R03428</string>
+    <string>R03429</string>
+    <string>R03433</string>
+    <string>R03449</string>
+    <string>R03469</string>
+    <string>R03471</string>
+    <string>R03474</string>
+    <string>R03478</string>
+    <string>R03479</string>
+    <string>R03494</string>
+    <string>R03516</string>
+    <string>R03530</string>
+    <string>R03576</string>
+    <string>R03607</string>
+    <string>R03632</string>
+    <string>R03691</string>
+    <string>R03744</string>
+    <string>R03754</string>
+    <string>R03766</string>
+    <string>R03770</string>
+    <string>R03780</string>
+    <string>R03785</string>
+    <string>R03819</string>
+    <string>R03822</string>
+    <string>R03840</string>
+    <string>R03877</string>
+    <string>R03905</string>
+    <string>R03920</string>
+    <string>R03939</string>
+    <string>R03944</string>
+    <string>R04002</string>
+    <string>R04023</string>
+    <string>R04068</string>
+    <string>R04126</string>
+    <string>R04138</string>
+    <string>R04143</string>
+    <string>R04144</string>
+    <string>R04208</string>
+    <string>R04212</string>
+    <string>R04235</string>
+    <string>R04241</string>
+    <string>R04267</string>
+    <string>R04275</string>
+    <string>R04358</string>
+    <string>R04369</string>
+    <string>R04385</string>
+    <string>R04388</string>
+    <string>R04391</string>
+    <string>R04401</string>
+    <string>R04403</string>
+    <string>R04448</string>
+    <string>R04463</string>
+    <string>R04504</string>
+    <string>R04509</string>
+    <string>R04545</string>
+    <string>R04555</string>
+    <string>R04573</string>
+    <string>R04589</string>
+    <string>R04591</string>
+    <string>R04617</string>
+    <string>R04657</string>
+    <string>R04730</string>
+    <string>R04779</string>
+    <string>R04928</string>
+    <string>R05030</string>
+    <string>R05185</string>
+    <string>R05186</string>
+    <string>R05197</string>
+    <string>R05202</string>
+    <string>R05221</string>
+    <string>R05224</string>
+    <string>R05225</string>
+    <string>R05227</string>
+    <string>R05328</string>
+    <string>R05453</string>
+    <string>R05496</string>
+    <string>R05626</string>
+    <string>R05634</string>
+    <string>R05646</string>
+    <string>R05661</string>
+    <string>R05795</string>
+    <string>R05799</string>
+    <string>R05800</string>
+    <string>R05801</string>
+    <string>R05802</string>
+    <string>R05803</string>
+    <string>R05804</string>
+    <string>R05805</string>
+    <string>R05806</string>
+    <string>R05815</string>
+    <string>R06282</string>
+    <string>R06367</string>
+    <string>R06396</string>
+    <string>R06529</string>
+    <string>R06531</string>
+    <string>R06588</string>
+    <string>R06836</string>
+    <string>R06974</string>
+    <string>R06975</string>
+    <string>R06976</string>
+    <string>R07127</string>
+    <string>R07279</string>
+    <string>R07302</string>
+    <string>R07404</string>
+    <string>R07414</string>
+    <string>R07641</string>
+    <string>R07642</string>
+    <string>R07828</string>
+    <string>R08052</string>
+    <string>R08124</string>
+    <string>R08154</string>
+    <string>R08201</string>
+    <string>R08217</string>
+    <string>R08223</string>
+    <string>R08232</string>
+    <string>R08233</string>
+    <string>R08241</string>
+    <string>R08242</string>
+    <string>R08323</string>
+    <string>R08352</string>
+    <string>R08353</string>
+    <string>R08354</string>
+    <string>R08355</string>
+    <string>R08480</string>
+    <string>R08515</string>
+    <string>R08572</string>
+    <string>R08676</string>
+    <string>R08844</string>
+    <string>R08855</string>
+    <string>R08905</string>
+    <string>R08906</string>
+    <string>R08924</string>
+    <string>R08946</string>
+    <string>R08962</string>
+    <string>R08964</string>
+    <string>R08967</string>
+    <string>R08968</string>
+    <string>R09053</string>
+    <string>R09060</string>
+    <string>R09084</string>
+    <string>R09085</string>
+    <string>R09086</string>
+    <string>R09087</string>
+    <string>R09378</string>
+    <string>R09401</string>
+    <string>R09588</string>
+    <string>R09590</string>
+    <string>R09592</string>
+    <string>R09593</string>
+    <string>R09594</string>
+    <string>R09595</string>
+    <string>R09596</string>
+    <string>R09598</string>
+    <string>R09599</string>
+    <string>R09640</string>
+    <string>R09665</string>
+    <string>R09729</string>
+    <string>R09767</string>
+    <string>R09770</string>
+    <string>R09775</string>
+    <string>R09776</string>
+    <string>R09880</string>
+    <string>R09945</string>
+    <string>R09946</string>
+    <string>R09978</string>
+    <string>R10065</string>
+    <string>R10093</string>
+    <string>R10267</string>
+    <string>R10268</string>
+    <string>R10288</string>
+    <string>R10470</string>
+    <string>R10531</string>
+    <string>R10548</string>
+    <string>R10561</string>
+    <string>R10657</string>
+    <string>R10677</string>
+    <string>R10678</string>
+    <string>R10679</string>
+    <string>R10693</string>
+    <string>R10758</string>
+    <string>R10772</string>
+    <string>R10779</string>
+    <string>R10780</string>
+    <string>R10821</string>
+    <string>R10822</string>
+    <string>R10892</string>
+    <string>R10901</string>
+    <string>R10902</string>
+    <string>R10929</string>
+    <string>R10930</string>
+    <string>R10941</string>
+    <string>R10942</string>
+    <string>R10943</string>
+    <string>R10944</string>
+    <string>R10948</string>
+    <string>R10951</string>
+    <string>R10953</string>
+    <string>R10970</string>
+    <string>R10993</string>
+    <string>R10994</string>
+    <string>R11024</string>
+    <string>R11039</string>
+    <string>R11064</string>
+    <string>R11085</string>
+    <string>R11090</string>
+    <string>R11183</string>
+    <string>R11184</string>
+    <string>R11185</string>
+    <string>R11207</string>
+    <string>R11234</string>
+    <string>R11319</string>
+    <string>R11400</string>
+    <string>R11406</string>
+    <string>R11460</string>
+    <string>R11461</string>
+    <string>R11530</string>
+    <string>R11531</string>
+    <string>R11535</string>
+    <string>R11536</string>
+    <string>R11627</string>
+    <string>R11628</string>
+    <string>R11629</string>
+    <string>R11662</string>
+    <string>R11673</string>
+    <string>R11706</string>
+    <string>R11707</string>
+    <string>R11783</string>
+    <string>R11784</string>
+    <string>R11803</string>
+    <string>R11891</string>
+    <string>R11892</string>
+    <string>R11894</string>
+    <string>R11895</string>
+    <string>R11933</string>
+    <string>R12084</string>
+    <string>R12245</string>
+    <string>R12246</string>
+    <string>R12272</string>
+    <string>R12330</string>
+    <string>R12342</string>
+    <string>R12344</string>
+    <string>R12352</string>
+  </reactionId>
+  <KEGG:pathway>
+    <KEGG:data name="[map00190]">Oxidative phosphorylation</KEGG:data>
+    <KEGG:data name="[map00195]">Photosynthesis</KEGG:data>
+    <KEGG:data name="[map00230]">Purine metabolism</KEGG:data>
+    <KEGG:data name="[map00908]">Zeatin biosynthesis</KEGG:data>
+    <KEGG:data name="[map01100]">Metabolic pathways</KEGG:data>
+    <KEGG:data name="[map01110]">Biosynthesis of secondary metabolites</KEGG:data>
+    <KEGG:data name="[map01130]">Biosynthesis of antibiotics</KEGG:data>
+    <KEGG:data name="[map04068]">FoxO signaling pathway</KEGG:data>
+    <KEGG:data name="[map04080]">Neuroactive ligand-receptor interaction</KEGG:data>
+    <KEGG:data name="[map04142]">Lysosome</KEGG:data>
+    <KEGG:data name="[map04152]">AMPK signaling pathway</KEGG:data>
+    <KEGG:data name="[map04611]">Platelet activation</KEGG:data>
+    <KEGG:data name="[map04714]">Thermogenesis</KEGG:data>
+    <KEGG:data name="[map04742]">Taste transduction</KEGG:data>
+    <KEGG:data name="[map04924]">Renin secretion</KEGG:data>
+    <KEGG:data name="[map05012]">Parkinson disease</KEGG:data>
+  </KEGG:pathway>
+  <KEGG:module>
+    <KEGG:data name="[M00049]">Adenine ribonucleotide biosynthesis, IMP =&gt; ADP,ATP</KEGG:data>
+  </KEGG:module>
+  <remarks>
+    <string>Same as: G11113</string>
+  </remarks>
+  <enzyme>
+    <string>1.3.7.7</string>
+    <string>1.3.7.8</string>
+    <string>1.3.7.14</string>
+    <string>1.3.7.15</string>
+    <string>1.17.4.1</string>
+    <string>1.18.6.1</string>
+    <string>1.18.6.2</string>
+    <string>1.19.6.1</string>
+    <string>2.3.3.8</string>
+    <string>2.4.1.13</string>
+    <string>2.4.1.21</string>
+    <string>2.4.1.113</string>
+    <string>2.4.1.213</string>
+    <string>2.4.1.242</string>
+    <string>2.4.1.245</string>
+    <string>2.4.1.268</string>
+    <string>2.4.1.342</string>
+    <string>2.4.1.347</string>
+    <string>2.5.1.112</string>
+    <string>2.7.1.1</string>
+    <string>2.7.1.2</string>
+    <string>2.7.1.3</string>
+    <string>2.7.1.4</string>
+    <string>2.7.1.5</string>
+    <string>2.7.1.6</string>
+    <string>2.7.1.7</string>
+    <string>2.7.1.8</string>
+    <string>2.7.1.10</string>
+    <string>2.7.1.11</string>
+    <string>2.7.1.12</string>
+    <string>2.7.1.13</string>
+    <string>2.7.1.14</string>
+    <string>2.7.1.15</string>
+    <string>2.7.1.16</string>
+    <string>2.7.1.17</string>
+    <string>2.7.1.18</string>
+    <string>2.7.1.19</string>
+    <string>2.7.1.20</string>
+    <string>2.7.1.21</string>
+    <string>2.7.1.22</string>
+    <string>2.7.1.23</string>
+    <string>2.7.1.24</string>
+    <string>2.7.1.25</string>
+    <string>2.7.1.26</string>
+    <string>2.7.1.27</string>
+    <string>2.7.1.28</string>
+    <string>2.7.1.29</string>
+    <string>2.7.1.30</string>
+    <string>2.7.1.31</string>
+    <string>2.7.1.32</string>
+    <string>2.7.1.33</string>
+    <string>2.7.1.34</string>
+    <string>2.7.1.35</string>
+    <string>2.7.1.36</string>
+    <string>2.7.1.39</string>
+    <string>2.7.1.40</string>
+    <string>2.7.1.43</string>
+    <string>2.7.1.44</string>
+    <string>2.7.1.45</string>
+    <string>2.7.1.46</string>
+    <string>2.7.1.47</string>
+    <string>2.7.1.48</string>
+    <string>2.7.1.49</string>
+    <string>2.7.1.50</string>
+    <string>2.7.1.51</string>
+    <string>2.7.1.52</string>
+    <string>2.7.1.53</string>
+    <string>2.7.1.54</string>
+    <string>2.7.1.55</string>
+    <string>2.7.1.56</string>
+    <string>2.7.1.58</string>
+    <string>2.7.1.59</string>
+    <string>2.7.1.60</string>
+    <string>2.7.1.64</string>
+    <string>2.7.1.65</string>
+    <string>2.7.1.66</string>
+    <string>2.7.1.67</string>
+    <string>2.7.1.68</string>
+    <string>2.7.1.71</string>
+    <string>2.7.1.72</string>
+    <string>2.7.1.73</string>
+    <string>2.7.1.74</string>
+    <string>2.7.1.76</string>
+    <string>2.7.1.78</string>
+    <string>2.7.1.82</string>
+    <string>2.7.1.83</string>
+    <string>2.7.1.84</string>
+    <string>2.7.1.85</string>
+    <string>2.7.1.86</string>
+    <string>2.7.1.87</string>
+    <string>2.7.1.88</string>
+    <string>2.7.1.89</string>
+    <string>2.7.1.91</string>
+    <string>2.7.1.92</string>
+    <string>2.7.1.93</string>
+    <string>2.7.1.94</string>
+    <string>2.7.1.95</string>
+    <string>2.7.1.100</string>
+    <string>2.7.1.101</string>
+    <string>2.7.1.102</string>
+    <string>2.7.1.103</string>
+    <string>2.7.1.105</string>
+    <string>2.7.1.107</string>
+    <string>2.7.1.113</string>
+    <string>2.7.1.118</string>
+    <string>2.7.1.119</string>
+    <string>2.7.1.122</string>
+    <string>2.7.1.127</string>
+    <string>2.7.1.130</string>
+    <string>2.7.1.134</string>
+    <string>2.7.1.136</string>
+    <string>2.7.1.137</string>
+    <string>2.7.1.138</string>
+    <string>2.7.1.140</string>
+    <string>2.7.1.144</string>
+    <string>2.7.1.145</string>
+    <string>2.7.1.146</string>
+    <string>2.7.1.147</string>
+    <string>2.7.1.148</string>
+    <string>2.7.1.149</string>
+    <string>2.7.1.150</string>
+    <string>2.7.1.151</string>
+    <string>2.7.1.153</string>
+    <string>2.7.1.154</string>
+    <string>2.7.1.156</string>
+    <string>2.7.1.157</string>
+    <string>2.7.1.158</string>
+    <string>2.7.1.159</string>
+    <string>2.7.1.162</string>
+    <string>2.7.1.163</string>
+    <string>2.7.1.164</string>
+    <string>2.7.1.165</string>
+    <string>2.7.1.166</string>
+    <string>2.7.1.167</string>
+    <string>2.7.1.168</string>
+    <string>2.7.1.169</string>
+    <string>2.7.1.170</string>
+    <string>2.7.1.173</string>
+    <string>2.7.1.175</string>
+    <string>2.7.1.176</string>
+    <string>2.7.1.177</string>
+    <string>2.7.1.178</string>
+    <string>2.7.1.179</string>
+    <string>2.7.1.181</string>
+    <string>2.7.1.183</string>
+    <string>2.7.1.184</string>
+    <string>2.7.1.185</string>
+    <string>2.7.1.186</string>
+    <string>2.7.1.187</string>
+    <string>2.7.1.188</string>
+    <string>2.7.1.189</string>
+    <string>2.7.1.209</string>
+    <string>2.7.1.210</string>
+    <string>2.7.1.212</string>
+    <string>2.7.1.213</string>
+    <string>2.7.1.214</string>
+    <string>2.7.1.215</string>
+    <string>2.7.1.217</string>
+    <string>2.7.1.218</string>
+    <string>2.7.1.219</string>
+    <string>2.7.1.220</string>
+    <string>2.7.1.221</string>
+    <string>2.7.1.222</string>
+    <string>2.7.1.223</string>
+    <string>2.7.1.224</string>
+    <string>2.7.1.225</string>
+    <string>2.7.1.226</string>
+    <string>2.7.2.1</string>
+    <string>2.7.2.2</string>
+    <string>2.7.2.3</string>
+    <string>2.7.2.4</string>
+    <string>2.7.2.6</string>
+    <string>2.7.2.7</string>
+    <string>2.7.2.8</string>
+    <string>2.7.2.11</string>
+    <string>2.7.2.13</string>
+    <string>2.7.2.14</string>
+    <string>2.7.2.15</string>
+    <string>2.7.3.1</string>
+    <string>2.7.3.2</string>
+    <string>2.7.3.3</string>
+    <string>2.7.3.4</string>
+    <string>2.7.3.5</string>
+    <string>2.7.3.6</string>
+    <string>2.7.3.7</string>
+    <string>2.7.3.8</string>
+    <string>2.7.3.10</string>
+    <string>2.7.4.1</string>
+    <string>2.7.4.2</string>
+    <string>2.7.4.3</string>
+    <string>2.7.4.4</string>
+    <string>2.7.4.6</string>
+    <string>2.7.4.7</string>
+    <string>2.7.4.8</string>
+    <string>2.7.4.9</string>
+    <string>2.7.4.10</string>
+    <string>2.7.4.11</string>
+    <string>2.7.4.12</string>
+    <string>2.7.4.13</string>
+    <string>2.7.4.14</string>
+    <string>2.7.4.15</string>
+    <string>2.7.4.16</string>
+    <string>2.7.4.18</string>
+    <string>2.7.4.19</string>
+    <string>2.7.4.21</string>
+    <string>2.7.4.22</string>
+    <string>2.7.4.23</string>
+    <string>2.7.4.24</string>
+    <string>2.7.4.25</string>
+    <string>2.7.4.26</string>
+    <string>2.7.4.31</string>
+    <string>2.7.7.5</string>
+    <string>2.7.7.8</string>
+    <string>2.7.7.35</string>
+    <string>2.7.7.36</string>
+    <string>2.7.7.53</string>
+    <string>2.7.7.89</string>
+    <string>2.7.10.1</string>
+    <string>2.7.10.2</string>
+    <string>2.7.11.1</string>
+    <string>2.7.11.2</string>
+    <string>2.7.11.3</string>
+    <string>2.7.11.4</string>
+    <string>2.7.11.5</string>
+    <string>2.7.11.6</string>
+    <string>2.7.11.7</string>
+    <string>2.7.11.8</string>
+    <string>2.7.11.9</string>
+    <string>2.7.11.10</string>
+    <string>2.7.11.11</string>
+    <string>2.7.11.12</string>
+    <string>2.7.11.13</string>
+    <string>2.7.11.14</string>
+    <string>2.7.11.15</string>
+    <string>2.7.11.17</string>
+    <string>2.7.11.18</string>
+    <string>2.7.11.19</string>
+    <string>2.7.11.21</string>
+    <string>2.7.11.22</string>
+    <string>2.7.11.23</string>
+    <string>2.7.11.24</string>
+    <string>2.7.11.25</string>
+    <string>2.7.11.26</string>
+    <string>2.7.11.27</string>
+    <string>2.7.11.28</string>
+    <string>2.7.11.29</string>
+    <string>2.7.11.30</string>
+    <string>2.7.11.31</string>
+    <string>2.7.12.1</string>
+    <string>2.7.12.2</string>
+    <string>2.7.13.1</string>
+    <string>2.7.13.2</string>
+    <string>2.7.14.1</string>
+    <string>3.5.2.9</string>
+    <string>3.5.2.14</string>
+    <string>3.5.4.7</string>
+    <string>3.5.4.17</string>
+    <string>3.6.1.3</string>
+    <string>3.6.1.5</string>
+    <string>3.6.1.8</string>
+    <string>3.6.1.15</string>
+    <string>3.6.1.29</string>
+    <string>3.6.1.41</string>
+    <string>3.6.1.61</string>
+    <string>4.1.1.33</string>
+    <string>4.1.1.49</string>
+    <string>4.1.1.99</string>
+    <string>4.2.1.93</string>
+    <string>4.2.1.136</string>
+    <string>6.1.2.1</string>
+    <string>6.2.1.5</string>
+    <string>6.2.1.6</string>
+    <string>6.2.1.9</string>
+    <string>6.2.1.13</string>
+    <string>6.2.1.18</string>
+    <string>6.2.1.39</string>
+    <string>6.2.1.56</string>
+    <string>6.3.1.2</string>
+    <string>6.3.1.4</string>
+    <string>6.3.1.6</string>
+    <string>6.3.1.8</string>
+    <string>6.3.1.9</string>
+    <string>6.3.1.10</string>
+    <string>6.3.1.11</string>
+    <string>6.3.1.12</string>
+    <string>6.3.1.17</string>
+    <string>6.3.1.18</string>
+    <string>6.3.1.19</string>
+    <string>6.3.2.2</string>
+    <string>6.3.2.3</string>
+    <string>6.3.2.4</string>
+    <string>6.3.2.6</string>
+    <string>6.3.2.7</string>
+    <string>6.3.2.8</string>
+    <string>6.3.2.9</string>
+    <string>6.3.2.10</string>
+    <string>6.3.2.11</string>
+    <string>6.3.2.12</string>
+    <string>6.3.2.13</string>
+    <string>6.3.2.16</string>
+    <string>6.3.2.17</string>
+    <string>6.3.2.18</string>
+    <string>6.3.2.20</string>
+    <string>6.3.2.23</string>
+    <string>6.3.2.25</string>
+    <string>6.3.2.29</string>
+    <string>6.3.2.30</string>
+    <string>6.3.2.32</string>
+    <string>6.3.2.33</string>
+    <string>6.3.2.35</string>
+    <string>6.3.2.37</string>
+    <string>6.3.2.41</string>
+    <string>6.3.2.42</string>
+    <string>6.3.2.43</string>
+    <string>6.3.2.44</string>
+    <string>6.3.2.45</string>
+    <string>6.3.2.47</string>
+    <string>6.3.2.48</string>
+    <string>6.3.2.49</string>
+    <string>6.3.2.53</string>
+    <string>6.3.3.1</string>
+    <string>6.3.3.2</string>
+    <string>6.3.3.3</string>
+    <string>6.3.3.5</string>
+    <string>6.3.3.7</string>
+    <string>6.3.4.2</string>
+    <string>6.3.4.3</string>
+    <string>6.3.4.6</string>
+    <string>6.3.4.7</string>
+    <string>6.3.4.8</string>
+    <string>6.3.4.12</string>
+    <string>6.3.4.13</string>
+    <string>6.3.4.14</string>
+    <string>6.3.4.16</string>
+    <string>6.3.4.17</string>
+    <string>6.3.4.18</string>
+    <string>6.3.4.20</string>
+    <string>6.3.4.21</string>
+    <string>6.3.4.23</string>
+    <string>6.3.4.24</string>
+    <string>6.3.5.3</string>
+    <string>6.3.5.5</string>
+    <string>6.3.5.6</string>
+    <string>6.3.5.7</string>
+    <string>6.3.5.9</string>
+    <string>6.3.5.10</string>
+    <string>6.3.5.11</string>
+    <string>6.3.5.12</string>
+    <string>6.3.5.13</string>
+    <string>6.4.1.1</string>
+    <string>6.4.1.2</string>
+    <string>6.4.1.3</string>
+    <string>6.4.1.4</string>
+    <string>6.4.1.5</string>
+    <string>6.4.1.7</string>
+    <string>6.4.1.8</string>
+    <string>6.4.1.9</string>
+    <string>6.5.1.7</string>
+    <string>6.6.1.1</string>
+    <string>6.6.1.2</string>
+    <string>7.3.2.6</string>
+  </enzyme>
+  <category>
+    <BriteTerm>
+      <class>Nucleic acids</class>
+      <category>Nucleotides [Fig]</category>
+      <subcategory>Ribonucleotides</subcategory>
+      <entry Key="C00008" Value="ADP" />
+    </BriteTerm>
+  </category>
+  <KEGG:DBlinks>
+    <KEGG:DBLink DBName="CAS">58-64-0</KEGG:DBLink>
+    <KEGG:DBLink DBName="PubChem">3310</KEGG:DBLink>
+    <KEGG:DBLink DBName="ChEBI">16761</KEGG:DBLink>
+    <KEGG:DBLink DBName="ChEMBL">CHEMBL14830</KEGG:DBLink>
+    <KEGG:DBLink DBName="KNApSAcK">C00019353</KEGG:DBLink>
+    <KEGG:DBLink DBName="PDB-CCD">ADP[PDBj]</KEGG:DBLink>
+    <KEGG:DBLink DBName="3DMET">B01130</KEGG:DBLink>
+    <KEGG:DBLink DBName="NIKKAJI">J10.683F</KEGG:DBLink>
+  </KEGG:DBlinks>
+  <KCF>ENTRY       C00008                      Compound
+ATOM        27
+            1   N4y N    29.0043  -15.0163
+            2   C8y C    30.0699  -15.7560
+            3   C1y C    27.7172  -15.4356
+            4   C8x C    29.4819  -13.6186
+            5   C8y C    31.3046  -14.8474
+            6   N5x N    30.2039  -17.1827
+            7   O2x O    26.5759  -14.5855
+            8   C1y C    27.2805  -16.6935
+            9   N5x N    30.9319  -13.6245
+            10  C8y C    32.5625  -15.4066
+            11  C8x C    31.5316  -17.7709
+            12  C1y C    25.4694  -15.3774
+            13  C1y C    25.9004  -16.6935
+            14  O1a O    28.0900  -17.8292
+            15  N5x N    32.7197  -16.8916
+            16  N1a N    33.6690  -14.5796
+            17  C1b C    24.1474  -14.9465
+            18  O1a O    25.4519  -18.0097
+            19  O2b O    23.1108  -15.8783
+            20  P1b P    21.7133  -15.8783
+            21  O2c O    20.3214  -15.8783
+            22  O1c O    21.7074  -17.2700
+            23  O1c O    21.7074  -14.4863
+            24  P1b P    18.9297  -15.8724
+            25  O1c O    18.9237  -17.2643
+            26  O1c O    17.5377  -15.8724
+            27  O1c O    18.9237  -14.4747
+BOND        29
+            1     1   2 1
+            2     3   1 1 #Up
+            3     1   4 1
+            4     2   5 2
+            5     2   6 1
+            6     3   7 1
+            7     3   8 1
+            8     4   9 2
+            9     5  10 1
+            10    6  11 2
+            11    7  12 1
+            12    8  13 1
+            13    8  14 1 #Down
+            14   10  15 2
+            15   10  16 1
+            16   12  17 1 #Up
+            17   13  18 1 #Down
+            18   17  19 1
+            19   19  20 1
+            20   20  21 1
+            21   20  22 1
+            22   20  23 2
+            23   21  24 1
+            24   24  25 1
+            25   24  26 1
+            26   24  27 2
+            27    5   9 1
+            28   11  15 1
+            29   12  13 1
+///
+</KCF>
+  <Image>data:image/gif;base64,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
+</Image>
+</Compound>

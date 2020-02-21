@@ -1,64 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::d0651cd8a19fe8cc5354f989f0c8f7ea, src\assembly\ProteoWizard.Interop\ProteoWizardCLI.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class ProteoWizardCLI
-    ' 
-    '     Properties: BIN
-    '     Enum OutFileTypes
-    ' 
-    ' 
-    ' 
-    ' 
-    '  
-    ' 
-    '     Constructor: (+2 Overloads) Sub New
-    ' 
-    '     Function: Convert2mzML, convertThermoRawFile, convertWatersRawFile, IsAvaiable
-    ' 
-    '     Sub: ConfigProgram
-    ' 
-    ' /********************************************************************************/
+' Class ProteoWizardCLI
+' 
+'     Properties: BIN
+'     Enum OutFileTypes
+' 
+' 
+' 
+' 
+'  
+' 
+'     Constructor: (+2 Overloads) Sub New
+' 
+'     Function: Convert2mzML, convertThermoRawFile, convertWatersRawFile, IsAvaiable
+' 
+'     Sub: ConfigProgram
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.ComponentModel
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine.InteropService
 Imports Microsoft.VisualBasic.FileIO
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.SymbolBuilder
+Imports ProteoWizard.Interop.filters
 
 ''' <summary>
 ''' 
@@ -226,11 +227,6 @@ Public Class ProteoWizardCLI : Inherits InteropService
     ''' </summary>
     Public Shared ReadOnly Property BIN As String
 
-    Public Enum OutFileTypes
-        <Description("--mzXML")> mzXML
-        <Description("--mzML")> mzML
-    End Enum
-
     Shared Sub New()
         Call ProteoWizardCLI.ConfigProgram(bin:=App.GetVariable("bin"))
     End Sub
@@ -260,28 +256,36 @@ Public Class ProteoWizardCLI : Inherits InteropService
         End If
     End Sub
 
-    Public Function Convert2mzML(input$, output$, Optional type As OutFileTypes = OutFileTypes.mzXML) As String
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="input"></param>
+    ''' <param name="output"></param>
+    ''' <param name="type"></param>
+    ''' <param name="filters">
+    ''' ``--filter arg``: add a spectrum list filter
+    ''' </param>
+    ''' <param name="verbose">
+    ''' ``--verbose``: display detailed progress information
+    ''' </param>
+    ''' <returns></returns>
+    Public Function Convert2mzML(input$, output$,
+                                 Optional type As OutFileTypes = OutFileTypes.mzXML,
+                                 Optional filters As IEnumerable(Of filter) = Nothing,
+                                 Optional verbose As Boolean = True) As String
+
         Call output.ParentPath.MkDIR
 
         If Strings.LCase(input).EndsWith(".raw.zip") Then
-            Return convertWatersRawFile(input, output, type)
+            Return convertWatersRawFile(input, output, type, filters.SafeQuery.ToArray, verbose)
         Else
-            Return convertThermoRawFile(input, output, type)
+            Return convertRawFile(input, output, type, filters, verbose)
         End If
     End Function
 
-    Private Function convertThermoRawFile(input$, output$, type As OutFileTypes) As String
+    Private Function convertRawFile(input$, output$, type As OutFileTypes, filters As IEnumerable(Of filter), verbose As Boolean) As String
         Dim std$ = ""
-
-        Dim args$ = New ScriptBuilder(input.GetFullPath.CLIPath) +
-               " " +
-               "--mz64" +
-               type.Description +
-               "--zlib" +
-               "--filter" +
-               """msLevel 1-2""" +
-               "--ignoreUnknownInstrumentError" +
-              $"-o {output.GetDirectoryFullPath.CLIPath}"
+        Dim args$ = cli(input, output, type, filters.SafeQuery.ToArray, verbose)
 
         Call input.__INFO_ECHO
         Call args.SetValue(args.TrimNewLine(" "))
@@ -293,26 +297,37 @@ Public Class ProteoWizardCLI : Inherits InteropService
         Return std
     End Function
 
-    Private Function convertWatersRawFile(input$, output$, type As OutFileTypes) As String
+    Private Function cli(input$, output$,
+                         type As OutFileTypes,
+                         filters As filter(),
+                         verbose As Boolean) As String
+
+        Dim args As New ScriptBuilder(input.GetFullPath.CLIPath)
+
+        args += " "
+        args += "--mz64"
+        args += type.Description
+        args += "--zlib"
+
+        If Not filters Is Nothing Then
+            args += filter.GetFilters(filters)
+        End If
+
+        If verbose Then
+            args += "--verbose"
+        End If
+
+        args += $"--ignoreUnknownInstrumentError"
+        args += $"-o {output.GetDirectoryFullPath.CLIPath}"
+
+        Return args.ToString
+    End Function
+
+    Private Function convertWatersRawFile(input$, output$, type As OutFileTypes, filters As filter(), verbose As Boolean) As String
         Dim std$ = ""
 
         For Each part In SplitDirectory(waters:=input)
-            Dim args$ = New ScriptBuilder(part.In.GetFullPath.CLIPath) +
-                " " +
-                "--mz64" +
-                type.Description +
-                "--zlib" +
-                "--filter" +
-                """msLevel 1-2""" +
-                "--ignoreUnknownInstrumentError" +
-               $"-o {output.GetDirectoryFullPath.CLIPath}"
-
-            Call part.Out.__INFO_ECHO
-            Call args.SetValue(args.TrimNewLine(" "))
-
-            Dim proc = Me.RunProgram(args,)
-            proc.Run()
-            std = std & vbCrLf & proc.StandardOutput
+            std = std & vbCrLf & convertRawFile(part.In, output, type, filters, verbose)
 
             ' cleanup filesystem for avoid file system crash
             Try

@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{94E1A3B2-05C7-4D80-8385-4EAEF4400F9B}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>SMRUCC.MassSpectrum.DATA.MoNA</RootNamespace>
-    <AssemblyName>SMRUCC.MassSpectrum.DATA.MoNA</AssemblyName>
+    <RootNamespace>BioNovoGene.BioDeep.Chemistry</RootNamespace>
+    <AssemblyName>BioNovoGene.BioDeep.Chemistry.Massbank.MoNA</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
@@ -19,7 +19,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>SMRUCC.MassSpectrum.DATA.MoNA.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.BioDeep.Chemistry.Massbank.MoNA.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -28,7 +28,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>SMRUCC.MassSpectrum.DATA.MoNA.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.BioDeep.Chemistry.Massbank.MoNA.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -48,7 +48,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Debug\</OutputPath>
-    <DocumentationFile>SMRUCC.MassSpectrum.DATA.MoNA.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.BioDeep.Chemistry.Massbank.MoNA.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -57,7 +57,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Release\</OutputPath>
-    <DocumentationFile>SMRUCC.MassSpectrum.DATA.MoNA.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.BioDeep.Chemistry.Massbank.MoNA.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -67,7 +67,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Biodeep\</OutputPath>
-    <DocumentationFile>SMRUCC.MassSpectrum.DATA.MoNA.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.BioDeep.Chemistry.Massbank.MoNA.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -77,7 +77,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Biodeep\</OutputPath>
-    <DocumentationFile>SMRUCC.MassSpectrum.DATA.MoNA.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.BioDeep.Chemistry.Massbank.MoNA.xml</DocumentationFile>
     <Optimize>false</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
@@ -88,7 +88,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BioDeep_database|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\BioDeep_database\</OutputPath>
-    <DocumentationFile>SMRUCC.MassSpectrum.DATA.MoNA.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.BioDeep.Chemistry.Massbank.MoNA.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -99,7 +99,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\BioDeep_database\</OutputPath>
-    <DocumentationFile>SMRUCC.MassSpectrum.DATA.MoNA.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.BioDeep.Chemistry.Massbank.MoNA.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>

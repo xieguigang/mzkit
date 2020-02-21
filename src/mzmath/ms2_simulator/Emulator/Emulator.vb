@@ -1,61 +1,69 @@
 ﻿#Region "Microsoft.VisualBasic::8e57528ae5d42a648cd160bfbd4a30fe, src\mzmath\ms2_simulator\Emulator\Emulator.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Emulator
-    ' 
-    '     Function: BreakBonds, CalculateMZ, FillBoundEnergy, (+2 Overloads) MolecularFragment
-    ' 
-    ' /********************************************************************************/
+' Module Emulator
+' 
+'     Function: BreakBonds, CalculateMZ, FillBoundEnergy, (+2 Overloads) MolecularFragment
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemistry.Model.Graph
 Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Language
-Imports SMRUCC.MassSpectrum.Math.Spectra
 Imports NetworkNode = Microsoft.VisualBasic.Data.visualize.Network.Graph.Node
+Imports Node = Microsoft.VisualBasic.Data.visualize.Network.Graph.Node
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' Generate insilicon MS/MS data based on the GA and graph theory.
 ''' </summary>
 Public Module Emulator
 
+    ''' <summary>
+    ''' 会将能量写入<see cref="EdgeData.weight"/>属性之中
+    ''' </summary>
+    ''' <param name="model"></param>
+    ''' <param name="energyTable"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function FillBoundEnergy(model As NetworkGraph, energyTable As BoundEnergyFinder) As NetworkGraph
         For Each bound As Edge In model.graphEdges
@@ -79,18 +87,20 @@ Public Module Emulator
     ''' 质谱模拟计算
     ''' </summary>
     ''' <param name="molecule"></param>
-    ''' <param name="energy"></param>
-    ''' <param name="step%"></param>
-    ''' <param name="precision%"></param>
-    ''' <param name="intoCutoff">``[0, 1]``, zero or negative value means no cutoff.</param>
+    ''' <param name="energy">
+    ''' 能量的范围值是从碰撞电压转换过来的
+    ''' 这个能量参数表示某一个给定的电压下所产生的能量分布
+    ''' </param>
+    ''' <param name="nintervals">计算能量分布的间隔区间数量</param>
+    ''' <param name="precision"></param>
     ''' <returns></returns>
     <Extension>
     Public Function MolecularFragment(molecule As NetworkGraph, energy As EnergyModel,
-                                      Optional step% = 100,
+                                      Optional nintervals% = 100,
                                       Optional precision% = 4,
-                                      Optional intoCutoff# = -1) As LibraryMatrix
+                                      Optional verbose As Boolean = True) As LibraryMatrix
 
-        Dim de# = (energy.MaxEnergy - energy.MinEnergy) / [step]
+        Dim de# = (energy.MaxEnergy - energy.MinEnergy) / nintervals
         ' {mz, quantity}
         Dim quantity As New Dictionary(Of Double, Double)
         Dim mzlist As New Dictionary(Of String, List(Of Double))
@@ -101,20 +111,31 @@ Public Module Emulator
             ' 则完整的分子图会分裂为多个子图碎片
 
             ' 使用定积分求出分子能量的分布密度
-            ' 分子的能量越高，高于这个能量的分子的半分比应该是越少的？
-            Dim percentage# = 1 - energy.PercentageLess(e)
-            Dim fragmentModel As NetworkGraph = molecule.BreakBonds(energy:=e)
-            Dim fragments = IteratesSubNetworks(Of NetworkNode, Edge, NetworkGraph)(fragmentModel).ToArray
+            ' 分子的能量越高，高于这个能量的分子的百分比应该是越少的？
+            Dim percentage# = energy.Percentage(e) * CDbl(nintervals)
 
-            Call $"Break into {fragments.Length} fragments under collision energy {e}".__DEBUG_ECHO
-            Call $"Quantile percentage is {(percentage * 100).ToString("F2")}%".__DEBUG_ECHO
+            If verbose Then
+                Call $"Energy: {e}|{percentage}%".__INFO_ECHO
+            End If
+
+            If percentage <= 0 Then
+                Continue For
+            End If
+
+            Dim fragmentModel As NetworkGraph = molecule.BreakBonds(energy:=e)
+            Dim fragments As NetworkGraph() = IteratesSubNetworks(Of NetworkNode, Edge, NetworkGraph)(
+                network:=fragmentModel,
+                singleNodeAsGraph:=True
+            ).ToArray
 
             For Each fragment As NetworkGraph In fragments
                 Dim mz As Double = fragment.CalculateMZ
 
-                Call $"  -> {mz.ToString("F2")} (m/z)".__DEBUG_ECHO
+                If verbose Then
+                    Call $"  -> {mz.ToString("F2")} (m/z)".__DEBUG_ECHO
+                End If
 
-                With Math.Round(mz, precision).ToString
+                With stdNum.Round(mz, precision).ToString
                     If Not quantity.ContainsKey(.ByRef) Then
                         quantity.Add(.ByRef, 0)
                         mzlist.Add(.ByRef, New List(Of Double))
@@ -127,27 +148,22 @@ Public Module Emulator
         Next
 
         Dim matrix As New LibraryMatrix With {
-            .Name = "Insilicons Ms/Ms matrix",
+            .name = "Insilicons Ms/Ms matrix",
             .ms2 = quantity _
                 .Select(Function(frag)
                             Dim mz# = mzlist(frag.Key).Average
 
                             Return New ms2 With {
                                 .mz = mz,
-                                .quantity = frag.Value
+                                .quantity = frag.Value,
+                                .intensity = frag.Value
                             }
                         End Function) _
+                .OrderByDescending(Function(m) m.mz) _
                 .ToArray
         }
 
-        ' 进行归一化计算出每一个分子碎片的相对响应度百分比
-        matrix = (matrix / Max(matrix)) * 100
-
-        If intoCutoff > 0 Then
-            matrix = matrix(matrix!intensity >= intoCutoff).ToArray
-        End If
-
-        Return matrix
+        Return (matrix / matrix.Max) * 100
     End Function
 
     ''' <summary>
@@ -183,6 +199,26 @@ Public Module Emulator
             .CreateGraph _
             .FillBoundEnergy(New BoundEnergyFinder) _
             .MolecularFragment(energy, [step])
+    End Function
+
+    ' 可以通过KEGG的原子基团解析出有多少个化学键
+    ' 然后通过分析与当前的这个节点相连接的边的化学键的数量
+    ' 二者的差值即为当前的这个原子基团可能的电荷值
+
+    ''' <summary>
+    ''' Calculate the charge value of ion graph model
+    ''' </summary>
+    ''' <param name="group">The atom group model</param>
+    ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function AtomGroupCharge(group As NetworkGraph) As Double
+        ' sum all charge value in nodes
+        Return Aggregate atom As Node
+               In group.vertex
+               Let charge As Double = Val(atom.data!charge)
+               Into Sum(charge)
     End Function
 
     ''' <summary>

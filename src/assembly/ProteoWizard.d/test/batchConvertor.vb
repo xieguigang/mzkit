@@ -55,7 +55,7 @@ Module batchConvertor
 
             For Each file As String In dir.EnumerateFiles("*.raw")
                 If Not file.ChangeSuffix("mzXML").FileLength > 1024 Then
-                    Call cli.Convert2mzML(file, dir, ProteoWizardCLI.OutFileTypes.mzXML)
+                    Call cli.Convert2mzML(file, dir, OutFileTypes.mzXML)
                 End If
 
                 Call file.Warning

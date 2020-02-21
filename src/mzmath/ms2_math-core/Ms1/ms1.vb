@@ -72,7 +72,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Math
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' The ms1 peak
@@ -85,7 +85,7 @@ Public Class Ms1Feature : Implements INamedValue, IMs1, IRetentionTime
     Public Property rt As Double Implements IMs1.rt
 
     Public Overrides Function ToString() As String
-        Return $"{sys.Round(mz, 4)}@{rt}"
+        Return $"{stdNum.Round(mz, 4)}@{rt}"
     End Function
 End Class
 
@@ -120,6 +120,9 @@ Public Class MetaInfo : Inherits Ms1Feature
 
 End Class
 
+''' <summary>
+''' [mz, rt, intensity]
+''' </summary>
 Public Interface IMs1Scan : Inherits IMs1
 
     Property intensity As Double
@@ -133,7 +136,7 @@ Public Class ms1_scan : Implements IMs1, IMs1Scan
     <XmlAttribute> Public Property intensity As Double Implements IMs1Scan.intensity
 
     Public Overrides Function ToString() As String
-        Return $"{mz.ToString("F4")}@{sys.Round(scan_time)} ({intensity})"
+        Return $"{mz.ToString("F4")}@{stdNum.Round(scan_time)} ({intensity})"
     End Function
 
     ''' <summary>
