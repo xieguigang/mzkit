@@ -117,7 +117,7 @@ Namespace Spectra
         ''' 
         <Extension>
         Public Function CentroidMode([lib] As LibraryMatrix, Optional intoCutoff# = 0.05) As LibraryMatrix
-            [lib].ms2 = [lib].ms2.Centroid.ToArray
+            [lib].ms2 = [lib].ms2.Centroid(intoCutoff).ToArray
             [lib].centroid = True
 
             Return [lib]

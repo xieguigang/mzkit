@@ -46,14 +46,18 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
+Imports SMRUCC.Rsharp.Runtime.Interop
 Imports mzXMLAssembly = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
+Imports REnv = SMRUCC.Rsharp.Runtime
 
 ''' <summary>
 ''' The mass spectrum assembly file read/write library module.
@@ -83,14 +87,22 @@ Module Assembly
     End Function
 
     <ExportAPI("write.mgf")>
-    Public Function writeMgfIons(ions As pipeline, file$, Optional relativeInto As Boolean = False) As Boolean
-        Using mgfWriter As StreamWriter = file.OpenWriter(Encodings.ASCII, append:=False)
-            For Each ionPeak As PeakMs2 In ions.populates(Of PeakMs2)
-                Call ionPeak _
+    Public Function writeMgfIons(ions As Object, file$, Optional relativeInto As Boolean = False) As Boolean
+        If ions.GetType() Is GetType(pipeline) Then
+            Using mgfWriter As StreamWriter = file.OpenWriter(Encodings.ASCII, append:=False)
+                For Each ionPeak As PeakMs2 In DirectCast(ions, pipeline).populates(Of PeakMs2)
+                    Call ionPeak _
+                        .MgfIon _
+                        .WriteAsciiMgf(mgfWriter, relativeInto)
+                Next
+            End Using
+        ElseIf ions.GetType Is GetType(LibraryMatrix) Then
+            Using mgf As StreamWriter = file.OpenWriter
+                Call DirectCast(ions, LibraryMatrix) _
                     .MgfIon _
-                    .WriteAsciiMgf(mgfWriter, relativeInto)
-            Next
-        End Using
+                    .WriteAsciiMgf(mgf)
+            End Using
+        End If
 
         Return True
     End Function
@@ -145,6 +157,14 @@ Module Assembly
             End If
 
             Return ms2Peak
+        ElseIf inputType Is GetType(LibraryMatrix) Then
+            Dim ms2 As LibraryMatrix = DirectCast(ions, LibraryMatrix)
+
+            If Not ms2.centroid Then
+                ms2 = ms2.CentroidMode(intoCutoff)
+            End If
+
+            Return ms2
         Else
             Return Internal.debug.stop(New InvalidCastException(inputType.FullName), env)
         End If
@@ -186,5 +206,41 @@ Module Assembly
                 Yield ms2Scan.ScanData(basename, raw:=Not relativeInto)
             End If
         Next
+    End Function
+
+    <ExportAPI("ms1.scans")>
+    Public Function getMs1Scans(<RRawVectorArgument> raw As Object) As ms1_scan()
+        Dim files As String() = REnv.asVector(Of String)(raw)
+        Dim ms1 As New List(Of ms1_scan)
+        Dim peakScans As PeakMs2
+
+        For Each file As String In files
+            Select Case file.ExtensionSuffix.ToLower
+                Case "mzxml"
+                    Dim basename$ = file.FileName
+
+                    For Each scan As scan In mzXMLAssembly.XML _
+                        .LoadScans(file) _
+                        .Where(Function(s)
+                                   Return s.msLevel = 1
+                               End Function)
+
+                        ' ms1的数据总是使用raw intensity值
+                        peakScans = scan.ScanData(basename, raw:=True)
+                        ms1 += peakScans.mzInto.ms2 _
+                            .Select(Function(frag)
+                                        Return New ms1_scan With {
+                                            .intensity = frag.intensity,
+                                            .mz = frag.mz,
+                                            .scan_time = peakScans.rt
+                                        }
+                                    End Function)
+                    Next
+                Case Else
+                    Throw New NotImplementedException
+            End Select
+        Next
+
+        Return ms1.ToArray
     End Function
 End Module

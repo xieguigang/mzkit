@@ -56,10 +56,11 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports PNNL.OMICS.MwtWinDll.MWElementAndMassRoutines
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports SMRUCC.Rsharp.Runtime.Interop
-Imports MwtWin = SMRUCC.proteomics.PNL.OMICS.MwtWinDll
-Imports MwtWinFormula = SMRUCC.proteomics.PNL.OMICS.MwtWinDll.FormulaFinder.FormulaFinderResult
+Imports MwtWin = PNNL.OMICS.MwtWinDll
+Imports MwtWinFormula = PNNL.OMICS.MwtWinDll.FormulaFinder.FormulaFinderResult
 Imports REnv = SMRUCC.Rsharp.Runtime.Internal.ConsolePrinter
 
 ''' <summary>
@@ -100,7 +101,7 @@ Module Formula
     Public Function FormulaFinder(mass#, Optional tolerance# = 0.1,
                                   <RRawVectorArgument(GetType(String))>
                                   Optional candidateElements As Object = "C|H|N|O",
-                                  Optional elementMode As MwtWin.MWElementAndMassRoutines.emElementModeConstants = MwtWin.MWElementAndMassRoutines.emElementModeConstants.emIsotopicMass) As MwtWinFormula()
+                                  Optional elementMode As emElementModeConstants = emElementModeConstants.emIsotopicMass) As MwtWinFormula()
 
         Dim oMwtWin As New MwtWin.MolecularWeightCalculator()
 

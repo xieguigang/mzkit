@@ -47,7 +47,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
-Imports SMRUCC.proteomics.PNL.OMICS.MwtWinDll.FormulaFinder
+Imports PNNL.OMICS.MwtWinDll.FormulaFinder
 
 #Disable Warning
 

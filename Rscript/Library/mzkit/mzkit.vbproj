@@ -301,6 +301,10 @@
       <Project>{78332537-7ecc-4b74-8aa9-ba66ab296af0}</Project>
       <Name>MwtWinDll</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\src\mzmath\mz_deco\mz_deco.vbproj">
+      <Project>{4921196c-a7f1-487e-a008-f31c25cb65f3}</Project>
+      <Name>mz_deco</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\src\visualize\KCF\KCF.Graph\KCF.Graph.vbproj">
       <Project>{c60416d4-b3e2-45e5-bfe0-90d5021647f9}</Project>
       <Name>KCF.Graph</Name>

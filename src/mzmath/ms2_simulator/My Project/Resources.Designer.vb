@@ -39,7 +39,7 @@ Namespace My.Resources
         Friend ReadOnly Property ResourceManager() As Global.System.Resources.ResourceManager
             Get
                 If Object.ReferenceEquals(resourceMan, Nothing) Then
-                    Dim temp As Global.System.Resources.ResourceManager = New Global.System.Resources.ResourceManager("ms2_simulator.Resources", GetType(Resources).Assembly)
+                    Dim temp As Global.System.Resources.ResourceManager = New Global.System.Resources.ResourceManager("BioNovoGene.Analytical.MassSpectrometry.Math.Insilicon.Resources", GetType(Resources).Assembly)
                     resourceMan = temp
                 End If
                 Return resourceMan
@@ -61,7 +61,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Bonds,H0*,bounds.n,atom1,atom2,Comments
+        '''  Looks up a localized string similar to Bonds,H0*,bounds.n,atom1,atom2,comments
         '''H-H,104.2,1,H,H,
         '''C-C,83,1,C,C,
         '''N-N,38.4,1,N,N,
