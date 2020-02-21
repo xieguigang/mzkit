@@ -44,8 +44,6 @@ kegg.match.handler <- function(
 	tolerance      = assert.deltaMass(0.3)) {
 	
     # load kegg reaction database and kegg meta information
-    # data/metaDNA_kegg.rda
-    xLoad("metaDNA_kegg.rda");
 	xLoad("KEGG_meta.rda");
 	
 	# 2019-03-29 some metabolite in KEGG database is a generic compound
@@ -214,7 +212,7 @@ kegg.match <- function(partners_id, kegg.mass, kegg.ids, kegg.mz, kegg.list,
 #'
 #' @return A kegg id vector which is related to the given \code{kegg_id}.
 #'
-kegg.partners <- function(kegg_id) {
+kegg.partners <- function(kegg_id, network) {
 	# kegg_id list could be empty???
 	is_null <- IsNothing(kegg_id);
 	partners <- sapply(network, function(reaction) {
