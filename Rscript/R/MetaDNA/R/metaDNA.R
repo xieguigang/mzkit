@@ -90,13 +90,21 @@ metaDNA <- function(identify, unknown, do.align,
                     kegg_id.skips = NULL,
 					seeds.all = TRUE,
 					seeds.topn = 5,
-                    iterations = 20) {
+                    iterations = 20, 
+					network.class_links = NULL) {
 
 	require(foreach);
 	require(doParallel);
 
     cat("\n\n");
 
+	if (IsNothing(network.class_links)) {
+		# use default kegg reaction class network data
+		# data/metaDNA_kegg.rda
+		xLoad("metaDNA_kegg.rda");
+		network.class_links = network;
+	}
+	
     # 1. Find all of the related KEGG compound by KEGG reaction link for
     #    identify metabolites
     # 2. Search for unknown by using ms1 precursor_m/z compare with the
@@ -135,7 +143,8 @@ metaDNA <- function(identify, unknown, do.align,
         identify, filter.skips,
         unknown, do.align,
         match.kegg,
-        score.cutoff
+        score.cutoff,
+		network = network.class_links
     );
 
 	memory.sample("[metaDNA]    do First iteration...");
@@ -161,7 +170,8 @@ metaDNA <- function(identify, unknown, do.align,
 				unknown = unknown,
 				do.align = do.align,
 				match.kegg = match.kegg,
-				score.cutoff = score.cutoff
+				score.cutoff = score.cutoff,
+				network = network.class_links
 			);
 			metaDNA.out <- append(metaDNA.out, output);
 
@@ -218,7 +228,8 @@ metaDNA <- function(identify, unknown, do.align,
 metaDNA.iteration <- function(identify, filter.skips,
                               unknown, do.align,
                               match.kegg,
-                              score.cutoff) {
+                              score.cutoff, 
+							  network) {
 
 	do.Predicts <- function(KEGG_cpd, identified, KEGG.partners, unknown.query) {
 		do.infer <- function(seed) {
@@ -297,7 +308,7 @@ metaDNA.iteration <- function(identify, filter.skips,
 
 		    identified <- identify[[KEGG_cpd]];
 			# find KEGG reaction partner for current identify KEGG compound
-			KEGG.partners <- KEGG_cpd %=>% kegg.partners %=>% filter.skips %=>% unique;
+			KEGG.partners <- kegg.partners(KEGG_cpd, network) %=>% filter.skips %=>% unique;
 
 			# current identify metabolite KEGG id didnt found any
 			# reaction related partner compounds
