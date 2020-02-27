@@ -192,7 +192,8 @@ Module Program
                 !network = Rbase.list(
                     !network = network.name,
                     !name = "MetaDNA Reaction Class Network",
-                    !description = "MetaDNA Reaction Class Network dataset."
+                    !description = "MetaDNA Reaction Class Network dataset.",
+                    !built = Now.ToString
                 )
 
                 Call Rbase.save({"network"}, rda)
