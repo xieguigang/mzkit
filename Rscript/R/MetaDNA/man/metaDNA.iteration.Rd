@@ -5,7 +5,7 @@
 \title{Run a metaDNA prediction iteration}
 \usage{
 metaDNA.iteration(identify, filter.skips, unknown, do.align, match.kegg,
-  score.cutoff)
+  score.cutoff, network)
 }
 \arguments{
 \item{identify}{The seeds data for the metaDNA algorithm.}

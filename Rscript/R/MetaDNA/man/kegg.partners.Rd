@@ -4,7 +4,7 @@
 \alias{kegg.partners}
 \title{Find kegg reaction partner}
 \usage{
-kegg.partners(kegg_id)
+kegg.partners(kegg_id, network)
 }
 \arguments{
 \item{kegg_id}{The kegg compound id of the identified compound.}
