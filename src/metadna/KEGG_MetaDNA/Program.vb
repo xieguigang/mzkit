@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::9a4759518e4a91550b6a521216b8437c, src\metadna\KEGG_MetaDNA\Program.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Program
-    ' 
-    '     Function: BuildNetwork, Compiler, KEGGMeta, Main
-    ' 
-    ' /********************************************************************************/
+' Module Program
+' 
+'     Function: BuildNetwork, Compiler, KEGGMeta, Main
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -46,12 +46,13 @@ Imports System.ComponentModel
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
-Imports GenericEquation = SMRUCC.genomics.ComponentModel.EquaionModel.DefaultTypes.Equation
 Imports R_server = RDotNet.Extensions.VisualBasic.RSystem
 Imports Rbase = RDotNet.Extensions.VisualBasic.API.base
+Imports RSymbol = RDotNet.Extensions.VisualBasic.var
 Imports VisualBasic = Microsoft.VisualBasic.Language.Runtime
 
 Module Program
@@ -75,7 +76,7 @@ Module Program
         Dim kegg$ = args <= "/kegg"
         Dim out$ = args("/out") Or $"{kegg.TrimDIR}/KEGG_meta.rda"
         Dim compounds = ScanLoad(repository:=kegg) _
-            .GroupBy(Function(c) c.Entry) _
+            .GroupBy(Function(c) c.entry) _
             .Select(Function(g) g.First) _
             .ToArray
 
@@ -85,7 +86,7 @@ Module Program
                 !KEGG_meta = Rbase.lapply(
                     x:=compounds,
                     FUN:=Function(compound)
-                             Call compound.CommonNames?.FirstOrDefault().__DEBUG_ECHO
+                             Call compound.commonNames?.FirstOrDefault().__DEBUG_ECHO
 
                              Return Rbase.list(
                                 !ID = compound.entry,
@@ -126,13 +127,14 @@ Module Program
 
     ReadOnly NA As New [Default](Of String)("NA", Function(exp) CStr(exp).StringEmpty OrElse CStr(exp) = "NULL")
 
-    <Extension> Private Function BuildNetwork(repository As (reaction$, compound$), rda$) As Boolean
+    <Extension>
+    Private Function BuildNetwork(repository As (reaction$, compound$), rda$) As Boolean
         Dim reactions = (ls - l - r - "*.Xml" <= repository.reaction) _
             .Select(Function(path)
-                        Return path.LoadXml(Of Reaction)(stripInvalidsCharacter:=True)
+                        Return path.LoadXml(Of ReactionClass)(stripInvalidsCharacter:=True)
                     End Function)
         Dim compounds = ScanLoad(repository.compound) _
-            .GroupBy(Function(c) c.Entry) _
+            .GroupBy(Function(c) c.entry) _
             .ToDictionary(Function(c) c.Key,
                           Function(g)
                               Return g.First
@@ -143,29 +145,55 @@ Module Program
 
                 ' network <- list(rxnID, define, reactants, products);
                 ' reactants和products都是KEGG的代谢物编号
-                Dim network$ = Rbase.list()
+                Dim network As New RSymbol(Rbase.list())
 
                 With New VisualBasic
 
-                    network = Rbase.lapply(
-                        x:=reactions,
-                        FUN:=Function(reaction)
-                                 Dim model As GenericEquation = reaction.ReactionModel
-                                 Dim name$ = Rbase.c(reaction.CommonNames, stringVector:=True) Or NA
+                    'network = Rbase.lapply(
+                    '    x:=reactions,
+                    '    FUN:=Function(reaction)
+                    '             Dim model As GenericEquation = reaction.ReactionModel
+                    '             Dim name$ = Rbase.c(reaction.CommonNames, stringVector:=True) Or NA
 
-                                 ' 生成一个列表之中的反应过程的摘要模型
-                                 ' 相当于网络之中的一个节点
-                                 Return Rbase.list(
-                                     !rxnID = reaction.ID,
-                                     !name = (name),
-                                     !define = reaction.Definition,
-                                     !reactants = Rbase.c(model.Reactants.Keys, stringVector:=True),
-                                     !products = Rbase.c(model.Products.Keys, stringVector:=True)
-                                 )
-                             End Function)
+                    '             ' 生成一个列表之中的反应过程的摘要模型
+                    '             ' 相当于网络之中的一个节点
+                    '             Return Rbase.list(
+                    '                 !rxnID = reaction.ID,
+                    '                 !name = (name),
+                    '                 !define = reaction.Definition,
+                    '                 !reactants = Rbase.c(model.Reactants.Keys, stringVector:=True),
+                    '                 !products = Rbase.c(model.Products.Keys, stringVector:=True)
+                    '             )
+                    '         End Function)
+
+                    Dim key$
+                    Dim i As i32
+
+                    For Each rclass In reactions
+                        If rclass.reactantPairs.Length > 1 Then
+                            i = 1
+
+                            For Each transform In rclass.reactantPairs
+                                key = $"{rclass.entryId}_{++i}"
+                                ' 生成一个列表之中的反应过程的摘要模型
+                                ' 相当于网络之中的一个节点
+                                network(key) = Rbase.list(
+                                    !rxnID = rclass.entryId,
+                                    !name = rclass.definition,
+                                    !define = rclass.definition,
+                                    !reactants = transform.from,
+                                    !products = transform.to
+                                )
+                            Next
+                        End If
+                    Next
                 End With
 
-                !network = network
+                !network = Rbase.list(
+                    !network = network.name,
+                    !name = "MetaDNA Reaction Class Network",
+                    !description = "MetaDNA Reaction Class Network dataset."
+                )
 
                 Call Rbase.save({"network"}, rda)
             End With
