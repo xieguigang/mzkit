@@ -133,12 +133,12 @@ Module Program
             .Select(Function(path)
                         Return path.LoadXml(Of ReactionClass)(stripInvalidsCharacter:=True)
                     End Function)
-        Dim compounds = ScanLoad(repository.compound) _
-            .GroupBy(Function(c) c.entry) _
-            .ToDictionary(Function(c) c.Key,
-                          Function(g)
-                              Return g.First
-                          End Function)
+        'Dim compounds = ScanLoad(repository.compound) _
+        '    .GroupBy(Function(c) c.entry) _
+        '    .ToDictionary(Function(c) c.Key,
+        '                  Function(g)
+        '                      Return g.First
+        '                  End Function)
 
         SyncLock R_server.R
             With R_server.R
