@@ -123,8 +123,8 @@ metaDNA <- function(identify, unknown, do.align,
     print("KEGG compound match with tolerance:");
     print(tolerance);
 
-	timer <- benchmark();
-	unknown.mz <- sapply(unknown, function(x) x$mz) %=>% as.numeric;
+	timer        <- benchmark();
+	unknown.mz   <- sapply(unknown, function(x) x$mz) %=>% as.numeric;
 	filter.skips <- kegg_id.skips %=>% create_filter.skips;
 
 	# The match.kegg lambda function implements:
@@ -132,9 +132,9 @@ metaDNA <- function(identify, unknown, do.align,
 	# Query the unknown ms feature by a given KEGG partner id list
 	#
     match.kegg <- kegg.match.handler(
-      unknown.mz = unknown.mz,
+      unknown.mz     = unknown.mz,
       precursor_type = precursor_type,
-      tolerance = tolerance
+      tolerance      = tolerance
     );
 
 	if (seeds.all && seeds.topn > 0) {
@@ -157,29 +157,29 @@ metaDNA <- function(identify, unknown, do.align,
 
 	memory.sample("[metaDNA]    do First iteration...");
 
-	seeds <- extends.seeds(output, rt.adjust, seeds.all, seeds.topn = seeds.topn);
-	metaDNA.out <- output;
-	stats <- NULL;
-	totals <- 0;
+	seeds         <- extends.seeds(output, rt.adjust, seeds.all, seeds.topn = seeds.topn);
+	metaDNA.out   <- output;
+	stats         <- NULL;
+	totals        <- 0;
 	kegg_id.skips <- append(kegg_id.skips, names(seeds));
-	filter.skips <- kegg_id.skips %=>% create_filter.skips;
+	filter.skips  <- kegg_id.skips %=>% create_filter.skips;
 
-	n <- length(seeds);
+	n      <- length(seeds);
 	totals <- totals + n;
-	stats <- rbind(stats, c(0, n, totals, timer()$since_last));
+	stats  <- rbind(stats, c(0, n, totals, timer()$since_last));
 
 	if (iterations > 1) {
 	    for(i in 1:iterations) {
 			print(sprintf("   do metaDNA Iteration %s ...", i));
 
 			output <- metaDNA.iteration(
-				identify = seeds,
+				identify     = seeds,
 				filter.skips = filter.skips,
-				unknown = unknown,
-				do.align = do.align,
-				match.kegg = match.kegg,
+				unknown      = unknown,
+				do.align     = do.align,
+				match.kegg   = match.kegg,
 				score.cutoff = score.cutoff,
-				network = network.class_links
+				network      = network.class_links
 			);
 			metaDNA.out <- append(metaDNA.out, output);
 
@@ -198,9 +198,9 @@ metaDNA <- function(identify, unknown, do.align,
 				# print(names(seeds));
 
 				kegg_id.skips <- append(kegg_id.skips, names(seeds));
-				filter.skips <- create_filter.skips(kegg_id.skips, FALSE);
-				totals <- totals + n;
-				stats <- rbind(stats, c(i, n, totals, timer()$since_last));
+				filter.skips  <- create_filter.skips(kegg_id.skips, FALSE);
+				totals        <- totals + n;
+				stats         <- rbind(stats, c(i, n, totals, timer()$since_last));
 			}
 
 			memory.sample(sprintf("[metaDNA]    do metaDNA Iteration %s ...", i));
