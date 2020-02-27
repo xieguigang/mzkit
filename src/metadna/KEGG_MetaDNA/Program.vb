@@ -132,13 +132,14 @@ Module Program
         Dim reactions = (ls - l - r - "*.Xml" <= repository.reaction) _
             .Select(Function(path)
                         Return path.LoadXml(Of ReactionClass)(stripInvalidsCharacter:=True)
-                    End Function)
-        'Dim compounds = ScanLoad(repository.compound) _
-        '    .GroupBy(Function(c) c.entry) _
-        '    .ToDictionary(Function(c) c.Key,
-        '                  Function(g)
-        '                      Return g.First
-        '                  End Function)
+                    End Function) _
+            .GroupBy(Function(rc) rc.entryId) _
+            .Select(Function(group)
+                        Return group.First
+                    End Function) _
+            .ToArray
+
+        Call $"There are {reactions.Length} unique reaction class data".__INFO_ECHO
 
         SyncLock R_server.R
             With R_server.R
