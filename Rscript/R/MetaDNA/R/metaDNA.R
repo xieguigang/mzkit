@@ -96,22 +96,30 @@ metaDNA <- function(identify, unknown, do.align,
 	require(foreach);
 	require(doParallel);
 
-    cat("\n\n");
+    cat("\n");
 
 	if (IsNothing(network.class_links)) {
 		# use default kegg reaction class network data
 		# data/metaDNA_kegg.rda
 		xLoad("metaDNA_kegg.rda");
-		network.class_links = network;
+
+		network.class_links <- network;
 	}
+
+	network <- network.class_links;
+
+    print(sprintf(" RUN [%s] pipline....", network$name));
+    cat("\n");
 	
+	print(network$description);
+	print(network$built);
+	
+	network.class_links <- network$network;
+
     # 1. Find all of the related KEGG compound by KEGG reaction link for
     #    identify metabolites
     # 2. Search for unknown by using ms1 precursor_m/z compare with the
     #    KEGG compound molecule weight in a given precursor_type mode.
-
-    print(" RUN [metaDNA] pipline....");
-    cat("\n\n");
     print("KEGG compound match with tolerance:");
     print(tolerance);
 
