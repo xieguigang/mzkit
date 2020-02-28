@@ -57,7 +57,7 @@ kegg.match.handler <- function(
 	mode <- getPolarity(precursor_type);
 
 	print("m/z will be calculate from these precursor types:");
-	print(cbind(precursor_type, mode));
+	print(cbind(cbind(precursor_type, mode), libtype));
 
 	# kegg.mass and kegg.ids have the same element length and 
 	# keeps the same element orders
