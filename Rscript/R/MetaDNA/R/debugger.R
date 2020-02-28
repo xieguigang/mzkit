@@ -108,34 +108,34 @@ save.network <- function(infer, outputdir, fileName = "MetaDNA.Xml") {
 #'
 do.write.network <- function(write, infer) {
 	totals <- names(infer) %=>% length;
-	n <- 0;
+	n      <- 0;
 
 	write("<!--
-	     
-         How to read MetaDNA infer network debug data:
 
-		 1. <compound> node means the infered KEGG compound result
-		    a. [kegg] is the kegg compound id for the metaDNA infer result
-			b. [candidates] is a number for indicate that how many candidate 
-			                unknown metabolite feature in your sample that may 
-							be identified as the current kegg compound.
+	How to read MetaDNA infer network debug data:
 
-			2. <unknown> node is a unknown metabolite feature that is a candidate 
-			             that will be identified as current kegg compound
-			   a. [name] is the xcms guid of the unknown metabolite feature
-			   b. [Msn] is a coordination for located the current unknown feature
-			   c. [length] is a number of the infer chain nodes
-			   d. [intensity] is the ms1 intensity data of current unknown feature
-			   e. [scores] is the ms2 alignment score of current unknown feature against
-			               the nearest <node> in its metaDNA infer chain.
-					
-			   3. <node> element is a kegg metabolite node in unknown features infer chain
-			             in metaDNA algorithm.
-					a. [kegg] The id of kegg compound seeds
-					b. [ms1] The ms1 feature that identified as current kegg compound and 
-					         used as metaDNA seeds.
-					c. The node text value is a coordination for located the current metaDNA 
-					   seeds feature in user sample data.
+	1. <compound> node means the infered KEGG compound result
+	a. [kegg] is the kegg compound id for the metaDNA infer result of current.
+	b. [candidates] is a number for indicate that how many candidate 
+					unknown metabolite feature in your sample that may 
+					be identified as the current kegg compound.
+
+	2. <unknown> node is a unknown metabolite feature that is a candidate 
+				that will be identified as current kegg compound
+		a. [name] is the xcms guid of the unknown metabolite feature
+		b. [Msn] is a coordination for located the current unknown feature
+		c. [length] is a number of the infer chain nodes
+		d. [intensity] is the ms1 intensity data of current unknown feature
+		e. [scores] is the ms2 alignment score of current unknown feature 
+					against the nearest <node> in its metaDNA infer chain.
+			
+		3. <node> element is a kegg metabolite node in unknown features infer 
+				chain in metaDNA algorithm.
+			a. [kegg] The id of kegg compound seeds
+			b. [ms1] The ms1 feature that identified as current kegg compound 
+					and used as metaDNA seeds.
+			c. The node text value is a coordination for located the current 
+				metaDNA seeds feature in user sample data.
 
 	-->");
 
