@@ -83,14 +83,14 @@ Imports(Microsoft.VisualBasic.Language);
 #'     }
 #'
 metaDNA <- function(identify, unknown, do.align,
-                    precursor_type = c("[M+H]+", "[M]+"),
-                    tolerance = assert.deltaMass(0.3),
-					rt.adjust = function(rt, KEGG_id) 1,
-                    score.cutoff = 0.8,
-                    kegg_id.skips = NULL,
-					seeds.all = TRUE,
-					seeds.topn = 5,
-                    iterations = 20, 
+                    precursor_type      = c("[M+H]+", "[M]+"),
+                    tolerance           = assert.deltaMass(0.3),
+					rt.adjust           = function(rt, KEGG_id) 1,
+                    score.cutoff        = 0.8,
+                    kegg_id.skips       = NULL,
+					seeds.all           = TRUE,
+					seeds.topn          = 5,
+                    iterations          = 20, 
 					network.class_links = NULL) {
 
 	require(foreach);

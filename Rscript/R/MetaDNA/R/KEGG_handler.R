@@ -50,7 +50,7 @@ kegg.match.handler <- function(
 	# which means it have no mass and formula
 	# removes all of these generic compound.
 	non.generic <- sapply(KEGG_meta, function(c) c$exact_mass > 0) %=>% as.logical;
-	KEGG_meta <- KEGG_meta[non.generic];
+	KEGG_meta   <- KEGG_meta[non.generic];
 	
 	mode <- getPolarity(precursor_type);
 
@@ -65,8 +65,8 @@ kegg.match.handler <- function(
     kegg.list <- KEGG_meta;
 
     function(kegg_id) {
-		out <- list();
-		i <- 1;
+		out  <- list();
+		i    <- 1;
 		list <- lapply(precursor_type, function(type) {
 			# mz <- kegg.mz[[type]];
 			kegg.match(
@@ -112,12 +112,12 @@ kegg.match <- function(partners_id, kegg.mass, kegg.ids, kegg.mz, kegg.list,
 	tolerance) {
 
 	# Get index of kegg m/z for a given kegg_id set	
-	mzi <- (kegg.ids %in% partners_id);
+	mzi      <- (kegg.ids %in% partners_id);
 	# Get corresponding kegg mz and annotation meta data
 	# in given precursor_type kegg m/z calculation data
-	mz <- kegg.mz[[precursor_type]][mzi];
+	mz       <- kegg.mz[[precursor_type]][mzi];
 	# Get corresponding kegg meta info by a given matched index list
-	kegg <- kegg.list[mzi];
+	kegg     <- kegg.list[mzi];
 	mz.index <- 1:length(mz);
 
 	# the ms1 parameter is a m/z number of a unknown metabolite
@@ -148,15 +148,15 @@ kegg.match <- function(partners_id, kegg.mass, kegg.ids, kegg.mz, kegg.list,
 		} else {
 			lapply(query, function(hit) {
 				list(
-					unknown.index = j,
-					unknown.mz = ms1,
+					unknown.index  = j,
+					unknown.mz     = ms1,
 					precursor_type = precursor_type,
 
 					# current unknown metabolite could have
 					# multiple kegg annotation result, based on the ms1
 					# tolerance.
-					kegg = hit$kegg,
-					ppm = hit$ppm,
+					kegg  = hit$kegg,
+					ppm   = hit$ppm,
 					
 					# The libmz is the corresponding m/z value of the 
 					# KEGG partner compound.

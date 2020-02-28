@@ -90,31 +90,31 @@ metaDNA.impl <- function(unknown.query, identify.ms2,
 		feature <- unknown.features[[i]];
 		
 		# peak is files and scans
-        peak <- feature$ms2;
+        peak   <- feature$ms2;
 		result <- align_best.internal(
-		  ref = identify.ms2,
-		  peak = peak,
-		  ms2.align = ms2.align,
-		  score.cutoff = score.cutoff,
-		  parent = parent
+		   ref          = identify.ms2,
+		   peak         = peak,
+		   ms2.align    = ms2.align,
+		   score.cutoff = score.cutoff,
+		   parent       = parent
 		);
 
         if (!is.null(result)) {
             # name is the peaktable rownames
-			feature$ms2 <- NULL;
+			feature$ms2   <- NULL;
 			# add reference spectra matrix data
-			result$ref <- identify.ms2;
+			result$ref    <- identify.ms2;
 			result$trace  <- trace$path;
 			result$parent <- sprintf("%s#%s", trace$ref, trace$parent);
 			
             list(
-              feature = feature,
-              kegg.info = kegg.query,
-			  # due to the reason of database did not
-			  # have this kegg compound its standard spectrum, so that
-			  # align using identify metabolite its spectrum matrix
-			  align = result,
-			  name = feature$ID
+               feature   = feature,
+               kegg.info = kegg.query,
+			   # due to the reason of database did not
+			   # have this kegg compound its standard spectrum, so that
+			   # align using identify metabolite its spectrum matrix
+			   align     = result,
+			   name      = feature$ID
             );
         } else {
 			NULL;
@@ -174,9 +174,9 @@ align_best.internal <- function(ref, peak, ms2.align, score.cutoff = 0.8, parent
 				# This is a self alignment...
 				NULL;
 			} else {
-				unknown <- file[[scan]];
+				unknown      <- file[[scan]];
 				align.scores <- ms2.align(unknown, ref);
-				ms2.name <- list(
+				ms2.name     <- list(
 					file = fileName,
 					scan = scan
 				);
@@ -210,22 +210,22 @@ align_best.internal <- function(ref, peak, ms2.align, score.cutoff = 0.8, parent
 #'
 pickbest.internal <- function(align) {
     best.score <- -10000
-    score <- c();
-    candidate <- NULL;
-    ms2.name <- list();
+    score      <- c();
+    candidate  <- NULL;
+    ms2.name   <- list();
 	
 	for(file in align) {
 		for(scan in file) {
 			if (!is.null(scan)) {
 			
-				x <- scan$score;
+				x    <- scan$score;
 				test <- min(x);
 
 				if (test > best.score) {
-					score <- x;
+					score      <- x;
 					best.score <- test;
-					candidate <- scan$candidate;
-					ms2.name <- scan$ms2.name;
+					candidate  <- scan$candidate;
+					ms2.name   <- scan$ms2.name;
 				}
 			}
 		}

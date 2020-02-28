@@ -105,8 +105,8 @@ seeding <- function(output, rt.adjust, seeds.all) {
 #'       So just pick the top 5 result when requires all alignment hit as seeds.
 #'
 extends.seeds <- function(output, 
-	rt.adjust = function(rt, KEGG_id) 1, 
-	seeds.all = TRUE, 
+	rt.adjust  = function(rt, KEGG_id) 1, 
+	seeds.all  = TRUE, 
 	seeds.topn = 5) {
 		
 	print("Create metaDNA seeds from alignment result");
@@ -146,10 +146,10 @@ metaDNA.score <- function(hit) {
 extends.seeds.top <- function(seeds, n = 5) {
 	lapply(seeds, function(compound) {
 		if (length(compound) > n) {
-			scores <- sapply(compound, metaDNA.score) %=>% as.vector;
-			desc <- order(-scores);
-			index <- names(compound)[desc];
-			top <- index[1:n];
+			scores   <- sapply(compound, metaDNA.score) %=>% as.vector;
+			desc     <- order(-scores);
+			index    <- names(compound)[desc];
+			top      <- index[1:n];
 			compound <- compound[top];
 		}
 		

@@ -71,7 +71,7 @@ network.trace <- function(result) {
 					scores[1], scores[2]
 				);
 
-				paralog <- infer.routine[[kegg_id]] %||% list();
+				paralog        <- infer.routine[[kegg_id]] %||% list();
 				paralog[[hit]] <- trace;
 
 				infer.routine[[kegg_id]] <- paralog;
@@ -133,10 +133,10 @@ do.write.network <- function(write, infer) {
 			);
 
 			for(node in trace) {
-				node <- Strings.Split(node, "\\|");
-				id <- node[1]
+				node    <- Strings.Split(node, "\\|");
+				id      <- node[1]
 				feature <- Strings.Split(node[2], "[#]");
-				node <- sprintf("%s#%s", feature[2], feature[3]);
+				node    <- sprintf("%s#%s", feature[2], feature[3]);
 
 				write('<node kegg="%s" ms1="%s">%s</node>', id, feature[1], node);
 			}
