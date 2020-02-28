@@ -95,6 +95,38 @@ kegg.match.handler <- function(
     }
 }
 
+#' Get precursor m/z data list
+#'
+#' @param KEGG_meta The kegg meta dataset that loaded from the metaDNA package
+#' @param precursor_type A character vector data for get m/z from the precursor data matrix
+#' @param mode libtype value, value could be 1 or -1
+#' 
+get.kegg_precursorMZ <- function(KEGG_meta, precursor_type, mode) {
+	getMz <- function(type) {
+		sapply(KEGG_meta, function(cpd) {
+			if (mode == 1) {
+				matrix <- cpd$positive;
+			} else {
+				matrix <- cpd$negative;
+			}
+			
+			x <- matrix[type, "mz"];
+			
+			if (is.na(x)) {
+				0;
+			} else {
+				x;
+			}
+		});
+	};
+	mz <- lapply(precursor_type, function(type) {
+		as.vector(as.numeric(getMz(type)));
+	});
+	names(mz) <- precursor_type;
+	
+	mz;
+}
+
 # identify kegg partners
 #   => kegg m/z
 #   => unknown mz with tolerance
