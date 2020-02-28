@@ -9,11 +9,11 @@ Imports System.Runtime.InteropServices
 ' Review the values of the assembly attributes
 
 <Assembly: AssemblyTitle("KEGG_MetaDNA")>
-<Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("Microsoft")>
-<Assembly: AssemblyProduct("KEGG_MetaDNA")>
-<Assembly: AssemblyCopyright("Copyright © Microsoft 2018")>
-<Assembly: AssemblyTrademark("")>
+<Assembly: AssemblyDescription("MetaDNA reaction class network library and KEGG compound meta data creator")>
+<Assembly: AssemblyCompany("BioNovoGene")>
+<Assembly: AssemblyProduct("MetaDNA")>
+<Assembly: AssemblyCopyright("Copyright © BioNovoGene 2020")>
+<Assembly: AssemblyTrademark("BioDeep")>
 
 <Assembly: ComVisible(False)>
 
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("1.0.0.0")>
-<Assembly: AssemblyFileVersion("1.0.0.0")>
+<Assembly: AssemblyVersion("1.33.*")>
+<Assembly: AssemblyFileVersion("2.45.*")>

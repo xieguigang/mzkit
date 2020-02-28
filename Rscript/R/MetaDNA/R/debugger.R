@@ -86,10 +86,10 @@ network.trace <- function(result) {
 
 #' Save metaDNA network
 #'
-#' @details save network data into Xml file.
+#' @details save network data into Xml file for export data for network visualization.
 #'
-save.network <- function(infer, outputdir) {
-	file <- sprintf("%s/MetaDNA.Xml", outputdir);
+save.network <- function(infer, outputdir, fileName = "MetaDNA.Xml") {
+	file <- sprintf("%s/%s", outputdir, fileName);
 	text <- textWriter(file);
 
 	out <- XML.Framework(
@@ -102,6 +102,9 @@ save.network <- function(infer, outputdir) {
 }
 
 #' Write metaDNA infer network
+#'
+#' @param write The text file stream handler
+#' @param infer The metaDNA infer network for the resulted unknown metabolite feature identification.
 #'
 do.write.network <- function(write, infer) {
 	totals <- names(infer) %=>% length;

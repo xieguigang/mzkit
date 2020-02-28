@@ -6,6 +6,11 @@
 \usage{
 do.write.network(write, infer)
 }
+\arguments{
+\item{write}{The text file stream handler}
+
+\item{infer}{The metaDNA infer network for the resulted unknown metabolite feature identification.}
+}
 \description{
 Write metaDNA infer network
 }

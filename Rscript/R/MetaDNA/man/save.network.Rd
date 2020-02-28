@@ -4,11 +4,11 @@
 \alias{save.network}
 \title{Save metaDNA network}
 \usage{
-save.network(infer, outputdir)
+save.network(infer, outputdir, fileName = "MetaDNA.Xml")
 }
 \description{
 Save metaDNA network
 }
 \details{
-save network data into Xml file.
+save network data into Xml file for export data for network visualization.
 }
