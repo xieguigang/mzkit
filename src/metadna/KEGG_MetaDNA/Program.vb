@@ -72,12 +72,17 @@ Module Program
     <ExportAPI("/KEGG.meta")>
     <Usage("/KEGG.meta /kegg <compounds.repo.directory> [/out <default=KEGG_meta.rda>]")>
     <Description("Compile a KEGG compound basic information database.")>
+    <Argument("/kegg", False, CLITypes.File,
+              AcceptTypes:={GetType(Compound)},
+              Description:="The kegg compound xml data model database repository directory.")>
     Public Function KEGGMeta(args As CommandLine) As Integer
         Dim kegg$ = args <= "/kegg"
         Dim out$ = args("/out") Or $"{kegg.TrimDIR}/KEGG_meta.rda"
         Dim compounds = ScanLoad(repository:=kegg) _
+            .Where(Function(cpd) Not cpd Is Nothing) _
             .GroupBy(Function(c) c.entry) _
             .Select(Function(g) g.First) _
+            .OrderBy(Function(cpd) cpd.entry) _
             .ToArray
 
         SyncLock R_server.R
@@ -86,13 +91,20 @@ Module Program
                 !KEGG_meta = Rbase.lapply(
                     x:=compounds,
                     FUN:=Function(compound)
+                             Dim exactMass As Double = compound.exactMass
+                             ' predefined precursor type data table
+                             Dim pos$
+                             Dim neg$
+
                              Call compound.commonNames?.FirstOrDefault().__DEBUG_ECHO
 
                              Return Rbase.list(
                                 !ID = compound.entry,
-                                !exact_mass = compound.exactMass,
+                                !exact_mass = exactMass,
                                 !name = compound.commonNames,
-                                !formula = compound.formula
+                                !formula = compound.formula,
+                                !positive = pos,
+                                !negative = neg
                              )
                          End Function)
 
@@ -110,17 +122,14 @@ Module Program
     ''' <param name="args"></param>
     ''' <returns></returns>
     <ExportAPI("/compile")>
-    <Usage("/compile /br08201 <reactions.repo.directory> /KEGG_cpd <compounds.repo.directory> [/out <default=metaDNA_kegg.rda>]")>
+    <Usage("/compile /br08201 <reactions.repo.directory> [/out <default=metaDNA_kegg.rda>]")>
     <Description("Compile the kegg reaction/compound database as MetaDNA network database into RDA format.")>
     <Argument("/br08201", False, CLITypes.File,
               AcceptTypes:={GetType(Reaction)},
               Description:="The kegg reaction xml data model database repository directory.")>
-    <Argument("/KEGG_cpd", False, CLITypes.File,
-              AcceptTypes:={GetType(Compound)},
-              Description:="The kegg compound xml data model database repository directory.")>
     <Argument("/out", True, CLITypes.File, Description:="The file save location of the rda database file.")>
     Public Function Compiler(args As CommandLine) As Integer
-        Return (args <= "/br08201", args <= "/KEGG_cpd") _
+        Return (args <= "/br08201") _
             .BuildNetwork(args("/out") Or $"metaDNA_kegg.rda") _
             .CLICode
     End Function
@@ -128,8 +137,8 @@ Module Program
     ReadOnly NA As New [Default](Of String)("NA", Function(exp) CStr(exp).StringEmpty OrElse CStr(exp) = "NULL")
 
     <Extension>
-    Private Function BuildNetwork(repository As (reaction$, compound$), rda$) As Boolean
-        Dim reactions = (ls - l - r - "*.Xml" <= repository.reaction) _
+    Private Function BuildNetwork(repository As String, rda$) As Boolean
+        Dim reactions = (ls - l - r - "*.Xml" <= repository) _
             .Select(Function(path)
                         Return path.LoadXml(Of ReactionClass)(stripInvalidsCharacter:=True)
                     End Function) _
