@@ -44,8 +44,10 @@
 
 Imports System.ComponentModel
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash
@@ -93,8 +95,8 @@ Module Program
                     FUN:=Function(compound)
                              Dim exactMass As Double = compound.exactMass
                              ' predefined precursor type data table
-                             Dim pos$
-                             Dim neg$
+                             Dim pos$ = precursorMzMatrix(exactMass, 1)
+                             Dim neg$ = precursorMzMatrix(exactMass, -1)
 
                              Call compound.commonNames?.FirstOrDefault().__DEBUG_ECHO
 
@@ -114,6 +116,45 @@ Module Program
         End SyncLock
 
         Return 0
+    End Function
+
+    <Extension>
+    Friend Function precursorMzMatrix(exact_mass#, libtype As Integer) As String
+        Dim precursorMz As New Dictionary(Of String, NamedValue(Of Double))
+        'libname precursor_type, mz
+        Dim libnames = precursorMz.Keys.AsList
+        Dim precursor_type = libnames.Select(Function(r) precursorMz(r).Name).AsList
+        Dim mz = libnames.Select(Function(r) precursorMz(r).Value).AsList
+        Dim prefix$ = If(precursorMz.Count > 0, "MzCalculator: ", "")
+
+        If libtype = 1 Then
+            For Each type In Provider.Positives
+                libnames += prefix & type.ToString
+                precursor_type += type.ToString
+                mz += type.CalcMZ(exact_mass)
+            Next
+        Else
+            For Each type In Provider.Negatives
+                libnames += prefix & type.ToString
+                precursor_type += type.ToString
+                mz += type.CalcMZ(exact_mass)
+            Next
+        End If
+
+        Dim matrix$
+
+        SyncLock R_server.R
+            With R_server.R
+
+                matrix = Rbase.dataframe(
+                    !precursor_type = Rbase.c(precursor_type.ToArray, stringVector:=True),
+                    !mz = Rbase.c(mz)
+                )
+                Rbase.rownames(matrix) = libnames.AsVector
+
+                Return matrix
+            End With
+        End SyncLock
     End Function
 
     ''' <summary>
