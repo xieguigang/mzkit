@@ -91,7 +91,8 @@ metaDNA <- function(identify, unknown, do.align,
 					seeds.all           = TRUE,
 					seeds.topn          = 5,
                     iterations          = 20, 
-					network.class_links = NULL) {
+					network.class_links = NULL,
+					libtype             = 1) {
 
 	require(foreach);
 	require(doParallel);
@@ -134,7 +135,8 @@ metaDNA <- function(identify, unknown, do.align,
     match.kegg <- kegg.match.handler(
       unknown.mz     = unknown.mz,
       precursor_type = precursor_type,
-      tolerance      = tolerance
+      tolerance      = tolerance,
+	  libtype        = libtype
     );
 
 	if (seeds.all && seeds.topn > 0) {

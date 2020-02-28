@@ -41,7 +41,8 @@ Delete.EmptyKEGG <- function(dataframe, col.name = "KEGG") {
 kegg.match.handler <- function(
 	unknown.mz, 
 	precursor_type = c("[M+H]+", "[M]+"), 
-	tolerance      = assert.deltaMass(0.3)) {
+	tolerance      = assert.deltaMass(0.3), 
+	libtype        = 1) {
 	
     # load kegg reaction database and kegg meta information
 	xLoad("KEGG_meta.rda");
@@ -52,6 +53,7 @@ kegg.match.handler <- function(
 	non.generic <- sapply(KEGG_meta, function(c) c$exact_mass > 0) %=>% as.logical;
 	KEGG_meta   <- KEGG_meta[non.generic];
 	
+	# debug used
 	mode <- getPolarity(precursor_type);
 
 	print("m/z will be calculate from these precursor types:");
@@ -61,7 +63,7 @@ kegg.match.handler <- function(
 	# keeps the same element orders
     kegg.mass <- sapply(KEGG_meta, function(c) c$exact_mass) %=>% as.numeric;
     kegg.ids  <- sapply(KEGG_meta, function(c) c$ID) %=>% as.character;
-    kegg.mz   <- get.PrecursorMZ(kegg.mass, precursor_type, mode);
+    kegg.mz   <- get.kegg_precursorMZ(KEGG_meta, precursor_type, mode = libtype);
     kegg.list <- KEGG_meta;
 
     function(kegg_id) {
