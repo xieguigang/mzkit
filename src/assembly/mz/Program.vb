@@ -48,6 +48,7 @@ Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
@@ -165,42 +166,37 @@ Imports Microsoft.VisualBasic.Text
     ''' <param name="args"></param>
     ''' <returns></returns>
     <ExportAPI("/peaktable")>
-    <Usage("/peaktable /in <raw.mzXML> [/ms2 /tolerance <default=da:0.3> /out <peaktable.xls>]")>
+    <Usage("/peaktable /in <raw.mzXML> [/tolerance <default=da:0.3> /out <peaktable.xls>]")>
     <Argument("/ms2", True, CLITypes.Boolean,
               AcceptTypes:={GetType(Boolean)},
               Description:="Use ms2 data for the calculation of the peaktable.")>
     Public Function GetPeaktable(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
-        Dim useMs2 As Boolean = args("/ms2")
-        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.peaktable.csv"
-        Dim allScans = mzXML.XML.ReadSingleFile([in], 1 Or 2.When(useMs2))
+        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.peaktable.xls"
+        Dim allScans = mzXML.XML.ReadSingleFile([in], 1)
         Dim tolerance As Tolerance = Tolerance.ParseScript(args("/tolerance") Or "da:0.3")
-
-        ' create ticks
-        ' and group by mz
-        Dim basename$ = [in].FileName
-        Dim ticks = allScans _
+        Dim basename$ = [in].BaseName
+        Dim peaktable As PeakFeature() = allScans _
             .Select(Function(scan)
-                        Dim peaks = scan.ScanData(basename,, raw:=True)
-                        Dim rt As Double = peaks.rt
-                        Dim mz = peaks.mzInto _
+                        ' ms1的数据总是使用raw intensity值
+                        Dim peakScans = scan.ScanData(basename, raw:=True)
+                        Dim ms1 = peakScans.mzInto _
+                            .ms2 _
                             .Select(Function(frag)
-                                        Return New TICPoint With {
+                                        Return New ms1_scan With {
+                                            .intensity = frag.intensity,
                                             .mz = frag.mz,
-                                            .intensity = frag.quantity,
-                                            .time = rt
+                                            .scan_time = peakScans.rt
                                         }
                                     End Function)
-
-                        Return mz
+                        Return ms1
                     End Function) _
             .IteratesALL _
-            .GroupBy(Function(t) t.mz, AddressOf tolerance.Assert) _
-            .Select(Function(mz) mz.GetPeakGroups) _
-            .IteratesALL _
+            .GetMzGroups(tolerance) _
+            .DecoMzGroups _
             .ToArray
 
-        Return ticks.SaveTo(out).CLICode
+        Return peaktable.SaveTo(out).CLICode
     End Function
 
     <ExportAPI("/export")>
