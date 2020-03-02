@@ -106,7 +106,7 @@ Public Module Algorithm
                 ' add common seed node
                 ' is a metaDNA seed from reference library
                 ' spectrum alignment result
-                seedNode = g.GetNode(candidate.edges(Scan0).ms1)
+                seedNode = g.GetElementByID(candidate.edges(Scan0).ms1)
 
                 If seedNode Is Nothing Then
                     ' 还没有添加进入网络之中
@@ -125,7 +125,7 @@ Public Module Algorithm
                 End If
 
                 For i As Integer = 0 To candidate.length - 2
-                    seedNode = g.GetNode(candidate.edges(i).ms1)
+                    seedNode = g.GetElementByID(candidate.edges(i).ms1)
                     edge = New Edge With {
                         .data = New EdgeData With {
                             .label = $"{candidate.edges(i).kegg} -> {candidate.edges(i + 1).kegg}",
@@ -134,7 +134,7 @@ Public Module Algorithm
                             }
                         },
                         .U = seedNode,
-                        .V = g.GetNode(candidate.edges(i + 1).ms1)
+                        .V = g.GetElementByID(candidate.edges(i + 1).ms1)
                     }
 
                     Call g.AddEdge(edge)
@@ -149,8 +149,8 @@ Public Module Algorithm
                             {NamesOf.REFLECTION_ID_MAPPING_INTERACTION_TYPE, "infer"}
                         }
                     },
-                    .U = g.GetNode(candidateParent.ms1),
-                    .V = g.GetNode(candidate.name)
+                    .U = g.GetElementByID(candidateParent.ms1),
+                    .V = g.GetElementByID(candidate.name)
                 }
                 Call g.AddEdge(edge)
             Next

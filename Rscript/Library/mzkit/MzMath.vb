@@ -20,7 +20,7 @@ Module MzMath
         Call REnv.Object.Converts.addHandler(GetType(MzGroup), AddressOf XICTable)
     End Sub
 
-    Private Function peaktable(x As PeakFeature(), env As Environment) As dataframe
+    Private Function peaktable(x As PeakFeature(), args As list, env As Environment) As dataframe
         Dim dataset = x.ToCsvDoc
         Dim table As New dataframe With {
             .columns = New Dictionary(Of String, Array)
@@ -35,7 +35,7 @@ Module MzMath
         Return table
     End Function
 
-    Private Function XICTable(x As MzGroup, env As Environment) As dataframe
+    Private Function XICTable(x As MzGroup, args As list, env As Environment) As dataframe
         Dim mz As Array = {x.mz}
         Dim into As Array = x.XIC.Select(Function(t) t.Intensity).ToArray
         Dim rt As Array = x.XIC.Select(Function(t) t.Time).ToArray
