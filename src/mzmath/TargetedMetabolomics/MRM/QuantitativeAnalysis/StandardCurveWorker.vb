@@ -128,12 +128,12 @@ Namespace MRM
                 '                   Not ionTPA(i.IS).Properties.Count < i.C.Count ' 标曲文件之中只有7个点，但是实际上打了10个点，剩下的三个点可以不要了
                 '        End Function)
 
-                Dim TPA = ionTPA(ion.HMDB).Properties.ToLower                     ' 得到标准曲线实验数据
+                Dim TPA = ionTPA(ion.ID).Properties.ToLower                     ' 得到标准曲线实验数据
                 Dim ISA = ionTPA.getIS(ion)                                       ' 得到内标的实验数据，如果是空值的话，说明不需要内标进行校正
                 Dim IsIon As [IS] = [IS].TryGetValue(ion.IS, [default]:=New [IS]) ' 尝试得到内标的数据
                 Dim CIS# = IsIon?.CIS                                             ' 内标的浓度，是不变的，所以就只有一个值
                 Dim points As New List(Of MRMStandards)
-                Dim blankPoints = blanks.TryGetValue(ion.HMDB).getBlankControls
+                Dim blankPoints = blanks.TryGetValue(ion.ID).getBlankControls
                 Dim blankISPoints = blanks.TryGetValue(ion.IS).getBlankControls
 
                 ' 标准曲线数据
@@ -177,12 +177,12 @@ Namespace MRM
                     End If
 
                     line = StandardCurveWorker _
-                       .CreateModelPoints(C, nA, ISTPA, CIS, ion.HMDB, ion.Name, points) _
+                       .CreateModelPoints(C, nA, ISTPA, CIS, ion.ID, ion.Name, points) _
                        .ToArray
                     fit = StandardCurve.CreateLinearRegression(line, weighted, maxDeletions)
                 Else
                     line = StandardCurveWorker _
-                       .CreateModelPoints(C, A, ISTPA, CIS, ion.HMDB, ion.Name, points) _
+                       .CreateModelPoints(C, A, ISTPA, CIS, ion.ID, ion.Name, points) _
                        .ToArray
                     fit = StandardCurve.CreateLinearRegression(line, weighted, maxDeletions)
                 End If
@@ -193,7 +193,7 @@ Namespace MRM
                 End If
 
                 Dim out As New StandardCurve With {
-                    .name = ion.HMDB,
+                    .name = ion.ID,
                     .linear = fit,
                     .points = points.PopAll,
                     .[IS] = IsIon
@@ -332,7 +332,7 @@ Namespace MRM
         ''' <param name="raw">``*.wiff``，转换之后的结果文件夹，其中标准曲线的数据都是默认使用``L数字``标记的。</param>
         ''' <param name="ions">包括离子对的定义数据以及浓度区间</param>
         ''' <param name="TPAFactors">
-        ''' ``{<see cref="Standards.HMDB"/>, <see cref="Standards.Factor"/>}``，这个是为了计算亮氨酸和异亮氨酸这类无法被区分的物质的峰面积所需要的
+        ''' ``{<see cref="Standards.ID"/>, <see cref="Standards.Factor"/>}``，这个是为了计算亮氨酸和异亮氨酸这类无法被区分的物质的峰面积所需要的
         ''' </param>
         ''' <returns></returns>
         Public Function Scan(raw$, ions As IonPair(),
@@ -365,7 +365,7 @@ Namespace MRM
         ''' <param name="mzMLRawFiles">``*.wiff``，转换之后的结果文件夹，其中标准曲线的数据都是默认使用``L数字``标记的。</param>
         ''' <param name="ions">包括离子对的定义数据以及浓度区间</param>
         ''' <param name="TPAFactors">
-        ''' ``{<see cref="Standards.HMDB"/>, <see cref="Standards.Factor"/>}``，这个是为了计算亮氨酸和异亮氨酸这类无法被区分的物质的峰面积所需要的
+        ''' ``{<see cref="Standards.ID"/>, <see cref="Standards.Factor"/>}``，这个是为了计算亮氨酸和异亮氨酸这类无法被区分的物质的峰面积所需要的
         ''' </param>
         ''' <returns></returns>
         ''' 

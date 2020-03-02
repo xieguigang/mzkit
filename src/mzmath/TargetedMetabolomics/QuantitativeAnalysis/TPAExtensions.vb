@@ -84,7 +84,7 @@ Public Module TPAExtensions
     ''' <param name="peakAreaMethod"></param>
     ''' <param name="integratorTicks%"></param>
     ''' <param name="TPAFactor">
-    ''' ``{<see cref="Standards.HMDB"/>, <see cref="Standards.Factor"/>}``，这个是为了计算亮氨酸和异亮氨酸这类无法被区分的物质的峰面积所需要的
+    ''' ``{<see cref="Standards.ID"/>, <see cref="Standards.Factor"/>}``，这个是为了计算亮氨酸和异亮氨酸这类无法被区分的物质的峰面积所需要的
     ''' </param>
     ''' <returns></returns>
     <Extension>

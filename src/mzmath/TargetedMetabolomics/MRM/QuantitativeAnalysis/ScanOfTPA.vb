@@ -57,7 +57,7 @@ Namespace MRM
         ''' <param name="raw$">``*.mzML``原始样本数据文件</param>
         ''' <param name="ionpairs"></param>
         ''' <param name="TPAFactors">
-        ''' ``{<see cref="Standards.HMDB"/>, <see cref="Standards.Factor"/>}``，这个是为了计算亮氨酸和异亮氨酸这类无法被区分的物质的峰面积所需要的
+        ''' ``{<see cref="Standards.ID"/>, <see cref="Standards.Factor"/>}``，这个是为了计算亮氨酸和异亮氨酸这类无法被区分的物质的峰面积所需要的
         ''' </param>
         ''' <returns></returns>
         <Extension>

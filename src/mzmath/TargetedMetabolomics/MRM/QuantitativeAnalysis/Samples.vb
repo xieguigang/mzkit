@@ -126,7 +126,7 @@ Namespace MRM
                                              Optional isBlank As Func(Of String, Boolean) = Nothing,
                                              Optional weighted As Boolean = False) As IEnumerable(Of DataSet)
             Dim standardNames$() = Nothing
-            Dim TPAFactors = calibrates.ToDictionary(Function(ion) ion.HMDB, Function(ion) ion.Factor)
+            Dim TPAFactors = calibrates.ToDictionary(Function(ion) ion.ID, Function(ion) ion.Factor)
             ' 扫描标准曲线的样本，然后进行回归建模 
             Dim calWiffRaw$ = externalStandardsWiff Or wiff.AsDefault
 
