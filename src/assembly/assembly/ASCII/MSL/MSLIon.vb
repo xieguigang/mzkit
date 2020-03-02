@@ -13,6 +13,8 @@ Namespace ASCII.MSL
         <Column(Name:="RI")> Public Property RI As String
         <Column(Name:="COMMENT")> Public Property Comment As String
         <Column(Name:="SOURCE")> Public Property Source As String
+        <Column(Name:="MW")> Public Property MW As Double
+        <Column(Name:="RT")> Public Property RT As Double
 
         Public Property Peaks As ms2()
 
