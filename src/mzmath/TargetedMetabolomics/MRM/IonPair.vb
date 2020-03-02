@@ -109,9 +109,9 @@ Namespace MRM.Models
             Dim iso As New List(Of IonPair)
 
             For Each ion As IonPair In ionpairs
-                For Each can As IonPair In ionpairs.Where(Function(a) Not a Is ion)
+                For Each can As IonPair In ionpairs.Where(Function(a) a.accession <> ion.accession)
                     If tolerance.Assert(can.precursor, ion.precursor) AndAlso tolerance.Assert(can.product, ion.product) Then
-                        iso += ion
+                        iso += can
                     End If
                 Next
 
