@@ -137,32 +137,6 @@ Namespace MarkupData.mzML
             Return path.LoadXmlDataSet(Of chromatogram)(, xmlns:=mzML.Xmlns)
         End Function
 
-        ''' <summary>
-        ''' BPC, TIC, etc
-        ''' </summary>
-        ReadOnly NotMRMSelectors As Index(Of String) = {"BPC", "TIC"}
-
-        ''' <summary>
-        ''' MRM ion selector based on the precursor ion m/z and the product ion m/z value.
-        ''' </summary>
-        ''' <param name="chromatograms"></param>
-        ''' <param name="ionPairs"></param>
-        ''' <returns>Nothing for ion not found</returns>
-        <Extension>
-        Public Function MRMSelector(chromatograms As IEnumerable(Of chromatogram), ionPairs As IEnumerable(Of IonPair), tolerance As Tolerance) As IEnumerable(Of (ion As IonPair, chromatogram As chromatogram))
-            With chromatograms.ToArray
-                Return ionPairs _
-                    .Select(Function(ion)
-                                Dim chromatogram =
-                                    .Where(Function(c)
-                                               Return (Not c.id Like NotMRMSelectors) AndAlso ion.Assert(c, tolerance)
-                                           End Function) _
-                                    .FirstOrDefault
-                                Return (ion, chromatogram)
-                            End Function)
-            End With
-        End Function
-
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function MRMTargetMz(selector As IMRMSelector) As Double

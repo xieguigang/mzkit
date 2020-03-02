@@ -46,12 +46,13 @@
 #End Region
 
 Imports System.Data.Linq.Mapping
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
-Imports stdNum = System.Math
+Imports mzchromatogram = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.chromatogram
 
-Namespace MarkupData.mzML
+Namespace MRM.Models
 
     Public Class IonPair : Implements INamedValue
 
@@ -84,7 +85,7 @@ Namespace MarkupData.mzML
         ''' <param name="chromatogram"></param>
         ''' <param name="tolerance">less than 0.3da or 20ppm??</param>
         ''' <returns></returns>
-        Public Function Assert(chromatogram As chromatogram, tolerance As Tolerance) As Boolean
+        Public Function Assert(chromatogram As mzchromatogram, tolerance As Tolerance) As Boolean
             Dim pre = chromatogram.precursor.MRMTargetMz
             Dim pro = chromatogram.product.MRMTargetMz
 

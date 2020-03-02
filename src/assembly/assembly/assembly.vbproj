@@ -298,7 +298,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="MarkupData\mzML\IonPair.vb" />
     <Compile Include="MarkupData\mzML\Extensions.vb" />
     <Compile Include="MarkupData\mzML\XML\XML.vb" />
     <Compile Include="MarkupData\mzXML\Extensions.vb" />

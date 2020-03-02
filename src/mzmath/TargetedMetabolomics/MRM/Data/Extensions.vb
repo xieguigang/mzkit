@@ -46,9 +46,12 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Scripting
+Imports mzchromatogram = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.chromatogram
 
 Namespace MRM.Data
 
@@ -76,6 +79,32 @@ Namespace MRM.Data
                 .ToArray
 
             Return ionData
+        End Function
+
+        ''' <summary>
+        ''' BPC, TIC, etc
+        ''' </summary>
+        ReadOnly NotMRMSelectors As Index(Of String) = {"BPC", "TIC"}
+
+        ''' <summary>
+        ''' MRM ion selector based on the precursor ion m/z and the product ion m/z value.
+        ''' </summary>
+        ''' <param name="chromatograms"></param>
+        ''' <param name="ionPairs"></param>
+        ''' <returns>Nothing for ion not found</returns>
+        <Extension>
+        Public Function MRMSelector(chromatograms As IEnumerable(Of mzchromatogram), ionPairs As IEnumerable(Of IonPair), tolerance As Tolerance) As IEnumerable(Of (ion As IonPair, chromatogram As mzchromatogram))
+            With chromatograms.ToArray
+                Return ionPairs _
+                    .Select(Function(ion)
+                                Dim chromatogram =
+                                    .Where(Function(c)
+                                               Return (Not c.id Like NotMRMSelectors) AndAlso ion.Assert(c, tolerance)
+                                           End Function) _
+                                    .FirstOrDefault
+                                Return (ion, chromatogram)
+                            End Function)
+            End With
         End Function
     End Module
 End Namespace
