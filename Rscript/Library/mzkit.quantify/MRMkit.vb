@@ -53,6 +53,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine
@@ -246,12 +247,19 @@ Module MRMkit
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("read.IS")>
-    Public Function readIS(file$, Optional sheetName$ = "Sheet1") As [IS]()
+    Public Function readIS(file$, Optional sheetName$ = "Sheet1", Optional env As Environment = Nothing) As [IS]()
         If file.ExtensionSuffix("xlsx") Then
-            Return Xlsx.Open(path:=file) _
-                .GetTable(sheetName) _
-                .AsDataSource(Of [IS])(silent:=True) _
-                .ToArray
+            Dim table = Xlsx.Open(path:=file).GetTable(sheetName)
+
+            If table Is Nothing Then
+                ' probably no used of any IS for data calibration
+                env.AddMessage($"No IS data was found in MRM information table file '{file.FileName}', where the sheet name is '{sheetName}'...", MSG_TYPES.WRN)
+                Return {}
+            Else
+                Return table _
+                    .AsDataSource(Of [IS])(silent:=True) _
+                    .ToArray
+            End If
         Else
             Return file.LoadCsv(Of [IS])(mute:=True).ToArray
         End If
