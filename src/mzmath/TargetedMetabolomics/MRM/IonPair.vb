@@ -97,6 +97,14 @@ Namespace MRM.Models
             End If
         End Function
 
+        ''' <summary>
+        ''' Produce an <see cref="IsomerismIonPairs"/> object sequence with 
+        ''' element length equals to the input ions data 
+        ''' <paramref name="ionpairs"/> 
+        ''' </summary>
+        ''' <param name="ionpairs"></param>
+        ''' <param name="tolerance"></param>
+        ''' <returns></returns>
         Public Shared Iterator Function GetIsomerism(ionpairs As IonPair(), tolerance As Tolerance) As IEnumerable(Of IsomerismIonPairs)
             Dim iso As New List(Of IonPair)
 

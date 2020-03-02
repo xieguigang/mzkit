@@ -198,6 +198,11 @@ Module MRMkit
         End If
     End Function
 
+    <ExportAPI("isomerism.ion_pairs")>
+    Public Function IsomerismIonPairs(ions As IonPair(), Optional tolerance$ = "ppm:20") As IsomerismIonPairs()
+        Return IonPair.GetIsomerism(ions, interop_arguments.GetTolerance(tolerance)).ToArray
+    End Function
+
     <ExportAPI("as.ion_pairs")>
     <RApiReturn(GetType(IonPair()))>
     Public Function asIonPair(<RRawVectorArgument> mz As Object, Optional env As Environment = Nothing) As Object
