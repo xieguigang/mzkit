@@ -2,11 +2,13 @@
 
 # imports mzkit library modules
 imports ["mzkit.mrm", "mzkit.quantify.visual"] from "mzkit.quantify.dll";
+imports "mzkit.assembly" from "mzkit.dll";
 
 # config of the standard curve data files
 let wiff as string     = ?"--Cal"          || stop("No standard curve data provides!");
 let sample as string   = ?"--data"         || stop("No sample data files provided!");
 let MRM.info as string = ?"--MRM"          || stop("Missing MRM information table file!");
+let ions as string     = ?"--ions";         
 let dir as string      = ?"--export"       || `${wiff :> trim(" ")}-result/`;
 let patternOf.ref      = ?"--patternOfRef" || '[-]?LM[-]?\d+';
 
@@ -32,12 +34,26 @@ if (isWorkCurve) {
 	print("Linear Modelling will running in work curve mode!");
 }
 
+let reference;
+let is;
+
 # read MRM, standard curve and IS information from the given file
-let [ions, reference, is] = MRM.info :> [
-	read.ion_pairs("ion pairs"), 
-	read.reference("coordinates"), 
-	read.IS("IS")
-];
+if (file.exists(ions)) {
+	[reference, is] = MRM.info :> [		
+		read.reference("coordinates"), 
+		read.IS("IS")
+	];	
+	
+	ions = ions 
+	:> read.msl 
+	:> as.ion_pairs;
+} else {
+	[ions, reference, is] = MRM.info :> [
+		read.ion_pairs("ion pairs"), 
+		read.reference("coordinates"), 
+		read.IS("IS")
+	];
+}
 
 # print debug message
 print("View reference standard levels data:");
