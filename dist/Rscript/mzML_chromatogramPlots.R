@@ -1,4 +1,5 @@
 imports ["mzkit.mrm", "mzkit.quantify.visual"] from "mzkit.quantify.dll";
+imports "mzkit.assembly" from "mzkit.dll";
 
 # The ``--mzML`` raw data file parameter its value can be 
 # the file path of a single mzML raw data file, or could
@@ -9,11 +10,20 @@ let file.mzML as string  = ?"--mzML"   || stop("Missing the MRM mzML raw data fi
 # The table file could be a csv plain text file or xlsx 
 # datasheet
 let MRM.xlsx as string   = ?"--MRM"    || stop("No mrm information provided!");
+let ions as string       = ?"--ions";
 let output.dir as string = ?"--output" || `${dirname(file.mzML)}/${basename(file.mzML)}.chromatogramPlots`;
 	
-# Get ion pair information from 
-# a given excel table
-let ions <- read.ion_pairs(MRM.xlsx, "ion pairs");
+if (file.exists(ions)) {
+	print("Use external msl file as ion pairs source.");
+	
+	ions = ions 
+		:> read.msl 
+		:> as.ion_pairs;
+} else {
+	# Get ion pair information from 
+	# a given excel table
+	ions <- read.ion_pairs(MRM.xlsx, "ion pairs");
+}
 
 let plot.mzML as function(file, output) {
 

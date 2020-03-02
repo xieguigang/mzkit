@@ -89,7 +89,9 @@ Public Module ChromatogramPlot
                                         Optional colorsSchema$ = "scibasic.category31()",
                                         Optional penStyle$ = Stroke.ScatterLineStroke,
                                         Optional labelFontStyle$ = CSSFont.Win7Normal,
-                                        Optional labelConnectorStroke$ = Stroke.StrongHighlightStroke) As GraphicsData
+                                        Optional labelConnectorStroke$ = Stroke.StrongHighlightStroke,
+                                        Optional labelLayoutTicks% = 1000) As GraphicsData
+
         Return ions.ExtractIonData(mzML, Function(ion) ion.name) _
                    .TICplot(
             size:=size,
@@ -99,7 +101,8 @@ Public Module ChromatogramPlot
             labelFontStyle:=labelFontStyle,
             margin:=margin,
             penStyle:=penStyle,
-            fillCurve:=False
+            fillCurve:=False,
+            labelLayoutTicks:=labelLayoutTicks
         )
     End Function
 
