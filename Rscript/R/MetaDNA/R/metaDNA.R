@@ -166,6 +166,8 @@ metaDNA <- function(identify, unknown, do.align,
 	kegg_id.skips <- append(kegg_id.skips, names(seeds));
 	filter.skips  <- kegg_id.skips %=>% create_filter.skips;
 
+	rm(list = "output");
+
 	n      <- length(seeds);
 	totals <- totals + n;
 	stats  <- rbind(stats, c(0, n, totals, timer()$since_last));
@@ -215,6 +217,9 @@ metaDNA <- function(identify, unknown, do.align,
 			print(stats);
 		}
 	}
+
+	# do memory release
+	gc();
 
     # at last returns the prediction result
     metaDNA.out;
