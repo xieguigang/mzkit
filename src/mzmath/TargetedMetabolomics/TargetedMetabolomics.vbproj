@@ -172,6 +172,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MRM\Data\NamespaceDoc.vb" />
     <Compile Include="MRM\Data\MRMStandards.vb" />
     <Compile Include="MRM\IonPair.vb" />
     <Compile Include="MRM\QuantitativeAnalysis\QuantificationWorker.vb" />
