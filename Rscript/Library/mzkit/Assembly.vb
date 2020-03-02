@@ -69,7 +69,7 @@ Module Assembly
 
     <ExportAPI("read.msl")>
     Public Function ReadMslIons(file As String) As MSLIon()
-        Return MSL.FileReader.Load(file)
+        Return MSL.FileReader.Load(file).ToArray
     End Function
 
     <ExportAPI("read.mgf")>
