@@ -53,6 +53,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
@@ -138,8 +139,13 @@ Module MRMkit
     ''' <param name="ionpairs">metabolite targets</param>
     ''' <returns></returns>
     <ExportAPI("extract.ions")>
-    Public Function ExtractIonData(mzML$, ionpairs As IonPair()) As NamedCollection(Of ChromatogramTick)()
-        Return MRMSamples.ExtractIonData(ionpairs, mzML, Function(i) i.accession)
+    Public Function ExtractIonData(mzML$, ionpairs As IonPair(), Optional mz_tolerance$ = "ppm:20") As NamedCollection(Of ChromatogramTick)()
+        Return MRMSamples.ExtractIonData(
+            ion_pairs:=ionpairs,
+            mzML:=mzML,
+            assignName:=Function(i) i.accession,
+            tolerance:=Tolerance.ParseScript(mz_tolerance)
+        )
     End Function
 
     ''' <summary>
@@ -154,6 +160,7 @@ Module MRMkit
     ''' <returns></returns>
     <ExportAPI("extract.peakROI")>
     Public Function ExtractPeakROI(mzML$, ionpairs As IonPair(),
+                                   Optional mz_tolerance$ = "ppm:20",
                                    Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
                                    Optional baselineQuantile# = 0.65,
                                    Optional integratorTicks% = 5000,
@@ -163,7 +170,13 @@ Module MRMkit
         End If
 
         Return ScanOfTPA.ScanTPA(
-            mzML, ionpairs, TPAFactors, baselineQuantile, integratorTicks, peakAreaMethod
+            raw:=mzML,
+            ionpairs:=ionpairs,
+            TPAFactors:=TPAFactors,
+            tolerance:=Tolerance.ParseScript(mz_tolerance),
+            baselineQuantile:=baselineQuantile,
+            integratorTicks:=integratorTicks,
+            peakAreaMethod:=peakAreaMethod
         )
     End Function
 
@@ -316,12 +329,13 @@ Module MRMkit
     <ExportAPI("MRM.peaks")>
     Public Function ScanPeakTable(mzML$, ions As IonPair(),
                                   Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum,
+                                  Optional mz_tolerance$ = "ppm:20",
                                   Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As DataSet()
         If TPAFactors Is Nothing Then
             TPAFactors = New Dictionary(Of String, Double)
         End If
 
-        Return WiffRaw.ScanPeakTable(mzML, ions, peakAreaMethod, TPAFactors)
+        Return WiffRaw.ScanPeakTable(mzML, ions, Tolerance.ParseScript(mz_tolerance), peakAreaMethod, TPAFactors)
     End Function
 
     ''' <summary>
@@ -342,6 +356,7 @@ Module MRMkit
     <ExportAPI("wiff.scans")>
     Public Function ScanWiffRaw(wiffConverts As String(), ions As IonPair(),
                                 Optional peakAreaMethod As PeakArea.Methods = PeakArea.Methods.NetPeakSum,
+                                Optional mz_tolerance$ = "ppm:20",
                                 Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
                                 Optional removesWiffName As Boolean = True) As DataSet()
 
@@ -379,7 +394,8 @@ Module MRMkit
             peakAreaMethod:=peakAreaMethod,
             TPAFactors:=TPAFactors,
             refName:=Nothing,
-            removesWiffName:=removesWiffName
+            removesWiffName:=removesWiffName,
+            tolerance:=Tolerance.ParseScript(mz_tolerance)
         )
     End Function
 
@@ -457,8 +473,17 @@ Module MRMkit
     <ExportAPI("sample.quantify")>
     Public Function SampleQuantify(model As StandardCurve(), file$, ions As IonPair(),
                                    Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum,
+                                   Optional mz_tolerance$ = "ppm:20",
                                    Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As QuantifyScan
-        Return MRMSamples.SampleQuantify(model, file, ions, peakAreaMethod, TPAFactors)
+
+        Return MRMSamples.SampleQuantify(
+            model:=model,
+            file:=file,
+            ions:=ions,
+            tolerance:=Tolerance.ParseScript(mz_tolerance),
+            peakAreaMethod:=peakAreaMethod,
+            TPAFactors:=TPAFactors
+        )
     End Function
 
     ''' <summary>

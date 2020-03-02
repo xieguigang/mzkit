@@ -50,7 +50,7 @@ let plot.mzML as function(file, output) {
 
 	# Draw all of the MRM ions onto one chromatogram plot image
 	file
-	:> chromatogram.plot(ions) 
+	:> chromatogram.plot(ions, labelLayoutTicks = 3000) 
 	:> save.graphics(file = `${output}/chromatogram.png`);
 }
 

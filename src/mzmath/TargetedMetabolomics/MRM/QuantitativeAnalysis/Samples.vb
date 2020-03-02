@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::c701290c6f96f44ae3604fc025bc21db, src\mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\Samples.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module MRMSamples
-    ' 
-    '         Function: ExtractIonData, QuantitativeAnalysis, SampleQuantify
-    ' 
-    '     Class QuantifyScan
-    ' 
-    '         Properties: MRMPeaks, quantify, rawX
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module MRMSamples
+' 
+'         Function: ExtractIonData, QuantitativeAnalysis, SampleQuantify
+' 
+'     Class QuantifyScan
+' 
+'         Properties: MRMPeaks, quantify, rawX
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -53,6 +53,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
@@ -73,9 +74,9 @@ Namespace MRM
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function ExtractIonData(ion_pairs As IonPair(), mzML$, assignName As Func(Of IonPair, String)) As NamedCollection(Of ChromatogramTick)()
+        Public Function ExtractIonData(ion_pairs As IonPair(), mzML$, assignName As Func(Of IonPair, String), tolerance As Tolerance) As NamedCollection(Of ChromatogramTick)()
             Return LoadChromatogramList(mzML) _
-                .MRMSelector(ion_pairs) _
+                .MRMSelector(ion_pairs, tolerance) _
                 .Where(Function(ion) Not ion.chromatogram Is Nothing) _
                 .Select(Function(ionData)
                             Dim ion As IonPair = ionData.ion
@@ -114,7 +115,7 @@ Namespace MRM
         ''' 默认将``-KB``和``-BLK``结尾的文件都判断为实验空白
         ''' </param>
         ''' <returns>经过定量计算得到的浓度数据</returns>
-        Public Function QuantitativeAnalysis(wiff$, ions As IonPair(), calibrates As Standards(), [IS] As [IS](),
+        Public Function QuantitativeAnalysis(wiff$, ions As IonPair(), calibrates As Standards(), [IS] As [IS](), tolerance As Tolerance,
                                              <Out> Optional ByRef model As StandardCurve() = Nothing,
                                              <Out> Optional ByRef standardPoints As NamedValue(Of MRMStandards())() = Nothing,
                                              <Out> Optional ByRef X As List(Of DataSet) = Nothing,
@@ -136,7 +137,8 @@ Namespace MRM
                       calibrationNamedPattern:=calibrationNamedPattern,
                       levelPattern:=levelPattern,
                       peakAreaMethod:=peakAreaMethod,
-                      TPAFactors:=TPAFactors
+                      TPAFactors:=TPAFactors,
+                      tolerance:=tolerance
                 ) _
                 .ToDictionary _
                 .Regression(calibrates, ISvector:=[IS], weighted:=weighted) _
@@ -170,7 +172,7 @@ Namespace MRM
 
                 Call file.ToFileURL.__INFO_ECHO
 
-                scan = model.SampleQuantify(file, ions, peakAreaMethod, TPAFactors)
+                scan = model.SampleQuantify(file, ions, tolerance, peakAreaMethod, TPAFactors)
                 mrmPeaktable += scan.MRMPeaks
                 X += scan.rawX
                 out += scan.quantify
@@ -182,7 +184,7 @@ Namespace MRM
         End Function
 
         <Extension>
-        Public Function SampleQuantify(model As StandardCurve(), file$, ions As IonPair(),
+        Public Function SampleQuantify(model As StandardCurve(), file$, ions As IonPair(), tolerance As Tolerance,
                                        Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum,
                                        Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As QuantifyScan
 
@@ -193,7 +195,8 @@ Namespace MRM
                     raw:=file,
                     ions:=ions,
                     peakAreaMethod:=peakAreaMethod,
-                    TPAFactors:=If(TPAFactors, New Dictionary(Of String, Double))
+                    TPAFactors:=If(TPAFactors, New Dictionary(Of String, Double)),
+                    tolerance:=tolerance
                 ) _
                 .ToArray
             Dim MRMPeakTable As New List(Of MRMPeakTable)

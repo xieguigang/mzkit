@@ -46,6 +46,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
@@ -119,7 +120,7 @@ Namespace MarkupData.mzML
 
                             Return New LibraryMatrix With {
                                 .ms2 = matrix,
-                                .Name = ms2.id
+                                .name = ms2.id
                             }
                         End Function)
         End Function
@@ -136,6 +137,9 @@ Namespace MarkupData.mzML
             Return path.LoadXmlDataSet(Of chromatogram)(, xmlns:=mzML.Xmlns)
         End Function
 
+        ''' <summary>
+        ''' BPC, TIC, etc
+        ''' </summary>
         ReadOnly NotMRMSelectors As Index(Of String) = {"BPC", "TIC"}
 
         ''' <summary>
@@ -145,13 +149,13 @@ Namespace MarkupData.mzML
         ''' <param name="ionPairs"></param>
         ''' <returns>Nothing for ion not found</returns>
         <Extension>
-        Public Function MRMSelector(chromatograms As IEnumerable(Of chromatogram), ionPairs As IEnumerable(Of IonPair)) As IEnumerable(Of (ion As IonPair, chromatogram As chromatogram))
+        Public Function MRMSelector(chromatograms As IEnumerable(Of chromatogram), ionPairs As IEnumerable(Of IonPair), tolerance As Tolerance) As IEnumerable(Of (ion As IonPair, chromatogram As chromatogram))
             With chromatograms.ToArray
                 Return ionPairs _
                     .Select(Function(ion)
                                 Dim chromatogram =
                                     .Where(Function(c)
-                                               Return (Not c.id Like NotMRMSelectors) AndAlso ion.Assert(c)
+                                               Return (Not c.id Like NotMRMSelectors) AndAlso ion.Assert(c, tolerance)
                                            End Function) _
                                     .FirstOrDefault
                                 Return (ion, chromatogram)
