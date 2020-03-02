@@ -44,7 +44,9 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSL
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -64,6 +66,11 @@ Imports REnv = SMRUCC.Rsharp.Runtime
 ''' </summary>
 <Package("mzkit.assembly", Category:=APICategories.UtilityTools)>
 Module Assembly
+
+    <ExportAPI("read.msl")>
+    Public Function ReadMslIons(file As String) As MSLIon()
+        Return MSL.FileReader.Load(file)
+    End Function
 
     <ExportAPI("read.mgf")>
     Public Function ReadMgfIons(file As String) As Ions()

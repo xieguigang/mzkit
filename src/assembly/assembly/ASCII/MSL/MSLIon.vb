@@ -3,7 +3,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 
 Namespace ASCII.MSL
 
-    Public Class MSL
+    Public Class MSLIon
 
         <Column(Name:="NAME")> Public Property Name As String
         <Column(Name:="CONTRIB")> Public Property Contributor As String

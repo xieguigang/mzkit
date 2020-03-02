@@ -9,11 +9,11 @@ Namespace ASCII.MSL
 
     Public Module FileReader
 
-        Public Iterator Function Load(path As String) As IEnumerable(Of MSL)
+        Public Iterator Function Load(path As String) As IEnumerable(Of MSLIon)
             Dim chemicals = path _
                 .ReadAllLines _
                 .Split(Function(s) s.StringEmpty, DelimiterLocation.NotIncludes)
-            Dim properties = DataFramework.Schema(Of MSL)(PropertyAccess.Readable, True)
+            Dim properties = DataFramework.Schema(Of MSLIon)(PropertyAccess.Readable, True)
             ' property name => column name
             Dim schema As Dictionary(Of String, String) = properties.Values _
                 .ToDictionary(Function(field) field.Name,
@@ -27,7 +27,7 @@ Namespace ASCII.MSL
                                   End If
                               End Function)
 
-            Call schema.Remove(NameOf(MSL.Peaks))
+            Call schema.Remove(NameOf(MSLIon.Peaks))
 
             For Each lines In chemicals
                 Dim data = lines.Split(Function(s) InStr(s, "NUM PEAKS:") = 1, DelimiterLocation.NotIncludes)
@@ -36,7 +36,7 @@ Namespace ASCII.MSL
                 Dim metaTable = meta _
                     .Select(Function(s) s.GetTagValue(":", trim:=True)) _
                     .ToDictionary
-                Dim o As Object = Activator.CreateInstance(GetType(MSL))
+                Dim o As Object = Activator.CreateInstance(GetType(MSLIon))
 
                 For Each prop In schema
                     Dim value = metaTable.TryGetValue(prop.Value).Value
@@ -49,7 +49,7 @@ Namespace ASCII.MSL
                     .Select(Function(s) r.Matches(s, "\(\s*\d+\s*\d+\s*\)").ToArray) _
                     .IteratesALL _
                     .Select(Function(s)
-                                Dim p = s _
+                                Dim p As String() = s _
                                     .GetStackValue("(", ")") _
                                     .Trim _
                                     .StringSplit("\s+")
@@ -62,7 +62,7 @@ Namespace ASCII.MSL
                             End Function) _
                     .ToArray
 
-                Yield DirectCast(o, MSL).With(Sub(msl) msl.Peaks = peaksData)
+                Yield DirectCast(o, MSLIon).With(Sub(msl) msl.Peaks = peaksData)
             Next
         End Function
     End Module

@@ -270,7 +270,7 @@
     <Compile Include="ASCII\MGF\MgfWriter.vb" />
     <Compile Include="ASCII\MGF\MgfReader.vb" />
     <Compile Include="ASCII\MSL\FileReader.vb" />
-    <Compile Include="ASCII\MSL\MSL.vb" />
+    <Compile Include="ASCII\MSL\MSLIon.vb" />
     <Compile Include="ASCII\MSN\FileReader.vb" />
     <Compile Include="ASCII\MSN\PeakTable.vb" />
     <Compile Include="ASCII\MSN\MsnList.vb" />
