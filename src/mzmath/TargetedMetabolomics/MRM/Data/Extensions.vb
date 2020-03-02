@@ -59,9 +59,9 @@ Namespace MRM.Data
     Public Module Extensions
 
         <Extension>
-        Public Function PopulatePeaks(ionPairs As IonPair(), raw$, tolerance As Tolerance, Optional baselineQuantile# = 0.65) As (ion As IonPair, peak As MRMPeak)()
+        Public Function PopulatePeaks(ionPairs As IonPair(), raw$, tolerance As Tolerance, Optional baselineQuantile# = 0.65) As (ion As IsomerismIonPairs, peak As MRMPeak)()
             Dim ionData = LoadChromatogramList(path:=raw) _
-                .MRMSelector(ionPairs, tolerance) _
+                .MRMSelector(IonPair.GetIsomerism(ionPairs, tolerance), tolerance) _
                 .Where(Function(ion) Not ion.chromatogram Is Nothing) _
                 .Select(Function(ion)
                             Dim vector As IVector(Of ChromatogramTick) = ion.chromatogram.Ticks.Shadows
@@ -93,13 +93,13 @@ Namespace MRM.Data
         ''' <param name="ionPairs"></param>
         ''' <returns>Nothing for ion not found</returns>
         <Extension>
-        Public Function MRMSelector(chromatograms As IEnumerable(Of mzchromatogram), ionPairs As IEnumerable(Of IonPair), tolerance As Tolerance) As IEnumerable(Of (ion As IonPair, chromatogram As mzchromatogram))
+        Public Function MRMSelector(chromatograms As IEnumerable(Of mzchromatogram), ionPairs As IEnumerable(Of IsomerismIonPairs), tolerance As Tolerance) As IEnumerable(Of (ion As IsomerismIonPairs, chromatogram As mzchromatogram))
             With chromatograms.ToArray
                 Return ionPairs _
                     .Select(Function(ion)
                                 Dim chromatogram =
                                     .Where(Function(c)
-                                               Return (Not c.id Like NotMRMSelectors) AndAlso ion.Assert(c, tolerance)
+                                               Return (Not c.id Like NotMRMSelectors) AndAlso ion.target.Assert(c, tolerance)
                                            End Function) _
                                     .FirstOrDefault
                                 Return (ion, chromatogram)

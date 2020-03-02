@@ -139,7 +139,7 @@ Module MRMkit
     ''' <param name="ionpairs">metabolite targets</param>
     ''' <returns></returns>
     <ExportAPI("extract.ions")>
-    Public Function ExtractIonData(mzML$, ionpairs As IonPair(), Optional tolerance$ = "ppm:20") As NamedCollection(Of ChromatogramTick)()
+    Public Function ExtractIonData(mzML$, ionpairs As IonPair(), Optional tolerance$ = "ppm:20") As IonChromatogramData()
         Return MRMSamples.ExtractIonData(
             ion_pairs:=ionpairs,
             mzML:=mzML,

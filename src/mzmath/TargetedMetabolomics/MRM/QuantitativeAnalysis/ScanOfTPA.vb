@@ -44,7 +44,6 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 
@@ -68,11 +67,12 @@ Namespace MRM
                                 Optional peakAreaMethod As PeakArea.Methods = Methods.Integrator) As IonTPA()
 
             ' 从原始文件之中读取出所有指定的离子对数据
-            Dim ionData = ionpairs.ExtractIonData(
-                mzML:=raw,
-                assignName:=Function(ion) ion.accession,
-                tolerance:=tolerance
-            )
+            Dim ionData = IonPair.GetIsomerism(ionpairs, tolerance) _
+                .ExtractIonData(
+                    mzML:=raw,
+                    assignName:=Function(ion) ion.accession,
+                    tolerance:=tolerance
+                )
             ' 进行最大峰的查找，然后计算出净峰面积，用于回归建模
             Dim TPA As IonTPA() = ionData _
                 .Select(Function(ion)

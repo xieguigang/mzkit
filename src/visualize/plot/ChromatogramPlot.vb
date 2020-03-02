@@ -44,6 +44,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
@@ -92,24 +93,36 @@ Public Module ChromatogramPlot
                                         Optional labelFontStyle$ = CSSFont.Win7Normal,
                                         Optional labelConnectorStroke$ = Stroke.StrongHighlightStroke,
                                         Optional labelLayoutTicks% = 1000,
-                                        Optional mz_tolerance$ = "ppm:20") As GraphicsData
+                                        Optional tolerance$ = "ppm:20") As GraphicsData
 
-        Return ions.ExtractIonData(
-            mzML:=mzML,
-            assignName:=Function(ion) ion.name,
-            tolerance:=Tolerance.ParseScript(mz_tolerance)
-        ) _
-                   .TICplot(
-            size:=size,
-            bg:=bg,
-            colorsSchema:=colorsSchema,
-            labelConnectorStroke:=labelConnectorStroke,
-            labelFontStyle:=labelFontStyle,
-            margin:=margin,
-            penStyle:=penStyle,
-            fillCurve:=False,
-            labelLayoutTicks:=labelLayoutTicks
-        )
+        Dim mzTolerance As Tolerance = Ms1.Tolerance.ParseScript(tolerance)
+        Dim MRM As IonChromatogramData() = IonPair _
+            .GetIsomerism(ions, mzTolerance) _
+            .ExtractIonData(
+                mzML:=mzML,
+                assignName:=Function(ion) ion.name,
+                tolerance:=mzTolerance
+            )
+
+        Return MRM.Select(Function(c)
+                              Return New NamedCollection(Of ChromatogramTick) With {
+                                 .name = c.name,
+                                 .value = c.chromatogram,
+                                 .description = c.description
+                              }
+                          End Function) _
+                  .ToArray _
+                  .TICplot(
+                      size:=size,
+                      bg:=bg,
+                      colorsSchema:=colorsSchema,
+                      labelConnectorStroke:=labelConnectorStroke,
+                      labelFontStyle:=labelFontStyle,
+                      margin:=margin,
+                      penStyle:=penStyle,
+                      fillCurve:=False,
+                      labelLayoutTicks:=labelLayoutTicks
+                  )
     End Function
 
     ''' <summary>

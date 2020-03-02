@@ -94,11 +94,11 @@ let linears.standard_curve as function(wiff_standards, subdir) {
 	# Get raw scan data for given ions
 	let CAL <- wiff_standards 
 	# list.files(wiff, pattern = "*.mzML")
-	 :> wiff.scans(
+	:> wiff.scans(
  		ions           = ions, 
  		peakAreaMethod = integrator, 
 	 	TPAFactors     = NULL
-	 );
+	);
 
 	CAL :> write.csv(file = `${dir}/${subdir}/referencePoints(peakarea).csv`);
 
