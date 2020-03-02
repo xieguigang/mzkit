@@ -16,68 +16,78 @@ seeding <- function(output, rt.adjust, seeds.all) {
 		if (block %=>% IsNothing) {
 			next;
 		}
-	
-		for (seedsCluster in block) {
-		
+
+		for (seedsCluster in block) {		
 		    if (seedsCluster %=>% IsNothing) {
 			    next;
-			}
-		
-			for (feature in seedsCluster) {
-				KEGG <- feature$kegg.info$kegg$ID;
-				align <- feature$align;
-				cluster <- seeds[[KEGG]];
-				hit <- list(
-					# feature is the current ion ms1 name
-					feature   = feature$name,
-					spectra   = align$candidate, 
-					score     = align$score, 
-
-					# ref and parent is the reference template index
-					KEGG      = KEGG,
-					ref       = align$ms2.name,
-					parent    = align$parent,
-					rt.adjust = rt.adjust(feature$feature$rt, KEGG),
-					# append the iteration trace stack
-					trace     = feature$align$trace
-				);							
-				hit$trace <- append(hit$trace, hit %=>% trace.node);
-				
-				# try to fix the duplicated spectra data
-				# use this uid tag data
-				uid = sprintf("%s#%s", hit$ref$file, hit$ref$scan);
-				
-				if (cluster %=>% IsNothing) {
-					# current feature alignment is the best
-					seed <- list();
-					seed[[uid]] <- hit;
-					seeds[[KEGG]] <- seed;
-				} else {
-				    if (seeds.all) {
-					    # insert all hits as the seeds					
-					    cluster[[uid]] <- hit;
-						seeds[[KEGG]] <- cluster;
-						
-						rm(list="cluster");
-					} else {
-					    # only pick the best hit for seeds
-						# due to the reason of only have one best hit record
-						# so that we can get the best hit directly by index 1
-						best <- cluster[[1]];
-						
-						if (metaDNA.score(hit) > metaDNA.score(best)) {
-							# current feature alignment is the best alignment
-							seed <- list();
-							seed[[uid]] <- hit;
-							seeds[[KEGG]] <- seed;
-						} else {
-							# no changes
-						}
-					}					
-				}
+			} else {
+				seeds <- seeding_impl(seeds, seedsCluster, rt.adjust, seeds.all);
+				rm(list = "seedsCluster");
 			}
 		}
+		
+		rm(list = "block");
 	}
+	
+	seeds;
+}
+
+seeding_impl <- function(seeds, seedsCluster, rt.adjust, seeds.all) {
+	for (feature in seedsCluster) {
+		KEGG <- feature$kegg.info$kegg$ID;
+		align <- feature$align;
+		cluster <- seeds[[KEGG]];
+		hit <- list(
+			# feature is the current ion ms1 name
+			feature   = feature$name,
+			spectra   = align$candidate, 
+			score     = align$score, 
+
+			# ref and parent is the reference template index
+			KEGG      = KEGG,
+			ref       = align$ms2.name,
+			parent    = align$parent,
+			rt.adjust = rt.adjust(feature$feature$rt, KEGG),
+			# append the iteration trace stack
+			trace     = feature$align$trace
+		);							
+		hit$trace <- append(hit$trace, hit %=>% trace.node);
+		
+		# try to fix the duplicated spectra data
+		# use this uid tag data
+		uid = sprintf("%s#%s", hit$ref$file, hit$ref$scan);
+		
+		if (cluster %=>% IsNothing) {
+			# current feature alignment is the best
+			seed          <- list();
+			seed[[uid]]   <- hit;
+			seeds[[KEGG]] <- seed;
+		} else {
+			if (seeds.all) {
+				# insert all hits as the seeds					
+				cluster[[uid]] <- hit;
+				seeds[[KEGG]]  <- cluster;
+				
+				rm(list="cluster");
+			} else {
+				# only pick the best hit for seeds
+				# due to the reason of only have one best hit record
+				# so that we can get the best hit directly by index 1
+				best <- cluster[[1]];
+				
+				if (metaDNA.score(hit) > metaDNA.score(best)) {
+					# current feature alignment is the best alignment
+					seed          <- list();
+					seed[[uid]]   <- hit;
+					seeds[[KEGG]] <- seed;
+				} else {
+					# no changes
+				}
+			}					
+		}
+	}
+	
+	rm(list = "seedsCluster");
 	
 	seeds;
 }
