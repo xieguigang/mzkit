@@ -9,10 +9,17 @@ Namespace ASCII.MSL
 
     Public Module FileReader
 
+        Private Function dataBlockParser(path As String) As IEnumerable(Of String())
+            Dim raw As String() = path.ReadAllLines
+
+            If raw.Any(Function(l) l.StringEmpty) Then
+                Return raw.Split(Function(s) s.StringEmpty, DelimiterLocation.NotIncludes)
+            Else
+                Return raw.Split(Function(s) InStr(s, "NAME:") = 1, DelimiterLocation.NextFirst)
+            End If
+        End Function
+
         Public Iterator Function Load(path As String) As IEnumerable(Of MSLIon)
-            Dim chemicals = path _
-                .ReadAllLines _
-                .Split(Function(s) s.StringEmpty, DelimiterLocation.NotIncludes)
             Dim properties = DataFramework.Schema(Of MSLIon)(PropertyAccess.Readable, True)
             ' property name => column name
             Dim schema As Dictionary(Of String, String) = properties.Values _
@@ -26,6 +33,7 @@ Namespace ASCII.MSL
                                       Return map.Name
                                   End If
                               End Function)
+            Dim chemicals = dataBlockParser(path).ToArray
 
             Call schema.Remove(NameOf(MSLIon.Peaks))
 
