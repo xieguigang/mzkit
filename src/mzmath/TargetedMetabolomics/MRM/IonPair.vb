@@ -50,6 +50,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
+Imports Microsoft.VisualBasic.Language
 Imports mzchromatogram = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.chromatogram
 
 Namespace MRM.Models
@@ -93,6 +94,65 @@ Namespace MRM.Models
                 Return True
             Else
                 Return False
+            End If
+        End Function
+
+        Public Shared Iterator Function GetIsomerism(ionpairs As IonPair(), tolerance As Tolerance) As IEnumerable(Of IsomerismIonPairs)
+            Dim iso As New List(Of IonPair)
+
+            For Each ion As IonPair In ionpairs
+                For Each can As IonPair In ionpairs.Where(Function(a) Not a Is ion)
+                    If tolerance.Assert(can.precursor, ion.precursor) AndAlso tolerance.Assert(can.product, ion.product) Then
+                        iso += ion
+                    End If
+                Next
+
+                Yield New IsomerismIonPairs With {
+                    .ions = iso.PopAll,
+                    .target = ion
+                }
+            Next
+        End Function
+    End Class
+
+    Public Class IsomerismIonPairs
+
+        Public Property ions As IonPair()
+        Public Property target As IonPair
+
+        ''' <summary>
+        ''' Get the chromatogram overlaps index by rt/ri order
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property index As Integer
+            Get
+                If ions.IsNullOrEmpty Then
+                    Return Scan0
+                Else
+                    Dim vec = ions.Join(target).OrderBy(Function(i) i.rt).ToArray
+
+                    For i As Integer = 0 To vec.Length - 1
+                        If vec(i).accession = target.accession Then
+                            Return i
+                        End If
+                    Next
+
+                    Throw New InvalidProgramException
+                End If
+            End Get
+        End Property
+
+        Public ReadOnly Property hasIsomerism As Boolean
+            Get
+                Return Not ions.IsNullOrEmpty
+            End Get
+        End Property
+
+        Public Overrides Function ToString() As String
+            If hasIsomerism Then
+                Return $"[{index}, rt:{target.rt} (sec)] {target}"
+            Else
+                Return target.ToString
             End If
         End Function
     End Class
