@@ -44,6 +44,8 @@ if (file.exists(ions)) {
 		read.IS("IS")
 	];	
 	
+	print("Use external msl data as ion pairs.");
+	
 	ions = ions 
 	:> read.msl 
 	:> as.ion_pairs;
