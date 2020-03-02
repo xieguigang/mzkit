@@ -1,4 +1,6 @@
-﻿Imports System.Reflection
+﻿Imports System.Data.Linq.Mapping
+Imports System.Reflection
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports r = System.Text.RegularExpressions.Regex
@@ -11,8 +13,19 @@ Namespace ASCII.MSL
             Dim chemicals = path _
                 .ReadAllLines _
                 .Split(Function(s) s.StringEmpty, DelimiterLocation.NotIncludes)
-            Dim schema = MappingsHelper.PropertyNames(Of MSL)
             Dim properties = DataFramework.Schema(Of MSL)(PropertyAccess.Readable, True)
+            ' property name => column name
+            Dim schema As Dictionary(Of String, String) = properties.Values _
+                .ToDictionary(Function(field) field.Name,
+                              Function(field)
+                                  Dim map As ColumnAttribute = field.GetCustomAttribute(GetType(ColumnAttribute))
+
+                                  If map Is Nothing Then
+                                      Return field.Name
+                                  Else
+                                      Return map.Name
+                                  End If
+                              End Function)
 
             Call schema.Remove(NameOf(MSL.Peaks))
 
@@ -32,7 +45,7 @@ Namespace ASCII.MSL
                     Call write.SetValue(o, value)
                 Next
 
-                Dim peaksData = peaks _
+                Dim peaksData As ms2() = peaks _
                     .Select(Function(s) r.Matches(s, "\(\s*\d+\s*\d+\s*\)").ToArray) _
                     .IteratesALL _
                     .Select(Function(s)
@@ -41,17 +54,15 @@ Namespace ASCII.MSL
                                     .Trim _
                                     .StringSplit("\s+")
 
-                                Return New MSMSMatrix With {
-                                    .LibraryIntensity = Val(p(1)),
-                                    .ProductMz = Val(p(0))
+                                Return New ms2 With {
+                                    .intensity = Val(p(1)),
+                                    .quantity = .intensity,
+                                    .mz = Val(p(0))
                                 }
                             End Function) _
                     .ToArray
 
-                Dim msl As MSL = DirectCast(o, MSL)
-                msl.Peaks = peaksData
-
-                Yield msl
+                Yield DirectCast(o, MSL).With(Sub(msl) msl.Peaks = peaksData)
             Next
         End Function
     End Module
