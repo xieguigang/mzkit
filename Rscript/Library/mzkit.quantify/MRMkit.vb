@@ -46,6 +46,7 @@
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSL
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
@@ -64,7 +65,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Interop
-Imports REnv = SMRUCC.Rsharp.Runtime.Internal
+Imports REnv = SMRUCC.Rsharp.Runtime
 Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
 Imports RRuntime = SMRUCC.Rsharp.Runtime
 Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
@@ -83,14 +84,14 @@ Module MRMkit
     End Class
 
     Sub New()
-        REnv.ConsolePrinter.AttachConsoleFormatter(Of StandardCurve)(AddressOf printLineModel)
-        REnv.ConsolePrinter.AttachConsoleFormatter(Of IonPair())(AddressOf printIonPairs)
-        REnv.ConsolePrinter.AttachConsoleFormatter(Of Standards())(AddressOf printStandards)
-        REnv.ConsolePrinter.AttachConsoleFormatter(Of [IS]())(AddressOf printIS)
+        REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of StandardCurve)(AddressOf printLineModel)
+        REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of IonPair())(AddressOf printIonPairs)
+        REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of Standards())(AddressOf printStandards)
+        REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of [IS]())(AddressOf printIS)
 
         ' create linear regression report
-        REnv.htmlPrinter.AttachHtmlFormatter(Of StandardCurve())(AddressOf MRMLinearReport.CreateHtml)
-        REnv.htmlPrinter.AttachHtmlFormatter(Of MRMDataSet)(AddressOf MRMLinearReport.CreateHtml)
+        REnv.Internal.htmlPrinter.AttachHtmlFormatter(Of StandardCurve())(AddressOf MRMLinearReport.CreateHtml)
+        REnv.Internal.htmlPrinter.AttachHtmlFormatter(Of MRMDataSet)(AddressOf MRMLinearReport.CreateHtml)
 
         Dim toolkit As AssemblyInfo = GetType(MRMkit).Assembly.FromAssembly
 
@@ -183,6 +184,37 @@ Module MRMkit
         End If
     End Function
 
+    <ExportAPI("as.ion_pairs")>
+    <RApiReturn(GetType(IonPair()))>
+    Public Function asIonPair(<RRawVectorArgument> mz As Object, Optional env As Environment = Nothing) As Object
+        If mz Is Nothing Then
+            Return Nothing
+        End If
+
+        Dim type As Type = mz.GetType
+
+        If type.IsArray Then
+            type = REnv.MeasureArrayElementType(mz)
+
+            Select Case type
+                Case GetType(MSLIon)
+                    Return DirectCast(REnv.asVector(Of MSLIon)(mz), MSLIon()) _
+                        .Select(Function(ion)
+                                    Return New IonPair With {
+                                        .accession = ion.Name,
+                                        .name = ion.Name,
+                                        .precursor = ion.MW,
+                                        .product = ion.Peaks(Scan0).mz,
+                                        .rt = ion.RT
+                                    }
+                                End Function) _
+                        .ToArray
+            End Select
+        End If
+
+        Return REnv.Internal.debug.stop(New NotImplementedException(mz.GetType.FullName), env)
+    End Function
+
     ''' <summary>
     ''' Read reference points
     ''' </summary>
@@ -244,8 +276,8 @@ Module MRMkit
                                 Optional patternOfBlank$ = "KB[-]?(\d+)?",
                                 Optional env As Environment = Nothing) As Object
 
-        If REnv.Invokes.isEmpty(convertDir) Then
-            Return REnv.debug.stop("No raw files data provided!", env)
+        If REnv.Internal.Invokes.isEmpty(convertDir) Then
+            Return REnv.Internal.debug.stop("No raw files data provided!", env)
         End If
 
         Dim dataType As Type = convertDir.GetType
