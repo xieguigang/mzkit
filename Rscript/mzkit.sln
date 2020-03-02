@@ -127,12 +127,16 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SignalProcessing", "..\..\G
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MetaDNA_visual", "..\src\metadna\MetaDNA_visual\MetaDNA_visual.vbproj", "{7B4A6D81-24D4-481C-8B6B-3129136B57A0}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "mzkit.interop", "Library\mzkit.interop\mzkit.interop.shproj", "{D68FA50B-A0CC-4511-AEF0-DAC24F236534}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{1579d1a8-73c4-4f97-bb57-3d1e62343599}*SharedItemsImports = 4
 		..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{53af2b13-ccd5-4f73-94d5-612191e785a9}*SharedItemsImports = 13
+		Library\mzkit.interop\mzkit.interop.projitems*{77ba269a-2995-4737-80d3-ef533baa69cd}*SharedItemsImports = 4
 		..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{a4db87f1-8b06-4398-af22-4bf0bafbd87a}*SharedItemsImports = 4
 		..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{c5c3428c-d64c-4e79-b239-77adc66b1156}*SharedItemsImports = 4
+		Library\mzkit.interop\mzkit.interop.projitems*{d68fa50b-a0cc-4511-aef0-dac24f236534}*SharedItemsImports = 13
 		..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{dd4b546d-f6ec-4c97-9683-d0dc0e9f569e}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

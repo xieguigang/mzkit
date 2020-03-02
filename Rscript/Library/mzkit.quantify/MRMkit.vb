@@ -139,12 +139,12 @@ Module MRMkit
     ''' <param name="ionpairs">metabolite targets</param>
     ''' <returns></returns>
     <ExportAPI("extract.ions")>
-    Public Function ExtractIonData(mzML$, ionpairs As IonPair(), Optional mz_tolerance$ = "ppm:20") As NamedCollection(Of ChromatogramTick)()
+    Public Function ExtractIonData(mzML$, ionpairs As IonPair(), Optional tolerance$ = "ppm:20") As NamedCollection(Of ChromatogramTick)()
         Return MRMSamples.ExtractIonData(
             ion_pairs:=ionpairs,
             mzML:=mzML,
             assignName:=Function(i) i.accession,
-            tolerance:=Tolerance.ParseScript(mz_tolerance)
+            tolerance:=interop_arguments.GetTolerance(tolerance)
         )
     End Function
 
@@ -160,7 +160,7 @@ Module MRMkit
     ''' <returns></returns>
     <ExportAPI("extract.peakROI")>
     Public Function ExtractPeakROI(mzML$, ionpairs As IonPair(),
-                                   Optional mz_tolerance$ = "ppm:20",
+                                   Optional tolerance$ = "ppm:20",
                                    Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
                                    Optional baselineQuantile# = 0.65,
                                    Optional integratorTicks% = 5000,
@@ -173,7 +173,7 @@ Module MRMkit
             raw:=mzML,
             ionpairs:=ionpairs,
             TPAFactors:=TPAFactors,
-            tolerance:=Tolerance.ParseScript(mz_tolerance),
+            tolerance:=interop_arguments.GetTolerance(tolerance),
             baselineQuantile:=baselineQuantile,
             integratorTicks:=integratorTicks,
             peakAreaMethod:=peakAreaMethod
@@ -329,13 +329,13 @@ Module MRMkit
     <ExportAPI("MRM.peaks")>
     Public Function ScanPeakTable(mzML$, ions As IonPair(),
                                   Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum,
-                                  Optional mz_tolerance$ = "ppm:20",
+                                  Optional tolerance$ = "ppm:20",
                                   Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As DataSet()
         If TPAFactors Is Nothing Then
             TPAFactors = New Dictionary(Of String, Double)
         End If
 
-        Return WiffRaw.ScanPeakTable(mzML, ions, Tolerance.ParseScript(mz_tolerance), peakAreaMethod, TPAFactors)
+        Return WiffRaw.ScanPeakTable(mzML, ions, interop_arguments.GetTolerance(tolerance), peakAreaMethod, TPAFactors)
     End Function
 
     ''' <summary>
@@ -356,7 +356,7 @@ Module MRMkit
     <ExportAPI("wiff.scans")>
     Public Function ScanWiffRaw(wiffConverts As String(), ions As IonPair(),
                                 Optional peakAreaMethod As PeakArea.Methods = PeakArea.Methods.NetPeakSum,
-                                Optional mz_tolerance$ = "ppm:20",
+                                Optional tolerance$ = "ppm:20",
                                 Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
                                 Optional removesWiffName As Boolean = True) As DataSet()
 
@@ -395,7 +395,7 @@ Module MRMkit
             TPAFactors:=TPAFactors,
             refName:=Nothing,
             removesWiffName:=removesWiffName,
-            tolerance:=Tolerance.ParseScript(mz_tolerance)
+            tolerance:=interop_arguments.GetTolerance(tolerance)
         )
     End Function
 
@@ -473,14 +473,14 @@ Module MRMkit
     <ExportAPI("sample.quantify")>
     Public Function SampleQuantify(model As StandardCurve(), file$, ions As IonPair(),
                                    Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum,
-                                   Optional mz_tolerance$ = "ppm:20",
+                                   Optional tolerance$ = "ppm:20",
                                    Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As QuantifyScan
 
         Return MRMSamples.SampleQuantify(
             model:=model,
             file:=file,
             ions:=ions,
-            tolerance:=Tolerance.ParseScript(mz_tolerance),
+            tolerance:=interop_arguments.GetTolerance(tolerance),
             peakAreaMethod:=peakAreaMethod,
             TPAFactors:=TPAFactors
         )
