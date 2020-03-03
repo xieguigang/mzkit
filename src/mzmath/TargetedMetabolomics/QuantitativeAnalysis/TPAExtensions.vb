@@ -97,15 +97,7 @@ Public Module TPAExtensions
                            Optional TPAFactor# = 1) As IonTPA
 
         Dim vector As IVector(Of ChromatogramTick) = ion.chromatogram.Shadows
-        Dim ROIData As ROI() = vector _
-            .PopulateROI _
-            .OrderByDescending(Function(ROI)
-                                   ' 这个积分值只是用来查找最大的峰面积的ROI区域
-                                   ' 并不是最后的峰面积结果
-                                   ' 还需要在下面的代码之中做峰面积积分才可以得到最终的结果
-                                   Return ROI.Integration
-                               End Function) _
-            .ToArray
+        Dim ROIData As ROI() = vector.PopulateROI.ToArray
 
         If ROIData.Length = 0 Then
             Return New IonTPA With {
@@ -144,21 +136,20 @@ Public Module TPAExtensions
 
         Dim peak As DoubleRange
         Dim data As (peak As DoubleRange, area#, baseline#, maxPeakHeight#)
+        Dim target = ion.ion.target
+        Dim find As DoubleRange = {target.rt - 5, target.rt + 5}
+
+        ROIData = ROIData _
+            .OrderBy(Function(r) r.Time.Min) _
+            .ToArray
+
+        Dim region As ROI = ROIData _
+            .Where(Function(r)
+                       Return r.Time.IsOverlapping(find)
+                   End Function) _
+            .FirstOrDefault
 
         If ion.ion.hasIsomerism Then
-            Dim target = ion.ion.target
-            Dim find As DoubleRange = {target.rt - 10, target.rt + 10}
-
-            ROIData = ROIData _
-                .OrderBy(Function(r) r.Time.Min) _
-                .ToArray
-
-            Dim region As ROI = ROIData _
-                .Where(Function(r)
-                           Return r.Time.IsOverlapping(find)
-                       End Function) _
-                .FirstOrDefault
-
             If region Is Nothing Then
                 ' find by index
                 If ion.ion.index < ROIData.Length Then
@@ -177,10 +168,23 @@ Public Module TPAExtensions
                 peak = region.Time
             End If
         Else
-            peak = ROIData(Scan0).Time
+            If target.rt Is Nothing OrElse region Is Nothing Then
+                ROIData = ROIData _
+                    .OrderByDescending(Function(ROI)
+                                           ' 这个积分值只是用来查找最大的峰面积的ROI区域
+                                           ' 并不是最后的峰面积结果
+                                           ' 还需要在下面的代码之中做峰面积积分才可以得到最终的结果
+                                           Return ROI.Integration
+                                       End Function) _
+                    .ToArray
+
+                peak = ROIData(Scan0).Time
+            Else
+                peak = region.Time
+            End If
         End If
 
-        If Not peak.IsInside(ion.ion.target.rt) Then
+        If Not peak.IsInside(CDbl(target.rt)) Then
             Call $"The ROI peak region [{peak.Min}, {peak.Max}] is not contains '{ion.name}' ({ion.ion.target.rt} sec)!".Warning
         End If
 

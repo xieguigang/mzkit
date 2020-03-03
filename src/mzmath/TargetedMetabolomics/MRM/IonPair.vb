@@ -70,7 +70,7 @@ Namespace MRM.Models
         Public Property name As String Implements IKeyedEntity(Of String).Key
         Public Property precursor As Double
         Public Property product As Double
-        Public Property rt As Double
+        Public Property rt As Double?
 
         Public Overrides Function ToString() As String
             If name.StringEmpty Then
