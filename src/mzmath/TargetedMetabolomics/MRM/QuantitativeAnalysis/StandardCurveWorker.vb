@@ -348,7 +348,7 @@ Namespace MRM
         ''' ``{<see cref="Standards.ID"/>, <see cref="Standards.Factor"/>}``，这个是为了计算亮氨酸和异亮氨酸这类无法被区分的物质的峰面积所需要的
         ''' </param>
         ''' <returns></returns>
-        Public Function Scan(raw$, ions As IonPair(), tolerance As Tolerance,
+        Public Function Scan(raw$, ions As IonPair(), tolerance As Tolerance, timeWindowSize#,
                              Optional peakAreaMethod As PeakArea.Methods = PeakArea.Methods.NetPeakSum,
                              Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
                              Optional ByRef refName$() = Nothing,
@@ -368,7 +368,15 @@ Namespace MRM
             If mzMLRawFiles.IsNullOrEmpty Then
                 Throw New InvalidExpressionException($"No mzML file could be match by given regexp patterns: '{calibrationNamedPattern}'")
             Else
-                Return mzMLRawFiles.Scan(ions, peakAreaMethod, TPAFactors, tolerance, refName, levelPattern)
+                Return mzMLRawFiles.Scan(
+                    ions:=ions,
+                    peakAreaMethod:=peakAreaMethod,
+                    TPAFactors:=TPAFactors,
+                    tolerance:=tolerance,
+                    timeWindowSize:=timeWindowSize,
+                    refName:=refName,
+                    levelPattern:=levelPattern
+                )
             End If
         End Function
 
@@ -388,6 +396,7 @@ Namespace MRM
                              peakAreaMethod As PeakArea.Methods,
                              TPAFactors As Dictionary(Of String, Double),
                              tolerance As Tolerance,
+                             timeWindowSize#,
                              Optional ByRef refName$() = Nothing,
                              Optional levelPattern$ = "[-]CAL\d+") As DataSet()
 
@@ -401,7 +410,7 @@ Namespace MRM
 
             ' get reference data
             Dim result As DataSet() = WiffRaw _
-                .Scan(mzMLRawFiles, ions, peakAreaMethod, TPAFactors, tolerance, refName, False) _
+                .Scan(mzMLRawFiles, ions, peakAreaMethod, TPAFactors, tolerance, timeWindowSize, refName, False) _
                 .Select(Function(ion)
                             Return New DataSet With {
                                 .ID = ion.ID,

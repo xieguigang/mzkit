@@ -125,7 +125,7 @@ Namespace MRM
         ''' 默认将``-KB``和``-BLK``结尾的文件都判断为实验空白
         ''' </param>
         ''' <returns>经过定量计算得到的浓度数据</returns>
-        Public Function QuantitativeAnalysis(wiff$, ions As IonPair(), calibrates As Standards(), [IS] As [IS](), tolerance As Tolerance,
+        Public Function QuantitativeAnalysis(wiff$, ions As IonPair(), calibrates As Standards(), [IS] As [IS](), tolerance As Tolerance, timeWindowSize#,
                                              <Out> Optional ByRef model As StandardCurve() = Nothing,
                                              <Out> Optional ByRef standardPoints As NamedValue(Of MRMStandards())() = Nothing,
                                              <Out> Optional ByRef X As List(Of DataSet) = Nothing,
@@ -148,7 +148,8 @@ Namespace MRM
                       levelPattern:=levelPattern,
                       peakAreaMethod:=peakAreaMethod,
                       TPAFactors:=TPAFactors,
-                      tolerance:=tolerance
+                      tolerance:=tolerance,
+                      timeWindowSize:=timeWindowSize
                 ) _
                 .ToDictionary _
                 .Regression(calibrates, ISvector:=[IS], weighted:=weighted) _
@@ -182,7 +183,7 @@ Namespace MRM
 
                 Call file.ToFileURL.__INFO_ECHO
 
-                scan = model.SampleQuantify(file, ions, tolerance, peakAreaMethod, TPAFactors)
+                scan = model.SampleQuantify(file, ions, tolerance, timeWindowSize, peakAreaMethod, TPAFactors)
                 mrmPeaktable += scan.MRMPeaks
                 X += scan.rawX
                 out += scan.quantify
@@ -194,7 +195,7 @@ Namespace MRM
         End Function
 
         <Extension>
-        Public Function SampleQuantify(model As StandardCurve(), file$, ions As IonPair(), tolerance As Tolerance,
+        Public Function SampleQuantify(model As StandardCurve(), file$, ions As IonPair(), tolerance As Tolerance, timeWindowSize#,
                                        Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum,
                                        Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As QuantifyScan
 
@@ -206,7 +207,8 @@ Namespace MRM
                     ions:=ions,
                     peakAreaMethod:=peakAreaMethod,
                     TPAFactors:=If(TPAFactors, New Dictionary(Of String, Double)),
-                    tolerance:=tolerance
+                    tolerance:=tolerance,
+                    timeWindowSize:=timeWindowSize
                 ) _
                 .ToArray
             Dim MRMPeakTable As New List(Of MRMPeakTable)
