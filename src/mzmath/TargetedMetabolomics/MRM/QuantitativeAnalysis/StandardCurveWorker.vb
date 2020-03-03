@@ -192,6 +192,16 @@ Namespace MRM
                 If fit Is Nothing Then
                     Call $"Missing {ion.ToString}!".Warning
                     Continue For
+                Else
+                    ' get points that removed from linear modelling
+                    For Each ptRef As MRMStandards In points
+                        For Each invalid In invalids
+                            If stdNum.Abs(invalid.X - ptRef.Cti) <= 0.0001 AndAlso stdNum.Abs(invalid.Y - ptRef.Px) <= 0.0001 Then
+                                ptRef.valid = False
+                                Exit For
+                            End If
+                        Next
+                    Next
                 End If
 
                 Dim out As New StandardCurve With {
@@ -314,7 +324,8 @@ Namespace MRM
                     .Cti = Ct_i,
                     .ID = id,
                     .Name = name,
-                    .level = "L" & (i + 1)
+                    .level = "L" & (i + 1),
+                    .valid = True
                 }
 
                 ' 得到标准曲线之中的一个点
