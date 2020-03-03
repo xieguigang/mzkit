@@ -102,6 +102,7 @@ Module MRMkit
         ' create linear regression report
         REnv.Internal.htmlPrinter.AttachHtmlFormatter(Of StandardCurve())(AddressOf MRMLinearReport.CreateHtml)
         REnv.Internal.htmlPrinter.AttachHtmlFormatter(Of MRMDataSet)(AddressOf MRMLinearReport.CreateHtml)
+        ' REnv.Internal.htmlPrinter.AttachHtmlFormatter(Of )()
 
         Dim toolkit As AssemblyInfo = GetType(MRMkit).Assembly.FromAssembly
 
