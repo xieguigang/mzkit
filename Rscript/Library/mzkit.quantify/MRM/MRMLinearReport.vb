@@ -43,6 +43,12 @@ Module MRMLinearReport
 
                     <!-- Bootstrap CSS -->
                     <link rel="stylesheet" href="http://cdn.biodeep.cn:8848/styles/bootstrap-4.3.1-dist/css/bootstrap.min.css" crossorigin="anonymous"/>
+
+                    <style type="text/css">
+                        .even td{/*必须加td，代表的是一行进行*/
+	                      background-color: #f5f5f5;
+                        }
+                    </style>
                 </head>
                 <body class="container">
                     <h1>MRM Quantification Linear Models</h1>
@@ -180,12 +186,12 @@ Module MRMLinearReport
     <Extension>
     Private Function asset(e As XElement, line As StandardCurve) As String
         Dim equation$ = line.linear.Polynomial.ToString("G4", html:=True)
-        Dim title = line.points(Scan0).Name
+        Dim title As String = $"Linear Model Reference Points of '{line.points(Scan0).Name}'"
         Dim pointTable$ = line.points.ToHTMLTable(
             className:="table",
             width:="100%",
             title:=title,
-            alt:=$"Linear Model Reference Points of '{title}'"
+            altClassName:="even"
         )
 
         Return sprintf(e, equation, pointTable)
