@@ -99,7 +99,7 @@ Module MRMLinearReport
                         </div>
 
                         <p>
-                            <img src=<%= New DataURI(image) %> style="width: 60%;"/>
+                            <img src=<%= New DataURI(image) %> style="width: 65%;"/>
                         </p>
 
                         <h3>Reference Points</h3>
