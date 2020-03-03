@@ -52,8 +52,8 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports stdNum = System.Math
@@ -75,6 +75,7 @@ Public Class IonTPA
 
 End Class
 
+<HideModuleName>
 Public Module TPAExtensions
 
     ''' <summary>
@@ -96,7 +97,7 @@ Public Module TPAExtensions
                            Optional TPAFactor# = 1) As IonTPA
 
         Dim vector As IVector(Of ChromatogramTick) = ion.chromatogram.Shadows
-        Dim ROIData = vector _
+        Dim ROIData As ROI() = vector _
             .PopulateROI _
             .OrderByDescending(Function(ROI)
                                    ' 这个积分值只是用来查找最大的峰面积的ROI区域
@@ -106,33 +107,71 @@ Public Module TPAExtensions
                                End Function) _
             .ToArray
 
-        If ion.ion.hasIsomerism Then
-            Console.WriteLine()
-        End If
-
         If ROIData.Length = 0 Then
             Return New IonTPA With {
                 .name = ion.name,
                 .peakROI = New DoubleRange(0, 0)
             }
         Else
-            Dim peak As DoubleRange = ROIData _
-                .First _
-                .Time ' .MRMPeak(baselineQuantile:=baselineQuantile)
-            Dim data As (peak As DoubleRange, area#, baseline#, maxPeakHeight#)
-
-            With vector.TPAIntegrator(peak, baselineQuantile, peakAreaMethod, integratorTicks, TPAFactor)
-                data = (peak, .Item1, .Item2, .Item3)
-            End With
-
-            Return New IonTPA With {
-                .name = ion.name,
-                .peakROI = data.peak,
-                .area = data.area,
-                .baseline = data.baseline,
-                .maxPeakHeight = data.maxPeakHeight
-            }
+            Return ion.ProcessingIonPeakArea(
+                vector:=vector,
+                ROIData:=ROIData,
+                baselineQuantile:=baselineQuantile,
+                peakAreaMethod:=peakAreaMethod,
+                integratorTicks:=integratorTicks,
+                TPAFactor:=TPAFactor
+            )
         End If
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="ion"></param>
+    ''' <param name="vector"></param>
+    ''' <param name="ROIData">The largest ROI is the first element.</param>
+    ''' <param name="baselineQuantile#"></param>
+    ''' <param name="peakAreaMethod"></param>
+    ''' <param name="integratorTicks%"></param>
+    ''' <param name="TPAFactor#"></param>
+    ''' <returns></returns>
+    <Extension>
+    Private Function ProcessingIonPeakArea(ion As IonChromatogramData, vector As IVector(Of ChromatogramTick), ROIData As ROI(),
+                                           baselineQuantile#,
+                                           peakAreaMethod As PeakArea.Methods,
+                                           integratorTicks%,
+                                           TPAFactor#) As IonTPA
+
+        Dim peak As DoubleRange
+        Dim data As (peak As DoubleRange, area#, baseline#, maxPeakHeight#)
+
+        If ion.ion.hasIsomerism Then
+            Dim largest As ROI = ROIData(Scan0)
+            Dim splits = largest.Ticks.Shadows.PopulateROI(baselineQuantile:=baselineQuantile).ToArray
+
+            Call largest.Ticks.SaveTo("D:/web/test.csv")
+            Call vector.SaveTo("D:/web/test.csv")
+
+            Console.WriteLine()
+        Else
+            peak = ROIData(Scan0).Time
+        End If
+
+        If Not peak.IsInside(ion.ion.target.rt) Then
+            Call $"The ROI peak region [{peak.Min}, {peak.Max}] is not contains '{ion.name}' ({ion.ion.target.rt} sec)!".Warning
+        End If
+
+        With vector.TPAIntegrator(peak, baselineQuantile, peakAreaMethod, integratorTicks, TPAFactor)
+            data = (peak, .Item1, .Item2, .Item3)
+        End With
+
+        Return New IonTPA With {
+            .name = ion.name,
+            .peakROI = data.peak,
+            .area = data.area,
+            .baseline = data.baseline,
+            .maxPeakHeight = data.maxPeakHeight
+        }
     End Function
 
     ''' <summary>

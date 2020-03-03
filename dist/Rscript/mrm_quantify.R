@@ -64,6 +64,8 @@ print("Internal standards:");
 print(is);
 print("Ion pairs for each required metabolites:");
 print(ions);
+print("Previews of the isomerism ion pairs:");
+print(ions :> isomerism.ion_pairs);
 
 print(`The reference data raw files will be matches by name pattern: [${patternOf.ref}]`);
 

@@ -47,7 +47,6 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.Imaging.Math2D
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
@@ -144,7 +143,7 @@ Namespace Chromatogram
                 Else
                     With peak!intensity
                         max = .Max
-                        rt = peak(index:=Which.Max(.ByRef)).Time
+                        rt = .DoCall(Function(vec) peak(index:=Which.Max(x:=vec))).Time
                     End With
                 End If
 
@@ -173,7 +172,9 @@ Namespace Chromatogram
                 .Split(Function(tangent)
                            Return (tangent.First, tangent.Last).Angle <= angleThreshold
                        End Function) _
-                .Where(Function(p) p.Length > 1)
+                .Where(Function(p)
+                           Return p.Length > 1
+                       End Function)
         End Function
 
         ''' <summary>

@@ -90,6 +90,14 @@ Module MRMkit
         REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of IonPair())(AddressOf printIonPairs)
         REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of Standards())(AddressOf printStandards)
         REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of [IS]())(AddressOf printIS)
+        REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of IsomerismIonPairs)(
+            Function(ion As IsomerismIonPairs)
+                If ion.hasIsomerism Then
+                    Return $"[{ion.index}, rt:{ion.target.rt} (sec)] {ion.target} {{{ion.ions.Select(Function(i) i.name).JoinBy(", ")}}}"
+                Else
+                    Return ion.target.ToString
+                End If
+            End Function)
 
         ' create linear regression report
         REnv.Internal.htmlPrinter.AttachHtmlFormatter(Of StandardCurve())(AddressOf MRMLinearReport.CreateHtml)
