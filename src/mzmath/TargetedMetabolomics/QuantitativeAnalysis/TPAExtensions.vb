@@ -146,13 +146,36 @@ Public Module TPAExtensions
         Dim data As (peak As DoubleRange, area#, baseline#, maxPeakHeight#)
 
         If ion.ion.hasIsomerism Then
-            Dim largest As ROI = ROIData(Scan0)
-            Dim splits = largest.Ticks.Shadows.PopulateROI(baselineQuantile:=baselineQuantile).ToArray
+            Dim target = ion.ion.target
+            Dim find As DoubleRange = {target.rt - 10, target.rt + 10}
 
-            Call largest.Ticks.SaveTo("D:/web/test.csv")
-            Call vector.SaveTo("D:/web/test.csv")
+            ROIData = ROIData _
+                .OrderBy(Function(r) r.Time.Min) _
+                .ToArray
 
-            Console.WriteLine()
+            Dim region As ROI = ROIData _
+                .Where(Function(r)
+                           Return r.Time.IsOverlapping(find)
+                       End Function) _
+                .FirstOrDefault
+
+            If region Is Nothing Then
+                ' find by index
+                If ion.ion.index < ROIData.Length Then
+                    region = ROIData(ion.ion.index)
+                Else
+                    region = ROIData.Last
+                End If
+            End If
+
+            If region Is Nothing Then
+                Return New IonTPA With {
+                    .name = ion.name,
+                    .peakROI = New DoubleRange(0, 0)
+                }
+            Else
+                peak = region.Time
+            End If
         Else
             peak = ROIData(Scan0).Time
         End If

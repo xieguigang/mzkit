@@ -55,6 +55,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.ValueTypes
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
@@ -68,8 +69,8 @@ Imports REnv = SMRUCC.Rsharp.Runtime
 Module Assembly
 
     <ExportAPI("read.msl")>
-    Public Function ReadMslIons(file As String) As MSLIon()
-        Return MSL.FileReader.Load(file).ToArray
+    Public Function ReadMslIons(file$, Optional unit As TimeScales = TimeScales.Second) As MSLIon()
+        Return MSL.FileReader.Load(file, unit).ToArray
     End Function
 
     <ExportAPI("read.mgf")>

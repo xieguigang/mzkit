@@ -47,7 +47,7 @@ if (file.exists(ions)) {
 	print("Use external msl data as ion pairs.");
 	
 	ions = ions 
-	:> read.msl 
+	:> read.msl(unit = "Minute") 
 	:> as.ion_pairs;
 } else {
 	[ions, reference, is] = MRM.info :> [

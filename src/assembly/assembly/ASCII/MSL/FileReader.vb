@@ -4,6 +4,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.ValueTypes
 Imports r = System.Text.RegularExpressions.Regex
 
 Namespace ASCII.MSL
@@ -24,7 +25,7 @@ Namespace ASCII.MSL
             End If
         End Function
 
-        Public Iterator Function Load(path As String) As IEnumerable(Of MSLIon)
+        Public Iterator Function Load(path$, Optional unit As TimeScales = TimeScales.Second) As IEnumerable(Of MSLIon)
             Dim properties = DataFramework.Schema(Of MSLIon)(PropertyAccess.Readable, True)
             ' property name => column name
             Dim schema As Dictionary(Of String, String) = properties.Values _
@@ -56,6 +57,12 @@ Namespace ASCII.MSL
                 For Each prop In schema
                     Dim write As PropertyInfo = properties(prop.Key)
                     Dim value As Object = Scripting.CTypeDynamic(metaTable.TryGetValue(prop.Value).Value, write.PropertyType)
+
+                    If write.Name = NameOf(MSLIon.RT) Then
+                        If unit = TimeScales.Minute Then
+                            value = CDbl(value) * 60
+                        End If
+                    End If
 
                     Call write.SetValue(o, value)
                 Next
