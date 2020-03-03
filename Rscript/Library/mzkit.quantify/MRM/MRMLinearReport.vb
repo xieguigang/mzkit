@@ -68,11 +68,13 @@ Module MRMLinearReport
         Dim image As Image
         Dim title$
         Dim R2#
+        Dim isWeighted As Boolean
 
         For Each line As StandardCurve In standardCurves
             title = line.points(Scan0).Name
             image = Visual.DrawStandardCurve(line, title).AsGDIImage
             R2 = line.linear.CorrelationCoefficient
+            isWeighted = line.isWeighted
             linears +=
                 <div class="row" id=<%= line.name %>>
                     <div class="col-xl-10">
@@ -84,6 +86,7 @@ Module MRMLinearReport
                                 <ul>
                                     <li>ID: <%= line.name %></li>
                                     <li>Linear: <i>f(x)</i>=%s</li>
+                                    <li>Weighted: <%= isWeighted.ToString.ToUpper %></li>
                                     <li>R<sup>2</sup>: <%= R2 %></li>
                                 </ul>
                             </div>
