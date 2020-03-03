@@ -46,17 +46,16 @@
 
 #End Region
 
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSL
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Linq
@@ -64,7 +63,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Interop
-Imports REnv = SMRUCC.Rsharp.Runtime.Internal
+Imports REnv = SMRUCC.Rsharp.Runtime
 Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
 Imports RRuntime = SMRUCC.Rsharp.Runtime
 Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
@@ -83,14 +82,23 @@ Module MRMkit
     End Class
 
     Sub New()
-        REnv.ConsolePrinter.AttachConsoleFormatter(Of StandardCurve)(AddressOf printLineModel)
-        REnv.ConsolePrinter.AttachConsoleFormatter(Of IonPair())(AddressOf printIonPairs)
-        REnv.ConsolePrinter.AttachConsoleFormatter(Of Standards())(AddressOf printStandards)
-        REnv.ConsolePrinter.AttachConsoleFormatter(Of [IS]())(AddressOf printIS)
+        REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of StandardCurve)(AddressOf printLineModel)
+        REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of IonPair())(AddressOf printIonPairs)
+        REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of Standards())(AddressOf printStandards)
+        REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of [IS]())(AddressOf printIS)
+        REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of IsomerismIonPairs)(
+            Function(ion As IsomerismIonPairs)
+                If ion.hasIsomerism Then
+                    Return $"[{ion.index}, rt:{ion.target.rt} (sec)] {ion.target} {{{ion.ions.Select(Function(i) i.name).JoinBy(", ")}}}"
+                Else
+                    Return ion.target.ToString
+                End If
+            End Function)
 
         ' create linear regression report
-        REnv.htmlPrinter.AttachHtmlFormatter(Of StandardCurve())(AddressOf MRMLinearReport.CreateHtml)
-        REnv.htmlPrinter.AttachHtmlFormatter(Of MRMDataSet)(AddressOf MRMLinearReport.CreateHtml)
+        REnv.Internal.htmlPrinter.AttachHtmlFormatter(Of StandardCurve())(AddressOf MRMLinearReport.CreateHtml)
+        REnv.Internal.htmlPrinter.AttachHtmlFormatter(Of MRMDataSet)(AddressOf MRMLinearReport.CreateHtml)
+        ' REnv.Internal.htmlPrinter.AttachHtmlFormatter(Of )()
 
         Dim toolkit As AssemblyInfo = GetType(MRMkit).Assembly.FromAssembly
 
@@ -136,8 +144,13 @@ Module MRMkit
     ''' <param name="ionpairs">metabolite targets</param>
     ''' <returns></returns>
     <ExportAPI("extract.ions")>
-    Public Function ExtractIonData(mzML$, ionpairs As IonPair()) As NamedCollection(Of ChromatogramTick)()
-        Return MRMSamples.ExtractIonData(ionpairs, mzML, Function(i) i.accession)
+    Public Function ExtractIonData(mzML$, ionpairs As IonPair(), Optional tolerance$ = "ppm:20") As IonChromatogramData()
+        Return MRMSamples.ExtractIonData(
+            ion_pairs:=ionpairs,
+            mzML:=mzML,
+            assignName:=Function(i) i.accession,
+            tolerance:=interop_arguments.GetTolerance(tolerance)
+        )
     End Function
 
     ''' <summary>
@@ -152,6 +165,7 @@ Module MRMkit
     ''' <returns></returns>
     <ExportAPI("extract.peakROI")>
     Public Function ExtractPeakROI(mzML$, ionpairs As IonPair(),
+                                   Optional tolerance$ = "ppm:20",
                                    Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
                                    Optional baselineQuantile# = 0.65,
                                    Optional integratorTicks% = 5000,
@@ -161,7 +175,13 @@ Module MRMkit
         End If
 
         Return ScanOfTPA.ScanTPA(
-            mzML, ionpairs, TPAFactors, baselineQuantile, integratorTicks, peakAreaMethod
+            raw:=mzML,
+            ionpairs:=ionpairs,
+            TPAFactors:=TPAFactors,
+            tolerance:=interop_arguments.GetTolerance(tolerance),
+            baselineQuantile:=baselineQuantile,
+            integratorTicks:=integratorTicks,
+            peakAreaMethod:=peakAreaMethod
         )
     End Function
 
@@ -181,6 +201,42 @@ Module MRMkit
         Else
             Return file.LoadCsv(Of IonPair)(mute:=True).ToArray
         End If
+    End Function
+
+    <ExportAPI("isomerism.ion_pairs")>
+    Public Function IsomerismIonPairs(ions As IonPair(), Optional tolerance$ = "ppm:20") As IsomerismIonPairs()
+        Return IonPair.GetIsomerism(ions, interop_arguments.GetTolerance(tolerance)).ToArray
+    End Function
+
+    <ExportAPI("as.ion_pairs")>
+    <RApiReturn(GetType(IonPair()))>
+    Public Function asIonPair(<RRawVectorArgument> mz As Object, Optional env As Environment = Nothing) As Object
+        If mz Is Nothing Then
+            Return Nothing
+        End If
+
+        Dim type As Type = mz.GetType
+
+        If type.IsArray Then
+            type = REnv.MeasureArrayElementType(mz)
+
+            Select Case type
+                Case GetType(MSLIon)
+                    Return DirectCast(REnv.asVector(Of MSLIon)(mz), MSLIon()) _
+                        .Select(Function(ion)
+                                    Return New IonPair With {
+                                        .accession = ion.Name,
+                                        .name = ion.Name,
+                                        .precursor = ion.MW,
+                                        .product = ion.Peaks(Scan0).mz,
+                                        .rt = ion.RT
+                                    }
+                                End Function) _
+                        .ToArray
+            End Select
+        End If
+
+        Return REnv.Internal.debug.stop(New NotImplementedException(mz.GetType.FullName), env)
     End Function
 
     ''' <summary>
@@ -214,12 +270,19 @@ Module MRMkit
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("read.IS")>
-    Public Function readIS(file$, Optional sheetName$ = "Sheet1") As [IS]()
+    Public Function readIS(file$, Optional sheetName$ = "Sheet1", Optional env As Environment = Nothing) As [IS]()
         If file.ExtensionSuffix("xlsx") Then
-            Return Xlsx.Open(path:=file) _
-                .GetTable(sheetName) _
-                .AsDataSource(Of [IS])(silent:=True) _
-                .ToArray
+            Dim table = Xlsx.Open(path:=file).GetTable(sheetName)
+
+            If table Is Nothing Then
+                ' probably no used of any IS for data calibration
+                env.AddMessage($"No IS data was found in MRM information table file '{file.FileName}', where the sheet name is '{sheetName}'...", MSG_TYPES.WRN)
+                Return {}
+            Else
+                Return table _
+                    .AsDataSource(Of [IS])(silent:=True) _
+                    .ToArray
+            End If
         Else
             Return file.LoadCsv(Of [IS])(mute:=True).ToArray
         End If
@@ -244,8 +307,8 @@ Module MRMkit
                                 Optional patternOfBlank$ = "KB[-]?(\d+)?",
                                 Optional env As Environment = Nothing) As Object
 
-        If REnv.Invokes.isEmpty(convertDir) Then
-            Return REnv.debug.stop("No raw files data provided!", env)
+        If REnv.Internal.Invokes.isEmpty(convertDir) Then
+            Return REnv.Internal.debug.stop("No raw files data provided!", env)
         End If
 
         Dim dataType As Type = convertDir.GetType
@@ -276,12 +339,13 @@ Module MRMkit
     <ExportAPI("MRM.peaks")>
     Public Function ScanPeakTable(mzML$, ions As IonPair(),
                                   Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum,
+                                  Optional tolerance$ = "ppm:20",
                                   Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As DataSet()
         If TPAFactors Is Nothing Then
             TPAFactors = New Dictionary(Of String, Double)
         End If
 
-        Return WiffRaw.ScanPeakTable(mzML, ions, peakAreaMethod, TPAFactors)
+        Return WiffRaw.ScanPeakTable(mzML, ions, interop_arguments.GetTolerance(tolerance), peakAreaMethod, TPAFactors)
     End Function
 
     ''' <summary>
@@ -302,6 +366,7 @@ Module MRMkit
     <ExportAPI("wiff.scans")>
     Public Function ScanWiffRaw(wiffConverts As String(), ions As IonPair(),
                                 Optional peakAreaMethod As PeakArea.Methods = PeakArea.Methods.NetPeakSum,
+                                Optional tolerance$ = "ppm:20",
                                 Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
                                 Optional removesWiffName As Boolean = True) As DataSet()
 
@@ -339,7 +404,8 @@ Module MRMkit
             peakAreaMethod:=peakAreaMethod,
             TPAFactors:=TPAFactors,
             refName:=Nothing,
-            removesWiffName:=removesWiffName
+            removesWiffName:=removesWiffName,
+            tolerance:=interop_arguments.GetTolerance(tolerance)
         )
     End Function
 
@@ -417,8 +483,17 @@ Module MRMkit
     <ExportAPI("sample.quantify")>
     Public Function SampleQuantify(model As StandardCurve(), file$, ions As IonPair(),
                                    Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum,
+                                   Optional tolerance$ = "ppm:20",
                                    Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As QuantifyScan
-        Return MRMSamples.SampleQuantify(model, file, ions, peakAreaMethod, TPAFactors)
+
+        Return MRMSamples.SampleQuantify(
+            model:=model,
+            file:=file,
+            ions:=ions,
+            tolerance:=interop_arguments.GetTolerance(tolerance),
+            peakAreaMethod:=peakAreaMethod,
+            TPAFactors:=TPAFactors
+        )
     End Function
 
     ''' <summary>

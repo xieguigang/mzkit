@@ -69,7 +69,9 @@ Namespace MRM
         ''' <summary>
         ''' Returns time range for the peak where the max intensity was represented.
         ''' </summary>
-        ''' <param name="chromatogram">Should be order by time asceding.(应该是按照时间升序排序了的)</param>
+        ''' <param name="chromatogram">
+        ''' Should be order by time asceding.(应该是按照时间升序排序了的)
+        ''' </param>
         ''' <param name="threshold">
         ''' Meaning changes base on the <paramref name="method"/> value:
         ''' 

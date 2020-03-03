@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::f6d8fdda4b5fbf64757b18360c9bfe7c, src\mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\StandardCurveWorker.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module StandardCurveWorker
-    ' 
-    '         Function: CreateModelPoints, getBlankControls, getByLevel, getIS, Regression
-    '                   reverseModel, (+2 Overloads) Scan, ScanContent
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module StandardCurveWorker
+' 
+'         Function: CreateModelPoints, getBlankControls, getByLevel, getIS, Regression
+'                   reverseModel, (+2 Overloads) Scan, ScanContent
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -49,6 +49,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.csv.IO
@@ -128,12 +129,12 @@ Namespace MRM
                 '                   Not ionTPA(i.IS).Properties.Count < i.C.Count ' 标曲文件之中只有7个点，但是实际上打了10个点，剩下的三个点可以不要了
                 '        End Function)
 
-                Dim TPA = ionTPA(ion.HMDB).Properties.ToLower                     ' 得到标准曲线实验数据
+                Dim TPA = ionTPA(ion.ID).Properties.ToLower                     ' 得到标准曲线实验数据
                 Dim ISA = ionTPA.getIS(ion)                                       ' 得到内标的实验数据，如果是空值的话，说明不需要内标进行校正
                 Dim IsIon As [IS] = [IS].TryGetValue(ion.IS, [default]:=New [IS]) ' 尝试得到内标的数据
                 Dim CIS# = IsIon?.CIS                                             ' 内标的浓度，是不变的，所以就只有一个值
                 Dim points As New List(Of MRMStandards)
-                Dim blankPoints = blanks.TryGetValue(ion.HMDB).getBlankControls
+                Dim blankPoints = blanks.TryGetValue(ion.ID).getBlankControls
                 Dim blankISPoints = blanks.TryGetValue(ion.IS).getBlankControls
 
                 ' 标准曲线数据
@@ -160,6 +161,7 @@ Namespace MRM
 
                 Dim line As PointF()
                 Dim fit As IFitted
+                Dim invalids As New List(Of PointF)
 
                 If blankPoints.Length > 0 Then
                     Dim baseline = blankPoints.Average
@@ -177,23 +179,33 @@ Namespace MRM
                     End If
 
                     line = StandardCurveWorker _
-                       .CreateModelPoints(C, nA, ISTPA, CIS, ion.HMDB, ion.Name, points) _
+                       .CreateModelPoints(C, nA, ISTPA, CIS, ion.ID, ion.Name, points) _
                        .ToArray
-                    fit = StandardCurve.CreateLinearRegression(line, weighted, maxDeletions)
+                    fit = StandardCurve.CreateLinearRegression(line, weighted, maxDeletions, removed:=invalids)
                 Else
                     line = StandardCurveWorker _
-                       .CreateModelPoints(C, A, ISTPA, CIS, ion.HMDB, ion.Name, points) _
+                       .CreateModelPoints(C, A, ISTPA, CIS, ion.ID, ion.Name, points) _
                        .ToArray
-                    fit = StandardCurve.CreateLinearRegression(line, weighted, maxDeletions)
+                    fit = StandardCurve.CreateLinearRegression(line, weighted, maxDeletions, removed:=invalids)
                 End If
 
                 If fit Is Nothing Then
                     Call $"Missing {ion.ToString}!".Warning
                     Continue For
+                Else
+                    ' get points that removed from linear modelling
+                    For Each ptRef As MRMStandards In points
+                        For Each invalid In invalids
+                            If stdNum.Abs(invalid.X - ptRef.Cti) <= 0.0001 AndAlso stdNum.Abs(invalid.Y - ptRef.Px) <= 0.0001 Then
+                                ptRef.valid = False
+                                Exit For
+                            End If
+                        Next
+                    Next
                 End If
 
                 Dim out As New StandardCurve With {
-                    .name = ion.HMDB,
+                    .name = ion.ID,
                     .linear = fit,
                     .points = points.PopAll,
                     .[IS] = IsIon
@@ -312,7 +324,8 @@ Namespace MRM
                     .Cti = Ct_i,
                     .ID = id,
                     .Name = name,
-                    .level = "L" & (i + 1)
+                    .level = "L" & (i + 1),
+                    .valid = True
                 }
 
                 ' 得到标准曲线之中的一个点
@@ -332,10 +345,10 @@ Namespace MRM
         ''' <param name="raw">``*.wiff``，转换之后的结果文件夹，其中标准曲线的数据都是默认使用``L数字``标记的。</param>
         ''' <param name="ions">包括离子对的定义数据以及浓度区间</param>
         ''' <param name="TPAFactors">
-        ''' ``{<see cref="Standards.HMDB"/>, <see cref="Standards.Factor"/>}``，这个是为了计算亮氨酸和异亮氨酸这类无法被区分的物质的峰面积所需要的
+        ''' ``{<see cref="Standards.ID"/>, <see cref="Standards.Factor"/>}``，这个是为了计算亮氨酸和异亮氨酸这类无法被区分的物质的峰面积所需要的
         ''' </param>
         ''' <returns></returns>
-        Public Function Scan(raw$, ions As IonPair(),
+        Public Function Scan(raw$, ions As IonPair(), tolerance As Tolerance,
                              Optional peakAreaMethod As PeakArea.Methods = PeakArea.Methods.NetPeakSum,
                              Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
                              Optional ByRef refName$() = Nothing,
@@ -355,7 +368,7 @@ Namespace MRM
             If mzMLRawFiles.IsNullOrEmpty Then
                 Throw New InvalidExpressionException($"No mzML file could be match by given regexp patterns: '{calibrationNamedPattern}'")
             Else
-                Return mzMLRawFiles.Scan(ions, peakAreaMethod, TPAFactors, refName, levelPattern)
+                Return mzMLRawFiles.Scan(ions, peakAreaMethod, TPAFactors, tolerance, refName, levelPattern)
             End If
         End Function
 
@@ -365,7 +378,7 @@ Namespace MRM
         ''' <param name="mzMLRawFiles">``*.wiff``，转换之后的结果文件夹，其中标准曲线的数据都是默认使用``L数字``标记的。</param>
         ''' <param name="ions">包括离子对的定义数据以及浓度区间</param>
         ''' <param name="TPAFactors">
-        ''' ``{<see cref="Standards.HMDB"/>, <see cref="Standards.Factor"/>}``，这个是为了计算亮氨酸和异亮氨酸这类无法被区分的物质的峰面积所需要的
+        ''' ``{<see cref="Standards.ID"/>, <see cref="Standards.Factor"/>}``，这个是为了计算亮氨酸和异亮氨酸这类无法被区分的物质的峰面积所需要的
         ''' </param>
         ''' <returns></returns>
         ''' 
@@ -374,6 +387,7 @@ Namespace MRM
                              ions As IonPair(),
                              peakAreaMethod As PeakArea.Methods,
                              TPAFactors As Dictionary(Of String, Double),
+                             tolerance As Tolerance,
                              Optional ByRef refName$() = Nothing,
                              Optional levelPattern$ = "[-]CAL\d+") As DataSet()
 
@@ -387,7 +401,7 @@ Namespace MRM
 
             ' get reference data
             Dim result As DataSet() = WiffRaw _
-                .Scan(mzMLRawFiles, ions, peakAreaMethod, TPAFactors, refName, False) _
+                .Scan(mzMLRawFiles, ions, peakAreaMethod, TPAFactors, tolerance, refName, False) _
                 .Select(Function(ion)
                             Return New DataSet With {
                                 .ID = ion.ID,

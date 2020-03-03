@@ -46,6 +46,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
@@ -119,7 +120,7 @@ Namespace MarkupData.mzML
 
                             Return New LibraryMatrix With {
                                 .ms2 = matrix,
-                                .Name = ms2.id
+                                .name = ms2.id
                             }
                         End Function)
         End Function
@@ -134,29 +135,6 @@ Namespace MarkupData.mzML
         <Extension>
         Public Function LoadChromatogramList(path As String) As IEnumerable(Of chromatogram)
             Return path.LoadXmlDataSet(Of chromatogram)(, xmlns:=mzML.Xmlns)
-        End Function
-
-        ReadOnly NotMRMSelectors As Index(Of String) = {"BPC", "TIC"}
-
-        ''' <summary>
-        ''' MRM ion selector based on the precursor ion m/z and the product ion m/z value.
-        ''' </summary>
-        ''' <param name="chromatograms"></param>
-        ''' <param name="ionPairs"></param>
-        ''' <returns>Nothing for ion not found</returns>
-        <Extension>
-        Public Function MRMSelector(chromatograms As IEnumerable(Of chromatogram), ionPairs As IEnumerable(Of IonPair)) As IEnumerable(Of (ion As IonPair, chromatogram As chromatogram))
-            With chromatograms.ToArray
-                Return ionPairs _
-                    .Select(Function(ion)
-                                Dim chromatogram =
-                                    .Where(Function(c)
-                                               Return (Not c.id Like NotMRMSelectors) AndAlso ion.Assert(c)
-                                           End Function) _
-                                    .FirstOrDefault
-                                Return (ion, chromatogram)
-                            End Function)
-            End With
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

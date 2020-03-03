@@ -269,6 +269,8 @@
     <Compile Include="ASCII\MGF\Ions.vb" />
     <Compile Include="ASCII\MGF\MgfWriter.vb" />
     <Compile Include="ASCII\MGF\MgfReader.vb" />
+    <Compile Include="ASCII\MSL\FileReader.vb" />
+    <Compile Include="ASCII\MSL\MSLIon.vb" />
     <Compile Include="ASCII\MSN\FileReader.vb" />
     <Compile Include="ASCII\MSN\PeakTable.vb" />
     <Compile Include="ASCII\MSN\MsnList.vb" />
@@ -296,7 +298,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="MarkupData\mzML\IonPair.vb" />
     <Compile Include="MarkupData\mzML\Extensions.vb" />
     <Compile Include="MarkupData\mzML\XML\XML.vb" />
     <Compile Include="MarkupData\mzXML\Extensions.vb" />

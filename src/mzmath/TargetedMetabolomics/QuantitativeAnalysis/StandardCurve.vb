@@ -51,6 +51,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Data.Bootstrapping
+Imports Microsoft.VisualBasic.Language
 
 ''' <summary>
 ''' The linear model of the targeted metabolism model data.(标准曲线模型)
@@ -106,8 +107,8 @@ Public Class StandardCurve : Implements INamedValue
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Shared Function CreateLinearRegression(points As IEnumerable(Of PointF), weighted As Boolean, maxDeletions%) As IFitted
-        Return points.AutoPointDeletion(weighted, max:=maxDeletions)
+    Public Shared Function CreateLinearRegression(points As IEnumerable(Of PointF), weighted As Boolean, maxDeletions%, ByRef removed As List(Of PointF)) As IFitted
+        Return points.AutoPointDeletion(weighted, max:=maxDeletions, removed:=removed)
     End Function
 
 End Class

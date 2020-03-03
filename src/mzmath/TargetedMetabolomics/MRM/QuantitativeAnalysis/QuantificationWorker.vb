@@ -1,6 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
@@ -33,12 +34,14 @@ Namespace MRM
                                              raw$,
                                              ions As IonPair(),
                                              peakAreaMethod As PeakArea.Methods,
-                                             TPAFactors As Dictionary(Of String, Double)) As IEnumerable(Of ContentResult(Of MRMPeakTable))
+                                             TPAFactors As Dictionary(Of String, Double),
+                                             tolerance As Tolerance) As IEnumerable(Of ContentResult(Of MRMPeakTable))
 
             Dim TPA As Dictionary(Of String, IonTPA) = raw _
                 .ScanTPA(ionpairs:=ions,
                          peakAreaMethod:=peakAreaMethod,
-                         TPAFactors:=TPAFactors
+                         TPAFactors:=TPAFactors,
+                         tolerance:=tolerance
                 ) _
                 .ToDictionary(Function(ion) ion.name)
 

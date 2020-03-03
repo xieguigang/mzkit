@@ -1,52 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::c5aff51c7f3013cc7a2be4a7f85043b6, src\visualize\plot\ChromatogramPlot.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module ChromatogramPlot
-    ' 
-    '     Function: MRMChromatogramPlot, (+2 Overloads) TICplot
-    ' 
-    ' /********************************************************************************/
+' Module ChromatogramPlot
+' 
+'     Function: MRMChromatogramPlot, (+2 Overloads) TICplot
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
@@ -89,18 +91,38 @@ Public Module ChromatogramPlot
                                         Optional colorsSchema$ = "scibasic.category31()",
                                         Optional penStyle$ = Stroke.ScatterLineStroke,
                                         Optional labelFontStyle$ = CSSFont.Win7Normal,
-                                        Optional labelConnectorStroke$ = Stroke.StrongHighlightStroke) As GraphicsData
-        Return ions.ExtractIonData(mzML, Function(ion) ion.name) _
-                   .TICplot(
-            size:=size,
-            bg:=bg,
-            colorsSchema:=colorsSchema,
-            labelConnectorStroke:=labelConnectorStroke,
-            labelFontStyle:=labelFontStyle,
-            margin:=margin,
-            penStyle:=penStyle,
-            fillCurve:=False
-        )
+                                        Optional labelConnectorStroke$ = Stroke.StrongHighlightStroke,
+                                        Optional labelLayoutTicks% = 1000,
+                                        Optional tolerance$ = "ppm:20") As GraphicsData
+
+        Dim mzTolerance As Tolerance = Ms1.Tolerance.ParseScript(tolerance)
+        Dim MRM As IonChromatogramData() = IonPair _
+            .GetIsomerism(ions, mzTolerance) _
+            .ExtractIonData(
+                mzML:=mzML,
+                assignName:=Function(ion) ion.name,
+                tolerance:=mzTolerance
+            )
+
+        Return MRM.Select(Function(c)
+                              Return New NamedCollection(Of ChromatogramTick) With {
+                                 .name = c.name,
+                                 .value = c.chromatogram,
+                                 .description = c.description
+                              }
+                          End Function) _
+                  .ToArray _
+                  .TICplot(
+                      size:=size,
+                      bg:=bg,
+                      colorsSchema:=colorsSchema,
+                      labelConnectorStroke:=labelConnectorStroke,
+                      labelFontStyle:=labelFontStyle,
+                      margin:=margin,
+                      penStyle:=penStyle,
+                      fillCurve:=False,
+                      labelLayoutTicks:=labelLayoutTicks
+                  )
     End Function
 
     ''' <summary>

@@ -27,10 +27,21 @@ Namespace MRM.Data
         ''' <returns></returns>
         Public Property cIS As Double
         ''' <summary>
-        ''' 当前试验点的标准品浓度
+        ''' 当前试验点的标准品浓度(Py)
         ''' </summary>
         ''' <returns></returns>
         Public Property Cti As Double
+
+        Public ReadOnly Property Px As Double
+            Get
+                If AIS = 0.0 Then
+                    Return Ati
+                Else
+                    Return Ati / AIS
+                End If
+            End Get
+        End Property
+
         Public Property yfit As Double
         Public ReadOnly Property [error] As Double
             Get
@@ -43,6 +54,13 @@ Namespace MRM.Data
                 Return stdNum.Round([error] / Cti, 4)
             End Get
         End Property
+
+        ''' <summary>
+        ''' If the value of this property is false, then it means 
+        ''' current reference point is removed from linear modelling.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property valid As Boolean
 
         ''' <summary>
         ''' 浓度梯度水平的名称，例如：``L1, L2, L3, ...``

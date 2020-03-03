@@ -1,58 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::2fe96072e6fb607f07b7d9f14337147b, src\mzmath\TargetedMetabolomics\QuantitativeAnalysis\TPAExtensions.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class IonTPA
-    ' 
-    '     Properties: area, baseline, maxPeakHeight, name, peakROI
-    ' 
-    '     Function: ToString
-    ' 
-    ' Module TPAExtensions
-    ' 
-    '     Function: ionTPA, TPAIntegrator
-    ' 
-    ' /********************************************************************************/
+' Class IonTPA
+' 
+'     Properties: area, baseline, maxPeakHeight, name, peakROI
+' 
+'     Function: ToString
+' 
+' Module TPAExtensions
+' 
+'     Function: ionTPA, TPAIntegrator
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports stdNum = System.Math
@@ -74,6 +75,7 @@ Public Class IonTPA
 
 End Class
 
+<HideModuleName>
 Public Module TPAExtensions
 
     ''' <summary>
@@ -84,27 +86,18 @@ Public Module TPAExtensions
     ''' <param name="peakAreaMethod"></param>
     ''' <param name="integratorTicks%"></param>
     ''' <param name="TPAFactor">
-    ''' ``{<see cref="Standards.HMDB"/>, <see cref="Standards.Factor"/>}``，这个是为了计算亮氨酸和异亮氨酸这类无法被区分的物质的峰面积所需要的
+    ''' ``{<see cref="Standards.ID"/>, <see cref="Standards.Factor"/>}``，这个是为了计算亮氨酸和异亮氨酸这类无法被区分的物质的峰面积所需要的
     ''' </param>
     ''' <returns></returns>
     <Extension>
-    Public Function ionTPA(ion As NamedCollection(Of ChromatogramTick),
+    Public Function ionTPA(ion As IonChromatogramData,
                            baselineQuantile#,
                            peakAreaMethod As PeakArea.Methods,
                            Optional integratorTicks% = 5000,
                            Optional TPAFactor# = 1) As IonTPA
 
-        Dim vector As IVector(Of ChromatogramTick) = ion.value.Shadows
-        Dim ROIData = vector _
-            .PopulateROI _
-            .OrderByDescending(Function(ROI)
-                                   ' 这个积分值只是用来查找最大的峰面积的ROI区域
-                                   ' 并不是最后的峰面积结果
-                                   ' 还需要在下面的代码之中做峰面积积分才可以得到最终的结果
-                                   Return ROI.Integration
-                               End Function) _
-            .ToArray
-
+        Dim vector As IVector(Of ChromatogramTick) = ion.chromatogram.Shadows
+        Dim ROIData As ROI() = vector.PopulateROI.ToArray
 
         If ROIData.Length = 0 Then
             Return New IonTPA With {
@@ -112,23 +105,100 @@ Public Module TPAExtensions
                 .peakROI = New DoubleRange(0, 0)
             }
         Else
-            Dim peak As DoubleRange = ROIData _
-                .First _
-                .Time ' .MRMPeak(baselineQuantile:=baselineQuantile)
-            Dim data As (peak As DoubleRange, area#, baseline#, maxPeakHeight#)
-
-            With vector.TPAIntegrator(peak, baselineQuantile, peakAreaMethod, integratorTicks, TPAFactor)
-                data = (peak, .Item1, .Item2, .Item3)
-            End With
-
-            Return New IonTPA With {
-                .name = ion.name,
-                .peakROI = data.peak,
-                .area = data.area,
-                .baseline = data.baseline,
-                .maxPeakHeight = data.maxPeakHeight
-            }
+            Return ion.ProcessingIonPeakArea(
+                vector:=vector,
+                ROIData:=ROIData,
+                baselineQuantile:=baselineQuantile,
+                peakAreaMethod:=peakAreaMethod,
+                integratorTicks:=integratorTicks,
+                TPAFactor:=TPAFactor
+            )
         End If
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="ion"></param>
+    ''' <param name="vector"></param>
+    ''' <param name="ROIData">The largest ROI is the first element.</param>
+    ''' <param name="baselineQuantile#"></param>
+    ''' <param name="peakAreaMethod"></param>
+    ''' <param name="integratorTicks%"></param>
+    ''' <param name="TPAFactor#"></param>
+    ''' <returns></returns>
+    <Extension>
+    Private Function ProcessingIonPeakArea(ion As IonChromatogramData, vector As IVector(Of ChromatogramTick), ROIData As ROI(),
+                                           baselineQuantile#,
+                                           peakAreaMethod As PeakArea.Methods,
+                                           integratorTicks%,
+                                           TPAFactor#) As IonTPA
+
+        Dim peak As DoubleRange
+        Dim data As (peak As DoubleRange, area#, baseline#, maxPeakHeight#)
+        Dim target = ion.ion.target
+        Dim find As DoubleRange = {target.rt - 5, target.rt + 5}
+
+        ROIData = ROIData _
+            .OrderBy(Function(r) r.Time.Min) _
+            .ToArray
+
+        Dim region As ROI = ROIData _
+            .Where(Function(r)
+                       Return r.Time.IsOverlapping(find)
+                   End Function) _
+            .FirstOrDefault
+
+        If ion.ion.hasIsomerism Then
+            If region Is Nothing Then
+                ' find by index
+                If ion.ion.index < ROIData.Length Then
+                    region = ROIData(ion.ion.index)
+                Else
+                    region = ROIData.Last
+                End If
+            End If
+
+            If region Is Nothing Then
+                Return New IonTPA With {
+                    .name = ion.name,
+                    .peakROI = New DoubleRange(0, 0)
+                }
+            Else
+                peak = region.Time
+            End If
+        Else
+            If target.rt Is Nothing OrElse region Is Nothing Then
+                ROIData = ROIData _
+                    .OrderByDescending(Function(ROI)
+                                           ' 这个积分值只是用来查找最大的峰面积的ROI区域
+                                           ' 并不是最后的峰面积结果
+                                           ' 还需要在下面的代码之中做峰面积积分才可以得到最终的结果
+                                           Return ROI.Integration
+                                       End Function) _
+                    .ToArray
+
+                peak = ROIData(Scan0).Time
+            Else
+                peak = region.Time
+            End If
+        End If
+
+        If Not peak.IsInside(CDbl(target.rt)) Then
+            Call $"The ROI peak region [{peak.Min}, {peak.Max}] is not contains '{ion.name}' ({ion.ion.target.rt} sec)!".Warning
+        End If
+
+        With vector.TPAIntegrator(peak, baselineQuantile, peakAreaMethod, integratorTicks, TPAFactor)
+            data = (peak, .Item1, .Item2, .Item3)
+        End With
+
+        Return New IonTPA With {
+            .name = ion.name,
+            .peakROI = data.peak,
+            .area = data.area,
+            .baseline = data.baseline,
+            .maxPeakHeight = data.maxPeakHeight
+        }
     End Function
 
     ''' <summary>

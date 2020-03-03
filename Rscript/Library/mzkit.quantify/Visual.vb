@@ -42,9 +42,9 @@
 
 #End Region
 
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -80,8 +80,8 @@ Module Visual
     End Function
 
     <ExportAPI("chromatogram.plot")>
-    Public Function chromatogramPlot(mzML$, ions As IonPair()) As GraphicsData
-        Return ions.MRMChromatogramPlot(mzML)
+    Public Function chromatogramPlot(mzML$, ions As IonPair(), Optional labelLayoutTicks% = 2000) As GraphicsData
+        Return ions.MRMChromatogramPlot(mzML, labelLayoutTicks:=labelLayoutTicks)
     End Function
 
     <ExportAPI("MRM.chromatogramPeaks.plot")>
