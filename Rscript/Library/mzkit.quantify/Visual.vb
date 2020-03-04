@@ -51,6 +51,10 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Internal.Object
+Imports SMRUCC.Rsharp.Runtime.Interop
+Imports REnv = SMRUCC.Rsharp.Runtime
 
 <Package("mzkit.quantify.visual")>
 Module Visual
@@ -90,11 +94,30 @@ Module Visual
     End Function
 
     <ExportAPI("MRM.chromatogramPeaks.plot")>
-    Public Function MRMchromatogramPeakPlot(chromatogram As ChromatogramTick(), Optional title$ = "MRM Chromatogram Peak Plot") As GraphicsData
-        Return chromatogram.Plot(
-            title:=title,
-            showMRMRegion:=True,
-            showAccumulateLine:=True
-        )
+    <RApiReturn(GetType(GraphicsData))>
+    Public Function MRMchromatogramPeakPlot(chromatogram As Object, Optional title$ = "MRM Chromatogram Peak Plot", Optional env As Environment = Nothing) As Object
+        If chromatogram Is Nothing Then
+            Return REnv.Internal.debug.stop("No chromatogram provided!", env)
+        End If
+
+        If TypeOf chromatogram Is ChromatogramTick() Then
+            Return DirectCast(chromatogram, ChromatogramTick()).Plot(
+                title:=title,
+                showMRMRegion:=True,
+                showAccumulateLine:=True
+            )
+        ElseIf TypeOf chromatogram Is list AndAlso DirectCast(chromatogram, list).slots.All(Function(c) REnv.isVector(Of ChromatogramTick)(c.Value)) Then
+            Return DirectCast(chromatogram, list).slots _
+                .Select(Function(sample)
+                            Return New NamedCollection(Of ChromatogramTick) With {
+                                .name = sample.Key,
+                                .value = REnv.asVector(Of ChromatogramTick)(sample.Value)
+                            }
+                        End Function) _
+                .ToArray _
+                .TICplot()
+        Else
+            Return REnv.Internal.debug.stop($"Invalid input data: {chromatogram.GetType.FullName}", env)
+        End If
     End Function
 End Module
