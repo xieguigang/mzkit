@@ -348,7 +348,7 @@ Namespace MRM
         ''' ``{<see cref="Standards.ID"/>, <see cref="Standards.Factor"/>}``，这个是为了计算亮氨酸和异亮氨酸这类无法被区分的物质的峰面积所需要的
         ''' </param>
         ''' <returns></returns>
-        Public Function Scan(raw$, ions As IonPair(), tolerance As Tolerance, timeWindowSize#,
+        Public Function Scan(raw$, ions As IonPair(), tolerance As Tolerance, timeWindowSize#, angleThreshold#,
                              Optional peakAreaMethod As PeakArea.Methods = PeakArea.Methods.NetPeakSum,
                              Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
                              Optional ByRef refName$() = Nothing,
@@ -375,7 +375,8 @@ Namespace MRM
                     tolerance:=tolerance,
                     timeWindowSize:=timeWindowSize,
                     refName:=refName,
-                    levelPattern:=levelPattern
+                    levelPattern:=levelPattern,
+                    angleThreshold:=angleThreshold
                 )
             End If
         End Function
@@ -397,6 +398,7 @@ Namespace MRM
                              TPAFactors As Dictionary(Of String, Double),
                              tolerance As Tolerance,
                              timeWindowSize#,
+                             angleThreshold#,
                              Optional ByRef refName$() = Nothing,
                              Optional levelPattern$ = "[-]CAL\d+") As DataSet()
 
@@ -410,7 +412,16 @@ Namespace MRM
 
             ' get reference data
             Dim result As DataSet() = WiffRaw _
-                .Scan(mzMLRawFiles, ions, peakAreaMethod, TPAFactors, tolerance, timeWindowSize, refName, False) _
+                .Scan(mzMLRawFiles:=mzMLRawFiles,
+                      ions:=ions,
+                      peakAreaMethod:=peakAreaMethod,
+                      TPAFactors:=TPAFactors,
+                      tolerance:=tolerance,
+                      timeWindowSize:=timeWindowSize,
+                      angleThreshold:=angleThreshold,
+                      refName:=refName,
+                      removesWiffName:=False
+                 ) _
                 .Select(Function(ion)
                             Return New DataSet With {
                                 .ID = ion.ID,

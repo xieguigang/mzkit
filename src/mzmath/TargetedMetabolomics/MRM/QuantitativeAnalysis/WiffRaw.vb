@@ -56,7 +56,7 @@ Namespace MRM
 
     Public Module WiffRaw
 
-        Public Function ScanPeakTable(mzML$, ions As IonPair(), tolerance As Tolerance, timeWindowSize#,
+        Public Function ScanPeakTable(mzML$, ions As IonPair(), tolerance As Tolerance, timeWindowSize#, angleThreshold#,
                                       Optional peakAreaMethod As PeakArea.Methods = PeakArea.Methods.NetPeakSum,
                                       Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As DataSet()
 
@@ -66,7 +66,8 @@ Namespace MRM
                 peakAreaMethod:=peakAreaMethod,
                 TPAFactors:=TPAFactors,
                 tolerance:=tolerance,
-                timeWindowSize:=timeWindowSize
+                timeWindowSize:=timeWindowSize,
+                angleThreshold:=angleThreshold
             )
             Dim peaktable As DataSet() = TPA _
                 .Select(Function(ion)

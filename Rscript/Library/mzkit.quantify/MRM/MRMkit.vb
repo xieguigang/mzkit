@@ -346,6 +346,7 @@ Module MRMkit
                                   Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum,
                                   Optional tolerance$ = "ppm:20",
                                   Optional timeWindowSize# = 5,
+                                  Optional angleThreshold# = 5,
                                   Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As DataSet()
 
         If TPAFactors Is Nothing Then
@@ -358,7 +359,8 @@ Module MRMkit
             tolerance:=interop_arguments.GetTolerance(tolerance),
             timeWindowSize:=timeWindowSize,
             peakAreaMethod:=peakAreaMethod,
-            TPAFactors:=TPAFactors
+            TPAFactors:=TPAFactors,
+            angleThreshold:=angleThreshold
         )
     End Function
 
@@ -381,6 +383,7 @@ Module MRMkit
     Public Function ScanWiffRaw(wiffConverts As String(), ions As IonPair(),
                                 Optional peakAreaMethod As PeakArea.Methods = PeakArea.Methods.NetPeakSum,
                                 Optional tolerance$ = "ppm:20",
+                                Optional angleThreshold# = 5,
                                 Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
                                 Optional removesWiffName As Boolean = True,
                                 Optional timeWindowSize# = 5) As DataSet()
@@ -421,7 +424,8 @@ Module MRMkit
             refName:=Nothing,
             removesWiffName:=removesWiffName,
             tolerance:=interop_arguments.GetTolerance(tolerance),
-            timeWindowSize:=timeWindowSize
+            timeWindowSize:=timeWindowSize,
+            angleThreshold:=angleThreshold
         )
     End Function
 
@@ -501,6 +505,7 @@ Module MRMkit
                                    Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum,
                                    Optional tolerance$ = "ppm:20",
                                    Optional timeWindowSize# = 5,
+                                   Optional angleThreshold# = 5,
                                    Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As QuantifyScan
 
         Return MRMSamples.SampleQuantify(
@@ -510,7 +515,8 @@ Module MRMkit
             tolerance:=interop_arguments.GetTolerance(tolerance),
             peakAreaMethod:=peakAreaMethod,
             TPAFactors:=TPAFactors,
-            timeWindowSize:=timeWindowSize
+            timeWindowSize:=timeWindowSize,
+            angleThreshold:=angleThreshold
         )
     End Function
 
