@@ -101,6 +101,31 @@
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\mzkit\</OutputPath>
+    <DocumentationFile>mz.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <WarningLevel>0</WarningLevel>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\..\..\dist\bin\</OutputPath>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>mz.xml</DocumentationFile>
+    <WarningLevel>0</WarningLevel>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
