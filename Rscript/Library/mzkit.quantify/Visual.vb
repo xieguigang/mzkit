@@ -95,7 +95,7 @@ Module Visual
 
     <ExportAPI("MRM.chromatogramPeaks.plot")>
     <RApiReturn(GetType(GraphicsData))>
-    Public Function MRMchromatogramPeakPlot(chromatogram As Object, Optional title$ = "MRM Chromatogram Peak Plot", Optional env As Environment = Nothing) As Object
+    Public Function MRMchromatogramPeakPlot(chromatogram As Object, Optional title$ = "MRM Chromatogram Peak Plot", Optional size As Object = "2100,1650", Optional env As Environment = Nothing) As Object
         If chromatogram Is Nothing Then
             Return REnv.Internal.debug.stop("No chromatogram provided!", env)
         End If
@@ -104,7 +104,8 @@ Module Visual
             Return DirectCast(chromatogram, ChromatogramTick()).Plot(
                 title:=title,
                 showMRMRegion:=True,
-                showAccumulateLine:=True
+                showAccumulateLine:=True,
+                size:=InteropArgumentHelper.getSize(size, "2100,1650")
             )
         ElseIf TypeOf chromatogram Is list AndAlso DirectCast(chromatogram, list).slots.All(Function(c) REnv.isVector(Of ChromatogramTick)(c.Value)) Then
             Return DirectCast(chromatogram, list).slots _
@@ -115,7 +116,7 @@ Module Visual
                             }
                         End Function) _
                 .ToArray _
-                .TICplot()
+                .TICplot(size:=InteropArgumentHelper.getSize(size, "2100,1650"))
         Else
             Return REnv.Internal.debug.stop($"Invalid input data: {chromatogram.GetType.FullName}", env)
         End If

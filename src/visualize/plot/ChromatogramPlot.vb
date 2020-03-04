@@ -194,7 +194,8 @@ Public Module ChromatogramPlot
                             Optional showLegends As Boolean = True,
                             Optional legendFontCSS$ = CSSFont.Win10Normal,
                             Optional deln% = 10,
-                            Optional isXIC As Boolean = False) As GraphicsData
+                            Optional isXIC As Boolean = False,
+                            Optional fillAlpha As Integer = 180) As GraphicsData
 
         Dim labelFont As Font = CSSFont.TryParse(labelFontStyle)
         Dim labelConnector As Pen = Stroke.TryParse(labelConnectorStroke)
@@ -266,6 +267,7 @@ Public Module ChromatogramPlot
 
                 Dim legends As New List(Of Legend)
                 Dim peakTimes As New List(Of NamedValue(Of ChromatogramTick))
+                Dim fillColor As Brush
 
                 For i As Integer = 0 To ionData.Length - 1
                     Dim curvePen As Pen = colors.Next
@@ -310,9 +312,8 @@ Public Module ChromatogramPlot
                     polygon.Add(New PointF(polygon.Last.X, bottom))
 
                     If fillCurve Then
-                        Dim color As Color = Color.FromArgb(200, curvePen.Color)
-
-                        Call g.FillPolygon(New SolidBrush(color), polygon)
+                        fillColor = New SolidBrush(Color.FromArgb(fillAlpha, curvePen.Color))
+                        g.FillPolygon(fillColor, polygon)
                     End If
                 Next
 

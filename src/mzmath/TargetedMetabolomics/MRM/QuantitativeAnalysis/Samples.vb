@@ -66,10 +66,10 @@ Namespace MRM
 
     Public Structure IonChromatogramData
 
-        Public name As String
-        Public description As String
-        Public chromatogram As ChromatogramTick()
-        Public ion As IsomerismIonPairs
+        Public Property name As String
+        Public Property description As String
+        Public Property chromatogram As ChromatogramTick()
+        Public Property ion As IsomerismIonPairs
 
     End Structure
 

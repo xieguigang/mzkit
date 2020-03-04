@@ -62,6 +62,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports REnv = SMRUCC.Rsharp.Runtime
 Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
@@ -144,13 +145,15 @@ Module MRMkit
     ''' <param name="ionpairs">metabolite targets</param>
     ''' <returns></returns>
     <ExportAPI("extract.ions")>
-    Public Function ExtractIonData(mzML$, ionpairs As IonPair(), Optional tolerance As Object = "ppm:20") As IonChromatogramData()
+    Public Function ExtractIonData(mzML$, ionpairs As IonPair(), Optional tolerance As Object = "ppm:20") As vector
         Return MRMSamples.ExtractIonData(
             ion_pairs:=IonPair.GetIsomerism(ionpairs, interop_arguments.GetTolerance(tolerance)),
             mzML:=mzML,
             assignName:=Function(i) i.accession,
             tolerance:=interop_arguments.GetTolerance(tolerance)
-        )
+        ).DoCall(Function(data)
+                     Return New vector With {.data = data}
+                 End Function)
     End Function
 
     ''' <summary>
