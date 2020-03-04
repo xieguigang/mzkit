@@ -38,8 +38,10 @@ let tolerance as string    = ?"--mz.diff"    || "ppm:20";
 # + negative value for auto detects: n.points / 2 - 1
 # + ZERO for no points is removed
 # + positive value for specific a number for the deletion.
-let maxNumOfPoint.delets   = ?"--max.deletes"     || -1;
-let angle.threshold        = ?"--angle.threshold" || 5;
+let maxNumOfPoint.delets   = ?"--max.deletes"       || -1;
+
+let angle.threshold        = ?"--angle.threshold"   || 5;
+let baseline.quantile      = ?"--baseline.quantile" || 0.6;
 
 if (isWorkCurve) {
 	print("Linear Modelling will running in work curve mode!");
@@ -52,6 +54,20 @@ print("m/z tolerance for find MRM ion:");
 print(tolerance);
 print("Integrator that we used for calculate the Peak Area:");
 print(integrator);
+print("Max number of points that allowes removes automatically in the process of linear modelling:");
+
+if (maxNumOfPoint.delets < 0) {
+	print("It's depends on the number of reference sample");
+} else {
+	if (maxNumOfPoint.delets == 0) {
+		print("Is not allowed for removes any points!");
+	} else {
+		print(`Removes less than ${maxNumOfPoint.delets} bad reference points.`);
+	}
+} 
+
+print(`MRM ion peak is populated from raw data with angle threshold ${angle.threshold}.`);
+print(`All of the data ticks that its intensity value less than ${baseline.quantile} quantile level will be treated as background noise`)
 
 let reference = NULL;
 let is        = NULL;
