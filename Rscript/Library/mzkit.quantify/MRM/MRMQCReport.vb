@@ -3,10 +3,12 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot.Histogram
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.SymbolBuilder
 Imports Microsoft.VisualBasic.Text.Xml
@@ -53,6 +55,7 @@ Module MRMQCReport
         Dim contents As New List(Of String)
         Dim rows As New List(Of String)
         Dim mean#
+        Dim RSD_dist As New List(Of Double)
 
         For Each metabolite In QCResult
             RSD = metabolite.Values.RSD
@@ -70,9 +73,13 @@ Module MRMQCReport
                 }
             }
 
+            If Not RSD.IsNaNImaginary Then
+                RSD_dist += RSD
+            End If
+
             rows *= 0
 
-            For Each sample In metabolite.Properties
+            For Each sample As KeyValuePair(Of String, Double) In metabolite.Properties
                 rows += (<tr>
                              <td><%= sample.Key %></td>
                              <td><%= sample.Value %></td>
@@ -105,16 +112,21 @@ Module MRMQCReport
                                 </div>, rows.JoinBy(vbCrLf))
         Next
 
-        report("TOC") = TOCData.reportTOC
+        report("TOC") = TOCData.reportTOC(RSD_dist)
         report("linears") = contents.JoinBy(vbCrLf)
 
         Return report.ToString
     End Function
 
     <Extension>
-    Private Function reportTOC(TOCData As IEnumerable(Of DataSet)) As String
+    Private Function reportTOC(TOCData As IEnumerable(Of DataSet), RSD_dist As Double()) As String
         Dim rows As New List(Of String)
         Dim RSD#
+        Dim RSD_steps = 0.1
+        Dim hist As Image = RSD_dist _
+            .Hist([step]:=RSD_steps) _
+            .HistogramPlot([step]:=RSD_steps, serialsTitle:="QC RSD", xLabel:="RSD", yLabel:="Number of Metabolite") _
+            .AsGDIImage
 
         For Each compound In TOCData
             RSD = compound!RSD
@@ -126,19 +138,22 @@ Module MRMQCReport
                             </tr>, compound.ID)
         Next
 
-        Return sprintf(<table class="table">
-                           <thead>
-                               <tr>
-                                   <th>Metabolite</th>
-                                   <th>Mean</th>
-                                   <th>SD</th>
-                                   <th>RSD</th>
-                               </tr>
-                           </thead>
-                           <tbody>
+        Return sprintf(<div>
+                           <img src=<%= New DataURI(hist).ToString %> style="width: 70%;"/>
+                           <table class="table">
+                               <thead>
+                                   <tr>
+                                       <th>Metabolite</th>
+                                       <th>Mean</th>
+                                       <th>SD</th>
+                                       <th>RSD</th>
+                                   </tr>
+                               </thead>
+                               <tbody>
                                %s
-                           </tbody>
-                       </table>, rows.JoinBy(vbCrLf))
+                               </tbody>
+                           </table>
+                       </div>, rows.JoinBy(vbCrLf))
     End Function
 End Module
 
