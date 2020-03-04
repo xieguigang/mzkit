@@ -69,6 +69,7 @@ Module MRMLinearReport
                     </div>
 
                     <hr/>
+                    <div style="page-break-after: always;"></div>
 
                     {$linears}
                 </body>

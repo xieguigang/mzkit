@@ -111,6 +111,7 @@ Module MRMQCReport
                                             %s
                                         </tbody>
                                     </table>
+                                    <div style="page-break-after: always;"></div>
                                 </div>, rows.JoinBy(vbCrLf))
         Next
 
