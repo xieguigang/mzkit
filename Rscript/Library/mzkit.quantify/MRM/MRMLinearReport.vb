@@ -21,7 +21,7 @@ Module MRMLinearReport
 
     Public Function CreateHtml(obj As Object) As String
         Dim standardCurves As StandardCurve() = getStandardCurve(obj)
-        Dim report As ScriptBuilder = getBlankReport()
+        Dim report As ScriptBuilder = getBlankReport(title:="MRM Quantification Linear Models")
         Dim samples As QuantifyScan() = Nothing
 
         If obj.GetType Is GetType(MRMDataSet) Then
@@ -32,14 +32,14 @@ Module MRMLinearReport
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Private Function getBlankReport() As ScriptBuilder
+    Friend Function getBlankReport(title As String) As ScriptBuilder
         Return New ScriptBuilder(
             <html lang="zh-CN">
                 <head>
                     <meta charset="utf-8"/>
                     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
-                    <title>Linear Models</title>
+                    <title><%= title %> | BioNovoGene</title>
 
                     <!-- Bootstrap CSS -->
                     <link rel="stylesheet" href="http://cdn.biodeep.cn:8848/styles/bootstrap-4.3.1-dist/css/bootstrap.min.css" crossorigin="anonymous"/>
@@ -59,7 +59,7 @@ Module MRMLinearReport
                     </style>
                 </head>
                 <body class="container">
-                    <h1>MRM Quantification Linear Models</h1>
+                    <h1><%= title %></h1>
                     <hr/>
                     <h2>Table Of Content</h2>
                     {$TOC}

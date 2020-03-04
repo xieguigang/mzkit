@@ -98,7 +98,7 @@ Module MRMkit
         ' create linear regression report
         REnv.Internal.htmlPrinter.AttachHtmlFormatter(Of StandardCurve())(AddressOf MRMLinearReport.CreateHtml)
         REnv.Internal.htmlPrinter.AttachHtmlFormatter(Of MRMDataSet)(AddressOf MRMLinearReport.CreateHtml)
-        ' REnv.Internal.htmlPrinter.AttachHtmlFormatter(Of )()
+        REnv.Internal.htmlPrinter.AttachHtmlFormatter(Of QCData)(AddressOf MRMQCReport.CreateHtml)
 
         Dim toolkit As AssemblyInfo = GetType(MRMkit).Assembly.FromAssembly
 
@@ -588,10 +588,17 @@ Module MRMkit
     ''' <param name="samples"></param>
     ''' <returns></returns>
     <ExportAPI("mrm.dataset")>
-    Public Function CreateMRMDataSet(standardCurve As StandardCurve(), samples As QuantifyScan()) As MRMDataSet
-        Return New MRMDataSet With {
-            .StandardCurve = standardCurve,
-            .Samples = samples
-        }
+    Public Function CreateMRMDataSet(standardCurve As StandardCurve(), samples As QuantifyScan(), Optional QC_dataset As Boolean = False) As Object
+        If QC_dataset Then
+            Return New QCData With {
+                .model = standardCurve,
+                .result = samples
+            }
+        Else
+            Return New MRMDataSet With {
+                .StandardCurve = standardCurve,
+                .Samples = samples
+            }
+        End If
     End Function
 End Module

@@ -45,7 +45,7 @@ let tolerance   as string  = ?"--mz.diff"    || "ppm:20";
 let maxNumOfPoint.delets = ?"--max.deletes"       || -1;
 
 let angle.threshold      = ?"--angle.threshold"   || 5;
-let baseline.quantile    = ?"--baseline.quantile" || 0.5;
+let baseline.quantile    = ?"--baseline.quantile" || 0;
 
 if (isWorkCurve) {
 	print("Linear Modelling will running in work curve mode!");
@@ -283,6 +283,7 @@ let doLinears as function(wiff_standards, subdir = "") {
 	
 	# save linear regression html report
 	html(mrm.dataset(ref, scans)) :> writeLines(con = `${dir}/${subdir}/index.html`);
+	html(mrm.dataset(ref, scans, QC_dataset = TRUE)) :> writeLines(con = `${dir}/${subdir}/QC.html`);
 }
 
 if (wiff$numberOfStandardReference > 1) {
