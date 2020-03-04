@@ -21,7 +21,7 @@ mzML <- list.files(mzML, pattern = "*.mzML");
 
 for(ion in MRM) {
 	let chromatograms = lapply(mzML, function(path) {
-		as.object(extract.ions(path, ion, tolerance))$chromatogram;
+		as.object(extract.ions(path, ion, tolerance)[1])$chromatogram;
 	});
 
 	names(chromatograms) <- basename(mzML);
