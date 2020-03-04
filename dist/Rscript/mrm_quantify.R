@@ -5,11 +5,15 @@ imports ["mzkit.mrm", "mzkit.quantify.visual"] from "mzkit.quantify.dll";
 imports "mzkit.assembly" from "mzkit.dll";
 
 # config of the standard curve data files
-let wiff as string     = ?"--Cal"          || stop("No standard curve data provides!");
-let sample as string   = ?"--data"         || stop("No sample data files provided!");
+let wiff     as string = ?"--Cal"          || stop("No standard curve data provides!");
+let sample   as string = ?"--data"         || stop("No sample data files provided!");
 let MRM.info as string = ?"--MRM"          || stop("Missing MRM information table file!");
-let ions as string     = ?"--ions";         
-let dir as string      = ?"--export"       || `${wiff :> trim(" ")}-result/`;
+# use external MSL data file if there is no 
+# ion pair data in the MRM table file. 
+let ions     as string = ?"--ions";         
+let dir      as string = ?"--export"       || `${wiff :> trim(" ")}-result/`;
+# The regexp pattern of the file name for match
+# the reference point data.
 let patternOf.ref      = ?"--patternOfRef" || '[-]?LM[-]?\d+';
 
 # let Methods as integer = {
@@ -27,10 +31,10 @@ let patternOf.ref      = ?"--patternOfRef" || '[-]?LM[-]?\d+';
 # 3. MRM.peaks
 # 4. extract.peakROI
 #
-let integrator as string   = ?"--integrator" || "NetPeakSum";
+let integrator  as string  = ?"--integrator" || "NetPeakSum";
 let isWorkCurve as boolean = ?"--workMode";
-let rt_winSize as double   = as.numeric(?"--rt.winsize" || "1"); 
-let tolerance as string    = ?"--mz.diff"    || "ppm:20";
+let rt_winSize  as double  = as.numeric(?"--rt.winsize" || "1"); 
+let tolerance   as string  = ?"--mz.diff"    || "ppm:20";
 
 # Max number of points for removes in 
 # linear modelling
@@ -38,10 +42,10 @@ let tolerance as string    = ?"--mz.diff"    || "ppm:20";
 # + negative value for auto detects: n.points / 2 - 1
 # + ZERO for no points is removed
 # + positive value for specific a number for the deletion.
-let maxNumOfPoint.delets   = ?"--max.deletes"       || -1;
+let maxNumOfPoint.delets = ?"--max.deletes"       || -1;
 
-let angle.threshold        = ?"--angle.threshold"   || 5;
-let baseline.quantile      = ?"--baseline.quantile" || 0.6;
+let angle.threshold      = ?"--angle.threshold"   || 5;
+let baseline.quantile    = ?"--baseline.quantile" || 0.5;
 
 if (isWorkCurve) {
 	print("Linear Modelling will running in work curve mode!");
@@ -100,7 +104,13 @@ if (file.exists(ions)) {
 print("View reference standard levels data:");
 print(reference);
 print("Internal standards:");
-print(is);
+
+if (length(is) == 0) {
+	print("No internal standards...");
+} else {
+	print(is);
+}
+
 print("Ion pairs for each required metabolites:");
 print(ions);
 print("Previews of the isomerism ion pairs:");
@@ -123,12 +133,14 @@ if (wiff$hasBlankControls) {
 	print(wiff$blanks);
 
 	blanks = wiff$blanks :> wiff.scans(
-		ions            = ions, 
-		peakAreaMethod  = integrator, 
-		TPAFactors      = NULL,
-		tolerance       = tolerance,
-		timeWindowSize  = rt_winSize,
-		removesWiffName = TRUE
+		ions             = ions, 
+		peakAreaMethod   = integrator, 
+		TPAFactors       = NULL,
+		tolerance        = tolerance,
+		timeWindowSize   = rt_winSize,
+		removesWiffName  = TRUE,
+		angleThreshold   = angle.threshold,
+        baselineQuantile = baseline.quantile
 	);
 } else {
 	print("Target reference data have no blank controls.");
@@ -139,13 +151,14 @@ let linears.standard_curve as function(wiff_standards, subdir) {
 	let CAL <- wiff_standards 
 	# list.files(wiff, pattern = "*.mzML")
 	:> wiff.scans(
- 		ions            = ions, 
- 		peakAreaMethod  = integrator, 
-	 	TPAFactors      = NULL,
-		tolerance       = tolerance,
-		timeWindowSize  = rt_winSize,
-		removesWiffName = TRUE,
-		angleThreshold  = angle.threshold
+ 		ions             = ions, 
+ 		peakAreaMethod   = integrator, 
+	 	TPAFactors       = NULL,
+		tolerance        = tolerance,
+		timeWindowSize   = rt_winSize,
+		removesWiffName  = TRUE,
+		angleThreshold   = angle.threshold,
+		baselineQuantile = baseline.quantile
 	);
 
 	CAL :> write.csv(file = `${dir}/${subdir}/referencePoints(peakarea).csv`);
@@ -195,14 +208,16 @@ let linears.standard_curve as function(wiff_standards, subdir) {
 	;
 
 	for(mzML in wiff_standards) {
-		let fileName = basename(mzML);
-		let peaks    = MRM.peaks(
-			mzML           = mzML, 
-			ions           = ions, 
-			peakAreaMethod = integrator, 
-			TPAFactors     = NULL, 
-			tolerance      = tolerance, 
-			timeWindowSize = rt_winSize
+		let fileName <- basename(mzML);
+		let peaks    <- MRM.peaks(
+			mzML             = mzML, 
+			ions             = ions, 
+			peakAreaMethod   = integrator, 
+			TPAFactors       = NULL, 
+			tolerance        = tolerance, 
+			timeWindowSize   = rt_winSize,
+			angleThreshold   = angle.threshold,
+			baselineQuantile = baseline.quantile
 		);
 		
 		# save peaktable for given rawfile
@@ -223,12 +238,14 @@ let doLinears as function(wiff_standards, subdir = "") {
 	sample.files
 	# list.files(wiff, pattern = "*.mzML")
 	:> wiff.scans(
-		ions            = ions, 
-		peakAreaMethod  = integrator, 
-		TPAFactors      = NULL, 
-		tolerance       = tolerance, 
-		removesWiffName = TRUE, 
-		timeWindowSize  = rt_winSize
+		ions             = ions, 
+		peakAreaMethod   = integrator, 
+		TPAFactors       = NULL, 
+		tolerance        = tolerance, 
+		removesWiffName  = TRUE, 
+		timeWindowSize   = rt_winSize,
+		angleThreshold   = angle.threshold,
+		baselineQuantile = baseline.quantile
 	) 
 	:> write.csv(file = `${dir}/${subdir}\samples.csv`);
 
@@ -237,10 +254,13 @@ let doLinears as function(wiff_standards, subdir = "") {
 	for(sample.mzML in sample.files) {
 		let peakfile as string = `${dir}/${subdir}/samples_peaktable/${basename(sample.mzML)}.csv`;
 		let result = ref :> sample.quantify(
-			sample.mzML, ions, integrator, 
-			tolerance      = tolerance, 
-			timeWindowSize = rt_winSize, 
-			TPAFactors     = NULL
+			sample.mzML, ions, 
+			peakAreaMethod   = integrator, 
+			tolerance        = tolerance, 
+			timeWindowSize   = rt_winSize, 
+			TPAFactors       = NULL,
+			angleThreshold   = angle.threshold,
+		    baselineQuantile = baseline.quantile
 		);
 		
 		print(basename(sample.mzML));

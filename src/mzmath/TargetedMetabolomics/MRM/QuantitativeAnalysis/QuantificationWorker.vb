@@ -35,6 +35,7 @@ Namespace MRM
                                              ions As IonPair(),
                                              peakAreaMethod As PeakArea.Methods,
                                              angleThreshold#,
+                                             baselineQuantile#,
                                              TPAFactors As Dictionary(Of String, Double),
                                              tolerance As Tolerance,
                                              timeWindowSize#) As IEnumerable(Of ContentResult(Of MRMPeakTable))
@@ -45,7 +46,8 @@ Namespace MRM
                          TPAFactors:=TPAFactors,
                          tolerance:=tolerance,
                          timeWindowSize:=timeWindowSize,
-                         angleThreshold:=angleThreshold
+                         angleThreshold:=angleThreshold,
+                         baselineQuantile:=baselineQuantile
                 ) _
                 .ToDictionary(Function(ion) ion.name)
 

@@ -347,6 +347,7 @@ Module MRMkit
                                   Optional tolerance$ = "ppm:20",
                                   Optional timeWindowSize# = 5,
                                   Optional angleThreshold# = 5,
+                                  Optional baselineQuantile# = 0.65,
                                   Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As DataSet()
 
         If TPAFactors Is Nothing Then
@@ -360,7 +361,8 @@ Module MRMkit
             timeWindowSize:=timeWindowSize,
             peakAreaMethod:=peakAreaMethod,
             TPAFactors:=TPAFactors,
-            angleThreshold:=angleThreshold
+            angleThreshold:=angleThreshold,
+            baselineQuantile:=baselineQuantile
         )
     End Function
 
@@ -508,6 +510,7 @@ Module MRMkit
                                    Optional tolerance$ = "ppm:20",
                                    Optional timeWindowSize# = 5,
                                    Optional angleThreshold# = 5,
+                                   Optional baselineQuantile# = 0.65,
                                    Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As QuantifyScan
 
         Return MRMSamples.SampleQuantify(
@@ -518,7 +521,8 @@ Module MRMkit
             peakAreaMethod:=peakAreaMethod,
             TPAFactors:=TPAFactors,
             timeWindowSize:=timeWindowSize,
-            angleThreshold:=angleThreshold
+            angleThreshold:=angleThreshold,
+            baselineQuantile:=baselineQuantile
         )
     End Function
 

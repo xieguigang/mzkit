@@ -195,7 +195,8 @@ Namespace MRM
                     timeWindowSize:=timeWindowSize,
                     angleThreshold:=angleThreshold,
                     peakAreaMethod:=peakAreaMethod,
-                    TPAFactors:=TPAFactors
+                    TPAFactors:=TPAFactors,
+                    baselineQuantile:=baselineQuantile
                 )
                 mrmPeaktable += scan.MRMPeaks
                 X += scan.rawX
@@ -208,7 +209,7 @@ Namespace MRM
         End Function
 
         <Extension>
-        Public Function SampleQuantify(model As StandardCurve(), file$, ions As IonPair(), tolerance As Tolerance, timeWindowSize#, angleThreshold#,
+        Public Function SampleQuantify(model As StandardCurve(), file$, ions As IonPair(), tolerance As Tolerance, timeWindowSize#, angleThreshold#, baselineQuantile#,
                                        Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum,
                                        Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As QuantifyScan
 
@@ -222,7 +223,8 @@ Namespace MRM
                     TPAFactors:=If(TPAFactors, New Dictionary(Of String, Double)),
                     tolerance:=tolerance,
                     timeWindowSize:=timeWindowSize,
-                    angleThreshold:=angleThreshold
+                    angleThreshold:=angleThreshold,
+                    baselineQuantile:=baselineQuantile
                 ) _
                 .ToArray
             Dim MRMPeakTable As New List(Of MRMPeakTable)
