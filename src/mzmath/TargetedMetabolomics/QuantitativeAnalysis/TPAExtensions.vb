@@ -53,7 +53,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
-Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports stdNum = System.Math
@@ -100,7 +99,7 @@ Public Module TPAExtensions
 
         Dim vector As IVector(Of ChromatogramTick) = ion.chromatogram.Shadows
         Dim ROIData As ROI() = vector _
-            .PopulateROI(baselineQuantile:=baselineQuantile) _
+            .PopulateROI(baselineQuantile:=baselineQuantile, angleThreshold:=angleThreshold) _
             .ToArray
 
         If ROIData.Length = 0 Then
@@ -160,6 +159,12 @@ Public Module TPAExtensions
 
         If ion.ion.hasIsomerism Then
             If region Is Nothing Then
+                ROIData = ROIData _
+                    .OrderByDescending(Function(r) r.Integration) _
+                    .Take(ion.ion.ions.Length + 1) _
+                    .OrderBy(Function(r) r.rt) _
+                    .ToArray
+
                 ' find by index
                 If ion.ion.index < ROIData.Length Then
                     region = ROIData(ion.ion.index)
@@ -198,7 +203,7 @@ Public Module TPAExtensions
         End If
 
         If Not peak.IsOverlapping(find) Then
-            Call $"The ROI peak region [{peak.Min}, {peak.Max}] is not contains '{ion.name}' ({ion.ion.target.rt} sec)!".Warning
+            ' Call $"The ROI peak region [{peak.Min}, {peak.Max}] is not contains '{ion.name}' ({ion.ion.target.rt} sec)!".Warning
         End If
 
         With vector.TPAIntegrator(peak, baselineQuantile, peakAreaMethod, integratorTicks, TPAFactor)
@@ -208,7 +213,7 @@ Public Module TPAExtensions
         Return New IonTPA With {
             .name = ion.name,
             .peakROI = data.peak,
-            .area = data.area,
+            .area = If(data.area < 0, 0, data.area),
             .baseline = data.baseline,
             .maxPeakHeight = data.maxPeakHeight
         }

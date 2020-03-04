@@ -16,7 +16,16 @@ Namespace MRM
             Dim a As Double = fx.Factors(1)
             Dim b As Double = fx.Factors(Scan0)
 
-            Return Function(y) (y - b) / a
+            Return Function(y)
+                       y = (y - b) / a
+
+                       ' ND value?
+                       If y < 0 Then
+                           y = 0
+                       End If
+
+                       Return y
+                   End Function
         End Function
 
         ''' <summary>
