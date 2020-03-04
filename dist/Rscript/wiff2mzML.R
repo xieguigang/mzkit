@@ -1,3 +1,6 @@
+# run R# install.packages('mzkit.dll');
+# or imports "ProteoWizard" from "mzkit.dll";
+# if missing package object
 require(ProteoWizard);
 
 let sample as string = ?"--samples" || stop("No wiff raw samples data directory provided!");
