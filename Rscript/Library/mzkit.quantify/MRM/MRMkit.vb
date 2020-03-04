@@ -591,8 +591,8 @@ Module MRMkit
     ''' <param name="samples"></param>
     ''' <returns></returns>
     <ExportAPI("mrm.dataset")>
-    Public Function CreateMRMDataSet(standardCurve As StandardCurve(), samples As QuantifyScan(), Optional QC_dataset$ = "QC[-]\d+") As Object
-        If QC_dataset Then
+    Public Function CreateMRMDataSet(standardCurve As StandardCurve(), samples As QuantifyScan(), Optional QC_dataset$ = Nothing) As Object
+        If Not QC_dataset.StringEmpty Then
             Return New QCData With {
                 .model = standardCurve,
                 .result = samples,

@@ -34,7 +34,7 @@ let patternOf.QC       = ?"--patternOfQC"  || "QC[-]\d+";
 #
 let integrator  as string  = ?"--integrator" || "NetPeakSum";
 let isWorkCurve as boolean = ?"--workMode";
-let rt_winSize  as double  = as.numeric(?"--rt.winsize" || "1"); 
+let rt_winSize  as double  = as.numeric(?"--rt.winsize" || "10"); 
 let tolerance   as string  = ?"--mz.diff"    || "da:0.3";
 
 # Max number of points for removes in 
@@ -45,7 +45,7 @@ let tolerance   as string  = ?"--mz.diff"    || "da:0.3";
 # + positive value for specific a number for the deletion.
 let maxNumOfPoint.delets = ?"--max.deletes"       || -1;
 
-let angle.threshold      = ?"--angle.threshold"   || 3;
+let angle.threshold      = ?"--angle.threshold"   || 5;
 let baseline.quantile    = ?"--baseline.quantile" || 0.65;
 
 if (isWorkCurve) {
@@ -126,13 +126,15 @@ wiff <- list(samples = sample, reference = wiff)
 
 print("Reference standards:");
 print(basename(wiff$standards));
+print("Sample data files:");
+print(basename(wiff$samples));
 
 let blanks <- NULL;
 let QC_samples = basename(wiff$samples) like regexp(patternOf.QC);
 
 if (sum(QC_samples) > 0) {
 	print(`Find ${sum(QC_samples)} in raw data:`);
-	print(basename(samples.files[QC_samples]));
+	print(basename(wiff$samples[QC_samples]));
 }
 
 if (wiff$hasBlankControls) {
