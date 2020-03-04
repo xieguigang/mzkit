@@ -158,7 +158,11 @@ Public Module TPAExtensions
                 If ion.ion.index < ROIData.Length Then
                     region = ROIData(ion.ion.index)
                 Else
-                    region = ROIData.Last
+                    ' current ion is ND value
+                    Return New IonTPA With {
+                        .name = ion.name,
+                        .peakROI = New DoubleRange(0, 0)
+                    }
                 End If
             End If
 
