@@ -95,7 +95,14 @@ Module Visual
 
     <ExportAPI("MRM.chromatogramPeaks.plot")>
     <RApiReturn(GetType(GraphicsData))>
-    Public Function MRMchromatogramPeakPlot(chromatogram As Object, Optional title$ = "MRM Chromatogram Peak Plot", Optional size As Object = "2100,1650", Optional env As Environment = Nothing) As Object
+    Public Function MRMchromatogramPeakPlot(chromatogram As Object,
+                                            Optional title$ = "MRM Chromatogram Peak Plot",
+                                            Optional size As Object = "2200,1600",
+                                            Optional fill As Boolean = True,
+                                            Optional gridFill$ = "rgb(250,250,250)",
+                                            Optional lineStyle$ = "stroke: black; stroke-width: 2px; stroke-dash: solid;",
+                                            Optional env As Environment = Nothing) As Object
+
         If chromatogram Is Nothing Then
             Return REnv.Internal.debug.stop("No chromatogram provided!", env)
         End If
@@ -105,7 +112,8 @@ Module Visual
                 title:=title,
                 showMRMRegion:=True,
                 showAccumulateLine:=True,
-                size:=InteropArgumentHelper.getSize(size, "2100,1650")
+                size:=InteropArgumentHelper.getSize(size, "2100,1650"),
+                curveStyle:=lineStyle
             )
         ElseIf TypeOf chromatogram Is list AndAlso DirectCast(chromatogram, list).slots.All(Function(c) REnv.isVector(Of ChromatogramTick)(c.Value)) Then
             Return DirectCast(chromatogram, list).slots _
@@ -116,7 +124,12 @@ Module Visual
                             }
                         End Function) _
                 .ToArray _
-                .TICplot(size:=InteropArgumentHelper.getSize(size, "2100,1650"))
+                .TICplot(
+                    size:=InteropArgumentHelper.getSize(size, "2200,1440"),
+                    fillCurve:=fill,
+                    gridFill:=gridFill,
+                    penStyle:=lineStyle
+                )
         Else
             Return REnv.Internal.debug.stop($"Invalid input data: {chromatogram.GetType.FullName}", env)
         End If

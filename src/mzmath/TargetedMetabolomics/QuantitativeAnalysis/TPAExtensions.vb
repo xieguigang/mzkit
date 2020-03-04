@@ -142,20 +142,26 @@ Public Module TPAExtensions
         Dim peak As DoubleRange
         Dim data As (peak As DoubleRange, area#, baseline#, maxPeakHeight#)
         Dim target = ion.ion.target
-        Dim find As DoubleRange = {
-            CDbl(target.rt) - timeWindowSize,
-            CDbl(target.rt) + timeWindowSize
-        }
+        Dim find As DoubleRange = Nothing
+        Dim region As ROI = Nothing
 
         ROIData = ROIData _
             .OrderBy(Function(r) r.Time.Min) _
             .ToArray
 
-        Dim region As ROI = ROIData _
-            .Where(Function(r)
-                       Return r.Time.IsOverlapping(find)
-                   End Function) _
-            .FirstOrDefault
+        If Not target.rt Is Nothing Then
+            ' 20200304
+            ' System.InvalidOperationException: Nullable object must have a value.
+            find = {
+                CDbl(target.rt) - timeWindowSize,
+                CDbl(target.rt) + timeWindowSize
+            }
+            region = ROIData _
+               .Where(Function(r)
+                          Return r.Time.IsOverlapping(find)
+                      End Function) _
+               .FirstOrDefault
+        End If
 
         If ion.ion.hasIsomerism Then
             If region Is Nothing Then
@@ -202,7 +208,7 @@ Public Module TPAExtensions
             End If
         End If
 
-        If Not peak.IsOverlapping(find) Then
+        If Not find Is Nothing AndAlso Not peak.IsOverlapping(find) Then
             ' Call $"The ROI peak region [{peak.Min}, {peak.Max}] is not contains '{ion.name}' ({ion.ion.target.rt} sec)!".Warning
         End If
 

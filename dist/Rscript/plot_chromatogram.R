@@ -4,7 +4,7 @@ imports "mzkit.assembly" from "mzkit.dll";
 let MRM       as string = ?"--MRM"     || stop("No MRM ion pair information provided!");
 let mzML      as string = ?"--data"    || stop("No raw data provided! This parameter should be an exists directory.");
 let export    as string = ?"--out"     || `${dirname(mzML)}/${basename(mzML)}_ions_chromatogram/`;
-let tolerance as string = ?"--mz.diff" || "ppm:20";
+let tolerance as string = ?"--mz.diff" || "da:0.3";
 
 if (lcase(file.info(MRM)$Extension) == ".xlsx") {
 	# ion pair sheet table
@@ -27,7 +27,14 @@ for(ion in MRM) {
 	names(chromatograms) <- basename(mzML);
 	
 	chromatograms 
-	:> MRM.chromatogramPeaks.plot
+	:> MRM.chromatogramPeaks.plot(
+		fill      = FALSE, 
+		gridFill  = "white", 
+		lineStyle = "stroke: black; stroke-width: 5px; stroke-dash: solid;",
+		size      = [1800, 1000]
+	)
 	:> save.graphics(file = `${export}/${as.object(ion)$accession}.png`)
 	;
+	
+	print(ion);
 }

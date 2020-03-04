@@ -176,6 +176,9 @@ Public Module ChromatogramPlot
     ''' <param name="bg"></param>
     ''' <param name="deln">legend每一列有多少个进行显示</param>
     ''' <param name="labelColor"></param>
+    ''' <param name="penStyle">
+    ''' CSS value for controls of the line drawing style
+    ''' </param>
     <Extension>
     Public Function TICplot(ionData As NamedCollection(Of ChromatogramTick)(),
                             Optional size$ = "1600,1000",
@@ -195,7 +198,8 @@ Public Module ChromatogramPlot
                             Optional legendFontCSS$ = CSSFont.Win10Normal,
                             Optional deln% = 10,
                             Optional isXIC As Boolean = False,
-                            Optional fillAlpha As Integer = 180) As GraphicsData
+                            Optional fillAlpha As Integer = 180,
+                            Optional gridFill As String = "rgb(245,245,245)") As GraphicsData
 
         Dim labelFont As Font = CSSFont.TryParse(labelFontStyle)
         Dim labelConnector As Pen = Stroke.TryParse(labelConnectorStroke)
@@ -262,7 +266,8 @@ Public Module ChromatogramPlot
                     htmlLabel:=False,
                     YtickFormat:="G2",
                     labelFont:=axisLabelFont,
-                    tickFontStyle:=axisTickFont
+                    tickFontStyle:=axisTickFont,
+                    gridFill:=gridFill
                 )
 
                 Dim legends As New List(Of Legend)

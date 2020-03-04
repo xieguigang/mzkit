@@ -34,7 +34,7 @@ let patternOf.ref      = ?"--patternOfRef" || '[-]?LM[-]?\d+';
 let integrator  as string  = ?"--integrator" || "NetPeakSum";
 let isWorkCurve as boolean = ?"--workMode";
 let rt_winSize  as double  = as.numeric(?"--rt.winsize" || "1"); 
-let tolerance   as string  = ?"--mz.diff"    || "ppm:20";
+let tolerance   as string  = ?"--mz.diff"    || "da:0.3";
 
 # Max number of points for removes in 
 # linear modelling
