@@ -56,6 +56,7 @@ Module MRMQCReport
         Dim rows As New List(Of String)
         Dim mean#
         Dim RSD_dist As New List(Of Double)
+        Dim QC_variants As New List(Of Double)
 
         For Each metabolite In QCResult
             RSD = metabolite.Values.RSD
@@ -80,6 +81,7 @@ Module MRMQCReport
             rows *= 0
 
             For Each sample As KeyValuePair(Of String, Double) In metabolite.Properties
+                QC_variants += (stdNum.Abs(sample.Value - mean) / mean)
                 rows += (<tr>
                              <td><%= sample.Key %></td>
                              <td><%= sample.Value %></td>
@@ -112,14 +114,14 @@ Module MRMQCReport
                                 </div>, rows.JoinBy(vbCrLf))
         Next
 
-        report("TOC") = TOCData.reportTOC(RSD_dist)
+        report("TOC") = TOCData.reportTOC(RSD_dist, QC_variants.Where(Function(n) Not n.IsNaNImaginary).ToArray)
         report("linears") = contents.JoinBy(vbCrLf)
 
         Return report.ToString
     End Function
 
     <Extension>
-    Private Function reportTOC(TOCData As IEnumerable(Of DataSet), RSD_dist As Double()) As String
+    Private Function reportTOC(TOCData As IEnumerable(Of DataSet), RSD_dist As Double(), QC_variants As Double()) As String
         Dim rows As New List(Of String)
         Dim RSD#
         Dim RSD_steps = 0.1
@@ -127,10 +129,14 @@ Module MRMQCReport
             .Hist([step]:=RSD_steps) _
             .HistogramPlot([step]:=RSD_steps, serialsTitle:="QC RSD", xLabel:="RSD", yLabel:="Number of Metabolite") _
             .AsGDIImage
+        Dim histVariants As Image = QC_variants _
+            .Hist([step]:=RSD_steps) _
+            .HistogramPlot([step]:=RSD_steps, serialsTitle:="QC variants", xLabel:="Variants", yLabel:="Number of Sample") _
+            .AsGDIImage
 
         For Each compound In TOCData
             RSD = compound!RSD
-            rows += sprintf(<tr class=<%= If(RSD >= 0.3, "warning", "") %>>
+            rows += sprintf(<tr class=<%= If(RSD >= 0.3, If(RSD >= 0.6, "critical", "warning"), "") %>>
                                 <td><a href="#%s"><%= compound.ID %></a></td>
                                 <td><%= compound!Mean %></td>
                                 <td><%= compound!SD %></td>
@@ -139,7 +145,10 @@ Module MRMQCReport
         Next
 
         Return sprintf(<div>
-                           <img src=<%= New DataURI(hist).ToString %> style="width: 70%;"/>
+                           <img src=<%= New DataURI(hist).ToString %> style="width: 50%;"/>
+                           <img src=<%= New DataURI(histVariants).ToString %> style="width: 50%; float: right"/>
+                           <br/>
+                           <hr/>
                            <table class="table">
                                <thead>
                                    <tr>

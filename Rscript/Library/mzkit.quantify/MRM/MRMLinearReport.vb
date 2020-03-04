@@ -50,11 +50,11 @@ Module MRMLinearReport
                         }
 
                         .critical td {
-                          background-color: #e91e63;
+                          background-color: #ffd1e1;
                         }
 
                         .warning td {
-                          background-color: #f3ea9c;
+                          background-color: #fbffd1;
                         }
                     </style>
                 </head>
@@ -62,7 +62,12 @@ Module MRMLinearReport
                     <h1><%= title %></h1>
                     <hr/>
                     <h2>Table Of Content</h2>
-                    {$TOC}
+                    <br/>
+
+                    <div>
+                        {$TOC}
+                    </div>
+
                     <hr/>
 
                     {$linears}
