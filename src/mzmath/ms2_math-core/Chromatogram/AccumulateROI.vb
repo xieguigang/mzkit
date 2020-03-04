@@ -109,8 +109,7 @@ Namespace Chromatogram
             ' 所有的基线下面的噪声加起来的积分面积总和
             Dim sumAllNoise# = baseline * chromatogram.Length
             ' 使用滑窗计算出切线的斜率
-            Dim windows As SlideWindow(Of PointF)() =
-                chromatogram _
+            Dim windows As SlideWindow(Of PointF)() = chromatogram _
                 .getAccumulateLine(baseline) _
                 .SlideWindows(winSize:=2) _
                 .ToArray

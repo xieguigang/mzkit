@@ -79,8 +79,11 @@ Namespace MRM
         ''' 从mzML原始数据文件之中取出每一个离子对所对应的色谱数据
         ''' </summary>
         ''' <param name="ion_pairs"></param>
-        ''' <param name="mzML$"></param>
+        ''' <param name="mzML"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' This function just read raw data
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function ExtractIonData(ion_pairs As IEnumerable(Of IsomerismIonPairs), mzML$, assignName As Func(Of IonPair, String), tolerance As Tolerance) As IonChromatogramData()

@@ -175,6 +175,7 @@
     <Compile Include="MRM\Data\NamespaceDoc.vb" />
     <Compile Include="MRM\Data\MRMStandards.vb" />
     <Compile Include="MRM\IonPair.vb" />
+    <Compile Include="MRM\QuantitativeAnalysis\MRMArguments.vb" />
     <Compile Include="MRM\QuantitativeAnalysis\QuantificationWorker.vb" />
     <Compile Include="QuantitativeAnalysis\ContentUnits.vb" />
     <Compile Include="GCMS\ChromatographyPeaktable.vb" />

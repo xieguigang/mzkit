@@ -103,6 +103,7 @@ Namespace MRM
                              TPAFactors As Dictionary(Of String, Double),
                              tolerance As Tolerance,
                              timeWindowSize#,
+                             angleThreshold#,
                              Optional ByRef refName$() = Nothing,
                              Optional removesWiffName As Boolean = False) As DataSet()
 
@@ -129,7 +130,8 @@ Namespace MRM
                     peakAreaMethod:=peakAreaMethod,
                     TPAFactors:=TPAFactors,
                     tolerance:=tolerance,
-                    timeWindowSize:=timeWindowSize
+                    timeWindowSize:=timeWindowSize,
+                    angleThreshold:=angleThreshold
                 )
 
                 refNames += file.BaseName

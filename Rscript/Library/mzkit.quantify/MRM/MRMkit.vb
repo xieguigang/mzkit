@@ -170,6 +170,7 @@ Module MRMkit
                                    Optional baselineQuantile# = 0.65,
                                    Optional integratorTicks% = 5000,
                                    Optional peakAreaMethod As PeakArea.Methods = PeakArea.Methods.NetPeakSum,
+                                   Optional angleThreshold# = 5,
                                    Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As IonTPA()
 
         If TPAFactors Is Nothing Then
@@ -184,7 +185,8 @@ Module MRMkit
             baselineQuantile:=baselineQuantile,
             integratorTicks:=integratorTicks,
             peakAreaMethod:=peakAreaMethod,
-            timeWindowSize:=timeWindowSize
+            timeWindowSize:=timeWindowSize,
+            angleThreshold:=angleThreshold
         )
     End Function
 
