@@ -40,7 +40,9 @@ Module MRMQCReport
         ' QC plot on the linear
         Dim QCResult As DataSet() = result _
             .Select(Function(sample) sample.quantify) _
-            .Where(Function(data) data.ID.Match("QC[-]\d+")) _
+            .Where(Function(data)
+                       Return Not data.ID.Match("QC[-]\d+").StringEmpty
+                   End Function) _
             .Transpose
         Dim RSD As Double
         Dim linear As StandardCurve
@@ -55,9 +57,9 @@ Module MRMQCReport
         For Each metabolite In QCResult
             RSD = metabolite.Values.RSD
             linear = ref(metabolite.ID)
-            title = $"QC scatter of {metabolite.ID}"
+            title = $"QC scatter of {metabolite.ID}(RSD: {stdNum.Round(RSD, 3)})"
             samples = metabolite.Properties.NamedValues
-            image = Visual.DrawStandardCurve(linear, title, samples).AsGDIImage
+            image = Visual.DrawStandardCurve(linear, title, samples, labelerIterations:=2000).AsGDIImage
             mean = metabolite.Values.Average
             TOCData += New DataSet With {
                 .ID = metabolite.ID,
@@ -81,6 +83,11 @@ Module MRMQCReport
             contents += sprintf(<div id=<%= metabolite.ID %>>
                                     <h2><%= metabolite.ID %></h2>
                                     <hr/>
+                                    <ul>
+                                        <li>Mean: <%= mean %></li>
+                                        <li>SD: <%= metabolite.Values.SD %></li>
+                                        <li>RSD : <strong><%= stdNum.Round(RSD * 100, 2) %></strong></li>
+                                    </ul>
                                     <img src=<%= New DataURI(image).ToString %> style="width: 70%"/>
                                     <h3>QC samples</h3>
                                     <table class="table">
@@ -99,6 +106,7 @@ Module MRMQCReport
         Next
 
         report("TOC") = TOCData.reportTOC
+        report("linears") = contents.JoinBy(vbCrLf)
 
         Return report.ToString
     End Function
@@ -112,9 +120,9 @@ Module MRMQCReport
             RSD = compound!RSD
             rows += sprintf(<tr class=<%= If(RSD >= 0.3, "warning", "") %>>
                                 <td><a href="#%s"><%= compound.ID %></a></td>
-                                <td><%= compound!Mean %>></td>
-                                <td><%= compound!SD %>></td>
-                                <td><%= compound!RSD %>></td>
+                                <td><%= compound!Mean %></td>
+                                <td><%= compound!SD %></td>
+                                <td><%= stdNum.Round(compound!RSD * 100, 2) %></td>
                             </tr>, compound.ID)
         Next
 

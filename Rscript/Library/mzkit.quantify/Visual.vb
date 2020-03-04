@@ -49,6 +49,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 <Package("mzkit.quantify.visual")>
@@ -67,7 +68,9 @@ Module Visual
                                       Optional samples As NamedValue(Of Double)() = Nothing,
                                       Optional size$ = "1600,1200",
                                       Optional margin$ = "padding: 200px 100px 150px 150px",
-                                      Optional factorFormat$ = "G4") As GraphicsData
+                                      Optional factorFormat$ = "G4",
+                                      Optional sampleLabelFont$ = CSSFont.Win10NormalLarger,
+                                      Optional labelerIterations% = 1000) As GraphicsData
 
         Return StandardCurvesPlot.StandardCurves(
             model:=model,
@@ -75,7 +78,9 @@ Module Visual
             name:=title,
             size:=size,
             margin:=margin,
-            factorFormat:=factorFormat
+            factorFormat:=factorFormat,
+            sampleLabelFont:=sampleLabelFont,
+            labelerIterations:=labelerIterations
         )
     End Function
 
