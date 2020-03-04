@@ -15,7 +15,8 @@ let dir      as string = ?"--export"       || `${wiff :> trim(" ")}-result/`;
 # The regexp pattern of the file name for match
 # the reference point data.
 let patternOf.ref      = ?"--patternOfRef" || '[-]?LM[-]?\d+';
-
+let patternOf.QC       = ?"--patternOfQC"  || "QC[-]\d+";
+ 
 # let Methods as integer = {
       # NetPeakSum = 0;
       # Integrator = 1;
@@ -127,6 +128,12 @@ print("Reference standards:");
 print(basename(wiff$standards));
 
 let blanks <- NULL;
+let QC_samples = basename(wiff$samples) like regexp(patternOf.QC);
+
+if (sum(QC_samples) > 0) {
+	print(`Find ${sum(QC_samples)} in raw data:`);
+	print(basename(samples.files[QC_samples]));
+}
 
 if (wiff$hasBlankControls) {
 	print(`There are ${length(wiff$blanks)} blank controls in wiff raw data!`);
@@ -283,7 +290,16 @@ let doLinears as function(wiff_standards, subdir = "") {
 	
 	# save linear regression html report
 	html(mrm.dataset(ref, scans)) :> writeLines(con = `${dir}/${subdir}/index.html`);
-	html(mrm.dataset(ref, scans, QC_dataset = TRUE)) :> writeLines(con = `${dir}/${subdir}/QC.html`);
+		
+	if (sum(QC_samples) > 0) {
+		ref
+		:> mrm.dataset(scans, QC_dataset = patternOf.QC) 
+		:> html 
+		:> writeLines(con = `${dir}/${subdir}/QC.html`)
+		;	
+	} else {
+		print("QC report will not created due to the reason of no QC samples...");
+	}
 }
 
 if (wiff$numberOfStandardReference > 1) {

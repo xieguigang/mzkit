@@ -21,7 +21,11 @@ Module MRMQCReport
         Dim ref As Dictionary(Of String, StandardCurve) = data.model.ToDictionary(Function(r) r.name)
         Dim html As String = MRMLinearReport _
             .getBlankReport(title:="MRM QC Report") _
-            .doReport(ref, data.result)
+            .doReport(
+                ref:=ref,
+                result:=data.result,
+                QCSampleNamePattern:=data.matchQC
+            )
 
         Return html
     End Function
@@ -37,13 +41,13 @@ Module MRMQCReport
     ''' <param name="result"></param>
     ''' <returns></returns>
     <Extension>
-    Private Function doReport(report As ScriptBuilder, ref As Dictionary(Of String, StandardCurve), result As QuantifyScan()) As String
+    Private Function doReport(report As ScriptBuilder, ref As Dictionary(Of String, StandardCurve), result As QuantifyScan(), QCSampleNamePattern$) As String
         ' QC RSD for each metabolites
         ' QC plot on the linear
         Dim QCResult As DataSet() = result _
             .Select(Function(sample) sample.quantify) _
             .Where(Function(data)
-                       Return Not data.ID.Match("QC[-]\d+").StringEmpty
+                       Return Not data.ID.Match(pattern:=QCSampleNamePattern).StringEmpty
                    End Function) _
             .Transpose
         Dim RSD As Double
@@ -170,4 +174,5 @@ End Module
 Public Class QCData
     Public Property model As StandardCurve()
     Public Property result As QuantifyScan()
+    Public Property matchQC As String
 End Class
