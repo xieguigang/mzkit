@@ -71,7 +71,7 @@ if (maxNumOfPoint.delets < 0) {
 } 
 
 print(`MRM ion peak is populated from raw data with angle threshold ${angle.threshold}.`);
-print(`All of the data ticks that its intensity value less than ${baseline.quantile} quantile level will be treated as background noise`)
+print(`All of the data ticks that its intensity value less than ${baseline.quantile} quantile level will be treated as background noise`);
 
 let reference = NULL;
 let is        = NULL;

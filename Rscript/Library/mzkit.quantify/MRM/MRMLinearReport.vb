@@ -48,6 +48,14 @@ Module MRMLinearReport
                         .even td{/*必须加td，代表的是一行进行*/
 	                      background-color: #f5f5f5;
                         }
+
+                        .critical td {
+                          background-color: #e91e63;
+                        }
+
+                        .warning td {
+                          background-color: #f3ea9c;
+                        }
                     </style>
                 </head>
                 <body class="container">
@@ -156,7 +164,9 @@ Module MRMLinearReport
     Private Function TOC(lines As StandardCurve()) As String
         Dim rows As String() = lines _
             .Select(Function(line)
-                        Return <tr>
+                        Dim R2 = line.linear.CorrelationCoefficient
+
+                        Return <tr class=<%= If(R2 < 0.99, If(R2 < 0.9, "critical", "warning"), "") %>>
                                    <td>
                                        <a href=<%= "#" & line.name %>><%= line.name %></a>
                                    </td>
