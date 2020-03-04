@@ -93,6 +93,20 @@ Module Visual
         Return ions.MRMChromatogramPlot(mzML, labelLayoutTicks:=labelLayoutTicks)
     End Function
 
+    ''' <summary>
+    ''' Visualization plot of the MRM chromatogram peaks data.
+    ''' </summary>
+    ''' <param name="chromatogram">the extract MRM chromatogram peaks data.</param>
+    ''' <param name="title">the plot title</param>
+    ''' <param name="size">the size of the output image</param>
+    ''' <param name="fill">fill polygon of the TIC plot?</param>
+    ''' <param name="gridFill">color value for fill the grid background</param>
+    ''' <param name="lineStyle">
+    ''' Css value for adjust the plot style of the curve line of the chromatogram peaks data.
+    ''' </param>
+    ''' <param name="relativeTimeScale"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("MRM.chromatogramPeaks.plot")>
     <RApiReturn(GetType(GraphicsData))>
     Public Function MRMchromatogramPeakPlot(chromatogram As Object,
@@ -101,10 +115,17 @@ Module Visual
                                             Optional fill As Boolean = True,
                                             Optional gridFill$ = "rgb(250,250,250)",
                                             Optional lineStyle$ = "stroke: black; stroke-width: 2px; stroke-dash: solid;",
+                                            Optional relativeTimeScale As Object = Nothing,
                                             Optional env As Environment = Nothing) As Object
 
         If chromatogram Is Nothing Then
             Return REnv.Internal.debug.stop("No chromatogram provided!", env)
+        End If
+
+        If relativeTimeScale Is Nothing Then
+            relativeTimeScale = New Double() {}
+        Else
+            relativeTimeScale = New Double() {0, DirectCast(REnv.asVector(Of Double)(relativeTimeScale), Double()).Max}
         End If
 
         If TypeOf chromatogram Is ChromatogramTick() Then
@@ -128,7 +149,8 @@ Module Visual
                     size:=InteropArgumentHelper.getSize(size, "2200,1440"),
                     fillCurve:=fill,
                     gridFill:=gridFill,
-                    penStyle:=lineStyle
+                    penStyle:=lineStyle,
+                    timeRange:=relativeTimeScale
                 )
         Else
             Return REnv.Internal.debug.stop($"Invalid input data: {chromatogram.GetType.FullName}", env)

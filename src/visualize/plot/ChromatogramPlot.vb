@@ -199,7 +199,8 @@ Public Module ChromatogramPlot
                             Optional deln% = 10,
                             Optional isXIC As Boolean = False,
                             Optional fillAlpha As Integer = 180,
-                            Optional gridFill As String = "rgb(245,245,245)") As GraphicsData
+                            Optional gridFill As String = "rgb(245,245,245)",
+                            Optional timeRange As Double() = Nothing) As GraphicsData
 
         Dim labelFont As Font = CSSFont.TryParse(labelFontStyle)
         Dim labelConnector As Pen = Stroke.TryParse(labelConnectorStroke)
@@ -230,14 +231,16 @@ Public Module ChromatogramPlot
                 .ToArray
         End If
 
-        Dim XTicks = ionData _
+        Dim XTicks As Double() = ionData _
             .Select(Function(ion)
                         Return ion.value.TimeArray
                     End Function) _
             .IteratesALL _
+            .JoinIterates(timeRange) _
             .AsVector _
             .Range _
             .CreateAxisTicks  ' time
+
         Dim YTicks = ionData _
             .Select(Function(ion)
                         Return ion.value.IntensityArray
