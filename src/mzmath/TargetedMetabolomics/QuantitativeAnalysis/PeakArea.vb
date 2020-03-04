@@ -185,8 +185,8 @@ Public Module PeakArea
             .PickArea(range:=peak) _
             .Select(Function(c)
                         Return New PointF With {
-                            .X = c.Time,
-                            .Y = c.Intensity
+                            .X = CSng(c.Time),
+                            .Y = CSng(c.Intensity)
                         }
                     End Function) _
             .AsList
@@ -203,7 +203,7 @@ Public Module PeakArea
                     (0)
 
                 With chromatogram(i - 1)
-                    rawPoints = New PointF(.Time, .Intensity) + rawPoints
+                    rawPoints = New PointF(CSng(.Time), CSng(.Intensity)) + rawPoints
                 End With
             Else
                 ' /
@@ -215,7 +215,7 @@ Public Module PeakArea
                     (0)
 
                 With chromatogram(i + 1)
-                    rawPoints += New Point(.Time, .Intensity)
+                    rawPoints += New Point(CInt(.Time), CInt(.Intensity))
                 End With
             End If
         End If
@@ -240,7 +240,7 @@ Public Module PeakArea
         Call moveNext()
 
         curve = points
-        peakRaw = rawPoints
+        peakRaw = rawPoints.ToArray
 
         ' 2018-4-10 不需要减去基线？？
         ' baseline = 0

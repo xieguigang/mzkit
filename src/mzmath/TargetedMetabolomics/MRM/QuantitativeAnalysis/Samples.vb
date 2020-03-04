@@ -128,7 +128,7 @@ Namespace MRM
         ''' 默认将``-KB``和``-BLK``结尾的文件都判断为实验空白
         ''' </param>
         ''' <returns>经过定量计算得到的浓度数据</returns>
-        Public Function QuantitativeAnalysis(wiff$, ions As IonPair(), calibrates As Standards(), [IS] As [IS](), tolerance As Tolerance, timeWindowSize#, angleThreshold#,
+        Public Function QuantitativeAnalysis(wiff$, ions As IonPair(), calibrates As Standards(), [IS] As [IS](), tolerance As Tolerance, timeWindowSize#, angleThreshold#, baselineQuantile#,
                                              <Out> Optional ByRef model As StandardCurve() = Nothing,
                                              <Out> Optional ByRef standardPoints As NamedValue(Of MRMStandards())() = Nothing,
                                              <Out> Optional ByRef X As List(Of DataSet) = Nothing,
@@ -153,7 +153,8 @@ Namespace MRM
                       TPAFactors:=TPAFactors,
                       tolerance:=tolerance,
                       timeWindowSize:=timeWindowSize,
-                      angleThreshold:=angleThreshold
+                      angleThreshold:=angleThreshold,
+                      baselineQuantile:=baselineQuantile
                 ) _
                 .ToDictionary _
                 .Regression(calibrates, ISvector:=[IS], weighted:=weighted) _

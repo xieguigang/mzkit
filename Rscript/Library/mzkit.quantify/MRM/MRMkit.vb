@@ -384,6 +384,7 @@ Module MRMkit
                                 Optional peakAreaMethod As PeakArea.Methods = PeakArea.Methods.NetPeakSum,
                                 Optional tolerance$ = "ppm:20",
                                 Optional angleThreshold# = 5,
+                                Optional baselineQuantile# = 0.65,
                                 Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
                                 Optional removesWiffName As Boolean = True,
                                 Optional timeWindowSize# = 5) As DataSet()
@@ -425,7 +426,8 @@ Module MRMkit
             removesWiffName:=removesWiffName,
             tolerance:=interop_arguments.GetTolerance(tolerance),
             timeWindowSize:=timeWindowSize,
-            angleThreshold:=angleThreshold
+            angleThreshold:=angleThreshold,
+            baselineQuantile:=baselineQuantile
         )
     End Function
 

@@ -32,6 +32,15 @@ let isWorkCurve as boolean = ?"--workMode";
 let rt_winSize as double   = as.numeric(?"--rt.winsize" || "1"); 
 let tolerance as string    = ?"--mz.diff"    || "ppm:20";
 
+# Max number of points for removes in 
+# linear modelling
+#
+# + negative value for auto detects: n.points / 2 - 1
+# + ZERO for no points is removed
+# + positive value for specific a number for the deletion.
+let maxNumOfPoint.delets   = ?"--max.deletes"     || -1;
+let angle.threshold        = ?"--angle.threshold" || 5;
+
 if (isWorkCurve) {
 	print("Linear Modelling will running in work curve mode!");
 }
@@ -119,7 +128,8 @@ let linears.standard_curve as function(wiff_standards, subdir) {
 	 	TPAFactors      = NULL,
 		tolerance       = tolerance,
 		timeWindowSize  = rt_winSize,
-		removesWiffName = TRUE
+		removesWiffName = TRUE,
+		angleThreshold  = angle.threshold
 	);
 
 	CAL :> write.csv(file = `${dir}/${subdir}/referencePoints(peakarea).csv`);
@@ -130,7 +140,7 @@ let linears.standard_curve as function(wiff_standards, subdir) {
 		ISvector        = is, 
 		autoWeighted    = TRUE, 
 		blankControls   = blanks, 
-		maxDeletions    = -1, 
+		maxDeletions    = maxNumOfPoint.delets, 
 		isWorkCurveMode = isWorkCurve
 	);
 

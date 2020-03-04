@@ -105,6 +105,7 @@ Namespace MRM
                              tolerance As Tolerance,
                              timeWindowSize#,
                              angleThreshold#,
+                             baselineQuantile#,
                              Optional ByRef refName$() = Nothing,
                              Optional removesWiffName As Boolean = False) As DataSet()
 
@@ -132,7 +133,8 @@ Namespace MRM
                     TPAFactors:=TPAFactors,
                     tolerance:=tolerance,
                     timeWindowSize:=timeWindowSize,
-                    angleThreshold:=angleThreshold
+                    angleThreshold:=angleThreshold,
+                    baselineQuantile:=baselineQuantile
                 )
 
                 refNames += file.BaseName
@@ -148,7 +150,7 @@ Namespace MRM
                 Next
             Next
 
-            refName = refNames
+            refName = refNames.ToArray
 
             Return ionTPAs _
                 .Select(Function(ion)

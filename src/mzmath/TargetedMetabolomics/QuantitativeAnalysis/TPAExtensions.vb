@@ -143,7 +143,10 @@ Public Module TPAExtensions
         Dim peak As DoubleRange
         Dim data As (peak As DoubleRange, area#, baseline#, maxPeakHeight#)
         Dim target = ion.ion.target
-        Dim find As DoubleRange = {target.rt - timeWindowSize, target.rt + timeWindowSize}
+        Dim find As DoubleRange = {
+            CDbl(target.rt) - timeWindowSize,
+            CDbl(target.rt) + timeWindowSize
+        }
 
         ROIData = ROIData _
             .OrderBy(Function(r) r.Time.Min) _
