@@ -92,12 +92,16 @@ Public Module TPAExtensions
     <Extension>
     Public Function ionTPA(ion As IonChromatogramData,
                            baselineQuantile#,
+                           angleThreshold#,
                            peakAreaMethod As PeakArea.Methods,
                            Optional integratorTicks% = 5000,
-                           Optional TPAFactor# = 1) As IonTPA
+                           Optional TPAFactor# = 1,
+                           Optional timeWindowSize# = 5) As IonTPA
 
         Dim vector As IVector(Of ChromatogramTick) = ion.chromatogram.Shadows
-        Dim ROIData As ROI() = vector.PopulateROI.ToArray
+        Dim ROIData As ROI() = vector _
+            .PopulateROI(baselineQuantile:=baselineQuantile) _
+            .ToArray
 
         If ROIData.Length = 0 Then
             Return New IonTPA With {
@@ -111,7 +115,8 @@ Public Module TPAExtensions
                 baselineQuantile:=baselineQuantile,
                 peakAreaMethod:=peakAreaMethod,
                 integratorTicks:=integratorTicks,
-                TPAFactor:=TPAFactor
+                TPAFactor:=TPAFactor,
+                timeWindowSize:=timeWindowSize
             )
         End If
     End Function
@@ -132,12 +137,13 @@ Public Module TPAExtensions
                                            baselineQuantile#,
                                            peakAreaMethod As PeakArea.Methods,
                                            integratorTicks%,
-                                           TPAFactor#) As IonTPA
+                                           TPAFactor#,
+                                           timeWindowSize#) As IonTPA
 
         Dim peak As DoubleRange
         Dim data As (peak As DoubleRange, area#, baseline#, maxPeakHeight#)
         Dim target = ion.ion.target
-        Dim find As DoubleRange = {target.rt - 5, target.rt + 5}
+        Dim find As DoubleRange = {target.rt - timeWindowSize, target.rt + timeWindowSize}
 
         ROIData = ROIData _
             .OrderBy(Function(r) r.Time.Min) _
@@ -155,7 +161,11 @@ Public Module TPAExtensions
                 If ion.ion.index < ROIData.Length Then
                     region = ROIData(ion.ion.index)
                 Else
-                    region = ROIData.Last
+                    ' current ion is ND value
+                    Return New IonTPA With {
+                        .name = ion.name,
+                        .peakROI = New DoubleRange(0, 0)
+                    }
                 End If
             End If
 
@@ -184,7 +194,7 @@ Public Module TPAExtensions
             End If
         End If
 
-        If Not peak.IsInside(CDbl(target.rt)) Then
+        If Not peak.IsOverlapping(find) Then
             Call $"The ROI peak region [{peak.Min}, {peak.Max}] is not contains '{ion.name}' ({ion.ion.target.rt} sec)!".Warning
         End If
 

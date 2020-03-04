@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports stdNum = System.Math
 
 Namespace MRM.Data
@@ -32,6 +33,7 @@ Namespace MRM.Data
         ''' <returns></returns>
         Public Property Cti As Double
 
+        <Ignored>
         Public ReadOnly Property Px As Double
             Get
                 If AIS = 0.0 Then

@@ -61,7 +61,10 @@ Namespace MRM
         ''' </param>
         ''' <returns></returns>
         <Extension>
-        Public Function ScanTPA(raw$, ionpairs As IonPair(), TPAFactors As Dictionary(Of String, Double), tolerance As Tolerance,
+        Public Function ScanTPA(raw$, ionpairs As IonPair(), TPAFactors As Dictionary(Of String, Double),
+                                tolerance As Tolerance,
+                                timeWindowSize#,
+                                angleThreshold#,
                                 Optional baselineQuantile# = 0.65,
                                 Optional integratorTicks% = 5000,
                                 Optional peakAreaMethod As PeakArea.Methods = Methods.Integrator) As IonTPA()
@@ -78,9 +81,11 @@ Namespace MRM
                 .Select(Function(ion)
                             Return ion.ionTPA(
                                 baselineQuantile,
+                                angleThreshold,
                                 peakAreaMethod,
                                 integratorTicks,
-                                TPAFactors.GetFactor(ion.name)
+                                TPAFactors.GetFactor(ion.name),
+                                timeWindowSize:=timeWindowSize
                             )
                         End Function) _
                 .ToArray

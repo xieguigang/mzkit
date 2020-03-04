@@ -29,13 +29,23 @@ let patternOf.ref      = ?"--patternOfRef" || '[-]?LM[-]?\d+';
 #
 let integrator as string   = ?"--integrator" || "NetPeakSum";
 let isWorkCurve as boolean = ?"--workMode";
+let rt_winSize as double   = as.numeric(?"--rt.winsize" || "1"); 
+let tolerance as string    = ?"--mz.diff"    || "ppm:20";
 
 if (isWorkCurve) {
 	print("Linear Modelling will running in work curve mode!");
 }
 
-let reference;
-let is;
+print("View parameter configurations:");
+print("RT window size:");
+print(rt_winSize);
+print("m/z tolerance for find MRM ion:");
+print(tolerance);
+print("Integrator that we used for calculate the Peak Area:");
+print(integrator);
+
+let reference = NULL;
+let is        = NULL;
 
 # read MRM, standard curve and IS information from the given file
 if (file.exists(ions)) {
@@ -47,6 +57,10 @@ if (file.exists(ions)) {
 	print("Use external msl data as ion pairs.");
 	
 	ions = ions 
+	# the time unit is minute by default
+	# required convert to second by 
+	# specific that the time unit is Minute
+	# at here
 	:> read.msl(unit = "Minute") 
 	:> as.ion_pairs;
 } else {
@@ -84,9 +98,12 @@ if (wiff$hasBlankControls) {
 	print(wiff$blanks);
 
 	blanks = wiff$blanks :> wiff.scans(
-		ions           = ions, 
-		peakAreaMethod = integrator, 
-		TPAFactors     = NULL
+		ions            = ions, 
+		peakAreaMethod  = integrator, 
+		TPAFactors      = NULL,
+		tolerance       = tolerance,
+		timeWindowSize  = rt_winSize,
+		removesWiffName = TRUE
 	);
 } else {
 	print("Target reference data have no blank controls.");
@@ -97,14 +114,25 @@ let linears.standard_curve as function(wiff_standards, subdir) {
 	let CAL <- wiff_standards 
 	# list.files(wiff, pattern = "*.mzML")
 	:> wiff.scans(
- 		ions           = ions, 
- 		peakAreaMethod = integrator, 
-	 	TPAFactors     = NULL
+ 		ions            = ions, 
+ 		peakAreaMethod  = integrator, 
+	 	TPAFactors      = NULL,
+		tolerance       = tolerance,
+		timeWindowSize  = rt_winSize,
+		removesWiffName = TRUE
 	);
 
 	CAL :> write.csv(file = `${dir}/${subdir}/referencePoints(peakarea).csv`);
 
-	let ref <- linears(CAL, reference, is, autoWeighted = TRUE, blankControls = blanks, maxDeletions = -1, isWorkCurveMode = isWorkCurve);
+	let ref <- linears(
+		rawScan         = CAL, 
+		calibrates      = reference, 
+		ISvector        = is, 
+		autoWeighted    = TRUE, 
+		blankControls   = blanks, 
+		maxDeletions    = -1, 
+		isWorkCurveMode = isWorkCurve
+	);
 
 	# print model summary and then do standard curve plot
 	let printModel as function(line) {
@@ -142,7 +170,14 @@ let linears.standard_curve as function(wiff_standards, subdir) {
 
 	for(mzML in wiff_standards) {
 		let fileName = basename(mzML);
-		let peaks = MRM.peaks(mzML, ions, peakAreaMethod = integrator, TPAFactors = NULL);
+		let peaks    = MRM.peaks(
+			mzML           = mzML, 
+			ions           = ions, 
+			peakAreaMethod = integrator, 
+			TPAFactors     = NULL, 
+			tolerance      = tolerance, 
+			timeWindowSize = rt_winSize
+		);
 		
 		# save peaktable for given rawfile
 		write.csv(peaks, file = `${dir}/${subdir}/peaktables/${fileName}.csv`);
@@ -160,15 +195,27 @@ let doLinears as function(wiff_standards, subdir = "") {
 
 	# Write raw scan data of the user sample data
 	sample.files
-		# list.files(wiff, pattern = "*.mzML")
-		:> wiff.scans(ions, peakAreaMethod = integrator, TPAFactors = NULL) 
-		:> write.csv(file = `${dir}/${subdir}\samples.csv`);
+	# list.files(wiff, pattern = "*.mzML")
+	:> wiff.scans(
+		ions            = ions, 
+		peakAreaMethod  = integrator, 
+		TPAFactors      = NULL, 
+		tolerance       = tolerance, 
+		removesWiffName = TRUE, 
+		timeWindowSize  = rt_winSize
+	) 
+	:> write.csv(file = `${dir}/${subdir}\samples.csv`);
 
 	# create ion quantify result for each metabolites
 	# that defined in ion pairs data
 	for(sample.mzML in sample.files) {
 		let peakfile as string = `${dir}/${subdir}/samples_peaktable/${basename(sample.mzML)}.csv`;
-		let result = ref :> sample.quantify(sample.mzML, ions, integrator, NULL);
+		let result = ref :> sample.quantify(
+			sample.mzML, ions, integrator, 
+			tolerance      = tolerance, 
+			timeWindowSize = rt_winSize, 
+			TPAFactors     = NULL
+		);
 		
 		print(basename(sample.mzML));
 		
