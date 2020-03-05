@@ -138,6 +138,37 @@ Module MRMkit
         End If
     End Function
 
+    <ExportAPI("MRM.arguments")>
+    Public Function MRMarguments(Optional tolerance As Object = "da:0.3",
+                                 Optional timeWindowSize# = 5,
+                                 Optional angleThreshold# = 5,
+                                 Optional baselineQuantile# = 0.65,
+                                 Optional integratorTicks% = 5000,
+                                 Optional peakAreaMethod As Methods = Methods.NetPeakSum,
+                                 Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As MRMArguments
+        Return New MRMArguments(
+            TPAFactors:=TPAFactors,
+            tolerance:=interop_arguments.GetTolerance(tolerance, "da:0.3"),
+            timeWindowSize:=timeWindowSize,
+            angleThreshold:=angleThreshold,
+            baselineQuantile:=baselineQuantile,
+            integratorTicks:=integratorTicks,
+            peakAreaMethod:=peakAreaMethod
+        )
+    End Function
+
+    <ExportAPI("MRM.rt_alignments")>
+    Public Function GetRTAlignments(<RRawVectorArgument> cal As Object, <RRawVectorArgument> ions As Object, Optional args As MRMArguments = Nothing) As RTAlignment()
+        Dim references As IEnumerable(Of String) = DirectCast(REnv.asVector(Of String)(cal), String())
+        Dim ionPairs As IonPair() = REnv.asVector(Of IonPair)(ions)
+
+        If args Is Nothing Then
+            args = MRM.MRMArguments.GetDefaultArguments
+        End If
+
+        Return RTAlignmentProcessor.AcquireRT(references, ionPairs, args)
+    End Function
+
     ''' <summary>
     ''' Extract ion peaks
     ''' </summary>

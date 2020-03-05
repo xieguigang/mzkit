@@ -12,12 +12,12 @@ Namespace MRM
     ''' <summary>
     ''' pre-processing for the rt shift
     ''' </summary>
-    Module RTAlignmentProcessor
+    Public Module RTAlignmentProcessor
 
         <Extension>
         Public Function AcquireRT(samples As IEnumerable(Of String), ions As IonPair(), args As MRMArguments) As RTAlignment()
             Dim tolerance As Tolerance = args.tolerance
-            Dim isomerism As IsomerismIonPairs() = IonPair.GetIsomerism(ions, Tolerance).ToArray
+            Dim isomerism As IsomerismIonPairs() = IonPair.GetIsomerism(ions, tolerance).ToArray
             Dim raw = samples _
                 .Select(Function(file)
                             Return MRMSamples.ExtractIonData(

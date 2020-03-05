@@ -20,6 +20,25 @@ Namespace MRM
                 integratorTicks%,
                 peakAreaMethod As PeakArea.Methods)
 
+            Me.TPAFactors = TPAFactors
+            Me.tolerance = tolerance
+            Me.timeWindowSize = timeWindowSize
+            Me.angleThreshold = angleThreshold
+            Me.baselineQuantile = baselineQuantile
+            Me.integratorTicks = integratorTicks
+            Me.peakAreaMethod = peakAreaMethod
         End Sub
+
+        Public Shared Function GetDefaultArguments() As MRMArguments
+            Return New MRMArguments(
+                TPAFactors:=Nothing,
+                tolerance:=Tolerance.DeltaMass(0.3),
+                timeWindowSize:=5,
+                angleThreshold:=5,
+                baselineQuantile:=0.65,
+                integratorTicks:=5000,
+                peakAreaMethod:=Methods.NetPeakSum
+            )
+        End Function
     End Class
 End Namespace
