@@ -115,6 +115,7 @@ Module Visual
                                             Optional fill As Boolean = True,
                                             Optional gridFill$ = "rgb(250,250,250)",
                                             Optional lineStyle$ = "stroke: black; stroke-width: 2px; stroke-dash: solid;",
+                                            <RRawVectorArgument>
                                             Optional relativeTimeScale As Object = Nothing,
                                             Optional env As Environment = Nothing) As Object
 
@@ -125,7 +126,7 @@ Module Visual
         If relativeTimeScale Is Nothing Then
             relativeTimeScale = New Double() {}
         Else
-            relativeTimeScale = New Double() {0, DirectCast(REnv.asVector(Of Double)(relativeTimeScale), Double()).Max}
+            relativeTimeScale = DirectCast(REnv.asVector(Of Double)(relativeTimeScale), Double())
         End If
 
         If TypeOf chromatogram Is ChromatogramTick() Then

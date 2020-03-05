@@ -28,10 +28,11 @@ for(ion in MRM) {
 	
 	chromatograms 
 	:> MRM.chromatogramPeaks.plot(
-		fill      = FALSE, 
-		gridFill  = "white", 
-		lineStyle = "stroke: black; stroke-width: 5px; stroke-dash: solid;",
-		size      = [1800, 1000]
+		fill              = FALSE, 
+		gridFill          = "white", 
+		lineStyle         = "stroke: black; stroke-width: 5px; stroke-dash: solid;",
+		size              = [1800, 1000],
+		relativeTimeScale = NULL
 	)
 	:> save.graphics(file = `${export}/${as.object(ion)$accession}.png`)
 	;
