@@ -50,8 +50,13 @@ Namespace MRM
                                 .PopulateROI(
                                     baselineQuantile:=args.baselineQuantile,
                                     angleThreshold:=args.angleThreshold
-                                )
-                            Dim rt As Double = ROI.getRt(numOfIsomerism:=ionPair.ions.Length)
+                                ).ToArray
+
+                            Return (sample.sampleName, ROI)
+                        End Function) _
+                .Where(Function(sample) Not sample.ROI.IsNullOrEmpty) _
+                .Select(Function(sample)
+                            Dim rt As Double = sample.ROI.getRt(numOfIsomerism:=ionPair.ions.Length)
 
                             Return New NamedValue(Of Double) With {
                                 .Name = sample.sampleName,
