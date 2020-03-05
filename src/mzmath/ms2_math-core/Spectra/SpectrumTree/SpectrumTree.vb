@@ -185,12 +185,12 @@ Namespace Spectra
 
             If showReport Then
                 Dim progress As New ProgressBar("Create spectrum tree", 2, True)
-                Dim tick As New ProgressProvider(ms2list.Length)
+                Dim tick As New ProgressProvider(progress, ms2list.Length)
                 Dim message$
 
                 tickAction =
                     Sub()
-                        message = $"ETA: {tick.ETA(progress.ElapsedMilliseconds).FormatTime}"
+                        message = $"ETA: {tick.ETA().FormatTime}"
                         progress.SetProgress(tick.StepProgress, message)
                     End Sub
                 releaseAction = AddressOf progress.Dispose
