@@ -3,21 +3,21 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
-Imports REnv = SMRUCC.Rsharp.Runtime.Internal
-Imports Microsoft.VisualBasic.Data.csv
+Imports REnv = SMRUCC.Rsharp.Runtime
 
 <Package("mzkit.math")>
 Module MzMath
 
     Sub New()
-        Call REnv.ConsolePrinter.AttachConsoleFormatter(Of MzReport())(AddressOf printMzTable)
+        Call REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of MzReport())(AddressOf printMzTable)
 
-        Call REnv.Object.Converts.addHandler(GetType(PeakFeature()), AddressOf peaktable)
-        Call REnv.Object.Converts.addHandler(GetType(MzGroup), AddressOf XICTable)
+        Call REnv.Internal.Object.Converts.addHandler(GetType(PeakFeature()), AddressOf peaktable)
+        Call REnv.Internal.Object.Converts.addHandler(GetType(MzGroup), AddressOf XICTable)
     End Sub
 
     Private Function peaktable(x As PeakFeature(), args As list, env As Environment) As dataframe
@@ -107,5 +107,15 @@ Module MzMath
     <RApiReturn(GetType(MzGroup()))>
     Public Function mz_groups(<RRawVectorArgument> ms1 As Object, Optional tolerance As Object = "ppm:20") As Object
         Return ms1Scans(ms1).GetMzGroups(getTolerance(tolerance)).ToArray
+    End Function
+
+    <ExportAPI("ppm")>
+    Public Function ppm(<RRawVectorArgument> a As Object, <RRawVectorArgument> b As Object) As Double()
+        Dim x As Double() = REnv.asVector(Of Double)(a)
+        Dim y As Double() = REnv.asVector(Of Double)(b)
+
+        Return REnv _
+            .BinaryCoreInternal(Of Double, Double, Double)(x, y, Function(xi, yi) PPMmethod.ppm(xi, yi)) _
+            .ToArray
     End Function
 End Module

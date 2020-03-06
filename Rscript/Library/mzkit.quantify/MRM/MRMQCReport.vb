@@ -9,6 +9,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Distributions
+Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.SymbolBuilder
 Imports Microsoft.VisualBasic.Text.Xml
@@ -121,7 +122,11 @@ Module MRMQCReport
                                 </div>, rows.JoinBy(vbCrLf))
         Next
 
-        report("TOC") = TOCData.reportTOC(RSD_dist, QC_variants.Where(Function(n) Not n.IsNaNImaginary).ToArray)
+        QC_variants = QC_variants _
+            .Where(Function(n) Not n.IsNaNImaginary AndAlso n <= 5) _
+            .AsList
+
+        report("TOC") = TOCData.reportTOC(RSD_dist, QC_variants.ToArray)
         report("linears") = contents.JoinBy(vbCrLf)
 
         Return report.ToString

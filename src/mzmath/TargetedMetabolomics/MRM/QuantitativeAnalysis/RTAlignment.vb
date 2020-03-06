@@ -73,19 +73,9 @@ Namespace MRM
 
         <Extension>
         Private Function getRt(ROI As IEnumerable(Of ROI), numOfIsomerism As Integer) As Double
-            Dim peak As ROI
-
-            If numOfIsomerism = 0 Then
-                peak = ROI _
-                    .OrderByDescending(Function(r) r.Integration) _
-                    .First
-            Else
-                peak = ROI _
-                    .OrderByDescending(Function(r) r.Integration) _
-                    .Take(numOfIsomerism + 1) _
-                    .OrderBy(Function(r) r.rt) _
-                    .First
-            End If
+            Dim peak As ROI = ROI _
+                .OrderByDescending(Function(r) r.Integration) _
+                .First
 
             Return peak.rt
         End Function
