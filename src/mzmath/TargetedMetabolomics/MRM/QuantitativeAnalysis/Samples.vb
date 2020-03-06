@@ -138,7 +138,8 @@ Namespace MRM
                                              Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum,
                                              Optional externalStandardsWiff$ = Nothing,
                                              Optional isBlank As Func(Of String, Boolean) = Nothing,
-                                             Optional weighted As Boolean = False) As IEnumerable(Of DataSet)
+                                             Optional weighted As Boolean = False,
+                                             Optional rtshifts As RTAlignment() = Nothing) As IEnumerable(Of DataSet)
             Dim standardNames$() = Nothing
             Dim TPAFactors = calibrates.ToDictionary(Function(ion) ion.ID, Function(ion) ion.Factor)
             ' 扫描标准曲线的样本，然后进行回归建模 
@@ -154,7 +155,8 @@ Namespace MRM
                       tolerance:=tolerance,
                       timeWindowSize:=timeWindowSize,
                       angleThreshold:=angleThreshold,
-                      baselineQuantile:=baselineQuantile
+                      baselineQuantile:=baselineQuantile,
+                      rtshifts:=rtshifts
                 ) _
                 .ToDictionary _
                 .Regression(calibrates, ISvector:=[IS], weighted:=weighted) _
@@ -196,7 +198,8 @@ Namespace MRM
                     angleThreshold:=angleThreshold,
                     peakAreaMethod:=peakAreaMethod,
                     TPAFactors:=TPAFactors,
-                    baselineQuantile:=baselineQuantile
+                    baselineQuantile:=baselineQuantile,
+                    rtshifts:=New Dictionary(Of String, Double)
                 )
                 mrmPeaktable += scan.MRMPeaks
                 X += scan.rawX
@@ -209,7 +212,7 @@ Namespace MRM
         End Function
 
         <Extension>
-        Public Function SampleQuantify(model As StandardCurve(), file$, ions As IonPair(), tolerance As Tolerance, timeWindowSize#, angleThreshold#, baselineQuantile#,
+        Public Function SampleQuantify(model As StandardCurve(), file$, ions As IonPair(), tolerance As Tolerance, timeWindowSize#, angleThreshold#, baselineQuantile#, rtshifts As Dictionary(Of String, Double),
                                        Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum,
                                        Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As QuantifyScan
 
@@ -224,7 +227,8 @@ Namespace MRM
                     tolerance:=tolerance,
                     timeWindowSize:=timeWindowSize,
                     angleThreshold:=angleThreshold,
-                    baselineQuantile:=baselineQuantile
+                    baselineQuantile:=baselineQuantile,
+                    rtshifts:=rtshifts
                 ) _
                 .ToArray
             Dim MRMPeakTable As New List(Of MRMPeakTable)

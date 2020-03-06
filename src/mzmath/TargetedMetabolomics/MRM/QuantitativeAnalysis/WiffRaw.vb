@@ -44,7 +44,6 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.Data.csv.IO
@@ -57,7 +56,7 @@ Namespace MRM
 
     Public Module WiffRaw
 
-        Public Function ScanPeakTable(mzML$, ions As IonPair(), tolerance As Tolerance, timeWindowSize#, angleThreshold#, baselineQuantile#,
+        Public Function ScanPeakTable(mzML$, ions As IonPair(), tolerance As Tolerance, timeWindowSize#, angleThreshold#, baselineQuantile#, rtshifts As Dictionary(Of String, Double),
                                       Optional peakAreaMethod As PeakArea.Methods = PeakArea.Methods.NetPeakSum,
                                       Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As DataSet()
 
@@ -69,7 +68,8 @@ Namespace MRM
                 tolerance:=tolerance,
                 timeWindowSize:=timeWindowSize,
                 angleThreshold:=angleThreshold,
-                baselineQuantile:=baselineQuantile
+                baselineQuantile:=baselineQuantile,
+                rtshifts:=rtshifts
             )
             Dim peaktable As DataSet() = TPA _
                 .Select(Function(ion)
@@ -87,6 +87,24 @@ Namespace MRM
                 .ToArray
 
             Return peaktable
+        End Function
+
+        <Extension>
+        Public Function CreateRtShiftMatrix(rtshifts As RTAlignment()) As Dictionary(Of String, Dictionary(Of String, Double))
+            Return rtshifts _
+               .Select(Function(i)
+                           Return i.CalcRtShifts.Select(Function(shift) (i.ion.target.accession, shift))
+                       End Function) _
+               .IteratesALL _
+               .GroupBy(Function(shift) shift.shift.Name) _
+               .ToDictionary(Function(sample) sample.Key,
+                             Function(sample)
+                                 Return sample _
+                                     .ToDictionary(Function(ion) ion.accession,
+                                                   Function(ion)
+                                                       Return ion.shift.Value
+                                                   End Function)
+                             End Function)
         End Function
 
         ''' <summary>
@@ -128,20 +146,7 @@ Namespace MRM
                 ionTPAs(ion.accession) = New Dictionary(Of String, Double)
             Next
 
-            Dim shiftMatrix = rtshifts _
-                .Select(Function(i)
-                            Return i.CalcRtShifts.Select(Function(shift) (i.ion.target.accession, shift))
-                        End Function) _
-                .IteratesALL _
-                .GroupBy(Function(shift) shift.shift.Name) _
-                .ToDictionary(Function(sample) sample.Key,
-                              Function(sample)
-                                  Return sample _
-                                      .ToDictionary(Function(ion) ion.accession,
-                                                    Function(ion)
-                                                        Return ion.shift.Value
-                                                    End Function)
-                              End Function)
+            Dim shiftMatrix = rtshifts.CreateRtShiftMatrix
 
             For Each file As String In mzMLRawFiles
                 ' 得到当前的这个原始文件之中的峰面积数据

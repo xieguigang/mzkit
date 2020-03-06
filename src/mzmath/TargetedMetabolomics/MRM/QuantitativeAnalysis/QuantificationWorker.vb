@@ -47,7 +47,8 @@ Namespace MRM
                                              baselineQuantile#,
                                              TPAFactors As Dictionary(Of String, Double),
                                              tolerance As Tolerance,
-                                             timeWindowSize#) As IEnumerable(Of ContentResult(Of MRMPeakTable))
+                                             timeWindowSize#,
+                                             rtshifts As Dictionary(Of String, Double)) As IEnumerable(Of ContentResult(Of MRMPeakTable))
 
             Dim TPA As Dictionary(Of String, IonTPA) = raw _
                 .ScanTPA(ionpairs:=ions,
@@ -56,7 +57,8 @@ Namespace MRM
                          tolerance:=tolerance,
                          timeWindowSize:=timeWindowSize,
                          angleThreshold:=angleThreshold,
-                         baselineQuantile:=baselineQuantile
+                         baselineQuantile:=baselineQuantile,
+                         rtshifts:=rtshifts
                 ) _
                 .ToDictionary(Function(ion) ion.name)
 

@@ -233,6 +233,7 @@ Module MRMkit
                                    Optional integratorTicks% = 5000,
                                    Optional peakAreaMethod As PeakArea.Methods = PeakArea.Methods.NetPeakSum,
                                    Optional angleThreshold# = 5,
+                                   Optional rtshift As Dictionary(Of String, Double) = Nothing,
                                    Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As IonTPA()
 
         If TPAFactors Is Nothing Then
@@ -248,7 +249,8 @@ Module MRMkit
             integratorTicks:=integratorTicks,
             peakAreaMethod:=peakAreaMethod,
             timeWindowSize:=timeWindowSize,
-            angleThreshold:=angleThreshold
+            angleThreshold:=angleThreshold,
+            rtshifts:=rtshift
         )
     End Function
 
@@ -410,6 +412,7 @@ Module MRMkit
                                   Optional timeWindowSize# = 5,
                                   Optional angleThreshold# = 5,
                                   Optional baselineQuantile# = 0.65,
+                                  Optional rtshifts As Dictionary(Of String, Double) = Nothing,
                                   Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As DataSet()
 
         If TPAFactors Is Nothing Then
@@ -424,7 +427,8 @@ Module MRMkit
             peakAreaMethod:=peakAreaMethod,
             TPAFactors:=TPAFactors,
             angleThreshold:=angleThreshold,
-            baselineQuantile:=baselineQuantile
+            baselineQuantile:=baselineQuantile,
+            rtshifts:=rtshifts
         )
     End Function
 
@@ -501,10 +505,7 @@ Module MRMkit
             timeWindowSize:=timeWindowSize,
             angleThreshold:=angleThreshold,
             baselineQuantile:=baselineQuantile,
-            rtshifts:=rtshifts _
-                .ToDictionary(Function(ion)
-                                  Return ion.ion.target.accession
-                              End Function)
+            rtshifts:=rtshifts
         )
     End Function
 
@@ -597,7 +598,8 @@ Module MRMkit
             TPAFactors:=TPAFactors,
             timeWindowSize:=timeWindowSize,
             angleThreshold:=angleThreshold,
-            baselineQuantile:=baselineQuantile
+            baselineQuantile:=baselineQuantile,
+            rtshifts:=New Dictionary(Of String, Double)
         )
     End Function
 

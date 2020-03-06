@@ -380,11 +380,7 @@ Namespace MRM
                     levelPattern:=levelPattern,
                     angleThreshold:=angleThreshold,
                     baselineQuantile:=baselineQuantile,
-                    rtshifts:=rtshifts _
-                        .SafeQuery _
-                        .ToDictionary(Function(ion)
-                                          Return ion.ion.target.accession
-                                      End Function)
+                    rtshifts:=rtshifts
                 )
             End If
         End Function
@@ -408,7 +404,7 @@ Namespace MRM
                              timeWindowSize#,
                              angleThreshold#,
                              baselineQuantile#,
-                             rtshifts As Dictionary(Of String, RTAlignment),
+                             rtshifts As RTAlignment(),
                              Optional ByRef refName$() = Nothing,
                              Optional levelPattern$ = "[-]CAL\d+") As DataSet()
 
