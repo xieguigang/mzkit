@@ -64,6 +64,7 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports Rdataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime
 Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
 Imports RRuntime = SMRUCC.Rsharp.Runtime
@@ -101,11 +102,36 @@ Module MRMkit
         REnv.Internal.htmlPrinter.AttachHtmlFormatter(Of MRMDataSet)(AddressOf MRMLinearReport.CreateHtml)
         REnv.Internal.htmlPrinter.AttachHtmlFormatter(Of QCData)(AddressOf MRMQCReport.CreateHtml)
 
+        REnv.Internal.Object.Converts.makeDataframe.addHandler(GetType(RTAlignment()), AddressOf RTShiftSummary)
+
         Dim toolkit As AssemblyInfo = GetType(MRMkit).Assembly.FromAssembly
 
         Call VBDebugger.WaitOutput()
         Call toolkit.AppSummary(Nothing, Nothing, App.StdOut)
     End Sub
+
+    Private Function RTShiftSummary(x As RTAlignment(), args As list, env As Environment) As Rdataframe
+        Dim rownames = x.Select(Function(i) i.ion.accession).ToArray
+        Dim cols As New Dictionary(Of String, Array)
+        Dim name As Array = x.Select(Function(i) i.ion.name).ToArray
+        Dim rt As Array = x.Select(Function(i) i.actualRT).ToArray
+        Dim rtshifts = x.Select(Function(i) i.CalcRtShifts.ToDictionary(Function(sample) sample.Name, Function(sample) sample.Value)).ToArray
+        Dim allSampleNames = rtshifts.Select(Function(i) i.Keys).IteratesALL.Distinct.OrderBy(Function(s) s).ToArray
+        Dim shifts As Array
+
+        Call cols.Add(NameOf(name), name)
+        Call cols.Add(NameOf(rt), rt)
+
+        For Each sampleName As String In allSampleNames
+            shifts = rtshifts.Select(Function(result) result.TryGetValue(sampleName, Double.NaN)).ToArray
+            cols(sampleName) = shifts
+        Next
+
+        Return New Rdataframe With {
+            .rownames = rownames,
+            .columns = cols
+        }
+    End Function
 
     Private Function printStandards(obj As Object) As String
         Dim csv = DirectCast(obj, Standards()).ToCsvDoc.ToMatrix.RowIterator.ToArray

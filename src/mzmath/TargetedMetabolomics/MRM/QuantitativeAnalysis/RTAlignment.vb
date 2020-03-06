@@ -6,6 +6,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Distributions
 
 Namespace MRM
 
@@ -92,15 +93,24 @@ Namespace MRM
     Public Class RTAlignment
 
         Dim samples As NamedValue(Of Double)()
-        Dim ion As IonPair
+
+        Public ReadOnly Property actualRT As Double
+        Public ReadOnly Property ion As IonPair
 
         Sub New(ion As IonPair, sampleValues As NamedValue(Of Double)())
             Me.ion = ion
             Me.samples = sampleValues
+            Me.actualRT = samples.Values.TabulateMode
         End Sub
 
         Public Iterator Function CalcRtShifts() As IEnumerable(Of NamedValue(Of Double))
-
+            For Each sample As NamedValue(Of Double) In samples
+                Yield New NamedValue(Of Double) With {
+                    .Name = sample.Name,
+                    .Value = sample.Value - actualRT,
+                    .Description = sample.Value
+                }
+            Next
         End Function
 
         Public Overrides Function ToString() As String
