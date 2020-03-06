@@ -80,6 +80,7 @@ Module MRMkit
 
         Public StandardCurve As StandardCurve()
         Public Samples As QuantifyScan()
+        Public IonsRaw As list
 
     End Class
 
@@ -663,9 +664,12 @@ Module MRMkit
     ''' </summary>
     ''' <param name="standardCurve"></param>
     ''' <param name="samples"></param>
+    ''' <param name="QC_dataset">
+    ''' Regular expression pattern string for match QC sample files
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("mrm.dataset")>
-    Public Function CreateMRMDataSet(standardCurve As StandardCurve(), samples As QuantifyScan(), Optional QC_dataset$ = Nothing) As Object
+    Public Function CreateMRMDataSet(standardCurve As StandardCurve(), samples As QuantifyScan(), Optional QC_dataset$ = Nothing, Optional ionsRaw As Rlist = Nothing) As Object
         If Not QC_dataset.StringEmpty Then
             Return New QCData With {
                 .model = standardCurve,
@@ -675,7 +679,8 @@ Module MRMkit
         Else
             Return New MRMDataSet With {
                 .StandardCurve = standardCurve,
-                .Samples = samples
+                .Samples = samples,
+                .IonsRaw = ionsRaw
             }
         End If
     End Function

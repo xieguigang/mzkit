@@ -1,7 +1,10 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM
+Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.csv.DATA
 Imports Microsoft.VisualBasic.Imaging
@@ -9,6 +12,8 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.SymbolBuilder
 Imports Microsoft.VisualBasic.Text.Xml
+Imports SMRUCC.Rsharp.Runtime.Internal.Object
+Imports REnv = SMRUCC.Rsharp.Runtime
 
 Module MRMLinearReport
 
@@ -24,12 +29,14 @@ Module MRMLinearReport
         Dim standardCurves As StandardCurve() = getStandardCurve(obj)
         Dim report As ScriptBuilder = getBlankReport(title:="MRM Quantification Linear Models")
         Dim samples As QuantifyScan() = Nothing
+        Dim ionsRaw As list = Nothing
 
         If obj.GetType Is GetType(MRMDataSet) Then
             samples = DirectCast(obj, MRMDataSet).Samples
+            ionsRaw = DirectCast(obj, MRMDataSet).IonsRaw
         End If
 
-        Return report.doReport(standardCurves, samples)
+        Return report.doReport(standardCurves, samples, ionsRaw)
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -85,13 +92,14 @@ Module MRMLinearReport
     End Function
 
     <Extension>
-    Private Function doReport(report As ScriptBuilder, standardCurves As StandardCurve(), samples As QuantifyScan()) As String
+    Private Function doReport(report As ScriptBuilder, standardCurves As StandardCurve(), samples As QuantifyScan(), ionsRaw As list) As String
         Dim linears As New List(Of XElement)
         Dim image As Image
         Dim title$
         Dim R2#
         Dim isWeighted As Boolean
         Dim range As DoubleRange
+        Dim ionRawPlot As Image
 
         For Each line As StandardCurve In standardCurves
             title = line.points(Scan0).Name
@@ -102,6 +110,22 @@ Module MRMLinearReport
                 .Where(Function(r) r.valid) _
                 .Select(Function(r) r.Cti) _
                 .Range
+            ionRawPlot = DirectCast(ionsRaw(line.name), list).slots _
+                .Select(Function(sample)
+                            Return New NamedCollection(Of ChromatogramTick) With {
+                                .name = sample.Key,
+                                .value = REnv.asVector(Of ChromatogramTick)(sample.Value)
+                            }
+                        End Function) _
+                .ToArray _
+                .TICplot(
+                    size:="1600,900",
+                    fillCurve:=False,
+                    gridFill:="rgb(250,250,250)",
+                    penStyle:="stroke: black; stroke-width: 2px; stroke-dash: solid;",
+                    timeRange:=New Double() {0, 2000},
+                    parallel:=True
+                ).AsGDIImage
 
             linears +=
                 <div class="row" id=<%= line.name %>>
@@ -123,6 +147,7 @@ Module MRMLinearReport
 
                         <p>
                             <img src=<%= New DataURI(image) %> style="width: 65%;"/>
+                            <img src=<%= New DataURI(ionRawPlot) %> style="width: 65%;"/>
                         </p>
 
                         <h3>Reference Points</h3>

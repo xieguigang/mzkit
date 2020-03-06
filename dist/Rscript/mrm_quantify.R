@@ -4,6 +4,9 @@
 imports ["mzkit.mrm", "mzkit.quantify.visual"] from "mzkit.quantify.dll";
 imports "mzkit.assembly" from "mzkit.dll";
 
+# includes external helper script
+imports "plot_ionRaws.R";
+
 # config of the standard curve data files
 let wiff     as string = ?"--Cal"          || stop("No standard curve data provides!");
 let sample   as string = ?"--data"         || stop("No sample data files provided!");
@@ -253,8 +256,15 @@ let linears.standard_curve as function(wiff_standards, subdir) {
 }
 
 let doLinears as function(wiff_standards, subdir = "") {
-	let scans        = [];
-	let ref          = linears.standard_curve(wiff_standards, subdir);
+	let scans    = [];
+	let ref      = linears.standard_curve(wiff_standards, subdir);
+	let ref_raws = ions 
+	# get ion chromatograms raw data for 
+	# TIC data plots
+	:> getIonsSampleRaw(wiff_standards, tolerance) 
+	:> lapply(ion => ion$chromatograms)
+	;
+	
 	# calculate standards points as well for quality controls
 	# and result data verification
 	let sample.files = wiff$samples << wiff_standards; 
@@ -307,7 +317,11 @@ let doLinears as function(wiff_standards, subdir = "") {
 	scans.X(scans) :> write.csv(file = `${dir}/${subdir}\rawX.csv`);
 	
 	# save linear regression html report
-	html(mrm.dataset(ref, scans)) :> writeLines(con = `${dir}/${subdir}/index.html`);
+	ref
+	:> mrm.dataset(scans, ionsRaw = ref_raws) 
+	:> html 
+	:> writeLines(con = `${dir}/${subdir}/index.html`)
+	;
 		
 	if (sum(QC_samples) > 0) {
 		ref
