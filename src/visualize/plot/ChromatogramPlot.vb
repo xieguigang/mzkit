@@ -96,7 +96,7 @@ Public Module ChromatogramPlot
                                         Optional tolerance$ = "ppm:20") As GraphicsData
 
         Dim mzTolerance As Tolerance = Ms1.Tolerance.ParseScript(tolerance)
-        Dim MRM As IonChromatogramData() = IonPair _
+        Dim MRM As IonChromatogram() = IonPair _
             .GetIsomerism(ions, mzTolerance) _
             .ExtractIonData(
                 mzML:=mzML,

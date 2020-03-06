@@ -64,7 +64,7 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace MRM
 
-    Public Structure IonChromatogramData
+    Public Structure IonChromatogram
 
         Public Property name As String
         Public Property description As String
@@ -86,7 +86,7 @@ Namespace MRM
         ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function ExtractIonData(ion_pairs As IEnumerable(Of IsomerismIonPairs), mzML$, assignName As Func(Of IonPair, String), tolerance As Tolerance) As IonChromatogramData()
+        Public Function ExtractIonData(ion_pairs As IEnumerable(Of IsomerismIonPairs), mzML$, assignName As Func(Of IonPair, String), tolerance As Tolerance) As IonChromatogram()
             Return LoadChromatogramList(mzML) _
                 .MRMSelector(ion_pairs, tolerance) _
                 .Where(Function(ion) Not ion.chromatogram Is Nothing) _
@@ -94,7 +94,7 @@ Namespace MRM
                             Dim ion As IonPair = ionData.ion.target
                             Dim note$ = ion.name & $" [{ion.precursor}/{ion.product}]"
 
-                            Return New IonChromatogramData With {
+                            Return New IonChromatogram With {
                                 .name = assignName(ion),
                                 .description = note,
                                 .chromatogram = ionData.chromatogram.Ticks,

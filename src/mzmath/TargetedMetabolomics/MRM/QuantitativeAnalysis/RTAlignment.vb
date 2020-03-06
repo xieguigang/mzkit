@@ -41,7 +41,7 @@ Namespace MRM
         End Function
 
         <Extension>
-        Private Function processingRT(samples As IEnumerable(Of (sampleName$, raw As IonChromatogramData)), args As MRMArguments) As RTAlignment
+        Private Function processingRT(samples As IEnumerable(Of (sampleName$, raw As IonChromatogram)), args As MRMArguments) As RTAlignment
             Dim data = samples.ToArray
             Dim ionPair As IsomerismIonPairs = data(Scan0).raw.ion
             Dim samplePeaks = data _

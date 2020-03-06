@@ -50,6 +50,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 
 Namespace MRM
@@ -107,7 +108,7 @@ Namespace MRM
                              timeWindowSize#,
                              angleThreshold#,
                              baselineQuantile#,
-                             rtshifts As Dictionary(Of String, RTAlignment),
+                             rtshifts As RTAlignment(),
                              Optional ByRef refName$() = Nothing,
                              Optional removesWiffName As Boolean = False) As DataSet()
 
@@ -127,6 +128,21 @@ Namespace MRM
                 ionTPAs(ion.accession) = New Dictionary(Of String, Double)
             Next
 
+            Dim shiftMatrix = rtshifts _
+                .Select(Function(i)
+                            Return i.CalcRtShifts.Select(Function(shift) (i.ion.target.accession, shift))
+                        End Function) _
+                .IteratesALL _
+                .GroupBy(Function(shift) shift.shift.Name) _
+                .ToDictionary(Function(sample) sample.Key,
+                              Function(sample)
+                                  Return sample _
+                                      .ToDictionary(Function(ion) ion.accession,
+                                                    Function(ion)
+                                                        Return ion.shift.Value
+                                                    End Function)
+                              End Function)
+
             For Each file As String In mzMLRawFiles
                 ' 得到当前的这个原始文件之中的峰面积数据
                 Dim TPA() = file.ScanTPA(
@@ -136,7 +152,8 @@ Namespace MRM
                     tolerance:=tolerance,
                     timeWindowSize:=timeWindowSize,
                     angleThreshold:=angleThreshold,
-                    baselineQuantile:=baselineQuantile
+                    baselineQuantile:=baselineQuantile,
+                    rtshifts:=shiftMatrix.TryGetValue(file.BaseName)
                 )
 
                 refNames += file.BaseName

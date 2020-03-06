@@ -181,7 +181,8 @@ let linears.standard_curve as function(wiff_standards, subdir) {
 		timeWindowSize   = rt_winSize,
 		removesWiffName  = TRUE,
 		angleThreshold   = angle.threshold,
-		baselineQuantile = baseline.quantile
+		baselineQuantile = baseline.quantile,
+		rtshifts         = rt.shifts
 	);
 
 	CAL :> write.csv(file = `${dir}/${subdir}/referencePoints(peakarea).csv`);

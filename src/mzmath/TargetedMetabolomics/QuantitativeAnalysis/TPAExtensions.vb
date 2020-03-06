@@ -89,7 +89,7 @@ Public Module TPAExtensions
     ''' </param>
     ''' <returns></returns>
     <Extension>
-    Public Function ionTPA(ion As IonChromatogramData,
+    Public Function ionTPA(ion As IonChromatogram,
                            baselineQuantile#,
                            angleThreshold#,
                            peakAreaMethod As PeakArea.Methods,
@@ -132,7 +132,7 @@ Public Module TPAExtensions
     ''' <param name="TPAFactor#"></param>
     ''' <returns></returns>
     <Extension>
-    Private Function ProcessingIonPeakArea(ion As IonChromatogramData, vector As IVector(Of ChromatogramTick), ROIData As ROI(),
+    Private Function ProcessingIonPeakArea(ion As IonChromatogram, vector As IVector(Of ChromatogramTick), ROIData As ROI(),
                                            baselineQuantile#,
                                            peakAreaMethod As PeakArea.Methods,
                                            integratorTicks%,

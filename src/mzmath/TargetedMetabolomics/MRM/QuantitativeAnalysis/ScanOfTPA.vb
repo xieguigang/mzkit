@@ -44,8 +44,10 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports stdNum = System.Math
 
 Namespace MRM
 
@@ -65,17 +67,36 @@ Namespace MRM
                                 tolerance As Tolerance,
                                 timeWindowSize#,
                                 angleThreshold#,
+                                rtshifts As Dictionary(Of String, Double),
                                 Optional baselineQuantile# = 0.65,
                                 Optional integratorTicks% = 5000,
                                 Optional peakAreaMethod As PeakArea.Methods = Methods.Integrator) As IonTPA()
 
             ' 从原始文件之中读取出所有指定的离子对数据
-            Dim ionData = IonPair.GetIsomerism(ionpairs, tolerance) _
+            Dim ionData As IonChromatogram() = IonPair.GetIsomerism(ionpairs, tolerance) _
                 .ExtractIonData(
                     mzML:=raw,
                     assignName:=Function(ion) ion.accession,
                     tolerance:=tolerance
                 )
+
+            If rtshifts Is Nothing Then
+                rtshifts = New Dictionary(Of String, Double)
+            End If
+
+            For Each ion As IonChromatogram In ionData
+                Dim shiftVal As Double = rtshifts.TryGetValue(ion.ion.target.accession)
+
+                If stdNum.Abs(shiftVal) > timeWindowSize Then
+                    ' required rt calibration
+                    ion.chromatogram = ion.chromatogram _
+                        .Select(Function(tick)
+                                    Return New ChromatogramTick(tick.Time - shiftVal, tick.Intensity)
+                                End Function) _
+                        .ToArray
+                End If
+            Next
+
             ' 进行最大峰的查找，然后计算出净峰面积，用于回归建模
             Dim TPA As IonTPA() = ionData _
                 .Select(Function(ion)
