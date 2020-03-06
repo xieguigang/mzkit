@@ -51,6 +51,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports mzchromatogram = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.chromatogram
 
 Namespace MRM.Models
@@ -109,7 +110,13 @@ Namespace MRM.Models
         ''' <param name="ionpairs"></param>
         ''' <param name="tolerance"></param>
         ''' <returns></returns>
-        Public Shared Iterator Function GetIsomerism(ionpairs As IonPair(), tolerance As Tolerance) As IEnumerable(Of IsomerismIonPairs)
+        Public Shared Function GetIsomerism(ionpairs As IonPair(), tolerance As Tolerance) As IEnumerable(Of IsomerismIonPairs)
+            Return populateGroupElement(ionpairs, tolerance) _
+                .GroupBy(Function(i) i.groupKey) _
+                .IteratesALL
+        End Function
+
+        Private Shared Iterator Function populateGroupElement(ionpairs As IonPair(), tolerance As Tolerance) As IEnumerable(Of IsomerismIonPairs)
             Dim iso As New List(Of IonPair)
 
             For Each ion As IonPair In ionpairs
@@ -159,6 +166,10 @@ Namespace MRM.Models
                 Return Not ions.IsNullOrEmpty
             End Get
         End Property
+
+        Friend Function groupKey() As String
+            Return Me.Select(Function(i) i.accession).JoinBy("|->|")
+        End Function
 
         Public Overrides Function ToString() As String
             If hasIsomerism Then
