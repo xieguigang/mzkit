@@ -9,6 +9,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.csv.DATA
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.SymbolBuilder
 Imports Microsoft.VisualBasic.Text.Xml
@@ -100,6 +101,7 @@ Module MRMLinearReport
         Dim isWeighted As Boolean
         Dim range As DoubleRange
         Dim ionRawPlot As Image
+        Dim rawData As NamedCollection(Of ChromatogramTick)()
 
         For Each line As StandardCurve In standardCurves
             title = line.points(Scan0).Name
@@ -110,21 +112,22 @@ Module MRMLinearReport
                 .Where(Function(r) r.valid) _
                 .Select(Function(r) r.Cti) _
                 .Range
-            ionRawPlot = DirectCast(ionsRaw(line.name), list).slots _
+            rawData = DirectCast(ionsRaw(line.name), list).slots _
                 .Select(Function(sample)
                             Return New NamedCollection(Of ChromatogramTick) With {
                                 .name = sample.Key,
                                 .value = REnv.asVector(Of ChromatogramTick)(sample.Value)
                             }
                         End Function) _
-                .ToArray _
+                .ToArray
+            ionRawPlot = rawData _
                 .TICplot(
                     size:="1600,900",
                     fillCurve:=False,
                     gridFill:="rgb(250,250,250)",
                     penStyle:="stroke: black; stroke-width: 2px; stroke-dash: solid;",
-                    timeRange:=New Double() {0, 2000},
-                    parallel:=True
+                    timeRange:=New Double() {0, rawData.Select(Function(r) r.value).IteratesALL.Select(Function(tick) tick.Intensity).Max * 1.25},
+                    parallel:=False
                 ).AsGDIImage
 
             linears +=

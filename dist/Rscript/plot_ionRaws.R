@@ -9,8 +9,7 @@ let plot_ionRaws as function(MRM, mzML, tolerance, export) {
 			gridFill          = "white", 
 			lineStyle         = "stroke: black; stroke-width: 5px; stroke-dash: solid;",
 			size              = [1600, 900],
-			relativeTimeScale = NULL,
-			parallel          = TRUE
+			relativeTimeScale = NULL
 		)
 		:> save.graphics(file = `${export}/${ion$id}.png`)
 		;

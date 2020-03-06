@@ -207,12 +207,12 @@ Public Module ChromatogramPlot
         Dim labelFont As Font = CSSFont.TryParse(labelFontStyle)
         Dim labelConnector As Pen = Stroke.TryParse(labelConnectorStroke)
 
-        For Each ion As NamedCollection(Of ChromatogramTick) In ionData
-            Dim base = ion.value.Baseline(quantile:=0.65)
-            Dim max# = ion.value.Shadows!Intensity.Max
+        'For Each ion As NamedCollection(Of ChromatogramTick) In ionData
+        '    Dim base = ion.value.Baseline(quantile:=0.65)
+        '    Dim max# = ion.value.Shadows!Intensity.Max
 
-            Call $"{ion.name}: {base}/{max} = {(100 * base / max).ToString("F2")}%".__DEBUG_ECHO
-        Next
+        '    Call $"{ion.name}: {base}/{max} = {(100 * base / max).ToString("F2")}%".__DEBUG_ECHO
+        'Next
 
         Dim colors As LoopArray(Of Pen)
         Dim newPen As Func(Of Color, Pen) =
