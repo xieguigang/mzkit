@@ -66,7 +66,7 @@ Namespace MRM
                         End Function) _
                 .ToArray
 
-            Return New RTAlignment(ionPair.target, samplePeaks)
+            Return New RTAlignment(ionPair, samplePeaks)
         End Function
 
         <Extension>
@@ -95,9 +95,9 @@ Namespace MRM
         Dim samples As NamedValue(Of Double)()
 
         Public ReadOnly Property actualRT As Double
-        Public ReadOnly Property ion As IonPair
+        Public ReadOnly Property ion As IsomerismIonPairs
 
-        Sub New(ion As IonPair, sampleValues As NamedValue(Of Double)())
+        Sub New(ion As IsomerismIonPairs, sampleValues As NamedValue(Of Double)())
             Me.ion = ion
             Me.samples = sampleValues
             Me.actualRT = samples.Values.TabulateMode

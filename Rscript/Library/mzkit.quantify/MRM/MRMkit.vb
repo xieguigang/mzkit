@@ -111,9 +111,10 @@ Module MRMkit
     End Sub
 
     Private Function RTShiftSummary(x As RTAlignment(), args As list, env As Environment) As Rdataframe
-        Dim rownames = x.Select(Function(i) i.ion.accession).ToArray
+        Dim rownames = x.Select(Function(i) i.ion.target.accession).ToArray
         Dim cols As New Dictionary(Of String, Array)
-        Dim name As Array = x.Select(Function(i) i.ion.name).ToArray
+        Dim name As Array = x.Select(Function(i) i.ion.target.name).ToArray
+        Dim isomerism As Array = x.Select(Function(i) If(i.ion.hasIsomerism, "*", "")).ToArray
         Dim rt As Array = x.Select(Function(i) i.actualRT).ToArray
         Dim rtshifts = x.Select(Function(i) i.CalcRtShifts.ToDictionary(Function(sample) sample.Name, Function(sample) sample.Value)).ToArray
         Dim allSampleNames = rtshifts.Select(Function(i) i.Keys).IteratesALL.Distinct.OrderBy(Function(s) s).ToArray
@@ -121,9 +122,10 @@ Module MRMkit
 
         Call cols.Add(NameOf(name), name)
         Call cols.Add(NameOf(rt), rt)
+        Call cols.Add(NameOf(isomerism), isomerism)
 
         For Each sampleName As String In allSampleNames
-            shifts = rtshifts.Select(Function(result) result.TryGetValue(sampleName, Double.NaN)).ToArray
+            shifts = rtshifts.Select(Function(result) result.TryGetValue(sampleName, [default]:=Double.NaN)).ToArray
             cols(sampleName) = shifts
         Next
 
