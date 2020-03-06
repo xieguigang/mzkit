@@ -34,7 +34,9 @@ Namespace MRM
                 .GroupBy(Function(tuple) tuple.ion.name) _
                 .ToArray
             Dim rt As RTAlignment() = raw _
-                .Select(Function(ion) ion.processingRT(args)) _
+                .Select(Function(ion)
+                            Return ion.processingRT(args)
+                        End Function) _
                 .ToArray
 
             Return rt
