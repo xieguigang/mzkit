@@ -107,6 +107,7 @@ Namespace MRM
                              timeWindowSize#,
                              angleThreshold#,
                              baselineQuantile#,
+                             rtshifts As Dictionary(Of String, RTAlignment),
                              Optional ByRef refName$() = Nothing,
                              Optional removesWiffName As Boolean = False) As DataSet()
 

@@ -442,6 +442,10 @@ Module MRMkit
     ''' <param name="peakAreaMethod"></param>
     ''' <param name="TPAFactors"></param>
     ''' <param name="removesWiffName"></param>
+    ''' <param name="rtshifts">
+    ''' For the calibration of the linear model reference points used only, 
+    ''' **DO NOT apply this parameter for the user sample data!**
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("wiff.scans")>
     Public Function ScanWiffRaw(wiffConverts As String(), ions As IonPair(),
@@ -451,7 +455,8 @@ Module MRMkit
                                 Optional baselineQuantile# = 0.65,
                                 Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
                                 Optional removesWiffName As Boolean = True,
-                                Optional timeWindowSize# = 5) As DataSet()
+                                Optional timeWindowSize# = 5,
+                                Optional rtshifts As RTAlignment() = Nothing) As DataSet()
 
         If TPAFactors Is Nothing Then
             TPAFactors = New Dictionary(Of String, Double)
@@ -459,6 +464,10 @@ Module MRMkit
 
         If wiffConverts Is Nothing Then
             Throw New ArgumentNullException(NameOf(wiffConverts))
+        End If
+
+        If rtshifts Is Nothing Then
+            rtshifts = {}
         End If
 
         'If wiffConverts Is Nothing Then
@@ -491,7 +500,11 @@ Module MRMkit
             tolerance:=interop_arguments.GetTolerance(tolerance),
             timeWindowSize:=timeWindowSize,
             angleThreshold:=angleThreshold,
-            baselineQuantile:=baselineQuantile
+            baselineQuantile:=baselineQuantile,
+            rtshifts:=rtshifts _
+                .ToDictionary(Function(ion)
+                                  Return ion.ion.target.accession
+                              End Function)
         )
     End Function
 

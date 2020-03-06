@@ -155,7 +155,21 @@ if (wiff$hasBlankControls) {
 	print("Target reference data have no blank controls.");
 }
 
+#' Create linear models
+#'
+#' @param wiff_standards A file path collection of ``*.mzML`` files, which should be the reference points.
+#' @param subdir A directory name for save the result table
+#'
 let linears.standard_curve as function(wiff_standards, subdir) {
+	let rt.shifts = wiff_standards :> MRM.rt_alignments(ions, args = MRM.arguments());
+	
+	print("Previews of the rt shifts summary in your sample reference points:");
+	
+	rt.shifts
+	:> as.data.frame
+	:> print
+	;
+	
 	# Get raw scan data for given ions
 	let CAL <- wiff_standards 
 	# list.files(wiff, pattern = "*.mzML")
@@ -182,7 +196,8 @@ let linears.standard_curve as function(wiff_standards, subdir) {
 		isWorkCurveMode = isWorkCurve
 	);
 
-	# print model summary and then do standard curve plot
+	#' print model summary and then do standard curve plot
+	#'
 	let printModel as function(line) {
 		# get compound id name
 		let id as string = line 

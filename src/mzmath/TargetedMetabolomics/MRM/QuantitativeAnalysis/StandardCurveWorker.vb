@@ -56,6 +56,7 @@ Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Quantile
 Imports regexp = System.Text.RegularExpressions.Regex
@@ -353,7 +354,8 @@ Namespace MRM
                              Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
                              Optional ByRef refName$() = Nothing,
                              Optional calibrationNamedPattern$ = ".+[-]CAL\d+",
-                             Optional levelPattern$ = "[-]CAL\d+") As DataSet()
+                             Optional levelPattern$ = "[-]CAL\d+",
+                             Optional rtshifts As RTAlignment() = Nothing) As DataSet()
 
             ' 扫描所有的符合命名规则要求的原始文件
             ' 假设这些符合命名规则的文件都是标准曲线文件
@@ -377,7 +379,12 @@ Namespace MRM
                     refName:=refName,
                     levelPattern:=levelPattern,
                     angleThreshold:=angleThreshold,
-                    baselineQuantile:=baselineQuantile
+                    baselineQuantile:=baselineQuantile,
+                    rtshifts:=rtshifts _
+                        .SafeQuery _
+                        .ToDictionary(Function(ion)
+                                          Return ion.ion.target.accession
+                                      End Function)
                 )
             End If
         End Function
@@ -401,6 +408,7 @@ Namespace MRM
                              timeWindowSize#,
                              angleThreshold#,
                              baselineQuantile#,
+                             rtshifts As Dictionary(Of String, RTAlignment),
                              Optional ByRef refName$() = Nothing,
                              Optional levelPattern$ = "[-]CAL\d+") As DataSet()
 
@@ -423,7 +431,8 @@ Namespace MRM
                       angleThreshold:=angleThreshold,
                       refName:=refName,
                       removesWiffName:=False,
-                      baselineQuantile:=baselineQuantile
+                      baselineQuantile:=baselineQuantile,
+                      rtshifts:=rtshifts
                  ) _
                 .Select(Function(ion)
                             Return New DataSet With {
