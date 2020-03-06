@@ -160,6 +160,7 @@ Public Module TPAExtensions
                .Where(Function(r)
                           Return r.Time.IsOverlapping(find)
                       End Function) _
+               .OrderByDescending(Function(r) r.Integration) _
                .FirstOrDefault
         End If
 

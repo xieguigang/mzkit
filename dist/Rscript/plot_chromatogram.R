@@ -1,6 +1,8 @@
 imports ["mzkit.mrm", "mzkit.quantify.visual"] from "mzkit.quantify.dll";
 imports "mzkit.assembly" from "mzkit.dll";
 
+imports "plot_ionRaws.R";
+
 let MRM       as string = ?"--MRM"     || stop("No MRM ion pair information provided!");
 let mzML      as string = ?"--data"    || stop("No raw data provided! This parameter should be an exists directory.");
 let export    as string = ?"--out"     || `${dirname(mzML)}/${basename(mzML)}_ions_chromatogram/`;
@@ -17,25 +19,4 @@ if (lcase(file.info(MRM)$Extension) == ".xlsx") {
 	;
 }
 
-mzML <- list.files(mzML, pattern = "*.mzML");
-
-for(ion in MRM) {
-	let chromatograms = lapply(mzML, function(path) {
-		as.object(extract.ions(path, ion, tolerance)[1])$chromatogram;
-	});
-
-	names(chromatograms) <- basename(mzML);
-	
-	chromatograms 
-	:> MRM.chromatogramPeaks.plot(
-		fill              = FALSE, 
-		gridFill          = "white", 
-		lineStyle         = "stroke: black; stroke-width: 5px; stroke-dash: solid;",
-		size              = [1800, 1000],
-		relativeTimeScale = NULL
-	)
-	:> save.graphics(file = `${export}/${as.object(ion)$accession}.png`)
-	;
-	
-	print(ion);
-}
+plot_ionRaws(MRM, list.files(mzML, pattern = "*.mzML"), tolerance, export);

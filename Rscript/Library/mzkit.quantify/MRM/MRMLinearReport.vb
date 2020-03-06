@@ -2,6 +2,7 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.csv.DATA
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
@@ -60,6 +61,7 @@ Module MRMLinearReport
                 </head>
                 <body class="container">
                     <h1><%= title %></h1>
+                    <p><%= Now.ToString %></p>
                     <hr/>
                     <h2>Table Of Content</h2>
                     <br/>
@@ -89,12 +91,18 @@ Module MRMLinearReport
         Dim title$
         Dim R2#
         Dim isWeighted As Boolean
+        Dim range As DoubleRange
 
         For Each line As StandardCurve In standardCurves
             title = line.points(Scan0).Name
             image = Visual.DrawStandardCurve(line, title).AsGDIImage
             R2 = line.linear.CorrelationCoefficient
             isWeighted = line.isWeighted
+            range = line.points _
+                .Where(Function(r) r.valid) _
+                .Select(Function(r) r.Cti) _
+                .Range
+
             linears +=
                 <div class="row" id=<%= line.name %>>
                     <div class="col-xl-10">
@@ -108,6 +116,7 @@ Module MRMLinearReport
                                     <li>Linear: <i>f(x)</i>=%s</li>
                                     <li>Weighted: <%= isWeighted.ToString.ToUpper %></li>
                                     <li>R<sup>2</sup>: <%= R2 %></li>
+                                    <li>Range: <%= $"{range.Min} ~ {range.Max}" %></li>
                                 </ul>
                             </div>
                         </div>

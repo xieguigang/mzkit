@@ -15,7 +15,7 @@ let dir      as string = ?"--export"       || `${wiff :> trim(" ")}-result/`;
 # The regexp pattern of the file name for match
 # the reference point data.
 let patternOf.ref      = ?"--patternOfRef" || '[-]?LM[-]?\d+';
-let patternOf.QC       = ?"--patternOfQC"  || "QC[-]\d+";
+let patternOf.QC       = ?"--patternOfQC"  || "QC[-]?\d+";
  
 # let Methods as integer = {
       # NetPeakSum = 0;
@@ -34,7 +34,7 @@ let patternOf.QC       = ?"--patternOfQC"  || "QC[-]\d+";
 #
 let integrator  as string  = ?"--integrator" || "NetPeakSum";
 let isWorkCurve as boolean = ?"--workMode";
-let rt_winSize  as double  = as.numeric(?"--rt.winsize" || "5"); 
+let rt_winSize  as double  = as.numeric(?"--rt.winsize" || "10"); 
 let tolerance   as string  = ?"--mz.diff"    || "da:0.3";
 
 # Max number of points for removes in 

@@ -91,7 +91,7 @@ Namespace MRM
                     ' required rt calibration
                     ion.chromatogram = ion.chromatogram _
                         .Select(Function(tick)
-                                    Return New ChromatogramTick(tick.Time - shiftVal, tick.Intensity)
+                                    Return New ChromatogramTick(tick.Time + shiftVal, tick.Intensity)
                                 End Function) _
                         .ToArray
                 End If
