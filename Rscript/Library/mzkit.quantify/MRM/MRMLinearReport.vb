@@ -126,7 +126,7 @@ Module MRMLinearReport
                     fillCurve:=False,
                     gridFill:="rgb(250,250,250)",
                     penStyle:="stroke: black; stroke-width: 2px; stroke-dash: solid;",
-                    timeRange:=New Double() {0, rawData.Select(Function(r) r.value).IteratesALL.Select(Function(tick) tick.Intensity).Max * 1.25},
+                    timeRange:=New Double() {0, rawData.Select(Function(r) r.value).IteratesALL.Select(Function(tick) tick.Time).Max * 1.125},
                     parallel:=False
                 ).AsGDIImage
 
