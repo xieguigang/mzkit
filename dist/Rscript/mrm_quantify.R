@@ -164,7 +164,14 @@ if (wiff$hasBlankControls) {
 #' @param subdir A directory name for save the result table
 #'
 let linears.standard_curve as function(wiff_standards, subdir) {
-	let rt.shifts = wiff_standards :> MRM.rt_alignments(ions, args = MRM.arguments());
+	let rt.shifts = wiff_standards :> MRM.rt_alignments(ions, args = MRM.arguments(
+		tolerance        = tolerance,
+		timeWindowSize   = rt_winSize,
+		angleThreshold   = angle.threshold,
+		baselineQuantile = baseline.quantile,
+		peakAreaMethod   = integrator,
+		TPAFactors       = NULL
+	));
 	
 	print("Previews of the rt shifts summary in your sample reference points:");
 	

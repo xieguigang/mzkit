@@ -94,15 +94,18 @@ Namespace MRM
 
     Public Class RTAlignment
 
-        Dim samples As NamedValue(Of Double)()
-
-        Public ReadOnly Property actualRT As Double
-        Public ReadOnly Property ion As IsomerismIonPairs
+        Public Property samples As NamedValue(Of Double)()
+        Public Property actualRT As Double
+        Public Property ion As IsomerismIonPairs
 
         Sub New(ion As IsomerismIonPairs, sampleValues As NamedValue(Of Double)())
             Me.ion = ion
             Me.samples = sampleValues
             Me.actualRT = samples.Values.TabulateMode
+        End Sub
+
+        Sub New()
+
         End Sub
 
         Public Iterator Function CalcRtShifts() As IEnumerable(Of NamedValue(Of Double))
