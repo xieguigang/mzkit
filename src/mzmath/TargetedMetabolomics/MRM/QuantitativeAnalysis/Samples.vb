@@ -71,6 +71,10 @@ Namespace MRM
         Public Property chromatogram As ChromatogramTick()
         Public Property ion As IsomerismIonPairs
 
+        Public Overrides Function ToString() As String
+            Return name
+        End Function
+
     End Structure
 
     Public Module MRMSamples

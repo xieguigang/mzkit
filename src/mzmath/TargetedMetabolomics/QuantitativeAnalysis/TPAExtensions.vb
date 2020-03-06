@@ -101,14 +101,15 @@ Public Module TPAExtensions
         Dim ROIData As ROI() = vector _
             .PopulateROI(baselineQuantile:=baselineQuantile, angleThreshold:=angleThreshold) _
             .ToArray
+        Dim result As IonTPA
 
         If ROIData.Length = 0 Then
-            Return New IonTPA With {
+            result = New IonTPA With {
                 .name = ion.name,
                 .peakROI = New DoubleRange(0, 0)
             }
         Else
-            Return ion.ProcessingIonPeakArea(
+            result = ion.ProcessingIonPeakArea(
                 vector:=vector,
                 ROIData:=ROIData,
                 baselineQuantile:=baselineQuantile,
@@ -118,6 +119,8 @@ Public Module TPAExtensions
                 timeWindowSize:=timeWindowSize
             )
         End If
+
+        Return result
     End Function
 
     ''' <summary>
@@ -140,7 +143,7 @@ Public Module TPAExtensions
                                            timeWindowSize#) As IonTPA
 
         Dim peak As DoubleRange
-        Dim data As (peak As DoubleRange, area#, baseline#, maxPeakHeight#)
+        Dim data As (area#, baseline#, maxPeakHeight#)
         Dim target = ion.ion.target
         Dim find As DoubleRange = Nothing
         Dim region As ROI = Nothing
@@ -214,12 +217,12 @@ Public Module TPAExtensions
         End If
 
         With vector.TPAIntegrator(peak, baselineQuantile, peakAreaMethod, integratorTicks, TPAFactor)
-            data = (peak, .Item1, .Item2, .Item3)
+            data = (.Item1, .Item2, .Item3)
         End With
 
         Return New IonTPA With {
             .name = ion.name,
-            .peakROI = data.peak,
+            .peakROI = peak,
             .area = If(data.area < 0, 0, data.area),
             .baseline = data.baseline,
             .maxPeakHeight = data.maxPeakHeight

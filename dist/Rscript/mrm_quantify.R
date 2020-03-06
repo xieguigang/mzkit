@@ -37,8 +37,8 @@ let patternOf.QC       = ?"--patternOfQC"  || "QC[-]?\d+";
 #
 let integrator  as string  = ?"--integrator" || "NetPeakSum";
 let isWorkCurve as boolean = ?"--workMode";
-let rt_winSize  as double  = as.numeric(?"--rt.winsize" || "1"); 
-let tolerance   as string  = ?"--mz.diff"    || "da:0.3";
+let rt_winSize  as double  = as.numeric(?"--rt.winsize" || "15"); 
+let tolerance   as string  = ?"--mz.diff"    || "ppm:10";
 
 # Max number of points for removes in 
 # linear modelling
@@ -323,6 +323,8 @@ let doLinears as function(wiff_standards, subdir = "") {
 	result(scans)  :> write.csv(file = `${dir}/${subdir}\quantify.csv`);
 	scans.X(scans) :> write.csv(file = `${dir}/${subdir}\rawX.csv`);
 	
+	print("Creating linear model report....");
+	
 	# save linear regression html report
 	ref
 	:> mrm.dataset(scans, ionsRaw = ref_raws) 
@@ -331,6 +333,8 @@ let doLinears as function(wiff_standards, subdir = "") {
 	;
 		
 	if (sum(QC_samples) > 0) {
+		print("Creating QC report....");
+	
 		ref
 		:> mrm.dataset(scans, QC_dataset = patternOf.QC) 
 		:> html 

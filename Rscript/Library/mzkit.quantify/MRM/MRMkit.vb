@@ -68,6 +68,7 @@ Imports Rdataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime
 Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
 Imports RRuntime = SMRUCC.Rsharp.Runtime
+Imports stdNum = System.Math
 Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
 
 ''' <summary>
@@ -116,13 +117,20 @@ Module MRMkit
         Dim cols As New Dictionary(Of String, Array)
         Dim name As Array = x.Select(Function(i) i.ion.target.name).ToArray
         Dim isomerism As Array = x.Select(Function(i) If(i.ion.hasIsomerism, "*", "")).ToArray
-        Dim rt As Array = x.Select(Function(i) i.actualRT).ToArray
+        Dim rt As Array = x _
+            .Select(Function(i)
+                        Dim act = stdNum.Round(i.actualRT)
+                        Dim ref = i.ion.target.rt
+
+                        Return $"{act}/{If(ref Is Nothing, "NA", stdNum.Round(ref.Value))}"
+                    End Function) _
+            .ToArray
         Dim rtshifts = x.Select(Function(i) i.CalcRtShifts.ToDictionary(Function(sample) sample.Name, Function(sample) sample.Value)).ToArray
         Dim allSampleNames = rtshifts.Select(Function(i) i.Keys).IteratesALL.Distinct.OrderBy(Function(s) s).ToArray
         Dim shifts As Array
 
         Call cols.Add(NameOf(name), name)
-        Call cols.Add(NameOf(rt), rt)
+        Call cols.Add("rt(actual/reference)", rt)
         Call cols.Add(NameOf(isomerism), isomerism)
 
         For Each sampleName As String In allSampleNames

@@ -61,6 +61,7 @@ Module MRMQCReport
         Dim mean#
         Dim RSD_dist As New List(Of Double)
         Dim QC_variants As New List(Of Double)
+        Dim tabulateMean As Double
 
         For Each metabolite In QCResult
             RSD = metabolite.Values.RSD
@@ -69,6 +70,7 @@ Module MRMQCReport
             samples = metabolite.Properties.NamedValues
             image = Visual.DrawStandardCurve(linear, title, samples, labelerIterations:=2000).AsGDIImage
             mean = metabolite.Values.Average
+            tabulateMean = metabolite.Values.TabulateMode
             TOCData += New DataSet With {
                 .ID = metabolite.ID,
                 .Properties = New Dictionary(Of String, Double) From {
@@ -85,11 +87,11 @@ Module MRMQCReport
             rows *= 0
 
             For Each sample As KeyValuePair(Of String, Double) In metabolite.Properties
-                QC_variants += (stdNum.Abs(sample.Value - mean) / mean)
+                QC_variants += (stdNum.Abs(sample.Value - tabulateMean) / tabulateMean)
                 rows += (<tr>
                              <td><%= sample.Key %></td>
                              <td><%= sample.Value %></td>
-                             <td><%= stdNum.Abs(sample.Value - mean) / mean %></td>
+                             <td><%= stdNum.Abs(sample.Value - tabulateMean) / tabulateMean %></td>
                          </tr>).ToString
             Next
 
