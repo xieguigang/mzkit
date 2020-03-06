@@ -2,7 +2,7 @@ imports ["mzkit.mrm", "mzkit.quantify.visual"] from "mzkit.quantify.dll";
 imports "mzkit.assembly" from "mzkit.dll";
 
 let plot_ionRaws as function(MRM, mzML, tolerance, export) {
-	for(ion in getIonsSampleRaw(MRM, mzML. tolerance)) {
+	for(ion in getIonsSampleRaw(MRM, mzML, tolerance)) {
 		ion$chromatograms 
 		:> MRM.chromatogramPeaks.plot(
 			fill              = FALSE, 
