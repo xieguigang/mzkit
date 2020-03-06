@@ -150,6 +150,7 @@ Namespace MRM
 
             For Each file As String In mzMLRawFiles
                 ' 得到当前的这个原始文件之中的峰面积数据
+                Dim ionShifts = shiftMatrix.TryGetValue(file.BaseName)
                 Dim TPA() = file.ScanTPA(
                     ionpairs:=ions,
                     peakAreaMethod:=peakAreaMethod,
@@ -158,7 +159,7 @@ Namespace MRM
                     timeWindowSize:=timeWindowSize,
                     angleThreshold:=angleThreshold,
                     baselineQuantile:=baselineQuantile,
-                    rtshifts:=shiftMatrix.TryGetValue(file.BaseName)
+                    rtshifts:=ionShifts
                 )
 
                 refNames += file.BaseName

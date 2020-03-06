@@ -117,6 +117,7 @@ Module Visual
                                             Optional lineStyle$ = "stroke: black; stroke-width: 2px; stroke-dash: solid;",
                                             <RRawVectorArgument>
                                             Optional relativeTimeScale As Object = Nothing,
+                                            Optional parallel As Boolean = False,
                                             Optional env As Environment = Nothing) As Object
 
         If chromatogram Is Nothing Then
@@ -151,7 +152,8 @@ Module Visual
                     fillCurve:=fill,
                     gridFill:=gridFill,
                     penStyle:=lineStyle,
-                    timeRange:=relativeTimeScale
+                    timeRange:=relativeTimeScale,
+                    parallel:=parallel
                 )
         Else
             Return REnv.Internal.debug.stop($"Invalid input data: {chromatogram.GetType.FullName}", env)

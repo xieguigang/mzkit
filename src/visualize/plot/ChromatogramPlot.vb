@@ -61,6 +61,7 @@ Imports Microsoft.VisualBasic.Imaging.d3js.Layout
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
@@ -200,7 +201,8 @@ Public Module ChromatogramPlot
                             Optional isXIC As Boolean = False,
                             Optional fillAlpha As Integer = 180,
                             Optional gridFill As String = "rgb(245,245,245)",
-                            Optional timeRange As Double() = Nothing) As GraphicsData
+                            Optional timeRange As Double() = Nothing,
+                            Optional parallel As Boolean = False) As GraphicsData
 
         Dim labelFont As Font = CSSFont.TryParse(labelFontStyle)
         Dim labelConnector As Pen = Stroke.TryParse(labelConnectorStroke)
@@ -250,6 +252,17 @@ Public Module ChromatogramPlot
             .Range _
             .CreateAxisTicks ' intensity
 
+        Dim ZTicks As Double()
+
+        If parallel Then
+            ZTicks = ionData _
+                .Sequence _
+                .Select(Function(i) CDbl(i)) _
+                .AsVector _
+                .Range _
+                .CreateAxisTicks
+        End If
+
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 Dim rect As Rectangle = region.PlotRegion
@@ -273,9 +286,15 @@ Public Module ChromatogramPlot
                     gridFill:=gridFill
                 )
 
+                If parallel Then
+                    ' draw Z axis
+
+                End If
+
                 Dim legends As New List(Of Legend)
                 Dim peakTimes As New List(Of NamedValue(Of ChromatogramTick))
                 Dim fillColor As Brush
+                Dim parallelOffset As New PointF
 
                 For i As Integer = 0 To ionData.Length - 1
                     Dim curvePen As Pen = colors.Next
@@ -296,14 +315,22 @@ Public Module ChromatogramPlot
                     Dim A, B As PointF
                     Dim polygon As New List(Of PointF)
 
+                    If parallel Then
+                        ' add [x,y] offset for current data
+                        parallelOffset = New PointF With {
+                            .X = parallelOffset.X + rect.Height / (ionData.Length + 2),
+                            .Y = parallelOffset.Y - rect.Height / (ionData.Length + 2)
+                        }
+                    End If
+
                     For Each signal As SlideWindow(Of PointF) In chromatogram _
                         .Select(Function(c)
                                     Return New PointF(c.Time, c.Intensity)
                                 End Function) _
                         .SlideWindows(winSize:=2)
 
-                        A = scaler.Translate(signal.First)
-                        B = scaler.Translate(signal.Last)
+                        A = scaler.Translate(signal.First).OffSet2D(parallelOffset)
+                        B = scaler.Translate(signal.Last).OffSet2D(parallelOffset)
 
                         Call g.DrawLine(curvePen, A, B)
 
