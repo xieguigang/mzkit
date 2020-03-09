@@ -109,7 +109,8 @@ Module Visual
     ''' <returns></returns>
     <ExportAPI("MRM.chromatogramPeaks.plot")>
     <RApiReturn(GetType(GraphicsData))>
-    Public Function MRMchromatogramPeakPlot(chromatogram As Object,
+    Public Function MRMchromatogramPeakPlot(<RRawVectorArgument>
+                                            chromatogram As Object,
                                             Optional title$ = "MRM Chromatogram Peak Plot",
                                             Optional size As Object = "2200,1600",
                                             Optional fill As Boolean = True,

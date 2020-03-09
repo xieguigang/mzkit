@@ -90,7 +90,11 @@ Namespace MRM
         ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function ExtractIonData(ion_pairs As IEnumerable(Of IsomerismIonPairs), mzML$, assignName As Func(Of IonPair, String), tolerance As Tolerance) As IonChromatogram()
+        Public Function ExtractIonData(ion_pairs As IEnumerable(Of IsomerismIonPairs),
+                                       mzML$,
+                                       assignName As Func(Of IonPair, String),
+                                       tolerance As Tolerance) As IonChromatogram()
+
             Return LoadChromatogramList(mzML) _
                 .MRMSelector(ion_pairs, tolerance) _
                 .Where(Function(ion) Not ion.chromatogram Is Nothing) _

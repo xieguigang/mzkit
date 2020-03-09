@@ -9,9 +9,13 @@ let file.mzML as string  = ?"--mzML"   || stop("Missing the MRM mzML raw data fi
 # Only requires the ion pairs data in this data table file
 # The table file could be a csv plain text file or xlsx 
 # datasheet
-let MRM.xlsx as string   = ?"--MRM"    || stop("No mrm information provided!");
+let MRM.xlsx as string   = ?"--MRM";
 let ions as string       = ?"--ions";
 let output.dir as string = ?"--output" || `${dirname(file.mzML)}/${basename(file.mzML)}.chromatogramPlots`;
+	
+if ((!file.exists(ions)) && (!file.exists(MRM.xlsx))) {
+   stop("No mrm information provided!");
+}
 	
 if (file.exists(ions)) {
 	print("Use external msl file as ion pairs source.");
@@ -42,7 +46,7 @@ let plot.mzML as function(file, output) {
 		# 3. [green] baseline, The chromatogram signal baseline, the lower of the baseline it is, the better of the ion signal it is
 		# 4. [blank] chromatogram, The MRM ion chromatogram signal data
 		#
-		ion$value 
+		ion$chromatogram
 		:> MRM.chromatogramPeaks.plot(title = ion$description)
 		:> save.graphics(file = save)
 		;
