@@ -15,6 +15,12 @@ Imports REnv = SMRUCC.Rsharp.Runtime.Internal
 <Package("mzkit.metadna")>
 Module metaDNA
 
+    ''' <summary>
+    ''' Load network graph model from the kegg metaDNA infer network data.
+    ''' </summary>
+    ''' <param name="debugOutput"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("read.metadna.infer")>
     <RApiReturn(GetType(NetworkGraph))>
     Public Function loadMetaDNAInferNetwork(debugOutput As Object, Optional env As Environment = Nothing) As Object
@@ -31,6 +37,12 @@ Module metaDNA
         Return DirectCast(debugOutput, Global.MetaDNA.visual.XML).CreateGraph
     End Function
 
+    ''' <summary>
+    ''' load kegg reaction class data in table format from given file
+    ''' </summary>
+    ''' <param name="file">csv table file or a directory with raw xml model data file in it.</param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("reaction_class.table")>
     <RApiReturn(GetType(ReactionClassTbl()))>
     Public Function readReactionClassTable(file As String, Optional env As Environment = Nothing) As Object
