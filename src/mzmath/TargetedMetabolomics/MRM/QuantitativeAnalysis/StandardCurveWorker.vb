@@ -258,10 +258,13 @@ Namespace MRM
                               End Function)
 
             Return Function(L)
+                       Dim key As String = "L" & getLevelNumber(L.Key)
+
                        If ref.Count = 0 Then
                            Return 0
+                       ElseIf Not refPoints.ContainsKey(key) Then
+                           Throw New MissingPrimaryKeyException($"Missing reference point '{key}', or you can just delete the reference point from table file before you run the quantify script!")
                        Else
-                           Dim key As String = "L" & getLevelNumber(L.Key)
                            Dim At_i = refPoints(key)
 
                            Return At_i

@@ -19,24 +19,24 @@ if (lcase(file.info(MRM)$Extension) == ".xlsx") {
 	;
 }
 
-# plot_ionRaws(MRM, list.files(mzML, pattern = "*.mzML"), tolerance, export);
+plot_ionRaws(MRM, list.files(mzML, pattern = "*.mzML"), tolerance, export);
 
-for(ion in MRM :> projectAs(as.object)) {
-	for(raw in list.files(mzML, pattern = "*.mzML")) {
-		let TIC = as.object(extract.ions(raw, ion, tolerance)[1])$chromatogram;
-		let data = list();
+# for(ion in MRM :> projectAs(as.object)) {
+	# for(raw in list.files(mzML, pattern = "*.mzML")) {
+		# let TIC = as.object(extract.ions(raw, ion, tolerance)[1])$chromatogram;
+		# let data = list();
 		
-		data[[ion$accession]] <- TIC;
+		# data[[ion$accession]] <- TIC;
 		
-		data
-		:> MRM.chromatogramPeaks.plot(
-			fill              = FALSE, 
-			gridFill          = "white", 
-			lineStyle         = "stroke: black; stroke-width: 5px; stroke-dash: solid;",
-			size              = [1600, 900],
-			relativeTimeScale = NULL
-		)
-		:> save.graphics(file = `${export}/${basename(raw)}/${ion$accession}.png`)
-		;
-	}
-}
+		# data
+		# :> MRM.chromatogramPeaks.plot(
+			# fill              = FALSE, 
+			# gridFill          = "white", 
+			# lineStyle         = "stroke: black; stroke-width: 5px; stroke-dash: solid;",
+			# size              = [1600, 900],
+			# relativeTimeScale = NULL
+		# )
+		# :> save.graphics(file = `${export}/${basename(raw)}/${ion$accession}.png`)
+		# ;
+	# }
+# }
