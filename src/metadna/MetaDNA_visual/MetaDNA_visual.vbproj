@@ -106,6 +106,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ReactionClass.vb" />
     <Compile Include="Extensions.vb" />
     <Compile Include="viz.vb" />
     <Compile Include="XML.vb" />
