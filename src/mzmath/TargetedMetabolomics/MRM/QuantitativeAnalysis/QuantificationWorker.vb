@@ -20,9 +20,9 @@ Namespace MRM
                        y = (y - b) / a
 
                        ' ND value?
-                       If y < 0 Then
-                           y = 0
-                       End If
+                       'If y < 0 Then
+                       '    y = 0
+                       'End If
 
                        Return y
                    End Function

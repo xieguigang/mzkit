@@ -37,8 +37,8 @@ let patternOf.QC       = ?"--patternOfQC"  || "QC[-]?\d+";
 #
 let integrator  as string  = ?"--integrator" || "NetPeakSum";
 let isWorkCurve as boolean = ?"--workMode";
-let rt_winSize  as double  = as.numeric(?"--rt.winsize" || "15"); 
-let tolerance   as string  = ?"--mz.diff"    || "ppm:10";
+let rt_winSize  as double  = as.numeric(?"--rt.winsize" || "3"); 
+let tolerance   as string  = ?"--mz.diff"    || "ppm:30";
 
 # Max number of points for removes in 
 # linear modelling
@@ -178,6 +178,11 @@ let linears.standard_curve as function(wiff_standards, subdir) {
 	rt.shifts
 	:> as.data.frame
 	:> print
+	;
+	
+	rt.shifts
+	:> as.data.frame
+	:> write.csv(file = `${dir}/${subdir}/rt_shifts.csv`)
 	;
 	
 	# Get raw scan data for given ions
