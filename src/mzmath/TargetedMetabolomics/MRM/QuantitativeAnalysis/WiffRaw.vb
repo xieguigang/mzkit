@@ -51,6 +51,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports stdNum = System.Math
 
 Namespace MRM
 
@@ -72,10 +73,12 @@ Namespace MRM
                 rtshifts:=rtshifts
             )
             Dim peaktable As DataSet() = TPA _
-                .Select(Function(ion)
+                .Select(Function(ion As IonTPA)
                             Return New DataSet With {
                                 .ID = ion.name,
                                 .Properties = New Dictionary(Of String, Double) From {
+                                    {"rt", ion.rt},
+                                    {"rt(min)", stdNum.Round(ion.rt / 60, 2)},
                                     {"rtmin", ion.peakROI.Min},
                                     {"rtmax", ion.peakROI.Max},
                                     {"area", ion.area},

@@ -63,6 +63,7 @@ Imports stdNum = System.Math
 Public Class IonTPA
 
     Public Property name As String
+    Public Property rt As Double
     Public Property peakROI As DoubleRange
     Public Property area As Double
     Public Property baseline As Double
@@ -232,7 +233,11 @@ Public Module TPAExtensions
             .peakROI = peak,
             .area = If(data.area < 0, 0, data.area),
             .baseline = data.baseline,
-            .maxPeakHeight = data.maxPeakHeight
+            .maxPeakHeight = data.maxPeakHeight,
+            .rt = vector _
+                .OrderByDescending(Function(t) t.Intensity) _
+                .First _
+                .Time
         }
     End Function
 
