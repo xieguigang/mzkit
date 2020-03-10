@@ -48,16 +48,49 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports Rdataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime
 
 <Package("mzkit.quantify.visual")>
 Module Visual
+
+    <ExportAPI("as.chromatogram")>
+    <RApiReturn(GetType(ChromatogramTick()))>
+    Public Function asChromatogram(data As Object,
+                                   Optional time$ = "Time",
+                                   Optional into$ = "Intensity",
+                                   Optional env As Environment = Nothing) As Object
+        Dim timeVec As Double()
+        Dim intoVec As Double()
+
+        If data Is Nothing Then
+            Return Nothing
+        ElseIf TypeOf data Is Rdataframe Then
+            timeVec = REnv.asVector(Of Double)(DirectCast(data, Rdataframe).GetColumnVector(time))
+            intoVec = REnv.asVector(Of Double)(DirectCast(data, Rdataframe).GetColumnVector(into))
+        ElseIf TypeOf data Is DataSet() Then
+            timeVec = DirectCast(data, DataSet()).Vector(time)
+            intoVec = DirectCast(data, DataSet()).Vector(into)
+        Else
+            Return Internal.debug.stop($"invalid data sequence: {data.GetType.FullName}", env)
+        End If
+
+        Return timeVec _
+            .Select(Function(t, i)
+                        Return New ChromatogramTick With {
+                            .Time = t,
+                            .Intensity = intoVec(i)
+                        }
+                    End Function) _
+            .ToArray
+    End Function
 
     ''' <summary>
     ''' Draw standard curve

@@ -48,6 +48,7 @@
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSL
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
@@ -59,6 +60,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -262,6 +264,27 @@ Module MRMkit
             rtshifts:=rtshift
         )
     End Function
+
+    <ExportAPI("peakROI")>
+    Public Function GetPeakROIList(<RRawVectorArgument(GetType(ChromatogramTick))>
+                                   chromatogram As Object,
+                                   Optional baselineQuantile# = 0.65,
+                                   Optional angleThreshold# = 5) As ROI()
+
+        If chromatogram Is Nothing Then
+            Return Nothing
+        End If
+
+        Return DirectCast(REnv.asVector(Of ChromatogramTick)(chromatogram), ChromatogramTick()) _
+            .Shadows _
+            .PopulateROI(
+                baselineQuantile:=baselineQuantile,
+                angleThreshold:=angleThreshold
+            ) _
+            .ToArray
+    End Function
+
+
 
     ''' <summary>
     ''' Get ion pair definition data from a given table file.
