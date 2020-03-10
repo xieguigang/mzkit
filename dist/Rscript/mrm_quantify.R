@@ -48,7 +48,7 @@ let tolerance   as string  = ?"--mz.diff"    || "ppm:30";
 # + positive value for specific a number for the deletion.
 let maxNumOfPoint.delets = ?"--max.deletes"       || -1;
 
-let angle.threshold      = ?"--angle.threshold"   || 5;
+let angle.threshold      = ?"--angle.threshold"   || 8;
 let baseline.quantile    = ?"--baseline.quantile" || 0.65;
 
 if (isWorkCurve) {

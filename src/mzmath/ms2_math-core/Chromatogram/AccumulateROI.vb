@@ -90,7 +90,10 @@ Namespace Chromatogram
         ''' 
         ''' (在这个函数之中，只是查找出了色谱峰的时间范围，但是并未对峰面积做积分计算)
         ''' </summary>
-        ''' <param name="angleThreshold#">区分色谱峰的累加线切线角度的阈值，单位为度</param>
+        ''' <param name="angleThreshold">
+        ''' The higher of this value it is, the more sensible it its.
+        ''' (区分色谱峰的累加线切线角度的阈值，单位为度)
+        ''' </param>
         ''' <returns></returns>
         ''' <remarks>
         ''' 这个方法对于MRM的数据的处理结果比较可靠，但是对于GCMS的实验数据，
@@ -107,7 +110,7 @@ Namespace Chromatogram
             Dim intensity As Vector = chromatogram!intensity
             ' Dim maxInto# = intensity.Max - baseline
             ' 所有的基线下面的噪声加起来的积分面积总和
-            Dim sumAllNoise# = baseline * chromatogram.Length
+            Dim sumAllNoise# = Aggregate into In intensity Where into <= baseline Into Sum(into)
             ' 使用滑窗计算出切线的斜率
             Dim windows As SlideWindow(Of PointF)() = chromatogram _
                 .getAccumulateLine(baseline) _
@@ -169,7 +172,11 @@ Namespace Chromatogram
         Private Function SplitMRMPeaks(windows As SlideWindow(Of PointF)(), angleThreshold#) As IEnumerable(Of SlideWindow(Of PointF)())
             Return windows _
                 .Split(Function(tangent)
-                           Return (tangent.First, tangent.Last).Angle <= angleThreshold
+                           Dim a = tangent.First
+                           Dim b = tangent.Last
+                           Dim angle = (a, b).Angle
+
+                           Return angle <= angleThreshold
                        End Function) _
                 .Where(Function(p)
                            Return p.Length > 1
