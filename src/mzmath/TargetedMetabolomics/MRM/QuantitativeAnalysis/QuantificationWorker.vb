@@ -42,7 +42,7 @@ Namespace MRM
         Public Iterator Function ScanContent(linearModels As StandardCurve(),
                                              raw$,
                                              ions As IonPair(),
-                                             peakAreaMethod As PeakArea.Methods,
+                                             peakAreaMethod As PeakAreaMethods,
                                              angleThreshold#,
                                              baselineQuantile#,
                                              TPAFactors As Dictionary(Of String, Double),

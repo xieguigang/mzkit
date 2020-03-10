@@ -108,7 +108,7 @@ Public Class StandardCurve : Implements INamedValue
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function CreateLinearRegression(points As IEnumerable(Of PointF), weighted As Boolean, maxDeletions%, ByRef removed As List(Of PointF)) As IFitted
-        Return points.AutoPointDeletion(weighted, max:=maxDeletions, removed:=removed)
+        Return points.AutoPointDeletion(weighted, max:=maxDeletions, removed:=removed, keepsLowestPoint:=True)
     End Function
 
 End Class

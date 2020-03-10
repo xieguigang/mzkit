@@ -255,7 +255,7 @@ Public Module PeakArea
                                Call moveNext()
                            End If
 
-                           y = tangent(x) - baseline
+                           y = tangent(x) '- baseline
 
                            Return y
                        End Function
