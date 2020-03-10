@@ -209,6 +209,10 @@ Module MRMLinearReport
         Dim rows As String() = lines _
             .Select(Function(line)
                         Dim R2 = line.linear.CorrelationCoefficient
+                        Dim range As DoubleRange = line.points _
+                            .Where(Function(sp) sp.valid) _
+                            .Select(Function(sp) sp.Cti) _
+                            .Range
 
                         Return <tr class=<%= If(R2 < 0.99, If(R2 < 0.9, "critical", "warning"), "") %>>
                                    <td>
@@ -217,6 +221,7 @@ Module MRMLinearReport
                                    <td><%= line.points(Scan0).Name %></td>
                                    <td><%= line.linear.Polynomial.ToString("G5", False) %></td>
                                    <td><%= line.linear.CorrelationCoefficient %></td>
+                                   <td><%= range.Min %> ~ <%= range.Max %></td>
                                </tr>
                     End Function) _
             .Select(Function(e) e.ToString) _
@@ -229,6 +234,7 @@ Module MRMLinearReport
                                    <th>name</th>
                                    <th><i>f(x)</i></th>
                                    <th>R<sup>2</sup></th>
+                                   <th>Linear Range</th>
                                </tr>
                            </thead>
                            <tbody>

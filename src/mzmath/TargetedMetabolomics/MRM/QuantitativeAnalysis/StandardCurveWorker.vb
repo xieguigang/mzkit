@@ -298,7 +298,7 @@ Namespace MRM
 
             For i As Integer = 0 To C.Length - 1
                 Dim Ct_i = C(i)
-                Dim At_i = A(i)
+                Dim At_i = stdNum.Round(A(i))
 
                 ' X 为峰面积，这样子在后面计算的时候就可以直接将离子对的峰面积带入方程计算出浓度结果了
                 Dim pX#

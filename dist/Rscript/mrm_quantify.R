@@ -35,7 +35,7 @@ let patternOf.QC       = ?"--patternOfQC"  || "QC[-]?\d+";
 # 3. MRM.peaks
 # 4. extract.peakROI
 #
-let integrator  as string  = ?"--integrator" || "NetPeakSum";
+let integrator  as string  = ?"--integrator" || "Integrator";
 let isWorkCurve as boolean = ?"--workMode";
 let rt_winSize  as double  = as.numeric(?"--rt.winsize" || "3"); 
 let tolerance   as string  = ?"--mz.diff"    || "ppm:15";
