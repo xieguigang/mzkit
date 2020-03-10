@@ -146,7 +146,6 @@ Namespace MRM
                                              Optional peakAreaMethod As PeakAreaMethods = PeakAreaMethods.NetPeakSum,
                                              Optional externalStandardsWiff$ = Nothing,
                                              Optional isBlank As Func(Of String, Boolean) = Nothing,
-                                             Optional weighted As Boolean = False,
                                              Optional rtshifts As RTAlignment() = Nothing) As IEnumerable(Of DataSet)
             Dim standardNames$() = Nothing
             Dim TPAFactors = calibrates.ToDictionary(Function(ion) ion.ID, Function(ion) ion.Factor)
@@ -167,7 +166,7 @@ Namespace MRM
                       rtshifts:=rtshifts
                 ) _
                 .ToDictionary _
-                .Regression(calibrates, ISvector:=[IS], weighted:=weighted) _
+                .Regression(calibrates, ISvector:=[IS]) _
                 .ToArray
 
             X = New List(Of DataSet)

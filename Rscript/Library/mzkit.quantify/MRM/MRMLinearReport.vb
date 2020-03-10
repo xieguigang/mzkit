@@ -15,6 +15,7 @@ Imports Microsoft.VisualBasic.Scripting.SymbolBuilder
 Imports Microsoft.VisualBasic.Text.Xml
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports REnv = SMRUCC.Rsharp.Runtime
+Imports stdNum = System.Math
 
 Module MRMLinearReport
 
@@ -106,7 +107,7 @@ Module MRMLinearReport
         For Each line As StandardCurve In standardCurves
             title = line.points(Scan0).Name
             image = Visual.DrawStandardCurve(line, title).AsGDIImage
-            R2 = line.linear.CorrelationCoefficient
+            R2 = line.linear.R2
             isWeighted = line.isWeighted
             range = line.points _
                 .Where(Function(r) r.valid) _
@@ -142,7 +143,7 @@ Module MRMLinearReport
                                     <li>ID: <%= line.name %></li>
                                     <li>Linear: <i>f(x)</i>=%s</li>
                                     <li>Weighted: <%= isWeighted.ToString.ToUpper %></li>
-                                    <li>R<sup>2</sup>: <%= R2 %></li>
+                                    <li>R<sup>2</sup>: <%= R2 %> (<%= stdNum.Sqrt(R2) %>)</li>
                                     <li>Range: <%= $"{range.Min} ~ {range.Max}" %></li>
                                 </ul>
                             </div>
@@ -208,7 +209,7 @@ Module MRMLinearReport
     Private Function TOC(lines As StandardCurve()) As String
         Dim rows As String() = lines _
             .Select(Function(line)
-                        Dim R2 = line.linear.CorrelationCoefficient
+                        Dim R2 As Double = line.linear.R2
                         Dim range As DoubleRange = line.points _
                             .Where(Function(sp) sp.valid) _
                             .Select(Function(sp) sp.Cti) _
@@ -220,7 +221,7 @@ Module MRMLinearReport
                                    </td>
                                    <td><%= line.points(Scan0).Name %></td>
                                    <td><%= line.linear.Polynomial.ToString("G5", False) %></td>
-                                   <td><%= line.linear.CorrelationCoefficient %></td>
+                                   <td><%= stdNum.Sqrt(line.linear.R2) %></td>
                                    <td><%= range.Min %> ~ <%= range.Max %></td>
                                </tr>
                     End Function) _

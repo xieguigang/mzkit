@@ -579,10 +579,6 @@ Module MRMkit
     ''' <param name="rawScan">The wiff raw scan data which are extract by function: ``wiff.scans``.</param>
     ''' <param name="calibrates"></param>
     ''' <param name="[ISvector]"></param>
-    ''' <param name="autoWeighted">
-    ''' If the unweighted R2 value of target standard curve is less than 0.99, 
-    ''' then the quantify program will try weighted linear fitting. 
-    ''' </param>
     ''' <param name="maxDeletions">
     ''' Max number of the reference points that delete automatically by 
     ''' the linear modelling program.
@@ -597,7 +593,6 @@ Module MRMkit
     ''' </remarks>
     <ExportAPI("linears")>
     Public Function Linears(rawScan As DataSet(), calibrates As Standards(), [ISvector] As [IS](),
-                            Optional autoWeighted As Boolean = True,
                             Optional blankControls As DataSet() = Nothing,
                             Optional maxDeletions As Integer = 1,
                             Optional isWorkCurveMode As Boolean = True) As StandardCurve()
@@ -606,7 +601,6 @@ Module MRMkit
             .Regression(
                 calibrates:=calibrates,
                 ISvector:=ISvector,
-                weighted:=autoWeighted,
                 blankControls:=blankControls,
                 maxDeletions:=maxDeletions,
                 isWorkCurveMode:=isWorkCurveMode
@@ -687,7 +681,7 @@ Module MRMkit
                             .Properties = New Dictionary(Of String, String) From {
                                 {"name", line.points(Scan0).Name},
                                 {"equation", "f(x)=" & line.linear.Polynomial.ToString("G5", False)},
-                                {"R2", line.linear.CorrelationCoefficient},
+                                {"R2", stdNum.Sqrt(line.linear.R2)},
                                 {"is.weighted", line.isWeighted},
                                 {"IS.calibration", line.requireISCalibration},
                                 {"IS", line.IS.name}

@@ -69,7 +69,7 @@ Namespace GCMS.QuantifyAnalysis
                             Return New PointF(CSng(p.data.TPACalibration), CSng(p.content))
                         End Function) _
                 .ToArray
-            Dim model As IFitted = Math.StandardCurve.CreateLinearRegression(line, True, maxDeletions, New List(Of PointF))
+            Dim model As IFitted = Math.StandardCurve.CreateLinearRegression(line, maxDeletions, New List(Of PointF))
             Return model
         End Function
 

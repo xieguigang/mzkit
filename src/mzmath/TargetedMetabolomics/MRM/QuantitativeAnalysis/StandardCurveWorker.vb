@@ -46,7 +46,6 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
@@ -109,7 +108,6 @@ Namespace MRM
         Public Iterator Function Regression(ionTPA As Dictionary(Of DataSet),
                                             calibrates As Standards(),
                                             [ISvector] As [IS](),
-                                            Optional weighted As Boolean = False,
                                             Optional blankControls As DataSet() = Nothing,
                                             Optional maxDeletions As Integer = 1,
                                             Optional isWorkCurveMode As Boolean = True) As IEnumerable(Of StandardCurve)
@@ -182,12 +180,12 @@ Namespace MRM
                     line = StandardCurveWorker _
                        .CreateModelPoints(C, nA, ISTPA, CIS, ion.ID, ion.Name, points) _
                        .ToArray
-                    fit = StandardCurve.CreateLinearRegression(line, weighted, maxDeletions, removed:=invalids)
+                    fit = StandardCurve.CreateLinearRegression(line, maxDeletions, removed:=invalids)
                 Else
                     line = StandardCurveWorker _
                        .CreateModelPoints(C, A, ISTPA, CIS, ion.ID, ion.Name, points) _
                        .ToArray
-                    fit = StandardCurve.CreateLinearRegression(line, weighted, maxDeletions, removed:=invalids)
+                    fit = StandardCurve.CreateLinearRegression(line, maxDeletions, removed:=invalids)
                 End If
 
                 If fit Is Nothing Then
