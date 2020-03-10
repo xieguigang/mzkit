@@ -74,7 +74,7 @@ Namespace MRM
         <Extension>
         Private Function getRt(ROI As IEnumerable(Of ROI), numOfIsomerism As Integer) As Double
             Dim peak As ROI = ROI _
-                .OrderByDescending(Function(r) r.Integration) _
+                .OrderByDescending(Function(r) r.MaxInto) _
                 .First
 
             Return peak.rt
