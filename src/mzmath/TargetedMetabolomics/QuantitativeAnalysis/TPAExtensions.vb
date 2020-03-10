@@ -163,14 +163,14 @@ Public Module TPAExtensions
                .Where(Function(r)
                           Return r.Time.IsOverlapping(find)
                       End Function) _
-               .OrderByDescending(Function(r) r.Integration) _
+               .OrderByDescending(Function(r) r.MaxInto) _
                .FirstOrDefault
         End If
 
         If ion.ion.hasIsomerism Then
             If region Is Nothing Then
                 ROIData = ROIData _
-                    .OrderByDescending(Function(r) r.Integration) _
+                    .OrderByDescending(Function(r) r.MaxInto) _
                     .Take(ion.ion.ions.Length + 1) _
                     .OrderBy(Function(r) r.rt) _
                     .ToArray
@@ -202,7 +202,7 @@ Public Module TPAExtensions
                                            ' 这个积分值只是用来查找最大的峰面积的ROI区域
                                            ' 并不是最后的峰面积结果
                                            ' 还需要在下面的代码之中做峰面积积分才可以得到最终的结果
-                                           Return ROI.Integration
+                                           Return ROI.MaxInto
                                        End Function) _
                     .ToArray
 
