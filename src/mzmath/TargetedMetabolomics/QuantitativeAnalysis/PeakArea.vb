@@ -177,7 +177,7 @@ Public Module PeakArea
                                        peak As DoubleRange,
                                        Optional baselineQuantile# = 0.65,
                                        Optional resolution% = 1000,
-                                       Optional cubicSplineDensity% = 10,
+                                       Optional bSplineDensity% = 10,
                                        ByRef Optional peakRaw As PointF() = Nothing,
                                        ByRef Optional curve As PointF() = Nothing) As Double
 
@@ -221,7 +221,7 @@ Public Module PeakArea
         End If
 
         Dim points As PointF() = rawPoints _
-            .CubicSpline(cubicSplineDensity) _
+            .BSpline(3, bSplineDensity) _
             .ToArray
         Dim baseline# = chromatogram.Baseline(baselineQuantile)
         Dim windows = points _

@@ -38,7 +38,7 @@ let patternOf.QC       = ?"--patternOfQC"  || "QC[-]?\d+";
 let integrator  as string  = ?"--integrator" || "NetPeakSum";
 let isWorkCurve as boolean = ?"--workMode";
 let rt_winSize  as double  = as.numeric(?"--rt.winsize" || "3"); 
-let tolerance   as string  = ?"--mz.diff"    || "ppm:30";
+let tolerance   as string  = ?"--mz.diff"    || "ppm:15";
 
 # Max number of points for removes in 
 # linear modelling
