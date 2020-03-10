@@ -80,7 +80,7 @@ Namespace GCMS.Vendors
                 .times = time.numerics,
                 .tic = tic.numerics,
                 .ms = ms,
-                .title = cdf.getAttribute("experiment_title")
+                .title = Scripting.ToString(cdf.getAttribute("experiment_title"))
             }
         End Function
     End Module

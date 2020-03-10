@@ -7,9 +7,7 @@ Imports BioNovoGene.BioDeep.Chemistry.Model.Graph
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Distributions
-Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Interpreter.ExecuteEngine
 Imports SMRUCC.Rsharp.Runtime
@@ -38,7 +36,9 @@ Module ms2_simulator
     <ExportAPI("energy.range")>
     Public Function energyRange(mol As NetworkGraph) As DoubleRange
         Dim energies As Double() = mol.graphEdges _
-            .Select(Function(e) e.data.weight) _
+            .Select(Function(e)
+                        Return e.weight
+                    End Function) _
             .ToArray
 
         Return energies

@@ -9,10 +9,10 @@ Imports System.Runtime.InteropServices
 ' Review the values of the assembly attributes
 
 <Assembly: AssemblyTitle("Targeted Metabolomics")>
-<Assembly: AssemblyDescription("Library of quantify module from mzkit")>
+<Assembly: AssemblyDescription("Library of targeted metabolomics quantify analysis from mzkit")>
 <Assembly: AssemblyCompany("BioNovoGene")>
 <Assembly: AssemblyProduct("mzkit")>
-<Assembly: AssemblyCopyright("Copyright © BioNovoGene 2019")>
+<Assembly: AssemblyCopyright("Copyright © BioNovoGene 2020")>
 <Assembly: AssemblyTrademark("BioDeep")>
 
 <Assembly: ComVisible(False)>

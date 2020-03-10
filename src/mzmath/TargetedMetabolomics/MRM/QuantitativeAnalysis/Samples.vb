@@ -64,12 +64,16 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace MRM
 
-    Public Structure IonChromatogramData
+    Public Structure IonChromatogram
 
-        Public name As String
-        Public description As String
-        Public chromatogram As ChromatogramTick()
-        Public ion As IsomerismIonPairs
+        Public Property name As String
+        Public Property description As String
+        Public Property chromatogram As ChromatogramTick()
+        Public Property ion As IsomerismIonPairs
+
+        Public Overrides Function ToString() As String
+            Return name
+        End Function
 
     End Structure
 
@@ -86,7 +90,11 @@ Namespace MRM
         ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function ExtractIonData(ion_pairs As IEnumerable(Of IsomerismIonPairs), mzML$, assignName As Func(Of IonPair, String), tolerance As Tolerance) As IonChromatogramData()
+        Public Function ExtractIonData(ion_pairs As IEnumerable(Of IsomerismIonPairs),
+                                       mzML$,
+                                       assignName As Func(Of IonPair, String),
+                                       tolerance As Tolerance) As IonChromatogram()
+
             Return LoadChromatogramList(mzML) _
                 .MRMSelector(ion_pairs, tolerance) _
                 .Where(Function(ion) Not ion.chromatogram Is Nothing) _
@@ -94,7 +102,7 @@ Namespace MRM
                             Dim ion As IonPair = ionData.ion.target
                             Dim note$ = ion.name & $" [{ion.precursor}/{ion.product}]"
 
-                            Return New IonChromatogramData With {
+                            Return New IonChromatogram With {
                                 .name = assignName(ion),
                                 .description = note,
                                 .chromatogram = ionData.chromatogram.Ticks,
@@ -128,7 +136,7 @@ Namespace MRM
         ''' 默认将``-KB``和``-BLK``结尾的文件都判断为实验空白
         ''' </param>
         ''' <returns>经过定量计算得到的浓度数据</returns>
-        Public Function QuantitativeAnalysis(wiff$, ions As IonPair(), calibrates As Standards(), [IS] As [IS](), tolerance As Tolerance, timeWindowSize#, angleThreshold#,
+        Public Function QuantitativeAnalysis(wiff$, ions As IonPair(), calibrates As Standards(), [IS] As [IS](), tolerance As Tolerance, timeWindowSize#, angleThreshold#, baselineQuantile#,
                                              <Out> Optional ByRef model As StandardCurve() = Nothing,
                                              <Out> Optional ByRef standardPoints As NamedValue(Of MRMStandards())() = Nothing,
                                              <Out> Optional ByRef X As List(Of DataSet) = Nothing,
@@ -138,7 +146,8 @@ Namespace MRM
                                              Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum,
                                              Optional externalStandardsWiff$ = Nothing,
                                              Optional isBlank As Func(Of String, Boolean) = Nothing,
-                                             Optional weighted As Boolean = False) As IEnumerable(Of DataSet)
+                                             Optional weighted As Boolean = False,
+                                             Optional rtshifts As RTAlignment() = Nothing) As IEnumerable(Of DataSet)
             Dim standardNames$() = Nothing
             Dim TPAFactors = calibrates.ToDictionary(Function(ion) ion.ID, Function(ion) ion.Factor)
             ' 扫描标准曲线的样本，然后进行回归建模 
@@ -153,7 +162,9 @@ Namespace MRM
                       TPAFactors:=TPAFactors,
                       tolerance:=tolerance,
                       timeWindowSize:=timeWindowSize,
-                      angleThreshold:=angleThreshold
+                      angleThreshold:=angleThreshold,
+                      baselineQuantile:=baselineQuantile,
+                      rtshifts:=rtshifts
                 ) _
                 .ToDictionary _
                 .Regression(calibrates, ISvector:=[IS], weighted:=weighted) _
@@ -194,7 +205,9 @@ Namespace MRM
                     timeWindowSize:=timeWindowSize,
                     angleThreshold:=angleThreshold,
                     peakAreaMethod:=peakAreaMethod,
-                    TPAFactors:=TPAFactors
+                    TPAFactors:=TPAFactors,
+                    baselineQuantile:=baselineQuantile,
+                    rtshifts:=New Dictionary(Of String, Double)
                 )
                 mrmPeaktable += scan.MRMPeaks
                 X += scan.rawX
@@ -207,7 +220,7 @@ Namespace MRM
         End Function
 
         <Extension>
-        Public Function SampleQuantify(model As StandardCurve(), file$, ions As IonPair(), tolerance As Tolerance, timeWindowSize#, angleThreshold#,
+        Public Function SampleQuantify(model As StandardCurve(), file$, ions As IonPair(), tolerance As Tolerance, timeWindowSize#, angleThreshold#, baselineQuantile#, rtshifts As Dictionary(Of String, Double),
                                        Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum,
                                        Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As QuantifyScan
 
@@ -221,7 +234,9 @@ Namespace MRM
                     TPAFactors:=If(TPAFactors, New Dictionary(Of String, Double)),
                     tolerance:=tolerance,
                     timeWindowSize:=timeWindowSize,
-                    angleThreshold:=angleThreshold
+                    angleThreshold:=angleThreshold,
+                    baselineQuantile:=baselineQuantile,
+                    rtshifts:=rtshifts
                 ) _
                 .ToArray
             Dim MRMPeakTable As New List(Of MRMPeakTable)

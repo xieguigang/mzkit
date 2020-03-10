@@ -211,9 +211,9 @@ Namespace GCMS.QuantifyAnalysis
                 alignList += (target.Item1.ID, target.query, target.ref)
             Next
 
-            alignments = alignList
+            alignments = alignList.ToArray
 
-            Return result
+            Return result.ToArray
         End Function
 
         <Extension>

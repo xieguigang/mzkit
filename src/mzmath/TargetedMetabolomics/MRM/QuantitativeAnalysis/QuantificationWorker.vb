@@ -16,7 +16,16 @@ Namespace MRM
             Dim a As Double = fx.Factors(1)
             Dim b As Double = fx.Factors(Scan0)
 
-            Return Function(y) (y - b) / a
+            Return Function(y)
+                       y = (y - b) / a
+
+                       ' ND value?
+                       'If y < 0 Then
+                       '    y = 0
+                       'End If
+
+                       Return y
+                   End Function
         End Function
 
         ''' <summary>
@@ -35,9 +44,11 @@ Namespace MRM
                                              ions As IonPair(),
                                              peakAreaMethod As PeakArea.Methods,
                                              angleThreshold#,
+                                             baselineQuantile#,
                                              TPAFactors As Dictionary(Of String, Double),
                                              tolerance As Tolerance,
-                                             timeWindowSize#) As IEnumerable(Of ContentResult(Of MRMPeakTable))
+                                             timeWindowSize#,
+                                             rtshifts As Dictionary(Of String, Double)) As IEnumerable(Of ContentResult(Of MRMPeakTable))
 
             Dim TPA As Dictionary(Of String, IonTPA) = raw _
                 .ScanTPA(ionpairs:=ions,
@@ -45,7 +56,9 @@ Namespace MRM
                          TPAFactors:=TPAFactors,
                          tolerance:=tolerance,
                          timeWindowSize:=timeWindowSize,
-                         angleThreshold:=angleThreshold
+                         angleThreshold:=angleThreshold,
+                         baselineQuantile:=baselineQuantile,
+                         rtshifts:=rtshifts
                 ) _
                 .ToDictionary(Function(ion) ion.name)
 

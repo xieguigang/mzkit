@@ -56,6 +56,7 @@ Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Quantile
 Imports regexp = System.Text.RegularExpressions.Regex
@@ -129,10 +130,10 @@ Namespace MRM
                 '                   Not ionTPA(i.IS).Properties.Count < i.C.Count ' 标曲文件之中只有7个点，但是实际上打了10个点，剩下的三个点可以不要了
                 '        End Function)
 
-                Dim TPA = ionTPA(ion.ID).Properties.ToLower                     ' 得到标准曲线实验数据
+                Dim TPA = ionTPA(ion.ID).Properties.ToLower                       ' 得到标准曲线实验数据
                 Dim ISA = ionTPA.getIS(ion)                                       ' 得到内标的实验数据，如果是空值的话，说明不需要内标进行校正
                 Dim IsIon As [IS] = [IS].TryGetValue(ion.IS, [default]:=New [IS]) ' 尝试得到内标的数据
-                Dim CIS# = IsIon?.CIS                                             ' 内标的浓度，是不变的，所以就只有一个值
+                Dim CIS# = CDbl(IsIon?.CIS)                                       ' 内标的浓度，是不变的，所以就只有一个值
                 Dim points As New List(Of MRMStandards)
                 Dim blankPoints = blanks.TryGetValue(ion.ID).getBlankControls
                 Dim blankISPoints = blanks.TryGetValue(ion.IS).getBlankControls
@@ -257,10 +258,13 @@ Namespace MRM
                               End Function)
 
             Return Function(L)
+                       Dim key As String = "L" & getLevelNumber(L.Key)
+
                        If ref.Count = 0 Then
                            Return 0
+                       ElseIf Not refPoints.ContainsKey(key) Then
+                           Throw New MissingPrimaryKeyException($"Missing reference point '{key}', or you can just delete the reference point from table file before you run the quantify script!")
                        Else
-                           Dim key As String = "L" & getLevelNumber(L.Key)
                            Dim At_i = refPoints(key)
 
                            Return At_i
@@ -335,7 +339,7 @@ Namespace MRM
                 ' it's wired that axis X should be the content and 
                 ' Y Is the peak area ratio in targeted quantify 
                 ' analysis
-                Yield New PointF(pY, pX)
+                Yield New PointF(CSng(pY), CSng(pX))
             Next
         End Function
 
@@ -348,12 +352,13 @@ Namespace MRM
         ''' ``{<see cref="Standards.ID"/>, <see cref="Standards.Factor"/>}``，这个是为了计算亮氨酸和异亮氨酸这类无法被区分的物质的峰面积所需要的
         ''' </param>
         ''' <returns></returns>
-        Public Function Scan(raw$, ions As IonPair(), tolerance As Tolerance, timeWindowSize#, angleThreshold#,
+        Public Function Scan(raw$, ions As IonPair(), tolerance As Tolerance, timeWindowSize#, angleThreshold#, baselineQuantile#,
                              Optional peakAreaMethod As PeakArea.Methods = PeakArea.Methods.NetPeakSum,
                              Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
                              Optional ByRef refName$() = Nothing,
                              Optional calibrationNamedPattern$ = ".+[-]CAL\d+",
-                             Optional levelPattern$ = "[-]CAL\d+") As DataSet()
+                             Optional levelPattern$ = "[-]CAL\d+",
+                             Optional rtshifts As RTAlignment() = Nothing) As DataSet()
 
             ' 扫描所有的符合命名规则要求的原始文件
             ' 假设这些符合命名规则的文件都是标准曲线文件
@@ -376,7 +381,9 @@ Namespace MRM
                     timeWindowSize:=timeWindowSize,
                     refName:=refName,
                     levelPattern:=levelPattern,
-                    angleThreshold:=angleThreshold
+                    angleThreshold:=angleThreshold,
+                    baselineQuantile:=baselineQuantile,
+                    rtshifts:=rtshifts
                 )
             End If
         End Function
@@ -399,6 +406,8 @@ Namespace MRM
                              tolerance As Tolerance,
                              timeWindowSize#,
                              angleThreshold#,
+                             baselineQuantile#,
+                             rtshifts As RTAlignment(),
                              Optional ByRef refName$() = Nothing,
                              Optional levelPattern$ = "[-]CAL\d+") As DataSet()
 
@@ -420,7 +429,9 @@ Namespace MRM
                       timeWindowSize:=timeWindowSize,
                       angleThreshold:=angleThreshold,
                       refName:=refName,
-                      removesWiffName:=False
+                      removesWiffName:=False,
+                      baselineQuantile:=baselineQuantile,
+                      rtshifts:=rtshifts
                  ) _
                 .Select(Function(ion)
                             Return New DataSet With {

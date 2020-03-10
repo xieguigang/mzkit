@@ -62,10 +62,13 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports Rdataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime
 Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
 Imports RRuntime = SMRUCC.Rsharp.Runtime
+Imports stdNum = System.Math
 Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
 
 ''' <summary>
@@ -78,6 +81,7 @@ Module MRMkit
 
         Public StandardCurve As StandardCurve()
         Public Samples As QuantifyScan()
+        Public IonsRaw As list
 
     End Class
 
@@ -98,13 +102,47 @@ Module MRMkit
         ' create linear regression report
         REnv.Internal.htmlPrinter.AttachHtmlFormatter(Of StandardCurve())(AddressOf MRMLinearReport.CreateHtml)
         REnv.Internal.htmlPrinter.AttachHtmlFormatter(Of MRMDataSet)(AddressOf MRMLinearReport.CreateHtml)
-        ' REnv.Internal.htmlPrinter.AttachHtmlFormatter(Of )()
+        REnv.Internal.htmlPrinter.AttachHtmlFormatter(Of QCData)(AddressOf MRMQCReport.CreateHtml)
+
+        REnv.Internal.Object.Converts.makeDataframe.addHandler(GetType(RTAlignment()), AddressOf RTShiftSummary)
 
         Dim toolkit As AssemblyInfo = GetType(MRMkit).Assembly.FromAssembly
 
         Call VBDebugger.WaitOutput()
         Call toolkit.AppSummary(Nothing, Nothing, App.StdOut)
     End Sub
+
+    Private Function RTShiftSummary(x As RTAlignment(), args As list, env As Environment) As Rdataframe
+        Dim rownames = x.Select(Function(i) i.ion.target.accession).ToArray
+        Dim cols As New Dictionary(Of String, Array)
+        Dim name As Array = x.Select(Function(i) i.ion.target.name).ToArray
+        Dim isomerism As Array = x.Select(Function(i) If(i.ion.hasIsomerism, "*", "")).ToArray
+        Dim rt As Array = x _
+            .Select(Function(i)
+                        Dim act = stdNum.Round(i.actualRT)
+                        Dim ref = i.ion.target.rt
+
+                        Return $"{act}/{If(ref Is Nothing, "NA", stdNum.Round(ref.Value))}"
+                    End Function) _
+            .ToArray
+        Dim rtshifts = x.Select(Function(i) i.CalcRtShifts.ToDictionary(Function(sample) sample.Name, Function(sample) sample.Value)).ToArray
+        Dim allSampleNames = rtshifts.Select(Function(i) i.Keys).IteratesALL.Distinct.OrderBy(Function(s) s).ToArray
+        Dim shifts As Array
+
+        Call cols.Add(NameOf(name), name)
+        Call cols.Add("rt(actual/reference)", rt)
+        Call cols.Add(NameOf(isomerism), isomerism)
+
+        For Each sampleName As String In allSampleNames
+            shifts = rtshifts.Select(Function(result) result.TryGetValue(sampleName, [default]:=Double.NaN)).ToArray
+            cols(sampleName) = shifts
+        Next
+
+        Return New Rdataframe With {
+            .rownames = rownames,
+            .columns = cols
+        }
+    End Function
 
     Private Function printStandards(obj As Object) As String
         Dim csv = DirectCast(obj, Standards()).ToCsvDoc.ToMatrix.RowIterator.ToArray
@@ -137,6 +175,37 @@ Module MRMkit
         End If
     End Function
 
+    <ExportAPI("MRM.arguments")>
+    Public Function MRMarguments(Optional tolerance As Object = "da:0.3",
+                                 Optional timeWindowSize# = 5,
+                                 Optional angleThreshold# = 5,
+                                 Optional baselineQuantile# = 0.65,
+                                 Optional integratorTicks% = 5000,
+                                 Optional peakAreaMethod As Methods = Methods.NetPeakSum,
+                                 Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As MRMArguments
+        Return New MRMArguments(
+            TPAFactors:=TPAFactors,
+            tolerance:=interop_arguments.GetTolerance(tolerance, "da:0.3"),
+            timeWindowSize:=timeWindowSize,
+            angleThreshold:=angleThreshold,
+            baselineQuantile:=baselineQuantile,
+            integratorTicks:=integratorTicks,
+            peakAreaMethod:=peakAreaMethod
+        )
+    End Function
+
+    <ExportAPI("MRM.rt_alignments")>
+    Public Function GetRTAlignments(<RRawVectorArgument> cal As Object, <RRawVectorArgument> ions As Object, Optional args As MRMArguments = Nothing) As RTAlignment()
+        Dim references As IEnumerable(Of String) = DirectCast(REnv.asVector(Of String)(cal), String())
+        Dim ionPairs As IonPair() = REnv.asVector(Of IonPair)(ions)
+
+        If args Is Nothing Then
+            args = MRM.MRMArguments.GetDefaultArguments
+        End If
+
+        Return RTAlignmentProcessor.AcquireRT(references, ionPairs, args)
+    End Function
+
     ''' <summary>
     ''' Extract ion peaks
     ''' </summary>
@@ -144,13 +213,15 @@ Module MRMkit
     ''' <param name="ionpairs">metabolite targets</param>
     ''' <returns></returns>
     <ExportAPI("extract.ions")>
-    Public Function ExtractIonData(mzML$, ionpairs As IonPair(), Optional tolerance$ = "ppm:20") As IonChromatogramData()
+    Public Function ExtractIonData(mzML$, ionpairs As IonPair(), Optional tolerance As Object = "ppm:20") As vector
         Return MRMSamples.ExtractIonData(
-            ion_pairs:=ionpairs,
+            ion_pairs:=IonPair.GetIsomerism(ionpairs, interop_arguments.GetTolerance(tolerance)),
             mzML:=mzML,
             assignName:=Function(i) i.accession,
             tolerance:=interop_arguments.GetTolerance(tolerance)
-        )
+        ).DoCall(Function(data)
+                     Return New vector With {.data = data}
+                 End Function)
     End Function
 
     ''' <summary>
@@ -171,6 +242,7 @@ Module MRMkit
                                    Optional integratorTicks% = 5000,
                                    Optional peakAreaMethod As PeakArea.Methods = PeakArea.Methods.NetPeakSum,
                                    Optional angleThreshold# = 5,
+                                   Optional rtshift As Dictionary(Of String, Double) = Nothing,
                                    Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As IonTPA()
 
         If TPAFactors Is Nothing Then
@@ -186,7 +258,8 @@ Module MRMkit
             integratorTicks:=integratorTicks,
             peakAreaMethod:=peakAreaMethod,
             timeWindowSize:=timeWindowSize,
-            angleThreshold:=angleThreshold
+            angleThreshold:=angleThreshold,
+            rtshifts:=rtshift
         )
     End Function
 
@@ -347,6 +420,8 @@ Module MRMkit
                                   Optional tolerance$ = "ppm:20",
                                   Optional timeWindowSize# = 5,
                                   Optional angleThreshold# = 5,
+                                  Optional baselineQuantile# = 0.65,
+                                  Optional rtshifts As Dictionary(Of String, Double) = Nothing,
                                   Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As DataSet()
 
         If TPAFactors Is Nothing Then
@@ -360,7 +435,9 @@ Module MRMkit
             timeWindowSize:=timeWindowSize,
             peakAreaMethod:=peakAreaMethod,
             TPAFactors:=TPAFactors,
-            angleThreshold:=angleThreshold
+            angleThreshold:=angleThreshold,
+            baselineQuantile:=baselineQuantile,
+            rtshifts:=rtshifts
         )
     End Function
 
@@ -378,15 +455,21 @@ Module MRMkit
     ''' <param name="peakAreaMethod"></param>
     ''' <param name="TPAFactors"></param>
     ''' <param name="removesWiffName"></param>
+    ''' <param name="rtshifts">
+    ''' For the calibration of the linear model reference points used only, 
+    ''' **DO NOT apply this parameter for the user sample data!**
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("wiff.scans")>
     Public Function ScanWiffRaw(wiffConverts As String(), ions As IonPair(),
                                 Optional peakAreaMethod As PeakArea.Methods = PeakArea.Methods.NetPeakSum,
                                 Optional tolerance$ = "ppm:20",
                                 Optional angleThreshold# = 5,
+                                Optional baselineQuantile# = 0.65,
                                 Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
                                 Optional removesWiffName As Boolean = True,
-                                Optional timeWindowSize# = 5) As DataSet()
+                                Optional timeWindowSize# = 5,
+                                Optional rtshifts As RTAlignment() = Nothing) As DataSet()
 
         If TPAFactors Is Nothing Then
             TPAFactors = New Dictionary(Of String, Double)
@@ -394,6 +477,10 @@ Module MRMkit
 
         If wiffConverts Is Nothing Then
             Throw New ArgumentNullException(NameOf(wiffConverts))
+        End If
+
+        If rtshifts Is Nothing Then
+            rtshifts = {}
         End If
 
         'If wiffConverts Is Nothing Then
@@ -425,7 +512,9 @@ Module MRMkit
             removesWiffName:=removesWiffName,
             tolerance:=interop_arguments.GetTolerance(tolerance),
             timeWindowSize:=timeWindowSize,
-            angleThreshold:=angleThreshold
+            angleThreshold:=angleThreshold,
+            baselineQuantile:=baselineQuantile,
+            rtshifts:=rtshifts
         )
     End Function
 
@@ -506,6 +595,7 @@ Module MRMkit
                                    Optional tolerance$ = "ppm:20",
                                    Optional timeWindowSize# = 5,
                                    Optional angleThreshold# = 5,
+                                   Optional baselineQuantile# = 0.65,
                                    Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As QuantifyScan
 
         Return MRMSamples.SampleQuantify(
@@ -516,7 +606,9 @@ Module MRMkit
             peakAreaMethod:=peakAreaMethod,
             TPAFactors:=TPAFactors,
             timeWindowSize:=timeWindowSize,
-            angleThreshold:=angleThreshold
+            angleThreshold:=angleThreshold,
+            baselineQuantile:=baselineQuantile,
+            rtshifts:=New Dictionary(Of String, Double)
         )
     End Function
 
@@ -580,12 +672,24 @@ Module MRMkit
     ''' </summary>
     ''' <param name="standardCurve"></param>
     ''' <param name="samples"></param>
+    ''' <param name="QC_dataset">
+    ''' Regular expression pattern string for match QC sample files
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("mrm.dataset")>
-    Public Function CreateMRMDataSet(standardCurve As StandardCurve(), samples As QuantifyScan()) As MRMDataSet
-        Return New MRMDataSet With {
-            .StandardCurve = standardCurve,
-            .Samples = samples
-        }
+    Public Function CreateMRMDataSet(standardCurve As StandardCurve(), samples As QuantifyScan(), Optional QC_dataset$ = Nothing, Optional ionsRaw As Rlist = Nothing) As Object
+        If Not QC_dataset.StringEmpty Then
+            Return New QCData With {
+                .model = standardCurve,
+                .result = samples,
+                .matchQC = QC_dataset
+            }
+        Else
+            Return New MRMDataSet With {
+                .StandardCurve = standardCurve,
+                .Samples = samples,
+                .IonsRaw = ionsRaw
+            }
+        End If
     End Function
 End Module

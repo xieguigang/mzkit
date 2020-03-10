@@ -59,7 +59,7 @@ Imports stdNum = System.Math
 Public Module Emulator
 
     ''' <summary>
-    ''' 会将能量写入<see cref="EdgeData.weight"/>属性之中
+    ''' 会将能量写入<see cref="Edge.weight"/>属性之中
     ''' </summary>
     ''' <param name="model"></param>
     ''' <param name="energyTable"></param>
@@ -71,10 +71,10 @@ Public Module Emulator
             Dim atom1 = bound.U.data.label
             Dim atom2 = bound.V.data.label
             ' The bounds number that parsed from KCF model is store in weight value
-            Dim energy As Double = energyTable.FindByKCFAtoms(atom1, atom2, bound.data.weight)
+            Dim energy As Double = energyTable.FindByKCFAtoms(atom1, atom2, bound.weight)
 
             ' The higher of bound energy, the harder for break this bound 
-            bound.data.weight = energy
+            bound.weight = energy
         Next
 
         Return model
@@ -235,7 +235,7 @@ Public Module Emulator
         ' 将键能低于能量值的边链接都删除掉
         ' 因为他们都被打断了
         For Each edge As Edge In copy.graphEdges.ToArray
-            If edge.data.weight <= energy Then
+            If edge.weight <= energy Then
                 ' 在这里得到化学键的数量
                 ' 计算电荷量
                 Dim bounds As Integer = edge.data!bounds

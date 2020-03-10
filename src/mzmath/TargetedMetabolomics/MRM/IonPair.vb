@@ -51,6 +51,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports mzchromatogram = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.chromatogram
 
 Namespace MRM.Models
@@ -76,7 +77,11 @@ Namespace MRM.Models
             If name.StringEmpty Then
                 Return $"{precursor}/{product}"
             Else
-                Return $"Dim {name} As [{precursor}, {product}]"
+                If rt Is Nothing Then
+                    Return $"Dim {name} As [{precursor}, {product}]"
+                Else
+                    Return $"Dim {name} As [{precursor}, {product}], {rt} sec"
+                End If
             End If
         End Function
 
@@ -105,7 +110,13 @@ Namespace MRM.Models
         ''' <param name="ionpairs"></param>
         ''' <param name="tolerance"></param>
         ''' <returns></returns>
-        Public Shared Iterator Function GetIsomerism(ionpairs As IonPair(), tolerance As Tolerance) As IEnumerable(Of IsomerismIonPairs)
+        Public Shared Function GetIsomerism(ionpairs As IonPair(), tolerance As Tolerance) As IEnumerable(Of IsomerismIonPairs)
+            Return populateGroupElement(ionpairs, tolerance) _
+                .GroupBy(Function(i) i.groupKey) _
+                .IteratesALL
+        End Function
+
+        Private Shared Iterator Function populateGroupElement(ionpairs As IonPair(), tolerance As Tolerance) As IEnumerable(Of IsomerismIonPairs)
             Dim iso As New List(Of IonPair)
 
             For Each ion As IonPair In ionpairs
@@ -123,7 +134,7 @@ Namespace MRM.Models
         End Function
     End Class
 
-    Public Class IsomerismIonPairs
+    Public Class IsomerismIonPairs : Implements IEnumerable(Of IonPair)
 
         Public Property ions As IonPair()
         Public Property target As IonPair
@@ -137,7 +148,7 @@ Namespace MRM.Models
                 If ions.IsNullOrEmpty Then
                     Return Scan0
                 Else
-                    Dim vec = ions.Join(target).OrderBy(Function(i) i.rt).ToArray
+                    Dim vec As IonPair() = Me.ToArray
 
                     For i As Integer = 0 To vec.Length - 1
                         If vec(i).accession = target.accession Then
@@ -156,12 +167,26 @@ Namespace MRM.Models
             End Get
         End Property
 
+        Friend Function groupKey() As String
+            Return Me.Select(Function(i) i.accession).JoinBy("|->|")
+        End Function
+
         Public Overrides Function ToString() As String
             If hasIsomerism Then
                 Return $"[{index}, rt:{target.rt} (sec)] {target}"
             Else
                 Return target.ToString
             End If
+        End Function
+
+        Public Iterator Function GetEnumerator() As IEnumerator(Of IonPair) Implements IEnumerable(Of IonPair).GetEnumerator
+            For Each i In ions.Join(target).OrderBy(Function(ion) ion.rt)
+                Yield i
+            Next
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield GetEnumerator()
         End Function
     End Class
 End Namespace

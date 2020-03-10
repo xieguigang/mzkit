@@ -61,6 +61,7 @@ Imports Microsoft.VisualBasic.Imaging.d3js.Layout
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
@@ -96,7 +97,7 @@ Public Module ChromatogramPlot
                                         Optional tolerance$ = "ppm:20") As GraphicsData
 
         Dim mzTolerance As Tolerance = Ms1.Tolerance.ParseScript(tolerance)
-        Dim MRM As IonChromatogramData() = IonPair _
+        Dim MRM As IonChromatogram() = IonPair _
             .GetIsomerism(ions, mzTolerance) _
             .ExtractIonData(
                 mzML:=mzML,
@@ -176,6 +177,9 @@ Public Module ChromatogramPlot
     ''' <param name="bg"></param>
     ''' <param name="deln">legend每一列有多少个进行显示</param>
     ''' <param name="labelColor"></param>
+    ''' <param name="penStyle">
+    ''' CSS value for controls of the line drawing style
+    ''' </param>
     <Extension>
     Public Function TICplot(ionData As NamedCollection(Of ChromatogramTick)(),
                             Optional size$ = "1600,1000",
@@ -194,17 +198,21 @@ Public Module ChromatogramPlot
                             Optional showLegends As Boolean = True,
                             Optional legendFontCSS$ = CSSFont.Win10Normal,
                             Optional deln% = 10,
-                            Optional isXIC As Boolean = False) As GraphicsData
+                            Optional isXIC As Boolean = False,
+                            Optional fillAlpha As Integer = 180,
+                            Optional gridFill As String = "rgb(245,245,245)",
+                            Optional timeRange As Double() = Nothing,
+                            Optional parallel As Boolean = False) As GraphicsData
 
         Dim labelFont As Font = CSSFont.TryParse(labelFontStyle)
         Dim labelConnector As Pen = Stroke.TryParse(labelConnectorStroke)
 
-        For Each ion As NamedCollection(Of ChromatogramTick) In ionData
-            Dim base = ion.value.Baseline(quantile:=0.65)
-            Dim max# = ion.value.Shadows!Intensity.Max
+        'For Each ion As NamedCollection(Of ChromatogramTick) In ionData
+        '    Dim base = ion.value.Baseline(quantile:=0.65)
+        '    Dim max# = ion.value.Shadows!Intensity.Max
 
-            Call $"{ion.name}: {base}/{max} = {(100 * base / max).ToString("F2")}%".__DEBUG_ECHO
-        Next
+        '    Call $"{ion.name}: {base}/{max} = {(100 * base / max).ToString("F2")}%".__DEBUG_ECHO
+        'Next
 
         Dim colors As LoopArray(Of Pen)
         Dim newPen As Func(Of Color, Pen) =
@@ -225,14 +233,16 @@ Public Module ChromatogramPlot
                 .ToArray
         End If
 
-        Dim XTicks = ionData _
+        Dim XTicks As Double() = ionData _
             .Select(Function(ion)
                         Return ion.value.TimeArray
                     End Function) _
             .IteratesALL _
+            .JoinIterates(timeRange) _
             .AsVector _
             .Range _
             .CreateAxisTicks  ' time
+
         Dim YTicks = ionData _
             .Select(Function(ion)
                         Return ion.value.IntensityArray
@@ -241,6 +251,17 @@ Public Module ChromatogramPlot
             .AsVector _
             .Range _
             .CreateAxisTicks ' intensity
+
+        Dim ZTicks As Double()
+
+        If parallel Then
+            ZTicks = ionData _
+                .Sequence _
+                .Select(Function(i) CDbl(i)) _
+                .AsVector _
+                .Range _
+                .CreateAxisTicks
+        End If
 
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
@@ -261,11 +282,19 @@ Public Module ChromatogramPlot
                     htmlLabel:=False,
                     YtickFormat:="G2",
                     labelFont:=axisLabelFont,
-                    tickFontStyle:=axisTickFont
+                    tickFontStyle:=axisTickFont,
+                    gridFill:=gridFill
                 )
+
+                If parallel Then
+                    ' draw Z axis
+
+                End If
 
                 Dim legends As New List(Of Legend)
                 Dim peakTimes As New List(Of NamedValue(Of ChromatogramTick))
+                Dim fillColor As Brush
+                Dim parallelOffset As New PointF
 
                 For i As Integer = 0 To ionData.Length - 1
                     Dim curvePen As Pen = colors.Next
@@ -286,14 +315,22 @@ Public Module ChromatogramPlot
                     Dim A, B As PointF
                     Dim polygon As New List(Of PointF)
 
+                    If parallel Then
+                        ' add [x,y] offset for current data
+                        parallelOffset = New PointF With {
+                            .X = parallelOffset.X + rect.Height / (ionData.Length + 2),
+                            .Y = parallelOffset.Y - rect.Height / (ionData.Length + 2)
+                        }
+                    End If
+
                     For Each signal As SlideWindow(Of PointF) In chromatogram _
                         .Select(Function(c)
                                     Return New PointF(c.Time, c.Intensity)
                                 End Function) _
                         .SlideWindows(winSize:=2)
 
-                        A = scaler.Translate(signal.First)
-                        B = scaler.Translate(signal.Last)
+                        A = scaler.Translate(signal.First).OffSet2D(parallelOffset)
+                        B = scaler.Translate(signal.Last).OffSet2D(parallelOffset)
 
                         Call g.DrawLine(curvePen, A, B)
 
@@ -310,9 +347,8 @@ Public Module ChromatogramPlot
                     polygon.Add(New PointF(polygon.Last.X, bottom))
 
                     If fillCurve Then
-                        Dim color As Color = Color.FromArgb(200, curvePen.Color)
-
-                        Call g.FillPolygon(New SolidBrush(color), polygon)
+                        fillColor = New SolidBrush(Color.FromArgb(fillAlpha, curvePen.Color))
+                        g.FillPolygon(fillColor, polygon)
                     End If
                 Next
 

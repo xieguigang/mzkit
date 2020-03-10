@@ -53,7 +53,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
-Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports stdNum = System.Math
@@ -90,7 +89,7 @@ Public Module TPAExtensions
     ''' </param>
     ''' <returns></returns>
     <Extension>
-    Public Function ionTPA(ion As IonChromatogramData,
+    Public Function ionTPA(ion As IonChromatogram,
                            baselineQuantile#,
                            angleThreshold#,
                            peakAreaMethod As PeakArea.Methods,
@@ -100,16 +99,17 @@ Public Module TPAExtensions
 
         Dim vector As IVector(Of ChromatogramTick) = ion.chromatogram.Shadows
         Dim ROIData As ROI() = vector _
-            .PopulateROI(baselineQuantile:=baselineQuantile) _
+            .PopulateROI(baselineQuantile:=baselineQuantile, angleThreshold:=angleThreshold) _
             .ToArray
+        Dim result As IonTPA
 
         If ROIData.Length = 0 Then
-            Return New IonTPA With {
+            result = New IonTPA With {
                 .name = ion.name,
                 .peakROI = New DoubleRange(0, 0)
             }
         Else
-            Return ion.ProcessingIonPeakArea(
+            result = ion.ProcessingIonPeakArea(
                 vector:=vector,
                 ROIData:=ROIData,
                 baselineQuantile:=baselineQuantile,
@@ -119,6 +119,8 @@ Public Module TPAExtensions
                 timeWindowSize:=timeWindowSize
             )
         End If
+
+        Return result
     End Function
 
     ''' <summary>
@@ -133,7 +135,7 @@ Public Module TPAExtensions
     ''' <param name="TPAFactor#"></param>
     ''' <returns></returns>
     <Extension>
-    Private Function ProcessingIonPeakArea(ion As IonChromatogramData, vector As IVector(Of ChromatogramTick), ROIData As ROI(),
+    Private Function ProcessingIonPeakArea(ion As IonChromatogram, vector As IVector(Of ChromatogramTick), ROIData As ROI(),
                                            baselineQuantile#,
                                            peakAreaMethod As PeakArea.Methods,
                                            integratorTicks%,
@@ -141,9 +143,10 @@ Public Module TPAExtensions
                                            timeWindowSize#) As IonTPA
 
         Dim peak As DoubleRange
-        Dim data As (peak As DoubleRange, area#, baseline#, maxPeakHeight#)
+        Dim data As (area#, baseline#, maxPeakHeight#)
         Dim target = ion.ion.target
-        Dim find As DoubleRange = {target.rt - timeWindowSize, target.rt + timeWindowSize}
+        Dim find As DoubleRange = Nothing
+        Dim region As ROI = Nothing
 
         ROIData = ROIData _
             .OrderBy(Function(r) r.Time.Min) _
@@ -158,9 +161,29 @@ Public Module TPAExtensions
                        Return r.Time.IsOverlapping(find)
                    End Function) _
             .FirstOrDefault
+        If Not target.rt Is Nothing Then
+            ' 20200304
+            ' System.InvalidOperationException: Nullable object must have a value.
+            find = {
+                CDbl(target.rt) - timeWindowSize,
+                CDbl(target.rt) + timeWindowSize
+            }
+            region = ROIData _
+               .Where(Function(r)
+                          Return r.Time.IsOverlapping(find)
+                      End Function) _
+               .OrderByDescending(Function(r) r.Integration) _
+               .FirstOrDefault
+        End If
 
         If ion.ion.hasIsomerism Then
             If region Is Nothing Then
+                ROIData = ROIData _
+                    .OrderByDescending(Function(r) r.Integration) _
+                    .Take(ion.ion.ions.Length + 1) _
+                    .OrderBy(Function(r) r.rt) _
+                    .ToArray
+
                 ' find by index
                 If ion.ion.index < ROIData.Length Then
                     region = ROIData(ion.ion.index)
@@ -198,18 +221,18 @@ Public Module TPAExtensions
             End If
         End If
 
-        If Not peak.IsOverlapping(find) Then
-            Call $"The ROI peak region [{peak.Min}, {peak.Max}] is not contains '{ion.name}' ({ion.ion.target.rt} sec)!".Warning
+        If Not find Is Nothing AndAlso Not peak.IsOverlapping(find) Then
+            ' Call $"The ROI peak region [{peak.Min}, {peak.Max}] is not contains '{ion.name}' ({ion.ion.target.rt} sec)!".Warning
         End If
 
         With vector.TPAIntegrator(peak, baselineQuantile, peakAreaMethod, integratorTicks, TPAFactor)
-            data = (peak, .Item1, .Item2, .Item3)
+            data = (.Item1, .Item2, .Item3)
         End With
 
         Return New IonTPA With {
             .name = ion.name,
-            .peakROI = data.peak,
-            .area = data.area,
+            .peakROI = peak,
+            .area = If(data.area < 0, 0, data.area),
             .baseline = data.baseline,
             .maxPeakHeight = data.maxPeakHeight
         }

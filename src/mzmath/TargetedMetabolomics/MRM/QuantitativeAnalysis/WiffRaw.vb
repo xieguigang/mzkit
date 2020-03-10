@@ -44,19 +44,19 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 
 Namespace MRM
 
     Public Module WiffRaw
 
-        Public Function ScanPeakTable(mzML$, ions As IonPair(), tolerance As Tolerance, timeWindowSize#, angleThreshold#,
+        Public Function ScanPeakTable(mzML$, ions As IonPair(), tolerance As Tolerance, timeWindowSize#, angleThreshold#, baselineQuantile#, rtshifts As Dictionary(Of String, Double),
                                       Optional peakAreaMethod As PeakArea.Methods = PeakArea.Methods.NetPeakSum,
                                       Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As DataSet()
 
@@ -67,7 +67,9 @@ Namespace MRM
                 TPAFactors:=TPAFactors,
                 tolerance:=tolerance,
                 timeWindowSize:=timeWindowSize,
-                angleThreshold:=angleThreshold
+                angleThreshold:=angleThreshold,
+                baselineQuantile:=baselineQuantile,
+                rtshifts:=rtshifts
             )
             Dim peaktable As DataSet() = TPA _
                 .Select(Function(ion)
@@ -85,6 +87,24 @@ Namespace MRM
                 .ToArray
 
             Return peaktable
+        End Function
+
+        <Extension>
+        Public Function CreateRtShiftMatrix(rtshifts As RTAlignment()) As Dictionary(Of String, Dictionary(Of String, Double))
+            Return rtshifts _
+               .Select(Function(i)
+                           Return i.CalcRtShifts.Select(Function(shift) (i.ion.target.accession, shift))
+                       End Function) _
+               .IteratesALL _
+               .GroupBy(Function(shift) shift.shift.Name) _
+               .ToDictionary(Function(sample) sample.Key,
+                             Function(sample)
+                                 Return sample _
+                                     .ToDictionary(Function(ion) ion.accession,
+                                                   Function(ion)
+                                                       Return ion.shift.Value
+                                                   End Function)
+                             End Function)
         End Function
 
         ''' <summary>
@@ -105,6 +125,8 @@ Namespace MRM
                              tolerance As Tolerance,
                              timeWindowSize#,
                              angleThreshold#,
+                             baselineQuantile#,
+                             rtshifts As RTAlignment(),
                              Optional ByRef refName$() = Nothing,
                              Optional removesWiffName As Boolean = False) As DataSet()
 
@@ -124,15 +146,20 @@ Namespace MRM
                 ionTPAs(ion.accession) = New Dictionary(Of String, Double)
             Next
 
+            Dim shiftMatrix = rtshifts.CreateRtShiftMatrix
+
             For Each file As String In mzMLRawFiles
                 ' 得到当前的这个原始文件之中的峰面积数据
+                Dim ionShifts = shiftMatrix.TryGetValue(file.BaseName)
                 Dim TPA() = file.ScanTPA(
                     ionpairs:=ions,
                     peakAreaMethod:=peakAreaMethod,
                     TPAFactors:=TPAFactors,
                     tolerance:=tolerance,
                     timeWindowSize:=timeWindowSize,
-                    angleThreshold:=angleThreshold
+                    angleThreshold:=angleThreshold,
+                    baselineQuantile:=baselineQuantile,
+                    rtshifts:=ionShifts
                 )
 
                 refNames += file.BaseName
@@ -148,7 +175,7 @@ Namespace MRM
                 Next
             Next
 
-            refName = refNames
+            refName = refNames.ToArray
 
             Return ionTPAs _
                 .Select(Function(ion)

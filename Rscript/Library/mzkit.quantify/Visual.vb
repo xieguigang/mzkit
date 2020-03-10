@@ -49,7 +49,12 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Internal.Object
+Imports SMRUCC.Rsharp.Runtime.Interop
+Imports REnv = SMRUCC.Rsharp.Runtime
 
 <Package("mzkit.quantify.visual")>
 Module Visual
@@ -67,7 +72,9 @@ Module Visual
                                       Optional samples As NamedValue(Of Double)() = Nothing,
                                       Optional size$ = "1600,1200",
                                       Optional margin$ = "padding: 200px 100px 150px 150px",
-                                      Optional factorFormat$ = "G4") As GraphicsData
+                                      Optional factorFormat$ = "G4",
+                                      Optional sampleLabelFont$ = CSSFont.Win10NormalLarger,
+                                      Optional labelerIterations% = 1000) As GraphicsData
 
         Return StandardCurvesPlot.StandardCurves(
             model:=model,
@@ -75,7 +82,9 @@ Module Visual
             name:=title,
             size:=size,
             margin:=margin,
-            factorFormat:=factorFormat
+            factorFormat:=factorFormat,
+            sampleLabelFont:=sampleLabelFont,
+            labelerIterations:=labelerIterations
         )
     End Function
 
@@ -84,12 +93,71 @@ Module Visual
         Return ions.MRMChromatogramPlot(mzML, labelLayoutTicks:=labelLayoutTicks)
     End Function
 
+    ''' <summary>
+    ''' Visualization plot of the MRM chromatogram peaks data.
+    ''' </summary>
+    ''' <param name="chromatogram">the extract MRM chromatogram peaks data.</param>
+    ''' <param name="title">the plot title</param>
+    ''' <param name="size">the size of the output image</param>
+    ''' <param name="fill">fill polygon of the TIC plot?</param>
+    ''' <param name="gridFill">color value for fill the grid background</param>
+    ''' <param name="lineStyle">
+    ''' Css value for adjust the plot style of the curve line of the chromatogram peaks data.
+    ''' </param>
+    ''' <param name="relativeTimeScale"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("MRM.chromatogramPeaks.plot")>
-    Public Function MRMchromatogramPeakPlot(chromatogram As ChromatogramTick(), Optional title$ = "MRM Chromatogram Peak Plot") As GraphicsData
-        Return chromatogram.Plot(
-            title:=title,
-            showMRMRegion:=True,
-            showAccumulateLine:=True
-        )
+    <RApiReturn(GetType(GraphicsData))>
+    Public Function MRMchromatogramPeakPlot(<RRawVectorArgument>
+                                            chromatogram As Object,
+                                            Optional title$ = "MRM Chromatogram Peak Plot",
+                                            Optional size As Object = "2200,1600",
+                                            Optional fill As Boolean = True,
+                                            Optional gridFill$ = "rgb(250,250,250)",
+                                            Optional lineStyle$ = "stroke: black; stroke-width: 2px; stroke-dash: solid;",
+                                            <RRawVectorArgument>
+                                            Optional relativeTimeScale As Object = Nothing,
+                                            Optional parallel As Boolean = False,
+                                            Optional env As Environment = Nothing) As Object
+
+        If chromatogram Is Nothing Then
+            Return REnv.Internal.debug.stop("No chromatogram provided!", env)
+        End If
+
+        If relativeTimeScale Is Nothing Then
+            relativeTimeScale = New Double() {}
+        Else
+            relativeTimeScale = DirectCast(REnv.asVector(Of Double)(relativeTimeScale), Double())
+        End If
+
+        If TypeOf chromatogram Is ChromatogramTick() Then
+            Return DirectCast(chromatogram, ChromatogramTick()).Plot(
+                title:=title,
+                showMRMRegion:=True,
+                showAccumulateLine:=True,
+                size:=InteropArgumentHelper.getSize(size, "2100,1650"),
+                curveStyle:=lineStyle
+            )
+        ElseIf TypeOf chromatogram Is list AndAlso DirectCast(chromatogram, list).slots.All(Function(c) REnv.isVector(Of ChromatogramTick)(c.Value)) Then
+            Return DirectCast(chromatogram, list).slots _
+                .Select(Function(sample)
+                            Return New NamedCollection(Of ChromatogramTick) With {
+                                .name = sample.Key,
+                                .value = REnv.asVector(Of ChromatogramTick)(sample.Value)
+                            }
+                        End Function) _
+                .ToArray _
+                .TICplot(
+                    size:=InteropArgumentHelper.getSize(size, "2200,1440"),
+                    fillCurve:=fill,
+                    gridFill:=gridFill,
+                    penStyle:=lineStyle,
+                    timeRange:=relativeTimeScale,
+                    parallel:=parallel
+                )
+        Else
+            Return REnv.Internal.debug.stop($"Invalid input data: {chromatogram.GetType.FullName}", env)
+        End If
     End Function
 End Module
