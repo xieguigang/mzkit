@@ -152,6 +152,15 @@ Public Module TPAExtensions
             .OrderBy(Function(r) r.Time.Min) _
             .ToArray
 
+		' 20200309 因为噪声的积分面积可能会大于目标物质峰
+		' 的面积，所以在这里应该是使用峰高进行ROI的排序操
+		' 作
+			
+        Dim region As ROI = ROIData _
+            .Where(Function(r)
+                       Return r.Time.IsOverlapping(find)
+                   End Function) _
+            .FirstOrDefault
         If Not target.rt Is Nothing Then
             ' 20200304
             ' System.InvalidOperationException: Nullable object must have a value.
