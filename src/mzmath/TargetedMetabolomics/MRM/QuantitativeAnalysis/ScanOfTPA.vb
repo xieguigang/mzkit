@@ -70,7 +70,9 @@ Namespace MRM
                                 rtshifts As Dictionary(Of String, Double),
                                 Optional baselineQuantile# = 0.65,
                                 Optional integratorTicks% = 5000,
-                                Optional peakAreaMethod As PeakArea.Methods = Methods.Integrator) As IonTPA()
+                                Optional peakAreaMethod As PeakAreaMethods = PeakAreaMethods.Integrator,
+                                Optional bsplineDensity% = 100,
+                                Optional bsplineDegree% = 2) As IonTPA()
 
             ' 从原始文件之中读取出所有指定的离子对数据
             Dim ionData As IonChromatogram() = IonPair.GetIsomerism(ionpairs, tolerance) _
@@ -106,7 +108,9 @@ Namespace MRM
                                 peakAreaMethod,
                                 integratorTicks,
                                 TPAFactors.GetFactor(ion.name),
-                                timeWindowSize:=timeWindowSize
+                                timeWindowSize:=timeWindowSize,
+                                bsplineDegree:=bsplineDegree,
+                                bsplineDensity:=bsplineDensity
                             )
                         End Function) _
                 .ToArray

@@ -10,7 +10,7 @@ Namespace MRM
         Public ReadOnly Property angleThreshold#
         Public ReadOnly Property baselineQuantile# = 0.65
         Public ReadOnly Property integratorTicks% = 5000
-        Public ReadOnly Property peakAreaMethod As PeakArea.Methods = Methods.Integrator
+        Public ReadOnly Property peakAreaMethod As PeakAreaMethods = PeakAreaMethods.Integrator
 
         Sub New(TPAFactors As Dictionary(Of String, Double),
                 tolerance As Tolerance,
@@ -18,7 +18,7 @@ Namespace MRM
                 angleThreshold#,
                 baselineQuantile#,
                 integratorTicks%,
-                peakAreaMethod As PeakArea.Methods)
+                peakAreaMethod As PeakAreaMethods)
 
             Me.TPAFactors = TPAFactors
             Me.tolerance = tolerance
@@ -37,7 +37,7 @@ Namespace MRM
                 angleThreshold:=5,
                 baselineQuantile:=0.65,
                 integratorTicks:=5000,
-                peakAreaMethod:=Methods.NetPeakSum
+                peakAreaMethod:=PeakAreaMethods.NetPeakSum
             )
         End Function
     End Class

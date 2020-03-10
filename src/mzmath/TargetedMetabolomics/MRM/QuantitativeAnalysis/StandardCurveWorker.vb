@@ -353,7 +353,7 @@ Namespace MRM
         ''' </param>
         ''' <returns></returns>
         Public Function Scan(raw$, ions As IonPair(), tolerance As Tolerance, timeWindowSize#, angleThreshold#, baselineQuantile#,
-                             Optional peakAreaMethod As PeakArea.Methods = PeakArea.Methods.NetPeakSum,
+                             Optional peakAreaMethod As PeakAreaMethods = PeakAreaMethods.NetPeakSum,
                              Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
                              Optional ByRef refName$() = Nothing,
                              Optional calibrationNamedPattern$ = ".+[-]CAL\d+",
@@ -401,7 +401,7 @@ Namespace MRM
         <Extension>
         Public Function Scan(mzMLRawFiles$(),
                              ions As IonPair(),
-                             peakAreaMethod As PeakArea.Methods,
+                             peakAreaMethod As PeakAreaMethods,
                              TPAFactors As Dictionary(Of String, Double),
                              tolerance As Tolerance,
                              timeWindowSize#,

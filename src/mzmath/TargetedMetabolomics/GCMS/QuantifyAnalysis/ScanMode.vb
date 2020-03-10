@@ -132,7 +132,7 @@ Namespace GCMS.QuantifyAnalysis
                     Dim TPA = candidate.region _
                         .Ticks _
                         .Shadows _
-                        .TPAIntegrator(candidate.region.Time, 0.65, Methods.Integrator)
+                        .TPAIntegrator(candidate.region.Time, 0.65, PeakAreaMethods.Integrator)
 
                     resultTable = candidate.region.ConvertAsTabular(
                         raw:=data,

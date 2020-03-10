@@ -93,10 +93,12 @@ Public Module TPAExtensions
     Public Function ionTPA(ion As IonChromatogram,
                            baselineQuantile#,
                            angleThreshold#,
-                           peakAreaMethod As PeakArea.Methods,
+                           peakAreaMethod As PeakAreaMethods,
                            Optional integratorTicks% = 5000,
                            Optional TPAFactor# = 1,
-                           Optional timeWindowSize# = 5) As IonTPA
+                           Optional timeWindowSize# = 5,
+                           Optional bsplineDensity% = 100,
+                           Optional bsplineDegree% = 2) As IonTPA
 
         Dim vector As IVector(Of ChromatogramTick) = ion.chromatogram.Shadows
         Dim ROIData As ROI() = vector _
@@ -117,7 +119,9 @@ Public Module TPAExtensions
                 peakAreaMethod:=peakAreaMethod,
                 integratorTicks:=integratorTicks,
                 TPAFactor:=TPAFactor,
-                timeWindowSize:=timeWindowSize
+                timeWindowSize:=timeWindowSize,
+                bsplineDensity:=bsplineDensity,
+                bsplineDegree:=bsplineDegree
             )
         End If
 
@@ -142,11 +146,12 @@ Public Module TPAExtensions
     <Extension>
     Private Function ProcessingIonPeakArea(ion As IonChromatogram, vector As IVector(Of ChromatogramTick), ROIData As ROI(),
                                            baselineQuantile#,
-                                           peakAreaMethod As PeakArea.Methods,
+                                           peakAreaMethod As PeakAreaMethods,
                                            integratorTicks%,
                                            TPAFactor#,
-                                           timeWindowSize#) As IonTPA
-
+                                           timeWindowSize#,
+                                           bsplineDensity%,
+                                           bsplineDegree%) As IonTPA
         Dim peak As DoubleRange
         Dim data As (area#, baseline#, maxPeakHeight#)
         Dim target = ion.ion.target
@@ -224,7 +229,13 @@ Public Module TPAExtensions
             ' Call $"The ROI peak region [{peak.Min}, {peak.Max}] is not contains '{ion.name}' ({ion.ion.target.rt} sec)!".Warning
         End If
 
-        With vector.TPAIntegrator(peak, baselineQuantile, peakAreaMethod, integratorTicks, TPAFactor)
+        With vector.TPAIntegrator(
+            peak, baselineQuantile, peakAreaMethod,
+            resolution:=integratorTicks,
+            bsplineDegree:=bsplineDegree,
+            bsplineDensity:=bsplineDensity,
+            TPAFactor:=TPAFactor
+        )
             data = (.Item1, .Item2, .Item3)
         End With
 
@@ -251,25 +262,29 @@ Public Module TPAExtensions
     <Extension>
     Public Function TPAIntegrator(vector As IVector(Of ChromatogramTick), peak As DoubleRange,
                                   baselineQuantile#,
-                                  Optional peakAreaMethod As PeakArea.Methods = PeakArea.Methods.Integrator,
+                                  Optional peakAreaMethod As PeakAreaMethods = PeakAreaMethods.Integrator,
                                   Optional resolution% = 5000,
+                                  Optional bsplineDensity% = 100,
+                                  Optional bsplineDegree% = 2,
                                   Optional TPAFactor# = 1) As (area#, baseline#, maxPeakHeight#)
         Dim area#
         Dim baseline# = vector.Baseline(quantile:=baselineQuantile)
 
         Select Case peakAreaMethod
-            Case Methods.NetPeakSum
+            Case PeakAreaMethods.NetPeakSum
                 area = vector.PeakArea(peak, baseline:=baselineQuantile)
-            Case Methods.SumAll
+            Case PeakAreaMethods.SumAll
                 area = vector.SumAll
-            Case Methods.MaxPeakHeight
+            Case PeakAreaMethods.MaxPeakHeight
                 area = vector.MaxPeakHeight
             Case Else
                 ' 默认是使用积分器方法
                 area = vector.PeakAreaIntegrator(
                     peak:=peak,
                     baselineQuantile:=baselineQuantile,
-                    resolution:=resolution
+                    resolution:=resolution,
+                    bsplineDegree:=bsplineDegree,
+                    bsplineDensity:=bsplineDensity
                 )
         End Select
 

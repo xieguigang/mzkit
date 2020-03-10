@@ -143,7 +143,7 @@ Namespace MRM
                                              <Out> Optional ByRef peaktable As MRMPeakTable() = Nothing,
                                              Optional calibrationNamedPattern$ = ".+[-]L\d+",
                                              Optional levelPattern$ = "[-]L\d+",
-                                             Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum,
+                                             Optional peakAreaMethod As PeakAreaMethods = PeakAreaMethods.NetPeakSum,
                                              Optional externalStandardsWiff$ = Nothing,
                                              Optional isBlank As Func(Of String, Boolean) = Nothing,
                                              Optional weighted As Boolean = False,
@@ -221,7 +221,7 @@ Namespace MRM
 
         <Extension>
         Public Function SampleQuantify(model As StandardCurve(), file$, ions As IonPair(), tolerance As Tolerance, timeWindowSize#, angleThreshold#, baselineQuantile#, rtshifts As Dictionary(Of String, Double),
-                                       Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum,
+                                       Optional peakAreaMethod As PeakAreaMethods = PeakAreaMethods.NetPeakSum,
                                        Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As QuantifyScan
 
             ' 使用离子对信息扫面当前的这个原始数据文件

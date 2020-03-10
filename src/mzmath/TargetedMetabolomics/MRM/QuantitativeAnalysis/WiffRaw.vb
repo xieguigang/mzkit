@@ -58,7 +58,7 @@ Namespace MRM
     Public Module WiffRaw
 
         Public Function ScanPeakTable(mzML$, ions As IonPair(), tolerance As Tolerance, timeWindowSize#, angleThreshold#, baselineQuantile#, rtshifts As Dictionary(Of String, Double),
-                                      Optional peakAreaMethod As PeakArea.Methods = PeakArea.Methods.NetPeakSum,
+                                      Optional peakAreaMethod As PeakAreaMethods = PeakAreaMethods.NetPeakSum,
                                       Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As DataSet()
 
             ' 得到当前的这个原始文件之中的峰面积数据
@@ -123,13 +123,16 @@ Namespace MRM
         <Extension>
         Public Function Scan(mzMLRawFiles$(),
                              ions As IonPair(),
-                             peakAreaMethod As PeakArea.Methods,
+                             peakAreaMethod As PeakAreaMethods,
                              TPAFactors As Dictionary(Of String, Double),
                              tolerance As Tolerance,
                              timeWindowSize#,
                              angleThreshold#,
                              baselineQuantile#,
                              rtshifts As RTAlignment(),
+                             Optional bsplineDensity% = 100,
+                             Optional bsplineDegree% = 2,
+                             Optional resolution% = 3000,
                              Optional ByRef refName$() = Nothing,
                              Optional removesWiffName As Boolean = False) As DataSet()
 
@@ -162,7 +165,10 @@ Namespace MRM
                     timeWindowSize:=timeWindowSize,
                     angleThreshold:=angleThreshold,
                     baselineQuantile:=baselineQuantile,
-                    rtshifts:=ionShifts
+                    rtshifts:=ionShifts,
+                    integratorTicks:=resolution,
+                    bsplineDegree:=bsplineDegree,
+                    bsplineDensity:=bsplineDensity
                 )
 
                 refNames += file.BaseName

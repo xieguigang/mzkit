@@ -210,7 +210,7 @@ Module MRMkit
                                  Optional angleThreshold# = 5,
                                  Optional baselineQuantile# = 0.65,
                                  Optional integratorTicks% = 5000,
-                                 Optional peakAreaMethod As Methods = Methods.NetPeakSum,
+                                 Optional peakAreaMethod As PeakAreaMethods = PeakAreaMethods.NetPeakSum,
                                  Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As MRMArguments
         Return New MRMArguments(
             TPAFactors:=TPAFactors,
@@ -269,9 +269,11 @@ Module MRMkit
                                    Optional timeWindowSize# = 5,
                                    Optional baselineQuantile# = 0.65,
                                    Optional integratorTicks% = 5000,
-                                   Optional peakAreaMethod As PeakArea.Methods = PeakArea.Methods.NetPeakSum,
+                                   Optional peakAreaMethod As PeakAreaMethods = PeakAreaMethods.NetPeakSum,
                                    Optional angleThreshold# = 5,
                                    Optional rtshift As Dictionary(Of String, Double) = Nothing,
+                                   Optional bsplineDensity% = 100,
+                                   Optional bsplineDegree% = 2,
                                    Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As IonTPA()
 
         If TPAFactors Is Nothing Then
@@ -288,7 +290,9 @@ Module MRMkit
             peakAreaMethod:=peakAreaMethod,
             timeWindowSize:=timeWindowSize,
             angleThreshold:=angleThreshold,
-            rtshifts:=rtshift
+            rtshifts:=rtshift,
+            bsplineDensity:=bsplineDensity,
+            bsplineDegree:=bsplineDegree
         )
     End Function
 
@@ -464,7 +468,7 @@ Module MRMkit
 
     <ExportAPI("MRM.peaks")>
     Public Function ScanPeakTable(mzML$, ions As IonPair(),
-                                  Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum,
+                                  Optional peakAreaMethod As PeakAreaMethods = PeakAreaMethods.NetPeakSum,
                                   Optional tolerance$ = "ppm:20",
                                   Optional timeWindowSize# = 5,
                                   Optional angleThreshold# = 5,
@@ -510,14 +514,17 @@ Module MRMkit
     ''' <returns></returns>
     <ExportAPI("wiff.scans")>
     Public Function ScanWiffRaw(wiffConverts As String(), ions As IonPair(),
-                                Optional peakAreaMethod As PeakArea.Methods = PeakArea.Methods.NetPeakSum,
+                                Optional peakAreaMethod As PeakAreaMethods = PeakAreaMethods.NetPeakSum,
                                 Optional tolerance$ = "ppm:20",
                                 Optional angleThreshold# = 5,
                                 Optional baselineQuantile# = 0.65,
-                                Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
                                 Optional removesWiffName As Boolean = True,
                                 Optional timeWindowSize# = 5,
-                                Optional rtshifts As RTAlignment() = Nothing) As DataSet()
+                                Optional rtshifts As RTAlignment() = Nothing,
+                                Optional bsplineDensity% = 100,
+                                Optional bsplineDegree% = 2,
+                                Optional resolution% = 3000,
+                                Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As DataSet()
 
         If TPAFactors Is Nothing Then
             TPAFactors = New Dictionary(Of String, Double)
@@ -639,7 +646,7 @@ Module MRMkit
     ''' <returns></returns>
     <ExportAPI("sample.quantify")>
     Public Function SampleQuantify(model As StandardCurve(), file$, ions As IonPair(),
-                                   Optional peakAreaMethod As PeakArea.Methods = Methods.NetPeakSum,
+                                   Optional peakAreaMethod As PeakAreaMethods = PeakAreaMethods.NetPeakSum,
                                    Optional tolerance$ = "ppm:20",
                                    Optional timeWindowSize# = 5,
                                    Optional angleThreshold# = 5,
