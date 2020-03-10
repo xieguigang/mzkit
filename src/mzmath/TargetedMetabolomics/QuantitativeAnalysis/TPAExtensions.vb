@@ -123,6 +123,10 @@ Public Module TPAExtensions
         Return result
     End Function
 
+    Private Function isContactWith(a As DoubleRange, b As DoubleRange) As Boolean
+        Return a.IsOverlapping(b) OrElse b.IsOverlapping(a) OrElse a.Contains(b) OrElse b.Contains(a)
+    End Function
+
     ''' <summary>
     ''' 
     ''' </summary>
@@ -164,7 +168,7 @@ Public Module TPAExtensions
             }
             region = ROIData _
                .Where(Function(r)
-                          Return r.Time.IsOverlapping(find)
+                          Return isContactWith(r.Time, find)
                       End Function) _
                .OrderByDescending(Function(r) r.MaxInto) _
                .FirstOrDefault
@@ -215,7 +219,7 @@ Public Module TPAExtensions
             End If
         End If
 
-        If Not find Is Nothing AndAlso Not peak.IsOverlapping(find) Then
+        If Not find Is Nothing AndAlso Not isContactWith(peak, find) Then
             ' Call $"The ROI peak region [{peak.Min}, {peak.Max}] is not contains '{ion.name}' ({ion.ion.target.rt} sec)!".Warning
         End If
 

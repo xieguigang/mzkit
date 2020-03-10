@@ -5,5 +5,6 @@ let data = [`S:\胆汁酸保留时间漂移测试\20200309三条标曲\test\cal.
 :> read.csv
 :> as.chromatogram("Time", "Intensity")
 :> peakROI
+:> as.data.frame
 :> print
 ;

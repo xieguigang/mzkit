@@ -107,12 +107,39 @@ Module MRMkit
         REnv.Internal.htmlPrinter.AttachHtmlFormatter(Of QCData)(AddressOf MRMQCReport.CreateHtml)
 
         REnv.Internal.Object.Converts.makeDataframe.addHandler(GetType(RTAlignment()), AddressOf RTShiftSummary)
+        REnv.Internal.Object.Converts.makeDataframe.addHandler(GetType(ROI()), AddressOf ROISummary)
 
         Dim toolkit As AssemblyInfo = GetType(MRMkit).Assembly.FromAssembly
 
         Call VBDebugger.WaitOutput()
         Call toolkit.AppSummary(Nothing, Nothing, App.StdOut)
     End Sub
+
+    Private Function ROISummary(peaks As ROI(), args As list, env As Environment) As Rdataframe
+        Dim rt As Array = peaks.Select(Function(r) r.rt).ToArray
+        Dim rtmin As Array = peaks.Select(Function(r) r.Time.Min).ToArray
+        Dim rtmax As Array = peaks.Select(Function(r) r.Time.Max).ToArray
+        Dim maxinto As Array = peaks.Select(Function(r) r.MaxInto).ToArray
+        Dim nticks As Array = peaks.Select(Function(r) r.Ticks.Length).ToArray
+        Dim baseline As Array = peaks.Select(Function(r) r.Baseline).ToArray
+        Dim area As Array = peaks.Select(Function(r) r.Integration).ToArray
+        Dim noise As Array = peaks.Select(Function(r) r.Noise).ToArray
+        Dim sn_ratio As Array = peaks.Select(Function(r) r.snRatio).ToArray
+
+        Return New Rdataframe With {
+            .columns = New Dictionary(Of String, Array) From {
+                {NameOf(rt), rt},
+                {NameOf(rtmin), rtmin},
+                {NameOf(rtmax), rtmax},
+                {NameOf(maxinto), maxinto},
+                {NameOf(nticks), nticks},
+                {NameOf(baseline), baseline},
+                {NameOf(area), area},
+                {NameOf(noise), noise},
+                {NameOf(sn_ratio), sn_ratio}
+            }
+        }
+    End Function
 
     Private Function RTShiftSummary(x As RTAlignment(), args As list, env As Environment) As Rdataframe
         Dim rownames = x.Select(Function(i) i.ion.target.accession).ToArray
@@ -283,8 +310,6 @@ Module MRMkit
             ) _
             .ToArray
     End Function
-
-
 
     ''' <summary>
     ''' Get ion pair definition data from a given table file.
