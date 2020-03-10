@@ -214,10 +214,10 @@ Public Module TPAExtensions
                                        End Function) _
                     .ToArray
 
-                peak = ROIData(Scan0).Time
-            Else
-                peak = region.Time
+                region = ROIData(Scan0)
             End If
+
+            peak = region.Time
         End If
 
         If Not find Is Nothing AndAlso Not isContactWith(peak, find) Then
@@ -234,10 +234,7 @@ Public Module TPAExtensions
             .area = If(data.area < 0, 0, data.area),
             .baseline = data.baseline,
             .maxPeakHeight = data.maxPeakHeight,
-            .rt = vector _
-                .OrderByDescending(Function(t) t.Intensity) _
-                .First _
-                .Time
+            .rt = region.rt
         }
     End Function
 
