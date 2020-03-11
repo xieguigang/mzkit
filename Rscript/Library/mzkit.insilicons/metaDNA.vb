@@ -47,7 +47,7 @@ Module metaDNA
     <RApiReturn(GetType(ReactionClassTbl()))>
     Public Function readReactionClassTable(file As String, Optional env As Environment = Nothing) As Object
         If file.ExtensionSuffix("csv") Then
-            Return file.LoadCsv(Of ReactionClassTbl)
+            Return file.LoadCsv(Of ReactionClassTbl).ToArray
         ElseIf file.DirectoryExists Then
             Dim loadFolder = Iterator Function() As IEnumerable(Of kegReactionClass)
                                  For Each xml As String In ls - l - r - "*.xml" <= file

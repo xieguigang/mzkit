@@ -9,15 +9,14 @@ let file.mzML as string  = ?"--mzML"   || stop("Missing the MRM mzML raw data fi
 # Only requires the ion pairs data in this data table file
 # The table file could be a csv plain text file or xlsx 
 # datasheet
-let MRM.xlsx as string   = ?"--MRM";
-let ions as string       = ?"--ions";
+let ions as string       = ?"--ions"   || stop("missing MRM ion pairs information!");
 let output.dir as string = ?"--output" || `${dirname(file.mzML)}/${basename(file.mzML)}.chromatogramPlots`;
 	
-if ((!file.exists(ions)) && (!file.exists(MRM.xlsx))) {
+if ((!file.exists(ions))) {
    stop("No mrm information provided!");
 }
-	
-if (file.exists(ions)) {
+
+if (lcase(file.info(ions)$Extension) == ".msl") {
 	print("Use external msl file as ion pairs source.");
 	
 	ions = ions 
@@ -26,7 +25,7 @@ if (file.exists(ions)) {
 } else {
 	# Get ion pair information from 
 	# a given excel table
-	ions <- read.ion_pairs(MRM.xlsx, "ion pairs");
+	ions <- read.ion_pairs(ions, "ion pairs");
 }
 
 let plot.mzML as function(file, output) {
