@@ -265,7 +265,6 @@ Imports Microsoft.VisualBasic.Text.Xml.Linq
                 Next
 
                 Call file.DeleteFile
-                Exit For
             Next
         End Using
 
