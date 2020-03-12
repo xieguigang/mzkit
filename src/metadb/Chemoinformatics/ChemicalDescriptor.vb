@@ -65,7 +65,7 @@ Imports Microsoft.VisualBasic.Language
 ''' <summary>
 ''' Chemical descriptor
 ''' </summary>
-Public Class ChemicalDescriptor : Implements IEnumerable(Of Double)
+Public Class ChemicalDescriptor
 
     ''' <summary>
     ''' Computed Octanol/Water Partition Coefficient
@@ -98,7 +98,7 @@ Public Class ChemicalDescriptor : Implements IEnumerable(Of Double)
     ''' <summary>
     ''' All of the property reflection info of <see cref="ChemicalDescriptor"/> object.
     ''' </summary>
-    Shared ReadOnly schema As PropertyInfo() = DataFramework _
+    Public Shared ReadOnly Property schema As PropertyInfo() = DataFramework _
         .Schema(Of ChemicalDescriptor)(PropertyAccess.Readable, True, True) _
         .Values _
         .OrderBy(Function(p) p.Name) _
@@ -187,14 +187,10 @@ Public Class ChemicalDescriptor : Implements IEnumerable(Of Double)
                End Function
     End Function
 
-    Public Iterator Function GetEnumerator() As IEnumerator(Of Double) Implements IEnumerable(Of Double).GetEnumerator
+    Public Iterator Function GetEnumerator() As IEnumerable(Of Double)
         For Each reader As PropertyInfo In schema
             Yield CDbl(reader.GetValue(Me))
         Next
-    End Function
-
-    Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
-        Yield GetEnumerator()
     End Function
 
     Public Shared Narrowing Operator CType(descriptor As ChemicalDescriptor) As Dictionary(Of String, Double)
@@ -206,91 +202,4 @@ Public Class ChemicalDescriptor : Implements IEnumerable(Of Double)
             Return .ByRef
         End With
     End Operator
-End Class
-
-Public Class DescriptorDatabase : Implements IEnumerable(Of ChemicalDescriptor)
-    Implements IDisposable
-
-    ReadOnly repository As Stream
-    ReadOnly blockSize As Integer
-
-    Public ReadOnly Property Length As Long
-
-    Sub New(stream As Stream)
-        repository = stream
-
-        If repository.Length > 8 Then
-            repository.Seek(stream.Length - 8, SeekOrigin.Begin)
-            Length = New BinaryReader(repository).ReadInt64
-        End If
-
-        blockSize = ChemicalDescriptor.GetBytesBuffer(New ChemicalDescriptor).Length
-    End Sub
-
-    Public Sub Flush()
-        Call repository.Flush()
-    End Sub
-
-    Public Function GetDescriptor(cid As Long) As ChemicalDescriptor
-        Dim offset = (cid - 1) * blockSize
-        Dim buffer As Byte() = New Byte(blockSize - 1) {}
-
-        Call repository.Seek(offset, SeekOrigin.Begin)
-        Call repository.Read(buffer, 0, blockSize)
-
-        Return ChemicalDescriptor.FromBytes(buffer)
-    End Function
-
-    Public Sub Write(cid&, descriptor As ChemicalDescriptor)
-        Dim offset = (cid - 1) * blockSize
-        Dim buffer = ChemicalDescriptor.GetBytesBuffer(descriptor)
-
-        Call repository.Seek(offset, SeekOrigin.Begin)
-        Call repository.Write(buffer, 0, blockSize)
-    End Sub
-
-    Public Iterator Function GetEnumerator() As IEnumerator(Of ChemicalDescriptor) Implements IEnumerable(Of ChemicalDescriptor).GetEnumerator
-        For i As Long = 1 To Length
-            Yield GetDescriptor(cid:=i)
-        Next
-    End Function
-
-    Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
-        Yield GetEnumerator()
-    End Function
-
-#Region "IDisposable Support"
-    Private disposedValue As Boolean ' To detect redundant calls
-
-    ' IDisposable
-    Protected Overridable Sub Dispose(disposing As Boolean)
-        If Not disposedValue Then
-            If disposing Then
-                ' TODO: dispose managed state (managed objects).
-                Call repository.Flush()
-                Call repository.Close()
-                Call repository.Dispose()
-            End If
-
-            ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.
-            ' TODO: set large fields to null.
-        End If
-        disposedValue = True
-    End Sub
-
-    ' TODO: override Finalize() only if Dispose(disposing As Boolean) above has code to free unmanaged resources.
-    'Protected Overrides Sub Finalize()
-    '    ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
-    '    Dispose(False)
-    '    MyBase.Finalize()
-    'End Sub
-
-    ' This code added by Visual Basic to correctly implement the disposable pattern.
-    Public Sub Dispose() Implements IDisposable.Dispose
-        ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
-        Dispose(True)
-        ' TODO: uncomment the following line if Finalize() is overridden above.
-        ' GC.SuppressFinalize(Me)
-    End Sub
-#End Region
 End Class

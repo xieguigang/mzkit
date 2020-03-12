@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::0e9264eafdac9a333210bd94217db6f2, src\metadb\pubchem\CLI\DatabaseCLI.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module CLI
-    ' 
-    '     Function: CompoundDescriptorQuery, Decompress, Descriptor, PubchemUnifyMetaLib, Xref2CID
-    '               xrefNotEmpty
-    ' 
-    ' /********************************************************************************/
+' Module CLI
+' 
+'     Function: CompoundDescriptorQuery, Decompress, Descriptor, PubchemUnifyMetaLib, Xref2CID
+'               xrefNotEmpty
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -47,6 +47,7 @@ Imports System.ComponentModel
 Imports System.IO
 Imports System.IO.Compression
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemistry.MetaLib.Models
 Imports BioNovoGene.BioDeep.Chemistry.NCBI.PubChem
 Imports BioNovoGene.BioDeep.Chemoinformatics
@@ -197,28 +198,41 @@ Imports Microsoft.VisualBasic.Text.Xml.Linq
     ''' <param name="args"></param>
     ''' <returns></returns>
     <ExportAPI("/descriptor.query")>
-    <Usage("/descriptor.query /meta <metaLib.Xml> /descriptor <descriptor.db> [/out <matrix.csv>]")>
+    <Usage("/descriptor.query /meta <metaLib.Xml/cid> /descriptor <descriptor.db> [/out <matrix.csv>]")>
     Public Function CompoundDescriptorQuery(args As CommandLine) As Integer
         Dim in$ = args <= "/meta"
         Dim db$ = args <= "/descriptor"
-        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.descriptor.csv"
-        ' 必须要保证这里面有正确的pubchem CID
-        Dim metaLib As MetaLib() = LoadUltraLargeXMLDataSet(Of MetaLib)(path:=[in]) _
-            .Where(Function(m) m.xref.pubchem > 0) _
-            .ToArray
 
-        ' 在这里不适用using,因为using在结束的时候会自动写数据
-        Dim repo As New DescriptorDatabase(out.Open(FileMode.OpenOrCreate, doClear:=False))
-        Dim matrix As DataSet() = metaLib _
-            .Select(Function(m)
-                        Return New DataSet With {
-                            .ID = m.ID,
-                            .Properties = repo.GetDescriptor(m.xref.pubchem)
-                        }
-                    End Function) _
-            .ToArray
+        If [in].FileExists Then
+            Dim out$ = args("/out") Or $"{[in].TrimSuffix}.descriptor.csv"
+            ' 必须要保证这里面有正确的pubchem CID
+            Dim metaLib As MetaLib() = LoadUltraLargeXMLDataSet(Of MetaLib)(path:=[in]) _
+                .Where(Function(m) m.xref.pubchem > 0) _
+                .ToArray
 
-        Return matrix.SaveTo(out).CLICode
+            ' 在这里不适用using,因为using在结束的时候会自动写数据
+            Dim repo As New PubChemDescriptorRepo(db)
+            Dim matrix As DataSet() = metaLib _
+                .Select(Function(m)
+                            Return New DataSet With {
+                                .ID = m.ID,
+                                .Properties = repo.GetDescriptor(m.xref.pubchem)
+                            }
+                        End Function) _
+                .ToArray
+
+            Return matrix.SaveTo(out).CLICode
+        ElseIf [in].IsPattern("\d+") Then
+            Dim cid As Long = Long.Parse([in])
+            Dim repo As New PubChemDescriptorRepo(db)
+            Dim descriptor As ChemicalDescriptor = repo.GetDescriptor(cid)
+
+            Call Console.WriteLine(descriptor.GetXml)
+
+            Return 0
+        Else
+            Return -255
+        End If
     End Function
 
     <ExportAPI("/descriptor")>
@@ -235,7 +249,7 @@ Imports Microsoft.VisualBasic.Text.Xml.Linq
         Dim descript As ChemicalDescriptor
         ' Dim verify As ChemicalDescriptor
 
-        Using repo As New DescriptorDatabase(out.Open(FileMode.OpenOrCreate, doClear:=False))
+        Using repo As New PubChemDescriptorRepo(out)
             For Each file As String In BlockOrderFiles
                 file = Decompress(New FileInfo(file))
 
@@ -251,7 +265,7 @@ Imports Microsoft.VisualBasic.Text.Xml.Linq
                 Next
 
                 Call file.DeleteFile
-                Call repo.Flush()
+                Exit For
             Next
         End Using
 
