@@ -95,6 +95,14 @@ Public Class ChemicalDescriptor
     Public Property FormalCharge As Integer
     Public Property Complexity As Integer
 
+    Public Property IsotopicAtomCount As Integer
+    Public Property AtomDefStereoCount As Integer
+    Public Property AtomUdefStereoCount As Integer
+    Public Property BondDefStereoCount As Integer
+    Public Property BondUdefStereoCount As Integer
+    Public Property ComponentCount As Integer
+    Public Property TautoCount As Integer
+
     ''' <summary>
     ''' All of the property reflection info of <see cref="ChemicalDescriptor"/> object.
     ''' </summary>
@@ -119,6 +127,14 @@ Public Class ChemicalDescriptor
         RotatableBonds = TryParseInteger(read("PUBCHEM_CACTVS_ROTATABLE_BOND"))
         HeavyAtoms = TryParseInteger(read("PUBCHEM_HEAVY_ATOM_COUNT"))
         Complexity = TryParseInteger(read("PUBCHEM_CACTVS_COMPLEXITY"))
+
+        IsotopicAtomCount = TryParseInteger(read("PUBCHEM_ISOTOPIC_ATOM_COUNT"))
+        AtomDefStereoCount = TryParseInteger(read("PUBCHEM_ATOM_DEF_STEREO_COUNT"))
+        AtomUdefStereoCount = TryParseInteger(read("PUBCHEM_ATOM_UDEF_STEREO_COUNT"))
+        BondDefStereoCount = TryParseInteger(read("PUBCHEM_BOND_DEF_STEREO_COUNT"))
+        BondUdefStereoCount = TryParseInteger(read("PUBCHEM_BOND_UDEF_STEREO_COUNT"))
+        ComponentCount = TryParseInteger(read("PUBCHEM_COMPONENT_COUNT"))
+        TautoCount = TryParseInteger(read("PUBCHEM_CACTVS_TAUTO_COUNT"))
     End Sub
 
     Sub New()

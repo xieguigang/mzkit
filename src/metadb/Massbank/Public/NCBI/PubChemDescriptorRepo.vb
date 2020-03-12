@@ -78,6 +78,34 @@ Public Class PubChemDescriptorRepo : Implements IDisposable
         stream(NameOf(descriptor.XLogP3_AA)).Read(buffer, Scan0, 8)
         descriptor.XLogP3_AA = BitConverter.ToDouble(buffer, Scan0)
 
+        stream(NameOf(descriptor.AtomDefStereoCount)).Seek(offset32Bits, SeekOrigin.Begin)
+        stream(NameOf(descriptor.AtomDefStereoCount)).Read(buffer, Scan0, 4)
+        descriptor.AtomDefStereoCount = BitConverter.ToInt32(buffer, Scan0)
+
+        stream(NameOf(descriptor.AtomUdefStereoCount)).Seek(offset32Bits, SeekOrigin.Begin)
+        stream(NameOf(descriptor.AtomUdefStereoCount)).Read(buffer, Scan0, 4)
+        descriptor.AtomUdefStereoCount = BitConverter.ToInt32(buffer, Scan0)
+
+        stream(NameOf(descriptor.BondDefStereoCount)).Seek(offset32Bits, SeekOrigin.Begin)
+        stream(NameOf(descriptor.BondDefStereoCount)).Read(buffer, Scan0, 4)
+        descriptor.BondDefStereoCount = BitConverter.ToInt32(buffer, Scan0)
+
+        stream(NameOf(descriptor.BondUdefStereoCount)).Seek(offset32Bits, SeekOrigin.Begin)
+        stream(NameOf(descriptor.BondUdefStereoCount)).Read(buffer, Scan0, 4)
+        descriptor.BondUdefStereoCount = BitConverter.ToInt32(buffer, Scan0)
+
+        stream(NameOf(descriptor.ComponentCount)).Seek(offset32Bits, SeekOrigin.Begin)
+        stream(NameOf(descriptor.ComponentCount)).Read(buffer, Scan0, 4)
+        descriptor.ComponentCount = BitConverter.ToInt32(buffer, Scan0)
+
+        stream(NameOf(descriptor.IsotopicAtomCount)).Seek(offset32Bits, SeekOrigin.Begin)
+        stream(NameOf(descriptor.IsotopicAtomCount)).Read(buffer, Scan0, 4)
+        descriptor.IsotopicAtomCount = BitConverter.ToInt32(buffer, Scan0)
+
+        stream(NameOf(descriptor.TautoCount)).Seek(offset32Bits, SeekOrigin.Begin)
+        stream(NameOf(descriptor.TautoCount)).Read(buffer, Scan0, 4)
+        descriptor.TautoCount = BitConverter.ToInt32(buffer, Scan0)
+
         Return descriptor
     End Function
 
@@ -124,6 +152,27 @@ Public Class PubChemDescriptorRepo : Implements IDisposable
         stream(NameOf(descriptor.XLogP3_AA)).Seek(offset64Bits, SeekOrigin.Begin)
         stream(NameOf(descriptor.XLogP3_AA)).Write(descriptor.XLogP3_AA)
         ' stream(NameOf(descriptor.XLogP3_AA)).Flush()
+
+        stream(NameOf(descriptor.AtomDefStereoCount)).Seek(offset32Bits, SeekOrigin.Begin)
+        stream(NameOf(descriptor.AtomDefStereoCount)).Write(descriptor.AtomDefStereoCount)
+
+        stream(NameOf(descriptor.AtomUdefStereoCount)).Seek(offset32Bits, SeekOrigin.Begin)
+        stream(NameOf(descriptor.AtomUdefStereoCount)).Write(descriptor.AtomUdefStereoCount)
+
+        stream(NameOf(descriptor.BondDefStereoCount)).Seek(offset32Bits, SeekOrigin.Begin)
+        stream(NameOf(descriptor.BondDefStereoCount)).Write(descriptor.BondDefStereoCount)
+
+        stream(NameOf(descriptor.BondUdefStereoCount)).Seek(offset32Bits, SeekOrigin.Begin)
+        stream(NameOf(descriptor.BondUdefStereoCount)).Write(descriptor.BondUdefStereoCount)
+
+        stream(NameOf(descriptor.ComponentCount)).Seek(offset32Bits, SeekOrigin.Begin)
+        stream(NameOf(descriptor.ComponentCount)).Write(descriptor.ComponentCount)
+
+        stream(NameOf(descriptor.IsotopicAtomCount)).Seek(offset32Bits, SeekOrigin.Begin)
+        stream(NameOf(descriptor.IsotopicAtomCount)).Write(descriptor.IsotopicAtomCount)
+
+        stream(NameOf(descriptor.TautoCount)).Seek(offset32Bits, SeekOrigin.Begin)
+        stream(NameOf(descriptor.TautoCount)).Write(descriptor.TautoCount)
     End Sub
 
 #Region "IDisposable Support"
