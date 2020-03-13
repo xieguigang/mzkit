@@ -47,10 +47,12 @@
 Imports System.Threading
 Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemistry.Model.Graph
+Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports BioNovoGene.BioDeep.Chemoinformatics.SDF
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -58,6 +60,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports PNNL.OMICS.MwtWinDll.MWElementAndMassRoutines
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
+Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports MwtWin = PNNL.OMICS.MwtWinDll
 Imports MwtWinFormula = PNNL.OMICS.MwtWinDll.FormulaFinder.FormulaFinderResult
@@ -180,5 +183,52 @@ Module Formula
         Next
 
         Return result.ToArray
+    End Function
+
+    <ExportAPI("descriptor.matrix")>
+    <RApiReturn(GetType(DataSet()))>
+    Public Function LoadChemicalDescriptorsMatrix(repo As PubChemDescriptorRepo, cid As Long(), Optional env As Environment = Nothing) As Object
+        If repo Is Nothing Then
+            Return Internal.debug.stop("no database provided!", env)
+        ElseIf cid.IsNullOrEmpty Then
+            Return Nothing
+        End If
+
+        Dim matrix As New List(Of DataSet)
+        Dim descriptor As ChemicalDescriptor
+        Dim row As DataSet
+
+        For Each id As Long In cid
+            descriptor = repo.GetDescriptor(cid:=id)
+            row = New DataSet With {
+                .ID = id,
+                .Properties = New Dictionary(Of String, Double) From {
+                    {NameOf(descriptor.AtomDefStereoCount), descriptor.AtomDefStereoCount},
+                    {NameOf(descriptor.AtomUdefStereoCount), descriptor.AtomUdefStereoCount},
+                    {NameOf(descriptor.BondDefStereoCount), descriptor.BondDefStereoCount},
+                    {NameOf(descriptor.BondUdefStereoCount), descriptor.BondUdefStereoCount},
+                    {NameOf(descriptor.Complexity), descriptor.Complexity},
+                    {NameOf(descriptor.ComponentCount), descriptor.ComponentCount},
+                    {NameOf(descriptor.ExactMass), descriptor.ExactMass},
+                    {NameOf(descriptor.FormalCharge), descriptor.FormalCharge},
+                    {NameOf(descriptor.HeavyAtoms), descriptor.HeavyAtoms},
+                    {NameOf(descriptor.HydrogenAcceptor), descriptor.HydrogenAcceptor},
+                    {NameOf(descriptor.HydrogenDonors), descriptor.HydrogenDonors},
+                    {NameOf(descriptor.IsotopicAtomCount), descriptor.IsotopicAtomCount},
+                    {NameOf(descriptor.RotatableBonds), descriptor.RotatableBonds},
+                    {NameOf(descriptor.TautoCount), descriptor.TautoCount},
+                    {NameOf(descriptor.TopologicalPolarSurfaceArea), descriptor.TopologicalPolarSurfaceArea},
+                    {NameOf(descriptor.XLogP3), descriptor.XLogP3},
+                    {NameOf(descriptor.XLogP3_AA), descriptor.XLogP3_AA}
+                }
+            }
+
+            If Not row.Properties.Values.All(Function(x) x = 0.0) Then
+                ' is not empty
+                matrix += row
+            End If
+        Next
+
+        Return matrix.ToArray
     End Function
 End Module
