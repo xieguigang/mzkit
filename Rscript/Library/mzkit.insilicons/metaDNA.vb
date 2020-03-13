@@ -49,13 +49,8 @@ Module metaDNA
         If file.ExtensionSuffix("csv") Then
             Return file.LoadCsv(Of ReactionClassTbl).ToArray
         ElseIf file.DirectoryExists Then
-            Dim loadFolder = Iterator Function() As IEnumerable(Of kegReactionClass)
-                                 For Each xml As String In ls - l - r - "*.xml" <= file
-                                     Yield xml.LoadXml(Of kegReactionClass)
-                                 Next
-                             End Function
-
-            Return loadFolder() _
+            Return kegReactionClass _
+                .ScanRepository(file, loadsAll:=True) _
                 .Select(Function(cls)
                             Return cls.reactantPairs _
                                 .Select(Function(r)
@@ -63,7 +58,8 @@ Module metaDNA
                                                 .define = cls.definition,
                                                 .from = r.from,
                                                 .[to] = r.to,
-                                                .rId = cls.entryId
+                                                .rId = cls.entryId,
+                                                .category = Integer.Parse(cls.category.Match("\d"))
                                             }
                                         End Function)
                         End Function) _
