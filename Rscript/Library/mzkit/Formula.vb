@@ -185,11 +185,24 @@ Module Formula
         Return result.ToArray
     End Function
 
+    ''' <summary>
+    ''' open the file handles of the chemical descriptor database. 
+    ''' </summary>
+    ''' <param name="dbFile">
+    ''' A directory path which contains the multiple database file of the 
+    ''' chemical descriptors.
+    ''' </param>
+    ''' <returns></returns>
+    <ExportAPI("open.descriptor.db")>
+    Public Function openChemicalDescriptorDatabase(dbFile As String) As PubChemDescriptorRepo
+        Return New PubChemDescriptorRepo(dir:=dbFile)
+    End Function
+
     <ExportAPI("descriptor.matrix")>
     <RApiReturn(GetType(DataSet()))>
     Public Function LoadChemicalDescriptorsMatrix(repo As PubChemDescriptorRepo, cid As Long(), Optional env As Environment = Nothing) As Object
         If repo Is Nothing Then
-            Return Internal.debug.stop("no database provided!", env)
+            Return Internal.debug.stop("no chemical descriptor database was provided!", env)
         ElseIf cid.IsNullOrEmpty Then
             Return Nothing
         End If
