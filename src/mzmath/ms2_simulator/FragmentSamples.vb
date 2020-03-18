@@ -129,10 +129,9 @@ Public Module FragmentSamples
                 End If
             Next
 
-            Yield New Sample With {
+            Yield New Sample(matrix.mz + mzSample) With {
                 .ID = matrix.ToString,
-                .target = {rt},
-                .status = matrix.mz + mzSample
+                .target = {rt}
             }
         Next
     End Function
