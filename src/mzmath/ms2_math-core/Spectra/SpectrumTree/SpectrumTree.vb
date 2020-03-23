@@ -50,9 +50,9 @@
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
 Imports Microsoft.VisualBasic.Language.Default
-Imports Microsoft.VisualBasic.Terminal.ProgressBar
 Imports stdNum = System.Math
 
 Namespace Spectra
