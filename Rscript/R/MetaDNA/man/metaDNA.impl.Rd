@@ -4,8 +4,14 @@
 \alias{metaDNA.impl}
 \title{Try to annotate unknown metabolite}
 \usage{
-metaDNA.impl(unknown.query, identify.ms2, unknown, ms2.align, trace,
-  score.cutoff = 0.8)
+metaDNA.impl(
+  unknown.query,
+  identify.ms2,
+  unknown,
+  ms2.align,
+  trace,
+  score.cutoff = 0.8
+)
 }
 \arguments{
 \item{identify.ms2}{The identify metabolite's MS/MS matrix data.}
