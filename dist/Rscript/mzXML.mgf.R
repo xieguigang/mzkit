@@ -1,7 +1,7 @@
 imports "mzkit.assembly" from "mzkit.dll"; 
 
-let mzxml as string        = ?"--mzxml";
-let mgf as string          = ?"--out" || `${dirname(mzxml)}/${basename(mzxml)}.mgf`;
+let mzxml as string        = ?"--mzxml"    || stop("no raw mzXML file provided!");
+let mgf as string          = ?"--out"      || `${dirname(mzxml)}/${basename(mzxml)}.mgf`;
 let ms1 as boolean         = ?"--and.ms1";
 let to.centroid as boolean = ?"--centroid";
 
@@ -19,5 +19,11 @@ if (to.centroid) {
 	:> centroid
 	:> write.mgf(file = mgf);
 } else {
-	mzxml.mgf(mzxml, FALSE, ms1) :> write.mgf(file = mgf);
+	mzxml 
+	:> mzxml.mgf(
+		relativeInto = FALSE, 
+		includesMs1  = ms1
+	 ) 
+	:> write.mgf(file = mgf)
+	;
 }
