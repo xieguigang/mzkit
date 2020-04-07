@@ -78,7 +78,14 @@ Module Assembly
         Return MgfReader.StreamParser(path:=file).ToArray
     End Function
 
+    ''' <summary>
+    ''' this function ensure that the output result of the any input ion objects is peakms2 data type.
+    ''' </summary>
+    ''' <param name="ions"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("mgf.ion_peaks")>
+    <RApiReturn(GetType(PeakMs2()))>
     Public Function IonPeaks(ions As Object, Optional env As Environment = Nothing) As Object
         Dim inputType As Type = ions.GetType
 
@@ -94,6 +101,16 @@ Module Assembly
         End Select
     End Function
 
+    ''' <summary>
+    ''' write spectra data in mgf file format.
+    ''' </summary>
+    ''' <param name="ions"></param>
+    ''' <param name="file">the file path of the mgf file to write spectra data.</param>
+    ''' <param name="relativeInto">
+    ''' write relative intensity value into the mgf file instead of the raw intensity value.
+    ''' no recommended...
+    ''' </param>
+    ''' <returns></returns>
     <ExportAPI("write.mgf")>
     Public Function writeMgfIons(ions As Object, file$, Optional relativeInto As Boolean = False) As Boolean
         If ions.GetType() Is GetType(pipeline) Then
@@ -216,8 +233,16 @@ Module Assembly
         Next
     End Function
 
+    ''' <summary>
+    ''' get all ms1 raw scans from the raw files
+    ''' </summary>
+    ''' <param name="raw">
+    ''' the file path of the raw data files.
+    ''' </param>
+    ''' <returns></returns>
     <ExportAPI("ms1.scans")>
-    Public Function getMs1Scans(<RRawVectorArgument> raw As Object) As ms1_scan()
+    <RApiReturn(GetType(ms1_scan()))>
+    Public Function getMs1Scans(<RRawVectorArgument> raw As Object, Optional env As Environment = Nothing) As Object
         Dim files As String() = REnv.asVector(Of String)(raw)
         Dim ms1 As New List(Of ms1_scan)
         Dim peakScans As PeakMs2
