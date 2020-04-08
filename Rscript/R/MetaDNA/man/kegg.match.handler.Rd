@@ -4,8 +4,12 @@
 \alias{kegg.match.handler}
 \title{Match unknown by mass}
 \usage{
-kegg.match.handler(unknown.mz, precursor_type = c("[M+H]+", "[M]+"),
-  tolerance = assert.deltaMass(0.3), libtype = 1)
+kegg.match.handler(
+  unknown.mz,
+  precursor_type = c("[M+H]+", "[M]+"),
+  tolerance = assert.deltaMass(0.3),
+  libtype = 1
+)
 }
 \arguments{
 \item{unknown.mz}{This mz parameter is a \code{m/z} vector from the
