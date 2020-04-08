@@ -320,5 +320,6 @@
       <Name>SDF.Extensions</Name>
     </ProjectReference>
   </ItemGroup>
+  <Import Project="..\mzkit.interopArguments\mzkit.interopArguments.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

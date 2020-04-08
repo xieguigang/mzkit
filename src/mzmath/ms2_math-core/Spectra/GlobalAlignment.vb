@@ -148,8 +148,8 @@ Namespace Spectra
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function TwoDirectionSSM(x As ms2(), y As ms2(), method As Tolerance) As (forward#, reverse#)
-            Return (GlobalAlignment.Align(x, y, method), GlobalAlignment.Align(y, x, method))
+        Public Function TwoDirectionSSM(x As ms2(), y As ms2(), tolerance As Tolerance) As (forward#, reverse#)
+            Return (GlobalAlignment.Align(x, y, tolerance), GlobalAlignment.Align(y, x, tolerance))
         End Function
 
         ''' <summary>
@@ -158,8 +158,8 @@ Namespace Spectra
         ''' <param name="query"></param>
         ''' <param name="ref"></param>
         ''' <returns></returns>
-        Public Function Align(query As ms2(), ref As ms2(), Optional method As Tolerance = Nothing) As Double
-            Dim q As Vector = query.AlignMatrix(ref, method Or ppm20).Shadows!intensity
+        Public Function Align(query As ms2(), ref As ms2(), Optional tolerance As Tolerance = Nothing) As Double
+            Dim q As Vector = query.AlignMatrix(ref, tolerance Or ppm20).Shadows!intensity
             Dim s As Vector = ref.Shadows!intensity
 
             Return SSM(q / q.Max, s / s.Max)
@@ -170,10 +170,10 @@ Namespace Spectra
         ''' </summary>
         ''' <param name="query"></param>
         ''' <param name="ref"></param>
-        ''' <param name="method"></param>
+        ''' <param name="tolerance"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function AlignMatrix(query As ms2(), ref As ms2(), method As Tolerance) As ms2()
+        Public Function AlignMatrix(query As ms2(), ref As ms2(), tolerance As Tolerance) As ms2()
             Return ref _
                 .Select(Function(mz)
 
@@ -183,7 +183,7 @@ Namespace Spectra
                             ' 所以在这个Linq表达式中，后面不需要使用Where来删除对象了
 
                             Dim subject = query _
-                                .Where(Function(q) method(q.mz, mz.mz)) _
+                                .Where(Function(q) tolerance(q.mz, mz.mz)) _
                                 .Shadows
 
                             If subject.Length = 0 Then
