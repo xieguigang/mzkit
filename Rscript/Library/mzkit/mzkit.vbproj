@@ -293,6 +293,10 @@
       <Project>{a686bdf5-077f-47f5-a8dd-c73e6e88363c}</Project>
       <Name>Massbank</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\src\metadb\MoNA\MoNA.vbproj">
+      <Project>{94e1a3b2-05c7-4d80-8385-4eaef4400f9b}</Project>
+      <Name>MoNA</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\src\mzmath\ms2_math-core\MassSpectrum.math-core.vbproj">
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
       <Name>MassSpectrum.math-core</Name>
@@ -321,6 +325,9 @@
       <Project>{203506ab-8cb6-454c-98db-2e27ac94cb17}</Project>
       <Name>SDF.Extensions</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="..\mzkit.interopArguments\mzkit.interopArguments.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
