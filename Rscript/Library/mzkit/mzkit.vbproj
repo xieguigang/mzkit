@@ -121,11 +121,13 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\biodeep\biodeepdb_v3\Rscript\R\</OutputPath>
     <DocumentationFile>mzkit.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep_UNIX_x64|AnyCPU'">
     <DefineTrace>true</DefineTrace>
@@ -291,6 +293,10 @@
       <Project>{a686bdf5-077f-47f5-a8dd-c73e6e88363c}</Project>
       <Name>Massbank</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\src\metadb\MoNA\MoNA.vbproj">
+      <Project>{94e1a3b2-05c7-4d80-8385-4eaef4400f9b}</Project>
+      <Name>MoNA</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\src\mzmath\ms2_math-core\MassSpectrum.math-core.vbproj">
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
       <Name>MassSpectrum.math-core</Name>
@@ -320,5 +326,9 @@
       <Name>SDF.Extensions</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <Import Project="..\mzkit.interopArguments\mzkit.interopArguments.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

@@ -4,8 +4,10 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports REnv = SMRUCC.Rsharp.Runtime
@@ -67,30 +69,18 @@ Module MzMath
     ''' <returns></returns>
     <ExportAPI("mz.deco")>
     <RApiReturn(GetType(PeakFeature()))>
-    Public Function mz_deco(<RRawVectorArgument> ms1 As Object, Optional tolerance As Object = "ppm:20", Optional baseline# = 0.65) As Object
+    Public Function mz_deco(<RRawVectorArgument> ms1 As Object, Optional tolerance As Object = "ppm:20", Optional baseline# = 0.65, Optional env As Environment = Nothing) As Object
         Dim ms1_scans As IEnumerable(Of IMs1Scan) = ms1Scans(ms1)
-        Dim errors As Tolerance = getTolerance(tolerance)
+        Dim errors As [Variant](Of Tolerance, Message) = Math.getTolerance(tolerance, env)
+
+        If errors Like GetType(Message) Then
+            Return errors.TryCast(Of Message)
+        End If
 
         Return ms1_scans _
             .GetMzGroups(errors) _
             .DecoMzGroups(quantile:=baseline) _
             .ToArray
-    End Function
-
-    Private Function getTolerance(val As Object) As Tolerance
-        If val Is Nothing Then
-            Return Tolerance.DefaultTolerance
-        ElseIf val.GetType.IsInheritsFrom(GetType(Tolerance)) Then
-            Return val
-        ElseIf val.GetType Is GetType(String) Then
-            Return Tolerance.ParseScript(val)
-        ElseIf val.GetType Is GetType(String()) Then
-            Return Tolerance.ParseScript(DirectCast(val, String())(Scan0))
-        ElseIf val.GetType Is GetType(vector) Then
-            Return Tolerance.ParseScript(DirectCast(val, vector).data(Scan0))
-        Else
-            Throw New NotImplementedException
-        End If
     End Function
 
     Private Function ms1Scans(ms1 As Object) As IEnumerable(Of IMs1Scan)
@@ -105,8 +95,8 @@ Module MzMath
 
     <ExportAPI("mz.groups")>
     <RApiReturn(GetType(MzGroup()))>
-    Public Function mz_groups(<RRawVectorArgument> ms1 As Object, Optional tolerance As Object = "ppm:20") As Object
-        Return ms1Scans(ms1).GetMzGroups(getTolerance(tolerance)).ToArray
+    Public Function mz_groups(<RRawVectorArgument> ms1 As Object, Optional tolerance As Object = "ppm:20", Optional env As Environment = Nothing) As Object
+        Return ms1Scans(ms1).GetMzGroups(Math.getTolerance(tolerance, env)).ToArray
     End Function
 
     <ExportAPI("ppm")>
