@@ -49,7 +49,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -61,12 +60,11 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.GraphTheory
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.Text
+Imports stdNum = System.Math
 
 <CLI> Module Program
 
@@ -145,7 +143,7 @@ Imports Microsoft.VisualBasic.Text
                         Dim scanData As Dictionary(Of String, Double) = mzInto _
                             .peaks _
                             .Where(Function(p) mzFilter(p.mz)) _
-                            .ToDictionary(Function(p) Math.Round(p.mz, rounds).ToString,
+                            .ToDictionary(Function(p) stdNum.Round(p.mz, rounds).ToString,
                                           Function(p) p.intensity)
 
                         Return New DataSet With {
@@ -241,7 +239,7 @@ Imports Microsoft.VisualBasic.Text
                             Return New ms2 With {
                                 .mz = m.mz,
                                 .quantity = m.quantity,
-                                .intensity = Math.Round(m.intensity * 100)
+                                .intensity = stdNum.Round(m.intensity * 100)
                             }
                         End Function) _
                 .ToArray

@@ -110,7 +110,7 @@ Namespace GCMS.QuantifyAnalysis
                                 Dim score = GlobalAlignment.TwoDirectionSSM(
                                     x:=query.ms2,
                                     y:=refSpectrum.ms2,
-                                    method:=Tolerance.DefaultTolerance
+                                    tolerance:=Tolerance.DefaultTolerance
                                 )
                                 Dim minScore# = {score.forward, score.reverse}.Min
 

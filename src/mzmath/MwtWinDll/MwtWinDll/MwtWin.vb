@@ -75,6 +75,7 @@
 #End Region
 
 Imports PNNL.OMICS.MwtWinDll.FormulaFinder
+Imports stdNum = System.Math
 
 Public Class MolecularWeightCalculator
 
@@ -442,7 +443,7 @@ Public Class MolecularWeightCalculator
             ' Determine what locale we're in (. or , for decimal point)
             strTestNumber = "5,500"
             sglConversionResult = CDbl(strTestNumber)
-            If Math.Abs(sglConversionResult - 5.5) < Single.Epsilon Then
+            If stdNum.Abs(sglConversionResult - 5.5) < Single.Epsilon Then
                 ' Use comma as Decimal point
                 Return ","c
             Else

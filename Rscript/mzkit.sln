@@ -137,6 +137,7 @@ Global
 		..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{53af2b13-ccd5-4f73-94d5-612191e785a9}*SharedItemsImports = 13
 		..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{77ba269a-2995-4737-80d3-ef533baa69cd}*SharedItemsImports = 4
 		Library\mzkit.interop\mzkit.interop.projitems*{77ba269a-2995-4737-80d3-ef533baa69cd}*SharedItemsImports = 4
+		Library\mzkit.interopArguments\mzkit.interopArguments.projitems*{7a42d5a0-8058-459c-a139-195b6022a710}*SharedItemsImports = 4
 		..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{a4db87f1-8b06-4398-af22-4bf0bafbd87a}*SharedItemsImports = 4
 		..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{c5c3428c-d64c-4e79-b239-77adc66b1156}*SharedItemsImports = 4
 		Library\mzkit.interop\mzkit.interop.projitems*{d68fa50b-a0cc-4511-aef0-dac24f236534}*SharedItemsImports = 13

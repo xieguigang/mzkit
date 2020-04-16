@@ -157,6 +157,7 @@
 
 Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports stdNum = System.Math
 
 Public Class MWElementAndMassRoutines
 
@@ -832,7 +833,7 @@ Public Class MWElementAndMassRoutines
             ' strFormula will contain a capital D followed by a number or another letter (or the end of formula)
             ' If found, replace each D with ^2.014H and re-compute
             dblCount = udtComputationStats.Elements(1).Count
-            If Math.Abs(dblCount - CInt(dblCount)) > Single.Epsilon Then
+            If stdNum.Abs(dblCount - CInt(dblCount)) > Single.Epsilon Then
                 ' Deuterium is present
                 strModifiedFormula = ""
                 intIndex = 1
@@ -875,7 +876,7 @@ Public Class MWElementAndMassRoutines
             ' Make sure there are no fractional atoms present (need to specially handle Deuterium)
             For intElementIndex = 1 To ELEMENT_COUNT
                 dblCount = udtComputationStats.Elements(intElementIndex).Count
-                If Math.Abs(dblCount - CInt(dblCount)) > Single.Epsilon Then
+                If stdNum.Abs(dblCount - CInt(dblCount)) > Single.Epsilon Then
                     strResults = LookupMessage(350) & ": " & LookupMessage(805) & ": " & ElementStats(intElementIndex).Symbol & dblCount
                     Return -1
                 End If
@@ -906,7 +907,7 @@ Public Class MWElementAndMassRoutines
                 intElementCount = intElementCount + ExplicitIsotopeCount
             End If
 
-            If intElementCount = 0 Or Math.Abs(dblWorkingFormulaMass) < Single.Epsilon Then
+            If intElementCount = 0 Or stdNum.Abs(dblWorkingFormulaMass) < Single.Epsilon Then
                 ' No elements or no weight
                 Return -1
 
@@ -932,8 +933,8 @@ Public Class MWElementAndMassRoutines
                         IsoStats(intElementCount).ExplicitMass = ElementStats(intElementIndex).Mass
 
                         With ElementStats(intElementIndex)
-                            MinWeight = CInt(MinWeight + IsoStats(intElementCount).AtomCount * Math.Round(.Isotopes(1).Mass, 0))
-                            MaxWeight = CInt(MaxWeight + IsoStats(intElementCount).AtomCount * Math.Round(.Isotopes(.IsotopeCount).Mass, 0))
+                            MinWeight = CInt(MinWeight + IsoStats(intElementCount).AtomCount * stdNum.Round(.Isotopes(1).Mass, 0))
+                            MaxWeight = CInt(MaxWeight + IsoStats(intElementCount).AtomCount * stdNum.Round(.Isotopes(.IsotopeCount).Mass, 0))
                         End With
                     End If
                 End If
@@ -1082,7 +1083,7 @@ Public Class MWElementAndMassRoutines
 
                                 dblLogSigma = 0
                                 For sigma = 1 To AtomCount
-                                    dblLogSigma = dblLogSigma + Math.Log(CDbl(sigma))
+                                    dblLogSigma = dblLogSigma + stdNum.Log(CDbl(sigma))
                                 Next sigma
 
                                 dblSumI = 0
@@ -1090,7 +1091,7 @@ Public Class MWElementAndMassRoutines
                                     If IsoCombos(ComboIndex, IsotopeIndex) > 0 Then
                                         dblWorkingSum = 0
                                         For SubIndex = 1 To IsoCombos(ComboIndex, IsotopeIndex)
-                                            dblWorkingSum = dblWorkingSum + Math.Log(CDbl(SubIndex))
+                                            dblWorkingSum = dblWorkingSum + stdNum.Log(CDbl(SubIndex))
                                         Next SubIndex
                                         dblSumI = dblSumI + dblWorkingSum
                                     End If
@@ -1100,13 +1101,13 @@ Public Class MWElementAndMassRoutines
                                     dblSumF = 0
                                     For IsotopeIndex = 1 To IsotopeCount
                                         If .Isotopes(IsotopeIndex).Abundance > 0 Then
-                                            dblSumF = dblSumF + IsoCombos(ComboIndex, IsotopeIndex) * Math.Log(CDbl(.Isotopes(IsotopeIndex).Abundance))
+                                            dblSumF = dblSumF + IsoCombos(ComboIndex, IsotopeIndex) * stdNum.Log(CDbl(.Isotopes(IsotopeIndex).Abundance))
                                         End If
                                     Next IsotopeIndex
                                 End With
 
                                 dblLogFreq = dblLogSigma - dblSumI + dblSumF
-                                dblThisComboFractionalAbundance = Math.Exp(dblLogFreq)
+                                dblThisComboFractionalAbundance = stdNum.Exp(dblLogFreq)
 
                                 dblFractionalAbundanceSaved = dblThisComboFractionalAbundance
                             End If
@@ -1127,21 +1128,21 @@ Public Class MWElementAndMassRoutines
                                     If intM > intMPrime Then
                                         dblLogSigma = 0
                                         For SubIndex = CInt(intMPrime) + 1 To CInt(intM)
-                                            dblLogSigma = dblLogSigma + Math.Log(SubIndex)
+                                            dblLogSigma = dblLogSigma + stdNum.Log(SubIndex)
                                         Next SubIndex
 
                                         With ElementStats(MasterElementIndex)
-                                            dblLogRho = dblLogSigma - (intM - intMPrime) * Math.Log(CDbl(.Isotopes(IsotopeIndex).Abundance))
+                                            dblLogRho = dblLogSigma - (intM - intMPrime) * stdNum.Log(CDbl(.Isotopes(IsotopeIndex).Abundance))
                                         End With
                                     ElseIf intM < intMPrime Then
                                         dblLogSigma = 0
                                         For SubIndex = CInt(intM) + 1 To CInt(intMPrime)
-                                            dblLogSigma = dblLogSigma + Math.Log(SubIndex)
+                                            dblLogSigma = dblLogSigma + stdNum.Log(SubIndex)
                                         Next SubIndex
 
                                         With ElementStats(MasterElementIndex)
                                             If .Isotopes(IsotopeIndex).Abundance > 0 Then
-                                                dblLogRho = (intMPrime - intM) * Math.Log(CDbl(.Isotopes(IsotopeIndex).Abundance)) - dblLogSigma
+                                                dblLogRho = (intMPrime - intM) * stdNum.Log(CDbl(.Isotopes(IsotopeIndex).Abundance)) - dblLogSigma
                                             End If
                                         End With
                                     Else
@@ -1149,7 +1150,7 @@ Public Class MWElementAndMassRoutines
                                         dblLogRho = 0
                                     End If
 
-                                    dblRho = Math.Exp(dblLogRho)
+                                    dblRho = stdNum.Exp(dblLogRho)
                                     dblRatioOfFreqs = dblRatioOfFreqs * dblRho
 
                                 Next IsotopeIndex
@@ -1250,7 +1251,7 @@ Public Class MWElementAndMassRoutines
                 End With
             Next intElementIndex
 
-            dblMassDefect = Math.Round(dblExactBaseIsoMass - ConvolutedAbundanceStartMass, 5)
+            dblMassDefect = stdNum.Round(dblExactBaseIsoMass - ConvolutedAbundanceStartMass, 5)
 
             ' Assure that the mass defect is only a small percentage of the total mass
             ' This won't be true for very small compounds so dblTemp is set to at least 10
@@ -1259,9 +1260,9 @@ Public Class MWElementAndMassRoutines
             Else
                 dblTemp = ConvolutedAbundanceStartMass
             End If
-            dblMaxPercentDifference = 10 ^ -(3 - Math.Round(Math.Log10(CDbl(dblTemp)), 0))
+            dblMaxPercentDifference = 10 ^ -(3 - stdNum.Round(Math.Log10(CDbl(dblTemp)), 0))
 
-            If Math.Abs(dblMassDefect / dblExactBaseIsoMass) >= dblMaxPercentDifference Then
+            If stdNum.Abs(dblMassDefect / dblExactBaseIsoMass) >= dblMaxPercentDifference Then
                 Console.WriteLine("dblMassDefect / dblExactBaseIsoMass is greater dblMaxPercentDifference: (" & dblMassDefect / dblExactBaseIsoMass & " vs. " & dblMaxPercentDifference & "); this is unexpected")
             End If
 
@@ -1291,7 +1292,7 @@ Public Class MWElementAndMassRoutines
 
             ' Populate the results array with the masses and abundances
             ' Also, if intChargeState is >= 1, then convolute the mass to the appropriate m/z
-            If Math.Abs(dblMaxAbundance) < Single.Epsilon Then dblMaxAbundance = 1
+            If stdNum.Abs(dblMaxAbundance) < Single.Epsilon Then dblMaxAbundance = 1
             For massIndex = 1 To ConvolutedMSDataCount
                 With ConvolutedAbundances(massIndex)
                     ConvolutedMSData2DOneBased(massIndex, 0) = (ConvolutedAbundanceStartMass + massIndex - 1) + dblMassDefect
@@ -1367,15 +1368,15 @@ Public Class MWElementAndMassRoutines
 
 
                     ' Calculate standard deviation
-                    If Math.Abs(.Elements(intElementIndex).IsotopicCorrection - 0) < Single.Epsilon Then
+                    If stdNum.Abs(.Elements(intElementIndex).IsotopicCorrection - 0) < Single.Epsilon Then
                         ' No isotopic mass correction factor exists
-                        dblStdDeviation = dblPercentComp * Math.Sqrt((ElementStats(intElementIndex).Uncertainty / ElementStats(intElementIndex).Mass) ^ 2 + (.StandardDeviation / .TotalMass) ^ 2)
+                        dblStdDeviation = dblPercentComp * stdNum.Sqrt((ElementStats(intElementIndex).Uncertainty / ElementStats(intElementIndex).Mass) ^ 2 + (.StandardDeviation / .TotalMass) ^ 2)
                     Else
                         ' Isotopic correction factor exists, assume no error in it
-                        dblStdDeviation = dblPercentComp * Math.Sqrt((.StandardDeviation / .TotalMass) ^ 2)
+                        dblStdDeviation = dblPercentComp * stdNum.Sqrt((.StandardDeviation / .TotalMass) ^ 2)
                     End If
 
-                    If Math.Abs(dblElementTotalMass - .TotalMass) < Single.Epsilon And Math.Abs(dblPercentComp - 100) < Single.Epsilon Then
+                    If stdNum.Abs(dblElementTotalMass - .TotalMass) < Single.Epsilon And stdNum.Abs(dblPercentComp - 100) < Single.Epsilon Then
                         dblStdDeviation = 0
                     End If
 
@@ -1453,13 +1454,13 @@ Public Class MWElementAndMassRoutines
             ' Make sure DeltaX is a reasonable number
             DeltaX = RoundToMultipleOf10(DeltaX)
 
-            If Math.Abs(DeltaX) < Single.Epsilon Then DeltaX = 1
+            If stdNum.Abs(DeltaX) < Single.Epsilon Then DeltaX = 1
 
             ' Set the Window Range to 1/10 the magnitude of the midpoint x value
             dblRangeWork = XYVals.First.Key + dblXValRange / 2
             dblRangeWork = RoundToMultipleOf10(dblRangeWork)
 
-            dblSigma = (dblResolutionMass / intResolution) / Math.Sqrt(5.54)
+            dblSigma = (dblResolutionMass / intResolution) / stdNum.Sqrt(5.54)
 
             ' Set the window range (the xvalue window width range) to calculate the Gaussian representation for each data point
             ' The width at the base of a peak is 4 dblSigma
@@ -1537,7 +1538,7 @@ Public Class MWElementAndMassRoutines
                     Dim udtNewPoint As udtXYDataType = New udtXYDataType()
 
                     udtNewPoint.X = udtThisDataPoint.X - dblXOffSet
-                    udtNewPoint.Y = udtThisDataPoint.Y * Math.Exp(-(dblXOffSet) ^ 2 / (2 * dblSigma ^ 2))
+                    udtNewPoint.Y = udtThisDataPoint.Y * stdNum.Exp(-(dblXOffSet) ^ 2 / (2 * dblSigma ^ 2))
 
                     lstDataToAdd.Add(udtNewPoint)
                 Next intDataIndex
@@ -1558,7 +1559,7 @@ Public Class MWElementAndMassRoutines
                     ' Step through lstXYSummation starting at intMinimalSummationIndex, looking for
                     '   the index to start combining data at
                     For intSummationIndex = intMinimalSummationIndex To lstXYSummation.Count - 1
-                        If Math.Round(lstDataToAdd(intDataIndex).X, MASS_PRECISION) <= Math.Round(lstXYSummation(intSummationIndex).X, MASS_PRECISION) Then
+                        If stdNum.Round(lstDataToAdd(intDataIndex).X, MASS_PRECISION) <= stdNum.Round(lstXYSummation(intSummationIndex).X, MASS_PRECISION) Then
 
                             ' Within Tolerance; start combining the values here
                             Do While intSummationIndex <= lstXYSummation.Count - 1
@@ -1730,8 +1731,8 @@ Public Class MWElementAndMassRoutines
 
         Dim dblNewMZ As Double
 
-        If Math.Abs(dblChargeCarrierMass - 0) < Single.Epsilon Then dblChargeCarrierMass = mChargeCarrierMass
-        If Math.Abs(dblChargeCarrierMass - 0) < Single.Epsilon Then dblChargeCarrierMass = DEFAULT_CHARGE_CARRIER_MASS_MONOISO
+        If stdNum.Abs(dblChargeCarrierMass - 0) < Single.Epsilon Then dblChargeCarrierMass = mChargeCarrierMass
+        If stdNum.Abs(dblChargeCarrierMass - 0) < Single.Epsilon Then dblChargeCarrierMass = DEFAULT_CHARGE_CARRIER_MASS_MONOISO
 
         If intCurrentCharge = intDesiredCharge Then
             dblNewMZ = dblMassMZ
@@ -1814,7 +1815,7 @@ Public Class MWElementAndMassRoutines
                 ' Only display the element if it's in the formula
                 With mComputationStatsSaved
                     Dim dblThisElementCount = .Elements(intElementIndexToUse).Count
-                    If Math.Abs(dblThisElementCount - 1.0#) < Single.Epsilon Then
+                    If stdNum.Abs(dblThisElementCount - 1.0#) < Single.Epsilon Then
                         strEmpiricalFormula = strEmpiricalFormula & ElementStats(intElementIndexToUse).Symbol
                     ElseIf dblThisElementCount > 0 Then
                         strEmpiricalFormula = strEmpiricalFormula & ElementStats(intElementIndexToUse).Symbol & Trim(CStr(dblThisElementCount))
@@ -1859,7 +1860,7 @@ Public Class MWElementAndMassRoutines
         Next IsotopeIndex
 
         '                             (workingMass  - IsoStats(ElementIndex).StartingResultsMass) + 1
-        FindIndexForNominalMass = (CInt(workingMass - AtomCount * Math.Round(ThisElementsIsotopes(1).Mass, 0)) + 1)
+        FindIndexForNominalMass = (CInt(workingMass - AtomCount * stdNum.Round(ThisElementsIsotopes(1).Mass, 0)) + 1)
     End Function
 
     Private Sub ConvoluteMasses(ByRef ConvolutedAbundances() As udtIsoResultsOverallType,
@@ -2745,7 +2746,7 @@ Public Class MWElementAndMassRoutines
     Public Function MonoMassToMZInternal(dblMonoisotopicMass As Double, intCharge As Short,
      dblChargeCarrierMass As Double) As Double
         ' If dblChargeCarrierMass is 0, then uses mChargeCarrierMass
-        If Math.Abs(dblChargeCarrierMass - 0) < Single.Epsilon Then dblChargeCarrierMass = mChargeCarrierMass
+        If stdNum.Abs(dblChargeCarrierMass - 0) < Single.Epsilon Then dblChargeCarrierMass = mChargeCarrierMass
 
         ' Call ConvoluteMass to convert to the desired charge state
         Return ConvoluteMassInternal(dblMonoisotopicMass + dblChargeCarrierMass, 1, intCharge, dblChargeCarrierMass)
@@ -4155,7 +4156,7 @@ Public Class MWElementAndMassRoutines
                 With udtComputationStats
 
                     ' Compute the standard deviation
-                    .StandardDeviation = Math.Sqrt(dblStdDevSum)
+                    .StandardDeviation = stdNum.Sqrt(dblStdDevSum)
 
                     ' Compute the total molecular weight
                     .TotalMass = 0 ' Reset total weight of compound to 0 so we can add to it
@@ -4298,7 +4299,7 @@ Public Class MWElementAndMassRoutines
                                     .Count = 0
                                 End If
 
-                                If Math.Abs(udtComputationStatsRightHalf.Elements(intElementIndex).IsotopicCorrection) > Single.Epsilon Then
+                                If stdNum.Abs(udtComputationStatsRightHalf.Elements(intElementIndex).IsotopicCorrection) > Single.Epsilon Then
                                     ' This assertion is here simply because I want to check the code
                                     .IsotopicCorrection = .IsotopicCorrection - udtComputationStatsRightHalf.Elements(intElementIndex).IsotopicCorrection
                                 End If
@@ -4423,7 +4424,7 @@ Public Class MWElementAndMassRoutines
                                 dblDashMultiplier = dblAdjacentNum * dblDashMultiplierPrior
                                 intCharIndex = intCharIndex + intNumLength
                             Else
-                                If Math.Abs(dblAdjacentNum) < Single.Epsilon Then
+                                If stdNum.Abs(dblAdjacentNum) < Single.Epsilon Then
                                     ' Cannot have 0 after a dash
                                     ErrorParams.ErrorID = 5 : ErrorParams.ErrorPosition = intCharIndex + 1S
                                 Else
@@ -4542,7 +4543,7 @@ Public Class MWElementAndMassRoutines
                                     ' Note that intNumLength = 0 if dblAdjacentNum was -1 or otherwise < 0
                                     intAddonCount = intNumLength + intSymbolLength - 1S
 
-                                    If Math.Abs(dblAdjacentNum) < Single.Epsilon Then
+                                    If stdNum.Abs(dblAdjacentNum) < Single.Epsilon Then
                                         ' Zero after element
                                         ErrorParams.ErrorID = 5 : ErrorParams.ErrorPosition = intCharIndex + intSymbolLength
                                     Else
@@ -5193,7 +5194,7 @@ Public Class MWElementAndMassRoutines
                 strPctSign = ""
             End If
 
-            If Math.Abs(dblStdDev) < Single.Epsilon Then
+            If stdNum.Abs(dblStdDev) < Single.Epsilon Then
                 ' Standard deviation value is 0; simply return the result
                 strResult = dblMass.ToString("0.0####") & strPctSign & " (" & Chr(177) & "0)"
 
@@ -5213,7 +5214,7 @@ Public Class MWElementAndMassRoutines
 
                 intExponentValue = NumberConversionRoutines.CShortSafe(Right(strWork, 4))
                 dblWork = dblMass / 10 ^ intExponentValue
-                dblWork = Math.Round(dblWork, 0)
+                dblWork = stdNum.Round(dblWork, 0)
                 dblRoundedMain = dblWork * 10 ^ intExponentValue
 
                 strWork = dblRoundedMain.ToString("0.0##E+00")
@@ -5291,7 +5292,7 @@ Public Class MWElementAndMassRoutines
         intExponentValue = NumberConversionRoutines.CIntSafe(Right(strWork, 4))
 
         intLoopCount = 0
-        Do While (dblValueToRound / MultipleValue).ToString.Trim() <> Math.Round(dblValueToRound / MultipleValue, 0).ToString.Trim()
+        Do While (dblValueToRound / MultipleValue).ToString.Trim() <> stdNum.Round(dblValueToRound / MultipleValue, 0).ToString.Trim()
             dblWork = dblValueToRound / 10 ^ (intExponentValue)
             dblWork = CDbl(dblWork.ToString("0"))
             dblWork *= 10 ^ intExponentValue
@@ -5845,7 +5846,7 @@ Public Class MWElementAndMassRoutines
         mProgressPercentComplete = sngPercentComplete
 
         If blnDescriptionChanged Then
-            If Math.Abs(mProgressPercentComplete) < Single.Epsilon Then
+            If stdNum.Abs(mProgressPercentComplete) < Single.Epsilon Then
                 LogMessage(mProgressStepDescription)
             Else
                 LogMessage(mProgressStepDescription & " (" & mProgressPercentComplete.ToString("0.0") & "% complete)")

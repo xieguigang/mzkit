@@ -1,195 +1,197 @@
 ﻿#Region "Microsoft.VisualBasic::d1256b998c4c218510714478d2419404, src\mzmath\MwtWinDll\MwtWinDll\CapillaryFlowClass.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class MWCapillaryFlowClass
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Enum ctCapillaryTypeConstants
-    ' 
-    '         ctPackedCapillary
-    ' 
-    ' 
-    ' 
-    '     Enum uprUnitsPressureConstants
-    ' 
-    '         uprAtmospheres, uprBar, uprDynesPerSquareCm, uprKiloPascals, uprPascals
-    '         uprTorr
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Enum ulnUnitsLengthConstants
-    ' 
-    '         ulnCM, ulnInches, ulnMicrons, ulnMM
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Enum uviUnitsViscosityConstants
-    ' 
-    '         uviCentiPoise
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Enum ufrUnitsFlowRateConstants
-    ' 
-    '         ufrNLPerMin, ufrULPerMin
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Enum ulvUnitsLinearVelocityConstants
-    ' 
-    '         ulvCmPerMin, ulvCmPerSec, ulvMmPerHr, ulvMmPerMin, ulvMmPerSec
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Enum utmUnitsTimeConstants
-    ' 
-    '         utmMinutes, utmSeconds
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Enum uvoUnitsVolumeConstants
-    ' 
-    '         uvoNL, uvoPL, uvoUL
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Enum ucoUnitsConcentrationConstants
-    ' 
-    '         ucoAttoMolar, ucoFemtoMolar, ucoMgPerML, ucoMicroMolar, ucoMilliMolar
-    '         ucoNanoMolar, ucongperml, ucoNgPerUL, ucoPicoMolar, ucoUgPerML
-    '         ucoUgPerUL
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Enum utpUnitsTemperatureConstants
-    ' 
-    '         utpFahrenheit, utpKelvin
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Enum umfMassFlowRateConstants
-    ' 
-    '         umfAmolPerMin, umfAmolPerSec, umfFmolPerMin, umfFmolPerSec, umfMolesPerMin
-    '         umfPmolPerSec
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Enum umaMolarAmountConstants
-    ' 
-    '         umaAttoMoles, umaFemtoMoles, umaMicroMoles, umaMilliMoles, umaNanoMoles
-    '         umaPicoMoles
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Enum udcDiffusionCoefficientConstants
-    ' 
-    '         udcCmSquaredPerMin, udcCmSquaredPerSec
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Enum acmAutoComputeModeConstants
-    ' 
-    '         acmColumnID, acmColumnLength, acmDeadTime, acmLinearVelociy, acmVolFlowrate
-    '         acmVolFlowrateUsingDeadTime
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Structure udtCapillaryFlowParametersType
-    ' 
-    ' 
-    ' 
-    '     Structure udtMassRateParametersType
-    ' 
-    ' 
-    ' 
-    '     Structure udtExtraColumnBroadeningParametersType
-    ' 
-    ' 
-    ' 
-    '  
-    ' 
-    '     Function: ComputeBackPressure, ComputeColumnID, ComputeColumnLength, ComputeColumnVolume, ComputeDeadTime
-    '               ComputeExtraColumnBroadeningResultantPeakWidth, ComputeLinearVelocity, ComputeMassFlowRate, ComputeMassRateMolesInjected, ComputeMeCNViscosity
-    '               ComputeOptimumLinearVelocityUsingParticleDiamAndDiffusionCoeff, ComputeVolFlowRate, ComputeVolFlowRateUsingDeadTime, ConvertConcentration, ConvertDiffusionCoefficient
-    '               ConvertLength, ConvertLinearVelocity, ConvertMassFlowRate, ConvertMoles, ConvertPressure
-    '               ConvertTemperature, ConvertTime, ConvertViscosity, ConvertVolFlowRate, ConvertVolume
-    '               FactorConcentration, FactorDiffusionCoeff, FactorLength, FactorLinearVelocity, FactorMassFlowRate
-    '               FactorMoles, FactorPressure, FactorTime, FactorViscosity, FactorVolFlowRate
-    '               FactorVolume, GetAutoComputeEnabled, GetAutoComputeMode, GetBackPressure, GetCapillaryType
-    '               GetColumnID, GetColumnLength, GetColumnVolume, GetDeadTime, GetExtraColumnBroadeningAdditionalVarianceInSquareSeconds
-    '               GetExtraColumnBroadeningDiffusionCoefficient, GetExtraColumnBroadeningInitialPeakWidthAtBase, GetExtraColumnBroadeningLinearVelocity, GetExtraColumnBroadeningOpenTubeID, GetExtraColumnBroadeningOpenTubeLength
-    '               GetExtraColumnBroadeningResultantPeakWidth, GetExtraColumnBroadeningTemporalVarianceInSquareSeconds, GetInterparticlePorosity, GetLinearVelocity, GetMassFlowRate
-    '               GetMassRateConcentration, GetMassRateInjectionTime, GetMassRateMolesInjected, GetMassRateSampleMass, GetMassRateVolFlowRate
-    '               GetParticleDiameter, GetSolventViscosity, GetVolFlowRate
-    ' 
-    '     Sub: CheckAutoCompute, ComputeExtraColumnBroadeningValues, ComputeMassRateValues, InitializeClass, SetAutoComputeEnabled
-    '          SetAutoComputeMode, SetBackPressure, SetCapillaryType, SetColumnID, SetColumnLength
-    '          SetDeadTime, SetExtraColumnBroadeningAdditionalVariance, SetExtraColumnBroadeningDiffusionCoefficient, SetExtraColumnBroadeningInitialPeakWidthAtBase, SetExtraColumnBroadeningLinearVelocity
-    '          SetExtraColumnBroadeningOpenTubeID, SetExtraColumnBroadeningOpenTubeLength, SetInterparticlePorosity, SetMassRateConcentration, SetMassRateInjectionTime
-    '          SetMassRateSampleMass, SetMassRateVolFlowRate, SetParticleDiameter, SetSolventViscosity, SetVolFlowRate
-    ' 
-    ' /********************************************************************************/
+' Class MWCapillaryFlowClass
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Enum ctCapillaryTypeConstants
+' 
+'         ctPackedCapillary
+' 
+' 
+' 
+'     Enum uprUnitsPressureConstants
+' 
+'         uprAtmospheres, uprBar, uprDynesPerSquareCm, uprKiloPascals, uprPascals
+'         uprTorr
+' 
+'  
+' 
+' 
+' 
+'     Enum ulnUnitsLengthConstants
+' 
+'         ulnCM, ulnInches, ulnMicrons, ulnMM
+' 
+'  
+' 
+' 
+' 
+'     Enum uviUnitsViscosityConstants
+' 
+'         uviCentiPoise
+' 
+'  
+' 
+' 
+' 
+'     Enum ufrUnitsFlowRateConstants
+' 
+'         ufrNLPerMin, ufrULPerMin
+' 
+'  
+' 
+' 
+' 
+'     Enum ulvUnitsLinearVelocityConstants
+' 
+'         ulvCmPerMin, ulvCmPerSec, ulvMmPerHr, ulvMmPerMin, ulvMmPerSec
+' 
+'  
+' 
+' 
+' 
+'     Enum utmUnitsTimeConstants
+' 
+'         utmMinutes, utmSeconds
+' 
+'  
+' 
+' 
+' 
+'     Enum uvoUnitsVolumeConstants
+' 
+'         uvoNL, uvoPL, uvoUL
+' 
+'  
+' 
+' 
+' 
+'     Enum ucoUnitsConcentrationConstants
+' 
+'         ucoAttoMolar, ucoFemtoMolar, ucoMgPerML, ucoMicroMolar, ucoMilliMolar
+'         ucoNanoMolar, ucongperml, ucoNgPerUL, ucoPicoMolar, ucoUgPerML
+'         ucoUgPerUL
+' 
+'  
+' 
+' 
+' 
+'     Enum utpUnitsTemperatureConstants
+' 
+'         utpFahrenheit, utpKelvin
+' 
+'  
+' 
+' 
+' 
+'     Enum umfMassFlowRateConstants
+' 
+'         umfAmolPerMin, umfAmolPerSec, umfFmolPerMin, umfFmolPerSec, umfMolesPerMin
+'         umfPmolPerSec
+' 
+'  
+' 
+' 
+' 
+'     Enum umaMolarAmountConstants
+' 
+'         umaAttoMoles, umaFemtoMoles, umaMicroMoles, umaMilliMoles, umaNanoMoles
+'         umaPicoMoles
+' 
+'  
+' 
+' 
+' 
+'     Enum udcDiffusionCoefficientConstants
+' 
+'         udcCmSquaredPerMin, udcCmSquaredPerSec
+' 
+'  
+' 
+' 
+' 
+'     Enum acmAutoComputeModeConstants
+' 
+'         acmColumnID, acmColumnLength, acmDeadTime, acmLinearVelociy, acmVolFlowrate
+'         acmVolFlowrateUsingDeadTime
+' 
+'  
+' 
+' 
+' 
+'     Structure udtCapillaryFlowParametersType
+' 
+' 
+' 
+'     Structure udtMassRateParametersType
+' 
+' 
+' 
+'     Structure udtExtraColumnBroadeningParametersType
+' 
+' 
+' 
+'  
+' 
+'     Function: ComputeBackPressure, ComputeColumnID, ComputeColumnLength, ComputeColumnVolume, ComputeDeadTime
+'               ComputeExtraColumnBroadeningResultantPeakWidth, ComputeLinearVelocity, ComputeMassFlowRate, ComputeMassRateMolesInjected, ComputeMeCNViscosity
+'               ComputeOptimumLinearVelocityUsingParticleDiamAndDiffusionCoeff, ComputeVolFlowRate, ComputeVolFlowRateUsingDeadTime, ConvertConcentration, ConvertDiffusionCoefficient
+'               ConvertLength, ConvertLinearVelocity, ConvertMassFlowRate, ConvertMoles, ConvertPressure
+'               ConvertTemperature, ConvertTime, ConvertViscosity, ConvertVolFlowRate, ConvertVolume
+'               FactorConcentration, FactorDiffusionCoeff, FactorLength, FactorLinearVelocity, FactorMassFlowRate
+'               FactorMoles, FactorPressure, FactorTime, FactorViscosity, FactorVolFlowRate
+'               FactorVolume, GetAutoComputeEnabled, GetAutoComputeMode, GetBackPressure, GetCapillaryType
+'               GetColumnID, GetColumnLength, GetColumnVolume, GetDeadTime, GetExtraColumnBroadeningAdditionalVarianceInSquareSeconds
+'               GetExtraColumnBroadeningDiffusionCoefficient, GetExtraColumnBroadeningInitialPeakWidthAtBase, GetExtraColumnBroadeningLinearVelocity, GetExtraColumnBroadeningOpenTubeID, GetExtraColumnBroadeningOpenTubeLength
+'               GetExtraColumnBroadeningResultantPeakWidth, GetExtraColumnBroadeningTemporalVarianceInSquareSeconds, GetInterparticlePorosity, GetLinearVelocity, GetMassFlowRate
+'               GetMassRateConcentration, GetMassRateInjectionTime, GetMassRateMolesInjected, GetMassRateSampleMass, GetMassRateVolFlowRate
+'               GetParticleDiameter, GetSolventViscosity, GetVolFlowRate
+' 
+'     Sub: CheckAutoCompute, ComputeExtraColumnBroadeningValues, ComputeMassRateValues, InitializeClass, SetAutoComputeEnabled
+'          SetAutoComputeMode, SetBackPressure, SetCapillaryType, SetColumnID, SetColumnLength
+'          SetDeadTime, SetExtraColumnBroadeningAdditionalVariance, SetExtraColumnBroadeningDiffusionCoefficient, SetExtraColumnBroadeningInitialPeakWidthAtBase, SetExtraColumnBroadeningLinearVelocity
+'          SetExtraColumnBroadeningOpenTubeID, SetExtraColumnBroadeningOpenTubeLength, SetInterparticlePorosity, SetMassRateConcentration, SetMassRateInjectionTime
+'          SetMassRateSampleMass, SetMassRateVolFlowRate, SetParticleDiameter, SetSolventViscosity, SetVolFlowRate
+' 
+' /********************************************************************************/
 
 #End Region
+
+Imports stdNum = System.Math
 
 Public Class MWCapillaryFlowClass
 
@@ -405,13 +407,13 @@ Public Class MWCapillaryFlowClass
 
             dblRadius = .ColumnID / 2.0#
 
-            If Math.Abs(dblRadius) > Single.Epsilon Then
+            If stdNum.Abs(dblRadius) > Single.Epsilon Then
                 If .CapillaryType = ctCapillaryTypeConstants.ctOpenTubularCapillary Then
                     ' Open tubular capillary
                     dblBackPressure = (.VolumetricFlowRate * 8 * .SolventViscosity * .ColumnLength) / (dblRadius ^ 4 * PI * 60) ' Pressure in dynes/cm^2
                 Else
                     ' Packed capillary
-                    If Math.Abs(.ParticleDiameter) > Single.Epsilon And Math.Abs(.InterparticlePorosity) > Single.Epsilon Then
+                    If stdNum.Abs(.ParticleDiameter) > Single.Epsilon And stdNum.Abs(.InterparticlePorosity) > Single.Epsilon Then
                         ' Flow rate in mL/sec
                         dblBackPressure = (.VolumetricFlowRate * 180 * .SolventViscosity * .ColumnLength * (1 - .InterparticlePorosity) ^ 2) / (.ParticleDiameter ^ 2 * .InterparticlePorosity ^ 2 * PI * dblRadius ^ 2 * 60) / .InterparticlePorosity
                     Else
@@ -443,13 +445,13 @@ Public Class MWCapillaryFlowClass
 
             dblRadius = .ColumnID / 2.0#
 
-            If Math.Abs(.SolventViscosity) > Single.Epsilon And Math.Abs(.VolumetricFlowRate) > Single.Epsilon Then
+            If stdNum.Abs(.SolventViscosity) > Single.Epsilon And stdNum.Abs(.VolumetricFlowRate) > Single.Epsilon Then
                 If .CapillaryType = ctCapillaryTypeConstants.ctOpenTubularCapillary Then
                     ' Open tubular capillary
                     dblColumnLength = (.BackPressure * dblRadius ^ 4 * PI * 60) / (8 * .SolventViscosity * .VolumetricFlowRate) ' Column length in cm
                 Else
                     ' Packed capillary
-                    If Math.Abs(.InterparticlePorosity - 1) > Single.Epsilon Then
+                    If stdNum.Abs(.InterparticlePorosity - 1) > Single.Epsilon Then
                         ' Flow rate in mL/sec
                         dblColumnLength = (.BackPressure * .ParticleDiameter ^ 2 * .InterparticlePorosity ^ 2 * PI * dblRadius ^ 2 * 60) * .InterparticlePorosity / (180 * .SolventViscosity * .VolumetricFlowRate * (1 - .InterparticlePorosity) ^ 2)
                     Else
@@ -498,13 +500,13 @@ Public Class MWCapillaryFlowClass
 
         With mCapillaryFlowParameters
 
-            If Math.Abs(.BackPressure) > Single.Epsilon Then
+            If stdNum.Abs(.BackPressure) > Single.Epsilon Then
                 If .CapillaryType = ctCapillaryTypeConstants.ctOpenTubularCapillary Then
                     ' Open tubular capillary
                     dblRadius = ((.VolumetricFlowRate * 8 * .SolventViscosity * .ColumnLength) / (.BackPressure * PI * 60)) ^ (0.25)
                 Else
                     ' Packed capillary
-                    If Math.Abs(.ParticleDiameter) > Single.Epsilon And Math.Abs(.InterparticlePorosity - 1) > Single.Epsilon Then
+                    If stdNum.Abs(.ParticleDiameter) > Single.Epsilon And stdNum.Abs(.InterparticlePorosity - 1) > Single.Epsilon Then
                         ' Flow rate in mL/sec
                         dblRadius = ((.VolumetricFlowRate * 180 * .SolventViscosity * .ColumnLength * (1 - .InterparticlePorosity) ^ 2) / (.BackPressure * .ParticleDiameter ^ 2 * .InterparticlePorosity ^ 2 * PI * 60) / .InterparticlePorosity) ^ 0.5
                     Else
@@ -536,7 +538,7 @@ Public Class MWCapillaryFlowClass
 
         With mCapillaryFlowParameters
 
-            If Math.Abs(.LinearVelocity) > Single.Epsilon Then
+            If stdNum.Abs(.LinearVelocity) > Single.Epsilon Then
                 dblDeadTime = .ColumnLength / .LinearVelocity ' Dead time in minutes
             Else
                 dblDeadTime = 0
@@ -561,7 +563,7 @@ Public Class MWCapillaryFlowClass
         Dim dblSumOfVariances As Double
 
         With mExtraColumnBroadeningParameters
-            If Math.Abs(.LinearVelocity) > Single.Epsilon And Math.Abs(.DiffusionCoefficient) > Single.Epsilon Then
+            If stdNum.Abs(.LinearVelocity) > Single.Epsilon And stdNum.Abs(.DiffusionCoefficient) > Single.Epsilon Then
                 .TemporalVariance = .OpenTubeID ^ 2 * .OpenTubeLength / (96 * .DiffusionCoefficient * .LinearVelocity / 60) ' in sec^2
             Else
                 .TemporalVariance = 0
@@ -573,7 +575,7 @@ Public Class MWCapillaryFlowClass
 
             If dblSumOfVariances >= 0 Then
                 ' ResultantPeakWidth at the base = 4 sigma  and  sigma = Sqr(Total_Variance)
-                .ResultantPeakWidth = 4 * Math.Sqrt(dblSumOfVariances)
+                .ResultantPeakWidth = 4 * stdNum.Sqrt(dblSumOfVariances)
             Else
                 .ResultantPeakWidth = 0
             End If
@@ -591,11 +593,11 @@ Public Class MWCapillaryFlowClass
 
         With mCapillaryFlowParameters
             dblRadius = .ColumnID / 2.0#
-            If Math.Abs(dblRadius) > Single.Epsilon Then
+            If stdNum.Abs(dblRadius) > Single.Epsilon Then
                 dblLinearVelocity = .VolumetricFlowRate / (PI * dblRadius ^ 2) ' Units in cm/min
 
                 ' Divide Linear Velocity by epsilon if a packed capillary
-                If .CapillaryType = ctCapillaryTypeConstants.ctPackedCapillary And Math.Abs(.InterparticlePorosity) > Single.Epsilon Then
+                If .CapillaryType = ctCapillaryTypeConstants.ctPackedCapillary And stdNum.Abs(.InterparticlePorosity) > Single.Epsilon Then
                     dblLinearVelocity = dblLinearVelocity / .InterparticlePorosity
                 End If
             Else
@@ -644,7 +646,7 @@ Public Class MWCapillaryFlowClass
         Dim dblOptimumLinearVelocity As Double
 
         With mCapillaryFlowParameters
-            If Math.Abs(.ParticleDiameter) > Single.Epsilon Then
+            If stdNum.Abs(.ParticleDiameter) > Single.Epsilon Then
                 dblOptimumLinearVelocity = 3 * mExtraColumnBroadeningParameters.DiffusionCoefficient / .ParticleDiameter
 
                 dblOptimumLinearVelocity = ConvertLinearVelocity(dblOptimumLinearVelocity, ulvUnitsLinearVelocityConstants.ulvCmPerSec, eUnits)
@@ -669,7 +671,7 @@ Public Class MWCapillaryFlowClass
             dblKelvin = ConvertTemperature(dblTemperature, eTemperatureUnits, utpUnitsTemperatureConstants.utpKelvin)
 
             If dblKelvin > 0 Then
-                dblViscosityInCentiPoise = Math.Exp(dblPhi * (-3.476 + 726 / dblKelvin) + (1 - dblPhi) * (-5.414 + 1566 / dblKelvin) + dblPhi * (1 - dblPhi) * (-1.762 + 929 / dblKelvin))
+                dblViscosityInCentiPoise = stdNum.Exp(dblPhi * (-3.476 + 726 / dblKelvin) + (1 - dblPhi) * (-5.414 + 1566 / dblKelvin) + dblPhi * (1 - dblPhi) * (-1.762 + 929 / dblKelvin))
             Else
                 dblViscosityInCentiPoise = 0
             End If
@@ -691,13 +693,13 @@ Public Class MWCapillaryFlowClass
 
             dblRadius = .ColumnID / 2.0#
 
-            If Math.Abs(.SolventViscosity) > Single.Epsilon And Math.Abs(.ColumnLength) > Single.Epsilon Then
+            If stdNum.Abs(.SolventViscosity) > Single.Epsilon And stdNum.Abs(.ColumnLength) > Single.Epsilon Then
                 If .CapillaryType = ctCapillaryTypeConstants.ctOpenTubularCapillary Then
                     ' Open tubular capillary
                     dblVolFlowRate = (.BackPressure * dblRadius ^ 4 * PI) / (8 * .SolventViscosity * .ColumnLength) ' Flow rate in mL/sec
                 Else
                     ' Packed capillary
-                    If Math.Abs(.InterparticlePorosity - 1) > Single.Epsilon Then
+                    If stdNum.Abs(.InterparticlePorosity - 1) > Single.Epsilon Then
                         ' Flow rate in mL/sec
                         dblVolFlowRate = (.BackPressure * .ParticleDiameter ^ 2 * .InterparticlePorosity ^ 2 * PI * dblRadius ^ 2) * .InterparticlePorosity / (180 * .SolventViscosity * .ColumnLength * (1 - .InterparticlePorosity) ^ 2)
                     Else
@@ -731,7 +733,7 @@ Public Class MWCapillaryFlowClass
             dblRadius = .ColumnID / 2.0#
 
             ' First find vol flow rate that gives observed dead time
-            If Math.Abs(.ColumnDeadTime) > Single.Epsilon Then
+            If stdNum.Abs(.ColumnDeadTime) > Single.Epsilon Then
 
                 dblVolFlowRate = .ColumnLength * (PI * dblRadius ^ 2) / .ColumnDeadTime ' Vol flow rate in mL/sec
 
@@ -771,14 +773,14 @@ Public Class MWCapillaryFlowClass
         dblSampleMass = mMassRateParameters.SampleMass
 
         dblFactor = FactorConcentration(eCurrentUnits, dblSampleMass)
-        If Math.Abs(dblFactor + 1) < Single.Epsilon Then
+        If stdNum.Abs(dblFactor + 1) < Single.Epsilon Then
             Return -1
         Else
             dblValue = dblConcentrationIn * dblFactor
         End If
 
         dblFactor = FactorConcentration(eNewUnits, dblSampleMass)
-        If Math.Abs(dblFactor + 1) < Single.Epsilon Or Math.Abs(dblFactor) < Single.Epsilon Then
+        If stdNum.Abs(dblFactor + 1) < Single.Epsilon Or stdNum.Abs(dblFactor) < Single.Epsilon Then
             Return -1
         Else
             Return dblValue / dblFactor
@@ -794,14 +796,14 @@ Public Class MWCapillaryFlowClass
         End If
 
         dblFactor = FactorDiffusionCoeff(eCurrentUnits)
-        If Math.Abs(dblFactor + 1) < Single.Epsilon Then
+        If stdNum.Abs(dblFactor + 1) < Single.Epsilon Then
             Return -1
         Else
             dblValue = dblDiffusionCoefficientIn * dblFactor
         End If
 
         dblFactor = FactorDiffusionCoeff(eNewUnits)
-        If Math.Abs(dblFactor + 1) < Single.Epsilon Or Math.Abs(dblFactor) < Single.Epsilon Then
+        If stdNum.Abs(dblFactor + 1) < Single.Epsilon Or stdNum.Abs(dblFactor) < Single.Epsilon Then
             ConvertDiffusionCoefficient = -1
         Else
             ConvertDiffusionCoefficient = dblValue / dblFactor
@@ -817,14 +819,14 @@ Public Class MWCapillaryFlowClass
         End If
 
         dblFactor = FactorLength(eCurrentUnits)
-        If Math.Abs(dblFactor + 1) < Single.Epsilon Then
+        If stdNum.Abs(dblFactor + 1) < Single.Epsilon Then
             Return -1
         Else
             dblValue = dblLengthIn * dblFactor
         End If
 
         dblFactor = FactorLength(eNewUnits)
-        If Math.Abs(dblFactor + 1) < Single.Epsilon Or Math.Abs(dblFactor) < Single.Epsilon Then
+        If stdNum.Abs(dblFactor + 1) < Single.Epsilon Or stdNum.Abs(dblFactor) < Single.Epsilon Then
             Return -1
         Else
             Return dblValue / dblFactor
@@ -840,14 +842,14 @@ Public Class MWCapillaryFlowClass
         End If
 
         dblFactor = FactorLinearVelocity(eCurrentUnits)
-        If Math.Abs(dblFactor + 1) < Single.Epsilon Then
+        If stdNum.Abs(dblFactor + 1) < Single.Epsilon Then
             Return -1
         Else
             dblValue = dblLinearVelocityIn * dblFactor
         End If
 
         dblFactor = FactorLinearVelocity(eNewUnits)
-        If Math.Abs(dblFactor + 1) < Single.Epsilon Or Math.Abs(dblFactor) < Single.Epsilon Then
+        If stdNum.Abs(dblFactor + 1) < Single.Epsilon Or stdNum.Abs(dblFactor) < Single.Epsilon Then
             ConvertLinearVelocity = -1
         Else
             ConvertLinearVelocity = dblValue / dblFactor
@@ -863,14 +865,14 @@ Public Class MWCapillaryFlowClass
         End If
 
         dblFactor = FactorMassFlowRate(eCurrentUnits)
-        If Math.Abs(dblFactor + 1) < Single.Epsilon Then
+        If stdNum.Abs(dblFactor + 1) < Single.Epsilon Then
             Return -1
         Else
             dblValue = dblMassFlowRateIn * dblFactor
         End If
 
         dblFactor = FactorMassFlowRate(eNewUnits)
-        If Math.Abs(dblFactor + 1) < Single.Epsilon Or Math.Abs(dblFactor) < Single.Epsilon Then
+        If stdNum.Abs(dblFactor + 1) < Single.Epsilon Or stdNum.Abs(dblFactor) < Single.Epsilon Then
             Return -1
         Else
             Return dblValue / dblFactor
@@ -886,14 +888,14 @@ Public Class MWCapillaryFlowClass
         End If
 
         dblFactor = FactorMoles(eCurrentUnits)
-        If Math.Abs(dblFactor + 1) < Single.Epsilon Then
+        If stdNum.Abs(dblFactor + 1) < Single.Epsilon Then
             Return -1
         Else
             dblValue = dblMolesIn * dblFactor
         End If
 
         dblFactor = FactorMoles(eNewUnits)
-        If Math.Abs(dblFactor + 1) < Single.Epsilon Or Math.Abs(dblFactor) < Single.Epsilon Then
+        If stdNum.Abs(dblFactor + 1) < Single.Epsilon Or stdNum.Abs(dblFactor) < Single.Epsilon Then
             Return -1
         Else
             Return dblValue / dblFactor
@@ -910,14 +912,14 @@ Public Class MWCapillaryFlowClass
         End If
 
         dblFactor = FactorPressure(eCurrentUnits)
-        If Math.Abs(dblFactor + 1) < Single.Epsilon Then
+        If stdNum.Abs(dblFactor + 1) < Single.Epsilon Then
             Return -1
         Else
             dblValue = dblPressureIn * dblFactor
         End If
 
         dblFactor = FactorPressure(eNewUnits)
-        If Math.Abs(dblFactor + 1) < Single.Epsilon Or Math.Abs(dblFactor) < Single.Epsilon Then
+        If stdNum.Abs(dblFactor + 1) < Single.Epsilon Or stdNum.Abs(dblFactor) < Single.Epsilon Then
             Return -1
         Else
             Return dblValue / dblFactor
@@ -973,14 +975,14 @@ Public Class MWCapillaryFlowClass
         End If
 
         dblFactor = FactorTime(eCurrentUnits)
-        If Math.Abs(dblFactor + 1) < Single.Epsilon Then
+        If stdNum.Abs(dblFactor + 1) < Single.Epsilon Then
             Return -1
         Else
             dblValue = dblTimeIn * dblFactor
         End If
 
         dblFactor = FactorTime(eNewUnits)
-        If Math.Abs(dblFactor + 1) < Single.Epsilon Or Math.Abs(dblFactor) < Single.Epsilon Then
+        If stdNum.Abs(dblFactor + 1) < Single.Epsilon Or stdNum.Abs(dblFactor) < Single.Epsilon Then
             Return -1
         Else
             Return dblValue / dblFactor
@@ -996,14 +998,14 @@ Public Class MWCapillaryFlowClass
         End If
 
         dblFactor = FactorViscosity(eCurrentUnits)
-        If Math.Abs(dblFactor + 1) < Single.Epsilon Then
+        If stdNum.Abs(dblFactor + 1) < Single.Epsilon Then
             Return -1
         Else
             dblValue = dblViscosityIn * dblFactor
         End If
 
         dblFactor = FactorViscosity(eNewUnits)
-        If Math.Abs(dblFactor + 1) < Single.Epsilon Or Math.Abs(dblFactor) < Single.Epsilon Then
+        If stdNum.Abs(dblFactor + 1) < Single.Epsilon Or stdNum.Abs(dblFactor) < Single.Epsilon Then
             Return -1
         Else
             Return dblValue / dblFactor
@@ -1019,14 +1021,14 @@ Public Class MWCapillaryFlowClass
         End If
 
         dblFactor = FactorVolFlowRate(eCurrentUnits)
-        If Math.Abs(dblFactor + 1) < Single.Epsilon Then
+        If stdNum.Abs(dblFactor + 1) < Single.Epsilon Then
             Return -1
         Else
             dblValue = dblVolFlowRateIn * dblFactor
         End If
 
         dblFactor = FactorVolFlowRate(eNewUnits)
-        If Math.Abs(dblFactor + 1) < Single.Epsilon Or Math.Abs(dblFactor) < Single.Epsilon Then
+        If stdNum.Abs(dblFactor + 1) < Single.Epsilon Or stdNum.Abs(dblFactor) < Single.Epsilon Then
             Return -1
         Else
             Return dblValue / dblFactor
@@ -1042,14 +1044,14 @@ Public Class MWCapillaryFlowClass
         End If
 
         dblFactor = FactorVolume(eCurrentUnits)
-        If Math.Abs(dblFactor + 1) < Single.Epsilon Then
+        If stdNum.Abs(dblFactor + 1) < Single.Epsilon Then
             Return -1
         Else
             dblValue = dblVolume * dblFactor
         End If
 
         dblFactor = FactorVolume(eNewUnits)
-        If Math.Abs(dblFactor + 1) < Single.Epsilon Or Math.Abs(dblFactor) < Single.Epsilon Then
+        If stdNum.Abs(dblFactor + 1) < Single.Epsilon Or stdNum.Abs(dblFactor) < Single.Epsilon Then
             Return -1
         Else
             Return dblValue / dblFactor
@@ -1063,7 +1065,7 @@ Public Class MWCapillaryFlowClass
     Private Function FactorConcentration(ByRef eUnits As ucoUnitsConcentrationConstants, Optional dblSampleMass As Double = 0) As Double
         Dim dblFactor As Double
 
-        If Math.Abs(dblSampleMass) < Single.Epsilon Then
+        If stdNum.Abs(dblSampleMass) < Single.Epsilon Then
             dblFactor = -1
         Else
             Select Case eUnits

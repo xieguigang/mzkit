@@ -79,6 +79,7 @@ Imports System.Runtime.InteropServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Language
 Imports PNNL.OMICS.MwtWinDll.MolecularWeightCalculator
+Imports stdNum = System.Math
 
 Namespace FormulaFinder
 
@@ -580,8 +581,8 @@ Namespace FormulaFinder
             Dim dblMtoZ As Double, dblOriginalMtoZ As Double
 
             ' The original target is the target m/z; assure this compound has that m/z
-            If Math.Abs(totalCharge) > 0.5 Then
-                dblMtoZ = Math.Abs(totalMass / totalCharge)
+            If stdNum.Abs(totalCharge) > 0.5 Then
+                dblMtoZ = stdNum.Abs(totalMass / totalCharge)
             Else
                 dblMtoZ = 0
             End If
@@ -736,7 +737,7 @@ Namespace FormulaFinder
 
                 ' Uncomment to debug
                 'Dim computedMass = mElementAndMassRoutines.ComputeFormulaWeight(sbEmpiricalFormula.ToString())
-                'If Math.Abs(computedMass - totalMass) > massToleranceDa Then
+                'If stdNum.Abs(computedMass - totalMass) > massToleranceDa Then
                 '    Console.WriteLine("Wrong result: " & sbEmpiricalFormula.ToString())
                 'End If
 
@@ -938,7 +939,7 @@ Namespace FormulaFinder
             Dim correctedCharge = totalCharge
 
             If udtElementNum.C + udtElementNum.Si >= 1 Then
-                If udtElementNum.H > 0 And Math.Abs(mElementAndMassRoutines.GetElementStatInternal(1, esElementStatsConstants.esCharge) - 1) < Single.Epsilon Then
+                If udtElementNum.H > 0 And stdNum.Abs(mElementAndMassRoutines.GetElementStatInternal(1, esElementStatsConstants.esCharge) - 1) < Single.Epsilon Then
                     ' Since carbon or silicon are present, assume the hydrogens should be negative
                     ' Subtract udtElementNum.H * 2 since hydrogen is assigned a +1 charge if ElementStats(1).Charge = 1
                     correctedCharge -= udtElementNum.H * 2
@@ -1472,9 +1473,9 @@ Namespace FormulaFinder
                     searchResult.Mass = totalMass
                 End If
 
-                If searchOptions.FindCharge AndAlso Math.Abs(totalCharge) > 0.1 Then
+                If searchOptions.FindCharge AndAlso stdNum.Abs(totalCharge) > 0.1 Then
                     ' Compute m/z value
-                    searchResult.MZ = Math.Abs(totalMass / totalCharge)
+                    searchResult.MZ = stdNum.Abs(totalMass / totalCharge)
                 End If
 
                 Return searchResult
@@ -1507,7 +1508,7 @@ Namespace FormulaFinder
             mzSearchChargeMin = searchOptions.ChargeMin
             mzSearchChargeMax = searchOptions.ChargeMax
 
-            mzSearchChargeMax = Math.Max(Math.Abs(mzSearchChargeMin), Math.Abs(mzSearchChargeMax))
+            mzSearchChargeMax = stdNum.Max(Math.Abs(mzSearchChargeMin), stdNum.Abs(mzSearchChargeMax))
             mzSearchChargeMin = 1
 
             If mzSearchChargeMax < mzSearchChargeMin Then mzSearchChargeMax = mzSearchChargeMin
@@ -2202,7 +2203,7 @@ Namespace FormulaFinder
             If calculationMode = eCalculationMode.MatchPercentComposition Then
                 Dim totalTargetPercentComp = GetTotalPercentComposition()
 
-                If Math.Abs(totalTargetPercentComp - 100) > Single.Epsilon Then
+                If stdNum.Abs(totalTargetPercentComp - 100) > Single.Epsilon Then
                     ReportError("Sum of the target percentages must be 100%; it is currently " + totalTargetPercentComp.ToString("0.0") + "%")
                     Return False
                 End If
