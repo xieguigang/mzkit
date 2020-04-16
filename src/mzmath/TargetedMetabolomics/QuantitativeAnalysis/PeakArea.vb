@@ -221,9 +221,7 @@ Public Module PeakArea
             End If
         End If
 
-        Dim points As PointF() = rawPoints _
-            .BSpline(bsplineDegree, bsplineDensity) _
-            .ToArray
+        Dim points As PointF() = B_Spline.BSpline(rawPoints, bsplineDegree, bsplineDensity).ToArray
         Dim baseline# = chromatogram.Baseline(baselineQuantile)
         Dim windows = points _
             .SlideWindows(2) _
