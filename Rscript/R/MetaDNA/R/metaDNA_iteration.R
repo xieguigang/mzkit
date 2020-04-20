@@ -1,3 +1,11 @@
+#Region "Microsoft.ROpen::c626a160aeec4dc57a4aad3b7171e2a0, metaDNA_iteration.R"
+
+    # Summaries:
+
+    # metaDNA.iteration <- function(identify, filter.skips,unknown, do.align,match.kegg,score.cutoff,network) {do.Predicts <- function(KEGG_cpd, identified, KEGG.partners, unknown.query) {do.infer <- function(seed) {...
+
+#End Region
+
 #' Run a metaDNA prediction iteration
 #'
 #' @param identify The seeds data for the metaDNA algorithm.

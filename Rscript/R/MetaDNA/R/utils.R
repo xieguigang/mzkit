@@ -1,3 +1,12 @@
+#Region "Microsoft.ROpen::38808013a2bc47ab970082f6c17199f1, utils.R"
+
+    # Summaries:
+
+    # create_filter.skips <- function(kegg_id.skips, debug.echo = TRUE) {if (kegg_id.skips %=>% IsNothing) {...
+    # filter.skips <- function(partners) {if (partners %=>% IsNothing) {...
+
+#End Region
+
 #' Create skips handler for KEGG id
 #'
 #' @param kegg_id.skips A character vector that contains KEGG id
