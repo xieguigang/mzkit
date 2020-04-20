@@ -95,7 +95,8 @@ save.network <- function(infer, outputdir, fileName = "MetaDNA.Xml") {
     out <- XML.Framework(
         write    = text$println,
         do.write = function(write) do.write.network(write, infer),
-        rootName = "MetaDNA"
+        rootName = "MetaDNA",
+		xmlns    = "http://www.bionovogene.com/"
     );
 
     text$close();
