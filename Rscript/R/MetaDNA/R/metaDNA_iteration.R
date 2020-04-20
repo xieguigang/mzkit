@@ -1,8 +1,9 @@
-#Region "Microsoft.ROpen::40d2970b45470a97224907a0b1931446, metaDNA_iteration.R"
+#Region "Microsoft.ROpen::e51bbda378151807170d2051fb0c32e9, metaDNA_iteration.R"
 
     # Summaries:
 
-    # metaDNA.iteration <- function(identify, filter.skips,unknown, do.align,match.kegg,score.cutoff,network) {do.Predicts <- function(KEGG_cpd, identified, KEGG.partners, unknown.query) {   do.infer <- function(seed) {...
+    # metaDNA.iteration <- function(identify, filter.skips,unknown, do.align,match.kegg,score.cutoff,network) {...
+    # do.Predicts <- function(KEGG_cpd, identified, KEGG.partners, unknown.query) {do.infer <- function(seed) {...
 
 #End Region
 
@@ -26,68 +27,6 @@ metaDNA.iteration <- function(identify, filter.skips,
                               match.kegg,
                               score.cutoff,
                               network) {
-
-    do.Predicts <- function(KEGG_cpd, identified, KEGG.partners, unknown.query) {
-        do.infer <- function(seed) {
-            # get trace information of current seed:
-            #
-            # The seed$feature is the ms1 feature id of the identified seed
-            # The seed$ref is the ms2 index of the identified seed, used for retrive
-            # the ms2 spectrum mnatrix data
-            trace <- seed$ref;
-            trace <- list(
-                # The unknown infer elongation path
-                path   = seed$trace %||% (seed %=>% trace.node),
-                KEGG   = seed$KEGG,
-                # ms feature of current seed
-                parent = sprintf("%s#%s", trace$file, trace$scan),
-                ref    = seed$feature
-            );
-
-            # do iteration
-            metaDNA.impl(
-                unknown.query = unknown.query,
-                identify.ms2  = seed$spectra,
-                # trace path is debug used only
-                # to visualize how the seeds extends to
-                # other metabolite in KEGG reaction
-                # network
-                trace         = trace,
-                unknown       = unknown,
-                ms2.align     = do.align,
-                score.cutoff  = score.cutoff
-            );
-        }
-
-        # element structure in unknown.query:
-        #
-        # [1] "unknown.index"  "unknown.mz"     "precursor_type" "kegg"
-        # [5] "ppm"
-        #
-        # unknown.index is the index of the unknown metabolite in input sequence
-        # unknown.mz is the corresponding m/z
-        # ppm is the ppm value for unknown mz match with the KEGG compound m/z
-        # KEGG.partners, identify.ms2, unknown, ms2.align, unknow.matches
-        infer <- if (length(identified) > (MetaDNA::cluster.cores())) {
-            # parallel
-            envir.exports <- c("unknown.query", "unknown", "do.align", "score.cutoff", "do.infer");
-            cl <- makeCluster(MetaDNA::cluster.cores());
-            registerDoParallel(cl);
-
-            output <- foreach(seed = identified, .export = envir.exports) %dopar% {
-                do.infer(seed);
-            }
-
-            stopCluster(cl);
-            output;
-        } else {
-            lapply(identified, do.infer);
-        }
-
-        # returns the metaDNA network infer result
-        # of current iteration.
-        infer;
-    }
 
     # tick.each
     # lapply
@@ -133,4 +72,66 @@ metaDNA.iteration <- function(identify, filter.skips,
     });
 
     seeds;
+}
+
+do.Predicts <- function(KEGG_cpd, identified, KEGG.partners, unknown.query) {
+    do.infer <- function(seed) {
+        # get trace information of current seed:
+        #
+        # The seed$feature is the ms1 feature id of the identified seed
+        # The seed$ref is the ms2 index of the identified seed, used for retrive
+        # the ms2 spectrum mnatrix data
+        trace <- seed$ref;
+        trace <- list(
+            # The unknown infer elongation path
+            path   = seed$trace %||% (seed %=>% trace.node),
+            KEGG   = seed$KEGG,
+            # ms feature of current seed
+            parent = sprintf("%s#%s", trace$file, trace$scan),
+            ref    = seed$feature
+        );
+
+        # do iteration
+        metaDNA.impl(
+            unknown.query = unknown.query,
+            identify.ms2  = seed$spectra,
+            # trace path is debug used only
+            # to visualize how the seeds extends to
+            # other metabolite in KEGG reaction
+            # network
+            trace         = trace,
+            unknown       = unknown,
+            ms2.align     = do.align,
+            score.cutoff  = score.cutoff
+        );
+    }
+
+    # element structure in unknown.query:
+    #
+    # [1] "unknown.index"  "unknown.mz"     "precursor_type" "kegg"
+    # [5] "ppm"
+    #
+    # unknown.index is the index of the unknown metabolite in input sequence
+    # unknown.mz is the corresponding m/z
+    # ppm is the ppm value for unknown mz match with the KEGG compound m/z
+    # KEGG.partners, identify.ms2, unknown, ms2.align, unknow.matches
+    infer <- if (length(identified) > (MetaDNA::cluster.cores())) {
+        # parallel
+        envir.exports <- c("unknown.query", "unknown", "do.align", "score.cutoff", "do.infer");
+        cl <- makeCluster(MetaDNA::cluster.cores());
+        registerDoParallel(cl);
+
+        output <- foreach(seed = identified, .export = envir.exports) %dopar% {
+            do.infer(seed);
+        }
+
+        stopCluster(cl);
+        output;
+    } else {
+        lapply(identified, do.infer);
+    }
+
+    # returns the metaDNA network infer result
+    # of current iteration.
+    infer;
 }
