@@ -64,14 +64,14 @@ metaDNA.iteration <- function(identify, filter.skips,
         if (IsNothing(unknown.query)) {
             NULL;
         } else {
-            do.Predicts(KEGG_cpd, identified, KEGG.partners, unknown.query);
+            do.Predicts(KEGG_cpd, identified, KEGG.partners, unknown.query, unknown, do.align, score.cutoff);
         }
     });
 
     seeds;
 }
 
-do.Predicts <- function(KEGG_cpd, identified, KEGG.partners, unknown.query) {
+do.Predicts <- function(KEGG_cpd, identified, KEGG.partners, unknown.query, unknown, do.align, score.cutoff) {
     do.infer <- function(seed) {
         # get trace information of current seed:
         #
