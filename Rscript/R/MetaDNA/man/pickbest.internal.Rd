@@ -11,7 +11,7 @@ pickbest.internal(align)
 }
 \description{
 due to the reason of all of the ms2 spectra in current one peak pack
-is corresponding to one ms1 feature, so that the precursor m/z and rt 
+is corresponding to one ms1 feature, so that the precursor m/z and rt
 all the same. so no needs for rt.adjust score at here
 
 we just required compare the best dot product score at here

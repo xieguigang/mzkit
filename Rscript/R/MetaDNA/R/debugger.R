@@ -1,4 +1,4 @@
-#Region "Microsoft.ROpen::0e36614af14142a3cda53ac061f9c553, debugger.R"
+#Region "Microsoft.ROpen::6a4949c82f6e1e25e9eac98bbf1073b9, debugger.R"
 
     # Summaries:
 
@@ -23,7 +23,7 @@
 #' @param seed The identified metaDNA seed data.
 #'
 trace.node <- function(seed) {
-	sprintf("%s|%s#%s#%s", seed$KEGG, seed$feature, seed$ref$file, seed$ref$scan);
+    sprintf("%s|%s#%s#%s", seed$KEGG, seed$feature, seed$ref$file, seed$ref$scan);
 }
 
 #' Network Visualize of the MetaDNA result
@@ -32,56 +32,56 @@ trace.node <- function(seed) {
 #'
 #'
 network.trace <- function(result) {
-	infer.routine <- list();
+    infer.routine <- list();
 
-	tick <- tick.helper(length(result));
-	cat("\n");
-	cat("\n");
-	cat("  Progress%: ");
+    tick <- tick.helper(length(result));
+    cat("\n");
+    cat("\n");
+    cat("  Progress%: ");
 
-	for (cluster in result) {
-		tick();
+    for (cluster in result) {
+        tick();
 
-		if (cluster %=>% IsNothing) {
-			next;
-		}
+        if (cluster %=>% IsNothing) {
+            next;
+        }
 
-		for (block in cluster) {
-			if (block %=>% IsNothing) {
-				next;
-			}
+        for (block in cluster) {
+            if (block %=>% IsNothing) {
+                next;
+            }
 
-			for (feature in block) {
-				# the trace data is a string vector
-				# contains the metaDNA infer routine information
-				# we can use this information for create network
-				# visualization data.
-				#
-				# Each node value in this trace vector is in format
-				# produced by ``trace.node`` function.
-				#
-				trace   <- feature$align$trace;
-				scores  <- feature$align$score;
-				kegg_id <- feature$kegg.info$kegg$ID;
-				hit     <- feature$align$ms2.name;
-				hit     <- sprintf(
-					"%s|%s#%s|%s|%s,%s",
-					feature$name, hit$file, hit$scan,
-					feature$feature$maxinto,
-					scores[1], scores[2]
-				);
+            for (feature in block) {
+                # the trace data is a string vector
+                # contains the metaDNA infer routine information
+                # we can use this information for create network
+                # visualization data.
+                #
+                # Each node value in this trace vector is in format
+                # produced by ``trace.node`` function.
+                #
+                trace   <- feature$align$trace;
+                scores  <- feature$align$score;
+                kegg_id <- feature$kegg.info$kegg$ID;
+                hit     <- feature$align$ms2.name;
+                hit     <- sprintf(
+                    "%s|%s#%s|%s|%s,%s",
+                    feature$name, hit$file, hit$scan,
+                    feature$feature$maxinto,
+                    scores[1], scores[2]
+                );
 
-				paralog        <- infer.routine[[kegg_id]] %||% list();
-				paralog[[hit]] <- trace;
+                paralog        <- infer.routine[[kegg_id]] %||% list();
+                paralog[[hit]] <- trace;
 
-				infer.routine[[kegg_id]] <- paralog;
-			}
-		}
-	}
+                infer.routine[[kegg_id]] <- paralog;
+            }
+        }
+    }
 
-	cat("\n\n");
+    cat("\n\n");
 
-	infer.routine;
+    infer.routine;
 }
 
 #' Save metaDNA network
@@ -89,16 +89,16 @@ network.trace <- function(result) {
 #' @details save network data into Xml file for export data for network visualization.
 #'
 save.network <- function(infer, outputdir, fileName = "MetaDNA.Xml") {
-	file <- sprintf("%s/%s", outputdir, fileName);
-	text <- textWriter(file);
+    file <- sprintf("%s/%s", outputdir, fileName);
+    text <- textWriter(file);
 
-	out <- XML.Framework(
-		write    = text$println,
-		do.write = function(write) do.write.network(write, infer),
-		rootName = "MetaDNA"
-	);
+    out <- XML.Framework(
+        write    = text$println,
+        do.write = function(write) do.write.network(write, infer),
+        rootName = "MetaDNA"
+    );
 
-	text$close();
+    text$close();
 }
 
 #' Write metaDNA infer network
@@ -107,79 +107,79 @@ save.network <- function(infer, outputdir, fileName = "MetaDNA.Xml") {
 #' @param infer The metaDNA infer network for the resulted unknown metabolite feature identification.
 #'
 do.write.network <- function(write, infer) {
-	totals <- names(infer) %=>% length;
-	n      <- 0;
+    totals <- names(infer) %=>% length;
+    n      <- 0;
 
-	write("<!--
+    write("<!--
 
 	How to read MetaDNA infer network debug data:
 
 	1. <compound> node means the infered KEGG compound result
 	a. [kegg] is the kegg compound id for the metaDNA infer result of current.
-	b. [candidates] is a number for indicate that how many candidate 
-					unknown metabolite feature in your sample that may 
+	b. [candidates] is a number for indicate that how many candidate
+					unknown metabolite feature in your sample that may
 					be identified as the current kegg compound.
 
-	2. <unknown> node is a unknown metabolite feature that is a candidate 
+	2. <unknown> node is a unknown metabolite feature that is a candidate
 				that will be identified as current kegg compound
 		a. [name] is the xcms guid of the unknown metabolite feature
 		b. [Msn] is a coordination for located the current unknown feature
 		c. [length] is a number of the infer chain nodes
 		d. [intensity] is the ms1 intensity data of current unknown feature
-		e. [scores] is the ms2 alignment score of current unknown feature 
+		e. [scores] is the ms2 alignment score of current unknown feature
 					against the nearest <node> in its metaDNA infer chain.
-			
-		3. <node> element is a kegg metabolite node in unknown features infer 
+
+		3. <node> element is a kegg metabolite node in unknown features infer
 				chain in metaDNA algorithm.
 			a. [kegg] The id of kegg compound seeds
-			b. [ms1] The ms1 feature that identified as current kegg compound 
+			b. [ms1] The ms1 feature that identified as current kegg compound
 					and used as metaDNA seeds.
-			c. The node text value is a coordination for located the current 
+			c. The node text value is a coordination for located the current
 				metaDNA seeds feature in user sample data.
 
 	-->");
 
-	for (kegg_id in names(infer)) {
-		trace.cluster <- infer[[kegg_id]];
+    for (kegg_id in names(infer)) {
+        trace.cluster <- infer[[kegg_id]];
 
-		if (debug.echo) {
-			print(sprintf("  [%s/%s] %s", n, totals, kegg_id));
-		    n <- n + 1;
-		}
+        if (debug.echo) {
+            print(sprintf("  [%s/%s] %s", n, totals, kegg_id));
+            n <- n + 1;
+        }
 
-		write('<compound kegg="%s" candidates="%s">', kegg_id, length(trace.cluster));
+        write('<compound kegg="%s" candidates="%s">', kegg_id, length(trace.cluster));
 
-		for (unknown_name in names(trace.cluster)) {
-			trace <- trace.cluster[[unknown_name]];
-			# `M137T1026|lxy-CID30.mzXML#3380|29188.0625|0.889599165343844,0.821310092994763`
-			# id|ms2_index|maxinto|forward,reverse
-			unknown_name <- Strings.Split(unknown_name, "\\|");
-			align_scores <- Strings.Split(unknown_name[4], ",");
+        for (unknown_name in names(trace.cluster)) {
+            trace <- trace.cluster[[unknown_name]];
+            # `M137T1026|lxy-CID30.mzXML#3380|29188.0625|0.889599165343844,0.821310092994763`
+            # id|ms2_index|maxinto|forward,reverse
+            unknown_name <- Strings.Split(unknown_name, "\\|");
+            align_scores <- Strings.Split(unknown_name[4], ",");
 
-			write('<unknown name="%s" Msn="%s" length="%s" intensity="%s" scores="%s">',
-				unknown_name[1],
-				unknown_name[2],
-				length(trace),
-				unknown_name[3],
-				sprintf("%s %s", align_scores[1], align_scores[2])
-			);
+            write('<unknown name="%s" Msn="%s" length="%s" intensity="%s" scores="%s">',
+                  unknown_name[1],
+                  unknown_name[2],
+                  length(trace),
+                  unknown_name[3],
+                  sprintf("%s %s", align_scores[1], align_scores[2])
+            );
 
-			for(node in trace) {
-				node    <- Strings.Split(node, "\\|");
-				id      <- node[1]
-				feature <- Strings.Split(node[2], "[#]");
-				node    <- sprintf("%s#%s", feature[2], feature[3]);
+            for(node in trace) {
+                node    <- Strings.Split(node, "\\|");
+                id      <- node[1]
+                feature <- Strings.Split(node[2], "[#]");
+                node    <- sprintf("%s#%s", feature[2], feature[3]);
 
-				write('<node kegg="%s" ms1="%s">%s</node>', id, feature[1], node);
-			}
+                write('<node kegg="%s" ms1="%s">%s</node>', id, feature[1], node);
+            }
 
-			write('</unknown>');
-		}
+            write('</unknown>');
+        }
 
-		write("</compound>");
-	}
+        write("</compound>");
+    }
 
-	cat("\n\n");
+    cat("\n\n");
 
-	invisible(NULL);
+    invisible(NULL);
 }

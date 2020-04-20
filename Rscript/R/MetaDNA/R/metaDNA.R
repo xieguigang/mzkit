@@ -1,8 +1,8 @@
-#Region "Microsoft.ROpen::be8fcc12d1d1995969244b7aefcfb354, metaDNA.R"
+#Region "Microsoft.ROpen::4e99a93f1842afd0bbcb6c249e2b3120, metaDNA.R"
 
     # Summaries:
 
-    # metaDNA <- function(identify, unknown, do.align,precursor_type= c("[M+H]+", "[M]+"),tolerance     = mzkit::assert.deltaMass(0.3),rt.adjust     = function(rt, KEGG_id) 1,score.cutoff  = 0.8,kegg_id.skips = NULL,seeds.all     = TRUE,seeds.topn    = 5,iterations    = 20, network.class_links = NULL,libtype = 1) {...
+    # metaDNA <- function(identify, unknown, do.align,precursor_type= c("[M+H]+", "[M]+"),tolerance     = mzkit::assert.deltaMass(0.3),rt.adjust     = function(rt, KEGG_id) 1,score.cutoff  = 0.8,kegg_id.skips = NULL,seeds.all     = TRUE,seeds.topn    = 5,iterations    = 20,network.class_links = NULL,libtype = 1) {...
 
 #End Region
 
@@ -82,37 +82,37 @@ Imports(Microsoft.VisualBasic.Language);
 metaDNA <- function(identify, unknown, do.align,
                     precursor_type      = c("[M+H]+", "[M]+"),
                     tolerance           = mzkit::assert.deltaMass(0.3),
-					rt.adjust           = function(rt, KEGG_id) 1,
+                    rt.adjust           = function(rt, KEGG_id) 1,
                     score.cutoff        = 0.8,
                     kegg_id.skips       = NULL,
-					seeds.all           = TRUE,
-					seeds.topn          = 5,
-                    iterations          = 20, 
-					network.class_links = NULL,
-					libtype             = 1) {
+                    seeds.all           = TRUE,
+                    seeds.topn          = 5,
+                    iterations          = 20,
+                    network.class_links = NULL,
+                    libtype             = 1) {
 
-	require(foreach);
-	require(doParallel);
+    require(foreach);
+    require(doParallel);
 
     cat("\n");
 
-	if (IsNothing(network.class_links)) {
-		# use default kegg reaction class network data
-		# data/metaDNA_kegg.rda
-		xLoad("metaDNA_kegg.rda");
+    if (IsNothing(network.class_links)) {
+        # use default kegg reaction class network data
+        # data/metaDNA_kegg.rda
+        xLoad("metaDNA_kegg.rda");
 
-		network.class_links <- network;
-	}
+        network.class_links <- network;
+    }
 
-	network <- network.class_links;
+    network <- network.class_links;
 
     print(sprintf(" RUN [%s] pipline....", network$name));
     cat("\n");
-	
-	print(network$description);
-	print(network$built);
-	
-	network.class_links <- network$network;
+
+    print(network$description);
+    print(network$built);
+
+    network.class_links <- network$network;
 
     # 1. Find all of the related KEGG compound by KEGG reaction link for
     #    identify metabolites
@@ -121,102 +121,102 @@ metaDNA <- function(identify, unknown, do.align,
     print("KEGG compound match with tolerance:");
     print(tolerance);
 
-	timer        <- benchmark();
-	unknown.mz   <- sapply(unknown, function(x) x$mz) %=>% as.numeric;
-	filter.skips <- kegg_id.skips %=>% create_filter.skips;
+    timer        <- benchmark();
+    unknown.mz   <- sapply(unknown, function(x) x$mz) %=>% as.numeric;
+    filter.skips <- kegg_id.skips %=>% create_filter.skips;
 
-	# The match.kegg lambda function implements:
-	#
-	# Query the unknown ms feature by a given KEGG partner id list
-	#
+    # The match.kegg lambda function implements:
+    #
+    # Query the unknown ms feature by a given KEGG partner id list
+    #
     match.kegg <- kegg.match.handler(
-      unknown.mz     = unknown.mz,
-      precursor_type = precursor_type,
-      tolerance      = tolerance,
-	  libtype        = libtype
+        unknown.mz     = unknown.mz,
+        precursor_type = precursor_type,
+        tolerance      = tolerance,
+        libtype        = libtype
     );
 
-	if (seeds.all && seeds.topn > 0) {
-		print(sprintf("metaDNA only used top %s best hit as seeds...", seeds.topn));
-	} else if (seeds.all) {
-		print("metaDNA will used all of the hits as seeds...");
-	} else {
-		print("metaDNA will used the top best hit as seeds...");
-	}
+    if (seeds.all && seeds.topn > 0) {
+        print(sprintf("metaDNA only used top %s best hit as seeds...", seeds.topn));
+    } else if (seeds.all) {
+        print("metaDNA will used all of the hits as seeds...");
+    } else {
+        print("metaDNA will used the top best hit as seeds...");
+    }
 
-	print("do First iteration....");
+    print("do First iteration....");
 
     output <- metaDNA.iteration(
         identify, filter.skips,
         unknown, do.align,
         match.kegg,
         score.cutoff,
-		network = network.class_links
+        network = network.class_links
     );
 
-	memory.sample("[metaDNA]    do First iteration...");
+    memory.sample("[metaDNA]    do First iteration...");
 
-	seeds         <- extends.seeds(output, rt.adjust, seeds.all, seeds.topn = seeds.topn);
-	metaDNA.out   <- output;
-	stats         <- NULL;
-	totals        <- 0;
-	kegg_id.skips <- append(kegg_id.skips, names(seeds));
-	filter.skips  <- kegg_id.skips %=>% create_filter.skips;
+    seeds         <- extends.seeds(output, rt.adjust, seeds.all, seeds.topn = seeds.topn);
+    metaDNA.out   <- output;
+    stats         <- NULL;
+    totals        <- 0;
+    kegg_id.skips <- append(kegg_id.skips, names(seeds));
+    filter.skips  <- kegg_id.skips %=>% create_filter.skips;
 
-	rm(list = "output");
+    rm(list = "output");
 
-	n      <- length(seeds);
-	totals <- totals + n;
-	stats  <- rbind(stats, c(0, n, totals, timer()$since_last));
+    n      <- length(seeds);
+    totals <- totals + n;
+    stats  <- rbind(stats, c(0, n, totals, timer()$since_last));
 
-	if (iterations > 1) {
-	    for(i in 1:iterations) {
-			print(sprintf("   do metaDNA Iteration %s ...", i));
+    if (iterations > 1) {
+        for(i in 1:iterations) {
+            print(sprintf("   do metaDNA Iteration %s ...", i));
 
-			output <- metaDNA.iteration(
-				identify     = seeds,
-				filter.skips = filter.skips,
-				unknown      = unknown,
-				do.align     = do.align,
-				match.kegg   = match.kegg,
-				score.cutoff = score.cutoff,
-				network      = network.class_links
-			);
-			metaDNA.out <- append(metaDNA.out, output);
+            output <- metaDNA.iteration(
+                identify     = seeds,
+                filter.skips = filter.skips,
+                unknown      = unknown,
+                do.align     = do.align,
+                match.kegg   = match.kegg,
+                score.cutoff = score.cutoff,
+                network      = network.class_links
+            );
+            metaDNA.out <- append(metaDNA.out, output);
 
-			# using identify output as seeds for next iteration
-			seeds <- extends.seeds(output, rt.adjust, seeds.all, seeds.topn = seeds.topn);
-			n <- length(seeds);
+            # using identify output as seeds for next iteration
+            seeds <- extends.seeds(output, rt.adjust, seeds.all, seeds.topn = seeds.topn);
+            n <- length(seeds);
 
-			if (n == 0) {
-				if (debug.echo) {
-					print("No more metabolite can be predicted, exit iterations...");
-				}
+            if (n == 0) {
+                if (debug.echo) {
+                    print("No more metabolite can be predicted, exit iterations...");
+                }
 
-				break;
-			} else {
-				print(sprintf("  Found %s kegg compound:", n));
-				# print(names(seeds));
+                break;
+            } else {
+                print(sprintf("  Found %s kegg compound:", n));
+                # print(names(seeds));
 
-				kegg_id.skips <- append(kegg_id.skips, names(seeds));
-				filter.skips  <- create_filter.skips(kegg_id.skips, FALSE);
-				totals        <- totals + n;
-				stats         <- rbind(stats, c(i, n, totals, timer()$since_last));
-			}
+                kegg_id.skips <- append(kegg_id.skips, names(seeds));
+                filter.skips  <- create_filter.skips(kegg_id.skips, FALSE);
+                totals        <- totals + n;
+                stats         <- rbind(stats, c(i, n, totals, timer()$since_last));
+            }
 
-			memory.sample(sprintf("[metaDNA]    do metaDNA Iteration %s ...", i));
-		}
+            memory.sample(sprintf("[metaDNA]    do metaDNA Iteration %s ...", i));
+        }
 
-		if (!is.null(stats)) {
-			colnames(stats) <- c("Iteration", "Predicts", "Total", "Elapsed(ms)");
-			rownames(stats) <- stats[, "Iteration"];
+        if (!is.null(stats)) {
+            colnames(stats) <- c("Iteration", "Predicts", "Total", "Elapsed(ms)");
+            rownames(stats) <- stats[, "Iteration"];
 
-			print(stats);
-		}
-	}
+            print(stats);
+        }
+    }
 
-	# do memory release
-	gc();
+    # do memory release
+    gc();
 
     # at last returns the prediction result
     metaDNA.out;

@@ -1,4 +1,4 @@
-#Region "Microsoft.ROpen::784ac4c178ce5d903304f97ed1560012, algorithm.R"
+#Region "Microsoft.ROpen::f293e29168ad61ea262637db0d5d15a8, algorithm.R"
 
     # Summaries:
 
@@ -51,81 +51,81 @@
 metaDNA.impl <- function(unknown.query, identify.ms2,
                          unknown,
                          ms2.align,
-						 trace,
+                         trace,
                          score.cutoff = 0.8) {
-	# unknown.query is the kegg partner matched ms feature result:
+    # unknown.query is the kegg partner matched ms feature result:
     # It contains a data structure like:
     # {
-	#    $unknown.index (row index in peaktable)
-	#    $unknown.mz (The ms1 m/z of the unknown feature)
-	#    $precursor_type (calculate from ms1 m/z between matched KEGG partner its m/z value)
-	#    $kegg (The kegg compound annotation data, contains kegg_id, exact_mass, name, etc)
-	#    $ppm (ppm value between the unknown ms1 m/z and the matched KEGG partner m/z value)
-	#    $libmz (The m/z value that calculated from the matched KEGG partner with given precursor_type)
-	# }	
-						 
+    #    $unknown.index (row index in peaktable)
+    #    $unknown.mz (The ms1 m/z of the unknown feature)
+    #    $precursor_type (calculate from ms1 m/z between matched KEGG partner its m/z value)
+    #    $kegg (The kegg compound annotation data, contains kegg_id, exact_mass, name, etc)
+    #    $ppm (ppm value between the unknown ms1 m/z and the matched KEGG partner m/z value)
+    #    $libmz (The m/z value that calculated from the matched KEGG partner with given precursor_type)
+    # }
+
     # unknown.i integer index of the peaktable
     unknown.i <- sapply(unknown.query, function(x) x$unknown.index) %=>% unlist %=>% as.numeric;
     # subset of the peaktable by using the unknown index value
-	# the peaktable subset object contains ms1 feature and ms2 feature
+    # the peaktable subset object contains ms1 feature and ms2 feature
     unknown.features <- unknown[unknown.i];
-	
-	# the identify ms2 file#scan index
-	# use this index value for avoid self alignment bugs.
-	parent <- trace$parent;
-	
-	# 2019-03-29 these object is in length equals
-	#
-	# unknown.query
-	# unknown.i
-	# unknown.features
+
+    # the identify ms2 file#scan index
+    # use this index value for avoid self alignment bugs.
+    parent <- trace$parent;
+
+    # 2019-03-29 these object is in length equals
+    #
+    # unknown.query
+    # unknown.i
+    # unknown.features
 
     # alignment of the ms2 between the identify and unknown
     # The unknown will identified as identify.ms2 when ms2.align
     # pass the threshold cutoff.
     query.result <- lapply(1:length(unknown.features), function(i) {
-		# loop on current unknown match list from the identify kegg partners
+        # loop on current unknown match list from the identify kegg partners
         # identify for each unknown metabolite
         kegg.query <- unknown.query[[i]];
-		feature <- unknown.features[[i]];
-		
-		# peak is files and scans
+        feature <- unknown.features[[i]];
+
+        # peak is files and scans
         peak   <- feature$ms2;
-		result <- align_best.internal(
-		   ref          = identify.ms2,
-		   peak         = peak,
-		   ms2.align    = ms2.align,
-		   score.cutoff = score.cutoff,
-		   parent       = parent
-		);
+        result <- align_best.internal(
+            ref          = identify.ms2,
+            peak         = peak,
+            ms2.align    = ms2.align,
+            score.cutoff = score.cutoff,
+            parent       = parent
+        );
 
         if (!is.null(result)) {
             # name is the peaktable rownames
-			feature$ms2   <- NULL;
-			# add reference spectra matrix data
-			result$ref    <- identify.ms2;
-			result$trace  <- trace$path;
-			result$parent <- sprintf("%s#%s", trace$ref, trace$parent);
-			
+            feature$ms2   <- NULL;
+            # add reference spectra matrix data
+            result$ref    <- identify.ms2;
+            result$trace  <- trace$path;
+            result$parent <- sprintf("%s#%s", trace$ref, trace$parent);
+
             list(
-               feature   = feature,
-               kegg.info = kegg.query,
-			   # due to the reason of database did not
-			   # have this kegg compound its standard spectrum, so that
-			   # align using identify metabolite its spectrum matrix
-			   align     = result,
-			   name      = feature$ID
+                feature   = feature,
+                kegg.info = kegg.query,
+                # due to the reason of database did not
+                # have this kegg compound its standard spectrum, so that
+                # align using identify metabolite its spectrum matrix
+                align     = result,
+                name      = feature$ID
             );
         } else {
-			NULL;
-		}
+            NULL;
+        }
     });
 
-	# get all non-null result
-	query.result <- query.result[!sapply(query.result, is.null)];
-	# and then get all names of the non-null result
-	rows <- sapply(query.result, function(q) q$name) %=>% as.character;
-	names(query.result) <- rows;
+    # get all non-null result
+    query.result <- query.result[!sapply(query.result, is.null)];
+    # and then get all names of the non-null result
+    rows <- sapply(query.result, function(q) q$name) %=>% as.character;
+    names(query.result) <- rows;
 
     query.result;
 }
@@ -147,61 +147,61 @@ metaDNA.impl <- function(unknown.query, identify.ms2,
 #'
 align_best.internal <- function(ref, peak, ms2.align, score.cutoff = 0.8, parent = NA) {
 
-	# Error in `colnames<-`(`*tmp*`, value = c("ProductMz", "LibraryIntensity")) :
+    # Error in `colnames<-`(`*tmp*`, value = c("ProductMz", "LibraryIntensity")) :
     #  attempt to set 'colnames' on an object with less than two dimensions
-	if (is.null(nrow(ref))) {
-		# 2019-2-26
-		#
-		# R language have a bug about matrix subset: matrix subset with only one row
-		# will transform as vector automatic.
-		# This will cause all of the matrix operation failure.
-		#
-		# using rbind to fix this bug.
-		ref <- rbind(ref);
-	}
+    if (is.null(nrow(ref))) {
+        # 2019-2-26
+        #
+        # R language have a bug about matrix subset: matrix subset with only one row
+        # will transform as vector automatic.
+        # This will cause all of the matrix operation failure.
+        #
+        # using rbind to fix this bug.
+        ref <- rbind(ref);
+    }
 
     colnames(ref) <- c("ProductMz", "LibraryIntensity");
 
     # loop each unknown ms2 for alignment best result
-	align <- lapply(names(peak), function(fileName) {
-		file <- peak[[fileName]];
-		
-		# one raw file contains multiple ms2 scans data
-		# alignment of the seeds spectra data 
-		# with each scan in current raw file.
-		lapply(names(file), function(scan) {		
-			if (parent == sprintf("%s#%s", fileName, scan)) {
-				# This is a self alignment...
-				NULL;
-			} else {
-				unknown      <- file[[scan]];
-				align.scores <- ms2.align(unknown, ref);
-				ms2.name     <- list(
-					file = fileName,
-					scan = scan
-				);
+    align <- lapply(names(peak), function(fileName) {
+        file <- peak[[fileName]];
 
-				if (all(align.scores >= score.cutoff)) {
-					# [ms2matrix<unknown feature>, reference<unknown>, score]
-					list(
-						score     = align.scores, 
-						ms2.name  = ms2.name, 
-						candidate = unknown
-					);
-				} else {
-					NULL;
-				}
-			}
-		});
-	});
+        # one raw file contains multiple ms2 scans data
+        # alignment of the seeds spectra data
+        # with each scan in current raw file.
+        lapply(names(file), function(scan) {
+            if (parent == sprintf("%s#%s", fileName, scan)) {
+                # This is a self alignment...
+                NULL;
+            } else {
+                unknown      <- file[[scan]];
+                align.scores <- ms2.align(unknown, ref);
+                ms2.name     <- list(
+                    file = fileName,
+                    scan = scan
+                );
 
-	align %=>% pickbest.internal;
+                if (all(align.scores >= score.cutoff)) {
+                    # [ms2matrix<unknown feature>, reference<unknown>, score]
+                    list(
+                        score     = align.scores,
+                        ms2.name  = ms2.name,
+                        candidate = unknown
+                    );
+                } else {
+                    NULL;
+                }
+            }
+        });
+    });
+
+    align %=>% pickbest.internal;
 }
 
-#' Pick best alignment result for single ms1 feature 
+#' Pick best alignment result for single ms1 feature
 #'
 #' @description due to the reason of all of the ms2 spectra in current one peak pack
-#' is corresponding to one ms1 feature, so that the precursor m/z and rt 
+#' is corresponding to one ms1 feature, so that the precursor m/z and rt
 #' all the same. so no needs for rt.adjust score at here
 #'
 #' we just required compare the best dot product score at here
@@ -213,23 +213,23 @@ pickbest.internal <- function(align) {
     score      <- c();
     candidate  <- NULL;
     ms2.name   <- list();
-	
-	for(file in align) {
-		for(scan in file) {
-			if (!is.null(scan)) {
-			
-				x    <- scan$score;
-				test <- min(x);
 
-				if (test > best.score) {
-					score      <- x;
-					best.score <- test;
-					candidate  <- scan$candidate;
-					ms2.name   <- scan$ms2.name;
-				}
-			}
-		}
-	}
+    for(file in align) {
+        for(scan in file) {
+            if (!is.null(scan)) {
+
+                x    <- scan$score;
+                test <- min(x);
+
+                if (test > best.score) {
+                    score      <- x;
+                    best.score <- test;
+                    candidate  <- scan$candidate;
+                    ms2.name   <- scan$ms2.name;
+                }
+            }
+        }
+    }
 
     if (!IsNothing(score)) {
         list(candidate = candidate,

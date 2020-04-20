@@ -16,7 +16,7 @@ kegg.match(
 )
 }
 \arguments{
-\item{partners_id}{The kegg partner compound id list, which is query 
+\item{partners_id}{The kegg partner compound id list, which is query
 from the identifed KEGG seed by the reaction network definition.}
 }
 \description{

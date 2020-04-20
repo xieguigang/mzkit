@@ -1,4 +1,4 @@
-#Region "Microsoft.ROpen::0fb6395b0b7196e3b1bf0d17624992a0, zzz.R"
+#Region "Microsoft.ROpen::0f45f7fe6c882771617e79125cc4f0ee, zzz.R"
 
     # Summaries:
 
@@ -10,13 +10,13 @@
 #' Get/Set cluster cores for metaDNA iteration
 #'
 cluster.cores <- function(cores = NULL) {
-	anonymous <- "metaDNA_cluster.cores_anonymous.holder";
+    anonymous <- "metaDNA_cluster.cores_anonymous.holder";
 
-	if (!cores %=>% IsNothing) {		
-		do.call(`=`, list(anonymous, cores), envir = .GlobalEnv);
-	}
-	
-	get(anonymous, envir = .GlobalEnv);
+    if (!cores %=>% IsNothing) {
+        do.call(`=`, list(anonymous, cores), envir = .GlobalEnv);
+    }
+
+    get(anonymous, envir = .GlobalEnv);
 }
 
 #' Package loader
@@ -24,29 +24,29 @@ cluster.cores <- function(cores = NULL) {
 .onLoad <- function(libname, pkgname) {
 
     require(VisualBasic.R);
-	require(mzkit);
+    require(mzkit);
 
-	global <- globalenv();
+    global <- globalenv();
 
     # enable additional language feature
     Imports("Microsoft.VisualBasic.Data", frame = global);
     Imports("Microsoft.VisualBasic.Data.Linq", frame = global);
 
-	try({
-		list(
-		    #' The molweight module is the very basic function for other modules
-		    MolWeight     = MolWeight(),
-		    PrecursorType = PrecursorType(),
-			#' Get precursor ion calculator
-			Calculator    = list("+" = positive(), "-" = negative())
-		) %=>% Set;
+    try({
+        list(
+            #' The molweight module is the very basic function for other modules
+            MolWeight     = MolWeight(),
+            PrecursorType = PrecursorType(),
+            #' Get precursor ion calculator
+            Calculator    = list("+" = positive(), "-" = negative())
+        ) %=>% Set;
 
-		lockBinding(sym = "Calculator", env = global);
-		lockBinding(sym = "MolWeight",  env = global);		
-		
-		# Run metaDNA parallel in full power
-		cluster.cores(VisualBasic.R::getClusterCores(level = "full"));
-	});
+        lockBinding(sym = "Calculator", env = global);
+        lockBinding(sym = "MolWeight",  env = global);
+
+        # Run metaDNA parallel in full power
+        cluster.cores(VisualBasic.R::getClusterCores(level = "full"));
+    });
 
     print("Pre-defined m/z calculator:");
     cat("\n");
@@ -62,12 +62,12 @@ cluster.cores <- function(cores = NULL) {
         symbols = names(Eval(MolWeight)$weights),
         weights = Eval(MolWeight)$weights %=>% as.numeric
     ));
-	cat("\n");
+    cat("\n");
 
-	cat("\n");
-	cat(sprintf("Run metaDNA iteration use %s folk process", cluster.cores()));
-	cat("\n\n");
-	
+    cat("\n");
+    cat(sprintf("Run metaDNA iteration use %s folk process", cluster.cores()));
+    cat("\n\n");
+
     cat("You can acquire the toolkit's source code from github:");
     cat("\n\n");
     cat("     https://github.com/xieguigang/mzkit");
