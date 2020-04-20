@@ -1,4 +1,4 @@
-#Region "Microsoft.ROpen::4e99a93f1842afd0bbcb6c249e2b3120, metaDNA.R"
+#Region "Microsoft.ROpen::fddfe1da7170fa4940190ea82083e495, metaDNA.R"
 
     # Summaries:
 
@@ -114,6 +114,9 @@ metaDNA <- function(identify, unknown, do.align,
 
     network.class_links <- network$network;
 
+    rm(network);
+    gc();
+
     # 1. Find all of the related KEGG compound by KEGG reaction link for
     #    identify metabolites
     # 2. Search for unknown by using ms1 precursor_m/z compare with the
@@ -188,6 +191,8 @@ metaDNA <- function(identify, unknown, do.align,
             seeds <- extends.seeds(output, rt.adjust, seeds.all, seeds.topn = seeds.topn);
             n <- length(seeds);
 
+            rm(output);
+
             if (n == 0) {
                 if (debug.echo) {
                     print("No more metabolite can be predicted, exit iterations...");
@@ -206,13 +211,13 @@ metaDNA <- function(identify, unknown, do.align,
 
             memory.sample(sprintf("[metaDNA]    do metaDNA Iteration %s ...", i));
         }
+    }
 
-        if (!is.null(stats)) {
-            colnames(stats) <- c("Iteration", "Predicts", "Total", "Elapsed(ms)");
-            rownames(stats) <- stats[, "Iteration"];
+    if (!is.null(stats)) {
+        colnames(stats) <- c("Iteration", "Predicts", "Total", "Elapsed(ms)");
+        rownames(stats) <- stats[, "Iteration"];
 
-            print(stats);
-        }
+        print(stats);
     }
 
     # do memory release

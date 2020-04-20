@@ -1,4 +1,4 @@
-#Region "Microsoft.ROpen::5bbb2113b31816ea479c6c13579279cb, metaDNA_iteration.R"
+#Region "Microsoft.ROpen::1bd1bb4bba07ae2f004229491ed09ab7, metaDNA_iteration.R"
 
     # Summaries:
 
@@ -38,7 +38,7 @@ metaDNA.iteration <- function(identify, filter.skips,
         # this seeds data contains multiple hits
         if (KEGG_cpd %=>% IsNothing) {
             return(NULL);
-        } 
+        }
 
         identified <- identify[[KEGG_cpd]];
         # find KEGG reaction partner for current identify KEGG compound
@@ -49,7 +49,9 @@ metaDNA.iteration <- function(identify, filter.skips,
         # Skip current identify metabolite.
         if (KEGG.partners %=>% IsNothing) {
             return(NULL);
-        } 
+        } else if (length(identified) == 0) {
+            return(NULL);
+        }
 
         # identify contains single result
         # Each metaDNA.impl result is a list that identify of
@@ -68,14 +70,17 @@ metaDNA.iteration <- function(identify, filter.skips,
         }
     });
 
+    rm(identify);
+    rm(unknown);
+
     seeds;
 }
 
 #' do metaDNA prediction for given KEGG compounds
-#' 
+#'
 #' @param KEGG_cpd the kegg compound id
 #' @param do.align a lambda function for evaluate align score of two spectra matrix.
-#' 
+#'
 do.Predicts <- function(KEGG_cpd, identified, KEGG.partners, unknown.query, unknown, do.align, score.cutoff) {
     do.infer <- function(seed) {
         # get trace information of current seed:
@@ -118,20 +123,24 @@ do.Predicts <- function(KEGG_cpd, identified, KEGG.partners, unknown.query, unkn
     # ppm is the ppm value for unknown mz match with the KEGG compound m/z
     # KEGG.partners, identify.ms2, unknown, ms2.align, unknow.matches
     # infer <- if (length(identified) > (MetaDNA::cluster.cores())) {
-	
-        # parallel
-        envir.exports <- c("unknown.query", "unknown", "do.align", "score.cutoff", "do.infer");
-        cl <- makeCluster(MetaDNA::cluster.cores());
-        registerDoParallel(cl);
 
-        infer <- foreach(seed = identified, .export = envir.exports) %dopar% {
-            do.infer(seed);
-        }
+    # parallel
+    envir.exports <- c("unknown.query", "unknown", "do.align", "score.cutoff", "do.infer");
+    cl <- makeCluster(min(MetaDNA::cluster.cores(), length(identified)));
+    registerDoParallel(cl);
 
-        stopCluster(cl);
-        # output;
+    infer <- foreach(seed = identified, .export = envir.exports) %dopar% {
+        do.infer(seed);
+    }
+
+    rm(identified);
+    rm(unknown);
+    rm(unknown.query);
+
+    stopCluster(cl);
+    # output;
     # } else {
-        # lapply(identified, do.infer);
+    # lapply(identified, do.infer);
     # }
 
     # returns the metaDNA network infer result
