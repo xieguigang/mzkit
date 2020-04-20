@@ -1,9 +1,9 @@
-#Region "Microsoft.ROpen::444d492c4049256d74ead2e741d2619a, metaDNA_iteration.R"
+#Region "Microsoft.ROpen::5bbb2113b31816ea479c6c13579279cb, metaDNA_iteration.R"
 
     # Summaries:
 
     # metaDNA.iteration <- function(identify, filter.skips,unknown, do.align,match.kegg,score.cutoff,network) {...
-    # do.Predicts <- function(KEGG_cpd, identified, KEGG.partners, unknown.query) {do.infer <- function(seed) {...
+    # do.Predicts <- function(KEGG_cpd, identified, KEGG.partners, unknown.query, unknown, do.align, score.cutoff) {do.infer <- function(seed) {...
 
 #End Region
 
@@ -71,6 +71,11 @@ metaDNA.iteration <- function(identify, filter.skips,
     seeds;
 }
 
+#' do metaDNA prediction for given KEGG compounds
+#' 
+#' @param KEGG_cpd the kegg compound id
+#' @param do.align a lambda function for evaluate align score of two spectra matrix.
+#' 
 do.Predicts <- function(KEGG_cpd, identified, KEGG.partners, unknown.query, unknown, do.align, score.cutoff) {
     do.infer <- function(seed) {
         # get trace information of current seed:
