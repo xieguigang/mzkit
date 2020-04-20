@@ -117,21 +117,22 @@ do.Predicts <- function(KEGG_cpd, identified, KEGG.partners, unknown.query, unkn
     # unknown.mz is the corresponding m/z
     # ppm is the ppm value for unknown mz match with the KEGG compound m/z
     # KEGG.partners, identify.ms2, unknown, ms2.align, unknow.matches
-    infer <- if (length(identified) > (MetaDNA::cluster.cores())) {
+    # infer <- if (length(identified) > (MetaDNA::cluster.cores())) {
+	
         # parallel
         envir.exports <- c("unknown.query", "unknown", "do.align", "score.cutoff", "do.infer");
         cl <- makeCluster(MetaDNA::cluster.cores());
         registerDoParallel(cl);
 
-        output <- foreach(seed = identified, .export = envir.exports) %dopar% {
+        infer <- foreach(seed = identified, .export = envir.exports) %dopar% {
             do.infer(seed);
         }
 
         stopCluster(cl);
-        output;
-    } else {
-        lapply(identified, do.infer);
-    }
+        # output;
+    # } else {
+        # lapply(identified, do.infer);
+    # }
 
     # returns the metaDNA network infer result
     # of current iteration.
