@@ -1,4 +1,4 @@
-#Region "Microsoft.ROpen::e51bbda378151807170d2051fb0c32e9, metaDNA_iteration.R"
+#Region "Microsoft.ROpen::444d492c4049256d74ead2e741d2619a, metaDNA_iteration.R"
 
     # Summaries:
 
@@ -27,7 +27,6 @@ metaDNA.iteration <- function(identify, filter.skips,
                               match.kegg,
                               score.cutoff,
                               network) {
-
     # tick.each
     # lapply
     seeds.KEGG_id <- names(identify);
@@ -38,36 +37,34 @@ metaDNA.iteration <- function(identify, filter.skips,
         #
         # this seeds data contains multiple hits
         if (KEGG_cpd %=>% IsNothing) {
+            return(NULL);
+        } 
+
+        identified <- identify[[KEGG_cpd]];
+        # find KEGG reaction partner for current identify KEGG compound
+        KEGG.partners <- kegg.partners(KEGG_cpd, network) %=>% filter.skips %=>% unique;
+
+        # current identify metabolite KEGG id didnt found any
+        # reaction related partner compounds
+        # Skip current identify metabolite.
+        if (KEGG.partners %=>% IsNothing) {
+            return(NULL);
+        } 
+
+        # identify contains single result
+        # Each metaDNA.impl result is a list that identify of
+        # unknowns
+
+        # Current set of KEGG.partners which comes from the identify KEGG metabolite
+        # can have multiple unknown metabolite match result
+        #
+        # precursor_type list();
+        unknown.query <- KEGG.partners %=>% match.kegg;
+
+        if (IsNothing(unknown.query)) {
             NULL;
         } else {
-
-            identified <- identify[[KEGG_cpd]];
-            # find KEGG reaction partner for current identify KEGG compound
-            KEGG.partners <- kegg.partners(KEGG_cpd, network) %=>% filter.skips %=>% unique;
-
-            # current identify metabolite KEGG id didnt found any
-            # reaction related partner compounds
-            # Skip current identify metabolite.
-            if (KEGG.partners %=>% IsNothing) {
-                NULL;
-            } else {
-
-                # identify contains single result
-                # Each metaDNA.impl result is a list that identify of
-                # unknowns
-
-                # Current set of KEGG.partners which comes from the identify KEGG metabolite
-                # can have multiple unknown metabolite match result
-                #
-                # precursor_type list();
-                unknown.query <- KEGG.partners %=>% match.kegg;
-
-                if (IsNothing(unknown.query)) {
-                    NULL;
-                } else {
-                    do.Predicts(KEGG_cpd, identified, KEGG.partners, unknown.query);
-                }
-            }
+            do.Predicts(KEGG_cpd, identified, KEGG.partners, unknown.query);
         }
     });
 
