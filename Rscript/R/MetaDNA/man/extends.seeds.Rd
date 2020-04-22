@@ -4,12 +4,8 @@
 \alias{extends.seeds}
 \title{Convert output as metaDNA seeds}
 \usage{
-extends.seeds(
-  output,
-  rt.adjust = function(rt, KEGG_id) 1,
-  seeds.all = TRUE,
-  seeds.topn = 5
-)
+extends.seeds(output, rt.adjust = function(rt, KEGG_id) 1,
+  seeds.all = TRUE, seeds.topn = 5)
 }
 \arguments{
 \item{seeds.all}{If this parameter is enable, then all of the hit from the
