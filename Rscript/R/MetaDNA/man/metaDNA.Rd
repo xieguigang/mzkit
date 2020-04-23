@@ -4,21 +4,11 @@
 \alias{metaDNA}
 \title{Identify unknown metabolite by metaDNA algorithm}
 \usage{
-metaDNA(
-  identify,
-  unknown,
-  do.align,
-  precursor_type = c("[M+H]+", "[M]+"),
-  tolerance = mzkit::assert.deltaMass(0.3),
-  rt.adjust = function(rt, KEGG_id) 1,
-  score.cutoff = 0.8,
-  kegg_id.skips = NULL,
-  seeds.all = TRUE,
-  seeds.topn = 5,
-  iterations = 20,
-  network.class_links = NULL,
-  libtype = 1
-)
+metaDNA(identify, unknown, do.align, precursor_type = c("[M+H]+",
+  "[M]+"), tolerance = mzkit::assert.deltaMass(0.3),
+  rt.adjust = function(rt, KEGG_id) 1, score.cutoff = 0.8,
+  kegg_id.skips = NULL, seeds.all = TRUE, seeds.topn = 5,
+  iterations = 20, network.class_links = NULL, libtype = 1)
 }
 \arguments{
 \item{identify}{The metaDNA seeds data input, A \code{list} object with two members
