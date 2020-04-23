@@ -172,16 +172,18 @@ Namespace Ms1.PrecursorType
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="mass#"></param>
+        ''' <param name="mass">
+        ''' mass value or ``m/z``
+        ''' </param>
         ''' <param name="mode"><see cref="ParseIonMode"/></param>
         ''' <returns></returns>
-        Public Shared Iterator Function Calculate(mass#, mode As String) As IEnumerable(Of MzReport)
+        Public Shared Iterator Function EvaluateAll(mass#, mode As String, Optional exact_mass As Boolean = False) As IEnumerable(Of MzReport)
             For Each type In Provider.Calculator(mode).Values
                 Yield New MzReport With {
                     .adduct = type.adducts,
                     .charge = type.charge,
                     .M = type.M,
-                    .mz = type.CalcMZ(mass),
+                    .mz = If(exact_mass, type.CalcMass(mass), type.CalcMZ(mass)),
                     .precursor_type = type.name
                 }
             Next
@@ -195,6 +197,10 @@ Namespace Ms1.PrecursorType
         Public Property M As Double
         Public Property adduct As Double
 
+        ''' <summary>
+        ''' mz or exact mass
+        ''' </summary>
+        ''' <returns></returns>
         <Column(Name:="m/z")>
         Public Property mz As Double
 

@@ -12,6 +12,9 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports REnv = SMRUCC.Rsharp.Runtime
 
+''' <summary>
+''' 
+''' </summary>
 <Package("mzkit.math")>
 Module MzMath
 
@@ -56,9 +59,26 @@ Module MzMath
         Return DirectCast(obj, MzReport()).Print(addBorder:=False)
     End Function
 
+    ''' <summary>
+    ''' evaluate all m/z for all known precursor type.
+    ''' </summary>
+    ''' <param name="mass"></param>
+    ''' <param name="mode"></param>
+    ''' <returns></returns>
     <ExportAPI("mz")>
     Public Function mz(mass As Double, Optional mode As Object = "+") As MzReport()
-        Return MzCalculator.Calculate(mass, Scripting.ToString(mode, "+")).ToArray
+        Return MzCalculator.EvaluateAll(mass, Scripting.ToString(mode, "+")).ToArray
+    End Function
+
+    ''' <summary>
+    ''' evaluate all exact mass for all known precursor type.
+    ''' </summary>
+    ''' <param name="mz"></param>
+    ''' <param name="mode"></param>
+    ''' <returns></returns>
+    <ExportAPI("exact_mass")>
+    Public Function exact_mass(mz As Double, Optional mode As Object = "+") As MzReport()
+        Return MzCalculator.EvaluateAll(mz, Scripting.ToString(mode, "+"), True).ToArray
     End Function
 
     ''' <summary>
@@ -93,12 +113,25 @@ Module MzMath
         End If
     End Function
 
+    ''' <summary>
+    ''' do mz grouping under the given tolerance
+    ''' </summary>
+    ''' <param name="ms1"></param>
+    ''' <param name="tolerance"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("mz.groups")>
     <RApiReturn(GetType(MzGroup()))>
     Public Function mz_groups(<RRawVectorArgument> ms1 As Object, Optional tolerance As Object = "ppm:20", Optional env As Environment = Nothing) As Object
         Return ms1Scans(ms1).GetMzGroups(Math.getTolerance(tolerance, env)).ToArray
     End Function
 
+    ''' <summary>
+    ''' calculate ppm value between two mass vector
+    ''' </summary>
+    ''' <param name="a">mass a</param>
+    ''' <param name="b">mass b</param>
+    ''' <returns></returns>
     <ExportAPI("ppm")>
     Public Function ppm(<RRawVectorArgument> a As Object, <RRawVectorArgument> b As Object) As Double()
         Dim x As Double() = REnv.asVector(Of Double)(a)

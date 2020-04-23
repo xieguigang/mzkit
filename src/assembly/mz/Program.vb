@@ -87,7 +87,7 @@ Imports stdNum = System.Math
         Dim mass# = args("/mass")
         Dim mode$ = args("/mode") Or "+"
         Dim out$ = args("/out")
-        Dim table As MzReport() = MzCalculator.Calculate(mass, mode).ToArray
+        Dim table As MzReport() = MzCalculator.EvaluateAll(mass, mode).ToArray
 
         If out.StringEmpty Then
             ' print on console
