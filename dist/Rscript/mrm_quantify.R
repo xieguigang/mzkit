@@ -294,7 +294,7 @@ let doLinears as function(wiff_standards, subdir = "") {
 		angleThreshold   = angle.threshold,
 		baselineQuantile = baseline.quantile
 	) 
-	:> write.csv(file = `${dir}/${subdir}\samples.csv`);
+	:> write.csv(file = `${dir}/${subdir}/samples.csv`);
 
 	# create ion quantify result for each metabolites
 	# that defined in ion pairs data
@@ -325,8 +325,8 @@ let doLinears as function(wiff_standards, subdir = "") {
 
 	# save the MRM quantify result
 	# base on the linear fitting
-	result(scans)  :> write.csv(file = `${dir}/${subdir}\quantify.csv`);
-	scans.X(scans) :> write.csv(file = `${dir}/${subdir}\rawX.csv`);
+	result(scans)  :> write.csv(file = `${dir}/${subdir}/quantify.csv`);
+	scans.X(scans) :> write.csv(file = `${dir}/${subdir}/rawX.csv`);
 	
 	print("Creating linear model report....");
 	
