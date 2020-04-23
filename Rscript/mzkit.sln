@@ -7788,8 +7788,8 @@ Global
 		{94E1A3B2-05C7-4D80-8385-4EAEF4400F9B}.mysqli_X64_release|x86.Build.0 = BioDeep_database|Any CPU
 		{94E1A3B2-05C7-4D80-8385-4EAEF4400F9B}.mzkit|Any CPU.ActiveCfg = BioDeep_database|Any CPU
 		{94E1A3B2-05C7-4D80-8385-4EAEF4400F9B}.mzkit|Any CPU.Build.0 = BioDeep_database|Any CPU
-		{94E1A3B2-05C7-4D80-8385-4EAEF4400F9B}.mzkit|x64.ActiveCfg = BioDeep_database|x64
-		{94E1A3B2-05C7-4D80-8385-4EAEF4400F9B}.mzkit|x64.Build.0 = BioDeep_database|x64
+		{94E1A3B2-05C7-4D80-8385-4EAEF4400F9B}.mzkit|x64.ActiveCfg = mzkit|x64
+		{94E1A3B2-05C7-4D80-8385-4EAEF4400F9B}.mzkit|x64.Build.0 = mzkit|x64
 		{94E1A3B2-05C7-4D80-8385-4EAEF4400F9B}.mzkit|x86.ActiveCfg = BioDeep_database|Any CPU
 		{94E1A3B2-05C7-4D80-8385-4EAEF4400F9B}.mzkit|x86.Build.0 = BioDeep_database|Any CPU
 		{94E1A3B2-05C7-4D80-8385-4EAEF4400F9B}.node-debug|Any CPU.ActiveCfg = BioDeep_database|Any CPU
