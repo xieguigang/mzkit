@@ -110,12 +110,28 @@ Public Class StandardCurve : Implements INamedValue
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function CreateLinearRegression(points As IEnumerable(Of PointF), maxDeletions%, ByRef removed As List(Of PointF)) As IFitted
-        Return points.AutoPointDeletion(
+        Dim deletes As New List(Of PointF)(removed.SafeQuery)
+        Dim rawPoints As PointF() = points.ToArray
+        Dim fit As IFitted = rawPoints.AutoPointDeletion(
             weighted:=Function(X) 1 / (X ^ 2),
             max:=maxDeletions,
-            removed:=removed,
+            removed:=deletes,
             keepsLowestPoint:=True
         )
+
+        If fit.R2 < 0.95 Then
+            deletes = New List(Of PointF)(removed.SafeQuery)
+            fit = rawPoints.AutoPointDeletion(
+                weighted:=Function(X) 1 / (X ^ 2),
+                max:=maxDeletions,
+                removed:=deletes,
+                keepsLowestPoint:=False
+            )
+        End If
+
+        removed = deletes
+
+        Return fit
     End Function
 
 End Class
