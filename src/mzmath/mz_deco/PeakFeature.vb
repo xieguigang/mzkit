@@ -2,6 +2,12 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports stdNum = System.Math
 
+Public Class PeakROI : Inherits ROI
+
+    Public Property mz As Double
+
+End Class
+
 Public Class PeakFeature
     Implements IRetentionTime
     Implements IROI

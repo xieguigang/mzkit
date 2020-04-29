@@ -150,13 +150,13 @@ Namespace Chromatogram
                 End If
 
                 Yield New ROI With {
-                    .Ticks = peak.ToArray,
-                    .MaxInto = max,
-                    .Baseline = baseline,
-                    .Time = {rtmin, rtmax},
-                    .Integration = integration,
+                    .ticks = peak.ToArray,
+                    .maxInto = max,
+                    .baseline = baseline,
+                    .time = {rtmin, rtmax},
+                    .integration = integration,
                     .rt = rt,
-                    .Noise = (peak.Length * baseline) / sumAllNoise
+                    .noise = (peak.Length * baseline) / sumAllNoise
                 }
             Next
         End Function

@@ -151,7 +151,7 @@ Namespace Spectra
 
                 Yield New ms2 With {
                     .mz = peak.rt,
-                    .intensity = peak.MaxInto,
+                    .intensity = peak.maxInto,
                     .quantity = .intensity,
                     .Annotation = peak.ToString
                 }

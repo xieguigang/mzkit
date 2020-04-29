@@ -83,9 +83,9 @@ Namespace Chromatogram
         ''' 这个区域的起始和结束的时间点
         ''' </summary>
         ''' <returns></returns>
-        Public Property Time As DoubleRange
+        Public Property time As DoubleRange
         ''' <summary>
-        ''' 出峰达到峰高最大值<see cref="MaxInto"/>的时间点
+        ''' 出峰达到峰高最大值<see cref="maxInto"/>的时间点
         ''' </summary>
         ''' <returns></returns>
         Public Property rt As Double Implements IRetentionTime.rt
@@ -93,18 +93,18 @@ Namespace Chromatogram
         ''' 这个区域的最大峰高度
         ''' </summary>
         ''' <returns></returns>
-        Public Property MaxInto As Double
+        Public Property maxInto As Double
 
         ''' <summary>
         ''' 在这个ROI时间窗区域内的色谱图数据
         ''' </summary>
         ''' <returns></returns>
-        Public Property Ticks As ChromatogramTick()
+        Public Property ticks As ChromatogramTick()
         ''' <summary>
         ''' 所计算出来的基线的响应强度
         ''' </summary>
         ''' <returns></returns>
-        Public Property Baseline As Double
+        Public Property baseline As Double
         ''' <summary>
         ''' 当前的这个ROI的峰面积积分值
         ''' </summary>
@@ -113,12 +113,12 @@ Namespace Chromatogram
         ''' 为当前的ROI峰面积占整个TIC峰面积的百分比，一个实验所导出来的所有的ROI的
         ''' 积分值加起来应该是约等于100的
         ''' </remarks>
-        Public Property Integration As Double
+        Public Property integration As Double
         ''' <summary>
         ''' 噪声的面积积分百分比
         ''' </summary>
         ''' <returns></returns>
-        Public Property Noise As Double
+        Public Property noise As Double
 
         ''' <summary>
         ''' 信噪比
@@ -126,14 +126,14 @@ Namespace Chromatogram
         ''' <returns></returns>
         Public ReadOnly Property snRatio As Double
             Get
-                Return stdNum.Log(Integration / Noise)
+                Return stdNum.Log(integration / noise)
             End Get
         End Property
 
-        Public ReadOnly Property PeakWidth As Single
+        Public ReadOnly Property peakWidth As Single
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Time.Length
+                Return time.Length
             End Get
         End Property
 
@@ -141,17 +141,17 @@ Namespace Chromatogram
         Public Function GetChromatogramData(Optional getTitle As Func(Of ROI, String) = Nothing) As NamedCollection(Of ChromatogramTick)
             Static defaultRtTitle As New [Default](Of Func(Of ROI, String))(
                 Function(roi)
-                    Return $"[{roi.Time.Min.ToString("F0")},{roi.Time.Max.ToString("F0")}]"
+                    Return $"[{roi.time.Min.ToString("F0")},{roi.time.Max.ToString("F0")}]"
                 End Function)
-            Return New NamedCollection(Of ChromatogramTick)((getTitle Or defaultRtTitle)(Me), Ticks)
+            Return New NamedCollection(Of ChromatogramTick)((getTitle Or defaultRtTitle)(Me), ticks)
         End Function
 
         Public Overrides Function ToString() As String
-            Return Time.ToString
+            Return time.ToString
         End Function
 
         Public Shared Narrowing Operator CType(ROI As ROI) As DoubleRange
-            Return ROI.Time
+            Return ROI.time
         End Operator
     End Class
 End Namespace
