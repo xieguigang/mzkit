@@ -96,73 +96,13 @@ Module MRMLinearReport
     <Extension>
     Private Function doReport(report As ScriptBuilder, standardCurves As StandardCurve(), samples As QuantifyScan(), ionsRaw As list) As String
         Dim linears As New List(Of XElement)
-        Dim image As Image
-        Dim title$
-        Dim R2#
-        Dim isWeighted As Boolean
-        Dim range As DoubleRange
-        Dim ionRawPlot As Image
-        Dim rawData As NamedCollection(Of ChromatogramTick)()
 
         For Each line As StandardCurve In standardCurves
-            title = line.points(Scan0).Name
-            image = Visual.DrawStandardCurve(line, title).AsGDIImage
-            R2 = line.linear.R2
-            isWeighted = line.isWeighted
-            range = line.points _
-                .Where(Function(r) r.valid) _
-                .Select(Function(r) r.Cti) _
-                .Range
-            rawData = DirectCast(ionsRaw(line.name), list).slots _
-                .Select(Function(sample)
-                            Return New NamedCollection(Of ChromatogramTick) With {
-                                .name = sample.Key,
-                                .value = REnv.asVector(Of ChromatogramTick)(sample.Value)
-                            }
-                        End Function) _
-                .ToArray
-            ionRawPlot = rawData _
-                .TICplot(
-                    size:="1600,900",
-                    fillCurve:=False,
-                    gridFill:="rgb(250,250,250)",
-                    penStyle:="stroke: black; stroke-width: 2px; stroke-dash: solid;",
-                    timeRange:=New Double() {0, rawData.Select(Function(r) r.value).IteratesALL.Select(Function(tick) tick.Time).Max},
-                    parallel:=False
-                ).AsGDIImage
-
-            linears +=
-                <div class="row" id=<%= line.name %>>
-                    <div class="col-xl-10">
-                        <h2><%= title %></h2>
-
-                        <div class="panel panel-success">
-                            <div class="panel-heading">Linear</div>
-                            <div style="padding:10px">
-                                <ul>
-                                    <li>ID: <%= line.name %></li>
-                                    <li>Linear: <i>f(x)</i>=%s</li>
-                                    <li>Weighted: <%= isWeighted.ToString.ToUpper %></li>
-                                    <li>R<sup>2</sup>: <%= R2 %> (<%= stdNum.Sqrt(R2) %>)</li>
-                                    <li>Range: <%= $"{range.Min} ~ {range.Max}" %></li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <p>
-                            <img src=<%= New DataURI(image) %> style="width: 65%;"/>
-                            <img src=<%= New DataURI(ionRawPlot) %> style="width: 65%;"/>
-                        </p>
-
-                        <h3>Reference Points</h3>
-
-                        <p>%s</p>
-                        <p>{$samples}</p>
-
-                        <hr/>
-                    </div>
-                    <div style="page-break-after: always;"></div>
-                </div>
+            With line.singleLinear(ionsRaw)
+                If Not .IsNothing Then
+                    Call .DoCall(AddressOf linears.Add)
+                End If
+            End With
         Next
 
         report("TOC") = standardCurves.TOC
@@ -192,6 +132,78 @@ Module MRMLinearReport
             .JoinBy(vbCrLf)
 
         Return "<!doctype html>" & report.ToString
+    End Function
+
+    <Extension>
+    Private Function singleLinear(line As StandardCurve, ionsRaw As list) As XElement
+        Dim title$ = line.points(Scan0).Name
+        Dim image As Image = Visual.DrawStandardCurve(line, title).AsGDIImage
+        Dim R2# = line.linear.R2
+        Dim isWeighted As Boolean = line.isWeighted
+        Dim range As DoubleRange = line.points _
+            .Where(Function(r) r.valid) _
+            .Select(Function(r) r.Cti) _
+            .Range
+        Dim rawData As NamedCollection(Of ChromatogramTick)() = DirectCast(ionsRaw(line.name), list).slots _
+            .Select(Function(sample)
+                        Return New NamedCollection(Of ChromatogramTick) With {
+                            .name = sample.Key,
+                            .value = REnv.asVector(Of ChromatogramTick)(sample.Value)
+                        }
+                    End Function) _
+            .ToArray
+        Dim timeRanges As Double() = rawData _
+            .Select(Function(r) r.value) _
+            .IteratesALL _
+            .Select(Function(tick) tick.Time) _
+            .ToArray
+
+        If timeRanges.Length = 0 Then
+            Call $"metabolite {title} have no raw data for plot!".Warning
+            Return Nothing
+        End If
+
+        Dim ionRawPlot As Image = rawData _
+            .TICplot(
+                size:="1600,900",
+                fillCurve:=False,
+                gridFill:="rgb(250,250,250)",
+                penStyle:="stroke: black; stroke-width: 2px; stroke-dash: solid;",
+                timeRange:=New Double() {0, timeRanges.Max},
+                parallel:=False
+            ).AsGDIImage
+
+        Return <div class="row" id=<%= line.name %>>
+                   <div class="col-xl-10">
+                       <h2><%= title %></h2>
+
+                       <div class="panel panel-success">
+                           <div class="panel-heading">Linear</div>
+                           <div style="padding:10px">
+                               <ul>
+                                   <li>ID: <%= line.name %></li>
+                                   <li>Linear: <i>f(x)</i>=%s</li>
+                                   <li>Weighted: <%= isWeighted.ToString.ToUpper %></li>
+                                   <li>R<sup>2</sup>: <%= R2 %> (<%= stdNum.Sqrt(R2) %>)</li>
+                                   <li>Range: <%= $"{range.Min} ~ {range.Max}" %></li>
+                               </ul>
+                           </div>
+                       </div>
+
+                       <p>
+                           <img src=<%= New DataURI(image) %> style="width: 65%;"/>
+                           <img src=<%= New DataURI(ionRawPlot) %> style="width: 65%;"/>
+                       </p>
+
+                       <h3>Reference Points</h3>
+
+                       <p>%s</p>
+                       <p>{$samples}</p>
+
+                       <hr/>
+                   </div>
+                   <div style="page-break-after: always;"></div>
+               </div>
     End Function
 
     '<Extension>

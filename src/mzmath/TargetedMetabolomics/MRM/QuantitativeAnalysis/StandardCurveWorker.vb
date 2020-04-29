@@ -245,7 +245,8 @@ Namespace MRM
             Dim getLevelNumber = Function(level As String) As String
                                      Return regexp.Replace(level, "^\d+[-]", "", RegexICMul) _
                                         .Trim("-"c, " "c) _
-                                        .Match("\d+")
+                                        .Matches("\d+") _
+                                        .Last
                                  End Function
             Dim refPoints = ref _
                 .ToDictionary(Function(level)
