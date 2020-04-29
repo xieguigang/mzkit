@@ -4,8 +4,15 @@
 \alias{do.Predicts}
 \title{do metaDNA prediction for given KEGG compounds}
 \usage{
-do.Predicts(KEGG_cpd, identified, KEGG.partners, unknown.query, unknown,
-  do.align, score.cutoff)
+do.Predicts(
+  KEGG_cpd,
+  identified,
+  KEGG.partners,
+  unknown.query,
+  unknown,
+  do.align,
+  score.cutoff
+)
 }
 \arguments{
 \item{KEGG_cpd}{the kegg compound id}
