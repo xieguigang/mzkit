@@ -64,7 +64,12 @@ Public Module Deconvolution
     Public Iterator Function GetMzGroups(scans As IEnumerable(Of scan), Optional tolerance As Tolerance = Nothing) As IEnumerable(Of MzGroup)
         For Each group As NamedCollection(Of scan) In scans.GroupBy(Function(t) t.mz, AddressOf (tolerance Or Tolerance.DefaultTolerance).Assert)
             Dim rawGroup As scan() = group.ToArray
-            Dim timePoints As NamedCollection(Of scan)() = rawGroup.GroupBy(Function(t) t.rt, Function(a, b) stdNum.Abs(a - b) <= 0.05).ToArray
+            Dim timePoints As NamedCollection(Of scan)() = rawGroup _
+                .GroupBy(Function(t) t.rt,
+                         Function(a, b)
+                             Return stdNum.Abs(a - b) <= 0.05
+                         End Function) _
+                .ToArray
             Dim xic As ChromatogramTick() = timePoints _
                 .Select(Function(t)
                             Dim rt As Double = Aggregate p As scan In t Into Average(p.rt)
@@ -90,7 +95,16 @@ Public Module Deconvolution
 
     <Extension>
     Public Iterator Function DecoMzGroups(mzgroups As IEnumerable(Of MzGroup), Optional quantile# = 0.65) As IEnumerable(Of PeakFeature)
-        Dim mzfeatures = mzgroups.AsParallel.Select(Function(mz) mz.GetPeakGroups(quantile)).IteratesALL.GroupBy(Function(m) stdNum.Round(m.mz).ToString).ToArray
+        Dim mzfeatures As IGrouping(Of String, PeakFeature)() = mzgroups _
+            .AsParallel _
+            .Select(Function(mz)
+                        Return mz.GetPeakGroups(quantile)
+                    End Function) _
+            .IteratesALL _
+            .GroupBy(Function(m)
+                         Return stdNum.Round(m.mz).ToString
+                     End Function) _
+            .ToArray
         Dim guid As New Dictionary(Of String, Counter)
 
         For Each mzidgroup In mzfeatures
