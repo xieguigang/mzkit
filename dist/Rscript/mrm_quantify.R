@@ -19,6 +19,7 @@ let dir      as string = ?"--export"       || `${wiff :> trim(" ")}-result/`;
 # the reference point data.
 let patternOf.ref      = ?"--patternOfRef" || '[-]?LM[-]?\d+';
 let patternOf.QC       = ?"--patternOfQC"  || "QC[-]?\d+";
+let patternOf.Blank    = ?"--patternOfBLK" || "BLK(\s*\(\d+\))?";
  
 # let Methods as integer = {
       # NetPeakSum = 0;
@@ -124,7 +125,7 @@ print(`The reference data raw files will be matches by name pattern: [${patternO
 
 wiff <- list(samples = sample, reference = wiff) 
 # :> wiff.rawfiles("[-]?LM[-]?\d+") 
-:> wiff.rawfiles(patternOf.ref) 
+:> wiff.rawfiles(patternOf.ref, patternOfBlank = patternOf.Blank) 
 :> as.object;
 
 print("Reference standards:");
