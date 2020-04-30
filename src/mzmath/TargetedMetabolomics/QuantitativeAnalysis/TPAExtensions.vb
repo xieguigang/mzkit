@@ -191,6 +191,9 @@ Public Module TPAExtensions
                 ' find by index
                 If ion.ion.index < ROIData.Length Then
                     region = ROIData(ion.ion.index)
+                ElseIf ROIData.Length = 1 AndAlso ion.ion.target.rt Is Nothing Then
+                    ' 在这里主要是修复ILE和LEU这两种代谢物
+                    region = ROIData(Scan0)
                 Else
                     ' current ion is ND value
                     Return New IonTPA With {

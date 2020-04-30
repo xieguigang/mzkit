@@ -76,7 +76,7 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
 ''' <summary>
 ''' MRM Targeted Metabolomics
 ''' </summary>
-<Package("mzkit.mrm")>
+<Package("mzkit.mrm", Category:=APICategories.ResearchTools, Publisher:="BioNovoGene")>
 Module MRMkit
 
     Public Class MRMDataSet
@@ -569,7 +569,10 @@ Module MRMkit
             timeWindowSize:=timeWindowSize,
             angleThreshold:=angleThreshold,
             baselineQuantile:=baselineQuantile,
-            rtshifts:=rtshifts
+            rtshifts:=rtshifts,
+            resolution:=resolution,
+            bsplineDegree:=bsplineDegree,
+            bsplineDensity:=bsplineDensity
         )
     End Function
 
