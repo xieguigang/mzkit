@@ -116,8 +116,12 @@ Public Module SDFReader
                 .OrderBy(Function(a) a.ID)
         Else
             Return Iterator Function() As IEnumerable(Of SpectraSection)
+                       Dim MoNAData As New Value(Of SpectraSection)
+
                        For Each mol As SDF In SDF.IterateParser(path, parseStruct:=False)
-                           Yield mol.createMoNAData(skipSpectraInfo, recalculateMz)
+                           If Not (MoNAData = mol.createMoNAData(skipSpectraInfo, recalculateMz)) Is Nothing Then
+                               Yield MoNAData.Value
+                           End If
                        Next
                    End Function()
         End If
