@@ -99,53 +99,73 @@ Public Module SDFReader
     ''' m/z结果值
     ''' </param>
     ''' <returns></returns>
-    Public Iterator Function ParseFile(path As String,
-                                       Optional skipSpectraInfo As Boolean = False,
-                                       Optional recalculateMz As Boolean = False) As IEnumerable(Of SpectraSection)
+    Public Function ParseFile(path As String,
+                              Optional skipSpectraInfo As Boolean = False,
+                              Optional recalculateMz As Boolean = False,
+                              Optional parallel As Boolean = False) As IEnumerable(Of SpectraSection)
 
-        For Each mol As SDF In SDF.IterateParser(path, parseStruct:=False)
-            Dim M As Func(Of String, String) = mol.readMeta
-            Dim commentMeta = mol.MetaData!COMMENT.ToTable
-            Dim info As SpectraInfo = Nothing
-            Dim commonName$ = Strings.Trim(M("NAME")).Trim(ASCII.Quot)
-            Dim exact_mass# = M("EXACT MASS")
-            Dim xrefID$ = M("ID").Trim
-            Dim xref As xref = commentMeta.readXref(M)
+        If parallel Then
+            Return SDF.IterateParser(path, parseStruct:=False) _
+                .AsParallel _
+                .Select(Function(mol)
+                            Return mol.createMoNAData(skipSpectraInfo, recalculateMz)
+                        End Function) _
+                .Where(Function(a)
+                           Return Not a Is Nothing
+                       End Function) _
+                .OrderBy(Function(a) a.ID)
+        Else
+            Return Iterator Function() As IEnumerable(Of SpectraSection)
+                       For Each mol As SDF In SDF.IterateParser(path, parseStruct:=False)
+                           Yield mol.createMoNAData(skipSpectraInfo, recalculateMz)
+                       Next
+                   End Function()
+        End If
+    End Function
 
-            ' fix naming bugs in GNPS library
-            If InStr(xrefID, "CCMSLIB") = 1 Then
-                commonName = TrimGNPSName(commonName)
+    <Extension>
+    Private Function createMoNAData(mol As SDF, skipSpectraInfo As Boolean, recalculateMz As Boolean) As SpectraSection
+        Dim M As Func(Of String, String) = mol.readMeta
+        Dim commentMeta = mol.MetaData!COMMENT.ToTable
+        Dim info As SpectraInfo = Nothing
+        Dim commonName$ = Strings.Trim(M("NAME")).Trim(ASCII.Quot)
+        Dim exact_mass# = M("EXACT MASS")
+        Dim xrefID$ = M("ID").Trim
+        Dim xref As xref = commentMeta.readXref(M)
 
-                If commonName.StringEmpty AndAlso xref.IsEmpty(xref) Then
-                    Continue For
-                End If
+        ' fix naming bugs in GNPS library
+        If InStr(xrefID, "CCMSLIB") = 1 Then
+            commonName = TrimGNPSName(commonName)
+
+            If commonName.StringEmpty AndAlso xref.IsEmpty(xref) Then
+                Return Nothing
             End If
+        End If
 
-            If Not skipSpectraInfo Then
-                info = M.readSpectraInfo.FixMzType(exact_mass, recalculateMz)
-                info.MassPeaks = mol _
-                    .MetaData("MASS SPECTRAL PEAKS") _
-                    .Select(Function(line) line.Split) _
-                    .Select(Function(line)
-                                Return New ms2 With {
-                                    .mz = line(0),
-                                    .intensity = line(1),
-                                    .quantity = line(1)
-                                }
-                            End Function) _
-                    .ToArray
-            End If
+        If Not skipSpectraInfo Then
+            info = M.readSpectraInfo.FixMzType(exact_mass, recalculateMz)
+            info.MassPeaks = mol _
+                .MetaData("MASS SPECTRAL PEAKS") _
+                .Select(Function(line) line.Split) _
+                .Select(Function(line)
+                            Return New ms2 With {
+                                .mz = line(0),
+                                .intensity = line(1),
+                                .quantity = line(1)
+                            }
+                        End Function) _
+                .ToArray
+        End If
 
-            Yield New SpectraSection With {
-                .name = commonName,
-                .ID = xrefID,
-                .Comment = commentMeta,
-                .formula = M("FORMULA"),
-                .exact_mass = exact_mass,
-                .xref = xref,
-                .SpectraInfo = info
-            }
-        Next
+        Return New SpectraSection With {
+            .name = commonName,
+            .ID = xrefID,
+            .Comment = commentMeta,
+            .formula = M("FORMULA"),
+            .exact_mass = exact_mass,
+            .xref = xref,
+            .SpectraInfo = info
+        }
     End Function
 
     ReadOnly standards As Index(Of String) = {"M", "M+H", "M-H", "[M]", "[M]+", "[M]-", "[M+H]", "[M-H]", "[M+H]+", "[M-H]-"}
