@@ -62,23 +62,37 @@ Namespace SDF
         ''' </summary>
         ''' <param name="path$"></param>
         ''' <returns></returns>
-        Public Iterator Function IterateParser(path$, Optional parseStruct As Boolean = True) As IEnumerable(Of SDF)
-            Dim offset%
+        Public Function IterateParser(path$, Optional parseStruct As Boolean = True, Optional parallel As Boolean = False) As IEnumerable(Of SDF)
+            If parallel Then
+                Return path _
+                    .IterateAllLines _
+                    .Split(Function(s) s = "$$$$", includes:=False) _
+                    .AsParallel _
+                    .Select(Function(block)
+                                Return parseSingle(block, parseStruct)
+                            End Function)
+            Else
+                Return Iterator Function() As IEnumerable(Of SDF)
+                           For Each block As String() In path _
+                               .IterateAllLines _
+                               .Split(Function(s) s = "$$$$", includes:=False)
 
-            For Each block As String() In path _
-                .IterateAllLines _
-                .Split(Function(s) s = "$$$$", includes:=False)
+                               Yield parseSingle(block, parseStruct)
+                           Next
+                       End Function()
+            End If
+        End Function
 
-                offset = block.solveOffset()
+        Private Function parseSingle(block As String(), parseStruct As Boolean) As SDF
+            Dim offset = block.solveOffset()
 
-                If offset > 0 Then
-                    block = block _
-                        .Skip(offset) _
-                        .ToArray
-                End If
+            If offset > 0 Then
+                block = block _
+                    .Skip(offset) _
+                    .ToArray
+            End If
 
-                Yield SDFParser.StreamParser(block, parseStruct)
-            Next
+            Return SDFParser.StreamParser(block, parseStruct)
         End Function
 
         Const MolEndMarks$ = "M  END"

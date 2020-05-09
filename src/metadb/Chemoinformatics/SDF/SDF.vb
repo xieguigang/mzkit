@@ -115,8 +115,8 @@ Namespace SDF
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function IterateParser(path$, Optional parseStruct As Boolean = True) As IEnumerable(Of SDF)
-            Return SDFParser.IterateParser(path, parseStruct)
+        Public Shared Function IterateParser(path$, Optional parseStruct As Boolean = True, Optional parallel As Boolean = False) As IEnumerable(Of SDF)
+            Return SDFParser.IterateParser(path, parseStruct, parallel)
         End Function
 
         ''' <summary>
