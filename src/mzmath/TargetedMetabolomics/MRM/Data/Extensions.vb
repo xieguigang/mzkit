@@ -102,6 +102,11 @@ Namespace MRM.Data
                                                Return (Not c.id Like NotMRMSelectors) AndAlso ion.target.Assert(c, tolerance)
                                            End Function) _
                                     .FirstOrDefault
+
+                                If chromatogram Is Nothing Then
+                                    Call $"missing {ion.ToString}, please consider check your ion pair data or increase the m/z tolerance value...".Warning
+                                End If
+
                                 Return (ion, chromatogram)
                             End Function)
             End With
