@@ -52,6 +52,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
@@ -117,13 +118,13 @@ Module MRMkit
 
     Private Function ROISummary(peaks As ROI(), args As list, env As Environment) As Rdataframe
         Dim rt As Array = peaks.Select(Function(r) r.rt).ToArray
-        Dim rtmin As Array = peaks.Select(Function(r) r.Time.Min).ToArray
-        Dim rtmax As Array = peaks.Select(Function(r) r.Time.Max).ToArray
-        Dim maxinto As Array = peaks.Select(Function(r) r.MaxInto).ToArray
-        Dim nticks As Array = peaks.Select(Function(r) r.Ticks.Length).ToArray
-        Dim baseline As Array = peaks.Select(Function(r) r.Baseline).ToArray
-        Dim area As Array = peaks.Select(Function(r) r.Integration).ToArray
-        Dim noise As Array = peaks.Select(Function(r) r.Noise).ToArray
+        Dim rtmin As Array = peaks.Select(Function(r) r.time.Min).ToArray
+        Dim rtmax As Array = peaks.Select(Function(r) r.time.Max).ToArray
+        Dim maxinto As Array = peaks.Select(Function(r) r.maxInto).ToArray
+        Dim nticks As Array = peaks.Select(Function(r) r.ticks.Length).ToArray
+        Dim baseline As Array = peaks.Select(Function(r) r.baseline).ToArray
+        Dim area As Array = peaks.Select(Function(r) r.integration).ToArray
+        Dim noise As Array = peaks.Select(Function(r) r.noise).ToArray
         Dim sn_ratio As Array = peaks.Select(Function(r) r.snRatio).ToArray
 
         Return New Rdataframe With {
@@ -557,6 +558,7 @@ Module MRMkit
         'End If
 
         'Dim raw As RawFile = DirectCast(wiffConverts, RawFile)
+        Dim errorTolerance As Tolerance = interop_arguments.GetTolerance(tolerance)
 
         Return WiffRaw.Scan(
             mzMLRawFiles:=wiffConverts,
@@ -565,7 +567,7 @@ Module MRMkit
             TPAFactors:=TPAFactors,
             refName:=Nothing,
             removesWiffName:=removesWiffName,
-            tolerance:=interop_arguments.GetTolerance(tolerance),
+            tolerance:=errorTolerance,
             timeWindowSize:=timeWindowSize,
             angleThreshold:=angleThreshold,
             baselineQuantile:=baselineQuantile,
