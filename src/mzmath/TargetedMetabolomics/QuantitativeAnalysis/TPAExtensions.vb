@@ -190,7 +190,12 @@ Public Module TPAExtensions
 
                 ' find by index
                 If ion.ion.index < ROIData.Length Then
-                    region = ROIData(ion.ion.index)
+                    If ion.ion.target.rt Is Nothing Then
+                        region = ROIData.OrderByDescending(Function(r) r.maxInto).First
+                    Else
+                        ' 胆汁酸MSL文件是存在rt的
+                        region = ROIData(ion.ion.index)
+                    End If
                 ElseIf ROIData.Length = 1 AndAlso ion.ion.target.rt Is Nothing Then
                     ' 在这里主要是修复ILE和LEU这两种代谢物
                     region = ROIData(Scan0)
