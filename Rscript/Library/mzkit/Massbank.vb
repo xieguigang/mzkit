@@ -72,13 +72,18 @@ Module Massbank
     ''' a linq pipeline for populate the spectrum data from the MoNA database.
     ''' </returns>
     <ExportAPI("read.MoNA")>
-    Public Function readMoNA(rawfile As String, Optional skipSpectraInfo As Boolean = False, Optional env As Environment = Nothing) As pipeline
+    Public Function readMoNA(rawfile As String,
+                             Optional skipSpectraInfo As Boolean = False,
+                             Optional is_gcms As Boolean = False,
+                             Optional env As Environment = Nothing) As pipeline
+
         Select Case rawfile.ExtensionSuffix.ToLower
             Case "sdf"
                 Return SDFReader _
                     .ParseFile(
                         path:=rawfile,
-                        skipSpectraInfo:=skipSpectraInfo
+                        skipSpectraInfo:=skipSpectraInfo,
+                        isGcms:=is_gcms
                     ) _
                     .DoCall(AddressOf pipeline.CreateFromPopulator)
             Case Else
