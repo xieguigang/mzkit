@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf8ba3c35d11375e4c23d45d00ef9a4f, src\mzmath\ms2_math-core\Ms1\PrecursorType\MzCalculator.vb"
+﻿#Region "Microsoft.VisualBasic::163e450d07d93253aa96ec6063006071, src\mzmath\ms2_math-core\Ms1\PrecursorType\MzCalculator.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '                     name
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: AdductMZ, CalcMass, CalcMZ, Calculate, ReverseMass
+    '         Function: AdductMZ, CalcMass, CalcMZ, EvaluateAll, ReverseMass
     '                   (+2 Overloads) ToString
     ' 
     '     Class MzReport

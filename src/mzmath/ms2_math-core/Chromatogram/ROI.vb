@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9ad4df5ef7978db313acf9d998aea19, src\mzmath\ms2_math-core\Chromatogram\ROI.vb"
+﻿#Region "Microsoft.VisualBasic::76001a62edcf58e3060450603a6d84a5, src\mzmath\ms2_math-core\Chromatogram\ROI.vb"
 
     ' Author:
     ' 
@@ -40,8 +40,8 @@
     ' 
     '     Class ROI
     ' 
-    '         Properties: Baseline, Integration, MaxInto, Noise, PeakWidth
-    '                     rt, snRatio, Ticks, Time
+    '         Properties: baseline, integration, maxInto, noise, peakWidth
+    '                     rt, snRatio, ticks, time
     ' 
     '         Function: GetChromatogramData, ToString
     ' 

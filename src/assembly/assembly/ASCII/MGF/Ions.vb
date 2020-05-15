@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::419a870a506b1d876ff3ec05aa93cf74, src\assembly\assembly\ASCII\MGF\Ions.vb"
+﻿#Region "Microsoft.VisualBasic::780a6f8a54c95403f971b6883b2db76b, src\assembly\assembly\ASCII\MGF\Ions.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '                     Meta, Peaks, PepMass, Rawfile, RtInSeconds
     '                     Sequence, Title
     ' 
-    '         Function: CreateDocs, ToString
+    '         Function: CreateDocs, GetLibrary, ToString
     ' 
     ' 
     ' /********************************************************************************/

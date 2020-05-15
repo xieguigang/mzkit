@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2cc183ea212609f5ce4cf3659a3c8e54, src\metadb\Chemoinformatics\SDF\SDFParser.vb"
+﻿#Region "Microsoft.VisualBasic::8e3d09aa089a10ee690b063452e9897d, src\metadb\Chemoinformatics\SDF\SDFParser.vb"
 
     ' Author:
     ' 
@@ -36,8 +36,8 @@
 
     '     Module SDFParser
     ' 
-    '         Function: IterateParser, MoleculePopulator, ScanKeys, solveOffset, SplitMolData
-    '                   StreamParser
+    '         Function: IterateParser, MoleculePopulator, parseSingle, ScanKeys, solveOffset
+    '                   SplitMolData, StreamParser
     ' 
     ' 
     ' /********************************************************************************/

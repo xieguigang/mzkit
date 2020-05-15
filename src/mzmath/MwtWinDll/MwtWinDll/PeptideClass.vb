@@ -1,108 +1,108 @@
-﻿#Region "Microsoft.VisualBasic::1b3d95b4a799f2b8643679a476945add, src\mzmath\MwtWinDll\MwtWinDll\PeptideClass.vb"
+﻿#Region "Microsoft.VisualBasic::816c26597c2f6cc5875536e933282511, src\mzmath\MwtWinDll\MwtWinDll\PeptideClass.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Class MWPeptideClass
-' 
-'     Constructor: (+2 Overloads) Sub New
-'     Enum ctgCTerminusGroupConstants
-' 
-' 
-' 
-' 
-'     Enum ntgNTerminusGroupConstants
-' 
-' 
-'  
-' 
-' 
-' 
-'     Enum itIonTypeConstants
-' 
-' 
-'  
-' 
-' 
-' 
-'     Structure udtModificationSymbolType
-' 
-' 
-' 
-'     Structure udtResidueType
-' 
-'         Sub: (+2 Overloads) Initialize
-' 
-'     Structure udtTerminusType
-' 
-'         Sub: Initialize
-' 
-'     Structure udtFragmentionSpectrumIntensitiesType
-' 
-'         Sub: Initialize
-' 
-'     Structure udtIonTypeOptionsType
-' 
-' 
-' 
-'     Structure udtFragmentationSpectrumOptionsType
-' 
-'         Sub: Initialize
-' 
-'     Structure udtFragmentationSpectrumDataType
-' 
-'         Function: ToString
-' 
-'  
-' 
-'     Function: AssureNonZero, CheckForModifications, (+4 Overloads) CheckSequenceAgainstCleavageRule, CheckSequenceAgainstCleavageRuleMatchTestResidue, ComputeImmoniumMass
-'               ComputeMaxIonsPerResidue, FillResidueStructureUsingSymbol, (+2 Overloads) GetFragmentationMasses, GetFragmentationSpectrumOptions, GetFragmentationSpectrumRequiredDataPoints
-'               (+2 Overloads) GetInternalResidues, GetModificationSymbol, GetModificationSymbolCount, GetModificationSymbolID, GetPeptideMass
-'               GetResidue, GetResidueCount, GetResidueCountSpecificResidue, GetResidueModificationIDs, GetResidueSymbolOnly
-'               (+6 Overloads) GetSequence, GetSequence1LetterCode, GetSymbolAmmoniaLoss, GetSymbolPhosphoLoss, GetSymbolWaterLoss
-'               (+6 Overloads) GetTrypticName, GetTrypticNameFindNextCleavageLoc, (+7 Overloads) GetTrypticNameMultipleMatches, (+3 Overloads) GetTrypticPeptideByFragmentNumber, (+2 Overloads) GetTrypticPeptideNext
-'               LookupIonTypeString, RemoveAllModificationSymbols, RemoveAllResidues, RemoveModification, RemoveModificationByID
-'               RemoveResidue, RemoveTrailingOH, (+3 Overloads) SetCTerminus, (+3 Overloads) SetCTerminusGroup, SetModificationSymbol
-'               (+3 Overloads) SetNTerminus, (+3 Overloads) SetNTerminusGroup, (+3 Overloads) SetResidue, SetResidueModifications, (+7 Overloads) SetSequence
-'               SetSequence1LetterSymbol
-' 
-'     Sub: AppendDataToFragSpectrum, InitializeArrays, InitializeClass, RemoveLeadingH, ReserveMemoryForModifications
-'          ReserveMemoryForResidues, SetDefaultModificationSymbols, SetDefaultOptions, SetFragmentationSpectrumOptions, (+2 Overloads) SetModificationSymbol
-'          SetSequenceAddResidue, SetSymbolAmmoniaLoss, SetSymbolPhosphoLoss, SetSymbolWaterLoss, ShellSortFragSpectrum
-'          UpdateResidueMasses, UpdateStandardMasses
-' 
-' /********************************************************************************/
+    ' Class MWPeptideClass
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    '     Enum ctgCTerminusGroupConstants
+    ' 
+    ' 
+    ' 
+    ' 
+    '     Enum ntgNTerminusGroupConstants
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum itIonTypeConstants
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Structure udtModificationSymbolType
+    ' 
+    ' 
+    ' 
+    '     Structure udtResidueType
+    ' 
+    '         Sub: (+2 Overloads) Initialize
+    ' 
+    '     Structure udtTerminusType
+    ' 
+    '         Sub: Initialize
+    ' 
+    '     Structure udtFragmentionSpectrumIntensitiesType
+    ' 
+    '         Sub: Initialize
+    ' 
+    '     Structure udtIonTypeOptionsType
+    ' 
+    ' 
+    ' 
+    '     Structure udtFragmentationSpectrumOptionsType
+    ' 
+    '         Sub: Initialize
+    ' 
+    '     Structure udtFragmentationSpectrumDataType
+    ' 
+    '         Function: ToString
+    ' 
+    '  
+    ' 
+    '     Function: AssureNonZero, CheckForModifications, (+4 Overloads) CheckSequenceAgainstCleavageRule, CheckSequenceAgainstCleavageRuleMatchTestResidue, ComputeImmoniumMass
+    '               ComputeMaxIonsPerResidue, FillResidueStructureUsingSymbol, (+2 Overloads) GetFragmentationMasses, GetFragmentationSpectrumOptions, GetFragmentationSpectrumRequiredDataPoints
+    '               (+2 Overloads) GetInternalResidues, GetModificationSymbol, GetModificationSymbolCount, GetModificationSymbolID, GetPeptideMass
+    '               GetResidue, GetResidueCount, GetResidueCountSpecificResidue, GetResidueModificationIDs, GetResidueSymbolOnly
+    '               (+6 Overloads) GetSequence, GetSequence1LetterCode, GetSymbolAmmoniaLoss, GetSymbolPhosphoLoss, GetSymbolWaterLoss
+    '               (+6 Overloads) GetTrypticName, GetTrypticNameFindNextCleavageLoc, (+7 Overloads) GetTrypticNameMultipleMatches, (+3 Overloads) GetTrypticPeptideByFragmentNumber, (+2 Overloads) GetTrypticPeptideNext
+    '               LookupIonTypeString, RemoveAllModificationSymbols, RemoveAllResidues, RemoveModification, RemoveModificationByID
+    '               RemoveResidue, RemoveTrailingOH, (+3 Overloads) SetCTerminus, (+3 Overloads) SetCTerminusGroup, SetModificationSymbol
+    '               (+3 Overloads) SetNTerminus, (+3 Overloads) SetNTerminusGroup, (+3 Overloads) SetResidue, SetResidueModifications, (+7 Overloads) SetSequence
+    '               SetSequence1LetterSymbol
+    ' 
+    '     Sub: AppendDataToFragSpectrum, InitializeArrays, InitializeClass, RemoveLeadingH, ReserveMemoryForModifications
+    '          ReserveMemoryForResidues, SetDefaultModificationSymbols, SetDefaultOptions, SetFragmentationSpectrumOptions, (+2 Overloads) SetModificationSymbol
+    '          SetSequenceAddResidue, SetSymbolAmmoniaLoss, SetSymbolPhosphoLoss, SetSymbolWaterLoss, ShellSortFragSpectrum
+    '          UpdateResidueMasses, UpdateStandardMasses
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

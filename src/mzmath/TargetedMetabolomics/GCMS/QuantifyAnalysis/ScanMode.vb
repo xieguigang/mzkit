@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::42a90cc4361a69a5cfd4c07ada5718e4, src\mzmath\TargetedMetabolomics\GCMS\QuantifyAnalysis\ScanMode.vb"
+﻿#Region "Microsoft.VisualBasic::0fecfc1fbdf0e898612cc4707a2aa193, src\mzmath\TargetedMetabolomics\GCMS\QuantifyAnalysis\ScanMode.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::afef64b82e7193b57d860961401781cf, src\mzmath\TargetedMetabolomics\GCMS\QuantifyAnalysis\StandardCurve.vb"
+﻿#Region "Microsoft.VisualBasic::a5e27274bcaeea3ca21cea7d4e71dcd8, src\mzmath\TargetedMetabolomics\GCMS\QuantifyAnalysis\StandardCurve.vb"
 
     ' Author:
     ' 

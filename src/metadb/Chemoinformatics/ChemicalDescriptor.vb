@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1178890d90e259165810a60339282e14, src\metadb\Chemoinformatics\ChemicalDescriptor.vb"
+﻿#Region "Microsoft.VisualBasic::a65e27d3ce31fd3ad893ff18865450bc, src\metadb\Chemoinformatics\ChemicalDescriptor.vb"
 
     ' Author:
     ' 
@@ -36,22 +36,14 @@
 
     ' Class ChemicalDescriptor
     ' 
-    '     Properties: Complexity, ExactMass, FormalCharge, HeavyAtoms, HydrogenAcceptor
-    '                 HydrogenDonors, RotatableBonds, TopologicalPolarSurfaceArea, XLogP3, XLogP3_AA
+    '     Properties: AtomDefStereoCount, AtomUdefStereoCount, BondDefStereoCount, BondUdefStereoCount, Complexity
+    '                 ComponentCount, ExactMass, FormalCharge, HeavyAtoms, HydrogenAcceptor
+    '                 HydrogenDonors, IsotopicAtomCount, RotatableBonds, schema, TautoCount
+    '                 TopologicalPolarSurfaceArea, XLogP3, XLogP3_AA
     ' 
     '     Constructor: (+2 Overloads) Sub New
-    '     Function: FromBytes, GetBytesBuffer, GetEnumerator, getOne, IEnumerable_GetEnumerator
-    '               TryParseDouble, TryParseInteger
-    ' 
-    ' Class DescriptorDatabase
-    ' 
-    '     Properties: Length
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: GetDescriptor, GetEnumerator, IEnumerable_GetEnumerator
-    ' 
-    '     Sub: (+2 Overloads) Dispose, Flush, Write
+    '     Function: FromBytes, GetBytesBuffer, GetEnumerator, getOne, TryParseDouble
+    '               TryParseInteger
     ' 
     ' /********************************************************************************/
 

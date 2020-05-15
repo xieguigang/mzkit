@@ -1,193 +1,193 @@
-﻿#Region "Microsoft.VisualBasic::d1256b998c4c218510714478d2419404, src\mzmath\MwtWinDll\MwtWinDll\CapillaryFlowClass.vb"
+﻿#Region "Microsoft.VisualBasic::fcfe25ad4fc7dc9c547d6ac3b15a5927, src\mzmath\MwtWinDll\MwtWinDll\CapillaryFlowClass.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Class MWCapillaryFlowClass
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Enum ctCapillaryTypeConstants
-' 
-'         ctPackedCapillary
-' 
-' 
-' 
-'     Enum uprUnitsPressureConstants
-' 
-'         uprAtmospheres, uprBar, uprDynesPerSquareCm, uprKiloPascals, uprPascals
-'         uprTorr
-' 
-'  
-' 
-' 
-' 
-'     Enum ulnUnitsLengthConstants
-' 
-'         ulnCM, ulnInches, ulnMicrons, ulnMM
-' 
-'  
-' 
-' 
-' 
-'     Enum uviUnitsViscosityConstants
-' 
-'         uviCentiPoise
-' 
-'  
-' 
-' 
-' 
-'     Enum ufrUnitsFlowRateConstants
-' 
-'         ufrNLPerMin, ufrULPerMin
-' 
-'  
-' 
-' 
-' 
-'     Enum ulvUnitsLinearVelocityConstants
-' 
-'         ulvCmPerMin, ulvCmPerSec, ulvMmPerHr, ulvMmPerMin, ulvMmPerSec
-' 
-'  
-' 
-' 
-' 
-'     Enum utmUnitsTimeConstants
-' 
-'         utmMinutes, utmSeconds
-' 
-'  
-' 
-' 
-' 
-'     Enum uvoUnitsVolumeConstants
-' 
-'         uvoNL, uvoPL, uvoUL
-' 
-'  
-' 
-' 
-' 
-'     Enum ucoUnitsConcentrationConstants
-' 
-'         ucoAttoMolar, ucoFemtoMolar, ucoMgPerML, ucoMicroMolar, ucoMilliMolar
-'         ucoNanoMolar, ucongperml, ucoNgPerUL, ucoPicoMolar, ucoUgPerML
-'         ucoUgPerUL
-' 
-'  
-' 
-' 
-' 
-'     Enum utpUnitsTemperatureConstants
-' 
-'         utpFahrenheit, utpKelvin
-' 
-'  
-' 
-' 
-' 
-'     Enum umfMassFlowRateConstants
-' 
-'         umfAmolPerMin, umfAmolPerSec, umfFmolPerMin, umfFmolPerSec, umfMolesPerMin
-'         umfPmolPerSec
-' 
-'  
-' 
-' 
-' 
-'     Enum umaMolarAmountConstants
-' 
-'         umaAttoMoles, umaFemtoMoles, umaMicroMoles, umaMilliMoles, umaNanoMoles
-'         umaPicoMoles
-' 
-'  
-' 
-' 
-' 
-'     Enum udcDiffusionCoefficientConstants
-' 
-'         udcCmSquaredPerMin, udcCmSquaredPerSec
-' 
-'  
-' 
-' 
-' 
-'     Enum acmAutoComputeModeConstants
-' 
-'         acmColumnID, acmColumnLength, acmDeadTime, acmLinearVelociy, acmVolFlowrate
-'         acmVolFlowrateUsingDeadTime
-' 
-'  
-' 
-' 
-' 
-'     Structure udtCapillaryFlowParametersType
-' 
-' 
-' 
-'     Structure udtMassRateParametersType
-' 
-' 
-' 
-'     Structure udtExtraColumnBroadeningParametersType
-' 
-' 
-' 
-'  
-' 
-'     Function: ComputeBackPressure, ComputeColumnID, ComputeColumnLength, ComputeColumnVolume, ComputeDeadTime
-'               ComputeExtraColumnBroadeningResultantPeakWidth, ComputeLinearVelocity, ComputeMassFlowRate, ComputeMassRateMolesInjected, ComputeMeCNViscosity
-'               ComputeOptimumLinearVelocityUsingParticleDiamAndDiffusionCoeff, ComputeVolFlowRate, ComputeVolFlowRateUsingDeadTime, ConvertConcentration, ConvertDiffusionCoefficient
-'               ConvertLength, ConvertLinearVelocity, ConvertMassFlowRate, ConvertMoles, ConvertPressure
-'               ConvertTemperature, ConvertTime, ConvertViscosity, ConvertVolFlowRate, ConvertVolume
-'               FactorConcentration, FactorDiffusionCoeff, FactorLength, FactorLinearVelocity, FactorMassFlowRate
-'               FactorMoles, FactorPressure, FactorTime, FactorViscosity, FactorVolFlowRate
-'               FactorVolume, GetAutoComputeEnabled, GetAutoComputeMode, GetBackPressure, GetCapillaryType
-'               GetColumnID, GetColumnLength, GetColumnVolume, GetDeadTime, GetExtraColumnBroadeningAdditionalVarianceInSquareSeconds
-'               GetExtraColumnBroadeningDiffusionCoefficient, GetExtraColumnBroadeningInitialPeakWidthAtBase, GetExtraColumnBroadeningLinearVelocity, GetExtraColumnBroadeningOpenTubeID, GetExtraColumnBroadeningOpenTubeLength
-'               GetExtraColumnBroadeningResultantPeakWidth, GetExtraColumnBroadeningTemporalVarianceInSquareSeconds, GetInterparticlePorosity, GetLinearVelocity, GetMassFlowRate
-'               GetMassRateConcentration, GetMassRateInjectionTime, GetMassRateMolesInjected, GetMassRateSampleMass, GetMassRateVolFlowRate
-'               GetParticleDiameter, GetSolventViscosity, GetVolFlowRate
-' 
-'     Sub: CheckAutoCompute, ComputeExtraColumnBroadeningValues, ComputeMassRateValues, InitializeClass, SetAutoComputeEnabled
-'          SetAutoComputeMode, SetBackPressure, SetCapillaryType, SetColumnID, SetColumnLength
-'          SetDeadTime, SetExtraColumnBroadeningAdditionalVariance, SetExtraColumnBroadeningDiffusionCoefficient, SetExtraColumnBroadeningInitialPeakWidthAtBase, SetExtraColumnBroadeningLinearVelocity
-'          SetExtraColumnBroadeningOpenTubeID, SetExtraColumnBroadeningOpenTubeLength, SetInterparticlePorosity, SetMassRateConcentration, SetMassRateInjectionTime
-'          SetMassRateSampleMass, SetMassRateVolFlowRate, SetParticleDiameter, SetSolventViscosity, SetVolFlowRate
-' 
-' /********************************************************************************/
+    ' Class MWCapillaryFlowClass
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Enum ctCapillaryTypeConstants
+    ' 
+    '         ctPackedCapillary
+    ' 
+    ' 
+    ' 
+    '     Enum uprUnitsPressureConstants
+    ' 
+    '         uprAtmospheres, uprBar, uprDynesPerSquareCm, uprKiloPascals, uprPascals
+    '         uprTorr
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum ulnUnitsLengthConstants
+    ' 
+    '         ulnCM, ulnInches, ulnMicrons, ulnMM
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum uviUnitsViscosityConstants
+    ' 
+    '         uviCentiPoise
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum ufrUnitsFlowRateConstants
+    ' 
+    '         ufrNLPerMin, ufrULPerMin
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum ulvUnitsLinearVelocityConstants
+    ' 
+    '         ulvCmPerMin, ulvCmPerSec, ulvMmPerHr, ulvMmPerMin, ulvMmPerSec
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum utmUnitsTimeConstants
+    ' 
+    '         utmMinutes, utmSeconds
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum uvoUnitsVolumeConstants
+    ' 
+    '         uvoNL, uvoPL, uvoUL
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum ucoUnitsConcentrationConstants
+    ' 
+    '         ucoAttoMolar, ucoFemtoMolar, ucoMgPerML, ucoMicroMolar, ucoMilliMolar
+    '         ucoNanoMolar, ucongperml, ucoNgPerUL, ucoPicoMolar, ucoUgPerML
+    '         ucoUgPerUL
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum utpUnitsTemperatureConstants
+    ' 
+    '         utpFahrenheit, utpKelvin
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum umfMassFlowRateConstants
+    ' 
+    '         umfAmolPerMin, umfAmolPerSec, umfFmolPerMin, umfFmolPerSec, umfMolesPerMin
+    '         umfPmolPerSec
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum umaMolarAmountConstants
+    ' 
+    '         umaAttoMoles, umaFemtoMoles, umaMicroMoles, umaMilliMoles, umaNanoMoles
+    '         umaPicoMoles
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum udcDiffusionCoefficientConstants
+    ' 
+    '         udcCmSquaredPerMin, udcCmSquaredPerSec
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum acmAutoComputeModeConstants
+    ' 
+    '         acmColumnID, acmColumnLength, acmDeadTime, acmLinearVelociy, acmVolFlowrate
+    '         acmVolFlowrateUsingDeadTime
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Structure udtCapillaryFlowParametersType
+    ' 
+    ' 
+    ' 
+    '     Structure udtMassRateParametersType
+    ' 
+    ' 
+    ' 
+    '     Structure udtExtraColumnBroadeningParametersType
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    '     Function: ComputeBackPressure, ComputeColumnID, ComputeColumnLength, ComputeColumnVolume, ComputeDeadTime
+    '               ComputeExtraColumnBroadeningResultantPeakWidth, ComputeLinearVelocity, ComputeMassFlowRate, ComputeMassRateMolesInjected, ComputeMeCNViscosity
+    '               ComputeOptimumLinearVelocityUsingParticleDiamAndDiffusionCoeff, ComputeVolFlowRate, ComputeVolFlowRateUsingDeadTime, ConvertConcentration, ConvertDiffusionCoefficient
+    '               ConvertLength, ConvertLinearVelocity, ConvertMassFlowRate, ConvertMoles, ConvertPressure
+    '               ConvertTemperature, ConvertTime, ConvertViscosity, ConvertVolFlowRate, ConvertVolume
+    '               FactorConcentration, FactorDiffusionCoeff, FactorLength, FactorLinearVelocity, FactorMassFlowRate
+    '               FactorMoles, FactorPressure, FactorTime, FactorViscosity, FactorVolFlowRate
+    '               FactorVolume, GetAutoComputeEnabled, GetAutoComputeMode, GetBackPressure, GetCapillaryType
+    '               GetColumnID, GetColumnLength, GetColumnVolume, GetDeadTime, GetExtraColumnBroadeningAdditionalVarianceInSquareSeconds
+    '               GetExtraColumnBroadeningDiffusionCoefficient, GetExtraColumnBroadeningInitialPeakWidthAtBase, GetExtraColumnBroadeningLinearVelocity, GetExtraColumnBroadeningOpenTubeID, GetExtraColumnBroadeningOpenTubeLength
+    '               GetExtraColumnBroadeningResultantPeakWidth, GetExtraColumnBroadeningTemporalVarianceInSquareSeconds, GetInterparticlePorosity, GetLinearVelocity, GetMassFlowRate
+    '               GetMassRateConcentration, GetMassRateInjectionTime, GetMassRateMolesInjected, GetMassRateSampleMass, GetMassRateVolFlowRate
+    '               GetParticleDiameter, GetSolventViscosity, GetVolFlowRate
+    ' 
+    '     Sub: CheckAutoCompute, ComputeExtraColumnBroadeningValues, ComputeMassRateValues, InitializeClass, SetAutoComputeEnabled
+    '          SetAutoComputeMode, SetBackPressure, SetCapillaryType, SetColumnID, SetColumnLength
+    '          SetDeadTime, SetExtraColumnBroadeningAdditionalVariance, SetExtraColumnBroadeningDiffusionCoefficient, SetExtraColumnBroadeningInitialPeakWidthAtBase, SetExtraColumnBroadeningLinearVelocity
+    '          SetExtraColumnBroadeningOpenTubeID, SetExtraColumnBroadeningOpenTubeLength, SetInterparticlePorosity, SetMassRateConcentration, SetMassRateInjectionTime
+    '          SetMassRateSampleMass, SetMassRateVolFlowRate, SetParticleDiameter, SetSolventViscosity, SetVolFlowRate
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
