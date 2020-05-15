@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dda21618f24de49ecf89084032156510, Rscript\Library\mzkit.insilicons\metaDNA.vb"
+﻿#Region "Microsoft.VisualBasic::50c1e0115ae5e7dad814123d048dc5e3, Rscript\Library\mzkit.insilicons\metaDNA.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports MetaDNA.visual
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -114,4 +113,3 @@ Module metaDNA
         End If
     End Function
 End Module
-

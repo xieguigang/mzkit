@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::53f704358bf156ab33dc5d8253327a9d, Rscript\Library\mzkit\MzMath.vb"
+﻿#Region "Microsoft.VisualBasic::f9d1979191d50bce3cf03d979c0d2c8e, Rscript\Library\mzkit\MzMath.vb"
 
     ' Author:
     ' 
@@ -188,4 +188,3 @@ Module MzMath
             .ToArray
     End Function
 End Module
-

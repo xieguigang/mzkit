@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::decb5ff5286f94b7691b3c3fcea84ebc, src\assembly\ProteoWizard.Interop\OutFileTypes.vb"
+﻿#Region "Microsoft.VisualBasic::ef814ebbf2a8b5e19861fcd3571abb26, src\assembly\ProteoWizard.Interop\OutFileTypes.vb"
 
     ' Author:
     ' 
@@ -45,7 +45,6 @@
 
 #End Region
 
-
 Imports System.ComponentModel
 
 Public Enum OutFileTypes
@@ -86,4 +85,3 @@ Public Enum OutFileTypes
     ''' </summary>
     <Description("--cms2")> cms2
 End Enum
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::480be158d92e6c3ec5fa3071ff9e4125, Rscript\Library\mzkit.plot\Visual.vb"
+﻿#Region "Microsoft.VisualBasic::91a2d71faccab8672004bbb4e4fbda40, Rscript\Library\mzkit.plot\Visual.vb"
 
     ' Author:
     ' 
@@ -102,4 +102,3 @@ Module Visual
         End Select
     End Function
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5dbae3ec7ba3b59cc6f1e0c973778831, Rscript\Library\mzkit.interopArguments\Math.vb"
+﻿#Region "Microsoft.VisualBasic::ffb7af420686ccadb72ddbf9532c7278, Rscript\Library\mzkit.interopArguments\Math.vb"
 
     ' Author:
     ' 
@@ -67,4 +67,3 @@ Module Math
         End If
     End Function
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b33bfb935407320e89ebb2446158602b, src\metadna\KEGG_MetaDNA\ReactionLink.vb"
+﻿#Region "Microsoft.VisualBasic::1a186c0085f26e0ce8813a456d1fb4fe, src\metadna\KEGG_MetaDNA\ReactionLink.vb"
 
     ' Author:
     ' 
@@ -51,4 +51,3 @@ Public Class ReactionLink : Implements INamedValue
     Public Property reactants As String()
     Public Property products As String()
 End Class
-

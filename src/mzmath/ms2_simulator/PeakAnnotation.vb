@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e07a87b7e637f7601fcc0a1410342524, src\mzmath\ms2_simulator\PeakAnnotation.vb"
+﻿#Region "Microsoft.VisualBasic::6e15d375950f181c154d67378a991392, src\mzmath\ms2_simulator\PeakAnnotation.vb"
 
     ' Author:
     ' 
@@ -45,4 +45,3 @@
 Public Class PeakAnnotation
 
 End Class
-

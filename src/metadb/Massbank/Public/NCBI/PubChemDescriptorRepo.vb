@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7c1966ebf4b5c90a8c15ed9f0db27f7, src\metadb\Massbank\Public\NCBI\PubChemDescriptorRepo.vb"
+﻿#Region "Microsoft.VisualBasic::f1a608990e6f19a8d6aa61a2296525da, src\metadb\Massbank\Public\NCBI\PubChemDescriptorRepo.vb"
 
     ' Author:
     ' 
@@ -278,4 +278,3 @@ Module BinaryHelper
         fs.Write(BitConverter.GetBytes(dbl), Scan0, 8)
     End Sub
 End Module
-

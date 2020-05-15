@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fdc7f3a91f292d6a67107c1cecfe0ff8, Rscript\Library\mzkit.quantify\MRM\MRMLinearReport.vb"
+﻿#Region "Microsoft.VisualBasic::8bc897ca8f30a9ef7c6620a1c751d461, Rscript\Library\mzkit.quantify\MRM\MRMLinearReport.vb"
 
     ' Author:
     ' 
@@ -315,4 +315,3 @@ Module MRMLinearReport
         Return sprintf(e, equation, pointTable)
     End Function
 End Module
-

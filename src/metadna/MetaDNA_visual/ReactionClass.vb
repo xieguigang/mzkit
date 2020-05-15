@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c9915a914ad0a1394fda596320b41c0, src\metadna\MetaDNA_visual\ReactionClass.vb"
+﻿#Region "Microsoft.VisualBasic::0dd9e67c9ddcbbeea1f65c5f87036794, src\metadna\MetaDNA_visual\ReactionClass.vb"
 
     ' Author:
     ' 
@@ -53,4 +53,3 @@ Public Class ReactionClass : Implements INamedValue
     Public Property define As String
 
 End Class
-

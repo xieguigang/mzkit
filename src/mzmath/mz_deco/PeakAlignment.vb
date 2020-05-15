@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8fb40be97e44e5e8c67a4d0f812facf3, src\mzmath\mz_deco\PeakAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::3182c3618af7650e03f9aa81e19e78fc, src\mzmath\mz_deco\PeakAlignment.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,6 @@
 
 #End Region
 
-
 ''' <summary>
 ''' 峰对齐操作主要是针对保留时间漂移进行矫正
 ''' 
@@ -52,4 +51,3 @@
 Module PeakAlignment
 
 End Module
-

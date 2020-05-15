@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d9ff52cfad56676ace9801a53d4dc16, src\mzmath\mz_deco\Deconvolution.vb"
+﻿#Region "Microsoft.VisualBasic::e874b6627e426d248fbfc62837a5319e, src\mzmath\mz_deco\Deconvolution.vb"
 
     ' Author:
     ' 
@@ -174,4 +174,3 @@ Public Module Deconvolution
         Next
     End Function
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d811fbe8aa125a72381104618878b5c, src\mzmath\mz_deco\PeakFeature.vb"
+﻿#Region "Microsoft.VisualBasic::dd81c25e42785843f9b23938e9083f9f, src\mzmath\mz_deco\PeakFeature.vb"
 
     ' Author:
     ' 
@@ -51,7 +51,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports stdNum = System.Math
