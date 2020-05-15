@@ -102,13 +102,14 @@ Public Module SDFReader
     Public Function ParseFile(path As String,
                               Optional skipSpectraInfo As Boolean = False,
                               Optional recalculateMz As Boolean = False,
-                              Optional parallel As Boolean = False) As IEnumerable(Of SpectraSection)
+                              Optional parallel As Boolean = False,
+                              Optional isGcms As Boolean = False) As IEnumerable(Of SpectraSection)
 
         If parallel Then
             Return SDF.IterateParser(path, parseStruct:=False) _
                 .AsParallel _
                 .Select(Function(mol)
-                            Return mol.createMoNAData(skipSpectraInfo, recalculateMz)
+                            Return mol.createMoNAData(skipSpectraInfo, recalculateMz, isGcms)
                         End Function) _
                 .Where(Function(a)
                            Return Not a Is Nothing
@@ -119,7 +120,7 @@ Public Module SDFReader
                        Dim MoNAData As New Value(Of SpectraSection)
 
                        For Each mol As SDF In SDF.IterateParser(path, parseStruct:=False)
-                           If Not (MoNAData = mol.createMoNAData(skipSpectraInfo, recalculateMz)) Is Nothing Then
+                           If Not (MoNAData = mol.createMoNAData(skipSpectraInfo, recalculateMz, isGcms)) Is Nothing Then
                                Yield MoNAData.Value
                            End If
                        Next
@@ -128,7 +129,7 @@ Public Module SDFReader
     End Function
 
     <Extension>
-    Private Function createMoNAData(mol As SDF, skipSpectraInfo As Boolean, recalculateMz As Boolean) As SpectraSection
+    Private Function createMoNAData(mol As SDF, skipSpectraInfo As Boolean, recalculateMz As Boolean, is_gcms As Boolean) As SpectraSection
         Dim M As Func(Of String, String) = mol.readMeta
         Dim commentMeta = mol.MetaData!COMMENT.ToTable
         Dim info As SpectraInfo = Nothing
@@ -147,7 +148,12 @@ Public Module SDFReader
         End If
 
         If Not skipSpectraInfo Then
-            info = M.readSpectraInfo.FixMzType(exact_mass, recalculateMz)
+            If Not is_gcms Then
+                info = M.readSpectraInfo.FixMzType(exact_mass, recalculateMz)
+            Else
+                info = M.readSpectraInfo
+            End If
+
             info.MassPeaks = mol _
                 .MetaData("MASS SPECTRAL PEAKS") _
                 .Select(Function(line) line.Split) _
