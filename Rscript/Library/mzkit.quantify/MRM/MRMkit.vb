@@ -521,6 +521,7 @@ Module MRMkit
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("wiff.scans")>
+    <RApiReturn(GetType(DataSet))>
     Public Function ScanWiffRaw(wiffConverts As String(), ions As IonPair(),
                                 Optional peakAreaMethod As PeakAreaMethods = PeakAreaMethods.NetPeakSum,
                                 Optional tolerance$ = "ppm:20",
@@ -532,14 +533,18 @@ Module MRMkit
                                 Optional bsplineDensity% = 100,
                                 Optional bsplineDegree% = 2,
                                 Optional resolution% = 3000,
-                                Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As DataSet()
+                                Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
+                                Optional env As Environment = Nothing) As Object
 
         If TPAFactors Is Nothing Then
             TPAFactors = New Dictionary(Of String, Double)
         End If
 
         If wiffConverts Is Nothing Then
-            Throw New ArgumentNullException(NameOf(wiffConverts))
+            Return Internal.debug.stop({
+                "the given wiff raw file list is nothing or empty!",
+                "argument: " & NameOf(wiffConverts)
+            }, env)
         End If
 
         If rtshifts Is Nothing Then
