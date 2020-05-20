@@ -174,7 +174,7 @@ Public Module TPAExtensions
     ''' <returns></returns>
     <Extension>
     Private Function findPeakWithRtRange(ion As IsomerismIonPairs, ROIData As ROI(), timeWindowSize#) As ROI
-        Dim ionOrders = ion.ions.OrderBy(Function(i) i.rt).ToArray
+        Dim ionOrders = ion.OrderBy(Function(i) i.rt).ToArray
         Dim peakOrders = ROIData.OrderBy(Function(r) r.rt).ToArray
         Dim rt As Double
         Dim dt As Double
@@ -195,19 +195,21 @@ Public Module TPAExtensions
             index = 1
             peakIndex(Scan0) = pi
 
-            For j As Integer = pi + 1 To peakOrders.Length - 1
-                ' dt1 - dt2 <= tolerance
-                If stdNum.Abs((CDbl(ionOrders(++index).rt) - peakOrders(j).rt) - dt) <= timeWindowSize Then
-                    peakIndex(CInt(index) - 1) = j
-                End If
+            For Each target In ionOrders.Skip(1)
+                For j As Integer = pi + 1 To peakOrders.Length - 1
+                    ' dt1 - dt2 <= tolerance
+                    If stdNum.Abs((CDbl(target.rt) - peakOrders(j).rt) - dt) <= timeWindowSize Then
+                        peakIndex(CInt(++index) - 1) = j
+                    End If
+                Next
             Next
 
-            If peakIndex.Count(Function(x) x >= 0) > 1 Then
+            If peakIndex.Count(Function(x) x >= 0) >= 1 Then
                 rt_alignments.Add(peakIndex)
             End If
         Next
 
-        If rt_alignments.Any Then
+        If rt_alignments.Count > 0 Then
             With rt_alignments _
                 .OrderByDescending(Function(r)
                                        Return r.Count(Function(x) x >= 0)
@@ -270,7 +272,16 @@ Public Module TPAExtensions
         Dim peak As DoubleRange
 
         If ionTarget.hasIsomerism Then
-            region = ionTarget.findPeakWithRtRange(ROIData, timeWindowSize)
+            If ionTarget _
+                .Where(Function(i)
+                           Return Not ROIData.Where(Function(r) stdNum.Abs(CDbl(i.rt) - r.rt) <= timeWindowSize).FirstOrDefault Is Nothing
+                       End Function) _
+                .Count > 1 Then
+
+                region = ionTarget.target.findPeakWithRtRange(ROIData, timeWindowSize)
+            Else
+                region = ionTarget.findPeakWithRtRange(ROIData, timeWindowSize)
+            End If
         Else
             If ionTarget.target.rt Is Nothing Then
                 region = ROIData.findPeakWithoutRtRange
