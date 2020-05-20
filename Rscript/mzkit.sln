@@ -135,8 +135,11 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "R-cmd", "..\..\GCModeller\s
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MLDebugger", "..\..\GCModeller\src\runtime\sciBASIC#\Data_science\MachineLearning\MLDebugger\MLDebugger.vbproj", "{CCBF36AB-506D-48A2-9150-A3762D4120EC}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Rstudio.common", "..\..\GCModeller\src\R-sharp\studio\Rstudio.common\Rstudio.common.shproj", "{14010B90-BC3B-42D9-A52C-30CA537D3C11}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\..\GCModeller\src\R-sharp\studio\Rstudio.common\Rstudio.common.projitems*{14010b90-bc3b-42d9-a52c-30ca537d3c11}*SharedItemsImports = 13
 		..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{1579d1a8-73c4-4f97-bb57-3d1e62343599}*SharedItemsImports = 4
 		..\..\GCModeller\src\R-sharp\studio\Rstudio.common\Rstudio.common.projitems*{3a35ac34-f313-4f72-89e9-eacca217bc8d}*SharedItemsImports = 4
 		..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{53af2b13-ccd5-4f73-94d5-612191e785a9}*SharedItemsImports = 13
@@ -8060,6 +8063,7 @@ Global
 		{94E1A3B2-05C7-4D80-8385-4EAEF4400F9B} = {8691D724-E832-4D0B-B795-391031CC697E}
 		{3A35AC34-F313-4F72-89E9-EACCA217BC8D} = {F5A1DAFA-58B8-485A-813E-EADD23E1B80F}
 		{CCBF36AB-506D-48A2-9150-A3762D4120EC} = {B14A5CD9-9069-4676-B700-55E4F9887FDC}
+		{14010B90-BC3B-42D9-A52C-30CA537D3C11} = {F5A1DAFA-58B8-485A-813E-EADD23E1B80F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F28DA09D-7571-4210-9657-2E4D45F4DC4D}
