@@ -103,14 +103,15 @@ Namespace Chromatogram
         Public Iterator Function PopulateROI(chromatogram As IVector(Of ChromatogramTick),
                                              Optional angleThreshold# = 5,
                                              Optional baselineQuantile# = 0.65,
-                                             Optional MRMpeaks As Boolean = True) As IEnumerable(Of ROI)
+                                             Optional MRMpeaks As Boolean = True,
+                                             Optional snThreshold As Double = 3) As IEnumerable(Of ROI)
             ' 先计算出基线和累加线
             Dim baseline# = chromatogram.Baseline(baselineQuantile)
             Dim time As Vector = chromatogram!time
             Dim intensity As Vector = chromatogram!intensity
             ' Dim maxInto# = intensity.Max - baseline
             ' 所有的基线下面的噪声加起来的积分面积总和
-            Dim sumAllNoise# = Aggregate into In intensity Where into <= baseline Into Sum(into)
+            ' Dim sumAllNoise# = Aggregate into In intensity Where into <= baseline Into Sum(into)
             ' 使用滑窗计算出切线的斜率
             Dim windows As SlideWindow(Of PointF)() = chromatogram _
                 .getAccumulateLine(baseline) _
@@ -149,15 +150,19 @@ Namespace Chromatogram
                     End With
                 End If
 
-                Yield New ROI With {
+                Dim ROI As New ROI With {
                     .ticks = peak.ToArray,
                     .maxInto = max,
                     .baseline = baseline,
                     .time = {rtmin, rtmax},
                     .integration = integration,
                     .rt = rt,
-                    .noise = (peak.Length * baseline) / sumAllNoise
+                    .noise = peak.Length * baseline
                 }
+
+                If ROI.snRatio >= snThreshold Then
+                    Yield ROI
+                End If
             Next
         End Function
 

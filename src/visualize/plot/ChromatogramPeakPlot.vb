@@ -99,6 +99,7 @@ Public Module ChromatogramPeakPlot
                          Optional accumulateLineStyleCss$ = "stroke: blue; stroke-width: 4px; stroke-dash: dash;",
                          Optional showAccumulateLine As Boolean = False,
                          Optional baselineQuantile# = 0.65,
+                         Optional angleThreshold# = 8,
                          Optional isMRM As Boolean = True) As GraphicsData
 
         Dim timeTicks#() = chromatogram.TimeArray.CreateAxisTicks
@@ -172,7 +173,7 @@ Public Module ChromatogramPeakPlot
                     ' 取出最大的ROI就是MRM色谱峰的保留时间范围
                     Dim MRM_ROIs As ROI() = chromatogram _
                         .Shadows _
-                        .PopulateROI(MRMpeaks:=isMRM) _
+                        .PopulateROI(MRMpeaks:=isMRM, angleThreshold:=angleThreshold) _
                         .ToArray
                     Dim maxIntensity# = intoTicks.Max
                     Dim canvas As IGraphics = g

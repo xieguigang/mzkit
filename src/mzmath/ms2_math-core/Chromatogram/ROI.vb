@@ -1,52 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::76001a62edcf58e3060450603a6d84a5, src\mzmath\ms2_math-core\Chromatogram\ROI.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Interface IROI
-    ' 
-    '         Properties: rtmax, rtmin
-    ' 
-    '     Class ROI
-    ' 
-    '         Properties: baseline, integration, maxInto, noise, peakWidth
-    '                     rt, snRatio, ticks, time
-    ' 
-    '         Function: GetChromatogramData, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Interface IROI
+' 
+'         Properties: rtmax, rtmin
+' 
+'     Class ROI
+' 
+'         Properties: baseline, integration, maxInto, noise, peakWidth
+'                     rt, snRatio, ticks, time
+' 
+'         Function: GetChromatogramData, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -114,6 +114,7 @@ Namespace Chromatogram
         ''' 积分值加起来应该是约等于100的
         ''' </remarks>
         Public Property integration As Double
+
         ''' <summary>
         ''' 噪声的面积积分百分比
         ''' </summary>
@@ -126,7 +127,10 @@ Namespace Chromatogram
         ''' <returns></returns>
         Public ReadOnly Property snRatio As Double
             Get
-                Return stdNum.Log(integration / noise)
+                Dim signal As Double = Aggregate tick In ticks Into Sum(tick.Intensity - baseline)
+                Dim sn As Double = 10 * stdNum.Log10(If(noise <= 0.0, Double.MaxValue, signal / noise))
+
+                Return sn
             End Get
         End Property
 
