@@ -1,55 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::e2daa309bb3f7a77f2878635eb4deeee, src\mzmath\ms2_math-core\Chromatogram\AccumulateROI.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module AccumulateROI
-    ' 
-    '         Function: getAccumulateLine, PopulateROI, SplitGCMSPeaks, SplitMRMPeaks
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module AccumulateROI
+' 
+'         Function: getAccumulateLine, PopulateROI, SplitGCMSPeaks, SplitMRMPeaks
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
+Imports stdNum = System.Math
 
 Namespace Chromatogram
 
@@ -104,7 +106,8 @@ Namespace Chromatogram
                                              Optional angleThreshold# = 5,
                                              Optional baselineQuantile# = 0.65,
                                              Optional MRMpeaks As Boolean = True,
-                                             Optional snThreshold As Double = 3) As IEnumerable(Of ROI)
+                                             Optional snThreshold As Double = 3,
+                                             Optional peakwidth As DoubleRange = Nothing) As IEnumerable(Of ROI)
             ' 先计算出基线和累加线
             Dim baseline# = chromatogram.Baseline(baselineQuantile)
             Dim time As Vector = chromatogram!time
@@ -118,6 +121,10 @@ Namespace Chromatogram
                 .SlideWindows(winSize:=2) _
                 .ToArray
             Dim peaks As IEnumerable(Of SlideWindow(Of PointF)())
+
+            If peakwidth Is Nothing Then
+                peakwidth = {10, 20}
+            End If
 
             ' 2018-11-26
             ' 目前暂时使用一样的方法进行MRM和GCMS的峰的解析操作
@@ -148,6 +155,24 @@ Namespace Chromatogram
                         max = .Max
                         rt = .DoCall(Function(vec) peak(index:=Which.Max(x:=vec))).Time
                     End With
+                End If
+
+                Dim dt = rtmax - rtmin
+                Dim d = dt / peakwidth.Min
+
+                ' 峰太窄了，认为是一个杂峰？
+                If d < 0.95 Then
+                    Continue For
+                Else
+                    d = dt / peakwidth.Max
+                End If
+
+                If d >= 1.25 Then
+                    ' 峰太宽了，可能积分积到其他的拖尾的杂峰上面了
+                    ' 按照rt进行峰收缩
+                    rtmin = stdNum.Max(rt - peakwidth.Max / 2, rtmin)
+                    rtmax = stdNum.Min(rt + peakwidth.Max / 2, rtmax)
+                    peak = chromatogram((time >= rtmin) & (time <= rtmax))
                 End If
 
                 Dim ROI As New ROI With {
