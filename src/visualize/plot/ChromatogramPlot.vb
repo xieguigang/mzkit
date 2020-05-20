@@ -280,6 +280,7 @@ Public Module ChromatogramPlot
                     xlabel:=If(isXIC, "m/z ratio", "Time (s)"),
                     ylabel:="Intensity",
                     htmlLabel:=False,
+                    XtickFormat:=If(isXIC, "F2", "F0"),
                     YtickFormat:="G2",
                     labelFont:=axisLabelFont,
                     tickFontStyle:=axisTickFont,

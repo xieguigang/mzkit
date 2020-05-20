@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::828ca2f616afa97bf89cc014836f925a, src\visualize\plot\ChromatogramPeakPlot.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module ChromatogramPeakPlot
-    ' 
-    '     Function: Plot
-    ' 
-    ' /********************************************************************************/
+' Module ChromatogramPeakPlot
+' 
+'     Function: Plot
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -94,9 +94,9 @@ Public Module ChromatogramPeakPlot
                          Optional titleFontCSS$ = CSSFont.Win7VeryLarge,
                          Optional legendFontCSS$ = CSSFont.Win7LargerNormal,
                          Optional showMRMRegion As Boolean = False,
-                         Optional ROI_styleCSS$ = "stroke: red; stroke-width: 2px; stroke-dash: dash;",
-                         Optional baseLine_styleCSS$ = "stroke: green; stroke-width: 2px; stroke-dash: dash;",
-                         Optional accumulateLineStyleCss$ = "stroke: blue; stroke-width: 2px; stroke-dash: dash;",
+                         Optional ROI_styleCSS$ = "stroke: red; stroke-width: 4px; stroke-dash: dash;",
+                         Optional baseLine_styleCSS$ = "stroke: green; stroke-width: 4px; stroke-dash: dash;",
+                         Optional accumulateLineStyleCss$ = "stroke: blue; stroke-width: 4px; stroke-dash: dash;",
                          Optional showAccumulateLine As Boolean = False,
                          Optional baselineQuantile# = 0.65,
                          Optional isMRM As Boolean = True) As GraphicsData
@@ -139,7 +139,7 @@ Public Module ChromatogramPeakPlot
                     xlabel:="Time (s)",
                     ylabel:="Intensity",
                     htmlLabel:=False,
-                    XtickFormat:="F1",
+                    XtickFormat:="F0",
                     YtickFormat:="G3"
                 )
 
@@ -170,35 +170,37 @@ Public Module ChromatogramPeakPlot
                 If showMRMRegion Then
 
                     ' 取出最大的ROI就是MRM色谱峰的保留时间范围
-                    Dim MRM_ROI As DoubleRange = chromatogram.Shadows _
-                                                             .PopulateROI(MRMpeaks:=isMRM) _
-                                                             .OrderByDescending(Function(ROI) ROI.Integration) _
-                                                             .FirstOrDefault _
-                                                            ?.Time
-                    If Not MRM_ROI Is Nothing Then
-                        Dim maxIntensity# = intoTicks.Max
-                        Dim canvas = g
-                        Dim drawLine = Sub(x1, x2)
-                                           x1 = scaler.Translate(x1)
-                                           x2 = scaler.Translate(x2)
+                    Dim MRM_ROIs As ROI() = chromatogram _
+                        .Shadows _
+                        .PopulateROI(MRMpeaks:=isMRM) _
+                        .ToArray
+                    Dim maxIntensity# = intoTicks.Max
+                    Dim canvas As IGraphics = g
+                    Dim drawLine = Sub(x1 As PointF, x2 As PointF, isBaseline As Boolean)
+                                       x1 = scaler.Translate(x1)
+                                       x2 = scaler.Translate(x2)
 
+                                       If isBaseline Then
+                                           Call canvas.DrawLine(baselinePen, x1, x2)
+                                       Else
                                            Call canvas.DrawLine(ROIpen, x1, x2)
-                                       End Sub
+                                       End If
+                                   End Sub
 
-                        A = New PointF(MRM_ROI.Min, 0)
-                        B = New PointF(MRM_ROI.Min, maxIntensity)
-                        drawLine(A, B)
+                    For Each MRM_ROI As ROI In MRM_ROIs
+                        A = New PointF(MRM_ROI.time.Min, 0)
+                        B = New PointF(MRM_ROI.time.Min, maxIntensity)
+                        drawLine(A, B, False)
 
-                        A = New PointF(MRM_ROI.Max, 0)
-                        B = New PointF(MRM_ROI.Max, maxIntensity)
-                        drawLine(A, B)
+                        A = New PointF(MRM_ROI.time.Max, 0)
+                        B = New PointF(MRM_ROI.time.Max, maxIntensity)
+                        drawLine(A, B, False)
 
                         A = New PointF(timeTicks.Min, base)
                         B = New PointF(timeTicks.Max, base)
-                        ROIpen = baselinePen
 
-                        drawLine(A, B)
-                    End If
+                        drawLine(A, B, True)
+                    Next
                 End If
 
                 Dim left = rect.Left + (rect.Width - g.MeasureString(title, titleFont).Width) / 2
