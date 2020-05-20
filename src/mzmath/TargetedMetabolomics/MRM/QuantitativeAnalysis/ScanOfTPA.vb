@@ -102,12 +102,14 @@ Namespace MRM
             ' 进行最大峰的查找，然后计算出净峰面积，用于回归建模
             Dim TPA As IonTPA() = ionData _
                 .Select(Function(ion)
+                            Dim factorVal As Double = TPAFactors.GetFactor(ion.name)
+
                             Return ion.ionTPA(
                                 baselineQuantile,
                                 angleThreshold,
                                 peakAreaMethod,
                                 integratorTicks,
-                                TPAFactors.GetFactor(ion.name),
+                                TPAFactor:=factorVal,
                                 timeWindowSize:=timeWindowSize,
                                 bsplineDegree:=bsplineDegree,
                                 bsplineDensity:=bsplineDensity

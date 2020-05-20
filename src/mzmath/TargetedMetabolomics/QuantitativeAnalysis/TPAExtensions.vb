@@ -1,51 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::f51d66d322aabe0ebb7e353f0eb7ee98, src\mzmath\TargetedMetabolomics\QuantitativeAnalysis\TPAExtensions.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class IonTPA
-    ' 
-    '     Properties: area, baseline, maxPeakHeight, name, peakROI
-    '                 rt
-    ' 
-    '     Function: ToString
-    ' 
-    ' Module TPAExtensions
-    ' 
-    '     Function: ionTPA, isContactWith, ProcessingIonPeakArea, TPAIntegrator
-    ' 
-    ' /********************************************************************************/
+' Class IonTPA
+' 
+'     Properties: area, baseline, maxPeakHeight, name, peakROI
+'                 rt
+' 
+'     Function: ToString
+' 
+' Module TPAExtensions
+' 
+'     Function: ionTPA, isContactWith, ProcessingIonPeakArea, TPAIntegrator
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -54,6 +54,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports stdNum = System.Math
@@ -134,6 +135,115 @@ Public Module TPAExtensions
     End Function
 
     ''' <summary>
+    ''' 这个函数是建立在没有保留时间漂移的基础上的
+    ''' </summary>
+    ''' <param name="ROIData"></param>
+    ''' <param name="timeWindowSize">时间窗口的大小</param>
+    ''' <returns>
+    ''' 返回空值表示ND结果
+    ''' </returns>
+    <Extension>
+    Private Function findPeakWithRtRange(target As IonPair, ROIData As ROI(), timeWindowSize#) As ROI
+        ' 20200304
+        ' System.InvalidOperationException: Nullable object must have a value.
+        Dim find As DoubleRange = {
+            CDbl(target.rt) - timeWindowSize,
+            CDbl(target.rt) + timeWindowSize
+        }
+        Dim region As ROI = ROIData _
+           .Where(Function(r)
+                      Return isContactWith(r.time, find)
+                  End Function) _
+           .OrderByDescending(Function(r)
+                                  ' 20200309 因为噪声的积分面积可能会大于目标物质峰
+                                  ' 的面积，所以在这里应该是使用峰高进行ROI的排序操
+                                  ' 作
+                                  Return r.maxInto
+                              End Function) _
+           .FirstOrDefault
+
+        Return region
+    End Function
+
+    ''' <summary>
+    ''' 这个是针对有保留时间漂移的情况
+    ''' </summary>
+    ''' <param name="ion"></param>
+    ''' <param name="ROIData"></param>
+    ''' <param name="timeWindowSize#"></param>
+    ''' <returns></returns>
+    <Extension>
+    Private Function findPeakWithRtRange(ion As IsomerismIonPairs, ROIData As ROI(), timeWindowSize#) As ROI
+        Dim ionOrders = ion.ions.OrderBy(Function(i) i.rt).ToArray
+        Dim peakOrders = ROIData.OrderBy(Function(r) r.rt).ToArray
+        Dim rt As Double
+        Dim dt As Double
+        Dim index As i32
+        Dim peakIndex As Integer()
+        Dim rt_alignments As New List(Of Integer())
+
+        ' 计算保留时间漂移
+        For pi As Integer = 0 To peakOrders.Length - 1
+            peakIndex = New Integer(ionOrders.Length - 1) {}
+
+            For i As Integer = 0 To peakIndex.Length - 1
+                peakIndex(i) = -1
+            Next
+
+            rt = peakOrders(pi).rt
+            dt = ionOrders(Scan0).rt - rt
+            index = 1
+            peakIndex(Scan0) = pi
+
+            For j As Integer = pi + 1 To peakOrders.Length - 1
+                ' dt1 - dt2 <= tolerance
+                If stdNum.Abs((CDbl(ionOrders(++index).rt) - peakOrders(j).rt) - dt) <= timeWindowSize Then
+                    peakIndex(CInt(index) - 1) = j
+                End If
+            Next
+
+            If peakIndex.Count(Function(x) x >= 0) > 1 Then
+                rt_alignments.Add(peakIndex)
+            End If
+        Next
+
+        If rt_alignments.Any Then
+            With rt_alignments _
+                .OrderByDescending(Function(r)
+                                       Return r.Count(Function(x) x >= 0)
+                                   End Function) _
+                .First
+
+                If DirectCast(.GetValue(ion.index), Integer) = -1 Then
+                    Return Nothing
+                Else
+                    Return peakOrders(.GetValue(ion.index))
+                End If
+            End With
+        Else
+            Return Nothing
+        End If
+    End Function
+
+    ''' <summary>
+    ''' 因为当前的<paramref name="ROIData"/>都是当前的这个离子对的结果数据
+    ''' 所以在这里直接返回最大的峰高度的那个结果？
+    ''' </summary>
+    ''' <param name="ROIData"></param>
+    ''' <returns></returns>
+    <Extension>
+    Private Function findPeakWithoutRtRange(ROIData As ROI()) As ROI
+        Return ROIData _
+            .OrderByDescending(Function(r)
+                                   ' 这个积分值只是用来查找最大的峰面积的ROI区域
+                                   ' 并不是最后的峰面积结果
+                                   ' 还需要在下面的代码之中做峰面积积分才可以得到最终的结果
+                                   Return r.maxInto
+                               End Function) _
+            .First
+    End Function
+
+    ''' <summary>
     ''' 
     ''' </summary>
     ''' <param name="ion"></param>
@@ -153,89 +263,29 @@ Public Module TPAExtensions
                                            timeWindowSize#,
                                            bsplineDensity%,
                                            bsplineDegree%) As IonTPA
-        Dim peak As DoubleRange
-        Dim data As (area#, baseline#, maxPeakHeight#)
-        Dim target = ion.ion.target
-        Dim find As DoubleRange = Nothing
+
+        Dim ionTarget As IsomerismIonPairs = ion.ion
         Dim region As ROI = Nothing
+        Dim data As (area#, baseline#, maxPeakHeight#)
+        Dim peak As DoubleRange
 
-        ROIData = ROIData _
-            .OrderBy(Function(r) r.Time.Min) _
-            .ToArray
-
-        ' 20200309 因为噪声的积分面积可能会大于目标物质峰
-        ' 的面积，所以在这里应该是使用峰高进行ROI的排序操
-        ' 作
-        If Not target.rt Is Nothing Then
-            ' 20200304
-            ' System.InvalidOperationException: Nullable object must have a value.
-            find = {
-                CDbl(target.rt) - timeWindowSize,
-                CDbl(target.rt) + timeWindowSize
-            }
-            region = ROIData _
-               .Where(Function(r)
-                          Return isContactWith(r.Time, find)
-                      End Function) _
-               .OrderByDescending(Function(r) r.MaxInto) _
-               .FirstOrDefault
-        End If
-
-        If ion.ion.hasIsomerism Then
-            If region Is Nothing Then
-                ROIData = ROIData _
-                    .OrderByDescending(Function(r) r.MaxInto) _
-                    .Take(ion.ion.ions.Length + 1) _
-                    .OrderBy(Function(r) r.rt) _
-                    .ToArray
-
-                ' find by index
-                If ion.ion.index < ROIData.Length Then
-                    If ion.ion.target.rt Is Nothing Then
-                        region = ROIData.OrderByDescending(Function(r) r.maxInto).First
-                    Else
-                        ' 胆汁酸MSL文件是存在rt的
-                        region = ROIData(ion.ion.index)
-                    End If
-                ElseIf ROIData.Length = 1 AndAlso ion.ion.target.rt Is Nothing Then
-                    ' 在这里主要是修复ILE和LEU这两种代谢物
-                    region = ROIData(Scan0)
-                Else
-                    ' current ion is ND value
-                    Return New IonTPA With {
-                        .name = ion.name,
-                        .peakROI = New DoubleRange(0, 0)
-                    }
-                End If
-            End If
-
-            If region Is Nothing Then
-                Return New IonTPA With {
-                    .name = ion.name,
-                    .peakROI = New DoubleRange(0, 0)
-                }
-            Else
-                peak = region.Time
-            End If
+        If ionTarget.hasIsomerism Then
+            region = ionTarget.findPeakWithRtRange(ROIData, timeWindowSize)
         Else
-            If target.rt Is Nothing OrElse region Is Nothing Then
-                ROIData = ROIData _
-                    .OrderByDescending(Function(ROI)
-                                           ' 这个积分值只是用来查找最大的峰面积的ROI区域
-                                           ' 并不是最后的峰面积结果
-                                           ' 还需要在下面的代码之中做峰面积积分才可以得到最终的结果
-                                           Return ROI.MaxInto
-                                       End Function) _
-                    .ToArray
-
-                region = ROIData(Scan0)
+            If ionTarget.target.rt Is Nothing Then
+                region = ROIData.findPeakWithoutRtRange
+            Else
+                region = ionTarget.target.findPeakWithRtRange(ROIData, timeWindowSize)
             End If
-
-            peak = region.Time
         End If
 
-        If Not find Is Nothing AndAlso Not isContactWith(peak, find) Then
-            ' Call $"The ROI peak region [{peak.Min}, {peak.Max}] is not contains '{ion.name}' ({ion.ion.target.rt} sec)!".Warning
+        If region Is Nothing Then
+            Return New IonTPA With {
+                .name = ion.name,
+                .peakROI = New DoubleRange(0, 0)
+            }
+        Else
+            peak = region.time
         End If
 
         With vector.TPAIntegrator(
