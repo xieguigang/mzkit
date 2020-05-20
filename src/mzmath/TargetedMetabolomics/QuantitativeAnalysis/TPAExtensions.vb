@@ -123,7 +123,8 @@ Public Module TPAExtensions
                 TPAFactor:=TPAFactor,
                 timeWindowSize:=timeWindowSize,
                 bsplineDensity:=bsplineDensity,
-                bsplineDegree:=bsplineDegree
+                bsplineDegree:=bsplineDegree,
+                timeshiftMethod:=False
             )
         End If
 
@@ -264,7 +265,8 @@ Public Module TPAExtensions
                                            TPAFactor#,
                                            timeWindowSize#,
                                            bsplineDensity%,
-                                           bsplineDegree%) As IonTPA
+                                           bsplineDegree%,
+                                           timeshiftMethod As Boolean) As IonTPA
 
         Dim ionTarget As IsomerismIonPairs = ion.ion
         Dim region As ROI = Nothing
@@ -272,12 +274,12 @@ Public Module TPAExtensions
         Dim peak As DoubleRange
 
         If ionTarget.hasIsomerism Then
-            If ionTarget _
-                .Where(Function(i)
-                           Return Not ROIData.Where(Function(r) stdNum.Abs(CDbl(i.rt) - r.rt) <= timeWindowSize).FirstOrDefault Is Nothing
-                       End Function) _
-                .Count > 1 Then
-
+            'If ionTarget _
+            '    .Where(Function(i)
+            '               Return Not ROIData.Where(Function(r) stdNum.Abs(CDbl(i.rt) - r.rt) <= timeWindowSize).FirstOrDefault Is Nothing
+            '           End Function) _
+            '    .Count > 1 Then
+            If Not timeshiftMethod Then
                 region = ionTarget.target.findPeakWithRtRange(ROIData, timeWindowSize)
             Else
                 region = ionTarget.findPeakWithRtRange(ROIData, timeWindowSize)
