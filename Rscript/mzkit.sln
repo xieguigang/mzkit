@@ -7935,8 +7935,8 @@ Global
 		{CCBF36AB-506D-48A2-9150-A3762D4120EC}.mysqli_X64_release|x86.Build.0 = Rsharp_app_release|x86
 		{CCBF36AB-506D-48A2-9150-A3762D4120EC}.mzkit|Any CPU.ActiveCfg = Rsharp_app_release|Any CPU
 		{CCBF36AB-506D-48A2-9150-A3762D4120EC}.mzkit|Any CPU.Build.0 = Rsharp_app_release|Any CPU
-		{CCBF36AB-506D-48A2-9150-A3762D4120EC}.mzkit|x64.ActiveCfg = Rsharp_app_release|x64
-		{CCBF36AB-506D-48A2-9150-A3762D4120EC}.mzkit|x64.Build.0 = Rsharp_app_release|x64
+		{CCBF36AB-506D-48A2-9150-A3762D4120EC}.mzkit|x64.ActiveCfg = mzkit|x64
+		{CCBF36AB-506D-48A2-9150-A3762D4120EC}.mzkit|x64.Build.0 = mzkit|x64
 		{CCBF36AB-506D-48A2-9150-A3762D4120EC}.mzkit|x86.ActiveCfg = Rsharp_app_release|x86
 		{CCBF36AB-506D-48A2-9150-A3762D4120EC}.mzkit|x86.Build.0 = Rsharp_app_release|x86
 		{CCBF36AB-506D-48A2-9150-A3762D4120EC}.node-debug|Any CPU.ActiveCfg = node-debug|Any CPU
