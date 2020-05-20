@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::810bba4568992b83d5574209401da66b, Rscript\Library\mzkit.quantify\Visual.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Visual
-    ' 
-    '     Function: asChromatogram, chromatogramPlot, DrawStandardCurve, MRMchromatogramPeakPlot
-    ' 
-    ' /********************************************************************************/
+' Module Visual
+' 
+'     Function: asChromatogram, chromatogramPlot, DrawStandardCurve, MRMchromatogramPeakPlot
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -73,8 +73,8 @@ Module Visual
         If data Is Nothing Then
             Return Nothing
         ElseIf TypeOf data Is Rdataframe Then
-            timeVec = REnv.asVector(Of Double)(DirectCast(data, Rdataframe).GetColumnVector(time))
-            intoVec = REnv.asVector(Of Double)(DirectCast(data, Rdataframe).GetColumnVector(into))
+            timeVec = REnv.asVector(Of Double)(DirectCast(data, Rdataframe).getColumnVector(time))
+            intoVec = REnv.asVector(Of Double)(DirectCast(data, Rdataframe).getColumnVector(into))
         ElseIf TypeOf data Is DataSet() Then
             timeVec = DirectCast(data, DataSet()).Vector(time)
             intoVec = DirectCast(data, DataSet()).Vector(into)
@@ -146,6 +146,7 @@ Module Visual
                                             chromatogram As Object,
                                             Optional title$ = "MRM Chromatogram Peak Plot",
                                             Optional size As Object = "2200,1600",
+                                            Optional padding As Object = "padding: 200px 80px 150px 200px",
                                             Optional fill As Boolean = True,
                                             Optional gridFill$ = "rgb(250,250,250)",
                                             Optional lineStyle$ = "stroke: black; stroke-width: 2px; stroke-dash: solid;",
@@ -165,11 +166,13 @@ Module Visual
         End If
 
         If TypeOf chromatogram Is ChromatogramTick() Then
+            ' [time, intensity]
             Return DirectCast(chromatogram, ChromatogramTick()).Plot(
                 title:=title,
                 showMRMRegion:=True,
                 showAccumulateLine:=True,
                 size:=InteropArgumentHelper.getSize(size, "2100,1650"),
+                padding:=InteropArgumentHelper.getPadding(padding),
                 curveStyle:=lineStyle
             )
         ElseIf TypeOf chromatogram Is list AndAlso DirectCast(chromatogram, list).slots.All(Function(c) REnv.isVector(Of ChromatogramTick)(c.Value)) Then
@@ -183,6 +186,7 @@ Module Visual
                 .ToArray _
                 .TICplot(
                     size:=InteropArgumentHelper.getSize(size, "2200,1440"),
+                    margin:=InteropArgumentHelper.getPadding(padding),
                     fillCurve:=fill,
                     gridFill:=gridFill,
                     penStyle:=lineStyle,

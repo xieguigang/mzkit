@@ -139,7 +139,7 @@ Public Module ChromatogramPeakPlot
                     xlabel:="Time (s)",
                     ylabel:="Intensity",
                     htmlLabel:=False,
-                    XtickFormat:="G3",
+                    XtickFormat:="F1",
                     YtickFormat:="G3"
                 )
 
