@@ -123,7 +123,7 @@ Namespace Chromatogram
             Dim peaks As IEnumerable(Of SlideWindow(Of PointF)())
 
             If peakwidth Is Nothing Then
-                peakwidth = {10, 20}
+                peakwidth = {8, 30}
             End If
 
             ' 2018-11-26
