@@ -142,14 +142,13 @@ Namespace MRM
         ''' 默认将``-KB``和``-BLK``结尾的文件都判断为实验空白
         ''' </param>
         ''' <returns>经过定量计算得到的浓度数据</returns>
-        Public Function QuantitativeAnalysis(wiff$, ions As IonPair(), calibrates As Standards(), [IS] As [IS](), tolerance As Tolerance, timeWindowSize#, angleThreshold#, baselineQuantile#,
+        Public Function QuantitativeAnalysis(wiff$, ions As IonPair(), calibrates As Standards(), [IS] As [IS](), args As MRMArguments,
                                              <Out> Optional ByRef model As StandardCurve() = Nothing,
                                              <Out> Optional ByRef standardPoints As NamedValue(Of MRMStandards())() = Nothing,
                                              <Out> Optional ByRef X As List(Of DataSet) = Nothing,
                                              <Out> Optional ByRef peaktable As MRMPeakTable() = Nothing,
                                              Optional calibrationNamedPattern$ = ".+[-]L\d+",
                                              Optional levelPattern$ = "[-]L\d+",
-                                             Optional peakAreaMethod As PeakAreaMethods = PeakAreaMethods.NetPeakSum,
                                              Optional externalStandardsWiff$ = Nothing,
                                              Optional isBlank As Func(Of String, Boolean) = Nothing,
                                              Optional rtshifts As RTAlignment() = Nothing) As IEnumerable(Of DataSet)
@@ -163,13 +162,8 @@ Namespace MRM
                       refName:=standardNames,
                       calibrationNamedPattern:=calibrationNamedPattern,
                       levelPattern:=levelPattern,
-                      peakAreaMethod:=peakAreaMethod,
-                      TPAFactors:=TPAFactors,
-                      tolerance:=tolerance,
-                      timeWindowSize:=timeWindowSize,
-                      angleThreshold:=angleThreshold,
-                      baselineQuantile:=baselineQuantile,
-                      rtshifts:=rtshifts
+                      rtshifts:=rtshifts,
+                      args:=args
                 ) _
                 .ToDictionary _
                 .Regression(calibrates, ISvector:=[IS]) _
@@ -206,13 +200,8 @@ Namespace MRM
                 scan = model.SampleQuantify(
                     file:=file,
                     ions:=ions,
-                    tolerance:=tolerance,
-                    timeWindowSize:=timeWindowSize,
-                    angleThreshold:=angleThreshold,
-                    peakAreaMethod:=peakAreaMethod,
-                    TPAFactors:=TPAFactors,
-                    baselineQuantile:=baselineQuantile,
-                    rtshifts:=New Dictionary(Of String, Double)
+                    rtshifts:=New Dictionary(Of String, Double),
+                    args:=args
                 )
                 mrmPeaktable += scan.MRMPeaks
                 X += scan.rawX
@@ -225,9 +214,7 @@ Namespace MRM
         End Function
 
         <Extension>
-        Public Function SampleQuantify(model As StandardCurve(), file$, ions As IonPair(), tolerance As Tolerance, timeWindowSize#, angleThreshold#, baselineQuantile#, rtshifts As Dictionary(Of String, Double),
-                                       Optional peakAreaMethod As PeakAreaMethods = PeakAreaMethods.NetPeakSum,
-                                       Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As QuantifyScan
+        Public Function SampleQuantify(model As StandardCurve(), file$, ions As IonPair(), rtshifts As Dictionary(Of String, Double), args As MRMArguments) As QuantifyScan
 
             ' 使用离子对信息扫面当前的这个原始数据文件
             ' 得到峰面积等定量计算所需要的结果信息
@@ -235,12 +222,7 @@ Namespace MRM
                 .ScanContent(
                     raw:=file,
                     ions:=ions,
-                    peakAreaMethod:=peakAreaMethod,
-                    TPAFactors:=If(TPAFactors, New Dictionary(Of String, Double)),
-                    tolerance:=tolerance,
-                    timeWindowSize:=timeWindowSize,
-                    angleThreshold:=angleThreshold,
-                    baselineQuantile:=baselineQuantile,
+                    args:=args,
                     rtshifts:=rtshifts
                 ) _
                 .ToArray

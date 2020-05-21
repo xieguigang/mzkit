@@ -347,13 +347,8 @@ Namespace MRM
         ''' </summary>
         ''' <param name="raw">``*.wiff``，转换之后的结果文件夹，其中标准曲线的数据都是默认使用``L数字``标记的。</param>
         ''' <param name="ions">包括离子对的定义数据以及浓度区间</param>
-        ''' <param name="TPAFactors">
-        ''' ``{<see cref="Standards.ID"/>, <see cref="Standards.Factor"/>}``，这个是为了计算亮氨酸和异亮氨酸这类无法被区分的物质的峰面积所需要的
-        ''' </param>
         ''' <returns></returns>
-        Public Function Scan(raw$, ions As IonPair(), tolerance As Tolerance, timeWindowSize#, angleThreshold#, baselineQuantile#,
-                             Optional peakAreaMethod As PeakAreaMethods = PeakAreaMethods.NetPeakSum,
-                             Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
+        Public Function Scan(raw$, ions As IonPair(), args As MRMArguments,
                              Optional ByRef refName$() = Nothing,
                              Optional calibrationNamedPattern$ = ".+[-]CAL\d+",
                              Optional levelPattern$ = "[-]CAL\d+",
@@ -374,15 +369,10 @@ Namespace MRM
             Else
                 Return mzMLRawFiles.Scan(
                     ions:=ions,
-                    peakAreaMethod:=peakAreaMethod,
-                    TPAFactors:=TPAFactors,
-                    tolerance:=tolerance,
-                    timeWindowSize:=timeWindowSize,
                     refName:=refName,
                     levelPattern:=levelPattern,
-                    angleThreshold:=angleThreshold,
-                    baselineQuantile:=baselineQuantile,
-                    rtshifts:=rtshifts
+                    rtshifts:=rtshifts,
+                    args:=args
                 )
             End If
         End Function
@@ -392,21 +382,13 @@ Namespace MRM
         ''' </summary>
         ''' <param name="mzMLRawFiles">``*.wiff``，转换之后的结果文件夹，其中标准曲线的数据都是默认使用``L数字``标记的。</param>
         ''' <param name="ions">包括离子对的定义数据以及浓度区间</param>
-        ''' <param name="TPAFactors">
-        ''' ``{<see cref="Standards.ID"/>, <see cref="Standards.Factor"/>}``，这个是为了计算亮氨酸和异亮氨酸这类无法被区分的物质的峰面积所需要的
-        ''' </param>
         ''' <returns></returns>
         ''' 
         <Extension>
         Public Function Scan(mzMLRawFiles$(),
                              ions As IonPair(),
-                             peakAreaMethod As PeakAreaMethods,
-                             TPAFactors As Dictionary(Of String, Double),
-                             tolerance As Tolerance,
-                             timeWindowSize#,
-                             angleThreshold#,
-                             baselineQuantile#,
                              rtshifts As RTAlignment(),
+                             args As MRMArguments,
                              Optional ByRef refName$() = Nothing,
                              Optional levelPattern$ = "[-]CAL\d+") As DataSet()
 
@@ -422,15 +404,10 @@ Namespace MRM
             Dim result As DataSet() = WiffRaw _
                 .Scan(mzMLRawFiles:=mzMLRawFiles,
                       ions:=ions,
-                      peakAreaMethod:=peakAreaMethod,
-                      TPAFactors:=TPAFactors,
-                      tolerance:=tolerance,
-                      timeWindowSize:=timeWindowSize,
-                      angleThreshold:=angleThreshold,
                       refName:=refName,
                       removesWiffName:=False,
-                      baselineQuantile:=baselineQuantile,
-                      rtshifts:=rtshifts
+                      rtshifts:=rtshifts,
+                      args:=args
                  ) _
                 .Select(Function(ion)
                             Return New DataSet With {

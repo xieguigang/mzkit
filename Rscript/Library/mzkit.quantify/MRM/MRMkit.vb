@@ -513,7 +513,7 @@ Module MRMkit
             rtshifts:=rtshifts,
             args:=New MRMArguments(
                 TPAFactors:=TPAFactors,
-                tolerance:=Ms1.Tolerance.ParseScript(tolerance),
+                tolerance:=interop_arguments.GetTolerance(tolerance),
                 timeWindowSize:=timeWindowSize,
                 angleThreshold:=angleThreshold,
                 baselineQuantile:=baselineQuantile,
@@ -611,7 +611,7 @@ Module MRMkit
             rtshifts:=rtshifts,
             args:=New MRMArguments(
                 TPAFactors:=TPAFactors,
-                tolerance:=Ms1.Tolerance.ParseScript(tolerance),
+                tolerance:=errorTolerance,
                 timeWindowSize:=timeWindowSize,
                 angleThreshold:=angleThreshold,
                 baselineQuantile:=baselineQuantile,
@@ -688,24 +688,38 @@ Module MRMkit
     ''' <param name="TPAFactors"></param>
     ''' <returns></returns>
     <ExportAPI("sample.quantify")>
+    <RApiReturn(GetType(QuantifyScan))>
     Public Function SampleQuantify(model As StandardCurve(), file$, ions As IonPair(),
                                    Optional peakAreaMethod As PeakAreaMethods = PeakAreaMethods.NetPeakSum,
                                    Optional tolerance$ = "ppm:20",
                                    Optional timeWindowSize# = 5,
                                    Optional angleThreshold# = 5,
                                    Optional baselineQuantile# = 0.65,
-                                   Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As QuantifyScan
+                                   <RRawVectorArgument>
+                                   Optional peakwidth As Object = "8,30",
+                                   Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
+                                   Optional env As Environment = Nothing) As Object
+
+        Dim _peakwidth = ApiArgumentHelpers.GetDoubleRange(peakwidth, env, "8,30")
+
+        If _peakwidth Like GetType(Message) Then
+            Return _peakwidth.TryCast(Of Message)
+        End If
 
         Return MRMSamples.SampleQuantify(
             model:=model,
             file:=file,
             ions:=ions,
-            tolerance:=interop_arguments.GetTolerance(tolerance),
-            peakAreaMethod:=peakAreaMethod,
-            TPAFactors:=TPAFactors,
-            timeWindowSize:=timeWindowSize,
-            angleThreshold:=angleThreshold,
-            baselineQuantile:=baselineQuantile,
+            args:=New MRMArguments(
+                TPAFactors:=TPAFactors,
+                tolerance:=interop_arguments.GetTolerance(tolerance),
+                timeWindowSize:=timeWindowSize,
+                angleThreshold:=angleThreshold,
+                baselineQuantile:=baselineQuantile,
+                integratorTicks:=0,
+                peakAreaMethod:=peakAreaMethod,
+                peakwidth:=_peakwidth
+            ),
             rtshifts:=New Dictionary(Of String, Double)
         )
     End Function

@@ -59,17 +59,17 @@ Namespace MRM
         ''' ``{<see cref="Standards.ID"/>, <see cref="Standards.Factor"/>}``，这个是为了计算亮氨酸和异亮氨酸这类无法被区分的物质的峰面积所需要的
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property TPAFactors As Dictionary(Of String, Double)
-        Public ReadOnly Property tolerance As Tolerance
-        Public ReadOnly Property timeWindowSize#
-        Public ReadOnly Property angleThreshold#
-        Public ReadOnly Property baselineQuantile# = 0.65
-        Public ReadOnly Property integratorTicks% = 5000
-        Public ReadOnly Property peakAreaMethod As PeakAreaMethods = PeakAreaMethods.Integrator
-        Public ReadOnly Property peakwidth As DoubleRange = Nothing
+        Public Property TPAFactors As Dictionary(Of String, Double)
+        Public Property tolerance As Tolerance
+        Public Property timeWindowSize#
+        Public Property angleThreshold#
+        Public Property baselineQuantile# = 0.65
+        Public Property integratorTicks% = 5000
+        Public Property peakAreaMethod As PeakAreaMethods = PeakAreaMethods.Integrator
+        Public Property peakwidth As DoubleRange = Nothing
 
-        Public ReadOnly Property bspline_degree As Integer = 2
-        Public ReadOnly Property bspline_density As Integer = 100
+        Public Property bspline_degree As Integer = 2
+        Public Property bspline_density As Integer = 100
 
         Sub New(TPAFactors As Dictionary(Of String, Double),
                 tolerance As Tolerance,
