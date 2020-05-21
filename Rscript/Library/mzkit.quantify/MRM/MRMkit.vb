@@ -485,6 +485,7 @@ Module MRMkit
     End Function
 
     <ExportAPI("MRM.peaks")>
+    <RApiReturn(GetType(DataSet))>
     Public Function ScanPeakTable(mzML$, ions As IonPair(),
                                   Optional peakAreaMethod As PeakAreaMethods = PeakAreaMethods.NetPeakSum,
                                   Optional tolerance$ = "ppm:20",
@@ -492,22 +493,34 @@ Module MRMkit
                                   Optional angleThreshold# = 5,
                                   Optional baselineQuantile# = 0.65,
                                   Optional rtshifts As Dictionary(Of String, Double) = Nothing,
-                                  Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As DataSet()
+                                  Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
+                                  Optional peakwidth As Object = "8,30",
+                                  Optional env As Environment = Nothing) As Object
 
         If TPAFactors Is Nothing Then
             TPAFactors = New Dictionary(Of String, Double)
         End If
 
+        Dim _peakwidth = ApiArgumentHelpers.GetDoubleRange(peakwidth, env, "8,30")
+
+        If _peakwidth Like GetType(Message) Then
+            Return _peakwidth.TryCast(Of Message)
+        End If
+
         Return WiffRaw.ScanPeakTable(
             mzML:=mzML,
             ions:=ions,
-            tolerance:=interop_arguments.GetTolerance(tolerance),
-            timeWindowSize:=timeWindowSize,
-            peakAreaMethod:=peakAreaMethod,
-            TPAFactors:=TPAFactors,
-            angleThreshold:=angleThreshold,
-            baselineQuantile:=baselineQuantile,
-            rtshifts:=rtshifts
+            rtshifts:=rtshifts,
+            args:=New MRMArguments(
+                TPAFactors:=TPAFactors,
+                tolerance:=Ms1.Tolerance.ParseScript(tolerance),
+                timeWindowSize:=timeWindowSize,
+                angleThreshold:=angleThreshold,
+                baselineQuantile:=baselineQuantile,
+                integratorTicks:=0,
+                peakAreaMethod:=peakAreaMethod,
+                peakwidth:=_peakwidth
+            )
         )
     End Function
 

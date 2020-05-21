@@ -87,23 +87,13 @@ Namespace MRM
         Public Iterator Function ScanContent(linearModels As StandardCurve(),
                                              raw$,
                                              ions As IonPair(),
-                                             peakAreaMethod As PeakAreaMethods,
-                                             angleThreshold#,
-                                             baselineQuantile#,
-                                             TPAFactors As Dictionary(Of String, Double),
-                                             tolerance As Tolerance,
-                                             timeWindowSize#,
-                                             rtshifts As Dictionary(Of String, Double)) As IEnumerable(Of ContentResult(Of MRMPeakTable))
+                                             rtshifts As Dictionary(Of String, Double),
+                                             args As MRMArguments) As IEnumerable(Of ContentResult(Of MRMPeakTable))
 
             Dim TPA As Dictionary(Of String, IonTPA) = raw _
                 .ScanTPA(ionpairs:=ions,
-                         peakAreaMethod:=peakAreaMethod,
-                         TPAFactors:=TPAFactors,
-                         tolerance:=tolerance,
-                         timeWindowSize:=timeWindowSize,
-                         angleThreshold:=angleThreshold,
-                         baselineQuantile:=baselineQuantile,
-                         rtshifts:=rtshifts
+                         rtshifts:=rtshifts,
+                         args:=args
                 ) _
                 .ToDictionary(Function(ion) ion.name)
 

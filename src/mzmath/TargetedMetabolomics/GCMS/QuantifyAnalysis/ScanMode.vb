@@ -77,7 +77,7 @@ Namespace GCMS.QuantifyAnalysis
         ''' 这个函数所返回来的结果之中已经包含有必须的峰面积等信息了
         ''' </returns>
         <Extension>
-        Public Iterator Function ScanIons(standards As IEnumerable(Of ROITable), data As Raw,
+        Public Iterator Function ScanIons(standards As IEnumerable(Of ROITable), data As Raw, peakwidth As DoubleRange,
                                           Optional sn# = 3,
                                           Optional winSize! = 3,
                                           Optional scoreCutoff# = 0.85,
@@ -85,7 +85,7 @@ Namespace GCMS.QuantifyAnalysis
                                           Optional all As Boolean = False) As IEnumerable(Of (ROITable, query As LibraryMatrix, ref As LibraryMatrix))
 
             Dim ROIlist As ROI() = data _
-                .ExportROI(angleCutoff) _
+                .ExportROI(angleCutoff, peakwidth) _
                 .Where(Function(ROI) ROI.snRatio >= sn) _
                 .ToArray
             Dim resultTable As ROITable
@@ -96,15 +96,15 @@ Namespace GCMS.QuantifyAnalysis
                 Dim timeRange As DoubleRange = {ref.rtmin - winSize, ref.rtmax + winSize}
                 Dim refSpectrum As LibraryMatrix = ref.CreateMatrix
 
-                refSpectrum.Name = ref.ID
+                refSpectrum.name = ref.ID
 
                 Dim candidates = ROIlist _
-                    .SkipWhile(Function(c) c.Time.Max < timeRange.Min) _
-                    .TakeWhile(Function(c) c.Time.Min < timeRange.Max) _
+                    .SkipWhile(Function(c) c.time.Max < timeRange.Min) _
+                    .TakeWhile(Function(c) c.time.Min < timeRange.Max) _
                     .Select(Function(region As ROI)
                                 ' 在这个循环之中的都是rt符合条件要求的
-                                Dim matrixName$ = $"rt={region.rt}, [{Fix(region.Time.Min)},{Fix(region.Time.Max)}]"
-                                Dim query = data.GetMsScan(region.Time) _
+                                Dim matrixName$ = $"rt={region.rt}, [{Fix(region.time.Min)},{Fix(region.time.Max)}]"
+                                Dim query = data.GetMsScan(region.time) _
                                     .GroupByMz() _
                                     .CreateLibraryMatrix(matrixName)
                                 Dim score = GlobalAlignment.TwoDirectionSSM(
@@ -130,9 +130,9 @@ Namespace GCMS.QuantifyAnalysis
                 For Each candidate In candidates
                     ' 计算出峰面积
                     Dim TPA = candidate.region _
-                        .Ticks _
+                        .ticks _
                         .Shadows _
-                        .TPAIntegrator(candidate.region.Time, 0.65, PeakAreaMethods.Integrator)
+                        .TPAIntegrator(candidate.region.time, 0.65, PeakAreaMethods.Integrator)
 
                     resultTable = candidate.region.ConvertAsTabular(
                         raw:=data,
@@ -192,6 +192,7 @@ Namespace GCMS.QuantifyAnalysis
         ''' 
         <Extension>
         Public Function ScanContents(ref As ROITable(), experiments$,
+                                     Optional peakwidth As DoubleRange = Nothing,
                                      Optional sn_threshold# = 0,
                                      Optional angle# = 5,
                                      Optional baselineQuantile# = 0.3,
@@ -203,7 +204,8 @@ Namespace GCMS.QuantifyAnalysis
             Dim alignList As New List(Of (String, LibraryMatrix, LibraryMatrix))
 
             For Each target In ref.ScanIons(
-                data, sn:=sn_threshold,
+                data, peakwidth,
+                sn:=sn_threshold,
                 angleCutoff:=angle,
                 scoreCutoff:=scoreCutoff
             )
