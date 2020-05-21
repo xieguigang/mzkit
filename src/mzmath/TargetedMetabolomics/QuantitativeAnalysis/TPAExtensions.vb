@@ -143,13 +143,14 @@ Public Module TPAExtensions
         }
         Dim region As ROI = ROIData _
            .Where(Function(r)
-                      Return isContactWith(r.time, find)
+                      Return find.IsInside(r.rt)
+                      ' Return isContactWith(r.time, find)
                   End Function) _
            .OrderByDescending(Function(r)
                                   ' 20200309 因为噪声的积分面积可能会大于目标物质峰
                                   ' 的面积，所以在这里应该是使用峰高进行ROI的排序操
                                   ' 作
-                                  Return r.maxInto
+                                  Return stdNum.Log10(r.maxInto)
                               End Function) _
            .FirstOrDefault
 

@@ -286,6 +286,7 @@ Module MRMkit
     ''' <param name="peakAreaMethod"></param>
     ''' <returns></returns>
     <ExportAPI("extract.peakROI")>
+    <RApiReturn(GetType(IonTPA))>
     Public Function ExtractPeakROI(mzML$, ionpairs As IonPair(),
                                    Optional tolerance$ = "ppm:20",
                                    Optional timeWindowSize# = 5,
@@ -298,29 +299,54 @@ Module MRMkit
                                    Optional rtshift As Dictionary(Of String, Double) = Nothing,
                                    Optional bsplineDensity% = 100,
                                    Optional bsplineDegree% = 2,
-                                   Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As IonTPA()
+                                   Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
+                                   Optional env As Environment = Nothing) As Object
 
         If TPAFactors Is Nothing Then
             TPAFactors = New Dictionary(Of String, Double)
+        End If
+
+        Dim _peakwidth = ApiArgumentHelpers.GetDoubleRange(peakwidth, env, "8,30")
+
+        If _peakwidth Like GetType(Message) Then
+            Return _peakwidth.TryCast(Of Message)
         End If
 
         Return ScanOfTPA.ScanTPA(
             raw:=mzML,
             ionpairs:=ionpairs,
             rtshifts:=rtshift,
-            args:=New MRMArguments(TPAFactors:=TPAFactors, tolerance:=Ms1.Tolerance.ParseScript(tolerance), timeWindowSize:=timeWindowSize, angleThreshold:=angleThreshold, baselineQuantile:=baselineQuantile, integratorTicks:=integratorTicks, peakAreaMethod:=peakAreaMethod, peakwidth:=peakwidth)
+            args:=New MRMArguments(
+                TPAFactors:=TPAFactors,
+                tolerance:=Ms1.Tolerance.ParseScript(tolerance),
+                timeWindowSize:=timeWindowSize,
+                angleThreshold:=angleThreshold,
+                baselineQuantile:=baselineQuantile,
+                integratorTicks:=integratorTicks,
+                peakAreaMethod:=peakAreaMethod,
+                peakwidth:=_peakwidth
+            )
         )
     End Function
 
     <ExportAPI("peakROI")>
+    <RApiReturn(GetType(ROI))>
     Public Function GetPeakROIList(<RRawVectorArgument(GetType(ChromatogramTick))>
                                    chromatogram As Object,
                                    Optional baselineQuantile# = 0.65,
                                    Optional angleThreshold# = 5,
-                                   Optional peakwidth As DoubleRange = Nothing) As ROI()
+                                   <RRawVectorArgument>
+                                   Optional peakwidth As Object = "8,30",
+                                   Optional env As Environment = Nothing) As Object
 
         If chromatogram Is Nothing Then
             Return Nothing
+        End If
+
+        Dim _peakwidth = ApiArgumentHelpers.GetDoubleRange(peakwidth, env, "8,30")
+
+        If _peakwidth Like GetType(Message) Then
+            Return _peakwidth.TryCast(Of Message)
         End If
 
         Return DirectCast(REnv.asVector(Of ChromatogramTick)(chromatogram), ChromatogramTick()) _
@@ -328,7 +354,7 @@ Module MRMkit
             .PopulateROI(
                 baselineQuantile:=baselineQuantile,
                 angleThreshold:=angleThreshold,
-                peakwidth:=peakwidth
+                peakwidth:=_peakwidth
             ) _
             .ToArray
     End Function
@@ -494,6 +520,7 @@ Module MRMkit
                                   Optional baselineQuantile# = 0.65,
                                   Optional rtshifts As Dictionary(Of String, Double) = Nothing,
                                   Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
+                                  <RRawVectorArgument>
                                   Optional peakwidth As Object = "8,30",
                                   Optional env As Environment = Nothing) As Object
 

@@ -40,6 +40,7 @@ let integrator  as string  = ?"--integrator" || "NetPeakSum";
 let isWorkCurve as boolean = ?"--workMode";
 let rt_winSize  as double  = as.numeric(?"--rt.winsize" || "3"); 
 let tolerance   as string  = ?"--mz.diff"    || "ppm:15";
+let peakwidth   as string  = ?"--peakwidth"  || "8,30";
 
 # Max number of points for removes in 
 # linear modelling
@@ -64,6 +65,8 @@ print(tolerance);
 print("Integrator that we used for calculate the Peak Area:");
 print(integrator);
 print("Max number of points that allowes removes automatically in the process of linear modelling:");
+print("peak width range(unit in second):");
+print(peakwidth);
 
 if (maxNumOfPoint.delets < 0) {
 	print("It's depends on the number of reference sample");
@@ -153,7 +156,8 @@ if (wiff$hasBlankControls) {
 		timeWindowSize   = rt_winSize,
 		removesWiffName  = TRUE,
 		angleThreshold   = angle.threshold,
-        baselineQuantile = baseline.quantile
+        baselineQuantile = baseline.quantile,
+		peakwidth        = peakwidth
 	);
 } else {
 	print("Target reference data have no blank controls.");
@@ -171,7 +175,8 @@ let linears.standard_curve as function(wiff_standards, subdir) {
 		angleThreshold   = angle.threshold,
 		baselineQuantile = baseline.quantile,
 		peakAreaMethod   = integrator,
-		TPAFactors       = NULL
+		TPAFactors       = NULL,
+		peakwidth        = peakwidth
 	));
 	
 	print("Previews of the rt shifts summary in your sample reference points:");
@@ -198,6 +203,7 @@ let linears.standard_curve as function(wiff_standards, subdir) {
 		removesWiffName  = TRUE,
 		angleThreshold   = angle.threshold,
 		baselineQuantile = baseline.quantile,
+		peakwidth        = peakwidth,
 		rtshifts         = NULL# rt.shifts
 	);
 
@@ -258,7 +264,8 @@ let linears.standard_curve as function(wiff_standards, subdir) {
 			tolerance        = tolerance, 
 			timeWindowSize   = rt_winSize,
 			angleThreshold   = angle.threshold,
-			baselineQuantile = baseline.quantile
+			baselineQuantile = baseline.quantile,
+			peakwidth        = peakwidth
 		);
 		
 		# save peaktable for given rawfile
@@ -293,7 +300,8 @@ let doLinears as function(wiff_standards, subdir = "") {
 		removesWiffName  = TRUE, 
 		timeWindowSize   = rt_winSize,
 		angleThreshold   = angle.threshold,
-		baselineQuantile = baseline.quantile
+		baselineQuantile = baseline.quantile,
+		peakwidth        = peakwidth
 	) 
 	:> write.csv(file = `${dir}/${subdir}/samples.csv`);
 
@@ -308,7 +316,8 @@ let doLinears as function(wiff_standards, subdir = "") {
 			timeWindowSize   = rt_winSize, 
 			TPAFactors       = NULL,
 			angleThreshold   = angle.threshold,
-		    baselineQuantile = baseline.quantile
+		    baselineQuantile = baseline.quantile,
+			peakwidth        = peakwidth
 		);
 		
 		print(basename(sample.mzML));
