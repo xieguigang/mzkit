@@ -60,32 +60,6 @@ Namespace Chromatogram
     ''' </summary>
     Public Module AccumulateROI
 
-        ' 算法原理，每当出现一个峰的时候，累加线就会明显升高一个高度
-        ' 当升高的时候，曲线的斜率大于零
-        ' 当处于基线水平的时候，曲线的斜率接近于零
-        ' 则可以利用这个特性将色谱峰给识别出来
-        ' 这个方法仅局限于色谱峰都是各自相互独立的情况之下
-
-        <Extension>
-        Private Function getAccumulateLine(chromatogram As IVector(Of ChromatogramTick), baseline#) As PointF()
-            Dim accumulate#
-            Dim sumALL# = (chromatogram!intensity - baseline) _
-                .Where(Function(x) x > 0) _
-                .Sum
-            Dim ay = Function(into As Double) As Double
-                         into -= baseline
-                         accumulate += If(into < 0, 0, into)
-                         Return (accumulate / sumALL) * 100 ' * maxInto
-                     End Function
-            Dim accumulateLine = chromatogram _
-                .Select(Function(tick)
-                            Return New PointF(tick.Time, ay(tick.Intensity))
-                        End Function) _
-                .ToArray
-
-            Return accumulateLine
-        End Function
-
         ''' <summary>
         ''' The input data parameter <paramref name="chromatogram"/> for this function should be 
         ''' sort in asc order at first!
