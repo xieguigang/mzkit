@@ -1,55 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::c7fe69a5f4ac67c552b27fcdaab289c7, Rscript\Library\mzkit.quantify\MRM\MRMkit.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module MRMkit
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: asIonPair, CreateMRMDataSet, ExtractIonData, ExtractPeakROI, GetLinearPoints
-    '               GetPeakROIList, GetQuantifyResult, GetRawX, GetRTAlignments, IsomerismIonPairs
-    '               Linears, MRMarguments, printIonPairs, printIS, printLineModel
-    '               printStandards, readCompoundReference, readIonPairs, readIS, ROISummary
-    '               RTShiftSummary, SampleQuantify, ScanPeakTable, ScanWiffRaw, StandardCurveDataSet
-    '               WiffRawFile, writeMRMpeaktable, writeStandardCurve
-    '     Class MRMDataSet
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Module MRMkit
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: asIonPair, CreateMRMDataSet, ExtractIonData, ExtractPeakROI, GetLinearPoints
+'               GetPeakROIList, GetQuantifyResult, GetRawX, GetRTAlignments, IsomerismIonPairs
+'               Linears, MRMarguments, printIonPairs, printIS, printLineModel
+'               printStandards, readCompoundReference, readIonPairs, readIS, ROISummary
+'               RTShiftSummary, SampleQuantify, ScanPeakTable, ScanWiffRaw, StandardCurveDataSet
+'               WiffRawFile, writeMRMpeaktable, writeStandardCurve
+'     Class MRMDataSet
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -65,11 +65,13 @@ Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
@@ -213,13 +215,24 @@ Module MRMkit
     End Function
 
     <ExportAPI("MRM.arguments")>
+    <RApiReturn(GetType(MRMArguments))>
     Public Function MRMarguments(Optional tolerance As Object = "da:0.3",
                                  Optional timeWindowSize# = 5,
                                  Optional angleThreshold# = 5,
                                  Optional baselineQuantile# = 0.65,
                                  Optional integratorTicks% = 5000,
                                  Optional peakAreaMethod As PeakAreaMethods = PeakAreaMethods.NetPeakSum,
-                                 Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As MRMArguments
+                                 <RRawVectorArgument>
+                                 Optional peakwidth As Object = "8,30",
+                                 Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
+                                 Optional env As Environment = Nothing) As Object
+
+        Dim _peakwidth = ApiArgumentHelpers.GetDoubleRange(peakwidth, env, Nothing)
+
+        If _peakwidth Like GetType(Message) Then
+            Return _peakwidth
+        End If
+
         Return New MRMArguments(
             TPAFactors:=TPAFactors,
             tolerance:=interop_arguments.GetTolerance(tolerance, "da:0.3"),
@@ -227,7 +240,8 @@ Module MRMkit
             angleThreshold:=angleThreshold,
             baselineQuantile:=baselineQuantile,
             integratorTicks:=integratorTicks,
-            peakAreaMethod:=peakAreaMethod
+            peakAreaMethod:=peakAreaMethod,
+            peakwidth:=_peakwidth
         )
     End Function
 
@@ -279,6 +293,8 @@ Module MRMkit
                                    Optional integratorTicks% = 5000,
                                    Optional peakAreaMethod As PeakAreaMethods = PeakAreaMethods.NetPeakSum,
                                    Optional angleThreshold# = 5,
+                                   <RRawVectorArgument>
+                                   Optional peakwidth As Object = "8,30",
                                    Optional rtshift As Dictionary(Of String, Double) = Nothing,
                                    Optional bsplineDensity% = 100,
                                    Optional bsplineDegree% = 2,
@@ -291,16 +307,8 @@ Module MRMkit
         Return ScanOfTPA.ScanTPA(
             raw:=mzML,
             ionpairs:=ionpairs,
-            TPAFactors:=TPAFactors,
-            tolerance:=interop_arguments.GetTolerance(tolerance),
-            baselineQuantile:=baselineQuantile,
-            integratorTicks:=integratorTicks,
-            peakAreaMethod:=peakAreaMethod,
-            timeWindowSize:=timeWindowSize,
-            angleThreshold:=angleThreshold,
             rtshifts:=rtshift,
-            bsplineDensity:=bsplineDensity,
-            bsplineDegree:=bsplineDegree
+            args:=New MRMArguments(TPAFactors:=TPAFactors, tolerance:=Ms1.Tolerance.ParseScript(tolerance), timeWindowSize:=timeWindowSize, angleThreshold:=angleThreshold, baselineQuantile:=baselineQuantile, integratorTicks:=integratorTicks, peakAreaMethod:=peakAreaMethod, peakwidth:=peakwidth)
         )
     End Function
 
@@ -308,7 +316,8 @@ Module MRMkit
     Public Function GetPeakROIList(<RRawVectorArgument(GetType(ChromatogramTick))>
                                    chromatogram As Object,
                                    Optional baselineQuantile# = 0.65,
-                                   Optional angleThreshold# = 5) As ROI()
+                                   Optional angleThreshold# = 5,
+                                   Optional peakwidth As DoubleRange = Nothing) As ROI()
 
         If chromatogram Is Nothing Then
             Return Nothing
@@ -318,7 +327,8 @@ Module MRMkit
             .Shadows _
             .PopulateROI(
                 baselineQuantile:=baselineQuantile,
-                angleThreshold:=angleThreshold
+                angleThreshold:=angleThreshold,
+                peakwidth:=peakwidth
             ) _
             .ToArray
     End Function

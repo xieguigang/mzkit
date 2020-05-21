@@ -104,6 +104,7 @@ Namespace MRM
                                 .Shadows _
                                 .PopulateROI(
                                     baselineQuantile:=args.baselineQuantile,
+                                    peakwidth:=args.peakwidth,
                                     angleThreshold:=args.angleThreshold
                                 ).ToArray
 

@@ -85,27 +85,16 @@ Public Module TPAExtensions
     ''' 对某一个色谱区域进行峰面积的积分计算
     ''' </summary>
     ''' <param name="ion"></param>
-    ''' <param name="baselineQuantile#"></param>
-    ''' <param name="peakAreaMethod"></param>
-    ''' <param name="integratorTicks%"></param>
-    ''' <param name="TPAFactor">
-    ''' ``{<see cref="Standards.ID"/>, <see cref="Standards.Factor"/>}``，这个是为了计算亮氨酸和异亮氨酸这类无法被区分的物质的峰面积所需要的
-    ''' </param>
     ''' <returns></returns>
     <Extension>
-    Public Function ionTPA(ion As IonChromatogram,
-                           baselineQuantile#,
-                           angleThreshold#,
-                           peakAreaMethod As PeakAreaMethods,
-                           Optional integratorTicks% = 5000,
-                           Optional TPAFactor# = 1,
-                           Optional timeWindowSize# = 5,
-                           Optional bsplineDensity% = 100,
-                           Optional bsplineDegree% = 2) As IonTPA
-
+    Public Function ionTPA(ion As IonChromatogram, TPAFactor As Double, args As MRMArguments) As IonTPA
         Dim vector As IVector(Of ChromatogramTick) = ion.chromatogram.Shadows
         Dim ROIData As ROI() = vector _
-            .PopulateROI(baselineQuantile:=baselineQuantile, angleThreshold:=angleThreshold) _
+            .PopulateROI(
+                baselineQuantile:=args.baselineQuantile,
+                angleThreshold:=args.angleThreshold,
+                peakwidth:=args.peakwidth
+            ) _
             .ToArray
         Dim result As IonTPA
 
@@ -118,13 +107,13 @@ Public Module TPAExtensions
             result = ion.ProcessingIonPeakArea(
                 vector:=vector,
                 ROIData:=ROIData,
-                baselineQuantile:=baselineQuantile,
-                peakAreaMethod:=peakAreaMethod,
-                integratorTicks:=integratorTicks,
+                baselineQuantile:=args.baselineQuantile,
+                peakAreaMethod:=args.peakAreaMethod,
+                integratorTicks:=args.integratorTicks,
                 TPAFactor:=TPAFactor,
-                timeWindowSize:=timeWindowSize,
-                bsplineDensity:=bsplineDensity,
-                bsplineDegree:=bsplineDegree,
+                timeWindowSize:=args.timeWindowSize,
+                bsplineDensity:=args.bspline_density,
+                bsplineDegree:=args.bspline_degree,
                 timeshiftMethod:=False
             )
         End If

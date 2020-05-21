@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::695427c7854307591558c7dfa3a1c849, src\mzmath\TargetedMetabolomics\GCMS\ReaderExtensions.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module ReaderExtensions
-    ' 
-    '         Function: CreateMatrix, ExportROI, GetROITable, (+2 Overloads) ReadData, ToTable
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module ReaderExtensions
+' 
+'         Function: CreateMatrix, ExportROI, GetROITable, (+2 Overloads) ReadData, ToTable
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -47,6 +47,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.GCMS.Vendors
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
@@ -60,10 +61,14 @@ Namespace GCMS
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function ExportROI(gcms As Raw, angle#) As ROI()
+        Public Function ExportROI(gcms As Raw, angle#, peakwidth As DoubleRange) As ROI()
             Return gcms.GetTIC _
                 .Shadows _
-                .PopulateROI(angleThreshold:=angle, MRMpeaks:=False) _
+                .PopulateROI(
+                    angleThreshold:=angle,
+                    MRMpeaks:=False,
+                    peakwidth:=peakwidth
+                ) _
                 .ToArray
         End Function
 
@@ -116,16 +121,16 @@ Namespace GCMS
         Public Function GetROITable(ROIobj As ROI, Optional getTitle As Func(Of ROI, String) = Nothing) As ROITable
             Static defaultRtTitle As New [Default](Of Func(Of ROI, String))(
                Function(roi)
-                   Return $"[{roi.Time.Min.ToString("F0")},{roi.Time.Max.ToString("F0")}]"
+                   Return $"[{roi.time.Min.ToString("F0")},{roi.time.Max.ToString("F0")}]"
                End Function)
 
             Return New ROITable With {
-                .baseline = ROIobj.Baseline,
+                .baseline = ROIobj.baseline,
                 .ID = (getTitle Or defaultRtTitle)(ROIobj),
-                .integration = ROIobj.Integration,
-                .maxInto = ROIobj.MaxInto,
-                .rtmax = ROIobj.Time.Max,
-                .rtmin = ROIobj.Time.Min,
+                .integration = ROIobj.integration,
+                .maxInto = ROIobj.maxInto,
+                .rtmax = ROIobj.time.Max,
+                .rtmin = ROIobj.time.Min,
                 .rt = ROIobj.rt,
                 .sn = ROIobj.snRatio
             }
