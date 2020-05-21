@@ -104,7 +104,7 @@ Namespace MRM
         Public Function GetFactor(TPAFactors As Dictionary(Of String, Double), ionName$, Optional default# = 1) As Double
             Dim factor#
 
-            If TPAFactors.ContainsKey(ionName) Then
+            If Not TPAFactors Is Nothing AndAlso TPAFactors.ContainsKey(ionName) Then
                 factor = TPAFactors(ionName)
 
                 ' factor列可能没有设置值，则加载之后会被默认转换为零

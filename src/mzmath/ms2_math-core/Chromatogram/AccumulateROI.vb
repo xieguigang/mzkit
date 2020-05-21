@@ -51,6 +51,7 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.Math.SignalProcessing.PeakFinding
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace Chromatogram
 
@@ -83,14 +84,14 @@ Namespace Chromatogram
             Dim baseline# = chromatogram.Baseline(baselineQuantile)
             Dim time As Vector = chromatogram!time
             Dim peaks As SignalPeak() = New ElevationAlgorithm(angleThreshold, baselineQuantile) _
-                .FindAllSignalPeaks(chromatogram.OfType(Of ITimeSignal)) _
+                .FindAllSignalPeaks(chromatogram.As(Of ITimeSignal)) _
                 .Triming(peakwidth) _
                 .ToArray
 
             For Each window As SignalPeak In peaks
                 Dim rtmin# = window.rtmin
                 Dim rtmax# = window.rtmax
-                Dim peak As ChromatogramTick() = window.region
+                Dim peak As ChromatogramTick() = window.region.As(Of ChromatogramTick).ToArray
                 Dim max# = peak.Max(Function(a) a.Intensity)
                 Dim rt# = window(Which.Max(window.region.Select(Function(a) a.intensity))).time
                 Dim ROI As New ROI With {
