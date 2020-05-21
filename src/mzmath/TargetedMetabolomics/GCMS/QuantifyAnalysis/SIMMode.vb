@@ -85,7 +85,7 @@ Namespace GCMS.QuantifyAnalysis
             Dim i As i32 = 1
             Dim TIC = data.GetTIC
             Dim ROIlist As ROI() = TIC.Shadows _
-                .PopulateROI(angle, MRMpeaks:=False, baselineQuantile:=baselineQuantile) _
+                .PopulateROI(angle, baselineQuantile:=baselineQuantile) _
                 .ToArray
             Dim resultTable As ROITable
 

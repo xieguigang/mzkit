@@ -66,7 +66,6 @@ Namespace GCMS
                 .Shadows _
                 .PopulateROI(
                     angleThreshold:=angle,
-                    MRMpeaks:=False,
                     peakwidth:=peakwidth
                 ) _
                 .ToArray
