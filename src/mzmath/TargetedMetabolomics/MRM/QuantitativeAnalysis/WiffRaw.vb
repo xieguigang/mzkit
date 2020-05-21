@@ -45,7 +45,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
@@ -57,20 +56,12 @@ Namespace MRM
 
     Public Module WiffRaw
 
-        Public Function ScanPeakTable(mzML$, ions As IonPair(), tolerance As Tolerance, timeWindowSize#, angleThreshold#, baselineQuantile#, rtshifts As Dictionary(Of String, Double),
-                                      Optional peakAreaMethod As PeakAreaMethods = PeakAreaMethods.NetPeakSum,
-                                      Optional TPAFactors As Dictionary(Of String, Double) = Nothing) As DataSet()
-
+        Public Function ScanPeakTable(mzML$, ions As IonPair(), rtshifts As Dictionary(Of String, Double), args As MRMArguments) As DataSet()
             ' 得到当前的这个原始文件之中的峰面积数据
             Dim TPA() = mzML.ScanTPA(
                 ionpairs:=ions,
-                peakAreaMethod:=peakAreaMethod,
-                TPAFactors:=TPAFactors,
-                tolerance:=tolerance,
-                timeWindowSize:=timeWindowSize,
-                angleThreshold:=angleThreshold,
-                baselineQuantile:=baselineQuantile,
-                rtshifts:=rtshifts
+                rtshifts:=rtshifts,
+                args:=args
             )
             Dim peaktable As DataSet() = TPA _
                 .Select(Function(ion As IonTPA)
@@ -115,24 +106,10 @@ Namespace MRM
         ''' </summary>
         ''' <param name="mzMLRawFiles">``*.wiff``，转换之后的结果文件夹，其中标准曲线的数据都是默认使用``L数字``标记的。</param>
         ''' <param name="ions">包括离子对的定义数据以及浓度区间</param>
-        ''' <param name="TPAFactors">
-        ''' ``{<see cref="Standards.ID"/>, <see cref="Standards.Factor"/>}``，这个是为了计算亮氨酸和异亮氨酸这类无法被区分的物质的峰面积所需要的
-        ''' </param>
         ''' <returns></returns>
         ''' 
         <Extension>
-        Public Function Scan(mzMLRawFiles$(),
-                             ions As IonPair(),
-                             peakAreaMethod As PeakAreaMethods,
-                             TPAFactors As Dictionary(Of String, Double),
-                             tolerance As Tolerance,
-                             timeWindowSize#,
-                             angleThreshold#,
-                             baselineQuantile#,
-                             rtshifts As RTAlignment(),
-                             Optional bsplineDensity% = 100,
-                             Optional bsplineDegree% = 2,
-                             Optional resolution% = 3000,
+        Public Function Scan(mzMLRawFiles$(), ions As IonPair(), rtshifts As RTAlignment(), args As MRMArguments,
                              Optional ByRef refName$() = Nothing,
                              Optional removesWiffName As Boolean = False) As DataSet()
 
@@ -162,19 +139,7 @@ Namespace MRM
             For Each file As String In mzMLRawFiles
                 ' 得到当前的这个原始文件之中的峰面积数据
                 Dim ionShifts = shiftMatrix.TryGetValue(file.BaseName)
-                Dim TPA() = file.ScanTPA(
-                    ionpairs:=ions,
-                    peakAreaMethod:=peakAreaMethod,
-                    TPAFactors:=TPAFactors,
-                    tolerance:=tolerance,
-                    timeWindowSize:=timeWindowSize,
-                    angleThreshold:=angleThreshold,
-                    baselineQuantile:=baselineQuantile,
-                    rtshifts:=ionShifts,
-                    integratorTicks:=resolution,
-                    bsplineDegree:=bsplineDegree,
-                    bsplineDensity:=bsplineDensity
-                )
+                Dim TPA() = file.ScanTPA(ionpairs:=ions, rtshifts:=ionShifts, args:=args)
 
                 refNames += file.BaseName
                 level$ = file.BaseName

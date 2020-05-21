@@ -543,6 +543,8 @@ Module MRMkit
                                 Optional bsplineDensity% = 100,
                                 Optional bsplineDegree% = 2,
                                 Optional resolution% = 3000,
+                                <RRawVectorArgument>
+                                Optional peakwidth As Object = "8,30",
                                 Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
                                 Optional env As Environment = Nothing) As Object
 
@@ -559,6 +561,12 @@ Module MRMkit
 
         If rtshifts Is Nothing Then
             rtshifts = {}
+        End If
+
+        Dim _peakwidth = ApiArgumentHelpers.GetDoubleRange(peakwidth, env, "8,30")
+
+        If _peakwidth Like GetType(Message) Then
+            Return _peakwidth.TryCast(Of Message)
         End If
 
         'If wiffConverts Is Nothing Then
@@ -585,18 +593,19 @@ Module MRMkit
         Return WiffRaw.Scan(
             mzMLRawFiles:=wiffConverts,
             ions:=ions,
-            peakAreaMethod:=peakAreaMethod,
-            TPAFactors:=TPAFactors,
             refName:=Nothing,
             removesWiffName:=removesWiffName,
-            tolerance:=errorTolerance,
-            timeWindowSize:=timeWindowSize,
-            angleThreshold:=angleThreshold,
-            baselineQuantile:=baselineQuantile,
             rtshifts:=rtshifts,
-            resolution:=resolution,
-            bsplineDegree:=bsplineDegree,
-            bsplineDensity:=bsplineDensity
+            args:=New MRMArguments(
+                TPAFactors:=TPAFactors,
+                tolerance:=Ms1.Tolerance.ParseScript(tolerance),
+                timeWindowSize:=timeWindowSize,
+                angleThreshold:=angleThreshold,
+                baselineQuantile:=baselineQuantile,
+                integratorTicks:=0,
+                peakAreaMethod:=peakAreaMethod,
+                peakwidth:=_peakwidth
+            )
         )
     End Function
 
