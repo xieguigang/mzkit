@@ -83,7 +83,7 @@ Namespace Chromatogram
             ' 先计算出基线和累加线
             Dim baseline# = chromatogram.Baseline(baselineQuantile)
             Dim time As Vector = chromatogram!time
-            Dim peaks As SignalPeak() = New ElevationAlgorithm(angleThreshold, baselineQuantile) _
+            Dim peaks As SignalPeak() = New ElevationAlgorithm(3, baselineQuantile) _
                 .FindAllSignalPeaks(chromatogram.As(Of ITimeSignal)) _
                 .Triming(peakwidth) _
                 .ToArray
