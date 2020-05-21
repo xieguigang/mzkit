@@ -116,7 +116,8 @@ Public Class StandardCurve : Implements INamedValue
             weighted:=Function(X) 1 / (X ^ 2),
             max:=maxDeletions,
             removed:=deletes,
-            keepsLowestPoint:=True
+            keepsLowestPoint:=True,
+            removesZeroY:=True
         )
 
         If fit.R2 < 0.95 Then
@@ -125,7 +126,8 @@ Public Class StandardCurve : Implements INamedValue
                 weighted:=Function(X) 1 / (X ^ 2),
                 max:=maxDeletions,
                 removed:=deletes,
-                keepsLowestPoint:=False
+                keepsLowestPoint:=False,
+                removesZeroY:=True
             )
         End If
 
