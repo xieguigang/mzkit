@@ -1,0 +1,26 @@
+ThermoRawFileReaderDLL Change Log
+
+Version 1.1.4757; January 9, 2013
+	- Added support for scan filter text with Full msx ms2
+		- Used with multiplexed parent ion selection
+
+Version 1.1.4661; October 5, 2012
+	- Added function GetCollisionEnergy
+
+Version 1.1.4492; April 19, 2012
+	- Now determining the Ion Mode for each scan (positive or negative)
+	- Now using <Out()> for ByRef parameters that are really out parameters (improves compatibility with C#)
+
+Version 1.1.4462; March 20, 2012
+	- Now setting String values to Nothing prior to calling XRawFile functions that return string values via a pbstr variable
+
+Version 1.1.4461; March 19, 2012
+	- Switched from xrawfile2.dll to MSFileReader.XRawfile2.dll
+		- New version supports Xcalibur v2.2
+	- Updated to .NET Framework 4.0
+
+Version 1.0.4309; October 19, 2011
+	- Added support for CRM in the scan filter text
+
+Version 1.0; June 29, 2011
+	- Initial version
