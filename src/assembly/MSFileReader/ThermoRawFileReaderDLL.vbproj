@@ -82,17 +82,6 @@
     <Compile Include="clsFinniganDataFileFunctionsBaseClass.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
   </ItemGroup>
-  <ItemGroup>
-    <COMReference Include="MSFileReaderLib">
-      <Guid>{F0C5F3E3-4F2A-443E-A74D-0AABE3237494}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
