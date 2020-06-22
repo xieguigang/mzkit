@@ -81,8 +81,10 @@ Namespace MarkupData
                     byteStream = bytes.UnZipStream
                 Case "gzip"
                     byteStream = bytes.UnGzipStream
+                Case "none"
+                    byteStream = New MemoryStream(bytes)
                 Case Else
-                    Throw New NotImplementedException
+                    Throw New NotImplementedException(stream.GetCompressionType)
             End Select
 
             Using byteStream
