@@ -82,7 +82,7 @@ Module Assembly
     ''' <summary>
     ''' this function ensure that the output result of the any input ion objects is peakms2 data type.
     ''' </summary>
-    ''' <param name="ions"></param>
+    ''' <param name="ions">a vector of mgf <see cref="Ions"/> from the ``read.mgf`` function or other data source.</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("mgf.ion_peaks")>
@@ -147,7 +147,12 @@ Module Assembly
     ''' Peaks data in centroid mode.
     ''' </returns>
     <ExportAPI("centroid")>
-    Public Function centroid(ions As Object, Optional intoCutoff As Double = 0.05, Optional parallel As Boolean = False, Optional env As Environment = Nothing) As Object
+    <RApiReturn(GetType(PeakMs2), GetType(LibraryMatrix))>
+    Public Function centroid(<RRawVectorArgument> ions As Object,
+                             Optional intoCutoff As Double = 0.05,
+                             Optional parallel As Boolean = False,
+                             Optional env As Environment = Nothing) As Object
+
         Dim inputType As Type = ions.GetType
 
         If inputType Is GetType(pipeline) OrElse inputType Is GetType(PeakMs2()) Then
