@@ -179,13 +179,13 @@ Namespace Spectra
             Next
         End Sub
 
-        Public Function doCluster(ms2list As PeakMs2()) As SpectrumTreeCluster
+        Public Function doCluster(spectrum As PeakMs2()) As SpectrumTreeCluster
             Dim tickAction As Action
             Dim releaseAction As Action
 
             If showReport Then
                 Dim progress As New ProgressBar("Create spectrum tree", 2, True)
-                Dim tick As New ProgressProvider(progress, ms2list.Length)
+                Dim tick As New ProgressProvider(progress, spectrum.Length)
                 Dim message$
 
                 tickAction =
@@ -199,7 +199,7 @@ Namespace Spectra
                 releaseAction = App.DoNothing
             End If
 
-            Call clusterInternal(ms2list, tickAction)
+            Call clusterInternal(spectrum, tickAction)
             Call releaseAction()
 
             Return Me
