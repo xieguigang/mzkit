@@ -86,20 +86,17 @@ Module Assembly
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("mgf.ion_peaks")>
-    <RApiReturn(GetType(PeakMs2()))>
-    Public Function IonPeaks(ions As Object, Optional env As Environment = Nothing) As Object
-        Dim inputType As Type = ions.GetType
+    <RApiReturn(GetType(PeakMs2))>
+    Public Function IonPeaks(<RRawVectorArgument> ions As Object, Optional env As Environment = Nothing) As Object
+        Dim pipeline As pipeline = pipeline.TryCreatePipeline(Of Ions)(ions, env)
 
-        Select Case inputType
-            Case GetType(Ions)
-                Return {DirectCast(ions, Ions)}.IonPeaks.ToArray
-            Case GetType(Ions())
-                Return DirectCast(ions, Ions()).IonPeaks.ToArray
-            Case GetType(pipeline)
-                Return New pipeline(DirectCast(ions, pipeline).populates(Of Ions).IonPeaks, GetType(PeakMs2))
-            Case Else
-                Return Internal.debug.stop(New InvalidCastException(inputType.FullName), env)
-        End Select
+        If pipeline.isError Then
+            Return pipeline.getError
+        End If
+
+        Return pipeline.populates(Of Ions) _
+            .IonPeaks _
+            .DoCall(AddressOf pipeline.CreateFromPopulator)
     End Function
 
     ''' <summary>

@@ -53,12 +53,12 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.Scripting
-Imports NumberAggregate = Microsoft.VisualBasic.Math.Scripting.Aggregate
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports NumberAggregate = Microsoft.VisualBasic.Math.Scripting.Aggregate
 Imports REnv = SMRUCC.Rsharp.Runtime
 
 ''' <summary>
