@@ -237,16 +237,18 @@ Module MzMath
     Public Function SpectrumTreeCluster(<RRawVectorArgument>
                                         ms2list As Object,
                                         Optional compares As Comparison(Of PeakMs2) = Nothing,
-                                        Optional mzwidth As Object = "0,0.1",
+                                        Optional tolerance As Object = "da:0.1",
                                         Optional intocutoff As Double = 0.05,
                                         Optional showReport As Boolean = True,
                                         Optional env As Environment = Nothing) As Object
 
         Dim spectrum As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(ms2list, env)
-        Dim mzrange As DoubleRange = ApiArgumentHelpers.GetDoubleRange(mzwidth, env, "0,0.1")
+        Dim mzrange = getTolerance(tolerance, env)
 
         If spectrum.isError Then
             Return spectrum.getError
+        ElseIf mzrange Like GetType(Message) Then
+            Return mzrange.TryCast(Of Message)
         End If
 
         Return New SpectrumTreeCluster(
@@ -282,12 +284,16 @@ Module MzMath
     <RApiReturn(GetType(PeakMs2), GetType(LibraryMatrix))>
     Public Function centroid(<RRawVectorArgument> ions As Object,
                              Optional intoCutoff As Double = 0.05,
-                             Optional mzwidth As Object = "0,0.1",
+                             Optional tolerance As Object = "da:0.1",
                              Optional parallel As Boolean = False,
                              Optional env As Environment = Nothing) As Object
 
         Dim inputType As Type = ions.GetType
-        Dim mzrange As DoubleRange = ApiArgumentHelpers.GetDoubleRange(mzwidth, env, "0,0.1")
+        Dim errors = getTolerance(tolerance, env)
+
+        If errors Like GetType(Message) Then
+            Return errors.TryCast(Of Message)
+        End If
 
         If inputType Is GetType(pipeline) OrElse inputType Is GetType(PeakMs2()) Then
             Dim source As IEnumerable(Of PeakMs2) = If(inputType Is GetType(pipeline), DirectCast(ions, pipeline).populates(Of PeakMs2), DirectCast(ions, PeakMs2()))
@@ -295,7 +301,7 @@ Module MzMath
                                 For Each peak As PeakMs2 In source
                                     If Not peak.mzInto.centroid Then
                                         peak.mzInto.ms2 = peak.mzInto.ms2 _
-                                            .Centroid(mzrange, intoCutoff) _
+                                            .Centroid(errors, intoCutoff) _
                                             .ToArray
                                         ' peak.mzInto = peak.mzInto.Shrink(tolerance:=Tolerance.DeltaMass(0.3))
                                     End If
@@ -314,7 +320,7 @@ Module MzMath
 
             If Not ms2Peak.mzInto.centroid Then
                 ms2Peak.mzInto.ms2 = ms2Peak.mzInto.ms2 _
-                    .Centroid(mzrange, intoCutoff) _
+                    .Centroid(errors, intoCutoff) _
                     .ToArray
             End If
 
@@ -323,7 +329,7 @@ Module MzMath
             Dim ms2 As LibraryMatrix = DirectCast(ions, LibraryMatrix)
 
             If Not ms2.centroid Then
-                ms2 = ms2.CentroidMode(mzrange, intoCutoff)
+                ms2 = ms2.CentroidMode(errors, intoCutoff)
             End If
 
             Return ms2

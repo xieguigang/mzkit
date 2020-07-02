@@ -70,7 +70,7 @@ Namespace Spectra
         Dim showReport As Boolean
         Dim Ms2Compares As Comparison(Of PeakMs2) = SSMCompares(Tolerance.PPM(20))
 
-        ReadOnly mzWidth As DoubleRange
+        ReadOnly mzWidth As Tolerance
         ReadOnly intocutoff As Double
 
         Public ReadOnly Property allMs2Scans As New List(Of PeakMs2)
@@ -85,7 +85,7 @@ Namespace Spectra
         ''' </param>
         ''' <param name="showReport">Show progress report?</param>
         Sub New(Optional compares As Comparison(Of PeakMs2) = Nothing,
-                Optional mzwidth As DoubleRange = Nothing,
+                Optional mzwidth As Tolerance = Nothing,
                 Optional intocutoff As Double = 0.05,
                 Optional showReport As Boolean = True)
 
@@ -94,7 +94,7 @@ Namespace Spectra
             Me.intocutoff = intocutoff
 
             If Me.mzWidth Is Nothing Then
-                Me.mzWidth = {0, 0.1}
+                Me.mzWidth = Tolerance.DeltaMass(0.1)
             End If
             If Not compares Is Nothing Then
                 Ms2Compares = compares
