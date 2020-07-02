@@ -48,6 +48,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSL
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -58,6 +59,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.ValueTypes
 Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports mzXMLAssembly = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
@@ -66,7 +68,7 @@ Imports REnv = SMRUCC.Rsharp.Runtime
 ''' <summary>
 ''' The mass spectrum assembly file read/write library module.
 ''' </summary>
-<Package("mzkit.assembly", Category:=APICategories.UtilityTools)>
+<Package("assembly", Category:=APICategories.UtilityTools)>
 Module Assembly
 
     <ExportAPI("read.msl")>
@@ -131,6 +133,29 @@ Module Assembly
     End Function
 
     ''' <summary>
+    ''' is mzxml or mzml?
+    ''' </summary>
+    ''' <param name="path"></param>
+    ''' <returns></returns>
+    Public Function GetFileType(path As String) As Type
+        Using xml As StreamReader = path.OpenReader
+            Dim header As String
+
+            For i As Integer = 0 To 1
+                header = xml.ReadLine
+
+                If InStr(header, "<indexedmzML ") > 0 Then
+                    Return GetType(mzML.Xml)
+                ElseIf InStr(header, "<mzXML ") > 0 Then
+                    Return GetType(mzXMLAssembly.XML)
+                End If
+            Next
+
+            Return Nothing
+        End Using
+    End Function
+
+    ''' <summary>
     ''' get file index string of the given ms2 peak data.
     ''' </summary>
     ''' <param name="ms2"></param>
@@ -143,12 +168,26 @@ Module Assembly
     ''' <summary>
     ''' Convert mzxml file as mgf ions.
     ''' </summary>
-    ''' <param name="mzXML"></param>
+    ''' <param name="file"></param>
     ''' <returns></returns>
     <ExportAPI("mzxml.mgf")>
-    Public Function mzXML2Mgf(mzXML$, Optional relativeInto As Boolean = False, Optional includesMs1 As Boolean = False) As pipeline
-        Return mzXML _
-            .scanLoader(relativeInto, includesMs1) _
+    Public Function mzXML2Mgf(file$,
+                              Optional relativeInto As Boolean = False,
+                              Optional includesMs1 As Boolean = False,
+                              Optional env As Environment = Nothing) As pipeline
+
+        Dim raw As IEnumerable(Of PeakMs2)
+        Dim type As Type = GetFileType(file)
+
+        If type Is Nothing Then
+            Return Internal.debug.stop({"the given file is not exists or file format not supported!", "file: " & file}, env)
+        ElseIf type Is GetType(mzML.Xml) Then
+            raw = file.mzMLScanLoader(relativeInto, includesMs1)
+        Else
+            raw = file.mzXMLScanLoader(relativeInto, includesMs1)
+        End If
+
+        Return raw _
             .Where(Function(peak) peak.mzInto.Length > 0) _
             .DoCall(Function(scans)
                         Return New pipeline(scans, GetType(PeakMs2))
@@ -156,7 +195,16 @@ Module Assembly
     End Function
 
     <Extension>
-    Private Iterator Function scanLoader(mzXML$, relativeInto As Boolean, includesMs1 As Boolean) As IEnumerable(Of PeakMs2)
+    Private Iterator Function mzMLScanLoader(path As String, relativeInto As Boolean, includesMs1 As Boolean) As IEnumerable(Of PeakMs2)
+        Dim basename$ = path.BaseName
+
+        For Each msscan In mzML.Xml
+
+        Next
+    End Function
+
+    <Extension>
+    Private Iterator Function mzXMLScanLoader(mzXML$, relativeInto As Boolean, includesMs1 As Boolean) As IEnumerable(Of PeakMs2)
         Dim basename$ = mzXML.FileName
 
         For Each ms2Scan As scan In mzXMLAssembly.XML _

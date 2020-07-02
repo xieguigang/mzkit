@@ -277,6 +277,7 @@
     <Compile Include="ASCII\MSP\MspParser.vb" />
     <Compile Include="ASCII\MSP\Comments.vb" />
     <Compile Include="ASCII\MSP\MspData.vb" />
+    <Compile Include="MarkupData\mzML\XML\FileComponents.vb" />
     <Compile Include="NamespaceDoc.vb" />
     <Compile Include="SpectrumTree.vb" />
     <Compile Include="MarkupData\IBase64Container.vb" />
