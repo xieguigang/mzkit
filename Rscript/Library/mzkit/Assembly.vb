@@ -173,7 +173,7 @@ Module Assembly
     <ExportAPI("mzxml.mgf")>
     Public Function mzXML2Mgf(file$,
                               Optional relativeInto As Boolean = False,
-                              Optional includesMs1 As Boolean = False,
+                              Optional onlyMs2 As Boolean = True,
                               Optional env As Environment = Nothing) As pipeline
 
         Dim raw As IEnumerable(Of PeakMs2)
@@ -182,9 +182,9 @@ Module Assembly
         If type Is Nothing Then
             Return Internal.debug.stop({"the given file is not exists or file format not supported!", "file: " & file}, env)
         ElseIf type Is GetType(mzML.Xml) Then
-            raw = file.mzMLScanLoader(relativeInto, includesMs1)
+            raw = file.mzMLScanLoader(relativeInto, onlyMs2)
         Else
-            raw = file.mzXMLScanLoader(relativeInto, includesMs1)
+            raw = file.mzXMLScanLoader(relativeInto, onlyMs2)
         End If
 
         Return raw _
@@ -195,22 +195,43 @@ Module Assembly
     End Function
 
     <Extension>
-    Private Iterator Function mzMLScanLoader(path As String, relativeInto As Boolean, includesMs1 As Boolean) As IEnumerable(Of PeakMs2)
+    Private Iterator Function mzMLScanLoader(path As String, relativeInto As Boolean, onlyMs2 As Boolean) As IEnumerable(Of PeakMs2)
         Dim basename$ = path.BaseName
 
-        For Each msscan In mzML.Xml
+        For Each msscan As mzML.spectrum In mzML.Xml _
+            .LoadScans(path) _
+            .Where(Function(s)
+                       If Not onlyMs2 Then
+                           Return True
+                       Else
+                           Return s.ms_level = "2"
+                       End If
+                   End Function)
 
+            Dim msLevel As Integer = msscan.ms_level.DoCall(AddressOf ParseInteger)
+
+            For Each bin In msscan.binaryDataArrayList.list
+                Select Case msLevel
+                    Case 1
+
+                    Case 0
+                        ' UV data?
+
+                    Case Else
+                        ' msn
+                End Select
+            Next
         Next
     End Function
 
     <Extension>
-    Private Iterator Function mzXMLScanLoader(mzXML$, relativeInto As Boolean, includesMs1 As Boolean) As IEnumerable(Of PeakMs2)
+    Private Iterator Function mzXMLScanLoader(mzXML$, relativeInto As Boolean, onlyMs2 As Boolean) As IEnumerable(Of PeakMs2)
         Dim basename$ = mzXML.FileName
 
         For Each ms2Scan As scan In mzXMLAssembly.XML _
             .LoadScans(mzXML) _
             .Where(Function(s)
-                       If includesMs1 Then
+                       If Not onlyMs2 Then
                            Return True
                        Else
                            Return s.msLevel = 2

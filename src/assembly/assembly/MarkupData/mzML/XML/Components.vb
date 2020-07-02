@@ -1,5 +1,7 @@
 ﻿
 Imports System.Xml.Serialization
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Language.Default
@@ -54,16 +56,6 @@ Namespace MarkupData.mzML
         Public Property defaultDataProcessingRef As String
     End Class
 
-    Public Class BinaryData : Inherits Params
-
-        <XmlAttribute> Public Property index As String
-        <XmlAttribute> Public Property id As String
-        <XmlAttribute> Public Property defaultArrayLength As String
-
-        Public Property binaryDataArrayList As binaryDataArrayList
-
-    End Class
-
     Public Structure cv
         <XmlAttribute> Public Property id As String
         <XmlAttribute> Public Property fullName As String
@@ -71,25 +63,14 @@ Namespace MarkupData.mzML
         <XmlAttribute> Public Property URI As String
     End Structure
 
-    Public Class precursor : Implements IMRMSelector
-
-        Public Property isolationWindow As Params Implements IMRMSelector.isolationWindow
-        Public Property activation As Params
-
-    End Class
-
-    Public Class product : Implements IMRMSelector
-
-        Public Property isolationWindow As Params Implements IMRMSelector.isolationWindow
-        Public Property activation As Params
-
-    End Class
-
     Public Class Params
+
         <XmlElement(NameOf(cvParam))>
         Public Property cvParams As cvParam()
+
         <XmlElement(NameOf(userParam))>
         Public Property userParams As userParam()
+
     End Class
 
     Public Class userParam : Implements INamedValue
@@ -100,42 +81,6 @@ Namespace MarkupData.mzML
 
         Public Overrides Function ToString() As String
             Return $"Dim {name} As {type} = {value}"
-        End Function
-    End Class
-
-    Public Class binaryDataArrayList : Inherits List
-
-        <XmlElement(NameOf(binaryDataArray))>
-        Public Property list As binaryDataArray()
-    End Class
-
-    Public Class binaryDataArray : Implements IBase64Container
-
-        Public Property encodedLength As Integer
-        <XmlElement(NameOf(cvParam))>
-        Public Property cvParams As cvParam()
-        Public Property binary As String Implements IBase64Container.BinaryArray
-
-        Public Overrides Function ToString() As String
-            Return binary
-        End Function
-
-        Public Function GetPrecision() As Integer Implements IBase64Container.GetPrecision
-            If Not cvParams.KeyItem("64-bit float") Is Nothing Then
-                Return 64
-            ElseIf Not cvParams.KeyItem("32-bit float") Is Nothing Then
-                Return 32
-            Else
-                Throw New NotImplementedException
-            End If
-        End Function
-
-        Public Function GetCompressionType() As String Implements IBase64Container.GetCompressionType
-            If Not cvParams.KeyItem("zlib compression") Is Nothing Then
-                Return "zlib"
-            Else
-                Throw New NotImplementedException
-            End If
         End Function
     End Class
 
