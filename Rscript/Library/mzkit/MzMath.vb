@@ -50,10 +50,12 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
@@ -235,10 +237,13 @@ Module MzMath
     Public Function SpectrumTreeCluster(<RRawVectorArgument>
                                         ms2list As Object,
                                         Optional compares As Comparison(Of PeakMs2) = Nothing,
+                                        Optional mzwidth As Object = "0,0.1",
+                                        Optional intocutoff As Double = 0.05,
                                         Optional showReport As Boolean = True,
                                         Optional env As Environment = Nothing) As Object
 
         Dim spectrum As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(ms2list, env)
+        Dim mzrange As DoubleRange = ApiArgumentHelpers.GetDoubleRange(mzwidth, env, "0,0.1")
 
         If spectrum.isError Then
             Return spectrum.getError
@@ -246,7 +251,9 @@ Module MzMath
 
         Return New SpectrumTreeCluster(
             compares:=compares,
-            showReport:=showReport
+            showReport:=showReport,
+            mzwidth:=mzrange,
+            intocutoff:=intocutoff
         ).doCluster(spectrum:=spectrum.populates(Of PeakMs2).ToArray)
     End Function
 

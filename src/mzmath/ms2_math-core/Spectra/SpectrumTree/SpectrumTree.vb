@@ -1,57 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::f49f164a1a9637397ee3476b1c096337, src\mzmath\ms2_math-core\Spectra\SpectrumTree\SpectrumTree.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class SpectrumTreeCluster
-    ' 
-    '         Properties: allMs2Scans
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: Best, doCluster, PopulateClusters, SSMCompares
-    ' 
-    '         Sub: clusterInternal
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class SpectrumTreeCluster
+' 
+'         Properties: allMs2Scans
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: Best, doCluster, PopulateClusters, SSMCompares
+' 
+'         Sub: clusterInternal
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language.Default
 Imports stdNum = System.Math
 
@@ -69,6 +70,9 @@ Namespace Spectra
         Dim showReport As Boolean
         Dim Ms2Compares As Comparison(Of PeakMs2) = SSMCompares(Tolerance.PPM(20))
 
+        ReadOnly mzWidth As DoubleRange
+        ReadOnly intocutoff As Double
+
         Public ReadOnly Property allMs2Scans As New List(Of PeakMs2)
 
         Const InvalidScoreRange$ = "Scores for x < y should be in range (0, 1] and its value is also less than score for spectra equals!"
@@ -80,9 +84,18 @@ Namespace Spectra
         ''' By default is SSM method <see cref="SSMCompares(Tolerance, Double, Double, Func(Of Double, Double, Double))"/>
         ''' </param>
         ''' <param name="showReport">Show progress report?</param>
-        Sub New(Optional compares As Comparison(Of PeakMs2) = Nothing, Optional showReport As Boolean = True)
-            Me.showReport = showReport
+        Sub New(Optional compares As Comparison(Of PeakMs2) = Nothing,
+                Optional mzwidth As DoubleRange = Nothing,
+                Optional intocutoff As Double = 0.05,
+                Optional showReport As Boolean = True)
 
+            Me.showReport = showReport
+            Me.mzWidth = mzwidth
+            Me.intocutoff = intocutoff
+
+            If Me.mzWidth Is Nothing Then
+                Me.mzWidth = {0, 0.1}
+            End If
             If Not compares Is Nothing Then
                 Ms2Compares = compares
             End If
@@ -164,7 +177,7 @@ Namespace Spectra
             tree = New AVLTree(Of PeakMs2, PeakMs2)(Ms2Compares, Function(x) x.ToString)
 
             For Each ms2 As PeakMs2 In ms2list
-                matrix = ms2.mzInto.CentroidMode(0.05)
+                matrix = ms2.mzInto.CentroidMode(mzWidth, intocutoff)
                 simply = New PeakMs2 With {
                     .mz = ms2.mz,
                     .file = ms2.file,

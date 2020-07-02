@@ -55,7 +55,7 @@ Public Class SpectrumTree : Inherits Spectra.SpectrumTreeCluster
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Sub New(Optional compares As Comparison(Of PeakMs2) = Nothing, Optional showReport As Boolean = True)
-        Call MyBase.New(compares, showReport)
+        Call MyBase.New(compares, showReport:=showReport)
     End Sub
 
     ''' <summary>

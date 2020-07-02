@@ -140,6 +140,10 @@ Namespace Spectra
                 .Where(Function(p) p.intensity / maxInto >= intoCutoff) _
                 .ToArray
 
+            If peaks.Length = 0 Then
+                Return
+            End If
+
             ' and then we could run peak detections for 
             ' Convert ms peaks DATA to centroid mode
             For Each peak As ROI In peaks _
