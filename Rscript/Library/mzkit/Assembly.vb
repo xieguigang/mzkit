@@ -94,7 +94,7 @@ Module Assembly
             Return pipeline.getError
         End If
 
-        Return pipeline.populates(Of Ions) _
+        Return pipeline.populates(Of Ions)(env) _
             .IonPeaks _
             .DoCall(AddressOf pipeline.CreateFromPopulator)
     End Function
@@ -110,10 +110,10 @@ Module Assembly
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("write.mgf")>
-    Public Function writeMgfIons(ions As Object, file$, Optional relativeInto As Boolean = False) As Boolean
+    Public Function writeMgfIons(ions As Object, file$, Optional relativeInto As Boolean = False, Optional env As Environment = Nothing) As Boolean
         If ions.GetType() Is GetType(pipeline) Then
             Using mgfWriter As StreamWriter = file.OpenWriter(Encodings.ASCII, append:=False)
-                For Each ionPeak As PeakMs2 In DirectCast(ions, pipeline).populates(Of PeakMs2)
+                For Each ionPeak As PeakMs2 In DirectCast(ions, pipeline).populates(Of PeakMs2)(env)
                     Call ionPeak _
                         .MgfIon _
                         .WriteAsciiMgf(mgfWriter, relativeInto)

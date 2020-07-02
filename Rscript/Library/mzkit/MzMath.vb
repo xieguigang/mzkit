@@ -256,7 +256,7 @@ Module MzMath
             showReport:=showReport,
             mzwidth:=mzrange,
             intocutoff:=intocutoff
-        ).doCluster(spectrum:=spectrum.populates(Of PeakMs2).ToArray)
+        ).doCluster(spectrum:=spectrum.populates(Of PeakMs2)(env).ToArray)
     End Function
 
     <ExportAPI("cluster.nodes")>
@@ -296,7 +296,7 @@ Module MzMath
         End If
 
         If inputType Is GetType(pipeline) OrElse inputType Is GetType(PeakMs2()) Then
-            Dim source As IEnumerable(Of PeakMs2) = If(inputType Is GetType(pipeline), DirectCast(ions, pipeline).populates(Of PeakMs2), DirectCast(ions, PeakMs2()))
+            Dim source As IEnumerable(Of PeakMs2) = If(inputType Is GetType(pipeline), DirectCast(ions, pipeline).populates(Of PeakMs2)(env), DirectCast(ions, PeakMs2()))
             Dim converter = Iterator Function() As IEnumerable(Of PeakMs2)
                                 For Each peak As PeakMs2 In source
                                     If Not peak.mzInto.centroid Then
