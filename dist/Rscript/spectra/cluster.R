@@ -14,7 +14,7 @@ let clusters =
 print(clusters :> sapply(c -> c$MID));
 
 for(cluster in clusters) {
-	let dir = `./${cluster$MID}/`;
+	let dir = `D:/plot/${cluster$MID}/`;
 	
 	write.mgf(cluster$cluster, file = `${dir}/spectrum.mgf`);
 	
