@@ -105,6 +105,16 @@ Namespace Spectra
             End Get
         End Property
 
+        Public ReadOnly Property fragments As Integer
+            Get
+                If mzInto Is Nothing Then
+                    Return 0
+                Else
+                    Return mzInto.Length
+                End If
+            End Get
+        End Property
+
         ''' <summary>
         ''' 将mzXML文件之中的RT文本解析为以秒为单位的rt保留时间数值
         ''' </summary>

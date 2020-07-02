@@ -44,7 +44,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
@@ -83,33 +83,6 @@ Namespace Spectra
                 .ToArray
         End Function
 
-        '''' <summary>
-        '''' 将符合误差范围的二级碎片合并在一起
-        '''' </summary>
-        '''' <param name="matrix"></param>
-        '''' <returns></returns>
-        '<MethodImpl(MethodImplOptions.AggressiveInlining)>
-        '<Extension>
-        'Public Function Shrink(matrix As LibraryMatrix, tolerance As Tolerance) As LibraryMatrix
-        '    Dim ms2Peaks As ms2() = matrix _
-        '        .GroupBy(Function(ms2) ms2.mz, AddressOf tolerance.Assert) _
-        '        .Select(Function(g)
-        '                    ' 合并在一起的二级碎片的相应强度取最高的为结果
-        '                    Dim fragments As ms2() = g.ToArray
-        '                    Dim maxi As Integer = Which.Max(fragments.Select(Function(m) m.intensity))
-        '                    Dim max As ms2 = fragments(maxi)
-
-        '                    Return max
-        '                End Function) _
-        '        .ToArray
-
-        '    Return New LibraryMatrix With {
-        '        .ms2 = ms2Peaks,
-        '        .name = matrix.name,
-        '        .centroid = matrix.centroid
-        '    }
-        'End Function
-
         ''' <summary>
         ''' Convert profile matrix to centroid matrix
         ''' </summary>
@@ -117,8 +90,8 @@ Namespace Spectra
         ''' <returns></returns>
         ''' 
         <Extension>
-        Public Function CentroidMode([lib] As LibraryMatrix, mzWidth As DoubleRange, Optional intoCutoff# = 0.05) As LibraryMatrix
-            [lib].ms2 = [lib].ms2.Centroid(mzWidth, intoCutoff).ToArray
+        Public Function CentroidMode([lib] As LibraryMatrix, tolerance As Tolerance, Optional intoCutoff# = 0.05) As LibraryMatrix
+            [lib].ms2 = [lib].ms2.Centroid(tolerance, intoCutoff).ToArray
             [lib].centroid = True
 
             Return [lib]
@@ -131,8 +104,8 @@ Namespace Spectra
         ''' <param name="intoCutoff"></param>
         ''' <returns></returns>
         <Extension>
-        Public Iterator Function Centroid(peaks As ms2(), mzWidth As DoubleRange, Optional intoCutoff# = 0.05) As IEnumerable(Of ms2)
-            Dim maxInto = peaks.Select(Function(p) p.intensity).Max
+        Public Function Centroid(peaks As ms2(), tolerance As Tolerance, Optional intoCutoff# = 0.05) As IEnumerable(Of ms2)
+            Dim maxInto = If(peaks.IsNullOrEmpty, 0, peaks.Select(Function(p) p.intensity).Max)
 
             ' removes low intensity fragment peaks
             ' for save calculation time
@@ -141,29 +114,22 @@ Namespace Spectra
                 .ToArray
 
             If peaks.Length = 0 Then
-                Return
+                Return {}
+            Else
+                ' 20200702 due to the reason of we not calculate the peakarea
+                ' so that there is no needs for populate ROI
+                ' find the highest fragment directly
+                Return peaks _
+                    .GroupBy(Function(ms2) ms2.mz, AddressOf tolerance.Assert) _
+                    .Select(Function(g)
+                            ' 合并在一起的二级碎片的相应强度取最高的为结果
+                            Dim fragments As ms2() = g.ToArray
+                                Dim maxi As Integer = Which.Max(fragments.Select(Function(m) m.intensity))
+                                Dim max As ms2 = fragments(maxi)
+                                Return max
+                            End Function) _
+                    .ToArray
             End If
-
-            ' and then we could run peak detections for 
-            ' Convert ms peaks DATA to centroid mode
-            For Each peak As ROI In peaks _
-                .Select(Function(p)
-                            Return New ChromatogramTick(p.mz, p.intensity)
-                        End Function) _
-                .OrderBy(Function(m) m.Time) _
-                .Shadows _
-                .PopulateROI(
-                    baselineQuantile:=0,
-                    peakwidth:=mzWidth
-                )
-
-                Yield New ms2 With {
-                    .mz = peak.rt,
-                    .intensity = peak.maxInto,
-                    .quantity = .intensity,
-                    .Annotation = peak.ToString
-                }
-            Next
         End Function
     End Module
 End Namespace

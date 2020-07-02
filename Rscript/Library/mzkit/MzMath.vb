@@ -261,4 +261,74 @@ Module MzMath
     Public Function GetClusters(tree As SpectrumTreeCluster) As SpectrumCluster()
         Return tree.PopulateClusters.ToArray
     End Function
+
+    ''' <summary>
+    ''' Converts profiles peak data to peak data in centroid mode.
+    ''' 
+    ''' profile and centroid in Mass Spectrometry?
+    ''' 
+    ''' 1. Profile means the continuous wave form in a mass spectrum.
+    '''   + Number of data points Is large.
+    ''' 2. Centroid means the peaks in a profile data Is changed to bars.
+    '''   + location of the bar Is center of the profile peak.
+    '''   + height of the bar Is area of the profile peak.
+    '''   
+    ''' </summary>
+    ''' <param name="ions"></param>
+    ''' <returns>
+    ''' Peaks data in centroid mode.
+    ''' </returns>
+    <ExportAPI("centroid")>
+    <RApiReturn(GetType(PeakMs2), GetType(LibraryMatrix))>
+    Public Function centroid(<RRawVectorArgument> ions As Object,
+                             Optional intoCutoff As Double = 0.05,
+                             Optional mzwidth As Object = "0,0.1",
+                             Optional parallel As Boolean = False,
+                             Optional env As Environment = Nothing) As Object
+
+        Dim inputType As Type = ions.GetType
+        Dim mzrange As DoubleRange = ApiArgumentHelpers.GetDoubleRange(mzwidth, env, "0,0.1")
+
+        If inputType Is GetType(pipeline) OrElse inputType Is GetType(PeakMs2()) Then
+            Dim source As IEnumerable(Of PeakMs2) = If(inputType Is GetType(pipeline), DirectCast(ions, pipeline).populates(Of PeakMs2), DirectCast(ions, PeakMs2()))
+            Dim converter = Iterator Function() As IEnumerable(Of PeakMs2)
+                                For Each peak As PeakMs2 In source
+                                    If Not peak.mzInto.centroid Then
+                                        peak.mzInto.ms2 = peak.mzInto.ms2 _
+                                            .Centroid(mzrange, intoCutoff) _
+                                            .ToArray
+                                        ' peak.mzInto = peak.mzInto.Shrink(tolerance:=Tolerance.DeltaMass(0.3))
+                                    End If
+
+                                    Yield peak
+                                Next
+                            End Function
+
+            If parallel Then
+                Return New pipeline(converter().AsParallel, GetType(PeakMs2))
+            Else
+                Return New pipeline(converter(), GetType(PeakMs2))
+            End If
+        ElseIf inputType Is GetType(PeakMs2) Then
+            Dim ms2Peak As PeakMs2 = DirectCast(ions, PeakMs2)
+
+            If Not ms2Peak.mzInto.centroid Then
+                ms2Peak.mzInto.ms2 = ms2Peak.mzInto.ms2 _
+                    .Centroid(mzrange, intoCutoff) _
+                    .ToArray
+            End If
+
+            Return ms2Peak
+        ElseIf inputType Is GetType(LibraryMatrix) Then
+            Dim ms2 As LibraryMatrix = DirectCast(ions, LibraryMatrix)
+
+            If Not ms2.centroid Then
+                ms2 = ms2.CentroidMode(mzrange, intoCutoff)
+            End If
+
+            Return ms2
+        Else
+            Return Internal.debug.stop(New InvalidCastException(inputType.FullName), env)
+        End If
+    End Function
 End Module

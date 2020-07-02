@@ -159,10 +159,14 @@ Namespace Spectra
         ''' <param name="ref"></param>
         ''' <returns></returns>
         Public Function Align(query As ms2(), ref As ms2(), Optional tolerance As Tolerance = Nothing) As Double
-            Dim q As Vector = query.AlignMatrix(ref, tolerance Or ppm20).Shadows!intensity
-            Dim s As Vector = ref.Shadows!intensity
+            If query.IsNullOrEmpty OrElse ref.IsNullOrEmpty Then
+                Return 0
+            Else
+                Dim q As Vector = query.AlignMatrix(ref, tolerance Or ppm20).Shadows!intensity
+                Dim s As Vector = ref.Shadows!intensity
 
-            Return SSM(q / q.Max, s / s.Max)
+                Return SSM(q / q.Max, s / s.Max)
+            End If
         End Function
 
         ''' <summary>

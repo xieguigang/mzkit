@@ -6,6 +6,7 @@ let clusters =
 :> read.mgf
 :> mgf.ion_peaks
 :> centroid
+:> which(ms2 -> as.object(ms2)$fragments > 0)
 :> spectrum_tree.cluster()
 :> cluster.nodes
 :> projectAs(as.object)
