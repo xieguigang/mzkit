@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::e8a3c9d32ee50537a8573c927f7a98dc, Rscript\Library\mzkit\Assembly.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Assembly
-    ' 
-    '     Function: centroid, getMs1Scans, IonPeaks, mzXML2Mgf, ReadMgfIons
-    '               ReadMslIons, scanLoader, writeMgfIons
-    ' 
-    ' /********************************************************************************/
+' Module Assembly
+' 
+'     Function: centroid, getMs1Scans, IonPeaks, mzXML2Mgf, ReadMgfIons
+'               ReadMslIons, scanLoader, writeMgfIons
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -52,11 +52,13 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.ValueTypes
+Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
@@ -160,10 +162,12 @@ Module Assembly
     <RApiReturn(GetType(PeakMs2), GetType(LibraryMatrix))>
     Public Function centroid(<RRawVectorArgument> ions As Object,
                              Optional intoCutoff As Double = 0.05,
+                             Optional mzwidth As Object = "0,0.1",
                              Optional parallel As Boolean = False,
                              Optional env As Environment = Nothing) As Object
 
         Dim inputType As Type = ions.GetType
+        Dim mzrange As DoubleRange = ApiArgumentHelpers.GetDoubleRange(mzwidth, env, "0,0.1")
 
         If inputType Is GetType(pipeline) OrElse inputType Is GetType(PeakMs2()) Then
             Dim source As IEnumerable(Of PeakMs2) = If(inputType Is GetType(pipeline), DirectCast(ions, pipeline).populates(Of PeakMs2), DirectCast(ions, PeakMs2()))
@@ -171,7 +175,7 @@ Module Assembly
                                 For Each peak As PeakMs2 In source
                                     If Not peak.mzInto.centroid Then
                                         peak.mzInto.ms2 = peak.mzInto.ms2 _
-                                            .Centroid(intoCutoff) _
+                                            .Centroid(mzrange, intoCutoff) _
                                             .ToArray
                                         ' peak.mzInto = peak.mzInto.Shrink(tolerance:=Tolerance.DeltaMass(0.3))
                                     End If
@@ -190,7 +194,7 @@ Module Assembly
 
             If Not ms2Peak.mzInto.centroid Then
                 ms2Peak.mzInto.ms2 = ms2Peak.mzInto.ms2 _
-                    .Centroid(intoCutoff) _
+                    .Centroid(mzrange, intoCutoff) _
                     .ToArray
             End If
 
@@ -199,7 +203,7 @@ Module Assembly
             Dim ms2 As LibraryMatrix = DirectCast(ions, LibraryMatrix)
 
             If Not ms2.centroid Then
-                ms2 = ms2.CentroidMode(intoCutoff)
+                ms2 = ms2.CentroidMode(mzrange, intoCutoff)
             End If
 
             Return ms2

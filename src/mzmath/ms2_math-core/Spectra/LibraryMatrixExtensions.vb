@@ -117,8 +117,8 @@ Namespace Spectra
         ''' <returns></returns>
         ''' 
         <Extension>
-        Public Function CentroidMode([lib] As LibraryMatrix, Optional intoCutoff# = 0.05) As LibraryMatrix
-            [lib].ms2 = [lib].ms2.Centroid(intoCutoff).ToArray
+        Public Function CentroidMode([lib] As LibraryMatrix, mzWidth As DoubleRange, Optional intoCutoff# = 0.05) As LibraryMatrix
+            [lib].ms2 = [lib].ms2.Centroid(mzWidth, intoCutoff).ToArray
             [lib].centroid = True
 
             Return [lib]
@@ -128,10 +128,10 @@ Namespace Spectra
         ''' Convert profile matrix to centroid matrix
         ''' </summary>
         ''' <param name="peaks"></param>
-        ''' <param name="intoCutoff#"></param>
+        ''' <param name="intoCutoff"></param>
         ''' <returns></returns>
         <Extension>
-        Public Iterator Function Centroid(peaks As ms2(), peakwidth As DoubleRange, Optional intoCutoff# = 0.05) As IEnumerable(Of ms2)
+        Public Iterator Function Centroid(peaks As ms2(), mzWidth As DoubleRange, Optional intoCutoff# = 0.05) As IEnumerable(Of ms2)
             Dim maxInto = peaks.Select(Function(p) p.intensity).Max
 
             ' removes low intensity fragment peaks
@@ -150,7 +150,7 @@ Namespace Spectra
                 .Shadows _
                 .PopulateROI(
                     baselineQuantile:=0,
-                    peakwidth:=peakwidth
+                    peakwidth:=mzWidth
                 )
 
                 Yield New ms2 With {
