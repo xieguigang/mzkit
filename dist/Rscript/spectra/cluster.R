@@ -1,4 +1,5 @@
 imports ["math", "mzkit.assembly"] from "mzkit";
+imports "mzkit.visual" from "mzkit.plot";
 
 let clusters = 
 "D:\mzkit\DATA\test\GABA_mgf.txt"
@@ -6,4 +7,22 @@ let clusters =
 :> mgf.ion_peaks
 :> centroid
 :> spectrum_tree.cluster()
+:> cluster.nodes
+:> projectAs(as.object)
 ;
+
+print(clusters :> sapply(c -> c$MID));
+
+for(cluster in clusters) {
+	let dir = `./${cluster$MID}/`;
+	
+	write.mgf(cluster$cluster, file = `${dir}/spectrum.mgf`);
+	
+	for(matrix in cluster$cluster) {
+		let png = `${dir}/${file.index(matrix)}.png`;
+		
+		matrix 
+		:> mass_spectrum.plot 
+		:> save.graphics(file = png);
+	}
+}

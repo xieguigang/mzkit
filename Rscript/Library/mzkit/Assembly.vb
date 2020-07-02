@@ -131,6 +131,16 @@ Module Assembly
     End Function
 
     ''' <summary>
+    ''' get file index string of the given ms2 peak data.
+    ''' </summary>
+    ''' <param name="ms2"></param>
+    ''' <returns></returns>
+    <ExportAPI("file.index")>
+    Public Function PeakMs2FileIndex(ms2 As PeakMs2) As String
+        Return $"{ms2.file}#{ms2.scan}"
+    End Function
+
+    ''' <summary>
     ''' Converts profiles peak data to peak data in centroid mode.
     ''' 
     ''' profile and centroid in Mass Spectrometry?

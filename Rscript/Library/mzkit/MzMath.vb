@@ -249,4 +249,9 @@ Module MzMath
             showReport:=showReport
         ).doCluster(spectrum:=spectrum.populates(Of PeakMs2).ToArray)
     End Function
+
+    <ExportAPI("cluster.nodes")>
+    Public Function GetClusters(tree As SpectrumTreeCluster) As SpectrumCluster()
+        Return tree.PopulateClusters.ToArray
+    End Function
 End Module
