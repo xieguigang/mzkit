@@ -1,4 +1,5 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
+﻿Imports System.IO
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.SignalProcessing
@@ -37,5 +38,24 @@ Module ERS
             .populates(Of spectrum)(env) _
             .PopulatesElectromagneticRadiationSpectrum(instrumentId) _
             .DoCall(AddressOf pipeline.CreateFromPopulator)
+    End Function
+
+    <ExportAPI("write.UVsignals")>
+    <RApiReturn(GetType(Boolean))>
+    Public Function WriteSignal(<RRawVectorArgument> signals As Object, file$, Optional env As Environment = Nothing) As Object
+        Dim raw As pipeline = pipeline.TryCreatePipeline(Of GeneralSignal)(signals, env)
+
+        If raw.isError Then
+            Return raw.getError
+        End If
+
+        Using writer As StreamWriter = file.OpenWriter
+            For Each scan As GeneralSignal In raw.populates(Of GeneralSignal)(env)
+                Call writer.WriteLine(scan.GetText)
+                Call writer.WriteLine()
+            Next
+        End Using
+
+        Return True
     End Function
 End Module

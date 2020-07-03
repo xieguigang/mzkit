@@ -34,8 +34,8 @@ Namespace MarkupData.mzML
             Dim intensity As Double() = rawScan.binaryDataArrayList.list(1).Base64Decode
 
             Return New GeneralSignal With {
-                .Description = type,
-                .MeasureUnit = "wavelength(nanometer)",
+                .description = type,
+                .measureUnit = "wavelength(nanometer)",
                 .Measures = descriptor,
                 .Strength = intensity
             }
