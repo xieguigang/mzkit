@@ -89,6 +89,12 @@ Namespace MarkupData.mzML
         End Function
     End Class
 
+    Public Class precursorList : Inherits List
+
+        Public Property precursor As precursor()
+
+    End Class
+
     Public Class spectrum : Inherits BinaryData
 
         <XmlAttribute> Public Property controllerType As String
@@ -96,6 +102,7 @@ Namespace MarkupData.mzML
         <XmlAttribute> Public Property scan As String
 
         Public Property scanList As scanList
+        Public Property precursorList As precursorList
 
         Public ReadOnly Property ms_level As String
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
