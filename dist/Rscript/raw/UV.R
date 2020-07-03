@@ -1,7 +1,8 @@
 imports ["mzML.ERS", "assembly"] from "mzkit";
 
-let raw as string = "D:\biodeep\B062.mzML";
+setwd(!script$dir);
 
+let raw as string = "D:\biodeep\B062.mzML";
 let IC as string = get_instrument(raw);
 
 if (is.null(IC)) {

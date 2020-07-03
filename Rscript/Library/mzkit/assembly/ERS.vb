@@ -52,7 +52,7 @@ Module ERS
         Using writer As StreamWriter = file.OpenWriter
             For Each scan As GeneralSignal In raw.populates(Of GeneralSignal)(env)
                 Call writer.WriteLine(scan.GetText)
-                Call writer.WriteLine()
+                ' Call scan.meta!title.__DEBUG_ECHO
             Next
         End Using
 
