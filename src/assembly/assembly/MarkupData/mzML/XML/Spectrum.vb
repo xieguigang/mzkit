@@ -123,7 +123,10 @@ Namespace MarkupData.mzML
         ''' <returns></returns>
         Public ReadOnly Property selectedIon As (mz As Double, intensity As Double)
             Get
+                Dim mz = precursorList.precursor(Scan0).selectedIonList.GetIonMz
+                Dim into = precursorList.precursor(Scan0).selectedIonList.GetIonIntensity
 
+                Return (mz(Scan0), into(Scan0))
             End Get
         End Property
 
@@ -170,8 +173,7 @@ Namespace MarkupData.mzML
         ''' </summary>
         ''' <param name="basename"></param>
         ''' <returns></returns>
-        Public Function ScanData(parent As spectrum,
-                                 Optional basename$ = Nothing,
+        Public Function ScanData(Optional basename$ = Nothing,
                                  Optional centroid As Boolean = False,
                                  Optional raw As Boolean = False,
                                  Optional centroidTolerance As Tolerance = Nothing) As PeakMs2
@@ -182,23 +184,29 @@ Namespace MarkupData.mzML
                 .ms2 = ms2,
                 .name = ToString()
             }
+            Dim precursor = selectedIon
+            Dim activationMethod$
 
             Static ms1 As [Default](Of String) = "ms1"
 
             ' 合并碎片只针对2级碎片有效
-            If ParseInteger(ms_level > 1) AndAlso centroid Then
-                If centroidTolerance Is Nothing Then
-                    centroidTolerance = Tolerance.DeltaMass(0.1)
+            If ParseInteger(ms_level > 1) Then
+                If centroid Then
+                    If centroidTolerance Is Nothing Then
+                        centroidTolerance = Tolerance.DeltaMass(0.1)
+                    End If
+
+                    mzInto = mzInto.CentroidMode(centroidTolerance, 0.001)
                 End If
 
-                mzInto = mzInto.CentroidMode(centroidTolerance, 0.001)
+                activationMethod = precursorList.precursor(Scan0).GetActivationMethod()
+            Else
+                activationMethod = ms1
             End If
 
             If Not raw Then
                 mzInto = mzInto / mzInto.Max
             End If
-
-            Dim precursor = selectedIon
 
             Return New PeakMs2 With {
                 .mz = precursor.mz,
@@ -206,8 +214,8 @@ Namespace MarkupData.mzML
                 .scan = index,
                 .file = basename,
                 .mzInto = mzInto,
-                .activation = precursorMz.activationMethod Or ms1,
-                .collisionEnergy = Val(collisionEnergy)
+                .activation = activationMethod,
+                .collisionEnergy = precursorList.precursor(Scan0).GetCollisionEnergy
             }
         End Function
 
