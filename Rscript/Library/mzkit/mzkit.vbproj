@@ -191,10 +191,11 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assembly.vb" />
-    <Compile Include="MzMath.vb" />
-    <Compile Include="ProteoWizard.vb" />
-    <Compile Include="Formula.vb" />
+    <Compile Include="assembly\Assembly.vb" />
+    <Compile Include="assembly\ERS.vb" />
+    <Compile Include="math\MzMath.vb" />
+    <Compile Include="assembly\ProteoWizard.vb" />
+    <Compile Include="math\Formula.vb" />
     <Compile Include="Massbank.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -264,6 +265,10 @@
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\math-core.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
       <Name>math-core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\SignalProcessing.vbproj">
+      <Project>{83975074-CBE1-4ABC-BA91-91D63DA156C8}</Project>
+      <Name>SignalProcessing</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Datavisualization.Network\Network.GraphTheory.vbproj">
       <Project>{076315ee-b598-40dc-9280-c71cdf9b6a48}</Project>
