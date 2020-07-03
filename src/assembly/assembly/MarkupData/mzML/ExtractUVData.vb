@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.Text.Xml
 Imports Microsoft.VisualBasic.Text.Xml.Linq
@@ -35,19 +36,29 @@ Namespace MarkupData.mzML
             Dim intensity As Double() = rawScan.binaryDataArrayList.list(1).Base64Decode
             Dim info As New Dictionary(Of String, String)
             Dim UVscan As scan = rawScan.scanList.scans.First(Function(a) a.instrumentConfigurationRef = instrumentConfigurationId)
+            Dim title As NamedValue(Of String)() = XmlEntity _
+                .UnescapingXmlEntity(rawScan.cvParams.KeyItem("spectrum title")?.value) _
+                .Matches("\S+[:]""[^""]+""") _
+                .Select(Function(tag) tag.GetTagValue(":")) _
+                .ToArray
 
             info.Add("total_ion_current", rawScan.cvParams.KeyItem("total ion current")?.value)
             info.Add("lowest_wavelength", rawScan.cvParams.KeyItem("lowest observed wavelength")?.value)
             info.Add("highest_wavelength", rawScan.cvParams.KeyItem("highest observed wavelength")?.value)
-            info.Add("title", XmlEntity.UnescapingXmlEntity(rawScan.cvParams.KeyItem("spectrum title")?.value))
             info.Add("scan_time", Val(UVscan.cvParams.KeyItem("scan start time")?.value) * 60)
+            info.Add("rawfile", title.KeyItem("File").Value.Trim(""""c))
+
+            title = rawScan.id.StringSplit("\s+").Select(Function(tag) tag.GetTagValue("=")).ToArray
+
+            info.Add("scan", title.KeyItem("scan").Value)
 
             Return New GeneralSignal With {
                 .description = type,
                 .meta = info,
                 .measureUnit = "wavelength(nanometer)",
                 .Measures = descriptor,
-                .Strength = intensity
+                .Strength = intensity,
+                .reference = $"{info!rawfile}#{info!scan}"
             }
         End Function
 
