@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Data.Signal
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -50,7 +51,7 @@ Module ERS
         End If
 
         If file.ExtensionSuffix("cdf") Then
-
+            Call raw.populates(Of GeneralSignal)(env).WriteCDF(file)
         Else
             ' write text
             Using writer As StreamWriter = file.OpenWriter

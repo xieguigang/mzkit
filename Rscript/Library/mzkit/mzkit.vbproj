@@ -266,6 +266,10 @@
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
       <Name>math-core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\Signal.IO\Signal.IO.vbproj">
+      <Project>{b08c17b2-7c36-404d-9e51-b3348b286ee6}</Project>
+      <Name>Signal.IO</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\SignalProcessing.vbproj">
       <Project>{83975074-CBE1-4ABC-BA91-91D63DA156C8}</Project>
       <Name>SignalProcessing</Name>
