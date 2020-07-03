@@ -193,6 +193,20 @@ Module Assembly
                     End Function)
     End Function
 
+    <ExportAPI("raw.scans")>
+    <RApiReturn(GetType(mzML.spectrum), GetType(scan))>
+    Public Function rawScans(file As String, Optional env As Environment = Nothing) As Object
+        Dim type As Type = GetFileType(file)
+
+        If type Is Nothing Then
+            Return Internal.debug.stop({"the given file is not exists or file format not supported!", "file: " & file}, env)
+        ElseIf type Is GetType(mzML.Xml) Then
+            Return mzML.Xml.LoadScans(file).DoCall(AddressOf pipeline.CreateFromPopulator)
+        Else
+            Return mzXMLAssembly.XML.LoadScans(file).DoCall(AddressOf pipeline.CreateFromPopulator)
+        End If
+    End Function
+
     <Extension>
     Private Iterator Function mzMLScanLoader(path As String, relativeInto As Boolean, onlyMs2 As Boolean) As IEnumerable(Of PeakMs2)
         Dim basename$ = path.BaseName
