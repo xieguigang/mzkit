@@ -50,7 +50,7 @@ Module ERS
             Return raw.getError
         End If
 
-        If file.ExtensionSuffix("cdf") Then
+        If file.ExtensionSuffix("cdf", "netcdf") Then
             Call raw.populates(Of GeneralSignal)(env).WriteCDF(file)
         Else
             ' write text
