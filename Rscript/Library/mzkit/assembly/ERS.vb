@@ -49,12 +49,16 @@ Module ERS
             Return raw.getError
         End If
 
-        Using writer As StreamWriter = file.OpenWriter
-            For Each scan As GeneralSignal In raw.populates(Of GeneralSignal)(env)
-                Call writer.WriteLine(scan.GetText)
-                ' Call scan.meta!title.__DEBUG_ECHO
-            Next
-        End Using
+        If file.ExtensionSuffix("cdf") Then
+
+        Else
+            ' write text
+            Using writer As StreamWriter = file.OpenWriter
+                For Each scan As GeneralSignal In raw.populates(Of GeneralSignal)(env)
+                    Call writer.WriteLine(scan.GetText)
+                Next
+            End Using
+        End If
 
         Return True
     End Function
