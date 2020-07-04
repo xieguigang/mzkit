@@ -41,6 +41,13 @@ Module ERS
             .DoCall(AddressOf pipeline.CreateFromPopulator)
     End Function
 
+    ''' <summary>
+    ''' write UV signal data into a text file or netCDF4 data file
+    ''' </summary>
+    ''' <param name="signals">a vector or pipeline of <see cref="GeneralSignal"/></param>
+    ''' <param name="file">the file path of the data file that will be write signal data to it.</param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("write.UVsignals")>
     <RApiReturn(GetType(Boolean))>
     Public Function WriteSignal(<RRawVectorArgument> signals As Object, file$, Optional env As Environment = Nothing) As Object
