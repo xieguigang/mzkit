@@ -43,7 +43,7 @@ Module ERS
 
     <ExportAPI("write.UVsignals")>
     <RApiReturn(GetType(Boolean))>
-    Public Function WriteSignal(<RRawVectorArgument> signals As Object, file$, Optional env As Environment = Nothing) As Object
+    Public Function WriteSignal(<RRawVectorArgument> signals As Object, file$, Optional enable_CDFextension As Boolean = False, Optional env As Environment = Nothing) As Object
         Dim raw As pipeline = pipeline.TryCreatePipeline(Of GeneralSignal)(signals, env)
 
         If raw.isError Then
@@ -51,7 +51,7 @@ Module ERS
         End If
 
         If file.ExtensionSuffix("cdf", "netcdf", "nc") Then
-            Call raw.populates(Of GeneralSignal)(env).WriteCDF(file, "electromagnetic radiation spectrum", "ERS_UVsignal_")
+            Call raw.populates(Of GeneralSignal)(env).WriteCDF(file, "electromagnetic radiation spectrum", "ERS_UVsignal_", enable_CDFextension)
         Else
             ' write text
             Using writer As StreamWriter = file.OpenWriter
