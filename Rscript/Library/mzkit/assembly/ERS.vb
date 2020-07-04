@@ -51,7 +51,7 @@ Module ERS
         End If
 
         If file.ExtensionSuffix("cdf", "netcdf", "nc") Then
-            Call raw.populates(Of GeneralSignal)(env).WriteCDF(file, "electromagnetic radiation spectrum", "ERS_UVsignal_", enable_CDFextension)
+            Call raw.populates(Of GeneralSignal)(env).WriteCDF(file, "electromagnetic radiation spectrum ERS_UVsignal", enable_CDFextension)
         Else
             ' write text
             Using writer As StreamWriter = file.OpenWriter
