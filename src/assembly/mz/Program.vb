@@ -271,7 +271,7 @@ Imports stdNum = System.Math
         Dim centroidIons = MgfReader.StreamParser([in]) _
             .Select(Function(p)
                         Dim peaks As New LibraryMatrix With {.ms2 = p.Peaks}
-                        Dim simplify = peaks.CentroidMode(intoCutoff)
+                        Dim simplify = peaks.CentroidMode(ms2Tolerance, intoCutoff)
 
                         Return p
                     End Function) _

@@ -46,9 +46,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Text.Xml.Linq
@@ -104,23 +102,9 @@ Namespace MarkupData.mzML
                 .LoadUltraLargeXMLDataSet(Of spectrum)(, xmlns:=mzML.Xmlns) _
                 .GetAllMs2 _
                 .Select(Function(ms2)
-                            Dim mz = ms2.ByteArray("m/z array").Base64Decode
-                            Dim intensity = ms2.ByteArray("intensity array").Base64Decode.AsVector
-                            Dim relInto As Vector = intensity / intensity.Max
-                            Dim matrix = CInt(ms2.defaultArrayLength) _
-                                .Sequence _
-                                .Select(Function(i)
-                                            Return New ms2 With {
-                                                .mz = mz(i),
-                                                .quantity = intensity(i),
-                                                .intensity = relInto(i)
-                                            }
-                                        End Function) _
-                                .ToArray
-
                             Return New LibraryMatrix With {
-                                .ms2 = matrix,
-                                .name = ms2.id
+                                .name = ms2.id,
+                                .ms2 = ms2.GetRawMatrix
                             }
                         End Function)
         End Function

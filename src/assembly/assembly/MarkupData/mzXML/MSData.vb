@@ -145,7 +145,8 @@ Namespace MarkupData.mzXML
         ''' <returns></returns>
         Public Function ScanData(Optional basename$ = Nothing,
                                  Optional centroid As Boolean = False,
-                                 Optional raw As Boolean = False) As PeakMs2
+                                 Optional raw As Boolean = False,
+                                 Optional centroidTolerance As Tolerance = Nothing) As PeakMs2
 
             Dim ms2 As ms2() = peaks _
                 .ExtractMzI _
@@ -168,7 +169,11 @@ Namespace MarkupData.mzXML
 
             ' 合并碎片只针对2级碎片有效
             If (msLevel > 1) AndAlso centroid Then
-                mzInto = mzInto.CentroidMode(0.001)
+                If centroidTolerance Is Nothing Then
+                    centroidTolerance = Tolerance.DeltaMass(0.1)
+                End If
+
+                mzInto = mzInto.CentroidMode(centroidTolerance, 0.001)
             End If
 
             If Not raw Then

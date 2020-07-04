@@ -47,7 +47,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace Spectra
 
@@ -78,7 +78,7 @@ Namespace Spectra
 
         Public ReadOnly Property MID As String
             Get
-                Return $"M{sys.Round(Representative.mz)}T{sys.Round(Representative.rt)}"
+                Return $"M{stdNum.Round(Representative.mz)}T{stdNum.Round(Representative.rt)}"
             End Get
         End Property
 
