@@ -12,10 +12,9 @@ readAllSignals = function(cdf, n_threads = 4, verbose = TRUE) {
 		print(paste("The file has",nc$nvars,"variables,",nc$ndims,"dimensions and",nc$natts,"NetCDF attributes"));
 	}
 	
-	signals = ncatt_get(nc, 0)$signals;
+	signals   = ncatt_get(nc, 0)$signals;
 	metaNames = fromJSON(ncatt_get(nc, 0)$metadata);
-	
-	axis = attributes(nc$var)$names;
+	axis      = attributes(nc$var)$names;
 	
 	if (verbose) {
 		print(sprintf("loading %s signals data...", signals));
@@ -33,20 +32,20 @@ readAllSignals = function(cdf, n_threads = 4, verbose = TRUE) {
 	});
 	names(meta) = metaNames;	
 	
-    x = ncvar_get(nc, "measure_buffer");
-    y = ncvar_get(nc, "signal_buffer");
+    x            = ncvar_get(nc, "measure_buffer");
+    y            = ncvar_get(nc, "signal_buffer");
 	chunk_size   = ncvar_get(nc, "chunk_size");              
 	signal_guid  = fromJSON(ncvar_get(nc, "signal_guid"));      
     measure_unit = fromJSON(ncvar_get(nc, "measure_unit"));      
 
-	index = list();
-	i = 1;
+	index       = list();
+	i           = 1;
 	buffer_size = 1;
 	
 	for(size in chunk_size) {
-		index[[i]] = c(buffer_size, buffer_size + size - 1);
+		index[[i]]  = c(buffer_size, buffer_size + size - 1);
 		buffer_size = buffer_size + size;
-		i = i + 1;
+		i           = i + 1;
 	}
 
 	signals = lapply(1:length(index), function(i) {
