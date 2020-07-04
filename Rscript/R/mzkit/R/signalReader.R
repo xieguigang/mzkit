@@ -2,10 +2,7 @@
 
 readAllSignals = function(cdf, n_threads = 4, verbose = TRUE) {
 	library(ncdf4);
-	
-	require(foreach);
-    require(doParallel);
-	
+		
 	Imports(System.Text.RegularExpressions);
 	
 	nc <- nc_open(cdf);
