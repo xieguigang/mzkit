@@ -1,7 +1,10 @@
 # a helper module for read sciBASIC.NET general signal netcdf4 data file.
 
-readAllSignals = function(cdf, verbose = TRUE) {
+readAllSignals = function(cdf, n_threads = 4, verbose = TRUE) {
 	library(ncdf4);
+	
+	require(foreach);
+    require(doParallel);
 	
 	Imports(System.Text.RegularExpressions);
 	
@@ -18,7 +21,12 @@ readAllSignals = function(cdf, verbose = TRUE) {
 		print(sprintf("loading %s signals data...", length(axis)));
 	}
 	
-	signals = lapply(axis, function(entry) {
+    cl <- makeCluster(n_threads);
+    registerDoParallel(cl);
+  
+	signals = foreach(entry = axis, .verbose = FALSE) %dopar% {
+		library(ncdf4);
+	
 		attrs = ncatt_get(nc, entry);
 		signal = attrs$signal;
 		
@@ -26,9 +34,12 @@ readAllSignals = function(cdf, verbose = TRUE) {
 		y =  ncvar_get(nc, signal);
 		
 		attrs = append( ncatt_get(nc, signal), attrs);
-		
+				
 		list(id = signal, attrs = attrs, signal = data.frame(axis = x, signal = y));
-	});
+	};
+	
+	stopCluster(cl);
+	nc_close(nc);
 	
 	names(signals) = sapply(signals, function(i) i$id);
 	signals;
