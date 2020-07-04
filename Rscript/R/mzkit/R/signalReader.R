@@ -1,6 +1,6 @@
 # a helper module for read sciBASIC.NET general signal netcdf4 data file.
 
-readAllSignals = function(cdf, n_threads = 4, verbose = TRUE) {
+readAllSignals = function(cdf, verbose = TRUE) {
 	library(ncdf4);
 	library(rjson);
 		 
