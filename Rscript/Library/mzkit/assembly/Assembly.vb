@@ -71,6 +71,36 @@ Imports REnv = SMRUCC.Rsharp.Runtime
 <Package("assembly", Category:=APICategories.UtilityTools)>
 Module Assembly
 
+    Sub New()
+        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(Ions()), AddressOf summaryIons)
+    End Sub
+
+    Private Function summaryIons(x As Ions(), args As list, env As Environment) As dataframe
+        Dim title As Array = x.Select(Function(a) a.Title).ToArray
+        Dim rt As Array = x.Select(Function(a) a.RtInSeconds).ToArray
+        Dim mz As Array = x.Select(Function(a) a.PepMass.name).ToArray
+        Dim into As Array = x.Select(Function(a) a.PepMass.text).ToArray
+        Dim charge As Array = x.Select(Function(a) a.Charge).ToArray
+        Dim accession As Array = x.Select(Function(a) a.Accession).ToArray
+        Dim raw As Array = x.Select(Function(a) a.Rawfile).ToArray
+        Dim fragments As Array = x.Select(Function(a) a.Peaks.Length).ToArray
+        Dim top3Product As Array = x.Select(Function(a) a.Peaks.OrderByDescending(Function(p) p.intensity).Take(3).Select(Function(p) p.mz.ToString("F4")).JoinBy(", ")).ToArray
+
+        Return New dataframe With {
+            .columns = New Dictionary(Of String, Array) From {
+                {NameOf(mz), mz},
+                {NameOf(rt), rt},
+                {NameOf(into), into},
+                {NameOf(charge), charge},
+                {NameOf(accession), accession},
+                {NameOf(raw), raw},
+                {NameOf(fragments), fragments},
+                {NameOf(top3Product), top3Product},
+                {NameOf(title), title}
+            }
+        }
+    End Function
+
     <ExportAPI("read.msl")>
     Public Function ReadMslIons(file$, Optional unit As TimeScales = TimeScales.Second) As MSLIon()
         Return MSL.FileReader.Load(file, unit).ToArray
