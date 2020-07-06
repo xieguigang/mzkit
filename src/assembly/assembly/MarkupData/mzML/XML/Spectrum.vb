@@ -197,7 +197,7 @@ Namespace MarkupData.mzML
             Static ms1 As [Default](Of String) = "ms1"
 
             ' 合并碎片只针对2级碎片有效
-            If ParseInteger(ms_level > 1) Then
+            If ParseInteger(ms_level) > 1 Then
                 If centroid Then
                     If centroidTolerance Is Nothing Then
                         centroidTolerance = Tolerance.DeltaMass(0.1)
