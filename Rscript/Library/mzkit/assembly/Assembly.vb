@@ -227,8 +227,8 @@ Module Assembly
                 Case 1
                     Yield msscan.ScanData(basename, centroid:=False, raw:=True)
                 Case 0
-                    ' UV data?
-                    Yield msscan.ScanData(basename, centroid:=False, raw:=True)
+                    ' skip UV data?
+                    ' Yield msscan.ScanData(basename, centroid:=False, raw:=True)
                 Case Else
                     ' msn
                     Yield msscan.ScanData(basename, centroid:=False, raw:=True)

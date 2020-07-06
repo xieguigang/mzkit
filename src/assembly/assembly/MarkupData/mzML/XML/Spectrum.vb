@@ -150,6 +150,12 @@ Namespace MarkupData.mzML
             End Get
         End Property
 
+        ''' <summary>
+        ''' this function is only works for mass spectrum raw data
+        ''' due to the reason of byte array data is fixed with ``m/z``
+        ''' and ``intensity`` values.
+        ''' </summary>
+        ''' <returns></returns>
         Public Function GetRawMatrix() As ms2()
             Dim mz = Me.ByteArray("m/z array").Base64Decode
             Dim intensity = Me.ByteArray("intensity array").Base64Decode.AsVector
@@ -184,8 +190,9 @@ Namespace MarkupData.mzML
                 .ms2 = ms2,
                 .name = ToString()
             }
-            Dim precursor = selectedIon
+            Dim precursor As (mz#, into#)
             Dim activationMethod$
+            Dim collisionEnergy As Double
 
             Static ms1 As [Default](Of String) = "ms1"
 
@@ -200,6 +207,8 @@ Namespace MarkupData.mzML
                 End If
 
                 activationMethod = precursorList.precursor(Scan0).GetActivationMethod()
+                precursor = selectedIon
+                collisionEnergy = precursorList.precursor(Scan0).GetCollisionEnergy
             Else
                 activationMethod = ms1
             End If
@@ -215,7 +224,7 @@ Namespace MarkupData.mzML
                 .file = basename,
                 .mzInto = mzInto,
                 .activation = activationMethod,
-                .collisionEnergy = precursorList.precursor(Scan0).GetCollisionEnergy
+                .collisionEnergy = collisionEnergy
             }
         End Function
 
