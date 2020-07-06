@@ -1,8 +1,8 @@
-imports ["math", "mzkit.assembly"] from "mzkit";
+imports ["math", "assembly"] from "mzkit";
 imports "mzkit.visual" from "mzkit.plot";
 
 let clusters = 
-"D:\mzkit\DATA\test\GABA_mgf.txt"
+"D:\biodeep\B062.mgf"
 :> read.mgf
 :> mgf.ion_peaks
 :> centroid
