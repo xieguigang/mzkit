@@ -7,7 +7,7 @@ let clusters =
 :> mgf.ion_peaks
 :> centroid
 :> which(ms2 -> as.object(ms2)$fragments > 0)
-:> spectrum_tree.cluster()
+:> spectrum_tree.cluster(compares = spectrum.compares(equals_score = 0.8, gt_score = 0.4))
 :> cluster.nodes
 :> projectAs(as.object)
 ;
