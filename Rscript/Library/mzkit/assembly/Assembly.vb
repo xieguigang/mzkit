@@ -223,17 +223,16 @@ Module Assembly
 
             Dim msLevel As Integer = msscan.ms_level.DoCall(AddressOf ParseInteger)
 
-            For Each bin In msscan.binaryDataArrayList.list
-                Select Case msLevel
-                    Case 1
-
-                    Case 0
-                        ' UV data?
-
-                    Case Else
-                        ' msn
-                End Select
-            Next
+            Select Case msLevel
+                Case 1
+                    Yield msscan.ScanData(basename, centroid:=False, raw:=True)
+                Case 0
+                    ' UV data?
+                    Yield msscan.ScanData(basename, centroid:=False, raw:=True)
+                Case Else
+                    ' msn
+                    Yield msscan.ScanData(basename, centroid:=False, raw:=True)
+            End Select
         Next
     End Function
 

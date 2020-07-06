@@ -1,4 +1,4 @@
-imports "mzkit.assembly" from "mzkit.dll"; 
+imports "assembly" from "mzkit"; 
 
 let mzxml as string        = ?"--mzxml"    || stop("no raw mzXML file provided!");
 let mgf as string          = ?"--out"      || `${dirname(mzxml)}/${basename(mzxml)}.mgf`;
@@ -15,14 +15,14 @@ if (to.centroid) {
 print(`Mgf ions data will be written to: ${mgf}`);
 
 if (to.centroid) {
-	mzxml.mgf(mzxml, FALSE, ms1) 
+	mzxml.mgf(mzxml, FALSE, !ms1) 
 	:> centroid
 	:> write.mgf(file = mgf);
 } else {
 	mzxml 
 	:> mzxml.mgf(
 		relativeInto = FALSE, 
-		includesMs1  = ms1
+		onlyMs2      = !ms1
 	 ) 
 	:> write.mgf(file = mgf)
 	;
