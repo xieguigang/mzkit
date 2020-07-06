@@ -1,8 +1,9 @@
 # a helper module for read sciBASIC.NET general signal netcdf4 data file.
 
-readAllSignals = function(cdf, n_threads = 4, verbose = TRUE) {
+readAllSignals = function(cdf, verbose = TRUE) {
 	library(ncdf4);
-		
+	library(rjson);
+		 
 	Imports(System.Text.RegularExpressions);
 	
 	nc <- nc_open(cdf);
@@ -11,31 +12,57 @@ readAllSignals = function(cdf, n_threads = 4, verbose = TRUE) {
 		print(paste("The file has",nc$nvars,"variables,",nc$ndims,"dimensions and",nc$natts,"NetCDF attributes"));
 	}
 	
-	axis = attributes(nc$var)$names;
-	axis = axis[axis %in% Matches(axis, "axis\\d+")];
+	signals   = ncatt_get(nc, 0)$signals;
+	metaNames = fromJSON(ncatt_get(nc, 0)$metadata);
+	axis      = attributes(nc$var)$names;
 	
 	if (verbose) {
-		print(sprintf("loading %s signals data...", length(axis)));
+		print(sprintf("loading %s signals data...", signals));
 	}
 	
-    cl <- makeCluster(n_threads);
-    registerDoParallel(cl);
-  
-	signals = foreach(entry = axis, .verbose = FALSE) %dopar% {
-		library(ncdf4);
-	
-		attrs = ncatt_get(nc, entry);
-		signal = attrs$signal;
+	meta = lapply(sprintf("meta:%s", metaNames), function(name) {
+		data = ncvar_get(nc, name);
+		info = ncatt_get(nc, name);
 		
-		x =  ncvar_get(nc, entry);
-		y =  ncvar_get(nc, signal);
-		
-		attrs = append( ncatt_get(nc, signal), attrs);
-				
-		list(id = signal, attrs = attrs, signal = data.frame(axis = x, signal = y));
-	};
+		if (info$type == "json") {
+			fromJSON(data);
+		} else {
+			data;
+		}		
+	});
+	names(meta) = metaNames;	
 	
-	stopCluster(cl);
+    x            = ncvar_get(nc, "measure_buffer");
+    y            = ncvar_get(nc, "signal_buffer");
+	chunk_size   = ncvar_get(nc, "chunk_size");              
+	signal_guid  = fromJSON(ncvar_get(nc, "signal_guid"));      
+    measure_unit = fromJSON(ncvar_get(nc, "measure_unit"));      
+
+	index       = list();
+	i           = 1;
+	buffer_size = 1;
+	
+	for(size in chunk_size) {
+		index[[i]]  = c(buffer_size, buffer_size + size - 1);
+		buffer_size = buffer_size + size;
+		i           = i + 1;
+	}
+
+	signals = lapply(1:length(index), function(i) {
+		range    = index[[i]];
+		index    = range[1]:range[2];
+		measure  = x[index];
+		signals  = y[index];
+		metadata = lapply(meta, function(data) data[i]);
+		
+		list(
+			id     = signal_guid[i], 
+			unit   = measure_unit[i], 
+			meta   = metadata,
+			signal = data.frame(measure = measure, signals = signals)
+		);
+	});
+
 	nc_close(nc);
 	
 	names(signals) = sapply(signals, function(i) i$id);
