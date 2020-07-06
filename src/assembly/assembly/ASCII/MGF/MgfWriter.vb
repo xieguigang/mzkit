@@ -59,7 +59,7 @@ Namespace ASCII.MGF
         <Extension>
         Public Function MgfIon(matrix As PeakMs2) As Ions
             Return New Ions With {
-                .Charge = 1,
+                .Charge = If(Not matrix.meta.IsNullOrEmpty AndAlso matrix.meta.ContainsKey("charge"), matrix.meta("charge"), 1),
                 .Peaks = matrix.mzInto.Array,
                 .PepMass = New NamedValue With {
                     .name = matrix.mz,

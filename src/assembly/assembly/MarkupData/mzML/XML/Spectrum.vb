@@ -91,6 +91,7 @@ Namespace MarkupData.mzML
 
     Public Class precursorList : Inherits List
 
+        <XmlElement>
         Public Property precursor As precursor()
 
     End Class
@@ -193,6 +194,7 @@ Namespace MarkupData.mzML
             Dim precursor As (mz#, into#)
             Dim activationMethod$
             Dim collisionEnergy As Double
+            Dim charge As String = "0"
 
             Static ms1 As [Default](Of String) = "ms1"
 
@@ -209,6 +211,7 @@ Namespace MarkupData.mzML
                 activationMethod = precursorList.precursor(Scan0).GetActivationMethod()
                 precursor = selectedIon
                 collisionEnergy = precursorList.precursor(Scan0).GetCollisionEnergy
+                charge = precursorList.precursor(Scan0).selectedIonList.selectedIon(Scan0).cvParams.KeyItem("charge state").value
             Else
                 activationMethod = ms1
             End If
@@ -224,7 +227,10 @@ Namespace MarkupData.mzML
                 .file = basename,
                 .mzInto = mzInto,
                 .activation = activationMethod,
-                .collisionEnergy = collisionEnergy
+                .collisionEnergy = collisionEnergy,
+                .meta = New Dictionary(Of String, String) From {
+                    {"charge", charge}
+                }
             }
         End Function
 

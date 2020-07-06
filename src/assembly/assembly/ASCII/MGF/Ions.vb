@@ -73,6 +73,10 @@ Namespace ASCII.MGF
         ''' </summary>
         ''' <returns></returns>
         Public Property RtInSeconds As Double
+        ''' <summary>
+        ''' charge state
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Charge As Integer
         ''' <summary>
         ''' Database entries to be searched
