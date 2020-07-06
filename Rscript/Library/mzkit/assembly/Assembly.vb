@@ -59,6 +59,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.ValueTypes
 Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports mzXMLAssembly = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
@@ -111,7 +112,12 @@ Module Assembly
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("write.mgf")>
-    Public Function writeMgfIons(ions As Object, file$, Optional relativeInto As Boolean = False, Optional env As Environment = Nothing) As Boolean
+    <RApiReturn(GetType(Boolean))>
+    Public Function writeMgfIons(<RRawVectorArgument> ions As Object, file$, Optional relativeInto As Boolean = False, Optional env As Environment = Nothing) As Object
+        If ions Is Nothing Then
+            Return Internal.debug.stop("the required ions data can not be nothing!", env)
+        End If
+
         If ions.GetType() Is GetType(pipeline) Then
             Using mgfWriter As StreamWriter = file.OpenWriter(Encodings.ASCII, append:=False)
                 For Each ionPeak As PeakMs2 In DirectCast(ions, pipeline).populates(Of PeakMs2)(env)
@@ -126,6 +132,8 @@ Module Assembly
                     .MgfIon _
                     .WriteAsciiMgf(mgf)
             End Using
+        Else
+            Return Internal.debug.stop(Message.InCompatibleType(GetType(PeakMs2), ions.GetType, env), env)
         End If
 
         Return True
