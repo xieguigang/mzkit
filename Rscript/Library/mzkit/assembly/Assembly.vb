@@ -132,6 +132,20 @@ Module Assembly
                     .MgfIon _
                     .WriteAsciiMgf(mgf)
             End Using
+        ElseIf ions.GetType Is GetType(PeakMs2()) Then
+            Using mgfWriter As StreamWriter = file.OpenWriter(Encodings.ASCII, append:=False)
+                For Each ionPeak As PeakMs2 In DirectCast(ions, PeakMs2())
+                    Call ionPeak _
+                        .MgfIon _
+                        .WriteAsciiMgf(mgfWriter, relativeInto)
+                Next
+            End Using
+        ElseIf ions.GetType Is GetType(PeakMs2) Then
+            Using mgfWriter As StreamWriter = file.OpenWriter(Encodings.ASCII, append:=False)
+                Call DirectCast(ions, PeakMs2) _
+                    .MgfIon _
+                    .WriteAsciiMgf(mgfWriter, relativeInto)
+            End Using
         Else
             Return Internal.debug.stop(Message.InCompatibleType(GetType(PeakMs2), ions.GetType, env), env)
         End If
