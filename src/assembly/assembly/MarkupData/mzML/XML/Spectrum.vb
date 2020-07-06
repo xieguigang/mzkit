@@ -72,6 +72,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
@@ -211,7 +212,9 @@ Namespace MarkupData.mzML
                 activationMethod = precursorList.precursor(Scan0).GetActivationMethod()
                 precursor = selectedIon
                 collisionEnergy = precursorList.precursor(Scan0).GetCollisionEnergy
-                charge = precursorList.precursor(Scan0).selectedIonList.selectedIon(Scan0).cvParams.KeyItem("charge state").value
+
+                ' unsure for the scans that missing charge values
+                charge = precursorList.precursor(Scan0).selectedIonList.selectedIon(Scan0).cvParams.KeyItem("charge state")?.value Or "-1".AsDefault
             Else
                 activationMethod = ms1
             End If
