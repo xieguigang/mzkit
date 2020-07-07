@@ -78,8 +78,8 @@ Module Assembly
     Private Function summaryIons(x As Ions(), args As list, env As Environment) As dataframe
         Dim title As Array = x.Select(Function(a) a.Title).ToArray
         Dim rt As Array = x.Select(Function(a) a.RtInSeconds).ToArray
-        Dim mz As Array = x.Select(Function(a) a.PepMass.name).ToArray
-        Dim into As Array = x.Select(Function(a) a.PepMass.text).ToArray
+        Dim mz As Array = x.Select(Function(a) Val(a.PepMass.name)).ToArray
+        Dim into As Array = x.Select(Function(a) Val(a.PepMass.text)).ToArray
         Dim charge As Array = x.Select(Function(a) a.Charge).ToArray
         Dim accession As Array = x.Select(Function(a) a.Accession).ToArray
         Dim raw As Array = x.Select(Function(a) a.Rawfile).ToArray
