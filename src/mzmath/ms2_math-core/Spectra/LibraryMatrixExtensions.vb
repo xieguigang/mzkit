@@ -45,7 +45,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
-Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 
@@ -120,12 +119,13 @@ Namespace Spectra
                 ' so that there is no needs for populate ROI
                 ' find the highest fragment directly
                 Return peaks _
-                    .GroupBy(Function(ms2) ms2.mz, AddressOf tolerance.Assert) _
+                    .GroupBy(Function(ms2) ms2.mz, AddressOf tolerance.Equals) _
                     .Select(Function(g)
-                            ' 合并在一起的二级碎片的相应强度取最高的为结果
-                            Dim fragments As ms2() = g.ToArray
+                                ' 合并在一起的二级碎片的相应强度取最高的为结果
+                                Dim fragments As ms2() = g.ToArray
                                 Dim maxi As Integer = Which.Max(fragments.Select(Function(m) m.intensity))
                                 Dim max As ms2 = fragments(maxi)
+
                                 Return max
                             End Function) _
                     .ToArray

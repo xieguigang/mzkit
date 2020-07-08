@@ -107,7 +107,7 @@ Public Module Deconvolution
     ''' 
     <Extension>
     Public Iterator Function GetMzGroups(scans As IEnumerable(Of scan), Optional tolerance As Tolerance = Nothing) As IEnumerable(Of MzGroup)
-        For Each group As NamedCollection(Of scan) In scans.GroupBy(Function(t) t.mz, AddressOf (tolerance Or Tolerance.DefaultTolerance).Assert)
+        For Each group As NamedCollection(Of scan) In scans.GroupBy(Function(t) t.mz, tolerance Or Tolerance.DefaultTolerance)
             Dim rawGroup As scan() = group.ToArray
             Dim timePoints As NamedCollection(Of scan)() = rawGroup _
                 .GroupBy(Function(t) t.rt,
