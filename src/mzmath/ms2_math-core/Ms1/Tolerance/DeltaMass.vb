@@ -45,7 +45,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace Ms1
 
@@ -55,26 +55,26 @@ Namespace Ms1
     Public Class DAmethod : Inherits Tolerance
 
         Sub New(Optional da# = 0.3)
-            Threshold = da
+            DeltaTolerance = da
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overrides Function Assert(mz1 As Double, mz2 As Double) As Boolean
-            Return sys.Abs(mz1 - mz2) <= Threshold
+        Public Overrides Function Equals(mz1 As Double, mz2 As Double) As Boolean
+            Return stdNum.Abs(mz1 - mz2) <= DeltaTolerance
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function AsScore(mz1 As Double, mz2 As Double) As Double
-            Return 1 - (sys.Abs(mz1 - mz2) / Threshold)
+            Return 1 - (stdNum.Abs(mz1 - mz2) / DeltaTolerance)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function MassError(mz1 As Double, mz2 As Double) As Double
-            Return sys.Abs(mz1 - mz2)
+            Return stdNum.Abs(mz1 - mz2)
         End Function
 
         Public Overrides Function ToString() As String
-            Return $"|mz1 - mz2| <= {Threshold}"
+            Return $"|mz1 - mz2| <= {DeltaTolerance} da"
         End Function
 
         Public Overrides Function MassErrorDescription(mz1 As Double, mz2 As Double) As String

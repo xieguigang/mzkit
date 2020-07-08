@@ -1,55 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::3def07499abf0a96af8cbb99f390ebbf, src\mzmath\ms2_math-core\Ms1\Tolerance\Tolerance.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Tolerance
-    ' 
-    '         Properties: [Interface], DefaultTolerance, Threshold
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: AddPPM, DeltaMass, MatchTolerance, ParseScript, PPM
-    '                   SubPPM
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Tolerance
+' 
+'         Properties: [Interface], DefaultTolerance, Threshold
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: AddPPM, DeltaMass, MatchTolerance, ParseScript, PPM
+'                   SubPPM
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.Default
-Imports sys = System.Math
+Imports Microsoft.VisualBasic.Math
+Imports stdNum = System.Math
 
 Namespace Ms1
 
@@ -57,8 +58,12 @@ Namespace Ms1
     ''' The m/z tolerance methods.
     ''' (可以直接使用这个对象的索引属性来进行计算判断,索引属性表示两个``m/z``值之间是否相等)
     ''' </summary>
-    Public MustInherit Class Tolerance
+    Public MustInherit Class Tolerance : Inherits NumberEqualityComparer
 
+        ''' <summary>
+        ''' <see cref="DeltaTolerance"/>(分子质量误差的上限值)
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property [Interface] As Tolerance
             Get
                 Return Me
@@ -85,12 +90,6 @@ Namespace Ms1
         ''' <returns></returns>
         Public Shared ReadOnly Property DefaultTolerance As [Default](Of Tolerance)
 
-        ''' <summary>
-        ''' 分子质量误差的上限值
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property Threshold As Double
-
         Shared Sub New()
             DefaultTolerance = New DAmethod(0.3).Interface
         End Sub
@@ -98,10 +97,11 @@ Namespace Ms1
         ''' <summary>
         ''' 判断两个分子质量是否一致
         ''' </summary>
-        ''' <param name="mz1#"></param>
-        ''' <param name="mz2#"></param>
+        ''' <param name="mz1"></param>
+        ''' <param name="mz2"></param>
         ''' <returns></returns>
-        Public MustOverride Function Assert(mz1#, mz2#) As Boolean
+        Public MustOverride Overrides Function Equals(mz1 As Double, mz2 As Double) As Boolean
+
         ''' <summary>
         ''' 将分子质量误差值转换为百分比得分
         ''' </summary>
@@ -126,7 +126,7 @@ Namespace Ms1
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function MatchTolerance([error] As Double) As Boolean
-            Return sys.Abs([error]) <= Threshold
+            Return stdNum.Abs([error]) <= DeltaTolerance
         End Function
 
         Public Shared Function DeltaMass(da#) As DAmethod
@@ -182,7 +182,7 @@ Namespace Ms1
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(tolerance As Tolerance) As GenericLambda(Of Double).IEquals
-            Return AddressOf tolerance.Assert
+            Return AddressOf tolerance.Equals
         End Operator
 
         ''' <summary>

@@ -84,7 +84,17 @@ Module Assembly
         Dim accession As Array = x.Select(Function(a) a.Accession).ToArray
         Dim raw As Array = x.Select(Function(a) a.Rawfile).ToArray
         Dim fragments As Array = x.Select(Function(a) a.Peaks.Length).ToArray
-        Dim top3Product As Array = x.Select(Function(a) a.Peaks.OrderByDescending(Function(p) p.intensity).Take(3).Select(Function(p) p.mz.ToString("F4")).JoinBy(", ")).ToArray
+        Dim top3Product As Array = x _
+            .Select(Function(a)
+                        Return a.Peaks _
+                            .OrderByDescending(Function(p) p.intensity) _
+                            .Take(3) _
+                            .Select(Function(p)
+                                        Return p.mz.ToString("F4")
+                                    End Function) _
+                            .JoinBy(", ")
+                    End Function) _
+            .ToArray
 
         Return New dataframe With {
             .columns = New Dictionary(Of String, Array) From {
@@ -101,6 +111,12 @@ Module Assembly
         }
     End Function
 
+    ''' <summary>
+    ''' read MSL data files
+    ''' </summary>
+    ''' <param name="file$"></param>
+    ''' <param name="unit"></param>
+    ''' <returns></returns>
     <ExportAPI("read.msl")>
     Public Function ReadMslIons(file$, Optional unit As TimeScales = TimeScales.Second) As MSLIon()
         Return MSL.FileReader.Load(file, unit).ToArray
@@ -245,6 +261,12 @@ Module Assembly
                     End Function)
     End Function
 
+    ''' <summary>
+    ''' get raw scans data from the ``mzXML`` or ``mzMl`` data file
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("raw.scans")>
     <RApiReturn(GetType(mzML.spectrum), GetType(scan))>
     Public Function rawScans(file As String, Optional env As Environment = Nothing) As Object

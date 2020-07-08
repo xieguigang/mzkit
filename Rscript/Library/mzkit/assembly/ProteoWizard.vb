@@ -1,50 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::d0a4086654a46b55e7f3230258c61d9a, Rscript\Library\mzkit\ProteoWizard.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module ProteoWizard
-    ' 
-    '     Function: ConvertThermoRawFile, GetServices, msLevelFilter, Ready, scanTimeFilter
-    '               wiffMRM
-    ' 
-    ' /********************************************************************************/
+' Module ProteoWizard
+' 
+'     Function: ConvertThermoRawFile, GetServices, msLevelFilter, Ready, scanTimeFilter
+'               wiffMRM
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports ProteoWizard.Interop
 Imports ProteoWizard.Interop.filters
@@ -145,27 +146,60 @@ Module ProteoWizard
     Public Function ConvertThermoRawFile(raw As String(), output$,
                                          Optional filetype As OutFileTypes = OutFileTypes.mzXML,
                                          Optional filters As filter() = Nothing,
+                                         Optional parallel As Boolean = False,
                                          Optional env As Environment = Nothing) As Object
 
-        Dim result As New List(Of Object)
-        Dim outputfile$
         Dim bin As ProteoWizardCLI = GetServices(env)
+        Dim process As New convertProcessor With {
+            .filetype = filetype,
+            .bin = bin,
+            .filters = filters,
+            .output = output
+        }
 
         If Not bin.IsAvailable Then
             Return Internal.debug.stop(ErrMsg, env)
+        ElseIf parallel > App.CPUCoreNumbers Then
+            Call env.AddMessage($"the given parallelism degree is greater than the processor counts!", MSG_TYPES.WRN)
         End If
 
-        For Each file As String In raw
-            outputfile = $"{output}/{file.FileName}"
-            bin.Convert2mzML(file, output, filetype, filters)
+        Dim rawPipeline As IEnumerable(Of SeqValue(Of Boolean))
+
+        If parallel > 1 Then
+            rawPipeline = raw _
+                .SeqIterator _
+                .AsParallel _
+                .Select(AddressOf process.runConvert)
+        Else
+            rawPipeline = raw _
+                .SeqIterator _
+                .Select(AddressOf process.runConvert)
+        End If
+
+        Dim result As Boolean() = rawPipeline _
+            .OrderBy(Function(file) file.i) _
+            .Select(Function(file) file.value) _
+            .ToArray
+
+        Return result
+    End Function
+
+    Private Class convertProcessor
+
+        Public filetype As OutFileTypes
+        Public filters As filter()
+        Public output As String
+        Public bin As ProteoWizardCLI
+
+        Public Function runConvert(file As SeqValue(Of String)) As SeqValue(Of Boolean)
+            Dim outputfile = $"{output}/{file.value.FileName}"
+            bin.Convert2mzML(file.value, output, filetype, filters)
 
             If outputfile.FileExists(ZERO_Nonexists:=True) Then
-                result.Add(True)
+                Return New SeqValue(Of Boolean)(file, True)
             Else
-                result.Add(file)
+                Return New SeqValue(Of Boolean)(file, False)
             End If
-        Next
-
-        Return result.ToArray
-    End Function
+        End Function
+    End Class
 End Module

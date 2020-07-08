@@ -46,7 +46,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace Ms1
 
@@ -59,7 +59,7 @@ Namespace Ms1
         End Sub
 
         Sub New(ppm#)
-            Threshold = ppm
+            DeltaTolerance = ppm
         End Sub
 
         ''' <summary>
@@ -71,19 +71,19 @@ Namespace Ms1
         Public Overloads Shared Function ppm(measured#, actualValue#) As Double
             ' （测量值-实际分子量）/ 实际分子量
             ' |(实验数据 - 数据库结果)| / 实验数据 * 1000000
-            Dim ppmd# = sys.Abs(measured - actualValue) / actualValue
+            Dim ppmd# = stdNum.Abs(measured - actualValue) / actualValue
             ppmd = ppmd * 1000000
             Return ppmd
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overrides Function Assert(mz1 As Double, mz2 As Double) As Boolean
-            Return ppm(mz1, mz2) <= Threshold
+        Public Overrides Function Equals(mz1 As Double, mz2 As Double) As Boolean
+            Return ppm(mz1, mz2) <= DeltaTolerance
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function AsScore(mz1 As Double, mz2 As Double) As Double
-            Return 1 - (ppm(mz1, mz2) / Threshold)
+            Return 1 - (ppm(mz1, mz2) / DeltaTolerance)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -92,7 +92,7 @@ Namespace Ms1
         End Function
 
         Public Overrides Function ToString() As String
-            Return $"ppm(mz1, mz2) <= {Threshold}"
+            Return $"ppm(mz1, mz2) <= {DeltaTolerance}"
         End Function
 
         Public Overrides Function MassErrorDescription(mz1 As Double, mz2 As Double) As String
