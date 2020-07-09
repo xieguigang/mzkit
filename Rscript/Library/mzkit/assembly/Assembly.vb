@@ -238,6 +238,7 @@ Module Assembly
     ''' <param name="file"></param>
     ''' <returns></returns>
     <ExportAPI("mzxml.mgf")>
+    <RApiReturn(GetType(PeakMs2))>
     Public Function mzXML2Mgf(file$,
                               Optional relativeInto As Boolean = False,
                               Optional onlyMs2 As Boolean = True,
