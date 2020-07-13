@@ -1,5 +1,8 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.Text.Xml
 Imports Microsoft.VisualBasic.Text.Xml.Linq
@@ -70,6 +73,37 @@ Namespace MarkupData.mzML
             Next
 
             Return Nothing
+        End Function
+
+        Public Iterator Function CreateTimeSignals(scans As IEnumerable(Of GeneralSignal)) As IEnumerable(Of GeneralSignal)
+            Dim samplers = scans _
+                .Select(Function(raw)
+                            Return (scan_time:=Val(raw.meta!scan_time), Data:=Resampler.CreateSampler(raw))
+                        End Function) _
+                .OrderBy(Function(raw) raw.scan_time) _
+                .ToArray
+            Dim allWavelength As Double() = samplers _
+                .Select(Function(a) a.Data.enumerateMeasures) _
+                .IteratesALL _
+                .Distinct _
+                .ToArray
+            Dim i As i32 = 1
+
+            For Each wl As Double In allWavelength
+                Dim time = samplers.Select(Function(a) a.scan_time).ToArray
+                Dim intensity = samplers.Select(Function(a) a.Data.GetIntensity(x:=wl)).ToArray
+
+                Yield New GeneralSignal With {
+                    .description = "UV ChromatogramTick",
+                    .Measures = time,
+                    .measureUnit = "sec",
+                    .Strength = intensity,
+                    .reference = ++i,
+                    .meta = New Dictionary(Of String, String) From {
+                        {"wavelength", wl}
+                    }
+                }
+            Next
         End Function
     End Module
 End Namespace
