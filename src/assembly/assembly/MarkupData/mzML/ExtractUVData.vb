@@ -75,6 +75,7 @@ Namespace MarkupData.mzML
             Return Nothing
         End Function
 
+        <Extension>
         Public Iterator Function CreateTimeSignals(scans As IEnumerable(Of GeneralSignal)) As IEnumerable(Of GeneralSignal)
             Dim samplers = scans _
                 .Select(Function(raw)

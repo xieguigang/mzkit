@@ -41,6 +41,20 @@ Module ERS
             .DoCall(AddressOf pipeline.CreateFromPopulator)
     End Function
 
+    <ExportAPI("as.UVtime_signals")>
+    Public Function translateToTimeSignals(<RRawVectorArgument> rawscans As Object, Optional env As Environment = Nothing) As Object
+        Dim raw As pipeline = pipeline.TryCreatePipeline(Of GeneralSignal)(rawscans, env)
+
+        If raw.isError Then
+            Return raw.getError
+        End If
+
+        Return raw _
+            .populates(Of GeneralSignal)(env) _
+            .CreateTimeSignals _
+            .DoCall(AddressOf pipeline.CreateFromPopulator)
+    End Function
+
     ''' <summary>
     ''' write UV signal data into a text file or netCDF4 data file
     ''' </summary>
