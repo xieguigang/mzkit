@@ -17,5 +17,6 @@ print(raw);
 
 raw
 :> extract_UVsignals(instrumentId = IC)
+:> as.UVtime_signals
 :> write.UVsignals(file = "./UVtest.cdf")
 ;

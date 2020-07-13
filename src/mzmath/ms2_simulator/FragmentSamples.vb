@@ -79,7 +79,7 @@ Public Module FragmentSamples
     Private Function productTree(tolerance As Tolerance) As NaiveBinaryTree(Of Double, Double)
         Return New NaiveBinaryTree(Of Double, Double)(
             Function(x, y)
-                If tolerance.Assert(x, y) Then
+                If tolerance.Equals(x, y) Then
                     Return 0
                 ElseIf x > y Then
                     Return 1
@@ -101,7 +101,7 @@ Public Module FragmentSamples
         Dim rt#
         ' parent/mz, product/mz intensity
         Dim mzSample As New List(Of Double)
-        Dim equals As Func(Of Double, Double, Boolean) = AddressOf (tolerance Or ppm20).Assert
+        Dim equals As GenericLambda(Of Double).IEquals = tolerance Or ppm20
         Dim into As ms2()
 
         fragments = fragments _
