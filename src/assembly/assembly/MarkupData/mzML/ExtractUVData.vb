@@ -44,12 +44,13 @@ Namespace MarkupData.mzML
                 .Matches("\S+[:]""[^""]+""") _
                 .Select(Function(tag) tag.GetTagValue(":")) _
                 .ToArray
+            Dim file = title.KeyItem("File").Value
 
             info.Add("total_ion_current", rawScan.cvParams.KeyItem("total ion current")?.value)
             info.Add("lowest_wavelength", rawScan.cvParams.KeyItem("lowest observed wavelength")?.value)
             info.Add("highest_wavelength", rawScan.cvParams.KeyItem("highest observed wavelength")?.value)
             info.Add("scan_time", Val(UVscan.cvParams.KeyItem("scan start time")?.value) * 60)
-            info.Add("rawfile", title.KeyItem("File").Value.Trim(""""c))
+            info.Add("rawfile", If(file.StringEmpty, "UVraw", file.Trim(""""c)))
 
             title = rawScan.id.StringSplit("\s+").Select(Function(tag) tag.GetTagValue("=")).ToArray
 
@@ -76,7 +77,7 @@ Namespace MarkupData.mzML
         End Function
 
         <Extension>
-        Public Iterator Function CreateTimeSignals(scans As IEnumerable(Of GeneralSignal)) As IEnumerable(Of GeneralSignal)
+        Public Iterator Function CreateTimeSignals(scans As IEnumerable(Of GeneralSignal), Optional rawfile As String = "raw") As IEnumerable(Of GeneralSignal)
             Dim samplers = scans _
                 .Select(Function(raw)
                             Return (scan_time:=Val(raw.meta!scan_time), Data:=Resampler.CreateSampler(raw))
@@ -101,7 +102,8 @@ Namespace MarkupData.mzML
                     .Strength = intensity,
                     .reference = ++i,
                     .meta = New Dictionary(Of String, String) From {
-                        {"wavelength", wl}
+                        {"wavelength", wl},
+                        {"File", rawfile}
                     }
                 }
             Next

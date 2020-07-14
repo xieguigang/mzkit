@@ -42,7 +42,7 @@ Module ERS
     End Function
 
     <ExportAPI("as.UVtime_signals")>
-    Public Function translateToTimeSignals(<RRawVectorArgument> rawscans As Object, Optional env As Environment = Nothing) As Object
+    Public Function translateToTimeSignals(<RRawVectorArgument> rawscans As Object, Optional rawfile As String = "UVraw", Optional env As Environment = Nothing) As Object
         Dim raw As pipeline = pipeline.TryCreatePipeline(Of GeneralSignal)(rawscans, env)
 
         If raw.isError Then
@@ -51,7 +51,7 @@ Module ERS
 
         Return raw _
             .populates(Of GeneralSignal)(env) _
-            .CreateTimeSignals _
+            .CreateTimeSignals(rawfile) _
             .DoCall(AddressOf pipeline.CreateFromPopulator)
     End Function
 
