@@ -34,7 +34,7 @@ Module PubChemToolKit
 
             For Each id2 As String In cid
                 Call ImageFly _
-                    .GetImage(id, 500, 500, doBgTransparent:=False) _
+                    .GetImage(id2, 500, 500, doBgTransparent:=False) _
                     .SaveAs($"{cache}/{id2}.png")
                 Call Thread.Sleep(1000)
             Next
