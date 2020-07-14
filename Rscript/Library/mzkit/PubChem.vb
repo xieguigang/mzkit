@@ -10,7 +10,7 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports REnv = SMRUCC.Rsharp.Runtime
 
-<Package("pubchemkit")>
+<Package("pubchem_kit")>
 Module PubChemToolKit
 
     ''' <summary>
