@@ -2,12 +2,17 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.Signal
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp
+Imports Microsoft.VisualBasic.Data.IO.netCDF
+Imports list = SMRUCC.Rsharp.Runtime.Internal.Object.list
 
 ''' <summary>
 ''' helper package module for read ``electromagnetic radiation spectrum`` data
@@ -87,5 +92,23 @@ Module ERS
         End If
 
         Return True
+    End Function
+
+    <ExportAPI("read.UVsignals")>
+    Public Function ReadSignals(file As Object, Optional env As Environment = Nothing) As Object
+        Dim filestream As [Variant](Of Stream, Message) = GetFileStream(file, FileAccess.Read, env)
+
+        If filestream Like GetType(Message) Then
+            Return filestream.TryCast(Of Message)
+        End If
+
+        Dim allSignals = New netCDFReader(filestream.TryCast(Of Stream)).ReadCDF.ToArray
+        Dim list As New list With {.slots = New Dictionary(Of String, Object)}
+
+        For Each signal As GeneralSignal In allSignals
+            list.slots.Add(signal.reference, signal)
+        Next
+
+        Return list
     End Function
 End Module
