@@ -50,6 +50,7 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace NCBI.PubChem
 
+    <HideModuleName>
     Public Module Extensions
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
