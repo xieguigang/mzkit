@@ -385,7 +385,7 @@ Module Assembly
 
                         ' ms1的数据总是使用raw intensity值
                         peakScans = scan.ScanData(basename, raw:=True)
-                        ms1 += peakScans.mzInto.ms2 _
+                        ms1 += peakScans.mzInto _
                             .Select(Function(frag)
                                         Return New ms1_scan With {
                                             .intensity = frag.intensity,
