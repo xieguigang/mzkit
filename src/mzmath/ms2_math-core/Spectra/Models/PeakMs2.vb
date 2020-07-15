@@ -54,44 +54,44 @@ Namespace Spectra
     ''' <summary>
     ''' 将mzXML文件之中的每一个ms2 scan转换而来
     ''' </summary>
-    Public Structure PeakMs2
+    Public Class PeakMs2
 
         ''' <summary>
         ''' The precursor ``m/z`` value.
         ''' (一级母离子的``m/z``)
         ''' </summary>
-        Dim mz As Double
+        Public Property mz As Double
         ''' <summary>
         ''' 一级母离子的出峰时间
         ''' </summary>
-        Dim rt As Double
+        Public Property rt As Double
         ''' <summary>
         ''' 原始数据文件名
         ''' </summary>
-        Dim file As String
+        Public Property file As String
         ''' <summary>
         ''' 数据扫描编号
         ''' </summary>
-        Dim scan As Integer
-        Dim activation As String
-        Dim collisionEnergy As Double
+        Public Property scan As Integer
+        Public Property activation As String
+        Public Property collisionEnergy As Double
 
         ''' <summary>
         ''' A unique variable name, meaning could be different with <see cref="LibraryMatrix.Name" />. 
         ''' </summary>
-        Dim lib_guid As String
+        Public Property lib_guid As String
 
         ''' <summary>
         ''' adducts type of the <see cref="mz"/> value.
         ''' </summary>
-        Dim precursor_type As String
+        Public Property precursor_type As String
 
         ''' <summary>
         ''' 二级碎片信息
         ''' </summary>
-        Dim mzInto As LibraryMatrix
+        Public Property mzInto As ms2()
 
-        Dim meta As Dictionary(Of String, String)
+        Public Property meta As Dictionary(Of String, String)
 
         ''' <summary>
         ''' 获取得到二级碎片的响应强度值的和,这个响应强度值是和其对应的一级母离子的响应强度值是呈正相关的
@@ -139,7 +139,7 @@ Namespace Spectra
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function AlignMatrix(ref As ms2(), tolerance As Tolerance) As ms2()
-            Return mzInto.ms2.AlignMatrix(ref, tolerance)
+            Return mzInto.AlignMatrix(ref, tolerance)
         End Function
-    End Structure
+    End Class
 End Namespace
