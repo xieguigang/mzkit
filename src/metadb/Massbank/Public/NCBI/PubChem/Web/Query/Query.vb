@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::227550d0476d6ecbd5cdfb11ccc7e67e, src\metadb\Massbank\Public\NCBI\PubChem\Web\Query\Query.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Query
-    ' 
-    '         Function: FetchPugViewByCID, getQueryHandler, QueryCID, QueryPugViews
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Query
+' 
+'         Function: FetchPugViewByCID, getQueryHandler, QueryCID, QueryPugViews
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -84,9 +84,9 @@ Namespace NCBI.PubChem
         ''' <param name="name"></param>
         ''' <param name="cacheFolder$"></param>
         ''' <returns></returns>
-        Public Function QueryCID(name As String, Optional cacheFolder$ = "./pubchem_cache", Optional offlineMode As Boolean = False) As String()
+        Public Function QueryCID(name As String, Optional cacheFolder$ = "./pubchem_cache", Optional offlineMode As Boolean = False, Optional ByRef hitCache As Boolean = False) As String()
             Dim cidQuery As CIDQuery = $"{cacheFolder}/cid/".getQueryHandler(Of CIDQuery)(offline:=offlineMode)
-            Dim list As IdentifierList = cidQuery.Query(Of IdentifierList)(name, ".json")
+            Dim list As IdentifierList = cidQuery.Query(Of IdentifierList)(name, ".json", hitCache:=hitCache)
             Dim CID As String() = Nothing
 
             If list Is Nothing OrElse list.CID.IsNullOrEmpty Then
@@ -110,7 +110,8 @@ Namespace NCBI.PubChem
         ''' </param>
         ''' <returns></returns>
         Public Function QueryPugViews(name As String, Optional cacheFolder$ = "./pubchem_cache", Optional offline As Boolean = False) As Dictionary(Of String, PugViewRecord)
-            Dim CID As String() = Query.QueryCID(name, cacheFolder)
+            Dim hitCache As Boolean = False
+            Dim CID As String() = Query.QueryCID(name, cacheFolder, offlineMode:=offline, hitCache:=hitCache)
             Dim table As New Dictionary(Of String, PugViewRecord)
             Dim api As WebQuery = $"{cacheFolder}/pugViews/".getQueryHandler(Of WebQuery)(offline)
             Dim cache = $"{cacheFolder}/{name.NormalizePathString(False)}.Xml"
@@ -118,11 +119,16 @@ Namespace NCBI.PubChem
             If CID.IsNullOrEmpty Then
                 Return New Dictionary(Of String, PugViewRecord)
             Else
+                Dim hitsCache As New List(Of Boolean)
+
                 For Each id As String In CID
-                    table(id) = api.Query(Of PugViewRecord)(id)
+                    table(id) = api.Query(Of PugViewRecord)(id, hitCache:=hitCache)
+                    hitsCache.Add(hitCache)
                 Next
 
-                Call Thread.Sleep(1000)
+                If Not hitsCache.Any(Function(t) True = t) Then
+                    Call Thread.Sleep(1000)
+                End If
             End If
 
             Call table.Values _
