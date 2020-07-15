@@ -71,12 +71,20 @@ Imports REnv = SMRUCC.Rsharp.Runtime
 <Package("assembly", Category:=APICategories.UtilityTools)>
 Module Assembly
 
-    Sub New()
+    <RInitializeAttribute>
+    Sub Main()
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(Ions()), AddressOf summaryIons)
     End Sub
 
+    ''' <summary>
+    ''' summary of the mgf ions
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="args"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     Private Function summaryIons(x As Ions(), args As list, env As Environment) As dataframe
-        Dim title As Array = x.Select(Function(a) a.Title).ToArray
+        Dim title As MetaData() = x.Select(Function(a) New MetaData(a.Meta)).ToArray
         Dim rt As Array = x.Select(Function(a) a.RtInSeconds).ToArray
         Dim mz As Array = x.Select(Function(a) Val(a.PepMass.name)).ToArray
         Dim into As Array = x.Select(Function(a) Val(a.PepMass.text)).ToArray
@@ -95,8 +103,7 @@ Module Assembly
                             .JoinBy(", ")
                     End Function) _
             .ToArray
-
-        Return New dataframe With {
+        Dim df As New dataframe With {
             .columns = New Dictionary(Of String, Array) From {
                 {NameOf(mz), mz},
                 {NameOf(rt), rt},
@@ -105,10 +112,23 @@ Module Assembly
                 {NameOf(accession), accession},
                 {NameOf(raw), raw},
                 {NameOf(fragments), fragments},
-                {NameOf(top3Product), top3Product},
-                {NameOf(title), title}
+                {NameOf(top3Product), top3Product}
             }
         }
+
+        df.columns.Add(NameOf(MetaData.activation), title.Select(Function(a) a.activation).ToArray)
+        df.columns.Add(NameOf(MetaData.collisionEnergy), title.Select(Function(a) a.collisionEnergy).ToArray)
+        df.columns.Add(NameOf(MetaData.compound_class), title.Select(Function(a) a.compound_class).ToArray)
+        df.columns.Add(NameOf(MetaData.formula), title.Select(Function(a) a.formula).ToArray)
+        df.columns.Add(NameOf(MetaData.kegg), title.Select(Function(a) a.kegg).ToArray)
+        df.columns.Add(NameOf(MetaData.mass), title.Select(Function(a) a.mass).ToArray)
+        df.columns.Add(NameOf(MetaData.mzcloud), title.Select(Function(a) a.mzcloud).ToArray)
+        df.columns.Add(NameOf(MetaData.name), title.Select(Function(a) a.name).ToArray)
+        df.columns.Add(NameOf(MetaData.polarity), title.Select(Function(a) a.polarity).ToArray)
+        df.columns.Add(NameOf(MetaData.precursor_type), title.Select(Function(a) a.precursor_type).ToArray)
+        df.columns.Add(NameOf(MetaData.scan), title.Select(Function(a) a.scan).ToArray)
+
+        Return df
     End Function
 
     ''' <summary>

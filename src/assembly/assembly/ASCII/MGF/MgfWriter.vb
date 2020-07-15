@@ -70,7 +70,8 @@ Namespace ASCII.MGF
                 .Meta = New MetaData With {
                     .collisionEnergy = matrix.collisionEnergy,
                     .activation = matrix.activation,
-                    .scan = matrix.scan
+                    .scan = matrix.scan,
+                    .precursor_type = matrix.precursor_type
                 },
                 .Rawfile = matrix.file,
                 .Accession = $"{matrix.file}#{matrix.scan}"
@@ -179,6 +180,12 @@ Namespace ASCII.MGF
             Return True
         End Function
 
+        ''' <summary>
+        ''' save ions data as mgf file
+        ''' </summary>
+        ''' <param name="ions"></param>
+        ''' <param name="file$"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function SaveTo(ions As IEnumerable(Of Ions), file$) As Boolean
             Using write As StreamWriter = file.OpenWriter

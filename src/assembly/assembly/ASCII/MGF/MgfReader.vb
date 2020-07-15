@@ -87,7 +87,7 @@ Namespace ASCII.MGF
                 .IteratesALL
         End Function
 
-        Public Iterator Function StreamParser(path$) As IEnumerable(Of Ions)
+        Public Iterator Function StreamParser(path$, Optional filter As Func(Of String(), Boolean) = Nothing) As IEnumerable(Of Ions)
             Dim lines$() = path.ReadAllLines
             Dim ionBlocks = lines _
                 .Split(delimiter:=Function(s)
@@ -97,6 +97,10 @@ Namespace ASCII.MGF
                 )
 
             For Each ion As String() In ionBlocks
+                If Not filter Is Nothing AndAlso filter(ion) Then
+                    Continue For
+                End If
+
                 Yield ParseIonBlock(ion)
             Next
         End Function
