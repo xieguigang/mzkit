@@ -51,6 +51,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSL
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
@@ -92,11 +93,14 @@ Module Assembly
         Dim accession As Array = x.Select(Function(a) a.Accession).ToArray
         Dim raw As Array = x.Select(Function(a) a.Rawfile).ToArray
         Dim fragments As Array = x.Select(Function(a) a.Peaks.Length).ToArray
-        Dim top3Product As Array = x _
+        Dim da3 = Tolerance.DeltaMass(0.3)
+        Dim topN As Integer = args.getValue(Of Integer)("top.n", env, 3)
+        Dim topNProduct As Array = x _
             .Select(Function(a)
                         Return a.Peaks _
+                            .Centroid(da3) _
                             .OrderByDescending(Function(p) p.intensity) _
-                            .Take(3) _
+                            .Take(topN) _
                             .Select(Function(p)
                                         Return p.mz.ToString("F4")
                                     End Function) _
@@ -112,7 +116,7 @@ Module Assembly
                 {NameOf(accession), accession},
                 {NameOf(raw), raw},
                 {NameOf(fragments), fragments},
-                {NameOf(top3Product), top3Product}
+                {"product(m/z)", topNProduct}
             }
         }
 
