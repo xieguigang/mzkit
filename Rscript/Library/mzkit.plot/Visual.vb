@@ -1,54 +1,64 @@
 ﻿#Region "Microsoft.VisualBasic::91a2d71faccab8672004bbb4e4fbda40, Rscript\Library\mzkit.plot\Visual.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Visual
-    ' 
-    '     Function: getSpectrum, SpectrumPlot
-    ' 
-    ' /********************************************************************************/
+' Module Visual
+' 
+'     Function: getSpectrum, SpectrumPlot
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Drawing
+Imports System.Drawing.Drawing2D
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataStructures
+Imports Microsoft.VisualBasic.Data.ChartPlots
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
+Imports SMRUCC.Rsharp.Runtime.Interop
 Imports REnv = SMRUCC.Rsharp.Runtime
 
 <Package("mzkit.visual")>
@@ -82,8 +92,8 @@ Module Visual
                 Return DirectCast(data, MGF.Ions).GetLibrary
             Case GetType(dataframe)
                 Dim matrix As dataframe = DirectCast(data, dataframe)
-                Dim mz As Double() = REnv.asVector(Of Double)(matrix.GetColumnVector("mz"))
-                Dim into As Double() = REnv.asVector(Of Double)(matrix.GetColumnVector("into"))
+                Dim mz As Double() = REnv.asVector(Of Double)(matrix.getColumnVector("mz"))
+                Dim into As Double() = REnv.asVector(Of Double)(matrix.getColumnVector("into"))
                 Dim ms2 As ms2() = mz _
                     .Select(Function(m, i)
                                 Return New ms2 With {
@@ -100,5 +110,52 @@ Module Visual
             Case Else
                 Throw New NotImplementedException(type.FullName)
         End Select
+    End Function
+
+    <ExportAPI("plot.UV_signals")>
+    <RApiReturn(GetType(GraphicsData))>
+    Public Function PlotUVSignals(<RRawVectorArgument>
+                                  timeSignals As Object,
+                                  Optional size As Object = "1600,1200",
+                                  Optional padding As Object = g.DefaultPadding,
+                                  Optional colorSet As String = "Set1:c8",
+                                  Optional pt_size As Single = 8,
+                                  Optional line_width As Single = 5,
+                                  Optional env As Environment = Nothing) As Object
+
+        Dim signals As pipeline = pipeline.TryCreatePipeline(Of GeneralSignal)(timeSignals, env)
+
+        If signals.isError Then
+            Return signals.getError
+        End If
+
+        Dim colors As LoopArray(Of Color) = Designer.GetColors(colorSet)
+        Dim data As SerialData() = signals _
+            .populates(Of GeneralSignal)(env) _
+            .Select(Function(line)
+                        Return New SerialData With {
+                            .color = colors.Next,
+                            .lineType = DashStyle.Solid,
+                            .pointSize = pt_size,
+                            .shape = LegendStyles.Triangle,
+                            .width = line_width,
+                            .title = line.reference,
+                            .pts = line _
+                                .PopulatePoints _
+                                .Select(Function(p)
+                                            Return New PointData(p)
+                                        End Function) _
+                                .ToArray
+                        }
+                    End Function) _
+            .ToArray
+
+        Return Scatter.Plot(
+            c:=data,
+            size:=InteropArgumentHelper.getSize(size),
+            padding:=InteropArgumentHelper.getPadding(padding),
+            Xlabel:="time(sec)",
+            Ylabel:="intensity"
+        )
     End Function
 End Module
