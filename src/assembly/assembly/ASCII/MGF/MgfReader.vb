@@ -60,17 +60,13 @@ Namespace ASCII.MGF
             Return ions _
                 .Select(Function(ion)
                             Dim meta As New MetaData(ion.Meta)
-                            Dim spectrum As New LibraryMatrix With {
-                                .ms2 = ion.Peaks,
-                                .Name = ion.Title
-                            }
 
                             Return New PeakMs2 With {
                                 .activation = meta.activation,
                                 .collisionEnergy = meta.collisionEnergy,
                                 .file = ion.Rawfile,
-                                .mz = ion.PepMass.name,
-                                .mzInto = spectrum,
+                                .mz = Val(ion.PepMass.name),
+                                .mzInto = ion.Peaks,
                                 .rt = ion.RtInSeconds,
                                 .scan = meta.scan
                             }

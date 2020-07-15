@@ -126,7 +126,7 @@ Namespace Spectra
             scoreAggregate = scoreAggregate Or scoreMin
 
             Return Function(x As PeakMs2, y As PeakMs2) As Integer
-                       Dim score = GlobalAlignment.TwoDirectionSSM(x.mzInto.ms2, y.mzInto.ms2, tolerance)
+                       Dim score = GlobalAlignment.TwoDirectionSSM(x.mzInto, y.mzInto, tolerance)
                        Dim scoreVal = scoreAggregate(score.forward, score.reverse)
 
                        If scoreVal >= equalsScore Then
@@ -170,14 +170,14 @@ Namespace Spectra
         End Function
 
         Private Sub clusterInternal(ms2list As PeakMs2(), tick As Action)
-            Dim matrix As LibraryMatrix
+            Dim matrix As ms2()
             Dim simply As PeakMs2
 
             ' simple => raw
             tree = New AVLTree(Of PeakMs2, PeakMs2)(Ms2Compares, Function(x) x.ToString)
 
             For Each ms2 As PeakMs2 In ms2list
-                matrix = ms2.mzInto.CentroidMode(mzWidth, intocutoff)
+                matrix = ms2.mzInto.Centroid(mzWidth, intocutoff).ToArray
                 simply = New PeakMs2 With {
                     .mz = ms2.mz,
                     .file = ms2.file,
