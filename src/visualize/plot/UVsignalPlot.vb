@@ -12,7 +12,7 @@ Public Module UVsignalPlot
 
     Public Function Plot(signals As IEnumerable(Of GeneralSignal),
                          Optional size As String = "1600,1200",
-                         Optional padding As String = g.DefaultUltraLargePadding,
+                         Optional padding As String = "padding:125px 50px 150px 200px;",
                          Optional colorSet As String = "Set1:c8",
                          Optional pt_size As Single = 8,
                          Optional line_width As Single = 5) As GraphicsData
@@ -26,7 +26,7 @@ Public Module UVsignalPlot
                             .pointSize = pt_size,
                             .shape = LegendStyles.Triangle,
                             .width = line_width,
-                            .title = "wavelength: " & line.meta!wavelength,
+                            .title = line.meta!wavelength & "nm",
                             .pts = line _
                                 .PopulatePoints _
                                 .Select(Function(p)
@@ -42,7 +42,10 @@ Public Module UVsignalPlot
             size:=size,
             padding:=padding,
             Xlabel:="time(sec)",
-            Ylabel:="intensity"
+            Ylabel:="intensity",
+            XtickFormat:="F0",
+            YtickFormat:="G2",
+            title:="UV absorption"
         )
     End Function
 End Module
