@@ -5,6 +5,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Shapes
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 
@@ -14,6 +15,7 @@ Public Module UVsignalPlot
                          Optional size As String = "1600,1200",
                          Optional padding As String = "padding:125px 50px 150px 200px;",
                          Optional colorSet As String = "Set1:c8",
+                         Optional rtLine As Double? = Nothing,
                          Optional pt_size As Single = 8,
                          Optional line_width As Single = 5) As GraphicsData
 
@@ -36,6 +38,16 @@ Public Module UVsignalPlot
                         }
                     End Function) _
             .ToArray
+        Dim ablines As Line() = {}
+
+        If Not rtLine Is Nothing Then
+            Dim min = data.Select(Function(a) a.pts.Select(Function(b) b.pt.Y).Min).Min
+            Dim max = data.Select(Function(a) a.pts.Select(Function(b) b.pt.Y).Max).Max
+
+            ablines = {
+               New Line(New PointF(rtLine, min), New PointF(rtLine, max), New Pen(Color.Black, 3) With {.DashStyle = DashStyle.Dash})
+            }
+        End If
 
         Return Scatter.Plot(
             c:=data,
@@ -45,7 +57,8 @@ Public Module UVsignalPlot
             Ylabel:="intensity",
             XtickFormat:="F0",
             YtickFormat:="G2",
-            title:="UV absorption"
+            title:="UV absorption",
+            ablines:=ablines
         )
     End Function
 End Module
