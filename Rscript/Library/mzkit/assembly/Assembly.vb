@@ -86,9 +86,9 @@ Module Assembly
     ''' <returns></returns>
     Private Function summaryIons(x As Ions(), args As list, env As Environment) As dataframe
         Dim title As MetaData() = x.Select(Function(a) New MetaData(a.Meta)).ToArray
-        Dim rt As Array = x.Select(Function(a) a.RtInSeconds).ToArray
-        Dim mz As Array = x.Select(Function(a) Val(a.PepMass.name)).ToArray
-        Dim into As Array = x.Select(Function(a) Val(a.PepMass.text)).ToArray
+        Dim rt As Array = x.Select(Function(a) CInt(a.RtInSeconds)).ToArray
+        Dim mz As Array = x.Select(Function(a) Val(a.PepMass.name).ToString("F3")).ToArray
+        Dim into As Array = x.Select(Function(a) Val(a.PepMass.text).ToString("G2")).ToArray
         Dim charge As Array = x.Select(Function(a) a.Charge).ToArray
         Dim accession As Array = x.Select(Function(a) a.Accession).ToArray
         Dim raw As Array = x.Select(Function(a) a.Rawfile).ToArray
@@ -102,7 +102,7 @@ Module Assembly
                             .OrderByDescending(Function(p) p.intensity) _
                             .Take(topN) _
                             .Select(Function(p)
-                                        Return p.mz.ToString("F4")
+                                        Return p.mz.ToString("F3")
                                     End Function) _
                             .JoinBy(", ")
                     End Function) _
@@ -126,11 +126,9 @@ Module Assembly
         df.columns.Add(NameOf(MetaData.formula), title.Select(Function(a) a.formula).ToArray)
         df.columns.Add(NameOf(MetaData.kegg), title.Select(Function(a) a.kegg).ToArray)
         df.columns.Add(NameOf(MetaData.mass), title.Select(Function(a) a.mass).ToArray)
-        df.columns.Add(NameOf(MetaData.mzcloud), title.Select(Function(a) a.mzcloud).ToArray)
         df.columns.Add(NameOf(MetaData.name), title.Select(Function(a) a.name).ToArray)
         df.columns.Add(NameOf(MetaData.polarity), title.Select(Function(a) a.polarity).ToArray)
         df.columns.Add(NameOf(MetaData.precursor_type), title.Select(Function(a) a.precursor_type).ToArray)
-        df.columns.Add(NameOf(MetaData.scan), title.Select(Function(a) a.scan).ToArray)
 
         Return df
     End Function
