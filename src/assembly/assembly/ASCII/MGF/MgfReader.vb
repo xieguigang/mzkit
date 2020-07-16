@@ -55,6 +55,11 @@ Namespace ASCII.MGF
 
         Const regexp_META$ = "((,\s*)?\S+[:]"".*?"")+"
 
+        ''' <summary>
+        ''' convert the mgf ion object to general peak data 
+        ''' </summary>
+        ''' <param name="ions"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function IonPeaks(ions As IEnumerable(Of Ions)) As IEnumerable(Of PeakMs2)
             Return ions _
@@ -68,7 +73,10 @@ Namespace ASCII.MGF
                                 .mz = Val(ion.PepMass.name),
                                 .mzInto = ion.Peaks,
                                 .rt = ion.RtInSeconds,
-                                .scan = meta.scan
+                                .scan = meta.scan,
+                                .lib_guid = ion.Accession,
+                                .meta = meta,
+                                .precursor_type = meta.precursor_type
                             }
                         End Function)
         End Function
