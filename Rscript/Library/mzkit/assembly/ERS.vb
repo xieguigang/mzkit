@@ -18,8 +18,12 @@ Imports list = SMRUCC.Rsharp.Runtime.Internal.Object.list
 ''' helper package module for read ``electromagnetic radiation spectrum`` data
 ''' </summary>
 ''' 
-<Package("mzML.ERS")>
+<Package("mzML.ERS", Category:=APICategories.UtilityTools, Publisher:="gg.xie@bionovogene.com")>
 Module ERS
+
+    Sub New()
+
+    End Sub
 
     ''' <summary>
     ''' Get photodiode array detector instrument configuration id
