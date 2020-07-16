@@ -126,6 +126,7 @@ Namespace Ms1.PrecursorType
             Return (AdductMZ(mass * M, adducts, charge))
         End Function
 
+        <DebuggerStepThrough>
         Public Overrides Function ToString() As String
             If InStr(name, "[") < InStr(name, "]") AndAlso InStr(name, "[") > 0 Then
                 Return name

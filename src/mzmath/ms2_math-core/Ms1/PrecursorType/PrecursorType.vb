@@ -48,7 +48,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Language.C
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace Ms1.PrecursorType
 
@@ -114,12 +114,12 @@ Namespace Ms1.PrecursorType
                 tolerance = tolerance Or Tolerance.DefaultTolerance
             End If
 
-            Dim mz# = mass / sys.Abs(charge)
+            Dim mz# = mass / stdNum.Abs(charge)
             Dim ppm As Double = tolerance.MassError(precursor_mz, mz)
 
             If tolerance.MatchTolerance([error]:=ppm) Then
                 ' 本身的分子质量和前体的mz一样，说明为[M]类型
-                If (sys.Abs(charge) = 1) Then
+                If (stdNum.Abs(charge) = 1) Then
                     Return New TypeMatch With {
                         .errors = ppm,
                         .precursorType = "[M]" & chargeMode

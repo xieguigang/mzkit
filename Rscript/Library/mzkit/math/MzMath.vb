@@ -312,12 +312,9 @@ Module MzMath
             Dim source As IEnumerable(Of PeakMs2) = If(inputType Is GetType(pipeline), DirectCast(ions, pipeline).populates(Of PeakMs2)(env), DirectCast(ions, PeakMs2()))
             Dim converter = Iterator Function() As IEnumerable(Of PeakMs2)
                                 For Each peak As PeakMs2 In source
-                                    If Not peak.mzInto.centroid Then
-                                        peak.mzInto.ms2 = peak.mzInto.ms2 _
-                                            .Centroid(errors, intoCutoff) _
-                                            .ToArray
-                                        ' peak.mzInto = peak.mzInto.Shrink(tolerance:=Tolerance.DeltaMass(0.3))
-                                    End If
+                                    peak.mzInto = peak.mzInto _
+                                        .Centroid(errors, intoCutoff) _
+                                        .ToArray
 
                                     Yield peak
                                 Next
@@ -331,11 +328,9 @@ Module MzMath
         ElseIf inputType Is GetType(PeakMs2) Then
             Dim ms2Peak As PeakMs2 = DirectCast(ions, PeakMs2)
 
-            If Not ms2Peak.mzInto.centroid Then
-                ms2Peak.mzInto.ms2 = ms2Peak.mzInto.ms2 _
-                    .Centroid(errors, intoCutoff) _
-                    .ToArray
-            End If
+            ms2Peak.mzInto = ms2Peak.mzInto _
+                .Centroid(errors, intoCutoff) _
+                .ToArray
 
             Return ms2Peak
         ElseIf inputType Is GetType(LibraryMatrix) Then

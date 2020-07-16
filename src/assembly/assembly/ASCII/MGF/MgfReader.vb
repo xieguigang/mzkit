@@ -55,24 +55,28 @@ Namespace ASCII.MGF
 
         Const regexp_META$ = "((,\s*)?\S+[:]"".*?"")+"
 
+        ''' <summary>
+        ''' convert the mgf ion object to general peak data 
+        ''' </summary>
+        ''' <param name="ions"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function IonPeaks(ions As IEnumerable(Of Ions)) As IEnumerable(Of PeakMs2)
             Return ions _
                 .Select(Function(ion)
                             Dim meta As New MetaData(ion.Meta)
-                            Dim spectrum As New LibraryMatrix With {
-                                .ms2 = ion.Peaks,
-                                .Name = ion.Title
-                            }
 
                             Return New PeakMs2 With {
                                 .activation = meta.activation,
                                 .collisionEnergy = meta.collisionEnergy,
                                 .file = ion.Rawfile,
-                                .mz = ion.PepMass.name,
-                                .mzInto = spectrum,
+                                .mz = Val(ion.PepMass.name),
+                                .mzInto = ion.Peaks,
                                 .rt = ion.RtInSeconds,
-                                .scan = meta.scan
+                                .scan = meta.scan,
+                                .lib_guid = ion.Accession,
+                                .meta = meta,
+                                .precursor_type = meta.precursor_type
                             }
                         End Function)
         End Function
@@ -87,7 +91,7 @@ Namespace ASCII.MGF
                 .IteratesALL
         End Function
 
-        Public Iterator Function StreamParser(path$) As IEnumerable(Of Ions)
+        Public Iterator Function StreamParser(path$, Optional filter As Func(Of String(), Boolean) = Nothing) As IEnumerable(Of Ions)
             Dim lines$() = path.ReadAllLines
             Dim ionBlocks = lines _
                 .Split(delimiter:=Function(s)
@@ -97,6 +101,10 @@ Namespace ASCII.MGF
                 )
 
             For Each ion As String() In ionBlocks
+                If Not filter Is Nothing AndAlso filter(ion) Then
+                    Continue For
+                End If
+
                 Yield ParseIonBlock(ion)
             Next
         End Function

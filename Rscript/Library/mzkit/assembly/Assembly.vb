@@ -51,6 +51,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSL
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
@@ -71,32 +72,42 @@ Imports REnv = SMRUCC.Rsharp.Runtime
 <Package("assembly", Category:=APICategories.UtilityTools)>
 Module Assembly
 
-    Sub New()
+    <RInitializeAttribute>
+    Sub Main()
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(Ions()), AddressOf summaryIons)
     End Sub
 
+    ''' <summary>
+    ''' summary of the mgf ions
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="args"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     Private Function summaryIons(x As Ions(), args As list, env As Environment) As dataframe
-        Dim title As Array = x.Select(Function(a) a.Title).ToArray
-        Dim rt As Array = x.Select(Function(a) a.RtInSeconds).ToArray
-        Dim mz As Array = x.Select(Function(a) Val(a.PepMass.name)).ToArray
-        Dim into As Array = x.Select(Function(a) Val(a.PepMass.text)).ToArray
+        Dim title As MetaData() = x.Select(Function(a) New MetaData(a.Meta)).ToArray
+        Dim rt As Array = x.Select(Function(a) CInt(a.RtInSeconds)).ToArray
+        Dim mz As Array = x.Select(Function(a) Val(a.PepMass.name).ToString("F3")).ToArray
+        Dim into As Array = x.Select(Function(a) Val(a.PepMass.text).ToString("G2")).ToArray
         Dim charge As Array = x.Select(Function(a) a.Charge).ToArray
         Dim accession As Array = x.Select(Function(a) a.Accession).ToArray
         Dim raw As Array = x.Select(Function(a) a.Rawfile).ToArray
         Dim fragments As Array = x.Select(Function(a) a.Peaks.Length).ToArray
-        Dim top3Product As Array = x _
+        Dim da3 = Tolerance.DeltaMass(0.3)
+        Dim topN As Integer = args.getValue(Of Integer)("top.n", env, 3)
+        Dim topNProduct As Array = x _
             .Select(Function(a)
                         Return a.Peaks _
+                            .Centroid(da3) _
                             .OrderByDescending(Function(p) p.intensity) _
-                            .Take(3) _
+                            .Take(topN) _
                             .Select(Function(p)
-                                        Return p.mz.ToString("F4")
+                                        Return p.mz.ToString("F3")
                                     End Function) _
                             .JoinBy(", ")
                     End Function) _
             .ToArray
-
-        Return New dataframe With {
+        Dim df As New dataframe With {
             .columns = New Dictionary(Of String, Array) From {
                 {NameOf(mz), mz},
                 {NameOf(rt), rt},
@@ -105,10 +116,21 @@ Module Assembly
                 {NameOf(accession), accession},
                 {NameOf(raw), raw},
                 {NameOf(fragments), fragments},
-                {NameOf(top3Product), top3Product},
-                {NameOf(title), title}
+                {"product(m/z)", topNProduct}
             }
         }
+
+        df.columns.Add(NameOf(MetaData.activation), title.Select(Function(a) a.activation).ToArray)
+        df.columns.Add(NameOf(MetaData.collisionEnergy), title.Select(Function(a) a.collisionEnergy).ToArray)
+        df.columns.Add(NameOf(MetaData.compound_class), title.Select(Function(a) a.compound_class).ToArray)
+        df.columns.Add(NameOf(MetaData.formula), title.Select(Function(a) a.formula).ToArray)
+        df.columns.Add(NameOf(MetaData.kegg), title.Select(Function(a) a.kegg).ToArray)
+        df.columns.Add(NameOf(MetaData.mass), title.Select(Function(a) a.mass).ToArray)
+        df.columns.Add(NameOf(MetaData.name), title.Select(Function(a) a.name).ToArray)
+        df.columns.Add(NameOf(MetaData.polarity), title.Select(Function(a) a.polarity).ToArray)
+        df.columns.Add(NameOf(MetaData.precursor_type), title.Select(Function(a) a.precursor_type).ToArray)
+
+        Return df
     End Function
 
     ''' <summary>
@@ -361,7 +383,7 @@ Module Assembly
 
                         ' ms1的数据总是使用raw intensity值
                         peakScans = scan.ScanData(basename, raw:=True)
-                        ms1 += peakScans.mzInto.ms2 _
+                        ms1 += peakScans.mzInto _
                             .Select(Function(frag)
                                         Return New ms1_scan With {
                                             .intensity = frag.intensity,

@@ -228,7 +228,7 @@ Namespace MarkupData.mzML
                 .rt = scan_time,
                 .scan = index,
                 .file = basename,
-                .mzInto = mzInto,
+                .mzInto = mzInto.Array,
                 .activation = activationMethod,
                 .collisionEnergy = collisionEnergy,
                 .meta = New Dictionary(Of String, String) From {

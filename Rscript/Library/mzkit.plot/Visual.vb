@@ -129,33 +129,13 @@ Module Visual
             Return signals.getError
         End If
 
-        Dim colors As LoopArray(Of Color) = Designer.GetColors(colorSet)
-        Dim data As SerialData() = signals _
-            .populates(Of GeneralSignal)(env) _
-            .Select(Function(line)
-                        Return New SerialData With {
-                            .color = colors.Next,
-                            .lineType = DashStyle.Solid,
-                            .pointSize = pt_size,
-                            .shape = LegendStyles.Triangle,
-                            .width = line_width,
-                            .title = line.reference,
-                            .pts = line _
-                                .PopulatePoints _
-                                .Select(Function(p)
-                                            Return New PointData(p)
-                                        End Function) _
-                                .ToArray
-                        }
-                    End Function) _
-            .ToArray
-
-        Return Scatter.Plot(
-            c:=data,
+        Return UVsignalPlot.Plot(
+            signals:=signals.populates(Of GeneralSignal)(env),
             size:=InteropArgumentHelper.getSize(size),
             padding:=InteropArgumentHelper.getPadding(padding),
-            Xlabel:="time(sec)",
-            Ylabel:="intensity"
+            colorSet:=colorSet,
+            pt_size:=pt_size,
+            line_width:=line_width
         )
     End Function
 End Module

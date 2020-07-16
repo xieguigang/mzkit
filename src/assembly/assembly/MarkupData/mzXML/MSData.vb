@@ -185,7 +185,7 @@ Namespace MarkupData.mzXML
                 .rt = PeakMs2.RtInSecond(retentionTime),
                 .scan = num,
                 .file = basename,
-                .mzInto = mzInto,
+                .mzInto = mzInto.Array,
                 .activation = precursorMz.activationMethod Or ms1,
                 .collisionEnergy = Val(collisionEnergy)
             }

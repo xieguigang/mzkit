@@ -293,6 +293,7 @@
     <Compile Include="ChromatogramPlot.vb" />
     <Compile Include="GCMSscanVisual.vb" />
     <Compile Include="MassSpectraMirrorPlot.vb" />
+    <Compile Include="UVsignalPlot.vb" />
     <Compile Include="MzrtPlot.vb" />
     <Compile Include="PeakAssign.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -356,6 +357,10 @@
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\ODE\ODEsSolver.vbproj">
       <Project>{14e0b048-3a0d-4fd6-aa79-9b815d6f1b30}</Project>
       <Name>ODEsSolver</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\SignalProcessing.vbproj">
+      <Project>{83975074-CBE1-4ABC-BA91-91D63DA156C8}</Project>
+      <Name>SignalProcessing</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\Plots-statistics\Plots.Statistics.vbproj">
       <Project>{368ee92f-7aa0-47df-be48-2ae150369a4c}</Project>

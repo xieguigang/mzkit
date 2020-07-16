@@ -148,6 +148,10 @@ Namespace NCBI.PubChem
         ''' 
         <Extension>
         Public Function GetMetaInfo(view As PugViewRecord) As MetaInfo
+            If view Is Nothing Then
+                Return Nothing
+            End If
+
             Dim identifier As Section = view("Names and Identifiers")
             Dim formula = view.GetInform("/Names and Identifiers/Molecular Formula/#0")
             Dim descriptors = identifier("Computed Descriptors")
@@ -209,7 +213,7 @@ Namespace NCBI.PubChem
             Return New MetaInfo With {
                 .formula = formulaStr,
                 .xref = xref,
-                .Name = commonName,
+                .name = commonName,
                 .exact_mass = exact_mass,
                 .ID = view.RecordNumber,
                 .synonym = synonyms.removesDbEntry.ToArray

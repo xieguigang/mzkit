@@ -60,7 +60,7 @@ Namespace ASCII.MGF
         Public Function MgfIon(matrix As PeakMs2) As Ions
             Return New Ions With {
                 .Charge = If(Not matrix.meta.IsNullOrEmpty AndAlso matrix.meta.ContainsKey("charge"), matrix.meta("charge"), 1),
-                .Peaks = matrix.mzInto.Array,
+                .Peaks = matrix.mzInto,
                 .PepMass = New NamedValue With {
                     .name = matrix.mz,
                     .text = matrix.Ms2Intensity
@@ -70,7 +70,8 @@ Namespace ASCII.MGF
                 .Meta = New MetaData With {
                     .collisionEnergy = matrix.collisionEnergy,
                     .activation = matrix.activation,
-                    .scan = matrix.scan
+                    .scan = matrix.scan,
+                    .precursor_type = matrix.precursor_type
                 },
                 .Rawfile = matrix.file,
                 .Accession = $"{matrix.file}#{matrix.scan}"
@@ -179,6 +180,12 @@ Namespace ASCII.MGF
             Return True
         End Function
 
+        ''' <summary>
+        ''' save ions data as mgf file
+        ''' </summary>
+        ''' <param name="ions"></param>
+        ''' <param name="file$"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function SaveTo(ions As IEnumerable(Of Ions), file$) As Boolean
             Using write As StreamWriter = file.OpenWriter
