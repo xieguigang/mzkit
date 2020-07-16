@@ -73,14 +73,14 @@ Namespace Ms1
         Default Public ReadOnly Property IsEquals(mz1#, mz2#) As Boolean
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Assert(mz1, mz2)
+                Return Equals(mz1, mz2)
             End Get
         End Property
 
         Default Public ReadOnly Property IsEquals(mz1 As Spectra.ms2, mz2 As Spectra.ms2) As Boolean
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Assert(mz1.mz, mz2.mz)
+                Return Equals(mz1.mz, mz2.mz)
             End Get
         End Property
 
