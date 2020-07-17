@@ -47,9 +47,11 @@
 
 #End Region
 
+Imports System.Reflection
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace MRM
 
@@ -105,6 +107,17 @@ Namespace MRM
                 peakwidth:={8, 30},
                 sn_threshold:=3
             )
+        End Function
+
+        Public Overrides Function ToString() As String
+            Dim porperties As PropertyInfo() = GetType(MRMArguments).GetProperties(BindingFlags.Public Or BindingFlags.Instance)
+            Dim json As New Dictionary(Of String, Object)
+
+            For Each p In porperties
+                json.Add(p.Name, p.GetValue(Me))
+            Next
+
+            Return json.GetJson
         End Function
     End Class
 End Namespace
