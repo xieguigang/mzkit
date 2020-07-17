@@ -67,7 +67,7 @@ Namespace GCMS.QuantifyAnalysis
             Dim gcms As Raw = netCDFReader.Open(cdf).ReadData()
             Dim ROIlist As ROI() = gcms.GetTIC _
                 .Shadows _
-                .PopulateROI(angleThreshold:=angle, peakwidth:=peakwidth) _
+                .PopulateROI(angleThreshold:=angle, peakwidth:=peakwidth, snThreshold:=sn_threads) _
                 .ToArray
             Dim result As ROITable() = ROIlist.ExportReferenceROITable(
                 raw:=gcms,

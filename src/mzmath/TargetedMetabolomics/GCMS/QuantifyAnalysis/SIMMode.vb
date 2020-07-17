@@ -77,7 +77,8 @@ Namespace GCMS.QuantifyAnalysis
                                            Optional winSize! = 3,
                                            Optional tolerance As Tolerance = Nothing,
                                            Optional scoreCutoff# = 0.8,
-                                           Optional top As Boolean = True) As IEnumerable(Of (ion As ROITable, query As Spectra.LibraryMatrix, ref As Spectra.LibraryMatrix))
+                                           Optional top As Boolean = True,
+                                           Optional sn_threshold As Double = 3) As IEnumerable(Of (ion As ROITable, query As Spectra.LibraryMatrix, ref As Spectra.LibraryMatrix))
 
             Dim data As Raw = netCDFReader.Open(filePath:=experiments).ReadData
             Dim result As New List(Of ROITable)
@@ -85,7 +86,7 @@ Namespace GCMS.QuantifyAnalysis
             Dim i As i32 = 1
             Dim TIC = data.GetTIC
             Dim ROIlist As ROI() = TIC.Shadows _
-                .PopulateROI(angle, baselineQuantile:=baselineQuantile) _
+                .PopulateROI(angle, baselineQuantile:=baselineQuantile, snThreshold:=sn_threshold) _
                 .ToArray
             Dim resultTable As ROITable
 
@@ -96,12 +97,12 @@ Namespace GCMS.QuantifyAnalysis
                 Dim refSpectrum As Spectra.LibraryMatrix = ref.CreateMatrix
                 Dim refMz As Spectra.ms2 = refSpectrum.GetMaxInto
                 Dim candidates = ROIlist _
-                    .SkipWhile(Function(c) c.Time.Max < timeRange.Min) _
-                    .TakeWhile(Function(c) c.Time.Min < timeRange.Max) _
+                    .SkipWhile(Function(c) c.time.Max < timeRange.Min) _
+                    .TakeWhile(Function(c) c.time.Min < timeRange.Max) _
                     .Select(Function(region As ROI)
                                 ' 在这个循环之中的都是rt符合条件要求的
-                                Dim matrixName$ = $"rt={region.rt}, [{Fix(region.Time.Min)},{Fix(region.Time.Max)}]"
-                                Dim query = data.GetMsScan(region.Time) _
+                                Dim matrixName$ = $"rt={region.rt}, [{Fix(region.time.Min)},{Fix(region.time.Max)}]"
+                                Dim query = data.GetMsScan(region.time) _
                                     .GroupByMz() _
                                     .CreateLibraryMatrix(matrixName)
                                 Dim maxInto As Spectra.ms2 = query.GetMaxInto
@@ -126,7 +127,7 @@ Namespace GCMS.QuantifyAnalysis
                     .OrderByDescending(Function(candidate) candidate.minScore) _
                     .ToArray
 
-                refSpectrum.Name = ref.ID
+                refSpectrum.name = ref.ID
 
                 For Each candidate In candidates
                     ' 在这里的峰面积就是定量离子的信号响应强度

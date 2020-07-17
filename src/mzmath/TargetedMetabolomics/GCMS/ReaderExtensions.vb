@@ -61,12 +61,13 @@ Namespace GCMS
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function ExportROI(gcms As Raw, angle#, peakwidth As DoubleRange) As ROI()
+        Public Function ExportROI(gcms As Raw, angle#, peakwidth As DoubleRange, Optional sn_threshold As Double = 3) As ROI()
             Return gcms.GetTIC _
                 .Shadows _
                 .PopulateROI(
                     angleThreshold:=angle,
-                    peakwidth:=peakwidth
+                    peakwidth:=peakwidth,
+                    snThreshold:=sn_threshold
                 ) _
                 .ToArray
         End Function

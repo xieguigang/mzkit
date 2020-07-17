@@ -71,8 +71,15 @@ Public Module Deconvolution
     ''' <returns></returns>
     ''' <remarks>实际的解卷积操作步骤：应用于处理复杂的样本数据</remarks>
     <Extension>
-    Public Iterator Function GetPeakGroups(mzpoints As MzGroup, peakwidth As DoubleRange, Optional quantile# = 0.65) As IEnumerable(Of PeakFeature)
-        For Each ROI As ROI In mzpoints.XIC.Shadows.PopulateROI(peakwidth:=peakwidth, baselineQuantile:=quantile)
+    Public Iterator Function GetPeakGroups(mzpoints As MzGroup, peakwidth As DoubleRange,
+                                           Optional quantile# = 0.65,
+                                           Optional sn_threshold As Double = 3) As IEnumerable(Of PeakFeature)
+
+        For Each ROI As ROI In mzpoints.XIC.Shadows.PopulateROI(
+            peakwidth:=peakwidth,
+            baselineQuantile:=quantile,
+            snThreshold:=sn_threshold
+        )
             Yield New PeakFeature With {
                 .mz = mzpoints.mz,
                 .baseline = ROI.baseline,

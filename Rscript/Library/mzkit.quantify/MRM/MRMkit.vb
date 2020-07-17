@@ -341,6 +341,7 @@ Module MRMkit
                                    Optional angleThreshold# = 5,
                                    <RRawVectorArgument>
                                    Optional peakwidth As Object = "8,30",
+                                   Optional sn_threshold As Double = 3,
                                    Optional env As Environment = Nothing) As Object
 
         If chromatogram Is Nothing Then
@@ -358,7 +359,8 @@ Module MRMkit
             .PopulateROI(
                 baselineQuantile:=baselineQuantile,
                 angleThreshold:=angleThreshold,
-                peakwidth:=_peakwidth
+                peakwidth:=_peakwidth,
+                snThreshold:=sn_threshold
             ) _
             .ToArray
     End Function
