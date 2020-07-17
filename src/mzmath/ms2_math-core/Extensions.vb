@@ -74,11 +74,11 @@ Imports stdNum = System.Math
     ''' <returns></returns>
     <Extension>
     Public Function Trim(ByRef library As LibraryMatrix, intoCutoff#) As LibraryMatrix
+        library = library / library.Max
         If intoCutoff > 0 Then
-            library = library / library.Max
             library = library(library!intensity >= intoCutoff)
-            library = library * 100
         End If
+        library = library * 100
 
         Return library
     End Function
