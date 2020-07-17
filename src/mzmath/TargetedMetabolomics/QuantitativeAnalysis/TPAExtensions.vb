@@ -93,7 +93,8 @@ Public Module TPAExtensions
             .PopulateROI(
                 baselineQuantile:=args.baselineQuantile,
                 angleThreshold:=args.angleThreshold,
-                peakwidth:=args.peakwidth
+                peakwidth:=args.peakwidth,
+                snThreshold:=args.sn_threshold
             ) _
             .ToArray
         Dim result As IonTPA
