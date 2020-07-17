@@ -17,7 +17,10 @@ Public Module UVsignalPlot
                          Optional colorSet As String = "Set1:c8",
                          Optional rtLine As Double? = Nothing,
                          Optional pt_size As Single = 8,
-                         Optional line_width As Single = 5) As GraphicsData
+                         Optional line_width As Single = 5,
+                         Optional title$ = "UV absorption",
+                         Optional xlabel$ = "time (sec)",
+                         Optional ylabel$ = "intensity") As GraphicsData
 
         Dim colors As LoopArray(Of Color) = Designer.GetColors(colorSet)
         Dim data As SerialData() = signals _
@@ -53,11 +56,11 @@ Public Module UVsignalPlot
             c:=data,
             size:=size,
             padding:=padding,
-            Xlabel:="time(sec)",
-            Ylabel:="intensity",
+            Xlabel:=xlabel,
+            Ylabel:=ylabel,
             XtickFormat:="F0",
             YtickFormat:="G2",
-            title:="UV absorption",
+            title:=title,
             ablines:=ablines
         )
     End Function
