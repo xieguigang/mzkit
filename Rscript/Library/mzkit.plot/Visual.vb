@@ -116,6 +116,7 @@ Module Visual
     <RApiReturn(GetType(GraphicsData))>
     Public Function PlotUVSignals(<RRawVectorArgument>
                                   timeSignals As Object,
+                                  Optional is_spectrum As Boolean = False,
                                   Optional size As Object = "1600,1200",
                                   Optional padding As Object = g.DefaultPadding,
                                   Optional colorSet As String = "Set1:c8",
@@ -129,13 +130,22 @@ Module Visual
             Return signals.getError
         End If
 
+        Dim legendTitle As Func(Of Dictionary(Of String, String), String)
+
+        If is_spectrum Then
+            legendTitle = Function(a) a!scan_time & " sec"
+        Else
+            legendTitle = Function(a) a!wavelength & " nm"
+        End If
+
         Return UVsignalPlot.Plot(
             signals:=signals.populates(Of GeneralSignal)(env),
             size:=InteropArgumentHelper.getSize(size),
             padding:=InteropArgumentHelper.getPadding(padding),
             colorSet:=colorSet,
             pt_size:=pt_size,
-            line_width:=line_width
+            line_width:=line_width,
+            legendTitle:=legendTitle
         )
     End Function
 End Module
