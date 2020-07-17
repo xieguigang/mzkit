@@ -1,5 +1,5 @@
 imports ["mzkit.mrm", "mzkit.quantify.visual"] from "mzkit.quantify.dll";
-imports "mzkit.assembly" from "mzkit.dll";
+imports "assembly" from "mzkit.dll";
 
 let plot_ionRaws as function(MRM, mzML, tolerance, export) {
 	for(ion in getIonsSampleRaw(MRM, mzML, tolerance)) {
