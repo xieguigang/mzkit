@@ -54,6 +54,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -95,6 +96,7 @@ Module Assembly
         Dim fragments As Array = x.Select(Function(a) a.Peaks.Length).ToArray
         Dim da3 = Tolerance.DeltaMass(0.3)
         Dim topN As Integer = args.getValue(Of Integer)("top.n", env, 3)
+        Dim metaFields As Index(Of String) = args.getValue(Of String())("meta", env, {})
         Dim topNProduct As Array = x _
             .Select(Function(a)
                         Return a.Peaks _
@@ -113,22 +115,38 @@ Module Assembly
                 {NameOf(rt), rt},
                 {NameOf(into), into},
                 {NameOf(charge), charge},
-                {NameOf(accession), accession},
                 {NameOf(raw), raw},
-                {NameOf(fragments), fragments},
                 {"product(m/z)", topNProduct}
             }
         }
 
+        If "accession" Like metaFields Then
+            df.columns.Add(NameOf(accession), accession)
+        End If
+        If "fragments" Like metaFields Then
+            df.columns.Add(NameOf(fragments), fragments)
+        End If
+
         df.columns.Add(NameOf(MetaData.activation), title.Select(Function(a) a.activation).ToArray)
         df.columns.Add(NameOf(MetaData.collisionEnergy), title.Select(Function(a) a.collisionEnergy).ToArray)
-        df.columns.Add(NameOf(MetaData.compound_class), title.Select(Function(a) a.compound_class).ToArray)
-        df.columns.Add(NameOf(MetaData.formula), title.Select(Function(a) a.formula).ToArray)
         df.columns.Add(NameOf(MetaData.kegg), title.Select(Function(a) a.kegg).ToArray)
-        df.columns.Add(NameOf(MetaData.mass), title.Select(Function(a) a.mass).ToArray)
-        df.columns.Add(NameOf(MetaData.name), title.Select(Function(a) a.name).ToArray)
-        df.columns.Add(NameOf(MetaData.polarity), title.Select(Function(a) a.polarity).ToArray)
         df.columns.Add(NameOf(MetaData.precursor_type), title.Select(Function(a) a.precursor_type).ToArray)
+
+        If "compound_class" Like metaFields Then
+            df.columns.Add(NameOf(MetaData.compound_class), title.Select(Function(a) a.compound_class).ToArray)
+        End If
+        If "formula" Like metaFields Then
+            df.columns.Add(NameOf(MetaData.formula), title.Select(Function(a) a.formula).ToArray)
+        End If
+        If "mass" Like metaFields Then
+            df.columns.Add(NameOf(MetaData.mass), title.Select(Function(a) a.mass).ToArray)
+        End If
+        If "name" Like metaFields Then
+            df.columns.Add(NameOf(MetaData.name), title.Select(Function(a) a.name).ToArray)
+        End If
+        If "polarity" Like metaFields Then
+            df.columns.Add(NameOf(MetaData.polarity), title.Select(Function(a) a.polarity).ToArray)
+        End If
 
         Return df
     End Function
