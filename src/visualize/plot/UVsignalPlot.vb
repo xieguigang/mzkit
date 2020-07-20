@@ -1,13 +1,15 @@
 ﻿Imports System.Drawing
 Imports System.Drawing.Drawing2D
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
-Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Shapes
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.SignalProcessing
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Public Module UVsignalPlot
 
@@ -16,6 +18,7 @@ Public Module UVsignalPlot
                          Optional padding As String = "padding:125px 50px 150px 200px;",
                          Optional colorSet As String = "Set1:c8",
                          Optional rtLine As Double? = Nothing,
+                         Optional annotations As NamedValue(Of PointF)() = Nothing,
                          Optional pt_size As Single = 8,
                          Optional line_width As Single = 5,
                          Optional title$ = "UV absorption",
@@ -36,6 +39,20 @@ Public Module UVsignalPlot
                                 .PopulatePoints _
                                 .Select(Function(p)
                                             Return New PointData(p)
+                                        End Function) _
+                                .ToArray,
+                            .DataAnnotations = annotations _
+                                .SafeQuery _
+                                .Select(Function(a)
+                                            Return New Annotation With {
+                                                .color = "blue",
+                                                .Font = CSSFont.Win10NormalLarge,
+                                                .Legend = LegendStyles.Pentacle,
+                                                .size = New SizeF(200, 64),
+                                                .Text = a.Name,
+                                                .X = a.Value.X,
+                                                .Y = a.Value.Y
+                                            }
                                         End Function) _
                                 .ToArray
                         }
