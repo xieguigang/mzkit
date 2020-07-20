@@ -60,7 +60,7 @@ Imports REnv = SMRUCC.Rsharp.Runtime.Internal.Invokes.base
 ''' <summary>
 ''' Metabolite annotation database toolkit
 ''' </summary>
-<Package("mzkit.massbank")>
+<Package("massbank")>
 Module Massbank
 
     ''' <summary>

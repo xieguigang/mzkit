@@ -68,7 +68,8 @@ Namespace Ms1.PrecursorType
                 {"2M-H", New MzCalculator("[2M-H]-", charge:=-1, M:=2, adducts:=-1.007276, mode:="-")},         ' 2M - 1.007276	    1-	2.00	 -1.007276	1705.654504	1753.647276
                 {"2M+FA-H", New MzCalculator("[2M+FA-H]-", charge:=-1, M:=2, adducts:=44.998201, mode:="-")},   ' 2M + 44.998201	    1-	2.00	 44.998201	1751.659981	1707.641799
                 {"2M+Hac-H", New MzCalculator("[2M+Hac-H]-", charge:=-1, M:=2, adducts:=59.013851, mode:="-")}, ' 2M + 59.013851	    1-	2.00	 59.013851	1765.675631	1693.626149
-                {"3M-H", New MzCalculator("[3M-H]-", charge:=-1, M:=3, adducts:=-1.007276, mode:="-")}          ' 3M - 1.007276	    1-	3.00	  1.007276	2560.999946	2627.952724
+                {"3M-H", New MzCalculator("[3M-H]-", charge:=-1, M:=3, adducts:=-1.007276, mode:="-")},         ' 3M - 1.007276	    1-	3.00	  1.007276	2560.999946	2627.952724
+                {"M+CH3COO", New MzCalculator("[M+CH3COO]-", charge:=-1, M:=1, adducts:=MolWeight.Weight("CH3COO"), mode:="-")}
             }
         End Function
     End Module
