@@ -105,7 +105,8 @@ Namespace MRM
                                 .PopulateROI(
                                     baselineQuantile:=args.baselineQuantile,
                                     peakwidth:=args.peakwidth,
-                                    angleThreshold:=args.angleThreshold
+                                    angleThreshold:=args.angleThreshold,
+                                    snThreshold:=args.sn_threshold
                                 ).ToArray
 
                             Return (sample.sampleName, ROI)

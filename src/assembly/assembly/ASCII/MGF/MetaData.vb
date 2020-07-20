@@ -165,6 +165,15 @@ Namespace ASCII.MGF
             End Get
         End Property
 
+        Default Public Property Item(key As String) As String
+            Get
+                Return meta.TryGetValue(key)
+            End Get
+            Set
+                meta(key) = Value
+            End Set
+        End Property
+
         Sub New()
             Call Me.New(New Dictionary(Of String, String))
         End Sub

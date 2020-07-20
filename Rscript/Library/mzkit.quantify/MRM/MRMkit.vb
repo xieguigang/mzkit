@@ -225,6 +225,7 @@ Module MRMkit
                                  <RRawVectorArgument>
                                  Optional peakwidth As Object = "8,30",
                                  Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
+                                 Optional sn_threshold As Double = 3,
                                  Optional env As Environment = Nothing) As Object
 
         Dim _peakwidth = ApiArgumentHelpers.GetDoubleRange(peakwidth, env, Nothing)
@@ -241,7 +242,8 @@ Module MRMkit
             baselineQuantile:=baselineQuantile,
             integratorTicks:=integratorTicks,
             peakAreaMethod:=peakAreaMethod,
-            peakwidth:=_peakwidth
+            peakwidth:=_peakwidth,
+            sn_threshold:=sn_threshold
         )
     End Function
 
@@ -299,6 +301,7 @@ Module MRMkit
                                    Optional rtshift As Dictionary(Of String, Double) = Nothing,
                                    Optional bsplineDensity% = 100,
                                    Optional bsplineDegree% = 2,
+                                   Optional sn_threshold As Double = 3,
                                    Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
                                    Optional env As Environment = Nothing) As Object
 
@@ -324,7 +327,8 @@ Module MRMkit
                 baselineQuantile:=baselineQuantile,
                 integratorTicks:=integratorTicks,
                 peakAreaMethod:=peakAreaMethod,
-                peakwidth:=_peakwidth
+                peakwidth:=_peakwidth,
+                sn_threshold:=sn_threshold
             )
         )
     End Function
@@ -337,6 +341,7 @@ Module MRMkit
                                    Optional angleThreshold# = 5,
                                    <RRawVectorArgument>
                                    Optional peakwidth As Object = "8,30",
+                                   Optional sn_threshold As Double = 3,
                                    Optional env As Environment = Nothing) As Object
 
         If chromatogram Is Nothing Then
@@ -354,7 +359,8 @@ Module MRMkit
             .PopulateROI(
                 baselineQuantile:=baselineQuantile,
                 angleThreshold:=angleThreshold,
-                peakwidth:=_peakwidth
+                peakwidth:=_peakwidth,
+                snThreshold:=sn_threshold
             ) _
             .ToArray
     End Function
@@ -522,6 +528,7 @@ Module MRMkit
                                   Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
                                   <RRawVectorArgument>
                                   Optional peakwidth As Object = "8,30",
+                                  Optional sn_threshold As Double = 3,
                                   Optional env As Environment = Nothing) As Object
 
         If TPAFactors Is Nothing Then
@@ -546,7 +553,8 @@ Module MRMkit
                 baselineQuantile:=baselineQuantile,
                 integratorTicks:=0,
                 peakAreaMethod:=peakAreaMethod,
-                peakwidth:=_peakwidth
+                peakwidth:=_peakwidth,
+                sn_threshold:=sn_threshold
             )
         )
     End Function
@@ -586,6 +594,7 @@ Module MRMkit
                                 <RRawVectorArgument>
                                 Optional peakwidth As Object = "8,30",
                                 Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
+                                Optional sn_threshold As Double = 3,
                                 Optional env As Environment = Nothing) As Object
 
         If TPAFactors Is Nothing Then
@@ -644,7 +653,8 @@ Module MRMkit
                 baselineQuantile:=baselineQuantile,
                 integratorTicks:=0,
                 peakAreaMethod:=peakAreaMethod,
-                peakwidth:=_peakwidth
+                peakwidth:=_peakwidth,
+                sn_threshold:=sn_threshold
             )
         )
     End Function
@@ -725,6 +735,7 @@ Module MRMkit
                                    <RRawVectorArgument>
                                    Optional peakwidth As Object = "8,30",
                                    Optional TPAFactors As Dictionary(Of String, Double) = Nothing,
+                                   Optional sn_threshold As Double = 3,
                                    Optional env As Environment = Nothing) As Object
 
         Dim _peakwidth = ApiArgumentHelpers.GetDoubleRange(peakwidth, env, "8,30")
@@ -745,7 +756,8 @@ Module MRMkit
                 baselineQuantile:=baselineQuantile,
                 integratorTicks:=0,
                 peakAreaMethod:=peakAreaMethod,
-                peakwidth:=_peakwidth
+                peakwidth:=_peakwidth,
+                sn_threshold:=sn_threshold
             ),
             rtshifts:=New Dictionary(Of String, Double)
         )

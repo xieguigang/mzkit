@@ -2,7 +2,7 @@
 
 # imports mzkit library modules
 imports ["mzkit.mrm", "mzkit.quantify.visual"] from "mzkit.quantify.dll";
-imports "mzkit.assembly" from "mzkit.dll";
+imports "assembly" from "mzkit.dll";
 
 # includes external helper script
 imports "plot_ionRaws.R";
@@ -36,11 +36,12 @@ let patternOf.Blank    = ?"--patternOfBLK" || "BLK(\s*\(\d+\))?";
 # 3. MRM.peaks
 # 4. extract.peakROI
 #
-let integrator  as string  = ?"--integrator" || "NetPeakSum";
-let isWorkCurve as boolean = ?"--workMode";
-let rt_winSize  as double  = as.numeric(?"--rt.winsize" || "3"); 
-let tolerance   as string  = ?"--mz.diff"    || "ppm:15";
-let peakwidth   as string  = ?"--peakwidth"  || "8,30";
+let integrator   as string  = ?"--integrator" || "NetPeakSum";
+let isWorkCurve  as boolean = ?"--workMode";
+let rt_winSize   as double  = as.numeric(?"--rt.winsize" || "3"); 
+let tolerance    as string  = ?"--mz.diff"      || "ppm:15";
+let peakwidth    as string  = ?"--peakwidth"    || "8,30";
+let sn_threshold as double  = ?"--sn_threshold" || "3";
 
 # Max number of points for removes in 
 # linear modelling
@@ -67,6 +68,8 @@ print(integrator);
 print("Max number of points that allowes removes automatically in the process of linear modelling:");
 print("peak width range(unit in second):");
 print(peakwidth);
+print("signal/noise ratio threshold is:");
+print(sn_threshold);
 
 if (maxNumOfPoint.delets < 0) {
 	print("It's depends on the number of reference sample");
@@ -157,7 +160,8 @@ if (wiff$hasBlankControls) {
 		removesWiffName  = TRUE,
 		angleThreshold   = angle.threshold,
         baselineQuantile = baseline.quantile,
-		peakwidth        = peakwidth
+		peakwidth        = peakwidth,
+		sn_threshold     = sn_threshold
 	);
 } else {
 	print("Target reference data have no blank controls.");
@@ -176,7 +180,8 @@ let linears.standard_curve as function(wiff_standards, subdir) {
 		baselineQuantile = baseline.quantile,
 		peakAreaMethod   = integrator,
 		TPAFactors       = NULL,
-		peakwidth        = peakwidth
+		peakwidth        = peakwidth,
+		sn_threshold     = sn_threshold
 	));
 	
 	print("Previews of the rt shifts summary in your sample reference points:");
@@ -204,6 +209,7 @@ let linears.standard_curve as function(wiff_standards, subdir) {
 		angleThreshold   = angle.threshold,
 		baselineQuantile = baseline.quantile,
 		peakwidth        = peakwidth,
+		sn_threshold     = sn_threshold,
 		rtshifts         = NULL# rt.shifts
 	);
 
@@ -265,7 +271,8 @@ let linears.standard_curve as function(wiff_standards, subdir) {
 			timeWindowSize   = rt_winSize,
 			angleThreshold   = angle.threshold,
 			baselineQuantile = baseline.quantile,
-			peakwidth        = peakwidth
+			peakwidth        = peakwidth,
+			sn_threshold     = sn_threshold
 		);
 		
 		# save peaktable for given rawfile
@@ -301,7 +308,8 @@ let doLinears as function(wiff_standards, subdir = "") {
 		timeWindowSize   = rt_winSize,
 		angleThreshold   = angle.threshold,
 		baselineQuantile = baseline.quantile,
-		peakwidth        = peakwidth
+		peakwidth        = peakwidth,
+		sn_threshold     = sn_threshold
 	) 
 	:> write.csv(file = `${dir}/${subdir}/samples.csv`);
 
@@ -317,7 +325,8 @@ let doLinears as function(wiff_standards, subdir = "") {
 			TPAFactors       = NULL,
 			angleThreshold   = angle.threshold,
 		    baselineQuantile = baseline.quantile,
-			peakwidth        = peakwidth
+			peakwidth        = peakwidth,
+			sn_threshold     = sn_threshold
 		);
 		
 		print(basename(sample.mzML));

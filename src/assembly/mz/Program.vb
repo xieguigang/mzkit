@@ -179,7 +179,6 @@ Imports stdNum = System.Math
                         ' ms1的数据总是使用raw intensity值
                         Dim peakScans = scan.ScanData(basename, raw:=True)
                         Dim ms1 = peakScans.mzInto _
-                            .ms2 _
                             .Select(Function(frag)
                                         Return New ms1_scan With {
                                             .intensity = frag.intensity,

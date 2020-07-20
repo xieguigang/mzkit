@@ -54,7 +54,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language.Default
-Imports stdNum = System.Math
+Imports Microsoft.VisualBasic.Math
 
 Namespace Chromatogram
 
@@ -128,7 +128,7 @@ Namespace Chromatogram
         Public ReadOnly Property snRatio As Double
             Get
                 Dim signal As Double = Aggregate tick In ticks Into Sum(tick.Intensity - baseline)
-                Dim sn As Double = 10 * stdNum.Log10(If(noise <= 0.0, Double.MaxValue, signal / noise))
+                Dim sn As Double = SignalProcessing.SNRatio(signal, noise)
 
                 Return sn
             End Get

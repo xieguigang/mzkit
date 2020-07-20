@@ -47,9 +47,11 @@
 
 #End Region
 
+Imports System.Reflection
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace MRM
 
@@ -67,6 +69,7 @@ Namespace MRM
         Public Property integratorTicks% = 5000
         Public Property peakAreaMethod As PeakAreaMethods = PeakAreaMethods.Integrator
         Public Property peakwidth As DoubleRange = Nothing
+        Public Property sn_threshold As Double = 3
 
         Public Property bspline_degree As Integer = 2
         Public Property bspline_density As Integer = 100
@@ -78,7 +81,8 @@ Namespace MRM
                 baselineQuantile#,
                 integratorTicks%,
                 peakAreaMethod As PeakAreaMethods,
-                peakwidth As DoubleRange)
+                peakwidth As DoubleRange,
+                sn_threshold As Double)
 
             Me.TPAFactors = TPAFactors
             Me.tolerance = tolerance
@@ -88,6 +92,7 @@ Namespace MRM
             Me.integratorTicks = integratorTicks
             Me.peakAreaMethod = peakAreaMethod
             Me.peakwidth = peakwidth
+            Me.sn_threshold = sn_threshold
         End Sub
 
         Public Shared Function GetDefaultArguments() As MRMArguments
@@ -99,8 +104,20 @@ Namespace MRM
                 baselineQuantile:=0.65,
                 integratorTicks:=5000,
                 peakAreaMethod:=PeakAreaMethods.NetPeakSum,
-                peakwidth:={8, 30}
+                peakwidth:={8, 30},
+                sn_threshold:=3
             )
+        End Function
+
+        Public Overrides Function ToString() As String
+            Dim porperties As PropertyInfo() = GetType(MRMArguments).GetProperties(BindingFlags.Public Or BindingFlags.Instance)
+            Dim json As New Dictionary(Of String, Object)
+
+            For Each p In porperties
+                json.Add(p.Name, p.GetValue(Me))
+            Next
+
+            Return json.GetJson
         End Function
     End Class
 End Namespace

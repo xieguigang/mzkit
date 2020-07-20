@@ -66,6 +66,8 @@ Namespace ASCII.MGF
                 .Select(Function(ion)
                             Dim meta As New MetaData(ion.Meta)
 
+                            meta!ion_intensity = ion.PepMass.text
+
                             Return New PeakMs2 With {
                                 .activation = meta.activation,
                                 .collisionEnergy = meta.collisionEnergy,
