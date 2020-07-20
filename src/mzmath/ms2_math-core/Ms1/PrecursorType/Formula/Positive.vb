@@ -87,7 +87,8 @@ Namespace Ms1.PrecursorType
                 {"2M+Na", New MzCalculator("[2M+Na]+", charge:=1, M:=2, adducts:=22.989218, mode:="+")},                  ' 2M + 22.989218	    1+	2.00	22.989218	1729.650998	1729.650782
                 {"2M+K", New MzCalculator("[2M+K]+", charge:=1, M:=2, adducts:=38.963158, mode:="+")},                    ' 2M + 38.963158	    1+	2.00	38.963158	1745.624938	1713.676842
                 {"2M+ACN+H", New MzCalculator("[2M+ACN+H]+", charge:=1, M:=2, adducts:=42.033823, mode:="+")},            ' 2M + 42.033823	    1+	2.00	42.033823	1748.695603	1710.606177
-                {"2M+ACN+Na", New MzCalculator("[2M+ACN+Na]+", charge:=1, M:=2, adducts:=64.015765, mode:="+")}           ' 2M + 64.015765	    1+	2.00	64.015765	1770.677545	1688.624235
+                {"2M+ACN+Na", New MzCalculator("[2M+ACN+Na]+", charge:=1, M:=2, adducts:=64.015765, mode:="+")},           ' 2M + 64.015765	    1+	2.00	64.015765	1770.677545	1688.624235
+                {"M+H-C12H20O9", New MzCalculator("[M+H-C12H20O9]+", charge:=1, M:=1, adducts:=MolWeight.Eval("+H-C12H20O9"), mode:="+")}
             }
         End Function
 
