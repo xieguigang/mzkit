@@ -78,7 +78,8 @@ Public Module UVsignalPlot
             XtickFormat:="F0",
             YtickFormat:="G2",
             title:=title,
-            ablines:=ablines
+            ablines:=ablines,
+            titleFontCSS:=CSSFont.Win7LargeBold
         )
     End Function
 End Module
