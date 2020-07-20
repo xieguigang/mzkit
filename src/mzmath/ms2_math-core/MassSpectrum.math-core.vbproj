@@ -277,6 +277,7 @@
     <Compile Include="Extensions.vb" />
     <Compile Include="Ms1\Ms1FeatureExtensions.vb" />
     <Compile Include="Ms1\PolarityData.vb" />
+    <Compile Include="Ms1\PrecursorType\Class1.vb" />
     <Compile Include="Ms1\PrecursorType\Extensions.vb" />
     <Compile Include="Ms1\PrecursorType\Formula\Negative.vb" />
     <Compile Include="Ms1\PrecursorType\Formula\Positive.vb" />
