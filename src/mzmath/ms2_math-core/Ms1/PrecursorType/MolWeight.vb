@@ -51,12 +51,13 @@ Namespace Ms1.PrecursorType
 
     Public Module MolWeight
 
-        Public Const H = 1.007276
-        Public Const C = 12.0107
+        Public Const H = 1.007825
+        Public Const C = 12
         Public Const O = 15.994915
         Public Const CH3COO = C + H * 3 + C + O + O
         Public Const H2O = H * 2 + O
         Public Const CH3 = C + H * 3
+        Public Const N = 14.003074
 
         ReadOnly weights As New Dictionary(Of String, Double) From {
             {"H", H},
@@ -71,7 +72,7 @@ Namespace Ms1.PrecursorType
             {"CH3", CH3},
             {"C", C},
             {"Na", 22.98976928},
-            {"NH4", 18.035534},
+            {"NH4", N + H * 4},
             {"K", 39.0983},
             {"F", 18.998},
             {"Li", 6.941},
