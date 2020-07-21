@@ -1,51 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::fd2f0148afac1e4f289122b2b88f8033, Rscript\Library\mzkit\Formula.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Formula
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: CreateGraph, DownloadKCF, FormulaCompositionString, FormulaFinder, LoadChemicalDescriptorsMatrix
-    '               openChemicalDescriptorDatabase, printFormulas, readKCF, readSDF, ScanFormula
-    '               SDF2KCF
-    ' 
-    ' /********************************************************************************/
+' Module Formula
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: CreateGraph, DownloadKCF, FormulaCompositionString, FormulaFinder, LoadChemicalDescriptorsMatrix
+'               openChemicalDescriptorDatabase, printFormulas, readKCF, readSDF, ScanFormula
+'               SDF2KCF
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Threading
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemistry.Model.Graph
 Imports BioNovoGene.BioDeep.Chemoinformatics
@@ -62,6 +63,8 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Imports PNNL.OMICS.MwtWinDll.MWElementAndMassRoutines
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports MwtWin = PNNL.OMICS.MwtWinDll
 Imports MwtWinFormula = PNNL.OMICS.MwtWinDll.FormulaFinder.FormulaFinderResult
@@ -127,6 +130,46 @@ Module Formula
             .ToArray
 
         Return results
+    End Function
+
+    ''' <summary>
+    ''' evaluate exact mass for the given formula strings.
+    ''' </summary>
+    ''' <param name="formula"></param>
+    ''' <returns></returns>
+    <ExportAPI("eval_formula")>
+    Public Function EvalFormula(<RRawVectorArgument> formula As Object, Optional env As Environment = Nothing) As Object
+        If formula Is Nothing Then
+            Return Nothing
+        ElseIf TypeOf formula Is list Then
+            Return DirectCast(formula, list) _
+                .AsGeneric(Of String)(env) _
+                .ToDictionary(Function(a) a.Key,
+                              Function(a)
+                                  Return CObj(ExactMass.Eval(a.Value))
+                              End Function) _
+                .DoCall(Function(list)
+                            Return New list With {
+                                .slots = list
+                            }
+                        End Function)
+        ElseIf TypeOf formula Is vector Then
+            With DirectCast(formula, vector)
+                Return New vector(
+                    names:= .getNames,
+                    input:= .data.AsObjectEnumerator(Of String).Select(AddressOf ExactMass.Eval).ToArray,
+                    type:=RType.GetRSharpType(GetType(Double)),
+                    env:=env
+                )
+            End With
+        ElseIf formula.GetType.IsArray Then
+            Return New vector(
+                input:=DirectCast(formula, Array).AsObjectEnumerator(Of String).Select(AddressOf ExactMass.Eval).ToArray,
+                type:=RType.GetRSharpType(GetType(Double))
+            )
+        Else
+            Return Internal.debug.stop(Message.InCompatibleType(GetType(String), formula.GetType, env), env)
+        End If
     End Function
 
     ''' <summary>
