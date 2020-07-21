@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::a7a00c3617d341de990d9b22e50dd766, src\mzmath\ms2_math-core\Ms1\PrecursorType\MolWeight.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module MolWeight
-    ' 
-    '         Function: Eval, Mul, Weight
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module MolWeight
+' 
+'         Function: Eval, Mul, Weight
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -51,26 +51,34 @@ Namespace Ms1.PrecursorType
 
     Public Module MolWeight
 
+        Public Const H = 1.007276
+        Public Const C = 12.0107
+        Public Const O = 15.994915
+        Public Const CH3COO = C + H * 3 + C + O + O
+        Public Const H2O = H * 2 + O
+        Public Const CH3 = C + H * 3
+
         ReadOnly weights As New Dictionary(Of String, Double) From {
-            {"H", 1.007276},
-            {"CH3COO", 59.013},
-            {"C3H7O2", 75.045},
-            {"C2H3O", 43.018},
+            {"H", H},
+            {"CH3COO", CH3COO},
+            {"CH3COOH", CH3COO + H},
+            {"C3H7O2", C * 3 + H * 7 + O * 2},
+            {"C2H3O", C * 2 + H * 3 + O},
             {"Methylcarbonyl", 43.018},
             {"Propyldioxy", 75.045},
             {"C12H20O9", 308.111},
             {"Lactal", 308.111},
-            {"CH3", 15.032528},
-            {"C", 12.0107},
+            {"CH3", CH3},
+            {"C", C},
             {"Na", 22.98976928},
             {"NH4", 18.035534},
             {"K", 39.0983},
             {"F", 18.998},
             {"Li", 6.941},
-            {"H2O", 18.01471},
+            {"H2O", H2O},
             {"ACN", 41.04746},      ' Acetonitrile (CH3CN)
-            {"CH3OH", 32.03773},
-            {"C2H3O2", 59.013},     ' Acetate
+            {"CH3OH", C + H * 3 + O + H},
+            {"C2H3O2", C * 2 + H * 3 + O * 2},     ' Acetate
             {"DMSO", 78.12089},     ' dimethyl sulfoxide (CH3)2SO 
             {"IsoProp", 60.058064}, ' Unknown
             {"Cl", 35.446},
