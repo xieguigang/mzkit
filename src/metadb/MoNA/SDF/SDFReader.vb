@@ -192,17 +192,19 @@ Public Module SDFReader
         Dim precursor_type As String = info.precursor_type
         Dim ion_mode$ = ParseIonMode(info.ion_mode, allowsUnknown:=True)
 
-        precursor_type = precursor_type.Replace("-----", "5-")
-        precursor_type = precursor_type.Replace("----", "4-")
-        precursor_type = precursor_type.Replace("---", "3-")
-        precursor_type = precursor_type.Replace("--", "2-")
+        If Not precursor_type.StringEmpty Then
+            precursor_type = precursor_type.Replace("-----", "5-")
+            precursor_type = precursor_type.Replace("----", "4-")
+            precursor_type = precursor_type.Replace("---", "3-")
+            precursor_type = precursor_type.Replace("--", "2-")
 
-        precursor_type = precursor_type.Replace("+++++", "5+")
-        precursor_type = precursor_type.Replace("++++", "4+")
-        precursor_type = precursor_type.Replace("+++", "3+")
-        precursor_type = precursor_type.Replace("++", "2+")
+            precursor_type = precursor_type.Replace("+++++", "5+")
+            precursor_type = precursor_type.Replace("++++", "4+")
+            precursor_type = precursor_type.Replace("+++", "3+")
+            precursor_type = precursor_type.Replace("++", "2+")
 
-        info.precursor_type = precursor_type
+            info.precursor_type = precursor_type
+        End If
 
         If ion_mode = "0" Then
             ion_mode = ParseIonMode(Strings.Trim(precursor_type).Last, allowsUnknown:=True)
