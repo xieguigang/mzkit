@@ -66,10 +66,10 @@ Namespace Ms1.PrecursorType
                 {"M+2ACN+2H", New MzCalculator("[M+2ACN+2H]2+", charge:=2, M:=1, adducts:=42.033823, mode:="+")},         ' M/2 + 42.033823	    2+	0.50	42.033823	 468.699268	 396.126177
                 {"M+3ACN+2H", New MzCalculator("[M+3ACN+2H]2+", charge:=2, M:=1, adducts:=62.547097, mode:="+")},         ' M/2 + 62.547097	    2+	0.50	62.547097	 489.212542	 375.612903
                 {"M+H", New MzCalculator("[M+H]+", charge:=1, M:=1, adducts:=1.007276, mode:="+")},                       '  M  + 1.007276	    1+	1.00	 1.007276	 854.338166	 875.312724
-                {"M+Li", New MzCalculator("[M+Li]+", charge:=1, M:=1, adducts:=MolWeight.Eval("+Li"), mode:="+")},
-                {"M-H2O+NH4", New MzCalculator("[M-H2O+NH4]+", charge:=1, M:=1, adducts:=MolWeight.Eval("-H2O+NH4"), mode:="+")},
-                {"M+H-2H2O", New MzCalculator("[M+H-2H2O]+", charge:=1, M:=1, adducts:=MolWeight.Eval("+H-2H2O"), mode:="+")},
-                {"M+H-H2O", New MzCalculator("[M+H-H2O]+", charge:=1, M:=1, adducts:=MolWeight.Eval("+H-H2O"), mode:="+")},
+                {"M+Li", New MzCalculator("[M+Li]+", charge:=1, M:=1, adducts:=ExactMass.Eval("+Li"), mode:="+")},
+                {"M-H2O+NH4", New MzCalculator("[M-H2O+NH4]+", charge:=1, M:=1, adducts:=ExactMass.Eval("-H2O+NH4"), mode:="+")},
+                {"M+H-2H2O", New MzCalculator("[M+H-2H2O]+", charge:=1, M:=1, adducts:=ExactMass.Eval("+H-2H2O"), mode:="+")},
+                {"M+H-H2O", New MzCalculator("[M+H-H2O]+", charge:=1, M:=1, adducts:=ExactMass.Eval("+H-H2O"), mode:="+")},
                 {"M+NH4", New MzCalculator("[M+NH4]+", charge:=1, M:=1, adducts:=18.033823, mode:="+")},                  '  M + 18.033823	    1+	1.00	18.033823	 871.364713	 858.286177
                 {"M+Na", New MzCalculator("[M+Na]+", charge:=1, M:=1, adducts:=22.989218, mode:="+")},                    '  M + 22.989218	    1+	1.00	22.989218	 876.320108	 853.330782
                 {"M+CH3OH+H", New MzCalculator("[M+CH3OH+H]+", charge:=1, M:=1, adducts:=33.033489, mode:="+")},          '  M + 33.033489	    1+	1.00	33.033489	 886.364379	 843.286511
@@ -88,7 +88,7 @@ Namespace Ms1.PrecursorType
                 {"2M+K", New MzCalculator("[2M+K]+", charge:=1, M:=2, adducts:=38.963158, mode:="+")},                    ' 2M + 38.963158	    1+	2.00	38.963158	1745.624938	1713.676842
                 {"2M+ACN+H", New MzCalculator("[2M+ACN+H]+", charge:=1, M:=2, adducts:=42.033823, mode:="+")},            ' 2M + 42.033823	    1+	2.00	42.033823	1748.695603	1710.606177
                 {"2M+ACN+Na", New MzCalculator("[2M+ACN+Na]+", charge:=1, M:=2, adducts:=64.015765, mode:="+")},           ' 2M + 64.015765	    1+	2.00	64.015765	1770.677545	1688.624235
-                {"M+H-C12H20O9", New MzCalculator("[M+H-C12H20O9]+", charge:=1, M:=1, adducts:=MolWeight.Eval("+H-C12H20O9"), mode:="+")}
+                {"M+H-C12H20O9", New MzCalculator("[M+H-C12H20O9]+", charge:=1, M:=1, adducts:=ExactMass.Eval("+H-C12H20O9"), mode:="+")}
             }
         End Function
 

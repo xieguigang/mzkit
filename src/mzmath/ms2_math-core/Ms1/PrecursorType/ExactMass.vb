@@ -49,7 +49,10 @@ Imports r = System.Text.RegularExpressions.Regex
 
 Namespace Ms1.PrecursorType
 
-    Public Module MolWeight
+    ''' <summary>
+    ''' exact mass calculator apply for LCMS analysis.
+    ''' </summary>
+    Public Module ExactMass
 
         Public Const H = 1.007825
         Public Const C = 12
@@ -89,6 +92,11 @@ Namespace Ms1.PrecursorType
             {"TFA", 113.9929}       ' Unknown
         }
 
+        ''' <summary>
+        ''' get the exact mass of the given formula symbol part
+        ''' </summary>
+        ''' <param name="symbol"></param>
+        ''' <returns></returns>
         Public Function Weight(symbol As String) As Double
             If weights.ContainsKey(symbol) Then
                 Return weights(symbol)
@@ -119,7 +127,7 @@ Namespace Ms1.PrecursorType
             Dim [next] As Char = "+"c
 
             For i As Integer = 0 To mt.Length - 1
-                Dim token = MolWeight.Mul(mt(i))
+                Dim token = ExactMass.Mul(mt(i))
                 Dim m = token.Value
                 Dim name = token.Name
 
@@ -142,12 +150,12 @@ Namespace Ms1.PrecursorType
             Return x
         End Function
 
+        Const x0 As Integer = Asc("0"c)
+        Const x9 As Integer = Asc("9"c)
+
         Private Function Mul(token As String) As NamedValue(Of Integer)
             Dim n$ = ""
             Dim len% = Strings.Len(token)
-
-            Static x0 As Integer = Asc("0")
-            Static x9 As Integer = Asc("9")
 
             For i As Integer = 0 To len - 1
                 Dim x% = Asc(token(i))
