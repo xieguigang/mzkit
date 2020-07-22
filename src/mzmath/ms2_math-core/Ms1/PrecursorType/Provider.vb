@@ -184,6 +184,8 @@ Namespace Ms1.PrecursorType
                 Case "-", "-1", "n", "neg", "negative"
                     Return -1
                 Case Else
+                    Call Console.WriteLine($"InvalidExpressionException: '{mode}'!")
+
                     If allowsUnknown Then
                         Return 0
                     Else
