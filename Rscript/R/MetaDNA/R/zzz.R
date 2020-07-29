@@ -32,18 +32,7 @@ cluster.cores <- function(cores = NULL) {
     Imports("Microsoft.VisualBasic.Data", frame = global);
     Imports("Microsoft.VisualBasic.Data.Linq", frame = global);
 
-    try({
-        list(
-            #' The molweight module is the very basic function for other modules
-            MolWeight     = MolWeight(),
-            PrecursorType = PrecursorType(),
-            #' Get precursor ion calculator
-            Calculator    = list("+" = positive(), "-" = negative())
-        ) %=>% Set;
-
-        lockBinding(sym = "Calculator", env = global);
-        lockBinding(sym = "MolWeight",  env = global);
-
+	try({
         # Run metaDNA parallel in full power
         cluster.cores(VisualBasic.R::getClusterCores(level = "full"));
     });
