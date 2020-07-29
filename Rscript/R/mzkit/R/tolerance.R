@@ -94,9 +94,11 @@ tolerance <- function(threshold = 0.3, method = c("da", "ppm")) {
     if (method[1] == "da") {
         assert = assert.deltaMass(threshold);
         is.low.resolution = TRUE;
+		massErr = function(a,b) abs(a-b);
     } else if (method[1] == "ppm") {
         assert = assert.ppm(threshold);
         is.low.resolution = FALSE;
+		massErr = function(a,b) PPM(a,b);
     } else {
         stop(sprintf("Unknown tolerance method: '%s'.", method[1]));
     }
@@ -111,6 +113,7 @@ tolerance <- function(threshold = 0.3, method = c("da", "ppm")) {
         threshold         = threshold,
         method            = method[1],
         assert            = assert,
+		massErr           = massErr,
         is.low.resolution = is.low.resolution,
         toString          = sprintf("%s m/z tolerance with threshold %s(%s).", resolution, threshold, method[1])
     );
