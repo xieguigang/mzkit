@@ -206,6 +206,8 @@ Public Module SDFReader
             info.precursor_type = precursor_type
         End If
 
+        ' unsure for these wired precursr types
+
         If ion_mode = "0" Then
             ion_mode = ParseIonMode(Strings.Trim(precursor_type).Last, allowsUnknown:=True)
 

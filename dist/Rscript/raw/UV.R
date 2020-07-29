@@ -2,21 +2,28 @@ imports ["mzML.ERS", "assembly"] from "mzkit";
 
 setwd(!script$dir);
 
-let raw as string = "D:\biodeep\B062.mzML";
-let IC as string = get_instrument(raw);
+let rawFolder as string = ?"--mzML";
+let runFile as function(raw) {
+	let output as string = `${dirname(raw)}/${basename(raw)}.cdf`;
+	let IC as string     = get_instrument(raw);
 
-if (is.null(IC)) {
-	stop("No electromagnetic radiation spectrum detector device data was found!");
-} else {
-	raw = raw.scans(raw);
+	if (is.null(IC)) {
+		warning(`No electromagnetic radiation spectrum detector device data was found in '${raw}'!`);
+	} else {
+		raw = raw.scans(raw);
+		print("electromagnetic radiation spectrum detector device is:");
+		print(IC);
+		print(raw);
+
+		raw
+		:> extract_UVsignals(instrumentId = IC)
+		# :> as.UVtime_signals
+		:> write.UVsignals(file = output)
+		;
+	}
 }
 
-print("electromagnetic radiation spectrum detector device is:");
-print(IC);
-print(raw);
+for(raw in list.files(rawFolder, pattern = "*.mzML")) {
+	runFile(raw);
+}
 
-raw
-:> extract_UVsignals(instrumentId = IC)
-:> as.UVtime_signals
-:> write.UVsignals(file = "./UVtest.cdf")
-;

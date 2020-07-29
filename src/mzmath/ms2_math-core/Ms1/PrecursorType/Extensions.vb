@@ -124,7 +124,7 @@ Namespace Ms1.PrecursorType
             If Not skipEvalAdducts Then
                 adducts = Aggregate formula As (sign%, expression$)
                           In formulas
-                          Let mass As Double = MolWeight.Eval(formula.expression)
+                          Let mass As Double = ExactMass.Eval(formula.expression)
                           Into Sum(formula.sign * mass)
             End If
 
