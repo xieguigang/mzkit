@@ -62,6 +62,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports PNNL.OMICS.MwtWinDll.MWElementAndMassRoutines
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
+Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
@@ -138,38 +139,9 @@ Module Formula
     ''' <param name="formula"></param>
     ''' <returns></returns>
     <ExportAPI("eval_formula")>
+    <RApiReturn(GetType(Double))>
     Public Function EvalFormula(<RRawVectorArgument> formula As Object, Optional env As Environment = Nothing) As Object
-        If formula Is Nothing Then
-            Return Nothing
-        ElseIf TypeOf formula Is list Then
-            Return DirectCast(formula, list) _
-                .AsGeneric(Of String)(env) _
-                .ToDictionary(Function(a) a.Key,
-                              Function(a)
-                                  Return CObj(ExactMass.Eval(a.Value))
-                              End Function) _
-                .DoCall(Function(list)
-                            Return New list With {
-                                .slots = list
-                            }
-                        End Function)
-        ElseIf TypeOf formula Is vector Then
-            With DirectCast(formula, vector)
-                Return New vector(
-                    names:= .getNames,
-                    input:= .data.AsObjectEnumerator(Of String).Select(AddressOf ExactMass.Eval).ToArray,
-                    type:=RType.GetRSharpType(GetType(Double)),
-                    env:=env
-                )
-            End With
-        ElseIf formula.GetType.IsArray Then
-            Return New vector(
-                input:=DirectCast(formula, Array).AsObjectEnumerator(Of String).Select(AddressOf ExactMass.Eval).ToArray,
-                type:=RType.GetRSharpType(GetType(Double))
-            )
-        Else
-            Return Internal.debug.stop(Message.InCompatibleType(GetType(String), formula.GetType, env), env)
-        End If
+        Return env.EvaluateFramework(Of String, Double)(formula, AddressOf ExactMass.Eval)
     End Function
 
     ''' <summary>
