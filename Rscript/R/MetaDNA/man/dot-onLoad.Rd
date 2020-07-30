@@ -7,6 +7,5 @@
 .onLoad(libname, pkgname)
 }
 \description{
-The molweight module is the very basic function for other modules
-Get precursor ion calculator
+Package loader
 }
