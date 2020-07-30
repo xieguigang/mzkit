@@ -16,6 +16,19 @@
     # enable additional language feature
     Imports("Microsoft.VisualBasic.Data", frame = global);
     Imports("Microsoft.VisualBasic.Data.Linq", frame = global);
+	
+	try({
+        list(
+            #' The molweight module is the very basic function for other modules
+            MolWeight     = MolWeight(),
+            PrecursorType = PrecursorType(),
+            #' Get precursor ion calculator
+            Calculator    = list("+" = positive(), "-" = negative())
+        ) %=>% Set;
+
+        lockBinding(sym = "Calculator", env = global);
+        lockBinding(sym = "MolWeight",  env = global);
+	});
 }
 
 .flashLoad <- function() .onLoad(NULL, NULL);
