@@ -74,7 +74,7 @@ Imports REnv = SMRUCC.Rsharp.Runtime.Internal.ConsolePrinter
 ''' <summary>
 ''' The chemical formulae toolkit
 ''' </summary>
-<Package("mzkit.formula", Category:=APICategories.UtilityTools)>
+<Package("formula", Category:=APICategories.UtilityTools)>
 Module Formula
 
     Sub New()
@@ -141,7 +141,16 @@ Module Formula
     <ExportAPI("eval_formula")>
     <RApiReturn(GetType(Double))>
     Public Function EvalFormula(<RRawVectorArgument> formula As Object, Optional env As Environment = Nothing) As Object
-        Return env.EvaluateFramework(Of String, Double)(formula, AddressOf ExactMass.Eval)
+        Return env.EvaluateFramework(Of String, Double)(
+            x:=formula,
+            eval:=Function(str)
+                      Dim composition As FormulaComposition = FormulaScanner.ScanFormula(str)
+                      Dim mass = Aggregate atom In composition.CountsByElement
+                                 Let eval As Double = ExactMass.Eval(atom.Key) * atom.Value
+                                 Into Sum(eval)
+
+                      Return mass
+                  End Function)
     End Function
 
     ''' <summary>
