@@ -178,9 +178,9 @@ Namespace Ms1.PrecursorType
         ''' </param>
         ''' <param name="mode"><see cref="ParseIonMode"/></param>
         ''' <returns></returns>
-        Public Shared Iterator Function EvaluateAll(mass#, mode As String, Optional exact_mass As Boolean = False) As IEnumerable(Of MzReport)
+        Public Shared Iterator Function EvaluateAll(mass#, mode As String, Optional exact_mass As Boolean = False) As IEnumerable(Of PrecursorInfo)
             For Each type In Provider.Calculator(mode).Values
-                Yield New MzReport With {
+                Yield New PrecursorInfo With {
                     .adduct = type.adducts,
                     .charge = type.charge,
                     .M = type.M,
@@ -191,7 +191,7 @@ Namespace Ms1.PrecursorType
         End Function
     End Class
 
-    Public Class MzReport
+    Public Class PrecursorInfo
 
         Public Property precursor_type As String
         Public Property charge As Double
@@ -204,6 +204,16 @@ Namespace Ms1.PrecursorType
         ''' <returns></returns>
         <Column(Name:="m/z")>
         Public Property mz As Double
+
+        Sub New()
+        End Sub
+
+        Sub New(mz As MzCalculator)
+            precursor_type = mz.ToString
+            charge = mz.charge
+            M = mz.M
+            adduct = mz.adducts
+        End Sub
 
         Public Overrides Function ToString() As String
             Return $"{precursor_type} m/z={mz}"

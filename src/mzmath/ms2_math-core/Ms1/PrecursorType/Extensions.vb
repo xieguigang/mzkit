@@ -197,7 +197,7 @@ Namespace Ms1.PrecursorType
         ''' <param name="report"></param>
         ''' <param name="output"></param>
         <Extension>
-        Public Sub PrintTable(report As IEnumerable(Of MzReport), output As TextWriter)
+        Public Sub PrintTable(report As IEnumerable(Of PrecursorInfo), output As TextWriter)
             Call output.WriteLine("<table style='width:100% font-size:0.9em;'>")
             Call output.WriteLine(html:=
                  <thead>
@@ -212,7 +212,7 @@ Namespace Ms1.PrecursorType
 
             Call output.WriteLine("<tbody>")
 
-            For Each type As MzReport In report
+            For Each type As PrecursorInfo In report
                 Call output.WriteLine(
                     <tr>
                         <td><%= type.precursor_type %></td>

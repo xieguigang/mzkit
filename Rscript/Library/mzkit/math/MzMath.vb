@@ -68,7 +68,7 @@ Imports REnv = SMRUCC.Rsharp.Runtime
 Module MzMath
 
     Sub New()
-        Call REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of MzReport())(AddressOf printMzTable)
+        Call REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of PrecursorInfo())(AddressOf printMzTable)
 
         Call REnv.Internal.Object.Converts.addHandler(GetType(PeakFeature()), AddressOf peaktable)
         Call REnv.Internal.Object.Converts.addHandler(GetType(MzGroup), AddressOf XICTable)
@@ -105,7 +105,7 @@ Module MzMath
     End Function
 
     Private Function printMzTable(obj As Object) As String
-        Return DirectCast(obj, MzReport()).Print(addBorder:=False)
+        Return DirectCast(obj, PrecursorInfo()).Print(addBorder:=False)
     End Function
 
     ''' <summary>
@@ -115,7 +115,7 @@ Module MzMath
     ''' <param name="mode"></param>
     ''' <returns></returns>
     <ExportAPI("mz")>
-    Public Function mz(mass As Double, Optional mode As Object = "+") As MzReport()
+    Public Function mz(mass As Double, Optional mode As Object = "+") As PrecursorInfo()
         Return MzCalculator.EvaluateAll(mass, Scripting.ToString(mode, "+")).ToArray
     End Function
 
@@ -126,7 +126,7 @@ Module MzMath
     ''' <param name="mode"></param>
     ''' <returns></returns>
     <ExportAPI("exact_mass")>
-    Public Function exact_mass(mz As Double, Optional mode As Object = "+") As MzReport()
+    Public Function exact_mass(mz As Double, Optional mode As Object = "+") As PrecursorInfo()
         Return MzCalculator.EvaluateAll(mz, Scripting.ToString(mode, "+"), True).ToArray
     End Function
 
