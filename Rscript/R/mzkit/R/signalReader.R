@@ -9,7 +9,7 @@ readAllSignals = function(cdf, verbose = TRUE) {
 	nc <- nc_open(cdf);
 	
 	if (verbose) {
-		print(paste("The file has",nc$nvars,"variables,",nc$ndims,"dimensions and",nc$natts,"NetCDF attributes"));
+		print(paste("The file [", cdf ,"]has",nc$nvars,"variables,",nc$ndims,"dimensions and",nc$natts,"NetCDF attributes"));
 	}
 	
 	signals   = ncatt_get(nc, 0)$signals;
