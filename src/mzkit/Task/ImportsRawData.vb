@@ -55,6 +55,8 @@ Public Class ImportsRawData
 
             cache.GlobalAttributes(New attribute With {.name = NameOf(nscans), .type = CDFDataTypes.INT, .value = nscans})
             raw.scans = nscans
+
+            Call showProgress("Write cache data...")
         End Using
     End Sub
 

@@ -100,6 +100,7 @@
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -121,6 +122,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="forms\frmRawViewer.Designer.vb">
+      <DependentUpon>frmRawViewer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="forms\frmRawViewer.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\frmMain.Designer.vb">
+      <DependentUpon>frmMain.vb</DependentUpon>
+    </Compile>
+    <Compile Include="forms\frmMain.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="forms\tools\frmCalculator.Designer.vb">
       <DependentUpon>frmCalculator.vb</DependentUpon>
     </Compile>
@@ -133,12 +146,6 @@
     <Compile Include="forms\frmProgress.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="forms\frmMain.Designer.vb">
-      <DependentUpon>frmMain.vb</DependentUpon>
-    </Compile>
-    <Compile Include="forms\frmMain.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="forms\frmSplashScreen.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -146,6 +153,7 @@
       <DependentUpon>frmSplashScreen.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Globals.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -164,14 +172,17 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="forms\frmMain.resx">
-      <DependentUpon>frmMain.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="forms\frmProgress.resx">
       <DependentUpon>frmProgress.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="forms\frmRawViewer.resx">
+      <DependentUpon>frmRawViewer.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="forms\frmSplashScreen.resx">
       <DependentUpon>frmSplashScreen.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\frmMain.resx">
+      <DependentUpon>frmMain.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="forms\tools\frmCalculator.resx">
       <DependentUpon>frmCalculator.vb</DependentUpon>
