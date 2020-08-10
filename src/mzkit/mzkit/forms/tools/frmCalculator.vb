@@ -49,4 +49,8 @@ Public Class frmCalculator
             End If
         End Using
     End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Process.Start($"https://query.biodeep.cn/search?expression=[mass]~0.3&category=metabolite&mass={TextBox1.Text}")
+    End Sub
 End Class
