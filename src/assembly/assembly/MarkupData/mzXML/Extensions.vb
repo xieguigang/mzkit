@@ -97,7 +97,8 @@ Namespace MarkupData.mzXML
             Return (name, peaks)
         End Function
 
-        <Extension> Private Function getName(scan As scan) As String
+        <Extension>
+        Public Function getName(scan As scan) As String
             Dim level$ = If(scan.msLevel = 1, "MS1", "MS/MS")
             Return $"[{level}] {scan.scanType} Scan, ({scan.polarity}) mz={scan.precursorMz.value}, into={scan.precursorMz.precursorIntensity} / retentionTime={scan.retentionTime}"
         End Function
