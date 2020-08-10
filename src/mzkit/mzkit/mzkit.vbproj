@@ -83,7 +83,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|x64'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\dist\bin\</OutputPath>
+    <OutputPath>..\..\..\dist\bin\</OutputPath>
     <DocumentationFile>mzkit.xml</DocumentationFile>
     <Optimize>false</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
@@ -121,6 +121,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="forms\tools\frmCalculator.Designer.vb">
+      <DependentUpon>frmCalculator.vb</DependentUpon>
+    </Compile>
+    <Compile Include="forms\tools\frmCalculator.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="forms\frmProgress.Designer.vb">
       <DependentUpon>frmProgress.vb</DependentUpon>
     </Compile>
@@ -166,6 +172,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="forms\frmSplashScreen.resx">
       <DependentUpon>frmSplashScreen.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\tools\frmCalculator.resx">
+      <DependentUpon>frmCalculator.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

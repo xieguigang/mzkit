@@ -11,4 +11,8 @@
             End If
         End Using
     End Sub
+
+    Private Sub MzCalculatorToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MzCalculatorToolStripMenuItem.Click
+        Call New frmCalculator().ShowDialog()
+    End Sub
 End Class
