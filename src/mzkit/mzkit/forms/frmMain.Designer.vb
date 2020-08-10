@@ -1,6 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿Imports VisualPlus.Toolkit.Dialogs
+
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmMain
-    Inherits System.Windows.Forms.Form
+    ' Inherits System.Windows.Forms.Form
+    Inherits VisualForm
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -301,37 +304,37 @@ Partial Class frmMain
         'NewWindowToolStripMenuItem
         '
         Me.NewWindowToolStripMenuItem.Name = "NewWindowToolStripMenuItem"
-        Me.NewWindowToolStripMenuItem.Size = New System.Drawing.Size(150, 22)
+        Me.NewWindowToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.NewWindowToolStripMenuItem.Text = "&New Window"
         '
         'CascadeToolStripMenuItem
         '
         Me.CascadeToolStripMenuItem.Name = "CascadeToolStripMenuItem"
-        Me.CascadeToolStripMenuItem.Size = New System.Drawing.Size(150, 22)
+        Me.CascadeToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.CascadeToolStripMenuItem.Text = "&Cascade"
         '
         'TileVerticalToolStripMenuItem
         '
         Me.TileVerticalToolStripMenuItem.Name = "TileVerticalToolStripMenuItem"
-        Me.TileVerticalToolStripMenuItem.Size = New System.Drawing.Size(150, 22)
+        Me.TileVerticalToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.TileVerticalToolStripMenuItem.Text = "Tile &Vertical"
         '
         'TileHorizontalToolStripMenuItem
         '
         Me.TileHorizontalToolStripMenuItem.Name = "TileHorizontalToolStripMenuItem"
-        Me.TileHorizontalToolStripMenuItem.Size = New System.Drawing.Size(150, 22)
+        Me.TileHorizontalToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.TileHorizontalToolStripMenuItem.Text = "Tile &Horizontal"
         '
         'CloseAllToolStripMenuItem
         '
         Me.CloseAllToolStripMenuItem.Name = "CloseAllToolStripMenuItem"
-        Me.CloseAllToolStripMenuItem.Size = New System.Drawing.Size(150, 22)
+        Me.CloseAllToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.CloseAllToolStripMenuItem.Text = "C&lose All"
         '
         'ArrangeIconsToolStripMenuItem
         '
         Me.ArrangeIconsToolStripMenuItem.Name = "ArrangeIconsToolStripMenuItem"
-        Me.ArrangeIconsToolStripMenuItem.Size = New System.Drawing.Size(150, 22)
+        Me.ArrangeIconsToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ArrangeIconsToolStripMenuItem.Text = "&Arrange Icons"
         '
         'HelpMenu
@@ -345,7 +348,7 @@ Partial Class frmMain
         '
         Me.ContentsToolStripMenuItem.Name = "ContentsToolStripMenuItem"
         Me.ContentsToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.F1), System.Windows.Forms.Keys)
-        Me.ContentsToolStripMenuItem.Size = New System.Drawing.Size(168, 22)
+        Me.ContentsToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ContentsToolStripMenuItem.Text = "&Contents"
         '
         'IndexToolStripMenuItem
@@ -353,7 +356,7 @@ Partial Class frmMain
         Me.IndexToolStripMenuItem.Image = CType(resources.GetObject("IndexToolStripMenuItem.Image"), System.Drawing.Image)
         Me.IndexToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Black
         Me.IndexToolStripMenuItem.Name = "IndexToolStripMenuItem"
-        Me.IndexToolStripMenuItem.Size = New System.Drawing.Size(168, 22)
+        Me.IndexToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.IndexToolStripMenuItem.Text = "&Index"
         '
         'SearchToolStripMenuItem
@@ -361,18 +364,18 @@ Partial Class frmMain
         Me.SearchToolStripMenuItem.Image = CType(resources.GetObject("SearchToolStripMenuItem.Image"), System.Drawing.Image)
         Me.SearchToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Black
         Me.SearchToolStripMenuItem.Name = "SearchToolStripMenuItem"
-        Me.SearchToolStripMenuItem.Size = New System.Drawing.Size(168, 22)
+        Me.SearchToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.SearchToolStripMenuItem.Text = "&Search"
         '
         'ToolStripSeparator8
         '
         Me.ToolStripSeparator8.Name = "ToolStripSeparator8"
-        Me.ToolStripSeparator8.Size = New System.Drawing.Size(165, 6)
+        Me.ToolStripSeparator8.Size = New System.Drawing.Size(177, 6)
         '
         'AboutToolStripMenuItem
         '
         Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
-        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(168, 22)
+        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.AboutToolStripMenuItem.Text = "&About ..."
         '
         'ToolStrip
@@ -467,14 +470,140 @@ Partial Class frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Border.Color = System.Drawing.Color.FromArgb(CType(CType(180, Byte), Integer), CType(CType(180, Byte), Integer), CType(CType(180, Byte), Integer))
+        Me.Border.HoverColor = System.Drawing.Color.FromArgb(CType(CType(120, Byte), Integer), CType(CType(183, Byte), Integer), CType(CType(230, Byte), Integer))
+        Me.Border.HoverVisible = True
+        Me.Border.Rounding = 6
+        Me.Border.Thickness = 3
+        Me.Border.Type = VisualPlus.Enumerators.ShapeTypes.Rectangle
+        Me.Border.Visible = False
         Me.ClientSize = New System.Drawing.Size(1260, 772)
+        '
+        '
+        '
+        Me.ControlBox.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.ControlBox.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.ControlBox.HelpButton.BackColorState.Disabled = System.Drawing.Color.Transparent
+        Me.ControlBox.HelpButton.BackColorState.Enabled = System.Drawing.Color.Transparent
+        Me.ControlBox.HelpButton.BackColorState.Hover = System.Drawing.Color.FromArgb(CType(CType(190, Byte), Integer), CType(CType(186, Byte), Integer), CType(CType(186, Byte), Integer))
+        Me.ControlBox.HelpButton.BackColorState.Pressed = System.Drawing.Color.FromArgb(CType(CType(105, Byte), Integer), CType(CType(105, Byte), Integer), CType(CType(105, Byte), Integer))
+        Me.ControlBox.HelpButton.BoxType = VisualPlus.Toolkit.VisualBase.ControlBoxButton.ControlBoxType.[Default]
+        Me.ControlBox.HelpButton.ForeColorState.Disabled = System.Drawing.Color.FromArgb(CType(CType(105, Byte), Integer), CType(CType(105, Byte), Integer), CType(CType(105, Byte), Integer))
+        Me.ControlBox.HelpButton.ForeColorState.Enabled = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.ControlBox.HelpButton.ForeColorState.Hover = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.ControlBox.HelpButton.ForeColorState.Pressed = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.ControlBox.HelpButton.Image = CType(resources.GetObject("resource.Image"), System.Drawing.Image)
+        Me.ControlBox.HelpButton.Location = New System.Drawing.Point(0, 0)
+        Me.ControlBox.HelpButton.MouseState = VisualPlus.Enumerators.MouseStates.Normal
+        Me.ControlBox.HelpButton.Name = ""
+        Me.ControlBox.HelpButton.OffsetLocation = New System.Drawing.Point(0, 1)
+        Me.ControlBox.HelpButton.Size = New System.Drawing.Size(24, 25)
+        Me.ControlBox.HelpButton.TabIndex = 0
+        Me.ControlBox.HelpButton.Text = "s"
+        Me.ControlBox.HelpButton.TextStyle.Disabled = System.Drawing.Color.FromArgb(CType(CType(131, Byte), Integer), CType(CType(129, Byte), Integer), CType(CType(129, Byte), Integer))
+        Me.ControlBox.HelpButton.TextStyle.Enabled = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.ControlBox.HelpButton.TextStyle.Hover = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.ControlBox.HelpButton.TextStyle.Pressed = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.ControlBox.HelpButton.TextStyle.TextAlignment = System.Drawing.StringAlignment.Center
+        Me.ControlBox.HelpButton.TextStyle.TextLineAlignment = System.Drawing.StringAlignment.Center
+        Me.ControlBox.HelpButton.TextStyle.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit
+        Me.ControlBox.HelpButton.Visible = False
+        Me.ControlBox.Location = New System.Drawing.Point(200, 4)
+        '
+        '
+        '
+        Me.ControlBox.MaximizeButton.BackColorState.Disabled = System.Drawing.Color.Transparent
+        Me.ControlBox.MaximizeButton.BackColorState.Enabled = System.Drawing.Color.Transparent
+        Me.ControlBox.MaximizeButton.BackColorState.Hover = System.Drawing.Color.FromArgb(CType(CType(190, Byte), Integer), CType(CType(186, Byte), Integer), CType(CType(186, Byte), Integer))
+        Me.ControlBox.MaximizeButton.BackColorState.Pressed = System.Drawing.Color.FromArgb(CType(CType(105, Byte), Integer), CType(CType(105, Byte), Integer), CType(CType(105, Byte), Integer))
+        Me.ControlBox.MaximizeButton.BoxType = VisualPlus.Toolkit.VisualBase.ControlBoxButton.ControlBoxType.[Default]
+        Me.ControlBox.MaximizeButton.ForeColorState.Disabled = System.Drawing.Color.FromArgb(CType(CType(105, Byte), Integer), CType(CType(105, Byte), Integer), CType(CType(105, Byte), Integer))
+        Me.ControlBox.MaximizeButton.ForeColorState.Enabled = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.ControlBox.MaximizeButton.ForeColorState.Hover = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.ControlBox.MaximizeButton.ForeColorState.Pressed = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.ControlBox.MaximizeButton.Image = CType(resources.GetObject("resource.Image1"), System.Drawing.Image)
+        Me.ControlBox.MaximizeButton.Location = New System.Drawing.Point(0, 0)
+        Me.ControlBox.MaximizeButton.MouseState = VisualPlus.Enumerators.MouseStates.Normal
+        Me.ControlBox.MaximizeButton.Name = ""
+        Me.ControlBox.MaximizeButton.OffsetLocation = New System.Drawing.Point(1, 1)
+        Me.ControlBox.MaximizeButton.Size = New System.Drawing.Size(24, 25)
+        Me.ControlBox.MaximizeButton.TabIndex = 2
+        Me.ControlBox.MaximizeButton.Text = "1"
+        Me.ControlBox.MaximizeButton.TextStyle.Disabled = System.Drawing.Color.FromArgb(CType(CType(131, Byte), Integer), CType(CType(129, Byte), Integer), CType(CType(129, Byte), Integer))
+        Me.ControlBox.MaximizeButton.TextStyle.Enabled = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.ControlBox.MaximizeButton.TextStyle.Hover = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.ControlBox.MaximizeButton.TextStyle.Pressed = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.ControlBox.MaximizeButton.TextStyle.TextAlignment = System.Drawing.StringAlignment.Center
+        Me.ControlBox.MaximizeButton.TextStyle.TextLineAlignment = System.Drawing.StringAlignment.Center
+        Me.ControlBox.MaximizeButton.TextStyle.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit
+        Me.ControlBox.MaximizeButton.Visible = False
+        '
+        '
+        '
+        Me.ControlBox.MinimizeButton.BackColorState.Disabled = System.Drawing.Color.Transparent
+        Me.ControlBox.MinimizeButton.BackColorState.Enabled = System.Drawing.Color.Transparent
+        Me.ControlBox.MinimizeButton.BackColorState.Hover = System.Drawing.Color.FromArgb(CType(CType(190, Byte), Integer), CType(CType(186, Byte), Integer), CType(CType(186, Byte), Integer))
+        Me.ControlBox.MinimizeButton.BackColorState.Pressed = System.Drawing.Color.FromArgb(CType(CType(105, Byte), Integer), CType(CType(105, Byte), Integer), CType(CType(105, Byte), Integer))
+        Me.ControlBox.MinimizeButton.BoxType = VisualPlus.Toolkit.VisualBase.ControlBoxButton.ControlBoxType.[Default]
+        Me.ControlBox.MinimizeButton.ForeColorState.Disabled = System.Drawing.Color.FromArgb(CType(CType(105, Byte), Integer), CType(CType(105, Byte), Integer), CType(CType(105, Byte), Integer))
+        Me.ControlBox.MinimizeButton.ForeColorState.Enabled = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.ControlBox.MinimizeButton.ForeColorState.Hover = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.ControlBox.MinimizeButton.ForeColorState.Pressed = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.ControlBox.MinimizeButton.Image = CType(resources.GetObject("resource.Image2"), System.Drawing.Image)
+        Me.ControlBox.MinimizeButton.Location = New System.Drawing.Point(0, 0)
+        Me.ControlBox.MinimizeButton.MouseState = VisualPlus.Enumerators.MouseStates.Normal
+        Me.ControlBox.MinimizeButton.Name = ""
+        Me.ControlBox.MinimizeButton.OffsetLocation = New System.Drawing.Point(2, 0)
+        Me.ControlBox.MinimizeButton.Size = New System.Drawing.Size(24, 25)
+        Me.ControlBox.MinimizeButton.TabIndex = 1
+        Me.ControlBox.MinimizeButton.Text = "0"
+        Me.ControlBox.MinimizeButton.TextStyle.Disabled = System.Drawing.Color.FromArgb(CType(CType(131, Byte), Integer), CType(CType(129, Byte), Integer), CType(CType(129, Byte), Integer))
+        Me.ControlBox.MinimizeButton.TextStyle.Enabled = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.ControlBox.MinimizeButton.TextStyle.Hover = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.ControlBox.MinimizeButton.TextStyle.Pressed = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.ControlBox.MinimizeButton.TextStyle.TextAlignment = System.Drawing.StringAlignment.Center
+        Me.ControlBox.MinimizeButton.TextStyle.TextLineAlignment = System.Drawing.StringAlignment.Center
+        Me.ControlBox.MinimizeButton.TextStyle.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit
+        Me.ControlBox.MinimizeButton.Visible = False
+        Me.ControlBox.MouseState = VisualPlus.Enumerators.MouseStates.Normal
+        Me.ControlBox.Name = ""
+        Me.ControlBox.Size = New System.Drawing.Size(24, 25)
+        Me.ControlBox.TabIndex = 0
+        Me.ControlBox.TextStyle.Disabled = System.Drawing.Color.FromArgb(CType(CType(131, Byte), Integer), CType(CType(129, Byte), Integer), CType(CType(129, Byte), Integer))
+        Me.ControlBox.TextStyle.Enabled = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.ControlBox.TextStyle.Hover = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.ControlBox.TextStyle.Pressed = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.ControlBox.TextStyle.TextAlignment = System.Drawing.StringAlignment.Center
+        Me.ControlBox.TextStyle.TextLineAlignment = System.Drawing.StringAlignment.Center
+        Me.ControlBox.TextStyle.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit
         Me.Controls.Add(Me.ToolStrip)
         Me.Controls.Add(Me.MenuStrip)
         Me.Controls.Add(Me.StatusStrip)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.Image.Border.Color = System.Drawing.Color.FromArgb(CType(CType(180, Byte), Integer), CType(CType(180, Byte), Integer), CType(CType(180, Byte), Integer))
+        Me.Image.Border.HoverColor = System.Drawing.Color.FromArgb(CType(CType(120, Byte), Integer), CType(CType(183, Byte), Integer), CType(CType(230, Byte), Integer))
+        Me.Image.Border.HoverVisible = False
+        Me.Image.Border.Rounding = 6
+        Me.Image.Border.Thickness = 1
+        Me.Image.Border.Type = VisualPlus.Enumerators.ShapeTypes.Rounded
+        Me.Image.Border.Visible = False
+        Me.Image.Image = CType(resources.GetObject("resource.Image3"), System.Drawing.Bitmap)
+        Me.Image.Point = New System.Drawing.Point(5, 7)
+        Me.Image.Size = New System.Drawing.Size(16, 16)
+        Me.Image.Visible = False
         Me.IsMdiContainer = True
+        Me.Location = New System.Drawing.Point(0, 0)
+        Me.Magnetic = True
         Me.MainMenuStrip = Me.MenuStrip
         Me.Name = "frmMain"
+        Me.ShowIcon = False
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "MDIParent1"
+        Me.TransparencyKey = System.Drawing.Color.Empty
+        Me.WindowTitleBarVisible = False
         Me.MenuStrip.ResumeLayout(False)
         Me.MenuStrip.PerformLayout()
         Me.ToolStrip.ResumeLayout(False)
