@@ -250,6 +250,8 @@
     <None Include="Resources\RE4As8m.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\header-foreground-image.png" />
+    <None Include="Resources\header-background-image.png" />
     <Content Include="vs.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
