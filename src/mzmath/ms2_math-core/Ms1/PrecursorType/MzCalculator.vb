@@ -203,7 +203,7 @@ Namespace Ms1.PrecursorType
         ''' </summary>
         ''' <returns></returns>
         <Column(Name:="m/z")>
-        Public Property mz As Double
+        Public Property mz As String
 
         Sub New()
         End Sub
