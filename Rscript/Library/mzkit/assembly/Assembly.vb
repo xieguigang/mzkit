@@ -206,11 +206,19 @@ Module Assembly
 
         If ions.GetType() Is GetType(pipeline) Then
             Using mgfWriter As StreamWriter = file.OpenWriter(Encodings.ASCII, append:=False)
-                For Each ionPeak As PeakMs2 In DirectCast(ions, pipeline).populates(Of PeakMs2)(env)
-                    Call ionPeak _
-                        .MgfIon _
-                        .WriteAsciiMgf(mgfWriter, relativeInto)
-                Next
+                Dim pipeStream As pipeline = DirectCast(ions, pipeline)
+
+                If Not pipeStream.elementType Is Nothing AndAlso pipeStream.elementType Like GetType(Ions) Then
+                    For Each ion As Ions In pipeStream.populates(Of Ions)(env)
+                        Call ion.WriteAsciiMgf(mgfWriter, relativeInto)
+                    Next
+                Else
+                    For Each ionPeak As PeakMs2 In pipeStream.populates(Of PeakMs2)(env)
+                        Call ionPeak _
+                            .MgfIon _
+                            .WriteAsciiMgf(mgfWriter, relativeInto)
+                    Next
+                End If
             End Using
         ElseIf ions.GetType Is GetType(LibraryMatrix) Then
             Using mgf As StreamWriter = file.OpenWriter
