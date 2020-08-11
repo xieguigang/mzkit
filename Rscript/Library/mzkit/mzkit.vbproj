@@ -194,7 +194,7 @@
   <ItemGroup>
     <Compile Include="assembly\Assembly.vb" />
     <Compile Include="assembly\ERS.vb" />
-    <Compile Include="math\MzMath.vb" />
+    <Compile Include="math\Math.vb" />
     <Compile Include="assembly\ProteoWizard.vb" />
     <Compile Include="math\Formula.vb" />
     <Compile Include="Massbank.vb" />

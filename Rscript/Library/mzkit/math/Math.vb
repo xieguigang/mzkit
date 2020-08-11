@@ -138,7 +138,12 @@ Module MzMath
     ''' <returns></returns>
     <ExportAPI("mz.deco")>
     <RApiReturn(GetType(PeakFeature()))>
-    Public Function mz_deco(<RRawVectorArgument> ms1 As Object, Optional tolerance As Object = "ppm:20", Optional baseline# = 0.65, Optional env As Environment = Nothing) As Object
+    Public Function mz_deco(<RRawVectorArgument>
+                            ms1 As Object,
+                            Optional tolerance As Object = "ppm:20",
+                            Optional baseline# = 0.65,
+                            Optional env As Environment = Nothing) As Object
+
         Dim ms1_scans As IEnumerable(Of IMs1Scan) = ms1Scans(ms1)
         Dim errors As [Variant](Of Tolerance, Message) = Math.getTolerance(tolerance, env)
 
