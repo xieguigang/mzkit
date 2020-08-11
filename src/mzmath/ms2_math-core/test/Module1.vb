@@ -71,7 +71,7 @@ Module Module1
         Dim html As New StringBuilder
 
         Using dev As New StringWriter(html)
-            Call MzCalculator.Calculate(mass, "-").PrintTable(dev)
+            Call MzCalculator.EvaluateAll(mass, "-").PrintTable(dev)
         End Using
 
         Dim display As String = html.ToString

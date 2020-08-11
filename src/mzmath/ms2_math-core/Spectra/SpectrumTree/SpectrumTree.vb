@@ -59,11 +59,21 @@ Imports stdNum = System.Math
 Namespace Spectra
 
     ''' <summary>
+    ''' The spectral network (molecular network, MN) concept is
+    ''' based on the organization And visualization of tandem MS
+    ''' information via spectral similarity (homologous MS2 fragmentations).
+    ''' 
+    ''' Structurally related compounds usually share
+    ''' similar MS/MS spectra, And GNPS groups the similar spectra
+    ''' in a network-based format, allowing the visual exploration of
+    ''' identical And analogous molecules.
+    ''' </summary>
+    ''' <remarks>
     ''' 因为在标准品实验之中仅包含有标准品以及流动相物质
     ''' 标准品的质谱碎片理论上应该是数量最多的,所以在这里
     ''' 通过二叉树对所有的质谱图进行聚类,取出成员最多的簇
     ''' 作为候选的标准品质谱图
-    ''' </summary>
+    ''' </remarks>
     Public Class SpectrumTreeCluster
 
         Dim tree As AVLTree(Of PeakMs2, PeakMs2)
