@@ -202,5 +202,13 @@ Namespace Ms1
                 Return PPM(value:=tolerance)
             End If
         End Function
+
+        Public Shared Function ToScript(err As Tolerance) As String
+            If TypeOf err Is DAmethod Then
+                Return $"da:{err.DeltaTolerance}"
+            Else
+                Return $"ppm:{err.DeltaTolerance}"
+            End If
+        End Function
     End Class
 End Namespace
