@@ -141,9 +141,41 @@ Namespace Spectra
         End Function
 
         ''' <summary>
-        ''' xy分别为预测或者标准品的结果数据，无顺序之分
+        ''' 计算两个质谱图之间的杰卡德相似性系数
         ''' </summary>
         ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        ''' <param name="tolerance"></param>
+        ''' <param name="topSet"></param>
+        ''' <returns></returns>
+        Public Function JaccardIndex(x As ms2(), y As ms2(), tolerance As Tolerance, Optional topSet As Integer = 5) As Double
+            Dim mzx As Double() = x.OrderByDescending(Function(a) a.intensity).Take(topSet).Select(Function(a) a.mz).ToArray
+            Dim mzy As Double() = y.OrderByDescending(Function(a) a.intensity).Take(topSet).Select(Function(a) a.mz).ToArray
+            Dim union As Double() = mzx _
+                .JoinIterates(mzy) _
+                .GroupBy(Function(mz) mz, tolerance.Equals) _
+                .Select(Function(a) Val(a.name)) _
+                .ToArray
+            Dim intersects As New List(Of Double)
+
+            For Each xi In mzx
+                For Each yi In mzy
+                    If tolerance(xi, yi) Then
+                        intersects.Add(xi)
+                        Exit For
+                    End If
+                Next
+            Next
+
+            Return intersects.Count / union.Length
+        End Function
+
+        ''' <summary>
+        ''' xy分别为预测或者标准品的结果数据，无顺序之分，并且这两个质谱图数据应该是经过centroid化之后的
+        ''' </summary>
+        ''' <param name="x">
+        ''' 
+        ''' </param>
         ''' <param name="y"></param>
         ''' <returns></returns>
         ''' 
