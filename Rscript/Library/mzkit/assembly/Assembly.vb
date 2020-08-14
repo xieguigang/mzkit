@@ -234,6 +234,16 @@ Module Assembly
                         .WriteAsciiMgf(mgfWriter, relativeInto)
                 Next
             End Using
+        ElseIf ions.GetType Is GetType(ions()) Then
+            Using mgfWriter As StreamWriter = file.OpenWriter(Encodings.ASCII, append:=False)
+                For Each ion As Ions In DirectCast(ions, Ions())
+                    Call ion.WriteAsciiMgf(mgfWriter, relativeInto)
+                Next
+            End Using
+        ElseIf TypeOf ions Is Ions Then
+            Using mgfWriter As StreamWriter = file.OpenWriter(Encodings.ASCII, append:=False)
+                Call DirectCast(ions, Ions).WriteAsciiMgf(mgfWriter, relativeInto)
+            End Using
         ElseIf ions.GetType Is GetType(PeakMs2) Then
             Using mgfWriter As StreamWriter = file.OpenWriter(Encodings.ASCII, append:=False)
                 Call DirectCast(ions, PeakMs2) _
