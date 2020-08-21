@@ -108,11 +108,50 @@
 			</Command.LargeImages>
 		</Command>
 
+		<Command Name="cmdTabMain"
+				 Id="1011"
+				 LabelTitle="Main">
+		</Command>
 
+
+		<Command Name="cmdHelpButton"
+				 Id="1016">
+		</Command>
+		
 	</Application.Commands>
 
 	<Application.Views>
 		<Ribbon>
+			<Ribbon.HelpButton>
+				<HelpButton CommandName="cmdHelpButton" />
+			</Ribbon.HelpButton>
+			
+				<Ribbon.Tabs>
+				<Tab CommandName="cmdTabMain">
+					<!-- scary part -->
+					<Tab.ScalingPolicy>
+						<ScalingPolicy>
+							<ScalingPolicy.IdealSizes>
+								<Scale Group="cmdGroupFileActions" Size="Large" />
+								<Scale Group="cmdGroupExit" Size="Large" />
+							</ScalingPolicy.IdealSizes>
+							<Scale Group="cmdGroupFileActions" Size="Medium" />
+						</ScalingPolicy>
+					</Tab.ScalingPolicy>
+
+					<!-- useful part -->
+					<Group CommandName="cmdGroupFileActions" SizeDefinition="ThreeButtons">
+						<Button CommandName="cmdButtonNew" />
+						<Button CommandName="cmdButtonOpen" />
+						<Button CommandName="cmdButtonSave" />
+					</Group>
+					<Group CommandName="cmdGroupExit" SizeDefinition="OneButton">
+						<Button CommandName="cmdButtonExit" />
+					</Group>
+				</Tab>
+
+			</Ribbon.Tabs>
+			
 			<Ribbon.ApplicationMenu>
 				<ApplicationMenu>
 

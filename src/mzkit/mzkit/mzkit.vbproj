@@ -248,6 +248,7 @@
     <None Include="Resources\RE4As8m.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="RibbonItems.Designer.cs" />
     <Content Include="RibbonMarkup.h" />
     <Content Include="RibbonMarkup.xml" />
     <None Include="Resources\header-foreground-image.png" />

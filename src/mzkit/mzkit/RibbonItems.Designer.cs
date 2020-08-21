@@ -13,59 +13,63 @@ using RibbonLib;
 using RibbonLib.Controls;
 using RibbonLib.Interop;
 
-namespace RibbonLib.Controls
+partial class RibbonItems
 {
-    partial class RibbonItems
+    private static class Cmd
     {
-        private static class Cmd
-        {
-            public const uint cmdMenuGroupFile = 1005;
-            public const uint cmdButtonNew = 1001;
-            public const uint cmdButtonOpen = 1002;
-            public const uint cmdButtonSave = 1003;
-            public const uint cmdDropDownButton = 1007;
-            public const uint cmdButtonDropA = 1008;
-            public const uint cmdButtonDropB = 1009;
-            public const uint cmdButtonDropC = 1010;
-            public const uint cmdMenuGroupExit = 1006;
-            public const uint cmdButtonExit = 1004;
-        }
-
-        // ContextPopup CommandName
-
-        private static bool initialized;
-
-        public Ribbon Ribbon { get; private set; }
-        public RibbonMenuGroup MenuGroupFile { get; private set; }
-        public RibbonButton ButtonNew { get; private set; }
-        public RibbonButton ButtonOpen { get; private set; }
-        public RibbonButton ButtonSave { get; private set; }
-        public RibbonDropDownButton DropDownButton { get; private set; }
-        public RibbonButton ButtonDropA { get; private set; }
-        public RibbonButton ButtonDropB { get; private set; }
-        public RibbonButton ButtonDropC { get; private set; }
-        public RibbonMenuGroup MenuGroupExit { get; private set; }
-        public RibbonButton ButtonExit { get; private set; }
-
-        public RibbonItems(Ribbon ribbon)
-        {
-            if (ribbon == null)
-                throw new ArgumentNullException(nameof(ribbon), "Parameter is null");
-            if (initialized)
-                return;
-            this.Ribbon = ribbon;
-            MenuGroupFile = new RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupFile);
-            ButtonNew = new RibbonButton(ribbon, Cmd.cmdButtonNew);
-            ButtonOpen = new RibbonButton(ribbon, Cmd.cmdButtonOpen);
-            ButtonSave = new RibbonButton(ribbon, Cmd.cmdButtonSave);
-            DropDownButton = new RibbonDropDownButton(ribbon, Cmd.cmdDropDownButton);
-            ButtonDropA = new RibbonButton(ribbon, Cmd.cmdButtonDropA);
-            ButtonDropB = new RibbonButton(ribbon, Cmd.cmdButtonDropB);
-            ButtonDropC = new RibbonButton(ribbon, Cmd.cmdButtonDropC);
-            MenuGroupExit = new RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupExit);
-            ButtonExit = new RibbonButton(ribbon, Cmd.cmdButtonExit);
-            initialized = true;
-        }
-
+        public const uint cmdHelpButton = 1016;
+        public const uint cmdTabMain = 1011;
+        public const uint cmdButtonNew = 1001;
+        public const uint cmdButtonOpen = 1002;
+        public const uint cmdButtonSave = 1003;
+        public const uint cmdButtonExit = 1004;
+        public const uint cmdMenuGroupFile = 1005;
+        public const uint cmdDropDownButton = 1007;
+        public const uint cmdButtonDropA = 1008;
+        public const uint cmdButtonDropB = 1009;
+        public const uint cmdButtonDropC = 1010;
+        public const uint cmdMenuGroupExit = 1006;
     }
+
+    // ContextPopup CommandName
+
+    private static bool initialized;
+
+    public Ribbon Ribbon { get; private set; }
+    public RibbonHelpButton HelpButton { get; private set; }
+    public RibbonTab TabMain { get; private set; }
+    public RibbonButton ButtonNew { get; private set; }
+    public RibbonButton ButtonOpen { get; private set; }
+    public RibbonButton ButtonSave { get; private set; }
+    public RibbonButton ButtonExit { get; private set; }
+    public RibbonMenuGroup MenuGroupFile { get; private set; }
+    public RibbonDropDownButton DropDownButton { get; private set; }
+    public RibbonButton ButtonDropA { get; private set; }
+    public RibbonButton ButtonDropB { get; private set; }
+    public RibbonButton ButtonDropC { get; private set; }
+    public RibbonMenuGroup MenuGroupExit { get; private set; }
+
+    public RibbonItems(Ribbon ribbon)
+    {
+        if (ribbon == null)
+            throw new ArgumentNullException(nameof(ribbon), "Parameter is null");
+        if (initialized)
+            return;
+        this.Ribbon = ribbon;
+        HelpButton = new RibbonHelpButton(ribbon, Cmd.cmdHelpButton);
+        TabMain = new RibbonTab(ribbon, Cmd.cmdTabMain);
+        ButtonNew = new RibbonButton(ribbon, Cmd.cmdButtonNew);
+        ButtonOpen = new RibbonButton(ribbon, Cmd.cmdButtonOpen);
+        ButtonSave = new RibbonButton(ribbon, Cmd.cmdButtonSave);
+        ButtonExit = new RibbonButton(ribbon, Cmd.cmdButtonExit);
+        MenuGroupFile = new RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupFile);
+        DropDownButton = new RibbonDropDownButton(ribbon, Cmd.cmdDropDownButton);
+        ButtonDropA = new RibbonButton(ribbon, Cmd.cmdButtonDropA);
+        ButtonDropB = new RibbonButton(ribbon, Cmd.cmdButtonDropB);
+        ButtonDropC = new RibbonButton(ribbon, Cmd.cmdButtonDropC);
+        MenuGroupExit = new RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupExit);
+        initialized = true;
+    }
+
 }
+

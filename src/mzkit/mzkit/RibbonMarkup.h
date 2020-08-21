@@ -56,6 +56,10 @@
 #define cmdButtonDropC_LabelDescription_RESID 60039
 #define cmdButtonDropC_TooltipTitle_RESID 60040
 #define cmdButtonDropC_LargeImages_RESID 60041
-#define InternalCmd2_LabelTitle_RESID 60042
-#define InternalCmd4_LabelTitle_RESID 60043
-#define InternalCmd6_LabelTitle_RESID 60044
+#define cmdTabMain 1011 
+#define cmdTabMain_LabelTitle_RESID 60042
+#define cmdHelpButton 1016 
+#define cmdGroupFileActions_LabelTitle_RESID 60043
+#define cmdGroupExit_LabelTitle_RESID 60044
+#define InternalCmd2_LabelTitle_RESID 60045
+#define InternalCmd4_LabelTitle_RESID 60046

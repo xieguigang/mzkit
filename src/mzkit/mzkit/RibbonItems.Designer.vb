@@ -14,19 +14,21 @@ Imports RibbonLib.Controls
 Imports RibbonLib.Interop
 
 Partial Class RibbonItems
-    Private _Ribbon As Ribbon, _MenuGroupFile As RibbonMenuGroup, _ButtonNew As RibbonButton, _ButtonOpen As RibbonButton, _ButtonSave As RibbonButton, _DropDownButton As RibbonDropDownButton, _ButtonDropA As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton, _MenuGroupExit As RibbonMenuGroup, _ButtonExit As RibbonButton
+    Private _Ribbon As Ribbon, _HelpButton As RibbonHelpButton, _TabMain As RibbonTab, _ButtonNew As RibbonButton, _ButtonOpen As RibbonButton, _ButtonSave As RibbonButton, _ButtonExit As RibbonButton, _MenuGroupFile As RibbonMenuGroup, _DropDownButton As RibbonDropDownButton, _ButtonDropA As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton, _MenuGroupExit As RibbonMenuGroup
 
     Private NotInheritable Class Cmd
-        Public Const cmdMenuGroupFile As UInteger = 1005
+        Public Const cmdHelpButton As UInteger = 1016
+        Public Const cmdTabMain As UInteger = 1011
         Public Const cmdButtonNew As UInteger = 1001
         Public Const cmdButtonOpen As UInteger = 1002
         Public Const cmdButtonSave As UInteger = 1003
+        Public Const cmdButtonExit As UInteger = 1004
+        Public Const cmdMenuGroupFile As UInteger = 1005
         Public Const cmdDropDownButton As UInteger = 1007
         Public Const cmdButtonDropA As UInteger = 1008
         Public Const cmdButtonDropB As UInteger = 1009
         Public Const cmdButtonDropC As UInteger = 1010
         Public Const cmdMenuGroupExit As UInteger = 1006
-        Public Const cmdButtonExit As UInteger = 1004
     End Class
 
     ' ContextPopup CommandName
@@ -42,12 +44,21 @@ Partial Class RibbonItems
         End Set
     End Property
 
-    Public Property MenuGroupFile As RibbonMenuGroup
+    Public Property HelpButton As RibbonHelpButton
         Get
-            Return _MenuGroupFile
+            Return _HelpButton
         End Get
-        Private Set(ByVal value As RibbonMenuGroup)
-            _MenuGroupFile = value
+        Private Set(ByVal value As RibbonHelpButton)
+            _HelpButton = value
+        End Set
+    End Property
+
+    Public Property TabMain As RibbonTab
+        Get
+            Return _TabMain
+        End Get
+        Private Set(ByVal value As RibbonTab)
+            _TabMain = value
         End Set
     End Property
 
@@ -75,6 +86,24 @@ Partial Class RibbonItems
         End Get
         Private Set(ByVal value As RibbonButton)
             _ButtonSave = value
+        End Set
+    End Property
+
+    Public Property ButtonExit As RibbonButton
+        Get
+            Return _ButtonExit
+        End Get
+        Private Set(ByVal value As RibbonButton)
+            _ButtonExit = value
+        End Set
+    End Property
+
+    Public Property MenuGroupFile As RibbonMenuGroup
+        Get
+            Return _MenuGroupFile
+        End Get
+        Private Set(ByVal value As RibbonMenuGroup)
+            _MenuGroupFile = value
         End Set
     End Property
 
@@ -123,29 +152,22 @@ Partial Class RibbonItems
         End Set
     End Property
 
-    Public Property ButtonExit As RibbonButton
-        Get
-            Return _ButtonExit
-        End Get
-        Private Set(ByVal value As RibbonButton)
-            _ButtonExit = value
-        End Set
-    End Property
-
     Public Sub New(ByVal ribbon As Ribbon)
         If ribbon Is Nothing Then Throw New ArgumentNullException(NameOf(ribbon), "Parameter is null")
         If initialized Then Return
         Me.Ribbon = ribbon
-        MenuGroupFile = New RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupFile)
+        HelpButton = New RibbonHelpButton(ribbon, Cmd.cmdHelpButton)
+        TabMain = New RibbonTab(ribbon, Cmd.cmdTabMain)
         ButtonNew = New RibbonButton(ribbon, Cmd.cmdButtonNew)
         ButtonOpen = New RibbonButton(ribbon, Cmd.cmdButtonOpen)
         ButtonSave = New RibbonButton(ribbon, Cmd.cmdButtonSave)
+        ButtonExit = New RibbonButton(ribbon, Cmd.cmdButtonExit)
+        MenuGroupFile = New RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupFile)
         DropDownButton = New RibbonDropDownButton(ribbon, Cmd.cmdDropDownButton)
         ButtonDropA = New RibbonButton(ribbon, Cmd.cmdButtonDropA)
         ButtonDropB = New RibbonButton(ribbon, Cmd.cmdButtonDropB)
         ButtonDropC = New RibbonButton(ribbon, Cmd.cmdButtonDropC)
         MenuGroupExit = New RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupExit)
-        ButtonExit = New RibbonButton(ribbon, Cmd.cmdButtonExit)
         initialized = True
     End Sub
 End Class
