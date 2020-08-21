@@ -113,11 +113,30 @@
 				 LabelTitle="Main">
 		</Command>
 
+		<!-- Tools Menu -->
+
+		<Command Name="cmdTabTools"
+				 Id="1012"
+				 LabelTitle="Tools">
+		</Command>
+
+		<Command Name="cmdButtonMzCalculator"
+				 Id="1013"
+				 LabelTitle="M/z Calculator">
+			<Command.LargeImages>
+				<Image>Res/Open32.bmp</Image>
+			</Command.LargeImages>
+			<Command.SmallImages>
+				<Image>Res/Open16.bmp</Image>
+			</Command.SmallImages>
+		</Command>
+
+
 
 		<Command Name="cmdHelpButton"
 				 Id="1016">
 		</Command>
-		
+
 	</Application.Commands>
 
 	<Application.Views>
@@ -125,8 +144,11 @@
 			<Ribbon.HelpButton>
 				<HelpButton CommandName="cmdHelpButton" />
 			</Ribbon.HelpButton>
-			
-				<Ribbon.Tabs>
+
+
+			<!-- Main Menu -->
+
+			<Ribbon.Tabs>
 				<Tab CommandName="cmdTabMain">
 					<!-- scary part -->
 					<Tab.ScalingPolicy>
@@ -150,14 +172,38 @@
 					</Group>
 				</Tab>
 
+	
+			<!-- Tools Menu -->
+		
+				<Tab CommandName="cmdTabTools">
+					<!-- scary part -->
+					<Tab.ScalingPolicy>
+						<ScalingPolicy>
+							<ScalingPolicy.IdealSizes>
+								<Scale Group="cmdGroupToolsActions" Size="Large" />							
+							</ScalingPolicy.IdealSizes>
+							<Scale Group="cmdGroupToolsActions" Size="Medium" />
+						</ScalingPolicy>
+					</Tab.ScalingPolicy>
+
+					<!-- useful part -->
+					<Group CommandName="cmdGroupToolsActions" SizeDefinition="ThreeButtons">
+						<Button CommandName="cmdButtonMzCalculator" />
+						<Button CommandName="cmdButtonOpenRaw" />
+						<Button CommandName="cmdButtonSave" />
+					</Group>
+
+				</Tab>
+
 			</Ribbon.Tabs>
-			
+
+
 			<Ribbon.ApplicationMenu>
 				<ApplicationMenu>
 
 					<MenuGroup CommandName='cmdMenuGroupFile'>
 						<Button CommandName='cmdButtonNew' />
-						
+
 						<DropDownButton CommandName='cmdButtonOpen'>
 							<MenuGroup Class='MajorItems'>
 								<Button CommandName='cmdButtonDropA' />
@@ -165,10 +211,10 @@
 								<Button CommandName='cmdButtonDropC' />
 							</MenuGroup>
 						</DropDownButton>
-						
+
 						<Button CommandName='cmdButtonSave' />
 					</MenuGroup>
-<!--
+					<!--
 					<MenuGroup>
 
 						

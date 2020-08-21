@@ -13,62 +13,68 @@ using RibbonLib;
 using RibbonLib.Controls;
 using RibbonLib.Interop;
 
-partial class RibbonItems
-{
-    private static class Cmd
+    partial class RibbonItems
     {
-        public const uint cmdHelpButton = 1016;
-        public const uint cmdTabMain = 1011;
-        public const uint cmdButtonNew = 1001;
-        public const uint cmdButtonOpenRaw = 1002;
-        public const uint cmdButtonSave = 1003;
-        public const uint cmdButtonExit = 1004;
-        public const uint cmdMenuGroupFile = 1005;
-        public const uint cmdButtonOpen = 1007;
-        public const uint cmdButtonDropA = 1008;
-        public const uint cmdButtonDropB = 1009;
-        public const uint cmdButtonDropC = 1010;
-        public const uint cmdMenuGroupExit = 1006;
+        private static class Cmd
+        {
+            public const uint cmdHelpButton = 1016;
+            public const uint cmdTabMain = 1011;
+            public const uint cmdButtonNew = 1001;
+            public const uint cmdButtonOpenRaw = 1002;
+            public const uint cmdButtonSave = 1003;
+            public const uint cmdButtonExit = 1004;
+            public const uint cmdTabTools = 1012;
+            public const uint cmdButtonMzCalculator = 1013;
+            public const uint cmdMenuGroupFile = 1005;
+            public const uint cmdButtonOpen = 1007;
+            public const uint cmdButtonDropA = 1008;
+            public const uint cmdButtonDropB = 1009;
+            public const uint cmdButtonDropC = 1010;
+            public const uint cmdMenuGroupExit = 1006;
+        }
+
+        // ContextPopup CommandName
+
+        private static bool initialized;
+
+        public Ribbon Ribbon { get; private set; }
+        public RibbonHelpButton HelpButton { get; private set; }
+        public RibbonTab TabMain { get; private set; }
+        public RibbonButton ButtonNew { get; private set; }
+        public RibbonButton ButtonOpenRaw { get; private set; }
+        public RibbonButton ButtonSave { get; private set; }
+        public RibbonButton ButtonExit { get; private set; }
+        public RibbonTab TabTools { get; private set; }
+        public RibbonButton ButtonMzCalculator { get; private set; }
+        public RibbonMenuGroup MenuGroupFile { get; private set; }
+        public RibbonDropDownButton ButtonOpen { get; private set; }
+        public RibbonButton ButtonDropA { get; private set; }
+        public RibbonButton ButtonDropB { get; private set; }
+        public RibbonButton ButtonDropC { get; private set; }
+        public RibbonMenuGroup MenuGroupExit { get; private set; }
+
+        public RibbonItems(Ribbon ribbon)
+        {
+            if (ribbon == null)
+                throw new ArgumentNullException(nameof(ribbon), "Parameter is null");
+            if (initialized)
+                return;
+            this.Ribbon = ribbon;
+            HelpButton = new RibbonHelpButton(ribbon, Cmd.cmdHelpButton);
+            TabMain = new RibbonTab(ribbon, Cmd.cmdTabMain);
+            ButtonNew = new RibbonButton(ribbon, Cmd.cmdButtonNew);
+            ButtonOpenRaw = new RibbonButton(ribbon, Cmd.cmdButtonOpenRaw);
+            ButtonSave = new RibbonButton(ribbon, Cmd.cmdButtonSave);
+            ButtonExit = new RibbonButton(ribbon, Cmd.cmdButtonExit);
+            TabTools = new RibbonTab(ribbon, Cmd.cmdTabTools);
+            ButtonMzCalculator = new RibbonButton(ribbon, Cmd.cmdButtonMzCalculator);
+            MenuGroupFile = new RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupFile);
+            ButtonOpen = new RibbonDropDownButton(ribbon, Cmd.cmdButtonOpen);
+            ButtonDropA = new RibbonButton(ribbon, Cmd.cmdButtonDropA);
+            ButtonDropB = new RibbonButton(ribbon, Cmd.cmdButtonDropB);
+            ButtonDropC = new RibbonButton(ribbon, Cmd.cmdButtonDropC);
+            MenuGroupExit = new RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupExit);
+            initialized = true;
+        }
+
     }
-
-    // ContextPopup CommandName
-
-    private static bool initialized;
-
-    public Ribbon Ribbon { get; private set; }
-    public RibbonHelpButton HelpButton { get; private set; }
-    public RibbonTab TabMain { get; private set; }
-    public RibbonButton ButtonNew { get; private set; }
-    public RibbonButton ButtonOpenRaw { get; private set; }
-    public RibbonButton ButtonSave { get; private set; }
-    public RibbonButton ButtonExit { get; private set; }
-    public RibbonMenuGroup MenuGroupFile { get; private set; }
-    public RibbonDropDownButton ButtonOpen { get; private set; }
-    public RibbonButton ButtonDropA { get; private set; }
-    public RibbonButton ButtonDropB { get; private set; }
-    public RibbonButton ButtonDropC { get; private set; }
-    public RibbonMenuGroup MenuGroupExit { get; private set; }
-
-    public RibbonItems(Ribbon ribbon)
-    {
-        if (ribbon == null)
-            throw new ArgumentNullException(nameof(ribbon), "Parameter is null");
-        if (initialized)
-            return;
-        this.Ribbon = ribbon;
-        HelpButton = new RibbonHelpButton(ribbon, Cmd.cmdHelpButton);
-        TabMain = new RibbonTab(ribbon, Cmd.cmdTabMain);
-        ButtonNew = new RibbonButton(ribbon, Cmd.cmdButtonNew);
-        ButtonOpenRaw = new RibbonButton(ribbon, Cmd.cmdButtonOpenRaw);
-        ButtonSave = new RibbonButton(ribbon, Cmd.cmdButtonSave);
-        ButtonExit = new RibbonButton(ribbon, Cmd.cmdButtonExit);
-        MenuGroupFile = new RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupFile);
-        ButtonOpen = new RibbonDropDownButton(ribbon, Cmd.cmdButtonOpen);
-        ButtonDropA = new RibbonButton(ribbon, Cmd.cmdButtonDropA);
-        ButtonDropB = new RibbonButton(ribbon, Cmd.cmdButtonDropB);
-        ButtonDropC = new RibbonButton(ribbon, Cmd.cmdButtonDropC);
-        MenuGroupExit = new RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupExit);
-        initialized = true;
-    }
-
-}

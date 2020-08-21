@@ -30,11 +30,11 @@ Public Class frmMain
 
                 ToolStripStatusLabel.Text = "Ready!"
 
-                Call New frmRawViewer() With {
-                    .MdiParent = Me,
-                    .Text = file.FileName,
-                    .rawFile = task.raw
-                }.Show()
+                'Call New frmRawViewer() With {
+                '    .MdiParent = Me,
+                '    .Text = file.FileName,
+                '    .rawFile = task.raw
+                '}.Show()
             End If
         End Using
     End Sub
@@ -111,9 +111,10 @@ Public Class frmMain
 
         AddHandler ribbonItems.ButtonExit.ExecuteEvent, AddressOf ExitToolsStripMenuItem_Click
         AddHandler ribbonItems.ButtonOpenRaw.ExecuteEvent, AddressOf OpenFile
+        AddHandler ribbonItems.ButtonMzCalculator.ExecuteEvent, AddressOf MzCalculatorToolStripMenuItem_Click
     End Sub
 
-    Private Sub MzCalculatorToolStripMenuItem_Click(sender As Object, e As EventArgs)
+    Private Sub MzCalculatorToolStripMenuItem_Click(ByVal sender As Object, ByVal e As ExecuteEventArgs)
         Call New frmCalculator().ShowDialog()
     End Sub
 

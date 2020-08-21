@@ -14,7 +14,7 @@ Imports RibbonLib.Controls
 Imports RibbonLib.Interop
 
 Partial Class RibbonItems
-    Private _Ribbon As Ribbon, _HelpButton As RibbonHelpButton, _TabMain As RibbonTab, _ButtonNew As RibbonButton, _ButtonOpenRaw As RibbonButton, _ButtonSave As RibbonButton, _ButtonExit As RibbonButton, _MenuGroupFile As RibbonMenuGroup, _ButtonOpen As RibbonDropDownButton, _ButtonDropA As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton, _MenuGroupExit As RibbonMenuGroup
+    Private _Ribbon As Ribbon, _HelpButton As RibbonHelpButton, _TabMain As RibbonTab, _ButtonNew As RibbonButton, _ButtonOpenRaw As RibbonButton, _ButtonSave As RibbonButton, _ButtonExit As RibbonButton, _TabTools As RibbonTab, _ButtonMzCalculator As RibbonButton, _MenuGroupFile As RibbonMenuGroup, _ButtonOpen As RibbonDropDownButton, _ButtonDropA As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton, _MenuGroupExit As RibbonMenuGroup
 
     Private NotInheritable Class Cmd
         Public Const cmdHelpButton As UInteger = 1016
@@ -23,6 +23,8 @@ Partial Class RibbonItems
         Public Const cmdButtonOpenRaw As UInteger = 1002
         Public Const cmdButtonSave As UInteger = 1003
         Public Const cmdButtonExit As UInteger = 1004
+        Public Const cmdTabTools As UInteger = 1012
+        Public Const cmdButtonMzCalculator As UInteger = 1013
         Public Const cmdMenuGroupFile As UInteger = 1005
         Public Const cmdButtonOpen As UInteger = 1007
         Public Const cmdButtonDropA As UInteger = 1008
@@ -98,6 +100,24 @@ Partial Class RibbonItems
         End Set
     End Property
 
+    Public Property TabTools As RibbonTab
+        Get
+            Return _TabTools
+        End Get
+        Private Set(ByVal value As RibbonTab)
+            _TabTools = value
+        End Set
+    End Property
+
+    Public Property ButtonMzCalculator As RibbonButton
+        Get
+            Return _ButtonMzCalculator
+        End Get
+        Private Set(ByVal value As RibbonButton)
+            _ButtonMzCalculator = value
+        End Set
+    End Property
+
     Public Property MenuGroupFile As RibbonMenuGroup
         Get
             Return _MenuGroupFile
@@ -162,6 +182,8 @@ Partial Class RibbonItems
         ButtonOpenRaw = New RibbonButton(ribbon, Cmd.cmdButtonOpenRaw)
         ButtonSave = New RibbonButton(ribbon, Cmd.cmdButtonSave)
         ButtonExit = New RibbonButton(ribbon, Cmd.cmdButtonExit)
+        TabTools = New RibbonTab(ribbon, Cmd.cmdTabTools)
+        ButtonMzCalculator = New RibbonButton(ribbon, Cmd.cmdButtonMzCalculator)
         MenuGroupFile = New RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupFile)
         ButtonOpen = New RibbonDropDownButton(ribbon, Cmd.cmdButtonOpen)
         ButtonDropA = New RibbonButton(ribbon, Cmd.cmdButtonDropA)

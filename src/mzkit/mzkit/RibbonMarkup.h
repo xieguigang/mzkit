@@ -58,7 +58,14 @@
 #define cmdButtonDropC_LargeImages_RESID 60041
 #define cmdTabMain 1011 
 #define cmdTabMain_LabelTitle_RESID 60042
+#define cmdTabTools 1012 
+#define cmdTabTools_LabelTitle_RESID 60043
+#define cmdButtonMzCalculator 1013 
+#define cmdButtonMzCalculator_LabelTitle_RESID 60044
+#define cmdButtonMzCalculator_SmallImages_RESID 60045
+#define cmdButtonMzCalculator_LargeImages_RESID 60046
 #define cmdHelpButton 1016 
-#define cmdGroupFileActions_LabelTitle_RESID 60043
-#define cmdGroupExit_LabelTitle_RESID 60044
-#define InternalCmd2_LabelTitle_RESID 60045
+#define cmdGroupFileActions_LabelTitle_RESID 60047
+#define cmdGroupExit_LabelTitle_RESID 60048
+#define cmdGroupToolsActions_LabelTitle_RESID 60049
+#define InternalCmd2_LabelTitle_RESID 60050

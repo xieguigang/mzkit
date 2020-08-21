@@ -65,7 +65,6 @@ Partial Class frmMain
         Me.Controls.Add(Me.Ribbon1)
         Me.Controls.Add(Me.StatusStrip)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.IsMdiContainer = True
         Me.Name = "frmMain"
         Me.ShowIcon = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen

@@ -128,12 +128,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
-    <Compile Include="forms\frmRawViewer.Designer.vb">
-      <DependentUpon>frmRawViewer.vb</DependentUpon>
-    </Compile>
-    <Compile Include="forms\frmRawViewer.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="forms\frmMain.Designer.vb">
       <DependentUpon>frmMain.vb</DependentUpon>
     </Compile>
@@ -181,9 +175,6 @@
   <ItemGroup>
     <EmbeddedResource Include="forms\frmProgress.resx">
       <DependentUpon>frmProgress.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="forms\frmRawViewer.resx">
-      <DependentUpon>frmRawViewer.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="forms\frmSplashScreen.resx">
       <DependentUpon>frmSplashScreen.vb</DependentUpon>
