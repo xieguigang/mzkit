@@ -240,6 +240,13 @@
           </QuickAccessToolbar.ApplicationDefaults>
         </QuickAccessToolbar>
       </Ribbon.QuickAccessToolbar>
+      <Ribbon.ContextualTabs>
+        <TabGroup>
+          <Tab>
+            <Group SizeDefinition="OneButton" />
+          </Tab>
+        </TabGroup>
+      </Ribbon.ContextualTabs>
       <Ribbon.Tabs>
         <Tab CommandName="cmdTabMain">
           <Tab.ScalingPolicy>
