@@ -140,10 +140,10 @@
     <Compile Include="forms\tools\frmCalculator.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="forms\frmProgress.Designer.vb">
-      <DependentUpon>frmProgress.vb</DependentUpon>
+    <Compile Include="forms\frmImportTaskProgress.Designer.vb">
+      <DependentUpon>frmImportTaskProgress.vb</DependentUpon>
     </Compile>
-    <Compile Include="forms\frmProgress.vb">
+    <Compile Include="forms\frmImportTaskProgress.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="forms\frmSplashScreen.vb">
@@ -173,8 +173,8 @@
     <Compile Include="RibbonItems.Designer.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="forms\frmProgress.resx">
-      <DependentUpon>frmProgress.vb</DependentUpon>
+    <EmbeddedResource Include="forms\frmImportTaskProgress.resx">
+      <DependentUpon>frmImportTaskProgress.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="forms\frmSplashScreen.resx">
       <DependentUpon>frmSplashScreen.vb</DependentUpon>

@@ -32,12 +32,13 @@ Public Class frmMain
     Private Sub OpenFile(ByVal sender As Object, ByVal e As ExecuteEventArgs)
         Using file As New OpenFileDialog With {.Filter = "Raw Data|*.mzXML;*.mzML"}
             If file.ShowDialog = DialogResult.OK Then
-                Dim progress As New frmProgress() With {.Text = $"Imports raw data [{file.FileName}]"}
+                Dim progress As New frmImportTaskProgress() With {.Text = $"Imports raw data [{file.FileName}]"}
                 Dim showProgress As Action(Of String) = Sub(text) progress.Invoke(Sub() progress.Label1.Text = text)
                 Dim task As New Task.ImportsRawData(file.FileName, showProgress, Sub() Call progress.Invoke(Sub() progress.Close()))
                 Dim runTask As New Thread(AddressOf task.RunImports)
 
                 ToolStripStatusLabel.Text = "Run Raw Data Imports"
+                progress.Label2.Text = progress.Text
 
                 Call runTask.Start()
                 Call progress.ShowDialog()

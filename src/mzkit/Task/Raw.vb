@@ -4,7 +4,11 @@
     Public Property cache As String
     Public ReadOnly Property numOfScans As Integer
         Get
-            Return scans.Length
+            If scans.IsNullOrEmpty Then
+                Return 0
+            Else
+                Return scans.Length
+            End If
         End Get
     End Property
 
