@@ -1,11 +1,15 @@
 ﻿Imports System.ComponentModel
 Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports RibbonLib
 Imports RibbonLib.Controls.Events
 Imports RibbonLib.Interop
@@ -232,7 +236,28 @@ Public Class frmMain
     End Sub
 
     Private Sub ShowTICToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowTICToolStripMenuItem.Click
+        Dim raw = TreeView1.CurrentRawFile
 
+        If Not raw.raw Is Nothing Then
+            raw.tree.Nodes.Clear()
+            raw.tree.Nodes.Add(New TreeNode("TIC"))
+
+            Using cache As New netCDFReader(raw.raw.cache)
+                Dim allMz As New List(Of ms2)
+
+                For Each scan In raw.raw.scans
+                    If scan.mz = 0 Then
+                        cache.getDataVariable(cache.getDataVariableEntry(scan.id)).numerics.AsMs2.DoCall(AddressOf allMz.AddRange)
+                    End If
+                Next
+
+                For Each mzblock In allMz.GroupBy(Function(mz) mz.mz, Tolerance.DeltaMass(0.3))
+                    Dim range As New DoubleRange(mzblock.Select(Function(m) m.mz))
+
+                    raw.tree.Nodes.Add(New TreeNode($"m/z {range.Min.ToString("F3")}~{range.Max.ToString("F3")}") With {.Tag = range})
+                Next
+            End Using
+        End If
     End Sub
 
     Private Sub SaveImageToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveImageToolStripMenuItem.Click
