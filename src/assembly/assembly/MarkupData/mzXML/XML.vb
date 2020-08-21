@@ -139,7 +139,7 @@ Namespace MarkupData.mzXML
             Dim ms1Peaktable = ms1 _
                 .Select(Function(scan)
                             Dim mzInto = scan.peaks.ExtractMzI
-                            Dim rt# = Val(scan.retentionTime.Replace("PT", ""))
+                            Dim rt# = PeakMs2.RtInSecond(scan.retentionTime)
                             Dim ms1Data = mzInto _
                                 .Select(Function(mz)
                                             Return New Peaktable With {

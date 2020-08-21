@@ -107,9 +107,9 @@ Namespace MarkupData.mzXML
             Dim level$ = If(scan.msLevel = 1, "MS1", "MS/MS")
 
             If scan.msLevel = 1 Then
-                Return $"[{level}] {scan.scanType} Scan, ({scan.polarity}) retentionTime={CInt(scan.retentionTime.ParseDouble)}"
+                Return $"[{level}, {scan.num}] {scan.scanType} Scan, ({scan.polarity}) retentionTime={CInt(scan.retentionTime.ParseDouble)}"
             Else
-                Return $"[{level}] {scan.scanType} Scan, ({scan.polarity}) mz={scan.precursorMz.value.ToString("F3")}, into={scan.precursorMz.precursorIntensity} / retentionTime={CInt(scan.retentionTime.ParseDouble)}"
+                Return $"[{level}] {scan.scanType} Scan, ({scan.polarity}) mz={scan.precursorMz.value.ToString("F3")}, into={scan.precursorMz.precursorIntensity} / retentionTime={CInt(PeakMs2.RtInSecond(scan.retentionTime))}s"
             End If
         End Function
 
