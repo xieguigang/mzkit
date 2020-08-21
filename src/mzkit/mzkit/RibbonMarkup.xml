@@ -69,7 +69,10 @@
 
 		<Command Name="cmdButtonOpen"
 				 Id="1007"
-				 LabelTitle="Open">
+				 LabelTitle="Open"
+				 LabelDescription="Open Description"
+				 TooltipTitle="Open (Ctrl+O)"
+				 TooltipDescription="Open an existing image.">
 			<Command.LargeImages>
 				<Image>Res/Open32.bmp</Image>
 			</Command.LargeImages>
@@ -131,11 +134,19 @@
 			</Command.SmallImages>
 		</Command>
 
-
+ <Command Name="cmdRecentItems" Id="1014" LabelTitle="Recent Items" />
 
 		<Command Name="cmdHelpButton"
 				 Id="1016">
 		</Command>
+
+ <Command Name="cmdQAT"
+             Id="1017">
+    </Command>
+    <Command Name="cmdCustomizeQAT"
+             Id="1018">
+    </Command>
+
 
 	</Application.Commands>
 
@@ -201,6 +212,10 @@
 			<Ribbon.ApplicationMenu>
 				<ApplicationMenu>
 
+<ApplicationMenu.RecentItems>
+            <RecentItems CommandName="cmdRecentItems" EnablePinning="true" MaxCount="13" />
+          </ApplicationMenu.RecentItems>
+
 					<MenuGroup CommandName='cmdMenuGroupFile'>
 						<Button CommandName='cmdButtonNew' />
 
@@ -239,6 +254,17 @@
 
 				</ApplicationMenu>
 			</Ribbon.ApplicationMenu>
+			
+			      <Ribbon.QuickAccessToolbar>
+        <QuickAccessToolbar CommandName='cmdQAT' CustomizeCommandName='cmdCustomizeQAT'>
+          <QuickAccessToolbar.ApplicationDefaults>
+            <Button CommandName="cmdButtonNew" ApplicationDefaults.IsChecked="true" />
+            <Button CommandName="cmdButtonOpenRaw" ApplicationDefaults.IsChecked="false" />
+            <Button CommandName="cmdButtonSave" ApplicationDefaults.IsChecked="false" />
+          </QuickAccessToolbar.ApplicationDefaults>
+        </QuickAccessToolbar>
+      </Ribbon.QuickAccessToolbar>
+			
 		</Ribbon>
 	</Application.Views>
 </Application>

@@ -68,7 +68,7 @@ Partial Class frmMain
         Me.Name = "frmMain"
         Me.ShowIcon = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "BioNovoGene Mass Spectrum Toolkit"
+        Me.Text = "mzkit.org"
         Me.StatusStrip.ResumeLayout(False)
         Me.StatusStrip.PerformLayout()
         Me.ResumeLayout(False)

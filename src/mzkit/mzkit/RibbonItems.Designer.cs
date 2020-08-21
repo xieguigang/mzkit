@@ -25,12 +25,15 @@ using RibbonLib.Interop;
             public const uint cmdButtonExit = 1004;
             public const uint cmdTabTools = 1012;
             public const uint cmdButtonMzCalculator = 1013;
+            public const uint cmdRecentItems = 1014;
             public const uint cmdMenuGroupFile = 1005;
             public const uint cmdButtonOpen = 1007;
             public const uint cmdButtonDropA = 1008;
             public const uint cmdButtonDropB = 1009;
             public const uint cmdButtonDropC = 1010;
             public const uint cmdMenuGroupExit = 1006;
+            public const uint cmdQAT = 1017;
+            public const uint cmdCustomizeQAT = 1018;
         }
 
         // ContextPopup CommandName
@@ -46,12 +49,14 @@ using RibbonLib.Interop;
         public RibbonButton ButtonExit { get; private set; }
         public RibbonTab TabTools { get; private set; }
         public RibbonButton ButtonMzCalculator { get; private set; }
+        public RibbonRecentItems RecentItems { get; private set; }
         public RibbonMenuGroup MenuGroupFile { get; private set; }
         public RibbonDropDownButton ButtonOpen { get; private set; }
         public RibbonButton ButtonDropA { get; private set; }
         public RibbonButton ButtonDropB { get; private set; }
         public RibbonButton ButtonDropC { get; private set; }
         public RibbonMenuGroup MenuGroupExit { get; private set; }
+        public RibbonQuickAccessToolbar QAT { get; private set; }
 
         public RibbonItems(Ribbon ribbon)
         {
@@ -68,12 +73,14 @@ using RibbonLib.Interop;
             ButtonExit = new RibbonButton(ribbon, Cmd.cmdButtonExit);
             TabTools = new RibbonTab(ribbon, Cmd.cmdTabTools);
             ButtonMzCalculator = new RibbonButton(ribbon, Cmd.cmdButtonMzCalculator);
+            RecentItems = new RibbonRecentItems(ribbon, Cmd.cmdRecentItems);
             MenuGroupFile = new RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupFile);
             ButtonOpen = new RibbonDropDownButton(ribbon, Cmd.cmdButtonOpen);
             ButtonDropA = new RibbonButton(ribbon, Cmd.cmdButtonDropA);
             ButtonDropB = new RibbonButton(ribbon, Cmd.cmdButtonDropB);
             ButtonDropC = new RibbonButton(ribbon, Cmd.cmdButtonDropC);
             MenuGroupExit = new RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupExit);
+            QAT = new RibbonQuickAccessToolbar(ribbon, Cmd.cmdQAT, Cmd.cmdCustomizeQAT);
             initialized = true;
         }
 

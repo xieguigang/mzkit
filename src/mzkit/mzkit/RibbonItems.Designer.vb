@@ -14,7 +14,7 @@ Imports RibbonLib.Controls
 Imports RibbonLib.Interop
 
 Partial Class RibbonItems
-    Private _Ribbon As Ribbon, _HelpButton As RibbonHelpButton, _TabMain As RibbonTab, _ButtonNew As RibbonButton, _ButtonOpenRaw As RibbonButton, _ButtonSave As RibbonButton, _ButtonExit As RibbonButton, _TabTools As RibbonTab, _ButtonMzCalculator As RibbonButton, _MenuGroupFile As RibbonMenuGroup, _ButtonOpen As RibbonDropDownButton, _ButtonDropA As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton, _MenuGroupExit As RibbonMenuGroup
+    Private _Ribbon As Ribbon, _HelpButton As RibbonHelpButton, _TabMain As RibbonTab, _ButtonNew As RibbonButton, _ButtonOpenRaw As RibbonButton, _ButtonSave As RibbonButton, _ButtonExit As RibbonButton, _TabTools As RibbonTab, _ButtonMzCalculator As RibbonButton, _RecentItems As RibbonRecentItems, _MenuGroupFile As RibbonMenuGroup, _ButtonOpen As RibbonDropDownButton, _ButtonDropA As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton, _MenuGroupExit As RibbonMenuGroup, _QAT As RibbonQuickAccessToolbar
 
     Private NotInheritable Class Cmd
         Public Const cmdHelpButton As UInteger = 1016
@@ -25,12 +25,15 @@ Partial Class RibbonItems
         Public Const cmdButtonExit As UInteger = 1004
         Public Const cmdTabTools As UInteger = 1012
         Public Const cmdButtonMzCalculator As UInteger = 1013
+        Public Const cmdRecentItems As UInteger = 1014
         Public Const cmdMenuGroupFile As UInteger = 1005
         Public Const cmdButtonOpen As UInteger = 1007
         Public Const cmdButtonDropA As UInteger = 1008
         Public Const cmdButtonDropB As UInteger = 1009
         Public Const cmdButtonDropC As UInteger = 1010
         Public Const cmdMenuGroupExit As UInteger = 1006
+        Public Const cmdQAT As UInteger = 1017
+        Public Const cmdCustomizeQAT As UInteger = 1018
     End Class
 
     ' ContextPopup CommandName
@@ -118,6 +121,15 @@ Partial Class RibbonItems
         End Set
     End Property
 
+    Public Property RecentItems As RibbonRecentItems
+        Get
+            Return _RecentItems
+        End Get
+        Private Set(ByVal value As RibbonRecentItems)
+            _RecentItems = value
+        End Set
+    End Property
+
     Public Property MenuGroupFile As RibbonMenuGroup
         Get
             Return _MenuGroupFile
@@ -172,6 +184,15 @@ Partial Class RibbonItems
         End Set
     End Property
 
+    Public Property QAT As RibbonQuickAccessToolbar
+        Get
+            Return _QAT
+        End Get
+        Private Set(ByVal value As RibbonQuickAccessToolbar)
+            _QAT = value
+        End Set
+    End Property
+
     Public Sub New(ByVal ribbon As Ribbon)
         If ribbon Is Nothing Then Throw New ArgumentNullException(NameOf(ribbon), "Parameter is null")
         If initialized Then Return
@@ -184,12 +205,14 @@ Partial Class RibbonItems
         ButtonExit = New RibbonButton(ribbon, Cmd.cmdButtonExit)
         TabTools = New RibbonTab(ribbon, Cmd.cmdTabTools)
         ButtonMzCalculator = New RibbonButton(ribbon, Cmd.cmdButtonMzCalculator)
+        RecentItems = New RibbonRecentItems(ribbon, Cmd.cmdRecentItems)
         MenuGroupFile = New RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupFile)
         ButtonOpen = New RibbonDropDownButton(ribbon, Cmd.cmdButtonOpen)
         ButtonDropA = New RibbonButton(ribbon, Cmd.cmdButtonDropA)
         ButtonDropB = New RibbonButton(ribbon, Cmd.cmdButtonDropB)
         ButtonDropC = New RibbonButton(ribbon, Cmd.cmdButtonDropC)
         MenuGroupExit = New RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupExit)
+        QAT = New RibbonQuickAccessToolbar(ribbon, Cmd.cmdQAT, Cmd.cmdCustomizeQAT)
         initialized = True
     End Sub
 End Class
