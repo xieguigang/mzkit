@@ -14,7 +14,7 @@ Imports RibbonLib.Controls
 Imports RibbonLib.Interop
 
 Partial Class RibbonItems
-    Private _Ribbon As Ribbon, _HelpButton As RibbonHelpButton, _TabMain As RibbonTab, _ButtonNew As RibbonButton, _ButtonOpenRaw As RibbonButton, _ButtonSave As RibbonButton, _ButtonExit As RibbonButton, _TabTools As RibbonTab, _ButtonMzCalculator As RibbonButton, _RecentItems As RibbonRecentItems, _MenuGroupFile As RibbonMenuGroup, _ButtonOpen As RibbonDropDownButton, _ButtonDropA As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton, _MenuGroupExit As RibbonMenuGroup, _QAT As RibbonQuickAccessToolbar
+    Private _Ribbon As Ribbon, _HelpButton As RibbonHelpButton, _TabMain As RibbonTab, _ButtonNew As RibbonButton, _ButtonOpenRaw As RibbonButton, _ButtonSave As RibbonButton, _ButtonExit As RibbonButton, _TabTools As RibbonTab, _ButtonMzCalculator As RibbonButton, _TabAbout As RibbonTab, _ButtonAbout As RibbonButton, _RecentItems As RibbonRecentItems, _MenuGroupFile As RibbonMenuGroup, _ButtonOpen As RibbonDropDownButton, _ButtonDropA As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton, _MenuGroupExit As RibbonMenuGroup, _QAT As RibbonQuickAccessToolbar
 
     Private NotInheritable Class Cmd
         Public Const cmdHelpButton As UInteger = 1016
@@ -25,6 +25,8 @@ Partial Class RibbonItems
         Public Const cmdButtonExit As UInteger = 1004
         Public Const cmdTabTools As UInteger = 1012
         Public Const cmdButtonMzCalculator As UInteger = 1013
+        Public Const cmdTabAbout As UInteger = 1020
+        Public Const cmdButtonAbout As UInteger = 1021
         Public Const cmdRecentItems As UInteger = 1014
         Public Const cmdMenuGroupFile As UInteger = 1005
         Public Const cmdButtonOpen As UInteger = 1007
@@ -121,6 +123,24 @@ Partial Class RibbonItems
         End Set
     End Property
 
+    Public Property TabAbout As RibbonTab
+        Get
+            Return _TabAbout
+        End Get
+        Private Set(ByVal value As RibbonTab)
+            _TabAbout = value
+        End Set
+    End Property
+
+    Public Property ButtonAbout As RibbonButton
+        Get
+            Return _ButtonAbout
+        End Get
+        Private Set(ByVal value As RibbonButton)
+            _ButtonAbout = value
+        End Set
+    End Property
+
     Public Property RecentItems As RibbonRecentItems
         Get
             Return _RecentItems
@@ -205,6 +225,8 @@ Partial Class RibbonItems
         ButtonExit = New RibbonButton(ribbon, Cmd.cmdButtonExit)
         TabTools = New RibbonTab(ribbon, Cmd.cmdTabTools)
         ButtonMzCalculator = New RibbonButton(ribbon, Cmd.cmdButtonMzCalculator)
+        TabAbout = New RibbonTab(ribbon, Cmd.cmdTabAbout)
+        ButtonAbout = New RibbonButton(ribbon, Cmd.cmdButtonAbout)
         RecentItems = New RibbonRecentItems(ribbon, Cmd.cmdRecentItems)
         MenuGroupFile = New RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupFile)
         ButtonOpen = New RibbonDropDownButton(ribbon, Cmd.cmdButtonOpen)

@@ -13,7 +13,6 @@ using RibbonLib;
 using RibbonLib.Controls;
 using RibbonLib.Interop;
 
-
     partial class RibbonItems
     {
         private static class Cmd
@@ -26,6 +25,8 @@ using RibbonLib.Interop;
             public const uint cmdButtonExit = 1004;
             public const uint cmdTabTools = 1012;
             public const uint cmdButtonMzCalculator = 1013;
+            public const uint cmdTabAbout = 1020;
+            public const uint cmdButtonAbout = 1021;
             public const uint cmdRecentItems = 1014;
             public const uint cmdMenuGroupFile = 1005;
             public const uint cmdButtonOpen = 1007;
@@ -50,6 +51,8 @@ using RibbonLib.Interop;
         public RibbonButton ButtonExit { get; private set; }
         public RibbonTab TabTools { get; private set; }
         public RibbonButton ButtonMzCalculator { get; private set; }
+        public RibbonTab TabAbout { get; private set; }
+        public RibbonButton ButtonAbout { get; private set; }
         public RibbonRecentItems RecentItems { get; private set; }
         public RibbonMenuGroup MenuGroupFile { get; private set; }
         public RibbonDropDownButton ButtonOpen { get; private set; }
@@ -74,6 +77,8 @@ using RibbonLib.Interop;
             ButtonExit = new RibbonButton(ribbon, Cmd.cmdButtonExit);
             TabTools = new RibbonTab(ribbon, Cmd.cmdTabTools);
             ButtonMzCalculator = new RibbonButton(ribbon, Cmd.cmdButtonMzCalculator);
+            TabAbout = new RibbonTab(ribbon, Cmd.cmdTabAbout);
+            ButtonAbout = new RibbonButton(ribbon, Cmd.cmdButtonAbout);
             RecentItems = new RibbonRecentItems(ribbon, Cmd.cmdRecentItems);
             MenuGroupFile = new RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupFile);
             ButtonOpen = new RibbonDropDownButton(ribbon, Cmd.cmdButtonOpen);

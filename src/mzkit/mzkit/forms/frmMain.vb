@@ -115,6 +115,11 @@ Public Class frmMain
         AddHandler ribbonItems.ButtonExit.ExecuteEvent, AddressOf ExitToolsStripMenuItem_Click
         AddHandler ribbonItems.ButtonOpenRaw.ExecuteEvent, AddressOf OpenFile
         AddHandler ribbonItems.ButtonMzCalculator.ExecuteEvent, AddressOf MzCalculatorToolStripMenuItem_Click
+        AddHandler ribbonItems.ButtonAbout.ExecuteEvent, AddressOf About_Click
+    End Sub
+
+    Private Sub About_Click(ByVal sender As Object, ByVal e As ExecuteEventArgs)
+        Call New frmSplashScreen() With {.isAboutScreen = True, .TopMost = True}.Show()
     End Sub
 
     Private Sub MzCalculatorToolStripMenuItem_Click(ByVal sender As Object, ByVal e As ExecuteEventArgs)
