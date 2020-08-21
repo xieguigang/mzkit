@@ -13,6 +13,7 @@ using RibbonLib;
 using RibbonLib.Controls;
 using RibbonLib.Interop;
 
+
     partial class RibbonItems
     {
         private static class Cmd
@@ -32,7 +33,7 @@ using RibbonLib.Interop;
             public const uint cmdButtonDropB = 1009;
             public const uint cmdButtonDropC = 1010;
             public const uint cmdMenuGroupExit = 1006;
-            public const uint cmdQAT = 1017;
+            public const uint cmdQAT = 1015;
             public const uint cmdCustomizeQAT = 1018;
         }
 

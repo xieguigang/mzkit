@@ -134,19 +134,19 @@
 			</Command.SmallImages>
 		</Command>
 
-		<Command Name="cmdRecentItems" Id="1014" LabelTitle="Recent Items" />
-
-		<Command Name="cmdHelpButton"
-				 Id="1016">
-		</Command>
 
 		<Command Name="cmdQAT"
-					Id="1017">
+					Id="1015">
 		</Command>
 		<Command Name="cmdCustomizeQAT"
 				 Id="1018">
 		</Command>
 
+		<Command Name="cmdRecentItems" Id="1014" LabelTitle="Recent Items" />
+
+		<Command Name="cmdHelpButton"
+				 Id="1016">
+		</Command>
 
 	</Application.Commands>
 

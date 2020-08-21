@@ -32,7 +32,7 @@ Partial Class RibbonItems
         Public Const cmdButtonDropB As UInteger = 1009
         Public Const cmdButtonDropC As UInteger = 1010
         Public Const cmdMenuGroupExit As UInteger = 1006
-        Public Const cmdQAT As UInteger = 1017
+        Public Const cmdQAT As UInteger = 1015
         Public Const cmdCustomizeQAT As UInteger = 1018
     End Class
 

@@ -67,11 +67,11 @@
 #define cmdButtonMzCalculator_LabelTitle_RESID 60047
 #define cmdButtonMzCalculator_SmallImages_RESID 60048
 #define cmdButtonMzCalculator_LargeImages_RESID 60049
+#define cmdQAT 1015 
+#define cmdCustomizeQAT 1018 
 #define cmdRecentItems 1014 
 #define cmdRecentItems_LabelTitle_RESID 60050
 #define cmdHelpButton 1016 
-#define cmdQAT 1017 
-#define cmdCustomizeQAT 1018 
 #define cmdGroupFileActions_LabelTitle_RESID 60051
 #define cmdGroupExit_LabelTitle_RESID 60052
 #define cmdGroupToolsActions_LabelTitle_RESID 60053
