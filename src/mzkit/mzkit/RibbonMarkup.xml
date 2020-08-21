@@ -15,7 +15,7 @@
 			</Command.SmallImages>
 		</Command>
 
-		<Command Name="cmdButtonOpen"
+		<Command Name="cmdButtonOpenRaw"
 				 Id="1002"
 				 LabelTitle="Open"
 				 LabelDescription="Open Description"
@@ -67,14 +67,14 @@
 				 LabelTitle="Exit Menu">
 		</Command>
 
-		<Command Name="cmdDropDownButton"
+		<Command Name="cmdButtonOpen"
 				 Id="1007"
-				 LabelTitle="Drop Down Button">
+				 LabelTitle="Open">
 			<Command.LargeImages>
-				<Image>Res/Drop32.bmp</Image>
+				<Image>Res/Open32.bmp</Image>
 			</Command.LargeImages>
 			<Command.SmallImages>
-				<Image>Res/Drop16.bmp</Image>
+				<Image>Res/Open16.bmp</Image>
 			</Command.SmallImages>
 		</Command>
 
@@ -142,7 +142,7 @@
 					<!-- useful part -->
 					<Group CommandName="cmdGroupFileActions" SizeDefinition="ThreeButtons">
 						<Button CommandName="cmdButtonNew" />
-						<Button CommandName="cmdButtonOpen" />
+						<Button CommandName="cmdButtonOpenRaw" />
 						<Button CommandName="cmdButtonSave" />
 					</Group>
 					<Group CommandName="cmdGroupExit" SizeDefinition="OneButton">
@@ -157,19 +157,21 @@
 
 					<MenuGroup CommandName='cmdMenuGroupFile'>
 						<Button CommandName='cmdButtonNew' />
-						<Button CommandName='cmdButtonOpen' />
-						<Button CommandName='cmdButtonSave' />
-					</MenuGroup>
-
-					<MenuGroup>
-
-						<DropDownButton CommandName='cmdDropDownButton'>
+						
+						<DropDownButton CommandName='cmdButtonOpen'>
 							<MenuGroup Class='MajorItems'>
 								<Button CommandName='cmdButtonDropA' />
 								<Button CommandName='cmdButtonDropB' />
 								<Button CommandName='cmdButtonDropC' />
 							</MenuGroup>
 						</DropDownButton>
+						
+						<Button CommandName='cmdButtonSave' />
+					</MenuGroup>
+<!--
+					<MenuGroup>
+
+						
 
 						<SplitButton>
 							<SplitButton.ButtonItem>
@@ -184,7 +186,7 @@
 							</SplitButton.MenuGroups>
 						</SplitButton>
 
-					</MenuGroup>
+					</MenuGroup>-->
 					<MenuGroup CommandName='cmdMenuGroupExit'>
 						<Button CommandName='cmdButtonExit' />
 					</MenuGroup>

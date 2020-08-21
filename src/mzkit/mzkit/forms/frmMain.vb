@@ -1,4 +1,5 @@
 ﻿Imports System.Threading
+Imports RibbonLib.Controls.Events
 
 Public Class frmMain
 
@@ -14,7 +15,7 @@ Public Class frmMain
         ChildForm.Show()
     End Sub
 
-    Private Sub OpenFile(ByVal sender As Object, ByVal e As EventArgs)
+    Private Sub OpenFile(ByVal sender As Object, ByVal e As ExecuteEventArgs)
         Using file As New OpenFileDialog With {.Filter = "Raw Data|*.mzXML;*.mzML"}
             If file.ShowDialog = DialogResult.OK Then
                 Dim progress As New frmProgress() With {.Text = $"Imports raw data [{file.FileName}]"}
@@ -50,7 +51,7 @@ Public Class frmMain
     End Sub
 
 
-    Private Sub ExitToolsStripMenuItem_Click(ByVal sender As Object, ByVal e As EventArgs)
+    Private Sub ExitToolsStripMenuItem_Click(ByVal sender As Object, ByVal e As ExecuteEventArgs)
         Me.Close()
     End Sub
 
@@ -107,6 +108,9 @@ Public Class frmMain
 
         ' 在 InitializeComponent() 调用之后添加任何初始化。
         ribbonItems = New RibbonItems(Ribbon1)
+
+        AddHandler ribbonItems.ButtonExit.ExecuteEvent, AddressOf ExitToolsStripMenuItem_Click
+        AddHandler ribbonItems.ButtonOpenRaw.ExecuteEvent, AddressOf OpenFile
     End Sub
 
     Private Sub MzCalculatorToolStripMenuItem_Click(sender As Object, e As EventArgs)

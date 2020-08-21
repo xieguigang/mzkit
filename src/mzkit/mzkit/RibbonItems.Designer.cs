@@ -20,11 +20,11 @@ partial class RibbonItems
         public const uint cmdHelpButton = 1016;
         public const uint cmdTabMain = 1011;
         public const uint cmdButtonNew = 1001;
-        public const uint cmdButtonOpen = 1002;
+        public const uint cmdButtonOpenRaw = 1002;
         public const uint cmdButtonSave = 1003;
         public const uint cmdButtonExit = 1004;
         public const uint cmdMenuGroupFile = 1005;
-        public const uint cmdDropDownButton = 1007;
+        public const uint cmdButtonOpen = 1007;
         public const uint cmdButtonDropA = 1008;
         public const uint cmdButtonDropB = 1009;
         public const uint cmdButtonDropC = 1010;
@@ -39,11 +39,11 @@ partial class RibbonItems
     public RibbonHelpButton HelpButton { get; private set; }
     public RibbonTab TabMain { get; private set; }
     public RibbonButton ButtonNew { get; private set; }
-    public RibbonButton ButtonOpen { get; private set; }
+    public RibbonButton ButtonOpenRaw { get; private set; }
     public RibbonButton ButtonSave { get; private set; }
     public RibbonButton ButtonExit { get; private set; }
     public RibbonMenuGroup MenuGroupFile { get; private set; }
-    public RibbonDropDownButton DropDownButton { get; private set; }
+    public RibbonDropDownButton ButtonOpen { get; private set; }
     public RibbonButton ButtonDropA { get; private set; }
     public RibbonButton ButtonDropB { get; private set; }
     public RibbonButton ButtonDropC { get; private set; }
@@ -59,11 +59,11 @@ partial class RibbonItems
         HelpButton = new RibbonHelpButton(ribbon, Cmd.cmdHelpButton);
         TabMain = new RibbonTab(ribbon, Cmd.cmdTabMain);
         ButtonNew = new RibbonButton(ribbon, Cmd.cmdButtonNew);
-        ButtonOpen = new RibbonButton(ribbon, Cmd.cmdButtonOpen);
+        ButtonOpenRaw = new RibbonButton(ribbon, Cmd.cmdButtonOpenRaw);
         ButtonSave = new RibbonButton(ribbon, Cmd.cmdButtonSave);
         ButtonExit = new RibbonButton(ribbon, Cmd.cmdButtonExit);
         MenuGroupFile = new RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupFile);
-        DropDownButton = new RibbonDropDownButton(ribbon, Cmd.cmdDropDownButton);
+        ButtonOpen = new RibbonDropDownButton(ribbon, Cmd.cmdButtonOpen);
         ButtonDropA = new RibbonButton(ribbon, Cmd.cmdButtonDropA);
         ButtonDropB = new RibbonButton(ribbon, Cmd.cmdButtonDropB);
         ButtonDropC = new RibbonButton(ribbon, Cmd.cmdButtonDropC);
@@ -72,4 +72,3 @@ partial class RibbonItems
     }
 
 }
-

@@ -14,17 +14,17 @@ Imports RibbonLib.Controls
 Imports RibbonLib.Interop
 
 Partial Class RibbonItems
-    Private _Ribbon As Ribbon, _HelpButton As RibbonHelpButton, _TabMain As RibbonTab, _ButtonNew As RibbonButton, _ButtonOpen As RibbonButton, _ButtonSave As RibbonButton, _ButtonExit As RibbonButton, _MenuGroupFile As RibbonMenuGroup, _DropDownButton As RibbonDropDownButton, _ButtonDropA As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton, _MenuGroupExit As RibbonMenuGroup
+    Private _Ribbon As Ribbon, _HelpButton As RibbonHelpButton, _TabMain As RibbonTab, _ButtonNew As RibbonButton, _ButtonOpenRaw As RibbonButton, _ButtonSave As RibbonButton, _ButtonExit As RibbonButton, _MenuGroupFile As RibbonMenuGroup, _ButtonOpen As RibbonDropDownButton, _ButtonDropA As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton, _MenuGroupExit As RibbonMenuGroup
 
     Private NotInheritable Class Cmd
         Public Const cmdHelpButton As UInteger = 1016
         Public Const cmdTabMain As UInteger = 1011
         Public Const cmdButtonNew As UInteger = 1001
-        Public Const cmdButtonOpen As UInteger = 1002
+        Public Const cmdButtonOpenRaw As UInteger = 1002
         Public Const cmdButtonSave As UInteger = 1003
         Public Const cmdButtonExit As UInteger = 1004
         Public Const cmdMenuGroupFile As UInteger = 1005
-        Public Const cmdDropDownButton As UInteger = 1007
+        Public Const cmdButtonOpen As UInteger = 1007
         Public Const cmdButtonDropA As UInteger = 1008
         Public Const cmdButtonDropB As UInteger = 1009
         Public Const cmdButtonDropC As UInteger = 1010
@@ -71,12 +71,12 @@ Partial Class RibbonItems
         End Set
     End Property
 
-    Public Property ButtonOpen As RibbonButton
+    Public Property ButtonOpenRaw As RibbonButton
         Get
-            Return _ButtonOpen
+            Return _ButtonOpenRaw
         End Get
         Private Set(ByVal value As RibbonButton)
-            _ButtonOpen = value
+            _ButtonOpenRaw = value
         End Set
     End Property
 
@@ -107,12 +107,12 @@ Partial Class RibbonItems
         End Set
     End Property
 
-    Public Property DropDownButton As RibbonDropDownButton
+    Public Property ButtonOpen As RibbonDropDownButton
         Get
-            Return _DropDownButton
+            Return _ButtonOpen
         End Get
         Private Set(ByVal value As RibbonDropDownButton)
-            _DropDownButton = value
+            _ButtonOpen = value
         End Set
     End Property
 
@@ -159,11 +159,11 @@ Partial Class RibbonItems
         HelpButton = New RibbonHelpButton(ribbon, Cmd.cmdHelpButton)
         TabMain = New RibbonTab(ribbon, Cmd.cmdTabMain)
         ButtonNew = New RibbonButton(ribbon, Cmd.cmdButtonNew)
-        ButtonOpen = New RibbonButton(ribbon, Cmd.cmdButtonOpen)
+        ButtonOpenRaw = New RibbonButton(ribbon, Cmd.cmdButtonOpenRaw)
         ButtonSave = New RibbonButton(ribbon, Cmd.cmdButtonSave)
         ButtonExit = New RibbonButton(ribbon, Cmd.cmdButtonExit)
         MenuGroupFile = New RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupFile)
-        DropDownButton = New RibbonDropDownButton(ribbon, Cmd.cmdDropDownButton)
+        ButtonOpen = New RibbonDropDownButton(ribbon, Cmd.cmdButtonOpen)
         ButtonDropA = New RibbonButton(ribbon, Cmd.cmdButtonDropA)
         ButtonDropB = New RibbonButton(ribbon, Cmd.cmdButtonDropB)
         ButtonDropC = New RibbonButton(ribbon, Cmd.cmdButtonDropC)
