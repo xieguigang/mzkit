@@ -212,6 +212,7 @@ Public Class frmMain
 
             Using cache As New netCDFReader(raw.cache)
                 Dim data As CDFData = cache.getDataVariable(cache.getDataVariableEntry(scanId))
+                Dim attrs = cache.getDataVariableEntry(scanId).attributes
 
                 scanData = New LibraryMatrix With {
                     .name = scanId,
@@ -262,5 +263,9 @@ Public Class frmMain
     Private Sub MS2ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MS2ToolStripMenuItem.Click
         MS2ToolStripMenuItem.Checked = Not MS2ToolStripMenuItem.Checked
         applyLevelFilter()
+    End Sub
+
+    Private Sub DeleteFileToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeleteFileToolStripMenuItem.Click
+
     End Sub
 End Class
