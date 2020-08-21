@@ -19,25 +19,29 @@ Module Globals
     End Sub
 
     <Extension>
-    Public Sub LoadRawFileCache(explorer As TreeView)
+    Public Function LoadRawFileCache(explorer As TreeView) As Integer
         Dim files = cacheList.LoadJsonFile(Of Task.Raw())
+        Dim i As Integer
 
         For Each raw As Raw In files.SafeQuery
             Call explorer.addRawFile(raw)
+            i += 1
         Next
-    End Sub
+
+        Return i
+    End Function
 
     <Extension>
     Public Sub addRawFile(explorer As TreeView, raw As Raw)
-        Dim rawFileNode As New TreeNode($"{raw.source.FileName} [{raw.scans} Scans]") With {
+        Dim rawFileNode As New TreeNode($"{raw.source.FileName} [{raw.numOfScans} Scans]") With {
                 .Checked = True,
                 .Tag = raw
             }
 
         explorer.Nodes.Add(rawFileNode)
 
-        For Each id As String In raw.scanIDList
-            rawFileNode.Nodes.Add(New TreeNode(id))
+        For Each scan As ScanEntry In raw.scans
+            rawFileNode.Nodes.Add(New TreeNode(scan.id) With {.Tag = scan})
         Next
     End Sub
 End Module

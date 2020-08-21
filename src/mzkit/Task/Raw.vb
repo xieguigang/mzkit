@@ -2,12 +2,19 @@
 
     Public Property source As String
     Public Property cache As String
-    Public ReadOnly Property scans As Integer
+    Public ReadOnly Property numOfScans As Integer
         Get
-            Return scanIDList.Length
+            Return scans.Length
         End Get
     End Property
 
-    Public Property scanIDList As String()
+    Public Property scans As ScanEntry()
+
+End Class
+
+Public Class ScanEntry
+
+    Public Property id As String
+    Public Property mz As Double
 
 End Class

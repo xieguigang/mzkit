@@ -195,7 +195,9 @@ Public Class frmMain
     End Sub
 
     Sub InitializeFileTree()
-        Call TreeView1.LoadRawFileCache
+        If TreeView1.LoadRawFileCache = 0 Then
+            MessageBox.Show($"It seems that you don't have any raw file opended. {vbCrLf}You could open raw file through [File] -> [Open Raw File].", "Tips", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
     End Sub
 
     Private Sub TreeView1_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles TreeView1.AfterSelect
@@ -225,5 +227,10 @@ Public Class frmMain
 
     Private Sub frmMain_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
         Call TreeView1.SaveRawFileCache
+    End Sub
+
+    Private Sub ShowTICToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowTICToolStripMenuItem.Click
+        Dim node = TreeView1.SelectedNode
+
     End Sub
 End Class

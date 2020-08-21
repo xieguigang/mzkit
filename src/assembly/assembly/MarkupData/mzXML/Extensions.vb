@@ -110,7 +110,7 @@ Namespace MarkupData.mzXML
             If scan.msLevel = 1 Then
                 Return $"[{level}, {scan.num}] {scan.scanType} Scan, ({scan.polarity}) retentionTime={CInt(scan.retentionTime.ParseDouble)}"
             Else
-                Return $"[{level}] {scan.scanType} Scan, ({scan.polarity}) mz={scan.precursorMz.value.ToString("F3")}, into={scan.precursorMz.precursorIntensity} / retentionTime={CInt(PeakMs2.RtInSecond(scan.retentionTime))}s"
+                Return $"[{level}] {scan.scanType} Scan, ({scan.polarity}) mz={scan.precursorMz.value.ToString("F3")}, into={CLng(scan.precursorMz.precursorIntensity)} / retentionTime={CInt(PeakMs2.RtInSecond(scan.retentionTime))}s"
             End If
         End Function
 
