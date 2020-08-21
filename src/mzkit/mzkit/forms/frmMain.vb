@@ -1,4 +1,5 @@
-﻿Imports System.Threading
+﻿Imports System.ComponentModel
+Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
@@ -43,18 +44,7 @@ Public Class frmMain
                 '    .Text = file.FileName,
                 '    .rawFile = task.raw
                 '}.Show()
-                Dim rawFile = task.raw
-                Dim rawFileNode As New TreeNode($"{file.FileName.FileName} [{rawFile.scans} Scans]") With {
-                    .Checked = True,
-                    .Tag = rawFile
-                }
-
-                TreeView1.Nodes.Add(rawFileNode)
-
-                For Each id As String In rawFile.scanIDList
-                    rawFileNode.Nodes.Add(New TreeNode(id))
-                Next
-
+                Call TreeView1.addRawFile(task.raw)
             End If
         End Using
     End Sub
@@ -205,7 +195,7 @@ Public Class frmMain
     End Sub
 
     Sub InitializeFileTree()
-
+        Call TreeView1.LoadRawFileCache
     End Sub
 
     Private Sub TreeView1_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles TreeView1.AfterSelect
@@ -228,8 +218,12 @@ Public Class frmMain
 
                 Dim draw As Image = scanData.MirrorPlot.AsGDIImage
 
-                PictureBox1.Image = draw
+                PictureBox1.BackgroundImage = draw
             End Using
         End If
+    End Sub
+
+    Private Sub frmMain_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        Call TreeView1.SaveRawFileCache
     End Sub
 End Class
