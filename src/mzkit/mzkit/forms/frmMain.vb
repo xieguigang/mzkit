@@ -9,6 +9,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports RibbonLib
 Imports RibbonLib.Controls.Events
 Imports RibbonLib.Interop
+Imports Task
 
 Public Class frmMain
 
@@ -196,7 +197,7 @@ Public Class frmMain
 
     Sub InitializeFileTree()
         If TreeView1.LoadRawFileCache = 0 Then
-            MessageBox.Show($"It seems that you don't have any raw file opended. {vbCrLf}You could open raw file through [File] -> [Open Raw File].", "Tips", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            ' MessageBox.Show($"It seems that you don't have any raw file opended. {vbCrLf}You could open raw file through [File] -> [Open Raw File].", "Tips", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
     End Sub
 
@@ -230,7 +231,36 @@ Public Class frmMain
     End Sub
 
     Private Sub ShowTICToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowTICToolStripMenuItem.Click
-        Dim node = TreeView1.SelectedNode
 
+    End Sub
+
+    Private Sub SaveImageToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveImageToolStripMenuItem.Click
+        If Not PictureBox1.BackgroundImage Is Nothing Then
+            Using file As New SaveFileDialog With {.Filter = "image(*.png)|*.png"}
+                If file.ShowDialog = DialogResult.OK Then
+                    Call PictureBox1.BackgroundImage.SaveAs(file.FileName)
+                    Call Process.Start(file.FileName)
+                End If
+            End Using
+        End If
+    End Sub
+
+    Private Sub applyLevelFilter()
+        Dim raw = TreeView1.CurrentRawFile
+
+        If Not raw.raw Is Nothing Then
+            raw.tree.Nodes.Clear()
+            raw.tree.addRawFile(raw.raw, MS1ToolStripMenuItem.Checked, MS2ToolStripMenuItem.Checked)
+        End If
+    End Sub
+
+    Private Sub MS1ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MS1ToolStripMenuItem.Click
+        MS1ToolStripMenuItem.Checked = Not MS1ToolStripMenuItem.Checked
+        applyLevelFilter()
+    End Sub
+
+    Private Sub MS2ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MS2ToolStripMenuItem.Click
+        MS2ToolStripMenuItem.Checked = Not MS2ToolStripMenuItem.Checked
+        applyLevelFilter()
     End Sub
 End Class

@@ -35,6 +35,8 @@ Partial Class frmMain
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.TreeView1 = New System.Windows.Forms.TreeView()
+        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.ShowTICToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TabControl2 = New System.Windows.Forms.TabControl()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.Button1 = New System.Windows.Forms.Button()
@@ -42,16 +44,19 @@ Partial Class frmMain
         Me.Label1 = New System.Windows.Forms.Label()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.ListBox1 = New System.Windows.Forms.ListBox()
-        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.ShowTICToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ContextMenuStrip2 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.SaveImageToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MS1ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MS2ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StatusStrip.SuspendLayout()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.ContextMenuStrip1.SuspendLayout()
         Me.TabControl2.SuspendLayout()
         Me.TabPage3.SuspendLayout()
         Me.TabPage4.SuspendLayout()
-        Me.ContextMenuStrip1.SuspendLayout()
+        Me.ContextMenuStrip2.SuspendLayout()
         Me.SuspendLayout()
         '
         'StatusStrip
@@ -66,7 +71,7 @@ Partial Class frmMain
         'ToolStripStatusLabel
         '
         Me.ToolStripStatusLabel.Name = "ToolStripStatusLabel"
-        Me.ToolStripStatusLabel.Size = New System.Drawing.Size(43, 17)
+        Me.ToolStripStatusLabel.Size = New System.Drawing.Size(39, 17)
         Me.ToolStripStatusLabel.Text = "Status"
         '
         'Ribbon1
@@ -108,6 +113,7 @@ Partial Class frmMain
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.PictureBox1.ContextMenuStrip = Me.ContextMenuStrip2
         Me.PictureBox1.Location = New System.Drawing.Point(6, 6)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(877, 384)
@@ -133,6 +139,18 @@ Partial Class frmMain
         Me.TreeView1.Name = "TreeView1"
         Me.TreeView1.Size = New System.Drawing.Size(313, 458)
         Me.TreeView1.TabIndex = 11
+        '
+        'ContextMenuStrip1
+        '
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowTICToolStripMenuItem, Me.MS1ToolStripMenuItem, Me.MS2ToolStripMenuItem})
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 92)
+        '
+        'ShowTICToolStripMenuItem
+        '
+        Me.ShowTICToolStripMenuItem.Name = "ShowTICToolStripMenuItem"
+        Me.ShowTICToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ShowTICToolStripMenuItem.Text = "Show TIC"
         '
         'TabControl2
         '
@@ -171,7 +189,7 @@ Partial Class frmMain
         '
         Me.TextBox1.Location = New System.Drawing.Point(83, 11)
         Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(144, 21)
+        Me.TextBox1.Size = New System.Drawing.Size(144, 20)
         Me.TextBox1.TabIndex = 13
         '
         'Label1
@@ -179,7 +197,7 @@ Partial Class frmMain
         Me.Label1.AutoSize = True
         Me.Label1.Location = New System.Drawing.Point(6, 14)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(71, 12)
+        Me.Label1.Size = New System.Drawing.Size(63, 13)
         Me.Label1.TabIndex = 12
         Me.Label1.Text = "m/z search:"
         '
@@ -197,23 +215,38 @@ Partial Class frmMain
         'ListBox1
         '
         Me.ListBox1.FormattingEnabled = True
-        Me.ListBox1.ItemHeight = 12
         Me.ListBox1.Location = New System.Drawing.Point(6, 62)
         Me.ListBox1.Name = "ListBox1"
-        Me.ListBox1.Size = New System.Drawing.Size(313, 436)
+        Me.ListBox1.Size = New System.Drawing.Size(313, 433)
         Me.ListBox1.TabIndex = 0
         '
-        'ContextMenuStrip1
+        'ContextMenuStrip2
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowTICToolStripMenuItem})
-        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 48)
+        Me.ContextMenuStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveImageToolStripMenuItem})
+        Me.ContextMenuStrip2.Name = "ContextMenuStrip2"
+        Me.ContextMenuStrip2.Size = New System.Drawing.Size(135, 26)
         '
-        'ShowTICToolStripMenuItem
+        'SaveImageToolStripMenuItem
         '
-        Me.ShowTICToolStripMenuItem.Name = "ShowTICToolStripMenuItem"
-        Me.ShowTICToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.ShowTICToolStripMenuItem.Text = "Show TIC"
+        Me.SaveImageToolStripMenuItem.Name = "SaveImageToolStripMenuItem"
+        Me.SaveImageToolStripMenuItem.Size = New System.Drawing.Size(134, 22)
+        Me.SaveImageToolStripMenuItem.Text = "Save Image"
+        '
+        'MS1ToolStripMenuItem
+        '
+        Me.MS1ToolStripMenuItem.Checked = True
+        Me.MS1ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.MS1ToolStripMenuItem.Name = "MS1ToolStripMenuItem"
+        Me.MS1ToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.MS1ToolStripMenuItem.Text = "MS1"
+        '
+        'MS2ToolStripMenuItem
+        '
+        Me.MS2ToolStripMenuItem.Checked = True
+        Me.MS2ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.MS2ToolStripMenuItem.Name = "MS2ToolStripMenuItem"
+        Me.MS2ToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.MS2ToolStripMenuItem.Text = "MS2"
         '
         'frmMain
         '
@@ -232,11 +265,12 @@ Partial Class frmMain
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ContextMenuStrip1.ResumeLayout(False)
         Me.TabControl2.ResumeLayout(False)
         Me.TabPage3.ResumeLayout(False)
         Me.TabPage3.PerformLayout()
         Me.TabPage4.ResumeLayout(False)
-        Me.ContextMenuStrip1.ResumeLayout(False)
+        Me.ContextMenuStrip2.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -259,4 +293,8 @@ Partial Class frmMain
     Friend WithEvents ListBox1 As ListBox
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents ShowTICToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ContextMenuStrip2 As ContextMenuStrip
+    Friend WithEvents SaveImageToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents MS1ToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents MS2ToolStripMenuItem As ToolStripMenuItem
 End Class
