@@ -134,18 +134,18 @@
 			</Command.SmallImages>
 		</Command>
 
- <Command Name="cmdRecentItems" Id="1014" LabelTitle="Recent Items" />
+		<Command Name="cmdRecentItems" Id="1014" LabelTitle="Recent Items" />
 
 		<Command Name="cmdHelpButton"
 				 Id="1016">
 		</Command>
 
- <Command Name="cmdQAT"
-             Id="1017">
-    </Command>
-    <Command Name="cmdCustomizeQAT"
-             Id="1018">
-    </Command>
+		<Command Name="cmdQAT"
+					Id="1017">
+		</Command>
+		<Command Name="cmdCustomizeQAT"
+				 Id="1018">
+		</Command>
 
 
 	</Application.Commands>
@@ -183,15 +183,15 @@
 					</Group>
 				</Tab>
 
-	
-			<!-- Tools Menu -->
-		
+
+				<!-- Tools Menu -->
+
 				<Tab CommandName="cmdTabTools">
 					<!-- scary part -->
 					<Tab.ScalingPolicy>
 						<ScalingPolicy>
 							<ScalingPolicy.IdealSizes>
-								<Scale Group="cmdGroupToolsActions" Size="Large" />							
+								<Scale Group="cmdGroupToolsActions" Size="Large" />
 							</ScalingPolicy.IdealSizes>
 							<Scale Group="cmdGroupToolsActions" Size="Medium" />
 						</ScalingPolicy>
@@ -212,9 +212,9 @@
 			<Ribbon.ApplicationMenu>
 				<ApplicationMenu>
 
-<ApplicationMenu.RecentItems>
-            <RecentItems CommandName="cmdRecentItems" EnablePinning="true" MaxCount="13" />
-          </ApplicationMenu.RecentItems>
+					<ApplicationMenu.RecentItems>
+						<RecentItems CommandName="cmdRecentItems" EnablePinning="true" MaxCount="13" />
+					</ApplicationMenu.RecentItems>
 
 					<MenuGroup CommandName='cmdMenuGroupFile'>
 						<Button CommandName='cmdButtonNew' />
@@ -254,17 +254,17 @@
 
 				</ApplicationMenu>
 			</Ribbon.ApplicationMenu>
-			
-			      <Ribbon.QuickAccessToolbar>
-        <QuickAccessToolbar CommandName='cmdQAT' CustomizeCommandName='cmdCustomizeQAT'>
-          <QuickAccessToolbar.ApplicationDefaults>
-            <Button CommandName="cmdButtonNew" ApplicationDefaults.IsChecked="true" />
-            <Button CommandName="cmdButtonOpenRaw" ApplicationDefaults.IsChecked="false" />
-            <Button CommandName="cmdButtonSave" ApplicationDefaults.IsChecked="false" />
-          </QuickAccessToolbar.ApplicationDefaults>
-        </QuickAccessToolbar>
-      </Ribbon.QuickAccessToolbar>
-			
+
+			<Ribbon.QuickAccessToolbar>
+				<QuickAccessToolbar CommandName='cmdQAT' CustomizeCommandName='cmdCustomizeQAT'>
+					<QuickAccessToolbar.ApplicationDefaults>
+						<Button CommandName="cmdButtonNew" ApplicationDefaults.IsChecked="true" />
+						<Button CommandName="cmdButtonOpenRaw" ApplicationDefaults.IsChecked="false" />
+						<Button CommandName="cmdButtonSave" ApplicationDefaults.IsChecked="false" />
+					</QuickAccessToolbar.ApplicationDefaults>
+				</QuickAccessToolbar>
+			</Ribbon.QuickAccessToolbar>
+
 		</Ribbon>
 	</Application.Views>
 </Application>
