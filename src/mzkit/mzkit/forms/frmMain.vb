@@ -1,8 +1,10 @@
 ﻿Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
+Imports Microsoft.VisualBasic.Imaging
 Imports RibbonLib
 Imports RibbonLib.Controls.Events
 Imports RibbonLib.Interop
@@ -224,7 +226,9 @@ Public Class frmMain
                     .ms2 = data.numerics.AsMs2.ToArray
                 }
 
-                Dim draw As Image
+                Dim draw As Image = scanData.MirrorPlot.AsGDIImage
+
+                PictureBox1.Image = draw
             End Using
         End If
     End Sub
