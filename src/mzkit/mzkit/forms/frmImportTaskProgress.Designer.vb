@@ -35,6 +35,7 @@ Partial Class frmImportTaskProgress
         Me.ProgressBar1.MarqueeAnimationSpeed = 40
         Me.ProgressBar1.Name = "ProgressBar1"
         Me.ProgressBar1.Size = New System.Drawing.Size(638, 31)
+        Me.ProgressBar1.Step = 30
         Me.ProgressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee
         Me.ProgressBar1.TabIndex = 0
         '

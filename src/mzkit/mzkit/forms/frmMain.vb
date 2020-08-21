@@ -1,13 +1,16 @@
 ﻿Imports System.ComponentModel
 Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports RibbonLib
@@ -209,6 +212,20 @@ Public Class frmMain
     Private Sub TreeView1_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles TreeView1.AfterSelect
         If TypeOf e.Node.Tag Is Task.Raw Then
             ' 原始文件节点
+        ElseIf TypeOf e.Node.Tag Is ms2() Then
+            ' TIC 图绘制
+            Dim raw = DirectCast(e.Node.Tag, ms2())
+            Dim TIC As New NamedCollection(Of ChromatogramTick) With {
+                .name = $"m/z {raw.Select(Function(m) m.mz).Min.ToString("F3")} - {raw.Select(Function(m) m.mz).Max.ToString("F3")}",
+                .value = raw.Select(Function(a) New ChromatogramTick With {.Time = Val(a.Annotation), .Intensity = a.intensity}).ToArray
+            }
+
+            PictureBox1.BackgroundImage = TIC.TICplot.AsGDIImage
+        ElseIf e.Node.Tag Is Nothing AndAlso e.Node.Text = "TIC" Then
+            Dim raw = TreeView1.CurrentRawFile.raw
+            Dim TIC As New NamedCollection(Of ChromatogramTick) With {.name = "TIC", .value = raw.scans.Where(Function(a) a.mz = 0R).Select(Function(m) New ChromatogramTick With {.Time = m.rt, .Intensity = m.intensity}).ToArray}
+
+            PictureBox1.BackgroundImage = TIC.TICplot.AsGDIImage
         Else
             ' scan节点
             Dim raw As Task.Raw = e.Node.Parent.Tag
@@ -239,25 +256,72 @@ Public Class frmMain
     Private Sub ShowTICToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowTICToolStripMenuItem.Click
         Dim raw = TreeView1.CurrentRawFile
 
-        If Not raw.raw Is Nothing Then
+        ShowTICToolStripMenuItem.Checked = Not ShowTICToolStripMenuItem.Checked
+
+        If raw.raw Is Nothing Then
+            Return
+        Else
             raw.tree.Nodes.Clear()
+        End If
+
+        If ShowTICToolStripMenuItem.Checked Then
             raw.tree.Nodes.Add(New TreeNode("TIC"))
 
             Using cache As New netCDFReader(raw.raw.cache)
-                Dim allMz As New List(Of ms2)
+                Dim progress As New frmImportTaskProgress() With {.Text = $"Reading TIC raw data [{raw.raw.source}]"}
+                Dim showProgress As Action(Of String) = Sub(text) progress.Invoke(Sub() progress.Label1.Text = text)
+                Dim mzgroups As NamedCollection(Of ms2)() = {}
+                Dim runTask As New Thread(
+                        Sub()
+                            Dim ms1n = raw.raw.scans.Where(Function(a) a.mz = 0R).Count
+                            Dim i As i32 = 1
+                            Dim allMz As New List(Of ms2)
+                            Dim mztemp As ms2()
 
-                For Each scan In raw.raw.scans
-                    If scan.mz = 0 Then
-                        cache.getDataVariable(cache.getDataVariableEntry(scan.id)).numerics.AsMs2.DoCall(AddressOf allMz.AddRange)
-                    End If
-                Next
+                            For Each scan In raw.raw.scans
+                                If scan.mz = 0 Then
+                                    Dim entry = cache.getDataVariableEntry(scan.id)
+                                    Dim rt As String = entry.attributes.Where(Function(a) a.name = "retentionTime").FirstOrDefault?.value
 
-                For Each mzblock In allMz.GroupBy(Function(mz) mz.mz, Tolerance.DeltaMass(0.3))
+                                    mztemp = cache.getDataVariable(entry).numerics.AsMs2.ToArray
+
+                                    For i2 As Integer = 0 To mztemp.Length - 1
+                                        mztemp(i2).Annotation = rt
+                                    Next
+
+                                    allMz.AddRange(mztemp)
+                                    showProgress($"[{++i}/{ms1n}] {scan.id}")
+                                End If
+                            Next
+
+                            showProgress("Run m/z group....")
+                            mzgroups = allMz _
+                                .GroupBy(Function(mz) mz.mz, Tolerance.DeltaMass(5)) _
+                                .Select(Function(a)
+                                            Dim max = a.Select(Function(m) m.intensity).Max
+
+                                            Return New NamedCollection(Of ms2) With {.value = a.value.Where(Function(m) m.intensity / max >= 0.05).OrderBy(Function(m) Val(m.Annotation)).ToArray}
+                                        End Function) _
+                                .ToArray
+                            progress.Invoke(Sub() progress.Close())
+                        End Sub)
+
+                ToolStripStatusLabel.Text = "Run Raw Data Imports"
+                progress.Label2.Text = progress.Text
+
+                Call runTask.Start()
+                Call progress.ShowDialog()
+
+                For Each mzblock In mzgroups
                     Dim range As New DoubleRange(mzblock.Select(Function(m) m.mz))
 
-                    raw.tree.Nodes.Add(New TreeNode($"m/z {range.Min.ToString("F3")}~{range.Max.ToString("F3")}") With {.Tag = range})
+                    raw.tree.Nodes.Add(New TreeNode($"m/z {range.Min.ToString("F3")} - {range.Max.ToString("F3")}") With {.Tag = mzblock.ToArray})
                 Next
+
+                ToolStripStatusLabel.Text = "Ready!"
             End Using
+        Else
+            Call applyLevelFilter()
         End If
     End Sub
 

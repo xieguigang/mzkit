@@ -54,7 +54,7 @@ Public Class ImportsRawData
                 data = scan.peaks.Base64Decode(True)
                 name = scan.getName
                 cache.AddVariable(name, New CDFData With {.numerics = data}, New Dimension With {.name = "m/z-int,scan_" & scan.num, .size = data.Length}, attrs)
-                nscans.Add(New ScanEntry With {.id = name, .mz = scan.precursorMz.value})
+                nscans.Add(New ScanEntry With {.id = name, .mz = scan.precursorMz.value, .rt = PeakMs2.RtInSecond(scan.retentionTime), .intensity = scan.basePeakIntensity})
 
                 Call showProgress(name)
             Next
