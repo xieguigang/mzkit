@@ -57,9 +57,17 @@ Namespace MarkupData.mzXML
         ''' </summary>
         ''' <param name="peaks"></param>
         ''' <returns></returns>
-        <Extension> Public Function ExtractMzI(peaks As peaks) As ms2()
+        <Extension>
+        Public Function ExtractMzI(peaks As peaks) As ms2()
             Dim floats#() = peaks.Base64Decode(True)
-            Dim peaksData = floats _
+            Dim peaksData As ms2() = floats.AsMs2.ToArray
+
+            Return peaksData
+        End Function
+
+        <Extension>
+        Public Function AsMs2(floats As Double()) As IEnumerable(Of ms2)
+            Return floats _
                 .Split(2) _
                 .Select(Function(buffer, i)
                             Return New ms2 With {
@@ -67,10 +75,7 @@ Namespace MarkupData.mzXML
                                 .intensity = buffer(Scan0), ' 信号强度, 归一化为 0-100 之间的数值
                                 .mz = buffer(1)             ' m/z质核比数据
                             }
-                        End Function) _
-                .ToArray
-
-            Return peaksData
+                        End Function)
         End Function
 
         ''' <summary>
@@ -100,7 +105,12 @@ Namespace MarkupData.mzXML
         <Extension>
         Public Function getName(scan As scan) As String
             Dim level$ = If(scan.msLevel = 1, "MS1", "MS/MS")
-            Return $"[{level}] {scan.scanType} Scan, ({scan.polarity}) mz={scan.precursorMz.value}, into={scan.precursorMz.precursorIntensity} / retentionTime={scan.retentionTime}"
+
+            If scan.msLevel = 1 Then
+                Return $"[{level}] {scan.scanType} Scan, ({scan.polarity}) retentionTime={CInt(scan.retentionTime)}"
+            Else
+                Return $"[{level}] {scan.scanType} Scan, ({scan.polarity}) mz={scan.precursorMz.value.ToString("F3")}, into={scan.precursorMz.precursorIntensity} / retentionTime={CInt(scan.retentionTime)}"
+            End If
         End Function
 
         ''' <summary>

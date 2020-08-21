@@ -1,4 +1,8 @@
 ﻿Imports System.Threading
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.Data.IO.netCDF
+Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 Imports RibbonLib
 Imports RibbonLib.Controls.Events
 Imports RibbonLib.Interop
@@ -37,6 +41,18 @@ Public Class frmMain
                 '    .Text = file.FileName,
                 '    .rawFile = task.raw
                 '}.Show()
+                Dim rawFile = task.raw
+                Dim rawFileNode As New TreeNode($"{file.FileName.FileName} [{rawFile.scans} Scans]") With {
+                    .Checked = True,
+                    .Tag = rawFile
+                }
+
+                TreeView1.Nodes.Add(rawFileNode)
+
+                For Each id As String In rawFile.scanIDList
+                    rawFileNode.Nodes.Add(New TreeNode(id))
+                Next
+
             End If
         End Using
     End Sub
@@ -128,6 +144,7 @@ Public Class frmMain
 
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         InitRecentItems()
+        InitializeFileTree()
         ToolStripStatusLabel.Text = "Ready!"
     End Sub
 
@@ -182,6 +199,33 @@ Public Class frmMain
             Dim propPinned As PropVariant
             e.CommandExecutionProperties.GetValue(RibbonProperties.Pinned, propPinned)
             Dim pinned As Boolean = CBool(propPinned.Value)
+        End If
+    End Sub
+
+    Sub InitializeFileTree()
+
+    End Sub
+
+    Private Sub TreeView1_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles TreeView1.AfterSelect
+        If TypeOf e.Node.Tag Is Task.Raw Then
+            ' 原始文件节点
+        Else
+            ' scan节点
+            Dim raw As Task.Raw = e.Node.Parent.Tag
+            Dim scanId As String = e.Node.Text
+            Dim scanData As LibraryMatrix
+
+            Using cache As New netCDFReader(raw.cache)
+                Dim data As CDFData = cache.getDataVariable(cache.getDataVariableEntry(scanId))
+
+                scanData = New LibraryMatrix With {
+                    .name = scanId,
+                    .centroid = False,
+                    .ms2 = data.numerics.AsMs2.ToArray
+                }
+
+                Dim draw As Image
+            End Using
         End If
     End Sub
 End Class
