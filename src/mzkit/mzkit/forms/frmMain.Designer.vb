@@ -469,7 +469,7 @@ Partial Class frmMain
         '
         Me.Ribbon1.Location = New System.Drawing.Point(0, 50)
         Me.Ribbon1.Name = "Ribbon1"
-        Me.Ribbon1.ResourceName = Nothing
+        Me.Ribbon1.ResourceName = "mzkit.RibbonMarkup.ribbon"
         Me.Ribbon1.ShortcutTableResourceName = Nothing
         Me.Ribbon1.Size = New System.Drawing.Size(1260, 23)
         Me.Ribbon1.TabIndex = 9

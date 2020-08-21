@@ -176,6 +176,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="RibbonItems.Designer.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="forms\frmProgress.resx">
@@ -212,6 +213,7 @@
     </None>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <EmbeddedResource Include="RibbonMarkup.ribbon" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj">
@@ -247,6 +249,7 @@
     <None Include="Resources\RE4As8m.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="RibbonMarkup.h" />
     <Content Include="RibbonMarkup.xml" />
     <None Include="Resources\header-foreground-image.png" />
     <None Include="Resources\header-background-image.png" />

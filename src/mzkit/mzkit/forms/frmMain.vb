@@ -1,5 +1,5 @@
 ﻿Imports System.Threading
-Imports System.Windows.Forms
+Imports mzkit.RibbonLib.Controls
 
 Public Class frmMain
 
@@ -99,6 +99,16 @@ Public Class frmMain
     End Sub
 
     Private m_ChildFormNumber As Integer
+    Dim ribbonItems As RibbonItems
+
+    Public Sub New()
+
+        ' 此调用是设计器所必需的。
+        InitializeComponent()
+
+        ' 在 InitializeComponent() 调用之后添加任何初始化。
+        ribbonItems = New RibbonItems(Ribbon1)
+    End Sub
 
     Private Sub MzCalculatorToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MzCalculatorToolStripMenuItem.Click
         Call New frmCalculator().ShowDialog()
