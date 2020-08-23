@@ -14,9 +14,19 @@ Imports RibbonLib.Controls
 Imports RibbonLib.Interop
 
 Partial Class RibbonItems
-    Private _Ribbon As Ribbon, _HelpButton As RibbonHelpButton, _TabMain As RibbonTab, _ButtonNew As RibbonButton, _ButtonOpenRaw As RibbonButton, _ButtonSave As RibbonButton, _ButtonExit As RibbonButton, _TabTools As RibbonTab, _ButtonMzCalculator As RibbonButton, _TabAbout As RibbonTab, _ButtonAbout As RibbonButton, _RecentItems As RibbonRecentItems, _MenuGroupFile As RibbonMenuGroup, _ButtonOpen As RibbonDropDownButton, _ButtonDropA As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton, _MenuGroupExit As RibbonMenuGroup, _QAT As RibbonQuickAccessToolbar
+    Private _Ribbon As Ribbon, _TabGroupTableTools As RibbonTabGroup, _TabDesign As RibbonTab, _GroupDesign As RibbonGroup, _ButtonDesign1 As RibbonButton, _ButtonDesign2 As RibbonButton, _ButtonDesign3 As RibbonButton, _TabLayout As RibbonTab, _GroupLayout As RibbonGroup, _ButtonLayout1 As RibbonButton, _ButtonLayout2 As RibbonButton, _HelpButton As RibbonHelpButton, _TabMain As RibbonTab, _ButtonNew As RibbonButton, _ButtonOpenRaw As RibbonButton, _ButtonSave As RibbonButton, _ButtonExit As RibbonButton, _TabTools As RibbonTab, _ButtonMzCalculator As RibbonButton, _TabAbout As RibbonTab, _ButtonAbout As RibbonButton, _RecentItems As RibbonRecentItems, _MenuGroupFile As RibbonMenuGroup, _ButtonOpen As RibbonDropDownButton, _ButtonDropA As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton, _MenuGroupExit As RibbonMenuGroup, _QAT As RibbonQuickAccessToolbar
 
     Private NotInheritable Class Cmd
+        Public Const cmdTabGroupTableTools As UInteger = 1031
+        Public Const cmdTabDesign As UInteger = 1032
+        Public Const cmdGroupDesign As UInteger = 1036
+        Public Const cmdButtonDesign1 As UInteger = 1040
+        Public Const cmdButtonDesign2 As UInteger = 1041
+        Public Const cmdButtonDesign3 As UInteger = 1042
+        Public Const cmdTabLayout As UInteger = 1035
+        Public Const cmdGroupLayout As UInteger = 1037
+        Public Const cmdButtonLayout1 As UInteger = 1043
+        Public Const cmdButtonLayout2 As UInteger = 1044
         Public Const cmdHelpButton As UInteger = 1016
         Public Const cmdTabMain As UInteger = 1011
         Public Const cmdButtonNew As UInteger = 1001
@@ -48,6 +58,96 @@ Partial Class RibbonItems
         End Get
         Private Set(ByVal value As Ribbon)
             _Ribbon = value
+        End Set
+    End Property
+
+    Public Property TabGroupTableTools As RibbonTabGroup
+        Get
+            Return _TabGroupTableTools
+        End Get
+        Private Set(ByVal value As RibbonTabGroup)
+            _TabGroupTableTools = value
+        End Set
+    End Property
+
+    Public Property TabDesign As RibbonTab
+        Get
+            Return _TabDesign
+        End Get
+        Private Set(ByVal value As RibbonTab)
+            _TabDesign = value
+        End Set
+    End Property
+
+    Public Property GroupDesign As RibbonGroup
+        Get
+            Return _GroupDesign
+        End Get
+        Private Set(ByVal value As RibbonGroup)
+            _GroupDesign = value
+        End Set
+    End Property
+
+    Public Property ButtonDesign1 As RibbonButton
+        Get
+            Return _ButtonDesign1
+        End Get
+        Private Set(ByVal value As RibbonButton)
+            _ButtonDesign1 = value
+        End Set
+    End Property
+
+    Public Property ButtonDesign2 As RibbonButton
+        Get
+            Return _ButtonDesign2
+        End Get
+        Private Set(ByVal value As RibbonButton)
+            _ButtonDesign2 = value
+        End Set
+    End Property
+
+    Public Property ButtonDesign3 As RibbonButton
+        Get
+            Return _ButtonDesign3
+        End Get
+        Private Set(ByVal value As RibbonButton)
+            _ButtonDesign3 = value
+        End Set
+    End Property
+
+    Public Property TabLayout As RibbonTab
+        Get
+            Return _TabLayout
+        End Get
+        Private Set(ByVal value As RibbonTab)
+            _TabLayout = value
+        End Set
+    End Property
+
+    Public Property GroupLayout As RibbonGroup
+        Get
+            Return _GroupLayout
+        End Get
+        Private Set(ByVal value As RibbonGroup)
+            _GroupLayout = value
+        End Set
+    End Property
+
+    Public Property ButtonLayout1 As RibbonButton
+        Get
+            Return _ButtonLayout1
+        End Get
+        Private Set(ByVal value As RibbonButton)
+            _ButtonLayout1 = value
+        End Set
+    End Property
+
+    Public Property ButtonLayout2 As RibbonButton
+        Get
+            Return _ButtonLayout2
+        End Get
+        Private Set(ByVal value As RibbonButton)
+            _ButtonLayout2 = value
         End Set
     End Property
 
@@ -217,6 +317,16 @@ Partial Class RibbonItems
         If ribbon Is Nothing Then Throw New ArgumentNullException(NameOf(ribbon), "Parameter is null")
         If initialized Then Return
         Me.Ribbon = ribbon
+        TabGroupTableTools = New RibbonTabGroup(ribbon, Cmd.cmdTabGroupTableTools)
+        TabDesign = New RibbonTab(ribbon, Cmd.cmdTabDesign)
+        GroupDesign = New RibbonGroup(ribbon, Cmd.cmdGroupDesign)
+        ButtonDesign1 = New RibbonButton(ribbon, Cmd.cmdButtonDesign1)
+        ButtonDesign2 = New RibbonButton(ribbon, Cmd.cmdButtonDesign2)
+        ButtonDesign3 = New RibbonButton(ribbon, Cmd.cmdButtonDesign3)
+        TabLayout = New RibbonTab(ribbon, Cmd.cmdTabLayout)
+        GroupLayout = New RibbonGroup(ribbon, Cmd.cmdGroupLayout)
+        ButtonLayout1 = New RibbonButton(ribbon, Cmd.cmdButtonLayout1)
+        ButtonLayout2 = New RibbonButton(ribbon, Cmd.cmdButtonLayout2)
         HelpButton = New RibbonHelpButton(ribbon, Cmd.cmdHelpButton)
         TabMain = New RibbonTab(ribbon, Cmd.cmdTabMain)
         ButtonNew = New RibbonButton(ribbon, Cmd.cmdButtonNew)

@@ -165,11 +165,96 @@
 			</Command.LargeImages>
 		</Command>
 		
+		
+		 <Command Name="cmdTabGroupTableTools"
+             Id="1031"
+             LabelTitle="Table Tools">
+    </Command>
+
+    <Command Name="cmdTabDesign"
+             Id="1032"
+             LabelTitle="Design">
+    </Command>
+
+    <Command Name="cmdTabLayout"
+             Id="1035"
+             LabelTitle="Layout">
+    </Command>
+
+    <Command Name="cmdGroupDesign"
+             Id="1036"
+             LabelTitle="">
+    </Command>
+
+    <Command Name="cmdGroupLayout"
+             Id="1037"
+             LabelTitle="">
+    </Command>
+		
+
+ <Command Name="cmdButtonDesign1"
+             Id="1040"
+             LabelTitle="Design 1">
+      <Command.LargeImages>
+        <Image>Res/DropA32.bmp</Image>
+      </Command.LargeImages>
+    </Command>
+
+    <Command Name="cmdButtonDesign2"
+             Id="1041"
+             LabelTitle="Design 2">
+      <Command.LargeImages>
+        <Image>Res/DropB32.bmp</Image>
+      </Command.LargeImages>
+    </Command>
+
+    <Command Name="cmdButtonDesign3"
+             Id="1042"
+             LabelTitle="Design 3">
+      <Command.LargeImages>
+        <Image>Res/DropC32.bmp</Image>
+      </Command.LargeImages>
+    </Command>
+
+    <Command Name="cmdButtonLayout1"
+             Id="1043"
+             LabelTitle="Layout 1">
+      <Command.LargeImages>
+        <Image>Res/DropA32.bmp</Image>
+      </Command.LargeImages>
+    </Command>
+
+    <Command Name="cmdButtonLayout2"
+             Id="1044"
+             LabelTitle="Layout 2">
+      <Command.LargeImages>
+        <Image>Res/DropB32.bmp</Image>
+      </Command.LargeImages>
+    </Command>
 
 	</Application.Commands>
 
 	<Application.Views>
 		<Ribbon>
+		
+		      <Ribbon.ContextualTabs>
+        <TabGroup CommandName='cmdTabGroupTableTools'>
+          <Tab CommandName='cmdTabDesign'>
+            <Group CommandName='cmdGroupDesign' SizeDefinition='ThreeButtons'>
+              <Button CommandName='cmdButtonDesign1' />
+              <Button CommandName='cmdButtonDesign2' />
+              <Button CommandName='cmdButtonDesign3' />
+            </Group>
+          </Tab>
+          <Tab CommandName='cmdTabLayout'>
+            <Group CommandName='cmdGroupLayout' SizeDefinition='TwoButtons'>
+              <Button CommandName='cmdButtonLayout1' />
+              <Button CommandName='cmdButtonLayout2' />
+            </Group>
+          </Tab>
+        </TabGroup>
+      </Ribbon.ContextualTabs>
+		
 			<Ribbon.HelpButton>
 				<HelpButton CommandName="cmdHelpButton" />
 			</Ribbon.HelpButton>
