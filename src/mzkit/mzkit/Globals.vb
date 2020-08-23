@@ -39,9 +39,33 @@ Module Globals
             }
 
         explorer.Nodes.Add(rawFileNode)
+        rawFileNode.addRawFile(raw, True, True)
+    End Sub
 
+    <Extension>
+    Public Sub addRawFile(rawFileNode As TreeNode, raw As Raw, ms1 As Boolean, ms2 As Boolean)
         For Each scan As ScanEntry In raw.scans
+            If scan.mz = 0 AndAlso Not ms1 Then
+                Continue For
+            End If
+            If scan.mz > 0 AndAlso Not ms2 Then
+                Continue For
+            End If
+
             rawFileNode.Nodes.Add(New TreeNode(scan.id) With {.Tag = scan})
         Next
     End Sub
+
+    <Extension>
+    Public Function CurrentRawFile(explorer As TreeView) As (raw As Raw, tree As TreeNode)
+        Dim node = explorer.SelectedNode
+
+        If node Is Nothing Then
+            Return Nothing
+        ElseIf TypeOf node.Tag Is Raw Then
+            Return (DirectCast(node.Tag, Raw), node)
+        Else
+            Return (DirectCast(node.Parent.Tag, Raw), node.Parent)
+        End If
+    End Function
 End Module

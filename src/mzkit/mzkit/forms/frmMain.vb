@@ -1,14 +1,22 @@
 ﻿Imports System.ComponentModel
 Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports RibbonLib
 Imports RibbonLib.Controls.Events
 Imports RibbonLib.Interop
+Imports Task
 
 Public Class frmMain
 
@@ -27,12 +35,13 @@ Public Class frmMain
     Private Sub OpenFile(ByVal sender As Object, ByVal e As ExecuteEventArgs)
         Using file As New OpenFileDialog With {.Filter = "Raw Data|*.mzXML;*.mzML"}
             If file.ShowDialog = DialogResult.OK Then
-                Dim progress As New frmProgress() With {.Text = $"Imports raw data [{file.FileName}]"}
+                Dim progress As New frmImportTaskProgress() With {.Text = $"Imports raw data [{file.FileName}]"}
                 Dim showProgress As Action(Of String) = Sub(text) progress.Invoke(Sub() progress.Label1.Text = text)
                 Dim task As New Task.ImportsRawData(file.FileName, showProgress, Sub() Call progress.Invoke(Sub() progress.Close()))
                 Dim runTask As New Thread(AddressOf task.RunImports)
 
                 ToolStripStatusLabel.Text = "Run Raw Data Imports"
+                progress.Label2.Text = progress.Text
 
                 Call runTask.Start()
                 Call progress.ShowDialog()
@@ -196,13 +205,27 @@ Public Class frmMain
 
     Sub InitializeFileTree()
         If TreeView1.LoadRawFileCache = 0 Then
-            MessageBox.Show($"It seems that you don't have any raw file opended. {vbCrLf}You could open raw file through [File] -> [Open Raw File].", "Tips", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            ' MessageBox.Show($"It seems that you don't have any raw file opended. {vbCrLf}You could open raw file through [File] -> [Open Raw File].", "Tips", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
     End Sub
 
     Private Sub TreeView1_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles TreeView1.AfterSelect
         If TypeOf e.Node.Tag Is Task.Raw Then
             ' 原始文件节点
+        ElseIf TypeOf e.Node.Tag Is ms2() Then
+            ' TIC 图绘制
+            Dim raw = DirectCast(e.Node.Tag, ms2())
+            Dim TIC As New NamedCollection(Of ChromatogramTick) With {
+                .name = $"m/z {raw.Select(Function(m) m.mz).Min.ToString("F3")} - {raw.Select(Function(m) m.mz).Max.ToString("F3")}",
+                .value = raw.Select(Function(a) New ChromatogramTick With {.Time = Val(a.Annotation), .Intensity = a.intensity}).ToArray
+            }
+
+            PictureBox1.BackgroundImage = TIC.TICplot.AsGDIImage
+        ElseIf e.Node.Tag Is Nothing AndAlso e.Node.Text = "TIC" Then
+            Dim raw = TreeView1.CurrentRawFile.raw
+            Dim TIC As New NamedCollection(Of ChromatogramTick) With {.name = "TIC", .value = raw.scans.Where(Function(a) a.mz = 0R).Select(Function(m) New ChromatogramTick With {.Time = m.rt, .Intensity = m.intensity}).ToArray}
+
+            PictureBox1.BackgroundImage = TIC.TICplot.AsGDIImage
         Else
             ' scan节点
             Dim raw As Task.Raw = e.Node.Parent.Tag
@@ -211,6 +234,7 @@ Public Class frmMain
 
             Using cache As New netCDFReader(raw.cache)
                 Dim data As CDFData = cache.getDataVariable(cache.getDataVariableEntry(scanId))
+                Dim attrs = cache.getDataVariableEntry(scanId).attributes
 
                 scanData = New LibraryMatrix With {
                     .name = scanId,
@@ -230,7 +254,108 @@ Public Class frmMain
     End Sub
 
     Private Sub ShowTICToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowTICToolStripMenuItem.Click
-        Dim node = TreeView1.SelectedNode
+        Dim raw = TreeView1.CurrentRawFile
+
+        ShowTICToolStripMenuItem.Checked = Not ShowTICToolStripMenuItem.Checked
+
+        If raw.raw Is Nothing Then
+            Return
+        Else
+            raw.tree.Nodes.Clear()
+        End If
+
+        If ShowTICToolStripMenuItem.Checked Then
+            raw.tree.Nodes.Add(New TreeNode("TIC"))
+
+            Using cache As New netCDFReader(raw.raw.cache)
+                Dim progress As New frmImportTaskProgress() With {.Text = $"Reading TIC raw data [{raw.raw.source}]"}
+                Dim showProgress As Action(Of String) = Sub(text) progress.Invoke(Sub() progress.Label1.Text = text)
+                Dim mzgroups As NamedCollection(Of ms2)() = {}
+                Dim runTask As New Thread(
+                        Sub()
+                            Dim ms1n = raw.raw.scans.Where(Function(a) a.mz = 0R).Count
+                            Dim i As i32 = 1
+                            Dim allMz As New List(Of ms2)
+                            Dim mztemp As ms2()
+
+                            For Each scan In raw.raw.scans
+                                If scan.mz = 0 Then
+                                    Dim entry = cache.getDataVariableEntry(scan.id)
+                                    Dim rt As String = entry.attributes.Where(Function(a) a.name = "retentionTime").FirstOrDefault?.value
+
+                                    mztemp = cache.getDataVariable(entry).numerics.AsMs2.ToArray
+
+                                    For i2 As Integer = 0 To mztemp.Length - 1
+                                        mztemp(i2).Annotation = rt
+                                    Next
+
+                                    allMz.AddRange(mztemp)
+                                    showProgress($"[{++i}/{ms1n}] {scan.id}")
+                                End If
+                            Next
+
+                            showProgress("Run m/z group....")
+                            mzgroups = allMz _
+                                .GroupBy(Function(mz) mz.mz, Tolerance.DeltaMass(5)) _
+                                .Select(Function(a)
+                                            Dim max = a.Select(Function(m) m.intensity).Max
+
+                                            Return New NamedCollection(Of ms2) With {.value = a.value.Where(Function(m) m.intensity / max >= 0.05).OrderBy(Function(m) Val(m.Annotation)).ToArray}
+                                        End Function) _
+                                .ToArray
+                            progress.Invoke(Sub() progress.Close())
+                        End Sub)
+
+                ToolStripStatusLabel.Text = "Run Raw Data Imports"
+                progress.Label2.Text = progress.Text
+
+                Call runTask.Start()
+                Call progress.ShowDialog()
+
+                For Each mzblock In mzgroups
+                    Dim range As New DoubleRange(mzblock.Select(Function(m) m.mz))
+
+                    raw.tree.Nodes.Add(New TreeNode($"m/z {range.Min.ToString("F3")} - {range.Max.ToString("F3")}") With {.Tag = mzblock.ToArray})
+                Next
+
+                ToolStripStatusLabel.Text = "Ready!"
+            End Using
+        Else
+            Call applyLevelFilter()
+        End If
+    End Sub
+
+    Private Sub SaveImageToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveImageToolStripMenuItem.Click
+        If Not PictureBox1.BackgroundImage Is Nothing Then
+            Using file As New SaveFileDialog With {.Filter = "image(*.png)|*.png"}
+                If file.ShowDialog = DialogResult.OK Then
+                    Call PictureBox1.BackgroundImage.SaveAs(file.FileName)
+                    Call Process.Start(file.FileName)
+                End If
+            End Using
+        End If
+    End Sub
+
+    Private Sub applyLevelFilter()
+        Dim raw = TreeView1.CurrentRawFile
+
+        If Not raw.raw Is Nothing Then
+            raw.tree.Nodes.Clear()
+            raw.tree.addRawFile(raw.raw, MS1ToolStripMenuItem.Checked, MS2ToolStripMenuItem.Checked)
+        End If
+    End Sub
+
+    Private Sub MS1ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MS1ToolStripMenuItem.Click
+        MS1ToolStripMenuItem.Checked = Not MS1ToolStripMenuItem.Checked
+        applyLevelFilter()
+    End Sub
+
+    Private Sub MS2ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MS2ToolStripMenuItem.Click
+        MS2ToolStripMenuItem.Checked = Not MS2ToolStripMenuItem.Checked
+        applyLevelFilter()
+    End Sub
+
+    Private Sub DeleteFileToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeleteFileToolStripMenuItem.Click
 
     End Sub
 End Class
