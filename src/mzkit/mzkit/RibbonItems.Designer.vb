@@ -14,13 +14,13 @@ Imports RibbonLib.Controls
 Imports RibbonLib.Interop
 
 Partial Class RibbonItems
-    Private _Ribbon As Ribbon, _TabGroupTableTools As RibbonTabGroup, _TabDesign As RibbonTab, _GroupDesign As RibbonGroup, _ButtonDesign1 As RibbonButton, _ButtonDesign2 As RibbonButton, _ButtonDesign3 As RibbonButton, _TabLayout As RibbonTab, _GroupLayout As RibbonGroup, _ButtonLayout1 As RibbonButton, _ButtonLayout2 As RibbonButton, _HelpButton As RibbonHelpButton, _TabMain As RibbonTab, _ButtonNew As RibbonButton, _ButtonOpenRaw As RibbonButton, _ButtonSave As RibbonButton, _ButtonExit As RibbonButton, _TabTools As RibbonTab, _ButtonMzCalculator As RibbonButton, _TabAbout As RibbonTab, _ButtonAbout As RibbonButton, _RecentItems As RibbonRecentItems, _MenuGroupFile As RibbonMenuGroup, _ButtonOpen As RibbonDropDownButton, _ButtonDropA As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton, _MenuGroupExit As RibbonMenuGroup, _QAT As RibbonQuickAccessToolbar
+    Private _Ribbon As Ribbon, _TabGroupTableTools As RibbonTabGroup, _TabDesign As RibbonTab, _GroupDesign As RibbonGroup, _Spinner As RibbonSpinner, _ButtonDesign2 As RibbonButton, _ButtonDesign3 As RibbonButton, _TabLayout As RibbonTab, _GroupLayout As RibbonGroup, _ButtonLayout1 As RibbonButton, _ButtonLayout2 As RibbonButton, _HelpButton As RibbonHelpButton, _TabMain As RibbonTab, _GroupFileActions As RibbonGroup, _ButtonNew As RibbonButton, _ButtonOpenRaw As RibbonButton, _ButtonSave As RibbonButton, _ButtonExit As RibbonButton, _TabTools As RibbonTab, _GroupToolsActions As RibbonGroup, _ButtonMzCalculator As RibbonButton, _TabAbout As RibbonTab, _GroupAboutActions As RibbonGroup, _ButtonAbout As RibbonButton, _RecentItems As RibbonRecentItems, _MenuGroupFile As RibbonMenuGroup, _ButtonOpen As RibbonDropDownButton, _ButtonDropA As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton, _MenuGroupExit As RibbonMenuGroup, _QAT As RibbonQuickAccessToolbar
 
     Private NotInheritable Class Cmd
         Public Const cmdTabGroupTableTools As UInteger = 1031
         Public Const cmdTabDesign As UInteger = 1032
         Public Const cmdGroupDesign As UInteger = 1036
-        Public Const cmdButtonDesign1 As UInteger = 1040
+        Public Const cmdSpinner As UInteger = 1050
         Public Const cmdButtonDesign2 As UInteger = 1041
         Public Const cmdButtonDesign3 As UInteger = 1042
         Public Const cmdTabLayout As UInteger = 1035
@@ -29,13 +29,16 @@ Partial Class RibbonItems
         Public Const cmdButtonLayout2 As UInteger = 1044
         Public Const cmdHelpButton As UInteger = 1016
         Public Const cmdTabMain As UInteger = 1011
+        Public Const cmdGroupFileActions As UInteger = 1045
         Public Const cmdButtonNew As UInteger = 1001
         Public Const cmdButtonOpenRaw As UInteger = 1002
         Public Const cmdButtonSave As UInteger = 1003
         Public Const cmdButtonExit As UInteger = 1004
         Public Const cmdTabTools As UInteger = 1012
+        Public Const cmdGroupToolsActions As UInteger = 1046
         Public Const cmdButtonMzCalculator As UInteger = 1013
         Public Const cmdTabAbout As UInteger = 1020
+        Public Const cmdGroupAboutActions As UInteger = 1047
         Public Const cmdButtonAbout As UInteger = 1021
         Public Const cmdRecentItems As UInteger = 1014
         Public Const cmdMenuGroupFile As UInteger = 1005
@@ -88,12 +91,12 @@ Partial Class RibbonItems
         End Set
     End Property
 
-    Public Property ButtonDesign1 As RibbonButton
+    Public Property Spinner As RibbonSpinner
         Get
-            Return _ButtonDesign1
+            Return _Spinner
         End Get
-        Private Set(ByVal value As RibbonButton)
-            _ButtonDesign1 = value
+        Private Set(ByVal value As RibbonSpinner)
+            _Spinner = value
         End Set
     End Property
 
@@ -169,6 +172,15 @@ Partial Class RibbonItems
         End Set
     End Property
 
+    Public Property GroupFileActions As RibbonGroup
+        Get
+            Return _GroupFileActions
+        End Get
+        Private Set(ByVal value As RibbonGroup)
+            _GroupFileActions = value
+        End Set
+    End Property
+
     Public Property ButtonNew As RibbonButton
         Get
             Return _ButtonNew
@@ -214,6 +226,15 @@ Partial Class RibbonItems
         End Set
     End Property
 
+    Public Property GroupToolsActions As RibbonGroup
+        Get
+            Return _GroupToolsActions
+        End Get
+        Private Set(ByVal value As RibbonGroup)
+            _GroupToolsActions = value
+        End Set
+    End Property
+
     Public Property ButtonMzCalculator As RibbonButton
         Get
             Return _ButtonMzCalculator
@@ -229,6 +250,15 @@ Partial Class RibbonItems
         End Get
         Private Set(ByVal value As RibbonTab)
             _TabAbout = value
+        End Set
+    End Property
+
+    Public Property GroupAboutActions As RibbonGroup
+        Get
+            Return _GroupAboutActions
+        End Get
+        Private Set(ByVal value As RibbonGroup)
+            _GroupAboutActions = value
         End Set
     End Property
 
@@ -320,7 +350,7 @@ Partial Class RibbonItems
         TabGroupTableTools = New RibbonTabGroup(ribbon, Cmd.cmdTabGroupTableTools)
         TabDesign = New RibbonTab(ribbon, Cmd.cmdTabDesign)
         GroupDesign = New RibbonGroup(ribbon, Cmd.cmdGroupDesign)
-        ButtonDesign1 = New RibbonButton(ribbon, Cmd.cmdButtonDesign1)
+        Spinner = New RibbonSpinner(ribbon, Cmd.cmdSpinner)
         ButtonDesign2 = New RibbonButton(ribbon, Cmd.cmdButtonDesign2)
         ButtonDesign3 = New RibbonButton(ribbon, Cmd.cmdButtonDesign3)
         TabLayout = New RibbonTab(ribbon, Cmd.cmdTabLayout)
@@ -329,13 +359,16 @@ Partial Class RibbonItems
         ButtonLayout2 = New RibbonButton(ribbon, Cmd.cmdButtonLayout2)
         HelpButton = New RibbonHelpButton(ribbon, Cmd.cmdHelpButton)
         TabMain = New RibbonTab(ribbon, Cmd.cmdTabMain)
+        GroupFileActions = New RibbonGroup(ribbon, Cmd.cmdGroupFileActions)
         ButtonNew = New RibbonButton(ribbon, Cmd.cmdButtonNew)
         ButtonOpenRaw = New RibbonButton(ribbon, Cmd.cmdButtonOpenRaw)
         ButtonSave = New RibbonButton(ribbon, Cmd.cmdButtonSave)
         ButtonExit = New RibbonButton(ribbon, Cmd.cmdButtonExit)
         TabTools = New RibbonTab(ribbon, Cmd.cmdTabTools)
+        GroupToolsActions = New RibbonGroup(ribbon, Cmd.cmdGroupToolsActions)
         ButtonMzCalculator = New RibbonButton(ribbon, Cmd.cmdButtonMzCalculator)
         TabAbout = New RibbonTab(ribbon, Cmd.cmdTabAbout)
+        GroupAboutActions = New RibbonGroup(ribbon, Cmd.cmdGroupAboutActions)
         ButtonAbout = New RibbonButton(ribbon, Cmd.cmdButtonAbout)
         RecentItems = New RibbonRecentItems(ribbon, Cmd.cmdRecentItems)
         MenuGroupFile = New RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupFile)

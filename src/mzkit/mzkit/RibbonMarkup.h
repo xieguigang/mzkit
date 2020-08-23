@@ -110,5 +110,7 @@
 #define cmdGroupToolsActions_LabelTitle_RESID 60072
 #define cmdGroupAboutActions 1047 
 #define cmdGroupAboutActions_LabelTitle_RESID 60073
-#define cmdGroupExit_LabelTitle_RESID 60074
-#define InternalCmd2_LabelTitle_RESID 60075
+#define cmdSpinner 1050 
+#define cmdSpinner_LabelTitle_RESID 60074
+#define cmdGroupExit_LabelTitle_RESID 60075
+#define InternalCmd2_LabelTitle_RESID 60076

@@ -13,8 +13,6 @@ using RibbonLib;
 using RibbonLib.Controls;
 using RibbonLib.Interop;
 
-namespace RibbonLib.Controls
-{
     partial class RibbonItems
     {
         private static class Cmd
@@ -22,7 +20,7 @@ namespace RibbonLib.Controls
             public const uint cmdTabGroupTableTools = 1031;
             public const uint cmdTabDesign = 1032;
             public const uint cmdGroupDesign = 1036;
-            public const uint cmdButtonDesign1 = 1040;
+            public const uint cmdSpinner = 1050;
             public const uint cmdButtonDesign2 = 1041;
             public const uint cmdButtonDesign3 = 1042;
             public const uint cmdTabLayout = 1035;
@@ -61,7 +59,7 @@ namespace RibbonLib.Controls
         public RibbonTabGroup TabGroupTableTools { get; private set; }
         public RibbonTab TabDesign { get; private set; }
         public RibbonGroup GroupDesign { get; private set; }
-        public RibbonButton ButtonDesign1 { get; private set; }
+        public RibbonSpinner Spinner { get; private set; }
         public RibbonButton ButtonDesign2 { get; private set; }
         public RibbonButton ButtonDesign3 { get; private set; }
         public RibbonTab TabLayout { get; private set; }
@@ -100,7 +98,7 @@ namespace RibbonLib.Controls
             TabGroupTableTools = new RibbonTabGroup(ribbon, Cmd.cmdTabGroupTableTools);
             TabDesign = new RibbonTab(ribbon, Cmd.cmdTabDesign);
             GroupDesign = new RibbonGroup(ribbon, Cmd.cmdGroupDesign);
-            ButtonDesign1 = new RibbonButton(ribbon, Cmd.cmdButtonDesign1);
+            Spinner = new RibbonSpinner(ribbon, Cmd.cmdSpinner);
             ButtonDesign2 = new RibbonButton(ribbon, Cmd.cmdButtonDesign2);
             ButtonDesign3 = new RibbonButton(ribbon, Cmd.cmdButtonDesign3);
             TabLayout = new RibbonTab(ribbon, Cmd.cmdTabLayout);
@@ -132,4 +130,3 @@ namespace RibbonLib.Controls
         }
 
     }
-}
