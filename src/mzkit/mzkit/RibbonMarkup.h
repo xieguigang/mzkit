@@ -104,8 +104,11 @@
 #define cmdButtonLayout2 1044 
 #define cmdButtonLayout2_LabelTitle_RESID 60069
 #define cmdButtonLayout2_LargeImages_RESID 60070
+#define cmdGroupFileActions 1045 
 #define cmdGroupFileActions_LabelTitle_RESID 60071
-#define cmdGroupExit_LabelTitle_RESID 60072
-#define cmdGroupToolsActions_LabelTitle_RESID 60073
-#define cmdGroupAboutActions_LabelTitle_RESID 60074
+#define cmdGroupToolsActions 1046 
+#define cmdGroupToolsActions_LabelTitle_RESID 60072
+#define cmdGroupAboutActions 1047 
+#define cmdGroupAboutActions_LabelTitle_RESID 60073
+#define cmdGroupExit_LabelTitle_RESID 60074
 #define InternalCmd2_LabelTitle_RESID 60075

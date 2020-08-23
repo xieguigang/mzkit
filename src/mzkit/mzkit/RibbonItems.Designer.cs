@@ -13,6 +13,8 @@ using RibbonLib;
 using RibbonLib.Controls;
 using RibbonLib.Interop;
 
+namespace RibbonLib.Controls
+{
     partial class RibbonItems
     {
         private static class Cmd
@@ -29,13 +31,16 @@ using RibbonLib.Interop;
             public const uint cmdButtonLayout2 = 1044;
             public const uint cmdHelpButton = 1016;
             public const uint cmdTabMain = 1011;
+            public const uint cmdGroupFileActions = 1045;
             public const uint cmdButtonNew = 1001;
             public const uint cmdButtonOpenRaw = 1002;
             public const uint cmdButtonSave = 1003;
             public const uint cmdButtonExit = 1004;
             public const uint cmdTabTools = 1012;
+            public const uint cmdGroupToolsActions = 1046;
             public const uint cmdButtonMzCalculator = 1013;
             public const uint cmdTabAbout = 1020;
+            public const uint cmdGroupAboutActions = 1047;
             public const uint cmdButtonAbout = 1021;
             public const uint cmdRecentItems = 1014;
             public const uint cmdMenuGroupFile = 1005;
@@ -65,13 +70,16 @@ using RibbonLib.Interop;
         public RibbonButton ButtonLayout2 { get; private set; }
         public RibbonHelpButton HelpButton { get; private set; }
         public RibbonTab TabMain { get; private set; }
+        public RibbonGroup GroupFileActions { get; private set; }
         public RibbonButton ButtonNew { get; private set; }
         public RibbonButton ButtonOpenRaw { get; private set; }
         public RibbonButton ButtonSave { get; private set; }
         public RibbonButton ButtonExit { get; private set; }
         public RibbonTab TabTools { get; private set; }
+        public RibbonGroup GroupToolsActions { get; private set; }
         public RibbonButton ButtonMzCalculator { get; private set; }
         public RibbonTab TabAbout { get; private set; }
+        public RibbonGroup GroupAboutActions { get; private set; }
         public RibbonButton ButtonAbout { get; private set; }
         public RibbonRecentItems RecentItems { get; private set; }
         public RibbonMenuGroup MenuGroupFile { get; private set; }
@@ -101,13 +109,16 @@ using RibbonLib.Interop;
             ButtonLayout2 = new RibbonButton(ribbon, Cmd.cmdButtonLayout2);
             HelpButton = new RibbonHelpButton(ribbon, Cmd.cmdHelpButton);
             TabMain = new RibbonTab(ribbon, Cmd.cmdTabMain);
+            GroupFileActions = new RibbonGroup(ribbon, Cmd.cmdGroupFileActions);
             ButtonNew = new RibbonButton(ribbon, Cmd.cmdButtonNew);
             ButtonOpenRaw = new RibbonButton(ribbon, Cmd.cmdButtonOpenRaw);
             ButtonSave = new RibbonButton(ribbon, Cmd.cmdButtonSave);
             ButtonExit = new RibbonButton(ribbon, Cmd.cmdButtonExit);
             TabTools = new RibbonTab(ribbon, Cmd.cmdTabTools);
+            GroupToolsActions = new RibbonGroup(ribbon, Cmd.cmdGroupToolsActions);
             ButtonMzCalculator = new RibbonButton(ribbon, Cmd.cmdButtonMzCalculator);
             TabAbout = new RibbonTab(ribbon, Cmd.cmdTabAbout);
+            GroupAboutActions = new RibbonGroup(ribbon, Cmd.cmdGroupAboutActions);
             ButtonAbout = new RibbonButton(ribbon, Cmd.cmdButtonAbout);
             RecentItems = new RibbonRecentItems(ribbon, Cmd.cmdRecentItems);
             MenuGroupFile = new RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupFile);
@@ -121,3 +132,4 @@ using RibbonLib.Interop;
         }
 
     }
+}

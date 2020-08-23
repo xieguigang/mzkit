@@ -183,12 +183,12 @@
 
     <Command Name="cmdGroupDesign"
              Id="1036"
-             LabelTitle="">
+             LabelTitle="EEE">
     </Command>
 
     <Command Name="cmdGroupLayout"
              Id="1037"
-             LabelTitle="">
+             LabelTitle="ABC">
     </Command>
 		
 
@@ -232,6 +232,21 @@
       </Command.LargeImages>
     </Command>
 
+    <Command Name="cmdGroupFileActions"
+             Id="1045"
+             LabelTitle="Process Raw File">
+    </Command>
+
+    <Command Name="cmdGroupToolsActions"
+             Id="1046"
+             LabelTitle="Mzkit Toolkit">
+    </Command>
+
+    <Command Name="cmdGroupAboutActions"
+             Id="1047"
+             LabelTitle="About mzkit">
+    </Command>
+	
 	</Application.Commands>
 
 	<Application.Views>
