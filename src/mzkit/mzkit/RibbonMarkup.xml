@@ -250,7 +250,7 @@
 
 		<Command Name="cmdSpinner"
 		 Id="1050"
-		 LabelTitle="Search PPM Tolerance">
+		 LabelTitle="Search PPM">
 		</Command>
 
 	</Application.Commands>

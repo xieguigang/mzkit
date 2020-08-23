@@ -140,7 +140,7 @@ Partial Class frmMain
         Me.TabPage2.Location = New System.Drawing.Point(4, 22)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(889, 494)
+        Me.TabPage2.Size = New System.Drawing.Size(911, 493)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "TabPage2"
         Me.TabPage2.UseVisualStyleBackColor = True
@@ -154,6 +154,7 @@ Partial Class frmMain
         Me.TreeView1.Name = "TreeView1"
         Me.TreeView1.Size = New System.Drawing.Size(313, 447)
         Me.TreeView1.TabIndex = 11
+        Me.ToolTip.SetToolTip(Me.TreeView1, "Opended raw file list")
         '
         'ContextMenuStrip1
         '
@@ -246,7 +247,7 @@ Partial Class frmMain
         Me.TabPage4.Location = New System.Drawing.Point(4, 22)
         Me.TabPage4.Name = "TabPage4"
         Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage4.Size = New System.Drawing.Size(325, 504)
+        Me.TabPage4.Size = New System.Drawing.Size(325, 493)
         Me.TabPage4.TabIndex = 1
         Me.TabPage4.Text = "TabPage4"
         Me.TabPage4.UseVisualStyleBackColor = True
@@ -255,9 +256,9 @@ Partial Class frmMain
         '
         Me.ListBox1.FormattingEnabled = True
         Me.ListBox1.ItemHeight = 12
-        Me.ListBox1.Location = New System.Drawing.Point(6, 62)
+        Me.ListBox1.Location = New System.Drawing.Point(6, 38)
         Me.ListBox1.Name = "ListBox1"
-        Me.ListBox1.Size = New System.Drawing.Size(313, 424)
+        Me.ListBox1.Size = New System.Drawing.Size(313, 448)
         Me.ListBox1.TabIndex = 0
         '
         'Panel1

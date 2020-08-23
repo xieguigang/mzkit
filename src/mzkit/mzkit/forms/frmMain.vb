@@ -146,10 +146,21 @@ Public Class frmMain
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         InitRecentItems()
         InitializeFileTree()
-
+        InitSpinner()
         ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
 
         ToolStripStatusLabel.Text = "Ready!"
+    End Sub
+
+    Private Sub InitSpinner()
+        Dim _spinner = ribbonItems.Spinner
+
+        _spinner.TooltipTitle = "PPM"
+        _spinner.TooltipDescription = "Enter ppm error for search feature by m/z."
+        _spinner.MaxValue = 30D
+        _spinner.MinValue = 0
+        _spinner.Increment = 0.5D
+        _spinner.DecimalValue = 10D
     End Sub
 
     Private Sub InitRecentItems()
@@ -209,6 +220,8 @@ Public Class frmMain
     Sub InitializeFileTree()
         If TreeView1.LoadRawFileCache = 0 Then
             ' MessageBox.Show($"It seems that you don't have any raw file opended. {vbCrLf}You could open raw file through [File] -> [Open Raw File].", "Tips", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Else
+            TreeView1.SelectedNode = TreeView1.Nodes.Item(Scan0)
         End If
     End Sub
 
@@ -250,6 +263,10 @@ Public Class frmMain
                 PictureBox1.BackgroundImage = draw
             End Using
         End If
+
+        With TreeView1.CurrentRawFile.raw
+            ToolStripStatusLabel.Text = $"{ .source.FileName} [{ .numOfScans} scans]"
+        End With
     End Sub
 
     Private Sub frmMain_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
@@ -363,6 +380,23 @@ Public Class frmMain
     End Sub
 
     Private Sub DeleteFileToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeleteFileToolStripMenuItem.Click
+
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Dim mz As Double = Val(TextBox1.Text)
+        Dim ppm As Double = Val(ribbonItems.Spinner.DecimalValue)
+        Dim raw = TreeView1.CurrentRawFile.raw
+        Dim ms2Hits = raw.scans.Where(Function(m) PPMmethod.ppm(m.mz, mz) <= ppm).ToArray
+
+        ListBox1.Items.Clear()
+
+        For Each hit As ScanEntry In ms2Hits
+            ListBox1.Items.Add(hit)
+        Next
+    End Sub
+
+    Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox1.SelectedIndexChanged
 
     End Sub
 End Class

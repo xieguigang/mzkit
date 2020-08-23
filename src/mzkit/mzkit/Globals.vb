@@ -52,7 +52,12 @@ Module Globals
                 Continue For
             End If
 
-            rawFileNode.Nodes.Add(New TreeNode(scan.id) With {.Tag = scan})
+            Dim scanNode As New TreeNode(scan.id) With {
+                .Tag = scan,
+                .ToolTipText = "m/z: " & scan.mz
+            }
+
+            rawFileNode.Nodes.Add(scanNode)
         Next
     End Sub
 
