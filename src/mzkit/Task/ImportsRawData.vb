@@ -5,6 +5,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
 
 Public Class ImportsRawData
@@ -54,7 +55,13 @@ Public Class ImportsRawData
                 data = scan.peaks.Base64Decode(True)
                 name = scan.getName
                 cache.AddVariable(name, New CDFData With {.numerics = data}, New Dimension With {.name = "m/z-int,scan_" & scan.num, .size = data.Length}, attrs)
-                nscans.Add(New ScanEntry With {.id = name, .mz = scan.precursorMz.value, .rt = PeakMs2.RtInSecond(scan.retentionTime), .intensity = scan.basePeakIntensity})
+
+                Call New ScanEntry With {
+                    .id = name,
+                    .mz = scan.precursorMz.value,
+                    .rt = PeakMs2.RtInSecond(scan.retentionTime),
+                    .intensity = scan.basePeakIntensity
+                }.DoCall(AddressOf nscans.Add)
 
                 Call showProgress(name)
             Next

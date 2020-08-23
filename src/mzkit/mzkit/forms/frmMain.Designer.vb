@@ -35,9 +35,11 @@ Partial Class frmMain
         Me.MS1ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MS2ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DeleteFileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.Ribbon1 = New RibbonLib.Ribbon()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.PropertyGrid1 = New System.Windows.Forms.PropertyGrid()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.ContextMenuStrip2 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.SaveImageToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -50,7 +52,8 @@ Partial Class frmMain
         Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.ListBox1 = New System.Windows.Forms.ListBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.SearchInFileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StatusStrip.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.TabControl1.SuspendLayout()
@@ -94,14 +97,14 @@ Partial Class frmMain
         '
         'ContextMenuStrip1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowTICToolStripMenuItem, Me.MS1ToolStripMenuItem, Me.MS2ToolStripMenuItem, Me.DeleteFileToolStripMenuItem})
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowTICToolStripMenuItem, Me.MS1ToolStripMenuItem, Me.MS2ToolStripMenuItem, Me.SearchInFileToolStripMenuItem, Me.ToolStripMenuItem1, Me.DeleteFileToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(129, 92)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(144, 120)
         '
         'ShowTICToolStripMenuItem
         '
         Me.ShowTICToolStripMenuItem.Name = "ShowTICToolStripMenuItem"
-        Me.ShowTICToolStripMenuItem.Size = New System.Drawing.Size(128, 22)
+        Me.ShowTICToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ShowTICToolStripMenuItem.Text = "Show TIC"
         '
         'MS1ToolStripMenuItem
@@ -109,7 +112,7 @@ Partial Class frmMain
         Me.MS1ToolStripMenuItem.Checked = True
         Me.MS1ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
         Me.MS1ToolStripMenuItem.Name = "MS1ToolStripMenuItem"
-        Me.MS1ToolStripMenuItem.Size = New System.Drawing.Size(128, 22)
+        Me.MS1ToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.MS1ToolStripMenuItem.Text = "MS1"
         '
         'MS2ToolStripMenuItem
@@ -117,14 +120,21 @@ Partial Class frmMain
         Me.MS2ToolStripMenuItem.Checked = True
         Me.MS2ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
         Me.MS2ToolStripMenuItem.Name = "MS2ToolStripMenuItem"
-        Me.MS2ToolStripMenuItem.Size = New System.Drawing.Size(128, 22)
+        Me.MS2ToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.MS2ToolStripMenuItem.Text = "MS2"
         '
         'DeleteFileToolStripMenuItem
         '
         Me.DeleteFileToolStripMenuItem.Name = "DeleteFileToolStripMenuItem"
-        Me.DeleteFileToolStripMenuItem.Size = New System.Drawing.Size(128, 22)
+        Me.DeleteFileToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.DeleteFileToolStripMenuItem.Text = "Delete File"
+        '
+        'ImageList1
+        '
+        Me.ImageList1.ImageStream = CType(resources.GetObject("ImageList1.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.ImageList1.TransparentColor = System.Drawing.Color.Transparent
+        Me.ImageList1.Images.SetKeyName(0, "view_16xLG.png")
+        Me.ImageList1.Images.SetKeyName(1, "StatusAnnotations_Warning_32xLG_color.png")
         '
         'Ribbon1
         '
@@ -150,6 +160,7 @@ Partial Class frmMain
         '
         'TabPage1
         '
+        Me.TabPage1.Controls.Add(Me.PropertyGrid1)
         Me.TabPage1.Controls.Add(Me.PictureBox1)
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
@@ -158,6 +169,15 @@ Partial Class frmMain
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "TabPage1"
         Me.TabPage1.UseVisualStyleBackColor = True
+        '
+        'PropertyGrid1
+        '
+        Me.PropertyGrid1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PropertyGrid1.Location = New System.Drawing.Point(691, 3)
+        Me.PropertyGrid1.Name = "PropertyGrid1"
+        Me.PropertyGrid1.Size = New System.Drawing.Size(217, 487)
+        Me.PropertyGrid1.TabIndex = 1
         '
         'PictureBox1
         '
@@ -168,7 +188,7 @@ Partial Class frmMain
         Me.PictureBox1.ContextMenuStrip = Me.ContextMenuStrip2
         Me.PictureBox1.Location = New System.Drawing.Point(6, 6)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(899, 383)
+        Me.PictureBox1.Size = New System.Drawing.Size(679, 484)
         Me.PictureBox1.TabIndex = 0
         Me.PictureBox1.TabStop = False
         '
@@ -258,6 +278,9 @@ Partial Class frmMain
         '
         'ListBox1
         '
+        Me.ListBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ListBox1.FormattingEnabled = True
         Me.ListBox1.Location = New System.Drawing.Point(6, 38)
         Me.ListBox1.Name = "ListBox1"
@@ -274,12 +297,16 @@ Partial Class frmMain
         Me.Panel1.Size = New System.Drawing.Size(1260, 525)
         Me.Panel1.TabIndex = 13
         '
-        'ImageList1
+        'ToolStripMenuItem1
         '
-        Me.ImageList1.ImageStream = CType(resources.GetObject("ImageList1.ImageStream"), System.Windows.Forms.ImageListStreamer)
-        Me.ImageList1.TransparentColor = System.Drawing.Color.Transparent
-        Me.ImageList1.Images.SetKeyName(0, "view_16xLG.png")
-        Me.ImageList1.Images.SetKeyName(1, "StatusAnnotations_Warning_32xLG_color.png")
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(177, 6)
+        '
+        'SearchInFileToolStripMenuItem
+        '
+        Me.SearchInFileToolStripMenuItem.Name = "SearchInFileToolStripMenuItem"
+        Me.SearchInFileToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.SearchInFileToolStripMenuItem.Text = "Search In File"
         '
         'frmMain
         '
@@ -333,4 +360,7 @@ Partial Class frmMain
     Friend WithEvents DeleteFileToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents Panel1 As Panel
     Friend WithEvents ImageList1 As ImageList
+    Friend WithEvents PropertyGrid1 As PropertyGrid
+    Friend WithEvents SearchInFileToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
 End Class

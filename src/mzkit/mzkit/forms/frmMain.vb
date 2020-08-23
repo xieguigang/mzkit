@@ -222,11 +222,7 @@ Public Class frmMain
             ' MessageBox.Show($"It seems that you don't have any raw file opended. {vbCrLf}You could open raw file through [File] -> [Open Raw File].", "Tips", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Else
             TreeView1.SelectedNode = TreeView1.Nodes.Item(Scan0)
-
-            If Not TreeView1.CurrentRawFile.raw.cache.FileExists Then
-                TreeView1.SelectedNode.ImageIndex = 0
-                TreeView1.SelectedNode.SelectedImageIndex = 0
-            End If
+            setCurrentFile()
         End If
     End Sub
 
@@ -251,29 +247,37 @@ Public Class frmMain
             ' scan节点
             Dim raw As Task.Raw = e.Node.Parent.Tag
             Dim scanId As String = e.Node.Text
-            Dim scanData As LibraryMatrix
 
-            If raw.cache.FileExists Then
-                Using cache As New netCDFReader(raw.cache)
-                    Dim data As CDFData = cache.getDataVariable(cache.getDataVariableEntry(scanId))
-                    Dim attrs = cache.getDataVariableEntry(scanId).attributes
-
-                    scanData = New LibraryMatrix With {
-                        .name = scanId,
-                        .centroid = False,
-                        .ms2 = data.numerics.AsMs2.ToArray
-                    }
-
-                    Dim draw As Image = scanData.MirrorPlot.AsGDIImage
-
-                    PictureBox1.BackgroundImage = draw
-                End Using
-            Else
-                Call missingCacheFile(raw)
-            End If
+            Call showSpectrum(scanId, raw)
         End If
 
         Call setCurrentFile()
+    End Sub
+
+    Private Sub showSpectrum(scanId As String, raw As Raw)
+        Dim scanData As LibraryMatrix
+
+        If raw.cache.FileExists Then
+            Using cache As New netCDFReader(raw.cache)
+                Dim data As CDFData = cache.getDataVariable(cache.getDataVariableEntry(scanId))
+                Dim attrs = cache.getDataVariableEntry(scanId).attributes
+
+                scanData = New LibraryMatrix With {
+                    .name = scanId,
+                    .centroid = False,
+                    .ms2 = data.numerics.AsMs2.ToArray.Centroid(Tolerance.DeltaMass(0.1), 0.01).ToArray
+                }
+
+                Dim draw As Image = scanData.MirrorPlot.AsGDIImage
+
+                PropertyGrid1.SelectedObject = New SpectrumProperty(attrs)
+                PropertyGrid1.Refresh()
+
+                PictureBox1.BackgroundImage = draw
+            End Using
+        Else
+            Call missingCacheFile(raw)
+        End If
     End Sub
 
     Private Sub setCurrentFile()
@@ -291,6 +295,11 @@ Public Class frmMain
                 ListBox1.Items.Clear()
             End If
         End With
+
+        If Not TreeView1.CurrentRawFile.raw.cache.FileExists Then
+            TreeView1.SelectedNode.ImageIndex = 1
+            TreeView1.SelectedNode.SelectedImageIndex = 1
+        End If
     End Sub
 
     Private Sub missingCacheFile(raw As Raw)
@@ -421,7 +430,10 @@ Public Class frmMain
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        Dim mz As Double = Val(TextBox1.Text)
+        Call searchInFileByMz(mz:=Val(TextBox1.Text))
+    End Sub
+
+    Private Sub searchInFileByMz(mz As Double)
         Dim ppm As Double = Val(ribbonItems.Spinner.DecimalValue)
         Dim raw = TreeView1.CurrentRawFile.raw
         Dim ms2Hits = raw.scans.Where(Function(m) PPMmethod.ppm(m.mz, mz) <= ppm).ToArray
@@ -434,6 +446,24 @@ Public Class frmMain
     End Sub
 
     Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox1.SelectedIndexChanged
+        Dim scanId As ScanEntry = ListBox1.SelectedItem
+        Dim raw = TreeView1.CurrentRawFile.raw
 
+        Call showSpectrum(scanId.id, raw)
+    End Sub
+
+    Private Sub SearchInFileToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SearchInFileToolStripMenuItem.Click
+        If Not ShowTICToolStripMenuItem.Checked Then
+            Dim current = TreeView1.CurrentRawFile
+            Dim node = TreeView1.SelectedNode
+
+            If Not node Is Nothing AndAlso current.raw.cache.FileExists Then
+                Dim mz = current.raw.scans.Where(Function(scan) scan.id = node.Text).FirstOrDefault
+
+                If Not mz Is Nothing AndAlso mz.mz > 0 Then
+                    Call searchInFileByMz(mz.mz)
+                End If
+            End If
+        End If
     End Sub
 End Class
