@@ -300,6 +300,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="RibbonItems.Designer.cs" />
+    <None Include="Resources\StatusAnnotations_Warning_32xLG_color.png" />
     <Content Include="RibbonMarkup.h" />
     <Content Include="RibbonMarkup.xml" />
     <None Include="Resources\header-foreground-image.png" />

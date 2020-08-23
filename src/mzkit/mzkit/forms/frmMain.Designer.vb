@@ -29,6 +29,12 @@ Partial Class frmMain
         Me.StatusStrip = New System.Windows.Forms.StatusStrip()
         Me.ToolStripStatusLabel = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
+        Me.TreeView1 = New System.Windows.Forms.TreeView()
+        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.ShowTICToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MS1ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MS2ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DeleteFileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Ribbon1 = New RibbonLib.Ribbon()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
@@ -36,12 +42,6 @@ Partial Class frmMain
         Me.ContextMenuStrip2 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.SaveImageToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
-        Me.TreeView1 = New System.Windows.Forms.TreeView()
-        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.ShowTICToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.MS1ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.MS2ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.DeleteFileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TabControl2 = New System.Windows.Forms.TabControl()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.Button1 = New System.Windows.Forms.Button()
@@ -50,12 +50,13 @@ Partial Class frmMain
         Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.ListBox1 = New System.Windows.Forms.ListBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.StatusStrip.SuspendLayout()
+        Me.ContextMenuStrip1.SuspendLayout()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip2.SuspendLayout()
-        Me.ContextMenuStrip1.SuspendLayout()
         Me.TabControl2.SuspendLayout()
         Me.TabPage3.SuspendLayout()
         Me.TabPage4.SuspendLayout()
@@ -74,8 +75,56 @@ Partial Class frmMain
         'ToolStripStatusLabel
         '
         Me.ToolStripStatusLabel.Name = "ToolStripStatusLabel"
-        Me.ToolStripStatusLabel.Size = New System.Drawing.Size(43, 17)
+        Me.ToolStripStatusLabel.Size = New System.Drawing.Size(39, 17)
         Me.ToolStripStatusLabel.Text = "Status"
+        '
+        'TreeView1
+        '
+        Me.TreeView1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.TreeView1.ContextMenuStrip = Me.ContextMenuStrip1
+        Me.TreeView1.ImageIndex = 0
+        Me.TreeView1.ImageList = Me.ImageList1
+        Me.TreeView1.Location = New System.Drawing.Point(6, 40)
+        Me.TreeView1.Name = "TreeView1"
+        Me.TreeView1.SelectedImageIndex = 0
+        Me.TreeView1.Size = New System.Drawing.Size(313, 447)
+        Me.TreeView1.TabIndex = 11
+        Me.ToolTip.SetToolTip(Me.TreeView1, "Opended raw file list")
+        '
+        'ContextMenuStrip1
+        '
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowTICToolStripMenuItem, Me.MS1ToolStripMenuItem, Me.MS2ToolStripMenuItem, Me.DeleteFileToolStripMenuItem})
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(129, 92)
+        '
+        'ShowTICToolStripMenuItem
+        '
+        Me.ShowTICToolStripMenuItem.Name = "ShowTICToolStripMenuItem"
+        Me.ShowTICToolStripMenuItem.Size = New System.Drawing.Size(128, 22)
+        Me.ShowTICToolStripMenuItem.Text = "Show TIC"
+        '
+        'MS1ToolStripMenuItem
+        '
+        Me.MS1ToolStripMenuItem.Checked = True
+        Me.MS1ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.MS1ToolStripMenuItem.Name = "MS1ToolStripMenuItem"
+        Me.MS1ToolStripMenuItem.Size = New System.Drawing.Size(128, 22)
+        Me.MS1ToolStripMenuItem.Text = "MS1"
+        '
+        'MS2ToolStripMenuItem
+        '
+        Me.MS2ToolStripMenuItem.Checked = True
+        Me.MS2ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.MS2ToolStripMenuItem.Name = "MS2ToolStripMenuItem"
+        Me.MS2ToolStripMenuItem.Size = New System.Drawing.Size(128, 22)
+        Me.MS2ToolStripMenuItem.Text = "MS2"
+        '
+        'DeleteFileToolStripMenuItem
+        '
+        Me.DeleteFileToolStripMenuItem.Name = "DeleteFileToolStripMenuItem"
+        Me.DeleteFileToolStripMenuItem.Size = New System.Drawing.Size(128, 22)
+        Me.DeleteFileToolStripMenuItem.Text = "Delete File"
         '
         'Ribbon1
         '
@@ -127,12 +176,12 @@ Partial Class frmMain
         '
         Me.ContextMenuStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveImageToolStripMenuItem})
         Me.ContextMenuStrip2.Name = "ContextMenuStrip2"
-        Me.ContextMenuStrip2.Size = New System.Drawing.Size(145, 26)
+        Me.ContextMenuStrip2.Size = New System.Drawing.Size(135, 26)
         '
         'SaveImageToolStripMenuItem
         '
         Me.SaveImageToolStripMenuItem.Name = "SaveImageToolStripMenuItem"
-        Me.SaveImageToolStripMenuItem.Size = New System.Drawing.Size(144, 22)
+        Me.SaveImageToolStripMenuItem.Size = New System.Drawing.Size(134, 22)
         Me.SaveImageToolStripMenuItem.Text = "Save Image"
         '
         'TabPage2
@@ -144,51 +193,6 @@ Partial Class frmMain
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "TabPage2"
         Me.TabPage2.UseVisualStyleBackColor = True
-        '
-        'TreeView1
-        '
-        Me.TreeView1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.TreeView1.ContextMenuStrip = Me.ContextMenuStrip1
-        Me.TreeView1.Location = New System.Drawing.Point(6, 40)
-        Me.TreeView1.Name = "TreeView1"
-        Me.TreeView1.Size = New System.Drawing.Size(313, 447)
-        Me.TreeView1.TabIndex = 11
-        Me.ToolTip.SetToolTip(Me.TreeView1, "Opended raw file list")
-        '
-        'ContextMenuStrip1
-        '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowTICToolStripMenuItem, Me.MS1ToolStripMenuItem, Me.MS2ToolStripMenuItem, Me.DeleteFileToolStripMenuItem})
-        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(137, 92)
-        '
-        'ShowTICToolStripMenuItem
-        '
-        Me.ShowTICToolStripMenuItem.Name = "ShowTICToolStripMenuItem"
-        Me.ShowTICToolStripMenuItem.Size = New System.Drawing.Size(136, 22)
-        Me.ShowTICToolStripMenuItem.Text = "Show TIC"
-        '
-        'MS1ToolStripMenuItem
-        '
-        Me.MS1ToolStripMenuItem.Checked = True
-        Me.MS1ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.MS1ToolStripMenuItem.Name = "MS1ToolStripMenuItem"
-        Me.MS1ToolStripMenuItem.Size = New System.Drawing.Size(136, 22)
-        Me.MS1ToolStripMenuItem.Text = "MS1"
-        '
-        'MS2ToolStripMenuItem
-        '
-        Me.MS2ToolStripMenuItem.Checked = True
-        Me.MS2ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.MS2ToolStripMenuItem.Name = "MS2ToolStripMenuItem"
-        Me.MS2ToolStripMenuItem.Size = New System.Drawing.Size(136, 22)
-        Me.MS2ToolStripMenuItem.Text = "MS2"
-        '
-        'DeleteFileToolStripMenuItem
-        '
-        Me.DeleteFileToolStripMenuItem.Name = "DeleteFileToolStripMenuItem"
-        Me.DeleteFileToolStripMenuItem.Size = New System.Drawing.Size(136, 22)
-        Me.DeleteFileToolStripMenuItem.Text = "Delete File"
         '
         'TabControl2
         '
@@ -229,7 +233,7 @@ Partial Class frmMain
         '
         Me.TextBox1.Location = New System.Drawing.Point(83, 11)
         Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(144, 21)
+        Me.TextBox1.Size = New System.Drawing.Size(144, 20)
         Me.TextBox1.TabIndex = 13
         '
         'Label1
@@ -237,7 +241,7 @@ Partial Class frmMain
         Me.Label1.AutoSize = True
         Me.Label1.Location = New System.Drawing.Point(6, 14)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(71, 12)
+        Me.Label1.Size = New System.Drawing.Size(63, 13)
         Me.Label1.TabIndex = 12
         Me.Label1.Text = "m/z search:"
         '
@@ -255,10 +259,9 @@ Partial Class frmMain
         'ListBox1
         '
         Me.ListBox1.FormattingEnabled = True
-        Me.ListBox1.ItemHeight = 12
         Me.ListBox1.Location = New System.Drawing.Point(6, 38)
         Me.ListBox1.Name = "ListBox1"
-        Me.ListBox1.Size = New System.Drawing.Size(313, 448)
+        Me.ListBox1.Size = New System.Drawing.Size(313, 446)
         Me.ListBox1.TabIndex = 0
         '
         'Panel1
@@ -270,6 +273,13 @@ Partial Class frmMain
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(1260, 525)
         Me.Panel1.TabIndex = 13
+        '
+        'ImageList1
+        '
+        Me.ImageList1.ImageStream = CType(resources.GetObject("ImageList1.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.ImageList1.TransparentColor = System.Drawing.Color.Transparent
+        Me.ImageList1.Images.SetKeyName(0, "view_16xLG.png")
+        Me.ImageList1.Images.SetKeyName(1, "StatusAnnotations_Warning_32xLG_color.png")
         '
         'frmMain
         '
@@ -284,11 +294,11 @@ Partial Class frmMain
         Me.Text = "mzkit.org"
         Me.StatusStrip.ResumeLayout(False)
         Me.StatusStrip.PerformLayout()
+        Me.ContextMenuStrip1.ResumeLayout(False)
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ContextMenuStrip2.ResumeLayout(False)
-        Me.ContextMenuStrip1.ResumeLayout(False)
         Me.TabControl2.ResumeLayout(False)
         Me.TabPage3.ResumeLayout(False)
         Me.TabPage3.PerformLayout()
@@ -322,4 +332,5 @@ Partial Class frmMain
     Friend WithEvents MS2ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents DeleteFileToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents Panel1 As Panel
+    Friend WithEvents ImageList1 As ImageList
 End Class

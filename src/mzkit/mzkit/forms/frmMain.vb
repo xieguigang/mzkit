@@ -222,6 +222,11 @@ Public Class frmMain
             ' MessageBox.Show($"It seems that you don't have any raw file opended. {vbCrLf}You could open raw file through [File] -> [Open Raw File].", "Tips", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Else
             TreeView1.SelectedNode = TreeView1.Nodes.Item(Scan0)
+
+            If Not TreeView1.CurrentRawFile.raw.cache.FileExists Then
+                TreeView1.SelectedNode.ImageIndex = 0
+                TreeView1.SelectedNode.SelectedImageIndex = 0
+            End If
         End If
     End Sub
 
@@ -248,25 +253,48 @@ Public Class frmMain
             Dim scanId As String = e.Node.Text
             Dim scanData As LibraryMatrix
 
-            Using cache As New netCDFReader(raw.cache)
-                Dim data As CDFData = cache.getDataVariable(cache.getDataVariableEntry(scanId))
-                Dim attrs = cache.getDataVariableEntry(scanId).attributes
+            If raw.cache.FileExists Then
+                Using cache As New netCDFReader(raw.cache)
+                    Dim data As CDFData = cache.getDataVariable(cache.getDataVariableEntry(scanId))
+                    Dim attrs = cache.getDataVariableEntry(scanId).attributes
 
-                scanData = New LibraryMatrix With {
-                    .name = scanId,
-                    .centroid = False,
-                    .ms2 = data.numerics.AsMs2.ToArray
-                }
+                    scanData = New LibraryMatrix With {
+                        .name = scanId,
+                        .centroid = False,
+                        .ms2 = data.numerics.AsMs2.ToArray
+                    }
 
-                Dim draw As Image = scanData.MirrorPlot.AsGDIImage
+                    Dim draw As Image = scanData.MirrorPlot.AsGDIImage
 
-                PictureBox1.BackgroundImage = draw
-            End Using
+                    PictureBox1.BackgroundImage = draw
+                End Using
+            Else
+                Call missingCacheFile(raw)
+            End If
+        End If
+
+        Call setCurrentFile()
+    End Sub
+
+    Private Sub setCurrentFile()
+        If TreeView1.Nodes.Count = 0 Then
+            ToolStripStatusLabel.Text = "No raw file opened."
+            Return
         End If
 
         With TreeView1.CurrentRawFile.raw
-            ToolStripStatusLabel.Text = $"{ .source.FileName} [{ .numOfScans} scans]"
+            Static selectedFile As String
+
+            If selectedFile <> ToolStripStatusLabel.Text Then
+                selectedFile = $"{ .source.FileName} [{ .numOfScans} scans]"
+                ToolStripStatusLabel.Text = selectedFile
+                ListBox1.Items.Clear()
+            End If
         End With
+    End Sub
+
+    Private Sub missingCacheFile(raw As Raw)
+        MessageBox.Show($"The specific raw data cache is missing!{vbCrLf}{raw.cache.GetFullPath}", "Cache Not Found!", MessageBoxButtons.OK, MessageBoxIcon.Stop)
     End Sub
 
     Private Sub frmMain_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
@@ -280,11 +308,15 @@ Public Class frmMain
 
         If raw.raw Is Nothing Then
             Return
-        Else
-            raw.tree.Nodes.Clear()
         End If
 
         If ShowTICToolStripMenuItem.Checked Then
+            If Not raw.raw.cache.FileExists Then
+                Call missingCacheFile(raw.raw)
+                Return
+            End If
+
+            raw.tree.Nodes.Clear()
             raw.tree.Nodes.Add(New TreeNode("TIC"))
 
             Using cache As New netCDFReader(raw.raw.cache)
@@ -380,7 +412,12 @@ Public Class frmMain
     End Sub
 
     Private Sub DeleteFileToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeleteFileToolStripMenuItem.Click
+        Dim current = TreeView1.CurrentRawFile
 
+        TreeView1.Nodes.Remove(current.tree)
+        TreeView1.SaveRawFileCache
+
+        Call setCurrentFile()
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
