@@ -146,6 +146,9 @@ Public Class frmMain
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         InitRecentItems()
         InitializeFileTree()
+
+        ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
+
         ToolStripStatusLabel.Text = "Ready!"
     End Sub
 
@@ -320,8 +323,12 @@ Public Class frmMain
 
                 ToolStripStatusLabel.Text = "Ready!"
             End Using
+
+            ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.NotAvailable
         Else
             Call applyLevelFilter()
+
+            ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
         End If
     End Sub
 
