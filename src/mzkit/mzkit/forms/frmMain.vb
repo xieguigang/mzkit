@@ -8,6 +8,9 @@ Public Class frmMain
 
     Dim pages As New List(Of Control)
 
+    Dim mzkitTool As New PageMzkitTools
+    Dim mzkitSettings As New PageSettings
+
     Private Sub ShowPage(page As Control)
         For Each page2 In pages
             If Not page Is page2 Then
@@ -19,7 +22,7 @@ Public Class frmMain
     End Sub
 
     Private Sub OpenFile(ByVal sender As Object, ByVal e As ExecuteEventArgs)
-
+        Call mzkitTool.ImportsRaw()
     End Sub
 
     Private Sub SaveAsToolStripMenuItem_Click(ByVal sender As Object, ByVal e As EventArgs)
@@ -32,7 +35,6 @@ Public Class frmMain
             ' TODO: Add code here to save the current contents of the form to a file.
         End If
     End Sub
-
 
     Private Sub ExitToolsStripMenuItem_Click(ByVal sender As Object, ByVal e As ExecuteEventArgs)
         Me.Close()
@@ -79,8 +81,7 @@ Public Class frmMain
     End Sub
 
     Private Sub Settings_Click(ByVal sender As Object, ByVal e As ExecuteEventArgs)
-
-
+        Call ShowPage(mzkitSettings)
     End Sub
 
     Private Sub About_Click(ByVal sender As Object, ByVal e As ExecuteEventArgs)
@@ -95,6 +96,12 @@ Public Class frmMain
         InitRecentItems()
         InitSpinner()
         ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
+
+        Controls.AddRange({mzkitTool, mzkitSettings})
+        mzkitTool.Dock = DockStyle.Fill
+        mzkitSettings.Dock = DockStyle.Fill
+
+        ShowPage(mzkitTool)
 
         ToolStripStatusLabel.Text = "Ready!"
     End Sub
