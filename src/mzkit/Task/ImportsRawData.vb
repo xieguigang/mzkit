@@ -83,12 +83,18 @@ Public Class ImportsRawData
             Dim nscans As New List(Of ScanEntry)
 
             For Each scan As spectrum In mzML.Xml.LoadScans(source)
+                Dim parent As (mz As Double, into As Double) = Nothing
+
+                If scan.ms_level > 1 Then
+                    parent = scan.selectedIon
+                End If
+
                 ' 在这里的attribute name需要与mzXML的名称保持一致
                 attrs = {
                     New attribute With {.name = NameOf(mzXML.scan.msLevel), .type = CDFDataTypes.INT, .value = scan.ms_level},
-                    New attribute With {.name = NameOf(mzXML.scan.collisionEnergy), .type = CDFDataTypes.CHAR, .value = scan.precursorList.precursor(Scan0).GetCollisionEnergy},
+                    New attribute With {.name = NameOf(mzXML.scan.collisionEnergy), .type = CDFDataTypes.CHAR, .value = If(scan.ms_level = 1, "n/a", scan.precursorList.precursor(Scan0).GetCollisionEnergy)},
                     New attribute With {.name = NameOf(mzXML.scan.centroided), .type = CDFDataTypes.CHAR, .value = Not scan.profile},
-                    New attribute With {.name = NameOf(mzXML.scan.precursorMz), .type = CDFDataTypes.DOUBLE, .value = scan.selectedIon.mz},
+                    New attribute With {.name = NameOf(mzXML.scan.precursorMz), .type = CDFDataTypes.DOUBLE, .value = parent.mz},
                     New attribute With {.name = NameOf(mzXML.scan.retentionTime), .type = CDFDataTypes.DOUBLE, .value = scan.scan_time}
                 }
 
@@ -105,9 +111,9 @@ Public Class ImportsRawData
 
                 Call New ScanEntry With {
                     .id = name,
-                    .mz = scan.selectedIon.mz,
+                    .mz = parent.mz,
                     .rt = scan.scan_time,
-                    .intensity = scan.selectedIon.intensity
+                    .intensity = parent.into
                 }.DoCall(AddressOf nscans.Add)
 
                 Call showProgress(name)
