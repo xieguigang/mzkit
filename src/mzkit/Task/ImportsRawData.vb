@@ -85,10 +85,16 @@ Public Class ImportsRawData
             For Each scan As spectrum In mzML.Xml.LoadScans(source)
                 Dim parent As (mz As Double, into As Double) = Nothing
 
+                If Not scan.cvParams.KeyItem("electromagnetic radiation spectrum") Is Nothing Then
+                    Call showProgress($"skip electromagnetic radiation spectrum at {scan.scan_time}...")
+                    Continue For
+                End If
+
                 If scan.ms_level > 1 Then
                     parent = scan.selectedIon
                 End If
 
+                data.Clear()
                 ' 在这里的attribute name需要与mzXML的名称保持一致
                 attrs = {
                     New attribute With {.name = NameOf(mzXML.scan.msLevel), .type = CDFDataTypes.INT, .value = scan.ms_level},
@@ -106,8 +112,22 @@ Public Class ImportsRawData
                     data.Add(mz(i))
                 Next
 
-                name = scan.ToString
-                cache.AddVariable(name, New CDFData With {.numerics = data}, New Dimension With {.name = "m/z-int,scan_" & scan.scan, .size = data.Count}, attrs)
+                Dim polarity As String
+                Dim scanType As String = scan.scanList.scans(0).cvParams.KeyItem("filter string")?.value
+
+                If Not scan.cvParams.KeyItem("positive scan") Is Nothing Then
+                    polarity = "+"
+                Else
+                    polarity = "-"
+                End If
+
+                If scan.ms_level = 1 Then
+                    name = $"[MS1] {scanType}, ({polarity}) retentionTime={CInt(scan.scan_time)}"
+                Else
+                    name = $"[MS/MS] {scanType}, ({polarity}) M{CInt(parent.mz)}T{CInt(scan.scan_time)}"
+                End If
+
+                cache.AddVariable(name, New CDFData With {.numerics = data}, New Dimension With {.name = "m/z-int,scan_" & scan.index, .size = data.Count}, attrs)
 
                 Call New ScanEntry With {
                     .id = name,
