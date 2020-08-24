@@ -67,7 +67,7 @@ Public Class PageMzkitTools
         End Using
     End Sub
 
-    Private Sub TreeView1_AfterSelect(sender As Object, e As TreeViewEventArgs)
+    Private Sub TreeView1_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles TreeView1.AfterSelect
         If TypeOf e.Node.Tag Is Task.Raw Then
             ' 原始文件节点
         ElseIf TypeOf e.Node.Tag Is ms2() Then
@@ -278,7 +278,7 @@ Public Class PageMzkitTools
         Call setCurrentFile()
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs)
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Call searchInFileByMz(mz:=Val(TextBox1.Text))
     End Sub
 
@@ -294,7 +294,7 @@ Public Class PageMzkitTools
         Next
     End Sub
 
-    Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As EventArgs)
+    Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox1.SelectedIndexChanged
         Dim scanId As ScanEntry = ListBox1.SelectedItem
         Dim raw = TreeView1.CurrentRawFile.raw
 

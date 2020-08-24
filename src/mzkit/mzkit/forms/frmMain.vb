@@ -8,10 +8,10 @@ Public Class frmMain
 
     Dim pages As New List(Of Control)
 
-    Dim mzkitTool As New PageMzkitTools
-    Dim mzkitSettings As New PageSettings
+    Friend mzkitTool As New PageMzkitTools
+    Friend mzkitSettings As New PageSettings
 
-    Private Sub ShowPage(page As Control)
+    Friend Sub ShowPage(page As Control)
         For Each page2 In pages
             If Not page Is page2 Then
                 page2.Hide()
