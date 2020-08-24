@@ -4,7 +4,7 @@ Imports PNNL.OMICS.MwtWinDll.FormulaFinder
 
 Public Class PageMzSearch
 
-    Public Sub doMzSearch()
+    Public Sub doMzSearch(mz As Double, ppm As Double)
         Dim oMwtWin = New MolecularWeightCalculator()
 
         oMwtWin.SetElementMode(MWElementAndMassRoutines.emElementModeConstants.emIsotopicMass)
@@ -26,10 +26,10 @@ Public Class PageMzSearch
         searchOptions.ChargeMax = 1
         searchOptions.FindTargetMZ = False
 
-        Call FormulaFinderTest4(oMwtWin, searchOptions, "")
+        Call FormulaFinderTest4(mz, ppm, oMwtWin, searchOptions, "")
     End Sub
 
-    Private Sub FormulaFinderTest4(oMwtWin As MolecularWeightCalculator, searchOptions As FormulaFinderOptions, currentTask As String)
+    Private Sub FormulaFinderTest4(mz As Double, ppm As Double, oMwtWin As MolecularWeightCalculator, searchOptions As FormulaFinderOptions, currentTask As String)
 
         searchOptions.LimitChargeRange = True
         searchOptions.ChargeMin = -4
@@ -37,7 +37,7 @@ Public Class PageMzSearch
         searchOptions.FindTargetMZ = True
 
         ' Search for 100 m/z, +/- 250 ppm
-        Dim lstResults = oMwtWin.FormulaFinder.FindMatchesByMassPPM(100, 250, searchOptions)
+        Dim lstResults = oMwtWin.FormulaFinder.FindMatchesByMassPPM(mz, ppm, searchOptions)
         ShowFormulaFinderResults(currentTask, searchOptions, lstResults, True)
 
     End Sub

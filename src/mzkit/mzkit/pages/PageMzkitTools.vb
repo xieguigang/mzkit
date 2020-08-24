@@ -324,6 +324,14 @@ Public Class PageMzkitTools
     End Sub
 
     Private Sub SearchInFileToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SearchInFileToolStripMenuItem.Click
+        Call runMzSearch(Sub(mz) Call searchInFileByMz(mz))
+    End Sub
+
+    Private Sub SaveMatrixToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveMatrixToolStripMenuItem.Click
+
+    End Sub
+
+    Private Sub runMzSearch(searchAction As Action(Of Double))
         If Not ShowTICToolStripMenuItem.Checked Then
             Dim current = TreeView1.CurrentRawFile
             Dim node = TreeView1.SelectedNode
@@ -332,13 +340,19 @@ Public Class PageMzkitTools
                 Dim mz = current.raw.scans.Where(Function(scan) scan.id = node.Text).FirstOrDefault
 
                 If Not mz Is Nothing AndAlso mz.mz > 0 Then
-                    Call searchInFileByMz(mz.mz)
+                    Call searchAction(mz.mz)
                 End If
             End If
         End If
     End Sub
 
-    Private Sub SaveMatrixToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveMatrixToolStripMenuItem.Click
+    Private Sub SearchFormulaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SearchFormulaToolStripMenuItem.Click
+        Dim ppm As Double = 30
 
+        Call runMzSearch(
+            Sub(mz)
+                host.mzkitSearch.doMzSearch(mz, ppm)
+                host.ShowPage(host.mzkitSearch)
+            End Sub)
     End Sub
 End Class
