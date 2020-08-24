@@ -92,15 +92,20 @@ Public Class frmMain
         Call New frmCalculator().ShowDialog()
     End Sub
 
+    Private Sub addPage(ParamArray pageList As Control())
+        For Each page As Control In pageList
+            Panel1.Controls.Add(page)
+            pages.Add(page)
+            page.Dock = DockStyle.Fill
+        Next
+    End Sub
+
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         InitRecentItems()
         InitSpinner()
         ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
 
-        Controls.AddRange({mzkitTool, mzkitSettings})
-        mzkitTool.Dock = DockStyle.Fill
-        mzkitSettings.Dock = DockStyle.Fill
-
+        addPage(mzkitTool, mzkitSettings)
         ShowPage(mzkitTool)
 
         ToolStripStatusLabel.Text = "Ready!"
@@ -172,6 +177,6 @@ Public Class frmMain
     End Sub
 
     Private Sub frmMain_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-
+        mzkitTool.SaveFileCache()
     End Sub
 End Class
