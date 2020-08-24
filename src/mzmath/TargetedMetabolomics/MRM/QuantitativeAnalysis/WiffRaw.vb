@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b18139416d1723f94f3399a651fd109a, src\mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\WiffRaw.vb"
+﻿#Region "Microsoft.VisualBasic::bd40f3a6ab15231f40c8484e6e05690e, src\mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\WiffRaw.vb"
 
     ' Author:
     ' 

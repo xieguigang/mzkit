@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b8496a4e37d97d594d322006b3c61ac, src\mzmath\ms2_math-core\Spectra\Models\PeakMs2.vb"
+﻿#Region "Microsoft.VisualBasic::efd4c35db2440f9a1b4e2e70aa309f17, src\mzmath\ms2_math-core\Spectra\Models\PeakMs2.vb"
 
     ' Author:
     ' 
@@ -34,9 +34,11 @@
 
     ' Summaries:
 
-    '     Structure PeakMs2
+    '     Class PeakMs2
     ' 
-    '         Properties: Ms2Intensity
+    '         Properties: activation, collisionEnergy, file, fragments, lib_guid
+    '                     meta, Ms2Intensity, mz, mzInto, precursor_type
+    '                     rt, scan
     ' 
     '         Function: AlignMatrix, RtInSecond, ToString
     ' 

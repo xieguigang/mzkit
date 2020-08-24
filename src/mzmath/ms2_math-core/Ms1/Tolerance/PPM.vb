@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c3ed0d666fd9337262019d5642f3ddeb, src\mzmath\ms2_math-core\Ms1\Tolerance\PPM.vb"
+﻿#Region "Microsoft.VisualBasic::30c8b136c53300fb4d04e4144b88a6f4, src\mzmath\ms2_math-core\Ms1\Tolerance\PPM.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     '     Class PPMmethod
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: AsScore, Assert, MassError, MassErrorDescription, ppm
+    '         Function: AsScore, Equals, MassError, MassErrorDescription, ppm
     '                   ToString
     ' 
     ' 
