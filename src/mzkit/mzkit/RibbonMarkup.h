@@ -122,5 +122,10 @@
 #define cmdButtonMzSearch_LabelDescription_RESID 60080
 #define cmdButtonMzSearch_TooltipTitle_RESID 60081
 #define cmdButtonMzSearch_LargeImages_RESID 60082
-#define cmdGroupExit_LabelTitle_RESID 60083
-#define InternalCmd2_LabelTitle_RESID 60084
+#define cmdButtonPageNavBack 1053 
+#define cmdButtonPageNavBack_LabelTitle_RESID 60083
+#define cmdButtonPageNavBack_LabelDescription_RESID 60084
+#define cmdButtonPageNavBack_TooltipTitle_RESID 60085
+#define cmdButtonPageNavBack_LargeImages_RESID 60086
+#define cmdGroupExit_LabelTitle_RESID 60087
+#define InternalCmd2_LabelTitle_RESID 60088

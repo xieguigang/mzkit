@@ -274,6 +274,16 @@
 			</Command.LargeImages>
 		</Command>
 
+<Command Name="cmdButtonPageNavBack"
+			 Id="1053"
+			 LabelTitle="M/z Search"
+			 LabelDescription="Search Formula for given m/z value"
+			TooltipTitle="Search Formula">
+			<Command.LargeImages>
+				<Image>Res/DropA32.bmp</Image>
+			</Command.LargeImages>
+		</Command>
+
 
 	</Application.Commands>
 
@@ -427,8 +437,8 @@
 			<Ribbon.QuickAccessToolbar>
 				<QuickAccessToolbar CommandName='cmdQAT' CustomizeCommandName='cmdCustomizeQAT'>
 					<QuickAccessToolbar.ApplicationDefaults>
-						<Button CommandName="cmdButtonNew" ApplicationDefaults.IsChecked="true" />
-						<Button CommandName="cmdButtonOpenRaw" ApplicationDefaults.IsChecked="false" />
+						<Button CommandName="cmdButtonPageNavBack" ApplicationDefaults.IsChecked="true" />
+						<Button CommandName="cmdButtonOpenRaw" ApplicationDefaults.IsChecked="true" />
 						<Button CommandName="cmdButtonSave" ApplicationDefaults.IsChecked="false" />
 					</QuickAccessToolbar.ApplicationDefaults>
 				</QuickAccessToolbar>

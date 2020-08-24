@@ -13,12 +13,18 @@ Public Class frmMain
     Friend mzkitSearch As New PageMzSearch
     Friend mzkitCalculator As New PageMzCalculator
 
-    Friend Sub ShowPage(page As Control)
+    Dim nav As New Stack(Of Control)
+
+    Friend Sub ShowPage(page As Control, Optional pushStack As Boolean = True)
         For Each page2 In pages
             If Not page Is page2 Then
                 page2.Hide()
             End If
         Next
+
+        If pushStack Then
+            nav.Push(page)
+        End If
 
         page.Show()
     End Sub
@@ -76,10 +82,17 @@ Public Class frmMain
         AddHandler ribbonItems.ButtonExit.ExecuteEvent, AddressOf ExitToolsStripMenuItem_Click
         AddHandler ribbonItems.ButtonOpenRaw.ExecuteEvent, AddressOf OpenFile
         AddHandler ribbonItems.ButtonAbout.ExecuteEvent, AddressOf About_Click
+        AddHandler ribbonItems.ButtonPageNavBack.ExecuteEvent, AddressOf NavBack_Click
 
         AddHandler ribbonItems.ButtonMzCalculator.ExecuteEvent, Sub(sender, e) Call ShowPage(mzkitCalculator)
         AddHandler ribbonItems.ButtonSettings.ExecuteEvent, Sub(sender, e) Call ShowPage(mzkitSettings)
         AddHandler ribbonItems.ButtonMzSearch.ExecuteEvent, Sub(sender, e) Call ShowPage(mzkitSearch)
+    End Sub
+
+    Private Sub NavBack_Click(ByVal sender As Object, ByVal e As ExecuteEventArgs)
+        If nav.Count > 0 Then
+            Call ShowPage(nav.Pop, pushStack:=False)
+        End If
     End Sub
 
     Private Sub About_Click(ByVal sender As Object, ByVal e As ExecuteEventArgs)

@@ -14,7 +14,7 @@ Imports RibbonLib.Controls
 Imports RibbonLib.Interop
 
 Partial Class RibbonItems
-    Private _Ribbon As Ribbon, _TabGroupTableTools As RibbonTabGroup, _TabDesign As RibbonTab, _GroupDesign As RibbonGroup, _Spinner As RibbonSpinner, _ButtonDesign2 As RibbonButton, _ButtonDesign3 As RibbonButton, _TabLayout As RibbonTab, _GroupLayout As RibbonGroup, _ButtonLayout1 As RibbonButton, _ButtonLayout2 As RibbonButton, _HelpButton As RibbonHelpButton, _TabMain As RibbonTab, _GroupFileActions As RibbonGroup, _ButtonNew As RibbonButton, _ButtonOpenRaw As RibbonButton, _ButtonSave As RibbonButton, _ButtonExit As RibbonButton, _TabTools As RibbonTab, _GroupToolsActions As RibbonGroup, _ButtonMzCalculator As RibbonButton, _ButtonMzSearch As RibbonButton, _TabAbout As RibbonTab, _GroupAboutActions As RibbonGroup, _ButtonAbout As RibbonButton, _ButtonSettings As RibbonButton, _RecentItems As RibbonRecentItems, _MenuGroupFile As RibbonMenuGroup, _ButtonOpen As RibbonDropDownButton, _ButtonDropA As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton, _MenuGroupExit As RibbonMenuGroup, _QAT As RibbonQuickAccessToolbar
+    Private _Ribbon As Ribbon, _TabGroupTableTools As RibbonTabGroup, _TabDesign As RibbonTab, _GroupDesign As RibbonGroup, _Spinner As RibbonSpinner, _ButtonDesign2 As RibbonButton, _ButtonDesign3 As RibbonButton, _TabLayout As RibbonTab, _GroupLayout As RibbonGroup, _ButtonLayout1 As RibbonButton, _ButtonLayout2 As RibbonButton, _HelpButton As RibbonHelpButton, _TabMain As RibbonTab, _GroupFileActions As RibbonGroup, _ButtonNew As RibbonButton, _ButtonOpenRaw As RibbonButton, _ButtonSave As RibbonButton, _ButtonExit As RibbonButton, _TabTools As RibbonTab, _GroupToolsActions As RibbonGroup, _ButtonMzCalculator As RibbonButton, _ButtonMzSearch As RibbonButton, _TabAbout As RibbonTab, _GroupAboutActions As RibbonGroup, _ButtonAbout As RibbonButton, _ButtonSettings As RibbonButton, _RecentItems As RibbonRecentItems, _MenuGroupFile As RibbonMenuGroup, _ButtonOpen As RibbonDropDownButton, _ButtonDropA As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton, _MenuGroupExit As RibbonMenuGroup, _QAT As RibbonQuickAccessToolbar, _ButtonPageNavBack As RibbonButton
 
     Private NotInheritable Class Cmd
         Public Const cmdTabGroupTableTools As UInteger = 1031
@@ -50,6 +50,7 @@ Partial Class RibbonItems
         Public Const cmdButtonDropC As UInteger = 1010
         Public Const cmdMenuGroupExit As UInteger = 1006
         Public Const cmdQAT As UInteger = 1015
+        Public Const cmdButtonPageNavBack As UInteger = 1053
         Public Const cmdCustomizeQAT As UInteger = 1018
     End Class
 
@@ -363,6 +364,15 @@ Partial Class RibbonItems
         End Set
     End Property
 
+    Public Property ButtonPageNavBack As RibbonButton
+        Get
+            Return _ButtonPageNavBack
+        End Get
+        Private Set(ByVal value As RibbonButton)
+            _ButtonPageNavBack = value
+        End Set
+    End Property
+
     Public Sub New(ByVal ribbon As Ribbon)
         If ribbon Is Nothing Then Throw New ArgumentNullException(NameOf(ribbon), "Parameter is null")
         If initialized Then Return
@@ -400,6 +410,7 @@ Partial Class RibbonItems
         ButtonDropC = New RibbonButton(ribbon, Cmd.cmdButtonDropC)
         MenuGroupExit = New RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupExit)
         QAT = New RibbonQuickAccessToolbar(ribbon, Cmd.cmdQAT, Cmd.cmdCustomizeQAT)
+        ButtonPageNavBack = New RibbonButton(ribbon, Cmd.cmdButtonPageNavBack)
         initialized = True
     End Sub
 End Class
