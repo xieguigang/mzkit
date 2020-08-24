@@ -128,6 +128,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="ctrls\PageSettings.Designer.vb">
+      <DependentUpon>PageSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ctrls\PageSettings.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrls\PageMzkitTools.Designer.vb">
+      <DependentUpon>PageMzkitTools.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ctrls\PageMzkitTools.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="forms\frmMain.Designer.vb">
       <DependentUpon>frmMain.vb</DependentUpon>
     </Compile>
@@ -173,6 +185,12 @@
     <Compile Include="RibbonItems.Designer.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ctrls\PageMzkitTools.resx">
+      <DependentUpon>PageMzkitTools.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ctrls\PageSettings.resx">
+      <DependentUpon>PageSettings.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="forms\frmImportTaskProgress.resx">
       <DependentUpon>frmImportTaskProgress.vb</DependentUpon>
     </EmbeddedResource>

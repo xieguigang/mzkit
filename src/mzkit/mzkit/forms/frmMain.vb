@@ -139,6 +139,7 @@ Public Class frmMain
     End Sub
 
     Private Sub Settings_Click(ByVal sender As Object, ByVal e As ExecuteEventArgs)
+        Panel1.Hide()
 
     End Sub
 
