@@ -182,11 +182,20 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="pages\PageMzSearch.Designer.vb">
+      <DependentUpon>PageMzSearch.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\PageMzSearch.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="RibbonItems.Designer.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="pages\PageMzkitTools.resx">
       <DependentUpon>PageMzkitTools.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pages\PageMzSearch.resx">
+      <DependentUpon>PageMzSearch.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pages\PageSettings.resx">
       <DependentUpon>PageSettings.vb</DependentUpon>
@@ -303,6 +312,14 @@
     <ProjectReference Include="..\..\mzmath\ms2_math-core\MassSpectrum.math-core.vbproj">
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
       <Name>MassSpectrum.math-core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\mzmath\MwtWinDll\MwtWinDll.Extensions\MwtWinDll.Extensions.vbproj">
+      <Project>{1b7c8c1b-b794-4f0a-8d6c-0f32f6d4e927}</Project>
+      <Name>MwtWinDll.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\mzmath\MwtWinDll\MwtWinDll\MwtWinDll.vbproj">
+      <Project>{78332537-7ecc-4b74-8aa9-ba66ab296af0}</Project>
+      <Name>MwtWinDll</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\mzmath\TargetedMetabolomics\TargetedMetabolomics.vbproj">
       <Project>{a8a71b32-dac6-4fa7-a5c1-0f5e5d5c9eb7}</Project>

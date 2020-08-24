@@ -10,6 +10,7 @@ Public Class frmMain
 
     Friend mzkitTool As New PageMzkitTools
     Friend mzkitSettings As New PageSettings
+    Friend mzkitSearch As New PageMzSearch
 
     Friend Sub ShowPage(page As Control)
         For Each page2 In pages
@@ -105,7 +106,7 @@ Public Class frmMain
         InitSpinner()
         ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
 
-        addPage(mzkitTool, mzkitSettings)
+        addPage(mzkitTool, mzkitSettings, mzkitSearch)
         ShowPage(mzkitTool)
 
         ToolStripStatusLabel.Text = "Ready!"

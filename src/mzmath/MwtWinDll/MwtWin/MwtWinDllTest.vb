@@ -1,51 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::2dbf37ca9b89835332c06fb4e554776e, src\mzmath\MwtWinDll\MwtWin\MwtWinDllTest.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class frmMwtWinDllTest
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: AppendBoolColumnToTableStyle, AppendColumnToTableStyle, cboStdDevMode_SelectedIndexChanged, cboWeightMode_SelectedIndexChanged, chkShowRTFSource_CheckedChanged
-    '          cmdClose_Click, cmdConvertToEmpirical_Click, cmdExpandAbbreviations_Click, cmdFindMass_Click, cmdTestFormulaFinder_Click
-    '          cmdTestFunctions_Click, cmdTestGetTrypticName_Click, Dispose, FindMass, FindPercentComposition
-    '          FormulaFinderTest1, FormulaFinderTest2, FormulaFinderTest3, FormulaFinderTest4, FormulaFinderTest5
-    '          FormulaFinderTest6, InitializeComponent, InitializeControls, MakeDataSet, MakePercentCompositionDataSet
-    '          mMwtWin_ProgressChanged, mMwtWin_ProgressComplete, mMwtWin_ProgressReset, PopulateComboBoxes, rtfFormula_TextChanged
-    '          ShowFormulaFinderResults, TestAccessFunctions, TestFormulaFinder, TestTrypticName, UpdateResultsForCompound
-    ' 
-    ' /********************************************************************************/
+' Class frmMwtWinDllTest
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Sub: AppendBoolColumnToTableStyle, AppendColumnToTableStyle, cboStdDevMode_SelectedIndexChanged, cboWeightMode_SelectedIndexChanged, chkShowRTFSource_CheckedChanged
+'          cmdClose_Click, cmdConvertToEmpirical_Click, cmdExpandAbbreviations_Click, cmdFindMass_Click, cmdTestFormulaFinder_Click
+'          cmdTestFunctions_Click, cmdTestGetTrypticName_Click, Dispose, FindMass, FindPercentComposition
+'          FormulaFinderTest1, FormulaFinderTest2, FormulaFinderTest3, FormulaFinderTest4, FormulaFinderTest5
+'          FormulaFinderTest6, InitializeComponent, InitializeControls, MakeDataSet, MakePercentCompositionDataSet
+'          mMwtWin_ProgressChanged, mMwtWin_ProgressComplete, mMwtWin_ProgressReset, PopulateComboBoxes, rtfFormula_TextChanged
+'          ShowFormulaFinderResults, TestAccessFunctions, TestFormulaFinder, TestTrypticName, UpdateResultsForCompound
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -54,7 +54,8 @@ Option Explicit On
 
 Imports System.Collections.Generic
 Imports System.Text
-Imports SMRUCC.proteomics.PNL.OMICS.MwtWinDll
+Imports PNNL.OMICS.MwtWinDll
+Imports PNNL.OMICS.MwtWinDll.FormulaFinder
 
 Friend Class frmMwtWinDllTest
     ' Molecular Weight Calculator Dll test program
@@ -1068,7 +1069,7 @@ Friend Class frmMwtWinDllTest
         Dim oMwtWin = New MolecularWeightCalculator()
 
         oMwtWin.SetElementMode(MWElementAndMassRoutines.emElementModeConstants.emIsotopicMass)
-        
+
         oMwtWin.FormulaFinder.CandidateElements.Clear()
 
         oMwtWin.FormulaFinder.AddCandidateElement("C")
@@ -1166,7 +1167,7 @@ Friend Class frmMwtWinDllTest
 
     Private Sub FormulaFinderTest6(oMwtWin As MolecularWeightCalculator, searchOptions As FormulaFinderOptions, currentTask As String)
 
-        searchOptions.SearchMode = FormulaFinderOptions.eSearchMode.Bounded
+        searchOptions.SearchMode = eSearchMode.Bounded
 
         ' Search for 200 Da, +/- 250 ppm
         Dim lstResults = oMwtWin.FormulaFinder.FindMatchesByMassPPM(200, 250, searchOptions)
