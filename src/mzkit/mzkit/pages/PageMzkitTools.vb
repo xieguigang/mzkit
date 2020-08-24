@@ -309,9 +309,13 @@ Public Class PageMzkitTools
                                        In composition.CountsByElement
                                        Let eval As Double = ExactMass.Eval(atom.Key) * atom.Value
                                        Into Sum(eval)
+            Dim ppm As Double = Val(RibbonItems.Spinner.DecimalValue)
+            Dim raw = TreeView1.CurrentRawFile.raw
 
             DataGridView1.Rows.Clear()
             DataGridView1.Columns.Clear()
+
+            showStatusMessage($"Search MS ions for [{TextBox1.Text}] exact_mass={exact_mass} with tolerance error {ppm} ppm")
 
             DataGridView1.Columns.Add(New DataGridViewTextBoxColumn() With {
                   .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
@@ -361,8 +365,6 @@ Public Class PageMzkitTools
             ' C25H40N4O5
             Dim pos = MzCalculator.EvaluateAll(exact_mass, "+", False).ToArray
             Dim neg = MzCalculator.EvaluateAll(exact_mass, "-", False).ToArray
-            Dim ppm As Double = Val(RibbonItems.Spinner.DecimalValue)
-            Dim raw = TreeView1.CurrentRawFile.raw
 
             For Each scan As ScanEntry In raw.scans
                 If scan.polarity > 0 Then

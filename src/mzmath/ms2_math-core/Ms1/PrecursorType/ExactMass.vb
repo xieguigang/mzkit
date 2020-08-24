@@ -61,6 +61,7 @@ Namespace Ms1.PrecursorType
         Public Const H2O = H * 2 + O
         Public Const CH3 = C + H * 3
         Public Const N = 14.003074
+        Public Const P = 30.973763
 
         ReadOnly weights As New Dictionary(Of String, Double) From {
             {"H", H},
@@ -69,6 +70,7 @@ Namespace Ms1.PrecursorType
             {"C3H7O2", C * 3 + H * 7 + O * 2},
             {"C2H3O", C * 2 + H * 3 + O},
             {"O", O},
+            {"P", P},
             {"Methylcarbonyl", 43.018},
             {"Propyldioxy", 75.045},
             {"C12H20O9", 308.111},
