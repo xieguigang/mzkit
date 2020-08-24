@@ -63,6 +63,16 @@ Namespace My.Resources
         '''<summary>
         '''  查找 System.Drawing.Bitmap 类型的本地化资源。
         '''</summary>
+        Friend ReadOnly Property _42082() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("_42082", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  查找 System.Drawing.Bitmap 类型的本地化资源。
+        '''</summary>
         Friend ReadOnly Property header_background_image() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("header_background_image", resourceCulture)
