@@ -12,12 +12,14 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports RibbonLib.Interop
 Imports Task
 
 Public Class PageMzkitTools
 
     Dim host As frmMain
     Dim status As ToolStripStatusLabel
+    Dim RibbonItems As RibbonItems
 
     Sub showStatusMessage(message As String)
         host.Invoke(Sub() status.Text = message)
@@ -104,6 +106,7 @@ Public Class PageMzkitTools
     Private Sub PageMzkitTools_Load(sender As Object, e As EventArgs) Handles Me.Load
         host = DirectCast(ParentForm, frmMain)
         status = host.ToolStripStatusLabel
+        RibbonItems = host.ribbonItems
 
         Call InitializeFileTree()
     End Sub
@@ -228,11 +231,11 @@ Public Class PageMzkitTools
                 showStatusMessage("Ready!")
             End Using
 
-            RibbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.NotAvailable
+            host.Invoke(Sub() RibbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.NotAvailable)
         Else
             Call applyLevelFilter()
 
-            RibbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
+            host.Invoke(Sub() RibbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active)
         End If
     End Sub
 

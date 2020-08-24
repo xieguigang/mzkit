@@ -58,8 +58,8 @@ Public Class frmMain
         ' Me.StatusStrip.Visible = Me.StatusBarToolStripMenuItem.Checked
     End Sub
 
-    Dim ribbonItems As RibbonItems
-    Private _recentItems As List(Of RecentItemsPropertySet)
+    Friend ribbonItems As RibbonItems
+    Friend recentItems As List(Of RecentItemsPropertySet)
 
     Public Sub New()
 
@@ -112,11 +112,11 @@ Public Class frmMain
 
     Private Sub InitRecentItems()
         ' prepare list of recent items
-        _recentItems = New List(Of RecentItemsPropertySet)()
-        _recentItems.Add(New RecentItemsPropertySet() With {.Label = "Recent item 1", .LabelDescription = "Recent item 1 description", .Pinned = True})
-        _recentItems.Add(New RecentItemsPropertySet() With {.Label = "Recent item 2", .LabelDescription = "Recent item 2 description", .Pinned = False})
+        recentItems = New List(Of RecentItemsPropertySet)()
+        recentItems.Add(New RecentItemsPropertySet() With {.Label = "Recent item 1", .LabelDescription = "Recent item 1 description", .Pinned = True})
+        recentItems.Add(New RecentItemsPropertySet() With {.Label = "Recent item 2", .LabelDescription = "Recent item 2 description", .Pinned = False})
 
-        ribbonItems.RecentItems.RecentItems = _recentItems
+        ribbonItems.RecentItems.RecentItems = recentItems
     End Sub
 
     Private Sub _recentItems_ExecuteEvent(ByVal sender As Object, ByVal e As ExecuteEventArgs)
@@ -140,7 +140,7 @@ Public Class frmMain
                     Dim pinned As Boolean = CBool(propPinned.Value)
 
                     ' update pinned value
-                    _recentItems(i).Pinned = pinned
+                    recentItems(i).Pinned = pinned
                 End If
             Next i
         ElseIf e.Key.PropertyKey = RibbonProperties.SelectedItem Then
