@@ -2,8 +2,10 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.IO.netCDF
@@ -82,7 +84,9 @@ Public Class PageMzkitTools
             TIC.value = {
                 New ChromatogramTick With {.Time = selects.rtmin},
                 New ChromatogramTick With {.Time = selects.rtmax}
-            }.JoinIterates(TIC.value).ToArray
+            }.JoinIterates(TIC.value) _
+             .OrderBy(Function(c) c.Time) _
+             .ToArray
 
             PictureBox1.BackgroundImage = TIC.TICplot.AsGDIImage
         ElseIf e.Node.Tag Is Nothing AndAlso e.Node.Text = "TIC" Then
@@ -100,7 +104,9 @@ Public Class PageMzkitTools
             TIC.value = {
                 New ChromatogramTick With {.Time = raw.rtmin},
                 New ChromatogramTick With {.Time = raw.rtmax}
-            }.JoinIterates(TIC.value).ToArray
+            }.JoinIterates(TIC.value) _
+             .OrderBy(Function(c) c.Time) _
+             .ToArray
 
             PictureBox1.BackgroundImage = TIC.TICplot.AsGDIImage
         Else
@@ -292,7 +298,45 @@ Public Class PageMzkitTools
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        Call searchInFileByMz(mz:=Val(TextBox1.Text))
+        If TextBox1.Text.StringEmpty Then
+            Return
+        ElseIf TextBox1.Text.IsNumeric Then
+            Call searchInFileByMz(mz:=Val(TextBox1.Text))
+        Else
+            ' formula
+            Dim composition As FormulaComposition = FormulaScanner.ScanFormula(TextBox1.Text)
+            Dim exact_mass As Double = Aggregate atom
+                                       In composition.CountsByElement
+                                       Let eval As Double = ExactMass.Eval(atom.Key) * atom.Value
+                                       Into Sum(eval)
+
+            DataGridView1.Rows.Clear()
+            DataGridView1.Columns.Clear()
+
+            DataGridView1.Columns.Add(New DataGridViewColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .ValueType = GetType(String), .HeaderText = "scan Id"})
+
+            Dim pos = MzCalculator.EvaluateAll(exact_mass, "+", False).ToArray
+            Dim neg = MzCalculator.EvaluateAll(exact_mass, "-", False).ToArray
+            Dim ppm As Double = Val(RibbonItems.Spinner.DecimalValue)
+
+            For Each scan As ScanEntry In TreeView1.CurrentRawFile.raw.scans
+                If scan.polarity > 0 Then
+                    For Each mode In pos
+                        If PPMmethod.ppm(scan.mz, Val(mode.mz)) <= ppm Then
+                            DataGridView1.Rows.Add(scan.id)
+                        End If
+                    Next
+                ElseIf scan.polarity < 0 Then
+                    For Each mode In neg
+                        If PPMmethod.ppm(scan.mz, Val(mode.mz)) <= ppm Then
+                            DataGridView1.Rows.Add(scan.id)
+                        End If
+                    Next
+                End If
+            Next
+
+            TabControl1.SelectedTab = TabPage2
+        End If
     End Sub
 
     Private Sub searchInFileByMz(mz As Double)

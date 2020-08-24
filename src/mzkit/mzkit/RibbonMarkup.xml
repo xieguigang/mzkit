@@ -305,7 +305,7 @@
 					Id="1064"
 					LabelTitle="Export Result Table">
 			<Command.LargeImages>
-				<Image>Res/DropA32.bmp</Image>
+				<Image>Res/excel-icon.png</Image>
 			</Command.LargeImages>
 		</Command>
 		

@@ -2,6 +2,7 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
@@ -60,7 +61,8 @@ Public Class ImportsRawData
                     New attribute With {.name = NameOf(scan.collisionEnergy), .type = CDFDataTypes.CHAR, .value = scan.collisionEnergy Or "n/a".AsDefault},
                     New attribute With {.name = NameOf(scan.centroided), .type = CDFDataTypes.CHAR, .value = scan.centroided Or "n/a".AsDefault},
                     New attribute With {.name = NameOf(scan.precursorMz), .type = CDFDataTypes.DOUBLE, .value = scan.precursorMz.value},
-                    New attribute With {.name = NameOf(scan.retentionTime), .type = CDFDataTypes.DOUBLE, .value = PeakMs2.RtInSecond(scan.retentionTime)}
+                    New attribute With {.name = NameOf(scan.retentionTime), .type = CDFDataTypes.DOUBLE, .value = PeakMs2.RtInSecond(scan.retentionTime)},
+                    New attribute With {.name = NameOf(scan.polarity), .type = CDFDataTypes.CHAR, .value = scan.polarity}
                 }
                 data = scan.peaks.Base64Decode(True)
                 name = scan.getName & $" scan={nscans.Count + 1}"
@@ -71,7 +73,8 @@ Public Class ImportsRawData
                     .id = name,
                     .mz = scan.precursorMz.value,
                     .rt = PeakMs2.RtInSecond(scan.retentionTime),
-                    .intensity = scan.basePeakIntensity
+                    .intensity = scan.basePeakIntensity,
+                    .polarity = Provider.ParseIonMode(scan.polarity)
                 }.DoCall(AddressOf nscans.Add)
 
                 Call showProgress(name)
@@ -107,6 +110,14 @@ Public Class ImportsRawData
                     parent = scan.selectedIon
                 End If
 
+                Dim polarity As String
+
+                If Not scan.cvParams.KeyItem("positive scan") Is Nothing Then
+                    polarity = "+"
+                Else
+                    polarity = "-"
+                End If
+
                 data.Clear()
                 ' 在这里的attribute name需要与mzXML的名称保持一致
                 attrs = {
@@ -114,7 +125,8 @@ Public Class ImportsRawData
                     New attribute With {.name = NameOf(mzXML.scan.collisionEnergy), .type = CDFDataTypes.CHAR, .value = If(scan.ms_level = 1, "n/a", scan.precursorList.precursor(Scan0).GetCollisionEnergy)},
                     New attribute With {.name = NameOf(mzXML.scan.centroided), .type = CDFDataTypes.CHAR, .value = Not scan.profile},
                     New attribute With {.name = NameOf(mzXML.scan.precursorMz), .type = CDFDataTypes.DOUBLE, .value = parent.mz},
-                    New attribute With {.name = NameOf(mzXML.scan.retentionTime), .type = CDFDataTypes.DOUBLE, .value = scan.scan_time}
+                    New attribute With {.name = NameOf(mzXML.scan.retentionTime), .type = CDFDataTypes.DOUBLE, .value = scan.scan_time},
+                    New attribute With {.name = NameOf(mzXML.scan.polarity), .type = CDFDataTypes.CHAR, .value = polarity}
                 }
 
                 Dim mz = scan.ByteArray("m/z array").Base64Decode
@@ -125,14 +137,7 @@ Public Class ImportsRawData
                     data.Add(mz(i))
                 Next
 
-                Dim polarity As String
                 Dim scanType As String = scan.scanList.scans(0).cvParams.KeyItem("filter string")?.value
-
-                If Not scan.cvParams.KeyItem("positive scan") Is Nothing Then
-                    polarity = "+"
-                Else
-                    polarity = "-"
-                End If
 
                 If scan.ms_level = 1 Then
                     name = $"[MS1] {scanType}_{nscans.Count + 1}, ({polarity}) retentionTime={CInt(scan.scan_time)}"
@@ -147,7 +152,8 @@ Public Class ImportsRawData
                     .id = name,
                     .mz = parent.mz,
                     .rt = scan.scan_time,
-                    .intensity = parent.into
+                    .intensity = parent.into,
+                    .polarity = Provider.ParseIonMode(polarity)
                 }.DoCall(AddressOf nscans.Add)
 
                 Call showProgress(name)
