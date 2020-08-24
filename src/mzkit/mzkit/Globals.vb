@@ -3,12 +3,11 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.MIME.application.json.BSON
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Task
 
 Module Globals
 
-    ReadOnly cacheList As String = App.LocalData & "/cacheList.json"
+    ReadOnly cacheList As String = App.LocalData & "/cacheList.dat"
 
     <Extension>
     Public Sub SaveRawFileCache(explorer As TreeView)
@@ -29,8 +28,13 @@ Module Globals
 
     <Extension>
     Public Function LoadRawFileCache(explorer As TreeView) As Integer
-        Dim files As Dictionary(Of String, Raw) = cacheList _
-            .ReadBinary _
+        Dim rawBuffer As Byte() = cacheList.ReadBinary
+
+        If rawBuffer.IsNullOrEmpty Then
+            Return 0
+        End If
+
+        Dim files As Dictionary(Of String, Raw) = rawBuffer _
             .DoCall(AddressOf BSONFormat.Load) _
             .CreateObject(GetType(Dictionary(Of String, Raw)))
         Dim i As Integer
