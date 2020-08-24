@@ -17,7 +17,7 @@
     End Sub
 
     Private Sub frmSplashScreen_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
+        Label3.Text = Label3.Text.Replace("%s", My.User.Name)
     End Sub
 
     Private Sub frmSplashScreen_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
