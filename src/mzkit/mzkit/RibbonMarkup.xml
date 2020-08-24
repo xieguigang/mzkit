@@ -253,6 +253,17 @@
 		 LabelTitle="Search PPM">
 		</Command>
 
+
+		<Command Name="cmdButtonSettings"
+			 Id="1051"
+			 LabelTitle="Settings"
+			 LabelDescription="Mzkit Tools Configuration"
+			TooltipTitle="Apply Settings">
+			<Command.LargeImages>
+				<Image>Res/DropA32.bmp</Image>
+			</Command.LargeImages>
+		</Command>
+
 	</Application.Commands>
 
 	<Application.Views>
@@ -348,7 +359,7 @@
 					<Group CommandName="cmdGroupAboutActions" SizeDefinition="ThreeButtons">
 						<Button CommandName="cmdButtonAbout" />
 						<Button CommandName="cmdButtonOpenRaw" />
-						<Button CommandName="cmdButtonSave" />
+						<Button CommandName="cmdButtonSettings" />
 					</Group>
 
 				</Tab>
