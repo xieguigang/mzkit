@@ -399,7 +399,7 @@ Public Class PageMzkitTools
                         row.Add(DataGridView1.Columns(i).HeaderText)
                     Next
 
-                    writeTsv.WriteLine(row.PopAll.JoinBy(vbTab))
+                    writeTsv.WriteLine(row.PopAll.JoinBy(","))
 
                     For j As Integer = 0 To DataGridView1.Rows.Count - 1
                         Dim rowObj = DataGridView1.Rows(j)
@@ -408,7 +408,7 @@ Public Class PageMzkitTools
                             row.Add(Microsoft.VisualBasic.Scripting.ToString(rowObj.Cells(i).Value))
                         Next
 
-                        writeTsv.WriteLine(row.PopAll.JoinBy(vbTab))
+                        writeTsv.WriteLine(row.PopAll.Select(Function(s) $"""{s}""").JoinBy(","))
                     Next
                 End Using
 
