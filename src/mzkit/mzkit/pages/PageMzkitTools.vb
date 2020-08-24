@@ -122,6 +122,8 @@ Public Class PageMzkitTools
         Call InitializeFileTree()
     End Sub
 
+    Dim currentMatrix As [Variant](Of ms2(), ChromatogramTick())
+
     Private Sub showSpectrum(scanId As String, raw As Raw)
         Dim scanData As LibraryMatrix
 
@@ -303,6 +305,15 @@ Public Class PageMzkitTools
         For Each hit As ScanEntry In ms2Hits
             ListBox1.Items.Add(hit)
         Next
+
+        If ms2Hits.Length = 0 Then
+            Label2.Text = "no hits!"
+            MessageBox.Show($"Sorry, no hits was found for m/z={mz} with tolerance {ppm}ppm...", "No hits found!", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Else
+            Label2.Text = $"{ms2Hits.Length} ms2 hits for m/z={mz} with tolerance {ppm}ppm"
+        End If
+
+        TabControl2.SelectedIndex = 1
     End Sub
 
     Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox1.SelectedIndexChanged
@@ -325,5 +336,9 @@ Public Class PageMzkitTools
                 End If
             End If
         End If
+    End Sub
+
+    Private Sub SaveMatrixToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveMatrixToolStripMenuItem.Click
+
     End Sub
 End Class
