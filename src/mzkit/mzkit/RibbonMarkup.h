@@ -112,5 +112,10 @@
 #define cmdGroupAboutActions_LabelTitle_RESID 60073
 #define cmdSpinner 1050 
 #define cmdSpinner_LabelTitle_RESID 60074
-#define cmdGroupExit_LabelTitle_RESID 60075
-#define InternalCmd2_LabelTitle_RESID 60076
+#define cmdButtonSettings 1051 
+#define cmdButtonSettings_LabelTitle_RESID 60075
+#define cmdButtonSettings_LabelDescription_RESID 60076
+#define cmdButtonSettings_TooltipTitle_RESID 60077
+#define cmdButtonSettings_LargeImages_RESID 60078
+#define cmdGroupExit_LabelTitle_RESID 60079
+#define InternalCmd2_LabelTitle_RESID 60080
