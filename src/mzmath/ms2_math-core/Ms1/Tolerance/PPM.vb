@@ -71,8 +71,13 @@ Namespace Ms1
         Public Overloads Shared Function ppm(measured#, actualValue#) As Double
             ' （测量值-实际分子量）/ 实际分子量
             ' |(实验数据 - 数据库结果)| / 实验数据 * 1000000
-            Dim ppmd# = stdNum.Abs(measured - actualValue) / actualValue
-            ppmd = ppmd * 1000000
+            Dim ppmd# = (stdNum.Abs(measured - actualValue) / actualValue) * 1000000
+
+            If ppmd < 0 Then
+                ' 计算溢出了
+                Return 10000000000
+            End If
+
             Return ppmd
         End Function
 
