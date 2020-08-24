@@ -13,8 +13,7 @@ using RibbonLib;
 using RibbonLib.Controls;
 using RibbonLib.Interop;
 
-namespace RibbonLib.Controls
-{
+
     partial class RibbonItems
     {
         private static class Cmd
@@ -33,6 +32,10 @@ namespace RibbonLib.Controls
             public const uint cmdTabCalculator = 1062;
             public const uint cmdGroupCalculator = 1063;
             public const uint cmdButtonCalculatorExport = 1064;
+            public const uint cmdTabGroupExactMassSearchTools = 1071;
+            public const uint cmdTabExactMassSearch = 1072;
+            public const uint cmdGroupExactMassSearch = 1073;
+            public const uint cmdButtonExactMassSearchExport = 1074;
             public const uint cmdHelpButton = 1016;
             public const uint cmdTabMain = 1011;
             public const uint cmdGroupFileActions = 1045;
@@ -79,6 +82,10 @@ namespace RibbonLib.Controls
         public RibbonTab TabCalculator { get; private set; }
         public RibbonGroup GroupCalculator { get; private set; }
         public RibbonButton ButtonCalculatorExport { get; private set; }
+        public RibbonTabGroup TabGroupExactMassSearchTools { get; private set; }
+        public RibbonTab TabExactMassSearch { get; private set; }
+        public RibbonGroup GroupExactMassSearch { get; private set; }
+        public RibbonButton ButtonExactMassSearchExport { get; private set; }
         public RibbonHelpButton HelpButton { get; private set; }
         public RibbonTab TabMain { get; private set; }
         public RibbonGroup GroupFileActions { get; private set; }
@@ -125,6 +132,10 @@ namespace RibbonLib.Controls
             TabCalculator = new RibbonTab(ribbon, Cmd.cmdTabCalculator);
             GroupCalculator = new RibbonGroup(ribbon, Cmd.cmdGroupCalculator);
             ButtonCalculatorExport = new RibbonButton(ribbon, Cmd.cmdButtonCalculatorExport);
+            TabGroupExactMassSearchTools = new RibbonTabGroup(ribbon, Cmd.cmdTabGroupExactMassSearchTools);
+            TabExactMassSearch = new RibbonTab(ribbon, Cmd.cmdTabExactMassSearch);
+            GroupExactMassSearch = new RibbonGroup(ribbon, Cmd.cmdGroupExactMassSearch);
+            ButtonExactMassSearchExport = new RibbonButton(ribbon, Cmd.cmdButtonExactMassSearchExport);
             HelpButton = new RibbonHelpButton(ribbon, Cmd.cmdHelpButton);
             TabMain = new RibbonTab(ribbon, Cmd.cmdTabMain);
             GroupFileActions = new RibbonGroup(ribbon, Cmd.cmdGroupFileActions);
@@ -153,4 +164,3 @@ namespace RibbonLib.Controls
         }
 
     }
-}

@@ -1,4 +1,5 @@
-﻿Imports System.Threading
+﻿Imports System.IO
+Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
@@ -383,7 +384,37 @@ Public Class PageMzkitTools
             Next
 
             TabControl1.SelectedTab = TabPage2
+
+            host.ribbonItems.TabGroupExactMassSearchTools.ContextAvailable = ContextAvailability.Active
         End If
+    End Sub
+
+    Public Sub ExportExactMassSearchTable()
+        Using file As New SaveFileDialog With {.Filter = "Excel Table(*.xls)|*.xls"}
+            If file.ShowDialog = DialogResult.OK Then
+                Using writeTsv As StreamWriter = file.FileName.OpenWriter
+                    Dim row As New List(Of String)
+
+                    For i As Integer = 0 To DataGridView1.Columns.Count - 1
+                        row.Add(DataGridView1.Columns(i).HeaderText)
+                    Next
+
+                    writeTsv.WriteLine(row.PopAll.JoinBy(vbTab))
+
+                    For j As Integer = 0 To DataGridView1.Rows.Count - 1
+                        Dim rowObj = DataGridView1.Rows(j)
+
+                        For i As Integer = 0 To rowObj.Cells.Count - 1
+                            row.Add(Microsoft.VisualBasic.Scripting.ToString(rowObj.Cells(i).Value))
+                        Next
+
+                        writeTsv.WriteLine(row.PopAll.JoinBy(vbTab))
+                    Next
+                End Using
+
+                MessageBox.Show($"Exact Mass Search Result table export to [{file.FileName}] successfully!", "Export Table", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+        End Using
     End Sub
 
     Private Sub searchInFileByMz(mz As Double)

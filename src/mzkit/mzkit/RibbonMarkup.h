@@ -136,5 +136,14 @@
 #define cmdButtonCalculatorExport 1064 
 #define cmdButtonCalculatorExport_LabelTitle_RESID 60090
 #define cmdButtonCalculatorExport_LargeImages_RESID 60091
-#define cmdGroupExit_LabelTitle_RESID 60092
-#define InternalCmd2_LabelTitle_RESID 60093
+#define cmdTabGroupExactMassSearchTools 1071 
+#define cmdTabGroupExactMassSearchTools_LabelTitle_RESID 60092
+#define cmdTabExactMassSearch 1072 
+#define cmdTabExactMassSearch_LabelTitle_RESID 60093
+#define cmdGroupExactMassSearch 1073 
+#define cmdGroupExactMassSearch_LabelTitle_RESID 60094
+#define cmdButtonExactMassSearchExport 1074 
+#define cmdButtonExactMassSearchExport_LabelTitle_RESID 60095
+#define cmdButtonExactMassSearchExport_LargeImages_RESID 60096
+#define cmdGroupExit_LabelTitle_RESID 60097
+#define InternalCmd2_LabelTitle_RESID 60098
