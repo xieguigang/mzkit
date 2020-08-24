@@ -28,6 +28,10 @@ Partial Class frmMain
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMain))
         Me.StatusStrip = New System.Windows.Forms.StatusStrip()
         Me.ToolStripStatusLabel = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.ToolStripDropDownButton1 = New System.Windows.Forms.ToolStripDropDownButton()
+        Me.FormulaSearchToolToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MzCalculatorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.RawFileViewerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.Ribbon1 = New RibbonLib.Ribbon()
         Me.Panel1 = New System.Windows.Forms.Panel()
@@ -36,7 +40,7 @@ Partial Class frmMain
         '
         'StatusStrip
         '
-        Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel})
+        Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel, Me.ToolStripDropDownButton1})
         Me.StatusStrip.Location = New System.Drawing.Point(0, 691)
         Me.StatusStrip.Name = "StatusStrip"
         Me.StatusStrip.Size = New System.Drawing.Size(1260, 22)
@@ -46,8 +50,39 @@ Partial Class frmMain
         'ToolStripStatusLabel
         '
         Me.ToolStripStatusLabel.Name = "ToolStripStatusLabel"
-        Me.ToolStripStatusLabel.Size = New System.Drawing.Size(43, 17)
+        Me.ToolStripStatusLabel.Size = New System.Drawing.Size(39, 17)
         Me.ToolStripStatusLabel.Text = "Status"
+        '
+        'ToolStripDropDownButton1
+        '
+        Me.ToolStripDropDownButton1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.ToolStripDropDownButton1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FormulaSearchToolToolStripMenuItem, Me.MzCalculatorToolStripMenuItem, Me.RawFileViewerToolStripMenuItem})
+        Me.ToolStripDropDownButton1.Image = CType(resources.GetObject("ToolStripDropDownButton1.Image"), System.Drawing.Image)
+        Me.ToolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripDropDownButton1.Name = "ToolStripDropDownButton1"
+        Me.ToolStripDropDownButton1.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.ToolStripDropDownButton1.Size = New System.Drawing.Size(110, 20)
+        Me.ToolStripDropDownButton1.Text = "Select Toolkits"
+        '
+        'FormulaSearchToolToolStripMenuItem
+        '
+        Me.FormulaSearchToolToolStripMenuItem.Image = CType(resources.GetObject("FormulaSearchToolToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.FormulaSearchToolToolStripMenuItem.Name = "FormulaSearchToolToolStripMenuItem"
+        Me.FormulaSearchToolToolStripMenuItem.Size = New System.Drawing.Size(181, 22)
+        Me.FormulaSearchToolToolStripMenuItem.Text = "Formula Search Tool"
+        '
+        'MzCalculatorToolStripMenuItem
+        '
+        Me.MzCalculatorToolStripMenuItem.Name = "MzCalculatorToolStripMenuItem"
+        Me.MzCalculatorToolStripMenuItem.Size = New System.Drawing.Size(181, 22)
+        Me.MzCalculatorToolStripMenuItem.Text = "m/z Calculator"
+        '
+        'RawFileViewerToolStripMenuItem
+        '
+        Me.RawFileViewerToolStripMenuItem.Image = CType(resources.GetObject("RawFileViewerToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.RawFileViewerToolStripMenuItem.Name = "RawFileViewerToolStripMenuItem"
+        Me.RawFileViewerToolStripMenuItem.Size = New System.Drawing.Size(181, 22)
+        Me.RawFileViewerToolStripMenuItem.Text = "Raw File Viewer"
         '
         'Ribbon1
         '
@@ -88,4 +123,8 @@ Partial Class frmMain
     Friend WithEvents StatusStrip As System.Windows.Forms.StatusStrip
     Friend WithEvents Ribbon1 As RibbonLib.Ribbon
     Friend WithEvents Panel1 As Panel
+    Friend WithEvents ToolStripDropDownButton1 As ToolStripDropDownButton
+    Friend WithEvents FormulaSearchToolToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents MzCalculatorToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents RawFileViewerToolStripMenuItem As ToolStripMenuItem
 End Class

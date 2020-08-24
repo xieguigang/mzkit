@@ -91,6 +91,18 @@ Public Class frmMain
         AddHandler ribbonItems.ButtonCalculatorExport.ExecuteEvent, Sub(sender, e) Call mzkitCalculator.ExportToolStripMenuItem_Click()
     End Sub
 
+    Private Sub RawFileViewerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RawFileViewerToolStripMenuItem.Click
+        Call ShowPage(mzkitTool)
+    End Sub
+
+    Private Sub MzCalculatorToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MzCalculatorToolStripMenuItem.Click
+        Call ShowPage(mzkitCalculator)
+    End Sub
+
+    Private Sub FormulaSearchToolToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FormulaSearchToolToolStripMenuItem.Click
+        Call ShowPage(mzkitSearch)
+    End Sub
+
     Private Sub NavBack_Click(ByVal sender As Object, ByVal e As ExecuteEventArgs)
         If nav.Count > 0 Then
             Call ShowPage(nav.Pop, pushStack:=False)
