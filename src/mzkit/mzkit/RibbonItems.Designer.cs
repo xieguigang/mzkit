@@ -28,6 +28,10 @@ using RibbonLib.Interop;
             public const uint cmdGroupLayout = 1037;
             public const uint cmdButtonLayout1 = 1043;
             public const uint cmdButtonLayout2 = 1044;
+            public const uint cmdTabGroupCalculatorTools = 1061;
+            public const uint cmdTabCalculator = 1062;
+            public const uint cmdGroupCalculator = 1063;
+            public const uint cmdButtonCalculatorExport = 1064;
             public const uint cmdHelpButton = 1016;
             public const uint cmdTabMain = 1011;
             public const uint cmdGroupFileActions = 1045;
@@ -70,6 +74,10 @@ using RibbonLib.Interop;
         public RibbonGroup GroupLayout { get; private set; }
         public RibbonButton ButtonLayout1 { get; private set; }
         public RibbonButton ButtonLayout2 { get; private set; }
+        public RibbonTabGroup TabGroupCalculatorTools { get; private set; }
+        public RibbonTab TabCalculator { get; private set; }
+        public RibbonGroup GroupCalculator { get; private set; }
+        public RibbonButton ButtonCalculatorExport { get; private set; }
         public RibbonHelpButton HelpButton { get; private set; }
         public RibbonTab TabMain { get; private set; }
         public RibbonGroup GroupFileActions { get; private set; }
@@ -112,6 +120,10 @@ using RibbonLib.Interop;
             GroupLayout = new RibbonGroup(ribbon, Cmd.cmdGroupLayout);
             ButtonLayout1 = new RibbonButton(ribbon, Cmd.cmdButtonLayout1);
             ButtonLayout2 = new RibbonButton(ribbon, Cmd.cmdButtonLayout2);
+            TabGroupCalculatorTools = new RibbonTabGroup(ribbon, Cmd.cmdTabGroupCalculatorTools);
+            TabCalculator = new RibbonTab(ribbon, Cmd.cmdTabCalculator);
+            GroupCalculator = new RibbonGroup(ribbon, Cmd.cmdGroupCalculator);
+            ButtonCalculatorExport = new RibbonButton(ribbon, Cmd.cmdButtonCalculatorExport);
             HelpButton = new RibbonHelpButton(ribbon, Cmd.cmdHelpButton);
             TabMain = new RibbonTab(ribbon, Cmd.cmdTabMain);
             GroupFileActions = new RibbonGroup(ribbon, Cmd.cmdGroupFileActions);

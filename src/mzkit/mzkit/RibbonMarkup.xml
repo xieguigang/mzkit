@@ -264,27 +264,51 @@
 			</Command.LargeImages>
 		</Command>
 
-	<Command Name="cmdButtonMzSearch"
-			 Id="1052"
-			 LabelTitle="M/z Search"
-			 LabelDescription="Search Formula for given m/z value"
-			TooltipTitle="Search Formula">
+		<Command Name="cmdButtonMzSearch"
+				 Id="1052"
+				 LabelTitle="M/z Search"
+				 LabelDescription="Search Formula for given m/z value"
+				TooltipTitle="Search Formula">
 			<Command.LargeImages>
 				<Image>Res/DropA32.bmp</Image>
 			</Command.LargeImages>
 		</Command>
 
-<Command Name="cmdButtonPageNavBack"
-			 Id="1053"
-			 LabelTitle="M/z Search"
-			 LabelDescription="Search Formula for given m/z value"
-			TooltipTitle="Search Formula">
+		<Command Name="cmdButtonPageNavBack"
+					 Id="1053"
+					 LabelTitle="M/z Search"
+					 LabelDescription="Search Formula for given m/z value"
+					TooltipTitle="Search Formula">
 			<Command.LargeImages>
 				<Image>Res/DropA32.bmp</Image>
 			</Command.LargeImages>
 		</Command>
 
 
+		<Command Name="cmdTabGroupCalculatorTools"
+			Id="1061"
+			LabelTitle="Calculator Tools">
+		</Command>
+
+		<Command Name="cmdTabCalculator"
+				 Id="1062"
+				 LabelTitle="Design">
+		</Command>
+
+		<Command Name="cmdGroupCalculator"
+				 Id="1063"
+				 LabelTitle="EEE">
+		</Command>
+
+
+		<Command Name="cmdButtonCalculatorExport"
+					Id="1064"
+					LabelTitle="Export Result Table">
+			<Command.LargeImages>
+				<Image>Res/DropA32.bmp</Image>
+			</Command.LargeImages>
+		</Command>
+		
 	</Application.Commands>
 
 	<Application.Views>
@@ -306,6 +330,19 @@
 						</Group>
 					</Tab>
 				</TabGroup>
+
+
+				<TabGroup CommandName='cmdTabGroupCalculatorTools'>
+					<Tab CommandName='cmdTabCalculator'>
+						<Group CommandName='cmdGroupCalculator' SizeDefinition='TwoButtons'>
+							<Button CommandName='cmdButtonCalculatorExport' />
+							<Button CommandName='cmdButtonLayout2' />
+						</Group>
+					</Tab>
+				</TabGroup>
+
+
+				
 			</Ribbon.ContextualTabs>
 
 			<Ribbon.HelpButton>
@@ -364,7 +401,7 @@
 
 
 				<!-- About Tab -->
-				
+
 				<Tab CommandName="cmdTabAbout">
 					<!-- scary part -->
 					<Tab.ScalingPolicy>

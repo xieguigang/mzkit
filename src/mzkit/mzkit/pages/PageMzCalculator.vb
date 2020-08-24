@@ -1,6 +1,7 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Linq
+Imports RibbonLib.Interop
 
 Public Class PageMzCalculator
 
@@ -24,7 +25,7 @@ Public Class PageMzCalculator
         Next
     End Sub
 
-    Private Sub ExportToolStripMenuItem_Click(sender As Object, e As EventArgs)
+    Public Sub ExportToolStripMenuItem_Click()
         Using file As New SaveFileDialog With {.Filter = "Excel Table|*.csv"}
             If file.ShowDialog = DialogResult.OK Then
                 Dim currentTab As DataGridView = (From ctrl As Control In TabControl1.SelectedTab.Controls Where TypeOf ctrl Is DataGridView).First
@@ -52,5 +53,17 @@ Public Class PageMzCalculator
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         Process.Start($"https://query.biodeep.cn/search?expression=[mass]~0.3&category=metabolite&mass={TextBox1.Text}")
+    End Sub
+
+    Private Sub PageMzCalculator_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
+        Dim host As frmMain = ParentForm
+
+        If Me.Visible Then
+            host.ribbonItems.TabGroupCalculatorTools.ContextAvailable = ContextAvailability.Active
+            host.ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.NotAvailable
+        Else
+            host.ribbonItems.TabGroupCalculatorTools.ContextAvailable = ContextAvailability.NotAvailable
+            host.ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
+        End If
     End Sub
 End Class

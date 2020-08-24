@@ -14,7 +14,7 @@ Imports RibbonLib.Controls
 Imports RibbonLib.Interop
 
 Partial Class RibbonItems
-    Private _Ribbon As Ribbon, _TabGroupTableTools As RibbonTabGroup, _TabDesign As RibbonTab, _GroupDesign As RibbonGroup, _Spinner As RibbonSpinner, _ButtonDesign2 As RibbonButton, _ButtonDesign3 As RibbonButton, _TabLayout As RibbonTab, _GroupLayout As RibbonGroup, _ButtonLayout1 As RibbonButton, _ButtonLayout2 As RibbonButton, _HelpButton As RibbonHelpButton, _TabMain As RibbonTab, _GroupFileActions As RibbonGroup, _ButtonNew As RibbonButton, _ButtonOpenRaw As RibbonButton, _ButtonSave As RibbonButton, _ButtonExit As RibbonButton, _TabTools As RibbonTab, _GroupToolsActions As RibbonGroup, _ButtonMzCalculator As RibbonButton, _ButtonMzSearch As RibbonButton, _TabAbout As RibbonTab, _GroupAboutActions As RibbonGroup, _ButtonAbout As RibbonButton, _ButtonSettings As RibbonButton, _RecentItems As RibbonRecentItems, _MenuGroupFile As RibbonMenuGroup, _ButtonOpen As RibbonDropDownButton, _ButtonDropA As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton, _MenuGroupExit As RibbonMenuGroup, _QAT As RibbonQuickAccessToolbar, _ButtonPageNavBack As RibbonButton
+    Private _Ribbon As Ribbon, _TabGroupTableTools As RibbonTabGroup, _TabDesign As RibbonTab, _GroupDesign As RibbonGroup, _Spinner As RibbonSpinner, _ButtonDesign2 As RibbonButton, _ButtonDesign3 As RibbonButton, _TabLayout As RibbonTab, _GroupLayout As RibbonGroup, _ButtonLayout1 As RibbonButton, _ButtonLayout2 As RibbonButton, _TabGroupCalculatorTools As RibbonTabGroup, _TabCalculator As RibbonTab, _GroupCalculator As RibbonGroup, _ButtonCalculatorExport As RibbonButton, _HelpButton As RibbonHelpButton, _TabMain As RibbonTab, _GroupFileActions As RibbonGroup, _ButtonNew As RibbonButton, _ButtonOpenRaw As RibbonButton, _ButtonSave As RibbonButton, _ButtonExit As RibbonButton, _TabTools As RibbonTab, _GroupToolsActions As RibbonGroup, _ButtonMzCalculator As RibbonButton, _ButtonMzSearch As RibbonButton, _TabAbout As RibbonTab, _GroupAboutActions As RibbonGroup, _ButtonAbout As RibbonButton, _ButtonSettings As RibbonButton, _RecentItems As RibbonRecentItems, _MenuGroupFile As RibbonMenuGroup, _ButtonOpen As RibbonDropDownButton, _ButtonDropA As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton, _MenuGroupExit As RibbonMenuGroup, _QAT As RibbonQuickAccessToolbar, _ButtonPageNavBack As RibbonButton
 
     Private NotInheritable Class Cmd
         Public Const cmdTabGroupTableTools As UInteger = 1031
@@ -27,6 +27,10 @@ Partial Class RibbonItems
         Public Const cmdGroupLayout As UInteger = 1037
         Public Const cmdButtonLayout1 As UInteger = 1043
         Public Const cmdButtonLayout2 As UInteger = 1044
+        Public Const cmdTabGroupCalculatorTools As UInteger = 1061
+        Public Const cmdTabCalculator As UInteger = 1062
+        Public Const cmdGroupCalculator As UInteger = 1063
+        Public Const cmdButtonCalculatorExport As UInteger = 1064
         Public Const cmdHelpButton As UInteger = 1016
         Public Const cmdTabMain As UInteger = 1011
         Public Const cmdGroupFileActions As UInteger = 1045
@@ -154,6 +158,42 @@ Partial Class RibbonItems
         End Get
         Private Set(ByVal value As RibbonButton)
             _ButtonLayout2 = value
+        End Set
+    End Property
+
+    Public Property TabGroupCalculatorTools As RibbonTabGroup
+        Get
+            Return _TabGroupCalculatorTools
+        End Get
+        Private Set(ByVal value As RibbonTabGroup)
+            _TabGroupCalculatorTools = value
+        End Set
+    End Property
+
+    Public Property TabCalculator As RibbonTab
+        Get
+            Return _TabCalculator
+        End Get
+        Private Set(ByVal value As RibbonTab)
+            _TabCalculator = value
+        End Set
+    End Property
+
+    Public Property GroupCalculator As RibbonGroup
+        Get
+            Return _GroupCalculator
+        End Get
+        Private Set(ByVal value As RibbonGroup)
+            _GroupCalculator = value
+        End Set
+    End Property
+
+    Public Property ButtonCalculatorExport As RibbonButton
+        Get
+            Return _ButtonCalculatorExport
+        End Get
+        Private Set(ByVal value As RibbonButton)
+            _ButtonCalculatorExport = value
         End Set
     End Property
 
@@ -387,6 +427,10 @@ Partial Class RibbonItems
         GroupLayout = New RibbonGroup(ribbon, Cmd.cmdGroupLayout)
         ButtonLayout1 = New RibbonButton(ribbon, Cmd.cmdButtonLayout1)
         ButtonLayout2 = New RibbonButton(ribbon, Cmd.cmdButtonLayout2)
+        TabGroupCalculatorTools = New RibbonTabGroup(ribbon, Cmd.cmdTabGroupCalculatorTools)
+        TabCalculator = New RibbonTab(ribbon, Cmd.cmdTabCalculator)
+        GroupCalculator = New RibbonGroup(ribbon, Cmd.cmdGroupCalculator)
+        ButtonCalculatorExport = New RibbonButton(ribbon, Cmd.cmdButtonCalculatorExport)
         HelpButton = New RibbonHelpButton(ribbon, Cmd.cmdHelpButton)
         TabMain = New RibbonTab(ribbon, Cmd.cmdTabMain)
         GroupFileActions = New RibbonGroup(ribbon, Cmd.cmdGroupFileActions)

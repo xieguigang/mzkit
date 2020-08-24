@@ -87,6 +87,8 @@ Public Class frmMain
         AddHandler ribbonItems.ButtonMzCalculator.ExecuteEvent, Sub(sender, e) Call ShowPage(mzkitCalculator)
         AddHandler ribbonItems.ButtonSettings.ExecuteEvent, Sub(sender, e) Call ShowPage(mzkitSettings)
         AddHandler ribbonItems.ButtonMzSearch.ExecuteEvent, Sub(sender, e) Call ShowPage(mzkitSearch)
+
+        AddHandler ribbonItems.ButtonCalculatorExport.ExecuteEvent, Sub(sender, e) Call mzkitCalculator.ExportToolStripMenuItem_Click()
     End Sub
 
     Private Sub NavBack_Click(ByVal sender As Object, ByVal e As ExecuteEventArgs)

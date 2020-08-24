@@ -127,5 +127,14 @@
 #define cmdButtonPageNavBack_LabelDescription_RESID 60084
 #define cmdButtonPageNavBack_TooltipTitle_RESID 60085
 #define cmdButtonPageNavBack_LargeImages_RESID 60086
-#define cmdGroupExit_LabelTitle_RESID 60087
-#define InternalCmd2_LabelTitle_RESID 60088
+#define cmdTabGroupCalculatorTools 1061 
+#define cmdTabGroupCalculatorTools_LabelTitle_RESID 60087
+#define cmdTabCalculator 1062 
+#define cmdTabCalculator_LabelTitle_RESID 60088
+#define cmdGroupCalculator 1063 
+#define cmdGroupCalculator_LabelTitle_RESID 60089
+#define cmdButtonCalculatorExport 1064 
+#define cmdButtonCalculatorExport_LabelTitle_RESID 60090
+#define cmdButtonCalculatorExport_LargeImages_RESID 60091
+#define cmdGroupExit_LabelTitle_RESID 60092
+#define InternalCmd2_LabelTitle_RESID 60093
