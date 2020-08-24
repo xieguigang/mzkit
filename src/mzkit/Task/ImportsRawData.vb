@@ -47,6 +47,10 @@ Public Class ImportsRawData
             Dim nscans As New List(Of ScanEntry)
 
             For Each scan As mzXML.scan In mzXML.XML.LoadScans(source)
+                If scan.peaks.compressedLen = 0 OrElse DirectCast(scan.peaks, IBase64Container).BinaryArray.StringEmpty Then
+                    Continue For
+                End If
+
                 attrs = {
                     New attribute With {.name = NameOf(scan.msLevel), .type = CDFDataTypes.INT, .value = scan.msLevel},
                     New attribute With {.name = NameOf(scan.collisionEnergy), .type = CDFDataTypes.CHAR, .value = scan.collisionEnergy Or "n/a".AsDefault},
