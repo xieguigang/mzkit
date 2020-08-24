@@ -87,6 +87,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SpectrumProperty.vb" />
     <Compile Include="Raw.vb" />
     <Compile Include="ImportsRawData.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

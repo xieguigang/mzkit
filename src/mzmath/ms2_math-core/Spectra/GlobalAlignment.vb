@@ -151,6 +151,11 @@ Namespace Spectra
         Public Function JaccardIndex(x As ms2(), y As ms2(), tolerance As Tolerance, Optional topSet As Integer = 5) As Double
             Dim mzx As Double() = x.OrderByDescending(Function(a) a.intensity).Take(topSet).Select(Function(a) a.mz).ToArray
             Dim mzy As Double() = y.OrderByDescending(Function(a) a.intensity).Take(topSet).Select(Function(a) a.mz).ToArray
+
+            Return JaccardIndex(mzx, mzy, tolerance)
+        End Function
+
+        Public Function JaccardIndex(mzx As Double(), mzy As Double(), tolerance As Tolerance) As Double
             Dim union As Double() = mzx _
                 .JoinIterates(mzy) _
                 .GroupBy(Function(mz) mz, tolerance.Equals) _

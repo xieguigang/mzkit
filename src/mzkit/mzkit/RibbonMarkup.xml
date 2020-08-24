@@ -1,0 +1,417 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<Application xmlns='http://schemas.microsoft.com/windows/2009/Ribbon'>
+	<Application.Commands>
+		<Command Name="cmdButtonNew"
+				 Id="1001"
+				 LabelTitle="&amp;New"
+				 LabelDescription="New Description"
+				 TooltipTitle="New (Ctrl+N)"
+				 TooltipDescription="Create a new image.">
+			<Command.LargeImages>
+				<Image>Res/New32.bmp</Image>
+			</Command.LargeImages>
+			<Command.SmallImages>
+				<Image>Res/New16.bmp</Image>
+			</Command.SmallImages>
+		</Command>
+
+		<Command Name="cmdButtonOpenRaw"
+				 Id="1002"
+				 LabelTitle="Open"
+				 LabelDescription="Open Description"
+				 TooltipTitle="Open (Ctrl+O)"
+				 TooltipDescription="Open an existing image.">
+			<Command.LargeImages>
+				<Image>Res/Open32.bmp</Image>
+			</Command.LargeImages>
+			<Command.SmallImages>
+				<Image>Res/Open16.bmp</Image>
+			</Command.SmallImages>
+		</Command>
+
+		<Command Name="cmdButtonSave"
+				 Id="1003"
+				 LabelTitle="Save"
+				 LabelDescription="Save Description"
+				 TooltipTitle="Save (Ctrl+S)"
+				 TooltipDescription="Save the current image.">
+			<Command.LargeImages>
+				<Image>Res/Save32.bmp</Image>
+			</Command.LargeImages>
+			<Command.SmallImages>
+				<Image>Res/Save16.bmp</Image>
+			</Command.SmallImages>
+		</Command>
+
+		<Command Name="cmdButtonExit"
+				 Id="1004"
+				 LabelTitle="Exit"
+				 LabelDescription="Exit Description"
+				 TooltipTitle="Exit (Ctrl+X)"
+				 TooltipDescription="Exit application.">
+			<Command.LargeImages>
+				<Image>Res/Exit32.bmp</Image>
+			</Command.LargeImages>
+			<Command.SmallImages>
+				<Image>Res/Exit16.bmp</Image>
+			</Command.SmallImages>
+		</Command>
+
+		<Command Name="cmdMenuGroupFile"
+				 Id="1005"
+				 LabelTitle="File Menu">
+		</Command>
+
+		<Command Name="cmdMenuGroupExit"
+				 Id="1006"
+				 LabelTitle="Exit Menu">
+		</Command>
+
+		<Command Name="cmdButtonOpen"
+				 Id="1007"
+				 LabelTitle="Open"
+				 LabelDescription="Open Description"
+				 TooltipTitle="Open (Ctrl+O)"
+				 TooltipDescription="Open an existing image.">
+			<Command.LargeImages>
+				<Image>Res/Open32.bmp</Image>
+			</Command.LargeImages>
+			<Command.SmallImages>
+				<Image>Res/Open16.bmp</Image>
+			</Command.SmallImages>
+		</Command>
+
+		<Command Name="cmdButtonDropA"
+			 Id="1008"
+			 LabelTitle="Drop A"
+			 LabelDescription="Sub button A"
+			TooltipTitle="Drop A">
+			<Command.LargeImages>
+				<Image>Res/DropA32.bmp</Image>
+			</Command.LargeImages>
+		</Command>
+
+		<Command Name="cmdButtonDropB"
+			 Id="1009"
+			 LabelTitle="Drop B"
+			 LabelDescription="Sub button B"
+			TooltipTitle="Drop B">
+			<Command.LargeImages>
+				<Image>Res/DropB32.bmp</Image>
+			</Command.LargeImages>
+		</Command>
+
+		<Command Name="cmdButtonDropC"
+			 Id="1010"
+			 LabelTitle="Drop C"
+			 LabelDescription="Sub button C"
+		   TooltipTitle="Drop C">
+			<Command.LargeImages>
+				<Image>Res/DropC32.bmp</Image>
+			</Command.LargeImages>
+		</Command>
+
+		<Command Name="cmdTabMain"
+				 Id="1011"
+				 LabelTitle="Main">
+		</Command>
+
+		<!-- Tools Menu -->
+
+		<Command Name="cmdTabTools"
+				 Id="1012"
+				 LabelTitle="Tools">
+		</Command>
+
+		<Command Name="cmdButtonMzCalculator"
+				 Id="1013"
+				 LabelTitle="M/z Calculator">
+			<Command.LargeImages>
+				<Image>Res/Open32.bmp</Image>
+			</Command.LargeImages>
+			<Command.SmallImages>
+				<Image>Res/Open16.bmp</Image>
+			</Command.SmallImages>
+		</Command>
+
+
+		<Command Name="cmdQAT"
+					Id="1015">
+		</Command>
+		<Command Name="cmdCustomizeQAT"
+				 Id="1018">
+		</Command>
+
+		<Command Name="cmdRecentItems" Id="1014" LabelTitle="Recent Items" />
+
+		<Command Name="cmdHelpButton"
+				 Id="1016">
+		</Command>
+
+
+		<Command Name="cmdTabAbout"
+					 Id="1020"
+					 LabelTitle="About">
+		</Command>
+
+
+		<Command Name="cmdButtonAbout"
+			 Id="1021"
+			 LabelTitle="Drop B"
+			 LabelDescription="Sub button B"
+			TooltipTitle="Drop B">
+			<Command.LargeImages>
+				<Image>Res/DropB32.bmp</Image>
+			</Command.LargeImages>
+		</Command>
+
+
+		<Command Name="cmdTabGroupTableTools"
+			Id="1031"
+			LabelTitle="Table Tools">
+		</Command>
+
+		<Command Name="cmdTabDesign"
+				 Id="1032"
+				 LabelTitle="Design">
+		</Command>
+
+		<Command Name="cmdTabLayout"
+				 Id="1035"
+				 LabelTitle="Layout">
+		</Command>
+
+		<Command Name="cmdGroupDesign"
+				 Id="1036"
+				 LabelTitle="EEE">
+		</Command>
+
+		<Command Name="cmdGroupLayout"
+				 Id="1037"
+				 LabelTitle="ABC">
+		</Command>
+
+
+		<Command Name="cmdButtonDesign1"
+					Id="1040"
+					LabelTitle="Design 1">
+			<Command.LargeImages>
+				<Image>Res/DropA32.bmp</Image>
+			</Command.LargeImages>
+		</Command>
+
+		<Command Name="cmdButtonDesign2"
+				 Id="1041"
+				 LabelTitle="Design 2">
+			<Command.LargeImages>
+				<Image>Res/DropB32.bmp</Image>
+			</Command.LargeImages>
+		</Command>
+
+		<Command Name="cmdButtonDesign3"
+				 Id="1042"
+				 LabelTitle="Design 3">
+			<Command.LargeImages>
+				<Image>Res/DropC32.bmp</Image>
+			</Command.LargeImages>
+		</Command>
+
+		<Command Name="cmdButtonLayout1"
+				 Id="1043"
+				 LabelTitle="Layout 1">
+			<Command.LargeImages>
+				<Image>Res/DropA32.bmp</Image>
+			</Command.LargeImages>
+		</Command>
+
+		<Command Name="cmdButtonLayout2"
+				 Id="1044"
+				 LabelTitle="Layout 2">
+			<Command.LargeImages>
+				<Image>Res/DropB32.bmp</Image>
+			</Command.LargeImages>
+		</Command>
+
+		<Command Name="cmdGroupFileActions"
+				 Id="1045"
+				 LabelTitle="Process Raw File">
+		</Command>
+
+		<Command Name="cmdGroupToolsActions"
+				 Id="1046"
+				 LabelTitle="Mzkit Toolkit">
+		</Command>
+
+		<Command Name="cmdGroupAboutActions"
+				 Id="1047"
+				 LabelTitle="About mzkit">
+		</Command>
+
+
+		<Command Name="cmdSpinner"
+		 Id="1050"
+		 LabelTitle="Search PPM">
+		</Command>
+
+	</Application.Commands>
+
+	<Application.Views>
+		<Ribbon>
+
+			<Ribbon.ContextualTabs>
+				<TabGroup CommandName='cmdTabGroupTableTools'>
+					<Tab CommandName='cmdTabDesign'>
+						<Group CommandName='cmdGroupDesign'>
+							<Spinner CommandName="cmdSpinner" />
+							<Button CommandName='cmdButtonDesign2' />
+							<Button CommandName='cmdButtonDesign3' />
+						</Group>
+					</Tab>
+					<Tab CommandName='cmdTabLayout'>
+						<Group CommandName='cmdGroupLayout' SizeDefinition='TwoButtons'>
+							<Button CommandName='cmdButtonLayout1' />
+							<Button CommandName='cmdButtonLayout2' />
+						</Group>
+					</Tab>
+				</TabGroup>
+			</Ribbon.ContextualTabs>
+
+			<Ribbon.HelpButton>
+				<HelpButton CommandName="cmdHelpButton" />
+			</Ribbon.HelpButton>
+
+
+			<!-- Main Menu -->
+
+			<Ribbon.Tabs>
+				<Tab CommandName="cmdTabMain">
+					<!-- scary part -->
+					<Tab.ScalingPolicy>
+						<ScalingPolicy>
+							<ScalingPolicy.IdealSizes>
+								<Scale Group="cmdGroupFileActions" Size="Large" />
+								<Scale Group="cmdGroupExit" Size="Large" />
+							</ScalingPolicy.IdealSizes>
+							<Scale Group="cmdGroupFileActions" Size="Medium" />
+						</ScalingPolicy>
+					</Tab.ScalingPolicy>
+
+					<!-- useful part -->
+					<Group CommandName="cmdGroupFileActions" SizeDefinition="ThreeButtons">
+						<Button CommandName="cmdButtonNew" />
+						<Button CommandName="cmdButtonOpenRaw" />
+						<Button CommandName="cmdButtonSave" />
+					</Group>
+					<Group CommandName="cmdGroupExit" SizeDefinition="OneButton">
+						<Button CommandName="cmdButtonExit" />
+					</Group>
+				</Tab>
+
+
+				<!-- Tools Menu -->
+
+				<Tab CommandName="cmdTabTools">
+					<!-- scary part -->
+					<Tab.ScalingPolicy>
+						<ScalingPolicy>
+							<ScalingPolicy.IdealSizes>
+								<Scale Group="cmdGroupToolsActions" Size="Large" />
+							</ScalingPolicy.IdealSizes>
+							<Scale Group="cmdGroupToolsActions" Size="Medium" />
+						</ScalingPolicy>
+					</Tab.ScalingPolicy>
+
+					<!-- useful part -->
+					<Group CommandName="cmdGroupToolsActions" SizeDefinition="ThreeButtons">
+						<Button CommandName="cmdButtonMzCalculator" />
+						<Button CommandName="cmdButtonOpenRaw" />
+						<Button CommandName="cmdButtonSave" />
+					</Group>
+
+				</Tab>
+
+
+				<!-- About Tab -->
+				
+				<Tab CommandName="cmdTabAbout">
+					<!-- scary part -->
+					<Tab.ScalingPolicy>
+						<ScalingPolicy>
+							<ScalingPolicy.IdealSizes>
+								<Scale Group="cmdGroupAboutActions" Size="Large" />
+							</ScalingPolicy.IdealSizes>
+							<Scale Group="cmdGroupAboutActions" Size="Medium" />
+						</ScalingPolicy>
+					</Tab.ScalingPolicy>
+
+					<!-- useful part -->
+					<Group CommandName="cmdGroupAboutActions" SizeDefinition="ThreeButtons">
+						<Button CommandName="cmdButtonAbout" />
+						<Button CommandName="cmdButtonOpenRaw" />
+						<Button CommandName="cmdButtonSave" />
+					</Group>
+
+				</Tab>
+
+			</Ribbon.Tabs>
+
+
+			<Ribbon.ApplicationMenu>
+				<ApplicationMenu>
+
+					<ApplicationMenu.RecentItems>
+						<RecentItems CommandName="cmdRecentItems" EnablePinning="true" MaxCount="13" />
+					</ApplicationMenu.RecentItems>
+
+					<MenuGroup CommandName='cmdMenuGroupFile'>
+						<Button CommandName='cmdButtonNew' />
+
+						<DropDownButton CommandName='cmdButtonOpen'>
+							<MenuGroup Class='MajorItems'>
+								<Button CommandName='cmdButtonDropA' />
+								<Button CommandName='cmdButtonDropB' />
+								<Button CommandName='cmdButtonDropC' />
+							</MenuGroup>
+						</DropDownButton>
+
+						<Button CommandName='cmdButtonSave' />
+					</MenuGroup>
+					<!--
+					<MenuGroup>
+
+						
+
+						<SplitButton>
+							<SplitButton.ButtonItem>
+								<Button CommandName='cmdButtonDropB' />
+							</SplitButton.ButtonItem>
+							<SplitButton.MenuGroups>
+								<MenuGroup Class='MajorItems'>
+									<Button CommandName='cmdButtonDropA' />
+									<Button CommandName='cmdButtonDropB' />
+									<Button CommandName='cmdButtonDropC' />
+								</MenuGroup>
+							</SplitButton.MenuGroups>
+						</SplitButton>
+
+					</MenuGroup>-->
+					<MenuGroup CommandName='cmdMenuGroupExit'>
+						<Button CommandName='cmdButtonExit' />
+					</MenuGroup>
+
+				</ApplicationMenu>
+			</Ribbon.ApplicationMenu>
+
+			<Ribbon.QuickAccessToolbar>
+				<QuickAccessToolbar CommandName='cmdQAT' CustomizeCommandName='cmdCustomizeQAT'>
+					<QuickAccessToolbar.ApplicationDefaults>
+						<Button CommandName="cmdButtonNew" ApplicationDefaults.IsChecked="true" />
+						<Button CommandName="cmdButtonOpenRaw" ApplicationDefaults.IsChecked="false" />
+						<Button CommandName="cmdButtonSave" ApplicationDefaults.IsChecked="false" />
+					</QuickAccessToolbar.ApplicationDefaults>
+				</QuickAccessToolbar>
+			</Ribbon.QuickAccessToolbar>
+
+		</Ribbon>
+	</Application.Views>
+</Application>

@@ -42,45 +42,81 @@
 
 #End Region
 
-Imports System.Drawing
-Imports System.Drawing.Drawing2D
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.ComponentModel.DataStructures
-Imports Microsoft.VisualBasic.Data.ChartPlots
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports REnv = SMRUCC.Rsharp.Runtime
 
-<Package("mzkit.visual")>
+<Package("visual")>
 Module Visual
+
+    Sub New()
+        Call Internal.generic.add("plot", GetType(GeneralSignal), AddressOf plotSignal)
+        Call Internal.generic.add("plot", GetType(GeneralSignal()), AddressOf plotSignal2)
+        Call Internal.generic.add("plot", GetType(MGF.Ions), AddressOf plotMS)
+    End Sub
+
+    Private Function plotSignal(x As GeneralSignal, args As list, env As Environment) As Object
+        Return plotSignal2({x}, args, env)
+    End Function
+
+    Private Function plotSignal2(x As GeneralSignal(), args As list, env As Environment) As Object
+        Return PlotUVSignals(x, env:=env)
+    End Function
+
+    Private Function plotMS(spectrum As Object, args As list, env As Environment) As Object
+        Return SpectrumPlot(spectrum)
+    End Function
 
     ''' <summary>
     ''' Plot of the mass spectrum
     ''' </summary>
-    ''' <param name="spectrum"></param>
+    ''' <param name="spectrum">
+    ''' the ms spectrum object, this parameter can be a collection 
+    ''' of ms2 object model, or else is a library matrix or peak 
+    ''' ms2 model object, or else is a mgf ion object, or else a 
+    ''' dataframe with columns ``mz`` and ``into``.
+    ''' </param>
     ''' <param name="alignment"></param>
-    ''' <param name="title$"></param>
+    ''' <param name="title">the main title that display on the chart plot</param>
     ''' <returns></returns>
     <ExportAPI("mass_spectrum.plot")>
-    Public Function SpectrumPlot(spectrum As Object, Optional alignment As Object = Nothing, Optional title$ = "Mass Spectrum Plot") As GraphicsData
+    <RApiReturn(GetType(GraphicsData))>
+    Public Function SpectrumPlot(spectrum As Object,
+                                 Optional alignment As Object = Nothing,
+                                 Optional title$ = "Mass Spectrum Plot",
+                                 Optional env As Environment = Nothing) As Object
+
+        Dim ms = getSpectrum(spectrum, env)
+
+        If ms Like GetType(Message) Then
+            Return ms.TryCast(Of Message)
+        End If
+
         If alignment Is Nothing Then
-            Return MassSpectra.MirrorPlot(getSpectrum(spectrum), plotTitle:=title)
+            Return MassSpectra.MirrorPlot(ms, plotTitle:=title)
         Else
-            Return MassSpectra.AlignMirrorPlot(getSpectrum(spectrum), getSpectrum(alignment), title:=title)
+            Dim ref = getSpectrum(alignment, env)
+
+            Return MassSpectra.AlignMirrorPlot(
+                query:=ms,
+                ref:=ref,
+                title:=title
+            )
         End If
     End Function
 
-    Private Function getSpectrum(data As Object) As LibraryMatrix
+    Private Function getSpectrum(data As Object, env As Environment) As [Variant](Of Message, LibraryMatrix)
         Dim type As Type = data.GetType
 
         Select Case type
@@ -106,9 +142,12 @@ Module Visual
 
                 Return New LibraryMatrix With {.ms2 = ms2, .name = "Mass Spectrum"}
             Case GetType(PeakMs2)
-                Return DirectCast(data, PeakMs2).mzInto
+                Return New LibraryMatrix With {
+                    .ms2 = DirectCast(data, PeakMs2).mzInto,
+                    .name = DirectCast(data, PeakMs2).lib_guid
+                }
             Case Else
-                Throw New NotImplementedException(type.FullName)
+                Return Internal.debug.stop(New NotImplementedException(type.FullName), env)
         End Select
     End Function
 
