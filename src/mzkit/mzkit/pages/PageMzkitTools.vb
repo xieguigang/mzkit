@@ -313,23 +313,68 @@ Public Class PageMzkitTools
             DataGridView1.Rows.Clear()
             DataGridView1.Columns.Clear()
 
-            DataGridView1.Columns.Add(New DataGridViewColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .ValueType = GetType(String), .HeaderText = "scan Id"})
+            DataGridView1.Columns.Add(New DataGridViewTextBoxColumn() With {
+                  .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
+                  .ValueType = GetType(String),
+                  .HeaderText = "scan Id"})
 
+            DataGridView1.Columns.Add(New DataGridViewTextBoxColumn() With {
+                  .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
+                  .ValueType = GetType(String),
+                  .HeaderText = "m/z"})
+
+            DataGridView1.Columns.Add(New DataGridViewTextBoxColumn() With {
+                  .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
+                  .ValueType = GetType(String),
+                  .HeaderText = "rt"})
+
+            DataGridView1.Columns.Add(New DataGridViewTextBoxColumn() With {
+                  .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
+                  .ValueType = GetType(String),
+                  .HeaderText = "intensity"})
+
+            DataGridView1.Columns.Add(New DataGridViewTextBoxColumn() With {
+                  .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
+                  .ValueType = GetType(String),
+                  .HeaderText = "M"})
+
+            DataGridView1.Columns.Add(New DataGridViewTextBoxColumn() With {
+                  .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
+                  .ValueType = GetType(String),
+                  .HeaderText = "adducts"})
+
+            DataGridView1.Columns.Add(New DataGridViewTextBoxColumn() With {
+                  .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
+                  .ValueType = GetType(String),
+                  .HeaderText = "charge"})
+
+            DataGridView1.Columns.Add(New DataGridViewTextBoxColumn() With {
+                  .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
+                  .ValueType = GetType(String),
+                  .HeaderText = "precursor_type"})
+
+            DataGridView1.Columns.Add(New DataGridViewTextBoxColumn() With {
+                  .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
+                  .ValueType = GetType(String),
+                  .HeaderText = "ppm"})
+
+            ' C25H40N4O5
             Dim pos = MzCalculator.EvaluateAll(exact_mass, "+", False).ToArray
             Dim neg = MzCalculator.EvaluateAll(exact_mass, "-", False).ToArray
             Dim ppm As Double = Val(RibbonItems.Spinner.DecimalValue)
+            Dim raw = TreeView1.CurrentRawFile.raw
 
-            For Each scan As ScanEntry In TreeView1.CurrentRawFile.raw.scans
+            For Each scan As ScanEntry In raw.scans
                 If scan.polarity > 0 Then
                     For Each mode In pos
                         If PPMmethod.ppm(scan.mz, Val(mode.mz)) <= ppm Then
-                            DataGridView1.Rows.Add(scan.id)
+                            DataGridView1.Rows.Add(scan.id, scan.mz, scan.rt, scan.intensity, mode.M, mode.adduct, mode.charge, mode.precursor_type, PPMmethod.ppm(scan.mz, Val(mode.mz)))
                         End If
                     Next
                 ElseIf scan.polarity < 0 Then
                     For Each mode In neg
                         If PPMmethod.ppm(scan.mz, Val(mode.mz)) <= ppm Then
-                            DataGridView1.Rows.Add(scan.id)
+                            DataGridView1.Rows.Add(scan.id, scan.mz, scan.rt, scan.intensity, mode.M, mode.adduct, mode.charge, mode.precursor_type, PPMmethod.ppm(scan.mz, Val(mode.mz)))
                         End If
                     Next
                 End If
