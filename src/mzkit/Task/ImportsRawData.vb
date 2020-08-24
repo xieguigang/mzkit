@@ -48,6 +48,7 @@ Public Class ImportsRawData
             Dim data As Double()
             Dim name As String
             Dim nscans As New List(Of ScanEntry)
+            Dim rt As New List(Of Double)
 
             For Each scan As mzXML.scan In mzXML.XML.LoadScans(source)
                 If scan.peaks.compressedLen = 0 OrElse DirectCast(scan.peaks, IBase64Container).BinaryArray.StringEmpty Then
@@ -64,6 +65,7 @@ Public Class ImportsRawData
                 data = scan.peaks.Base64Decode(True)
                 name = scan.getName & $" scan={nscans.Count + 1}"
                 cache.AddVariable(name, New CDFData With {.numerics = data}, New Dimension With {.name = "m/z-int,scan_" & scan.num, .size = data.Length}, attrs)
+                rt.Add(PeakMs2.RtInSecond(scan.retentionTime))
 
                 Call New ScanEntry With {
                     .id = name,
@@ -76,7 +78,10 @@ Public Class ImportsRawData
             Next
 
             cache.GlobalAttributes(New attribute With {.name = NameOf(nscans), .type = CDFDataTypes.INT, .value = nscans.Count})
+
             raw.scans = nscans.ToArray
+            raw.rtmin = rt.Min
+            raw.rtmax = rt.Max
 
             Call showProgress("Write cache data...")
         End Using
@@ -88,6 +93,7 @@ Public Class ImportsRawData
             Dim data As New List(Of Double)
             Dim name As String
             Dim nscans As New List(Of ScanEntry)
+            Dim rt As New List(Of Double)
 
             For Each scan As spectrum In mzML.Xml.LoadScans(source)
                 Dim parent As (mz As Double, into As Double) = Nothing
@@ -134,6 +140,7 @@ Public Class ImportsRawData
                     name = $"[MS/MS] {scanType}_{nscans.Count + 1}, ({polarity}) M{CInt(parent.mz)}T{CInt(scan.scan_time)}"
                 End If
 
+                rt.Add(scan.scan_time)
                 cache.AddVariable(name, New CDFData With {.numerics = data}, New Dimension With {.name = "m/z-int,scan_" & scan.index, .size = data.Count}, attrs)
 
                 Call New ScanEntry With {
@@ -147,7 +154,10 @@ Public Class ImportsRawData
             Next
 
             cache.GlobalAttributes(New attribute With {.name = NameOf(nscans), .type = CDFDataTypes.INT, .value = nscans.Count})
+
             raw.scans = nscans.ToArray
+            raw.rtmin = rt.Min
+            raw.rtmax = rt.Max
 
             Call showProgress("Write cache data...")
         End Using

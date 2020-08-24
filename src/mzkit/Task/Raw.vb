@@ -2,6 +2,10 @@
 
     Public Property source As String
     Public Property cache As String
+
+    Public Property rtmin As Double
+    Public Property rtmax As Double
+
     Public ReadOnly Property numOfScans As Integer
         Get
             If scans.IsNullOrEmpty Then

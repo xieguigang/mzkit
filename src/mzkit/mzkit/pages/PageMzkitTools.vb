@@ -73,10 +73,16 @@ Public Class PageMzkitTools
         ElseIf TypeOf e.Node.Tag Is ms2() Then
             ' TIC 图绘制
             Dim raw = DirectCast(e.Node.Tag, ms2())
+            Dim selects = TreeView1.CurrentRawFile.raw
             Dim TIC As New NamedCollection(Of ChromatogramTick) With {
                 .name = $"m/z {raw.Select(Function(m) m.mz).Min.ToString("F3")} - {raw.Select(Function(m) m.mz).Max.ToString("F3")}",
                 .value = raw.Select(Function(a) New ChromatogramTick With {.Time = Val(a.Annotation), .Intensity = a.intensity}).ToArray
             }
+
+            TIC.value = {
+                New ChromatogramTick With {.Time = selects.rtmin},
+                New ChromatogramTick With {.Time = selects.rtmax}
+            }.JoinIterates(TIC.value).ToArray
 
             PictureBox1.BackgroundImage = TIC.TICplot.AsGDIImage
         ElseIf e.Node.Tag Is Nothing AndAlso e.Node.Text = "TIC" Then
@@ -90,6 +96,11 @@ Public Class PageMzkitTools
                             End Function) _
                     .ToArray
             }
+
+            TIC.value = {
+                New ChromatogramTick With {.Time = raw.rtmin},
+                New ChromatogramTick With {.Time = raw.rtmax}
+            }.JoinIterates(TIC.value).ToArray
 
             PictureBox1.BackgroundImage = TIC.TICplot.AsGDIImage
         Else
