@@ -11,6 +11,7 @@ Public Class frmMain
     Friend mzkitTool As New PageMzkitTools
     Friend mzkitSettings As New PageSettings
     Friend mzkitSearch As New PageMzSearch
+    Friend mzkitCalculator As New PageMzCalculator
 
     Friend Sub ShowPage(page As Control)
         For Each page2 In pages
@@ -74,20 +75,15 @@ Public Class frmMain
 
         AddHandler ribbonItems.ButtonExit.ExecuteEvent, AddressOf ExitToolsStripMenuItem_Click
         AddHandler ribbonItems.ButtonOpenRaw.ExecuteEvent, AddressOf OpenFile
-        AddHandler ribbonItems.ButtonMzCalculator.ExecuteEvent, AddressOf MzCalculatorToolStripMenuItem_Click
         AddHandler ribbonItems.ButtonAbout.ExecuteEvent, AddressOf About_Click
 
-
+        AddHandler ribbonItems.ButtonMzCalculator.ExecuteEvent, Sub(sender, e) Call ShowPage(mzkitCalculator)
         AddHandler ribbonItems.ButtonSettings.ExecuteEvent, Sub(sender, e) Call ShowPage(mzkitSettings)
         AddHandler ribbonItems.ButtonMzSearch.ExecuteEvent, Sub(sender, e) Call ShowPage(mzkitSearch)
     End Sub
 
     Private Sub About_Click(ByVal sender As Object, ByVal e As ExecuteEventArgs)
         Call New frmSplashScreen() With {.isAboutScreen = True, .TopMost = True}.Show()
-    End Sub
-
-    Private Sub MzCalculatorToolStripMenuItem_Click(ByVal sender As Object, ByVal e As ExecuteEventArgs)
-        Call New frmCalculator().ShowDialog()
     End Sub
 
     Private Sub addPage(ParamArray pageList As Control())
@@ -103,7 +99,7 @@ Public Class frmMain
         InitSpinner()
         ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
 
-        addPage(mzkitTool, mzkitSettings, mzkitSearch)
+        addPage(mzkitTool, mzkitSettings, mzkitSearch, mzkitCalculator)
         ShowPage(mzkitTool)
 
         ToolStripStatusLabel.Text = "Ready!"

@@ -2,7 +2,7 @@
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Linq
 
-Public Class frmCalculator
+Public Class PageMzCalculator
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Dim exact_mass As Double = Val(TextBox1.Text)
@@ -24,7 +24,7 @@ Public Class frmCalculator
         Next
     End Sub
 
-    Private Sub ExportToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportToolStripMenuItem.Click
+    Private Sub ExportToolStripMenuItem_Click(sender As Object, e As EventArgs)
         Using file As New SaveFileDialog With {.Filter = "Excel Table|*.csv"}
             If file.ShowDialog = DialogResult.OK Then
                 Dim currentTab As DataGridView = (From ctrl As Control In TabControl1.SelectedTab.Controls Where TypeOf ctrl Is DataGridView).First

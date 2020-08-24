@@ -146,12 +146,6 @@
     <Compile Include="forms\frmMain.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="forms\tools\frmCalculator.Designer.vb">
-      <DependentUpon>frmCalculator.vb</DependentUpon>
-    </Compile>
-    <Compile Include="forms\tools\frmCalculator.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="forms\frmImportTaskProgress.Designer.vb">
       <DependentUpon>frmImportTaskProgress.vb</DependentUpon>
     </Compile>
@@ -188,9 +182,18 @@
     <Compile Include="pages\PageMzSearch.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="pages\PageMzCalculator.Designer.vb">
+      <DependentUpon>PageMzCalculator.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\PageMzCalculator.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="RibbonItems.Designer.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="pages\PageMzCalculator.resx">
+      <DependentUpon>PageMzCalculator.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="pages\PageMzkitTools.resx">
       <DependentUpon>PageMzkitTools.vb</DependentUpon>
     </EmbeddedResource>
@@ -208,9 +211,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="forms\frmMain.resx">
       <DependentUpon>frmMain.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="forms\tools\frmCalculator.resx">
-      <DependentUpon>frmCalculator.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
