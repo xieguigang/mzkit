@@ -50,7 +50,7 @@ Partial Class PageMzCalculator
         '
         'Button2
         '
-        Me.Button2.Location = New System.Drawing.Point(783, -2)
+        Me.Button2.Location = New System.Drawing.Point(362, 37)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(133, 21)
         Me.Button2.TabIndex = 10
@@ -59,12 +59,15 @@ Partial Class PageMzCalculator
         '
         'TabControl1
         '
+        Me.TabControl1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage2)
-        Me.TabControl1.Location = New System.Drawing.Point(169, 29)
+        Me.TabControl1.Location = New System.Drawing.Point(3, 64)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(754, 702)
+        Me.TabControl1.Size = New System.Drawing.Size(1082, 662)
         Me.TabControl1.TabIndex = 9
         '
         'TabPage1
@@ -73,7 +76,7 @@ Partial Class PageMzCalculator
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(746, 676)
+        Me.TabPage1.Size = New System.Drawing.Size(1074, 636)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Positive"
         Me.TabPage1.UseVisualStyleBackColor = True
@@ -85,7 +88,7 @@ Partial Class PageMzCalculator
         Me.DataGridView1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DataGridView1.Location = New System.Drawing.Point(3, 3)
         Me.DataGridView1.Name = "DataGridView1"
-        Me.DataGridView1.Size = New System.Drawing.Size(740, 670)
+        Me.DataGridView1.Size = New System.Drawing.Size(1068, 630)
         Me.DataGridView1.TabIndex = 0
         '
         'PrecursorType
@@ -161,7 +164,7 @@ Partial Class PageMzCalculator
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(645, -2)
+        Me.Button1.Location = New System.Drawing.Point(221, 37)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(111, 21)
         Me.Button1.TabIndex = 8
@@ -170,15 +173,15 @@ Partial Class PageMzCalculator
         '
         'TextBox1
         '
-        Me.TextBox1.Location = New System.Drawing.Point(318, -2)
+        Me.TextBox1.Location = New System.Drawing.Point(10, 37)
         Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(304, 21)
+        Me.TextBox1.Size = New System.Drawing.Size(153, 21)
         Me.TextBox1.TabIndex = 7
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(166, 1)
+        Me.Label1.Location = New System.Drawing.Point(8, 17)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(155, 12)
         Me.Label1.TabIndex = 6
@@ -188,6 +191,7 @@ Partial Class PageMzCalculator
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.White
         Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.Button1)
