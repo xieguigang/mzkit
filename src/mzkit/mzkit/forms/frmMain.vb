@@ -78,11 +78,8 @@ Public Class frmMain
         AddHandler ribbonItems.ButtonAbout.ExecuteEvent, AddressOf About_Click
 
 
-        AddHandler ribbonItems.ButtonSettings.ExecuteEvent, AddressOf Settings_Click
-    End Sub
-
-    Private Sub Settings_Click(ByVal sender As Object, ByVal e As ExecuteEventArgs)
-        Call ShowPage(mzkitSettings)
+        AddHandler ribbonItems.ButtonSettings.ExecuteEvent, Sub(sender, e) Call ShowPage(mzkitSettings)
+        AddHandler ribbonItems.ButtonMzSearch.ExecuteEvent, Sub(sender, e) Call ShowPage(mzkitSearch)
     End Sub
 
     Private Sub About_Click(ByVal sender As Object, ByVal e As ExecuteEventArgs)

@@ -264,6 +264,17 @@
 			</Command.LargeImages>
 		</Command>
 
+	<Command Name="cmdButtonMzSearch"
+			 Id="1052"
+			 LabelTitle="M/z Search"
+			 LabelDescription="Search Formula for given m/z value"
+			TooltipTitle="Search Formula">
+			<Command.LargeImages>
+				<Image>Res/DropA32.bmp</Image>
+			</Command.LargeImages>
+		</Command>
+
+
 	</Application.Commands>
 
 	<Application.Views>
@@ -335,7 +346,7 @@
 					<!-- useful part -->
 					<Group CommandName="cmdGroupToolsActions" SizeDefinition="ThreeButtons">
 						<Button CommandName="cmdButtonMzCalculator" />
-						<Button CommandName="cmdButtonOpenRaw" />
+						<Button CommandName="cmdButtonMzSearch" />
 						<Button CommandName="cmdButtonSave" />
 					</Group>
 
