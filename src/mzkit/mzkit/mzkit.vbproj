@@ -146,10 +146,10 @@
     <Compile Include="forms\frmMain.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="forms\frmImportTaskProgress.Designer.vb">
-      <DependentUpon>frmImportTaskProgress.vb</DependentUpon>
+    <Compile Include="forms\frmTaskProgress.Designer.vb">
+      <DependentUpon>frmTaskProgress.vb</DependentUpon>
     </Compile>
-    <Compile Include="forms\frmImportTaskProgress.vb">
+    <Compile Include="forms\frmTaskProgress.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="forms\frmSplashScreen.vb">
@@ -203,8 +203,8 @@
     <EmbeddedResource Include="pages\PageSettings.resx">
       <DependentUpon>PageSettings.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="forms\frmImportTaskProgress.resx">
-      <DependentUpon>frmImportTaskProgress.vb</DependentUpon>
+    <EmbeddedResource Include="forms\frmTaskProgress.resx">
+      <DependentUpon>frmTaskProgress.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="forms\frmSplashScreen.resx">
       <DependentUpon>frmSplashScreen.vb</DependentUpon>
@@ -340,6 +340,7 @@
   <ItemGroup>
     <None Include="RibbonItems.Designer.cs" />
     <None Include="Resources\StatusAnnotations_Warning_32xLG_color.png" />
+    <None Include="Resources\spinner.gif" />
     <Content Include="RibbonMarkup.h" />
     <Content Include="RibbonMarkup.xml" />
     <None Include="Resources\header-foreground-image.png" />

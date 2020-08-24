@@ -45,7 +45,7 @@ Public Class PageMzkitTools
     Public Sub ImportsRaw()
         Using file As New OpenFileDialog With {.Filter = "Raw Data|*.mzXML;*.mzML"}
             If file.ShowDialog = DialogResult.OK Then
-                Dim progress As New frmImportTaskProgress() With {.Text = $"Imports raw data [{file.FileName}]"}
+                Dim progress As New frmTaskProgress() With {.Text = $"Imports raw data [{file.FileName}]"}
                 Dim showProgress As Action(Of String) = Sub(text) progress.Invoke(Sub() progress.Label1.Text = text)
                 Dim task As New Task.ImportsRawData(file.FileName, showProgress, Sub() Call progress.Invoke(Sub() progress.Close()))
                 Dim runTask As New Thread(AddressOf task.RunImports)
@@ -191,7 +191,7 @@ Public Class PageMzkitTools
             raw.tree.Nodes.Add(New TreeNode("TIC"))
 
             Using cache As New netCDFReader(raw.raw.cache)
-                Dim progress As New frmImportTaskProgress() With {.Text = $"Reading TIC raw data [{raw.raw.source}]"}
+                Dim progress As New frmTaskProgress() With {.Text = $"Reading TIC raw data [{raw.raw.source}]"}
                 Dim showProgress As Action(Of String) = Sub(text) progress.Invoke(Sub() progress.Label1.Text = text)
                 Dim mzgroups As NamedCollection(Of ms2)() = {}
                 Dim runTask As New Thread(

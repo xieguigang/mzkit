@@ -1,11 +1,21 @@
 ﻿Imports System.Text
+Imports System.Threading
 Imports PNNL.OMICS.MwtWinDll
 Imports PNNL.OMICS.MwtWinDll.FormulaFinder
 
 Public Class PageMzSearch
 
     Public Sub doMzSearch(mz As Double, ppm As Double)
+        Dim progress As New frmTaskProgress
+
+        Call New Thread(Sub() Call runSearchInternal(mz, ppm, progress)).Start()
+        Call progress.ShowDialog()
+    End Sub
+
+    Private Sub runSearchInternal(mz As Double, ppm As Double, progress As frmTaskProgress)
         Dim oMwtWin = New MolecularWeightCalculator()
+
+        progress.Invoke(Sub() progress.Label2.Text = "initialize workspace...")
 
         oMwtWin.SetElementMode(MWElementAndMassRoutines.emElementModeConstants.emIsotopicMass)
 
@@ -26,10 +36,18 @@ Public Class PageMzSearch
         searchOptions.ChargeMax = 1
         searchOptions.FindTargetMZ = False
 
-        Call FormulaFinderTest4(mz, ppm, oMwtWin, searchOptions, "")
+        progress.Invoke(Sub() progress.Label2.Text = "running formula search...")
+
+        Dim searchResults = FormulaFinderTest4(mz, ppm, oMwtWin, searchOptions)
+
+        progress.Invoke(Sub() progress.Label2.Text = "output search result...")
+
+        Call ShowFormulaFinderResults(searchOptions, searchResults, True, True)
+
+        Call progress.Invoke(Sub() Call progress.Close())
     End Sub
 
-    Private Sub FormulaFinderTest4(mz As Double, ppm As Double, oMwtWin As MolecularWeightCalculator, searchOptions As FormulaFinderOptions, currentTask As String)
+    Private Function FormulaFinderTest4(mz As Double, ppm As Double, oMwtWin As MolecularWeightCalculator, searchOptions As FormulaFinderOptions) As IEnumerable(Of FormulaFinderResult)
 
         searchOptions.LimitChargeRange = True
         searchOptions.ChargeMin = -4
@@ -37,15 +55,12 @@ Public Class PageMzSearch
         searchOptions.FindTargetMZ = True
 
         ' Search for 100 m/z, +/- 250 ppm
-        Dim lstResults = oMwtWin.FormulaFinder.FindMatchesByMassPPM(mz, ppm, searchOptions)
-        ShowFormulaFinderResults(currentTask, searchOptions, lstResults, True)
-
-    End Sub
+        Return oMwtWin.FormulaFinder.FindMatchesByMassPPM(mz, ppm, searchOptions)
+    End Function
 
     Private Sub ShowFormulaFinderResults(
-     currentTask As String,
      searchOptions As FormulaFinderOptions,
-     lstResults As List(Of FormulaFinderResult),
+     lstResults As IEnumerable(Of FormulaFinderResult),
      Optional deltaMassIsPPM As Boolean = False,
      Optional percentCompositionSearch As Boolean = False)
 
@@ -88,7 +103,7 @@ Public Class PageMzSearch
 
         Dim sbPercentCompInfo = New StringBuilder()
 
-        For Each result In lstResults
+        For Each result As FormulaFinderResult In lstResults
             newRow = tDataTable.NewRow()
             newRow("Formula") = result.EmpiricalFormula
             newRow("Mass") = Math.Round(result.Mass, 4)
@@ -120,7 +135,7 @@ Public Class PageMzSearch
             tDataTable.Rows.Add(newRow)
         Next
 
-        dgDataGrid.SetDataBinding(myDataSet, "DataTable1")
+        Invoke(Sub() Call dgDataGrid.SetDataBinding(myDataSet, "DataTable1"))
 
     End Sub
 
