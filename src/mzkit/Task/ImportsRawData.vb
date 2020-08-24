@@ -24,7 +24,10 @@ Public Class ImportsRawData
         temp = App.AppSystemTemp & "/" & file.GetFullPath.MD5 & ".cdf"
         showProgress = progress
         success = finished
-        raw = New Raw With {.cache = temp, .source = source}
+        raw = New Raw With {
+            .cache = temp.GetFullPath,
+            .source = source.GetFullPath
+        }
     End Sub
 
     Public Sub RunImports()
@@ -59,7 +62,7 @@ Public Class ImportsRawData
                     New attribute With {.name = NameOf(scan.retentionTime), .type = CDFDataTypes.DOUBLE, .value = PeakMs2.RtInSecond(scan.retentionTime)}
                 }
                 data = scan.peaks.Base64Decode(True)
-                name = scan.getName
+                name = scan.getName & $" scan={nscans.Count + 1}"
                 cache.AddVariable(name, New CDFData With {.numerics = data}, New Dimension With {.name = "m/z-int,scan_" & scan.num, .size = data.Length}, attrs)
 
                 Call New ScanEntry With {
