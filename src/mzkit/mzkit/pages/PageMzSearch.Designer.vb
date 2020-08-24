@@ -28,14 +28,12 @@ Partial Class PageMzSearch
         '
         'dgDataGrid
         '
-        Me.dgDataGrid.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.dgDataGrid.DataMember = ""
+        Me.dgDataGrid.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dgDataGrid.HeaderForeColor = System.Drawing.SystemColors.ControlText
-        Me.dgDataGrid.Location = New System.Drawing.Point(50, 98)
+        Me.dgDataGrid.Location = New System.Drawing.Point(0, 0)
         Me.dgDataGrid.Name = "dgDataGrid"
-        Me.dgDataGrid.Size = New System.Drawing.Size(616, 417)
+        Me.dgDataGrid.Size = New System.Drawing.Size(1047, 647)
         Me.dgDataGrid.TabIndex = 21
         '
         'PageMzSearch
