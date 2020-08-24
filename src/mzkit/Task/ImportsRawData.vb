@@ -122,9 +122,9 @@ Public Class ImportsRawData
                 End If
 
                 If scan.ms_level = 1 Then
-                    name = $"[MS1] {scanType}, ({polarity}) retentionTime={CInt(scan.scan_time)}"
+                    name = $"[MS1] {scanType}_{nscans.Count + 1}, ({polarity}) retentionTime={CInt(scan.scan_time)}"
                 Else
-                    name = $"[MS/MS] {scanType}, ({polarity}) M{CInt(parent.mz)}T{CInt(scan.scan_time)}"
+                    name = $"[MS/MS] {scanType}_{nscans.Count + 1}, ({polarity}) M{CInt(parent.mz)}T{CInt(scan.scan_time)}"
                 End If
 
                 cache.AddVariable(name, New CDFData With {.numerics = data}, New Dimension With {.name = "m/z-int,scan_" & scan.index, .size = data.Count}, attrs)
