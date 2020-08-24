@@ -1,5 +1,8 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.application.json
+Imports Microsoft.VisualBasic.MIME.application.json.BSON
+Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Task
 
@@ -15,15 +18,24 @@ Module Globals
             files.Add(node.Tag)
         Next
 
-        Call files.ToArray.GetJson.SaveTo(cacheList)
+        Dim obj As Dictionary(Of String, Raw) = files.ToDictionary(Function(raw) raw.source.FileName)
+        Dim schema = obj.GetType
+        Dim model As JsonElement = schema.GetJsonElement(obj, New JSONSerializerOptions)
+
+        Using buffer = cacheList.Open(doClear:=True)
+            Call DirectCast(model, JsonObject).WriteBuffer(buffer)
+        End Using
     End Sub
 
     <Extension>
     Public Function LoadRawFileCache(explorer As TreeView) As Integer
-        Dim files = cacheList.LoadJsonFile(Of Task.Raw())
+        Dim files As Dictionary(Of String, Raw) = cacheList _
+            .ReadBinary _
+            .DoCall(AddressOf BSONFormat.Load) _
+            .CreateObject(GetType(Dictionary(Of String, Raw)))
         Dim i As Integer
 
-        For Each raw As Raw In files.SafeQuery
+        For Each raw As Raw In files.SafeQuery.Values
             Call explorer.addRawFile(raw)
             i += 1
         Next
