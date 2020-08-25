@@ -65,10 +65,11 @@ Public Class PageMzSearch
     End Sub
 
     Private Sub runSearchInternal(mz As Double, ppm As Double, progress As frmTaskProgress)
+        Thread.Sleep(100)
         progress.Invoke(Sub() progress.Label2.Text = "initialize workspace...")
 
-        Dim opts As New Chemoinformatics.Formula.SearchOption(-1, 1)
-        opts.AddElement("C", 10, 10).AddElement("H", 16, 16).AddElement("N", 5, 5).AddElement("O", 13, 13).AddElement("P", 3, 3)
+        Dim opts As New Chemoinformatics.Formula.SearchOption(-100000, 1000000, 10)
+        opts.AddElement("C", 1, 20).AddElement("H", 4, 100).AddElement("N", 0, 20).AddElement("O", 0, 20).AddElement("P", 0, 20)
         Dim oMwtWin As New FormulaSearch(
             opts:=opts,
             progress:=Sub(msg) progress.Invoke(Sub() progress.Label1.Text = msg))

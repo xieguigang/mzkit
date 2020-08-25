@@ -1,5 +1,4 @@
-﻿Imports System.Runtime.InteropServices
-Imports stdNum = System.Math
+﻿Imports stdNum = System.Math
 
 Namespace Formula
 
