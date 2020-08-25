@@ -23,7 +23,7 @@ Public Module MoleculeNetworking
                 .Where(Function(a) a.Item2 >= cutoff) _
                 .ToArray
 
-            Call progressCallback($"{scan.ToString} has {scores} homologous spectrum")
+            Call progressCallback($"{scan.ToString} has {scores.Length} homologous spectrum")
 
             Yield New DataSet With {
                 .ID = scan.lib_guid,
