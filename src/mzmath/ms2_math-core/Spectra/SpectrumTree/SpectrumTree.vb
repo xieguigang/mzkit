@@ -111,6 +111,10 @@ Namespace Spectra
             End If
         End Sub
 
+        Public Function getRoot() As BinaryTree(Of PeakMs2, PeakMs2)
+            Return tree.root
+        End Function
+
         ''' <summary>
         ''' 
         ''' </summary>

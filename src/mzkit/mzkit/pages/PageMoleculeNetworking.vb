@@ -1,4 +1,5 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.Data.visualize.Network
 
 Public Class PageMoleculeNetworking
 
@@ -7,6 +8,7 @@ Public Class PageMoleculeNetworking
         DataGridView2.Rows.Clear()
         PictureBox1.BackgroundImage = Nothing
 
+        Dim g = TreeGraph(Of PeakMs2, PeakMs2).CreateGraph(MN.getRoot, Function(a) a.lib_guid)
 
 
     End Sub
