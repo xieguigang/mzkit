@@ -355,4 +355,28 @@ Public Class PageMzkitTools
                 host.ShowPage(host.mzkitSearch)
             End Sub)
     End Sub
+
+    Private Sub MolecularNetworkingToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MolecularNetworkingToolStripMenuItem.Click
+        If TreeView1.CurrentRawFile.raw Is Nothing Then
+            Return
+        End If
+
+        Dim tree As New SpectrumTreeCluster(SpectrumTreeCluster.SSMCompares, showReport:=False)
+        Dim run As New List(Of PeakMs2)
+
+        Using cache As New netCDFReader(TreeView1.CurrentRawFile.raw.cache)
+            For Each scan In TreeView1.CurrentRawFile.raw.scans.Where(Function(s) s.mz > 0)
+                run += New PeakMs2 With {
+                    .rt = scan.rt,
+                    .mz = scan.mz,
+                    .lib_guid = scan.id,
+                    .mzInto = cache.getDataVariable(scan.id).numerics.AsMs2.ToArray
+                }
+            Next
+        End Using
+
+        Call tree.doCluster(run)
+        Call host.mzkitMNtools.loadNetwork(tree)
+        Call host.ShowPage(host.mzkitMNtools)
+    End Sub
 End Class

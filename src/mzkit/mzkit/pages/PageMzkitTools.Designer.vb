@@ -34,7 +34,10 @@ Partial Class PageMzkitTools
         Me.ShowTICToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MS1ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MS2ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MolecularNetworkingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripSeparator()
         Me.SearchInFileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SearchFormulaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
         Me.DeleteFileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
@@ -51,7 +54,6 @@ Partial Class PageMzkitTools
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
-        Me.SearchFormulaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TabControl2.SuspendLayout()
         Me.TabPage3.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
@@ -130,14 +132,14 @@ Partial Class PageMzkitTools
         '
         'ContextMenuStrip1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowTICToolStripMenuItem, Me.MS1ToolStripMenuItem, Me.MS2ToolStripMenuItem, Me.SearchInFileToolStripMenuItem, Me.SearchFormulaToolStripMenuItem, Me.ToolStripMenuItem1, Me.DeleteFileToolStripMenuItem})
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowTICToolStripMenuItem, Me.MS1ToolStripMenuItem, Me.MS2ToolStripMenuItem, Me.MolecularNetworkingToolStripMenuItem, Me.ToolStripMenuItem2, Me.SearchInFileToolStripMenuItem, Me.SearchFormulaToolStripMenuItem, Me.ToolStripMenuItem1, Me.DeleteFileToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 164)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(207, 192)
         '
         'ShowTICToolStripMenuItem
         '
         Me.ShowTICToolStripMenuItem.Name = "ShowTICToolStripMenuItem"
-        Me.ShowTICToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ShowTICToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
         Me.ShowTICToolStripMenuItem.Text = "Show TIC"
         '
         'MS1ToolStripMenuItem
@@ -145,7 +147,7 @@ Partial Class PageMzkitTools
         Me.MS1ToolStripMenuItem.Checked = True
         Me.MS1ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
         Me.MS1ToolStripMenuItem.Name = "MS1ToolStripMenuItem"
-        Me.MS1ToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.MS1ToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
         Me.MS1ToolStripMenuItem.Text = "MS1"
         '
         'MS2ToolStripMenuItem
@@ -153,24 +155,41 @@ Partial Class PageMzkitTools
         Me.MS2ToolStripMenuItem.Checked = True
         Me.MS2ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
         Me.MS2ToolStripMenuItem.Name = "MS2ToolStripMenuItem"
-        Me.MS2ToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.MS2ToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
         Me.MS2ToolStripMenuItem.Text = "MS2"
+        '
+        'MolecularNetworkingToolStripMenuItem
+        '
+        Me.MolecularNetworkingToolStripMenuItem.Name = "MolecularNetworkingToolStripMenuItem"
+        Me.MolecularNetworkingToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
+        Me.MolecularNetworkingToolStripMenuItem.Text = "Molecular Networking"
+        '
+        'ToolStripMenuItem2
+        '
+        Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(203, 6)
         '
         'SearchInFileToolStripMenuItem
         '
         Me.SearchInFileToolStripMenuItem.Name = "SearchInFileToolStripMenuItem"
-        Me.SearchInFileToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.SearchInFileToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
         Me.SearchInFileToolStripMenuItem.Text = "Search In File"
+        '
+        'SearchFormulaToolStripMenuItem
+        '
+        Me.SearchFormulaToolStripMenuItem.Name = "SearchFormulaToolStripMenuItem"
+        Me.SearchFormulaToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
+        Me.SearchFormulaToolStripMenuItem.Text = "Search Formula"
         '
         'ToolStripMenuItem1
         '
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(177, 6)
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(203, 6)
         '
         'DeleteFileToolStripMenuItem
         '
         Me.DeleteFileToolStripMenuItem.Name = "DeleteFileToolStripMenuItem"
-        Me.DeleteFileToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.DeleteFileToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
         Me.DeleteFileToolStripMenuItem.Text = "Delete File"
         '
         'ImageList1
@@ -300,12 +319,6 @@ Partial Class PageMzkitTools
         Me.DataGridView1.Size = New System.Drawing.Size(602, 430)
         Me.DataGridView1.TabIndex = 0
         '
-        'SearchFormulaToolStripMenuItem
-        '
-        Me.SearchFormulaToolStripMenuItem.Name = "SearchFormulaToolStripMenuItem"
-        Me.SearchFormulaToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.SearchFormulaToolStripMenuItem.Text = "Search Formula"
-        '
         'PageMzkitTools
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
@@ -359,4 +372,6 @@ Partial Class PageMzkitTools
     Friend WithEvents ToolTip1 As ToolTip
     Friend WithEvents SaveMatrixToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SearchFormulaToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents MolecularNetworkingToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem2 As ToolStripSeparator
 End Class

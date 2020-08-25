@@ -188,9 +188,18 @@
     <Compile Include="pages\PageMzCalculator.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="pages\PageMoleculeNetworking.Designer.vb">
+      <DependentUpon>PageMoleculeNetworking.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\PageMoleculeNetworking.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="RibbonItems.Designer.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="pages\PageMoleculeNetworking.resx">
+      <DependentUpon>PageMoleculeNetworking.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="pages\PageMzCalculator.resx">
       <DependentUpon>PageMzCalculator.vb</DependentUpon>
     </EmbeddedResource>

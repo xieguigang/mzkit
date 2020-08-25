@@ -12,6 +12,7 @@ Public Class frmMain
     Friend mzkitSettings As New PageSettings
     Friend mzkitSearch As New PageMzSearch
     Friend mzkitCalculator As New PageMzCalculator
+    Friend mzkitMNtools As New PageMoleculeNetworking
 
     Dim nav As New Stack(Of Control)
 
@@ -114,7 +115,7 @@ Public Class frmMain
         InitSpinner()
         ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
 
-        addPage(mzkitTool, mzkitSettings, mzkitSearch, mzkitCalculator)
+        addPage(mzkitTool, mzkitSettings, mzkitSearch, mzkitCalculator, mzkitMNtools)
         ShowPage(mzkitTool)
 
         ToolStripStatusLabel.Text = "Ready!"
