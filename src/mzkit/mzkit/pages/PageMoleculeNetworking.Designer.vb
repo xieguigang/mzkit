@@ -22,18 +22,21 @@ Partial Class PageMoleculeNetworking
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
-        Me.TabPage2 = New System.Windows.Forms.TabPage()
-        Me.DataGridView2 = New System.Windows.Forms.DataGridView()
-        Me.TabPage3 = New System.Windows.Forms.TabPage()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.CompoundA = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.CompoundB = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Similarity = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.DataGridView2 = New System.Windows.Forms.DataGridView()
         Me.Compound = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ClusterId = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.SaveImageToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -41,6 +44,7 @@ Partial Class PageMoleculeNetworking
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage3.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'TabControl1
@@ -77,6 +81,24 @@ Partial Class PageMoleculeNetworking
         Me.DataGridView1.Size = New System.Drawing.Size(942, 566)
         Me.DataGridView1.TabIndex = 0
         '
+        'CompoundA
+        '
+        Me.CompoundA.HeaderText = "CompoundA"
+        Me.CompoundA.Name = "CompoundA"
+        Me.CompoundA.ReadOnly = True
+        '
+        'CompoundB
+        '
+        Me.CompoundB.HeaderText = "CompoundB"
+        Me.CompoundB.Name = "CompoundB"
+        Me.CompoundB.ReadOnly = True
+        '
+        'Similarity
+        '
+        Me.Similarity.HeaderText = "Similarity"
+        Me.Similarity.Name = "Similarity"
+        Me.Similarity.ReadOnly = True
+        '
         'TabPage2
         '
         Me.TabPage2.Controls.Add(Me.DataGridView2)
@@ -98,6 +120,16 @@ Partial Class PageMoleculeNetworking
         Me.DataGridView2.Size = New System.Drawing.Size(942, 566)
         Me.DataGridView2.TabIndex = 0
         '
+        'Compound
+        '
+        Me.Compound.HeaderText = "Compound"
+        Me.Compound.Name = "Compound"
+        '
+        'ClusterId
+        '
+        Me.ClusterId.HeaderText = "ClusterId"
+        Me.ClusterId.Name = "ClusterId"
+        '
         'TabPage3
         '
         Me.TabPage3.Controls.Add(Me.PictureBox1)
@@ -110,6 +142,7 @@ Partial Class PageMoleculeNetworking
         '
         'PictureBox1
         '
+        Me.PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.PictureBox1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PictureBox1.Location = New System.Drawing.Point(0, 0)
         Me.PictureBox1.Name = "PictureBox1"
@@ -117,33 +150,17 @@ Partial Class PageMoleculeNetworking
         Me.PictureBox1.TabIndex = 0
         Me.PictureBox1.TabStop = False
         '
-        'CompoundA
+        'ContextMenuStrip1
         '
-        Me.CompoundA.HeaderText = "CompoundA"
-        Me.CompoundA.Name = "CompoundA"
-        Me.CompoundA.ReadOnly = True
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveImageToolStripMenuItem})
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 48)
         '
-        'CompoundB
+        'SaveImageToolStripMenuItem
         '
-        Me.CompoundB.HeaderText = "CompoundB"
-        Me.CompoundB.Name = "CompoundB"
-        Me.CompoundB.ReadOnly = True
-        '
-        'Similarity
-        '
-        Me.Similarity.HeaderText = "Similarity"
-        Me.Similarity.Name = "Similarity"
-        Me.Similarity.ReadOnly = True
-        '
-        'Compound
-        '
-        Me.Compound.HeaderText = "Compound"
-        Me.Compound.Name = "Compound"
-        '
-        'ClusterId
-        '
-        Me.ClusterId.HeaderText = "ClusterId"
-        Me.ClusterId.Name = "ClusterId"
+        Me.SaveImageToolStripMenuItem.Name = "SaveImageToolStripMenuItem"
+        Me.SaveImageToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.SaveImageToolStripMenuItem.Text = "Save Image"
         '
         'PageMoleculeNetworking
         '
@@ -159,6 +176,7 @@ Partial Class PageMoleculeNetworking
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage3.ResumeLayout(False)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ContextMenuStrip1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -175,4 +193,6 @@ Partial Class PageMoleculeNetworking
     Friend WithEvents Similarity As DataGridViewTextBoxColumn
     Friend WithEvents Compound As DataGridViewTextBoxColumn
     Friend WithEvents ClusterId As DataGridViewTextBoxColumn
+    Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
+    Friend WithEvents SaveImageToolStripMenuItem As ToolStripMenuItem
 End Class
