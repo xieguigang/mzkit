@@ -570,7 +570,7 @@ Public Class PageMzkitTools
                         run += New PeakMs2 With {
                             .rt = scan.rt,
                             .mz = scan.mz,
-                            .lib_guid = scan.id,
+                            .lib_guid = $"M{CInt(.mz)}T{CInt(.rt)}",
                             .mzInto = cache.getDataVariable(scan.id).numerics.AsMs2.ToArray
                         }
 

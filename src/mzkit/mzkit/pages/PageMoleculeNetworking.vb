@@ -15,7 +15,7 @@ Public Class PageMoleculeNetworking
         PictureBox1.BackgroundImage = Nothing
 
         g = TreeGraph(Of PeakMs2, PeakMs2) _
-            .CreateGraph(MN.getRoot, Function(a) a.lib_guid) _
+            .CreateGraph(MN.getRoot, Function(a) a.lib_guid, Function(a) $"M{CInt(a.mz)}T{CInt(a.rt)}") _
             .doRandomLayout _
             .doForceLayout(iterations:=100)
 
