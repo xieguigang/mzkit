@@ -1,9 +1,60 @@
-﻿Imports System.Threading
+﻿#Region "Microsoft.VisualBasic::13636b710d15c7add5bb883831e486eb, src\mzkit\mzkit\pages\PageMzkitTools.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class PageMzkitTools
+    ' 
+    '     Sub: applyLevelFilter, Button1_Click, DeleteFileToolStripMenuItem_Click, ExportExactMassSearchTable, ImportsRaw
+    '          InitializeFileTree, ListBox1_SelectedIndexChanged, missingCacheFile, MS1ToolStripMenuItem_Click, MS2ToolStripMenuItem_Click
+    '          PageMzkitTools_Load, runMzSearch, SaveFileCache, SaveImageToolStripMenuItem_Click, SaveMatrixToolStripMenuItem_Click
+    '          SearchFormulaToolStripMenuItem_Click, searchInFileByMz, SearchInFileToolStripMenuItem_Click, setCurrentFile, showSpectrum
+    '          showStatusMessage, ShowTICToolStripMenuItem_Click, TreeView1_AfterSelect
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.IO
+Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.IO.netCDF
@@ -82,7 +133,9 @@ Public Class PageMzkitTools
             TIC.value = {
                 New ChromatogramTick With {.Time = selects.rtmin},
                 New ChromatogramTick With {.Time = selects.rtmax}
-            }.JoinIterates(TIC.value).ToArray
+            }.JoinIterates(TIC.value) _
+             .OrderBy(Function(c) c.Time) _
+             .ToArray
 
             PictureBox1.BackgroundImage = TIC.TICplot.AsGDIImage
         ElseIf e.Node.Tag Is Nothing AndAlso e.Node.Text = "TIC" Then
@@ -100,7 +153,9 @@ Public Class PageMzkitTools
             TIC.value = {
                 New ChromatogramTick With {.Time = raw.rtmin},
                 New ChromatogramTick With {.Time = raw.rtmax}
-            }.JoinIterates(TIC.value).ToArray
+            }.JoinIterates(TIC.value) _
+             .OrderBy(Function(c) c.Time) _
+             .ToArray
 
             PictureBox1.BackgroundImage = TIC.TICplot.AsGDIImage
         Else
@@ -292,7 +347,122 @@ Public Class PageMzkitTools
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        Call searchInFileByMz(mz:=Val(TextBox1.Text))
+        If TextBox1.Text.StringEmpty Then
+            Return
+        ElseIf TextBox1.Text.IsNumeric Then
+            Call searchInFileByMz(mz:=Val(TextBox1.Text))
+        Else
+            ' formula
+            Dim composition As FormulaComposition = FormulaScanner.ScanFormula(TextBox1.Text)
+            Dim exact_mass As Double = Aggregate atom
+                                       In composition.CountsByElement
+                                       Let eval As Double = ExactMass.Eval(atom.Key) * atom.Value
+                                       Into Sum(eval)
+            Dim ppm As Double = Val(RibbonItems.Spinner.DecimalValue)
+            Dim raw = TreeView1.CurrentRawFile.raw
+
+            DataGridView1.Rows.Clear()
+            DataGridView1.Columns.Clear()
+
+            showStatusMessage($"Search MS ions for [{TextBox1.Text}] exact_mass={exact_mass} with tolerance error {ppm} ppm")
+
+            DataGridView1.Columns.Add(New DataGridViewTextBoxColumn() With {
+                  .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
+                  .ValueType = GetType(String),
+                  .HeaderText = "scan Id"})
+
+            DataGridView1.Columns.Add(New DataGridViewTextBoxColumn() With {
+                  .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
+                  .ValueType = GetType(String),
+                  .HeaderText = "m/z"})
+
+            DataGridView1.Columns.Add(New DataGridViewTextBoxColumn() With {
+                  .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
+                  .ValueType = GetType(String),
+                  .HeaderText = "rt"})
+
+            DataGridView1.Columns.Add(New DataGridViewTextBoxColumn() With {
+                  .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
+                  .ValueType = GetType(String),
+                  .HeaderText = "intensity"})
+
+            DataGridView1.Columns.Add(New DataGridViewTextBoxColumn() With {
+                  .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
+                  .ValueType = GetType(String),
+                  .HeaderText = "M"})
+
+            DataGridView1.Columns.Add(New DataGridViewTextBoxColumn() With {
+                  .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
+                  .ValueType = GetType(String),
+                  .HeaderText = "adducts"})
+
+            DataGridView1.Columns.Add(New DataGridViewTextBoxColumn() With {
+                  .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
+                  .ValueType = GetType(String),
+                  .HeaderText = "charge"})
+
+            DataGridView1.Columns.Add(New DataGridViewTextBoxColumn() With {
+                  .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
+                  .ValueType = GetType(String),
+                  .HeaderText = "precursor_type"})
+
+            DataGridView1.Columns.Add(New DataGridViewTextBoxColumn() With {
+                  .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
+                  .ValueType = GetType(String),
+                  .HeaderText = "ppm"})
+
+            ' C25H40N4O5
+            Dim pos = MzCalculator.EvaluateAll(exact_mass, "+", False).ToArray
+            Dim neg = MzCalculator.EvaluateAll(exact_mass, "-", False).ToArray
+
+            For Each scan As ScanEntry In raw.scans
+                If scan.polarity > 0 Then
+                    For Each mode In pos
+                        If PPMmethod.ppm(scan.mz, Val(mode.mz)) <= ppm Then
+                            DataGridView1.Rows.Add(scan.id, scan.mz, scan.rt, scan.intensity, mode.M, mode.adduct, mode.charge, mode.precursor_type, PPMmethod.ppm(scan.mz, Val(mode.mz)))
+                        End If
+                    Next
+                ElseIf scan.polarity < 0 Then
+                    For Each mode In neg
+                        If PPMmethod.ppm(scan.mz, Val(mode.mz)) <= ppm Then
+                            DataGridView1.Rows.Add(scan.id, scan.mz, scan.rt, scan.intensity, mode.M, mode.adduct, mode.charge, mode.precursor_type, PPMmethod.ppm(scan.mz, Val(mode.mz)))
+                        End If
+                    Next
+                End If
+            Next
+
+            TabControl1.SelectedTab = TabPage2
+
+            host.ribbonItems.TabGroupExactMassSearchTools.ContextAvailable = ContextAvailability.Active
+        End If
+    End Sub
+
+    Public Sub ExportExactMassSearchTable()
+        Using file As New SaveFileDialog With {.Filter = "Excel Table(*.xls)|*.xls"}
+            If file.ShowDialog = DialogResult.OK Then
+                Using writeTsv As StreamWriter = file.FileName.OpenWriter
+                    Dim row As New List(Of String)
+
+                    For i As Integer = 0 To DataGridView1.Columns.Count - 1
+                        row.Add(DataGridView1.Columns(i).HeaderText)
+                    Next
+
+                    writeTsv.WriteLine(row.PopAll.JoinBy(","))
+
+                    For j As Integer = 0 To DataGridView1.Rows.Count - 1
+                        Dim rowObj = DataGridView1.Rows(j)
+
+                        For i As Integer = 0 To rowObj.Cells.Count - 1
+                            row.Add(Microsoft.VisualBasic.Scripting.ToString(rowObj.Cells(i).Value))
+                        Next
+
+                        writeTsv.WriteLine(row.PopAll.Select(Function(s) $"""{s}""").JoinBy(","))
+                    Next
+                End Using
+
+                MessageBox.Show($"Exact Mass Search Result table export to [{file.FileName}] successfully!", "Export Table", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+        End Using
     End Sub
 
     Private Sub searchInFileByMz(mz As Double)
@@ -380,3 +550,4 @@ Public Class PageMzkitTools
         Call host.ShowPage(host.mzkitMNtools)
     End Sub
 End Class
+

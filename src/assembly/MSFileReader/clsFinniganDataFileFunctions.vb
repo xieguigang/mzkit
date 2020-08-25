@@ -1,3 +1,85 @@
+﻿#Region "Microsoft.VisualBasic::db55bccd8396a20d26c4dd8e2a41ef64, src\assembly\MSFileReader\clsFinniganDataFileFunctions.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' 	Class XRawFileIO
+    ' 
+    ' 
+    ' 		Enum SampleTypeConstants
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 		Enum ControllerTypeConstants
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' 		Enum IntensityCutoffTypeConstants
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' 		Class InstFlags
+    ' 
+    ' 
+    ' 
+    ' 		Structure udtParentIonInfoType
+    ' 
+    ' 		    Sub: Clear
+    ' 
+    '  
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: CheckFunctionality, DetermineIonizationMode, DetermineMRMScanType, ExtractMSLevel, (+2 Overloads) ExtractParentIonMZFromFilterText
+    '               FillFileInfo, GetCollisionEnergy, GetNumScans, (+2 Overloads) GetScanData, GetScanInfo
+    '               GetScanTypeNameFromFinniganScanFilterText, MakeGenericFinniganScanFilter, OpenRawFile, SetMSController, TuneMethodsMatch
+    '               ValidateMSScan
+    ' 
+    '     Sub: CloseRawFile, ExtractMRMMasses, InitializeMRMInfo
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Option Strict On
 
 ' These functions utilize MSFileReader.XRawfile2.dll to extract scan header info and
@@ -1615,3 +1697,4 @@ Namespace FinniganFileIO
 
 	End Class
 End Namespace
+

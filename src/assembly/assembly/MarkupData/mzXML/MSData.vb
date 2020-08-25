@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::06eea62e77b62988da893dd9a9531b46, src\assembly\assembly\MarkupData\mzXML\MSData.vb"
+﻿#Region "Microsoft.VisualBasic::eb9889f93bfe93efb4e3a24b01f484fd, src\assembly\assembly\MarkupData\mzXML\MSData.vb"
 
     ' Author:
     ' 

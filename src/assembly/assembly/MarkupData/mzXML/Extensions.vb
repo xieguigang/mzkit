@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f33b93bdd3f1b27efed0964ec7d8c9e3, src\assembly\assembly\MarkupData\mzXML\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::76544ce5fa734634ac9a3c37bda02cae, src\assembly\assembly\MarkupData\mzXML\Extensions.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
 
     '     Module Extensions
     ' 
-    '         Function: (+2 Overloads) ExtractMzI, getName, IsIntact
+    '         Function: AsMs2, (+2 Overloads) ExtractMzI, getName, IsIntact
     ' 
     ' 
     ' /********************************************************************************/

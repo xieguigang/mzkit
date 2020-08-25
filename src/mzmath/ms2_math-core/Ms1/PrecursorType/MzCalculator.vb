@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::163e450d07d93253aa96ec6063006071, src\mzmath\ms2_math-core\Ms1\PrecursorType\MzCalculator.vb"
+﻿#Region "Microsoft.VisualBasic::ddd894375174b2091a15aa81e0b6b303, src\mzmath\ms2_math-core\Ms1\PrecursorType\MzCalculator.vb"
 
     ' Author:
     ' 
@@ -43,10 +43,11 @@
     '         Function: AdductMZ, CalcMass, CalcMZ, EvaluateAll, ReverseMass
     '                   (+2 Overloads) ToString
     ' 
-    '     Class MzReport
+    '     Class PrecursorInfo
     ' 
     '         Properties: adduct, charge, M, mz, precursor_type
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: ToString
     ' 
     ' 

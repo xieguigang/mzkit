@@ -305,9 +305,36 @@
 					Id="1064"
 					LabelTitle="Export Result Table">
 			<Command.LargeImages>
-				<Image>Res/DropA32.bmp</Image>
+				<Image>Res/excel-icon.png</Image>
 			</Command.LargeImages>
 		</Command>
+		
+		
+		
+		<Command Name="cmdTabGroupExactMassSearchTools"
+			Id="1071"
+			LabelTitle="Calculator Tools">
+		</Command>
+
+		<Command Name="cmdTabExactMassSearch"
+				 Id="1072"
+				 LabelTitle="Design">
+		</Command>
+
+		<Command Name="cmdGroupExactMassSearch"
+				 Id="1073"
+				 LabelTitle="EEE">
+		</Command>
+
+
+		<Command Name="cmdButtonExactMassSearchExport"
+					Id="1074"
+					LabelTitle="Export Result Table">
+			<Command.LargeImages>
+				<Image>Res/excel-icon.png</Image>
+			</Command.LargeImages>
+		</Command>
+		
 		
 	</Application.Commands>
 
@@ -341,6 +368,15 @@
 					</Tab>
 				</TabGroup>
 
+
+				<TabGroup CommandName='cmdTabGroupExactMassSearchTools'>
+					<Tab CommandName='cmdTabExactMassSearch'>
+						<Group CommandName='cmdGroupExactMassSearch' SizeDefinition='TwoButtons'>
+							<Button CommandName='cmdButtonExactMassSearchExport' />
+							<Button CommandName='cmdButtonLayout2' />
+						</Group>
+					</Tab>
+				</TabGroup>
 
 				
 			</Ribbon.ContextualTabs>

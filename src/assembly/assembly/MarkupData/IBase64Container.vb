@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d0307e59c6d304d63a5ecc9548a9021, src\assembly\assembly\MarkupData\IBase64Container.vb"
+﻿#Region "Microsoft.VisualBasic::ea074387e17450eaa8b5e6e5865ca8c7, src\assembly\assembly\MarkupData\IBase64Container.vb"
 
     ' Author:
     ' 

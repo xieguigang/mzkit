@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c3ed0d666fd9337262019d5642f3ddeb, src\mzmath\ms2_math-core\Ms1\Tolerance\PPM.vb"
+﻿#Region "Microsoft.VisualBasic::30c8b136c53300fb4d04e4144b88a6f4, src\mzmath\ms2_math-core\Ms1\Tolerance\PPM.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     '     Class PPMmethod
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: AsScore, Assert, MassError, MassErrorDescription, ppm
+    '         Function: AsScore, Equals, MassError, MassErrorDescription, ppm
     '                   ToString
     ' 
     ' 
@@ -71,8 +71,13 @@ Namespace Ms1
         Public Overloads Shared Function ppm(measured#, actualValue#) As Double
             ' （测量值-实际分子量）/ 实际分子量
             ' |(实验数据 - 数据库结果)| / 实验数据 * 1000000
-            Dim ppmd# = stdNum.Abs(measured - actualValue) / actualValue
-            ppmd = ppmd * 1000000
+            Dim ppmd# = (stdNum.Abs(measured - actualValue) / actualValue) * 1000000
+
+            If ppmd < 0 Then
+                ' 计算溢出了
+                Return 10000000000
+            End If
+
             Return ppmd
         End Function
 

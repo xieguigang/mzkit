@@ -1,4 +1,52 @@
-﻿Imports System.ComponentModel
+﻿#Region "Microsoft.VisualBasic::cdf5ca783e82f7045df9c12680c4e3a5, src\mzkit\mzkit\forms\frmMain.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class frmMain
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Sub: _recentItems_ExecuteEvent, About_Click, addPage, CopyToolStripMenuItem_Click, CutToolStripMenuItem_Click
+    '          ExitToolsStripMenuItem_Click, FormulaSearchToolToolStripMenuItem_Click, frmMain_Closing, frmMain_Load, InitRecentItems
+    '          InitSpinner, MzCalculatorToolStripMenuItem_Click, NavBack_Click, OpenFile, PasteToolStripMenuItem_Click
+    '          RawFileViewerToolStripMenuItem_Click, SaveAsToolStripMenuItem_Click, ShowPage, StatusBarToolStripMenuItem_Click, ToolBarToolStripMenuItem_Click
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.ComponentModel
 Imports Microsoft.VisualBasic.Language
 Imports RibbonLib
 Imports RibbonLib.Controls.Events
@@ -90,6 +138,19 @@ Public Class frmMain
         AddHandler ribbonItems.ButtonMzSearch.ExecuteEvent, Sub(sender, e) Call ShowPage(mzkitSearch)
 
         AddHandler ribbonItems.ButtonCalculatorExport.ExecuteEvent, Sub(sender, e) Call mzkitCalculator.ExportToolStripMenuItem_Click()
+        AddHandler ribbonItems.ButtonExactMassSearchExport.ExecuteEvent, Sub(sender, e) Call mzkitTool.ExportExactMassSearchTable()
+    End Sub
+
+    Private Sub RawFileViewerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RawFileViewerToolStripMenuItem.Click
+        Call ShowPage(mzkitTool)
+    End Sub
+
+    Private Sub MzCalculatorToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MzCalculatorToolStripMenuItem.Click
+        Call ShowPage(mzkitCalculator)
+    End Sub
+
+    Private Sub FormulaSearchToolToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FormulaSearchToolToolStripMenuItem.Click
+        Call ShowPage(mzkitSearch)
     End Sub
 
     Private Sub NavBack_Click(ByVal sender As Object, ByVal e As ExecuteEventArgs)
@@ -190,3 +251,4 @@ Public Class frmMain
         mzkitTool.SaveFileCache()
     End Sub
 End Class
+
