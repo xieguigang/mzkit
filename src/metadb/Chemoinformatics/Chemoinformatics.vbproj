@@ -173,6 +173,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Formula\Class1.vb" />
     <Compile Include="Formula\FormulaComposition.vb" />
     <Compile Include="Formula\FormulaScanner.vb" />
     <Compile Include="Formula\Element.vb" />
