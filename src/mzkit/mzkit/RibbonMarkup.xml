@@ -22,10 +22,10 @@
 				 TooltipTitle="Open (Ctrl+O)"
 				 TooltipDescription="Open an existing image.">
 			<Command.LargeImages>
-				<Image>Res/Open32.bmp</Image>
+				<Image>Res/folder-drag-accept.png</Image>
 			</Command.LargeImages>
 			<Command.SmallImages>
-				<Image>Res/Open16.bmp</Image>
+				<Image>Res/folder-drag-accept.png</Image>
 			</Command.SmallImages>
 		</Command>
 
@@ -36,10 +36,10 @@
 				 TooltipTitle="Save (Ctrl+S)"
 				 TooltipDescription="Save the current image.">
 			<Command.LargeImages>
-				<Image>Res/Save32.bmp</Image>
+				<Image>Res/media-flash.png</Image>
 			</Command.LargeImages>
 			<Command.SmallImages>
-				<Image>Res/Save16.bmp</Image>
+				<Image>Res/media-flash.png</Image>
 			</Command.SmallImages>
 		</Command>
 
@@ -74,10 +74,10 @@
 				 TooltipTitle="Open (Ctrl+O)"
 				 TooltipDescription="Open an existing image.">
 			<Command.LargeImages>
-				<Image>Res/Open32.bmp</Image>
+				<Image>Res/folder-drag-accept.png</Image>
 			</Command.LargeImages>
 			<Command.SmallImages>
-				<Image>Res/Open16.bmp</Image>
+				<Image>Res/folder-drag-accept.png</Image>
 			</Command.SmallImages>
 		</Command>
 
@@ -125,7 +125,7 @@
 
 		<Command Name="cmdButtonMzCalculator"
 				 Id="1013"
-				 LabelTitle="M/z Calculator">
+				 LabelTitle="Calculator">
 			<Command.LargeImages>
 				<Image>Res/Open32.bmp</Image>
 			</Command.LargeImages>
@@ -250,7 +250,7 @@
 
 		<Command Name="cmdSpinner"
 		 Id="1050"
-		 LabelTitle="Search PPM">
+		 LabelTitle="PPM">
 		</Command>
 
 
@@ -266,11 +266,11 @@
 
 		<Command Name="cmdButtonMzSearch"
 				 Id="1052"
-				 LabelTitle="M/z Search"
+				 LabelTitle="Search"
 				 LabelDescription="Search Formula for given m/z value"
 				TooltipTitle="Search Formula">
 			<Command.LargeImages>
-				<Image>Res/DropA32.bmp</Image>
+				<Image>Res/folder-saved-search.png</Image>
 			</Command.LargeImages>
 		</Command>
 

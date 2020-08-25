@@ -135,7 +135,7 @@ Partial Class PageMzkitTools
         '
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowTICToolStripMenuItem, Me.MS1ToolStripMenuItem, Me.MS2ToolStripMenuItem, Me.MolecularNetworkingToolStripMenuItem, Me.ToolStripMenuItem2, Me.SearchInFileToolStripMenuItem, Me.SearchFormulaToolStripMenuItem, Me.ToolStripMenuItem1, Me.DeleteFileToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(207, 170)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(207, 192)
         '
         'ShowTICToolStripMenuItem
         '
@@ -161,6 +161,7 @@ Partial Class PageMzkitTools
         '
         'MolecularNetworkingToolStripMenuItem
         '
+        Me.MolecularNetworkingToolStripMenuItem.Image = CType(resources.GetObject("MolecularNetworkingToolStripMenuItem.Image"), System.Drawing.Image)
         Me.MolecularNetworkingToolStripMenuItem.Name = "MolecularNetworkingToolStripMenuItem"
         Me.MolecularNetworkingToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
         Me.MolecularNetworkingToolStripMenuItem.Text = "Molecular Networking"
