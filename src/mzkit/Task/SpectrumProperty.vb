@@ -53,6 +53,9 @@ Public Class SpectrumProperty
     Public Property centroided As String
     Public Property precursorMz As Double
     Public Property retentionTime As Double
+    Public Property precursorCharge As Double
+    Public Property polarity As String
+    Public Property activationMethod As String
 
     Sub New(attrs As attribute())
         With attrs.ToDictionary(Function(a) a.name, Function(a) a.value)
@@ -61,6 +64,9 @@ Public Class SpectrumProperty
             centroided = .TryGetValue(NameOf(centroided))
             precursorMz = Val(.TryGetValue(NameOf(precursorMz))).ToString("F4")
             retentionTime = Val(.TryGetValue(NameOf(retentionTime))).ToString("F2")
+            precursorCharge = Val(.TryGetValue("precursorCharge"))
+            polarity = .TryGetValue("polarity", [default]:="n/a")
+            activationMethod = .TryGetValue("activationMethod", [default]:="n/a")
         End With
     End Sub
 End Class

@@ -464,31 +464,7 @@ Public Class PageMzkitTools
     End Sub
 
     Public Sub ExportExactMassSearchTable()
-        Using file As New SaveFileDialog With {.Filter = "Excel Table(*.xls)|*.xls"}
-            If file.ShowDialog = DialogResult.OK Then
-                Using writeTsv As StreamWriter = file.FileName.OpenWriter
-                    Dim row As New List(Of String)
-
-                    For i As Integer = 0 To DataGridView1.Columns.Count - 1
-                        row.Add(DataGridView1.Columns(i).HeaderText)
-                    Next
-
-                    writeTsv.WriteLine(row.PopAll.JoinBy(","))
-
-                    For j As Integer = 0 To DataGridView1.Rows.Count - 1
-                        Dim rowObj = DataGridView1.Rows(j)
-
-                        For i As Integer = 0 To rowObj.Cells.Count - 1
-                            row.Add(Microsoft.VisualBasic.Scripting.ToString(rowObj.Cells(i).Value))
-                        Next
-
-                        writeTsv.WriteLine(row.PopAll.Select(Function(s) $"""{s}""").JoinBy(","))
-                    Next
-                End Using
-
-                MessageBox.Show($"Exact Mass Search Result table export to [{file.FileName}] successfully!", "Export Table", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            End If
-        End Using
+        Call DataGridView1.SaveDataGrid
     End Sub
 
     Private Sub searchInFileByMz(mz As Double)

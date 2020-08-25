@@ -51,11 +51,11 @@ Imports BioNovoGene.BioDeep
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports RibbonLib.Interop
 Imports RowObject = Microsoft.VisualBasic.Data.csv.IO.RowObject
+Imports stdNum = System.Math
 
 Public Class PageMzSearch
 
     Dim host As frmMain
-    Dim tDataTable As DataTable
 
     Public Sub doMzSearch(mz As Double, ppm As Double)
         Dim progress As New frmTaskProgress
@@ -87,77 +87,33 @@ Public Class PageMzSearch
     End Sub
 
     Private Sub ShowFormulaFinderResults(lstResults As IEnumerable(Of FormulaComposition))
-        Dim myDataSet = New DataSet("myDataSet")
-
-        ' Create a DataTable.
-        tDataTable = New DataTable("DataTable1")
-
-        Dim massColumnName As String = "DeltaPPM"
+        DataGridView1.Rows.Clear()
+        DataGridView1.Columns.Clear()
 
         ' Add coluns to the table
-        Dim cFormula As New DataColumn("Formula", GetType(String))
-        Dim cMass As New DataColumn("Mass", GetType(Double))
-        Dim cDeltaMass As New DataColumn(massColumnName, GetType(Double))
-        Dim cCharge As New DataColumn("Charge", GetType(Integer))
-        Dim cMZ As New DataColumn("M/Z", GetType(Double))
-        Dim cPercentComp As New DataColumn("PercentCompInfo", GetType(String))
-
-        tDataTable.Columns.Add(cFormula)
-        tDataTable.Columns.Add(cMass)
-        tDataTable.Columns.Add(cDeltaMass)
-        tDataTable.Columns.Add(cCharge)
-        tDataTable.Columns.Add(cMZ)
-        tDataTable.Columns.Add(cPercentComp)
-
-        If myDataSet.Tables.Count > 0 Then
-            myDataSet.Tables.Clear()
-        End If
-
-        ' Add the table to the DataSet.
-        myDataSet.Tables.Add(tDataTable)
-
-        ' Populates the table. 
-        Dim newRow As DataRow
-
-        Dim sbPercentCompInfo = New StringBuilder()
+        DataGridView1.Columns.Add(New DataGridViewLinkColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .ValueType = GetType(String), .HeaderText = "Formula"})
+        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .ValueType = GetType(String), .HeaderText = "Exact Mass"})
+        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .ValueType = GetType(String), .HeaderText = "PPM"})
+        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .ValueType = GetType(String), .HeaderText = "Charge"})
+        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .ValueType = GetType(String), .HeaderText = "m/z"})
 
         For Each result As FormulaComposition In lstResults
-            newRow = tDataTable.NewRow()
-            newRow("Formula") = result.EmpiricalFormula
-            newRow("Mass") = Math.Round(result.exact_mass, 4)
-            newRow(massColumnName) = result.ppm.ToString("0.0")
-            newRow("Charge") = result.charge
-            newRow("M/Z") = Math.Round(result.exact_mass / result.charge, 3)
-
-            tDataTable.Rows.Add(newRow)
+            DataGridView1.Rows.Add(result.EmpiricalFormula, result.exact_mass, result.ppm, result.charge, stdNum.Abs(result.exact_mass / result.charge))
         Next
+    End Sub
 
-        Invoke(Sub() Call dgDataGrid.SetDataBinding(myDataSet, "DataTable1"))
+    Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellContentClick
+        If e.ColumnIndex = Scan0 AndAlso e.RowIndex >= 0 Then
+            Dim formula As String = DataGridView1.Rows(e.RowIndex).Cells(0).Value?.ToString
 
+            If Not formula.StringEmpty Then
+                Call Process.Start($"https://query.biodeep.cn/search?expression=[formula]&category=metabolite&formula={formula}")
+            End If
+        End If
     End Sub
 
     Public Sub SaveSearchResultTable()
-        If Not tDataTable Is Nothing Then
-            Using file As New SaveFileDialog With {.Filter = "Excel Table(*.xls)|*.xls"}
-                If file.ShowDialog = DialogResult.OK Then
-                    Dim row As New RowObject
-
-                    Using write As StreamWriter = file.FileName.OpenWriter
-                        For i As Integer = 0 To tDataTable.Columns.Count - 1
-                            row.Add(tDataTable.Columns(i).ColumnName)
-                        Next
-
-                        Call write.WriteLine(row.AsLine)
-
-                        For i As Integer = 0 To tDataTable.Rows.Count - 1
-                            Dim rdata = tDataTable.Rows(i)
-                            row = New RowObject(rdata.ItemArray)
-                            Call write.WriteLine(row.AsLine)
-                        Next
-                    End Using
-                End If
-            End Using
-        End If
+        Call DataGridView1.SaveDataGrid
     End Sub
 
     Private Sub PageMzSearch_Load(sender As Object, e As EventArgs) Handles MyBase.Load

@@ -128,6 +128,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="DataControlHandler.vb" />
     <Compile Include="pages\PageSettings.Designer.vb">
       <DependentUpon>PageSettings.vb</DependentUpon>
     </Compile>
