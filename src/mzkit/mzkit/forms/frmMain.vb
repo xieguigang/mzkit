@@ -139,6 +139,12 @@ Public Class frmMain
 
         AddHandler ribbonItems.ButtonCalculatorExport.ExecuteEvent, Sub(sender, e) Call mzkitCalculator.ExportToolStripMenuItem_Click()
         AddHandler ribbonItems.ButtonExactMassSearchExport.ExecuteEvent, Sub(sender, e) Call mzkitTool.ExportExactMassSearchTable()
+        AddHandler ribbonItems.ButtonSave.ExecuteEvent, Sub(sender, e) Call saveCacheList()
+    End Sub
+
+    Private Sub saveCacheList()
+        mzkitTool.TreeView1.SaveRawFileCache
+        ToolStripStatusLabel.Text = "The raw file cache data was saved!"
     End Sub
 
     Private Sub RawFileViewerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RawFileViewerToolStripMenuItem.Click
