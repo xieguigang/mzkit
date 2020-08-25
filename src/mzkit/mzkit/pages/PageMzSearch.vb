@@ -86,9 +86,10 @@ Public Class PageMzSearch
 
         progress.Invoke(Sub() progress.Label2.Text = "running formula search...")
 
-        Dim searchResults = FormulaFinderTest4(mz, ppm, oMwtWin, searchOptions)
+        Dim searchResults = FormulaFinderTest4(mz, ppm, oMwtWin, searchOptions).ToArray
 
         progress.Invoke(Sub() progress.Label2.Text = "output search result...")
+        host.Invoke(Sub() host.ToolStripStatusLabel1.Text = $"Run formula search for m/z {mz} with tolerance error {ppm} ppm, have {searchResults.Length} formula found!")
 
         Call ShowFormulaFinderResults(searchOptions, searchResults, True, True)
 
@@ -225,8 +226,9 @@ Public Class PageMzSearch
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Dim mz As Double = Val(TextBox1.Text)
+        Dim ppm As Double = 30
 
-        Call doMzSearch(mz, 30)
+        Call doMzSearch(mz, ppm)
     End Sub
 End Class
 
