@@ -109,7 +109,9 @@ Public Class ImportsRawData
                     New attribute With {.name = NameOf(scan.centroided), .type = CDFDataTypes.CHAR, .value = scan.centroided Or "n/a".AsDefault},
                     New attribute With {.name = NameOf(scan.precursorMz), .type = CDFDataTypes.DOUBLE, .value = scan.precursorMz.value},
                     New attribute With {.name = NameOf(scan.retentionTime), .type = CDFDataTypes.DOUBLE, .value = PeakMs2.RtInSecond(scan.retentionTime)},
-                    New attribute With {.name = NameOf(scan.polarity), .type = CDFDataTypes.CHAR, .value = scan.polarity}
+                    New attribute With {.name = NameOf(scan.polarity), .type = CDFDataTypes.CHAR, .value = scan.polarity},
+                    New attribute With {.name = NameOf(scan.precursorMz.activationMethod), .type = CDFDataTypes.CHAR, .value = scan.precursorMz.activationMethod Or "n/a".AsDefault},
+                    New attribute With {.name = NameOf(scan.precursorMz.precursorCharge), .type = CDFDataTypes.DOUBLE, .value = scan.precursorMz.precursorCharge}
                 }
                 data = scan.peaks.Base64Decode(True)
                 name = scan.getName & $" scan={nscans.Count + 1}"
@@ -121,7 +123,8 @@ Public Class ImportsRawData
                     .mz = scan.precursorMz.value,
                     .rt = PeakMs2.RtInSecond(scan.retentionTime),
                     .intensity = scan.basePeakIntensity,
-                    .polarity = Provider.ParseIonMode(scan.polarity)
+                    .polarity = Provider.ParseIonMode(scan.polarity),
+                    .charge = scan.precursorMz.precursorCharge
                 }.DoCall(AddressOf nscans.Add)
 
                 Call showProgress(name)
