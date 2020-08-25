@@ -24,17 +24,22 @@ Partial Class PageMoleculeNetworking
     Private Sub InitializeComponent()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
-        Me.TabPage2 = New System.Windows.Forms.TabPage()
-        Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.DataGridView2 = New System.Windows.Forms.DataGridView()
+        Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.CompoundA = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CompoundB = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Similarity = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Compound = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ClusterId = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
-        Me.TabPage2.SuspendLayout()
-        Me.TabPage3.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage2.SuspendLayout()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage3.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -61,6 +66,17 @@ Partial Class PageMoleculeNetworking
         Me.TabPage1.Text = "Network"
         Me.TabPage1.UseVisualStyleBackColor = True
         '
+        'DataGridView1
+        '
+        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CompoundA, Me.CompoundB, Me.Similarity})
+        Me.DataGridView1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DataGridView1.Location = New System.Drawing.Point(3, 3)
+        Me.DataGridView1.Name = "DataGridView1"
+        Me.DataGridView1.ReadOnly = True
+        Me.DataGridView1.Size = New System.Drawing.Size(942, 566)
+        Me.DataGridView1.TabIndex = 0
+        '
         'TabPage2
         '
         Me.TabPage2.Controls.Add(Me.DataGridView2)
@@ -72,6 +88,16 @@ Partial Class PageMoleculeNetworking
         Me.TabPage2.Text = "Compounds"
         Me.TabPage2.UseVisualStyleBackColor = True
         '
+        'DataGridView2
+        '
+        Me.DataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView2.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Compound, Me.ClusterId})
+        Me.DataGridView2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DataGridView2.Location = New System.Drawing.Point(3, 3)
+        Me.DataGridView2.Name = "DataGridView2"
+        Me.DataGridView2.Size = New System.Drawing.Size(942, 566)
+        Me.DataGridView2.TabIndex = 0
+        '
         'TabPage3
         '
         Me.TabPage3.Controls.Add(Me.PictureBox1)
@@ -82,24 +108,6 @@ Partial Class PageMoleculeNetworking
         Me.TabPage3.Text = "Visual"
         Me.TabPage3.UseVisualStyleBackColor = True
         '
-        'DataGridView1
-        '
-        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DataGridView1.Location = New System.Drawing.Point(3, 3)
-        Me.DataGridView1.Name = "DataGridView1"
-        Me.DataGridView1.Size = New System.Drawing.Size(942, 566)
-        Me.DataGridView1.TabIndex = 0
-        '
-        'DataGridView2
-        '
-        Me.DataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DataGridView2.Location = New System.Drawing.Point(3, 3)
-        Me.DataGridView2.Name = "DataGridView2"
-        Me.DataGridView2.Size = New System.Drawing.Size(942, 566)
-        Me.DataGridView2.TabIndex = 0
-        '
         'PictureBox1
         '
         Me.PictureBox1.Dock = System.Windows.Forms.DockStyle.Fill
@@ -108,6 +116,34 @@ Partial Class PageMoleculeNetworking
         Me.PictureBox1.Size = New System.Drawing.Size(948, 572)
         Me.PictureBox1.TabIndex = 0
         Me.PictureBox1.TabStop = False
+        '
+        'CompoundA
+        '
+        Me.CompoundA.HeaderText = "CompoundA"
+        Me.CompoundA.Name = "CompoundA"
+        Me.CompoundA.ReadOnly = True
+        '
+        'CompoundB
+        '
+        Me.CompoundB.HeaderText = "CompoundB"
+        Me.CompoundB.Name = "CompoundB"
+        Me.CompoundB.ReadOnly = True
+        '
+        'Similarity
+        '
+        Me.Similarity.HeaderText = "Similarity"
+        Me.Similarity.Name = "Similarity"
+        Me.Similarity.ReadOnly = True
+        '
+        'Compound
+        '
+        Me.Compound.HeaderText = "Compound"
+        Me.Compound.Name = "Compound"
+        '
+        'ClusterId
+        '
+        Me.ClusterId.HeaderText = "ClusterId"
+        Me.ClusterId.Name = "ClusterId"
         '
         'PageMoleculeNetworking
         '
@@ -118,10 +154,10 @@ Partial Class PageMoleculeNetworking
         Me.Size = New System.Drawing.Size(956, 598)
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
-        Me.TabPage2.ResumeLayout(False)
-        Me.TabPage3.ResumeLayout(False)
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPage2.ResumeLayout(False)
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPage3.ResumeLayout(False)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -134,4 +170,9 @@ Partial Class PageMoleculeNetworking
     Friend WithEvents DataGridView1 As DataGridView
     Friend WithEvents DataGridView2 As DataGridView
     Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents CompoundA As DataGridViewTextBoxColumn
+    Friend WithEvents CompoundB As DataGridViewTextBoxColumn
+    Friend WithEvents Similarity As DataGridViewTextBoxColumn
+    Friend WithEvents Compound As DataGridViewTextBoxColumn
+    Friend WithEvents ClusterId As DataGridViewTextBoxColumn
 End Class
