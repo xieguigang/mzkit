@@ -13,7 +13,6 @@ using RibbonLib;
 using RibbonLib.Controls;
 using RibbonLib.Interop;
 
-
     partial class RibbonItems
     {
         private static class Cmd
@@ -36,6 +35,11 @@ using RibbonLib.Interop;
             public const uint cmdTabExactMassSearch = 1072;
             public const uint cmdGroupExactMassSearch = 1073;
             public const uint cmdButtonExactMassSearchExport = 1074;
+            public const uint cmdTabGroupNetworkTools = 1081;
+            public const uint cmdTabNetwork = 1082;
+            public const uint cmdGroupNetwork = 1083;
+            public const uint cmdButtonNetworkExport = 1084;
+            public const uint cmdButtonNetworkRender = 1085;
             public const uint cmdHelpButton = 1016;
             public const uint cmdTabMain = 1011;
             public const uint cmdGroupFileActions = 1045;
@@ -86,6 +90,11 @@ using RibbonLib.Interop;
         public RibbonTab TabExactMassSearch { get; private set; }
         public RibbonGroup GroupExactMassSearch { get; private set; }
         public RibbonButton ButtonExactMassSearchExport { get; private set; }
+        public RibbonTabGroup TabGroupNetworkTools { get; private set; }
+        public RibbonTab TabNetwork { get; private set; }
+        public RibbonGroup GroupNetwork { get; private set; }
+        public RibbonButton ButtonNetworkExport { get; private set; }
+        public RibbonButton ButtonNetworkRender { get; private set; }
         public RibbonHelpButton HelpButton { get; private set; }
         public RibbonTab TabMain { get; private set; }
         public RibbonGroup GroupFileActions { get; private set; }
@@ -136,6 +145,11 @@ using RibbonLib.Interop;
             TabExactMassSearch = new RibbonTab(ribbon, Cmd.cmdTabExactMassSearch);
             GroupExactMassSearch = new RibbonGroup(ribbon, Cmd.cmdGroupExactMassSearch);
             ButtonExactMassSearchExport = new RibbonButton(ribbon, Cmd.cmdButtonExactMassSearchExport);
+            TabGroupNetworkTools = new RibbonTabGroup(ribbon, Cmd.cmdTabGroupNetworkTools);
+            TabNetwork = new RibbonTab(ribbon, Cmd.cmdTabNetwork);
+            GroupNetwork = new RibbonGroup(ribbon, Cmd.cmdGroupNetwork);
+            ButtonNetworkExport = new RibbonButton(ribbon, Cmd.cmdButtonNetworkExport);
+            ButtonNetworkRender = new RibbonButton(ribbon, Cmd.cmdButtonNetworkRender);
             HelpButton = new RibbonHelpButton(ribbon, Cmd.cmdHelpButton);
             TabMain = new RibbonTab(ribbon, Cmd.cmdTabMain);
             GroupFileActions = new RibbonGroup(ribbon, Cmd.cmdGroupFileActions);

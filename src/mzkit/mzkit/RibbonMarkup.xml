@@ -336,6 +336,39 @@
 		</Command>
 		
 		
+		
+		<Command Name="cmdTabGroupNetworkTools"
+			Id="1081"
+			LabelTitle="Molecule Networking Tools">
+		</Command>
+
+		<Command Name="cmdTabNetwork"
+				 Id="1082"
+				 LabelTitle="Design">
+		</Command>
+
+		<Command Name="cmdGroupNetwork"
+				 Id="1083"
+				 LabelTitle="EEE">
+		</Command>
+
+
+		<Command Name="cmdButtonNetworkExport"
+					Id="1084"
+					LabelTitle="Export Network">
+			<Command.LargeImages>
+				<Image>Res/excel-icon.png</Image>
+			</Command.LargeImages>
+		</Command>
+		
+				<Command Name="cmdButtonNetworkRender"
+					Id="1085"
+					LabelTitle="Render Network">
+			<Command.LargeImages>
+				<Image>Res/excel-icon.png</Image>
+			</Command.LargeImages>
+		</Command>
+		
 	</Application.Commands>
 
 	<Application.Views>
@@ -378,7 +411,17 @@
 					</Tab>
 				</TabGroup>
 
+
+				<TabGroup CommandName='cmdTabGroupNetworkTools'>
+					<Tab CommandName='cmdTabNetwork'>
+						<Group CommandName='cmdGroupNetwork' SizeDefinition='TwoButtons'>
+							<Button CommandName='cmdButtonNetworkExport' />
+							<Button CommandName='cmdButtonNetworkRender' />
+						</Group>
+					</Tab>
+				</TabGroup>
 				
+
 			</Ribbon.ContextualTabs>
 
 			<Ribbon.HelpButton>

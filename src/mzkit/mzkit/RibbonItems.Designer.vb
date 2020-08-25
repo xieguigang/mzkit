@@ -14,7 +14,7 @@ Imports RibbonLib.Controls
 Imports RibbonLib.Interop
 
 Partial Class RibbonItems
-    Private _Ribbon As Ribbon, _TabGroupTableTools As RibbonTabGroup, _TabDesign As RibbonTab, _GroupDesign As RibbonGroup, _Spinner As RibbonSpinner, _ButtonDesign2 As RibbonButton, _ButtonDesign3 As RibbonButton, _TabLayout As RibbonTab, _GroupLayout As RibbonGroup, _ButtonLayout1 As RibbonButton, _ButtonLayout2 As RibbonButton, _TabGroupCalculatorTools As RibbonTabGroup, _TabCalculator As RibbonTab, _GroupCalculator As RibbonGroup, _ButtonCalculatorExport As RibbonButton, _TabGroupExactMassSearchTools As RibbonTabGroup, _TabExactMassSearch As RibbonTab, _GroupExactMassSearch As RibbonGroup, _ButtonExactMassSearchExport As RibbonButton, _HelpButton As RibbonHelpButton, _TabMain As RibbonTab, _GroupFileActions As RibbonGroup, _ButtonNew As RibbonButton, _ButtonOpenRaw As RibbonButton, _ButtonSave As RibbonButton, _ButtonExit As RibbonButton, _TabTools As RibbonTab, _GroupToolsActions As RibbonGroup, _ButtonMzCalculator As RibbonButton, _ButtonMzSearch As RibbonButton, _TabAbout As RibbonTab, _GroupAboutActions As RibbonGroup, _ButtonAbout As RibbonButton, _ButtonSettings As RibbonButton, _RecentItems As RibbonRecentItems, _MenuGroupFile As RibbonMenuGroup, _ButtonOpen As RibbonDropDownButton, _ButtonDropA As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton, _MenuGroupExit As RibbonMenuGroup, _QAT As RibbonQuickAccessToolbar, _ButtonPageNavBack As RibbonButton
+    Private _Ribbon As Ribbon, _TabGroupTableTools As RibbonTabGroup, _TabDesign As RibbonTab, _GroupDesign As RibbonGroup, _Spinner As RibbonSpinner, _ButtonDesign2 As RibbonButton, _ButtonDesign3 As RibbonButton, _TabLayout As RibbonTab, _GroupLayout As RibbonGroup, _ButtonLayout1 As RibbonButton, _ButtonLayout2 As RibbonButton, _TabGroupCalculatorTools As RibbonTabGroup, _TabCalculator As RibbonTab, _GroupCalculator As RibbonGroup, _ButtonCalculatorExport As RibbonButton, _TabGroupExactMassSearchTools As RibbonTabGroup, _TabExactMassSearch As RibbonTab, _GroupExactMassSearch As RibbonGroup, _ButtonExactMassSearchExport As RibbonButton, _TabGroupNetworkTools As RibbonTabGroup, _TabNetwork As RibbonTab, _GroupNetwork As RibbonGroup, _ButtonNetworkExport As RibbonButton, _ButtonNetworkRender As RibbonButton, _HelpButton As RibbonHelpButton, _TabMain As RibbonTab, _GroupFileActions As RibbonGroup, _ButtonNew As RibbonButton, _ButtonOpenRaw As RibbonButton, _ButtonSave As RibbonButton, _ButtonExit As RibbonButton, _TabTools As RibbonTab, _GroupToolsActions As RibbonGroup, _ButtonMzCalculator As RibbonButton, _ButtonMzSearch As RibbonButton, _TabAbout As RibbonTab, _GroupAboutActions As RibbonGroup, _ButtonAbout As RibbonButton, _ButtonSettings As RibbonButton, _RecentItems As RibbonRecentItems, _MenuGroupFile As RibbonMenuGroup, _ButtonOpen As RibbonDropDownButton, _ButtonDropA As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton, _MenuGroupExit As RibbonMenuGroup, _QAT As RibbonQuickAccessToolbar, _ButtonPageNavBack As RibbonButton
 
     Private NotInheritable Class Cmd
         Public Const cmdTabGroupTableTools As UInteger = 1031
@@ -35,6 +35,11 @@ Partial Class RibbonItems
         Public Const cmdTabExactMassSearch As UInteger = 1072
         Public Const cmdGroupExactMassSearch As UInteger = 1073
         Public Const cmdButtonExactMassSearchExport As UInteger = 1074
+        Public Const cmdTabGroupNetworkTools As UInteger = 1081
+        Public Const cmdTabNetwork As UInteger = 1082
+        Public Const cmdGroupNetwork As UInteger = 1083
+        Public Const cmdButtonNetworkExport As UInteger = 1084
+        Public Const cmdButtonNetworkRender As UInteger = 1085
         Public Const cmdHelpButton As UInteger = 1016
         Public Const cmdTabMain As UInteger = 1011
         Public Const cmdGroupFileActions As UInteger = 1045
@@ -234,6 +239,51 @@ Partial Class RibbonItems
         End Get
         Private Set(ByVal value As RibbonButton)
             _ButtonExactMassSearchExport = value
+        End Set
+    End Property
+
+    Public Property TabGroupNetworkTools As RibbonTabGroup
+        Get
+            Return _TabGroupNetworkTools
+        End Get
+        Private Set(ByVal value As RibbonTabGroup)
+            _TabGroupNetworkTools = value
+        End Set
+    End Property
+
+    Public Property TabNetwork As RibbonTab
+        Get
+            Return _TabNetwork
+        End Get
+        Private Set(ByVal value As RibbonTab)
+            _TabNetwork = value
+        End Set
+    End Property
+
+    Public Property GroupNetwork As RibbonGroup
+        Get
+            Return _GroupNetwork
+        End Get
+        Private Set(ByVal value As RibbonGroup)
+            _GroupNetwork = value
+        End Set
+    End Property
+
+    Public Property ButtonNetworkExport As RibbonButton
+        Get
+            Return _ButtonNetworkExport
+        End Get
+        Private Set(ByVal value As RibbonButton)
+            _ButtonNetworkExport = value
+        End Set
+    End Property
+
+    Public Property ButtonNetworkRender As RibbonButton
+        Get
+            Return _ButtonNetworkRender
+        End Get
+        Private Set(ByVal value As RibbonButton)
+            _ButtonNetworkRender = value
         End Set
     End Property
 
@@ -475,6 +525,11 @@ Partial Class RibbonItems
         TabExactMassSearch = New RibbonTab(ribbon, Cmd.cmdTabExactMassSearch)
         GroupExactMassSearch = New RibbonGroup(ribbon, Cmd.cmdGroupExactMassSearch)
         ButtonExactMassSearchExport = New RibbonButton(ribbon, Cmd.cmdButtonExactMassSearchExport)
+        TabGroupNetworkTools = New RibbonTabGroup(ribbon, Cmd.cmdTabGroupNetworkTools)
+        TabNetwork = New RibbonTab(ribbon, Cmd.cmdTabNetwork)
+        GroupNetwork = New RibbonGroup(ribbon, Cmd.cmdGroupNetwork)
+        ButtonNetworkExport = New RibbonButton(ribbon, Cmd.cmdButtonNetworkExport)
+        ButtonNetworkRender = New RibbonButton(ribbon, Cmd.cmdButtonNetworkRender)
         HelpButton = New RibbonHelpButton(ribbon, Cmd.cmdHelpButton)
         TabMain = New RibbonTab(ribbon, Cmd.cmdTabMain)
         GroupFileActions = New RibbonGroup(ribbon, Cmd.cmdGroupFileActions)
