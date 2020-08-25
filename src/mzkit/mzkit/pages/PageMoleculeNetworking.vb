@@ -12,12 +12,11 @@ Public Class PageMoleculeNetworking
     Public Sub loadNetwork(MN As SpectrumTreeCluster)
         DataGridView1.Rows.Clear()
         DataGridView2.Rows.Clear()
-        PictureBox1.BackgroundImage = Nothing
 
         g = TreeGraph(Of PeakMs2, PeakMs2) _
-            .CreateGraph(MN.getRoot, Function(a) a.lib_guid, Function(a) $"M{CInt(a.mz)}T{CInt(a.rt)}") _
-            .doRandomLayout _
-            .doForceLayout(iterations:=100)
+            .CreateGraph(MN.getRoot, Function(a) a.lib_guid, Function(a) $"M{CInt(a.mz)}T{CInt(a.rt)}")
+        '.doRandomLayout _
+        '.doForceLayout(iterations:=100)
 
         For Each node In g.vertex
             DataGridView2.Rows.Add(node.label, node.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE))
@@ -26,16 +25,16 @@ Public Class PageMoleculeNetworking
             DataGridView1.Rows.Add(edge.U.label, edge.V.label, edge.weight)
         Next
 
-        PictureBox1.BackgroundImage = g.DrawImage(labelerIterations:=-1).AsGDIImage
+        ' PictureBox1.BackgroundImage = g.DrawImage(labelerIterations:=-1).AsGDIImage
     End Sub
 
     Private Sub SaveImageToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveImageToolStripMenuItem.Click
-        If Not PictureBox1.BackgroundImage Is Nothing Then
-            Using file As New SaveFileDialog With {.Filter = "image(*.png)|*.png"}
-                If file.ShowDialog = DialogResult.OK Then
-                    Call PictureBox1.BackgroundImage.SaveAs(file.FileName)
-                End If
-            End Using
-        End If
+        'If Not PictureBox1.BackgroundImage Is Nothing Then
+        '    Using file As New SaveFileDialog With {.Filter = "image(*.png)|*.png"}
+        '        If file.ShowDialog = DialogResult.OK Then
+        '            Call PictureBox1.BackgroundImage.SaveAs(file.FileName)
+        '        End If
+        '    End Using
+        'End If
     End Sub
 End Class
