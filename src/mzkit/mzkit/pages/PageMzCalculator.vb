@@ -104,7 +104,17 @@ Public Class PageMzCalculator
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-        Process.Start($"https://query.biodeep.cn/search?expression=[mass]~0.3&category=metabolite&mass={TextBox1.Text}")
+        Dim exact_mass As Double
+
+        If TextBox1.Text.StringEmpty Then
+            Return
+        ElseIf TextBox1.Text.IsNumeric Then
+            exact_mass = Val(TextBox1.Text)
+        Else
+            exact_mass = Task.Math.EvaluateFormula(TextBox1.Text)
+        End If
+
+        Process.Start($"https://query.biodeep.cn/search?expression=[mass]~0.3&category=metabolite&mass={exact_mass}")
     End Sub
 
     Private Sub PageMzCalculator_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
