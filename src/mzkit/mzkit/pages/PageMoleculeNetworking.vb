@@ -35,8 +35,11 @@ Public Class PageMoleculeNetworking
             Using file As New FolderBrowserDialog With {.ShowNewFolderButton = True}
                 If file.ShowDialog = DialogResult.OK Then
                     Call g.Tabular.Save(output:=file.SelectedPath)
+                    Call Process.Start(file.SelectedPath)
                 End If
             End Using
+        Else
+            MessageBox.Show("No network graph object is found! Please goto raw file viewer page and select a raw file to run [Molecule Networking] analysis!", "No network graph object!", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         End If
     End Sub
 
