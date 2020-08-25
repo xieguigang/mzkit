@@ -67,7 +67,9 @@ Public Class PageMzSearch
     Private Sub runSearchInternal(mz As Double, ppm As Double, progress As frmTaskProgress)
         progress.Invoke(Sub() progress.Label2.Text = "initialize workspace...")
 
-        Dim oMwtWin As New FormulaSearch(opts:=Chemoinformatics.Formula.SearchOption.DefaultMetaboliteProfile)
+        Dim oMwtWin As New FormulaSearch(
+            opts:=Chemoinformatics.Formula.SearchOption.DefaultMetaboliteProfile,
+            progress:=Sub(msg) progress.Invoke(Sub() progress.Label1.Text = msg))
 
         progress.Invoke(Sub() progress.Label2.Text = "running formula search...")
 

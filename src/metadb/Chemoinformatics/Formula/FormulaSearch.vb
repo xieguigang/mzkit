@@ -7,18 +7,22 @@ Namespace Formula
 
         ReadOnly opts As SearchOption
         ReadOnly elements As Dictionary(Of String, Element)
+        ReadOnly progressReport As Action(Of String)
 
-        Sub New(opts As SearchOption)
+        Sub New(opts As SearchOption, Optional progress As Action(Of String) = Nothing)
             Me.opts = opts
+            Me.progressReport = progress
             Me.elements = Element.MemoryLoadElements
         End Sub
 
         Public Iterator Function SearchByExactMass(exact_mass As Double) As IEnumerable(Of FormulaComposition)
-            Dim elements As New Stack(Of ElementSearchCandiate)(opts.candidateElements)
+            Dim elements As New Stack(Of ElementSearchCandiate)(opts.candidateElements.AsEnumerable.Reverse)
             Dim seed As New FormulaComposition(New Dictionary(Of String, Integer), "")
 
             For Each formula As FormulaComposition In SearchByExactMass(exact_mass, seed, elements)
                 If opts.chargeRange.IsInside(formula.charge) Then
+                    progressReport($"find {formula} with tolerance error {formula.ppm} ppm!")
+
                     Yield formula
                 End If
             Next
