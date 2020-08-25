@@ -424,7 +424,7 @@ Public Class PageMzkitTools
             For Each scan As ScanEntry In raw.scans
                 If scan.polarity > 0 Then
                     For Each mode In pos
-                        If PPMmethod.ppm(scan.mz, Val(mode.mz)) <= ppm Then
+                        If PPMmethod.PPM(scan.mz, Val(mode.mz)) <= ppm Then
                             DataGridView1.Rows.Add(
                                 scan.id,
                                 scan.mz.ToString("F4"),
@@ -435,12 +435,12 @@ Public Class PageMzkitTools
                                 mode.adduct,
                                 mode.charge,
                                 mode.precursor_type,
-                                PPMmethod.ppm(scan.mz, Val(mode.mz)).ToString("F2"))
+                                PPMmethod.PPM(scan.mz, Val(mode.mz)).ToString("F2"))
                         End If
                     Next
                 ElseIf scan.polarity < 0 Then
                     For Each mode In neg
-                        If PPMmethod.ppm(scan.mz, Val(mode.mz)) <= ppm Then
+                        If PPMmethod.PPM(scan.mz, Val(mode.mz)) <= ppm Then
                             DataGridView1.Rows.Add(
                                 scan.id,
                                 scan.mz.ToString("F4"),
@@ -451,7 +451,7 @@ Public Class PageMzkitTools
                                 mode.adduct,
                                 mode.charge,
                                 mode.precursor_type,
-                                PPMmethod.ppm(scan.mz, Val(mode.mz)).ToString("F2"))
+                                PPMmethod.PPM(scan.mz, Val(mode.mz)).ToString("F2"))
                         End If
                     Next
                 End If
@@ -494,7 +494,7 @@ Public Class PageMzkitTools
     Private Sub searchInFileByMz(mz As Double)
         Dim ppm As Double = Val(RibbonItems.Spinner.DecimalValue)
         Dim raw = TreeView1.CurrentRawFile.raw
-        Dim ms2Hits = raw.scans.Where(Function(m) PPMmethod.ppm(m.mz, mz) <= ppm).ToArray
+        Dim ms2Hits = raw.scans.Where(Function(m) PPMmethod.PPM(m.mz, mz) <= ppm).ToArray
 
         ListBox1.Items.Clear()
 
