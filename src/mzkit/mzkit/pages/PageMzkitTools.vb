@@ -200,6 +200,8 @@ Public Class PageMzkitTools
 
                 PictureBox1.BackgroundImage = draw
             End Using
+
+            TabControl1.SelectedTab = TabPage1
         Else
             Call missingCacheFile(raw)
         End If
@@ -219,6 +221,8 @@ Public Class PageMzkitTools
                 showStatusMessage(selectedFile)
                 ListBox1.Items.Clear()
             End If
+
+            host.Text = $"M/z Toolkit [ { .source.GetFullPath} ]"
         End With
 
         If Not TreeView1.CurrentRawFile.raw.cache.FileExists Then
@@ -366,7 +370,7 @@ Public Class PageMzkitTools
 
             showStatusMessage($"Search MS ions for [{TextBox1.Text}] exact_mass={exact_mass} with tolerance error {ppm} ppm")
 
-            DataGridView1.Columns.Add(New DataGridViewTextBoxColumn() With {
+            DataGridView1.Columns.Add(New DataGridViewLinkColumn With {
                   .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
                   .ValueType = GetType(String),
                   .HeaderText = "scan Id"})
@@ -568,6 +572,16 @@ Public Class PageMzkitTools
             End Sub)
         runTask.Start()
         progress.ShowDialog()
+    End Sub
+
+    Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellContentClick
+        If e.ColumnIndex = Scan0 AndAlso e.RowIndex >= 0 Then
+            Dim scanId As String = DataGridView1.Rows(e.RowIndex).Cells(0).Value?.ToString
+
+            If Not scanId.StringEmpty Then
+                Call showSpectrum(scanId, TreeView1.CurrentRawFile.raw)
+            End If
+        End If
     End Sub
 End Class
 
