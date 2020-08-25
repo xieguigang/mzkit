@@ -157,11 +157,11 @@
 
 		<Command Name="cmdButtonAbout"
 			 Id="1021"
-			 LabelTitle="Drop B"
-			 LabelDescription="Sub button B"
-			TooltipTitle="Drop B">
+			 LabelTitle="About Mzkit"
+			 LabelDescription="Show Information about BioNovoGene M/z toolkit"
+			TooltipTitle="Show Application About">
 			<Command.LargeImages>
-				<Image>Res/DropB32.bmp</Image>
+				<Image>Res/dialog-information.png</Image>
 			</Command.LargeImages>
 		</Command>
 
@@ -260,7 +260,7 @@
 			 LabelDescription="Mzkit Tools Configuration"
 			TooltipTitle="Apply Settings">
 			<Command.LargeImages>
-				<Image>Res/DropA32.bmp</Image>
+				<Image>Res/applications-system.png</Image>
 			</Command.LargeImages>
 		</Command>
 
