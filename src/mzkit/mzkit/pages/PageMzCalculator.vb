@@ -50,7 +50,15 @@ Imports RibbonLib.Interop
 Public Class PageMzCalculator
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        Dim exact_mass As Double = Val(TextBox1.Text)
+        Dim exact_mass As Double
+
+        If TextBox1.Text.StringEmpty Then
+            Return
+        ElseIf TextBox1.Text.IsNumeric Then
+            exact_mass = Val(TextBox1.Text)
+        Else
+            exact_mass = Task.Math.EvaluateFormula(TextBox1.Text)
+        End If
 
         Call Update(exact_mass, Provider.GetCalculator("+").Values, DataGridView1)
         Call Update(exact_mass, Provider.GetCalculator("-").Values, DataGridView2)

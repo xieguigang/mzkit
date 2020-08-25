@@ -357,13 +357,9 @@ Public Class PageMzkitTools
             Call searchInFileByMz(mz:=Val(TextBox1.Text))
         Else
             ' formula
-            Dim composition As FormulaComposition = FormulaScanner.ScanFormula(TextBox1.Text)
-            Dim exact_mass As Double = Aggregate atom
-                                       In composition.CountsByElement
-                                       Let eval As Double = ExactMass.Eval(atom.Key) * atom.Value
-                                       Into Sum(eval)
+            Dim exact_mass As Double = Math.EvaluateFormula(TextBox1.Text)
             Dim ppm As Double = Val(RibbonItems.Spinner.DecimalValue)
-            Dim raw = TreeView1.CurrentRawFile.raw
+            Dim raw As Raw = TreeView1.CurrentRawFile.raw
 
             DataGridView1.Rows.Clear()
             DataGridView1.Columns.Clear()
