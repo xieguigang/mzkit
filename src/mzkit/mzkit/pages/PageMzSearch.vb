@@ -47,7 +47,8 @@
 Imports System.IO
 Imports System.Text
 Imports System.Threading
-Imports BioNovoGene.BioDeep.Chemoinformatics
+Imports BioNovoGene.BioDeep
+Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports RibbonLib.Interop
 Imports RowObject = Microsoft.VisualBasic.Data.csv.IO.RowObject
 
@@ -64,70 +65,29 @@ Public Class PageMzSearch
     End Sub
 
     Private Sub runSearchInternal(mz As Double, ppm As Double, progress As frmTaskProgress)
-        Dim oMwtWin As New FormulaSearch(opts:=New Formula.SearchOption)
-
         progress.Invoke(Sub() progress.Label2.Text = "initialize workspace...")
 
-        oMwtWin.SetElementMode(MWElementAndMassRoutines.emElementModeConstants.emIsotopicMass)
-
-        oMwtWin.FormulaFinder.CandidateElements.Clear()
-
-        oMwtWin.FormulaFinder.AddCandidateElement("C")
-        oMwtWin.FormulaFinder.AddCandidateElement("H")
-        oMwtWin.FormulaFinder.AddCandidateElement("O")
-        oMwtWin.FormulaFinder.AddCandidateElement("N")
-        oMwtWin.FormulaFinder.AddCandidateElement("P")
-
-        Dim searchOptions As New FormulaFinderOptions() With {
-            .LimitChargeRange = True,
-            .ChargeMin = 0,
-            .ChargeMax = 2,
-            .FindTargetMZ = True,
-            .FindCharge = True,
-            .SearchMode = eSearchMode.Bounded,
-            .VerifyHydrogens = False
-        }
+        Dim oMwtWin As New FormulaSearch(opts:=Chemoinformatics.Formula.SearchOption.DefaultMetaboliteProfile)
 
         progress.Invoke(Sub() progress.Label2.Text = "running formula search...")
 
-        Dim searchResults = FormulaFinderTest4(mz, ppm, oMwtWin, searchOptions).ToArray
+        Dim searchResults = oMwtWin.SearchByExactMass(mz).ToArray
 
         progress.Invoke(Sub() progress.Label2.Text = "output search result...")
         host.Invoke(Sub() host.ToolStripStatusLabel1.Text = $"Run formula search for m/z {mz} with tolerance error {ppm} ppm, have {searchResults.Length} formula found!")
 
-        Call ShowFormulaFinderResults(searchOptions, searchResults, True, True)
+        Call ShowFormulaFinderResults(searchResults)
 
         Call progress.Invoke(Sub() Call progress.Close())
     End Sub
 
-    Private Function FormulaFinderTest4(mz As Double, ppm As Double, oMwtWin As MolecularWeightCalculator, searchOptions As FormulaFinderOptions) As IEnumerable(Of FormulaFinderResult)
-
-        'searchOptions.LimitChargeRange = True
-        'searchOptions.ChargeMin = -4
-        'searchOptions.ChargeMax = 6
-        'searchOptions.FindTargetMZ = True
-
-        ' Search for 100 m/z, +/- 250 ppm
-        Return oMwtWin.FormulaFinder.FindMatchesByMassPPM(mz, ppm, searchOptions)
-    End Function
-
-    Private Sub ShowFormulaFinderResults(
-     searchOptions As FormulaFinderOptions,
-     lstResults As IEnumerable(Of FormulaFinderResult),
-     Optional deltaMassIsPPM As Boolean = False,
-     Optional percentCompositionSearch As Boolean = False)
-
+    Private Sub ShowFormulaFinderResults(lstResults As IEnumerable(Of FormulaComposition))
         Dim myDataSet = New DataSet("myDataSet")
 
         ' Create a DataTable.
         tDataTable = New DataTable("DataTable1")
 
-        Dim massColumnName As String
-        If deltaMassIsPPM Then
-            massColumnName = "DeltaPPM"
-        Else
-            massColumnName = "DeltaMass"
-        End If
+        Dim massColumnName As String = "DeltaPPM"
 
         ' Add coluns to the table
         Dim cFormula As New DataColumn("Formula", GetType(String))
@@ -156,34 +116,13 @@ Public Class PageMzSearch
 
         Dim sbPercentCompInfo = New StringBuilder()
 
-        For Each result As FormulaFinderResult In lstResults
+        For Each result As FormulaComposition In lstResults
             newRow = tDataTable.NewRow()
             newRow("Formula") = result.EmpiricalFormula
-            newRow("Mass") = Math.Round(result.Mass, 4)
-
-            If deltaMassIsPPM Then
-                newRow(massColumnName) = result.DeltaMass.ToString("0.0")
-            Else
-                newRow(massColumnName) = result.DeltaMass.ToString("0.000")
-            End If
-
-            newRow("Charge") = result.ChargeState
-
-            If searchOptions.FindCharge Then
-                newRow("M/Z") = Math.Round(result.MZ, 3)
-            End If
-
-            If percentCompositionSearch Then
-
-                sbPercentCompInfo.Clear()
-
-                For Each percentCompValue In result.PercentComposition
-                    sbPercentCompInfo.Append(" " & percentCompValue.Key & "=" & percentCompValue.Value.ToString("0.00") & "%")
-                Next
-                newRow("PercentCompInfo") = sbPercentCompInfo.ToString().TrimStart()
-            Else
-                newRow("PercentCompInfo") = String.Empty
-            End If
+            newRow("Mass") = Math.Round(result.exact_mass, 4)
+            newRow(massColumnName) = result.ppm.ToString("0.0")
+            newRow("Charge") = result.charge
+            newRow("M/Z") = Math.Round(result.exact_mass / result.charge, 3)
 
             tDataTable.Rows.Add(newRow)
         Next
