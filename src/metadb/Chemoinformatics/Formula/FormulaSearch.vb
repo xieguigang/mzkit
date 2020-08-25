@@ -43,7 +43,9 @@ Namespace Formula
                 ElseIf formula.exact_mass < exact_mass Then
                     If candidates.Count > 0 Then
                         ' 还可以再增加分子质量
-                        For Each subtree In SearchByExactMass(exact_mass, parent:=formula, New Stack(Of ElementSearchCandiate)(candidates))
+                        ' stack必须要在这里进行重新初始化
+                        ' 否则会被其他的循环所修改产生bug
+                        For Each subtree In SearchByExactMass(exact_mass, parent:=formula, New Stack(Of ElementSearchCandiate)(candidates.AsEnumerable.Reverse))
                             Yield subtree
                         Next
                     End If

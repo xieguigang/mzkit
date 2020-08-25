@@ -33,10 +33,10 @@ Namespace Formula
         Public Shared Function DefaultMetaboliteProfile() As SearchOption
             Return New SearchOption(-3, 3) _
                 .AddElement("C", 1, 20) _
-                .AddElement("H", 4, 300) _
-                .AddElement("N", 1, 100) _
-                .AddElement("O", 2, 100) _
-                .AddElement("P", 1, 100)
+                .AddElement("H", 1, 200) _
+                .AddElement("N", 1, 50) _
+                .AddElement("O", 1, 50) _
+                .AddElement("P", 1, 50)
         End Function
 
     End Class
