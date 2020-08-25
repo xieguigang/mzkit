@@ -559,8 +559,10 @@ Public Class PageMzkitTools
 
                 progress.Invoke(Sub() progress.Label1.Text = "initialize result output...")
 
-                Call host.mzkitMNtools.loadNetwork(tree)
-                Call host.ShowPage(host.mzkitMNtools)
+                host.Invoke(Sub()
+                                Call host.mzkitMNtools.loadNetwork(tree)
+                                Call host.ShowPage(host.mzkitMNtools)
+                            End Sub)
 
                 progress.Invoke(Sub() progress.Close())
             End Sub)
