@@ -2,6 +2,7 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Language
 
 Public Module MoleculeNetworking
 
@@ -10,6 +11,8 @@ Public Module MoleculeNetworking
                                           cutoff As Double,
                                           tolerance As Tolerance,
                                           progressCallback As Action(Of String)) As IEnumerable(Of DataSet)
+        Dim i As i32 = 1
+
         For Each scan In ms2
             Dim scores = ms2 _
                 .Where(Function(a) Not a Is scan) _
@@ -23,7 +26,7 @@ Public Module MoleculeNetworking
                 .Where(Function(a) a.Item2 >= cutoff) _
                 .ToArray
 
-            Call progressCallback($"{scan.ToString} has {scores.Length} homologous spectrum")
+            Call progressCallback($"[{++i}/{ms2.Length}] {scan.ToString} has {scores.Length} homologous spectrum")
 
             Yield New DataSet With {
                 .ID = scan.lib_guid,
