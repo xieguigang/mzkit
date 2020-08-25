@@ -76,13 +76,18 @@ Public Class PageMzSearch
         oMwtWin.FormulaFinder.AddCandidateElement("C")
         oMwtWin.FormulaFinder.AddCandidateElement("H")
         oMwtWin.FormulaFinder.AddCandidateElement("O")
+        oMwtWin.FormulaFinder.AddCandidateElement("N")
+        oMwtWin.FormulaFinder.AddCandidateElement("P")
 
-        Dim searchOptions As New FormulaFinderOptions()
-
-        searchOptions.LimitChargeRange = True
-        searchOptions.ChargeMin = 1
-        searchOptions.ChargeMax = 2
-        searchOptions.FindTargetMZ = False
+        Dim searchOptions As New FormulaFinderOptions() With {
+            .LimitChargeRange = True,
+            .ChargeMin = 0,
+            .ChargeMax = 2,
+            .FindTargetMZ = True,
+            .FindCharge = True,
+            .SearchMode = eSearchMode.Bounded,
+            .VerifyHydrogens = False
+        }
 
         progress.Invoke(Sub() progress.Label2.Text = "running formula search...")
 
@@ -98,10 +103,10 @@ Public Class PageMzSearch
 
     Private Function FormulaFinderTest4(mz As Double, ppm As Double, oMwtWin As MolecularWeightCalculator, searchOptions As FormulaFinderOptions) As IEnumerable(Of FormulaFinderResult)
 
-        searchOptions.LimitChargeRange = True
-        searchOptions.ChargeMin = -4
-        searchOptions.ChargeMax = 6
-        searchOptions.FindTargetMZ = True
+        'searchOptions.LimitChargeRange = True
+        'searchOptions.ChargeMin = -4
+        'searchOptions.ChargeMax = 6
+        'searchOptions.FindTargetMZ = True
 
         ' Search for 100 m/z, +/- 250 ppm
         Return oMwtWin.FormulaFinder.FindMatchesByMassPPM(mz, ppm, searchOptions)
