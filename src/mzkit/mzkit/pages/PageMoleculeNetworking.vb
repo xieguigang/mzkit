@@ -1,10 +1,9 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+﻿Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.visualize.Network
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
-Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports RibbonLib.Interop
 
 Public Class PageMoleculeNetworking
@@ -12,13 +11,28 @@ Public Class PageMoleculeNetworking
     Dim g As NetworkGraph
     Dim host As frmMain
 
-    Public Sub loadNetwork(MN As SpectrumTreeCluster)
+    Public Sub loadNetwork(MN As IEnumerable(Of EntityClusterModel))
         DataGridView1.Rows.Clear()
         DataGridView2.Rows.Clear()
 
-        g = TreeGraph(Of PeakMs2, PeakMs2).CreateGraph(MN.getRoot, Function(a) a.lib_guid, Function(a) $"M{CInt(a.mz)}T{CInt(a.rt)}")
+        ' g = TreeGraph(Of PeakMs2, PeakMs2).CreateGraph(MN.getRoot, Function(a) a.lib_guid, Function(a) $"M{CInt(a.mz)}T{CInt(a.rt)}")
         '.doRandomLayout _
         '.doForceLayout(iterations:=100)
+        g = New NetworkGraph
+
+        For Each row In MN
+            If g.GetElementByID(row.ID) Is Nothing Then
+                g.CreateNode(row.ID, New NodeData With {.Properties = New Dictionary(Of String, String) From {{NamesOf.REFLECTION_ID_MAPPING_NODETYPE, row.Cluster}}})
+            End If
+
+            For Each link In row.Properties
+                If g.GetElementByID(link.Key) Is Nothing Then
+                    g.CreateNode(link.Key)
+                End If
+
+                g.CreateEdge(row.ID, link.Key, link.Value)
+            Next
+        Next
 
         For Each node In g.vertex
             DataGridView2.Rows.Add(node.label, node.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE))

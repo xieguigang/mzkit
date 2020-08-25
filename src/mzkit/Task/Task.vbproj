@@ -88,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Math.vb" />
+    <Compile Include="MoleculeNetworking.vb" />
     <Compile Include="SpectrumProperty.vb" />
     <Compile Include="Raw.vb" />
     <Compile Include="ImportsRawData.vb" />

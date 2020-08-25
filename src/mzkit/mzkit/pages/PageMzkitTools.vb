@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::13636b710d15c7add5bb883831e486eb, src\mzkit\mzkit\pages\PageMzkitTools.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class PageMzkitTools
-    ' 
-    '     Sub: applyLevelFilter, Button1_Click, DeleteFileToolStripMenuItem_Click, ExportExactMassSearchTable, ImportsRaw
-    '          InitializeFileTree, ListBox1_SelectedIndexChanged, missingCacheFile, MS1ToolStripMenuItem_Click, MS2ToolStripMenuItem_Click
-    '          PageMzkitTools_Load, runMzSearch, SaveFileCache, SaveImageToolStripMenuItem_Click, SaveMatrixToolStripMenuItem_Click
-    '          SearchFormulaToolStripMenuItem_Click, searchInFileByMz, SearchInFileToolStripMenuItem_Click, setCurrentFile, showSpectrum
-    '          showStatusMessage, ShowTICToolStripMenuItem_Click, TreeView1_AfterSelect
-    ' 
-    ' /********************************************************************************/
+' Class PageMzkitTools
+' 
+'     Sub: applyLevelFilter, Button1_Click, DeleteFileToolStripMenuItem_Click, ExportExactMassSearchTable, ImportsRaw
+'          InitializeFileTree, ListBox1_SelectedIndexChanged, missingCacheFile, MS1ToolStripMenuItem_Click, MS2ToolStripMenuItem_Click
+'          PageMzkitTools_Load, runMzSearch, SaveFileCache, SaveImageToolStripMenuItem_Click, SaveMatrixToolStripMenuItem_Click
+'          SearchFormulaToolStripMenuItem_Click, searchInFileByMz, SearchInFileToolStripMenuItem_Click, setCurrentFile, showSpectrum
+'          showStatusMessage, ShowTICToolStripMenuItem_Click, TreeView1_AfterSelect
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -59,6 +59,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
+Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -560,7 +561,7 @@ Public Class PageMzkitTools
         Dim progress As New frmTaskProgress
         Dim runTask As New Thread(
             Sub()
-                Dim tree As New SpectrumTreeCluster(SpectrumTreeCluster.SSMCompares(Tolerance.DeltaMass(0.3), 0.75, 0.4), showReport:=False)
+                ' Dim tree As New SpectrumTreeCluster(SpectrumTreeCluster.SSMCompares(Tolerance.DeltaMass(0.3), 0.75, 0.4), showReport:=False)
                 Dim run As New List(Of PeakMs2)
 
                 progress.Invoke(Sub() progress.Label1.Text = "loading cache ms2 scan data...")
@@ -571,7 +572,7 @@ Public Class PageMzkitTools
                             .rt = scan.rt,
                             .mz = scan.mz,
                             .lib_guid = $"M{CInt(.mz)}T{CInt(.rt)}",
-                            .mzInto = cache.getDataVariable(scan.id).numerics.AsMs2.ToArray
+                            .mzInto = cache.getDataVariable(scan.id).numerics.AsMs2.ToArray.Centroid(Tolerance.DeltaMass(0.3)).ToArray
                         }
 
                         progress.Invoke(Sub() progress.Label2.Text = scan.id)
@@ -580,12 +581,17 @@ Public Class PageMzkitTools
 
                 progress.Invoke(Sub() progress.Label1.Text = "run molecular networking....")
 
-                Call tree.doCluster(run)
+                ' Call tree.doCluster(run)
+                Dim net = MoleculeNetworking.CreateMatrix(run, 0.6, Tolerance.DeltaMass(0.3), Sub(msg) progress.Invoke(Sub() progress.Label1.Text = msg)).ToArray
+
+                progress.Invoke(Sub() progress.Label1.Text = "run family clustering....")
+
+                Dim clusters = net.ToKMeansModels.Kmeans(expected:=10, debug:=False)
 
                 progress.Invoke(Sub() progress.Label1.Text = "initialize result output...")
 
                 host.Invoke(Sub()
-                                Call host.mzkitMNtools.loadNetwork(tree)
+                                Call host.mzkitMNtools.loadNetwork(clusters)
                                 Call host.ShowPage(host.mzkitMNtools)
                             End Sub)
 
