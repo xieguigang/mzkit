@@ -171,7 +171,7 @@ Public Class PageMzkitTools
 
     Private Sub PageMzkitTools_Load(sender As Object, e As EventArgs) Handles Me.Load
         host = DirectCast(ParentForm, frmMain)
-        status = host.ToolStripStatusLabel
+        status = host.ToolStripStatusLabel1
         RibbonItems = host.ribbonItems
 
         Call InitializeFileTree()

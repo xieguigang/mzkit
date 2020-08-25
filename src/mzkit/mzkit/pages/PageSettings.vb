@@ -53,7 +53,7 @@ Public Class PageSettings
 
     Private Sub PageSettings_Load(sender As Object, e As EventArgs) Handles Me.Load
         host = DirectCast(ParentForm, frmMain)
-        status = host.ToolStripStatusLabel
+        status = host.ToolStripStatusLabel1
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
