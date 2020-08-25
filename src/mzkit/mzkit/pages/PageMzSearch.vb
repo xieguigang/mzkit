@@ -47,8 +47,7 @@
 Imports System.IO
 Imports System.Text
 Imports System.Threading
-Imports PNNL.OMICS.MwtWinDll
-Imports PNNL.OMICS.MwtWinDll.FormulaFinder
+Imports BioNovoGene.BioDeep.Chemoinformatics
 Imports RibbonLib.Interop
 Imports RowObject = Microsoft.VisualBasic.Data.csv.IO.RowObject
 
@@ -65,7 +64,7 @@ Public Class PageMzSearch
     End Sub
 
     Private Sub runSearchInternal(mz As Double, ppm As Double, progress As frmTaskProgress)
-        Dim oMwtWin As New MolecularWeightCalculator()
+        Dim oMwtWin As New FormulaSearch(opts:=New Formula.SearchOption)
 
         progress.Invoke(Sub() progress.Label2.Text = "initialize workspace...")
 

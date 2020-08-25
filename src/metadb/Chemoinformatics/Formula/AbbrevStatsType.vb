@@ -19,44 +19,47 @@
 ' SOFTWARE.  This notice including this sentence must appear on any copies of 
 ' this computer software.
 
-Public Class AbbrevStatsType
+Namespace Formula
 
-    ''' <summary>
-    ''' The symbol for the abbreviation, e.g. Ph for 
-    ''' the phenyl group or Ala for alanine (3 letter 
-    ''' codes for amino acids)
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property Symbol As String
-    ''' <summary>
-    ''' Cannot contain other abbreviations
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property Formula As String
-    ''' <summary>
-    ''' Computed mass for quick reference
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property Mass As Double
-    Public Property Charge As Single
-    ''' <summary>
-    ''' True if an amino acid
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property IsAminoAcid As Boolean
-    ''' <summary>
-    ''' Only used for amino acids
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property OneLetterSymbol As String
-    ''' <summary>
-    ''' Description of the abbreviation
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property Comment As String
-    Public Property InvalidSymbolOrFormula As Boolean
+    Public Class AbbrevStatsType
 
-    Public Overrides Function ToString() As String
-        Return Symbol & ": " & Formula
-    End Function
-End Class
+        ''' <summary>
+        ''' The symbol for the abbreviation, e.g. Ph for 
+        ''' the phenyl group or Ala for alanine (3 letter 
+        ''' codes for amino acids)
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Symbol As String
+        ''' <summary>
+        ''' Cannot contain other abbreviations
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Formula As String
+        ''' <summary>
+        ''' Computed mass for quick reference
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Mass As Double
+        Public Property Charge As Single
+        ''' <summary>
+        ''' True if an amino acid
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property IsAminoAcid As Boolean
+        ''' <summary>
+        ''' Only used for amino acids
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property OneLetterSymbol As String
+        ''' <summary>
+        ''' Description of the abbreviation
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Comment As String
+        Public Property InvalidSymbolOrFormula As Boolean
+
+        Public Overrides Function ToString() As String
+            Return Symbol & ": " & Formula
+        End Function
+    End Class
+End Namespace
