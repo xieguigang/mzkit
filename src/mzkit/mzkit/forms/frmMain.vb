@@ -148,6 +148,10 @@ Public Class frmMain
         ToolStripStatusLabel1.Text = "The raw file cache data was saved!"
     End Sub
 
+    Private Sub MoleculeNetworkingToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MoleculeNetworkingToolStripMenuItem.Click
+        Call ShowPage(mzkitMNtools)
+    End Sub
+
     Private Sub RawFileViewerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RawFileViewerToolStripMenuItem.Click
         Call ShowPage(mzkitTool)
     End Sub

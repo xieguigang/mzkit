@@ -27,6 +27,7 @@ Partial Class frmMain
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMain))
         Me.StatusStrip = New System.Windows.Forms.StatusStrip()
+        Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripDropDownButton1 = New System.Windows.Forms.ToolStripDropDownButton()
         Me.FormulaSearchToolToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MzCalculatorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -34,7 +35,7 @@ Partial Class frmMain
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.Ribbon1 = New RibbonLib.Ribbon()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.MoleculeNetworkingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StatusStrip.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -47,9 +48,15 @@ Partial Class frmMain
         Me.StatusStrip.TabIndex = 7
         Me.StatusStrip.Text = "StatusStrip"
         '
+        'ToolStripStatusLabel1
+        '
+        Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
+        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(134, 18)
+        Me.ToolStripStatusLabel1.Text = "ToolStripStatusLabel1"
+        '
         'ToolStripDropDownButton1
         '
-        Me.ToolStripDropDownButton1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FormulaSearchToolToolStripMenuItem, Me.MzCalculatorToolStripMenuItem, Me.RawFileViewerToolStripMenuItem})
+        Me.ToolStripDropDownButton1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MoleculeNetworkingToolStripMenuItem, Me.FormulaSearchToolToolStripMenuItem, Me.MzCalculatorToolStripMenuItem, Me.RawFileViewerToolStripMenuItem})
         Me.ToolStripDropDownButton1.Image = CType(resources.GetObject("ToolStripDropDownButton1.Image"), System.Drawing.Image)
         Me.ToolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ToolStripDropDownButton1.Name = "ToolStripDropDownButton1"
@@ -61,20 +68,20 @@ Partial Class frmMain
         '
         Me.FormulaSearchToolToolStripMenuItem.Image = CType(resources.GetObject("FormulaSearchToolToolStripMenuItem.Image"), System.Drawing.Image)
         Me.FormulaSearchToolToolStripMenuItem.Name = "FormulaSearchToolToolStripMenuItem"
-        Me.FormulaSearchToolToolStripMenuItem.Size = New System.Drawing.Size(196, 22)
+        Me.FormulaSearchToolToolStripMenuItem.Size = New System.Drawing.Size(201, 22)
         Me.FormulaSearchToolToolStripMenuItem.Text = "Formula Search Tool"
         '
         'MzCalculatorToolStripMenuItem
         '
         Me.MzCalculatorToolStripMenuItem.Name = "MzCalculatorToolStripMenuItem"
-        Me.MzCalculatorToolStripMenuItem.Size = New System.Drawing.Size(196, 22)
+        Me.MzCalculatorToolStripMenuItem.Size = New System.Drawing.Size(201, 22)
         Me.MzCalculatorToolStripMenuItem.Text = "m/z Calculator"
         '
         'RawFileViewerToolStripMenuItem
         '
         Me.RawFileViewerToolStripMenuItem.Image = CType(resources.GetObject("RawFileViewerToolStripMenuItem.Image"), System.Drawing.Image)
         Me.RawFileViewerToolStripMenuItem.Name = "RawFileViewerToolStripMenuItem"
-        Me.RawFileViewerToolStripMenuItem.Size = New System.Drawing.Size(196, 22)
+        Me.RawFileViewerToolStripMenuItem.Size = New System.Drawing.Size(201, 22)
         Me.RawFileViewerToolStripMenuItem.Text = "Raw File Viewer"
         '
         'Ribbon1
@@ -94,11 +101,11 @@ Partial Class frmMain
         Me.Panel1.Size = New System.Drawing.Size(1260, 524)
         Me.Panel1.TabIndex = 13
         '
-        'ToolStripStatusLabel1
+        'MoleculeNetworkingToolStripMenuItem
         '
-        Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
-        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(134, 18)
-        Me.ToolStripStatusLabel1.Text = "ToolStripStatusLabel1"
+        Me.MoleculeNetworkingToolStripMenuItem.Name = "MoleculeNetworkingToolStripMenuItem"
+        Me.MoleculeNetworkingToolStripMenuItem.Size = New System.Drawing.Size(201, 22)
+        Me.MoleculeNetworkingToolStripMenuItem.Text = "Molecule Networking"
         '
         'frmMain
         '
@@ -126,4 +133,5 @@ Partial Class frmMain
     Friend WithEvents MzCalculatorToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents RawFileViewerToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripStatusLabel1 As ToolStripStatusLabel
+    Friend WithEvents MoleculeNetworkingToolStripMenuItem As ToolStripMenuItem
 End Class
