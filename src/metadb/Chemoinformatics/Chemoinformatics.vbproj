@@ -175,6 +175,7 @@
   <ItemGroup>
     <Compile Include="Formula\FormulaComposition.vb" />
     <Compile Include="Formula\FormulaScanner.vb" />
+    <Compile Include="Formula\Element.vb" />
     <Compile Include="InChI\Components.vb" />
     <Compile Include="InChI\Extensions.vb" />
     <Compile Include="InChI\InChI.vb" />
