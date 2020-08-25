@@ -51,7 +51,18 @@ Imports System.Runtime.CompilerServices
 
 Namespace Formula
 
-    Public Class FormulaComposition
+    Public Class Formula
+
+        Public ReadOnly Property CountsByElement As Dictionary(Of String, Integer)
+        Public ReadOnly Property EmpiricalFormula As String
+            Get
+                Return m_formula
+            End Get
+        End Property
+
+        Friend m_formula As String
+
+        Public Shared ReadOnly Property Elements As IReadOnlyDictionary(Of String, Element) = Element.MemoryLoadElements
 
         Default Public ReadOnly Property GetAtomCount(atom As String) As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -60,37 +71,73 @@ Namespace Formula
             End Get
         End Property
 
-        Public ReadOnly Property CountsByElement As Dictionary(Of String, Integer)
-        Public ReadOnly Property EmpiricalFormula As String
-
         Sub New(counts As IDictionary(Of String, Integer), Optional formula$ = Nothing)
             CountsByElement = New Dictionary(Of String, Integer)(counts)
 
             If formula.StringEmpty Then
-                EmpiricalFormula = CountsByElement _
-                    .Select(Function(e)
-                                Return If(e.Value = 1, e.Key, e.Key & e.Value)
-                            End Function) _
-                    .JoinBy("")
+                Me.m_formula = BuildFormula(CountsByElement)
             Else
-                EmpiricalFormula = formula
+                Me.m_formula = formula
             End If
         End Sub
+
+        Public Shared Function BuildFormula(countsByElement As Dictionary(Of String, Integer)) As String
+            Return countsByElement _
+                .Select(Function(e)
+                            Return If(e.Value = 1, e.Key, e.Key & e.Value)
+                        End Function) _
+                .JoinBy("")
+        End Function
 
         Public Overrides Function ToString() As String
             Return EmpiricalFormula
         End Function
 
-        Public Shared Operator *(composition As FormulaComposition, n%) As FormulaComposition
+        Public Shared Operator *(composition As Formula, n%) As Formula
             Dim newFormula$ = $"({composition}){n}"
             Dim newComposition = composition _
-            .CountsByElement _
-            .ToDictionary(Function(e) e.Key,
-                          Function(e)
-                              Return e.Value * n
-                          End Function)
+                .CountsByElement _
+                .ToDictionary(Function(e) e.Key,
+                              Function(e)
+                                  Return e.Value * n
+                              End Function)
 
-            Return New FormulaComposition(newComposition, newFormula)
+            Return New Formula(newComposition, newFormula)
         End Operator
+    End Class
+
+    Public Class FormulaComposition : Inherits Formula
+
+        Public Property charge As Integer
+        Public Property ppm As Double
+        Public Property exact_mass As Double
+
+        Sub New(counts As IDictionary(Of String, Integer), Optional formula$ = Nothing)
+            Call MyBase.New(counts, formula)
+        End Sub
+
+        Public Function AppendElement(element As String, count As Integer) As FormulaComposition
+            Dim copy As FormulaComposition = GetCopy()
+
+            If copy.CountsByElement.ContainsKey(element) Then
+                copy.CountsByElement(element) += count
+            Else
+                copy.CountsByElement(element) = count
+            End If
+
+            copy.exact_mass = copy.exact_mass + Formula.Elements(element).isotopic * count
+            copy.charge = copy.charge + Formula.Elements(element).charge * count
+            copy.m_formula = Formula.BuildFormula(copy.CountsByElement)
+
+            Return copy
+        End Function
+
+        Friend Function GetCopy() As FormulaComposition
+            Return New FormulaComposition(CountsByElement, EmpiricalFormula) With {
+                .exact_mass = exact_mass,
+                .charge = charge,
+                .ppm = ppm
+            }
+        End Function
     End Class
 End Namespace

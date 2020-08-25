@@ -4,7 +4,7 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Public Module Math
 
     Public Function EvaluateFormula(formula As String) As Double
-        Dim composition As FormulaComposition = FormulaScanner.ScanFormula(formula)
+        Dim composition As Formula = FormulaScanner.ScanFormula(formula)
         Dim exact_mass As Double = Aggregate atom
                                    In composition.CountsByElement
                                    Let eval As Double = ExactMass.Eval(atom.Key) * atom.Value

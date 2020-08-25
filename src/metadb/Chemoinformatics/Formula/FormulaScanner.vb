@@ -72,7 +72,7 @@ Namespace Formula
         ' (CH3)4C
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function ScanFormula(formula$, Optional n% = 9999) As FormulaComposition
+        Public Shared Function ScanFormula(formula$, Optional n% = 9999) As Formula
             Return New FormulaScanner(n).ScanFormula(New CharPtr(formula))
         End Function
 
@@ -108,7 +108,7 @@ Namespace Formula
             End If
         End Sub
 
-        Private Function ScanFormula(scaner As CharPtr) As FormulaComposition
+        Private Function ScanFormula(scaner As CharPtr) As Formula
             Dim c As Char
 
             Do While Not scaner.EndRead
@@ -131,7 +131,7 @@ Namespace Formula
                 ElseIf c = "("c Then
                     ' 遇到了一个堆栈
                     ' 对这个分子基团进行函数递归
-                    Dim group As FormulaComposition = New FormulaScanner(n).ScanFormula(scaner)
+                    Dim group As Formula = New FormulaScanner(n).ScanFormula(scaner)
 
                     Call push(c)
                     ' 后面必定会跟着数字
@@ -179,7 +179,7 @@ Namespace Formula
             ' 把剩余的也添加进去
             Call push(c)
 
-            Return New FormulaComposition(composition.AsInteger, formula.CharString)
+            Return New Formula(composition.AsInteger, formula.CharString)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

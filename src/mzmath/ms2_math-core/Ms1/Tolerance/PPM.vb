@@ -68,7 +68,7 @@ Namespace Ms1
         ''' <param name="measured#"></param>
         ''' <param name="actualValue#"></param>
         ''' <returns></returns>
-        Public Overloads Shared Function ppm(measured#, actualValue#) As Double
+        Public Overloads Shared Function PPM(measured#, actualValue#) As Double
             ' （测量值-实际分子量）/ 实际分子量
             ' |(实验数据 - 数据库结果)| / 实验数据 * 1000000
             Dim ppmd# = (stdNum.Abs(measured - actualValue) / actualValue) * 1000000

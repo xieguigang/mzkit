@@ -176,8 +176,8 @@
     <Compile Include="Formula\AbbrevStatsType.vb" />
     <Compile Include="Formula\SearchOption.vb" />
     <Compile Include="Formula\FormulaSearch.vb" />
-    <Compile Include="Formula\ElementSearchRange.vb" />
-    <Compile Include="Formula\FormulaComposition.vb" />
+    <Compile Include="Formula\ElementSearchCandiate.vb" />
+    <Compile Include="Formula\Formula.vb" />
     <Compile Include="Formula\FormulaScanner.vb" />
     <Compile Include="Formula\Element.vb" />
     <Compile Include="InChI\Components.vb" />

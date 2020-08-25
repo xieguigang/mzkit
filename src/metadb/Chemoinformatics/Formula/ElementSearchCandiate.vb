@@ -1,4 +1,4 @@
-﻿Public Class ElementSearchRange
+﻿Public Class ElementSearchCandiate
 
     Public Property Element As String
     Public Property MinCount As Integer = 0
