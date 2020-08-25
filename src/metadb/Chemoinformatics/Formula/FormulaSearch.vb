@@ -20,7 +20,9 @@ Namespace Formula
             Dim seed As New FormulaComposition(New Dictionary(Of String, Integer), "")
 
             For Each formula As FormulaComposition In SearchByExactMass(exact_mass, seed, elements)
-                If opts.chargeRange.IsInside(formula.charge) Then
+                formula.charge = FormalCharge.CorrectChargeEmpirical(formula.charge, New ElementNumType(formula))
+
+                If formula.charge >= opts.chargeRange.Min AndAlso formula.charge <= opts.chargeRange.Max Then
                     progressReport($"find {formula} with tolerance error {formula.ppm} ppm!")
 
                     Yield formula

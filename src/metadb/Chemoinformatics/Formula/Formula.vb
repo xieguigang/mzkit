@@ -108,7 +108,7 @@ Namespace Formula
 
     Public Class FormulaComposition : Inherits Formula
 
-        Public Property charge As Integer
+        Public Property charge As Double
         Public Property ppm As Double
         Public Property exact_mass As Double
 
