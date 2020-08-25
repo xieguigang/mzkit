@@ -560,7 +560,7 @@ Public Class PageMzkitTools
         Dim progress As New frmTaskProgress
         Dim runTask As New Thread(
             Sub()
-                Dim tree As New SpectrumTreeCluster(SpectrumTreeCluster.SSMCompares, showReport:=False)
+                Dim tree As New SpectrumTreeCluster(SpectrumTreeCluster.SSMCompares(Tolerance.DeltaMass(0.3), 0.75, 0.4), showReport:=False)
                 Dim run As New List(Of PeakMs2)
 
                 progress.Invoke(Sub() progress.Label1.Text = "loading cache ms2 scan data...")
