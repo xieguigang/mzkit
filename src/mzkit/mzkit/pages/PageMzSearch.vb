@@ -59,7 +59,7 @@ Public Class PageMzSearch
     End Sub
 
     Private Sub runSearchInternal(mz As Double, ppm As Double, progress As frmTaskProgress)
-        Dim oMwtWin = New MolecularWeightCalculator()
+        Dim oMwtWin As New MolecularWeightCalculator()
 
         progress.Invoke(Sub() progress.Label2.Text = "initialize workspace...")
 
@@ -69,17 +69,13 @@ Public Class PageMzSearch
 
         oMwtWin.FormulaFinder.AddCandidateElement("C")
         oMwtWin.FormulaFinder.AddCandidateElement("H")
-        oMwtWin.FormulaFinder.AddCandidateElement("N")
         oMwtWin.FormulaFinder.AddCandidateElement("O")
 
-        ' Abbreviations are supported, for example Serine
-        oMwtWin.FormulaFinder.AddCandidateElement("Ser")
+        Dim searchOptions As New FormulaFinderOptions()
 
-        Dim searchOptions = New FormulaFinderOptions()
-
-        searchOptions.LimitChargeRange = False
+        searchOptions.LimitChargeRange = True
         searchOptions.ChargeMin = 1
-        searchOptions.ChargeMax = 1
+        searchOptions.ChargeMax = 2
         searchOptions.FindTargetMZ = False
 
         progress.Invoke(Sub() progress.Label2.Text = "running formula search...")
