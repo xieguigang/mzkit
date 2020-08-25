@@ -384,6 +384,11 @@ Public Class PageMzkitTools
             DataGridView1.Columns.Add(New DataGridViewTextBoxColumn() With {
                   .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
                   .ValueType = GetType(String),
+                  .HeaderText = "rt(min)"})
+
+            DataGridView1.Columns.Add(New DataGridViewTextBoxColumn() With {
+                  .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
+                  .ValueType = GetType(String),
                   .HeaderText = "intensity"})
 
             DataGridView1.Columns.Add(New DataGridViewTextBoxColumn() With {
@@ -419,13 +424,33 @@ Public Class PageMzkitTools
                 If scan.polarity > 0 Then
                     For Each mode In pos
                         If PPMmethod.ppm(scan.mz, Val(mode.mz)) <= ppm Then
-                            DataGridView1.Rows.Add(scan.id, scan.mz, scan.rt, scan.intensity, mode.M, mode.adduct, mode.charge, mode.precursor_type, PPMmethod.ppm(scan.mz, Val(mode.mz)))
+                            DataGridView1.Rows.Add(
+                                scan.id,
+                                scan.mz.ToString("F4"),
+                                CInt(scan.rt),
+                                (scan.rt / 60).ToString("F2"),
+                                scan.intensity.ToString("G3"),
+                                mode.M,
+                                mode.adduct,
+                                mode.charge,
+                                mode.precursor_type,
+                                PPMmethod.ppm(scan.mz, Val(mode.mz)).ToString("F2"))
                         End If
                     Next
                 ElseIf scan.polarity < 0 Then
                     For Each mode In neg
                         If PPMmethod.ppm(scan.mz, Val(mode.mz)) <= ppm Then
-                            DataGridView1.Rows.Add(scan.id, scan.mz, scan.rt, scan.intensity, mode.M, mode.adduct, mode.charge, mode.precursor_type, PPMmethod.ppm(scan.mz, Val(mode.mz)))
+                            DataGridView1.Rows.Add(
+                                scan.id,
+                                scan.mz.ToString("F4"),
+                                CInt(scan.rt),
+                                (scan.rt / 60).ToString("F2"),
+                                scan.intensity.ToString("G3"),
+                                mode.M,
+                                mode.adduct,
+                                mode.charge,
+                                mode.precursor_type,
+                                PPMmethod.ppm(scan.mz, Val(mode.mz)).ToString("F2"))
                         End If
                     Next
                 End If
