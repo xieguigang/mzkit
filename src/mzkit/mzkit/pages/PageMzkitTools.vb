@@ -531,23 +531,41 @@ Public Class PageMzkitTools
             Return
         End If
 
-        Dim tree As New SpectrumTreeCluster(SpectrumTreeCluster.SSMCompares, showReport:=False)
-        Dim run As New List(Of PeakMs2)
+        Dim raw As Raw = TreeView1.CurrentRawFile.raw
+        Dim progress As New frmTaskProgress
+        Dim runTask As New Thread(
+            Sub()
+                Dim tree As New SpectrumTreeCluster(SpectrumTreeCluster.SSMCompares, showReport:=False)
+                Dim run As New List(Of PeakMs2)
 
-        Using cache As New netCDFReader(TreeView1.CurrentRawFile.raw.cache)
-            For Each scan In TreeView1.CurrentRawFile.raw.scans.Where(Function(s) s.mz > 0)
-                run += New PeakMs2 With {
-                    .rt = scan.rt,
-                    .mz = scan.mz,
-                    .lib_guid = scan.id,
-                    .mzInto = cache.getDataVariable(scan.id).numerics.AsMs2.ToArray
-                }
-            Next
-        End Using
+                progress.Invoke(Sub() progress.Label1.Text = "loading cache ms2 scan data...")
 
-        Call tree.doCluster(run)
-        Call host.mzkitMNtools.loadNetwork(tree)
-        Call host.ShowPage(host.mzkitMNtools)
+                Using cache As New netCDFReader(raw.cache)
+                    For Each scan In raw.scans.Where(Function(s) s.mz > 0)
+                        run += New PeakMs2 With {
+                            .rt = scan.rt,
+                            .mz = scan.mz,
+                            .lib_guid = scan.id,
+                            .mzInto = cache.getDataVariable(scan.id).numerics.AsMs2.ToArray
+                        }
+
+                        progress.Invoke(Sub() progress.Label2.Text = scan.id)
+                    Next
+                End Using
+
+                progress.Invoke(Sub() progress.Label1.Text = "run molecular networking....")
+
+                Call tree.doCluster(run)
+
+                progress.Invoke(Sub() progress.Label1.Text = "initialize result output...")
+
+                Call host.mzkitMNtools.loadNetwork(tree)
+                Call host.ShowPage(host.mzkitMNtools)
+
+                progress.Invoke(Sub() progress.Close())
+            End Sub)
+        runTask.Start()
+        progress.ShowDialog()
     End Sub
 End Class
 
