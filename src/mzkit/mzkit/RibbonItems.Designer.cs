@@ -13,8 +13,7 @@ using RibbonLib;
 using RibbonLib.Controls;
 using RibbonLib.Interop;
 
-namespace RibbonLib.Controls
-{
+
     partial class RibbonItems
     {
         private static class Cmd
@@ -42,6 +41,10 @@ namespace RibbonLib.Controls
             public const uint cmdGroupNetwork = 1083;
             public const uint cmdButtonNetworkExport = 1084;
             public const uint cmdButtonNetworkRender = 1085;
+            public const uint cmdTabGroupFormulaSearchTools = 1091;
+            public const uint cmdTabFormulaSearch = 1092;
+            public const uint cmdGroupFormulaSearch = 1093;
+            public const uint cmdButtonFormulaSearchExport = 1094;
             public const uint cmdHelpButton = 1016;
             public const uint cmdTabMain = 1011;
             public const uint cmdGroupFileActions = 1045;
@@ -97,6 +100,10 @@ namespace RibbonLib.Controls
         public RibbonGroup GroupNetwork { get; private set; }
         public RibbonButton ButtonNetworkExport { get; private set; }
         public RibbonButton ButtonNetworkRender { get; private set; }
+        public RibbonTabGroup TabGroupFormulaSearchTools { get; private set; }
+        public RibbonTab TabFormulaSearch { get; private set; }
+        public RibbonGroup GroupFormulaSearch { get; private set; }
+        public RibbonButton ButtonFormulaSearchExport { get; private set; }
         public RibbonHelpButton HelpButton { get; private set; }
         public RibbonTab TabMain { get; private set; }
         public RibbonGroup GroupFileActions { get; private set; }
@@ -152,6 +159,10 @@ namespace RibbonLib.Controls
             GroupNetwork = new RibbonGroup(ribbon, Cmd.cmdGroupNetwork);
             ButtonNetworkExport = new RibbonButton(ribbon, Cmd.cmdButtonNetworkExport);
             ButtonNetworkRender = new RibbonButton(ribbon, Cmd.cmdButtonNetworkRender);
+            TabGroupFormulaSearchTools = new RibbonTabGroup(ribbon, Cmd.cmdTabGroupFormulaSearchTools);
+            TabFormulaSearch = new RibbonTab(ribbon, Cmd.cmdTabFormulaSearch);
+            GroupFormulaSearch = new RibbonGroup(ribbon, Cmd.cmdGroupFormulaSearch);
+            ButtonFormulaSearchExport = new RibbonButton(ribbon, Cmd.cmdButtonFormulaSearchExport);
             HelpButton = new RibbonHelpButton(ribbon, Cmd.cmdHelpButton);
             TabMain = new RibbonTab(ribbon, Cmd.cmdTabMain);
             GroupFileActions = new RibbonGroup(ribbon, Cmd.cmdGroupFileActions);
@@ -180,4 +191,3 @@ namespace RibbonLib.Controls
         }
 
     }
-}

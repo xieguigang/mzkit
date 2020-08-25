@@ -1,55 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::d934041670f9828af641220a18c6edf7, src\mzkit\mzkit\pages\PageMzSearch.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class PageMzSearch
-    ' 
-    '     Function: FormulaFinderTest4
-    ' 
-    '     Sub: doMzSearch, PageMzSearch_Load, runSearchInternal, ShowFormulaFinderResults
-    ' 
-    ' /********************************************************************************/
+' Class PageMzSearch
+' 
+'     Function: FormulaFinderTest4
+' 
+'     Sub: doMzSearch, PageMzSearch_Load, runSearchInternal, ShowFormulaFinderResults
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports System.Text
 Imports System.Threading
 Imports PNNL.OMICS.MwtWinDll
 Imports PNNL.OMICS.MwtWinDll.FormulaFinder
+Imports RibbonLib.Interop
+Imports RowObject = Microsoft.VisualBasic.Data.csv.IO.RowObject
 
 Public Class PageMzSearch
+
+    Dim host As frmMain
+    Dim tDataTable As DataTable
 
     Public Sub doMzSearch(mz As Double, ppm As Double)
         Dim progress As New frmTaskProgress
@@ -109,7 +115,7 @@ Public Class PageMzSearch
         Dim myDataSet = New DataSet("myDataSet")
 
         ' Create a DataTable.
-        Dim tDataTable As New DataTable("DataTable1")
+        tDataTable = New DataTable("DataTable1")
 
         Dim massColumnName As String
         If deltaMassIsPPM Then
@@ -181,8 +187,46 @@ Public Class PageMzSearch
 
     End Sub
 
-    Private Sub PageMzSearch_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Public Sub SaveSearchResultTable()
+        If Not tDataTable Is Nothing Then
+            Using file As New SaveFileDialog With {.Filter = "Excel Table(*.xls)|*.xls"}
+                If file.ShowDialog = DialogResult.OK Then
+                    Dim row As New RowObject
 
+                    Using write As StreamWriter = file.FileName.OpenWriter
+                        For i As Integer = 0 To tDataTable.Columns.Count - 1
+                            row.Add(tDataTable.Columns(i).ColumnName)
+                        Next
+
+                        Call write.WriteLine(row.AsLine)
+
+                        For i As Integer = 0 To tDataTable.Rows.Count - 1
+                            Dim rdata = tDataTable.Rows(i)
+                            row = New RowObject(rdata.ItemArray)
+                            Call write.WriteLine(row.AsLine)
+                        Next
+                    End Using
+                End If
+            End Using
+        End If
+    End Sub
+
+    Private Sub PageMzSearch_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        host = DirectCast(ParentForm, frmMain)
+    End Sub
+
+    Private Sub PageMzSearch_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
+        If Visible Then
+            host.ribbonItems.TabGroupFormulaSearchTools.ContextAvailable = ContextAvailability.Active
+        Else
+            host.ribbonItems.TabGroupFormulaSearchTools.ContextAvailable = ContextAvailability.NotAvailable
+        End If
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Dim mz As Double = Val(TextBox1.Text)
+
+        Call doMzSearch(mz, 30)
     End Sub
 End Class
 

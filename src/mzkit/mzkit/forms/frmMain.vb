@@ -141,6 +141,7 @@ Public Class frmMain
         AddHandler ribbonItems.ButtonExactMassSearchExport.ExecuteEvent, Sub(sender, e) Call mzkitTool.ExportExactMassSearchTable()
         AddHandler ribbonItems.ButtonSave.ExecuteEvent, Sub(sender, e) Call saveCacheList()
         AddHandler ribbonItems.ButtonNetworkExport.ExecuteEvent, Sub(sender, e) Call mzkitMNtools.saveNetwork()
+        AddHandler ribbonItems.ButtonFormulaSearchExport.ExecuteEvent, Sub(sender, e) Call mzkitSearch.SaveSearchResultTable()
     End Sub
 
     Private Sub saveCacheList()

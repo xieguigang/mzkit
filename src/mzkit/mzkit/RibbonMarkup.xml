@@ -369,6 +369,34 @@
 			</Command.LargeImages>
 		</Command>
 		
+		
+		
+				<Command Name="cmdTabGroupFormulaSearchTools"
+			Id="1091"
+			LabelTitle="Formula Search Tools">
+		</Command>
+
+		<Command Name="cmdTabFormulaSearch"
+				 Id="1092"
+				 LabelTitle="Design">
+		</Command>
+
+		<Command Name="cmdGroupFormulaSearch"
+				 Id="1093"
+				 LabelTitle="EEE">
+		</Command>
+
+
+		<Command Name="cmdButtonFormulaSearchExport"
+					Id="1094"
+					LabelTitle="Export Formula Search Result">
+			<Command.LargeImages>
+				<Image>Res/excel-icon.png</Image>
+			</Command.LargeImages>
+		</Command>
+		
+
+		
 	</Application.Commands>
 
 	<Application.Views>
@@ -421,6 +449,17 @@
 					</Tab>
 				</TabGroup>
 				
+		<TabGroup CommandName='cmdTabGroupFormulaSearchTools'>
+					<Tab CommandName='cmdTabFormulaSearch'>
+						<Group CommandName='cmdGroupFormulaSearch' SizeDefinition='TwoButtons'>
+							<Button CommandName='cmdButtonFormulaSearchExport' />
+							<Button CommandName='cmdButtonNetworkRender' />
+						</Group>
+					</Tab>
+				</TabGroup>
+
+
+		
 
 			</Ribbon.ContextualTabs>
 

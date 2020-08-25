@@ -157,5 +157,14 @@
 #define cmdButtonNetworkRender 1085 
 #define cmdButtonNetworkRender_LabelTitle_RESID 60102
 #define cmdButtonNetworkRender_LargeImages_RESID 60103
-#define cmdGroupExit_LabelTitle_RESID 60104
-#define InternalCmd2_LabelTitle_RESID 60105
+#define cmdTabGroupFormulaSearchTools 1091 
+#define cmdTabGroupFormulaSearchTools_LabelTitle_RESID 60104
+#define cmdTabFormulaSearch 1092 
+#define cmdTabFormulaSearch_LabelTitle_RESID 60105
+#define cmdGroupFormulaSearch 1093 
+#define cmdGroupFormulaSearch_LabelTitle_RESID 60106
+#define cmdButtonFormulaSearchExport 1094 
+#define cmdButtonFormulaSearchExport_LabelTitle_RESID 60107
+#define cmdButtonFormulaSearchExport_LargeImages_RESID 60108
+#define cmdGroupExit_LabelTitle_RESID 60109
+#define InternalCmd2_LabelTitle_RESID 60110
