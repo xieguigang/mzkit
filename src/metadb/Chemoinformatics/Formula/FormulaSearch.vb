@@ -102,6 +102,10 @@ Namespace Formula
                 Dim formula As FormulaComposition = parent.AppendElement(current.Element, n)
                 Dim ppm As Double = FormulaSearch.PPM(formula.exact_mass, exact_mass)
 
+                If Not formula.HeteroatomRatioCheck Then
+                    Continue For
+                End If
+
                 If ppm <= opts.ppm Then
                     formula.ppm = ppm
                     ' populate current formula that match exact mass ppm condition
