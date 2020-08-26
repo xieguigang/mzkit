@@ -45,6 +45,8 @@ using RibbonLib.Interop;
             public const uint cmdTabFormulaSearch = 1092;
             public const uint cmdGroupFormulaSearch = 1093;
             public const uint cmdButtonFormulaSearchExport = 1094;
+            public const uint cmdGroupFormulaSearchConfig = 1095;
+            public const uint cmdComboFormulaSearchProfile = 1096;
             public const uint cmdHelpButton = 1016;
             public const uint cmdTabMain = 1011;
             public const uint cmdGroupFileActions = 1045;
@@ -104,6 +106,8 @@ using RibbonLib.Interop;
         public RibbonTab TabFormulaSearch { get; private set; }
         public RibbonGroup GroupFormulaSearch { get; private set; }
         public RibbonButton ButtonFormulaSearchExport { get; private set; }
+        public RibbonGroup GroupFormulaSearchConfig { get; private set; }
+        public RibbonComboBox ComboFormulaSearchProfile { get; private set; }
         public RibbonHelpButton HelpButton { get; private set; }
         public RibbonTab TabMain { get; private set; }
         public RibbonGroup GroupFileActions { get; private set; }
@@ -163,6 +167,8 @@ using RibbonLib.Interop;
             TabFormulaSearch = new RibbonTab(ribbon, Cmd.cmdTabFormulaSearch);
             GroupFormulaSearch = new RibbonGroup(ribbon, Cmd.cmdGroupFormulaSearch);
             ButtonFormulaSearchExport = new RibbonButton(ribbon, Cmd.cmdButtonFormulaSearchExport);
+            GroupFormulaSearchConfig = new RibbonGroup(ribbon, Cmd.cmdGroupFormulaSearchConfig);
+            ComboFormulaSearchProfile = new RibbonComboBox(ribbon, Cmd.cmdComboFormulaSearchProfile);
             HelpButton = new RibbonHelpButton(ribbon, Cmd.cmdHelpButton);
             TabMain = new RibbonTab(ribbon, Cmd.cmdTabMain);
             GroupFileActions = new RibbonGroup(ribbon, Cmd.cmdGroupFileActions);

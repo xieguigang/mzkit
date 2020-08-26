@@ -308,9 +308,9 @@
 				<Image>Res/excel-icon.png</Image>
 			</Command.LargeImages>
 		</Command>
-		
-		
-		
+
+
+
 		<Command Name="cmdTabGroupExactMassSearchTools"
 			Id="1071"
 			LabelTitle="Calculator Tools">
@@ -334,9 +334,9 @@
 				<Image>Res/excel-icon.png</Image>
 			</Command.LargeImages>
 		</Command>
-		
-		
-		
+
+
+
 		<Command Name="cmdTabGroupNetworkTools"
 			Id="1081"
 			LabelTitle="Molecule Networking Tools">
@@ -360,20 +360,20 @@
 				<Image>Res/excel-icon.png</Image>
 			</Command.LargeImages>
 		</Command>
-		
-				<Command Name="cmdButtonNetworkRender"
-					Id="1085"
-					LabelTitle="Render Network">
+
+		<Command Name="cmdButtonNetworkRender"
+			Id="1085"
+			LabelTitle="Render Network">
 			<Command.LargeImages>
 				<Image>Res/excel-icon.png</Image>
 			</Command.LargeImages>
 		</Command>
-		
-		
-		
-				<Command Name="cmdTabGroupFormulaSearchTools"
-			Id="1091"
-			LabelTitle="Formula Search Tools">
+
+
+
+		<Command Name="cmdTabGroupFormulaSearchTools"
+	Id="1091"
+	LabelTitle="Formula Search Tools">
 		</Command>
 
 		<Command Name="cmdTabFormulaSearch"
@@ -394,9 +394,19 @@
 				<Image>Res/excel-icon.png</Image>
 			</Command.LargeImages>
 		</Command>
-		
 
+		<Command Name="cmdGroupFormulaSearchConfig"
+				 Id="1095"
+				 LabelTitle="EEE">
+		</Command>
 		
+		<Command Name="cmdComboFormulaSearchProfile"
+				 Id="1096"
+				 LabelTitle ="Preset Profiles:"
+				 TooltipTitle ="Preset Formula Search Profile"
+			LabelDescription="Select Preset Formula Search Profile"		>
+		</Command>
+
 	</Application.Commands>
 
 	<Application.Views>
@@ -448,18 +458,22 @@
 						</Group>
 					</Tab>
 				</TabGroup>
-				
-		<TabGroup CommandName='cmdTabGroupFormulaSearchTools'>
+
+				<TabGroup CommandName='cmdTabGroupFormulaSearchTools'>
 					<Tab CommandName='cmdTabFormulaSearch'>
 						<Group CommandName='cmdGroupFormulaSearch' SizeDefinition='TwoButtons'>
 							<Button CommandName='cmdButtonFormulaSearchExport' />
 							<Button CommandName='cmdButtonNetworkRender' />
 						</Group>
+
+						<Group CommandName='cmdGroupFormulaSearchConfig'>
+							<ComboBox CommandName="cmdComboFormulaSearchProfile" IsEditable="false" ResizeType="NoResize" />
+						</Group>
 					</Tab>
 				</TabGroup>
 
 
-		
+
 
 			</Ribbon.ContextualTabs>
 

@@ -186,6 +186,7 @@ Public Class frmMain
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         InitRecentItems()
         InitSpinner()
+        InitializeFormulaProfile()
         ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
 
         addPage(mzkitTool, mzkitSettings, mzkitSearch, mzkitCalculator, mzkitMNtools)
@@ -193,6 +194,45 @@ Public Class frmMain
 
         ToolStripStatusLabel1.Text = "Ready!"
     End Sub
+
+    Private Sub InitializeFormulaProfile()
+        AddHandler ribbonItems.ComboFormulaSearchProfile.ItemsSourceReady,
+            Sub(sender, e)
+                Dim itemsSource3 As IUICollection = ribbonItems.ComboFormulaSearchProfile.ItemsSource
+                itemsSource3.Clear()
+                itemsSource3.Add(New GalleryItemPropertySet() With {.Label = FormulaSearchProfiles.Custom.Description, .CategoryID = Constants.UI_Collection_InvalidIndex})
+                itemsSource3.Add(New GalleryItemPropertySet() With {.Label = FormulaSearchProfiles.Default.Description, .CategoryID = Constants.UI_Collection_InvalidIndex})
+                itemsSource3.Add(New GalleryItemPropertySet() With {.Label = FormulaSearchProfiles.SmallMolecule.Description, .CategoryID = Constants.UI_Collection_InvalidIndex})
+                itemsSource3.Add(New GalleryItemPropertySet() With {.Label = FormulaSearchProfiles.NaturalProduct.Description, .CategoryID = Constants.UI_Collection_InvalidIndex})
+            End Sub
+    End Sub
+
+    Public Function GetFormulaSearchProfileName() As FormulaSearchProfiles
+        ' get selected item index from combo box 1
+        Dim selectedItemIndex As UInteger = ribbonItems.ComboFormulaSearchProfile.SelectedItem
+
+        If selectedItemIndex = Constants.UI_Collection_InvalidIndex Then
+            Return FormulaSearchProfiles.Custom
+        Else
+            Dim selectedItem As Object = Nothing
+            ribbonItems.ComboFormulaSearchProfile.ItemsSource.GetItem(selectedItemIndex, selectedItem)
+            Dim uiItem As IUISimplePropertySet = CType(selectedItem, IUISimplePropertySet)
+            Dim itemLabel As PropVariant
+            uiItem.GetValue(RibbonProperties.Label, itemLabel)
+
+            Dim selected As String = Strings.LCase(CStr(itemLabel.Value))
+
+            If selected = FormulaSearchProfiles.Default.Description.ToLower Then
+                Return FormulaSearchProfiles.Default
+            ElseIf selected = FormulaSearchProfiles.SmallMolecule.Description.ToLower Then
+                Return FormulaSearchProfiles.SmallMolecule
+            ElseIf selected = FormulaSearchProfiles.NaturalProduct.Description.ToLower Then
+                Return FormulaSearchProfiles.NaturalProduct
+            Else
+                Return FormulaSearchProfiles.Custom
+            End If
+        End If
+    End Function
 
     Private Sub InitSpinner()
         Dim _spinner = ribbonItems.Spinner

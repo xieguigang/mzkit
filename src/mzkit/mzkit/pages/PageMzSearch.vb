@@ -46,7 +46,6 @@
 
 Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
-Imports BioNovoGene.BioDeep
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports RibbonLib.Interop
 Imports stdNum = System.Math
@@ -75,12 +74,25 @@ Public Class PageMzSearch
         Call progress.ShowDialog()
     End Sub
 
+    Private Function GetProfile() As SearchOption
+        Select Case host.GetFormulaSearchProfileName
+            Case FormulaSearchProfiles.Default
+                Return SearchOption.DefaultMetaboliteProfile
+            Case FormulaSearchProfiles.NaturalProduct
+                Return SearchOption.NaturalProduct(DNPOrWileyType.DNP)
+            Case FormulaSearchProfiles.SmallMolecule
+                Return SearchOption.SmallMolecule(DNPOrWileyType.DNP)
+            Case Else
+                Return Globals.Settings.formula_search.CreateOptions
+        End Select
+    End Function
+
     Private Sub runSearchInternal(mz As Double, charge As Integer, ionMode As Integer, progress As frmTaskProgress)
         Thread.Sleep(100)
         progress.Invoke(Sub() progress.Label2.Text = "initialize workspace...")
 
         Dim config As PrecursorSearchSettings = Globals.Settings.precursor_search
-        Dim opts = Chemoinformatics.Formula.SearchOption.DefaultMetaboliteProfile.AdjustPpm(config.ppm)
+        Dim opts = GetProfile.AdjustPpm(config.ppm)
         Dim oMwtWin As New PrecursorIonSearch(
             opts:=opts,
             progress:=Sub(msg) progress.Invoke(Sub() progress.Label1.Text = msg),
@@ -104,7 +116,7 @@ Public Class PageMzSearch
         Thread.Sleep(100)
         progress.Invoke(Sub() progress.Label2.Text = "initialize workspace...")
 
-        Dim opts = Chemoinformatics.Formula.SearchOption.DefaultMetaboliteProfile.AdjustPpm(ppm)
+        Dim opts = GetProfile.AdjustPpm(ppm)
         Dim oMwtWin As New FormulaSearch(
             opts:=opts,
             progress:=Sub(msg) progress.Invoke(Sub() progress.Label1.Text = msg)

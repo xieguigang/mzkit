@@ -3,6 +3,7 @@
 Public Class Settings
 
     Public Property precursor_search As PrecursorSearchSettings
+    Public Property formula_search As FormulaSearchProfile
 
     Public Shared ReadOnly Property configFile As String = App.LocalData & "/settings.json"
 
