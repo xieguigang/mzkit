@@ -206,6 +206,11 @@ Public Class PageMzkitTools
                     .centroid = False,
                     .ms2 = rawData.Centroid(Tolerance.DeltaMass(0.1), 0.01).ToArray
                 }
+
+                If rawData.Length > 1000 Then
+                    rawData = scanData.ms2
+                End If
+
                 showMatrix(rawData, scanId)
 
                 Dim draw As Image = scanData.MirrorPlot.AsGDIImage
