@@ -517,13 +517,27 @@ Public Class PageMzkitTools
     End Sub
 
     Private Sub SearchFormulaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SearchFormulaToolStripMenuItem.Click
-        Dim ppm As Double = 1
+        If Not ShowTICToolStripMenuItem.Checked Then
+            Dim current = TreeView1.CurrentRawFile
+            Dim node = TreeView1.SelectedNode
 
-        Call runMzSearch(
-            Sub(mz)
-                host.mzkitSearch.doExactMassSearch(mz, ppm)
-                host.ShowPage(host.mzkitSearch)
-            End Sub)
+            If Not node Is Nothing AndAlso current.raw.cache.FileExists Then
+                Dim mz = current.raw.scans.Where(Function(scan) scan.id = node.Text).FirstOrDefault
+
+                If Not mz Is Nothing AndAlso mz.mz > 0 Then
+                    Dim ppm As Double = 20
+                    Dim charge As Double = mz.charge
+                    Dim ionMode As Integer = mz.polarity
+
+                    If charge = 0 Then
+                        charge = 1
+                    End If
+
+                    host.mzkitSearch.doMzSearch(mz.mz, charge, ionMode, ppm)
+                    host.ShowPage(host.mzkitSearch)
+                End If
+            End If
+        End If
     End Sub
 
     Private Sub MolecularNetworkingToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MolecularNetworkingToolStripMenuItem.Click
