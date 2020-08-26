@@ -26,17 +26,23 @@ Namespace Formula
             Return Me
         End Function
 
+        Public Function AdjustPpm(ppm As Double) As SearchOption
+            _ppm = ppm
+            Return Me
+        End Function
+
         Public Overrides Function ToString() As String
             Return Me.GetJson
         End Function
 
         Public Shared Function DefaultMetaboliteProfile() As SearchOption
-            Return New SearchOption(-999999999, 999999999, ppm:=5) _
+            Return New SearchOption(-999999999, 999999999, ppm:=1) _
                 .AddElement("C", 1, 30) _
-                .AddElement("H", 1, 200) _
+                .AddElement("H", 0, 300) _
                 .AddElement("N", 0, 30) _
                 .AddElement("O", 0, 30) _
-                .AddElement("P", 0, 30)
+                .AddElement("P", 0, 30) _
+                .AddElement("S", 0, 30)
         End Function
 
     End Class

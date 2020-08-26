@@ -57,7 +57,10 @@ Public Class PageMzSearch
     Public Sub doMzSearch(mz As Double, ppm As Double)
         Dim progress As New frmTaskProgress
 
-        Call New Thread(Sub() Call runSearchInternal(mz, ppm, progress)).Start()
+        Call New Thread(
+            Sub()
+                Call runSearchInternal(mz, ppm, progress)
+            End Sub).Start()
         Call progress.ShowDialog()
     End Sub
 
@@ -65,7 +68,7 @@ Public Class PageMzSearch
         Thread.Sleep(100)
         progress.Invoke(Sub() progress.Label2.Text = "initialize workspace...")
 
-        Dim opts = Chemoinformatics.Formula.SearchOption.DefaultMetaboliteProfile
+        Dim opts = Chemoinformatics.Formula.SearchOption.DefaultMetaboliteProfile.AdjustPpm(ppm)
         Dim oMwtWin As New FormulaSearch(
             opts:=opts,
             progress:=Sub(msg) progress.Invoke(Sub() progress.Label1.Text = msg)
@@ -78,8 +81,7 @@ Public Class PageMzSearch
         progress.Invoke(Sub() progress.Label2.Text = "output search result...")
         host.Invoke(Sub() host.ToolStripStatusLabel1.Text = $"Run formula search for m/z {mz} with tolerance error {ppm} ppm, have {searchResults.Length} formula found!")
 
-        Call ShowFormulaFinderResults(searchResults)
-
+        Call Me.Invoke(Sub() Call ShowFormulaFinderResults(searchResults))
         Call progress.Invoke(Sub() Call progress.Close())
     End Sub
 
@@ -127,7 +129,7 @@ Public Class PageMzSearch
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Dim mz As Double = Val(TextBox1.Text)
-        Dim ppm As Double = 30
+        Dim ppm As Double = 1
 
         Call doMzSearch(mz, ppm)
     End Sub

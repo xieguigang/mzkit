@@ -23,7 +23,7 @@ Namespace Formula
                 Dim counts As New ElementNumType(formula)
 
                 If ConstructAndVerifyCompoundWork(counts) Then
-                    formula.charge = FormalCharge.CorrectChargeEmpirical(formula.charge, counts)
+                    ' formula.charge = FormalCharge.CorrectChargeEmpirical(formula.charge, counts)
 
                     If formula.charge >= opts.chargeRange.Min AndAlso formula.charge <= opts.chargeRange.Max Then
                         progressReport($"find {formula} with tolerance error {formula.ppm} ppm!")

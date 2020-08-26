@@ -519,7 +519,7 @@ Public Class PageMzkitTools
     End Sub
 
     Private Sub SearchFormulaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SearchFormulaToolStripMenuItem.Click
-        Dim ppm As Double = 30
+        Dim ppm As Double = 1
 
         Call runMzSearch(
             Sub(mz)
