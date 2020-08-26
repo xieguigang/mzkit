@@ -194,7 +194,7 @@ Public Class PageMzkitTools
 
                 Dim draw As Image = scanData.MirrorPlot.AsGDIImage
 
-                PropertyGrid1.SelectedObject = New SpectrumProperty(attrs)
+                PropertyGrid1.SelectedObject = New SpectrumProperty(scanId, attrs)
                 PropertyGrid1.Refresh()
 
                 PictureBox1.BackgroundImage = draw
@@ -312,7 +312,9 @@ Public Class PageMzkitTools
 
     Private Sub SaveImageToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveImageToolStripMenuItem.Click
         If Not PictureBox1.BackgroundImage Is Nothing Then
-            Using file As New SaveFileDialog With {.Filter = "image(*.png)|*.png"}
+            Dim preFileName As String = DirectCast(PropertyGrid1.SelectedObject, SpectrumProperty).scanId.NormalizePathString(alphabetOnly:=False)
+
+            Using file As New SaveFileDialog With {.Filter = "image(*.png)|*.png", .FileName = preFileName & ".png"}
                 If file.ShowDialog = DialogResult.OK Then
                     Call PictureBox1.BackgroundImage.SaveAs(file.FileName)
                     Call Process.Start(file.FileName)

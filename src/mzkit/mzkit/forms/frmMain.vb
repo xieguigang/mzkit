@@ -200,6 +200,7 @@ Public Class frmMain
         If Not Globals.Settings.ui Is Nothing Then
             Me.Location = Globals.Settings.ui.getLocation
             Me.Size = Globals.Settings.ui.getSize
+            Me.WindowState = Globals.Settings.ui.window
         End If
 
         ToolStripStatusLabel1.Text = "Ready!"
@@ -301,7 +302,13 @@ Public Class frmMain
     Private Sub frmMain_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
         mzkitTool.SaveFileCache()
 
-        Globals.Settings.ui = New UISettings With {.height = Height, .width = Width, .x = Location.X, .y = Location.Y}
+        Globals.Settings.ui = New UISettings With {
+            .height = Height,
+            .width = Width,
+            .x = Location.X,
+            .y = Location.Y,
+            .window = WindowState
+        }
         Globals.Settings.Save()
     End Sub
 End Class

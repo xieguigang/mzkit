@@ -4,6 +4,7 @@
     Public Property y As Integer
     Public Property width As Integer
     Public Property height As Integer
+    Public Property window As FormWindowState
 
     Public Function getLocation() As Point
         Return New Point(x, y)

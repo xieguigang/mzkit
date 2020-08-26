@@ -72,7 +72,9 @@ Public Class SpectrumProperty
     <Description("Current ion scan is in centroid mode? False means in profile mode.")>
     <Category("MS/MS")> Public Property centroided As String
 
-    Sub New(attrs As attribute())
+    Public Property scanId As String
+
+    Sub New(scanId As String, attrs As attribute())
         With attrs.ToDictionary(Function(a) a.name, Function(a) a.value)
             msLevel = .TryGetValue(NameOf(msLevel))
             collisionEnergy = .TryGetValue(NameOf(collisionEnergy))
@@ -84,6 +86,8 @@ Public Class SpectrumProperty
             activationMethod = .TryGetValue("activationMethod", [default]:="n/a")
             rtmin = stdNum.Round(retentionTime / 60, 2)
         End With
+
+        Me.scanId = scanId
     End Sub
 
     Public Overrides Function ToString() As String
