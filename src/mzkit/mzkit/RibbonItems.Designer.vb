@@ -45,7 +45,7 @@ Partial Class RibbonItems
         Public Const cmdGroupFormulaSearch As UInteger = 1093
         Public Const cmdButtonFormulaSearchExport As UInteger = 1094
         Public Const cmdGroupFormulaSearchConfig As UInteger = 1095
-        Public Const cmdComboFormulaSearchProfile As UInteger = 1096
+        Public Const cmdComboFormulaSearchProfile As UInteger = 1099
         Public Const cmdHelpButton As UInteger = 1016
         Public Const cmdTabMain As UInteger = 1011
         Public Const cmdGroupFileActions As UInteger = 1045

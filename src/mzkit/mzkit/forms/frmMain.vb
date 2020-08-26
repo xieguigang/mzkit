@@ -128,6 +128,8 @@ Public Class frmMain
         ' 在 InitializeComponent() 调用之后添加任何初始化。
         ribbonItems = New RibbonItems(Ribbon1)
 
+        InitializeFormulaProfile()
+
         AddHandler ribbonItems.ButtonExit.ExecuteEvent, AddressOf ExitToolsStripMenuItem_Click
         AddHandler ribbonItems.ButtonOpenRaw.ExecuteEvent, AddressOf OpenFile
         AddHandler ribbonItems.ButtonAbout.ExecuteEvent, AddressOf About_Click
@@ -186,7 +188,6 @@ Public Class frmMain
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         InitRecentItems()
         InitSpinner()
-        InitializeFormulaProfile()
         ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
 
         addPage(mzkitTool, mzkitSettings, mzkitSearch, mzkitCalculator, mzkitMNtools)
@@ -196,6 +197,9 @@ Public Class frmMain
     End Sub
 
     Private Sub InitializeFormulaProfile()
+        ribbonItems.ComboFormulaSearchProfile.RepresentativeString = "XXXXXXXXXXX"
+        ribbonItems.ComboFormulaSearchProfile.Label = "Preset Profiles:"
+
         AddHandler ribbonItems.ComboFormulaSearchProfile.ItemsSourceReady,
             Sub(sender, e)
                 Dim itemsSource3 As IUICollection = ribbonItems.ComboFormulaSearchProfile.ItemsSource

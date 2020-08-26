@@ -13,8 +13,7 @@ using RibbonLib;
 using RibbonLib.Controls;
 using RibbonLib.Interop;
 
-namespace RibbonLib.Controls
-{
+
     partial class RibbonItems
     {
         private static class Cmd
@@ -47,7 +46,7 @@ namespace RibbonLib.Controls
             public const uint cmdGroupFormulaSearch = 1093;
             public const uint cmdButtonFormulaSearchExport = 1094;
             public const uint cmdGroupFormulaSearchConfig = 1095;
-            public const uint cmdComboFormulaSearchProfile = 1096;
+            public const uint cmdComboFormulaSearchProfile = 1099;
             public const uint cmdHelpButton = 1016;
             public const uint cmdTabMain = 1011;
             public const uint cmdGroupFileActions = 1045;
@@ -198,4 +197,3 @@ namespace RibbonLib.Controls
         }
 
     }
-}
