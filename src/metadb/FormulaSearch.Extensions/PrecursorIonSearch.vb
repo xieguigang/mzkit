@@ -40,7 +40,7 @@ Public Class PrecursorIonSearch : Inherits FormulaSearch
         End If
 
         If Not (LimitPrecursorTypes Is Nothing OrElse LimitPrecursorTypes.Count = 0) Then
-            parents = parents.Where(Function(a) a.name Like LimitPrecursorTypes).ToArray
+            parents = parents.Where(Function(a) a.name.GetStackValue("[", "]") Like LimitPrecursorTypes).ToArray
         End If
 
         For Each type As MzCalculator In parents
