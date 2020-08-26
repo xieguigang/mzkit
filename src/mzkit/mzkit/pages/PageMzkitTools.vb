@@ -532,7 +532,7 @@ Public Class PageMzkitTools
                         charge = 1
                     End If
 
-                    host.mzkitSearch.doMzSearch(mz.mz, charge, ionMode, ppm)
+                    host.mzkitSearch.doMzSearch(mz.mz, charge, ionMode)
                     host.ShowPage(host.mzkitSearch)
                 End If
             End If
