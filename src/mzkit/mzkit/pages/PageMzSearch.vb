@@ -44,46 +44,161 @@
 
 #End Region
 
-Imports System.IO
-Imports System.Text
 Imports System.Threading
-Imports BioNovoGene.BioDeep
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports RibbonLib.Interop
-Imports RowObject = Microsoft.VisualBasic.Data.csv.IO.RowObject
 Imports stdNum = System.Math
 
 Public Class PageMzSearch
 
     Dim host As frmMain
 
-    Public Sub doMzSearch(mz As Double, ppm As Double)
+    Private Sub doExactMassSearch(exact_mass As Double, ppm As Double)
         Dim progress As New frmTaskProgress
 
-        Call New Thread(Sub() Call runSearchInternal(mz, ppm, progress)).Start()
+        Call New Thread(
+            Sub()
+                Call runSearchInternal(exact_mass, ppm, progress)
+            End Sub).Start()
         Call progress.ShowDialog()
     End Sub
 
-    Private Sub runSearchInternal(mz As Double, ppm As Double, progress As frmTaskProgress)
+    Public Sub doMzSearch(mz As Double, charge As Integer, ionMode As Integer)
+        Dim progress As New frmTaskProgress
+
+        Call New Thread(
+            Sub()
+                Call runSearchInternal(mz, charge, ionMode, progress)
+            End Sub).Start()
+        Call progress.ShowDialog()
+    End Sub
+
+    Public Function GetFormulaSearchProfileName() As FormulaSearchProfiles
+        ' get selected item index from combo box 1
+        ' Dim selectedItemIndex As UInteger = ribbonItems.ComboFormulaSearchProfile.SelectedItem
+
+        ' If selectedItemIndex = Constants.UI_Collection_InvalidIndex Then
+        'Return FormulaSearchProfiles.Custom
+        'Else
+        ' Dim selectedItem As Object = Nothing
+        ' ribbonItems.ComboFormulaSearchProfile.ItemsSource.GetItem(selectedItemIndex, selectedItem)
+        ' Dim uiItem As IUISimplePropertySet = CType(selectedItem, IUISimplePropertySet)
+        'Dim itemLabel As PropVariant
+        'uiItem.GetValue(RibbonProperties.Label, itemLabel)
+
+        'Dim selected As String = Strings.LCase(CStr(itemLabel.Value))
+        '  Dim selected As String = Strings.LCase(ribbonItems.ComboFormulaSearchProfile3.StringValue)
+        Dim selected As FormulaSearchProfiles = ComboBox1.SelectedIndex
+        '  MsgBox(selected)
+
+        If selected < 0 Then
+            selected = FormulaSearchProfiles.Default
+        End If
+
+        Return selected
+
+        'If selected = FormulaSearchProfiles.Default.Description.ToLower Then
+        '    Return FormulaSearchProfiles.Default
+        'ElseIf selected = FormulaSearchProfiles.SmallMolecule.Description.ToLower Then
+        '    Return FormulaSearchProfiles.SmallMolecule
+        'ElseIf selected = FormulaSearchProfiles.NaturalProduct.Description.ToLower Then
+        '    Return FormulaSearchProfiles.NaturalProduct
+        'Else
+        '    Return FormulaSearchProfiles.Custom
+        'End If
+        ' End If
+    End Function
+
+    Private Function GetProfile() As SearchOption
+        Select Case GetFormulaSearchProfileName()
+            Case FormulaSearchProfiles.Default
+                Return SearchOption.DefaultMetaboliteProfile
+            Case FormulaSearchProfiles.NaturalProduct
+                Return SearchOption.NaturalProduct(DNPOrWileyType.DNP, True)
+            Case FormulaSearchProfiles.SmallMolecule
+                Return SearchOption.SmallMolecule(DNPOrWileyType.DNP, True)
+            Case FormulaSearchProfiles.GeneralFlavone
+                Return SearchOption.GeneralFlavone
+            Case Else
+                If Globals.Settings.formula_search Is Nothing Then
+                    Return SearchOption.DefaultMetaboliteProfile
+                Else
+                    Return Globals.Settings.formula_search.CreateOptions
+                End If
+        End Select
+    End Function
+
+    Private Sub runSearchInternal(mz As Double, charge As Integer, ionMode As Integer, progress As frmTaskProgress)
         Thread.Sleep(100)
         progress.Invoke(Sub() progress.Label2.Text = "initialize workspace...")
 
-        Dim opts As New Chemoinformatics.Formula.SearchOption(-100000, 1000000, 10)
-        opts.AddElement("C", 1, 20).AddElement("H", 4, 100).AddElement("N", 0, 20).AddElement("O", 0, 20).AddElement("P", 0, 20)
-        Dim oMwtWin As New FormulaSearch(
+        Dim config As PrecursorSearchSettings = Globals.Settings.precursor_search
+        Dim opts = DirectCast(Invoke(Function() GetProfile()), SearchOption).AdjustPpm(config.ppm)
+        Dim oMwtWin As New PrecursorIonSearch(
             opts:=opts,
-            progress:=Sub(msg) progress.Invoke(Sub() progress.Label1.Text = msg))
+            progress:=Sub(msg) progress.Invoke(Sub() progress.Label1.Text = msg),
+            precursorTypeProgress:=Sub(msg) progress.Invoke(Sub() progress.Label2.Text = msg)
+        )
+
+        oMwtWin.AddPrecursorTypeRanges(config.precursor_types)
 
         progress.Invoke(Sub() progress.Label2.Text = "running formula search...")
 
-        Dim searchResults = oMwtWin.SearchByExactMass(mz).ToArray
+        Dim searchResults = oMwtWin.SearchByPrecursorMz(mz, charge, ionMode).ToArray
 
         progress.Invoke(Sub() progress.Label2.Text = "output search result...")
-        host.Invoke(Sub() host.ToolStripStatusLabel1.Text = $"Run formula search for m/z {mz} with tolerance error {ppm} ppm, have {searchResults.Length} formula found!")
+        host.Invoke(Sub() host.ToolStripStatusLabel1.Text = $"Run formula search for m/z {mz} with tolerance error {config.ppm} ppm, have {searchResults.Length} formula found!")
 
-        Call ShowFormulaFinderResults(searchResults)
-
+        Call Me.Invoke(Sub() Call ShowFormulaFinderResults(searchResults))
         Call progress.Invoke(Sub() Call progress.Close())
+    End Sub
+
+    Private Sub runSearchInternal(exact_mass As Double, ppm As Double, progress As frmTaskProgress)
+        Thread.Sleep(100)
+        progress.Invoke(Sub() progress.Label2.Text = "initialize workspace...")
+
+        Dim opts = DirectCast(Invoke(Function() GetProfile()), SearchOption).AdjustPpm(ppm)
+        Dim oMwtWin As New FormulaSearch(
+            opts:=opts,
+            progress:=Sub(msg) progress.Invoke(Sub() progress.Label1.Text = msg)
+        )
+
+        progress.Invoke(Sub() progress.Label2.Text = "running formula search...")
+
+        Dim searchResults = oMwtWin.SearchByExactMass(exact_mass).ToArray
+
+        progress.Invoke(Sub() progress.Label2.Text = "output search result...")
+        host.Invoke(Sub() host.ToolStripStatusLabel1.Text = $"Run formula search for exact mass {exact_mass} with tolerance error {ppm} ppm, have {searchResults.Length} formula found!")
+
+        Call Me.Invoke(Sub() Call ShowFormulaFinderResults(searchResults))
+        Call progress.Invoke(Sub() Call progress.Close())
+    End Sub
+
+    Private Sub ShowFormulaFinderResults(lstResults As IEnumerable(Of PrecursorIonComposition))
+        DataGridView1.Rows.Clear()
+        DataGridView1.Columns.Clear()
+
+        ' Add coluns to the table
+        DataGridView1.Columns.Add(New DataGridViewLinkColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .ValueType = GetType(String), .HeaderText = "Formula"})
+        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .ValueType = GetType(String), .HeaderText = "Exact Mass"})
+        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .ValueType = GetType(String), .HeaderText = "PPM"})
+        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .ValueType = GetType(String), .HeaderText = "Charge"})
+        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .ValueType = GetType(String), .HeaderText = "Adducts"})
+        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .ValueType = GetType(String), .HeaderText = "M"})
+        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .ValueType = GetType(String), .HeaderText = "Precursor Type"})
+
+        For Each result As PrecursorIonComposition In lstResults
+            DataGridView1.Rows.Add(
+                result.EmpiricalFormula,
+                result.exact_mass,
+                result.ppm,
+                result.charge,
+                result.adducts,
+                result.M,
+                result.precursor_type
+            )
+        Next
     End Sub
 
     Private Sub ShowFormulaFinderResults(lstResults As IEnumerable(Of FormulaComposition))
@@ -118,6 +233,7 @@ Public Class PageMzSearch
 
     Private Sub PageMzSearch_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         host = DirectCast(ParentForm, frmMain)
+        ComboBox1.SelectedIndex = 0
     End Sub
 
     Private Sub PageMzSearch_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
@@ -130,9 +246,9 @@ Public Class PageMzSearch
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Dim mz As Double = Val(TextBox1.Text)
-        Dim ppm As Double = 30
+        Dim ppm As Double = 1
 
-        Call doMzSearch(mz, ppm)
+        Call doExactMassSearch(mz, ppm)
     End Sub
 End Class
 

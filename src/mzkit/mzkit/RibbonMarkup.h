@@ -166,5 +166,8 @@
 #define cmdButtonFormulaSearchExport 1094 
 #define cmdButtonFormulaSearchExport_LabelTitle_RESID 60107
 #define cmdButtonFormulaSearchExport_LargeImages_RESID 60108
-#define cmdGroupExit_LabelTitle_RESID 60109
-#define InternalCmd2_LabelTitle_RESID 60110
+#define cmdGroupFormulaSearchConfig2 1095 
+#define cmdGroupFormulaSearchConfig2_LabelTitle_RESID 60109
+#define cmdComboFormulaSearchProfile3 1099 
+#define cmdGroupExit_LabelTitle_RESID 60110
+#define InternalCmd2_LabelTitle_RESID 60111

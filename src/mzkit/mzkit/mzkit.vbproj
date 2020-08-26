@@ -91,7 +91,7 @@
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
-    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup>
@@ -128,6 +128,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="settings\UISettings.vb" />
+    <Compile Include="settings\PrecursorSearchSettings.vb" />
+    <Compile Include="settings\Settings.vb" />
     <Compile Include="DataControlHandler.vb" />
     <Compile Include="pages\PageSettings.Designer.vb">
       <DependentUpon>PageSettings.vb</DependentUpon>
@@ -347,6 +350,10 @@
     <ProjectReference Include="..\..\metadb\Chemoinformatics\Chemoinformatics.vbproj">
       <Project>{c3faf972-2d6d-4fcb-8e1f-a66fe130d485}</Project>
       <Name>Chemoinformatics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.vbproj">
+      <Project>{7acfed27-3bc8-47e1-a1a2-226c82c6dc1f}</Project>
+      <Name>FormulaSearch.Extensions</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\mzmath\ms2_math-core\MassSpectrum.math-core.vbproj">
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>

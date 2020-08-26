@@ -46,7 +46,6 @@
 
 #End Region
 
-Imports System.IO
 Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
@@ -54,7 +53,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
-Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.IO.netCDF
@@ -128,8 +126,16 @@ Public Class PageMzkitTools
             Dim selects = TreeView1.CurrentRawFile.raw
             Dim TIC As New NamedCollection(Of ChromatogramTick) With {
                 .name = $"m/z {raw.Select(Function(m) m.mz).Min.ToString("F3")} - {raw.Select(Function(m) m.mz).Max.ToString("F3")}",
-                .value = raw.Select(Function(a) New ChromatogramTick With {.Time = Val(a.Annotation), .Intensity = a.intensity}).ToArray
+                .value = raw _
+                    .Select(Function(a)
+                                Return New ChromatogramTick With {
+                                    .Time = Val(a.Annotation),
+                                    .Intensity = a.intensity
+                                }
+                            End Function) _
+                    .ToArray
             }
+            Dim maxY As Double = selects.scans.Select(Function(a) a.intensity).Max
 
             TIC.value = {
                 New ChromatogramTick With {.Time = selects.rtmin},
@@ -138,7 +144,7 @@ Public Class PageMzkitTools
              .OrderBy(Function(c) c.Time) _
              .ToArray
 
-            PictureBox1.BackgroundImage = TIC.TICplot.AsGDIImage
+            PictureBox1.BackgroundImage = TIC.TICplot(intensityMax:=maxY).AsGDIImage
         ElseIf e.Node.Tag Is Nothing AndAlso e.Node.Text = "TIC" Then
             Dim raw = TreeView1.CurrentRawFile.raw
             Dim TIC As New NamedCollection(Of ChromatogramTick) With {
@@ -196,7 +202,7 @@ Public Class PageMzkitTools
 
                 Dim draw As Image = scanData.MirrorPlot.AsGDIImage
 
-                PropertyGrid1.SelectedObject = New SpectrumProperty(attrs)
+                PropertyGrid1.SelectedObject = New SpectrumProperty(scanId, attrs)
                 PropertyGrid1.Refresh()
 
                 PictureBox1.BackgroundImage = draw
@@ -314,7 +320,9 @@ Public Class PageMzkitTools
 
     Private Sub SaveImageToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveImageToolStripMenuItem.Click
         If Not PictureBox1.BackgroundImage Is Nothing Then
-            Using file As New SaveFileDialog With {.Filter = "image(*.png)|*.png"}
+            Dim preFileName As String = DirectCast(PropertyGrid1.SelectedObject, SpectrumProperty).scanId.NormalizePathString(alphabetOnly:=False)
+
+            Using file As New SaveFileDialog With {.Filter = "image(*.png)|*.png", .FileName = preFileName & ".png"}
                 If file.ShowDialog = DialogResult.OK Then
                     Call PictureBox1.BackgroundImage.SaveAs(file.FileName)
                     Call Process.Start(file.FileName)
@@ -518,14 +526,27 @@ Public Class PageMzkitTools
         End If
     End Sub
 
-    Private Sub SearchFormulaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SearchFormulaToolStripMenuItem.Click
-        Dim ppm As Double = 30
+    Private Sub SearchFormulaToolStripMenuItem_Click(sender As Object, e As EventArgs) ' Handles SearchFormulaToolStripMenuItem.Click
+        If Not ShowTICToolStripMenuItem.Checked Then
+            Dim current = TreeView1.CurrentRawFile
+            Dim node = TreeView1.SelectedNode
 
-        Call runMzSearch(
-            Sub(mz)
-                host.mzkitSearch.doMzSearch(mz, ppm)
-                host.ShowPage(host.mzkitSearch)
-            End Sub)
+            If Not node Is Nothing AndAlso current.raw.cache.FileExists Then
+                Dim mz = current.raw.scans.Where(Function(scan) scan.id = node.Text).FirstOrDefault
+
+                If Not mz Is Nothing AndAlso mz.mz > 0 Then
+                    Dim charge As Double = mz.charge
+                    Dim ionMode As Integer = mz.polarity
+
+                    If charge = 0 Then
+                        charge = 1
+                    End If
+
+                    host.mzkitSearch.doMzSearch(mz.mz, charge, ionMode)
+                    host.ShowPage(host.mzkitSearch)
+                End If
+            End If
+        End If
     End Sub
 
     Private Sub MolecularNetworkingToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MolecularNetworkingToolStripMenuItem.Click
@@ -585,6 +606,68 @@ Public Class PageMzkitTools
                 Call showSpectrum(scanId, TreeView1.CurrentRawFile.raw)
             End If
         End If
+    End Sub
+
+    Private Sub CustomToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CustomToolStripMenuItem.Click
+        host.mzkitSearch.ComboBox1.SelectedIndex = 0
+        SearchFormulaToolStripMenuItem_Click(sender, e)
+    End Sub
+
+    Private Sub DefaultToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DefaultToolStripMenuItem.Click
+        host.mzkitSearch.ComboBox1.SelectedIndex = 1
+        SearchFormulaToolStripMenuItem_Click(sender, e)
+    End Sub
+
+    Private Sub SmallMoleculeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SmallMoleculeToolStripMenuItem.Click
+        host.mzkitSearch.ComboBox1.SelectedIndex = 2
+        SearchFormulaToolStripMenuItem_Click(sender, e)
+    End Sub
+
+    Private Sub NatureProductToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NatureProductToolStripMenuItem.Click
+        host.mzkitSearch.ComboBox1.SelectedIndex = 3
+        SearchFormulaToolStripMenuItem_Click(sender, e)
+    End Sub
+
+    Private Sub GeneralFlavoneToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GeneralFlavoneToolStripMenuItem.Click
+        host.mzkitSearch.ComboBox1.SelectedIndex = 4
+        SearchFormulaToolStripMenuItem_Click(sender, e)
+    End Sub
+
+    Private Sub ShowXICToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowXICToolStripMenuItem.Click
+        ' scan节点
+        Dim raw As Task.Raw = TreeView1.CurrentRawFile.raw
+        Dim scanId As String = TreeView1.SelectedNode.Text
+        Dim ms2 As ScanEntry = raw.scans.Where(Function(a) a.id = scanId).FirstOrDefault
+
+        If ms2 Is Nothing OrElse ms2.mz = 0.0 Then
+            Return
+        End If
+
+        Dim ppm As Double = Val(RibbonItems.Spinner.DecimalValue)
+        Dim XIC As ChromatogramTick() = raw.scans _
+            .Where(Function(a) PPMmethod.PPM(a.mz, ms2.mz) <= ppm) _
+            .Select(Function(a)
+                        Return New ChromatogramTick With {
+                            .Time = a.rt,
+                            .Intensity = a.intensity
+                        }
+                    End Function) _
+            .ToArray
+        Dim plotTIC As New NamedCollection(Of ChromatogramTick) With {
+            .name = $"XIC [m/z={ms2.mz}, {ppm}ppm]",
+            .value = {
+                  New ChromatogramTick With {.Time = raw.rtmin},
+                  New ChromatogramTick With {.Time = raw.rtmax}
+              }.JoinIterates(XIC) _
+               .OrderBy(Function(c) c.Time) _
+               .ToArray
+        }
+        Dim maxY As Double = raw.scans _
+            .Where(Function(a) a.mz > 0) _
+            .Select(Function(a) a.intensity) _
+            .Max
+
+        PictureBox1.BackgroundImage = plotTIC.TICplot(intensityMax:=maxY).AsGDIImage
     End Sub
 End Class
 

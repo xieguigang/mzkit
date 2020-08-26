@@ -120,6 +120,8 @@ Public Class frmMain
     Friend ribbonItems As RibbonItems
     Friend recentItems As List(Of RecentItemsPropertySet)
 
+    Dim _uiCollectionChangedEvent As UICollectionChangedEvent
+
     Public Sub New()
 
         ' 此调用是设计器所必需的。
@@ -142,6 +144,10 @@ Public Class frmMain
         AddHandler ribbonItems.ButtonSave.ExecuteEvent, Sub(sender, e) Call saveCacheList()
         AddHandler ribbonItems.ButtonNetworkExport.ExecuteEvent, Sub(sender, e) Call mzkitMNtools.saveNetwork()
         AddHandler ribbonItems.ButtonFormulaSearchExport.ExecuteEvent, Sub(sender, e) Call mzkitSearch.SaveSearchResultTable()
+
+        _uiCollectionChangedEvent = New UICollectionChangedEvent()
+
+        InitializeFormulaProfile()
     End Sub
 
     Private Sub saveCacheList()
@@ -191,7 +197,41 @@ Public Class frmMain
         addPage(mzkitTool, mzkitSettings, mzkitSearch, mzkitCalculator, mzkitMNtools)
         ShowPage(mzkitTool)
 
+        If (Not Globals.Settings.ui Is Nothing) AndAlso Globals.Settings.ui.window <> FormWindowState.Minimized Then
+            Me.Location = Globals.Settings.ui.getLocation
+            Me.Size = Globals.Settings.ui.getSize
+            Me.WindowState = Globals.Settings.ui.window
+        End If
+
         ToolStripStatusLabel1.Text = "Ready!"
+    End Sub
+
+    Private Sub _uiCollectionChangedEvent_ChangedEvent(ByVal sender As Object, ByVal e As UICollectionChangedEventArgs)
+        MessageBox.Show("Got ChangedEvent. Action = " & e.Action.ToString())
+    End Sub
+
+    Private Sub InitializeFormulaProfile()
+        ribbonItems.ComboFormulaSearchProfile3.RepresentativeString = "XXXXXXXXXXXXXX"
+        ribbonItems.ComboFormulaSearchProfile3.Label = "Preset Profiles:"
+
+        AddHandler ribbonItems.ComboFormulaSearchProfile3.ItemsSourceReady, AddressOf InitializeFormulaProfile
+    End Sub
+
+    Private Sub InitializeFormulaProfile(sender As Object, e As EventArgs)
+        Dim itemsSource3 As IUICollection = ribbonItems.ComboFormulaSearchProfile3.ItemsSource
+
+        MsgBox("initialize profile")
+
+        itemsSource3.Clear()
+        itemsSource3.Add(New GalleryItemPropertySet() With {.Label = FormulaSearchProfiles.Custom.Description, .CategoryID = Constants.UI_Collection_InvalidIndex})
+        itemsSource3.Add(New GalleryItemPropertySet() With {.Label = FormulaSearchProfiles.Default.Description, .CategoryID = Constants.UI_Collection_InvalidIndex})
+        itemsSource3.Add(New GalleryItemPropertySet() With {.Label = FormulaSearchProfiles.SmallMolecule.Description, .CategoryID = Constants.UI_Collection_InvalidIndex})
+        itemsSource3.Add(New GalleryItemPropertySet() With {.Label = FormulaSearchProfiles.NaturalProduct.Description, .CategoryID = Constants.UI_Collection_InvalidIndex})
+
+        MsgBox("initialize event")
+
+        _uiCollectionChangedEvent.Attach(ribbonItems.ComboFormulaSearchProfile3.ItemsSource)
+        AddHandler _uiCollectionChangedEvent.ChangedEvent, AddressOf _uiCollectionChangedEvent_ChangedEvent
     End Sub
 
     Private Sub InitSpinner()
@@ -261,6 +301,15 @@ Public Class frmMain
 
     Private Sub frmMain_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
         mzkitTool.SaveFileCache()
+
+        Globals.Settings.ui = New UISettings With {
+            .height = Height,
+            .width = Width,
+            .x = Location.X,
+            .y = Location.Y,
+            .window = WindowState
+        }
+        Globals.Settings.Save()
     End Sub
 End Class
 

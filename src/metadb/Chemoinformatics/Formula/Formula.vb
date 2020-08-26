@@ -83,6 +83,7 @@ Namespace Formula
 
         Public Shared Function BuildFormula(countsByElement As Dictionary(Of String, Integer)) As String
             Return countsByElement _
+                .Where(Function(e) e.Value > 0) _
                 .Select(Function(e)
                             Return If(e.Value = 1, e.Key, e.Key & e.Value)
                         End Function) _

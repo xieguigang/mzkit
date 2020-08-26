@@ -175,6 +175,7 @@
   <ItemGroup>
     <Compile Include="Formula\AbbrevStatsType.vb" />
     <Compile Include="Formula\FormalCharge.vb" />
+    <Compile Include="Formula\HeteroatomRatioCheck.vb" />
     <Compile Include="Formula\SearchOption.vb" />
     <Compile Include="Formula\FormulaSearch.vb" />
     <Compile Include="Formula\ElementSearchCandiate.vb" />
