@@ -14,6 +14,7 @@ Public Enum FormulaSearchProfiles
     <Description("Default_Profile")> [Default]
     <Description("Small_Molecule")> SmallMolecule
     <Description("Natural_Product")> NaturalProduct
+    GeneralFlavone
 End Enum
 
 Public Class FormulaSearchProfile

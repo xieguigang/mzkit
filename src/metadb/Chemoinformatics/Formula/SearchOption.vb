@@ -83,6 +83,10 @@ Namespace Formula
             End If
         End Function
 
+        Public Shared Function GeneralFlavone() As SearchOption
+            Return New SearchOption(-999999, 999999, ppm:=1).AddElement("C", 9, 50).AddElement("H", 4, 100).AddElement("O", 1, 30)
+        End Function
+
         Public Shared Function SmallMolecule(type As DNPOrWileyType, common As Boolean) As SearchOption
             If type = DNPOrWileyType.DNP Then
                 Dim opts As New SearchOption(-999999999, 999999999, ppm:=1)

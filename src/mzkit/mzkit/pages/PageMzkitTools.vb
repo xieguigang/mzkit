@@ -617,5 +617,10 @@ Public Class PageMzkitTools
         host.mzkitSearch.ComboBox1.SelectedIndex = 3
         SearchFormulaToolStripMenuItem_Click(sender, e)
     End Sub
+
+    Private Sub GeneralFlavoneToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GeneralFlavoneToolStripMenuItem.Click
+        host.mzkitSearch.ComboBox1.SelectedIndex = 4
+        SearchFormulaToolStripMenuItem_Click(sender, e)
+    End Sub
 End Class
 

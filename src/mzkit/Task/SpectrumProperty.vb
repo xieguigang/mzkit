@@ -47,6 +47,7 @@
 Imports System.ComponentModel
 Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports stdNum = System.Math
 
 Public Class SpectrumProperty
 
@@ -56,6 +57,9 @@ Public Class SpectrumProperty
     <Category("Precursor Ion")> Public Property precursorMz As Double
     <Description("The retension time in seconds.")>
     <Category("Precursor Ion")> Public Property retentionTime As Double
+    <Description("The retension time in minute.")>
+    <Category("Precursor Ion")> Public Property rtmin As Double
+
     <Description("The charge value of current ion.")>
     <Category("Precursor Ion")> Public Property precursorCharge As Double
     <Description("The charge polarity of current ion.")>
@@ -78,6 +82,7 @@ Public Class SpectrumProperty
             precursorCharge = Val(.TryGetValue("precursorCharge"))
             polarity = .TryGetValue("polarity", [default]:="n/a")
             activationMethod = .TryGetValue("activationMethod", [default]:="n/a")
+            rtmin = stdNum.Round(retentionTime / 60, 2)
         End With
     End Sub
 
