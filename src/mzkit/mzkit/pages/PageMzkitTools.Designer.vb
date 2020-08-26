@@ -38,6 +38,10 @@ Partial Class PageMzkitTools
         Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripSeparator()
         Me.SearchInFileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SearchFormulaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CustomToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DefaultToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SmallMoleculeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.NatureProductToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
         Me.DeleteFileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
@@ -54,10 +58,6 @@ Partial Class PageMzkitTools
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
-        Me.CustomToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.DefaultToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SmallMoleculeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.NatureProductToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TabControl2.SuspendLayout()
         Me.TabPage3.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
@@ -139,7 +139,7 @@ Partial Class PageMzkitTools
         '
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowTICToolStripMenuItem, Me.MS1ToolStripMenuItem, Me.MS2ToolStripMenuItem, Me.MolecularNetworkingToolStripMenuItem, Me.ToolStripMenuItem2, Me.SearchInFileToolStripMenuItem, Me.SearchFormulaToolStripMenuItem, Me.ToolStripMenuItem1, Me.DeleteFileToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(207, 192)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(207, 170)
         '
         'ShowTICToolStripMenuItem
         '
@@ -184,9 +184,34 @@ Partial Class PageMzkitTools
         'SearchFormulaToolStripMenuItem
         '
         Me.SearchFormulaToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CustomToolStripMenuItem, Me.DefaultToolStripMenuItem, Me.SmallMoleculeToolStripMenuItem, Me.NatureProductToolStripMenuItem})
+        Me.SearchFormulaToolStripMenuItem.Image = CType(resources.GetObject("SearchFormulaToolStripMenuItem.Image"), System.Drawing.Image)
         Me.SearchFormulaToolStripMenuItem.Name = "SearchFormulaToolStripMenuItem"
         Me.SearchFormulaToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
         Me.SearchFormulaToolStripMenuItem.Text = "Search Formula"
+        '
+        'CustomToolStripMenuItem
+        '
+        Me.CustomToolStripMenuItem.Name = "CustomToolStripMenuItem"
+        Me.CustomToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.CustomToolStripMenuItem.Text = "Custom"
+        '
+        'DefaultToolStripMenuItem
+        '
+        Me.DefaultToolStripMenuItem.Name = "DefaultToolStripMenuItem"
+        Me.DefaultToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.DefaultToolStripMenuItem.Text = "Default"
+        '
+        'SmallMoleculeToolStripMenuItem
+        '
+        Me.SmallMoleculeToolStripMenuItem.Name = "SmallMoleculeToolStripMenuItem"
+        Me.SmallMoleculeToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.SmallMoleculeToolStripMenuItem.Text = "Small Molecule"
+        '
+        'NatureProductToolStripMenuItem
+        '
+        Me.NatureProductToolStripMenuItem.Name = "NatureProductToolStripMenuItem"
+        Me.NatureProductToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.NatureProductToolStripMenuItem.Text = "Nature Product"
         '
         'ToolStripMenuItem1
         '
@@ -326,30 +351,6 @@ Partial Class PageMzkitTools
         Me.DataGridView1.ReadOnly = True
         Me.DataGridView1.Size = New System.Drawing.Size(602, 430)
         Me.DataGridView1.TabIndex = 0
-        '
-        'CustomToolStripMenuItem
-        '
-        Me.CustomToolStripMenuItem.Name = "CustomToolStripMenuItem"
-        Me.CustomToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.CustomToolStripMenuItem.Text = "Custom"
-        '
-        'DefaultToolStripMenuItem
-        '
-        Me.DefaultToolStripMenuItem.Name = "DefaultToolStripMenuItem"
-        Me.DefaultToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.DefaultToolStripMenuItem.Text = "Default"
-        '
-        'SmallMoleculeToolStripMenuItem
-        '
-        Me.SmallMoleculeToolStripMenuItem.Name = "SmallMoleculeToolStripMenuItem"
-        Me.SmallMoleculeToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.SmallMoleculeToolStripMenuItem.Text = "Small Molecule"
-        '
-        'NatureProductToolStripMenuItem
-        '
-        Me.NatureProductToolStripMenuItem.Name = "NatureProductToolStripMenuItem"
-        Me.NatureProductToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.NatureProductToolStripMenuItem.Text = "Nature Product"
         '
         'PageMzkitTools
         '
