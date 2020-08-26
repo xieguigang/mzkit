@@ -4,6 +4,7 @@ Public Class Settings
 
     Public Property precursor_search As PrecursorSearchSettings
     Public Property formula_search As FormulaSearchProfile
+    Public Property ui As UISettings
 
     Public Shared ReadOnly Property configFile As String = App.LocalData & "/settings.json"
 
@@ -25,7 +26,7 @@ Public Class Settings
         Return config
     End Function
 
-    Public Shared Function Save(config As Settings) As Boolean
-        Return config.GetJson.SaveTo(configFile)
+    Public Function Save() As Boolean
+        Return Me.GetJson.SaveTo(configFile)
     End Function
 End Class

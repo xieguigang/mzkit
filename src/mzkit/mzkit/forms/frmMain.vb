@@ -197,6 +197,11 @@ Public Class frmMain
         addPage(mzkitTool, mzkitSettings, mzkitSearch, mzkitCalculator, mzkitMNtools)
         ShowPage(mzkitTool)
 
+        If Not Globals.Settings.ui Is Nothing Then
+            Me.Location = Globals.Settings.ui.getLocation
+            Me.Size = Globals.Settings.ui.getSize
+        End If
+
         ToolStripStatusLabel1.Text = "Ready!"
     End Sub
 
@@ -295,6 +300,9 @@ Public Class frmMain
 
     Private Sub frmMain_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
         mzkitTool.SaveFileCache()
+
+        Globals.Settings.ui = New UISettings With {.height = Height, .width = Width, .x = Location.X, .y = Location.Y}
+        Globals.Settings.Save()
     End Sub
 End Class
 
