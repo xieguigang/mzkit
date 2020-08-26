@@ -279,7 +279,7 @@
 				 LabelDescription="Search Formula for given m/z value"
 				TooltipTitle="Search Formula">
 			<Command.LargeImages>
-				<Image>Res/folder-saved-search.png</Image>
+				<Image>Res/tracker.png</Image>
 			</Command.LargeImages>
 		</Command>
 

@@ -141,7 +141,7 @@ Partial Class PageMzkitTools
         '
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowXICToolStripMenuItem, Me.ShowTICToolStripMenuItem, Me.MS1ToolStripMenuItem, Me.MS2ToolStripMenuItem, Me.MolecularNetworkingToolStripMenuItem, Me.ToolStripMenuItem2, Me.SearchInFileToolStripMenuItem, Me.SearchFormulaToolStripMenuItem, Me.ToolStripMenuItem1, Me.DeleteFileToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(193, 192)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(193, 214)
         '
         'ShowXICToolStripMenuItem
         '
@@ -234,6 +234,7 @@ Partial Class PageMzkitTools
         '
         'DeleteFileToolStripMenuItem
         '
+        Me.DeleteFileToolStripMenuItem.Image = CType(resources.GetObject("DeleteFileToolStripMenuItem.Image"), System.Drawing.Image)
         Me.DeleteFileToolStripMenuItem.Name = "DeleteFileToolStripMenuItem"
         Me.DeleteFileToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
         Me.DeleteFileToolStripMenuItem.Text = "Delete File"
@@ -328,7 +329,7 @@ Partial Class PageMzkitTools
         '
         Me.ContextMenuStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveImageToolStripMenuItem, Me.SaveMatrixToolStripMenuItem})
         Me.ContextMenuStrip2.Name = "ContextMenuStrip2"
-        Me.ContextMenuStrip2.Size = New System.Drawing.Size(181, 70)
+        Me.ContextMenuStrip2.Size = New System.Drawing.Size(136, 48)
         '
         'SaveImageToolStripMenuItem
         '
@@ -340,7 +341,7 @@ Partial Class PageMzkitTools
         'SaveMatrixToolStripMenuItem
         '
         Me.SaveMatrixToolStripMenuItem.Name = "SaveMatrixToolStripMenuItem"
-        Me.SaveMatrixToolStripMenuItem.Size = New System.Drawing.Size(135, 22)
+        Me.SaveMatrixToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.SaveMatrixToolStripMenuItem.Text = "Save Matrix"
         '
         'TabPage2
