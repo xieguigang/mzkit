@@ -157,7 +157,7 @@
 
 		<Command Name="cmdButtonAbout"
 			 Id="1021"
-			 LabelTitle="About Mzkit"
+			 LabelTitle="About"
 			 LabelDescription="Show Information about BioNovoGene M/z toolkit"
 			TooltipTitle="Show Application About">
 			<Command.LargeImages>
@@ -165,6 +165,15 @@
 			</Command.LargeImages>
 		</Command>
 
+<Command Name="cmdButtonBioDeep"
+			 Id="1022"
+			 LabelTitle="BioDeep"
+			 LabelDescription="Show Information about BioNovoGene M/z toolkit"
+			TooltipTitle="Show Application About">
+			<Command.LargeImages>
+				<Image>Res/BioDeep.png</Image>
+			</Command.LargeImages>
+		</Command>
 
 		<Command Name="cmdTabGroupTableTools"
 			Id="1031"
@@ -545,7 +554,7 @@
 					<!-- useful part -->
 					<Group CommandName="cmdGroupAboutActions" SizeDefinition="ThreeButtons">
 						<Button CommandName="cmdButtonAbout" />
-						<Button CommandName="cmdButtonOpenRaw" />
+						<Button CommandName="cmdButtonBioDeep" />
 						<Button CommandName="cmdButtonSettings" />
 					</Group>
 

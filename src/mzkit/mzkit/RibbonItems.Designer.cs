@@ -13,8 +13,7 @@ using RibbonLib;
 using RibbonLib.Controls;
 using RibbonLib.Interop;
 
-namespace RibbonLib.Controls
-{
+
     partial class RibbonItems
     {
         private static class Cmd
@@ -60,6 +59,7 @@ namespace RibbonLib.Controls
             public const uint cmdTabAbout = 1020;
             public const uint cmdGroupAboutActions = 1047;
             public const uint cmdButtonAbout = 1021;
+            public const uint cmdButtonBioDeep = 1022;
             public const uint cmdButtonSettings = 1051;
             public const uint cmdRecentItems = 1014;
             public const uint cmdMenuGroupFile = 1005;
@@ -119,6 +119,7 @@ namespace RibbonLib.Controls
         public RibbonTab TabAbout { get; private set; }
         public RibbonGroup GroupAboutActions { get; private set; }
         public RibbonButton ButtonAbout { get; private set; }
+        public RibbonButton ButtonBioDeep { get; private set; }
         public RibbonButton ButtonSettings { get; private set; }
         public RibbonRecentItems RecentItems { get; private set; }
         public RibbonMenuGroup MenuGroupFile { get; private set; }
@@ -178,6 +179,7 @@ namespace RibbonLib.Controls
             TabAbout = new RibbonTab(ribbon, Cmd.cmdTabAbout);
             GroupAboutActions = new RibbonGroup(ribbon, Cmd.cmdGroupAboutActions);
             ButtonAbout = new RibbonButton(ribbon, Cmd.cmdButtonAbout);
+            ButtonBioDeep = new RibbonButton(ribbon, Cmd.cmdButtonBioDeep);
             ButtonSettings = new RibbonButton(ribbon, Cmd.cmdButtonSettings);
             RecentItems = new RibbonRecentItems(ribbon, Cmd.cmdRecentItems);
             MenuGroupFile = new RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupFile);
@@ -192,4 +194,3 @@ namespace RibbonLib.Controls
         }
 
     }
-}
