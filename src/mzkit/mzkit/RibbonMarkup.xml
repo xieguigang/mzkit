@@ -424,7 +424,10 @@
 		</Command>
 
 
-		<Command Name="cmdButtonAboutMenu" Id="1101">
+		<Command Name="cmdButtonLicense" Id="1101" LabelTitle="View License Information">
+		<Command.LargeImages>
+				<Image>Res/baobab.png</Image>
+			</Command.LargeImages>
 		</Command>
 
 	</Application.Commands>
@@ -610,6 +613,7 @@
 								<MenuGroup Class='MajorItems'>
 									<Button CommandName='cmdButtonAbout' />
 									<Button CommandName='cmdButtonBioDeep' />
+									<Button CommandName='cmdButtonLicense' />
 									
 								</MenuGroup>
 							</SplitButton.MenuGroups>

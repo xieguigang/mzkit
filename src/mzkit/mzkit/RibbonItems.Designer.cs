@@ -13,8 +13,7 @@ using RibbonLib;
 using RibbonLib.Controls;
 using RibbonLib.Interop;
 
-namespace RibbonLib.Controls
-{
+
     partial class RibbonItems
     {
         private static class Cmd
@@ -69,6 +68,7 @@ namespace RibbonLib.Controls
             public const uint cmdButtonDropB = 1009;
             public const uint cmdButtonDropC = 1010;
             public const uint cmdButtonDropD = 5010;
+            public const uint cmdButtonLicense = 1101;
             public const uint cmdMenuGroupExit = 1006;
             public const uint cmdQAT = 1015;
             public const uint cmdButtonPageNavBack = 1053;
@@ -130,6 +130,7 @@ namespace RibbonLib.Controls
         public RibbonButton ButtonDropB { get; private set; }
         public RibbonButton ButtonDropC { get; private set; }
         public RibbonButton ButtonDropD { get; private set; }
+        public RibbonButton ButtonLicense { get; private set; }
         public RibbonMenuGroup MenuGroupExit { get; private set; }
         public RibbonQuickAccessToolbar QAT { get; private set; }
         public RibbonButton ButtonPageNavBack { get; private set; }
@@ -191,6 +192,7 @@ namespace RibbonLib.Controls
             ButtonDropB = new RibbonButton(ribbon, Cmd.cmdButtonDropB);
             ButtonDropC = new RibbonButton(ribbon, Cmd.cmdButtonDropC);
             ButtonDropD = new RibbonButton(ribbon, Cmd.cmdButtonDropD);
+            ButtonLicense = new RibbonButton(ribbon, Cmd.cmdButtonLicense);
             MenuGroupExit = new RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupExit);
             QAT = new RibbonQuickAccessToolbar(ribbon, Cmd.cmdQAT, Cmd.cmdCustomizeQAT);
             ButtonPageNavBack = new RibbonButton(ribbon, Cmd.cmdButtonPageNavBack);
@@ -198,4 +200,3 @@ namespace RibbonLib.Controls
         }
 
     }
-}

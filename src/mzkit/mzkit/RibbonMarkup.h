@@ -179,7 +179,9 @@
 #define cmdGroupFormulaSearchConfig2 1095 
 #define cmdGroupFormulaSearchConfig2_LabelTitle_RESID 60117
 #define cmdComboFormulaSearchProfile3 1099 
-#define cmdButtonAboutMenu 1101 
-#define cmdGroupExit_LabelTitle_RESID 60118
-#define InternalCmd2_LabelTitle_RESID 60119
-#define InternalCmd4_LabelTitle_RESID 60120
+#define cmdButtonLicense 1101 
+#define cmdButtonLicense_LabelTitle_RESID 60118
+#define cmdButtonLicense_LargeImages_RESID 60119
+#define cmdGroupExit_LabelTitle_RESID 60120
+#define InternalCmd2_LabelTitle_RESID 60121
+#define InternalCmd4_LabelTitle_RESID 60122
