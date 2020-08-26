@@ -597,5 +597,25 @@ Public Class PageMzkitTools
             End If
         End If
     End Sub
+
+    Private Sub CustomToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CustomToolStripMenuItem.Click
+        host.mzkitSearch.ComboBox1.SelectedIndex = 0
+        SearchFormulaToolStripMenuItem_Click(sender, e)
+    End Sub
+
+    Private Sub DefaultToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DefaultToolStripMenuItem.Click
+        host.mzkitSearch.ComboBox1.SelectedIndex = 1
+        SearchFormulaToolStripMenuItem_Click(sender, e)
+    End Sub
+
+    Private Sub SmallMoleculeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SmallMoleculeToolStripMenuItem.Click
+        host.mzkitSearch.ComboBox1.SelectedIndex = 2
+        SearchFormulaToolStripMenuItem_Click(sender, e)
+    End Sub
+
+    Private Sub NatureProductToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NatureProductToolStripMenuItem.Click
+        host.mzkitSearch.ComboBox1.SelectedIndex = 3
+        SearchFormulaToolStripMenuItem_Click(sender, e)
+    End Sub
 End Class
 

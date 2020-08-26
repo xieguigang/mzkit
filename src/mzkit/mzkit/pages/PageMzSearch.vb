@@ -92,7 +92,7 @@ Public Class PageMzSearch
         progress.Invoke(Sub() progress.Label2.Text = "initialize workspace...")
 
         Dim config As PrecursorSearchSettings = Globals.Settings.precursor_search
-        Dim opts = GetProfile.AdjustPpm(config.ppm)
+        Dim opts = DirectCast(GetProfile(), SearchOption).AdjustPpm(config.ppm)
         Dim oMwtWin As New PrecursorIonSearch(
             opts:=opts,
             progress:=Sub(msg) progress.Invoke(Sub() progress.Label1.Text = msg),
@@ -116,7 +116,7 @@ Public Class PageMzSearch
         Thread.Sleep(100)
         progress.Invoke(Sub() progress.Label2.Text = "initialize workspace...")
 
-        Dim opts = GetProfile.AdjustPpm(ppm)
+        Dim opts = DirectCast(Invoke(Function() GetProfile()), SearchOption).AdjustPpm(ppm)
         Dim oMwtWin As New FormulaSearch(
             opts:=opts,
             progress:=Sub(msg) progress.Invoke(Sub() progress.Label1.Text = msg)
@@ -191,6 +191,7 @@ Public Class PageMzSearch
 
     Private Sub PageMzSearch_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         host = DirectCast(ParentForm, frmMain)
+        ComboBox1.SelectedIndex = 0
     End Sub
 
     Private Sub PageMzSearch_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged

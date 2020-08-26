@@ -461,11 +461,11 @@
 							<Button CommandName='cmdButtonFormulaSearchExport' />
 							<Button CommandName='cmdButtonNetworkRender' />
 						</Group>
-
+<!--
 						<Group CommandName='cmdGroupFormulaSearchConfig2'>
 							<ComboBox CommandName="cmdComboFormulaSearchProfile3" IsAutoCompleteEnabled="true" IsEditable="false" ResizeType="NoResize" >																
 							</ComboBox>
-						</Group>
+						</Group>-->
 					</Tab>
 				</TabGroup>
 

@@ -242,19 +242,25 @@ Public Class frmMain
         'uiItem.GetValue(RibbonProperties.Label, itemLabel)
 
         'Dim selected As String = Strings.LCase(CStr(itemLabel.Value))
-        Dim selected As String = Strings.LCase(ribbonItems.ComboFormulaSearchProfile3.StringValue)
+        '  Dim selected As String = Strings.LCase(ribbonItems.ComboFormulaSearchProfile3.StringValue)
+        Dim selected As FormulaSearchProfiles = mzkitSearch.ComboBox1.SelectedIndex
+        '  MsgBox(selected)
 
-        MsgBox(selected)
-
-        If selected = FormulaSearchProfiles.Default.Description.ToLower Then
-            Return FormulaSearchProfiles.Default
-        ElseIf selected = FormulaSearchProfiles.SmallMolecule.Description.ToLower Then
-            Return FormulaSearchProfiles.SmallMolecule
-        ElseIf selected = FormulaSearchProfiles.NaturalProduct.Description.ToLower Then
-            Return FormulaSearchProfiles.NaturalProduct
-        Else
-            Return FormulaSearchProfiles.Custom
+        If selected < 0 Then
+            selected = FormulaSearchProfiles.Default
         End If
+
+        Return selected
+
+        'If selected = FormulaSearchProfiles.Default.Description.ToLower Then
+        '    Return FormulaSearchProfiles.Default
+        'ElseIf selected = FormulaSearchProfiles.SmallMolecule.Description.ToLower Then
+        '    Return FormulaSearchProfiles.SmallMolecule
+        'ElseIf selected = FormulaSearchProfiles.NaturalProduct.Description.ToLower Then
+        '    Return FormulaSearchProfiles.NaturalProduct
+        'Else
+        '    Return FormulaSearchProfiles.Custom
+        'End If
         ' End If
     End Function
 
