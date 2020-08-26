@@ -45,6 +45,7 @@
 #End Region
 
 Imports System.Threading
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.BioDeep
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports RibbonLib.Interop
@@ -54,17 +55,48 @@ Public Class PageMzSearch
 
     Dim host As frmMain
 
-    Public Sub doMzSearch(mz As Double, ppm As Double)
+    Private Sub doExactMassSearch(exact_mass As Double, ppm As Double)
         Dim progress As New frmTaskProgress
 
         Call New Thread(
             Sub()
-                Call runSearchInternal(mz, ppm, progress)
+                Call runSearchInternal(exact_mass, ppm, progress)
             End Sub).Start()
         Call progress.ShowDialog()
     End Sub
 
-    Private Sub runSearchInternal(mz As Double, ppm As Double, progress As frmTaskProgress)
+    Public Sub doMzSearch(mz As Double, charge As Integer, ionMode As Integer, ppm As Double)
+        Dim progress As New frmTaskProgress
+
+        Call New Thread(
+            Sub()
+                Call runSearchInternal(mz, charge, ionMode, ppm, progress)
+            End Sub).Start()
+        Call progress.ShowDialog()
+    End Sub
+
+    Private Sub runSearchInternal(mz As Double, charge As Integer, ionMode As Integer, ppm As Double, progress As frmTaskProgress)
+        Thread.Sleep(100)
+        progress.Invoke(Sub() progress.Label2.Text = "initialize workspace...")
+
+        Dim opts = Chemoinformatics.Formula.SearchOption.DefaultMetaboliteProfile.AdjustPpm(ppm)
+        Dim oMwtWin As New PrecursorIonSearch(
+            opts:=opts,
+            progress:=Sub(msg) progress.Invoke(Sub() progress.Label1.Text = msg)
+        )
+
+        progress.Invoke(Sub() progress.Label2.Text = "running formula search...")
+
+        Dim searchResults = oMwtWin.SearchByPrecursorMz(mz, charge, ionMode).ToArray
+
+        progress.Invoke(Sub() progress.Label2.Text = "output search result...")
+        host.Invoke(Sub() host.ToolStripStatusLabel1.Text = $"Run formula search for m/z {mz} with tolerance error {ppm} ppm, have {searchResults.Length} formula found!")
+
+        Call Me.Invoke(Sub() Call ShowFormulaFinderResults(searchResults))
+        Call progress.Invoke(Sub() Call progress.Close())
+    End Sub
+
+    Private Sub runSearchInternal(exact_mass As Double, ppm As Double, progress As frmTaskProgress)
         Thread.Sleep(100)
         progress.Invoke(Sub() progress.Label2.Text = "initialize workspace...")
 
@@ -76,13 +108,39 @@ Public Class PageMzSearch
 
         progress.Invoke(Sub() progress.Label2.Text = "running formula search...")
 
-        Dim searchResults = oMwtWin.SearchByExactMass(mz).ToArray
+        Dim searchResults = oMwtWin.SearchByExactMass(exact_mass).ToArray
 
         progress.Invoke(Sub() progress.Label2.Text = "output search result...")
-        host.Invoke(Sub() host.ToolStripStatusLabel1.Text = $"Run formula search for m/z {mz} with tolerance error {ppm} ppm, have {searchResults.Length} formula found!")
+        host.Invoke(Sub() host.ToolStripStatusLabel1.Text = $"Run formula search for exact mass {exact_mass} with tolerance error {ppm} ppm, have {searchResults.Length} formula found!")
 
         Call Me.Invoke(Sub() Call ShowFormulaFinderResults(searchResults))
         Call progress.Invoke(Sub() Call progress.Close())
+    End Sub
+
+    Private Sub ShowFormulaFinderResults(lstResults As IEnumerable(Of PrecursorIonComposition))
+        DataGridView1.Rows.Clear()
+        DataGridView1.Columns.Clear()
+
+        ' Add coluns to the table
+        DataGridView1.Columns.Add(New DataGridViewLinkColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .ValueType = GetType(String), .HeaderText = "Formula"})
+        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .ValueType = GetType(String), .HeaderText = "Exact Mass"})
+        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .ValueType = GetType(String), .HeaderText = "PPM"})
+        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .ValueType = GetType(String), .HeaderText = "Charge"})
+        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .ValueType = GetType(String), .HeaderText = "Adducts"})
+        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .ValueType = GetType(String), .HeaderText = "M"})
+        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .ValueType = GetType(String), .HeaderText = "Precursor Type"})
+
+        For Each result As PrecursorIonComposition In lstResults
+            DataGridView1.Rows.Add(
+                result.EmpiricalFormula,
+                result.exact_mass,
+                result.ppm,
+                result.charge,
+                result.adducts,
+                result.M,
+                result.precursor_type
+            )
+        Next
     End Sub
 
     Private Sub ShowFormulaFinderResults(lstResults As IEnumerable(Of FormulaComposition))
@@ -131,7 +189,7 @@ Public Class PageMzSearch
         Dim mz As Double = Val(TextBox1.Text)
         Dim ppm As Double = 1
 
-        Call doMzSearch(mz, ppm)
+        Call doExactMassSearch(mz, ppm)
     End Sub
 End Class
 

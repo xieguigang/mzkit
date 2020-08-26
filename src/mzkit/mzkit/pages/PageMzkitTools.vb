@@ -46,7 +46,6 @@
 
 #End Region
 
-Imports System.IO
 Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
@@ -54,7 +53,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
-Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.IO.netCDF
@@ -523,7 +521,7 @@ Public Class PageMzkitTools
 
         Call runMzSearch(
             Sub(mz)
-                host.mzkitSearch.doMzSearch(mz, ppm)
+                host.mzkitSearch.doExactMassSearch(mz, ppm)
                 host.ShowPage(host.mzkitSearch)
             End Sub)
     End Sub
