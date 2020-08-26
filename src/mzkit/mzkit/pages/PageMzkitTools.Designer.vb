@@ -332,6 +332,7 @@ Partial Class PageMzkitTools
         '
         'SaveImageToolStripMenuItem
         '
+        Me.SaveImageToolStripMenuItem.Image = CType(resources.GetObject("SaveImageToolStripMenuItem.Image"), System.Drawing.Image)
         Me.SaveImageToolStripMenuItem.Name = "SaveImageToolStripMenuItem"
         Me.SaveImageToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.SaveImageToolStripMenuItem.Text = "Save Image"
@@ -339,7 +340,7 @@ Partial Class PageMzkitTools
         'SaveMatrixToolStripMenuItem
         '
         Me.SaveMatrixToolStripMenuItem.Name = "SaveMatrixToolStripMenuItem"
-        Me.SaveMatrixToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.SaveMatrixToolStripMenuItem.Size = New System.Drawing.Size(135, 22)
         Me.SaveMatrixToolStripMenuItem.Text = "Save Matrix"
         '
         'TabPage2

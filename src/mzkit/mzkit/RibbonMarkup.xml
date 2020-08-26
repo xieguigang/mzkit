@@ -127,10 +127,10 @@
 				 Id="1013"
 				 LabelTitle="Calculator">
 			<Command.LargeImages>
-				<Image>Res/Open32.bmp</Image>
+				<Image>Res/libreoffice-math.png</Image>
 			</Command.LargeImages>
 			<Command.SmallImages>
-				<Image>Res/Open16.bmp</Image>
+				<Image>Res/libreoffice-math.png</Image>
 			</Command.SmallImages>
 		</Command>
 
