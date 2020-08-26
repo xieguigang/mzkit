@@ -82,7 +82,8 @@ Public Class PageMzSearch
         Dim opts = Chemoinformatics.Formula.SearchOption.DefaultMetaboliteProfile.AdjustPpm(ppm)
         Dim oMwtWin As New PrecursorIonSearch(
             opts:=opts,
-            progress:=Sub(msg) progress.Invoke(Sub() progress.Label1.Text = msg)
+            progress:=Sub(msg) progress.Invoke(Sub() progress.Label1.Text = msg),
+            precursorTypeProgress:=Sub(msg) progress.Invoke(Sub() progress.Label2.Text = msg)
         )
 
         progress.Invoke(Sub() progress.Label2.Text = "running formula search...")

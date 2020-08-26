@@ -4,8 +4,15 @@ Imports stdNum = System.Math
 
 Public Class PrecursorIonSearch : Inherits FormulaSearch
 
-    Public Sub New(opts As SearchOption, Optional progress As Action(Of String) = Nothing)
+    ReadOnly precursorTypeProgress As Action(Of String)
+
+    Public Sub New(opts As SearchOption,
+                   Optional progress As Action(Of String) = Nothing,
+                   Optional precursorTypeProgress As Action(Of String) = Nothing)
+
         MyBase.New(opts, progress)
+
+        Me.precursorTypeProgress = precursorTypeProgress
     End Sub
 
     ''' <summary>
@@ -26,6 +33,8 @@ Public Class PrecursorIonSearch : Inherits FormulaSearch
 
         For Each type As MzCalculator In parents
             Dim exact_mass As Double = type.CalcMass(mz)
+
+            Call precursorTypeProgress($"Run search for precursor type: {type.ToString}")
 
             For Each formula As FormulaComposition In SearchByExactMass(exact_mass, doVerify:=False)
                 Yield New PrecursorIonComposition(formula.CountsByElement, formula.EmpiricalFormula) With {
