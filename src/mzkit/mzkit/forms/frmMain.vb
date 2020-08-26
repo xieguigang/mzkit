@@ -197,7 +197,7 @@ Public Class frmMain
         addPage(mzkitTool, mzkitSettings, mzkitSearch, mzkitCalculator, mzkitMNtools)
         ShowPage(mzkitTool)
 
-        If Not Globals.Settings.ui Is Nothing Then
+        If Not Globals.Settings.ui Is Nothing AndAlso Globals.Settings.ui.window <> FormWindowState.Minimized Then
             Me.Location = Globals.Settings.ui.getLocation
             Me.Size = Globals.Settings.ui.getSize
             Me.WindowState = Globals.Settings.ui.window
