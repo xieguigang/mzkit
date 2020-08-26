@@ -65,33 +65,36 @@ Public Class PageMzSearch
         Call progress.ShowDialog()
     End Sub
 
-    Public Sub doMzSearch(mz As Double, charge As Integer, ionMode As Integer, ppm As Double)
+    Public Sub doMzSearch(mz As Double, charge As Integer, ionMode As Integer)
         Dim progress As New frmTaskProgress
 
         Call New Thread(
             Sub()
-                Call runSearchInternal(mz, charge, ionMode, ppm, progress)
+                Call runSearchInternal(mz, charge, ionMode, progress)
             End Sub).Start()
         Call progress.ShowDialog()
     End Sub
 
-    Private Sub runSearchInternal(mz As Double, charge As Integer, ionMode As Integer, ppm As Double, progress As frmTaskProgress)
+    Private Sub runSearchInternal(mz As Double, charge As Integer, ionMode As Integer, progress As frmTaskProgress)
         Thread.Sleep(100)
         progress.Invoke(Sub() progress.Label2.Text = "initialize workspace...")
 
-        Dim opts = Chemoinformatics.Formula.SearchOption.DefaultMetaboliteProfile.AdjustPpm(ppm)
+        Dim config As PrecursorSearchSettings = Globals.Settings.precursor_search
+        Dim opts = Chemoinformatics.Formula.SearchOption.DefaultMetaboliteProfile.AdjustPpm(config.ppm)
         Dim oMwtWin As New PrecursorIonSearch(
             opts:=opts,
             progress:=Sub(msg) progress.Invoke(Sub() progress.Label1.Text = msg),
             precursorTypeProgress:=Sub(msg) progress.Invoke(Sub() progress.Label2.Text = msg)
         )
 
+        oMwtWin.AddPrecursorTypeRanges(config.precursor_types)
+
         progress.Invoke(Sub() progress.Label2.Text = "running formula search...")
 
         Dim searchResults = oMwtWin.SearchByPrecursorMz(mz, charge, ionMode).ToArray
 
         progress.Invoke(Sub() progress.Label2.Text = "output search result...")
-        host.Invoke(Sub() host.ToolStripStatusLabel1.Text = $"Run formula search for m/z {mz} with tolerance error {ppm} ppm, have {searchResults.Length} formula found!")
+        host.Invoke(Sub() host.ToolStripStatusLabel1.Text = $"Run formula search for m/z {mz} with tolerance error {config.ppm} ppm, have {searchResults.Length} formula found!")
 
         Call Me.Invoke(Sub() Call ShowFormulaFinderResults(searchResults))
         Call progress.Invoke(Sub() Call progress.Close())

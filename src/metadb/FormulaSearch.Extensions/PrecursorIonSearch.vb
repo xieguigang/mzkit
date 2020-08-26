@@ -1,10 +1,13 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports stdNum = System.Math
 
 Public Class PrecursorIonSearch : Inherits FormulaSearch
 
     ReadOnly precursorTypeProgress As Action(Of String)
+
+    Public ReadOnly Property LimitPrecursorTypes As Index(Of String)
 
     Public Sub New(opts As SearchOption,
                    Optional progress As Action(Of String) = Nothing,
@@ -14,6 +17,11 @@ Public Class PrecursorIonSearch : Inherits FormulaSearch
 
         Me.precursorTypeProgress = precursorTypeProgress
     End Sub
+
+    Public Function AddPrecursorTypeRanges(ParamArray precursor_types As String()) As PrecursorIonSearch
+        _LimitPrecursorTypes = precursor_types.Indexing
+        Return Me
+    End Function
 
     ''' <summary>
     ''' 
@@ -29,6 +37,10 @@ Public Class PrecursorIonSearch : Inherits FormulaSearch
             parents = Provider.Positives.Where(Function(p) stdNum.Abs(p.charge) = stdNum.Abs(charge)).ToArray
         Else
             parents = Provider.Negatives.Where(Function(p) stdNum.Abs(p.charge) = stdNum.Abs(charge)).ToArray
+        End If
+
+        If Not (LimitPrecursorTypes Is Nothing OrElse LimitPrecursorTypes.Count = 0) Then
+            parents = parents.Where(Function(a) a.name Like LimitPrecursorTypes).ToArray
         End If
 
         For Each type As MzCalculator In parents

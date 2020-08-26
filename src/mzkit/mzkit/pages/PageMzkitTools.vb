@@ -525,7 +525,6 @@ Public Class PageMzkitTools
                 Dim mz = current.raw.scans.Where(Function(scan) scan.id = node.Text).FirstOrDefault
 
                 If Not mz Is Nothing AndAlso mz.mz > 0 Then
-                    Dim ppm As Double = 20
                     Dim charge As Double = mz.charge
                     Dim ionMode As Integer = mz.polarity
 

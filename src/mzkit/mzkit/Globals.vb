@@ -55,6 +55,12 @@ Module Globals
 
     ReadOnly cacheList As String = App.LocalData & "/cacheList.dat"
 
+    Public ReadOnly Property Settings As Settings
+
+    Sub New()
+        Settings = Settings.GetConfiguration()
+    End Sub
+
     <Extension>
     Public Sub SaveRawFileCache(explorer As TreeView)
         Dim files As New List(Of Task.Raw)
