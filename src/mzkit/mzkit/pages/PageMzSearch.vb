@@ -44,13 +44,10 @@
 
 #End Region
 
-Imports System.IO
-Imports System.Text
 Imports System.Threading
 Imports BioNovoGene.BioDeep
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports RibbonLib.Interop
-Imports RowObject = Microsoft.VisualBasic.Data.csv.IO.RowObject
 Imports stdNum = System.Math
 
 Public Class PageMzSearch
@@ -68,11 +65,11 @@ Public Class PageMzSearch
         Thread.Sleep(100)
         progress.Invoke(Sub() progress.Label2.Text = "initialize workspace...")
 
-        Dim opts As New Chemoinformatics.Formula.SearchOption(-100000, 1000000, 10)
-        opts.AddElement("C", 1, 20).AddElement("H", 4, 100).AddElement("N", 0, 20).AddElement("O", 0, 20).AddElement("P", 0, 20)
+        Dim opts = Chemoinformatics.Formula.SearchOption.DefaultMetaboliteProfile
         Dim oMwtWin As New FormulaSearch(
             opts:=opts,
-            progress:=Sub(msg) progress.Invoke(Sub() progress.Label1.Text = msg))
+            progress:=Sub(msg) progress.Invoke(Sub() progress.Label1.Text = msg)
+        )
 
         progress.Invoke(Sub() progress.Label2.Text = "running formula search...")
 
