@@ -1,5 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 
 Public Class PrecursorSearchSettings
 
@@ -17,7 +18,15 @@ End Enum
 
 Public Class FormulaSearchProfile
 
-    Public Function CreateOptions() As SearchOption
+    Public Property elements As Dictionary(Of String, IntRange)
 
+    Public Function CreateOptions() As SearchOption
+        Dim opts = New SearchOption(-99999, 99999, 5)
+
+        For Each element In elements
+            opts.AddElement(element.Key, element.Value.Min, element.Value.Max)
+        Next
+
+        Return opts
     End Function
 End Class

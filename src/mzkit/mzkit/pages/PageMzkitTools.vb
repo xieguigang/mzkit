@@ -516,7 +516,7 @@ Public Class PageMzkitTools
         End If
     End Sub
 
-    Private Sub SearchFormulaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SearchFormulaToolStripMenuItem.Click
+    Private Sub SearchFormulaToolStripMenuItem_Click(sender As Object, e As EventArgs) ' Handles SearchFormulaToolStripMenuItem.Click
         If Not ShowTICToolStripMenuItem.Checked Then
             Dim current = TreeView1.CurrentRawFile
             Dim node = TreeView1.SelectedNode

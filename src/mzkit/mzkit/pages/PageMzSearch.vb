@@ -74,16 +74,56 @@ Public Class PageMzSearch
         Call progress.ShowDialog()
     End Sub
 
+    Public Function GetFormulaSearchProfileName() As FormulaSearchProfiles
+        ' get selected item index from combo box 1
+        ' Dim selectedItemIndex As UInteger = ribbonItems.ComboFormulaSearchProfile.SelectedItem
+
+        ' If selectedItemIndex = Constants.UI_Collection_InvalidIndex Then
+        'Return FormulaSearchProfiles.Custom
+        'Else
+        ' Dim selectedItem As Object = Nothing
+        ' ribbonItems.ComboFormulaSearchProfile.ItemsSource.GetItem(selectedItemIndex, selectedItem)
+        ' Dim uiItem As IUISimplePropertySet = CType(selectedItem, IUISimplePropertySet)
+        'Dim itemLabel As PropVariant
+        'uiItem.GetValue(RibbonProperties.Label, itemLabel)
+
+        'Dim selected As String = Strings.LCase(CStr(itemLabel.Value))
+        '  Dim selected As String = Strings.LCase(ribbonItems.ComboFormulaSearchProfile3.StringValue)
+        Dim selected As FormulaSearchProfiles = ComboBox1.SelectedIndex
+        '  MsgBox(selected)
+
+        If selected < 0 Then
+            selected = FormulaSearchProfiles.Default
+        End If
+
+        Return selected
+
+        'If selected = FormulaSearchProfiles.Default.Description.ToLower Then
+        '    Return FormulaSearchProfiles.Default
+        'ElseIf selected = FormulaSearchProfiles.SmallMolecule.Description.ToLower Then
+        '    Return FormulaSearchProfiles.SmallMolecule
+        'ElseIf selected = FormulaSearchProfiles.NaturalProduct.Description.ToLower Then
+        '    Return FormulaSearchProfiles.NaturalProduct
+        'Else
+        '    Return FormulaSearchProfiles.Custom
+        'End If
+        ' End If
+    End Function
+
     Private Function GetProfile() As SearchOption
-        Select Case host.GetFormulaSearchProfileName
+        Select Case GetFormulaSearchProfileName()
             Case FormulaSearchProfiles.Default
                 Return SearchOption.DefaultMetaboliteProfile
             Case FormulaSearchProfiles.NaturalProduct
-                Return SearchOption.NaturalProduct(DNPOrWileyType.DNP)
+                Return SearchOption.NaturalProduct(DNPOrWileyType.DNP, True)
             Case FormulaSearchProfiles.SmallMolecule
-                Return SearchOption.SmallMolecule(DNPOrWileyType.DNP)
+                Return SearchOption.SmallMolecule(DNPOrWileyType.DNP, True)
             Case Else
-                Return Globals.Settings.formula_search.CreateOptions
+                If Globals.Settings.formula_search Is Nothing Then
+                    Return SearchOption.DefaultMetaboliteProfile
+                Else
+                    Return Globals.Settings.formula_search.CreateOptions
+                End If
         End Select
     End Function
 
@@ -92,7 +132,7 @@ Public Class PageMzSearch
         progress.Invoke(Sub() progress.Label2.Text = "initialize workspace...")
 
         Dim config As PrecursorSearchSettings = Globals.Settings.precursor_search
-        Dim opts = DirectCast(GetProfile(), SearchOption).AdjustPpm(config.ppm)
+        Dim opts = DirectCast(Invoke(Function() GetProfile()), SearchOption).AdjustPpm(config.ppm)
         Dim oMwtWin As New PrecursorIonSearch(
             opts:=opts,
             progress:=Sub(msg) progress.Invoke(Sub() progress.Label1.Text = msg),

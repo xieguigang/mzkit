@@ -228,42 +228,6 @@ Public Class frmMain
         AddHandler _uiCollectionChangedEvent.ChangedEvent, AddressOf _uiCollectionChangedEvent_ChangedEvent
     End Sub
 
-    Public Function GetFormulaSearchProfileName() As FormulaSearchProfiles
-        ' get selected item index from combo box 1
-        ' Dim selectedItemIndex As UInteger = ribbonItems.ComboFormulaSearchProfile.SelectedItem
-
-        ' If selectedItemIndex = Constants.UI_Collection_InvalidIndex Then
-        'Return FormulaSearchProfiles.Custom
-        'Else
-        ' Dim selectedItem As Object = Nothing
-        ' ribbonItems.ComboFormulaSearchProfile.ItemsSource.GetItem(selectedItemIndex, selectedItem)
-        ' Dim uiItem As IUISimplePropertySet = CType(selectedItem, IUISimplePropertySet)
-        'Dim itemLabel As PropVariant
-        'uiItem.GetValue(RibbonProperties.Label, itemLabel)
-
-        'Dim selected As String = Strings.LCase(CStr(itemLabel.Value))
-        '  Dim selected As String = Strings.LCase(ribbonItems.ComboFormulaSearchProfile3.StringValue)
-        Dim selected As FormulaSearchProfiles = mzkitSearch.ComboBox1.SelectedIndex
-        '  MsgBox(selected)
-
-        If selected < 0 Then
-            selected = FormulaSearchProfiles.Default
-        End If
-
-        Return selected
-
-        'If selected = FormulaSearchProfiles.Default.Description.ToLower Then
-        '    Return FormulaSearchProfiles.Default
-        'ElseIf selected = FormulaSearchProfiles.SmallMolecule.Description.ToLower Then
-        '    Return FormulaSearchProfiles.SmallMolecule
-        'ElseIf selected = FormulaSearchProfiles.NaturalProduct.Description.ToLower Then
-        '    Return FormulaSearchProfiles.NaturalProduct
-        'Else
-        '    Return FormulaSearchProfiles.Custom
-        'End If
-        ' End If
-    End Function
-
     Private Sub InitSpinner()
         Dim _spinner = ribbonItems.Spinner
 
