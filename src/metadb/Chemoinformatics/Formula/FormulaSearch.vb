@@ -1,5 +1,4 @@
-﻿Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
-Imports stdNum = System.Math
+﻿Imports stdNum = System.Math
 
 Namespace Formula
 
