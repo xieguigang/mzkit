@@ -126,8 +126,16 @@ Public Class PageMzkitTools
             Dim selects = TreeView1.CurrentRawFile.raw
             Dim TIC As New NamedCollection(Of ChromatogramTick) With {
                 .name = $"m/z {raw.Select(Function(m) m.mz).Min.ToString("F3")} - {raw.Select(Function(m) m.mz).Max.ToString("F3")}",
-                .value = raw.Select(Function(a) New ChromatogramTick With {.Time = Val(a.Annotation), .Intensity = a.intensity}).ToArray
+                .value = raw _
+                    .Select(Function(a)
+                                Return New ChromatogramTick With {
+                                    .Time = Val(a.Annotation),
+                                    .Intensity = a.intensity
+                                }
+                            End Function) _
+                    .ToArray
             }
+            Dim maxY As Double = selects.scans.Select(Function(a) a.intensity).Max
 
             TIC.value = {
                 New ChromatogramTick With {.Time = selects.rtmin},
@@ -136,7 +144,7 @@ Public Class PageMzkitTools
              .OrderBy(Function(c) c.Time) _
              .ToArray
 
-            PictureBox1.BackgroundImage = TIC.TICplot.AsGDIImage
+            PictureBox1.BackgroundImage = TIC.TICplot(intensityMax:=maxY).AsGDIImage
         ElseIf e.Node.Tag Is Nothing AndAlso e.Node.Text = "TIC" Then
             Dim raw = TreeView1.CurrentRawFile.raw
             Dim TIC As New NamedCollection(Of ChromatogramTick) With {
@@ -623,6 +631,43 @@ Public Class PageMzkitTools
     Private Sub GeneralFlavoneToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GeneralFlavoneToolStripMenuItem.Click
         host.mzkitSearch.ComboBox1.SelectedIndex = 4
         SearchFormulaToolStripMenuItem_Click(sender, e)
+    End Sub
+
+    Private Sub ShowXICToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowXICToolStripMenuItem.Click
+        ' scan节点
+        Dim raw As Task.Raw = TreeView1.CurrentRawFile.raw
+        Dim scanId As String = TreeView1.SelectedNode.Text
+        Dim ms2 As ScanEntry = raw.scans.Where(Function(a) a.id = scanId).FirstOrDefault
+
+        If ms2 Is Nothing OrElse ms2.mz = 0.0 Then
+            Return
+        End If
+
+        Dim ppm As Double = Val(RibbonItems.Spinner.DecimalValue)
+        Dim XIC As ChromatogramTick() = raw.scans _
+            .Where(Function(a) PPMmethod.PPM(a.mz, ms2.mz) <= ppm) _
+            .Select(Function(a)
+                        Return New ChromatogramTick With {
+                            .Time = a.rt,
+                            .Intensity = a.intensity
+                        }
+                    End Function) _
+            .ToArray
+        Dim plotTIC As New NamedCollection(Of ChromatogramTick) With {
+            .name = $"XIC [m/z={ms2.mz}, {ppm}ppm]",
+            .value = {
+                  New ChromatogramTick With {.Time = raw.rtmin},
+                  New ChromatogramTick With {.Time = raw.rtmax}
+              }.JoinIterates(XIC) _
+               .OrderBy(Function(c) c.Time) _
+               .ToArray
+        }
+        Dim maxY As Double = raw.scans _
+            .Where(Function(a) a.mz > 0) _
+            .Select(Function(a) a.intensity) _
+            .Max
+
+        PictureBox1.BackgroundImage = plotTIC.TICplot(intensityMax:=maxY).AsGDIImage
     End Sub
 End Class
 

@@ -149,7 +149,8 @@ Public Module ChromatogramPlot
                             Optional axisLabelFont$ = CSSFont.Win7Large,
                             Optional axisTickFont$ = CSSFont.Win10NormalLarger,
                             Optional showLegends As Boolean = True,
-                            Optional legendFontCSS$ = CSSFont.Win10Normal) As GraphicsData
+                            Optional legendFontCSS$ = CSSFont.Win10Normal,
+                            Optional intensityMax As Double = 0) As GraphicsData
 
         Return {ionData}.TICplot(
             size:=size,
@@ -165,7 +166,8 @@ Public Module ChromatogramPlot
             showLabels:=showLabels,
             showLegends:=showLegends,
             fillCurve:=fillCurve,
-            legendFontCSS:=legendFontCSS
+            legendFontCSS:=legendFontCSS,
+            intensityMax:=intensityMax
         )
     End Function
 
@@ -202,7 +204,8 @@ Public Module ChromatogramPlot
                             Optional fillAlpha As Integer = 180,
                             Optional gridFill As String = "rgb(245,245,245)",
                             Optional timeRange As Double() = Nothing,
-                            Optional parallel As Boolean = False) As GraphicsData
+                            Optional parallel As Boolean = False,
+                            Optional intensityMax As Double = 0) As GraphicsData
 
         Dim labelFont As Font = CSSFont.TryParse(labelFontStyle)
         Dim labelConnector As Pen = Stroke.TryParse(labelConnectorStroke)
@@ -248,6 +251,7 @@ Public Module ChromatogramPlot
                         Return ion.value.IntensityArray
                     End Function) _
             .IteratesALL _
+            .JoinIterates({intensityMax}) _
             .AsVector _
             .Range _
             .CreateAxisTicks ' intensity
