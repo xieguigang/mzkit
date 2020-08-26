@@ -400,6 +400,7 @@
     <None Include="Resources\42082.png" />
     <Content Include="chemistry.ico" />
     <None Include="Resources\LICENSE.txt" />
+    <None Include="Resources\logo%402x.png" />
     <Content Include="RibbonMarkup.h" />
     <Content Include="RibbonMarkup.xml" />
     <None Include="Resources\header-foreground-image.png" />
