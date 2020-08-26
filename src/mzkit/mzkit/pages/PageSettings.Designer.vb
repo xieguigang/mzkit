@@ -22,8 +22,9 @@ Partial Class PageSettings
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim TreeNode1 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Element Profile")
-        Dim TreeNode2 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Formula Search", New System.Windows.Forms.TreeNode() {TreeNode1})
+        Dim TreeNode1 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Mzkit App")
+        Dim TreeNode2 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Element Profile")
+        Dim TreeNode3 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Formula Search", New System.Windows.Forms.TreeNode() {TreeNode2})
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.TreeView1 = New System.Windows.Forms.TreeView()
@@ -56,11 +57,13 @@ Partial Class PageSettings
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.TreeView1.Location = New System.Drawing.Point(3, 3)
         Me.TreeView1.Name = "TreeView1"
-        TreeNode1.Name = "Node1"
-        TreeNode1.Text = "Element Profile"
-        TreeNode2.Name = "Node0"
-        TreeNode2.Text = "Formula Search"
-        Me.TreeView1.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode2})
+        TreeNode1.Name = "Node0"
+        TreeNode1.Text = "Mzkit App"
+        TreeNode2.Name = "Node1"
+        TreeNode2.Text = "Element Profile"
+        TreeNode3.Name = "Node0"
+        TreeNode3.Text = "Formula Search"
+        Me.TreeView1.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode1, TreeNode3})
         Me.TreeView1.Size = New System.Drawing.Size(217, 504)
         Me.TreeView1.TabIndex = 2
         '

@@ -47,6 +47,10 @@ Public Class PageSettings
     Dim host As frmMain
     Dim status As ToolStripStatusLabel
 
+    Dim elementProfile As New ElementProfile
+    Dim appConfig As New AppConfig
+    Dim pages As Control()
+
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         host.ShowPage(host.mzkitTool)
     End Sub
@@ -54,6 +58,14 @@ Public Class PageSettings
     Private Sub PageSettings_Load(sender As Object, e As EventArgs) Handles Me.Load
         host = DirectCast(ParentForm, frmMain)
         status = host.ToolStripStatusLabel1
+        pages = {elementProfile, appConfig}
+
+        For Each page In pages
+            Panel1.Controls.Add(page)
+            page.Dock = DockStyle.Fill
+        Next
+
+        showPage(appConfig)
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
@@ -62,6 +74,21 @@ Public Class PageSettings
 
     Sub showStatusMessage(message As String)
         host.Invoke(Sub() status.Text = message)
+    End Sub
+
+    Sub showPage(page As Control)
+        For Each page2 In From ctl In pages Where Not ctl Is page
+            page.Visible = False
+        Next
+
+        page.Visible = True
+    End Sub
+
+    Private Sub TreeView1_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles TreeView1.AfterSelect
+        Select Case e.Node.Text
+            Case "Element Profile" : showPage(elementProfile)
+            Case "Mzkit App" : showPage(appConfig)
+        End Select
     End Sub
 End Class
 

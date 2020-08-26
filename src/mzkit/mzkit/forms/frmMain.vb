@@ -197,7 +197,10 @@ Public Class frmMain
         addPage(mzkitTool, mzkitSettings, mzkitSearch, mzkitCalculator, mzkitMNtools)
         ShowPage(mzkitTool)
 
-        If (Not Globals.Settings.ui Is Nothing) AndAlso Globals.Settings.ui.window <> FormWindowState.Minimized Then
+        If (Not Globals.Settings.ui Is Nothing) AndAlso
+            Globals.Settings.ui.window <> FormWindowState.Minimized AndAlso
+            Globals.Settings.ui.rememberWindowsLocation Then
+
             Me.Location = Globals.Settings.ui.getLocation
             Me.Size = Globals.Settings.ui.getSize
             Me.WindowState = Globals.Settings.ui.window
@@ -302,12 +305,17 @@ Public Class frmMain
     Private Sub frmMain_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
         mzkitTool.SaveFileCache()
 
+        If Globals.Settings.ui Is Nothing Then
+            Globals.Settings.ui = New UISettings
+        End If
+
         Globals.Settings.ui = New UISettings With {
             .height = Height,
             .width = Width,
             .x = Location.X,
             .y = Location.Y,
-            .window = WindowState
+            .window = WindowState,
+            .rememberWindowsLocation = Globals.Settings.ui.rememberWindowsLocation
         }
         Globals.Settings.Save()
     End Sub
