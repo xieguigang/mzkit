@@ -15,21 +15,31 @@ Namespace Formula
             Me.elements = Element.MemoryLoadElements
         End Sub
 
-        Public Iterator Function SearchByExactMass(exact_mass As Double) As IEnumerable(Of FormulaComposition)
+        Public Iterator Function SearchByExactMass(exact_mass As Double, Optional doVerify As Boolean = True) As IEnumerable(Of FormulaComposition)
             Dim elements As New Stack(Of ElementSearchCandiate)(opts.candidateElements.AsEnumerable.Reverse)
             Dim seed As New FormulaComposition(New Dictionary(Of String, Integer), "")
 
             For Each formula As FormulaComposition In SearchByExactMass(exact_mass, seed, elements)
-                Dim counts As New ElementNumType(formula)
+                If doVerify Then
+                    Dim counts As New ElementNumType(formula)
+                    Dim checked As Boolean = False
 
-                If ConstructAndVerifyCompoundWork(counts) Then
-                    ' formula.charge = FormalCharge.CorrectChargeEmpirical(formula.charge, counts)
+                    If ConstructAndVerifyCompoundWork(counts) Then
+                        ' formula.charge = FormalCharge.CorrectChargeEmpirical(formula.charge, counts)
 
-                    If formula.charge >= opts.chargeRange.Min AndAlso formula.charge <= opts.chargeRange.Max Then
-                        progressReport($"find {formula} with tolerance error {formula.ppm} ppm!")
-                        Yield formula
+                        If formula.charge >= opts.chargeRange.Min AndAlso formula.charge <= opts.chargeRange.Max Then
+                            checked = True
+                        End If
+                    End If
+
+                    If Not checked Then
+                        Continue For
                     End If
                 End If
+
+                progressReport($"find {formula} with tolerance error {formula.ppm} ppm!")
+
+                Yield formula
             Next
         End Function
 
