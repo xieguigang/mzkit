@@ -395,12 +395,12 @@
 			</Command.LargeImages>
 		</Command>
 
-		<Command Name="cmdGroupFormulaSearchConfig"
+		<Command Name="cmdGroupFormulaSearchConfig2"
 				 Id="1095"
 				 LabelTitle="EEE">
 		</Command>
 
-		<Command Name="cmdComboFormulaSearchProfile" Id="1099">
+		<Command Name="cmdComboFormulaSearchProfile3" Id="1099">
 		</Command>
 
 	</Application.Commands>
@@ -462,8 +462,9 @@
 							<Button CommandName='cmdButtonNetworkRender' />
 						</Group>
 
-						<Group CommandName='cmdGroupFormulaSearchConfig'>
-							<ComboBox CommandName="cmdComboFormulaSearchProfile" IsAutoCompleteEnabled="true" IsEditable="false" ResizeType="NoResize" />
+						<Group CommandName='cmdGroupFormulaSearchConfig2'>
+							<ComboBox CommandName="cmdComboFormulaSearchProfile3" IsAutoCompleteEnabled="true" IsEditable="false" ResizeType="NoResize" >																
+							</ComboBox>
 						</Group>
 					</Tab>
 				</TabGroup>

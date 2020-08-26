@@ -9,10 +9,10 @@ Public Class PrecursorSearchSettings
 End Class
 
 Public Enum FormulaSearchProfiles
-    Custom
-    [Default]
-    <Description("Small Molecule")> SmallMolecule
-    <Description("Natural Product")> NaturalProduct
+    <Description("Custom_Profile")> Custom
+    <Description("Default_Profile")> [Default]
+    <Description("Small_Molecule")> SmallMolecule
+    <Description("Natural_Product")> NaturalProduct
 End Enum
 
 Public Class FormulaSearchProfile

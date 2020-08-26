@@ -120,6 +120,8 @@ Public Class frmMain
     Friend ribbonItems As RibbonItems
     Friend recentItems As List(Of RecentItemsPropertySet)
 
+    Dim _uiCollectionChangedEvent As UICollectionChangedEvent
+
     Public Sub New()
 
         ' 此调用是设计器所必需的。
@@ -127,8 +129,6 @@ Public Class frmMain
 
         ' 在 InitializeComponent() 调用之后添加任何初始化。
         ribbonItems = New RibbonItems(Ribbon1)
-
-        InitializeFormulaProfile()
 
         AddHandler ribbonItems.ButtonExit.ExecuteEvent, AddressOf ExitToolsStripMenuItem_Click
         AddHandler ribbonItems.ButtonOpenRaw.ExecuteEvent, AddressOf OpenFile
@@ -144,6 +144,10 @@ Public Class frmMain
         AddHandler ribbonItems.ButtonSave.ExecuteEvent, Sub(sender, e) Call saveCacheList()
         AddHandler ribbonItems.ButtonNetworkExport.ExecuteEvent, Sub(sender, e) Call mzkitMNtools.saveNetwork()
         AddHandler ribbonItems.ButtonFormulaSearchExport.ExecuteEvent, Sub(sender, e) Call mzkitSearch.SaveSearchResultTable()
+
+        _uiCollectionChangedEvent = New UICollectionChangedEvent()
+
+        InitializeFormulaProfile()
     End Sub
 
     Private Sub saveCacheList()
@@ -196,46 +200,62 @@ Public Class frmMain
         ToolStripStatusLabel1.Text = "Ready!"
     End Sub
 
-    Private Sub InitializeFormulaProfile()
-        ribbonItems.ComboFormulaSearchProfile.RepresentativeString = "XXXXXXXXXXX"
-        ribbonItems.ComboFormulaSearchProfile.Label = "Preset Profiles:"
+    Private Sub _uiCollectionChangedEvent_ChangedEvent(ByVal sender As Object, ByVal e As UICollectionChangedEventArgs)
+        MessageBox.Show("Got ChangedEvent. Action = " & e.Action.ToString())
+    End Sub
 
-        AddHandler ribbonItems.ComboFormulaSearchProfile.ItemsSourceReady,
-            Sub(sender, e)
-                Dim itemsSource3 As IUICollection = ribbonItems.ComboFormulaSearchProfile.ItemsSource
-                itemsSource3.Clear()
-                itemsSource3.Add(New GalleryItemPropertySet() With {.Label = FormulaSearchProfiles.Custom.Description, .CategoryID = Constants.UI_Collection_InvalidIndex})
-                itemsSource3.Add(New GalleryItemPropertySet() With {.Label = FormulaSearchProfiles.Default.Description, .CategoryID = Constants.UI_Collection_InvalidIndex})
-                itemsSource3.Add(New GalleryItemPropertySet() With {.Label = FormulaSearchProfiles.SmallMolecule.Description, .CategoryID = Constants.UI_Collection_InvalidIndex})
-                itemsSource3.Add(New GalleryItemPropertySet() With {.Label = FormulaSearchProfiles.NaturalProduct.Description, .CategoryID = Constants.UI_Collection_InvalidIndex})
-            End Sub
+    Private Sub InitializeFormulaProfile()
+        ribbonItems.ComboFormulaSearchProfile3.RepresentativeString = "XXXXXXXXXXXXXX"
+        ribbonItems.ComboFormulaSearchProfile3.Label = "Preset Profiles:"
+
+        AddHandler ribbonItems.ComboFormulaSearchProfile3.ItemsSourceReady, AddressOf InitializeFormulaProfile
+    End Sub
+
+    Private Sub InitializeFormulaProfile(sender As Object, e As EventArgs)
+        Dim itemsSource3 As IUICollection = ribbonItems.ComboFormulaSearchProfile3.ItemsSource
+
+        MsgBox("initialize profile")
+
+        itemsSource3.Clear()
+        itemsSource3.Add(New GalleryItemPropertySet() With {.Label = FormulaSearchProfiles.Custom.Description, .CategoryID = Constants.UI_Collection_InvalidIndex})
+        itemsSource3.Add(New GalleryItemPropertySet() With {.Label = FormulaSearchProfiles.Default.Description, .CategoryID = Constants.UI_Collection_InvalidIndex})
+        itemsSource3.Add(New GalleryItemPropertySet() With {.Label = FormulaSearchProfiles.SmallMolecule.Description, .CategoryID = Constants.UI_Collection_InvalidIndex})
+        itemsSource3.Add(New GalleryItemPropertySet() With {.Label = FormulaSearchProfiles.NaturalProduct.Description, .CategoryID = Constants.UI_Collection_InvalidIndex})
+
+        MsgBox("initialize event")
+
+        _uiCollectionChangedEvent.Attach(ribbonItems.ComboFormulaSearchProfile3.ItemsSource)
+        AddHandler _uiCollectionChangedEvent.ChangedEvent, AddressOf _uiCollectionChangedEvent_ChangedEvent
     End Sub
 
     Public Function GetFormulaSearchProfileName() As FormulaSearchProfiles
         ' get selected item index from combo box 1
-        Dim selectedItemIndex As UInteger = ribbonItems.ComboFormulaSearchProfile.SelectedItem
+        ' Dim selectedItemIndex As UInteger = ribbonItems.ComboFormulaSearchProfile.SelectedItem
 
-        If selectedItemIndex = Constants.UI_Collection_InvalidIndex Then
-            Return FormulaSearchProfiles.Custom
+        ' If selectedItemIndex = Constants.UI_Collection_InvalidIndex Then
+        'Return FormulaSearchProfiles.Custom
+        'Else
+        ' Dim selectedItem As Object = Nothing
+        ' ribbonItems.ComboFormulaSearchProfile.ItemsSource.GetItem(selectedItemIndex, selectedItem)
+        ' Dim uiItem As IUISimplePropertySet = CType(selectedItem, IUISimplePropertySet)
+        'Dim itemLabel As PropVariant
+        'uiItem.GetValue(RibbonProperties.Label, itemLabel)
+
+        'Dim selected As String = Strings.LCase(CStr(itemLabel.Value))
+        Dim selected As String = Strings.LCase(ribbonItems.ComboFormulaSearchProfile3.StringValue)
+
+        MsgBox(selected)
+
+        If selected = FormulaSearchProfiles.Default.Description.ToLower Then
+            Return FormulaSearchProfiles.Default
+        ElseIf selected = FormulaSearchProfiles.SmallMolecule.Description.ToLower Then
+            Return FormulaSearchProfiles.SmallMolecule
+        ElseIf selected = FormulaSearchProfiles.NaturalProduct.Description.ToLower Then
+            Return FormulaSearchProfiles.NaturalProduct
         Else
-            Dim selectedItem As Object = Nothing
-            ribbonItems.ComboFormulaSearchProfile.ItemsSource.GetItem(selectedItemIndex, selectedItem)
-            Dim uiItem As IUISimplePropertySet = CType(selectedItem, IUISimplePropertySet)
-            Dim itemLabel As PropVariant
-            uiItem.GetValue(RibbonProperties.Label, itemLabel)
-
-            Dim selected As String = Strings.LCase(CStr(itemLabel.Value))
-
-            If selected = FormulaSearchProfiles.Default.Description.ToLower Then
-                Return FormulaSearchProfiles.Default
-            ElseIf selected = FormulaSearchProfiles.SmallMolecule.Description.ToLower Then
-                Return FormulaSearchProfiles.SmallMolecule
-            ElseIf selected = FormulaSearchProfiles.NaturalProduct.Description.ToLower Then
-                Return FormulaSearchProfiles.NaturalProduct
-            Else
-                Return FormulaSearchProfiles.Custom
-            End If
+            Return FormulaSearchProfiles.Custom
         End If
+        ' End If
     End Function
 
     Private Sub InitSpinner()
