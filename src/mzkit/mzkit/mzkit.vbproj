@@ -195,6 +195,12 @@
     <Compile Include="pages\PageMoleculeNetworking.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="pages\Settings\ElementProfile.Designer.vb">
+      <DependentUpon>ElementProfile.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\Settings\ElementProfile.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="RibbonItems.Designer.vb" />
   </ItemGroup>
   <ItemGroup>
@@ -240,6 +246,9 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="App.config" />
+    <EmbeddedResource Include="pages\Settings\ElementProfile.resx">
+      <DependentUpon>ElementProfile.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="RibbonMarkup.ribbon" />
   </ItemGroup>
   <ItemGroup>
