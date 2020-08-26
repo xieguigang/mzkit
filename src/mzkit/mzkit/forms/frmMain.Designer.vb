@@ -61,8 +61,8 @@ Partial Class frmMain
         Me.ToolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ToolStripDropDownButton1.Name = "ToolStripDropDownButton1"
         Me.ToolStripDropDownButton1.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ToolStripDropDownButton1.Size = New System.Drawing.Size(110, 20)
-        Me.ToolStripDropDownButton1.Text = "Select Toolkits"
+        Me.ToolStripDropDownButton1.Size = New System.Drawing.Size(149, 20)
+        Me.ToolStripDropDownButton1.Text = "Use m/z Data Toolkits"
         '
         'MoleculeNetworkingToolStripMenuItem
         '
