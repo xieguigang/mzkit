@@ -128,6 +128,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="forms\frmLicense.Designer.vb">
+      <DependentUpon>frmLicense.vb</DependentUpon>
+    </Compile>
+    <Compile Include="forms\frmLicense.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="pages\Settings\AppConfig.Designer.vb">
       <DependentUpon>AppConfig.vb</DependentUpon>
     </Compile>
@@ -213,6 +219,9 @@
     <Compile Include="RibbonItems.Designer.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="forms\frmLicense.resx">
+      <DependentUpon>frmLicense.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="pages\PageMoleculeNetworking.resx">
       <DependentUpon>PageMoleculeNetworking.vb</DependentUpon>
     </EmbeddedResource>
@@ -390,6 +399,7 @@
     <None Include="Resources\spinner.gif" />
     <None Include="Resources\42082.png" />
     <Content Include="chemistry.ico" />
+    <None Include="Resources\LICENSE.txt" />
     <Content Include="RibbonMarkup.h" />
     <Content Include="RibbonMarkup.xml" />
     <None Include="Resources\header-foreground-image.png" />

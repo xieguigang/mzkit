@@ -50,10 +50,10 @@
 				 TooltipTitle="Exit (Ctrl+X)"
 				 TooltipDescription="Exit application.">
 			<Command.LargeImages>
-				<Image>Res/Exit32.bmp</Image>
+				<Image>Res/application-exit.png</Image>
 			</Command.LargeImages>
 			<Command.SmallImages>
-				<Image>Res/Exit16.bmp</Image>
+				<Image>Res/application-exit.png</Image>
 			</Command.SmallImages>
 		</Command>
 
@@ -67,49 +67,60 @@
 				 LabelTitle="Exit Menu">
 		</Command>
 
-		<Command Name="cmdButtonOpen"
+		<Command Name="cmdButtonToolkits"
 				 Id="1007"
-				 LabelTitle="Open"
+				 LabelTitle="Mzkit Data Toolkits"
 				 LabelDescription="Open Description"
 				 TooltipTitle="Open (Ctrl+O)"
 				 TooltipDescription="Open an existing image.">
 			<Command.LargeImages>
-				<Image>Res/folder-drag-accept.png</Image>
+				<Image>Res/applications-utilities.png</Image>
 			</Command.LargeImages>
 			<Command.SmallImages>
-				<Image>Res/folder-drag-accept.png</Image>
+				<Image>Res/applications-utilities.png</Image>
 			</Command.SmallImages>
 		</Command>
 
 		<Command Name="cmdButtonDropA"
 			 Id="1008"
-			 LabelTitle="Drop A"
+			 LabelTitle="Mzkit Raw Data File Viewer"
 			 LabelDescription="Sub button A"
 			TooltipTitle="Drop A">
 			<Command.LargeImages>
-				<Image>Res/DropA32.bmp</Image>
+				<Image>Res/application-x-object.png</Image>
 			</Command.LargeImages>
 		</Command>
 
 		<Command Name="cmdButtonDropB"
 			 Id="1009"
-			 LabelTitle="Drop B"
+			 LabelTitle="M/z Calculator"
 			 LabelDescription="Sub button B"
 			TooltipTitle="Drop B">
 			<Command.LargeImages>
-				<Image>Res/DropB32.bmp</Image>
+				<Image>Res/libreoffice-math.png</Image>
 			</Command.LargeImages>
 		</Command>
 
 		<Command Name="cmdButtonDropC"
 			 Id="1010"
-			 LabelTitle="Drop C"
+			 LabelTitle="Formula Search Tool"
 			 LabelDescription="Sub button C"
 		   TooltipTitle="Drop C">
 			<Command.LargeImages>
-				<Image>Res/DropC32.bmp</Image>
+				<Image>Res/document-print-preview.png</Image>
 			</Command.LargeImages>
 		</Command>
+
+		<Command Name="cmdButtonDropD"
+			 Id="5010"
+			 LabelTitle="Molecule Networking"
+			 LabelDescription="Sub button C"
+		   TooltipTitle="Drop C">
+			<Command.LargeImages>
+				<Image>Res/preferences-system-sharing.png</Image>
+			</Command.LargeImages>
+		</Command>
+
 
 		<Command Name="cmdTabMain"
 				 Id="1011"
@@ -412,6 +423,10 @@
 		<Command Name="cmdComboFormulaSearchProfile3" Id="1099">
 		</Command>
 
+
+		<Command Name="cmdButtonAboutMenu" Id="1101">
+		</Command>
+
 	</Application.Commands>
 
 	<Application.Views>
@@ -573,35 +588,34 @@
 					<MenuGroup CommandName='cmdMenuGroupFile'>
 						<Button CommandName='cmdButtonNew' />
 
-						<DropDownButton CommandName='cmdButtonOpen'>
+						<DropDownButton CommandName='cmdButtonToolkits'>
 							<MenuGroup Class='MajorItems'>
 								<Button CommandName='cmdButtonDropA' />
 								<Button CommandName='cmdButtonDropB' />
 								<Button CommandName='cmdButtonDropC' />
+								<Button CommandName='cmdButtonDropD' />
 							</MenuGroup>
 						</DropDownButton>
 
 						<Button CommandName='cmdButtonSave' />
 					</MenuGroup>
-					<!--
+				
 					<MenuGroup>
 
 						
 
 						<SplitButton>
-							<SplitButton.ButtonItem>
-								<Button CommandName='cmdButtonDropB' />
-							</SplitButton.ButtonItem>
+							
 							<SplitButton.MenuGroups>
 								<MenuGroup Class='MajorItems'>
-									<Button CommandName='cmdButtonDropA' />
-									<Button CommandName='cmdButtonDropB' />
-									<Button CommandName='cmdButtonDropC' />
+									<Button CommandName='cmdButtonAbout' />
+									<Button CommandName='cmdButtonBioDeep' />
+									
 								</MenuGroup>
 							</SplitButton.MenuGroups>
 						</SplitButton>
 
-					</MenuGroup>-->
+					</MenuGroup>
 					<MenuGroup CommandName='cmdMenuGroupExit'>
 						<Button CommandName='cmdButtonExit' />
 					</MenuGroup>

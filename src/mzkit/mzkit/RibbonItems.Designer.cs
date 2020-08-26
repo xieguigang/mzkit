@@ -64,10 +64,11 @@ namespace RibbonLib.Controls
             public const uint cmdButtonSettings = 1051;
             public const uint cmdRecentItems = 1014;
             public const uint cmdMenuGroupFile = 1005;
-            public const uint cmdButtonOpen = 1007;
+            public const uint cmdButtonToolkits = 1007;
             public const uint cmdButtonDropA = 1008;
             public const uint cmdButtonDropB = 1009;
             public const uint cmdButtonDropC = 1010;
+            public const uint cmdButtonDropD = 5010;
             public const uint cmdMenuGroupExit = 1006;
             public const uint cmdQAT = 1015;
             public const uint cmdButtonPageNavBack = 1053;
@@ -124,10 +125,11 @@ namespace RibbonLib.Controls
         public RibbonButton ButtonSettings { get; private set; }
         public RibbonRecentItems RecentItems { get; private set; }
         public RibbonMenuGroup MenuGroupFile { get; private set; }
-        public RibbonDropDownButton ButtonOpen { get; private set; }
+        public RibbonDropDownButton ButtonToolkits { get; private set; }
         public RibbonButton ButtonDropA { get; private set; }
         public RibbonButton ButtonDropB { get; private set; }
         public RibbonButton ButtonDropC { get; private set; }
+        public RibbonButton ButtonDropD { get; private set; }
         public RibbonMenuGroup MenuGroupExit { get; private set; }
         public RibbonQuickAccessToolbar QAT { get; private set; }
         public RibbonButton ButtonPageNavBack { get; private set; }
@@ -184,10 +186,11 @@ namespace RibbonLib.Controls
             ButtonSettings = new RibbonButton(ribbon, Cmd.cmdButtonSettings);
             RecentItems = new RibbonRecentItems(ribbon, Cmd.cmdRecentItems);
             MenuGroupFile = new RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupFile);
-            ButtonOpen = new RibbonDropDownButton(ribbon, Cmd.cmdButtonOpen);
+            ButtonToolkits = new RibbonDropDownButton(ribbon, Cmd.cmdButtonToolkits);
             ButtonDropA = new RibbonButton(ribbon, Cmd.cmdButtonDropA);
             ButtonDropB = new RibbonButton(ribbon, Cmd.cmdButtonDropB);
             ButtonDropC = new RibbonButton(ribbon, Cmd.cmdButtonDropC);
+            ButtonDropD = new RibbonButton(ribbon, Cmd.cmdButtonDropD);
             MenuGroupExit = new RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupExit);
             QAT = new RibbonQuickAccessToolbar(ribbon, Cmd.cmdQAT, Cmd.cmdCustomizeQAT);
             ButtonPageNavBack = new RibbonButton(ribbon, Cmd.cmdButtonPageNavBack);

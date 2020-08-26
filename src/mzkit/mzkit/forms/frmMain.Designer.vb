@@ -66,6 +66,7 @@ Partial Class frmMain
         '
         'MoleculeNetworkingToolStripMenuItem
         '
+        Me.MoleculeNetworkingToolStripMenuItem.Image = CType(resources.GetObject("MoleculeNetworkingToolStripMenuItem.Image"), System.Drawing.Image)
         Me.MoleculeNetworkingToolStripMenuItem.Name = "MoleculeNetworkingToolStripMenuItem"
         Me.MoleculeNetworkingToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
         Me.MoleculeNetworkingToolStripMenuItem.Text = "Molecule Networking"
@@ -79,9 +80,10 @@ Partial Class frmMain
         '
         'MzCalculatorToolStripMenuItem
         '
+        Me.MzCalculatorToolStripMenuItem.Image = CType(resources.GetObject("MzCalculatorToolStripMenuItem.Image"), System.Drawing.Image)
         Me.MzCalculatorToolStripMenuItem.Name = "MzCalculatorToolStripMenuItem"
         Me.MzCalculatorToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
-        Me.MzCalculatorToolStripMenuItem.Text = "m/z Calculator"
+        Me.MzCalculatorToolStripMenuItem.Text = "M/z Calculator"
         '
         'RawFileViewerToolStripMenuItem
         '
