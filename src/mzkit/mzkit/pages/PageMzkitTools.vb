@@ -663,10 +663,10 @@ Public Class PageMzkitTools
         DataGridView1.Rows.Clear()
         DataGridView1.Columns.Clear()
 
-        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = True, .HeaderText = "m/z"})
-        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = True, .HeaderText = "intensity"})
-        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = True, .HeaderText = "relative"})
-        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = True, .HeaderText = "annotation"})
+        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .HeaderText = "m/z"})
+        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .HeaderText = "intensity"})
+        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .HeaderText = "relative"})
+        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .HeaderText = "annotation"})
 
         Dim max As Double = matrix.Select(Function(a) a.intensity).Max
 
@@ -683,8 +683,8 @@ Public Class PageMzkitTools
         DataGridView1.Rows.Clear()
         DataGridView1.Columns.Clear()
 
-        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = True, .HeaderText = "time"})
-        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = True, .HeaderText = "intensity"})
+        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .HeaderText = "time"})
+        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .HeaderText = "intensity"})
 
         For Each tick In matrix
             DataGridView1.Rows.Add({tick.Time, tick.Intensity})
