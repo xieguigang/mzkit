@@ -242,6 +242,7 @@ Public Class frmMain
 
         _spinner.TooltipTitle = "PPM"
         _spinner.TooltipDescription = "Enter ppm error for search feature by m/z."
+        _spinner.RepresentativeString = "XXXXXX"
         _spinner.MaxValue = 30D
         _spinner.MinValue = 0
         _spinner.Increment = 0.5D

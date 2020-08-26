@@ -55,6 +55,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 Imports Microsoft.VisualBasic.DataMining.KMeans
@@ -70,6 +71,7 @@ Public Class PageMzkitTools
     Dim host As frmMain
     Dim status As ToolStripStatusLabel
     Dim RibbonItems As RibbonItems
+    Dim matrix As [Variant](Of ms2(), ChromatogramTick())
 
     Sub showStatusMessage(message As String)
         host.Invoke(Sub() status.Text = message)
@@ -143,7 +145,7 @@ Public Class PageMzkitTools
             }.JoinIterates(TIC.value) _
              .OrderBy(Function(c) c.Time) _
              .ToArray
-
+            matrix = TIC.value
             PictureBox1.BackgroundImage = TIC.TICplot(intensityMax:=maxY).AsGDIImage
         ElseIf e.Node.Tag Is Nothing AndAlso e.Node.Text = "TIC" Then
             Dim raw = TreeView1.CurrentRawFile.raw
@@ -163,7 +165,7 @@ Public Class PageMzkitTools
             }.JoinIterates(TIC.value) _
              .OrderBy(Function(c) c.Time) _
              .ToArray
-
+            matrix = TIC.value
             PictureBox1.BackgroundImage = TIC.TICplot.AsGDIImage
         Else
             ' scan节点
@@ -193,12 +195,14 @@ Public Class PageMzkitTools
             Using cache As New netCDFReader(raw.cache)
                 Dim data As CDFData = cache.getDataVariable(cache.getDataVariableEntry(scanId))
                 Dim attrs = cache.getDataVariableEntry(scanId).attributes
+                Dim rawData As ms2() = data.numerics.AsMs2.ToArray
 
                 scanData = New LibraryMatrix With {
                     .name = scanId,
                     .centroid = False,
-                    .ms2 = data.numerics.AsMs2.ToArray.Centroid(Tolerance.DeltaMass(0.1), 0.01).ToArray
+                    .ms2 = rawData.Centroid(Tolerance.DeltaMass(0.1), 0.01).ToArray
                 }
+                matrix = rawData
 
                 Dim draw As Image = scanData.MirrorPlot.AsGDIImage
 
@@ -508,7 +512,22 @@ Public Class PageMzkitTools
     End Sub
 
     Private Sub SaveMatrixToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveMatrixToolStripMenuItem.Click
-
+        If matrix Is Nothing Then
+            Return
+        End If
+        If matrix Like GetType(ms2()) Then
+            Using file As New SaveFileDialog() With {.Filter = "Excel Table(*.xls)|*.xls", .FileName = TreeView1.SelectedNode.Text.NormalizePathString(False)}
+                If file.ShowDialog = DialogResult.OK Then
+                    Call matrix.TryCast(Of ms2()).SaveTo(file.FileName)
+                End If
+            End Using
+        ElseIf matrix Like GetType(ChromatogramTick()) Then
+            Using file As New SaveFileDialog() With {.Filter = "Excel Table(*.xls)|*.xls", .FileName = TreeView1.SelectedNode.Text.NormalizePathString(False)}
+                If file.ShowDialog = DialogResult.OK Then
+                    Call matrix.TryCast(Of ChromatogramTick()).SaveTo(file.FileName)
+                End If
+            End Using
+        End If
     End Sub
 
     Private Sub runMzSearch(searchAction As Action(Of Double))
@@ -638,12 +657,19 @@ Public Class PageMzkitTools
         Dim raw As Task.Raw = TreeView1.CurrentRawFile.raw
         Dim scanId As String = TreeView1.SelectedNode.Text
         Dim ms2 As ScanEntry = raw.scans.Where(Function(a) a.id = scanId).FirstOrDefault
+        Dim ppm As Double = Val(RibbonItems.Spinner.DecimalValue)
+        Dim name As String = $"XIC [m/z={ms2.mz.ToString("F4")}, {ppm}ppm]"
 
         If ms2 Is Nothing OrElse ms2.mz = 0.0 Then
+            host.ToolStripStatusLabel1.Image = My.Resources.StatusAnnotations_Warning_32xLG_color
+            host.ToolStripStatusLabel1.Text = "XIC plot is not avaliable for MS1 parent!"
             Return
+        Else
+            host.ToolStripStatusLabel1.Image = Nothing
+            host.ToolStripStatusLabel1.Text = name
         End If
 
-        Dim ppm As Double = Val(RibbonItems.Spinner.DecimalValue)
+
         Dim XIC As ChromatogramTick() = raw.scans _
             .Where(Function(a) PPMmethod.PPM(a.mz, ms2.mz) <= ppm) _
             .Select(Function(a)
@@ -654,7 +680,7 @@ Public Class PageMzkitTools
                     End Function) _
             .ToArray
         Dim plotTIC As New NamedCollection(Of ChromatogramTick) With {
-            .name = $"XIC [m/z={ms2.mz}, {ppm}ppm]",
+            .name = name,
             .value = {
                   New ChromatogramTick With {.Time = raw.rtmin},
                   New ChromatogramTick With {.Time = raw.rtmax}
@@ -666,6 +692,8 @@ Public Class PageMzkitTools
             .Where(Function(a) a.mz > 0) _
             .Select(Function(a) a.intensity) _
             .Max
+
+        matrix = plotTIC.value
 
         PictureBox1.BackgroundImage = plotTIC.TICplot(intensityMax:=maxY).AsGDIImage
     End Sub
