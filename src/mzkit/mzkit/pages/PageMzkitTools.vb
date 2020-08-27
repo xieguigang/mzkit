@@ -763,5 +763,18 @@ Public Class PageMzkitTools
     Private Sub ClearToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ClearToolStripMenuItem.Click
         XICCollection.Clear()
     End Sub
+
+    Private Sub PictureBox1_Click(sender As Object, e As EventArgs) Handles PictureBox1.Click
+
+    End Sub
+
+    Private Sub PictureBox1_DoubleClick(sender As Object, e As EventArgs) Handles PictureBox1.DoubleClick
+        If Not PictureBox1.BackgroundImage Is Nothing Then
+            Dim temp As String = App.GetAppSysTempFile(".png", App.PID, "imagePlot_")
+
+            Call PictureBox1.BackgroundImage.SaveAs(temp)
+            Call Process.Start(temp)
+        End If
+    End Sub
 End Class
 
