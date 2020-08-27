@@ -1,11 +1,15 @@
 ﻿Public Class AppConfig : Implements ISaveSettings, IPageSettings
 
     Public Sub LoadSettings() Implements ISaveSettings.LoadSettings
+        If Globals.Settings.ui Is Nothing Then
+            Globals.Settings.ui = New UISettings With {.rememberWindowsLocation = True}
+        End If
 
+        CheckBox1.Checked = Globals.Settings.ui.rememberWindowsLocation
     End Sub
 
     Public Sub SaveSettings() Implements ISaveSettings.SaveSettings
-        Throw New NotImplementedException()
+        Globals.Settings.Save()
     End Sub
 
     Public Sub ShowPage() Implements IPageSettings.ShowPage
