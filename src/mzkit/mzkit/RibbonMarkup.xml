@@ -671,12 +671,11 @@
 								<Button CommandName='cmdButtonDropA' />
 								<Button CommandName='cmdButtonDropB' />
 								<Button CommandName='cmdButtonDropC' />
-								<Button CommandName='cmdButtonDropD' />
-								<Button CommandName='cmdButtonRsharp' />
+								<Button CommandName='cmdButtonDropD' />								
 							</MenuGroup>
 						</DropDownButton>
 
-						<Button CommandName='cmdButtonSave' />
+						<Button CommandName='cmdButtonRsharp' />
 					</MenuGroup>
 
 					<MenuGroup>
