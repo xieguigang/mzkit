@@ -26,17 +26,21 @@ Partial Class ElementProfile
         Me.ElementName = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Min = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Max = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'DataGridView1
         '
+        Me.DataGridView1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ElementName, Me.Min, Me.Max})
-        Me.DataGridView1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DataGridView1.Location = New System.Drawing.Point(0, 0)
+        Me.DataGridView1.Location = New System.Drawing.Point(0, 51)
         Me.DataGridView1.Name = "DataGridView1"
-        Me.DataGridView1.Size = New System.Drawing.Size(744, 485)
+        Me.DataGridView1.Size = New System.Drawing.Size(744, 472)
         Me.DataGridView1.TabIndex = 0
         '
         'ElementName
@@ -54,15 +58,36 @@ Partial Class ElementProfile
         Me.Max.HeaderText = "Max"
         Me.Max.Name = "Max"
         '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(17, 16)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(155, 12)
+        Me.Label1.TabIndex = 1
+        Me.Label1.Text = "Copy From Preset Profile:"
+        '
+        'ComboBox1
+        '
+        Me.ComboBox1.FormattingEnabled = True
+        Me.ComboBox1.Items.AddRange(New Object() {"Default", "Small Molecule", "Natural Product", "General Flavone"})
+        Me.ComboBox1.Location = New System.Drawing.Point(190, 16)
+        Me.ComboBox1.Name = "ComboBox1"
+        Me.ComboBox1.Size = New System.Drawing.Size(184, 20)
+        Me.ComboBox1.TabIndex = 2
+        '
         'ElementProfile
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.ComboBox1)
+        Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.DataGridView1)
         Me.Name = "ElementProfile"
-        Me.Size = New System.Drawing.Size(744, 485)
+        Me.Size = New System.Drawing.Size(744, 526)
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
 
@@ -70,4 +95,6 @@ Partial Class ElementProfile
     Friend WithEvents ElementName As DataGridViewTextBoxColumn
     Friend WithEvents Min As DataGridViewTextBoxColumn
     Friend WithEvents Max As DataGridViewTextBoxColumn
+    Friend WithEvents Label1 As Label
+    Friend WithEvents ComboBox1 As ComboBox
 End Class
