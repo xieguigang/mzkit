@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b8c073df1d5c743a3bb8d55e4fb95c8a, src\mzmath\ms2_math-core\Spectra\GlobalAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::418066a5cc5fcc7dbb73eae471dcb6e1, src\mzmath\ms2_math-core\Spectra\GlobalAlignment.vb"
 
     ' Author:
     ' 
@@ -38,8 +38,8 @@
     ' 
     '         Properties: ppm20
     ' 
-    '         Function: Align, AlignMatrix, (+2 Overloads) JaccardIndex, SharedPeakCount, TopPeaks
-    '                   TwoDirectionSSM
+    '         Function: Align, AlignMatrix, CreateAlignment, (+2 Overloads) JaccardIndex, MzUnion
+    '                   SharedPeakCount, TopPeaks, TwoDirectionSSM
     ' 
     ' 
     ' /********************************************************************************/

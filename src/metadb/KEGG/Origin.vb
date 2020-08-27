@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8bccc566bd6a469582db6e03e5ee300a, src\metadb\KEGG\Origin.vb"
+﻿#Region "Microsoft.VisualBasic::f0d047ebd87fb1c66d78a0170f03a182, src\metadb\KEGG\Origin.vb"
 
     ' Author:
     ' 
@@ -40,11 +40,9 @@
     ' 
     '     Function: CreateOrigin
     ' 
-    ' 
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' the metabolite origin
@@ -68,5 +66,3 @@ Public Class Origin
     End Function
 
 End Class
-
-

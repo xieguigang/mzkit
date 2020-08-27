@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a29d2953a02e461d3f9939b3e829e309, src\mzkit\mzkit\forms\frmSplashScreen.vb"
+﻿#Region "Microsoft.VisualBasic::18c6bd695e8f2f48bff1ae9852eeae60, src\mzkit\mzkit\forms\frmSplashScreen.vb"
 
     ' Author:
     ' 
@@ -70,4 +70,3 @@ Public Class frmSplashScreen
         e.Graphics.DrawRectangle(New Pen(Color.Black, 1), New Rectangle(0, 0, Width - 1, Height - 1))
     End Sub
 End Class
-

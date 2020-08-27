@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6be8870bce9875cff559529d405a7f06, src\metadb\Chemoinformatics\Formula\FormulaComposition.vb"
+﻿#Region "Microsoft.VisualBasic::3aa972a9fd5c07d5400d076498557985, src\metadb\Chemoinformatics\Formula\Formula.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,20 @@
 
     ' Summaries:
 
-    '     Class FormulaComposition
+    '     Class Formula
     ' 
-    '         Properties: CountsByElement, EmpiricalFormula
+    '         Properties: CountsByElement, Elements, EmpiricalFormula
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: ToString
+    '         Function: BuildFormula, ToString
     '         Operators: *
+    ' 
+    '     Class FormulaComposition
+    ' 
+    '         Properties: charge, exact_mass, ppm
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: AppendElement, GetCopy
     ' 
     ' 
     ' /********************************************************************************/

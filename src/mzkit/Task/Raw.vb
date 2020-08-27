@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::597b7be97be4ed8e665284574275fbe2, src\mzkit\Task\Raw.vb"
+﻿#Region "Microsoft.VisualBasic::ef3d7fa15a94ee2bf09368c587a9633a, src\mzkit\Task\Raw.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,8 @@
     ' 
     ' Class ScanEntry
     ' 
-    '     Properties: id, intensity, mz, polarity, rt
+    '     Properties: charge, id, intensity, mz, polarity
+    '                 rt
     ' 
     '     Function: ToString
     ' 

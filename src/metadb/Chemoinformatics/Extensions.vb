@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d834505971bfe3f23f84a2fa37fb5b27, src\metadb\Chemoinformatics\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::aca06a371533b558cf87ca568a50f68c, src\metadb\Chemoinformatics\Extensions.vb"
 
     ' Author:
     ' 
@@ -59,4 +59,3 @@ Public Module Extensions
         Return formula
     End Function
 End Module
-

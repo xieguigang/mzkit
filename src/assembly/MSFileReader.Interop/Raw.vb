@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76c558fa7ec025d85c8736c3be05add4, src\assembly\MSFileReader.Interop\Raw.vb"
+﻿#Region "Microsoft.VisualBasic::becf1fc5cb16625757350add2b2573a1, src\assembly\MSFileReader.Interop\Raw.vb"
 
     ' Author:
     ' 
@@ -45,4 +45,3 @@
 Public Class Raw
 
 End Class
-

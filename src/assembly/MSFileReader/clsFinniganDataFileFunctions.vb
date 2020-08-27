@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db55bccd8396a20d26c4dd8e2a41ef64, src\assembly\MSFileReader\clsFinniganDataFileFunctions.vb"
+﻿#Region "Microsoft.VisualBasic::2a3c50db75439a1ffdb14e2de41c6e15, src\assembly\MSFileReader\clsFinniganDataFileFunctions.vb"
 
     ' Author:
     ' 
@@ -1697,4 +1697,3 @@ Namespace FinniganFileIO
 
 	End Class
 End Namespace
-

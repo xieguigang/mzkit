@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35c8a82444068322a6842ea5bbe82b76, src\assembly\assembly\MarkupData\mzML\XML\BinaryData.vb"
+﻿#Region "Microsoft.VisualBasic::af82e2dd7b100b28037c19754f0f6a4a, src\assembly\assembly\MarkupData\mzML\XML\BinaryData.vb"
 
     ' Author:
     ' 
@@ -52,7 +52,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Xml.Serialization
 

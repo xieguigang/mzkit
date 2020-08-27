@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6baafc2376bb1842c0fef2636d723011, src\mzkit\mzkit\pages\PageSettings.vb"
+﻿#Region "Microsoft.VisualBasic::0b5ab9f4231293aa3c6505c3b706cb7a, src\mzkit\mzkit\pages\PageSettings.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,8 @@
 
     ' Class PageSettings
     ' 
-    '     Sub: Button1_Click, Button2_Click, PageSettings_Load, showStatusMessage
+    '     Sub: Button1_Click, Button2_Click, LinkLabel1_LinkClicked, PageSettings_Load, showPage
+    '          showStatusMessage, TreeView1_AfterSelect
     ' 
     ' /********************************************************************************/
 
@@ -103,4 +104,3 @@ Public Class PageSettings
         Call showPageLink.ShowPage()
     End Sub
 End Class
-

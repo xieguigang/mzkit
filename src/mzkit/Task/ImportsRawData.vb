@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::739ffc86e777e7e92449dcd224a0474c, src\mzkit\Task\ImportsRawData.vb"
+﻿#Region "Microsoft.VisualBasic::6fa4c7c690f3542171f57e1baa096514, src\mzkit\Task\ImportsRawData.vb"
 
     ' Author:
     ' 
@@ -219,4 +219,3 @@ Public Class ImportsRawData
         End Using
     End Sub
 End Class
-

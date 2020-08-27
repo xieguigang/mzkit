@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db8e6334ccb8115145e9b26b16e15b0c, src\assembly\assembly\MarkupData\mzML\XML\Components.vb"
+﻿#Region "Microsoft.VisualBasic::b24c4e6039dc876d93a58bc108b76465, src\assembly\assembly\MarkupData\mzML\XML\Components.vb"
 
     ' Author:
     ' 
@@ -94,7 +94,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Xml.Serialization
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58745ff1a4fb2a96545b67997ef187d0, src\mzkit\mzkit\ApplicationEvents.vb"
+﻿#Region "Microsoft.VisualBasic::a687136eed8492e1814dd7d8668d08a2, src\mzkit\mzkit\ApplicationEvents.vb"
 
     ' Author:
     ' 
@@ -60,4 +60,3 @@ Namespace My
         End Sub
     End Class
 End Namespace
-

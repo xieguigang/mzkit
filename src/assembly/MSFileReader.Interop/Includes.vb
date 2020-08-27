@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a433b11a6e5aeaf7d733907f952af2a, src\assembly\MSFileReader.Interop\Includes.vb"
+﻿#Region "Microsoft.VisualBasic::be5b99d23495b7186c7645938b3a6741, src\assembly\MSFileReader.Interop\Includes.vb"
 
     ' Author:
     ' 
@@ -54,4 +54,3 @@ Module Includes
 
     Public Declare Function Open Lib "XRawfile2_x64.dll" (szFileName As String) As Integer
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b8d38b26c63e9e78ad468e2a77ece3e8, src\mzkit\mzkit\Globals.vb"
+﻿#Region "Microsoft.VisualBasic::751e644f0cbfa144734671ec1299cc77, src\mzkit\mzkit\Globals.vb"
 
     ' Author:
     ' 
@@ -35,6 +35,10 @@
     ' Summaries:
 
     ' Module Globals
+    ' 
+    '     Properties: Settings
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
     ' 
     '     Function: CurrentRawFile, LoadRawFileCache
     ' 
@@ -142,4 +146,3 @@ Module Globals
         End If
     End Function
 End Module
-

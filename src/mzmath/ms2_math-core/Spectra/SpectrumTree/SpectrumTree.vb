@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bff7aca096ef9edd8c2da56a2efcae2d, src\mzmath\ms2_math-core\Spectra\SpectrumTree\SpectrumTree.vb"
+﻿#Region "Microsoft.VisualBasic::5a40dc44ee09d1bdee850700f9f09002, src\mzmath\ms2_math-core\Spectra\SpectrumTree\SpectrumTree.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: Best, doCluster, PopulateClusters, SSMCompares
+    '         Function: Best, doCluster, getRoot, PopulateClusters, SSMCompares
     ' 
     '         Sub: clusterInternal
     ' 
