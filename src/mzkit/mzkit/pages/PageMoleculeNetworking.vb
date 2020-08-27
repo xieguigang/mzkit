@@ -1,9 +1,13 @@
-﻿Imports Microsoft.VisualBasic.Data.csv.IO
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.visualize.Network
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.DataMining.KMeans
+Imports Microsoft.VisualBasic.Imaging
 Imports RibbonLib.Interop
 Imports Task
 
@@ -39,11 +43,8 @@ Public Class PageMoleculeNetworking
                 }})
         Next
 
+        For Each row In rawMatrix
             For Each link In row.Properties.Where(Function(l) l.Value > 0)
-                If g.GetElementByID(link.Key) Is Nothing Then
-                    g.CreateNode(link.Key)
-                End If
-
                 g.CreateEdge(row.ID, link.Key, link.Value)
             Next
         Next
@@ -104,7 +105,15 @@ Public Class PageMoleculeNetworking
             a = nodeInfo(a).id
             b = nodeInfo(b).id
 
+            Dim raw = host.mzkitTool.TreeView1.CurrentRawFile.raw
+            Dim data1 = raw.GetSpectrum(a)
+            Dim data2 = raw.GetSpectrum(b)
+            Dim matrix As SSM2MatrixFragment() = GlobalAlignment.CreateAlignment(data1.ms2, data2.ms2, Tolerance.DeltaMass(0.3)).ToArray
 
+            host.mzkitTool.showMatrix(matrix, $"{row.Cells(0).Value}_vs_{row.Cells(1).Value}")
+
+            host.mzkitTool.PictureBox1.BackgroundImage = MassSpectra.AlignMirrorPlot(data1, data2).AsGDIImage
+            host.mzkitTool.TabControl1.SelectedTab = host.mzkitTool.TabPage1
         End If
     End Sub
 End Class

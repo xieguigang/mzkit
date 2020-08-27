@@ -53,6 +53,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Extensions
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports stdNum = System.Math
 
 Namespace Spectra
 
@@ -157,11 +158,7 @@ Namespace Spectra
         End Function
 
         Public Function JaccardIndex(mzx As Double(), mzy As Double(), tolerance As Tolerance) As Double
-            Dim union As Double() = mzx _
-                .JoinIterates(mzy) _
-                .GroupBy(Function(mz) mz, tolerance.Equals) _
-                .Select(Function(a) Val(a.name)) _
-                .ToArray
+            Dim union As Double() = MzUnion(mzx, mzy, tolerance)
             Dim intersects As New List(Of Double)
 
             For Each xi In mzx
@@ -174,6 +171,14 @@ Namespace Spectra
             Next
 
             Return intersects.Count / union.Length
+        End Function
+
+        Private Function MzUnion(mzx As Double(), mzy As Double(), tolerance As Tolerance) As Double()
+            Return mzx _
+                .JoinIterates(mzy) _
+                .GroupBy(Function(mz) mz, tolerance.Equals) _
+                .Select(Function(a) Val(a.name)) _
+                .ToArray
         End Function
 
         ''' <summary>
@@ -241,6 +246,19 @@ Namespace Spectra
                             End If
                         End Function) _
                 .ToArray
+        End Function
+
+        Public Iterator Function CreateAlignment(query As ms2(), ref As ms2(), tolerance As Tolerance) As IEnumerable(Of SSM2MatrixFragment)
+            Dim union = MzUnion(query.Select(Function(m) m.mz).ToArray, ref.Select(Function(m) m.mz).ToArray, tolerance)
+
+            For Each mz As Double In union
+                Yield New SSM2MatrixFragment With {
+                    .mz = mz,
+                    .query = query.Where(Function(a) tolerance(a.mz, mz)).FirstOrDefault?.intensity,
+                    .ref = ref.Where(Function(a) tolerance(a.mz, mz)).FirstOrDefault?.intensity,
+                    .da = stdNum.Abs(.ref - .query)
+                }
+            Next
         End Function
     End Module
 End Namespace

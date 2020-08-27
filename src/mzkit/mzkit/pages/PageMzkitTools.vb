@@ -75,7 +75,7 @@ Public Class PageMzkitTools
     Dim host As frmMain
     Dim status As ToolStripStatusLabel
     Dim RibbonItems As RibbonItems
-    Dim matrix As [Variant](Of ms2(), ChromatogramTick())
+    Dim matrix As [Variant](Of ms2(), ChromatogramTick(), SSM2MatrixFragment())
     Dim matrixName As String
 
     Sub showStatusMessage(message As String, Optional icon As Image = Nothing)
@@ -524,6 +524,12 @@ Public Class PageMzkitTools
                     Call matrix.TryCast(Of ChromatogramTick()).SaveTo(file.FileName)
                 End If
             End Using
+        ElseIf matrix Like GetType(SSM2MatrixFragment()) Then
+            Using file As New SaveFileDialog() With {.Filter = "Excel Table(*.xls)|*.xls", .FileName = matrixName.NormalizePathString(False)}
+                If file.ShowDialog = DialogResult.OK Then
+                    Call matrix.TryCast(Of SSM2MatrixFragment()).SaveTo(file.FileName)
+                End If
+            End Using
         End If
     End Sub
 
@@ -668,6 +674,23 @@ Public Class PageMzkitTools
         For Each tick In matrix
             tick.quantity = CInt(tick.intensity / max * 100)
             DataGridView1.Rows.Add({tick.mz, tick.intensity, tick.quantity, tick.Annotation})
+        Next
+    End Sub
+
+    Sub showMatrix(matrix As SSM2MatrixFragment(), name As String)
+        Me.matrix = matrix
+        matrixName = name
+
+        DataGridView1.Rows.Clear()
+        DataGridView1.Columns.Clear()
+
+        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .HeaderText = "m/z"})
+        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .HeaderText = "intensity(query)"})
+        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .HeaderText = "intensity(target)"})
+        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .HeaderText = "tolerance"})
+
+        For Each tick In matrix
+            DataGridView1.Rows.Add({tick.mz, tick.query, tick.ref, tick.da})
         Next
     End Sub
 
