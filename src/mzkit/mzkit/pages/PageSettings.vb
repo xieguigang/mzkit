@@ -47,9 +47,10 @@ Public Class PageSettings
     Dim host As frmMain
     Dim status As ToolStripStatusLabel
 
-    Dim elementProfile As New ElementProfile
-    Dim appConfig As New AppConfig
+    Dim elementProfile As New ElementProfile With {.Text = "Formula Search"}
+    Dim appConfig As New AppConfig With {.Text = "Mzkit Settings"}
     Dim pages As Control()
+    Dim showPageLink As IPageSettings
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         host.ShowPage(host.mzkitTool)
@@ -63,12 +64,17 @@ Public Class PageSettings
         For Each page In pages
             Panel1.Controls.Add(page)
             page.Dock = DockStyle.Fill
+            Call DirectCast(CObj(page), ISaveSettings).LoadSettings()
         Next
 
         showPage(appConfig)
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        For Each page In pages
+            Call DirectCast(CObj(page), ISaveSettings).SaveSettings()
+        Next
+
         showStatusMessage("New settings value applied and saved!")
     End Sub
 
@@ -78,10 +84,12 @@ Public Class PageSettings
 
     Sub showPage(page As Control)
         For Each page2 In From ctl In pages Where Not ctl Is page
-            page.Visible = False
+            page2.Hide()
         Next
 
-        page.Visible = True
+        LinkLabel1.Text = page.Text
+        page.Show()
+        showPageLink = DirectCast(CObj(page), IPageSettings)
     End Sub
 
     Private Sub TreeView1_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles TreeView1.AfterSelect
@@ -89,6 +97,10 @@ Public Class PageSettings
             Case "Element Profile" : showPage(elementProfile)
             Case "Mzkit App" : showPage(appConfig)
         End Select
+    End Sub
+
+    Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
+        Call showPageLink.ShowPage()
     End Sub
 End Class
 

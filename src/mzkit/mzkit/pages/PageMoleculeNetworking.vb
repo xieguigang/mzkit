@@ -39,8 +39,7 @@ Public Class PageMoleculeNetworking
                 }})
         Next
 
-        For Each row In rawMatrix
-            For Each link In row.Properties
+            For Each link In row.Properties.Where(Function(l) l.Value > 0)
                 If g.GetElementByID(link.Key) Is Nothing Then
                     g.CreateNode(link.Key)
                 End If

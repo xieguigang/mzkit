@@ -46,7 +46,10 @@
 
 #End Region
 
+Imports System.IO
 Imports System.Threading
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
@@ -63,6 +66,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports RibbonLib.Interop
 Imports Task
 
@@ -593,7 +597,7 @@ Public Class PageMzkitTools
                 progress.Invoke(Sub() progress.Label2.Text = "run molecular networking....")
 
                 ' Call tree.doCluster(run)
-                Dim net = MoleculeNetworking.CreateMatrix(run, 0.6, Tolerance.DeltaMass(0.3), Sub(msg) progress.Invoke(Sub() progress.Label1.Text = msg)).ToArray
+                Dim net = MoleculeNetworking.CreateMatrix(run, 0.8, Tolerance.DeltaMass(0.3), Sub(msg) progress.Invoke(Sub() progress.Label1.Text = msg)).ToArray
 
                 progress.Invoke(Sub() progress.Label1.Text = "run family clustering....")
 
@@ -685,6 +689,26 @@ Public Class PageMzkitTools
     Private Sub ShowXICToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowXICToolStripMenuItem.Click
         ' scan节点
         Dim raw As Task.Raw = TreeView1.CurrentRawFile.raw
+        Dim plotTIC = getXICMatrix(raw)
+        Dim maxY As Double = raw.scans _
+            .Where(Function(a) a.mz > 0) _
+            .Select(Function(a) a.intensity) _
+            .Max
+
+        If plotTIC.value.IsNullOrEmpty Then
+            Return
+        End If
+
+        showMatrix(plotTIC.value, Name)
+
+        Dim XICPlot = XICCollection.JoinIterates({plotTIC}).ToArray
+
+        PictureBox1.BackgroundImage = XICPlot.TICplot(intensityMax:=maxY, isXIC:=True).AsGDIImage
+    End Sub
+
+    Dim XICCollection As New List(Of NamedCollection(Of ChromatogramTick))
+
+    Private Function getXICMatrix(raw As Raw) As NamedCollection(Of ChromatogramTick)
         Dim scanId As String = TreeView1.SelectedNode.Text
         Dim ms2 As ScanEntry = raw.scans.Where(Function(a) a.id = scanId).FirstOrDefault
         Dim ppm As Double = Val(RibbonItems.Spinner.DecimalValue)
@@ -693,7 +717,7 @@ Public Class PageMzkitTools
         If ms2 Is Nothing OrElse ms2.mz = 0.0 Then
             host.ToolStripStatusLabel1.Image = My.Resources.StatusAnnotations_Warning_32xLG_color
             host.ToolStripStatusLabel1.Text = "XIC plot is not avaliable for MS1 parent!"
-            Return
+            Return Nothing
         Else
             host.ToolStripStatusLabel1.Image = Nothing
             host.ToolStripStatusLabel1.Text = name
@@ -715,16 +739,64 @@ Public Class PageMzkitTools
                   New ChromatogramTick With {.Time = raw.rtmax}
               }.JoinIterates(XIC) _
                .OrderBy(Function(c) c.Time) _
-               .ToArray
+               .ToArray,
+            .description = ms2.mz
         }
-        Dim maxY As Double = raw.scans _
-            .Where(Function(a) a.mz > 0) _
-            .Select(Function(a) a.intensity) _
-            .Max
 
-        showMatrix(plotTIC.value, name)
+        Return plotTIC
+    End Function
 
-        PictureBox1.BackgroundImage = plotTIC.TICplot(intensityMax:=maxY).AsGDIImage
+    Private Sub AddToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AddToolStripMenuItem.Click
+        Dim XIC = getXICMatrix(TreeView1.CurrentRawFile.raw)
+        XICCollection.Add(XIC)
+    End Sub
+
+    Private Sub ClearToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ClearToolStripMenuItem.Click
+        XICCollection.Clear()
+    End Sub
+
+    Private Sub PictureBox1_Click(sender As Object, e As EventArgs) Handles PictureBox1.Click
+
+    End Sub
+
+    Private Sub PictureBox1_DoubleClick(sender As Object, e As EventArgs) Handles PictureBox1.DoubleClick
+        If Not PictureBox1.BackgroundImage Is Nothing Then
+            Dim temp As String = App.GetAppSysTempFile(".png", App.PID, "imagePlot_")
+
+            Call PictureBox1.BackgroundImage.SaveAs(temp)
+            Call Process.Start(temp)
+        End If
+    End Sub
+
+    Private Sub ExportToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportToolStripMenuItem.Click
+        If XICCollection.IsNullOrEmpty Then
+            MessageBox.Show("No chromatogram data for XIC plot, please use XIC -> Add for add data!", "No data save", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        Else
+            Using file As New SaveFileDialog With {.Filter = "Mgf ASCII spectrum data(*.mgf)|*.mgf", .FileName = "XIC.mgf"}
+                If file.ShowDialog = DialogResult.OK Then
+                    Using OutFile As StreamWriter = file.FileName.OpenWriter()
+                        For Each xic In XICCollection
+                            Dim parent As New NamedValue With {.name = xic.description, .text = xic.value.Select(Function(a) a.Intensity).Max}
+                            Dim ion As New MGF.Ions With {
+                                .Title = xic.name,
+                                .Peaks = xic.value _
+                                    .Select(Function(a)
+                                                Return New ms2 With {
+                                                    .mz = a.Time,
+                                                    .intensity = a.Intensity,
+                                                    .quantity = a.Intensity
+                                                }
+                                            End Function) _
+                                    .ToArray,
+                                .PepMass = parent
+                            }
+
+                            ion.WriteAsciiMgf(OutFile)
+                        Next
+                    End Using
+                End If
+            End Using
+        End If
     End Sub
 End Class
 

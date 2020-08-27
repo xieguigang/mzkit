@@ -1,4 +1,7 @@
-# MassSpectrum-toolkits
+# BioNovoGene Mzkit
+
+![](src/mzkit/splash.PNG)
+
 
 ![](visual/gcms_ticplot.png)
 ![](visual/gcms_ions.png)

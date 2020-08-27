@@ -19,15 +19,21 @@ End Enum
 
 Public Class FormulaSearchProfile
 
-    Public Property elements As Dictionary(Of String, IntRange)
+    Public Property elements As Dictionary(Of String, ElementRange)
 
     Public Function CreateOptions() As SearchOption
         Dim opts = New SearchOption(-99999, 99999, 5)
 
         For Each element In elements
-            opts.AddElement(element.Key, element.Value.Min, element.Value.Max)
+            opts.AddElement(element.Key, element.Value.min, element.Value.max)
         Next
 
         Return opts
     End Function
+End Class
+
+Public Class ElementRange
+    Public Property min As Integer
+    Public Property max As Integer
+
 End Class
