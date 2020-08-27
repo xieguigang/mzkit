@@ -368,7 +368,7 @@ Public Class PageMzkitTools
         Else
             ' formula
             Dim exact_mass As Double = Math.EvaluateFormula(TextBox1.Text)
-            Dim ppm As Double = Val(RibbonItems.Spinner.DecimalValue)
+            Dim ppm As Double = Val(RibbonItems.PPMSpinner.DecimalValue)
             Dim raw As Raw = TreeView1.CurrentRawFile.raw
 
             DataGridView1.Rows.Clear()
@@ -477,7 +477,7 @@ Public Class PageMzkitTools
     End Sub
 
     Private Sub searchInFileByMz(mz As Double)
-        Dim ppm As Double = Val(RibbonItems.Spinner.DecimalValue)
+        Dim ppm As Double = Val(RibbonItems.PPMSpinner.DecimalValue)
         Dim raw = TreeView1.CurrentRawFile.raw
         Dim ms2Hits = raw.scans.Where(Function(m) PPMmethod.PPM(m.mz, mz) <= ppm).ToArray
 
@@ -734,7 +734,7 @@ Public Class PageMzkitTools
     Private Function getXICMatrix(raw As Raw) As NamedCollection(Of ChromatogramTick)
         Dim scanId As String = TreeView1.SelectedNode.Text
         Dim ms2 As ScanEntry = raw.scans.Where(Function(a) a.id = scanId).FirstOrDefault
-        Dim ppm As Double = Val(RibbonItems.Spinner.DecimalValue)
+        Dim ppm As Double = Val(RibbonItems.PPMSpinner.DecimalValue)
         Dim name As String = $"XIC [m/z={ms2.mz.ToString("F4")}, {ppm}ppm]"
 
         If ms2 Is Nothing OrElse ms2.mz = 0.0 Then

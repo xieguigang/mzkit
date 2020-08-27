@@ -176,11 +176,11 @@
 			</Command.LargeImages>
 		</Command>
 
-<Command Name="cmdButtonBioDeep"
-			 Id="1022"
-			 LabelTitle="BioDeep"
-			 LabelDescription="Show Information about BioNovoGene M/z toolkit"
-			TooltipTitle="Show Application About">
+		<Command Name="cmdButtonBioDeep"
+					 Id="1022"
+					 LabelTitle="BioDeep"
+					 LabelDescription="Show Information about BioNovoGene M/z toolkit"
+					TooltipTitle="Show Application About">
 			<Command.LargeImages>
 				<Image>Res/BioDeep.png</Image>
 			</Command.LargeImages>
@@ -268,9 +268,9 @@
 		</Command>
 
 
-		<Command Name="cmdSpinner"
+		<Command Name="cmdPPMSpinner"
 		 Id="1050"
-		 LabelTitle="PPM">
+		 LabelTitle="Search PPM">
 		</Command>
 
 
@@ -425,9 +425,20 @@
 
 
 		<Command Name="cmdButtonLicense" Id="1101" LabelTitle="View License Information">
-		<Command.LargeImages>
+			<Command.LargeImages>
 				<Image>Res/baobab.png</Image>
 			</Command.LargeImages>
+		</Command>
+
+		<Command Name="cmdCheckBoxXICRelative"
+		 Id="1103"
+		 LabelTitle="Relative XIC intensity">
+			<Command.LargeImages>
+				<Image>Res/Save32.bmp</Image>
+			</Command.LargeImages>
+			<Command.SmallImages>
+				<Image>Res/Save16.bmp</Image>
+			</Command.SmallImages>
 		</Command>
 
 	</Application.Commands>
@@ -439,8 +450,9 @@
 				<TabGroup CommandName='cmdTabGroupTableTools'>
 					<Tab CommandName='cmdTabDesign'>
 						<Group CommandName='cmdGroupDesign'>
-							<Spinner CommandName="cmdSpinner" />
-							<Button CommandName='cmdButtonDesign2' />
+
+							<Spinner CommandName="cmdPPMSpinner" />
+							<CheckBox CommandName="cmdCheckBoxXICRelative" />
 							<Button CommandName='cmdButtonDesign3' />
 						</Group>
 					</Tab>
@@ -488,7 +500,7 @@
 							<Button CommandName='cmdButtonFormulaSearchExport' />
 							<Button CommandName='cmdButtonNetworkRender' />
 						</Group>
-<!--
+						<!--
 						<Group CommandName='cmdGroupFormulaSearchConfig2'>
 							<ComboBox CommandName="cmdComboFormulaSearchProfile3" IsAutoCompleteEnabled="true" IsEditable="false" ResizeType="NoResize" >																
 							</ComboBox>
@@ -602,19 +614,19 @@
 
 						<Button CommandName='cmdButtonSave' />
 					</MenuGroup>
-				
+
 					<MenuGroup>
 
-						
+
 
 						<SplitButton>
-							
+
 							<SplitButton.MenuGroups>
 								<MenuGroup Class='MajorItems'>
 									<Button CommandName='cmdButtonAbout' />
 									<Button CommandName='cmdButtonBioDeep' />
 									<Button CommandName='cmdButtonLicense' />
-									
+
 								</MenuGroup>
 							</SplitButton.MenuGroups>
 						</SplitButton>

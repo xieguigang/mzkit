@@ -13,7 +13,6 @@ using RibbonLib;
 using RibbonLib.Controls;
 using RibbonLib.Interop;
 
-
     partial class RibbonItems
     {
         private static class Cmd
@@ -21,8 +20,8 @@ using RibbonLib.Interop;
             public const uint cmdTabGroupTableTools = 1031;
             public const uint cmdTabDesign = 1032;
             public const uint cmdGroupDesign = 1036;
-            public const uint cmdSpinner = 1050;
-            public const uint cmdButtonDesign2 = 1041;
+            public const uint cmdPPMSpinner = 1050;
+            public const uint cmdCheckBoxXICRelative = 1103;
             public const uint cmdButtonDesign3 = 1042;
             public const uint cmdTabLayout = 1035;
             public const uint cmdGroupLayout = 1037;
@@ -83,8 +82,8 @@ using RibbonLib.Interop;
         public RibbonTabGroup TabGroupTableTools { get; private set; }
         public RibbonTab TabDesign { get; private set; }
         public RibbonGroup GroupDesign { get; private set; }
-        public RibbonSpinner Spinner { get; private set; }
-        public RibbonButton ButtonDesign2 { get; private set; }
+        public RibbonSpinner PPMSpinner { get; private set; }
+        public RibbonCheckBox CheckBoxXICRelative { get; private set; }
         public RibbonButton ButtonDesign3 { get; private set; }
         public RibbonTab TabLayout { get; private set; }
         public RibbonGroup GroupLayout { get; private set; }
@@ -145,8 +144,8 @@ using RibbonLib.Interop;
             TabGroupTableTools = new RibbonTabGroup(ribbon, Cmd.cmdTabGroupTableTools);
             TabDesign = new RibbonTab(ribbon, Cmd.cmdTabDesign);
             GroupDesign = new RibbonGroup(ribbon, Cmd.cmdGroupDesign);
-            Spinner = new RibbonSpinner(ribbon, Cmd.cmdSpinner);
-            ButtonDesign2 = new RibbonButton(ribbon, Cmd.cmdButtonDesign2);
+            PPMSpinner = new RibbonSpinner(ribbon, Cmd.cmdPPMSpinner);
+            CheckBoxXICRelative = new RibbonCheckBox(ribbon, Cmd.cmdCheckBoxXICRelative);
             ButtonDesign3 = new RibbonButton(ribbon, Cmd.cmdButtonDesign3);
             TabLayout = new RibbonTab(ribbon, Cmd.cmdTabLayout);
             GroupLayout = new RibbonGroup(ribbon, Cmd.cmdGroupLayout);

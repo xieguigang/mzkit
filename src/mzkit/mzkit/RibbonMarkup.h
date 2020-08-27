@@ -120,8 +120,8 @@
 #define cmdGroupToolsActions_LabelTitle_RESID 60080
 #define cmdGroupAboutActions 1047 
 #define cmdGroupAboutActions_LabelTitle_RESID 60081
-#define cmdSpinner 1050 
-#define cmdSpinner_LabelTitle_RESID 60082
+#define cmdPPMSpinner 1050 
+#define cmdPPMSpinner_LabelTitle_RESID 60082
 #define cmdButtonSettings 1051 
 #define cmdButtonSettings_LabelTitle_RESID 60083
 #define cmdButtonSettings_LabelDescription_RESID 60084
@@ -182,6 +182,10 @@
 #define cmdButtonLicense 1101 
 #define cmdButtonLicense_LabelTitle_RESID 60118
 #define cmdButtonLicense_LargeImages_RESID 60119
-#define cmdGroupExit_LabelTitle_RESID 60120
-#define InternalCmd2_LabelTitle_RESID 60121
-#define InternalCmd4_LabelTitle_RESID 60122
+#define cmdCheckBoxXICRelative 1103 
+#define cmdCheckBoxXICRelative_LabelTitle_RESID 60120
+#define cmdCheckBoxXICRelative_SmallImages_RESID 60121
+#define cmdCheckBoxXICRelative_LargeImages_RESID 60122
+#define cmdGroupExit_LabelTitle_RESID 60123
+#define InternalCmd2_LabelTitle_RESID 60124
+#define InternalCmd4_LabelTitle_RESID 60125

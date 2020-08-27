@@ -248,7 +248,7 @@ Public Class frmMain
     'End Sub
 
     Private Sub InitSpinner()
-        Dim _spinner = ribbonItems.Spinner
+        Dim _spinner = ribbonItems.PPMSpinner
 
         _spinner.TooltipTitle = "PPM"
         _spinner.TooltipDescription = "Enter ppm error for search feature by m/z."
