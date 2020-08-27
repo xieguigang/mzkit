@@ -252,11 +252,14 @@ Namespace Spectra
             Dim union = MzUnion(query.Select(Function(m) m.mz).ToArray, ref.Select(Function(m) m.mz).ToArray, tolerance)
 
             For Each mz As Double In union
+                Dim qmz = query.Where(Function(a) tolerance(a.mz, mz)).FirstOrDefault
+                Dim rmz = ref.Where(Function(a) tolerance(a.mz, mz)).FirstOrDefault
+
                 Yield New SSM2MatrixFragment With {
                     .mz = mz,
-                    .query = query.Where(Function(a) tolerance(a.mz, mz)).FirstOrDefault?.intensity,
-                    .ref = ref.Where(Function(a) tolerance(a.mz, mz)).FirstOrDefault?.intensity,
-                    .da = stdNum.Abs(.ref - .query)
+                    .query = If(qmz Is Nothing, 0, qmz.intensity),
+                    .ref = If(rmz Is Nothing, 0, rmz.intensity),
+                    .da = If(qmz Is Nothing OrElse rmz Is Nothing, Double.NaN, stdNum.Abs(qmz.mz - rmz.mz))
                 }
             Next
         End Function

@@ -612,7 +612,7 @@ Public Class PageMzkitTools
                 progress.Invoke(Sub() progress.Label1.Text = "initialize result output...")
 
                 host.Invoke(Sub()
-                                Call host.mzkitMNtools.loadNetwork(clusters, nodes)
+                                Call host.mzkitMNtools.loadNetwork(clusters, nodes, 0.8)
                                 Call host.ShowPage(host.mzkitMNtools)
                             End Sub)
 

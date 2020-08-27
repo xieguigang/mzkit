@@ -18,7 +18,7 @@ Public Class PageMoleculeNetworking
     Dim rawMatrix As EntityClusterModel()
     Dim nodeInfo As Dictionary(Of String, ScanEntry)
 
-    Public Sub loadNetwork(MN As IEnumerable(Of EntityClusterModel), nodes As Dictionary(Of String, ScanEntry))
+    Public Sub loadNetwork(MN As IEnumerable(Of EntityClusterModel), nodes As Dictionary(Of String, ScanEntry), cutoff As Double)
         DataGridView1.Rows.Clear()
         DataGridView2.Rows.Clear()
 
@@ -44,7 +44,7 @@ Public Class PageMoleculeNetworking
         Next
 
         For Each row In rawMatrix
-            For Each link In row.Properties.Where(Function(l) l.Value > 0)
+            For Each link In row.Properties.Where(Function(l) l.Value >= cutoff)
                 g.CreateEdge(row.ID, link.Key, link.Value)
             Next
         Next
@@ -114,6 +114,8 @@ Public Class PageMoleculeNetworking
 
             host.mzkitTool.PictureBox1.BackgroundImage = MassSpectra.AlignMirrorPlot(data1, data2).AsGDIImage
             host.mzkitTool.TabControl1.SelectedTab = host.mzkitTool.TabPage1
+
+            host.ShowPage(host.mzkitTool)
         End If
     End Sub
 End Class
