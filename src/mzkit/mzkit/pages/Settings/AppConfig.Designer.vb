@@ -28,20 +28,20 @@ Partial Class AppConfig
         'CheckBox1
         '
         Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.Location = New System.Drawing.Point(33, 33)
+        Me.CheckBox1.Location = New System.Drawing.Point(33, 30)
         Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(163, 17)
+        Me.CheckBox1.Size = New System.Drawing.Size(168, 16)
         Me.CheckBox1.TabIndex = 0
         Me.CheckBox1.Text = "Remember Window Location"
         Me.CheckBox1.UseVisualStyleBackColor = True
         '
         'AppConfig
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.CheckBox1)
         Me.Name = "AppConfig"
-        Me.Size = New System.Drawing.Size(718, 380)
+        Me.Size = New System.Drawing.Size(732, 495)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

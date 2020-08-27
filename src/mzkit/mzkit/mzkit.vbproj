@@ -140,6 +140,7 @@
     <Compile Include="pages\Settings\AppConfig.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="pages\Settings\ISaveSettings.vb" />
     <Compile Include="settings\UISettings.vb" />
     <Compile Include="settings\PrecursorSearchSettings.vb" />
     <Compile Include="settings\Settings.vb" />
