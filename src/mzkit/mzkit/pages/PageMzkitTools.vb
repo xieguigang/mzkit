@@ -588,6 +588,7 @@ Public Class PageMzkitTools
             Sub()
                 ' Dim tree As New SpectrumTreeCluster(SpectrumTreeCluster.SSMCompares(Tolerance.DeltaMass(0.3), 0.75, 0.4), showReport:=False)
                 Dim run As New List(Of PeakMs2)
+                Dim nodes As New Dictionary(Of String, ScanEntry)
 
                 progress.Invoke(Sub() progress.Label1.Text = "loading cache ms2 scan data...")
 
@@ -601,6 +602,7 @@ Public Class PageMzkitTools
                         }
 
                         progress.Invoke(Sub() progress.Label2.Text = scan.id)
+                        nodes.Add(run.Last.lib_guid, scan)
                     Next
                 End Using
 
@@ -616,7 +618,7 @@ Public Class PageMzkitTools
                 progress.Invoke(Sub() progress.Label1.Text = "initialize result output...")
 
                 host.Invoke(Sub()
-                                Call host.mzkitMNtools.loadNetwork(clusters)
+                                Call host.mzkitMNtools.loadNetwork(clusters, nodes)
                                 Call host.ShowPage(host.mzkitMNtools)
                             End Sub)
 

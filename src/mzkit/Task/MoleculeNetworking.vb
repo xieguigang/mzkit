@@ -23,10 +23,9 @@ Public Module MoleculeNetworking
 
                             Return (id, System.Math.Min(score.forward, score.reverse))
                         End Function) _
-                .Where(Function(a) a.Item2 >= cutoff) _
                 .ToArray
 
-            Call progressCallback($"[{++i}/{ms2.Length}] {scan.ToString} has {scores.Length} homologous spectrum")
+            Call progressCallback($"[{++i}/{ms2.Length}] {scan.ToString} has {scores.Where(Function(a) a.Item2 >= cutoff).Count} homologous spectrum")
 
             Yield New DataSet With {
                 .ID = scan.lib_guid,

@@ -26,15 +26,22 @@ Partial Class PageMoleculeNetworking
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
-        Me.CompoundA = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.CompoundB = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Similarity = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.DataGridView2 = New System.Windows.Forms.DataGridView()
         Me.Compound = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ClusterId = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.SaveImageToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CompoundA = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CompoundB = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Similarity = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column1 = New System.Windows.Forms.DataGridViewButtonColumn()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -51,7 +58,7 @@ Partial Class PageMoleculeNetworking
         Me.TabControl1.Location = New System.Drawing.Point(0, 0)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(956, 598)
+        Me.TabControl1.Size = New System.Drawing.Size(956, 648)
         Me.TabControl1.TabIndex = 0
         '
         'TabPage1
@@ -60,7 +67,7 @@ Partial Class PageMoleculeNetworking
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(948, 572)
+        Me.TabPage1.Size = New System.Drawing.Size(948, 622)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Network"
         Me.TabPage1.UseVisualStyleBackColor = True
@@ -68,13 +75,56 @@ Partial Class PageMoleculeNetworking
         'DataGridView1
         '
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CompoundA, Me.CompoundB, Me.Similarity})
+        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CompoundA, Me.CompoundB, Me.Similarity, Me.Column1})
         Me.DataGridView1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DataGridView1.Location = New System.Drawing.Point(3, 3)
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.ReadOnly = True
-        Me.DataGridView1.Size = New System.Drawing.Size(942, 566)
+        Me.DataGridView1.Size = New System.Drawing.Size(942, 616)
         Me.DataGridView1.TabIndex = 0
+        '
+        'TabPage2
+        '
+        Me.TabPage2.Controls.Add(Me.DataGridView2)
+        Me.TabPage2.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage2.Name = "TabPage2"
+        Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage2.Size = New System.Drawing.Size(948, 622)
+        Me.TabPage2.TabIndex = 1
+        Me.TabPage2.Text = "Compounds"
+        Me.TabPage2.UseVisualStyleBackColor = True
+        '
+        'DataGridView2
+        '
+        Me.DataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView2.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Compound, Me.ClusterId, Me.Column2, Me.Column3, Me.Column4, Me.Column5, Me.Column6, Me.Column7})
+        Me.DataGridView2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DataGridView2.Location = New System.Drawing.Point(3, 3)
+        Me.DataGridView2.Name = "DataGridView2"
+        Me.DataGridView2.Size = New System.Drawing.Size(942, 616)
+        Me.DataGridView2.TabIndex = 0
+        '
+        'Compound
+        '
+        Me.Compound.HeaderText = "Compound"
+        Me.Compound.Name = "Compound"
+        '
+        'ClusterId
+        '
+        Me.ClusterId.HeaderText = "ClusterId"
+        Me.ClusterId.Name = "ClusterId"
+        '
+        'ContextMenuStrip1
+        '
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveImageToolStripMenuItem})
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(135, 26)
+        '
+        'SaveImageToolStripMenuItem
+        '
+        Me.SaveImageToolStripMenuItem.Name = "SaveImageToolStripMenuItem"
+        Me.SaveImageToolStripMenuItem.Size = New System.Drawing.Size(134, 22)
+        Me.SaveImageToolStripMenuItem.Text = "Save Image"
         '
         'CompoundA
         '
@@ -94,56 +144,49 @@ Partial Class PageMoleculeNetworking
         Me.Similarity.Name = "Similarity"
         Me.Similarity.ReadOnly = True
         '
-        'TabPage2
+        'Column1
         '
-        Me.TabPage2.Controls.Add(Me.DataGridView2)
-        Me.TabPage2.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage2.Name = "TabPage2"
-        Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(948, 572)
-        Me.TabPage2.TabIndex = 1
-        Me.TabPage2.Text = "Compounds"
-        Me.TabPage2.UseVisualStyleBackColor = True
+        Me.Column1.HeaderText = "View"
+        Me.Column1.Name = "Column1"
+        Me.Column1.ReadOnly = True
         '
-        'DataGridView2
+        'Column2
         '
-        Me.DataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView2.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Compound, Me.ClusterId})
-        Me.DataGridView2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DataGridView2.Location = New System.Drawing.Point(3, 3)
-        Me.DataGridView2.Name = "DataGridView2"
-        Me.DataGridView2.Size = New System.Drawing.Size(942, 566)
-        Me.DataGridView2.TabIndex = 0
+        Me.Column2.HeaderText = "Scan"
+        Me.Column2.Name = "Column2"
         '
-        'Compound
+        'Column3
         '
-        Me.Compound.HeaderText = "Compound"
-        Me.Compound.Name = "Compound"
+        Me.Column3.HeaderText = "m/z"
+        Me.Column3.Name = "Column3"
         '
-        'ClusterId
+        'Column4
         '
-        Me.ClusterId.HeaderText = "ClusterId"
-        Me.ClusterId.Name = "ClusterId"
+        Me.Column4.HeaderText = "rt"
+        Me.Column4.Name = "Column4"
         '
-        'ContextMenuStrip1
+        'Column5
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveImageToolStripMenuItem})
-        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(145, 26)
+        Me.Column5.HeaderText = "intensity"
+        Me.Column5.Name = "Column5"
         '
-        'SaveImageToolStripMenuItem
+        'Column6
         '
-        Me.SaveImageToolStripMenuItem.Name = "SaveImageToolStripMenuItem"
-        Me.SaveImageToolStripMenuItem.Size = New System.Drawing.Size(144, 22)
-        Me.SaveImageToolStripMenuItem.Text = "Save Image"
+        Me.Column6.HeaderText = "polarity"
+        Me.Column6.Name = "Column6"
+        '
+        'Column7
+        '
+        Me.Column7.HeaderText = "charge"
+        Me.Column7.Name = "Column7"
         '
         'PageMoleculeNetworking
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.TabControl1)
         Me.Name = "PageMoleculeNetworking"
-        Me.Size = New System.Drawing.Size(956, 598)
+        Me.Size = New System.Drawing.Size(956, 648)
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
@@ -159,11 +202,18 @@ Partial Class PageMoleculeNetworking
     Friend WithEvents TabPage2 As TabPage
     Friend WithEvents DataGridView1 As DataGridView
     Friend WithEvents DataGridView2 As DataGridView
-    Friend WithEvents CompoundA As DataGridViewTextBoxColumn
-    Friend WithEvents CompoundB As DataGridViewTextBoxColumn
-    Friend WithEvents Similarity As DataGridViewTextBoxColumn
     Friend WithEvents Compound As DataGridViewTextBoxColumn
     Friend WithEvents ClusterId As DataGridViewTextBoxColumn
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents SaveImageToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents CompoundA As DataGridViewTextBoxColumn
+    Friend WithEvents CompoundB As DataGridViewTextBoxColumn
+    Friend WithEvents Similarity As DataGridViewTextBoxColumn
+    Friend WithEvents Column1 As DataGridViewButtonColumn
+    Friend WithEvents Column2 As DataGridViewTextBoxColumn
+    Friend WithEvents Column3 As DataGridViewTextBoxColumn
+    Friend WithEvents Column4 As DataGridViewTextBoxColumn
+    Friend WithEvents Column5 As DataGridViewTextBoxColumn
+    Friend WithEvents Column6 As DataGridViewTextBoxColumn
+    Friend WithEvents Column7 As DataGridViewTextBoxColumn
 End Class

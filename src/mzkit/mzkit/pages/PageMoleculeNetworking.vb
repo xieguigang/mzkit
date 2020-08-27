@@ -5,13 +5,16 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports RibbonLib.Interop
+Imports Task
 
 Public Class PageMoleculeNetworking
 
     Dim g As NetworkGraph
     Dim host As frmMain
+    Dim rawMatrix As EntityClusterModel()
+    Dim nodeInfo As Dictionary(Of String, ScanEntry)
 
-    Public Sub loadNetwork(MN As IEnumerable(Of EntityClusterModel))
+    Public Sub loadNetwork(MN As IEnumerable(Of EntityClusterModel), nodes As Dictionary(Of String, ScanEntry))
         DataGridView1.Rows.Clear()
         DataGridView2.Rows.Clear()
 
@@ -19,12 +22,24 @@ Public Class PageMoleculeNetworking
         '.doRandomLayout _
         '.doForceLayout(iterations:=100)
         g = New NetworkGraph
+        rawMatrix = MN.ToArray
+        nodeInfo = nodes
 
-        For Each row In MN
-            If g.GetElementByID(row.ID) Is Nothing Then
-                g.CreateNode(row.ID, New NodeData With {.Properties = New Dictionary(Of String, String) From {{NamesOf.REFLECTION_ID_MAPPING_NODETYPE, row.Cluster}}})
-            End If
+        For Each row In rawMatrix
+            Dim info = nodeInfo(row.ID)
+            g.CreateNode(row.ID, New NodeData With {
+                .Properties = New Dictionary(Of String, String) From {
+                    {NamesOf.REFLECTION_ID_MAPPING_NODETYPE, row.Cluster},
+                    {"scan", info.id},
+                    {"m/z", info.mz},
+                    {"rt", info.rt},
+                    {"intensity", info.intensity},
+                    {"polarity", info.polarity},
+                    {"charge", info.charge}
+                }})
+        Next
 
+        For Each row In rawMatrix
             For Each link In row.Properties
                 If g.GetElementByID(link.Key) Is Nothing Then
                     g.CreateNode(link.Key)
@@ -35,10 +50,12 @@ Public Class PageMoleculeNetworking
         Next
 
         For Each node In g.vertex
-            DataGridView2.Rows.Add(node.label, node.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE))
+            Dim info = nodeInfo(node.label)
+
+            DataGridView2.Rows.Add(node.label, node.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE), info.id, info.mz, info.rt, info.intensity, info.polarity, info.charge)
         Next
         For Each edge In g.graphEdges
-            DataGridView1.Rows.Add(edge.U.label, edge.V.label, edge.weight)
+            DataGridView1.Rows.Add(edge.U.label, edge.V.label, edge.weight, "View")
         Next
 
         ' PictureBox1.BackgroundImage = g.DrawImage(labelerIterations:=-1).AsGDIImage
@@ -48,7 +65,7 @@ Public Class PageMoleculeNetworking
         If Not g Is Nothing Then
             Using file As New FolderBrowserDialog With {.ShowNewFolderButton = True}
                 If file.ShowDialog = DialogResult.OK Then
-                    Call g.Tabular.Save(output:=file.SelectedPath)
+                    Call g.Tabular({"scan", "m/z", "rt", "intensity", "polarity", "charge"}).Save(output:=file.SelectedPath)
                     Call Process.Start(file.SelectedPath)
                 End If
             End Using
