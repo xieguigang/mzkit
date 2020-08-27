@@ -219,7 +219,7 @@ Public Class frmMain
             Me.Size = Globals.Settings.ui.getSize
             Me.WindowState = Globals.Settings.ui.window
 
-            Call Globals.Settings.ui.setColors(Ribbon1)
+            ' Call Globals.Settings.ui.setColors(Ribbon1)
         End If
 
         ToolStripStatusLabel1.Text = "Ready!"

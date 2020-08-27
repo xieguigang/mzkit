@@ -296,11 +296,11 @@
 
 		<Command Name="cmdButtonPageNavBack"
 					 Id="1053"
-					 LabelTitle="M/z Search"
-					 LabelDescription="Search Formula for given m/z value"
-					TooltipTitle="Search Formula">
+					 LabelTitle="Back to Previous Page"
+					 LabelDescription="Go Back to the Previous Page"
+					TooltipTitle="Go Back to the Previous Page">
 			<Command.LargeImages>
-				<Image>Res/DropA32.bmp</Image>
+				<Image>Res/edit-undo.png</Image>
 			</Command.LargeImages>
 		</Command>
 
