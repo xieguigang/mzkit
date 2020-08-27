@@ -25,7 +25,7 @@ Public Class PageMoleculeNetworking
                 g.CreateNode(row.ID, New NodeData With {.Properties = New Dictionary(Of String, String) From {{NamesOf.REFLECTION_ID_MAPPING_NODETYPE, row.Cluster}}})
             End If
 
-            For Each link In row.Properties
+            For Each link In row.Properties.Where(Function(l) l.Value > 0)
                 If g.GetElementByID(link.Key) Is Nothing Then
                     g.CreateNode(link.Key)
                 End If

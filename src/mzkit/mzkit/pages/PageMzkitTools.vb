@@ -579,7 +579,7 @@ Public Class PageMzkitTools
                 progress.Invoke(Sub() progress.Label2.Text = "run molecular networking....")
 
                 ' Call tree.doCluster(run)
-                Dim net = MoleculeNetworking.CreateMatrix(run, 0.6, Tolerance.DeltaMass(0.3), Sub(msg) progress.Invoke(Sub() progress.Label1.Text = msg)).ToArray
+                Dim net = MoleculeNetworking.CreateMatrix(run, 0.8, Tolerance.DeltaMass(0.3), Sub(msg) progress.Invoke(Sub() progress.Label1.Text = msg)).ToArray
 
                 progress.Invoke(Sub() progress.Label1.Text = "run family clustering....")
 
