@@ -473,7 +473,22 @@
 		<Command Name="cmdContextMap"
 		 Id="1106">
 		</Command>
-		
+
+
+		<Command Name="cmdButtonRsharp"
+			 Id="1107"
+			 LabelTitle="R# Terminal"
+			 LabelDescription="Run R# Script"
+			 TooltipTitle="Mzkit Automation"
+			 TooltipDescription="R# Scripting for Run Mzkit Automation Pipeline">
+			<Command.LargeImages>
+				<Image>Res/Terminal.png</Image>
+			</Command.LargeImages>
+			<Command.SmallImages>
+				<Image>Res/Terminal.png</Image>
+			</Command.SmallImages>
+		</Command>
+
 	</Application.Commands>
 
 	<Application.Views>
@@ -588,7 +603,7 @@
 						<Button CommandName="cmdButtonSave" />
 					</Group>
 					<Group CommandName="cmdGroupExit" SizeDefinition="OneButton">
-						<Button CommandName="cmdButtonExit" />
+						<Button CommandName="cmdButtonRsharp" />
 					</Group>
 				</Tab>
 
@@ -657,6 +672,7 @@
 								<Button CommandName='cmdButtonDropB' />
 								<Button CommandName='cmdButtonDropC' />
 								<Button CommandName='cmdButtonDropD' />
+								<Button CommandName='cmdButtonRsharp' />
 							</MenuGroup>
 						</DropDownButton>
 
@@ -692,7 +708,7 @@
 					<QuickAccessToolbar.ApplicationDefaults>
 						<Button CommandName="cmdButtonPageNavBack" ApplicationDefaults.IsChecked="true" />
 						<Button CommandName="cmdButtonOpenRaw" ApplicationDefaults.IsChecked="true" />
-						<Button CommandName="cmdButtonSave" ApplicationDefaults.IsChecked="false" />
+						<Button CommandName="cmdButtonRsharp" ApplicationDefaults.IsChecked="true" />
 					</QuickAccessToolbar.ApplicationDefaults>
 				</QuickAccessToolbar>
 			</Ribbon.QuickAccessToolbar>

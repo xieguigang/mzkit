@@ -62,6 +62,7 @@ Public Class frmMain
     Friend mzkitSearch As New PageMzSearch
     Friend mzkitCalculator As New PageMzCalculator
     Friend mzkitMNtools As New PageMoleculeNetworking
+    Friend mzkitRsharpScripting As New PageScripting
 
     Dim nav As New Stack(Of Control)
 
@@ -206,7 +207,7 @@ Public Class frmMain
         InitRecentItems()
         ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
 
-        addPage(mzkitTool, mzkitSettings, mzkitSearch, mzkitCalculator, mzkitMNtools)
+        addPage(mzkitTool, mzkitSettings, mzkitSearch, mzkitCalculator, mzkitMNtools, mzkitRsharpScripting)
         ShowPage(mzkitTool)
 
         mzkitTool.Ribbon_Load(Ribbon1)

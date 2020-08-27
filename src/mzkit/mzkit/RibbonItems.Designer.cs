@@ -13,8 +13,7 @@ using RibbonLib;
 using RibbonLib.Controls;
 using RibbonLib.Interop;
 
-namespace RibbonLib.Controls
-{
+
     partial class RibbonItems
     {
         private static class Cmd
@@ -52,7 +51,7 @@ namespace RibbonLib.Controls
             public const uint cmdButtonNew = 1001;
             public const uint cmdButtonOpenRaw = 1002;
             public const uint cmdButtonSave = 1003;
-            public const uint cmdButtonExit = 1004;
+            public const uint cmdButtonRsharp = 1107;
             public const uint cmdTabTools = 1012;
             public const uint cmdGroupToolsActions = 1046;
             public const uint cmdButtonMzCalculator = 1013;
@@ -71,6 +70,7 @@ namespace RibbonLib.Controls
             public const uint cmdButtonDropD = 5010;
             public const uint cmdButtonLicense = 1101;
             public const uint cmdMenuGroupExit = 1006;
+            public const uint cmdButtonExit = 1004;
             public const uint cmdQAT = 1015;
             public const uint cmdButtonPageNavBack = 1053;
             public const uint cmdButtonExportImage = 1104;
@@ -118,7 +118,7 @@ namespace RibbonLib.Controls
         public RibbonButton ButtonNew { get; private set; }
         public RibbonButton ButtonOpenRaw { get; private set; }
         public RibbonButton ButtonSave { get; private set; }
-        public RibbonButton ButtonExit { get; private set; }
+        public RibbonButton ButtonRsharp { get; private set; }
         public RibbonTab TabTools { get; private set; }
         public RibbonGroup GroupToolsActions { get; private set; }
         public RibbonButton ButtonMzCalculator { get; private set; }
@@ -137,6 +137,7 @@ namespace RibbonLib.Controls
         public RibbonButton ButtonDropD { get; private set; }
         public RibbonButton ButtonLicense { get; private set; }
         public RibbonMenuGroup MenuGroupExit { get; private set; }
+        public RibbonButton ButtonExit { get; private set; }
         public RibbonQuickAccessToolbar QAT { get; private set; }
         public RibbonButton ButtonPageNavBack { get; private set; }
         public RibbonButton ButtonExportImage { get; private set; }
@@ -182,7 +183,7 @@ namespace RibbonLib.Controls
             ButtonNew = new RibbonButton(ribbon, Cmd.cmdButtonNew);
             ButtonOpenRaw = new RibbonButton(ribbon, Cmd.cmdButtonOpenRaw);
             ButtonSave = new RibbonButton(ribbon, Cmd.cmdButtonSave);
-            ButtonExit = new RibbonButton(ribbon, Cmd.cmdButtonExit);
+            ButtonRsharp = new RibbonButton(ribbon, Cmd.cmdButtonRsharp);
             TabTools = new RibbonTab(ribbon, Cmd.cmdTabTools);
             GroupToolsActions = new RibbonGroup(ribbon, Cmd.cmdGroupToolsActions);
             ButtonMzCalculator = new RibbonButton(ribbon, Cmd.cmdButtonMzCalculator);
@@ -201,6 +202,7 @@ namespace RibbonLib.Controls
             ButtonDropD = new RibbonButton(ribbon, Cmd.cmdButtonDropD);
             ButtonLicense = new RibbonButton(ribbon, Cmd.cmdButtonLicense);
             MenuGroupExit = new RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupExit);
+            ButtonExit = new RibbonButton(ribbon, Cmd.cmdButtonExit);
             QAT = new RibbonQuickAccessToolbar(ribbon, Cmd.cmdQAT, Cmd.cmdCustomizeQAT);
             ButtonPageNavBack = new RibbonButton(ribbon, Cmd.cmdButtonPageNavBack);
             ButtonExportImage = new RibbonButton(ribbon, Cmd.cmdButtonExportImage);
@@ -209,4 +211,3 @@ namespace RibbonLib.Controls
         }
 
     }
-}

@@ -14,9 +14,9 @@ Imports RibbonLib.Controls
 Imports RibbonLib.Interop
 
 Partial Class RibbonItems
-    Private _Ribbon As Ribbon, _TabGroupTableTools As RibbonTabGroup, _TabDesign As RibbonTab, _GroupDesign As RibbonGroup, _PPMSpinner As RibbonSpinner, _CheckBoxXICRelative As RibbonCheckBox, _ButtonDesign3 As RibbonButton, _TabLayout As RibbonTab, _GroupLayout As RibbonGroup, _ButtonLayout1 As RibbonButton, _ButtonLayout2 As RibbonButton, _TabGroupCalculatorTools As RibbonTabGroup, _TabCalculator As RibbonTab, _GroupCalculator As RibbonGroup, _ButtonCalculatorExport As RibbonButton, _TabGroupExactMassSearchTools As RibbonTabGroup, _TabExactMassSearch As RibbonTab, _GroupExactMassSearch As RibbonGroup, _ButtonExactMassSearchExport As RibbonButton, _TabGroupNetworkTools As RibbonTabGroup, _TabNetwork As RibbonTab, _GroupNetwork As RibbonGroup, _ButtonNetworkExport As RibbonButton, _ButtonNetworkRender As RibbonButton, _TabGroupFormulaSearchTools As RibbonTabGroup, _TabFormulaSearch As RibbonTab, _GroupFormulaSearch As RibbonGroup, _ButtonFormulaSearchExport As RibbonButton, _HelpButton As RibbonHelpButton, _TabMain As RibbonTab, _GroupFileActions As RibbonGroup, _ButtonNew As RibbonButton, _ButtonOpenRaw As RibbonButton, _ButtonSave As RibbonButton, _ButtonExit As RibbonButton, _TabTools As RibbonTab, _GroupToolsActions As RibbonGroup, _ButtonMzCalculator As RibbonButton, _ButtonMzSearch As RibbonButton, _TabAbout As RibbonTab, _GroupAboutActions As RibbonGroup, _ButtonAbout As RibbonButton, _ButtonBioDeep As RibbonButton, _ButtonSettings As RibbonButton, _RecentItems As RibbonRecentItems, _MenuGroupFile As RibbonMenuGroup, _ButtonToolkits As RibbonDropDownButton, _ButtonDropA As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton, _ButtonDropD As RibbonButton, _ButtonLicense As RibbonButton, _MenuGroupExit As RibbonMenuGroup, _QAT As RibbonQuickAccessToolbar, _ButtonPageNavBack As RibbonButton, _ButtonExportImage As RibbonButton, _ButtonExportMatrix As RibbonButton
+    Private _Ribbon As Ribbon, _TabGroupTableTools As RibbonTabGroup, _TabDesign As RibbonTab, _GroupDesign As RibbonGroup, _PPMSpinner As RibbonSpinner, _CheckBoxXICRelative As RibbonCheckBox, _ButtonDesign3 As RibbonButton, _TabLayout As RibbonTab, _GroupLayout As RibbonGroup, _ButtonLayout1 As RibbonButton, _ButtonLayout2 As RibbonButton, _TabGroupCalculatorTools As RibbonTabGroup, _TabCalculator As RibbonTab, _GroupCalculator As RibbonGroup, _ButtonCalculatorExport As RibbonButton, _TabGroupExactMassSearchTools As RibbonTabGroup, _TabExactMassSearch As RibbonTab, _GroupExactMassSearch As RibbonGroup, _ButtonExactMassSearchExport As RibbonButton, _TabGroupNetworkTools As RibbonTabGroup, _TabNetwork As RibbonTab, _GroupNetwork As RibbonGroup, _ButtonNetworkExport As RibbonButton, _ButtonNetworkRender As RibbonButton, _TabGroupFormulaSearchTools As RibbonTabGroup, _TabFormulaSearch As RibbonTab, _GroupFormulaSearch As RibbonGroup, _ButtonFormulaSearchExport As RibbonButton, _HelpButton As RibbonHelpButton, _TabMain As RibbonTab, _GroupFileActions As RibbonGroup, _ButtonNew As RibbonButton, _ButtonOpenRaw As RibbonButton, _ButtonSave As RibbonButton, _ButtonRsharp As RibbonButton, _TabTools As RibbonTab, _GroupToolsActions As RibbonGroup, _ButtonMzCalculator As RibbonButton, _ButtonMzSearch As RibbonButton, _TabAbout As RibbonTab, _GroupAboutActions As RibbonGroup, _ButtonAbout As RibbonButton, _ButtonBioDeep As RibbonButton, _ButtonSettings As RibbonButton, _RecentItems As RibbonRecentItems, _MenuGroupFile As RibbonMenuGroup, _ButtonToolkits As RibbonDropDownButton, _ButtonDropA As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton, _ButtonDropD As RibbonButton, _ButtonLicense As RibbonButton, _MenuGroupExit As RibbonMenuGroup, _ButtonExit As RibbonButton, _QAT As RibbonQuickAccessToolbar, _ButtonPageNavBack As RibbonButton, _ButtonExportImage As RibbonButton, _ButtonExportMatrix As RibbonButton
 
-    Friend NotInheritable Class Cmd
+    Private NotInheritable Class Cmd
         Public Const cmdTabGroupTableTools As UInteger = 1031
         Public Const cmdTabDesign As UInteger = 1032
         Public Const cmdGroupDesign As UInteger = 1036
@@ -50,7 +50,7 @@ Partial Class RibbonItems
         Public Const cmdButtonNew As UInteger = 1001
         Public Const cmdButtonOpenRaw As UInteger = 1002
         Public Const cmdButtonSave As UInteger = 1003
-        Public Const cmdButtonExit As UInteger = 1004
+        Public Const cmdButtonRsharp As UInteger = 1107
         Public Const cmdTabTools As UInteger = 1012
         Public Const cmdGroupToolsActions As UInteger = 1046
         Public Const cmdButtonMzCalculator As UInteger = 1013
@@ -69,6 +69,7 @@ Partial Class RibbonItems
         Public Const cmdButtonDropD As UInteger = 5010
         Public Const cmdButtonLicense As UInteger = 1101
         Public Const cmdMenuGroupExit As UInteger = 1006
+        Public Const cmdButtonExit As UInteger = 1004
         Public Const cmdQAT As UInteger = 1015
         Public Const cmdButtonPageNavBack As UInteger = 1053
         Public Const cmdButtonExportImage As UInteger = 1104
@@ -387,12 +388,12 @@ Partial Class RibbonItems
         End Set
     End Property
 
-    Public Property ButtonExit As RibbonButton
+    Public Property ButtonRsharp As RibbonButton
         Get
-            Return _ButtonExit
+            Return _ButtonRsharp
         End Get
         Private Set(ByVal value As RibbonButton)
-            _ButtonExit = value
+            _ButtonRsharp = value
         End Set
     End Property
 
@@ -558,6 +559,15 @@ Partial Class RibbonItems
         End Set
     End Property
 
+    Public Property ButtonExit As RibbonButton
+        Get
+            Return _ButtonExit
+        End Get
+        Private Set(ByVal value As RibbonButton)
+            _ButtonExit = value
+        End Set
+    End Property
+
     Public Property QAT As RibbonQuickAccessToolbar
         Get
             Return _QAT
@@ -631,7 +641,7 @@ Partial Class RibbonItems
         ButtonNew = New RibbonButton(ribbon, Cmd.cmdButtonNew)
         ButtonOpenRaw = New RibbonButton(ribbon, Cmd.cmdButtonOpenRaw)
         ButtonSave = New RibbonButton(ribbon, Cmd.cmdButtonSave)
-        ButtonExit = New RibbonButton(ribbon, Cmd.cmdButtonExit)
+        ButtonRsharp = New RibbonButton(ribbon, Cmd.cmdButtonRsharp)
         TabTools = New RibbonTab(ribbon, Cmd.cmdTabTools)
         GroupToolsActions = New RibbonGroup(ribbon, Cmd.cmdGroupToolsActions)
         ButtonMzCalculator = New RibbonButton(ribbon, Cmd.cmdButtonMzCalculator)
@@ -650,6 +660,7 @@ Partial Class RibbonItems
         ButtonDropD = New RibbonButton(ribbon, Cmd.cmdButtonDropD)
         ButtonLicense = New RibbonButton(ribbon, Cmd.cmdButtonLicense)
         MenuGroupExit = New RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupExit)
+        ButtonExit = New RibbonButton(ribbon, Cmd.cmdButtonExit)
         QAT = New RibbonQuickAccessToolbar(ribbon, Cmd.cmdQAT, Cmd.cmdCustomizeQAT)
         ButtonPageNavBack = New RibbonButton(ribbon, Cmd.cmdButtonPageNavBack)
         ButtonExportImage = New RibbonButton(ribbon, Cmd.cmdButtonExportImage)

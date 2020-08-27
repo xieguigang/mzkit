@@ -201,6 +201,13 @@
 #define cmdButtonExportMatrix_SmallImages_RESID 60133
 #define cmdButtonExportMatrix_LargeImages_RESID 60134
 #define cmdContextMap 1106 
-#define cmdGroupExit_LabelTitle_RESID 60135
-#define InternalCmd2_LabelTitle_RESID 60136
-#define InternalCmd4_LabelTitle_RESID 60137
+#define cmdButtonRsharp 1107 
+#define cmdButtonRsharp_LabelTitle_RESID 60135
+#define cmdButtonRsharp_LabelDescription_RESID 60136
+#define cmdButtonRsharp_TooltipTitle_RESID 60137
+#define cmdButtonRsharp_TooltipDescription_RESID 60138
+#define cmdButtonRsharp_SmallImages_RESID 60139
+#define cmdButtonRsharp_LargeImages_RESID 60140
+#define cmdGroupExit_LabelTitle_RESID 60141
+#define InternalCmd2_LabelTitle_RESID 60142
+#define InternalCmd4_LabelTitle_RESID 60143
