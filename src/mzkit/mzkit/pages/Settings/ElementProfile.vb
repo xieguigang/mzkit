@@ -7,7 +7,7 @@ Public Class ElementProfile : Implements ISaveSettings, IPageSettings
         DataGridView1.Rows.Clear()
 
         If Globals.Settings.formula_search Is Nothing Then
-            Globals.Settings.formula_search = New FormulaSearchProfile With {.elements = New Dictionary(Of String, IntRange)}
+            Globals.Settings.formula_search = New FormulaSearchProfile With {.elements = New Dictionary(Of String, ElementRange)}
         End If
 
         For Each element In Globals.Settings.formula_search.elements.SafeQuery
@@ -16,7 +16,7 @@ Public Class ElementProfile : Implements ISaveSettings, IPageSettings
     End Sub
 
     Public Sub SaveSettings() Implements ISaveSettings.SaveSettings
-        Globals.Settings.formula_search.elements = New Dictionary(Of String, IntRange)
+        Globals.Settings.formula_search.elements = New Dictionary(Of String, ElementRange)
 
         For i As Integer = 0 To DataGridView1.Rows.Count - 1
             Dim elementProfile = DataGridView1.Rows(i)
@@ -26,7 +26,7 @@ Public Class ElementProfile : Implements ISaveSettings, IPageSettings
                 Exit For
             End If
 
-            Globals.Settings.formula_search.elements.Add(atomName, New IntRange(elementProfile.Cells(1).Value, elementProfile.Cells(2).Value))
+            Globals.Settings.formula_search.elements.Add(atomName, New ElementRange With {.min = elementProfile.Cells(1).Value, .max = elementProfile.Cells(2).Value})
         Next
 
         Globals.Settings.Save()
