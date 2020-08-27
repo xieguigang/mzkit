@@ -26,22 +26,22 @@ Partial Class PageMoleculeNetworking
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
-        Me.TabPage2 = New System.Windows.Forms.TabPage()
-        Me.DataGridView2 = New System.Windows.Forms.DataGridView()
-        Me.Compound = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ClusterId = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.SaveImageToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CompoundA = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.CompoundB = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Similarity = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column1 = New System.Windows.Forms.DataGridViewButtonColumn()
+        Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.DataGridView2 = New System.Windows.Forms.DataGridView()
+        Me.Compound = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ClusterId = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.SaveImageToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -83,6 +83,30 @@ Partial Class PageMoleculeNetworking
         Me.DataGridView1.Size = New System.Drawing.Size(942, 616)
         Me.DataGridView1.TabIndex = 0
         '
+        'CompoundA
+        '
+        Me.CompoundA.HeaderText = "CompoundA"
+        Me.CompoundA.Name = "CompoundA"
+        Me.CompoundA.ReadOnly = True
+        '
+        'CompoundB
+        '
+        Me.CompoundB.HeaderText = "CompoundB"
+        Me.CompoundB.Name = "CompoundB"
+        Me.CompoundB.ReadOnly = True
+        '
+        'Similarity
+        '
+        Me.Similarity.HeaderText = "Similarity"
+        Me.Similarity.Name = "Similarity"
+        Me.Similarity.ReadOnly = True
+        '
+        'Column1
+        '
+        Me.Column1.HeaderText = "View"
+        Me.Column1.Name = "Column1"
+        Me.Column1.ReadOnly = True
+        '
         'TabPage2
         '
         Me.TabPage2.Controls.Add(Me.DataGridView2)
@@ -114,42 +138,6 @@ Partial Class PageMoleculeNetworking
         Me.ClusterId.HeaderText = "ClusterId"
         Me.ClusterId.Name = "ClusterId"
         '
-        'ContextMenuStrip1
-        '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveImageToolStripMenuItem})
-        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(135, 26)
-        '
-        'SaveImageToolStripMenuItem
-        '
-        Me.SaveImageToolStripMenuItem.Name = "SaveImageToolStripMenuItem"
-        Me.SaveImageToolStripMenuItem.Size = New System.Drawing.Size(134, 22)
-        Me.SaveImageToolStripMenuItem.Text = "Save Image"
-        '
-        'CompoundA
-        '
-        Me.CompoundA.HeaderText = "CompoundA"
-        Me.CompoundA.Name = "CompoundA"
-        Me.CompoundA.ReadOnly = True
-        '
-        'CompoundB
-        '
-        Me.CompoundB.HeaderText = "CompoundB"
-        Me.CompoundB.Name = "CompoundB"
-        Me.CompoundB.ReadOnly = True
-        '
-        'Similarity
-        '
-        Me.Similarity.HeaderText = "Similarity"
-        Me.Similarity.Name = "Similarity"
-        Me.Similarity.ReadOnly = True
-        '
-        'Column1
-        '
-        Me.Column1.HeaderText = "View"
-        Me.Column1.Name = "Column1"
-        Me.Column1.ReadOnly = True
-        '
         'Column2
         '
         Me.Column2.HeaderText = "Scan"
@@ -179,6 +167,18 @@ Partial Class PageMoleculeNetworking
         '
         Me.Column7.HeaderText = "charge"
         Me.Column7.Name = "Column7"
+        '
+        'ContextMenuStrip1
+        '
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveImageToolStripMenuItem})
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(135, 26)
+        '
+        'SaveImageToolStripMenuItem
+        '
+        Me.SaveImageToolStripMenuItem.Name = "SaveImageToolStripMenuItem"
+        Me.SaveImageToolStripMenuItem.Size = New System.Drawing.Size(134, 22)
+        Me.SaveImageToolStripMenuItem.Text = "Save Image"
         '
         'PageMoleculeNetworking
         '

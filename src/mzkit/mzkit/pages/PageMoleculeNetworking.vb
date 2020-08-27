@@ -95,4 +95,17 @@ Public Class PageMoleculeNetworking
     Private Sub PageMoleculeNetworking_Load(sender As Object, e As EventArgs) Handles Me.Load
         host = DirectCast(ParentForm, frmMain)
     End Sub
+
+    Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellContentClick
+        If e.ColumnIndex = 3 AndAlso e.RowIndex > -1 Then
+            Dim row = DataGridView1.Rows(e.RowIndex)
+            Dim a = CStr(row.Cells(0).Value)
+            Dim b = CStr(row.Cells(1).Value)
+
+            a = nodeInfo(a).id
+            b = nodeInfo(b).id
+
+
+        End If
+    End Sub
 End Class

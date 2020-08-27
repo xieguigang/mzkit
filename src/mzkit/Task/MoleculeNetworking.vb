@@ -1,8 +1,12 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.IO.netCDF
+Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
 Public Module MoleculeNetworking
 
@@ -32,5 +36,23 @@ Public Module MoleculeNetworking
                 .Properties = scores.ToDictionary(Function(a) a.id, Function(a) a.Item2)
             }
         Next
+    End Function
+
+    <Extension>
+    Public Function GetSpectrum(raw As Raw, scanId As String, Optional ByRef properties As SpectrumProperty = Nothing) As LibraryMatrix
+        Using cache As New netCDFReader(raw.cache)
+            Dim data As CDFData = cache.getDataVariable(cache.getDataVariableEntry(scanId))
+            Dim attrs = cache.getDataVariableEntry(scanId).attributes
+            Dim rawData As ms2() = data.numerics.AsMs2.ToArray
+            Dim scanData As New LibraryMatrix With {
+                .name = scanId,
+                .centroid = False,
+                .ms2 = rawData.Centroid(Tolerance.DeltaMass(0.1), 0.01).ToArray
+            }
+
+            properties = New SpectrumProperty(scanId, attrs)
+
+            Return scanData
+        End Using
     End Function
 End Module

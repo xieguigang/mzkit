@@ -193,34 +193,18 @@ Public Class PageMzkitTools
     Dim currentMatrix As [Variant](Of ms2(), ChromatogramTick())
 
     Private Sub showSpectrum(scanId As String, raw As Raw)
-        Dim scanData As LibraryMatrix
-
         If raw.cache.FileExists Then
-            Using cache As New netCDFReader(raw.cache)
-                Dim data As CDFData = cache.getDataVariable(cache.getDataVariableEntry(scanId))
-                Dim attrs = cache.getDataVariableEntry(scanId).attributes
-                Dim rawData As ms2() = data.numerics.AsMs2.ToArray
+            Dim prop As SpectrumProperty = Nothing
+            Dim scanData As LibraryMatrix = raw.GetSpectrum(scanId, prop)
 
-                scanData = New LibraryMatrix With {
-                    .name = scanId,
-                    .centroid = False,
-                    .ms2 = rawData.Centroid(Tolerance.DeltaMass(0.1), 0.01).ToArray
-                }
+            showMatrix(scanData.ms2, scanId)
 
-                If rawData.Length > 1000 Then
-                    rawData = scanData.ms2
-                End If
+            Dim draw As Image = scanData.MirrorPlot.AsGDIImage
 
-                showMatrix(rawData, scanId)
+            PropertyGrid1.SelectedObject = prop
+            PropertyGrid1.Refresh()
 
-                Dim draw As Image = scanData.MirrorPlot.AsGDIImage
-
-                PropertyGrid1.SelectedObject = New SpectrumProperty(scanId, attrs)
-                PropertyGrid1.Refresh()
-
-                PictureBox1.BackgroundImage = draw
-            End Using
-
+            PictureBox1.BackgroundImage = draw
             TabControl1.SelectedTab = TabPage1
         Else
             Call missingCacheFile(raw)
