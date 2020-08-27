@@ -145,6 +145,9 @@ Public Class frmMain
         AddHandler ribbonItems.ButtonNetworkExport.ExecuteEvent, Sub(sender, e) Call mzkitMNtools.saveNetwork()
         AddHandler ribbonItems.ButtonFormulaSearchExport.ExecuteEvent, Sub(sender, e) Call mzkitSearch.SaveSearchResultTable()
 
+        AddHandler ribbonItems.ButtonBioDeep.ExecuteEvent, Sub(sender, e) Call Process.Start("http://www.biodeep.cn/")
+        AddHandler ribbonItems.ButtonLicense.ExecuteEvent, Sub(sender, e) Call New frmLicense().ShowDialog()
+
         _uiCollectionChangedEvent = New UICollectionChangedEvent()
 
         InitializeFormulaProfile()
@@ -197,7 +200,10 @@ Public Class frmMain
         addPage(mzkitTool, mzkitSettings, mzkitSearch, mzkitCalculator, mzkitMNtools)
         ShowPage(mzkitTool)
 
-        If (Not Globals.Settings.ui Is Nothing) AndAlso Globals.Settings.ui.window <> FormWindowState.Minimized Then
+        If (Not Globals.Settings.ui Is Nothing) AndAlso
+            Globals.Settings.ui.window <> FormWindowState.Minimized AndAlso
+            Globals.Settings.ui.rememberWindowsLocation Then
+
             Me.Location = Globals.Settings.ui.getLocation
             Me.Size = Globals.Settings.ui.getSize
             Me.WindowState = Globals.Settings.ui.window
@@ -211,34 +217,35 @@ Public Class frmMain
     End Sub
 
     Private Sub InitializeFormulaProfile()
-        ribbonItems.ComboFormulaSearchProfile3.RepresentativeString = "XXXXXXXXXXXXXX"
-        ribbonItems.ComboFormulaSearchProfile3.Label = "Preset Profiles:"
+        '  ribbonItems.ComboFormulaSearchProfile3.RepresentativeString = "XXXXXXXXXXXXXX"
+        '  ribbonItems.ComboFormulaSearchProfile3.Label = "Preset Profiles:"
 
-        AddHandler ribbonItems.ComboFormulaSearchProfile3.ItemsSourceReady, AddressOf InitializeFormulaProfile
+        '  AddHandler ribbonItems.ComboFormulaSearchProfile3.ItemsSourceReady, AddressOf InitializeFormulaProfile
     End Sub
 
-    Private Sub InitializeFormulaProfile(sender As Object, e As EventArgs)
-        Dim itemsSource3 As IUICollection = ribbonItems.ComboFormulaSearchProfile3.ItemsSource
+    'Private Sub InitializeFormulaProfile(sender As Object, e As EventArgs)
+    '    Dim itemsSource3 As IUICollection = ribbonItems.ComboFormulaSearchProfile3.ItemsSource
 
-        MsgBox("initialize profile")
+    '    MsgBox("initialize profile")
 
-        itemsSource3.Clear()
-        itemsSource3.Add(New GalleryItemPropertySet() With {.Label = FormulaSearchProfiles.Custom.Description, .CategoryID = Constants.UI_Collection_InvalidIndex})
-        itemsSource3.Add(New GalleryItemPropertySet() With {.Label = FormulaSearchProfiles.Default.Description, .CategoryID = Constants.UI_Collection_InvalidIndex})
-        itemsSource3.Add(New GalleryItemPropertySet() With {.Label = FormulaSearchProfiles.SmallMolecule.Description, .CategoryID = Constants.UI_Collection_InvalidIndex})
-        itemsSource3.Add(New GalleryItemPropertySet() With {.Label = FormulaSearchProfiles.NaturalProduct.Description, .CategoryID = Constants.UI_Collection_InvalidIndex})
+    '    itemsSource3.Clear()
+    '    itemsSource3.Add(New GalleryItemPropertySet() With {.Label = FormulaSearchProfiles.Custom.Description, .CategoryID = Constants.UI_Collection_InvalidIndex})
+    '    itemsSource3.Add(New GalleryItemPropertySet() With {.Label = FormulaSearchProfiles.Default.Description, .CategoryID = Constants.UI_Collection_InvalidIndex})
+    '    itemsSource3.Add(New GalleryItemPropertySet() With {.Label = FormulaSearchProfiles.SmallMolecule.Description, .CategoryID = Constants.UI_Collection_InvalidIndex})
+    '    itemsSource3.Add(New GalleryItemPropertySet() With {.Label = FormulaSearchProfiles.NaturalProduct.Description, .CategoryID = Constants.UI_Collection_InvalidIndex})
 
-        MsgBox("initialize event")
+    '    MsgBox("initialize event")
 
-        _uiCollectionChangedEvent.Attach(ribbonItems.ComboFormulaSearchProfile3.ItemsSource)
-        AddHandler _uiCollectionChangedEvent.ChangedEvent, AddressOf _uiCollectionChangedEvent_ChangedEvent
-    End Sub
+    '    _uiCollectionChangedEvent.Attach(ribbonItems.ComboFormulaSearchProfile3.ItemsSource)
+    '    AddHandler _uiCollectionChangedEvent.ChangedEvent, AddressOf _uiCollectionChangedEvent_ChangedEvent
+    'End Sub
 
     Private Sub InitSpinner()
         Dim _spinner = ribbonItems.Spinner
 
         _spinner.TooltipTitle = "PPM"
         _spinner.TooltipDescription = "Enter ppm error for search feature by m/z."
+        _spinner.RepresentativeString = "XXXXXX"
         _spinner.MaxValue = 30D
         _spinner.MinValue = 0
         _spinner.Increment = 0.5D
@@ -302,12 +309,17 @@ Public Class frmMain
     Private Sub frmMain_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
         mzkitTool.SaveFileCache()
 
+        If Globals.Settings.ui Is Nothing Then
+            Globals.Settings.ui = New UISettings
+        End If
+
         Globals.Settings.ui = New UISettings With {
             .height = Height,
             .width = Width,
             .x = Location.X,
             .y = Location.Y,
-            .window = WindowState
+            .window = WindowState,
+            .rememberWindowsLocation = Globals.Settings.ui.rememberWindowsLocation
         }
         Globals.Settings.Save()
     End Sub

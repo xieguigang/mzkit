@@ -55,6 +55,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 Imports Microsoft.VisualBasic.DataMining.KMeans
@@ -70,14 +71,19 @@ Public Class PageMzkitTools
     Dim host As frmMain
     Dim status As ToolStripStatusLabel
     Dim RibbonItems As RibbonItems
+    Dim matrix As [Variant](Of ms2(), ChromatogramTick())
+    Dim matrixName As String
 
-    Sub showStatusMessage(message As String)
-        host.Invoke(Sub() status.Text = message)
+    Sub showStatusMessage(message As String, Optional icon As Image = Nothing)
+        host.Invoke(Sub()
+                        status.Text = message
+                        status.Image = icon
+                    End Sub)
     End Sub
 
     Sub InitializeFileTree()
         If TreeView1.LoadRawFileCache = 0 Then
-            ' MessageBox.Show($"It seems that you don't have any raw file opended. {vbCrLf}You could open raw file through [File] -> [Open Raw File].", "Tips", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            showStatusMessage($"It seems that you don't have any raw file opended. You could open raw file through [File] -> [Open Raw File].", My.Resources.StatusAnnotations_Warning_32xLG_color)
         Else
             TreeView1.SelectedNode = TreeView1.Nodes.Item(Scan0)
             setCurrentFile()
@@ -143,7 +149,7 @@ Public Class PageMzkitTools
             }.JoinIterates(TIC.value) _
              .OrderBy(Function(c) c.Time) _
              .ToArray
-
+            showMatrix(TIC.value, TIC.name)
             PictureBox1.BackgroundImage = TIC.TICplot(intensityMax:=maxY).AsGDIImage
         ElseIf e.Node.Tag Is Nothing AndAlso e.Node.Text = "TIC" Then
             Dim raw = TreeView1.CurrentRawFile.raw
@@ -163,7 +169,7 @@ Public Class PageMzkitTools
             }.JoinIterates(TIC.value) _
              .OrderBy(Function(c) c.Time) _
              .ToArray
-
+            showMatrix(TIC.value, TIC.name)
             PictureBox1.BackgroundImage = TIC.TICplot.AsGDIImage
         Else
             ' scan节点
@@ -193,12 +199,19 @@ Public Class PageMzkitTools
             Using cache As New netCDFReader(raw.cache)
                 Dim data As CDFData = cache.getDataVariable(cache.getDataVariableEntry(scanId))
                 Dim attrs = cache.getDataVariableEntry(scanId).attributes
+                Dim rawData As ms2() = data.numerics.AsMs2.ToArray
 
                 scanData = New LibraryMatrix With {
                     .name = scanId,
                     .centroid = False,
-                    .ms2 = data.numerics.AsMs2.ToArray.Centroid(Tolerance.DeltaMass(0.1), 0.01).ToArray
+                    .ms2 = rawData.Centroid(Tolerance.DeltaMass(0.1), 0.01).ToArray
                 }
+
+                If rawData.Length > 1000 Then
+                    rawData = scanData.ms2
+                End If
+
+                showMatrix(rawData, scanId)
 
                 Dim draw As Image = scanData.MirrorPlot.AsGDIImage
 
@@ -320,7 +333,7 @@ Public Class PageMzkitTools
 
     Private Sub SaveImageToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveImageToolStripMenuItem.Click
         If Not PictureBox1.BackgroundImage Is Nothing Then
-            Dim preFileName As String = DirectCast(PropertyGrid1.SelectedObject, SpectrumProperty).scanId.NormalizePathString(alphabetOnly:=False)
+            Dim preFileName As String = matrixName.NormalizePathString(alphabetOnly:=False)
 
             Using file As New SaveFileDialog With {.Filter = "image(*.png)|*.png", .FileName = preFileName & ".png"}
                 If file.ShowDialog = DialogResult.OK Then
@@ -508,7 +521,22 @@ Public Class PageMzkitTools
     End Sub
 
     Private Sub SaveMatrixToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveMatrixToolStripMenuItem.Click
-
+        If matrix Is Nothing Then
+            Return
+        End If
+        If matrix Like GetType(ms2()) Then
+            Using file As New SaveFileDialog() With {.Filter = "Excel Table(*.xls)|*.xls", .FileName = matrixName.NormalizePathString(False)}
+                If file.ShowDialog = DialogResult.OK Then
+                    Call matrix.TryCast(Of ms2()).SaveTo(file.FileName)
+                End If
+            End Using
+        ElseIf matrix Like GetType(ChromatogramTick()) Then
+            Using file As New SaveFileDialog() With {.Filter = "Excel Table(*.xls)|*.xls", .FileName = matrixName.NormalizePathString(False)}
+                If file.ShowDialog = DialogResult.OK Then
+                    Call matrix.TryCast(Of ChromatogramTick()).SaveTo(file.FileName)
+                End If
+            End Using
+        End If
     End Sub
 
     Private Sub runMzSearch(searchAction As Action(Of Double))
@@ -633,17 +661,58 @@ Public Class PageMzkitTools
         SearchFormulaToolStripMenuItem_Click(sender, e)
     End Sub
 
+    Sub showMatrix(matrix As ms2(), name As String)
+        Me.matrix = matrix
+        matrixName = name
+
+        DataGridView1.Rows.Clear()
+        DataGridView1.Columns.Clear()
+
+        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .HeaderText = "m/z"})
+        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .HeaderText = "intensity"})
+        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .HeaderText = "relative"})
+        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .HeaderText = "annotation"})
+
+        Dim max As Double = matrix.Select(Function(a) a.intensity).Max
+
+        For Each tick In matrix
+            tick.quantity = CInt(tick.intensity / max * 100)
+            DataGridView1.Rows.Add({tick.mz, tick.intensity, tick.quantity, tick.Annotation})
+        Next
+    End Sub
+
+    Sub showMatrix(matrix As ChromatogramTick(), name As String)
+        Me.matrix = matrix
+        matrixName = name
+
+        DataGridView1.Rows.Clear()
+        DataGridView1.Columns.Clear()
+
+        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .HeaderText = "time"})
+        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .HeaderText = "intensity"})
+
+        For Each tick In matrix
+            DataGridView1.Rows.Add({tick.Time, tick.Intensity})
+        Next
+    End Sub
+
     Private Sub ShowXICToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowXICToolStripMenuItem.Click
         ' scan节点
         Dim raw As Task.Raw = TreeView1.CurrentRawFile.raw
         Dim scanId As String = TreeView1.SelectedNode.Text
         Dim ms2 As ScanEntry = raw.scans.Where(Function(a) a.id = scanId).FirstOrDefault
+        Dim ppm As Double = Val(RibbonItems.Spinner.DecimalValue)
+        Dim name As String = $"XIC [m/z={ms2.mz.ToString("F4")}, {ppm}ppm]"
 
         If ms2 Is Nothing OrElse ms2.mz = 0.0 Then
+            host.ToolStripStatusLabel1.Image = My.Resources.StatusAnnotations_Warning_32xLG_color
+            host.ToolStripStatusLabel1.Text = "XIC plot is not avaliable for MS1 parent!"
             Return
+        Else
+            host.ToolStripStatusLabel1.Image = Nothing
+            host.ToolStripStatusLabel1.Text = name
         End If
 
-        Dim ppm As Double = Val(RibbonItems.Spinner.DecimalValue)
         Dim XIC As ChromatogramTick() = raw.scans _
             .Where(Function(a) PPMmethod.PPM(a.mz, ms2.mz) <= ppm) _
             .Select(Function(a)
@@ -654,7 +723,7 @@ Public Class PageMzkitTools
                     End Function) _
             .ToArray
         Dim plotTIC As New NamedCollection(Of ChromatogramTick) With {
-            .name = $"XIC [m/z={ms2.mz}, {ppm}ppm]",
+            .name = name,
             .value = {
                   New ChromatogramTick With {.Time = raw.rtmin},
                   New ChromatogramTick With {.Time = raw.rtmax}
@@ -666,6 +735,8 @@ Public Class PageMzkitTools
             .Where(Function(a) a.mz > 0) _
             .Select(Function(a) a.intensity) _
             .Max
+
+        showMatrix(plotTIC.value, name)
 
         PictureBox1.BackgroundImage = plotTIC.TICplot(intensityMax:=maxY).AsGDIImage
     End Sub

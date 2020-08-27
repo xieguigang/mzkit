@@ -14,7 +14,7 @@ Imports RibbonLib.Controls
 Imports RibbonLib.Interop
 
 Partial Class RibbonItems
-    Private _Ribbon As Ribbon, _TabGroupTableTools As RibbonTabGroup, _TabDesign As RibbonTab, _GroupDesign As RibbonGroup, _Spinner As RibbonSpinner, _ButtonDesign2 As RibbonButton, _ButtonDesign3 As RibbonButton, _TabLayout As RibbonTab, _GroupLayout As RibbonGroup, _ButtonLayout1 As RibbonButton, _ButtonLayout2 As RibbonButton, _TabGroupCalculatorTools As RibbonTabGroup, _TabCalculator As RibbonTab, _GroupCalculator As RibbonGroup, _ButtonCalculatorExport As RibbonButton, _TabGroupExactMassSearchTools As RibbonTabGroup, _TabExactMassSearch As RibbonTab, _GroupExactMassSearch As RibbonGroup, _ButtonExactMassSearchExport As RibbonButton, _TabGroupNetworkTools As RibbonTabGroup, _TabNetwork As RibbonTab, _GroupNetwork As RibbonGroup, _ButtonNetworkExport As RibbonButton, _ButtonNetworkRender As RibbonButton, _TabGroupFormulaSearchTools As RibbonTabGroup, _TabFormulaSearch As RibbonTab, _GroupFormulaSearch As RibbonGroup, _ButtonFormulaSearchExport As RibbonButton, _GroupFormulaSearchConfig2 As RibbonGroup, _ComboFormulaSearchProfile3 As RibbonComboBox, _HelpButton As RibbonHelpButton, _TabMain As RibbonTab, _GroupFileActions As RibbonGroup, _ButtonNew As RibbonButton, _ButtonOpenRaw As RibbonButton, _ButtonSave As RibbonButton, _ButtonExit As RibbonButton, _TabTools As RibbonTab, _GroupToolsActions As RibbonGroup, _ButtonMzCalculator As RibbonButton, _ButtonMzSearch As RibbonButton, _TabAbout As RibbonTab, _GroupAboutActions As RibbonGroup, _ButtonAbout As RibbonButton, _ButtonSettings As RibbonButton, _RecentItems As RibbonRecentItems, _MenuGroupFile As RibbonMenuGroup, _ButtonOpen As RibbonDropDownButton, _ButtonDropA As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton, _MenuGroupExit As RibbonMenuGroup, _QAT As RibbonQuickAccessToolbar, _ButtonPageNavBack As RibbonButton
+    Private _Ribbon As Ribbon, _TabGroupTableTools As RibbonTabGroup, _TabDesign As RibbonTab, _GroupDesign As RibbonGroup, _Spinner As RibbonSpinner, _ButtonDesign2 As RibbonButton, _ButtonDesign3 As RibbonButton, _TabLayout As RibbonTab, _GroupLayout As RibbonGroup, _ButtonLayout1 As RibbonButton, _ButtonLayout2 As RibbonButton, _TabGroupCalculatorTools As RibbonTabGroup, _TabCalculator As RibbonTab, _GroupCalculator As RibbonGroup, _ButtonCalculatorExport As RibbonButton, _TabGroupExactMassSearchTools As RibbonTabGroup, _TabExactMassSearch As RibbonTab, _GroupExactMassSearch As RibbonGroup, _ButtonExactMassSearchExport As RibbonButton, _TabGroupNetworkTools As RibbonTabGroup, _TabNetwork As RibbonTab, _GroupNetwork As RibbonGroup, _ButtonNetworkExport As RibbonButton, _ButtonNetworkRender As RibbonButton, _TabGroupFormulaSearchTools As RibbonTabGroup, _TabFormulaSearch As RibbonTab, _GroupFormulaSearch As RibbonGroup, _ButtonFormulaSearchExport As RibbonButton, _HelpButton As RibbonHelpButton, _TabMain As RibbonTab, _GroupFileActions As RibbonGroup, _ButtonNew As RibbonButton, _ButtonOpenRaw As RibbonButton, _ButtonSave As RibbonButton, _ButtonExit As RibbonButton, _TabTools As RibbonTab, _GroupToolsActions As RibbonGroup, _ButtonMzCalculator As RibbonButton, _ButtonMzSearch As RibbonButton, _TabAbout As RibbonTab, _GroupAboutActions As RibbonGroup, _ButtonAbout As RibbonButton, _ButtonBioDeep As RibbonButton, _ButtonSettings As RibbonButton, _RecentItems As RibbonRecentItems, _MenuGroupFile As RibbonMenuGroup, _ButtonToolkits As RibbonDropDownButton, _ButtonDropA As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton, _ButtonDropD As RibbonButton, _ButtonLicense As RibbonButton, _MenuGroupExit As RibbonMenuGroup, _QAT As RibbonQuickAccessToolbar, _ButtonPageNavBack As RibbonButton
 
     Private NotInheritable Class Cmd
         Public Const cmdTabGroupTableTools As UInteger = 1031
@@ -44,8 +44,6 @@ Partial Class RibbonItems
         Public Const cmdTabFormulaSearch As UInteger = 1092
         Public Const cmdGroupFormulaSearch As UInteger = 1093
         Public Const cmdButtonFormulaSearchExport As UInteger = 1094
-        Public Const cmdGroupFormulaSearchConfig2 As UInteger = 1095
-        Public Const cmdComboFormulaSearchProfile3 As UInteger = 1099
         Public Const cmdHelpButton As UInteger = 1016
         Public Const cmdTabMain As UInteger = 1011
         Public Const cmdGroupFileActions As UInteger = 1045
@@ -60,13 +58,16 @@ Partial Class RibbonItems
         Public Const cmdTabAbout As UInteger = 1020
         Public Const cmdGroupAboutActions As UInteger = 1047
         Public Const cmdButtonAbout As UInteger = 1021
+        Public Const cmdButtonBioDeep As UInteger = 1022
         Public Const cmdButtonSettings As UInteger = 1051
         Public Const cmdRecentItems As UInteger = 1014
         Public Const cmdMenuGroupFile As UInteger = 1005
-        Public Const cmdButtonOpen As UInteger = 1007
+        Public Const cmdButtonToolkits As UInteger = 1007
         Public Const cmdButtonDropA As UInteger = 1008
         Public Const cmdButtonDropB As UInteger = 1009
         Public Const cmdButtonDropC As UInteger = 1010
+        Public Const cmdButtonDropD As UInteger = 5010
+        Public Const cmdButtonLicense As UInteger = 1101
         Public Const cmdMenuGroupExit As UInteger = 1006
         Public Const cmdQAT As UInteger = 1015
         Public Const cmdButtonPageNavBack As UInteger = 1053
@@ -329,24 +330,6 @@ Partial Class RibbonItems
         End Set
     End Property
 
-    Public Property GroupFormulaSearchConfig2 As RibbonGroup
-        Get
-            Return _GroupFormulaSearchConfig2
-        End Get
-        Private Set(ByVal value As RibbonGroup)
-            _GroupFormulaSearchConfig2 = value
-        End Set
-    End Property
-
-    Public Property ComboFormulaSearchProfile3 As RibbonComboBox
-        Get
-            Return _ComboFormulaSearchProfile3
-        End Get
-        Private Set(ByVal value As RibbonComboBox)
-            _ComboFormulaSearchProfile3 = value
-        End Set
-    End Property
-
     Public Property HelpButton As RibbonHelpButton
         Get
             Return _HelpButton
@@ -473,6 +456,15 @@ Partial Class RibbonItems
         End Set
     End Property
 
+    Public Property ButtonBioDeep As RibbonButton
+        Get
+            Return _ButtonBioDeep
+        End Get
+        Private Set(ByVal value As RibbonButton)
+            _ButtonBioDeep = value
+        End Set
+    End Property
+
     Public Property ButtonSettings As RibbonButton
         Get
             Return _ButtonSettings
@@ -500,12 +492,12 @@ Partial Class RibbonItems
         End Set
     End Property
 
-    Public Property ButtonOpen As RibbonDropDownButton
+    Public Property ButtonToolkits As RibbonDropDownButton
         Get
-            Return _ButtonOpen
+            Return _ButtonToolkits
         End Get
         Private Set(ByVal value As RibbonDropDownButton)
-            _ButtonOpen = value
+            _ButtonToolkits = value
         End Set
     End Property
 
@@ -533,6 +525,24 @@ Partial Class RibbonItems
         End Get
         Private Set(ByVal value As RibbonButton)
             _ButtonDropC = value
+        End Set
+    End Property
+
+    Public Property ButtonDropD As RibbonButton
+        Get
+            Return _ButtonDropD
+        End Get
+        Private Set(ByVal value As RibbonButton)
+            _ButtonDropD = value
+        End Set
+    End Property
+
+    Public Property ButtonLicense As RibbonButton
+        Get
+            Return _ButtonLicense
+        End Get
+        Private Set(ByVal value As RibbonButton)
+            _ButtonLicense = value
         End Set
     End Property
 
@@ -594,8 +604,6 @@ Partial Class RibbonItems
         TabFormulaSearch = New RibbonTab(ribbon, Cmd.cmdTabFormulaSearch)
         GroupFormulaSearch = New RibbonGroup(ribbon, Cmd.cmdGroupFormulaSearch)
         ButtonFormulaSearchExport = New RibbonButton(ribbon, Cmd.cmdButtonFormulaSearchExport)
-        GroupFormulaSearchConfig2 = New RibbonGroup(ribbon, Cmd.cmdGroupFormulaSearchConfig2)
-        ComboFormulaSearchProfile3 = New RibbonComboBox(ribbon, Cmd.cmdComboFormulaSearchProfile3)
         HelpButton = New RibbonHelpButton(ribbon, Cmd.cmdHelpButton)
         TabMain = New RibbonTab(ribbon, Cmd.cmdTabMain)
         GroupFileActions = New RibbonGroup(ribbon, Cmd.cmdGroupFileActions)
@@ -610,13 +618,16 @@ Partial Class RibbonItems
         TabAbout = New RibbonTab(ribbon, Cmd.cmdTabAbout)
         GroupAboutActions = New RibbonGroup(ribbon, Cmd.cmdGroupAboutActions)
         ButtonAbout = New RibbonButton(ribbon, Cmd.cmdButtonAbout)
+        ButtonBioDeep = New RibbonButton(ribbon, Cmd.cmdButtonBioDeep)
         ButtonSettings = New RibbonButton(ribbon, Cmd.cmdButtonSettings)
         RecentItems = New RibbonRecentItems(ribbon, Cmd.cmdRecentItems)
         MenuGroupFile = New RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupFile)
-        ButtonOpen = New RibbonDropDownButton(ribbon, Cmd.cmdButtonOpen)
+        ButtonToolkits = New RibbonDropDownButton(ribbon, Cmd.cmdButtonToolkits)
         ButtonDropA = New RibbonButton(ribbon, Cmd.cmdButtonDropA)
         ButtonDropB = New RibbonButton(ribbon, Cmd.cmdButtonDropB)
         ButtonDropC = New RibbonButton(ribbon, Cmd.cmdButtonDropC)
+        ButtonDropD = New RibbonButton(ribbon, Cmd.cmdButtonDropD)
+        ButtonLicense = New RibbonButton(ribbon, Cmd.cmdButtonLicense)
         MenuGroupExit = New RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupExit)
         QAT = New RibbonQuickAccessToolbar(ribbon, Cmd.cmdQAT, Cmd.cmdCustomizeQAT)
         ButtonPageNavBack = New RibbonButton(ribbon, Cmd.cmdButtonPageNavBack)

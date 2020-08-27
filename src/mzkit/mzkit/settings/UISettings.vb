@@ -6,6 +6,8 @@
     Public Property height As Integer
     Public Property window As FormWindowState
 
+    Public Property rememberWindowsLocation As Boolean = True
+
     Public Function getLocation() As Point
         If x < 0 Then x = 0
         If y < 0 Then y = 0

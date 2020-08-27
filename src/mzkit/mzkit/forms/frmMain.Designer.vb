@@ -29,29 +29,29 @@ Partial Class frmMain
         Me.StatusStrip = New System.Windows.Forms.StatusStrip()
         Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripDropDownButton1 = New System.Windows.Forms.ToolStripDropDownButton()
+        Me.MoleculeNetworkingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.FormulaSearchToolToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MzCalculatorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RawFileViewerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.Ribbon1 = New RibbonLib.Ribbon()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.MoleculeNetworkingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StatusStrip.SuspendLayout()
         Me.SuspendLayout()
         '
         'StatusStrip
         '
         Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1, Me.ToolStripDropDownButton1})
-        Me.StatusStrip.Location = New System.Drawing.Point(0, 690)
+        Me.StatusStrip.Location = New System.Drawing.Point(0, 691)
         Me.StatusStrip.Name = "StatusStrip"
-        Me.StatusStrip.Size = New System.Drawing.Size(1260, 23)
+        Me.StatusStrip.Size = New System.Drawing.Size(1260, 22)
         Me.StatusStrip.TabIndex = 7
         Me.StatusStrip.Text = "StatusStrip"
         '
         'ToolStripStatusLabel1
         '
         Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
-        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(134, 18)
+        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(119, 17)
         Me.ToolStripStatusLabel1.Text = "ToolStripStatusLabel1"
         '
         'ToolStripDropDownButton1
@@ -61,27 +61,35 @@ Partial Class frmMain
         Me.ToolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ToolStripDropDownButton1.Name = "ToolStripDropDownButton1"
         Me.ToolStripDropDownButton1.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ToolStripDropDownButton1.Size = New System.Drawing.Size(121, 21)
-        Me.ToolStripDropDownButton1.Text = "Select Toolkits"
+        Me.ToolStripDropDownButton1.Size = New System.Drawing.Size(149, 20)
+        Me.ToolStripDropDownButton1.Text = "Use m/z Data Toolkits"
+        '
+        'MoleculeNetworkingToolStripMenuItem
+        '
+        Me.MoleculeNetworkingToolStripMenuItem.Image = CType(resources.GetObject("MoleculeNetworkingToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.MoleculeNetworkingToolStripMenuItem.Name = "MoleculeNetworkingToolStripMenuItem"
+        Me.MoleculeNetworkingToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
+        Me.MoleculeNetworkingToolStripMenuItem.Text = "Molecule Networking"
         '
         'FormulaSearchToolToolStripMenuItem
         '
         Me.FormulaSearchToolToolStripMenuItem.Image = CType(resources.GetObject("FormulaSearchToolToolStripMenuItem.Image"), System.Drawing.Image)
         Me.FormulaSearchToolToolStripMenuItem.Name = "FormulaSearchToolToolStripMenuItem"
-        Me.FormulaSearchToolToolStripMenuItem.Size = New System.Drawing.Size(201, 22)
+        Me.FormulaSearchToolToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
         Me.FormulaSearchToolToolStripMenuItem.Text = "Formula Search Tool"
         '
         'MzCalculatorToolStripMenuItem
         '
+        Me.MzCalculatorToolStripMenuItem.Image = CType(resources.GetObject("MzCalculatorToolStripMenuItem.Image"), System.Drawing.Image)
         Me.MzCalculatorToolStripMenuItem.Name = "MzCalculatorToolStripMenuItem"
-        Me.MzCalculatorToolStripMenuItem.Size = New System.Drawing.Size(201, 22)
-        Me.MzCalculatorToolStripMenuItem.Text = "m/z Calculator"
+        Me.MzCalculatorToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
+        Me.MzCalculatorToolStripMenuItem.Text = "M/z Calculator"
         '
         'RawFileViewerToolStripMenuItem
         '
         Me.RawFileViewerToolStripMenuItem.Image = CType(resources.GetObject("RawFileViewerToolStripMenuItem.Image"), System.Drawing.Image)
         Me.RawFileViewerToolStripMenuItem.Name = "RawFileViewerToolStripMenuItem"
-        Me.RawFileViewerToolStripMenuItem.Size = New System.Drawing.Size(201, 22)
+        Me.RawFileViewerToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
         Me.RawFileViewerToolStripMenuItem.Text = "Raw File Viewer"
         '
         'Ribbon1
@@ -98,14 +106,8 @@ Partial Class frmMain
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel1.Location = New System.Drawing.Point(0, 166)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(1260, 524)
+        Me.Panel1.Size = New System.Drawing.Size(1260, 525)
         Me.Panel1.TabIndex = 13
-        '
-        'MoleculeNetworkingToolStripMenuItem
-        '
-        Me.MoleculeNetworkingToolStripMenuItem.Name = "MoleculeNetworkingToolStripMenuItem"
-        Me.MoleculeNetworkingToolStripMenuItem.Size = New System.Drawing.Size(201, 22)
-        Me.MoleculeNetworkingToolStripMenuItem.Text = "Molecule Networking"
         '
         'frmMain
         '
@@ -114,6 +116,7 @@ Partial Class frmMain
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.Ribbon1)
         Me.Controls.Add(Me.StatusStrip)
+        Me.DoubleBuffered = True
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmMain"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
