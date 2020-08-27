@@ -699,6 +699,26 @@ Public Class PageMzkitTools
     Private Sub ShowXICToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowXICToolStripMenuItem.Click
         ' scan节点
         Dim raw As Task.Raw = TreeView1.CurrentRawFile.raw
+        Dim plotTIC = getXICMatrix(raw)
+        Dim maxY As Double = raw.scans _
+            .Where(Function(a) a.mz > 0) _
+            .Select(Function(a) a.intensity) _
+            .Max
+
+        If plotTIC.value.IsNullOrEmpty Then
+            Return
+        End If
+
+        showMatrix(plotTIC.value, name)
+
+        Dim XICPlot = XICCollection.JoinIterates({plotTIC}).ToArray
+
+        PictureBox1.BackgroundImage = XICPlot.TICplot(intensityMax:=maxY, isXIC:=True).AsGDIImage
+    End Sub
+
+    Dim XICCollection As New List(Of NamedCollection(Of ChromatogramTick))
+
+    Private Function getXICMatrix(raw As Raw) As NamedCollection(Of ChromatogramTick)
         Dim scanId As String = TreeView1.SelectedNode.Text
         Dim ms2 As ScanEntry = raw.scans.Where(Function(a) a.id = scanId).FirstOrDefault
         Dim ppm As Double = Val(RibbonItems.Spinner.DecimalValue)
@@ -707,7 +727,7 @@ Public Class PageMzkitTools
         If ms2 Is Nothing OrElse ms2.mz = 0.0 Then
             host.ToolStripStatusLabel1.Image = My.Resources.StatusAnnotations_Warning_32xLG_color
             host.ToolStripStatusLabel1.Text = "XIC plot is not avaliable for MS1 parent!"
-            Return
+            Return Nothing
         Else
             host.ToolStripStatusLabel1.Image = Nothing
             host.ToolStripStatusLabel1.Text = name
@@ -731,14 +751,17 @@ Public Class PageMzkitTools
                .OrderBy(Function(c) c.Time) _
                .ToArray
         }
-        Dim maxY As Double = raw.scans _
-            .Where(Function(a) a.mz > 0) _
-            .Select(Function(a) a.intensity) _
-            .Max
 
-        showMatrix(plotTIC.value, name)
+        Return plotTIC
+    End Function
 
-        PictureBox1.BackgroundImage = plotTIC.TICplot(intensityMax:=maxY).AsGDIImage
+    Private Sub AddToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AddToolStripMenuItem.Click
+        Dim XIC = getXICMatrix(TreeView1.CurrentRawFile.raw)
+        XICCollection.Add(XIC)
+    End Sub
+
+    Private Sub ClearToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ClearToolStripMenuItem.Click
+        XICCollection.Clear()
     End Sub
 End Class
 
