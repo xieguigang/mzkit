@@ -14,8 +14,6 @@ Public Class ElementProfile : Implements ISaveSettings, IPageSettings
         For Each element In Globals.Settings.formula_search.elements.SafeQuery
             DataGridView1.Rows.Add({element.Key, element.Value.min, element.Value.max})
         Next
-
-        ComboBox1.SelectedIndex = 0
     End Sub
 
     Public Sub SaveSettings() Implements ISaveSettings.SaveSettings
@@ -60,5 +58,9 @@ Public Class ElementProfile : Implements ISaveSettings, IPageSettings
             Case FormulaSearchProfiles.SmallMolecule
                 loadPresetProfile(SearchOption.SmallMolecule(DNPOrWileyType.DNP, True))
         End Select
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Call LoadSettings()
     End Sub
 End Class
