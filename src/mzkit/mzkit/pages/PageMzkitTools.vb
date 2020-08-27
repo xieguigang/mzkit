@@ -66,6 +66,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports RibbonLib.Interop
 Imports Task
 
@@ -752,7 +753,8 @@ Public Class PageMzkitTools
                   New ChromatogramTick With {.Time = raw.rtmax}
               }.JoinIterates(XIC) _
                .OrderBy(Function(c) c.Time) _
-               .ToArray
+               .ToArray,
+            .description = ms2.mz
         }
 
         Return plotTIC
@@ -788,6 +790,7 @@ Public Class PageMzkitTools
                 If file.ShowDialog = DialogResult.OK Then
                     Using OutFile As StreamWriter = file.FileName.OpenWriter()
                         For Each xic In XICCollection
+                            Dim parent As New NamedValue With {.name = xic.description, .text = xic.value.Select(Function(a) a.Intensity).Max}
                             Dim ion As New MGF.Ions With {
                                 .Title = xic.name,
                                 .Peaks = xic.value _
@@ -798,7 +801,8 @@ Public Class PageMzkitTools
                                                     .quantity = a.Intensity
                                                 }
                                             End Function) _
-                                    .ToArray
+                                    .ToArray,
+                                .PepMass = parent
                             }
 
                             ion.WriteAsciiMgf(OutFile)
