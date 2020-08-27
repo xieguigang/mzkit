@@ -23,22 +23,34 @@ Partial Class AppConfig
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.CheckBox1 = New System.Windows.Forms.CheckBox()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'CheckBox1
         '
         Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.Location = New System.Drawing.Point(33, 30)
+        Me.CheckBox1.Location = New System.Drawing.Point(41, 415)
         Me.CheckBox1.Name = "CheckBox1"
         Me.CheckBox1.Size = New System.Drawing.Size(168, 16)
         Me.CheckBox1.TabIndex = 0
         Me.CheckBox1.Text = "Remember Window Location"
         Me.CheckBox1.UseVisualStyleBackColor = True
         '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(41, 31)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(41, 12)
+        Me.Label1.TabIndex = 1
+        Me.Label1.Text = "Label1"
+        '
         'AppConfig
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.White
+        Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.CheckBox1)
         Me.Name = "AppConfig"
         Me.Size = New System.Drawing.Size(732, 495)
@@ -48,4 +60,5 @@ Partial Class AppConfig
     End Sub
 
     Friend WithEvents CheckBox1 As CheckBox
+    Friend WithEvents Label1 As Label
 End Class
