@@ -34,6 +34,7 @@ Partial Class PageMzkitTools
         Me.ShowXICToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AddToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ClearToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ExportToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ShowTICToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MS1ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MS2ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -62,7 +63,6 @@ Partial Class PageMzkitTools
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
-        Me.ExportToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TabControl2.SuspendLayout()
         Me.TabPage3.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
@@ -144,7 +144,7 @@ Partial Class PageMzkitTools
         '
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowXICToolStripMenuItem, Me.ShowTICToolStripMenuItem, Me.MS1ToolStripMenuItem, Me.MS2ToolStripMenuItem, Me.MolecularNetworkingToolStripMenuItem, Me.ToolStripMenuItem2, Me.SearchInFileToolStripMenuItem, Me.SearchFormulaToolStripMenuItem, Me.ToolStripMenuItem1, Me.DeleteFileToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(207, 192)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(207, 214)
         '
         'ShowXICToolStripMenuItem
         '
@@ -165,6 +165,13 @@ Partial Class PageMzkitTools
         Me.ClearToolStripMenuItem.Name = "ClearToolStripMenuItem"
         Me.ClearToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ClearToolStripMenuItem.Text = "Clear"
+        '
+        'ExportToolStripMenuItem
+        '
+        Me.ExportToolStripMenuItem.Image = CType(resources.GetObject("ExportToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.ExportToolStripMenuItem.Name = "ExportToolStripMenuItem"
+        Me.ExportToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ExportToolStripMenuItem.Text = "Export"
         '
         'ShowTICToolStripMenuItem
         '
@@ -384,13 +391,6 @@ Partial Class PageMzkitTools
         Me.DataGridView1.ReadOnly = True
         Me.DataGridView1.Size = New System.Drawing.Size(602, 430)
         Me.DataGridView1.TabIndex = 0
-        '
-        'ExportToolStripMenuItem
-        '
-        Me.ExportToolStripMenuItem.Image = CType(resources.GetObject("ExportToolStripMenuItem.Image"), System.Drawing.Image)
-        Me.ExportToolStripMenuItem.Name = "ExportToolStripMenuItem"
-        Me.ExportToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.ExportToolStripMenuItem.Text = "Export"
         '
         'PageMzkitTools
         '

@@ -46,7 +46,10 @@
 
 #End Region
 
+Imports System.IO
 Imports System.Threading
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
@@ -709,7 +712,7 @@ Public Class PageMzkitTools
             Return
         End If
 
-        showMatrix(plotTIC.value, name)
+        showMatrix(plotTIC.value, Name)
 
         Dim XICPlot = XICCollection.JoinIterates({plotTIC}).ToArray
 
@@ -774,6 +777,35 @@ Public Class PageMzkitTools
 
             Call PictureBox1.BackgroundImage.SaveAs(temp)
             Call Process.Start(temp)
+        End If
+    End Sub
+
+    Private Sub ExportToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportToolStripMenuItem.Click
+        If XICCollection.IsNullOrEmpty Then
+            MessageBox.Show("No chromatogram data for XIC plot, please use XIC -> Add for add data!", "No data save", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        Else
+            Using file As New SaveFileDialog With {.Filter = "Mgf ASCII spectrum data(*.mgf)|*.mgf", .FileName = "XIC.mgf"}
+                If file.ShowDialog = DialogResult.OK Then
+                    Using OutFile As StreamWriter = file.FileName.OpenWriter()
+                        For Each xic In XICCollection
+                            Dim ion As New MGF.Ions With {
+                                .Title = xic.name,
+                                .Peaks = xic.value _
+                                    .Select(Function(a)
+                                                Return New ms2 With {
+                                                    .mz = a.Time,
+                                                    .intensity = a.Intensity,
+                                                    .quantity = a.Intensity
+                                                }
+                                            End Function) _
+                                    .ToArray
+                            }
+
+                            ion.WriteAsciiMgf(OutFile)
+                        Next
+                    End Using
+                End If
+            End Using
         End If
     End Sub
 End Class
