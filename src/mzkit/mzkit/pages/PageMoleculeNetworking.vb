@@ -147,6 +147,10 @@ Public Class PageMoleculeNetworking
             Dim a = CStr(row.Cells(0).Value)
             Dim b = CStr(row.Cells(1).Value)
 
+            If a Is Nothing OrElse b Is Nothing Then
+                Return
+            End If
+
             a = nodeInfo(a).id
             b = nodeInfo(b).id
 

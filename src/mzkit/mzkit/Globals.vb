@@ -83,6 +83,21 @@ Module Globals
     End Sub
 
     <Extension>
+    Public Function GetTotalCacheSize(explorer As TreeView) As String
+        Dim size As Double
+
+        For Each node As TreeNode In explorer.Nodes
+            size += DirectCast(node.Tag, Raw).cache.FileLength
+        Next
+
+        If size = 0.0 Then
+            Return "0 KB"
+        Else
+            Return Lanudry(size)
+        End If
+    End Function
+
+    <Extension>
     Public Function LoadRawFileCache(explorer As TreeView) As Integer
         Dim rawBuffer As Byte() = cacheList.ReadBinary
 

@@ -104,6 +104,8 @@ Public Class PageMzkitTools
             TreeView1.SelectedNode = TreeView1.Nodes.Item(Scan0)
             setCurrentFile()
         End If
+
+        host.ToolStripStatusLabel2.Text = TreeView1.GetTotalCacheSize
     End Sub
 
     Private Sub missingCacheFile(raw As Raw)
@@ -134,7 +136,11 @@ Public Class PageMzkitTools
                 '    .rawFile = task.raw
                 '}.Show()
                 Call TreeView1.addRawFile(task.raw)
-                Call ParentForm.Invoke(Sub() status.Text = "Ready!")
+                Call ParentForm.Invoke(
+                    Sub()
+                        status.Text = "Ready!"
+                        host.ToolStripStatusLabel2.Text = TreeView1.GetTotalCacheSize
+                    End Sub)
             End If
         End Using
     End Sub
@@ -376,6 +382,8 @@ Public Class PageMzkitTools
         Else
             showStatusMessage("No raw file for removes!", My.Resources.StatusAnnotations_Warning_32xLG_color)
         End If
+
+        host.ToolStripStatusLabel2.Text = TreeView1.GetTotalCacheSize
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
