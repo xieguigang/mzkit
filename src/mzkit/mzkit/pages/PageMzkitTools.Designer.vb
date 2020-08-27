@@ -57,9 +57,6 @@ Partial Class PageMzkitTools
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.PropertyGrid1 = New System.Windows.Forms.PropertyGrid()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.ContextMenuStrip2 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.SaveImageToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SaveMatrixToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
@@ -70,7 +67,6 @@ Partial Class PageMzkitTools
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.ContextMenuStrip2.SuspendLayout()
         Me.TabPage2.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -145,7 +141,7 @@ Partial Class PageMzkitTools
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowXICToolStripMenuItem, Me.ShowTICToolStripMenuItem, Me.MS1ToolStripMenuItem, Me.MS2ToolStripMenuItem, Me.MolecularNetworkingToolStripMenuItem, Me.ToolStripMenuItem2, Me.SearchInFileToolStripMenuItem, Me.SearchFormulaToolStripMenuItem, Me.ToolStripMenuItem1, Me.DeleteFileToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
         Me.ContextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(193, 192)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(193, 214)
         '
         'ShowXICToolStripMenuItem
         '
@@ -343,32 +339,11 @@ Partial Class PageMzkitTools
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox1.ContextMenuStrip = Me.ContextMenuStrip2
         Me.PictureBox1.Location = New System.Drawing.Point(6, 3)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(324, 467)
         Me.PictureBox1.TabIndex = 0
         Me.PictureBox1.TabStop = False
-        '
-        'ContextMenuStrip2
-        '
-        Me.ContextMenuStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveImageToolStripMenuItem, Me.SaveMatrixToolStripMenuItem})
-        Me.ContextMenuStrip2.Name = "ContextMenuStrip2"
-        Me.ContextMenuStrip2.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.ContextMenuStrip2.Size = New System.Drawing.Size(136, 48)
-        '
-        'SaveImageToolStripMenuItem
-        '
-        Me.SaveImageToolStripMenuItem.Image = CType(resources.GetObject("SaveImageToolStripMenuItem.Image"), System.Drawing.Image)
-        Me.SaveImageToolStripMenuItem.Name = "SaveImageToolStripMenuItem"
-        Me.SaveImageToolStripMenuItem.Size = New System.Drawing.Size(135, 22)
-        Me.SaveImageToolStripMenuItem.Text = "Save Image"
-        '
-        'SaveMatrixToolStripMenuItem
-        '
-        Me.SaveMatrixToolStripMenuItem.Name = "SaveMatrixToolStripMenuItem"
-        Me.SaveMatrixToolStripMenuItem.Size = New System.Drawing.Size(135, 22)
-        Me.SaveMatrixToolStripMenuItem.Text = "Save Matrix"
         '
         'TabPage2
         '
@@ -411,7 +386,6 @@ Partial Class PageMzkitTools
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.ContextMenuStrip2.ResumeLayout(False)
         Me.TabPage2.ResumeLayout(False)
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
@@ -434,8 +408,6 @@ Partial Class PageMzkitTools
     Friend WithEvents TabPage2 As TabPage
     Friend WithEvents DataGridView1 As DataGridView
     Friend WithEvents ImageList1 As ImageList
-    Friend WithEvents ContextMenuStrip2 As ContextMenuStrip
-    Friend WithEvents SaveImageToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents ShowTICToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents MS1ToolStripMenuItem As ToolStripMenuItem
@@ -444,7 +416,6 @@ Partial Class PageMzkitTools
     Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
     Friend WithEvents DeleteFileToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolTip1 As ToolTip
-    Friend WithEvents SaveMatrixToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SearchFormulaToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents MolecularNetworkingToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem2 As ToolStripSeparator

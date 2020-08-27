@@ -1,53 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::b7f8ba228d88b57a3609f576041ef180, src\mzkit\mzkit\pages\PageMzkitTools.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class PageMzkitTools
-    ' 
-    '     Function: getXICMatrix
-    ' 
-    '     Sub: AddToolStripMenuItem_Click, applyLevelFilter, Button1_Click, ClearToolStripMenuItem_Click, CustomToolStripMenuItem_Click
-    '          DataGridView1_CellContentClick, DefaultToolStripMenuItem_Click, DeleteFileToolStripMenuItem_Click, ExportExactMassSearchTable, ExportToolStripMenuItem_Click
-    '          GeneralFlavoneToolStripMenuItem_Click, ImportsRaw, InitializeFileTree, ListBox1_SelectedIndexChanged, missingCacheFile
-    '          MolecularNetworkingToolStripMenuItem_Click, MS1ToolStripMenuItem_Click, MS2ToolStripMenuItem_Click, NatureProductToolStripMenuItem_Click, PageMzkitTools_Load
-    '          PictureBox1_Click, PictureBox1_DoubleClick, runMzSearch, SaveFileCache, SaveImageToolStripMenuItem_Click
-    '          SaveMatrixToolStripMenuItem_Click, SearchFormulaToolStripMenuItem_Click, searchInFileByMz, SearchInFileToolStripMenuItem_Click, setCurrentFile
-    '          (+3 Overloads) showMatrix, showSpectrum, showStatusMessage, ShowTICToolStripMenuItem_Click, ShowXICToolStripMenuItem_Click
-    '          SmallMoleculeToolStripMenuItem_Click, TreeView1_AfterSelect
-    ' 
-    ' /********************************************************************************/
+' Class PageMzkitTools
+' 
+'     Function: getXICMatrix
+' 
+'     Sub: AddToolStripMenuItem_Click, applyLevelFilter, Button1_Click, ClearToolStripMenuItem_Click, CustomToolStripMenuItem_Click
+'          DataGridView1_CellContentClick, DefaultToolStripMenuItem_Click, DeleteFileToolStripMenuItem_Click, ExportExactMassSearchTable, ExportToolStripMenuItem_Click
+'          GeneralFlavoneToolStripMenuItem_Click, ImportsRaw, InitializeFileTree, ListBox1_SelectedIndexChanged, missingCacheFile
+'          MolecularNetworkingToolStripMenuItem_Click, MS1ToolStripMenuItem_Click, MS2ToolStripMenuItem_Click, NatureProductToolStripMenuItem_Click, PageMzkitTools_Load
+'          PictureBox1_Click, PictureBox1_DoubleClick, runMzSearch, SaveFileCache, SaveImageToolStripMenuItem_Click
+'          SaveMatrixToolStripMenuItem_Click, SearchFormulaToolStripMenuItem_Click, searchInFileByMz, SearchInFileToolStripMenuItem_Click, setCurrentFile
+'          (+3 Overloads) showMatrix, showSpectrum, showStatusMessage, ShowTICToolStripMenuItem_Click, ShowXICToolStripMenuItem_Click
+'          SmallMoleculeToolStripMenuItem_Click, TreeView1_AfterSelect
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -72,6 +72,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Text.Xml.Models
+Imports RibbonLib
 Imports RibbonLib.Interop
 Imports Task
 
@@ -82,6 +83,12 @@ Public Class PageMzkitTools
     Dim RibbonItems As RibbonItems
     Dim matrix As [Variant](Of ms2(), ChromatogramTick(), SSM2MatrixFragment())
     Dim matrixName As String
+
+    Friend _ribbonExportDataContextMenuStrip As ExportData
+
+    Public Sub Ribbon_Load(ribbon As Ribbon)
+        _ribbonExportDataContextMenuStrip = New ExportData(ribbon, RibbonItems.cmdContextMap)
+    End Sub
 
     Sub showStatusMessage(message As String, Optional icon As Image = Nothing)
         host.Invoke(Sub()
@@ -324,7 +331,7 @@ Public Class PageMzkitTools
         End If
     End Sub
 
-    Private Sub SaveImageToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveImageToolStripMenuItem.Click
+    Public Sub SaveImageToolStripMenuItem_Click()
         If Not PictureBox1.BackgroundImage Is Nothing Then
             Dim preFileName As String = matrixName.NormalizePathString(alphabetOnly:=False)
 
@@ -513,7 +520,7 @@ Public Class PageMzkitTools
         Call runMzSearch(Sub(mz) Call searchInFileByMz(mz))
     End Sub
 
-    Private Sub SaveMatrixToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveMatrixToolStripMenuItem.Click
+    Public Sub SaveMatrixToolStripMenuItem_Click()
         If matrix Is Nothing Then
             Return
         End If
@@ -831,6 +838,13 @@ Public Class PageMzkitTools
                     End Using
                 End If
             End Using
+        End If
+    End Sub
+
+    Private Sub PictureBox1_MouseClick(sender As Object, e As MouseEventArgs) Handles PictureBox1.MouseClick
+        If e.Button = MouseButtons.Right Then
+            Dim p As Point = PictureBox1.PointToScreen(e.Location)
+            DirectCast(ParentForm, frmMain).Ribbon1.ShowContextPopup(CUInt(RibbonItems.cmdContextMap), p.X, p.Y)
         End If
     End Sub
 End Class

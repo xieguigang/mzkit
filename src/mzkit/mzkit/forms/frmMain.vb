@@ -154,6 +154,9 @@ Public Class frmMain
         AddHandler ribbonItems.ButtonBioDeep.ExecuteEvent, Sub(sender, e) Call Process.Start("http://www.biodeep.cn/")
         AddHandler ribbonItems.ButtonLicense.ExecuteEvent, Sub(sender, e) Call New frmLicense().ShowDialog()
 
+        AddHandler ribbonItems.ButtonExportImage.ExecuteEvent, Sub(sender, e) Call mzkitTool.SaveImageToolStripMenuItem_Click()
+        AddHandler ribbonItems.ButtonExportMatrix.ExecuteEvent, Sub(sender, e) Call mzkitTool.SaveMatrixToolStripMenuItem_Click()
+
         _uiCollectionChangedEvent = New UICollectionChangedEvent()
 
         InitSpinner()
@@ -205,6 +208,8 @@ Public Class frmMain
 
         addPage(mzkitTool, mzkitSettings, mzkitSearch, mzkitCalculator, mzkitMNtools)
         ShowPage(mzkitTool)
+
+        mzkitTool.Ribbon_Load(Ribbon1)
 
         If (Not Globals.Settings.ui Is Nothing) AndAlso
             Globals.Settings.ui.window <> FormWindowState.Minimized AndAlso

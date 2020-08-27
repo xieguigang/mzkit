@@ -137,6 +137,9 @@
     <Compile Include="forms\frmLicense.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="pages\contextMenu\ExportData.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="pages\Settings\AppConfig.Designer.vb">
       <DependentUpon>AppConfig.vb</DependentUpon>
     </Compile>

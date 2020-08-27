@@ -13,6 +13,7 @@ using RibbonLib;
 using RibbonLib.Controls;
 using RibbonLib.Interop;
 
+
     partial class RibbonItems
     {
         private static class Cmd
@@ -71,10 +72,14 @@ using RibbonLib.Interop;
             public const uint cmdMenuGroupExit = 1006;
             public const uint cmdQAT = 1015;
             public const uint cmdButtonPageNavBack = 1053;
+            public const uint cmdButtonExportImage = 1104;
+            public const uint cmdButtonExportMatrix = 1105;
+            public const uint cmdContextMap = 1106;
             public const uint cmdCustomizeQAT = 1018;
         }
 
         // ContextPopup CommandName
+        public const uint cmdContextMap = Cmd.cmdContextMap;
 
         private static bool initialized;
 
@@ -133,6 +138,8 @@ using RibbonLib.Interop;
         public RibbonMenuGroup MenuGroupExit { get; private set; }
         public RibbonQuickAccessToolbar QAT { get; private set; }
         public RibbonButton ButtonPageNavBack { get; private set; }
+        public RibbonButton ButtonExportImage { get; private set; }
+        public RibbonButton ButtonExportMatrix { get; private set; }
 
         public RibbonItems(Ribbon ribbon)
         {
@@ -195,6 +202,8 @@ using RibbonLib.Interop;
             MenuGroupExit = new RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupExit);
             QAT = new RibbonQuickAccessToolbar(ribbon, Cmd.cmdQAT, Cmd.cmdCustomizeQAT);
             ButtonPageNavBack = new RibbonButton(ribbon, Cmd.cmdButtonPageNavBack);
+            ButtonExportImage = new RibbonButton(ribbon, Cmd.cmdButtonExportImage);
+            ButtonExportMatrix = new RibbonButton(ribbon, Cmd.cmdButtonExportMatrix);
             initialized = true;
         }
 

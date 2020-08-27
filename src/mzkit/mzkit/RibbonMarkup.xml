@@ -441,9 +441,57 @@
 			</Command.SmallImages>
 		</Command>
 
+
+		<Command Name="cmdButtonExportImage"
+		 Id="1104"
+		 LabelTitle="Open"
+		 LabelDescription="Open Description"
+		 TooltipTitle="Open (Ctrl+O)"
+		 TooltipDescription="Open an existing image.">
+			<Command.LargeImages>
+				<Image>Res/Open32.bmp</Image>
+			</Command.LargeImages>
+			<Command.SmallImages>
+				<Image>Res/Open16.bmp</Image>
+			</Command.SmallImages>
+		</Command>
+
+		<Command Name="cmdButtonExportMatrix"
+				 Id="1105"
+				 LabelTitle="Save"
+				 LabelDescription="Save Description"
+				 TooltipTitle="Save (Ctrl+S)"
+				 TooltipDescription="Save the current image.">
+			<Command.LargeImages>
+				<Image>Res/Save32.bmp</Image>
+			</Command.LargeImages>
+			<Command.SmallImages>
+				<Image>Res/Save16.bmp</Image>
+			</Command.SmallImages>
+		</Command>
+
+		<Command Name="cmdContextMap"
+		 Id="1106">
+		</Command>
+		
 	</Application.Commands>
 
 	<Application.Views>
+
+		<ContextPopup>
+			<ContextPopup.ContextMenus>
+				<ContextMenu Name="ContextMenu">
+					<MenuGroup>
+						<Button CommandName="cmdButtonExportImage" />
+						<Button CommandName="cmdButtonExportMatrix" />					
+					</MenuGroup>
+				</ContextMenu>
+			</ContextPopup.ContextMenus>
+			<ContextPopup.ContextMaps>
+				<ContextMap CommandName="cmdContextMap" ContextMenu="ContextMenu" />
+			</ContextPopup.ContextMaps>
+		</ContextPopup>
+		
 		<Ribbon>
 
 			<Ribbon.ContextualTabs>
