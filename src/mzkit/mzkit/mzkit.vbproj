@@ -101,6 +101,9 @@
     <Reference Include="Microsoft.Windows.Ribbon">
       <HintPath>..\dist\Microsoft.Windows.Ribbon.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Windows.ThemeColor">
+      <HintPath>..\dist\Microsoft.Windows.ThemeColor.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
