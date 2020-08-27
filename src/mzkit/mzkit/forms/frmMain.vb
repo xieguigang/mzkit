@@ -155,6 +155,7 @@ Public Class frmMain
 
         _uiCollectionChangedEvent = New UICollectionChangedEvent()
 
+        InitSpinner()
         InitializeFormulaProfile()
     End Sub
 
@@ -199,7 +200,6 @@ Public Class frmMain
 
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         InitRecentItems()
-        InitSpinner()
         ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
 
         addPage(mzkitTool, mzkitSettings, mzkitSearch, mzkitCalculator, mzkitMNtools)
@@ -250,13 +250,15 @@ Public Class frmMain
     Private Sub InitSpinner()
         Dim _spinner = ribbonItems.PPMSpinner
 
-        _spinner.TooltipTitle = "PPM"
-        _spinner.TooltipDescription = "Enter ppm error for search feature by m/z."
-        _spinner.RepresentativeString = "XXXXXX"
         _spinner.MaxValue = 30D
         _spinner.MinValue = 0
         _spinner.Increment = 0.5D
         _spinner.DecimalValue = 10D
+
+        _spinner.TooltipTitle = "PPM"
+        _spinner.TooltipDescription = "Enter ppm error for search feature by m/z."
+        _spinner.RepresentativeString = "XXXXXX"
+
     End Sub
 
     Private Sub InitRecentItems()

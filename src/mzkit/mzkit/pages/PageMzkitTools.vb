@@ -755,14 +755,19 @@ Public Class PageMzkitTools
                         }
                     End Function) _
             .ToArray
-        Dim plotTIC As New NamedCollection(Of ChromatogramTick) With {
-            .name = name,
-            .value = {
+
+        If Not host.ribbonItems.CheckBoxXICRelative.BooleanValue Then
+            XIC = {
                   New ChromatogramTick With {.Time = raw.rtmin},
                   New ChromatogramTick With {.Time = raw.rtmax}
               }.JoinIterates(XIC) _
                .OrderBy(Function(c) c.Time) _
-               .ToArray,
+               .ToArray
+        End If
+
+        Dim plotTIC As New NamedCollection(Of ChromatogramTick) With {
+            .name = name,
+            .value = XIC,
             .description = ms2.mz
         }
 
@@ -772,10 +777,12 @@ Public Class PageMzkitTools
     Private Sub AddToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AddToolStripMenuItem.Click
         Dim XIC = getXICMatrix(TreeView1.CurrentRawFile.raw)
         XICCollection.Add(XIC)
+        ClearToolStripMenuItem.Text = $"Clear [{XICCollection.Count} XIC data]"
     End Sub
 
     Private Sub ClearToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ClearToolStripMenuItem.Click
         XICCollection.Clear()
+        ClearToolStripMenuItem.Text = "Clear"
     End Sub
 
     Private Sub PictureBox1_Click(sender As Object, e As EventArgs) Handles PictureBox1.Click
