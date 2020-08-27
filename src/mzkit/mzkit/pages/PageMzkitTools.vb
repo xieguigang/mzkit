@@ -366,10 +366,16 @@ Public Class PageMzkitTools
     Private Sub DeleteFileToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeleteFileToolStripMenuItem.Click
         Dim current = TreeView1.CurrentRawFile
 
-        TreeView1.Nodes.Remove(current.tree)
-        TreeView1.SaveRawFileCache
+        If Not current.raw Is Nothing Then
+            If MessageBox.Show($"Going to remove the raw data file [{current.raw.source.FileName}]?", "Delete File", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) = DialogResult.OK Then
+                TreeView1.Nodes.Remove(current.tree)
+                TreeView1.SaveRawFileCache
 
-        Call setCurrentFile()
+                Call setCurrentFile()
+            End If
+        Else
+            showStatusMessage("No raw file for removes!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+        End If
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click

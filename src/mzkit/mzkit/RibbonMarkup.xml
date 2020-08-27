@@ -444,29 +444,29 @@
 
 		<Command Name="cmdButtonExportImage"
 		 Id="1104"
-		 LabelTitle="Open"
-		 LabelDescription="Open Description"
-		 TooltipTitle="Open (Ctrl+O)"
-		 TooltipDescription="Open an existing image.">
+		 LabelTitle="Export Plot Image"
+		 LabelDescription="Save Mass Spectrum Or XIC plot image to a given file"
+		 TooltipTitle="Save Image"
+		 TooltipDescription="Save Mass Spectrum Or XIC plot image to a given file">
 			<Command.LargeImages>
-				<Image>Res/Open32.bmp</Image>
+				<Image>Res/applets-screenshooter.png</Image>
 			</Command.LargeImages>
 			<Command.SmallImages>
-				<Image>Res/Open16.bmp</Image>
+				<Image>Res/applets-screenshooter.png</Image>
 			</Command.SmallImages>
 		</Command>
 
 		<Command Name="cmdButtonExportMatrix"
 				 Id="1105"
-				 LabelTitle="Save"
-				 LabelDescription="Save Description"
-				 TooltipTitle="Save (Ctrl+S)"
-				 TooltipDescription="Save the current image.">
+				 LabelTitle="Export Matrix Table"
+				 LabelDescription="Save Mass Spectrum Or Chromatogram Data To Table File."
+				 TooltipTitle="Save Matrix Table"
+				 TooltipDescription="Save Mass Spectrum Or Chromatogram Data To Table File.">
 			<Command.LargeImages>
-				<Image>Res/Save32.bmp</Image>
+				<Image>Res/excel-icon.png</Image>
 			</Command.LargeImages>
 			<Command.SmallImages>
-				<Image>Res/Save16.bmp</Image>
+				<Image>Res/excel-icon.png</Image>
 			</Command.SmallImages>
 		</Command>
 
