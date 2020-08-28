@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::9f4b4c3e87676f6054cdd49f5172d821, src\mzkit\mzkit\forms\frmMain.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class frmMain
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: _recentItems_ExecuteEvent, _uiCollectionChangedEvent_ChangedEvent, About_Click, addPage, CopyToolStripMenuItem_Click
-    '          CutToolStripMenuItem_Click, ExitToolsStripMenuItem_Click, FormulaSearchToolToolStripMenuItem_Click, frmMain_Closing, frmMain_Load
-    '          InitializeFormulaProfile, InitRecentItems, InitSpinner, MoleculeNetworkingToolStripMenuItem_Click, MzCalculatorToolStripMenuItem_Click
-    '          NavBack_Click, OpenFile, PasteToolStripMenuItem_Click, RawFileViewerToolStripMenuItem_Click, SaveAsToolStripMenuItem_Click
-    '          saveCacheList, ShowPage, StatusBarToolStripMenuItem_Click, ToolBarToolStripMenuItem_Click
-    ' 
-    ' /********************************************************************************/
+' Class frmMain
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Sub: _recentItems_ExecuteEvent, _uiCollectionChangedEvent_ChangedEvent, About_Click, addPage, CopyToolStripMenuItem_Click
+'          CutToolStripMenuItem_Click, ExitToolsStripMenuItem_Click, FormulaSearchToolToolStripMenuItem_Click, frmMain_Closing, frmMain_Load
+'          InitializeFormulaProfile, InitRecentItems, InitSpinner, MoleculeNetworkingToolStripMenuItem_Click, MzCalculatorToolStripMenuItem_Click
+'          NavBack_Click, OpenFile, PasteToolStripMenuItem_Click, RawFileViewerToolStripMenuItem_Click, SaveAsToolStripMenuItem_Click
+'          saveCacheList, ShowPage, StatusBarToolStripMenuItem_Click, ToolBarToolStripMenuItem_Click
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -52,6 +52,7 @@ Imports Microsoft.VisualBasic.Language
 Imports RibbonLib
 Imports RibbonLib.Controls.Events
 Imports RibbonLib.Interop
+Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class frmMain
 
@@ -224,6 +225,8 @@ Public Class frmMain
             ' Call Globals.Settings.ui.setColors(Ribbon1)
         End If
 
+        Call initializeVSPanel()
+
         ToolStripStatusLabel1.Text = "Ready!"
     End Sub
 
@@ -345,4 +348,56 @@ Public Class frmMain
         }
         Globals.Settings.Save()
     End Sub
+
+#Region "vs2015"
+
+    Dim WithEvents dockPanel As New WeifenLuo.WinFormsUI.Docking.DockPanel
+    Private vS2015LightTheme1 As New WeifenLuo.WinFormsUI.Docking.VS2015LightTheme
+    Private vsToolStripExtender1 As New WeifenLuo.WinFormsUI.Docking.VisualStudioToolStripExtender
+    Private ReadOnly _toolStripProfessionalRenderer As ToolStripRenderer = New ToolStripProfessionalRenderer()
+
+    Private Sub initializeVSPanel()
+        Me.dockPanel.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dockPanel.DockBackColor = System.Drawing.Color.FromArgb(CType(CType(41, Byte), Integer), CType(CType(57, Byte), Integer), CType(CType(85, Byte), Integer))
+        Me.dockPanel.DockBottomPortion = 150.0R
+        Me.dockPanel.DockLeftPortion = 200.0R
+        Me.dockPanel.DockRightPortion = 200.0R
+        Me.dockPanel.DockTopPortion = 150.0R
+        Me.dockPanel.Font = New System.Drawing.Font("Tahoma", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World, CType(0, Byte))
+        Me.dockPanel.Location = New System.Drawing.Point(0, 49)
+        Me.dockPanel.Name = "dockPanel"
+        Me.dockPanel.RightToLeftLayout = True
+        Me.dockPanel.ShowAutoHideContentOnHover = False
+        Me.dockPanel.Size = New System.Drawing.Size(1248, 496)
+        Me.dockPanel.TabIndex = 0
+        Me.Controls.Add(Me.dockPanel)
+    End Sub
+
+    Private Sub SetSchema(ByVal sender As Object, ByVal e As EventArgs)
+        'If sender Is menuItemSchemaVS2005 Then
+        '    dockPanel.Theme = vS2005Theme1
+        '    EnableVSRenderer(VisualStudioToolStripExtender.VsVersion.Vs2005, vS2005Theme1)
+        'ElseIf sender Is menuItemSchemaVS2015Blue Then
+        '    dockPanel.Theme = vS2015BlueTheme1
+        '    EnableVSRenderer(VisualStudioToolStripExtender.VsVersion.Vs2015, vS2015BlueTheme1)
+        'ElseIf sender Is menuItemSchemaVS2015Light Then
+        dockPanel.Theme = vS2015LightTheme1
+        EnableVSRenderer(VisualStudioToolStripExtender.VsVersion.Vs2015, vS2015LightTheme1)
+        'ElseIf sender Is menuItemSchemaVS2015Dark Then
+        'dockPanel.Theme = vS2015DarkTheme1
+        'EnableVSRenderer(VisualStudioToolStripExtender.VsVersion.Vs2015, vS2015DarkTheme1)
+        'End If
+
+        If dockPanel.Theme.ColorPalette IsNot Nothing Then
+            StatusStrip.BackColor = dockPanel.Theme.ColorPalette.MainWindowStatusBarDefault.Background
+        End If
+    End Sub
+
+    Private Sub EnableVSRenderer(ByVal version As VisualStudioToolStripExtender.VsVersion, ByVal theme As ThemeBase)
+        ' vsToolStripExtender1.SetStyle(MainMenu, version, theme)
+        ' vsToolStripExtender1.SetStyle(ToolBar, version, theme)
+        vsToolStripExtender1.SetStyle(StatusStrip, version, theme)
+    End Sub
+#End Region
+
 End Class

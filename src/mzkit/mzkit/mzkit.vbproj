@@ -98,6 +98,9 @@
     <ApplicationIcon>chemistry.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.Windows.Form">
+      <HintPath>..\dist\Microsoft.VisualStudio.Windows.Form.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Windows.Ribbon">
       <HintPath>..\dist\Microsoft.Windows.Ribbon.dll</HintPath>
     </Reference>
@@ -115,6 +118,9 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="ThemeVS2015">
+      <HintPath>..\dist\ThemeVS2015.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
