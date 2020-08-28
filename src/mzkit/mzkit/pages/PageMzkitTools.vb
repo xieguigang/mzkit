@@ -228,6 +228,9 @@ Public Class PageMzkitTools
         ListBox1 = host.searchList.ListBox1
 
         Call InitializeFileTree()
+
+        AddHandler ListBox1.SelectedIndexChanged, AddressOf ListBox1_SelectedIndexChanged
+        AddHandler TreeView1.AfterSelect, AddressOf TreeView1_AfterSelect
     End Sub
 
     Dim currentMatrix As [Variant](Of ms2(), ChromatogramTick())
