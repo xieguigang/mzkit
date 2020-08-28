@@ -75,6 +75,7 @@ Imports mzkit.DockSample
 Imports RibbonLib
 Imports RibbonLib.Interop
 Imports Task
+Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class PageMzkitTools
 
@@ -241,15 +242,7 @@ Public Class PageMzkitTools
                             ' PropertyGrid1.SelectedObject = prop
                             'PropertyGrid1.Refresh()
 
-                            If Not Globals.CheckFormOpened(propertyWin) Then
-                                Try
-                                    propertyWin.Close()
-                                    propertyWin.Dispose()
-                                Catch ex As Exception
-
-                                End Try
-
-                                propertyWin = New DummyPropertyWindow
+                            If propertyWin.DockState = DockState.Hidden OrElse propertyWin.DockState = DockState.Unknown Then
                                 propertyWin.Show(host.dockPanel)
                             End If
 
@@ -258,9 +251,9 @@ Public Class PageMzkitTools
                         End Sub)
 
             PictureBox1.BackgroundImage = draw
-                TabControl1.SelectedTab = TabPage1
-            Else
-                Call missingCacheFile(raw)
+            TabControl1.SelectedTab = TabPage1
+        Else
+            Call missingCacheFile(raw)
         End If
     End Sub
 
