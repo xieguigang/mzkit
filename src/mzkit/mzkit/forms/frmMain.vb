@@ -262,7 +262,7 @@ Public Class frmMain
         _spinner.MinValue = 0
         _spinner.Increment = 0.5D
         _spinner.DecimalPlaces = 1
-        _spinner.DecimalValue = 10D
+        _spinner.DecimalValue = 20D
 
         _spinner.TooltipTitle = "PPM"
         _spinner.TooltipDescription = "Enter ppm error for search feature by m/z."
