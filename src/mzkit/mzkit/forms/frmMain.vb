@@ -386,7 +386,7 @@ Public Class frmMain
         Call SetSchema(Nothing, Nothing)
 
         fileExplorer.Show(dockPanel)
-        fileExplorer.DockState = DockState.DockLeft
+        fileExplorer.DockState = DockState.DockLeftAutoHide
         TreeView1 = fileExplorer.TreeView1
 
         searchList.Show(dockPanel)
@@ -423,8 +423,10 @@ Public Class frmMain
     End Sub
 
     Private Sub frmMain_ResizeEnd(sender As Object, e As EventArgs) Handles Me.ResizeEnd
-
+        Ribbon1.Refresh()
     End Sub
+
+
 #End Region
 
 End Class
