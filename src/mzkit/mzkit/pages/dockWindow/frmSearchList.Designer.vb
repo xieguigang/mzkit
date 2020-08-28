@@ -35,7 +35,7 @@ Partial Class frmSearchList
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(800, 20)
         Me.Label2.TabIndex = 3
-        Me.Label2.Text = "Label2"
+        Me.Label2.Text = "No Feature At Here!"
         '
         'ListBox1
         '
@@ -54,6 +54,7 @@ Partial Class frmSearchList
         Me.Controls.Add(Me.ListBox1)
         Me.Controls.Add(Me.Label2)
         Me.Name = "frmSearchList"
+        Me.TabText = "Feature List"
         Me.Text = "Form1"
         Me.ResumeLayout(False)
 

@@ -86,6 +86,7 @@ Partial Class frmFileTree
         Me.Controls.Add(Me.Panel1)
         Me.Name = "frmFileTree"
         Me.Text = "Form1"
+        Me.TabText = "File Explorer"
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
         Me.ResumeLayout(False)
