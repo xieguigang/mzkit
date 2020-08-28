@@ -49,6 +49,7 @@
 
 Imports System.ComponentModel
 Imports Microsoft.VisualBasic.Language
+Imports mzkit.DockSample
 Imports RibbonLib
 Imports RibbonLib.Controls.Events
 Imports RibbonLib.Interop
@@ -363,6 +364,7 @@ Public Class frmMain
 
     Friend fileExplorer As New frmFileTree
     Friend searchList As New frmSearchList
+    Friend output As New DummyOutputWindow
 
     Private Sub initializeVSPanel()
         PanelBase.Controls.Add(Me.dockPanel)
@@ -389,6 +391,9 @@ Public Class frmMain
 
         searchList.Show(dockPanel)
         searchList.DockState = DockState.DockLeftAutoHide
+
+        output.Show(dockPanel)
+        output.DockState = DockState.DockBottomAutoHide
     End Sub
 
     Private Sub SetSchema(ByVal sender As Object, ByVal e As EventArgs)

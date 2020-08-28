@@ -146,6 +146,10 @@
     <Compile Include="pages\contextMenu\ExportData.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="pages\dockWindow\DummyOutputWindow.Designer.vb" />
+    <Compile Include="pages\dockWindow\DummyOutputWindow.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="pages\dockWindow\DummyPropertyWindow.Designer.vb" />
     <Compile Include="pages\dockWindow\DummyPropertyWindow.vb">
       <SubType>Form</SubType>

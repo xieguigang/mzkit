@@ -50,6 +50,7 @@ Partial Class PageMzkitTools
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
+        Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
@@ -191,6 +192,7 @@ Partial Class PageMzkitTools
         '
         'TabControl1
         '
+        Me.TabControl1.Controls.Add(Me.TabPage3)
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage2)
         Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
@@ -244,6 +246,16 @@ Partial Class PageMzkitTools
         Me.DataGridView1.Size = New System.Drawing.Size(943, 469)
         Me.DataGridView1.TabIndex = 0
         '
+        'TabPage3
+        '
+        Me.TabPage3.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage3.Name = "TabPage3"
+        Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage3.Size = New System.Drawing.Size(949, 475)
+        Me.TabPage3.TabIndex = 2
+        Me.TabPage3.Text = "Start"
+        Me.TabPage3.UseVisualStyleBackColor = True
+        '
         'PageMzkitTools
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -290,4 +302,5 @@ Partial Class PageMzkitTools
     Friend WithEvents AddToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ClearToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ExportToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents TabPage3 As TabPage
 End Class
