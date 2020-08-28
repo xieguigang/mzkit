@@ -109,7 +109,18 @@ Public Class PageMzkitTools
     End Sub
 
     Private Sub missingCacheFile(raw As Raw)
-        MessageBox.Show($"The specific raw data cache is missing!{vbCrLf}{raw.cache.GetFullPath}", "Cache Not Found!", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        If MessageBox.Show($"The specific raw data cache is missing, run imports again?{vbCrLf}{raw.cache.GetFullPath}", "Cache Not Found!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) = DialogResult.OK Then
+            Dim newRaw = getRawCache(raw.source)
+
+            For i As Integer = 0 To TreeView1.Nodes.Count - 1
+                If TreeView1.Nodes(i).Tag Is raw Then
+                    TreeView1.Nodes(i).Tag = newRaw
+                End If
+            Next
+
+            status.Text = "Ready!"
+            host.ToolStripStatusLabel2.Text = TreeView1.GetTotalCacheSize
+        End If
     End Sub
 
     Public Sub SaveFileCache()
@@ -119,31 +130,33 @@ Public Class PageMzkitTools
     Public Sub ImportsRaw()
         Using file As New OpenFileDialog With {.Filter = "Raw Data|*.mzXML;*.mzML"}
             If file.ShowDialog = DialogResult.OK Then
-                Dim progress As New frmTaskProgress() With {.Text = $"Imports raw data [{file.FileName}]"}
-                Dim showProgress As Action(Of String) = Sub(text) progress.Invoke(Sub() progress.Label1.Text = text)
-                Dim task As New Task.ImportsRawData(file.FileName, showProgress, Sub() Call progress.Invoke(Sub() progress.Close()))
-                Dim runTask As New Thread(AddressOf task.RunImports)
+                Call TreeView1.addRawFile(getRawCache(file.FileName))
 
-                ParentForm.Invoke(Sub() status.Text = "Run Raw Data Imports")
-                progress.Label2.Text = progress.Text
-
-                Call runTask.Start()
-                Call progress.ShowDialog()
-
-                'Call New frmRawViewer() With {
-                '    .MdiParent = Me,
-                '    .Text = file.FileName,
-                '    .rawFile = task.raw
-                '}.Show()
-                Call TreeView1.addRawFile(task.raw)
-                Call ParentForm.Invoke(
-                    Sub()
-                        status.Text = "Ready!"
-                        host.ToolStripStatusLabel2.Text = TreeView1.GetTotalCacheSize
-                    End Sub)
+                status.Text = "Ready!"
+                host.ToolStripStatusLabel2.Text = TreeView1.GetTotalCacheSize
             End If
         End Using
     End Sub
+
+    Public Function getRawCache(fileName As String) As Raw
+        Dim progress As New frmTaskProgress() With {.Text = $"Imports raw data [{fileName}]"}
+        Dim showProgress As Action(Of String) = Sub(text) progress.Invoke(Sub() progress.Label1.Text = text)
+        Dim task As New Task.ImportsRawData(fileName, showProgress, Sub() Call progress.Invoke(Sub() progress.Close()))
+        Dim runTask As New Thread(AddressOf task.RunImports)
+
+        ParentForm.Invoke(Sub() status.Text = "Run Raw Data Imports")
+        progress.Label2.Text = progress.Text
+
+        Call runTask.Start()
+        Call progress.ShowDialog()
+
+        'Call New frmRawViewer() With {
+        '    .MdiParent = Me,
+        '    .Text = file.FileName,
+        '    .rawFile = task.raw
+        '}.Show()
+        Return task.raw
+    End Function
 
     Private Sub TreeView1_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles TreeView1.AfterSelect
         If TypeOf e.Node.Tag Is Task.Raw Then
