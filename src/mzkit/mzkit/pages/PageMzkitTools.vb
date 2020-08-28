@@ -233,7 +233,7 @@ Public Class PageMzkitTools
 
         AddHandler ListBox1.SelectedIndexChanged, AddressOf ListBox1_SelectedIndexChanged
         AddHandler TreeView1.AfterSelect, AddressOf TreeView1_AfterSelect
-        AddHandler host.fileExplorer.Button2.Click, Sub(obj, evt) Call SearchByMz(host.fileExplorer.TextBox2.Text)
+        AddHandler host.fileExplorer.Button1.Click, Sub(obj, evt) Call SearchByMz(host.fileExplorer.TextBox2.Text)
 
         TabPage3.Controls.Add(startPage)
         startPage.Dock = DockStyle.Fill
@@ -285,7 +285,7 @@ Public Class PageMzkitTools
                 ListBox1.Items.Clear()
             End If
 
-            host.Text = $"M/z Toolkit [ { .source.GetFullPath} ]"
+            host.Text = $"BioNovoGene Mzkit [{ .source.GetFullPath}]"
         End With
 
         If Not TreeView1.CurrentRawFile.raw.cache.FileExists Then
