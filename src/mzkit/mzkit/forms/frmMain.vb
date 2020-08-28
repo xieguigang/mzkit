@@ -258,11 +258,15 @@ Public Class frmMain
     Private Sub InitSpinner()
         Dim _spinner = ribbonItems.PPMSpinner
 
+        If Globals.Settings.viewer Is Nothing Then
+            Globals.Settings.viewer = New RawFileViewerSettings
+        End If
+
         _spinner.MaxValue = 30D
         _spinner.MinValue = 0
         _spinner.Increment = 0.5D
         _spinner.DecimalPlaces = 1
-        _spinner.DecimalValue = 20D
+        _spinner.DecimalValue = Globals.Settings.viewer.XIC_ppm
 
         _spinner.TooltipTitle = "PPM"
         _spinner.TooltipDescription = "Enter ppm error for search feature by m/z."

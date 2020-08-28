@@ -153,6 +153,12 @@
     <Compile Include="pages\PageScripting.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="pages\Settings\RawFileViewer.Designer.vb">
+      <DependentUpon>RawFileViewer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\Settings\RawFileViewer.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="settings\UISettings.vb" />
     <Compile Include="settings\PrecursorSearchSettings.vb" />
     <Compile Include="settings\Settings.vb" />
@@ -285,6 +291,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="pages\Settings\ElementProfile.resx">
       <DependentUpon>ElementProfile.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pages\Settings\RawFileViewer.resx">
+      <DependentUpon>RawFileViewer.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RibbonMarkup.ribbon" />
   </ItemGroup>

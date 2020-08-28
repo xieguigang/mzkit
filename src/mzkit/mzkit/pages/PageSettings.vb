@@ -50,6 +50,7 @@ Public Class PageSettings
 
     Dim elementProfile As New ElementProfile With {.Text = "Formula Search"}
     Dim appConfig As New AppConfig With {.Text = "Mzkit Settings"}
+    Dim viewer As New RawFileViewer With {.Text = "Raw File Viewer"}
     Dim pages As Control()
     Dim showPageLink As IPageSettings
 
@@ -60,7 +61,7 @@ Public Class PageSettings
     Private Sub PageSettings_Load(sender As Object, e As EventArgs) Handles Me.Load
         host = DirectCast(ParentForm, frmMain)
         status = host.ToolStripStatusLabel1
-        pages = {elementProfile, appConfig}
+        pages = {elementProfile, appConfig, viewer}
 
         For Each page In pages
             Panel1.Controls.Add(page)
@@ -97,6 +98,7 @@ Public Class PageSettings
         Select Case e.Node.Text
             Case "Element Profile" : showPage(elementProfile)
             Case "Mzkit App" : showPage(appConfig)
+            Case "Raw File Viewer" : showPage(viewer)
         End Select
     End Sub
 
