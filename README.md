@@ -2,6 +2,7 @@
 
 ![](src/mzkit/splash.PNG)
 
+![](docs/images/screen.jpg)
 
 ![](visual/gcms_ticplot.png)
 ![](visual/gcms_ions.png)
