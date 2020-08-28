@@ -65,6 +65,9 @@ Public Class frmMain
     Friend mzkitMNtools As New PageMoleculeNetworking
     Friend mzkitRsharpScripting As New PageScripting
 
+
+    Friend TreeView1 As TreeView
+
     Dim nav As New Stack(Of Control)
 
     Friend Sub ShowPage(page As Control, Optional pushStack As Boolean = True)
@@ -167,7 +170,7 @@ Public Class frmMain
     End Sub
 
     Private Sub saveCacheList()
-        mzkitTool.TreeView1.SaveRawFileCache
+        TreeView1.SaveRawFileCache
         ToolStripStatusLabel1.Text = "The raw file cache data was saved!"
     End Sub
 
@@ -358,6 +361,9 @@ Public Class frmMain
     Private vsToolStripExtender1 As New WeifenLuo.WinFormsUI.Docking.VisualStudioToolStripExtender
     Private ReadOnly _toolStripProfessionalRenderer As ToolStripRenderer = New ToolStripProfessionalRenderer()
 
+    Friend fileExplorer As New frmFileTree
+    Friend searchList As New frmSearchList
+
     Private Sub initializeVSPanel()
         PanelBase.Controls.Add(Me.dockPanel)
 
@@ -376,6 +382,13 @@ Public Class frmMain
         Me.dockPanel.TabIndex = 0
 
         Call SetSchema(Nothing, Nothing)
+
+        fileExplorer.Show(dockPanel)
+        fileExplorer.DockState = DockState.DockLeft
+        TreeView1 = fileExplorer.TreeView1
+
+        searchList.Show(dockPanel)
+        searchList.DockState = DockState.DockLeftAutoHide
     End Sub
 
     Private Sub SetSchema(ByVal sender As Object, ByVal e As EventArgs)

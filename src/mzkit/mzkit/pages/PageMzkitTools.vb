@@ -84,6 +84,8 @@ Public Class PageMzkitTools
     Dim RibbonItems As RibbonItems
     Dim matrix As [Variant](Of ms2(), ChromatogramTick(), SSM2MatrixFragment())
     Dim matrixName As String
+    Dim TreeView1 As TreeView
+    Dim ListBox1 As ListBox
 
     Friend _ribbonExportDataContextMenuStrip As ExportData
 
@@ -159,7 +161,7 @@ Public Class PageMzkitTools
         Return task.raw
     End Function
 
-    Private Sub TreeView1_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles TreeView1.AfterSelect
+    Private Sub TreeView1_AfterSelect(sender As Object, e As TreeViewEventArgs)
         If TypeOf e.Node.Tag Is Task.Raw Then
             ' 原始文件节点
         ElseIf TypeOf e.Node.Tag Is ms2() Then
@@ -222,6 +224,8 @@ Public Class PageMzkitTools
         host = DirectCast(ParentForm, frmMain)
         status = host.ToolStripStatusLabel1
         RibbonItems = host.ribbonItems
+        TreeView1 = host.TreeView1
+        ListBox1 = host.searchList.ListBox1
 
         Call InitializeFileTree()
     End Sub
@@ -410,21 +414,21 @@ Public Class PageMzkitTools
         host.ToolStripStatusLabel2.Text = TreeView1.GetTotalCacheSize
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        If TextBox1.Text.StringEmpty Then
+    Public Sub SearchByMz(text As String)
+        If text.StringEmpty Then
             Return
-        ElseIf TextBox1.Text.IsNumeric Then
-            Call searchInFileByMz(mz:=Val(TextBox1.Text))
+        ElseIf text.IsNumeric Then
+            Call searchInFileByMz(mz:=Val(text))
         Else
             ' formula
-            Dim exact_mass As Double = Math.EvaluateFormula(TextBox1.Text)
+            Dim exact_mass As Double = Math.EvaluateFormula(text)
             Dim ppm As Double = Val(RibbonItems.PPMSpinner.DecimalValue)
             Dim raw As Raw = TreeView1.CurrentRawFile.raw
 
             DataGridView1.Rows.Clear()
             DataGridView1.Columns.Clear()
 
-            showStatusMessage($"Search MS ions for [{TextBox1.Text}] exact_mass={exact_mass} with tolerance error {ppm} ppm")
+            showStatusMessage($"Search MS ions for [{text}] exact_mass={exact_mass} with tolerance error {ppm} ppm")
 
             DataGridView1.Columns.Add(New DataGridViewLinkColumn With {
                   .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
@@ -538,16 +542,17 @@ Public Class PageMzkitTools
         Next
 
         If ms2Hits.Length = 0 Then
-            Label2.Text = "no hits!"
+            host.searchList.Label2.Text = "no hits!"
             MessageBox.Show($"Sorry, no hits was found for m/z={mz} with tolerance {ppm}ppm...", "No hits found!", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Else
-            Label2.Text = $"{ms2Hits.Length} ms2 hits for m/z={mz} with tolerance {ppm}ppm"
+            host.searchList.Label2.Text = $"{ms2Hits.Length} ms2 hits for m/z={mz} with tolerance {ppm}ppm"
         End If
 
-        TabControl2.SelectedIndex = 1
+        host.searchList.DockState = DockState.DockLeft
+        host.searchList.Show(host.dockPanel)
     End Sub
 
-    Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox1.SelectedIndexChanged
+    Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As EventArgs) 
         Dim scanId As ScanEntry = ListBox1.SelectedItem
         Dim raw = TreeView1.CurrentRawFile.raw
 

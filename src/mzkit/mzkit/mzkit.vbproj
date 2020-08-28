@@ -150,6 +150,18 @@
     <Compile Include="pages\dockWindow\DummyPropertyWindow.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="pages\dockWindow\frmSearchList.Designer.vb">
+      <DependentUpon>frmSearchList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\dockWindow\frmSearchList.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="pages\dockWindow\frmFileTree.Designer.vb">
+      <DependentUpon>frmFileTree.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\dockWindow\frmFileTree.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="pages\dockWindow\ToolWindow.Designer.vb" />
     <Compile Include="pages\dockWindow\ToolWindow.vb">
       <SubType>Form</SubType>
@@ -256,6 +268,9 @@
       <DependentUpon>frmLicense.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\DummyPropertyWindow.resx" />
+    <EmbeddedResource Include="pages\dockWindow\frmSearchList.resx">
+      <DependentUpon>frmSearchList.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\ToolWindow.resx" />
     <EmbeddedResource Include="pages\PageMoleculeNetworking.resx">
       <DependentUpon>PageMoleculeNetworking.vb</DependentUpon>

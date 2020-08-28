@@ -154,7 +154,7 @@ Public Class PageMoleculeNetworking
             a = nodeInfo(a).id
             b = nodeInfo(b).id
 
-            Dim raw = host.mzkitTool.TreeView1.CurrentRawFile.raw
+            Dim raw = host.TreeView1.CurrentRawFile.raw
             Dim data1 = raw.GetSpectrum(a)
             Dim data2 = raw.GetSpectrum(b)
             Dim matrix As SSM2MatrixFragment() = GlobalAlignment.CreateAlignment(data1.ms2, data2.ms2, Tolerance.DeltaMass(0.3)).ToArray
