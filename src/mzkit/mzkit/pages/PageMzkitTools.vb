@@ -220,6 +220,8 @@ Public Class PageMzkitTools
         Call setCurrentFile()
     End Sub
 
+    Dim startPage As New PageStart
+
     Private Sub PageMzkitTools_Load(sender As Object, e As EventArgs) Handles Me.Load
         host = DirectCast(ParentForm, frmMain)
         status = host.ToolStripStatusLabel1
@@ -232,6 +234,9 @@ Public Class PageMzkitTools
         AddHandler ListBox1.SelectedIndexChanged, AddressOf ListBox1_SelectedIndexChanged
         AddHandler TreeView1.AfterSelect, AddressOf TreeView1_AfterSelect
         AddHandler host.fileExplorer.Button2.Click, Sub(obj, evt) Call SearchByMz(host.fileExplorer.TextBox2.Text)
+
+        TabPage3.Controls.Add(startPage)
+        startPage.Dock = DockStyle.Fill
     End Sub
 
     Dim currentMatrix As [Variant](Of ms2(), ChromatogramTick())

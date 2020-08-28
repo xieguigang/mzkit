@@ -189,6 +189,12 @@
     <Compile Include="pages\Settings\RawFileViewer.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="pages\PageStart.Designer.vb">
+      <DependentUpon>PageStart.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\PageStart.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="settings\UISettings.vb" />
     <Compile Include="settings\PrecursorSearchSettings.vb" />
     <Compile Include="settings\Settings.vb" />
@@ -324,6 +330,9 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="App.config" />
+    <EmbeddedResource Include="pages\PageStart.resx">
+      <DependentUpon>PageStart.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="pages\Settings\AppConfig.resx">
       <DependentUpon>AppConfig.vb</DependentUpon>
     </EmbeddedResource>

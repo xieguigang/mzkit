@@ -45,12 +45,12 @@ Partial Class PageMzkitTools
         Me.DeleteFileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.TabControl1 = New System.Windows.Forms.TabControl()
+        Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
-        Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
@@ -196,11 +196,24 @@ Partial Class PageMzkitTools
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage2)
         Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TabControl1.HotTrack = True
         Me.TabControl1.Location = New System.Drawing.Point(0, 0)
+        Me.TabControl1.Multiline = True
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
         Me.TabControl1.Size = New System.Drawing.Size(957, 501)
+        Me.TabControl1.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight
         Me.TabControl1.TabIndex = 13
+        '
+        'TabPage3
+        '
+        Me.TabPage3.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage3.Name = "TabPage3"
+        Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage3.Size = New System.Drawing.Size(949, 475)
+        Me.TabPage3.TabIndex = 2
+        Me.TabPage3.Text = "Start Page"
+        Me.TabPage3.UseVisualStyleBackColor = True
         '
         'TabPage1
         '
@@ -210,7 +223,7 @@ Partial Class PageMzkitTools
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
         Me.TabPage1.Size = New System.Drawing.Size(949, 475)
         Me.TabPage1.TabIndex = 0
-        Me.TabPage1.Text = "Plot"
+        Me.TabPage1.Text = "Data Plot"
         Me.TabPage1.UseVisualStyleBackColor = True
         '
         'PictureBox1
@@ -231,7 +244,7 @@ Partial Class PageMzkitTools
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
         Me.TabPage2.Size = New System.Drawing.Size(949, 475)
         Me.TabPage2.TabIndex = 1
-        Me.TabPage2.Text = "Matrix"
+        Me.TabPage2.Text = "M/z Matrix"
         Me.TabPage2.UseVisualStyleBackColor = True
         '
         'DataGridView1
@@ -245,16 +258,6 @@ Partial Class PageMzkitTools
         Me.DataGridView1.ReadOnly = True
         Me.DataGridView1.Size = New System.Drawing.Size(943, 469)
         Me.DataGridView1.TabIndex = 0
-        '
-        'TabPage3
-        '
-        Me.TabPage3.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage3.Name = "TabPage3"
-        Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage3.Size = New System.Drawing.Size(949, 475)
-        Me.TabPage3.TabIndex = 2
-        Me.TabPage3.Text = "Start"
-        Me.TabPage3.UseVisualStyleBackColor = True
         '
         'PageMzkitTools
         '
