@@ -173,12 +173,12 @@ Partial Class PageMoleculeNetworking
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveImageToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
         Me.ContextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 48)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(135, 26)
         '
         'SaveImageToolStripMenuItem
         '
         Me.SaveImageToolStripMenuItem.Name = "SaveImageToolStripMenuItem"
-        Me.SaveImageToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.SaveImageToolStripMenuItem.Size = New System.Drawing.Size(134, 22)
         Me.SaveImageToolStripMenuItem.Text = "Save Image"
         '
         'PageMoleculeNetworking
@@ -186,6 +186,7 @@ Partial Class PageMoleculeNetworking
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.TabControl1)
+        Me.DoubleBuffered = True
         Me.Name = "PageMoleculeNetworking"
         Me.Size = New System.Drawing.Size(956, 648)
         Me.TabControl1.ResumeLayout(False)

@@ -103,6 +103,7 @@ Partial Class PageSettings
         Me.Controls.Add(Me.TreeView1)
         Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.Button1)
+        Me.DoubleBuffered = True
         Me.Name = "PageSettings"
         Me.Size = New System.Drawing.Size(930, 510)
         Me.ResumeLayout(False)

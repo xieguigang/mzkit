@@ -8,6 +8,8 @@ Namespace DockSample
             InitializeComponent()
             ' comboBox.SelectedIndex = 0
             propertyGrid.SelectedObject = propertyGrid
+
+            DoubleBuffered = True
         End Sub
     End Class
 End Namespace

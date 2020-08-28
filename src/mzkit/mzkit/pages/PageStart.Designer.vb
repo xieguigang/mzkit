@@ -130,6 +130,7 @@ Partial Class PageStart
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.FlowLayoutPanel1)
         Me.Controls.Add(Me.Panel1)
+        Me.DoubleBuffered = True
         Me.Name = "PageStart"
         Me.Size = New System.Drawing.Size(1119, 769)
         Me.Panel1.ResumeLayout(False)

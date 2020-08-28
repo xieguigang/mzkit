@@ -85,6 +85,7 @@ Partial Class PageMzSearch
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.Label1)
+        Me.DoubleBuffered = True
         Me.Name = "PageMzSearch"
         Me.Size = New System.Drawing.Size(1047, 701)
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()

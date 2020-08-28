@@ -8,6 +8,7 @@ Namespace DockSample
         Public Sub New()
             InitializeComponent()
             AutoScaleMode = AutoScaleMode.Dpi
+            DoubleBuffered = True
         End Sub
     End Class
 End Namespace

@@ -5,6 +5,8 @@ Namespace DockSample
 
         Public Sub New()
             InitializeComponent()
+
+            DoubleBuffered = True
         End Sub
     End Class
 End Namespace

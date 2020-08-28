@@ -265,6 +265,7 @@ Partial Class PageMzkitTools
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.Controls.Add(Me.TabControl1)
+        Me.DoubleBuffered = True
         Me.Name = "PageMzkitTools"
         Me.Size = New System.Drawing.Size(957, 501)
         Me.ContextMenuStrip1.ResumeLayout(False)

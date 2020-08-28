@@ -22,21 +22,15 @@ Partial Class PageScripting
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-
         Me.SuspendLayout()
-        '
-        'SplitContainer1
-        '
-
         '
         'PageScripting
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-
+        Me.DoubleBuffered = True
         Me.Name = "PageScripting"
         Me.Size = New System.Drawing.Size(768, 561)
-
         Me.ResumeLayout(False)
 
     End Sub
