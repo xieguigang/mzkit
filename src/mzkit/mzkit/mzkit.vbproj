@@ -268,6 +268,9 @@
       <DependentUpon>frmLicense.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\DummyPropertyWindow.resx" />
+    <EmbeddedResource Include="pages\dockWindow\frmFileTree.resx">
+      <DependentUpon>frmFileTree.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\frmSearchList.resx">
       <DependentUpon>frmSearchList.vb</DependentUpon>
     </EmbeddedResource>

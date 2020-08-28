@@ -231,6 +231,7 @@ Public Class PageMzkitTools
 
         AddHandler ListBox1.SelectedIndexChanged, AddressOf ListBox1_SelectedIndexChanged
         AddHandler TreeView1.AfterSelect, AddressOf TreeView1_AfterSelect
+        AddHandler host.fileExplorer.Button2.Click, Sub(obj, evt) Call SearchByMz(host.fileExplorer.TextBox2.Text)
     End Sub
 
     Dim currentMatrix As [Variant](Of ms2(), ChromatogramTick())
