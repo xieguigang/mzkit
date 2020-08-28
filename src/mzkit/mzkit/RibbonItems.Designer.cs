@@ -61,7 +61,6 @@ namespace RibbonLib.Controls
             public const uint cmdGroupAboutActions = 1047;
             public const uint cmdButtonAbout = 1021;
             public const uint cmdButtonBioDeep = 1022;
-            public const uint cmdButtonSettings = 1051;
             public const uint cmdRecentItems = 1014;
             public const uint cmdMenuGroupFile = 1005;
             public const uint cmdButtonToolkits = 1007;
@@ -69,6 +68,7 @@ namespace RibbonLib.Controls
             public const uint cmdButtonDropB = 1009;
             public const uint cmdButtonDropC = 1010;
             public const uint cmdButtonDropD = 5010;
+            public const uint cmdButtonSettings = 1051;
             public const uint cmdButtonLicense = 1101;
             public const uint cmdMenuGroupExit = 1006;
             public const uint cmdButtonExit = 1004;
@@ -128,7 +128,6 @@ namespace RibbonLib.Controls
         public RibbonGroup GroupAboutActions { get; private set; }
         public RibbonButton ButtonAbout { get; private set; }
         public RibbonButton ButtonBioDeep { get; private set; }
-        public RibbonButton ButtonSettings { get; private set; }
         public RibbonRecentItems RecentItems { get; private set; }
         public RibbonMenuGroup MenuGroupFile { get; private set; }
         public RibbonDropDownButton ButtonToolkits { get; private set; }
@@ -136,6 +135,7 @@ namespace RibbonLib.Controls
         public RibbonButton ButtonDropB { get; private set; }
         public RibbonButton ButtonDropC { get; private set; }
         public RibbonButton ButtonDropD { get; private set; }
+        public RibbonButton ButtonSettings { get; private set; }
         public RibbonButton ButtonLicense { get; private set; }
         public RibbonMenuGroup MenuGroupExit { get; private set; }
         public RibbonButton ButtonExit { get; private set; }
@@ -193,7 +193,6 @@ namespace RibbonLib.Controls
             GroupAboutActions = new RibbonGroup(ribbon, Cmd.cmdGroupAboutActions);
             ButtonAbout = new RibbonButton(ribbon, Cmd.cmdButtonAbout);
             ButtonBioDeep = new RibbonButton(ribbon, Cmd.cmdButtonBioDeep);
-            ButtonSettings = new RibbonButton(ribbon, Cmd.cmdButtonSettings);
             RecentItems = new RibbonRecentItems(ribbon, Cmd.cmdRecentItems);
             MenuGroupFile = new RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupFile);
             ButtonToolkits = new RibbonDropDownButton(ribbon, Cmd.cmdButtonToolkits);
@@ -201,6 +200,7 @@ namespace RibbonLib.Controls
             ButtonDropB = new RibbonButton(ribbon, Cmd.cmdButtonDropB);
             ButtonDropC = new RibbonButton(ribbon, Cmd.cmdButtonDropC);
             ButtonDropD = new RibbonButton(ribbon, Cmd.cmdButtonDropD);
+            ButtonSettings = new RibbonButton(ribbon, Cmd.cmdButtonSettings);
             ButtonLicense = new RibbonButton(ribbon, Cmd.cmdButtonLicense);
             MenuGroupExit = new RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupExit);
             ButtonExit = new RibbonButton(ribbon, Cmd.cmdButtonExit);

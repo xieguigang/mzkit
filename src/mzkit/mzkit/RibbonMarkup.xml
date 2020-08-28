@@ -645,10 +645,9 @@
 					</Tab.ScalingPolicy>
 
 					<!-- useful part -->
-					<Group CommandName="cmdGroupAboutActions" SizeDefinition="ThreeButtons">
+					<Group CommandName="cmdGroupAboutActions" SizeDefinition="TwoButtons">
 						<Button CommandName="cmdButtonAbout" />
-						<Button CommandName="cmdButtonBioDeep" />
-						<Button CommandName="cmdButtonSettings" />
+						<Button CommandName="cmdButtonBioDeep" />						
 					</Group>
 
 				</Tab>
@@ -680,7 +679,7 @@
 
 					<MenuGroup>
 
-
+<Button CommandName="cmdButtonSettings" />
 
 						<SplitButton>
 
