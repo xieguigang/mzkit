@@ -33,10 +33,10 @@ Partial Class frmMain
         Me.FormulaSearchToolToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MzCalculatorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RawFileViewerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.Ribbon1 = New RibbonLib.Ribbon()
-        Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.PanelBase = New System.Windows.Forms.Panel()
         Me.StatusStrip.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -93,23 +93,6 @@ Partial Class frmMain
         Me.RawFileViewerToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
         Me.RawFileViewerToolStripMenuItem.Text = "Raw File Viewer"
         '
-        'Ribbon1
-        '
-        Me.Ribbon1.Location = New System.Drawing.Point(0, 0)
-        Me.Ribbon1.Name = "Ribbon1"
-        Me.Ribbon1.ResourceName = "mzkit.RibbonMarkup.ribbon"
-        Me.Ribbon1.ShortcutTableResourceName = Nothing
-        Me.Ribbon1.Size = New System.Drawing.Size(1260, 166)
-        Me.Ribbon1.TabIndex = 9
-        '
-        'Panel1
-        '
-        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel1.Location = New System.Drawing.Point(0, 166)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(1260, 525)
-        Me.Panel1.TabIndex = 13
-        '
         'ToolStripStatusLabel2
         '
         Me.ToolStripStatusLabel2.Image = CType(resources.GetObject("ToolStripStatusLabel2.Image"), System.Drawing.Image)
@@ -117,13 +100,31 @@ Partial Class frmMain
         Me.ToolStripStatusLabel2.Size = New System.Drawing.Size(135, 17)
         Me.ToolStripStatusLabel2.Text = "ToolStripStatusLabel2"
         '
+        'Ribbon1
+        '
+        Me.Ribbon1.Location = New System.Drawing.Point(0, 0)
+        Me.Ribbon1.Name = "Ribbon1"
+        Me.Ribbon1.ResourceIdentifier = Nothing
+        Me.Ribbon1.ResourceName = "mzkit.RibbonMarkup.ribbon"
+        Me.Ribbon1.ShortcutTableResourceName = Nothing
+        Me.Ribbon1.Size = New System.Drawing.Size(1260, 166)
+        Me.Ribbon1.TabIndex = 9
+        '
+        'PanelBase
+        '
+        Me.PanelBase.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.PanelBase.Location = New System.Drawing.Point(0, 166)
+        Me.PanelBase.Name = "PanelBase"
+        Me.PanelBase.Size = New System.Drawing.Size(1260, 525)
+        Me.PanelBase.TabIndex = 10
+        '
         'frmMain
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
         Me.ClientSize = New System.Drawing.Size(1260, 713)
-        Me.Controls.Add(Me.Panel1)
-        Me.Controls.Add(Me.Ribbon1)
+        Me.Controls.Add(Me.PanelBase)
         Me.Controls.Add(Me.StatusStrip)
+        Me.Controls.Add(Me.Ribbon1)
         Me.DoubleBuffered = True
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmMain"
@@ -138,7 +139,6 @@ Partial Class frmMain
     Friend WithEvents ToolTip As System.Windows.Forms.ToolTip
     Friend WithEvents StatusStrip As System.Windows.Forms.StatusStrip
     Friend WithEvents Ribbon1 As RibbonLib.Ribbon
-    Friend WithEvents Panel1 As Panel
     Friend WithEvents ToolStripDropDownButton1 As ToolStripDropDownButton
     Friend WithEvents FormulaSearchToolToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents MzCalculatorToolStripMenuItem As ToolStripMenuItem
@@ -146,4 +146,5 @@ Partial Class frmMain
     Friend WithEvents ToolStripStatusLabel1 As ToolStripStatusLabel
     Friend WithEvents MoleculeNetworkingToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripStatusLabel2 As ToolStripStatusLabel
+    Friend WithEvents PanelBase As Panel
 End Class

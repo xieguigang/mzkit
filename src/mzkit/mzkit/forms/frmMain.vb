@@ -199,13 +199,17 @@ Public Class frmMain
 
     Private Sub addPage(ParamArray pageList As Control())
         For Each page As Control In pageList
-            Panel1.Controls.Add(page)
+            dockPanel.Controls.Add(page)
             pages.Add(page)
             page.Dock = DockStyle.Fill
         Next
     End Sub
 
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ' 20200829 因为有一组控件需要放置在这里
+        ' 所以这个基础的panel需要首先进行初始化
+        Call initializeVSPanel()
+
         InitRecentItems()
         ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
 
@@ -224,8 +228,6 @@ Public Class frmMain
 
             ' Call Globals.Settings.ui.setColors(Ribbon1)
         End If
-
-        Call initializeVSPanel()
 
         ToolStripStatusLabel1.Text = "Ready!"
     End Sub
@@ -351,26 +353,29 @@ Public Class frmMain
 
 #Region "vs2015"
 
-    Dim WithEvents dockPanel As New WeifenLuo.WinFormsUI.Docking.DockPanel
+    Friend WithEvents dockPanel As New WeifenLuo.WinFormsUI.Docking.DockPanel
     Private vS2015LightTheme1 As New WeifenLuo.WinFormsUI.Docking.VS2015LightTheme
     Private vsToolStripExtender1 As New WeifenLuo.WinFormsUI.Docking.VisualStudioToolStripExtender
     Private ReadOnly _toolStripProfessionalRenderer As ToolStripRenderer = New ToolStripProfessionalRenderer()
 
     Private Sub initializeVSPanel()
-        Me.dockPanel.Dock = System.Windows.Forms.DockStyle.Fill
+        PanelBase.Controls.Add(Me.dockPanel)
+
+        Me.dockPanel.Dock = DockStyle.Fill
         Me.dockPanel.DockBackColor = System.Drawing.Color.FromArgb(CType(CType(41, Byte), Integer), CType(CType(57, Byte), Integer), CType(CType(85, Byte), Integer))
         Me.dockPanel.DockBottomPortion = 150.0R
         Me.dockPanel.DockLeftPortion = 200.0R
         Me.dockPanel.DockRightPortion = 200.0R
         Me.dockPanel.DockTopPortion = 150.0R
         Me.dockPanel.Font = New System.Drawing.Font("Tahoma", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World, CType(0, Byte))
-        Me.dockPanel.Location = New System.Drawing.Point(0, 49)
+
         Me.dockPanel.Name = "dockPanel"
         Me.dockPanel.RightToLeftLayout = True
         Me.dockPanel.ShowAutoHideContentOnHover = False
-        Me.dockPanel.Size = New System.Drawing.Size(1248, 496)
+
         Me.dockPanel.TabIndex = 0
-        Me.Controls.Add(Me.dockPanel)
+
+        Call SetSchema(Nothing, Nothing)
     End Sub
 
     Private Sub SetSchema(ByVal sender As Object, ByVal e As EventArgs)
@@ -397,6 +402,10 @@ Public Class frmMain
         ' vsToolStripExtender1.SetStyle(MainMenu, version, theme)
         ' vsToolStripExtender1.SetStyle(ToolBar, version, theme)
         vsToolStripExtender1.SetStyle(StatusStrip, version, theme)
+    End Sub
+
+    Private Sub frmMain_ResizeEnd(sender As Object, e As EventArgs) Handles Me.ResizeEnd
+
     End Sub
 #End Region
 

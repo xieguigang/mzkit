@@ -55,7 +55,6 @@ Partial Class PageMzkitTools
         Me.ListBox1 = New System.Windows.Forms.ListBox()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
-        Me.PropertyGrid1 = New System.Windows.Forms.PropertyGrid()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
@@ -141,7 +140,7 @@ Partial Class PageMzkitTools
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowXICToolStripMenuItem, Me.ShowTICToolStripMenuItem, Me.MS1ToolStripMenuItem, Me.MS2ToolStripMenuItem, Me.MolecularNetworkingToolStripMenuItem, Me.ToolStripMenuItem2, Me.SearchInFileToolStripMenuItem, Me.SearchFormulaToolStripMenuItem, Me.ToolStripMenuItem1, Me.DeleteFileToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
         Me.ContextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(193, 214)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(193, 192)
         '
         'ShowXICToolStripMenuItem
         '
@@ -314,7 +313,6 @@ Partial Class PageMzkitTools
         '
         'TabPage1
         '
-        Me.TabPage1.Controls.Add(Me.PropertyGrid1)
         Me.TabPage1.Controls.Add(Me.PictureBox1)
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
@@ -324,24 +322,13 @@ Partial Class PageMzkitTools
         Me.TabPage1.Text = "Plot"
         Me.TabPage1.UseVisualStyleBackColor = True
         '
-        'PropertyGrid1
-        '
-        Me.PropertyGrid1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.PropertyGrid1.Location = New System.Drawing.Point(336, 3)
-        Me.PropertyGrid1.Name = "PropertyGrid1"
-        Me.PropertyGrid1.Size = New System.Drawing.Size(269, 466)
-        Me.PropertyGrid1.TabIndex = 1
-        '
         'PictureBox1
         '
-        Me.PictureBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox1.Location = New System.Drawing.Point(6, 3)
+        Me.PictureBox1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.PictureBox1.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(324, 467)
+        Me.PictureBox1.Size = New System.Drawing.Size(602, 466)
         Me.PictureBox1.TabIndex = 0
         Me.PictureBox1.TabStop = False
         '
@@ -403,7 +390,6 @@ Partial Class PageMzkitTools
     Friend WithEvents ListBox1 As ListBox
     Friend WithEvents TabControl1 As TabControl
     Friend WithEvents TabPage1 As TabPage
-    Friend WithEvents PropertyGrid1 As PropertyGrid
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents TabPage2 As TabPage
     Friend WithEvents DataGridView1 As DataGridView

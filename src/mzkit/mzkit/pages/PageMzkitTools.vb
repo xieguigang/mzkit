@@ -71,6 +71,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Text.Xml.Models
+Imports mzkit.DockSample
 Imports RibbonLib
 Imports RibbonLib.Interop
 Imports Task
@@ -225,6 +226,7 @@ Public Class PageMzkitTools
     End Sub
 
     Dim currentMatrix As [Variant](Of ms2(), ChromatogramTick())
+    Dim propertyWin As New DummyPropertyWindow
 
     Private Sub showSpectrum(scanId As String, raw As Raw)
         If raw.cache.FileExists Then
@@ -235,13 +237,30 @@ Public Class PageMzkitTools
 
             Dim draw As Image = scanData.MirrorPlot.AsGDIImage
 
-            PropertyGrid1.SelectedObject = prop
-            PropertyGrid1.Refresh()
+            host.Invoke(Sub()
+                            ' PropertyGrid1.SelectedObject = prop
+                            'PropertyGrid1.Refresh()
+
+                            If Not Globals.CheckFormOpened(propertyWin) Then
+                                Try
+                                    propertyWin.Close()
+                                    propertyWin.Dispose()
+                                Catch ex As Exception
+
+                                End Try
+
+                                propertyWin = New DummyPropertyWindow
+                                propertyWin.Show(host.dockPanel)
+                            End If
+
+                            propertyWin.propertyGrid.SelectedObject = prop
+                            propertyWin.propertyGrid.Refresh()
+                        End Sub)
 
             PictureBox1.BackgroundImage = draw
-            TabControl1.SelectedTab = TabPage1
-        Else
-            Call missingCacheFile(raw)
+                TabControl1.SelectedTab = TabPage1
+            Else
+                Call missingCacheFile(raw)
         End If
     End Sub
 

@@ -146,6 +146,14 @@
     <Compile Include="pages\contextMenu\ExportData.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="pages\dockWindow\DummyPropertyWindow.Designer.vb" />
+    <Compile Include="pages\dockWindow\DummyPropertyWindow.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="pages\dockWindow\ToolWindow.Designer.vb" />
+    <Compile Include="pages\dockWindow\ToolWindow.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="pages\Settings\AppConfig.Designer.vb">
       <DependentUpon>AppConfig.vb</DependentUpon>
     </Compile>
@@ -247,6 +255,8 @@
     <EmbeddedResource Include="forms\frmLicense.resx">
       <DependentUpon>frmLicense.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="pages\dockWindow\DummyPropertyWindow.resx" />
+    <EmbeddedResource Include="pages\dockWindow\ToolWindow.resx" />
     <EmbeddedResource Include="pages\PageMoleculeNetworking.resx">
       <DependentUpon>PageMoleculeNetworking.vb</DependentUpon>
     </EmbeddedResource>

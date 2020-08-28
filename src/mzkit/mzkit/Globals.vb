@@ -160,4 +160,14 @@ Module Globals
             Return (DirectCast(node.Parent.Tag, Raw), node.Parent)
         End If
     End Function
+
+    Public Function CheckFormOpened(form As Form) As Boolean
+        For i As Integer = 0 To Application.OpenForms.Count - 1
+            If Application.OpenForms.Item(i) Is form Then
+                Return True
+            End If
+        Next
+
+        Return False
+    End Function
 End Module
