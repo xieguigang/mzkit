@@ -3,6 +3,8 @@ Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
+Imports mzkit.My
+Imports RibbonLib.Interop
 
 Public Class frmRScriptEdit
     Implements ISaveHandle
@@ -18,7 +20,7 @@ Public Class frmRScriptEdit
         End Get
     End Property
 
-    Dim script As New PageRscriptEditor
+    Dim WithEvents script As New PageRscriptEditor
 
     Private Sub frmRScriptEdit_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
         If scriptFile.StringEmpty Then

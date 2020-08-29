@@ -1,4 +1,6 @@
 ﻿Imports FastColoredTextBoxNS
+Imports mzkit.My
+Imports RibbonLib.Interop
 
 Public Class PageRscriptEditor
 
@@ -47,5 +49,9 @@ Public Class PageRscriptEditor
         e.ChangedRange.SetStyle(blue, keyword2)
         e.ChangedRange.SetStyle(green, "#.*$")
         e.ChangedRange.SetStyle(endSymbol, ";")
+    End Sub
+
+    Private Sub FastColoredTextBox1_GotFocus(sender As Object, e As EventArgs) Handles FastColoredTextBox1.GotFocus
+        MyApplication.host.ribbonItems.TabGroupRscriptTools.ContextAvailable = ContextAvailability.Active
     End Sub
 End Class

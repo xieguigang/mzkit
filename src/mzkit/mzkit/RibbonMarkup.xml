@@ -559,9 +559,9 @@
 
 
 
-<Command Name="cmdGroupShowDockWindows"
-				 Id="1120"
-				 LabelTitle="Dock Windows">
+		<Command Name="cmdGroupShowDockWindows"
+						 Id="1120"
+						 LabelTitle="Dock Windows">
 		</Command>
 
 
@@ -596,6 +596,35 @@
 			</Command.LargeImages>
 		</Command>
 
+
+
+
+		<Command Name="cmdTabGroupRscriptTools"
+	Id="1130"
+	LabelTitle="R# Scripting">
+		</Command>
+
+		<Command Name="cmdTabRscriptTools"
+				 Id="1131"
+				 LabelTitle="R#">
+		</Command>
+
+		<Command Name="cmdGroupRscript"
+				 Id="1132"
+				 LabelTitle="Scripting">
+		</Command>
+
+
+		<Command Name="cmdButtonRunScript"
+					Id="1133"
+					LabelTitle="Run"
+					LabelDescription="Run R# Script"
+		 TooltipTitle="Run"
+		 TooltipDescription="Run R# script for mzkit Automation">
+			<Command.LargeImages>
+				<Image>Res/gparted.png</Image>
+			</Command.LargeImages>
+		</Command>
 
 
 	</Application.Commands>
@@ -636,7 +665,7 @@
 						</Group>
 
 
-<Group CommandName='cmdGroupShowDockWindows' SizeDefinition='ThreeButtons'>
+						<Group CommandName='cmdGroupShowDockWindows' SizeDefinition='ThreeButtons'>
 
 							<Button CommandName='cmdButtonShowExplorer' />
 							<Button CommandName='cmdButtonShowSearchList' />
@@ -666,6 +695,19 @@
 				</TabGroup>
 
 
+
+				<TabGroup CommandName='cmdTabGroupRscriptTools'>
+					<Tab CommandName='cmdTabRscriptTools'>
+						<Group CommandName='cmdGroupRscript' SizeDefinition='OneButton'>
+							<Button CommandName='cmdButtonRunScript' />
+
+						</Group>
+					</Tab>
+				</TabGroup>
+
+		
+				
+				
 				<TabGroup CommandName='cmdTabGroupExactMassSearchTools'>
 					<Tab CommandName='cmdTabExactMassSearch'>
 						<Group CommandName='cmdGroupExactMassSearch' SizeDefinition='TwoButtons'>

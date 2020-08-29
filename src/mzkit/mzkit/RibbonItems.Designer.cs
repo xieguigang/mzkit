@@ -13,6 +13,7 @@ using RibbonLib;
 using RibbonLib.Controls;
 using RibbonLib.Interop;
 
+
     partial class RibbonItems
     {
         private static class Cmd
@@ -38,6 +39,10 @@ using RibbonLib.Interop;
             public const uint cmdTabCalculator = 1062;
             public const uint cmdGroupCalculator = 1063;
             public const uint cmdButtonCalculatorExport = 1064;
+            public const uint cmdTabGroupRscriptTools = 1130;
+            public const uint cmdTabRscriptTools = 1131;
+            public const uint cmdGroupRscript = 1132;
+            public const uint cmdButtonRunScript = 1133;
             public const uint cmdTabGroupExactMassSearchTools = 1071;
             public const uint cmdTabExactMassSearch = 1072;
             public const uint cmdGroupExactMassSearch = 1073;
@@ -115,6 +120,10 @@ using RibbonLib.Interop;
         public RibbonTab TabCalculator { get; private set; }
         public RibbonGroup GroupCalculator { get; private set; }
         public RibbonButton ButtonCalculatorExport { get; private set; }
+        public RibbonTabGroup TabGroupRscriptTools { get; private set; }
+        public RibbonTab TabRscriptTools { get; private set; }
+        public RibbonGroup GroupRscript { get; private set; }
+        public RibbonButton ButtonRunScript { get; private set; }
         public RibbonTabGroup TabGroupExactMassSearchTools { get; private set; }
         public RibbonTab TabExactMassSearch { get; private set; }
         public RibbonGroup GroupExactMassSearch { get; private set; }
@@ -190,6 +199,10 @@ using RibbonLib.Interop;
             TabCalculator = new RibbonTab(ribbon, Cmd.cmdTabCalculator);
             GroupCalculator = new RibbonGroup(ribbon, Cmd.cmdGroupCalculator);
             ButtonCalculatorExport = new RibbonButton(ribbon, Cmd.cmdButtonCalculatorExport);
+            TabGroupRscriptTools = new RibbonTabGroup(ribbon, Cmd.cmdTabGroupRscriptTools);
+            TabRscriptTools = new RibbonTab(ribbon, Cmd.cmdTabRscriptTools);
+            GroupRscript = new RibbonGroup(ribbon, Cmd.cmdGroupRscript);
+            ButtonRunScript = new RibbonButton(ribbon, Cmd.cmdButtonRunScript);
             TabGroupExactMassSearchTools = new RibbonTabGroup(ribbon, Cmd.cmdTabGroupExactMassSearchTools);
             TabExactMassSearch = new RibbonTab(ribbon, Cmd.cmdTabExactMassSearch);
             GroupExactMassSearch = new RibbonGroup(ribbon, Cmd.cmdGroupExactMassSearch);
