@@ -47,5 +47,6 @@ Public Class PageStart
 
     Private Sub LinkLabel3_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel3.LinkClicked
         ' 打开R终端页面
+        MyApplication.host.CreateNewScript(Nothing, Nothing)
     End Sub
 End Class

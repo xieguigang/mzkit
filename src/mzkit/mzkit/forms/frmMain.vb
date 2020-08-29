@@ -224,7 +224,7 @@ Public Class frmMain
 
     Dim scriptFiles As New List(Of frmRScriptEdit)
 
-    Private Sub CreateNewScript(sender As Object, e As ExecuteEventArgs)
+    Public Sub CreateNewScript(sender As Object, e As ExecuteEventArgs)
         Dim newScript As New frmRScriptEdit
 
         newScript.Show(dockPanel)
