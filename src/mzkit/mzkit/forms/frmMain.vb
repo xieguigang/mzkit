@@ -89,6 +89,8 @@ Public Class frmMain
         Me.Text = $"BioNovoGene Mzkit [{page.Text}]"
         page.Visible = True
         page.Show()
+
+        panelMain.Show(dockPanel)
     End Sub
 
     Private Sub OpenFile(ByVal sender As Object, ByVal e As ExecuteEventArgs)
