@@ -348,6 +348,9 @@
     <EmbeddedResource Include="pages\PageMzSearch.resx">
       <DependentUpon>PageMzSearch.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="pages\PageRscriptEditor.resx">
+      <DependentUpon>PageRscriptEditor.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="pages\PageScripting.resx">
       <DependentUpon>PageScripting.vb</DependentUpon>
     </EmbeddedResource>
