@@ -33,10 +33,16 @@ Partial Class PageStart
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
         Me.LinkLabel2 = New System.Windows.Forms.LinkLabel()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.PictureBox4 = New System.Windows.Forms.PictureBox()
+        Me.LinkLabel3 = New System.Windows.Forms.LinkLabel()
+        Me.PictureBox5 = New System.Windows.Forms.PictureBox()
+        Me.LinkLabel4 = New System.Windows.Forms.LinkLabel()
         Me.Panel1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Panel1
@@ -44,9 +50,9 @@ Partial Class PageStart
         Me.Panel1.BackgroundImage = Global.mzkit.My.Resources.Resources.header_background_image
         Me.Panel1.Controls.Add(Me.PictureBox1)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel1.Location = New System.Drawing.Point(0, 349)
+        Me.Panel1.Location = New System.Drawing.Point(0, 569)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(1119, 62)
+        Me.Panel1.Size = New System.Drawing.Size(1065, 62)
         Me.Panel1.TabIndex = 0
         '
         'PictureBox1
@@ -56,7 +62,7 @@ Partial Class PageStart
         Me.PictureBox1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.PictureBox1.Location = New System.Drawing.Point(0, 11)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(1119, 51)
+        Me.PictureBox1.Size = New System.Drawing.Size(1065, 51)
         Me.PictureBox1.TabIndex = 0
         Me.PictureBox1.TabStop = False
         '
@@ -68,10 +74,10 @@ Partial Class PageStart
         Me.FlowLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.FlowLayoutPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.FlowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
-        Me.FlowLayoutPanel1.Location = New System.Drawing.Point(639, 65)
+        Me.FlowLayoutPanel1.Location = New System.Drawing.Point(585, 65)
         Me.FlowLayoutPanel1.Margin = New System.Windows.Forms.Padding(0)
         Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
-        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(471, 281)
+        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(471, 501)
         Me.FlowLayoutPanel1.TabIndex = 1
         Me.FlowLayoutPanel1.WrapContents = False
         '
@@ -122,7 +128,7 @@ Partial Class PageStart
         Me.LinkLabel2.DisabledLinkColor = System.Drawing.Color.Silver
         Me.LinkLabel2.Font = New System.Drawing.Font("Microsoft YaHei UI", 36.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LinkLabel2.LinkColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(104, Byte), Integer), CType(CType(189, Byte), Integer))
-        Me.LinkLabel2.Location = New System.Drawing.Point(628, 3)
+        Me.LinkLabel2.Location = New System.Drawing.Point(574, 3)
         Me.LinkLabel2.Name = "LinkLabel2"
         Me.LinkLabel2.Size = New System.Drawing.Size(447, 62)
         Me.LinkLabel2.TabIndex = 6
@@ -141,11 +147,63 @@ Partial Class PageStart
         Me.Label1.TabIndex = 7
         Me.Label1.Text = "Mzkit"
         '
+        'PictureBox4
+        '
+        Me.PictureBox4.BackgroundImage = CType(resources.GetObject("PictureBox4.BackgroundImage"), System.Drawing.Image)
+        Me.PictureBox4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.PictureBox4.Location = New System.Drawing.Point(72, 291)
+        Me.PictureBox4.Name = "PictureBox4"
+        Me.PictureBox4.Size = New System.Drawing.Size(32, 32)
+        Me.PictureBox4.TabIndex = 9
+        Me.PictureBox4.TabStop = False
+        '
+        'LinkLabel3
+        '
+        Me.LinkLabel3.AutoSize = True
+        Me.LinkLabel3.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LinkLabel3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.LinkLabel3.ImageList = Me.ImageList1
+        Me.LinkLabel3.Location = New System.Drawing.Point(110, 303)
+        Me.LinkLabel3.Name = "LinkLabel3"
+        Me.LinkLabel3.Size = New System.Drawing.Size(161, 20)
+        Me.LinkLabel3.TabIndex = 8
+        Me.LinkLabel3.TabStop = True
+        Me.LinkLabel3.Text = "R# Script Automation"
+        Me.LinkLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'PictureBox5
+        '
+        Me.PictureBox5.BackgroundImage = CType(resources.GetObject("PictureBox5.BackgroundImage"), System.Drawing.Image)
+        Me.PictureBox5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.PictureBox5.Location = New System.Drawing.Point(72, 340)
+        Me.PictureBox5.Name = "PictureBox5"
+        Me.PictureBox5.Size = New System.Drawing.Size(32, 32)
+        Me.PictureBox5.TabIndex = 11
+        Me.PictureBox5.TabStop = False
+        '
+        'LinkLabel4
+        '
+        Me.LinkLabel4.AutoSize = True
+        Me.LinkLabel4.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LinkLabel4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.LinkLabel4.ImageList = Me.ImageList1
+        Me.LinkLabel4.Location = New System.Drawing.Point(110, 352)
+        Me.LinkLabel4.Name = "LinkLabel4"
+        Me.LinkLabel4.Size = New System.Drawing.Size(105, 20)
+        Me.LinkLabel4.TabIndex = 10
+        Me.LinkLabel4.TabStop = True
+        Me.LinkLabel4.Text = "Visit BioDeep"
+        Me.LinkLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
         'PageStart
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
+        Me.Controls.Add(Me.PictureBox5)
+        Me.Controls.Add(Me.LinkLabel4)
+        Me.Controls.Add(Me.PictureBox4)
+        Me.Controls.Add(Me.LinkLabel3)
         Me.Controls.Add(Me.LinkLabel2)
         Me.Controls.Add(Me.PictureBox3)
         Me.Controls.Add(Me.LinkLabel1)
@@ -155,11 +213,13 @@ Partial Class PageStart
         Me.Controls.Add(Me.Label1)
         Me.DoubleBuffered = True
         Me.Name = "PageStart"
-        Me.Size = New System.Drawing.Size(1119, 411)
+        Me.Size = New System.Drawing.Size(1065, 631)
         Me.Panel1.ResumeLayout(False)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -174,4 +234,8 @@ Partial Class PageStart
     Friend WithEvents PictureBox3 As PictureBox
     Friend WithEvents LinkLabel2 As LinkLabel
     Friend WithEvents Label1 As Label
+    Friend WithEvents PictureBox4 As PictureBox
+    Friend WithEvents LinkLabel3 As LinkLabel
+    Friend WithEvents PictureBox5 As PictureBox
+    Friend WithEvents LinkLabel4 As LinkLabel
 End Class

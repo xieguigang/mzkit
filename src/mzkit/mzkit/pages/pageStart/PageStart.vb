@@ -30,4 +30,8 @@ Public Class PageStart
     Private Sub LinkLabel2_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel2.LinkClicked
         Process.Start("http://www.bionovogene.com/news/newsFeed.htm")
     End Sub
+
+    Private Sub LinkLabel4_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel4.LinkClicked
+        Process.Start("http://www.biodeep.cn/")
+    End Sub
 End Class
