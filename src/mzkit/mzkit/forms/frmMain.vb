@@ -149,12 +149,32 @@ Public Class frmMain
         AddHandler ribbonItems.ButtonShowPlotViewer.ExecuteEvent, Sub(sender, e) Call mzkitTool.ShowTabPage(mzkitTool.TabPage5)
         AddHandler ribbonItems.ButtonShowMatrixViewer.ExecuteEvent, Sub(sender, e) Call mzkitTool.ShowTabPage(mzkitTool.TabPage6)
 
+        AddHandler ribbonItems.ButtonRunScript.ExecuteEvent, AddressOf RunCurrentScript
+
         _uiCollectionChangedEvent = New UICollectionChangedEvent()
 
         MyApplication.RegisterHost(Me)
 
         InitSpinner()
         InitializeFormulaProfile()
+    End Sub
+
+    Private Sub RunCurrentScript(sender As Object, e As ExecuteEventArgs)
+        Dim active = dockPanel.ActiveDocument
+
+        If Not active Is Nothing Then
+            If TypeOf CObj(active) Is frmRScriptEdit Then
+                Dim editor = DirectCast(CObj(active), frmRScriptEdit)
+                Dim script As String = editor.script.FastColoredTextBox1.Text
+
+                If editor.scriptFile.StringEmpty Then
+                    Call MyApplication.REngine.Evaluate(script)
+                Else
+                    Call script.SaveTo(editor.scriptFile)
+                    Call MyApplication.REngine.Source(editor.scriptFile)
+                End If
+            End If
+        End If
     End Sub
 
     Private Sub CreateNewScript(sender As Object, e As ExecuteEventArgs)
@@ -307,6 +327,7 @@ Public Class frmMain
         End If
 
         MyApplication.host.startPage.Show(MyApplication.host.dockPanel)
+        MyApplication.InitializeREngine()
 
         showStatusMessage("Ready!")
     End Sub

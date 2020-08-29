@@ -45,6 +45,8 @@
 
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports mzkit.DockSample
+Imports SMRUCC.Rsharp.Interpreter
+Imports SMRUCC.Rsharp.Runtime
 
 Namespace My
     ' The following events are available for MyApplication:
@@ -57,9 +59,14 @@ Namespace My
 
         Public Shared ReadOnly Property host As frmMain
         Public Shared ReadOnly Property LogForm As DummyOutputWindow
+        Public Shared ReadOnly Property REngine As RInterpreter
 
         Public Shared Sub RegisterOutput(log As DummyOutputWindow)
             _LogForm = log
+        End Sub
+
+        Public Shared Sub InitializeREngine()
+            _REngine = New RInterpreter
         End Sub
 
         Public Overloads Shared Sub LogText(msg As String)

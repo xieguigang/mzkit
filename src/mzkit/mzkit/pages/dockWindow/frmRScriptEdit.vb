@@ -20,7 +20,7 @@ Public Class frmRScriptEdit
         End Get
     End Property
 
-    Dim WithEvents script As New PageRscriptEditor
+    Friend WithEvents script As New PageRscriptEditor
 
     Private Sub frmRScriptEdit_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
         If scriptFile.StringEmpty Then
