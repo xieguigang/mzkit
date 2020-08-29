@@ -43,9 +43,9 @@ Partial Class frmMain
         'StatusStrip
         '
         Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1, Me.ToolStripDropDownButton1, Me.ToolStripStatusLabel2})
-        Me.StatusStrip.Location = New System.Drawing.Point(0, 691)
+        Me.StatusStrip.Location = New System.Drawing.Point(0, 502)
         Me.StatusStrip.Name = "StatusStrip"
-        Me.StatusStrip.Size = New System.Drawing.Size(1260, 22)
+        Me.StatusStrip.Size = New System.Drawing.Size(1084, 22)
         Me.StatusStrip.TabIndex = 7
         Me.StatusStrip.Text = "StatusStrip"
         '
@@ -107,7 +107,7 @@ Partial Class frmMain
         Me.Ribbon1.ResourceIdentifier = Nothing
         Me.Ribbon1.ResourceName = "mzkit.RibbonMarkup.ribbon"
         Me.Ribbon1.ShortcutTableResourceName = Nothing
-        Me.Ribbon1.Size = New System.Drawing.Size(1260, 166)
+        Me.Ribbon1.Size = New System.Drawing.Size(1084, 166)
         Me.Ribbon1.TabIndex = 9
         '
         'PanelBase
@@ -115,13 +115,13 @@ Partial Class frmMain
         Me.PanelBase.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PanelBase.Location = New System.Drawing.Point(0, 166)
         Me.PanelBase.Name = "PanelBase"
-        Me.PanelBase.Size = New System.Drawing.Size(1260, 525)
+        Me.PanelBase.Size = New System.Drawing.Size(1084, 336)
         Me.PanelBase.TabIndex = 10
         '
         'frmMain
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
-        Me.ClientSize = New System.Drawing.Size(1260, 713)
+        Me.ClientSize = New System.Drawing.Size(1084, 524)
         Me.Controls.Add(Me.PanelBase)
         Me.Controls.Add(Me.StatusStrip)
         Me.Controls.Add(Me.Ribbon1)

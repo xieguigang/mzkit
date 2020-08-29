@@ -189,6 +189,9 @@ Public Class PageMzkitTools
              .ToArray
             showMatrix(TIC.value, TIC.name)
             PictureBox1.BackgroundImage = TIC.TICplot(intensityMax:=maxY).AsGDIImage
+
+            host.ShowPage(Me)
+
         ElseIf e.Node.Tag Is Nothing AndAlso e.Node.Text = "TIC" Then
             Dim raw = TreeView1.CurrentRawFile.raw
             Dim TIC As New NamedCollection(Of ChromatogramTick) With {
@@ -209,12 +212,15 @@ Public Class PageMzkitTools
              .ToArray
             showMatrix(TIC.value, TIC.name)
             PictureBox1.BackgroundImage = TIC.TICplot.AsGDIImage
+
+            host.ShowPage(Me)
         Else
             ' scan节点
             Dim raw As Task.Raw = e.Node.Parent.Tag
             Dim scanId As String = e.Node.Text
 
             Call showSpectrum(scanId, raw)
+            Call host.ShowPage(Me)
         End If
 
         Call setCurrentFile()

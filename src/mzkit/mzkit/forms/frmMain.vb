@@ -59,13 +59,12 @@ Public Class frmMain
 
     Dim pages As New List(Of Control)
 
-    Friend mzkitTool As New PageMzkitTools
-    Friend mzkitSettings As New PageSettings
-    Friend mzkitSearch As New PageMzSearch
-    Friend mzkitCalculator As New PageMzCalculator
-    Friend mzkitMNtools As New PageMoleculeNetworking
-    Friend mzkitRsharpScripting As New PageScripting
-
+    Friend mzkitTool As New PageMzkitTools With {.Text = "Raw File Viewer"}
+    Friend mzkitSettings As New PageSettings With {.Text = "Settings"}
+    Friend mzkitSearch As New PageMzSearch With {.Text = "M/Z Formula De-novo Search"}
+    Friend mzkitCalculator As New PageMzCalculator With {.Text = "M/Z Calculator"}
+    Friend mzkitMNtools As New PageMoleculeNetworking With {.Text = "Molecular Networking"}
+    Friend mzkitRsharpScripting As New PageScripting With {.Text = "Mzkit Automation"}
 
     Friend TreeView1 As TreeView
 
@@ -83,6 +82,7 @@ Public Class frmMain
             nav.Push(page)
         End If
 
+        Me.Text = $"BioNovoGene Mzkit [{page.Text}]"
         page.Visible = True
         page.Show()
     End Sub
