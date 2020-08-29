@@ -62,7 +62,6 @@
 
 Imports System.ComponentModel
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
-Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 
 Public Class PrecursorSearchSettings
 

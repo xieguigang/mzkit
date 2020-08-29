@@ -53,6 +53,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports mzkit.DockSample
 Imports mzkit.My
@@ -104,6 +105,8 @@ Public Class frmMain
                 Else
                     Call mzkitTool.ImportsRaw(file.FileName)
                 End If
+
+                Globals.AddRecentFileHistory(file.FileName)
             End If
         End Using
     End Sub
@@ -282,6 +285,7 @@ Public Class frmMain
             End If
 
             If Not script.scriptFile.StringEmpty Then
+                Globals.AddRecentFileHistory(script.scriptFile)
                 Me.showStatusMessage($"Save R# script file at location {script.scriptFile.GetFullPath}!")
             End If
         End If
@@ -321,6 +325,7 @@ Public Class frmMain
                 End If
 
                 If Not file.StringEmpty Then
+                    Globals.AddRecentFileHistory(file)
                     Me.showStatusMessage($"Current file saved at {file.GetFullPath}!")
                 End If
 
@@ -452,8 +457,13 @@ Public Class frmMain
     Private Sub InitRecentItems()
         ' prepare list of recent items
         recentItems = New List(Of RecentItemsPropertySet)()
-        recentItems.Add(New RecentItemsPropertySet() With {.Label = "Recent item 1", .LabelDescription = "Recent item 1 description", .Pinned = True})
-        recentItems.Add(New RecentItemsPropertySet() With {.Label = "Recent item 2", .LabelDescription = "Recent item 2 description", .Pinned = False})
+
+        For Each file In Globals.Settings.recentFiles.SafeQuery
+            recentItems.Add(New RecentItemsPropertySet() With {
+                            .Label = file.FileName,
+                            .LabelDescription = $"Location at {file.ParentPath}",
+                            .Pinned = True})
+        Next
 
         ribbonItems.RecentItems.RecentItems = recentItems
     End Sub

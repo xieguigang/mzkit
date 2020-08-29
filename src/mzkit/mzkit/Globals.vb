@@ -65,6 +65,11 @@ Module Globals
         Settings = Settings.GetConfiguration()
     End Sub
 
+    Public Sub AddRecentFileHistory(file As String)
+        Settings.recentFiles = {file}.JoinIterates(Settings.recentFiles).Distinct.ToArray
+        Settings.Save()
+    End Sub
+
     <Extension>
     Public Sub SaveRawFileCache(explorer As TreeView)
         Dim files As New List(Of Task.Raw)

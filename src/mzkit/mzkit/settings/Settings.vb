@@ -53,6 +53,8 @@ Public Class Settings
     Public Property ui As UISettings
     Public Property viewer As RawFileViewerSettings
 
+    Public Property recentFiles As String()
+
     Public Shared ReadOnly Property configFile As String = App.LocalData & "/settings.json"
 
     Public Shared Function DefaultProfile() As Settings
