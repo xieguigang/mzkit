@@ -86,7 +86,6 @@ Public Class PageMzkitTools
     Dim matrixName As String
     Dim TreeView1 As TreeView
     Dim ListBox1 As ListBox
-    Dim ShowTICToolStripMenuItem As ToolStripMenuItem
 
     Friend _ribbonExportDataContextMenuStrip As ExportData
 
@@ -611,39 +610,35 @@ Public Class PageMzkitTools
     End Sub
 
     Private Sub runMzSearch(searchAction As Action(Of Double))
-        If Not ShowTICToolStripMenuItem.Checked Then
-            Dim current = TreeView1.CurrentRawFile
-            Dim node = TreeView1.SelectedNode
+        Dim current = TreeView1.CurrentRawFile
+        Dim node = TreeView1.SelectedNode
 
-            If Not node Is Nothing AndAlso current.raw.cache.FileExists Then
-                Dim mz = current.raw.scans.Where(Function(scan) scan.id = node.Text).FirstOrDefault
+        If Not node Is Nothing AndAlso current.raw.cache.FileExists Then
+            Dim mz = current.raw.scans.Where(Function(scan) scan.id = node.Text).FirstOrDefault
 
-                If Not mz Is Nothing AndAlso mz.mz > 0 Then
-                    Call searchAction(mz.mz)
-                End If
+            If Not mz Is Nothing AndAlso mz.mz > 0 Then
+                Call searchAction(mz.mz)
             End If
         End If
     End Sub
 
     Private Sub SearchFormulaToolStripMenuItem_Click(sender As Object, e As EventArgs) ' Handles SearchFormulaToolStripMenuItem.Click
-        If Not ShowTICToolStripMenuItem.Checked Then
-            Dim current = TreeView1.CurrentRawFile
-            Dim node = TreeView1.SelectedNode
+        Dim current = TreeView1.CurrentRawFile
+        Dim node = TreeView1.SelectedNode
 
-            If Not node Is Nothing AndAlso current.raw.cache.FileExists Then
-                Dim mz = current.raw.scans.Where(Function(scan) scan.id = node.Text).FirstOrDefault
+        If Not node Is Nothing AndAlso current.raw.cache.FileExists Then
+            Dim mz = current.raw.scans.Where(Function(scan) scan.id = node.Text).FirstOrDefault
 
-                If Not mz Is Nothing AndAlso mz.mz > 0 Then
-                    Dim charge As Double = mz.charge
-                    Dim ionMode As Integer = mz.polarity
+            If Not mz Is Nothing AndAlso mz.mz > 0 Then
+                Dim charge As Double = mz.charge
+                Dim ionMode As Integer = mz.polarity
 
-                    If charge = 0 Then
-                        charge = 1
-                    End If
-
-                    host.mzkitSearch.doMzSearch(mz.mz, charge, ionMode)
-                    host.ShowPage(host.mzkitSearch)
+                If charge = 0 Then
+                    charge = 1
                 End If
+
+                host.mzkitSearch.doMzSearch(mz.mz, charge, ionMode)
+                host.ShowPage(host.mzkitSearch)
             End If
         End If
     End Sub
