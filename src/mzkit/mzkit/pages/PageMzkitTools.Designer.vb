@@ -44,19 +44,19 @@ Partial Class PageMzkitTools
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
         Me.DeleteFileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
-        Me.TabControl1 = New System.Windows.Forms.TabControl()
-        Me.TabPage3 = New System.Windows.Forms.TabPage()
-        Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
+        Me.CustomTabControl1 = New System.Windows.Forms.CustomTabControl()
+        Me.TabPage4 = New System.Windows.Forms.TabPage()
+        Me.TabPage5 = New System.Windows.Forms.TabPage()
+        Me.TabPage6 = New System.Windows.Forms.TabPage()
         Me.ContextMenuStrip1.SuspendLayout()
-        Me.TabControl1.SuspendLayout()
-        Me.TabPage1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TabPage2.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.CustomTabControl1.SuspendLayout()
+        Me.TabPage5.SuspendLayout()
+        Me.TabPage6.SuspendLayout()
         Me.SuspendLayout()
         '
         'ContextMenuStrip1
@@ -190,100 +190,108 @@ Partial Class PageMzkitTools
         Me.ImageList1.Images.SetKeyName(0, "view_16xLG.png")
         Me.ImageList1.Images.SetKeyName(1, "StatusAnnotations_Warning_32xLG_color.png")
         '
-        'TabControl1
-        '
-        Me.TabControl1.Controls.Add(Me.TabPage3)
-        Me.TabControl1.Controls.Add(Me.TabPage1)
-        Me.TabControl1.Controls.Add(Me.TabPage2)
-        Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TabControl1.HotTrack = True
-        Me.TabControl1.Location = New System.Drawing.Point(0, 0)
-        Me.TabControl1.Multiline = True
-        Me.TabControl1.Name = "TabControl1"
-        Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(957, 501)
-        Me.TabControl1.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight
-        Me.TabControl1.TabIndex = 13
-        '
-        'TabPage3
-        '
-        Me.TabPage3.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage3.Name = "TabPage3"
-        Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage3.Size = New System.Drawing.Size(949, 475)
-        Me.TabPage3.TabIndex = 2
-        Me.TabPage3.Text = "Start Page"
-        Me.TabPage3.UseVisualStyleBackColor = True
-        '
-        'TabPage1
-        '
-        Me.TabPage1.Controls.Add(Me.PictureBox1)
-        Me.TabPage1.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage1.Name = "TabPage1"
-        Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(949, 475)
-        Me.TabPage1.TabIndex = 0
-        Me.TabPage1.Text = "Data Plot"
-        Me.TabPage1.UseVisualStyleBackColor = True
-        '
         'PictureBox1
         '
         Me.PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.PictureBox1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PictureBox1.Location = New System.Drawing.Point(3, 3)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(943, 469)
+        Me.PictureBox1.Size = New System.Drawing.Size(1327, 477)
         Me.PictureBox1.TabIndex = 0
         Me.PictureBox1.TabStop = False
         '
-        'TabPage2
-        '
-        Me.TabPage2.Controls.Add(Me.DataGridView1)
-        Me.TabPage2.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage2.Name = "TabPage2"
-        Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(949, 475)
-        Me.TabPage2.TabIndex = 1
-        Me.TabPage2.Text = "M/z Matrix"
-        Me.TabPage2.UseVisualStyleBackColor = True
-        '
         'DataGridView1
         '
-        Me.DataGridView1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView1.Location = New System.Drawing.Point(3, 3)
+        Me.DataGridView1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DataGridView1.Location = New System.Drawing.Point(0, 0)
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.ReadOnly = True
-        Me.DataGridView1.Size = New System.Drawing.Size(943, 469)
+        Me.DataGridView1.Size = New System.Drawing.Size(645, 410)
         Me.DataGridView1.TabIndex = 0
+        '
+        'CustomTabControl1
+        '
+        Me.CustomTabControl1.Controls.Add(Me.TabPage4)
+        Me.CustomTabControl1.Controls.Add(Me.TabPage5)
+        Me.CustomTabControl1.Controls.Add(Me.TabPage6)
+        '
+        '
+        '
+        Me.CustomTabControl1.DisplayStyleProvider.BorderColor = System.Drawing.SystemColors.ControlDark
+        Me.CustomTabControl1.DisplayStyleProvider.BorderColorHot = System.Drawing.SystemColors.ControlDark
+        Me.CustomTabControl1.DisplayStyleProvider.BorderColorSelected = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(157, Byte), Integer), CType(CType(185, Byte), Integer))
+        Me.CustomTabControl1.DisplayStyleProvider.CloserColor = System.Drawing.Color.DarkGray
+        Me.CustomTabControl1.DisplayStyleProvider.FocusTrack = True
+        Me.CustomTabControl1.DisplayStyleProvider.HotTrack = True
+        Me.CustomTabControl1.DisplayStyleProvider.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.CustomTabControl1.DisplayStyleProvider.Opacity = 1.0!
+        Me.CustomTabControl1.DisplayStyleProvider.Overlap = 0
+        Me.CustomTabControl1.DisplayStyleProvider.Padding = New System.Drawing.Point(6, 3)
+        Me.CustomTabControl1.DisplayStyleProvider.Radius = 2
+        Me.CustomTabControl1.DisplayStyleProvider.ShowTabCloser = True
+        Me.CustomTabControl1.DisplayStyleProvider.TextColor = System.Drawing.SystemColors.ControlText
+        Me.CustomTabControl1.DisplayStyleProvider.TextColorDisabled = System.Drawing.SystemColors.ControlDark
+        Me.CustomTabControl1.DisplayStyleProvider.TextColorSelected = System.Drawing.SystemColors.ControlText
+        Me.CustomTabControl1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CustomTabControl1.HotTrack = True
+        Me.CustomTabControl1.Location = New System.Drawing.Point(0, 0)
+        Me.CustomTabControl1.Name = "CustomTabControl1"
+        Me.CustomTabControl1.SelectedIndex = 0
+        Me.CustomTabControl1.Size = New System.Drawing.Size(1341, 510)
+        Me.CustomTabControl1.TabIndex = 14
+        '
+        'TabPage4
+        '
+        Me.TabPage4.Location = New System.Drawing.Point(4, 23)
+        Me.TabPage4.Name = "TabPage4"
+        Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage4.Size = New System.Drawing.Size(1333, 483)
+        Me.TabPage4.TabIndex = 0
+        Me.TabPage4.Text = "Start Page"
+        Me.TabPage4.UseVisualStyleBackColor = True
+        '
+        'TabPage5
+        '
+        Me.TabPage5.Controls.Add(Me.PictureBox1)
+        Me.TabPage5.Location = New System.Drawing.Point(4, 23)
+        Me.TabPage5.Name = "TabPage5"
+        Me.TabPage5.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage5.Size = New System.Drawing.Size(1333, 483)
+        Me.TabPage5.TabIndex = 1
+        Me.TabPage5.Text = "Plot Viewer"
+        Me.TabPage5.UseVisualStyleBackColor = True
+        '
+        'TabPage6
+        '
+        Me.TabPage6.Controls.Add(Me.DataGridView1)
+        Me.TabPage6.Location = New System.Drawing.Point(4, 23)
+        Me.TabPage6.Name = "TabPage6"
+        Me.TabPage6.Size = New System.Drawing.Size(645, 410)
+        Me.TabPage6.TabIndex = 2
+        Me.TabPage6.Text = "Matrix Viewer"
+        Me.TabPage6.UseVisualStyleBackColor = True
         '
         'PageMzkitTools
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.Controls.Add(Me.TabControl1)
+        Me.Controls.Add(Me.CustomTabControl1)
         Me.DoubleBuffered = True
         Me.Name = "PageMzkitTools"
-        Me.Size = New System.Drawing.Size(957, 501)
+        Me.Size = New System.Drawing.Size(1341, 510)
         Me.ContextMenuStrip1.ResumeLayout(False)
-        Me.TabControl1.ResumeLayout(False)
-        Me.TabPage1.ResumeLayout(False)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TabPage2.ResumeLayout(False)
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.CustomTabControl1.ResumeLayout(False)
+        Me.TabPage5.ResumeLayout(False)
+        Me.TabPage6.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
 
-
-
-    Friend WithEvents TabControl1 As TabControl
-    Friend WithEvents TabPage1 As TabPage
     Friend WithEvents PictureBox1 As PictureBox
-    Friend WithEvents TabPage2 As TabPage
     Friend WithEvents DataGridView1 As DataGridView
     Friend WithEvents ImageList1 As ImageList
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
@@ -306,5 +314,8 @@ Partial Class PageMzkitTools
     Friend WithEvents AddToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ClearToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ExportToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents TabPage3 As TabPage
+    Friend WithEvents CustomTabControl1 As CustomTabControl
+    Friend WithEvents TabPage4 As TabPage
+    Friend WithEvents TabPage5 As TabPage
+    Friend WithEvents TabPage6 As TabPage
 End Class

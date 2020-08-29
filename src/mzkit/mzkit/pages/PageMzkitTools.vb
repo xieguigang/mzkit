@@ -235,7 +235,7 @@ Public Class PageMzkitTools
         AddHandler TreeView1.AfterSelect, AddressOf TreeView1_AfterSelect
         AddHandler host.fileExplorer.Button1.Click, Sub(obj, evt) Call SearchByMz(host.fileExplorer.TextBox2.Text)
 
-        TabPage3.Controls.Add(startPage)
+        TabPage4.Controls.Add(startPage)
         startPage.Dock = DockStyle.Fill
     End Sub
 
@@ -264,7 +264,7 @@ Public Class PageMzkitTools
                         End Sub)
 
             PictureBox1.BackgroundImage = draw
-            TabControl1.SelectedTab = TabPage1
+            CustomTabControl1.SelectedTab = TabPage5
         Else
             Call missingCacheFile(raw)
         End If
@@ -529,7 +529,7 @@ Public Class PageMzkitTools
                 End If
             Next
 
-            TabControl1.SelectedTab = TabPage2
+            CustomTabControl1.SelectedTab = TabPage6
 
             host.ribbonItems.TabGroupExactMassSearchTools.ContextAvailable = ContextAvailability.Active
         End If
@@ -561,7 +561,7 @@ Public Class PageMzkitTools
         host.searchList.Show(host.dockPanel)
     End Sub
 
-    Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As EventArgs) 
+    Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As EventArgs)
         Dim scanId As ScanEntry = ListBox1.SelectedItem
         Dim raw = TreeView1.CurrentRawFile.raw
 
@@ -898,5 +898,30 @@ Public Class PageMzkitTools
             Dim p As Point = PictureBox1.PointToScreen(e.Location)
             DirectCast(ParentForm, frmMain).Ribbon1.ShowContextPopup(CUInt(RibbonItems.cmdContextMap), p.X, p.Y)
         End If
+    End Sub
+
+    Private Sub CustomTabControl1_TabClosing(sender As Object, e As TabControlCancelEventArgs) Handles CustomTabControl1.TabClosing
+        e.Cancel = True
+
+        If CustomTabControl1.Controls.Count = 1 Then
+            If e.TabPage Is TabPage4 Then
+
+            Else
+                CustomTabControl1.Controls.Clear()
+                ShowTabPage(TabPage4)
+            End If
+        Else
+            CustomTabControl1.Controls.Remove(e.TabPage)
+            e.TabPage.Hide()
+        End If
+    End Sub
+
+    Public Sub ShowTabPage(tabpage As TabPage)
+        If Not CustomTabControl1.Controls.Contains(tabpage) Then
+            CustomTabControl1.Controls.Add(tabpage)
+        End If
+
+        CustomTabControl1.SelectedTab = tabpage
+        tabpage.Visible = True
     End Sub
 End Class

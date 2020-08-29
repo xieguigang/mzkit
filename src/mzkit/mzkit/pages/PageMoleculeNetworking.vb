@@ -162,7 +162,7 @@ Public Class PageMoleculeNetworking
             host.mzkitTool.showMatrix(matrix, $"{row.Cells(0).Value}_vs_{row.Cells(1).Value}")
 
             host.mzkitTool.PictureBox1.BackgroundImage = MassSpectra.AlignMirrorPlot(data1, data2).AsGDIImage
-            host.mzkitTool.TabControl1.SelectedTab = host.mzkitTool.TabPage1
+            host.mzkitTool.CustomTabControl1.SelectedTab = host.mzkitTool.TabPage5
 
             host.ShowPage(host.mzkitTool)
         End If
