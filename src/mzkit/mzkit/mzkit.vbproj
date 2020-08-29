@@ -154,6 +154,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="pages\dockWindow\DummyPropertyWindow.Designer.vb" />
+    <Compile Include="pages\dockWindow\frmRsharp.Designer.vb">
+      <DependentUpon>frmRsharp.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\dockWindow\frmRsharp.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="pages\dockWindow\frmSettings.Designer.vb">
       <DependentUpon>frmSettings.vb</DependentUpon>
     </Compile>
@@ -506,6 +512,7 @@
     <Content Include="chemistry.ico" />
     <None Include="Resources\LICENSE.txt" />
     <None Include="Resources\logo%402x.png" />
+    <None Include="Res\preferences-system-notifications.png" />
     <Content Include="RibbonMarkup.h" />
     <Content Include="RibbonMarkup.xml" />
     <None Include="Resources\header-foreground-image.png" />

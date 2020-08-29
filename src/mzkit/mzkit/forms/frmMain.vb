@@ -259,7 +259,7 @@ Public Class frmMain
 
         MyApplication.host.startPage.Show(MyApplication.host.dockPanel)
 
-        MyApplication.LogText("Ready!")
+        showStatusMessage("Ready!")
     End Sub
 
     Private Sub _uiCollectionChangedEvent_ChangedEvent(ByVal sender As Object, ByVal e As UICollectionChangedEventArgs)
@@ -293,8 +293,12 @@ Public Class frmMain
     Sub showStatusMessage(message As String, Optional icon As Image = Nothing)
         MyApplication.host.Invoke(
             Sub()
-                ToolStripStatusLabel1.Text = message
+                If icon Is Nothing Then
+                    icon = My.Resources.preferences_system_notifications
+                End If
+
                 ToolStripStatusLabel1.Image = icon
+                ToolStripStatusLabel1.Text = message
 
                 Call MyApplication.LogText(message)
             End Sub)
