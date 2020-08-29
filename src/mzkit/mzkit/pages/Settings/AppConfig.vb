@@ -76,7 +76,7 @@ Public Class AppConfig : Implements ISaveSettings, IPageSettings
     End Sub
 
     Public Sub ShowPage() Implements IPageSettings.ShowPage
-        Call MyApplication.host.ShowPage(MyApplication.host.mzkitSettings)
+
     End Sub
 
     Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged

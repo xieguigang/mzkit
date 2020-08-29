@@ -59,7 +59,6 @@ Imports WeifenLuo.WinFormsUI.Docking
 Public Class frmMain
 
     Friend mzkitTool As New PageMzkitTools With {.Text = "Raw File Viewer"}
-    Friend mzkitSettings As New PageSettings With {.Text = "Settings"}
     Friend mzkitSearch As New PageMzSearch With {.Text = "M/Z Formula De-novo Search"}
     Friend mzkitCalculator As New PageMzCalculator With {.Text = "M/Z Calculator"}
     Friend mzkitMNtools As New PageMoleculeNetworking With {.Text = "Molecular Networking"}
@@ -233,7 +232,7 @@ Public Class frmMain
         InitRecentItems()
         ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
 
-        panelMain.addPage(mzkitTool, mzkitSettings, mzkitSearch, mzkitCalculator, mzkitMNtools, mzkitRsharpScripting)
+        panelMain.addPage(mzkitTool, mzkitSearch, mzkitCalculator, mzkitMNtools, mzkitRsharpScripting)
         ShowPage(mzkitTool)
 
         mzkitTool.Ribbon_Load(Ribbon1)
