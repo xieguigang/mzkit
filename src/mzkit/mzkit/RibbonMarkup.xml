@@ -559,6 +559,45 @@
 
 
 
+<Command Name="cmdGroupShowDockWindows"
+				 Id="1120"
+				 LabelTitle="Dock Windows">
+		</Command>
+
+
+		<Command Name="cmdButtonShowExplorer"
+			 Id="1121"
+			 LabelTitle="Explorer"
+			 LabelDescription="Show Raw File Explorer"
+			TooltipTitle="File Explorer">
+			<Command.LargeImages>
+				<Image>Res/folder-documents.png</Image>
+			</Command.LargeImages>
+		</Command>
+
+		<Command Name="cmdButtonShowSearchList"
+					 Id="1122"
+					 LabelTitle="Search Results"
+					 LabelDescription="Show Feature Search Result List"
+					TooltipTitle="Feature Search List">
+			<Command.LargeImages>
+				<Image>Res/document-print-preview.png</Image>
+			</Command.LargeImages>
+		</Command>
+
+
+		<Command Name="cmdButtonShowProperties"
+					 Id="1123"
+					 LabelTitle="Properties"
+					 LabelDescription="Show M/Z Data Properties Viewer"
+					TooltipTitle="M/Z Data Properties">
+			<Command.LargeImages>
+				<Image>Res/application-x-object.png</Image>
+			</Command.LargeImages>
+		</Command>
+
+
+
 	</Application.Commands>
 
 	<Application.Views>
@@ -595,6 +634,16 @@
 							<Button CommandName='cmdButtonShowPlotViewer' />
 							<Button CommandName='cmdButtonShowMatrixViewer' />
 						</Group>
+
+
+<Group CommandName='cmdGroupShowDockWindows' SizeDefinition='ThreeButtons'>
+
+							<Button CommandName='cmdButtonShowExplorer' />
+							<Button CommandName='cmdButtonShowSearchList' />
+							<Button CommandName='cmdButtonShowProperties' />
+						</Group>
+
+
 
 
 					</Tab>

@@ -13,8 +13,6 @@ using RibbonLib;
 using RibbonLib.Controls;
 using RibbonLib.Interop;
 
-namespace RibbonLib.Controls
-{
     partial class RibbonItems
     {
         private static class Cmd
@@ -28,6 +26,10 @@ namespace RibbonLib.Controls
             public const uint cmdGroupShowViewer = 1110;
             public const uint cmdButtonShowPlotViewer = 1111;
             public const uint cmdButtonShowMatrixViewer = 1112;
+            public const uint cmdGroupShowDockWindows = 1120;
+            public const uint cmdButtonShowExplorer = 1121;
+            public const uint cmdButtonShowSearchList = 1122;
+            public const uint cmdButtonShowProperties = 1123;
             public const uint cmdTabLayout = 1035;
             public const uint cmdGroupLayout = 1037;
             public const uint cmdButtonLayout1 = 1043;
@@ -101,6 +103,10 @@ namespace RibbonLib.Controls
         public RibbonGroup GroupShowViewer { get; private set; }
         public RibbonButton ButtonShowPlotViewer { get; private set; }
         public RibbonButton ButtonShowMatrixViewer { get; private set; }
+        public RibbonGroup GroupShowDockWindows { get; private set; }
+        public RibbonButton ButtonShowExplorer { get; private set; }
+        public RibbonButton ButtonShowSearchList { get; private set; }
+        public RibbonButton ButtonShowProperties { get; private set; }
         public RibbonTab TabLayout { get; private set; }
         public RibbonGroup GroupLayout { get; private set; }
         public RibbonButton ButtonLayout1 { get; private set; }
@@ -172,6 +178,10 @@ namespace RibbonLib.Controls
             GroupShowViewer = new RibbonGroup(ribbon, Cmd.cmdGroupShowViewer);
             ButtonShowPlotViewer = new RibbonButton(ribbon, Cmd.cmdButtonShowPlotViewer);
             ButtonShowMatrixViewer = new RibbonButton(ribbon, Cmd.cmdButtonShowMatrixViewer);
+            GroupShowDockWindows = new RibbonGroup(ribbon, Cmd.cmdGroupShowDockWindows);
+            ButtonShowExplorer = new RibbonButton(ribbon, Cmd.cmdButtonShowExplorer);
+            ButtonShowSearchList = new RibbonButton(ribbon, Cmd.cmdButtonShowSearchList);
+            ButtonShowProperties = new RibbonButton(ribbon, Cmd.cmdButtonShowProperties);
             TabLayout = new RibbonTab(ribbon, Cmd.cmdTabLayout);
             GroupLayout = new RibbonGroup(ribbon, Cmd.cmdGroupLayout);
             ButtonLayout1 = new RibbonButton(ribbon, Cmd.cmdButtonLayout1);
@@ -230,4 +240,3 @@ namespace RibbonLib.Controls
         }
 
     }
-}
