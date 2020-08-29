@@ -368,18 +368,18 @@
 
 		<Command Name="cmdTabNetwork"
 				 Id="1082"
-				 LabelTitle="Design">
+				 LabelTitle="Network">
 		</Command>
 
 		<Command Name="cmdGroupNetwork"
 				 Id="1083"
-				 LabelTitle="EEE">
+				 LabelTitle="Network Result">
 		</Command>
 
 
 		<Command Name="cmdButtonNetworkExport"
 					Id="1084"
-					LabelTitle="Export Network">
+					LabelTitle="Export">
 			<Command.LargeImages>
 				<Image>Res/excel-icon.png</Image>
 			</Command.LargeImages>
@@ -389,7 +389,7 @@
 			Id="1085"
 			LabelTitle="Render Network">
 			<Command.LargeImages>
-				<Image>Res/excel-icon.png</Image>
+				<Image>Res/image-tiff.png</Image>
 			</Command.LargeImages>
 		</Command>
 
