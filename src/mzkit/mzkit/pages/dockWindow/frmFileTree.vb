@@ -1,4 +1,5 @@
-﻿Imports mzkit.My
+﻿Imports System.ComponentModel
+Imports mzkit.My
 Imports RibbonLib.Interop
 
 Public Class frmFileTree
@@ -24,5 +25,10 @@ Public Class frmFileTree
 
     Private Sub frmFileTree_Activated(sender As Object, e As EventArgs) Handles Me.Activated
         MyApplication.host.ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
+    End Sub
+
+    Private Sub frmFileTree_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        e.Cancel = True
+        Me.Hide()
     End Sub
 End Class

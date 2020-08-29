@@ -1,4 +1,5 @@
-﻿Imports System.Windows.Forms
+﻿Imports System.ComponentModel
+Imports System.Windows.Forms
 Imports Task
 
 Namespace DockSample
@@ -11,6 +12,11 @@ Namespace DockSample
             propertyGrid.SelectedObject = New SpectrumProperty("n/a", {})
 
             DoubleBuffered = True
+        End Sub
+
+        Private Sub DummyPropertyWindow_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+            e.Cancel = True
+            Me.Hide()
         End Sub
     End Class
 End Namespace

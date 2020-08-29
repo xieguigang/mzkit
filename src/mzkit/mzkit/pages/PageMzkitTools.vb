@@ -247,7 +247,18 @@ Public Class PageMzkitTools
 
             showMatrix(scanData.ms2, scanId)
 
-            Dim draw As Image = scanData.MirrorPlot.AsGDIImage
+            Dim title1$
+            Dim title2$
+
+            If prop.msLevel = 1 Then
+                title1 = $"MS1 Scan@{prop.retentionTime}sec"
+                title2 = scanData.name
+            Else
+                title1 = $"M/Z {prop.precursorMz}, RT {prop.rtmin}min"
+                title2 = scanData.name
+            End If
+
+            Dim draw As Image = scanData.MirrorPlot(titles:={title1, title2}).AsGDIImage
 
             MyApplication.host.Invoke(
                 Sub()
@@ -843,8 +854,11 @@ Public Class PageMzkitTools
 
     Private Sub AddToolStripMenuItem_Click(sender As Object, e As EventArgs)
         Dim XIC = getXICMatrix(TreeView1.CurrentRawFile.raw)
-        XICCollection.Add(XIC)
-        MyApplication.host.fileExplorer.ClearToolStripMenuItem.Text = $"Clear [{XICCollection.Count} XIC data]"
+
+        If Not XIC.IsEmpty Then
+            XICCollection.Add(XIC)
+            MyApplication.host.fileExplorer.ClearToolStripMenuItem.Text = $"Clear [{XICCollection.Count} XIC data]"
+        End If
     End Sub
 
     Private Sub ClearToolStripMenuItem_Click(sender As Object, e As EventArgs)
