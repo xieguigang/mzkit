@@ -13,8 +13,7 @@ using RibbonLib;
 using RibbonLib.Controls;
 using RibbonLib.Interop;
 
-namespace RibbonLib.Controls
-{
+
     partial class RibbonItems
     {
         private static class Cmd
@@ -25,6 +24,9 @@ namespace RibbonLib.Controls
             public const uint cmdPPMSpinner = 1050;
             public const uint cmdCheckBoxXICRelative = 1103;
             public const uint cmdButtonDesign3 = 1042;
+            public const uint cmdGroupShowViewer = 1110;
+            public const uint cmdButtonShowPlotViewer = 1111;
+            public const uint cmdButtonShowMatrixViewer = 1112;
             public const uint cmdTabLayout = 1035;
             public const uint cmdGroupLayout = 1037;
             public const uint cmdButtonLayout1 = 1043;
@@ -93,6 +95,9 @@ namespace RibbonLib.Controls
         public RibbonSpinner PPMSpinner { get; private set; }
         public RibbonCheckBox CheckBoxXICRelative { get; private set; }
         public RibbonButton ButtonDesign3 { get; private set; }
+        public RibbonGroup GroupShowViewer { get; private set; }
+        public RibbonButton ButtonShowPlotViewer { get; private set; }
+        public RibbonButton ButtonShowMatrixViewer { get; private set; }
         public RibbonTab TabLayout { get; private set; }
         public RibbonGroup GroupLayout { get; private set; }
         public RibbonButton ButtonLayout1 { get; private set; }
@@ -159,6 +164,9 @@ namespace RibbonLib.Controls
             PPMSpinner = new RibbonSpinner(ribbon, Cmd.cmdPPMSpinner);
             CheckBoxXICRelative = new RibbonCheckBox(ribbon, Cmd.cmdCheckBoxXICRelative);
             ButtonDesign3 = new RibbonButton(ribbon, Cmd.cmdButtonDesign3);
+            GroupShowViewer = new RibbonGroup(ribbon, Cmd.cmdGroupShowViewer);
+            ButtonShowPlotViewer = new RibbonButton(ribbon, Cmd.cmdButtonShowPlotViewer);
+            ButtonShowMatrixViewer = new RibbonButton(ribbon, Cmd.cmdButtonShowMatrixViewer);
             TabLayout = new RibbonTab(ribbon, Cmd.cmdTabLayout);
             GroupLayout = new RibbonGroup(ribbon, Cmd.cmdGroupLayout);
             ButtonLayout1 = new RibbonButton(ribbon, Cmd.cmdButtonLayout1);
@@ -215,4 +223,3 @@ namespace RibbonLib.Controls
         }
 
     }
-}

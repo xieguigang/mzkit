@@ -212,6 +212,7 @@
 		</Command>
 
 
+
 		<Command Name="cmdButtonDesign1"
 					Id="1040"
 					LabelTitle="Design 1">
@@ -503,6 +504,36 @@
 			</Command.SmallImages>
 		</Command>
 
+
+
+		<Command Name="cmdGroupShowViewer"
+				 Id="1110"
+				 LabelTitle="Viewers">
+		</Command>
+
+
+		<Command Name="cmdButtonShowPlotViewer"
+			 Id="1111"
+			 LabelTitle="Plot"
+			 LabelDescription="Show M/Z Plot Viewer"
+			TooltipTitle="Show M/Z Plot Viewer">
+			<Command.LargeImages>
+				<Image>Res/pix.png</Image>
+			</Command.LargeImages>
+		</Command>
+
+		<Command Name="cmdButtonShowMatrixViewer"
+					 Id="1112"
+					 LabelTitle="Matrix"
+					 LabelDescription="Show M/Z Data Matrix Viewer"
+					TooltipTitle="Show M/Z Data Matrix Viewer">
+			<Command.LargeImages>
+				<Image>Res/application-x-object.png</Image>
+			</Command.LargeImages>
+		</Command>
+
+
+
 	</Application.Commands>
 
 	<Application.Views>
@@ -532,6 +563,15 @@
 							<CheckBox CommandName="cmdCheckBoxXICRelative" />
 							<Button CommandName='cmdButtonDesign3' />
 						</Group>
+						
+												
+				<Group CommandName='cmdGroupShowViewer' SizeDefinition='TwoButtons'>
+
+							<Button CommandName='cmdButtonShowPlotViewer' />
+							<Button CommandName='cmdButtonShowMatrixViewer' />
+						</Group>
+	
+		
 					</Tab>
 					<Tab CommandName='cmdTabLayout'>
 						<Group CommandName='cmdGroupLayout' SizeDefinition='TwoButtons'>

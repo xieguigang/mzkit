@@ -150,6 +150,9 @@ Public Class frmMain
 
         AddHandler ribbonItems.ButtonShowStartPage.ExecuteEvent, AddressOf showStartPage
 
+        AddHandler ribbonItems.ButtonShowPlotViewer.ExecuteEvent, Sub(sender, e) Call mzkitTool.ShowTabPage(mzkitTool.TabPage5)
+        AddHandler ribbonItems.ButtonShowMatrixViewer.ExecuteEvent, Sub(sender, e) Call mzkitTool.ShowTabPage(mzkitTool.TabPage6)
+
         _uiCollectionChangedEvent = New UICollectionChangedEvent()
 
         MyApplication.RegisterHost(Me)
@@ -221,6 +224,8 @@ Public Class frmMain
 
             ' Call Globals.Settings.ui.setColors(Ribbon1)
         End If
+
+        MyApplication.host.startPage.Show(MyApplication.host.dockPanel)
 
         MyApplication.LogText("Ready!")
     End Sub
