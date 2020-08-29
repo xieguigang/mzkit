@@ -13,8 +13,7 @@ using RibbonLib;
 using RibbonLib.Controls;
 using RibbonLib.Interop;
 
-namespace RibbonLib.Controls
-{
+
     partial class RibbonItems
     {
         private static class Cmd
@@ -53,6 +52,7 @@ namespace RibbonLib.Controls
             public const uint cmdButtonOpenRaw = 1002;
             public const uint cmdButtonSave = 1003;
             public const uint cmdButtonRsharp = 1107;
+            public const uint cmdButtonShowStartPage = 1108;
             public const uint cmdTabTools = 1012;
             public const uint cmdGroupToolsActions = 1046;
             public const uint cmdButtonMzCalculator = 1013;
@@ -120,6 +120,7 @@ namespace RibbonLib.Controls
         public RibbonButton ButtonOpenRaw { get; private set; }
         public RibbonButton ButtonSave { get; private set; }
         public RibbonButton ButtonRsharp { get; private set; }
+        public RibbonButton ButtonShowStartPage { get; private set; }
         public RibbonTab TabTools { get; private set; }
         public RibbonGroup GroupToolsActions { get; private set; }
         public RibbonButton ButtonMzCalculator { get; private set; }
@@ -185,6 +186,7 @@ namespace RibbonLib.Controls
             ButtonOpenRaw = new RibbonButton(ribbon, Cmd.cmdButtonOpenRaw);
             ButtonSave = new RibbonButton(ribbon, Cmd.cmdButtonSave);
             ButtonRsharp = new RibbonButton(ribbon, Cmd.cmdButtonRsharp);
+            ButtonShowStartPage = new RibbonButton(ribbon, Cmd.cmdButtonShowStartPage);
             TabTools = new RibbonTab(ribbon, Cmd.cmdTabTools);
             GroupToolsActions = new RibbonGroup(ribbon, Cmd.cmdGroupToolsActions);
             ButtonMzCalculator = new RibbonButton(ribbon, Cmd.cmdButtonMzCalculator);
@@ -212,4 +214,3 @@ namespace RibbonLib.Controls
         }
 
     }
-}

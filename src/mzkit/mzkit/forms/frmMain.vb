@@ -74,6 +74,7 @@ Public Class frmMain
     Friend Sub ShowPage(page As Control, Optional pushStack As Boolean = True)
         For Each page2 In pages
             If Not page Is page2 Then
+                page2.Visible = False
                 page2.Hide()
             End If
         Next
@@ -82,6 +83,7 @@ Public Class frmMain
             nav.Push(page)
         End If
 
+        page.Visible = True
         page.Show()
     End Sub
 

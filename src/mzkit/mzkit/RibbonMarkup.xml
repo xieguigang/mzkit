@@ -489,6 +489,20 @@
 			</Command.SmallImages>
 		</Command>
 
+		<Command Name="cmdButtonShowStartPage"
+			 Id="1108"
+			 LabelTitle="Start Page"
+			 LabelDescription="Show Start Page"
+			 TooltipTitle="Show Start Page"
+			 TooltipDescription="Show Start Page">
+			<Command.LargeImages>
+				<Image>Res/applications-utilities.png</Image>
+			</Command.LargeImages>
+			<Command.SmallImages>
+				<Image>Res/applications-utilities.png</Image>
+			</Command.SmallImages>
+		</Command>
+
 	</Application.Commands>
 
 	<Application.Views>
@@ -602,8 +616,10 @@
 						<Button CommandName="cmdButtonOpenRaw" />
 						<Button CommandName="cmdButtonSave" />
 					</Group>
-					<Group CommandName="cmdGroupExit" SizeDefinition="OneButton">
+					<Group CommandName="cmdGroupExit" SizeDefinition="TwoButtons">
 						<Button CommandName="cmdButtonRsharp" />
+						<Button CommandName="cmdButtonShowStartPage" />
+						
 					</Group>
 				</Tab>
 

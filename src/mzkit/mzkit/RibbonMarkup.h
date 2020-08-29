@@ -208,6 +208,13 @@
 #define cmdButtonRsharp_TooltipDescription_RESID 60138
 #define cmdButtonRsharp_SmallImages_RESID 60139
 #define cmdButtonRsharp_LargeImages_RESID 60140
-#define cmdGroupExit_LabelTitle_RESID 60141
-#define InternalCmd2_LabelTitle_RESID 60142
-#define InternalCmd4_LabelTitle_RESID 60143
+#define cmdButtonShowStartPage 1108 
+#define cmdButtonShowStartPage_LabelTitle_RESID 60141
+#define cmdButtonShowStartPage_LabelDescription_RESID 60142
+#define cmdButtonShowStartPage_TooltipTitle_RESID 60143
+#define cmdButtonShowStartPage_TooltipDescription_RESID 60144
+#define cmdButtonShowStartPage_SmallImages_RESID 60145
+#define cmdButtonShowStartPage_LargeImages_RESID 60146
+#define cmdGroupExit_LabelTitle_RESID 60147
+#define InternalCmd2_LabelTitle_RESID 60148
+#define InternalCmd4_LabelTitle_RESID 60149
