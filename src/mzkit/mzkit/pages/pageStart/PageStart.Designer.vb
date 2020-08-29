@@ -50,9 +50,9 @@ Partial Class PageStart
         Me.Panel1.BackgroundImage = Global.mzkit.My.Resources.Resources.header_background_image
         Me.Panel1.Controls.Add(Me.PictureBox1)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel1.Location = New System.Drawing.Point(0, 569)
+        Me.Panel1.Location = New System.Drawing.Point(0, 677)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(1065, 62)
+        Me.Panel1.Size = New System.Drawing.Size(953, 62)
         Me.Panel1.TabIndex = 0
         '
         'PictureBox1
@@ -62,7 +62,7 @@ Partial Class PageStart
         Me.PictureBox1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.PictureBox1.Location = New System.Drawing.Point(0, 11)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(1065, 51)
+        Me.PictureBox1.Size = New System.Drawing.Size(953, 51)
         Me.PictureBox1.TabIndex = 0
         Me.PictureBox1.TabStop = False
         '
@@ -73,10 +73,10 @@ Partial Class PageStart
         Me.FlowLayoutPanel1.AutoScroll = True
         Me.FlowLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.FlowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
-        Me.FlowLayoutPanel1.Location = New System.Drawing.Point(526, 82)
+        Me.FlowLayoutPanel1.Location = New System.Drawing.Point(414, 82)
         Me.FlowLayoutPanel1.Margin = New System.Windows.Forms.Padding(0)
         Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
-        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(471, 473)
+        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(471, 581)
         Me.FlowLayoutPanel1.TabIndex = 1
         Me.FlowLayoutPanel1.WrapContents = False
         '
@@ -127,7 +127,7 @@ Partial Class PageStart
         Me.LinkLabel2.DisabledLinkColor = System.Drawing.Color.Silver
         Me.LinkLabel2.Font = New System.Drawing.Font("Microsoft YaHei UI", 36.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LinkLabel2.LinkColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(104, Byte), Integer), CType(CType(189, Byte), Integer))
-        Me.LinkLabel2.Location = New System.Drawing.Point(515, 20)
+        Me.LinkLabel2.Location = New System.Drawing.Point(403, 20)
         Me.LinkLabel2.Name = "LinkLabel2"
         Me.LinkLabel2.Size = New System.Drawing.Size(447, 62)
         Me.LinkLabel2.TabIndex = 6
@@ -212,7 +212,7 @@ Partial Class PageStart
         Me.Controls.Add(Me.Label1)
         Me.DoubleBuffered = True
         Me.Name = "PageStart"
-        Me.Size = New System.Drawing.Size(1065, 631)
+        Me.Size = New System.Drawing.Size(953, 739)
         Me.Panel1.ResumeLayout(False)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()

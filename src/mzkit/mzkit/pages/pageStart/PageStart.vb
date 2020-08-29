@@ -34,4 +34,14 @@ Public Class PageStart
     Private Sub LinkLabel4_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel4.LinkClicked
         Process.Start("http://www.biodeep.cn/")
     End Sub
+
+    Private Sub PageStart_Resize(sender As Object, e As EventArgs) Handles Me.Resize
+        If Width < 955 Then
+            LinkLabel2.Visible = False
+            FlowLayoutPanel1.Visible = False
+        Else
+            LinkLabel2.Visible = True
+            FlowLayoutPanel1.Visible = True
+        End If
+    End Sub
 End Class

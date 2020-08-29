@@ -117,21 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="Panel1.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="PictureBox1.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="FlowLayoutPanel1.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="PictureBox2.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="LinkLabel1.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
   <metadata name="ImageList1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
@@ -140,36 +125,33 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAACc
-        BQAAAk1TRnQBSQFMAwEBAAGQAQABkAEAARABAAEQAQAE/wEhAQAI/wFCAU0BNgcAATYDAAEoAwABQAMA
-        ARADAAEBAQABIAYAARAaAAG1AX0BKwH8AfMBrAEkAf8B8wGsASQB/wHzAawBJAH/AfMBrAEkAf8B8wGs
-        ASQB/wHzAawBJAH/AfMBrAEkAf8B8wGsASQB/wgAAw8BFNAAAfMBrAEkAf8B8wGsASQB/wHzAawBJAH/
-        AfMBrAEkAf8B8wGsASQB/wHzAawBJAH/AfMBrAEkAf8B8wGsASQB/wHzAawBJAH/BAAB+wH8Af0B/wP1
-        Af/QAAHzAawBJAH/AfMBrAEkAf8B8wGsASQB/wHzAawBJAH/AfMBrAEkAf8B8wGsASQB/wHzAawBJAH/
-        AfIBqwEkAf8B8wGsASQB/wFfATABAAH/A/UB/wP1Af/QAAHzAawBJAH/AfMBrAEkAf8B8wGsASQB/wHz
-        AawBJAH/AfIBqwEkAf8C9QH0Af8D9QH/A/UB/wP1Af8D9QH/A/UB/wG9AWUBAAH/0AAB8wGsASQB/wHz
-        AawBJAH/AfMBrAEkAf8B8wGsASQB/wP1Af8B9QH0AfIB/wHzAawBJAH/AfMBrAEkAf8B8wGsASQB/wP1
-        Af8BgQFGAQIB/wG9AWUBAAH/0AAB8wGsASQB/wHzAawBJAH/AfMBrAEkAf8B1wHGAagB/wP1Af8B8wGs
-        ASQB/wHzAawBJAH/AfMBrAEkAf8B8wGsASQB/wG6AWIBAAH/A/UB/wG9AWUBAAH/0AAB8wGsASQB/wHz
-        AawBJAH/AfMBrAEkAf8D9QH/AdkBnQEoAf8B8wGsASQB/wHzAawBJAH/AfMBrAEkAf8B8wGsASQB/wG6
-        AWIBAAH/A/UB/wG9AWUBAAH/0AAB8wGsASQB/wHzAawBJAH/AfMBrAEkAf8C9QH0Af8BxwGsAYAB/wHz
-        AawBJAH/AfMBrAEkAf8B8wGsASQB/wHzAawBJAH/AboBYgEAAf8D9QH/Ab0BZQEAAf/QAAHzAawBJAH/
-        AfMBrAEkAf8B8wGsASQB/wHuAaQBFgH/A/UB/wHzAawBJAH/AfMBrAEkAf8B8wGsASQB/wHzAawBJAH/
-        AV8BMAEAAf8D9QH/Ab0BZQEAAf/QAAHzAawBJAH/AfMBrAEkAf8B8wGsASQB/wHzAawBJAH/A/UB/wP1
-        Af8BkQGGAWAB/wG1AacBjwH/AfYC9wH/A/UB/wG9AWUBAAH/Ab0BZQEAAf/QAAHzAawBJAH/AfMBrAEk
-        Af8B8wGsASQB/wHzAawBJAH/AfMBrAEkAf8B8wHmAdEB/wP1Af8D9QH/AfUB9AHyAf8BvQFlAQAB/wG9
-        AWUBAAH/Ab0BZQEAAf/QAAHzAawBJAH/AfMBrAEkAf8B8wGsASQB/wHzAawBJAH/AfMBrAEkAf8B7wHd
-        Ab4B/wHvAd4BwAH/Ab0BZQEAAf8B8wGsASQB/wHzAawBJAH/AfMBrAEkAf/UAAHzAawBJAH/AfMBrAEk
-        Af8B8wGsASQB/wHzAawBJAH/AfMBrAEkAf8B7wHdAb4B/wG9AWUBAAH/Ab0BZQEAAf8B8wGsASQB/wHz
-        AawBJAH/4AADAQECAb0BZQEAAf8BvQFlAQAB/wG9AWUBAAH/Ab0BZQEAAf8BvQFlAQAB/wHzAawBJAH/
-        6AABvQFlAQAB/wG9AWUBAAH/Ab0BZQEAAf8BvQFlAQAB/wG9AWUBAAH//wDZAAFCAU0BPgcAAT4DAAEo
+        BQAAAk1TRnQBSQFMAwEBAAGYAQABmAEAARABAAEQAQAE/wEhAQAI/wFCAU0BNgcAATYDAAEoAwABQAMA
+        ARADAAEBAQABIAYAARAaAAGzAXwBKwH8AfMBrAEjAf8B8wGsASMB/wHzAawBIwH/AfMBrAEjAf8B8wGs
+        ASMB/wHzAawBIwH/AfMBrAEjAf8B8wGsASMB/wgAAw8BFNAAAfMBrAEjAf8B8wGsASMB/wHzAawBIwH/
+        AfMBrAEjAf8B8wGsASMB/wHzAawBIwH/AfMBrAEjAf8B8wGsASMB/wHzAawBIwH/BAAB+wH8Af0B/wP1
+        Af/QAAHzAawBIwH/AfMBrAEjAf8B8wGsASMB/wHzAawBIwH/AfMBrAEjAf8B8wGsASMB/wHzAawBIwH/
+        AfIBqwEjAf8B8wGsASMB/wFeAS8BAAH/A/UB/wP1Af/QAAHzAawBIwH/AfMBrAEjAf8B8wGsASMB/wHz
+        AawBIwH/AfIBqwEjAf8C9QH0Af8D9QH/A/UB/wP1Af8D9QH/A/UB/wG9AWQBAAH/0AAB8wGsASMB/wHz
+        AawBIwH/AfMBrAEjAf8B8wGsASMB/wP1Af8B9QH0AfIB/wHzAawBIwH/AfMBrAEjAf8B8wGsASMB/wP1
+        Af8BgQFFAQEB/wG9AWQBAAH/0AAB8wGsASMB/wHzAawBIwH/AfMBrAEjAf8B1wHGAagB/wP1Af8B8wGs
+        ASMB/wHzAawBIwH/AfMBrAEjAf8B8wGsASMB/wG6AWEBAAH/A/UB/wG9AWQBAAH/0AAB8wGsASMB/wHz
+        AawBIwH/AfMBrAEjAf8D9QH/AdkBnQEnAf8B8wGsASMB/wHzAawBIwH/AfMBrAEjAf8B8wGsASMB/wG6
+        AWEBAAH/A/UB/wG9AWQBAAH/0AAB8wGsASMB/wHzAawBIwH/AfMBrAEjAf8C9QH0Af8BxwGsAYAB/wHz
+        AawBIwH/AfMBrAEjAf8B8wGsASMB/wHzAawBIwH/AboBYQEAAf8D9QH/Ab0BZAEAAf/QAAHzAawBIwH/
+        AfMBrAEjAf8B8wGsASMB/wHuAaQBFQH/A/UB/wHzAawBIwH/AfMBrAEjAf8B8wGsASMB/wHzAawBIwH/
+        AV4BLwEAAf8D9QH/Ab0BZAEAAf/QAAHzAawBIwH/AfMBrAEjAf8B8wGsASMB/wHzAawBIwH/A/UB/wP1
+        Af8BkQGGAV8B/wG1AacBjwH/AfYC9wH/A/UB/wG9AWQBAAH/Ab0BZAEAAf/QAAHzAawBIwH/AfMBrAEj
+        Af8B8wGsASMB/wHzAawBIwH/AfMBrAEjAf8B8wHmAdEB/wP1Af8D9QH/AfUB9AHyAf8BvQFkAQAB/wG9
+        AWQBAAH/Ab0BZAEAAf/QAAHzAawBIwH/AfMBrAEjAf8B8wGsASMB/wHzAawBIwH/AfMBrAEjAf8B7wHd
+        Ab4B/wHvAd4BwAH/Ab0BZAEAAf8B8wGsASMB/wHzAawBIwH/AfMBrAEjAf/UAAHzAawBIwH/AfMBrAEj
+        Af8B8wGsASMB/wHzAawBIwH/AfMBrAEjAf8B7wHdAb4B/wG9AWQBAAH/Ab0BZAEAAf8B8wGsASMB/wHz
+        AawBIwH/4AADAQECAb0BZAEAAf8BvQFkAQAB/wG9AWQBAAH/Ab0BZAEAAf8BvQFkAQAB/wHzAawBIwH/
+        6AABvQFkAQAB/wG9AWQBAAH/Ab0BZAEAAf8BvQFkAQAB/wG9AWQBAAH//wDZAAFCAU0BPgcAAT4DAAEo
         AwABQAMAARADAAEBAQABAQUAAYAXAAP/AQABwAEbBgABwAETBgABwAEDBgABwAEDBgABwAEDBgABwAED
         BgABwAEDBgABwAEDBgABwAEDBgABwAEDBgABwAEDBgABwAEHBgABwAEPBgAB8AEfBgAB+AE/BgAC/wYA
         Cw==
 </value>
   </data>
-  <metadata name="PictureBox3.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="PictureBox3.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -306,15 +288,6 @@
         AElFTkSuQmCC
 </value>
   </data>
-  <metadata name="LinkLabel2.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="Label1.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="PictureBox4.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
   <data name="PictureBox4.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAABGdBTUEAALGPC/xhBQAAD4xJREFUeF7t
@@ -387,12 +360,6 @@
         MAzDMAzDMIXlqKP+DxmMnUkhzZRTAAAAAElFTkSuQmCC
 </value>
   </data>
-  <metadata name="LinkLabel3.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="PictureBox5.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
   <data name="PictureBox5.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAWYAAAFmCAYAAABeJjAWAAAABGdBTUEAALGOfPtRkwAAACBjSFJNAACH
@@ -841,10 +808,4 @@
         7WBDJZML2N9pdK73gXWVjGH0yz//z/8HyC6Y3z8bsywAAAAASUVORK5CYII=
 </value>
   </data>
-  <metadata name="LinkLabel4.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="$this.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
 </root>
