@@ -87,6 +87,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NewsFeed.vb" />
     <Compile Include="Math.vb" />
     <Compile Include="MoleculeNetworking.vb" />
     <Compile Include="SpectrumProperty.vb" />
