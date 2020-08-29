@@ -1,4 +1,6 @@
-﻿Public Class frmDockDocument
+﻿Imports System.ComponentModel
+
+Public Class frmDockDocument
 
     Friend pages As New List(Of Control)
 
@@ -8,5 +10,14 @@
             pages.Add(page)
             page.Dock = DockStyle.Fill
         Next
+    End Sub
+
+    Private Sub frmDockDocument_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        e.Cancel = True
+        Me.DockState = WeifenLuo.WinFormsUI.Docking.DockState.Document
+    End Sub
+
+    Private Sub frmDockDocument_Load(sender As Object, e As EventArgs) Handles Me.Load
+        Text = "BioNovoGene M/Z Data Toolkit"
     End Sub
 End Class

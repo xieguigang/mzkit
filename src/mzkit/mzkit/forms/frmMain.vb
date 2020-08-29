@@ -362,7 +362,7 @@ Public Class frmMain
     Friend fileExplorer As New frmFileTree
     Friend searchList As New frmSearchList
     Friend output As New DummyOutputWindow
-    Friend panelMain As New frmDockDocument
+    Friend WithEvents panelMain As New frmDockDocument
 
     Private Sub initializeVSPanel()
         PanelBase.Controls.Add(Me.dockPanel)
