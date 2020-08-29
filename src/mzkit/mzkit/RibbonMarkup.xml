@@ -4,9 +4,9 @@
 		<Command Name="cmdButtonNew"
 				 Id="1001"
 				 LabelTitle="&amp;New"
-				 LabelDescription="New Description"
+				 LabelDescription="New R# script file"
 				 TooltipTitle="New (Ctrl+N)"
-				 TooltipDescription="Create a new image.">
+				 TooltipDescription="Create a R# script file for mzkit automation.">
 			<Command.LargeImages>
 				<Image>Res/New32.bmp</Image>
 			</Command.LargeImages>
@@ -18,23 +18,23 @@
 		<Command Name="cmdButtonOpenRaw"
 				 Id="1002"
 				 LabelTitle="Open"
-				 LabelDescription="Open Description"
+				 LabelDescription="Open A file"
 				 TooltipTitle="Open (Ctrl+O)"
-				 TooltipDescription="Open an existing image.">
+				 TooltipDescription="Open an existing raw data file or R# script file.">
 			<Command.LargeImages>
-				<Image>Res/folder-drag-accept.png</Image>
+				<Image>Res/folder-publicshare.png</Image>
 			</Command.LargeImages>
 			<Command.SmallImages>
-				<Image>Res/folder-drag-accept.png</Image>
+				<Image>Res/folder-publicshare.png</Image>
 			</Command.SmallImages>
 		</Command>
 
 		<Command Name="cmdButtonSave"
 				 Id="1003"
 				 LabelTitle="Save"
-				 LabelDescription="Save Description"
+				 LabelDescription="Save Current File"
 				 TooltipTitle="Save (Ctrl+S)"
-				 TooltipDescription="Save the current image.">
+				 TooltipDescription="Save the current Script File or Application Configuration.">
 			<Command.LargeImages>
 				<Image>Res/media-flash.png</Image>
 			</Command.LargeImages>
@@ -199,12 +199,12 @@
 
 		<Command Name="cmdGroupDesign"
 				 Id="1036"
-				 LabelTitle="EEE">
+				 LabelTitle="Viewer Config">
 		</Command>
 
 		<Command Name="cmdGroupLayout"
 				 Id="1037"
-				 LabelTitle="ABC">
+				 LabelTitle="Viewer Actions">
 		</Command>
 
 
