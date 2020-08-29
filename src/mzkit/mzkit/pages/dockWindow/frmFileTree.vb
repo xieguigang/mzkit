@@ -1,4 +1,7 @@
-﻿Public Class frmFileTree
+﻿Imports mzkit.My
+Imports RibbonLib.Interop
+
+Public Class frmFileTree
 
     Dim host As frmMain
 
@@ -17,5 +20,9 @@
 
     Private Sub ShowTICToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowTICToolStripMenuItem.Click
 
+    End Sub
+
+    Private Sub frmFileTree_Activated(sender As Object, e As EventArgs) Handles Me.Activated
+        MyApplication.host.ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
     End Sub
 End Class
