@@ -48,6 +48,8 @@
 #End Region
 
 Imports System.ComponentModel
+Imports System.IO
+Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Language
@@ -57,6 +59,7 @@ Imports mzkit.My
 Imports RibbonLib
 Imports RibbonLib.Controls.Events
 Imports RibbonLib.Interop
+Imports SMRUCC.Rsharp.Runtime
 Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class frmMain
@@ -177,18 +180,28 @@ Public Class frmMain
     Private Sub RunCurrentScript(sender As Object, e As ExecuteEventArgs)
         Dim active = dockPanel.ActiveDocument
 
-        If Not active Is Nothing Then
-            If TypeOf CObj(active) Is frmRScriptEdit Then
-                Dim editor = DirectCast(CObj(active), frmRScriptEdit)
-                Dim script As String = editor.script.FastColoredTextBox1.Text
+        If Not active Is Nothing AndAlso TypeOf CObj(active) Is frmRScriptEdit Then
+            Dim editor = DirectCast(CObj(active), frmRScriptEdit)
+            Dim script As String = editor.script.FastColoredTextBox1.Text
 
-                If editor.scriptFile.StringEmpty Then
-                    Call MyApplication.REngine.Evaluate(script)
-                Else
-                    Call script.SaveTo(editor.scriptFile)
-                    Call MyApplication.REngine.Source(editor.scriptFile)
-                End If
-            End If
+            Using buffer As New MemoryStream
+                Using writer As New StreamWriter(buffer)
+                    MyApplication.REngine.RedirectOutput(writer, OutputEnvironments.Html)
+
+                    If editor.scriptFile.StringEmpty Then
+                        Call MyApplication.REngine.Evaluate(script)
+                    Else
+                        Call script.SaveTo(editor.scriptFile)
+                        Call MyApplication.REngine.Source(editor.scriptFile)
+                    End If
+
+                    writer.Flush()
+                    RtermPage.Routput.AppendText(Encoding.UTF8.GetString(buffer.ToArray) & vbCrLf)
+                End Using
+            End Using
+
+            RtermPage.Show(dockPanel)
+            RtermPage.DockState = DockState.Document
         End If
     End Sub
 
