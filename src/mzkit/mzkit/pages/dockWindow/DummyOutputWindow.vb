@@ -1,6 +1,8 @@
 ﻿
+Imports System.ComponentModel
+
 Namespace DockSample
-    Public Partial Class DummyOutputWindow
+    Partial Public Class DummyOutputWindow
         Inherits ToolWindow
 
         Public Sub New()
@@ -46,6 +48,11 @@ Namespace DockSample
                 textBox1.Hide()
                 textBox2.Show()
             End If
+        End Sub
+
+        Private Sub DummyOutputWindow_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+            e.Cancel = True
+            Call Me.Hide()
         End Sub
     End Class
 End Namespace

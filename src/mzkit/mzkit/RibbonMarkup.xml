@@ -255,7 +255,7 @@
 
 		<Command Name="cmdGroupFileActions"
 				 Id="1045"
-				 LabelTitle="Process Raw File">
+				 LabelTitle="File Operations">
 		</Command>
 
 		<Command Name="cmdGroupToolsActions"
@@ -428,9 +428,15 @@
 				 LabelTitle="EEE">
 		</Command>
 
-		<Command Name="cmdComboFormulaSearchProfile3" Id="1099">
+		<Command Name="cmdGroupExit"
+						 Id="1096"
+						 LabelTitle="Application Tools">
 		</Command>
 
+
+
+		<Command Name="cmdComboFormulaSearchProfile3" Id="1099">
+		</Command>
 
 		<Command Name="cmdButtonLicense" Id="1101" LabelTitle="View License Information">
 			<Command.LargeImages>
@@ -511,7 +517,19 @@
 			</Command.SmallImages>
 		</Command>
 
-
+		<Command Name="cmdButtonShowLogWindow"
+					 Id="1109"
+					 LabelTitle="Logging"
+					 LabelDescription="Show Application Logging Output Window"
+					 TooltipTitle="Show Logging Output"
+					 TooltipDescription="Show Application Logging Output Window">
+			<Command.LargeImages>
+				<Image>Res/preferences-system-notifications.png</Image>
+			</Command.LargeImages>
+			<Command.SmallImages>
+				<Image>Res/preferences-system-notifications.png</Image>
+			</Command.SmallImages>
+		</Command>
 
 		<Command Name="cmdGroupShowViewer"
 				 Id="1110"
@@ -550,7 +568,7 @@
 				<ContextMenu Name="ContextMenu">
 					<MenuGroup>
 						<Button CommandName="cmdButtonExportImage" />
-						<Button CommandName="cmdButtonExportMatrix" />					
+						<Button CommandName="cmdButtonExportMatrix" />
 					</MenuGroup>
 				</ContextMenu>
 			</ContextPopup.ContextMenus>
@@ -558,7 +576,7 @@
 				<ContextMap CommandName="cmdContextMap" ContextMenu="ContextMenu" />
 			</ContextPopup.ContextMaps>
 		</ContextPopup>
-		
+
 		<Ribbon>
 
 			<Ribbon.ContextualTabs>
@@ -570,15 +588,15 @@
 							<CheckBox CommandName="cmdCheckBoxXICRelative" />
 							<Button CommandName='cmdButtonDesign3' />
 						</Group>
-						
-												
-				<Group CommandName='cmdGroupShowViewer' SizeDefinition='TwoButtons'>
+
+
+						<Group CommandName='cmdGroupShowViewer' SizeDefinition='TwoButtons'>
 
 							<Button CommandName='cmdButtonShowPlotViewer' />
 							<Button CommandName='cmdButtonShowMatrixViewer' />
 						</Group>
-	
-		
+
+
 					</Tab>
 					<Tab CommandName='cmdTabLayout'>
 						<Group CommandName='cmdGroupLayout' SizeDefinition='TwoButtons'>
@@ -593,7 +611,7 @@
 					<Tab CommandName='cmdTabCalculator'>
 						<Group CommandName='cmdGroupCalculator' SizeDefinition='OneButton'>
 							<Button CommandName='cmdButtonCalculatorExport' />
-						
+
 						</Group>
 					</Tab>
 				</TabGroup>
@@ -622,7 +640,7 @@
 					<Tab CommandName='cmdTabFormulaSearch'>
 						<Group CommandName='cmdGroupFormulaSearch' SizeDefinition='OneButton'>
 							<Button CommandName='cmdButtonFormulaSearchExport' />
-						
+
 						</Group>
 						<!--
 						<Group CommandName='cmdGroupFormulaSearchConfig2'>
@@ -663,10 +681,10 @@
 						<Button CommandName="cmdButtonOpenRaw" />
 						<Button CommandName="cmdButtonSave" />
 					</Group>
-					<Group CommandName="cmdGroupExit" SizeDefinition="TwoButtons">
+					<Group CommandName="cmdGroupExit" SizeDefinition="ThreeButtons">
 						<Button CommandName="cmdButtonRsharp" />
 						<Button CommandName="cmdButtonShowStartPage" />
-						
+						<Button CommandName="cmdButtonShowLogWindow" />
 					</Group>
 				</Tab>
 
@@ -710,7 +728,7 @@
 					<!-- useful part -->
 					<Group CommandName="cmdGroupAboutActions" SizeDefinition="TwoButtons">
 						<Button CommandName="cmdButtonAbout" />
-						<Button CommandName="cmdButtonBioDeep" />						
+						<Button CommandName="cmdButtonBioDeep" />
 					</Group>
 
 				</Tab>
@@ -733,7 +751,7 @@
 								<Button CommandName='cmdButtonDropA' />
 								<Button CommandName='cmdButtonDropB' />
 								<Button CommandName='cmdButtonDropC' />
-								<Button CommandName='cmdButtonDropD' />								
+								<Button CommandName='cmdButtonDropD' />
 							</MenuGroup>
 						</DropDownButton>
 
@@ -742,7 +760,7 @@
 
 					<MenuGroup>
 
-<Button CommandName="cmdButtonSettings" />
+						<Button CommandName="cmdButtonSettings" />
 
 						<SplitButton>
 

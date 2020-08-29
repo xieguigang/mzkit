@@ -149,6 +149,7 @@ Public Class frmMain
         AddHandler ribbonItems.ButtonLayout2.ExecuteEvent, Sub(sender, e) Call mzkitTool.SaveMatrixToolStripMenuItem_Click()
 
         AddHandler ribbonItems.ButtonShowStartPage.ExecuteEvent, AddressOf showStartPage
+        AddHandler ribbonItems.ButtonShowLogWindow.ExecuteEvent, AddressOf showLoggingWindow
 
         AddHandler ribbonItems.ButtonShowPlotViewer.ExecuteEvent, Sub(sender, e) Call mzkitTool.ShowTabPage(mzkitTool.TabPage5)
         AddHandler ribbonItems.ButtonShowMatrixViewer.ExecuteEvent, Sub(sender, e) Call mzkitTool.ShowTabPage(mzkitTool.TabPage6)
@@ -159,6 +160,11 @@ Public Class frmMain
 
         InitSpinner()
         InitializeFormulaProfile()
+    End Sub
+
+    Private Sub showLoggingWindow(sender As Object, e As ExecuteEventArgs)
+        output.Show(dockPanel)
+        output.DockState = DockState.DockBottom
     End Sub
 
     Private Sub showStartPage(sender As Object, e As ExecuteEventArgs)
