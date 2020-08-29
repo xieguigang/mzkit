@@ -313,18 +313,21 @@
 
 		<Command Name="cmdTabCalculator"
 				 Id="1062"
-				 LabelTitle="Design">
+				 LabelTitle="Calculator Result">
 		</Command>
 
 		<Command Name="cmdGroupCalculator"
 				 Id="1063"
-				 LabelTitle="EEE">
+				 LabelTitle="Result Data">
 		</Command>
 
 
 		<Command Name="cmdButtonCalculatorExport"
 					Id="1064"
-					LabelTitle="Export Result Table">
+					LabelTitle="Export"
+					LabelDescription="Save M/Z Calculation result to Table File."
+		 TooltipTitle="Save Matrix"
+		 TooltipDescription="Save M/Z Calculation result to Table File.">
 			<Command.LargeImages>
 				<Image>Res/excel-icon.png</Image>
 			</Command.LargeImages>
@@ -399,18 +402,22 @@
 
 		<Command Name="cmdTabFormulaSearch"
 				 Id="1092"
-				 LabelTitle="Design">
+				 LabelTitle="Formula Result">
 		</Command>
 
 		<Command Name="cmdGroupFormulaSearch"
 				 Id="1093"
-				 LabelTitle="EEE">
+				 LabelTitle="Data">
 		</Command>
 
 
 		<Command Name="cmdButtonFormulaSearchExport"
 					Id="1094"
-					LabelTitle="Export Formula Search Result">
+					LabelTitle="Export"
+					LabelDescription="Export Formula Search Result"
+		 TooltipTitle="Save Formula Table"
+		 TooltipDescription="Export Formula Search Result to a given file"
+		 >
 			<Command.LargeImages>
 				<Image>Res/excel-icon.png</Image>
 			</Command.LargeImages>
@@ -584,9 +591,9 @@
 
 				<TabGroup CommandName='cmdTabGroupCalculatorTools'>
 					<Tab CommandName='cmdTabCalculator'>
-						<Group CommandName='cmdGroupCalculator' SizeDefinition='TwoButtons'>
+						<Group CommandName='cmdGroupCalculator' SizeDefinition='OneButton'>
 							<Button CommandName='cmdButtonCalculatorExport' />
-							<Button CommandName='cmdButtonLayout2' />
+						
 						</Group>
 					</Tab>
 				</TabGroup>
@@ -613,9 +620,9 @@
 
 				<TabGroup CommandName='cmdTabGroupFormulaSearchTools'>
 					<Tab CommandName='cmdTabFormulaSearch'>
-						<Group CommandName='cmdGroupFormulaSearch' SizeDefinition='TwoButtons'>
+						<Group CommandName='cmdGroupFormulaSearch' SizeDefinition='OneButton'>
 							<Button CommandName='cmdButtonFormulaSearchExport' />
-							<Button CommandName='cmdButtonNetworkRender' />
+						
 						</Group>
 						<!--
 						<Group CommandName='cmdGroupFormulaSearchConfig2'>
