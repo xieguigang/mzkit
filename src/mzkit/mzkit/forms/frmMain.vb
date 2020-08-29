@@ -166,6 +166,8 @@ Public Class frmMain
         AddHandler ribbonItems.ButtonExportImage.ExecuteEvent, Sub(sender, e) Call mzkitTool.SaveImageToolStripMenuItem_Click()
         AddHandler ribbonItems.ButtonExportMatrix.ExecuteEvent, Sub(sender, e) Call mzkitTool.SaveMatrixToolStripMenuItem_Click()
 
+        AddHandler ribbonItems.ButtonShowStartPage.ExecuteEvent, Sub(sender, e) Call mzkitTool.ShowTabPage(mzkitTool.TabPage4)
+
         _uiCollectionChangedEvent = New UICollectionChangedEvent()
 
         InitSpinner()

@@ -264,7 +264,7 @@ Public Class PageMzkitTools
                         End Sub)
 
             PictureBox1.BackgroundImage = draw
-            CustomTabControl1.SelectedTab = TabPage5
+            ShowTabPage(TabPage5)
         Else
             Call missingCacheFile(raw)
         End If
@@ -790,6 +790,7 @@ Public Class PageMzkitTools
 
         Dim XICPlot = XICCollection.JoinIterates({plotTIC}).ToArray
 
+        ShowTabPage(TabPage5)
         PictureBox1.BackgroundImage = XICPlot.TICplot(intensityMax:=maxY, isXIC:=True).AsGDIImage
     End Sub
 
