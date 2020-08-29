@@ -177,7 +177,7 @@ Public Class frmMain
 
     Private Sub saveCacheList()
         TreeView1.SaveRawFileCache
-        ToolStripStatusLabel1.Text = "The raw file cache data was saved!"
+        MyApplication.LogText("The raw file cache data was saved!")
     End Sub
 
     Private Sub MoleculeNetworkingToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MoleculeNetworkingToolStripMenuItem.Click
@@ -230,7 +230,7 @@ Public Class frmMain
             ' Call Globals.Settings.ui.setColors(Ribbon1)
         End If
 
-        ToolStripStatusLabel1.Text = "Ready!"
+        MyApplication.LogText("Ready!")
     End Sub
 
     Private Sub _uiCollectionChangedEvent_ChangedEvent(ByVal sender As Object, ByVal e As UICollectionChangedEventArgs)
@@ -260,6 +260,16 @@ Public Class frmMain
     '    _uiCollectionChangedEvent.Attach(ribbonItems.ComboFormulaSearchProfile3.ItemsSource)
     '    AddHandler _uiCollectionChangedEvent.ChangedEvent, AddressOf _uiCollectionChangedEvent_ChangedEvent
     'End Sub
+
+    Sub showStatusMessage(message As String, Optional icon As Image = Nothing)
+        MyApplication.host.Invoke(
+            Sub()
+                ToolStripStatusLabel1.Text = message
+                ToolStripStatusLabel1.Image = icon
+
+                Call MyApplication.LogText(message)
+            End Sub)
+    End Sub
 
     Private Sub InitSpinner()
         Dim _spinner = ribbonItems.PPMSpinner
@@ -396,6 +406,8 @@ Public Class frmMain
 
         panelMain.Show(dockPanel)
         panelMain.DockState = DockState.Document
+
+        MyApplication.RegisterOutput(output)
     End Sub
 
     Private Sub SetSchema(ByVal sender As Object, ByVal e As EventArgs)

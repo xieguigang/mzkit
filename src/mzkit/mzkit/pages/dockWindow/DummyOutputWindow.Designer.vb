@@ -25,26 +25,19 @@
         Private Sub InitializeComponent()
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(DummyOutputWindow))
             Me.textBox1 = New System.Windows.Forms.TextBox()
+            Me.textBox2 = New System.Windows.Forms.TextBox()
             Me.comboBox = New System.Windows.Forms.ComboBox()
             Me.SuspendLayout()
             '
             'textBox1
             '
-            Me.textBox1.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.textBox1.Location = New System.Drawing.Point(0, 23)
-            Me.textBox1.Multiline = True
-            Me.textBox1.Name = "textBox1"
-            Me.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both
-            Me.textBox1.Size = New System.Drawing.Size(653, 349)
-            Me.textBox1.TabIndex = 2
 
-            Me.textBox1.WordWrap = False
             '
             'comboBox
             '
             Me.comboBox.Dock = System.Windows.Forms.DockStyle.Top
             Me.comboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-            Me.comboBox.Items.AddRange(New Object() {"Build"})
+            Me.comboBox.Items.AddRange(New Object() {"Mzkit", "R#"})
             Me.comboBox.Location = New System.Drawing.Point(0, 2)
             Me.comboBox.Name = "comboBox"
             Me.comboBox.Size = New System.Drawing.Size(653, 21)
@@ -55,6 +48,7 @@
             Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
             Me.ClientSize = New System.Drawing.Size(653, 374)
             Me.Controls.Add(Me.textBox1)
+            Me.Controls.Add(Me.textBox2)
             Me.Controls.Add(Me.comboBox)
             Me.HideOnClose = True
 
@@ -69,6 +63,7 @@
         End Sub
 #End Region
         Private textBox1 As Windows.Forms.TextBox
+        Private textBox2 As Windows.Forms.TextBox
         Private WithEvents comboBox As Windows.Forms.ComboBox
     End Class
 End Namespace

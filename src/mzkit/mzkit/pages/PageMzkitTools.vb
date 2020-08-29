@@ -80,7 +80,6 @@ Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class PageMzkitTools
 
-    Dim status As ToolStripStatusLabel
     Dim RibbonItems As RibbonItems
     Dim matrix As [Variant](Of ms2(), ChromatogramTick(), SSM2MatrixFragment())
     Dim matrixName As String
@@ -93,16 +92,9 @@ Public Class PageMzkitTools
         _ribbonExportDataContextMenuStrip = New ExportData(ribbon, RibbonItems.cmdContextMap)
     End Sub
 
-    Sub showStatusMessage(message As String, Optional icon As Image = Nothing)
-        MyApplication.host.Invoke(Sub()
-                                      status.Text = message
-                                      status.Image = icon
-                                  End Sub)
-    End Sub
-
     Sub InitializeFileTree()
         If TreeView1.LoadRawFileCache = 0 Then
-            showStatusMessage($"It seems that you don't have any raw file opended. You could open raw file through [File] -> [Open Raw File].", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            MyApplication.host.showStatusMessage($"It seems that you don't have any raw file opended. You could open raw file through [File] -> [Open Raw File].", My.Resources.StatusAnnotations_Warning_32xLG_color)
         Else
             TreeView1.SelectedNode = TreeView1.Nodes.Item(Scan0)
             setCurrentFile()
@@ -121,7 +113,7 @@ Public Class PageMzkitTools
                 End If
             Next
 
-            status.Text = "Ready!"
+            MyApplication.host.showStatusMessage("Ready!")
             MyApplication.host.ToolStripStatusLabel2.Text = TreeView1.GetTotalCacheSize
         End If
     End Sub
@@ -135,7 +127,7 @@ Public Class PageMzkitTools
             If file.ShowDialog = DialogResult.OK Then
                 Call TreeView1.addRawFile(getRawCache(file.FileName))
 
-                status.Text = "Ready!"
+                MyApplication.host.showStatusMessage("Ready!")
                 MyApplication.host.ToolStripStatusLabel2.Text = TreeView1.GetTotalCacheSize
             End If
         End Using
@@ -147,7 +139,7 @@ Public Class PageMzkitTools
         Dim task As New Task.ImportsRawData(fileName, showProgress, Sub() Call progress.Invoke(Sub() progress.Close()))
         Dim runTask As New Thread(AddressOf task.RunImports)
 
-        MyApplication.host.Invoke(Sub() status.Text = "Run Raw Data Imports")
+        MyApplication.host.showStatusMessage("Run Raw Data Imports")
         progress.Label2.Text = progress.Text
 
         Call runTask.Start()
@@ -207,7 +199,6 @@ Public Class PageMzkitTools
 
     Private Sub PageMzkitTools_Load(sender As Object, e As EventArgs) Handles Me.Load
         Dim host = MyApplication.host
-        status = host.ToolStripStatusLabel1
         RibbonItems = host.ribbonItems
         TreeView1 = host.TreeView1
         ListBox1 = host.searchList.ListBox1
@@ -277,16 +268,16 @@ Public Class PageMzkitTools
 
     Private Sub setCurrentFile()
         If TreeView1.Nodes.Count = 0 Then
-            showStatusMessage("No raw file opened.")
+            MyApplication.host.showStatusMessage("No raw file opened.")
             Return
         End If
 
         With TreeView1.CurrentRawFile.raw
             Static selectedFile As String
 
-            If selectedFile <> status.Text Then
+            If selectedFile <> MyApplication.host.ToolStripStatusLabel1.Text Then
                 selectedFile = $"{ .source.FileName} [{ .numOfScans} scans]"
-                showStatusMessage(selectedFile)
+                MyApplication.host.showStatusMessage(selectedFile)
                 ListBox1.Items.Clear()
             End If
 
@@ -430,7 +421,7 @@ Public Class PageMzkitTools
                 Call setCurrentFile()
             End If
         Else
-            showStatusMessage("No raw file for removes!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            MyApplication.host.showStatusMessage("No raw file for removes!", My.Resources.StatusAnnotations_Warning_32xLG_color)
         End If
 
         MyApplication.host.ToolStripStatusLabel2.Text = TreeView1.GetTotalCacheSize
@@ -450,7 +441,7 @@ Public Class PageMzkitTools
             DataGridView1.Rows.Clear()
             DataGridView1.Columns.Clear()
 
-            showStatusMessage($"Search MS ions for [{text}] exact_mass={exact_mass} with tolerance error {ppm} ppm")
+            MyApplication.host.showStatusMessage($"Search MS ions for [{text}] exact_mass={exact_mass} with tolerance error {ppm} ppm")
 
             DataGridView1.Columns.Add(New DataGridViewLinkColumn With {
                   .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
@@ -813,12 +804,10 @@ Public Class PageMzkitTools
         Dim name As String = $"XIC [m/z={ms2.mz.ToString("F4")}, {ppm}ppm]"
 
         If ms2 Is Nothing OrElse ms2.mz = 0.0 Then
-            MyApplication.host.ToolStripStatusLabel1.Image = My.Resources.StatusAnnotations_Warning_32xLG_color
-            MyApplication.host.ToolStripStatusLabel1.Text = "XIC plot is not avaliable for MS1 parent!"
+            MyApplication.host.showStatusMessage("XIC plot is not avaliable for MS1 parent!", My.Resources.StatusAnnotations_Warning_32xLG_color)
             Return Nothing
         Else
-            MyApplication.host.ToolStripStatusLabel1.Image = Nothing
-            MyApplication.host.ToolStripStatusLabel1.Text = name
+            MyApplication.host.showStatusMessage(name, Nothing)
         End If
 
         Dim XIC As ChromatogramTick() = raw.scans _
