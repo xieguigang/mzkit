@@ -98,6 +98,9 @@
     <ApplicationIcon>chemistry.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.TextEdit">
+      <HintPath>..\dist\Microsoft.VisualStudio.TextEdit.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.Windows.Form">
       <HintPath>..\dist\Microsoft.VisualStudio.Windows.Form.dll</HintPath>
     </Reference>
