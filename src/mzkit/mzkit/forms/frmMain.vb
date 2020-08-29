@@ -57,8 +57,6 @@ Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class frmMain
 
-    Dim pages As New List(Of Control)
-
     Friend mzkitTool As New PageMzkitTools With {.Text = "Raw File Viewer"}
     Friend mzkitSettings As New PageSettings With {.Text = "Settings"}
     Friend mzkitSearch As New PageMzSearch With {.Text = "M/Z Formula De-novo Search"}
@@ -71,7 +69,7 @@ Public Class frmMain
     Dim nav As New Stack(Of Control)
 
     Friend Sub ShowPage(page As Control, Optional pushStack As Boolean = True)
-        For Each page2 In pages
+        For Each page2 In panelMain.pages
             If Not page Is page2 Then
                 page2.Visible = False
                 page2.Hide()
@@ -205,14 +203,6 @@ Public Class frmMain
         Call New frmSplashScreen() With {.isAboutScreen = True, .TopMost = True}.Show()
     End Sub
 
-    Private Sub addPage(ParamArray pageList As Control())
-        For Each page As Control In pageList
-            dockPanel.Controls.Add(page)
-            pages.Add(page)
-            page.Dock = DockStyle.Fill
-        Next
-    End Sub
-
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ' 20200829 因为有一组控件需要放置在这里
         ' 所以这个基础的panel需要首先进行初始化
@@ -221,7 +211,7 @@ Public Class frmMain
         InitRecentItems()
         ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
 
-        addPage(mzkitTool, mzkitSettings, mzkitSearch, mzkitCalculator, mzkitMNtools, mzkitRsharpScripting)
+        panelMain.addPage(mzkitTool, mzkitSettings, mzkitSearch, mzkitCalculator, mzkitMNtools, mzkitRsharpScripting)
         ShowPage(mzkitTool)
 
         mzkitTool.Ribbon_Load(Ribbon1)
