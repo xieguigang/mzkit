@@ -44,4 +44,8 @@ Public Class PageStart
             FlowLayoutPanel1.Visible = True
         End If
     End Sub
+
+    Private Sub LinkLabel3_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel3.LinkClicked
+        ' 打开R终端页面
+    End Sub
 End Class

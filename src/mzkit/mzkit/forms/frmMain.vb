@@ -121,6 +121,7 @@ Public Class frmMain
         AddHandler ribbonItems.ButtonOpenRaw.ExecuteEvent, AddressOf OpenFile
         AddHandler ribbonItems.ButtonAbout.ExecuteEvent, AddressOf About_Click
         AddHandler ribbonItems.ButtonPageNavBack.ExecuteEvent, AddressOf NavBack_Click
+        AddHandler ribbonItems.ButtonNew.ExecuteEvent, AddressOf CreateNewScript
 
         AddHandler ribbonItems.ButtonMzCalculator.ExecuteEvent, Sub(sender, e) Call ShowPage(mzkitCalculator)
         AddHandler ribbonItems.ButtonSettings.ExecuteEvent, AddressOf ShowSettings
@@ -163,6 +164,16 @@ Public Class frmMain
 
         InitSpinner()
         InitializeFormulaProfile()
+    End Sub
+
+    Private Sub CreateNewScript(sender As Object, e As ExecuteEventArgs)
+        Dim newScript As New frmRScriptEdit
+
+        newScript.Show(dockPanel)
+        newScript.DockState = DockState.Document
+        newScript.Text = "New R# Script"
+
+        Me.Text = $"BioNovoGene Mzkit [{newScript.Text}]"
     End Sub
 
     Private Sub ShowSettings(sender As Object, e As ExecuteEventArgs)
