@@ -92,17 +92,6 @@ Public Class frmMain
         Call mzkitTool.ImportsRaw()
     End Sub
 
-    Private Sub SaveAsToolStripMenuItem_Click(ByVal sender As Object, ByVal e As EventArgs)
-        Dim SaveFileDialog As New SaveFileDialog
-        SaveFileDialog.InitialDirectory = My.Computer.FileSystem.SpecialDirectories.MyDocuments
-        SaveFileDialog.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
-
-        If (SaveFileDialog.ShowDialog(Me) = System.Windows.Forms.DialogResult.OK) Then
-            Dim FileName As String = SaveFileDialog.FileName
-            ' TODO: Add code here to save the current contents of the form to a file.
-        End If
-    End Sub
-
     Private Sub ExitToolsStripMenuItem_Click(ByVal sender As Object, ByVal e As ExecuteEventArgs)
         Me.Close()
     End Sub
@@ -220,7 +209,11 @@ Public Class frmMain
         Dim active = dockPanel.ActiveDocument
 
         If Not active Is Nothing Then
-            If CObj(active).GetType.ImplementInterface(Of ISaveHandle) Then
+            If TypeOf CObj(active) Is frmSettings Then
+
+                Call DirectCast(CObj(active), frmSettings).mzkitSettings.SaveSettings()
+
+            ElseIf CObj(active).GetType.ImplementInterface(Of ISaveHandle) Then
                 Dim file As String = Nothing
                 Dim content As ContentType() = Nothing
 
@@ -237,11 +230,16 @@ Public Class frmMain
                         End If
 
                         If save.ShowDialog = DialogResult.OK Then
+                            file = save.FileName
                             Call DirectCast(CObj(active), ISaveHandle).Save(save.FileName)
                         End If
                     End Using
                 Else
-                    Call DirectCast(CObj(active), ISaveHandle).Save(DirectCast(CObj(active), IFileReference).FilePath)
+                    Call DirectCast(CObj(active), ISaveHandle).Save(file)
+                End If
+
+                If Not file.StringEmpty Then
+                    Me.showStatusMessage($"Current file saved at {file.GetFullPath}!")
                 End If
 
                 Return

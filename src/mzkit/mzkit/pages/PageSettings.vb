@@ -47,8 +47,6 @@ Imports mzkit.My
 
 Public Class PageSettings
 
-    Dim status As ToolStripStatusLabel
-
     Dim elementProfile As New ElementProfile With {.Text = "Formula Search"}
     Dim appConfig As New AppConfig With {.Text = "Mzkit Settings"}
     Dim viewer As New RawFileViewer With {.Text = "Raw File Viewer"}
@@ -60,7 +58,6 @@ Public Class PageSettings
     End Sub
 
     Private Sub PageSettings_Load(sender As Object, e As EventArgs) Handles Me.Load
-        status = MyApplication.host.ToolStripStatusLabel1
         pages = {elementProfile, appConfig, viewer}
 
         For Each page In pages
@@ -73,15 +70,15 @@ Public Class PageSettings
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Call SaveSettings()
+    End Sub
+
+    Public Sub SaveSettings()
         For Each page In pages
             Call DirectCast(CObj(page), ISaveSettings).SaveSettings()
         Next
 
-        showStatusMessage("New settings value applied and saved!")
-    End Sub
-
-    Sub showStatusMessage(message As String)
-        MyApplication.host.Invoke(Sub() status.Text = message)
+        Call MyApplication.host.showStatusMessage("New settings value applied and saved!")
     End Sub
 
     Sub showPage(page As Control)
