@@ -24,49 +24,56 @@ Partial Class NewsFeedDisplay
     Private Sub InitializeComponent()
         Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.Label2 = New System.Windows.Forms.Label()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.SuspendLayout()
         '
         'LinkLabel1
         '
         Me.LinkLabel1.AutoSize = True
-        Me.LinkLabel1.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LinkLabel1.Location = New System.Drawing.Point(15, 9)
+        Me.LinkLabel1.Font = New System.Drawing.Font("Microsoft YaHei UI", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LinkLabel1.LinkColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.LinkLabel1.Location = New System.Drawing.Point(3, 7)
         Me.LinkLabel1.Name = "LinkLabel1"
-        Me.LinkLabel1.Size = New System.Drawing.Size(130, 29)
+        Me.LinkLabel1.Size = New System.Drawing.Size(119, 28)
         Me.LinkLabel1.TabIndex = 0
         Me.LinkLabel1.TabStop = True
         Me.LinkLabel1.Text = "LinkLabel1"
+        Me.LinkLabel1.VisitedLinkColor = System.Drawing.Color.Silver
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(17, 52)
+        Me.Label1.Location = New System.Drawing.Point(5, 37)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(39, 13)
         Me.Label1.TabIndex = 1
         Me.Label1.Text = "Label1"
         '
-        'Label2
+        'TextBox1
         '
-        Me.Label2.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.TextBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label2.Location = New System.Drawing.Point(17, 77)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(443, 73)
-        Me.Label2.TabIndex = 2
-        Me.Label2.Text = "Label2"
+        Me.TextBox1.BackColor = System.Drawing.Color.White
+        Me.TextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.TextBox1.Font = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBox1.ForeColor = System.Drawing.Color.Gray
+        Me.TextBox1.Location = New System.Drawing.Point(8, 53)
+        Me.TextBox1.Multiline = True
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.ReadOnly = True
+        Me.TextBox1.Size = New System.Drawing.Size(463, 65)
+        Me.TextBox1.TabIndex = 2
         '
         'NewsFeedDisplay
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.LinkLabel1)
         Me.Name = "NewsFeedDisplay"
-        Me.Size = New System.Drawing.Size(474, 160)
+        Me.Size = New System.Drawing.Size(474, 121)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -74,5 +81,5 @@ Partial Class NewsFeedDisplay
 
     Friend WithEvents LinkLabel1 As LinkLabel
     Friend WithEvents Label1 As Label
-    Friend WithEvents Label2 As Label
+    Friend WithEvents TextBox1 As TextBox
 End Class

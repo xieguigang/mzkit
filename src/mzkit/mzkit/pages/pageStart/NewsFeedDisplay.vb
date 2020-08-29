@@ -9,7 +9,7 @@ Public Class NewsFeedDisplay
 
         LinkLabel1.Text = news.title
         Label1.Text = news.date
-        Label2.Text = news.abstract
+        TextBox1.Text = news.abstract
     End Sub
 
     Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked

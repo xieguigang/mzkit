@@ -117,6 +117,21 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <metadata name="Panel1.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="PictureBox1.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="PictureBox1.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="FlowLayoutPanel1.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="PictureBox2.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="PictureBox2.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -386,6 +401,9 @@
         UBiQhwaDoTAgDw0GQyEAF/x/1jadg3xWymIAAAAASUVORK5CYII=
 </value>
   </data>
+  <metadata name="LinkLabel1.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <metadata name="ImageList1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
@@ -394,33 +412,36 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAACc
-        BQAAAk1TRnQBSQFMAwEBAAFAAQABQAEAARABAAEQAQAE/wEhAQAI/wFCAU0BNgcAATYDAAEoAwABQAMA
-        ARADAAEBAQABIAYAARAaAAHOAZcBLwH8AfMBrAEuAf8B8wGsAS4B/wHzAawBLgH/AfMBrAEuAf8B8wGs
-        AS4B/wHzAawBLgH/AfMBrAEuAf8B8wGsAS4B/wgAAw8BFNAAAfMBrAEuAf8B8wGsAS4B/wHzAawBLgH/
-        AfMBrAEuAf8B8wGsAS4B/wHzAawBLgH/AfMBrAEuAf8B8wGsAS4B/wHzAawBLgH/BAAB+wH8Af0B/wP1
-        Af/QAAHzAawBLgH/AfMBrAEuAf8B8wGsAS4B/wHzAawBLgH/AfMBrAEuAf8B8wGsAS4B/wHzAawBLgH/
-        AfIBqwEuAf8B8wGsAS4B/wFpAToBAAH/A/UB/wP1Af/QAAHzAawBLgH/AfMBrAEuAf8B8wGsAS4B/wHz
-        AawBLgH/AfIBqwEuAf8C9QH0Af8D9QH/A/UB/wP1Af8D9QH/A/UB/wG9AW8BAAH/0AAB8wGsAS4B/wHz
-        AawBLgH/AfMBrAEuAf8B8wGsAS4B/wP1Af8B9QH0AfIB/wHzAawBLgH/AfMBrAEuAf8B8wGsAS4B/wP1
-        Af8BgQFQAQwB/wG9AW8BAAH/0AAB8wGsAS4B/wHzAawBLgH/AfMBrAEuAf8B1wHGAagB/wP1Af8B8wGs
-        AS4B/wHzAawBLgH/AfMBrAEuAf8B8wGsAS4B/wG6AWwBAAH/A/UB/wG9AW8BAAH/0AAB8wGsAS4B/wHz
-        AawBLgH/AfMBrAEuAf8D9QH/AdkBnQEyAf8B8wGsAS4B/wHzAawBLgH/AfMBrAEuAf8B8wGsAS4B/wG6
-        AWwBAAH/A/UB/wG9AW8BAAH/0AAB8wGsAS4B/wHzAawBLgH/AfMBrAEuAf8C9QH0Af8BxwGsAYAB/wHz
-        AawBLgH/AfMBrAEuAf8B8wGsAS4B/wHzAawBLgH/AboBbAEAAf8D9QH/Ab0BbwEAAf/QAAHzAawBLgH/
-        AfMBrAEuAf8B8wGsAS4B/wHuAaQBIAH/A/UB/wHzAawBLgH/AfMBrAEuAf8B8wGsAS4B/wHzAawBLgH/
-        AWkBOgEAAf8D9QH/Ab0BbwEAAf/QAAHzAawBLgH/AfMBrAEuAf8B8wGsAS4B/wHzAawBLgH/A/UB/wP1
-        Af8BkQGGAWoB/wG1AacBjwH/AfYC9wH/A/UB/wG9AW8BAAH/Ab0BbwEAAf/QAAHzAawBLgH/AfMBrAEu
-        Af8B8wGsAS4B/wHzAawBLgH/AfMBrAEuAf8B8wHmAdEB/wP1Af8D9QH/AfUB9AHyAf8BvQFvAQAB/wG9
-        AW8BAAH/Ab0BbwEAAf/QAAHzAawBLgH/AfMBrAEuAf8B8wGsAS4B/wHzAawBLgH/AfMBrAEuAf8B7wHd
-        Ab4B/wHvAd4BwAH/Ab0BbwEAAf8B8wGsAS4B/wHzAawBLgH/AfMBrAEuAf/UAAHzAawBLgH/AfMBrAEu
-        Af8B8wGsAS4B/wHzAawBLgH/AfMBrAEuAf8B7wHdAb4B/wG9AW8BAAH/Ab0BbwEAAf8B8wGsAS4B/wHz
-        AawBLgH/4AADAQECAb0BbwEAAf8BvQFvAQAB/wG9AW8BAAH/Ab0BbwEAAf8BvQFvAQAB/wHzAawBLgH/
-        6AABvQFvAQAB/wG9AW8BAAH/Ab0BbwEAAf8BvQFvAQAB/wG9AW8BAAH//wDZAAFCAU0BPgcAAT4DAAEo
+        BQAAAk1TRnQBSQFMAwEBAAFQAQABUAEAARABAAEQAQAE/wEhAQAI/wFCAU0BNgcAATYDAAEoAwABQAMA
+        ARADAAEBAQABIAYAARAaAAHIAZEBLQH8AfMBrAEsAf8B8wGsASwB/wHzAawBLAH/AfMBrAEsAf8B8wGs
+        ASwB/wHzAawBLAH/AfMBrAEsAf8B8wGsASwB/wgAAw8BFNAAAfMBrAEsAf8B8wGsASwB/wHzAawBLAH/
+        AfMBrAEsAf8B8wGsASwB/wHzAawBLAH/AfMBrAEsAf8B8wGsASwB/wHzAawBLAH/BAAB+wH8Af0B/wP1
+        Af/QAAHzAawBLAH/AfMBrAEsAf8B8wGsASwB/wHzAawBLAH/AfMBrAEsAf8B8wGsASwB/wHzAawBLAH/
+        AfIBqwEsAf8B8wGsASwB/wFnATgBAAH/A/UB/wP1Af/QAAHzAawBLAH/AfMBrAEsAf8B8wGsASwB/wHz
+        AawBLAH/AfIBqwEsAf8C9QH0Af8D9QH/A/UB/wP1Af8D9QH/A/UB/wG9AW0BAAH/0AAB8wGsASwB/wHz
+        AawBLAH/AfMBrAEsAf8B8wGsASwB/wP1Af8B9QH0AfIB/wHzAawBLAH/AfMBrAEsAf8B8wGsASwB/wP1
+        Af8BgQFOAQoB/wG9AW0BAAH/0AAB8wGsASwB/wHzAawBLAH/AfMBrAEsAf8B1wHGAagB/wP1Af8B8wGs
+        ASwB/wHzAawBLAH/AfMBrAEsAf8B8wGsASwB/wG6AWoBAAH/A/UB/wG9AW0BAAH/0AAB8wGsASwB/wHz
+        AawBLAH/AfMBrAEsAf8D9QH/AdkBnQEwAf8B8wGsASwB/wHzAawBLAH/AfMBrAEsAf8B8wGsASwB/wG6
+        AWoBAAH/A/UB/wG9AW0BAAH/0AAB8wGsASwB/wHzAawBLAH/AfMBrAEsAf8C9QH0Af8BxwGsAYAB/wHz
+        AawBLAH/AfMBrAEsAf8B8wGsASwB/wHzAawBLAH/AboBagEAAf8D9QH/Ab0BbQEAAf/QAAHzAawBLAH/
+        AfMBrAEsAf8B8wGsASwB/wHuAaQBHgH/A/UB/wHzAawBLAH/AfMBrAEsAf8B8wGsASwB/wHzAawBLAH/
+        AWcBOAEAAf8D9QH/Ab0BbQEAAf/QAAHzAawBLAH/AfMBrAEsAf8B8wGsASwB/wHzAawBLAH/A/UB/wP1
+        Af8BkQGGAWgB/wG1AacBjwH/AfYC9wH/A/UB/wG9AW0BAAH/Ab0BbQEAAf/QAAHzAawBLAH/AfMBrAEs
+        Af8B8wGsASwB/wHzAawBLAH/AfMBrAEsAf8B8wHmAdEB/wP1Af8D9QH/AfUB9AHyAf8BvQFtAQAB/wG9
+        AW0BAAH/Ab0BbQEAAf/QAAHzAawBLAH/AfMBrAEsAf8B8wGsASwB/wHzAawBLAH/AfMBrAEsAf8B7wHd
+        Ab4B/wHvAd4BwAH/Ab0BbQEAAf8B8wGsASwB/wHzAawBLAH/AfMBrAEsAf/UAAHzAawBLAH/AfMBrAEs
+        Af8B8wGsASwB/wHzAawBLAH/AfMBrAEsAf8B7wHdAb4B/wG9AW0BAAH/Ab0BbQEAAf8B8wGsASwB/wHz
+        AawBLAH/4AADAQECAb0BbQEAAf8BvQFtAQAB/wG9AW0BAAH/Ab0BbQEAAf8BvQFtAQAB/wHzAawBLAH/
+        6AABvQFtAQAB/wG9AW0BAAH/Ab0BbQEAAf8BvQFtAQAB/wG9AW0BAAH//wDZAAFCAU0BPgcAAT4DAAEo
         AwABQAMAARADAAEBAQABAQUAAYAXAAP/AQABwAEbBgABwAETBgABwAEDBgABwAEDBgABwAEDBgABwAED
         BgABwAEDBgABwAEDBgABwAEDBgABwAEDBgABwAEDBgABwAEHBgABwAEPBgAB8AEfBgAB+AE/BgAC/wYA
         Cw==
 </value>
   </data>
+  <metadata name="PictureBox3.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <data name="PictureBox3.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAABGdBTUEAALGPC/xhBQAAHjhJREFUeF7t
@@ -556,4 +577,7 @@
         AElFTkSuQmCC
 </value>
   </data>
+  <metadata name="$this.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
 </root>
