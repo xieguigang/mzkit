@@ -232,6 +232,14 @@ Public Class PageMzkitTools
     Dim currentMatrix As [Variant](Of ms2(), ChromatogramTick())
     Dim propertyWin As New DummyPropertyWindow
 
+    Public Sub ShowPropertyWindow()
+        If propertyWin.DockState = DockState.Hidden OrElse propertyWin.DockState = DockState.Unknown Then
+            propertyWin.Show(MyApplication.host.dockPanel)
+        End If
+
+        propertyWin.DockState = DockState.DockRight
+    End Sub
+
     Private Sub showSpectrum(scanId As String, raw As Raw)
         If raw.cache.FileExists Then
             Dim prop As SpectrumProperty = Nothing
@@ -245,13 +253,10 @@ Public Class PageMzkitTools
                 Sub()
                     ' PropertyGrid1.SelectedObject = prop
                     'PropertyGrid1.Refresh()
-
-                    If propertyWin.DockState = DockState.Hidden OrElse propertyWin.DockState = DockState.Unknown Then
-                        propertyWin.Show(MyApplication.host.dockPanel)
-                    End If
-
                     propertyWin.propertyGrid.SelectedObject = prop
                     propertyWin.propertyGrid.Refresh()
+
+                    ShowPropertyWindow()
                 End Sub)
 
             PictureBox1.BackgroundImage = draw

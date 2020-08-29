@@ -151,6 +151,10 @@ Public Class frmMain
         AddHandler ribbonItems.ButtonShowStartPage.ExecuteEvent, AddressOf showStartPage
         AddHandler ribbonItems.ButtonShowLogWindow.ExecuteEvent, AddressOf showLoggingWindow
 
+        AddHandler ribbonItems.ButtonShowExplorer.ExecuteEvent, AddressOf ShowExplorer
+        AddHandler ribbonItems.ButtonShowSearchList.ExecuteEvent, AddressOf ShowSearchList
+        AddHandler ribbonItems.ButtonShowProperties.ExecuteEvent, AddressOf ShowProperties
+
         AddHandler ribbonItems.ButtonShowPlotViewer.ExecuteEvent, Sub(sender, e) Call mzkitTool.ShowTabPage(mzkitTool.TabPage5)
         AddHandler ribbonItems.ButtonShowMatrixViewer.ExecuteEvent, Sub(sender, e) Call mzkitTool.ShowTabPage(mzkitTool.TabPage6)
 
@@ -160,6 +164,20 @@ Public Class frmMain
 
         InitSpinner()
         InitializeFormulaProfile()
+    End Sub
+
+    Private Sub ShowExplorer(sender As Object, e As ExecuteEventArgs)
+        fileExplorer.Show(dockPanel)
+        fileExplorer.DockState = DockState.DockLeft
+    End Sub
+
+    Private Sub ShowSearchList(sender As Object, e As ExecuteEventArgs)
+        searchList.Show(dockPanel)
+        searchList.DockState = DockState.DockLeft
+    End Sub
+
+    Private Sub ShowProperties(sender As Object, e As ExecuteEventArgs)
+        mzkitTool.ShowPropertyWindow()
     End Sub
 
     Private Sub showLoggingWindow(sender As Object, e As ExecuteEventArgs)
