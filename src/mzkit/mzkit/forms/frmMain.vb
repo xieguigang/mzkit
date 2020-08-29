@@ -165,7 +165,7 @@ Public Class frmMain
         AddHandler ribbonItems.ButtonExportImage.ExecuteEvent, Sub(sender, e) Call mzkitTool.SaveImageToolStripMenuItem_Click()
         AddHandler ribbonItems.ButtonExportMatrix.ExecuteEvent, Sub(sender, e) Call mzkitTool.SaveMatrixToolStripMenuItem_Click()
 
-        AddHandler ribbonItems.ButtonShowStartPage.ExecuteEvent, Sub(sender, e) Call mzkitTool.ShowTabPage(mzkitTool.TabPage4)
+        AddHandler ribbonItems.ButtonShowStartPage.ExecuteEvent, AddressOf showStartPage
 
         _uiCollectionChangedEvent = New UICollectionChangedEvent()
 
@@ -173,6 +173,15 @@ Public Class frmMain
 
         InitSpinner()
         InitializeFormulaProfile()
+    End Sub
+
+    Private Sub showStartPage(sender As Object, e As ExecuteEventArgs)
+        If Not Globals.CheckFormOpened(startPage) Then
+            startPage = New frmStartPage
+        End If
+
+        startPage.Show(dockPanel)
+        startPage.DockState = DockState.Document
     End Sub
 
     Private Sub saveCacheList()
@@ -373,6 +382,7 @@ Public Class frmMain
     Friend searchList As New frmSearchList
     Friend output As New DummyOutputWindow
     Friend WithEvents panelMain As New frmDockDocument
+    Friend startPage As New frmStartPage
 
     Private Sub initializeVSPanel()
         PanelBase.Controls.Add(Me.dockPanel)
@@ -403,6 +413,9 @@ Public Class frmMain
 
         output.Show(dockPanel)
         output.DockState = DockState.DockBottomAutoHide
+
+        startPage.Show(dockPanel)
+        startPage.DockState = DockState.Document
 
         panelMain.Show(dockPanel)
         panelMain.DockState = DockState.Document

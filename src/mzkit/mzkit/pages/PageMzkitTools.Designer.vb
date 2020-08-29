@@ -29,7 +29,6 @@ Partial Class PageMzkitTools
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.CustomTabControl1 = New System.Windows.Forms.CustomTabControl()
-        Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -68,7 +67,6 @@ Partial Class PageMzkitTools
         '
         'CustomTabControl1
         '
-        Me.CustomTabControl1.Controls.Add(Me.TabPage4)
         Me.CustomTabControl1.Controls.Add(Me.TabPage5)
         Me.CustomTabControl1.Controls.Add(Me.TabPage6)
         '
@@ -96,16 +94,6 @@ Partial Class PageMzkitTools
         Me.CustomTabControl1.SelectedIndex = 0
         Me.CustomTabControl1.Size = New System.Drawing.Size(1341, 510)
         Me.CustomTabControl1.TabIndex = 14
-        '
-        'TabPage4
-        '
-        Me.TabPage4.Location = New System.Drawing.Point(4, 23)
-        Me.TabPage4.Name = "TabPage4"
-        Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage4.Size = New System.Drawing.Size(1333, 483)
-        Me.TabPage4.TabIndex = 0
-        Me.TabPage4.Text = "Start Page"
-        Me.TabPage4.UseVisualStyleBackColor = True
         '
         'TabPage5
         '
@@ -151,7 +139,6 @@ Partial Class PageMzkitTools
     Friend WithEvents ImageList1 As ImageList
     Friend WithEvents ToolTip1 As ToolTip
     Friend WithEvents CustomTabControl1 As CustomTabControl
-    Friend WithEvents TabPage4 As TabPage
     Friend WithEvents TabPage5 As TabPage
     Friend WithEvents TabPage6 As TabPage
 End Class

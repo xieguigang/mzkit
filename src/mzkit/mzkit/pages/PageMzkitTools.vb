@@ -195,8 +195,6 @@ Public Class PageMzkitTools
         Call setCurrentFile()
     End Sub
 
-    Dim startPage As New PageStart
-
     Private Sub PageMzkitTools_Load(sender As Object, e As EventArgs) Handles Me.Load
         Dim host = MyApplication.host
         RibbonItems = host.ribbonItems
@@ -208,9 +206,6 @@ Public Class PageMzkitTools
         AddHandler ListBox1.SelectedIndexChanged, AddressOf ListBox1_SelectedIndexChanged
         AddHandler TreeView1.AfterSelect, AddressOf TreeView1_AfterSelect
         AddHandler host.fileExplorer.Button1.Click, Sub(obj, evt) Call SearchByMz(host.fileExplorer.TextBox2.Text)
-
-        TabPage4.Controls.Add(startPage)
-        startPage.Dock = DockStyle.Fill
 
         AddHandler host.fileExplorer.ShowTICToolStripMenuItem.Click, AddressOf ShowTICToolStripMenuItem_Click
         AddHandler host.fileExplorer.ShowXICToolStripMenuItem.Click, AddressOf ShowXICToolStripMenuItem_Click
@@ -900,11 +895,11 @@ Public Class PageMzkitTools
         e.Cancel = True
 
         If CustomTabControl1.Controls.Count = 1 Then
-            If e.TabPage Is TabPage4 Then
+            If e.TabPage Is TabPage5 Then
 
             Else
                 CustomTabControl1.Controls.Clear()
-                ShowTabPage(TabPage4)
+                ShowTabPage(TabPage5)
             End If
         Else
             CustomTabControl1.Controls.Remove(e.TabPage)
