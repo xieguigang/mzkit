@@ -17,7 +17,12 @@ Public Class PageStart
     Private Sub BackgroundWorker_DoWork(sender As Object, e As DoWorkEventArgs) Handles BackgroundWorker.DoWork
         Dim news As NewsFeed() = NewsFeed.ParseLatest().ToArray
 
-
-
+        Invoke(Sub()
+                   For Each newsItem As NewsFeed In news
+                       Dim display As New NewsFeedDisplay
+                       FlowLayoutPanel1.Controls.Add(display)
+                       display.ShowNews(newsItem)
+                   Next
+               End Sub)
     End Sub
 End Class

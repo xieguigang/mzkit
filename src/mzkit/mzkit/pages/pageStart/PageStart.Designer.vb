@@ -63,9 +63,12 @@ Partial Class PageStart
         '
         Me.FlowLayoutPanel1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.FlowLayoutPanel1.Location = New System.Drawing.Point(680, 65)
+        Me.FlowLayoutPanel1.AutoScroll = True
+        Me.FlowLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.FlowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
+        Me.FlowLayoutPanel1.Location = New System.Drawing.Point(625, 65)
         Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
-        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(436, 574)
+        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(478, 574)
         Me.FlowLayoutPanel1.TabIndex = 1
         '
         'Label1
@@ -74,7 +77,7 @@ Partial Class PageStart
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Microsoft YaHei", 27.75!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Underline), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.Gray
-        Me.Label1.Location = New System.Drawing.Point(670, 10)
+        Me.Label1.Location = New System.Drawing.Point(616, 12)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(433, 50)
         Me.Label1.TabIndex = 2
