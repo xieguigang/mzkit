@@ -84,8 +84,7 @@
 		<Command Name="cmdButtonDropA"
 			 Id="1008"
 			 LabelTitle="Mzkit Raw Data File Viewer"
-			 LabelDescription="Sub button A"
-			TooltipTitle="Drop A">
+			 LabelDescription="View MSMS and Chromatography data in MzXML/mzML/Mgf raw file data.">
 			<Command.LargeImages>
 				<Image>Res/application-x-object.png</Image>
 			</Command.LargeImages>
@@ -94,8 +93,7 @@
 		<Command Name="cmdButtonDropB"
 			 Id="1009"
 			 LabelTitle="M/z Calculator"
-			 LabelDescription="Sub button B"
-			TooltipTitle="Drop B">
+			 LabelDescription="Calculate Precursor M/z Information for a given exact mass value.">
 			<Command.LargeImages>
 				<Image>Res/libreoffice-math.png</Image>
 			</Command.LargeImages>
@@ -104,8 +102,7 @@
 		<Command Name="cmdButtonDropC"
 			 Id="1010"
 			 LabelTitle="Formula Search Tool"
-			 LabelDescription="Sub button C"
-		   TooltipTitle="Drop C">
+			 LabelDescription="Run De-Novo Formula Search for a specific given exact mass value.">
 			<Command.LargeImages>
 				<Image>Res/document-print-preview.png</Image>
 			</Command.LargeImages>
@@ -114,8 +111,7 @@
 		<Command Name="cmdButtonDropD"
 			 Id="5010"
 			 LabelTitle="Molecule Networking"
-			 LabelDescription="Sub button C"
-		   TooltipTitle="Drop C">
+			 LabelDescription="View network data created from the Spectrum similarity matrix calculation.">
 			<Command.LargeImages>
 				<Image>Res/preferences-system-sharing.png</Image>
 			</Command.LargeImages>
@@ -664,7 +660,7 @@
 
 							<Spinner CommandName="cmdPPMSpinner" />
 							<CheckBox CommandName="cmdCheckBoxXICRelative" />
-							<Button CommandName='cmdButtonDesign3' />
+							<!-- <Button CommandName='cmdButtonDesign3' /> -->
 						</Group>
 
 
@@ -804,10 +800,10 @@
 					</Tab.ScalingPolicy>
 
 					<!-- useful part -->
-					<Group CommandName="cmdGroupToolsActions" SizeDefinition="ThreeButtons">
+					<Group CommandName="cmdGroupToolsActions" SizeDefinition="TwoButtons">
 						<Button CommandName="cmdButtonMzCalculator" />
 						<Button CommandName="cmdButtonMzSearch" />
-						<Button CommandName="cmdButtonSave" />
+						<!-- <Button CommandName="cmdButtonSave" /> -->
 					</Group>
 
 				</Tab>
