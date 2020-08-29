@@ -4,7 +4,7 @@
 
     Public Sub addPage(ParamArray pageList As Control())
         For Each page As Control In pageList
-            DockPanel.Controls.Add(page)
+            Controls.Add(page)
             pages.Add(page)
             page.Dock = DockStyle.Fill
         Next

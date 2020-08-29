@@ -54,6 +54,12 @@ Namespace My
     ' NetworkAvailabilityChanged: Raised when the network connection is connected or disconnected.
     Partial Friend Class MyApplication
 
+        Public Shared ReadOnly Property host As frmMain
+
+        Public Shared Sub RegisterHost(host As frmMain)
+            MyApplication._host = host
+        End Sub
+
         Private Sub MyApplication_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
             Call App.LogException(e.Exception)
             Call MessageBox.Show(e.Exception.ToString, "Unknown Error!", MessageBoxButtons.OK, MessageBoxIcon.Error)

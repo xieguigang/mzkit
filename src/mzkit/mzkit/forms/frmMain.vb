@@ -50,6 +50,7 @@
 Imports System.ComponentModel
 Imports Microsoft.VisualBasic.Language
 Imports mzkit.DockSample
+Imports mzkit.My
 Imports RibbonLib
 Imports RibbonLib.Controls.Events
 Imports RibbonLib.Interop
@@ -167,6 +168,8 @@ Public Class frmMain
         AddHandler ribbonItems.ButtonShowStartPage.ExecuteEvent, Sub(sender, e) Call mzkitTool.ShowTabPage(mzkitTool.TabPage4)
 
         _uiCollectionChangedEvent = New UICollectionChangedEvent()
+
+        MyApplication.RegisterHost(Me)
 
         InitSpinner()
         InitializeFormulaProfile()

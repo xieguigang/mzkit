@@ -1,4 +1,6 @@
-﻿Public Class RawFileViewer : Implements ISaveSettings, IPageSettings
+﻿Imports mzkit.My
+
+Public Class RawFileViewer : Implements ISaveSettings, IPageSettings
 
     Public Sub LoadSettings() Implements ISaveSettings.LoadSettings
         If Globals.Settings.viewer Is Nothing Then
@@ -13,6 +15,6 @@
     End Sub
 
     Public Sub ShowPage() Implements IPageSettings.ShowPage
-        Call DirectCast(ParentForm, frmMain).ShowPage(DirectCast(ParentForm, frmMain).mzkitTool)
+        Call MyApplication.host.ShowPage(MyApplication.host.mzkitTool)
     End Sub
 End Class

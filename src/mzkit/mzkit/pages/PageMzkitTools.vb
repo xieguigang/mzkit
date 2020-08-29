@@ -72,6 +72,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports mzkit.DockSample
+Imports mzkit.My
 Imports RibbonLib
 Imports RibbonLib.Interop
 Imports Task
@@ -79,7 +80,6 @@ Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class PageMzkitTools
 
-    Dim host As frmMain
     Dim status As ToolStripStatusLabel
     Dim RibbonItems As RibbonItems
     Dim matrix As [Variant](Of ms2(), ChromatogramTick(), SSM2MatrixFragment())
@@ -94,10 +94,10 @@ Public Class PageMzkitTools
     End Sub
 
     Sub showStatusMessage(message As String, Optional icon As Image = Nothing)
-        host.Invoke(Sub()
-                        status.Text = message
-                        status.Image = icon
-                    End Sub)
+        MyApplication.host.Invoke(Sub()
+                                      status.Text = message
+                                      status.Image = icon
+                                  End Sub)
     End Sub
 
     Sub InitializeFileTree()
@@ -108,7 +108,7 @@ Public Class PageMzkitTools
             setCurrentFile()
         End If
 
-        host.ToolStripStatusLabel2.Text = TreeView1.GetTotalCacheSize
+        MyApplication.host.ToolStripStatusLabel2.Text = TreeView1.GetTotalCacheSize
     End Sub
 
     Private Sub missingCacheFile(raw As Raw)
@@ -122,7 +122,7 @@ Public Class PageMzkitTools
             Next
 
             status.Text = "Ready!"
-            host.ToolStripStatusLabel2.Text = TreeView1.GetTotalCacheSize
+            MyApplication.host.ToolStripStatusLabel2.Text = TreeView1.GetTotalCacheSize
         End If
     End Sub
 
@@ -136,7 +136,7 @@ Public Class PageMzkitTools
                 Call TreeView1.addRawFile(getRawCache(file.FileName))
 
                 status.Text = "Ready!"
-                host.ToolStripStatusLabel2.Text = TreeView1.GetTotalCacheSize
+                MyApplication.host.ToolStripStatusLabel2.Text = TreeView1.GetTotalCacheSize
             End If
         End Using
     End Sub
@@ -147,7 +147,7 @@ Public Class PageMzkitTools
         Dim task As New Task.ImportsRawData(fileName, showProgress, Sub() Call progress.Invoke(Sub() progress.Close()))
         Dim runTask As New Thread(AddressOf task.RunImports)
 
-        ParentForm.Invoke(Sub() status.Text = "Run Raw Data Imports")
+        MyApplication.host.Invoke(Sub() status.Text = "Run Raw Data Imports")
         progress.Label2.Text = progress.Text
 
         Call runTask.Start()
@@ -190,14 +190,14 @@ Public Class PageMzkitTools
             showMatrix(TIC.value, TIC.name)
             PictureBox1.BackgroundImage = TIC.TICplot(intensityMax:=maxY).AsGDIImage
 
-            host.ShowPage(Me)
+            MyApplication.host.ShowPage(Me)
         Else
             ' scan节点
             Dim raw As Task.Raw = e.Node.Parent.Tag
             Dim scanId As String = e.Node.Text
 
             Call showSpectrum(scanId, raw)
-            Call host.ShowPage(Me)
+            Call MyApplication.host.ShowPage(Me)
         End If
 
         Call setCurrentFile()
@@ -206,7 +206,7 @@ Public Class PageMzkitTools
     Dim startPage As New PageStart
 
     Private Sub PageMzkitTools_Load(sender As Object, e As EventArgs) Handles Me.Load
-        host = DirectCast(ParentForm, frmMain)
+        Dim host = MyApplication.host
         status = host.ToolStripStatusLabel1
         RibbonItems = host.ribbonItems
         TreeView1 = host.TreeView1
@@ -255,17 +255,18 @@ Public Class PageMzkitTools
 
             Dim draw As Image = scanData.MirrorPlot.AsGDIImage
 
-            host.Invoke(Sub()
-                            ' PropertyGrid1.SelectedObject = prop
-                            'PropertyGrid1.Refresh()
+            MyApplication.host.Invoke(
+                Sub()
+                    ' PropertyGrid1.SelectedObject = prop
+                    'PropertyGrid1.Refresh()
 
-                            If propertyWin.DockState = DockState.Hidden OrElse propertyWin.DockState = DockState.Unknown Then
-                                propertyWin.Show(host.dockPanel)
-                            End If
+                    If propertyWin.DockState = DockState.Hidden OrElse propertyWin.DockState = DockState.Unknown Then
+                        propertyWin.Show(MyApplication.host.dockPanel)
+                    End If
 
-                            propertyWin.propertyGrid.SelectedObject = prop
-                            propertyWin.propertyGrid.Refresh()
-                        End Sub)
+                    propertyWin.propertyGrid.SelectedObject = prop
+                    propertyWin.propertyGrid.Refresh()
+                End Sub)
 
             PictureBox1.BackgroundImage = draw
             ShowTabPage(TabPage5)
@@ -289,7 +290,7 @@ Public Class PageMzkitTools
                 ListBox1.Items.Clear()
             End If
 
-            host.Text = $"BioNovoGene Mzkit [{ .source.GetFullPath}]"
+            MyApplication.host.Text = $"BioNovoGene Mzkit [{ .source.GetFullPath}]"
         End With
 
         If Not TreeView1.CurrentRawFile.raw.cache.FileExists Then
@@ -327,7 +328,7 @@ Public Class PageMzkitTools
         showMatrix(TIC.value, TIC.name)
         PictureBox1.BackgroundImage = TIC.TICplot.AsGDIImage
 
-        host.ShowPage(Me)
+        MyApplication.host.ShowPage(Me)
 
         'Using cache As New netCDFReader(raw.raw.cache)
         '    Dim progress As New frmTaskProgress() With {.Text = $"Reading TIC raw data [{raw.raw.source}]"}
@@ -383,7 +384,7 @@ Public Class PageMzkitTools
         '    showStatusMessage("Ready!")
         'End Using
 
-        host.Invoke(Sub() RibbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.NotAvailable)
+        MyApplication.host.Invoke(Sub() RibbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.NotAvailable)
     End Sub
 
     Public Sub SaveImageToolStripMenuItem_Click()
@@ -404,17 +405,17 @@ Public Class PageMzkitTools
 
         If Not raw.raw Is Nothing Then
             raw.tree.Nodes.Clear()
-            raw.tree.addRawFile(raw.raw, host.fileExplorer.MS1ToolStripMenuItem.Checked, host.fileExplorer.MS2ToolStripMenuItem.Checked)
+            raw.tree.addRawFile(raw.raw, MyApplication.host.fileExplorer.MS1ToolStripMenuItem.Checked, MyApplication.host.fileExplorer.MS2ToolStripMenuItem.Checked)
         End If
     End Sub
 
     Private Sub MS1ToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        host.fileExplorer.MS1ToolStripMenuItem.Checked = Not host.fileExplorer.MS1ToolStripMenuItem.Checked
+        MyApplication.host.fileExplorer.MS1ToolStripMenuItem.Checked = Not MyApplication.host.fileExplorer.MS1ToolStripMenuItem.Checked
         applyLevelFilter()
     End Sub
 
     Private Sub MS2ToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        host.fileExplorer.MS2ToolStripMenuItem.Checked = Not host.fileExplorer.MS2ToolStripMenuItem.Checked
+        MyApplication.host.fileExplorer.MS2ToolStripMenuItem.Checked = Not MyApplication.host.fileExplorer.MS2ToolStripMenuItem.Checked
         applyLevelFilter()
     End Sub
 
@@ -432,7 +433,7 @@ Public Class PageMzkitTools
             showStatusMessage("No raw file for removes!", My.Resources.StatusAnnotations_Warning_32xLG_color)
         End If
 
-        host.ToolStripStatusLabel2.Text = TreeView1.GetTotalCacheSize
+        MyApplication.host.ToolStripStatusLabel2.Text = TreeView1.GetTotalCacheSize
     End Sub
 
     Public Sub SearchByMz(text As String)
@@ -543,7 +544,7 @@ Public Class PageMzkitTools
 
             CustomTabControl1.SelectedTab = TabPage6
 
-            host.ribbonItems.TabGroupExactMassSearchTools.ContextAvailable = ContextAvailability.Active
+            MyApplication.host.ribbonItems.TabGroupExactMassSearchTools.ContextAvailable = ContextAvailability.Active
         End If
     End Sub
 
@@ -563,14 +564,14 @@ Public Class PageMzkitTools
         Next
 
         If ms2Hits.Length = 0 Then
-            host.searchList.Label2.Text = "no hits!"
+            MyApplication.host.searchList.Label2.Text = "no hits!"
             MessageBox.Show($"Sorry, no hits was found for m/z={mz} with tolerance {ppm}ppm...", "No hits found!", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Else
-            host.searchList.Label2.Text = $"{ms2Hits.Length} ms2 hits for m/z={mz} with tolerance {ppm}ppm"
+            MyApplication.host.searchList.Label2.Text = $"{ms2Hits.Length} ms2 hits for m/z={mz} with tolerance {ppm}ppm"
         End If
 
-        host.searchList.DockState = DockState.DockLeft
-        host.searchList.Show(host.dockPanel)
+        MyApplication.host.searchList.DockState = DockState.DockLeft
+        MyApplication.host.searchList.Show(MyApplication.host.dockPanel)
     End Sub
 
     Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As EventArgs)
@@ -637,8 +638,8 @@ Public Class PageMzkitTools
                     charge = 1
                 End If
 
-                host.mzkitSearch.doMzSearch(mz.mz, charge, ionMode)
-                host.ShowPage(host.mzkitSearch)
+                MyApplication.host.mzkitSearch.doMzSearch(mz.mz, charge, ionMode)
+                MyApplication.host.ShowPage(MyApplication.host.mzkitSearch)
             End If
         End If
     End Sub
@@ -683,10 +684,11 @@ Public Class PageMzkitTools
 
                 progress.Invoke(Sub() progress.Label1.Text = "initialize result output...")
 
-                host.Invoke(Sub()
-                                Call host.mzkitMNtools.loadNetwork(clusters, nodes, 0.8)
-                                Call host.ShowPage(host.mzkitMNtools)
-                            End Sub)
+                MyApplication.host.Invoke(
+                    Sub()
+                        Call MyApplication.host.mzkitMNtools.loadNetwork(clusters, nodes, 0.8)
+                        Call MyApplication.host.ShowPage(MyApplication.host.mzkitMNtools)
+                    End Sub)
 
                 progress.Invoke(Sub() progress.Close())
             End Sub)
@@ -705,27 +707,27 @@ Public Class PageMzkitTools
     End Sub
 
     Private Sub CustomToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        host.mzkitSearch.ComboBox1.SelectedIndex = 0
+        MyApplication.host.mzkitSearch.ComboBox1.SelectedIndex = 0
         SearchFormulaToolStripMenuItem_Click(sender, e)
     End Sub
 
     Private Sub DefaultToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        host.mzkitSearch.ComboBox1.SelectedIndex = 1
+        MyApplication.host.mzkitSearch.ComboBox1.SelectedIndex = 1
         SearchFormulaToolStripMenuItem_Click(sender, e)
     End Sub
 
     Private Sub SmallMoleculeToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        host.mzkitSearch.ComboBox1.SelectedIndex = 2
+        MyApplication.host.mzkitSearch.ComboBox1.SelectedIndex = 2
         SearchFormulaToolStripMenuItem_Click(sender, e)
     End Sub
 
     Private Sub NatureProductToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        host.mzkitSearch.ComboBox1.SelectedIndex = 3
+        MyApplication.host.mzkitSearch.ComboBox1.SelectedIndex = 3
         SearchFormulaToolStripMenuItem_Click(sender, e)
     End Sub
 
     Private Sub GeneralFlavoneToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        host.mzkitSearch.ComboBox1.SelectedIndex = 4
+        MyApplication.host.mzkitSearch.ComboBox1.SelectedIndex = 4
         SearchFormulaToolStripMenuItem_Click(sender, e)
     End Sub
 
@@ -811,12 +813,12 @@ Public Class PageMzkitTools
         Dim name As String = $"XIC [m/z={ms2.mz.ToString("F4")}, {ppm}ppm]"
 
         If ms2 Is Nothing OrElse ms2.mz = 0.0 Then
-            host.ToolStripStatusLabel1.Image = My.Resources.StatusAnnotations_Warning_32xLG_color
-            host.ToolStripStatusLabel1.Text = "XIC plot is not avaliable for MS1 parent!"
+            MyApplication.host.ToolStripStatusLabel1.Image = My.Resources.StatusAnnotations_Warning_32xLG_color
+            MyApplication.host.ToolStripStatusLabel1.Text = "XIC plot is not avaliable for MS1 parent!"
             Return Nothing
         Else
-            host.ToolStripStatusLabel1.Image = Nothing
-            host.ToolStripStatusLabel1.Text = name
+            MyApplication.host.ToolStripStatusLabel1.Image = Nothing
+            MyApplication.host.ToolStripStatusLabel1.Text = name
         End If
 
         Dim XIC As ChromatogramTick() = raw.scans _
@@ -829,7 +831,7 @@ Public Class PageMzkitTools
                     End Function) _
             .ToArray
 
-        If Not host.ribbonItems.CheckBoxXICRelative.BooleanValue Then
+        If Not MyApplication.host.ribbonItems.CheckBoxXICRelative.BooleanValue Then
             XIC = {
                   New ChromatogramTick With {.Time = raw.rtmin},
                   New ChromatogramTick With {.Time = raw.rtmax}
@@ -850,12 +852,12 @@ Public Class PageMzkitTools
     Private Sub AddToolStripMenuItem_Click(sender As Object, e As EventArgs)
         Dim XIC = getXICMatrix(TreeView1.CurrentRawFile.raw)
         XICCollection.Add(XIC)
-        host.fileExplorer.ClearToolStripMenuItem.Text = $"Clear [{XICCollection.Count} XIC data]"
+        MyApplication.host.fileExplorer.ClearToolStripMenuItem.Text = $"Clear [{XICCollection.Count} XIC data]"
     End Sub
 
     Private Sub ClearToolStripMenuItem_Click(sender As Object, e As EventArgs)
         XICCollection.Clear()
-        host.fileExplorer.ClearToolStripMenuItem.Text = "Clear"
+        MyApplication.host.fileExplorer.ClearToolStripMenuItem.Text = "Clear"
     End Sub
 
     Private Sub PictureBox1_DoubleClick(sender As Object, e As EventArgs) Handles PictureBox1.DoubleClick
@@ -901,7 +903,7 @@ Public Class PageMzkitTools
     Private Sub PictureBox1_MouseClick(sender As Object, e As MouseEventArgs) Handles PictureBox1.MouseClick
         If e.Button = MouseButtons.Right Then
             Dim p As Point = PictureBox1.PointToScreen(e.Location)
-            DirectCast(ParentForm, frmMain).Ribbon1.ShowContextPopup(CUInt(RibbonItems.cmdContextMap), p.X, p.Y)
+            MyApplication.host.Ribbon1.ShowContextPopup(CUInt(RibbonItems.cmdContextMap), p.X, p.Y)
         End If
     End Sub
 
