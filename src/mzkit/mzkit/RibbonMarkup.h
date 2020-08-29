@@ -271,5 +271,11 @@
 #define cmdButtonRunScript_TooltipTitle_RESID 60187
 #define cmdButtonRunScript_TooltipDescription_RESID 60188
 #define cmdButtonRunScript_LargeImages_RESID 60189
-#define InternalCmd2_LabelTitle_RESID 60190
-#define InternalCmd4_LabelTitle_RESID 60191
+#define cmdButtonSaveScript 1134 
+#define cmdButtonSaveScript_LabelTitle_RESID 60190
+#define cmdButtonSaveScript_LabelDescription_RESID 60191
+#define cmdButtonSaveScript_TooltipTitle_RESID 60192
+#define cmdButtonSaveScript_TooltipDescription_RESID 60193
+#define cmdButtonSaveScript_LargeImages_RESID 60194
+#define InternalCmd2_LabelTitle_RESID 60195
+#define InternalCmd4_LabelTitle_RESID 60196

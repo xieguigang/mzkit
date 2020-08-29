@@ -22,6 +22,10 @@ Public Class frmRScriptEdit
 
     Friend WithEvents script As New PageRscriptEditor
 
+    Public Sub LoadScript(script As String)
+        Me.script.FastColoredTextBox1.Text = script
+    End Sub
+
     Private Sub frmRScriptEdit_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
         If scriptFile.StringEmpty Then
             Dim result = MessageBox.Show("Save current script file?", "File Not Saved", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)

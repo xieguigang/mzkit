@@ -626,6 +626,16 @@
 			</Command.LargeImages>
 		</Command>
 
+		<Command Name="cmdButtonSaveScript"
+					Id="1134"
+					LabelTitle="Save"
+					LabelDescription="Save R# Script"
+		 TooltipTitle="Save Script"
+		 TooltipDescription="Save R# script for mzkit Automation">
+			<Command.LargeImages>
+				<Image>Res/document-save.png</Image>
+			</Command.LargeImages>
+		</Command>
 
 	</Application.Commands>
 
@@ -698,10 +708,10 @@
 
 				<TabGroup CommandName='cmdTabGroupRscriptTools'>
 					<Tab CommandName='cmdTabRscriptTools'>
-						<Group CommandName='cmdGroupRscript' SizeDefinition='OneButton'>
-							<Button CommandName='cmdButtonRunScript' />
-
-						</Group>
+						<Group CommandName='cmdGroupRscript' SizeDefinition='TwoButtons'>
+	<Button CommandName='cmdButtonSaveScript' />						
+						<Button CommandName='cmdButtonRunScript' />
+												</Group>
 					</Tab>
 				</TabGroup>
 

@@ -88,7 +88,21 @@ Public Class frmMain
     End Sub
 
     Private Sub OpenFile(ByVal sender As Object, ByVal e As ExecuteEventArgs)
-        Call mzkitTool.ImportsRaw()
+        Using file As New OpenFileDialog With {.Filter = "Raw Data|*.mzXML;*.mzML|R# Script(*.R)|*.R"}
+            If file.ShowDialog = DialogResult.OK Then
+                If file.FileName.ExtensionSuffix("R") Then
+                    Dim newScript As New frmRScriptEdit With {.scriptFile = file.FileName}
+
+                    scriptFiles.Add(newScript)
+                    newScript.Show(dockPanel)
+                    newScript.DockState = DockState.Document
+                    newScript.Text = file.FileName.FileName
+                    newScript.LoadScript(file.FileName.ReadAllText)
+                Else
+                    Call mzkitTool.ImportsRaw(file.FileName)
+                End If
+            End If
+        End Using
     End Sub
 
     Private Sub ExitToolsStripMenuItem_Click(ByVal sender As Object, ByVal e As ExecuteEventArgs)
@@ -150,6 +164,7 @@ Public Class frmMain
         AddHandler ribbonItems.ButtonShowMatrixViewer.ExecuteEvent, Sub(sender, e) Call mzkitTool.ShowTabPage(mzkitTool.TabPage6)
 
         AddHandler ribbonItems.ButtonRunScript.ExecuteEvent, AddressOf RunCurrentScript
+        AddHandler ribbonItems.ButtonSaveScript.ExecuteEvent, AddressOf saveCurrentScript
 
         _uiCollectionChangedEvent = New UICollectionChangedEvent()
 
@@ -177,12 +192,16 @@ Public Class frmMain
         End If
     End Sub
 
+    Dim scriptFiles As New List(Of frmRScriptEdit)
+
     Private Sub CreateNewScript(sender As Object, e As ExecuteEventArgs)
         Dim newScript As New frmRScriptEdit
 
         newScript.Show(dockPanel)
         newScript.DockState = DockState.Document
         newScript.Text = "New R# Script"
+
+        scriptFiles.Add(newScript)
 
         Me.Text = $"BioNovoGene Mzkit [{newScript.Text}]"
     End Sub
@@ -229,6 +248,30 @@ Public Class frmMain
         startPage.DockState = DockState.Document
 
         Me.Text = $"BioNovoGene Mzkit [{startPage.Text}]"
+    End Sub
+
+    Private Sub saveCurrentScript()
+        Dim active = dockPanel.ActiveDocument
+
+        If Not active Is Nothing AndAlso TypeOf CObj(active) Is frmRScriptEdit Then
+            Dim script As frmRScriptEdit = CObj(active)
+
+            If script.scriptFile.StringEmpty Then
+                Using save As New SaveFileDialog With {.Filter = "R# script file(*.R)|*.R"}
+
+                    If save.ShowDialog = DialogResult.OK Then
+                        script.scriptFile = save.FileName
+                        script.Save(save.FileName)
+                    End If
+                End Using
+            Else
+                Call script.Save(script.scriptFile)
+            End If
+
+            If Not script.scriptFile.StringEmpty Then
+                Me.showStatusMessage($"Save R# script file at location {script.scriptFile.GetFullPath}!")
+            End If
+        End If
     End Sub
 
     Private Sub saveCurrentFile()

@@ -122,15 +122,11 @@ Public Class PageMzkitTools
         Call TreeView1.SaveRawFileCache
     End Sub
 
-    Public Sub ImportsRaw()
-        Using file As New OpenFileDialog With {.Filter = "Raw Data|*.mzXML;*.mzML"}
-            If file.ShowDialog = DialogResult.OK Then
-                Call TreeView1.addRawFile(getRawCache(file.FileName))
+    Public Sub ImportsRaw(fileName As String)
+        Call TreeView1.addRawFile(getRawCache(fileName))
 
-                MyApplication.host.showStatusMessage("Ready!")
-                MyApplication.host.ToolStripStatusLabel2.Text = TreeView1.GetTotalCacheSize
-            End If
-        End Using
+        MyApplication.host.showStatusMessage("Ready!")
+        MyApplication.host.ToolStripStatusLabel2.Text = TreeView1.GetTotalCacheSize
     End Sub
 
     Public Function getRawCache(fileName As String) As Raw

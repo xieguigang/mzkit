@@ -42,6 +42,7 @@ using RibbonLib.Interop;
             public const uint cmdTabGroupRscriptTools = 1130;
             public const uint cmdTabRscriptTools = 1131;
             public const uint cmdGroupRscript = 1132;
+            public const uint cmdButtonSaveScript = 1134;
             public const uint cmdButtonRunScript = 1133;
             public const uint cmdTabGroupExactMassSearchTools = 1071;
             public const uint cmdTabExactMassSearch = 1072;
@@ -123,6 +124,7 @@ using RibbonLib.Interop;
         public RibbonTabGroup TabGroupRscriptTools { get; private set; }
         public RibbonTab TabRscriptTools { get; private set; }
         public RibbonGroup GroupRscript { get; private set; }
+        public RibbonButton ButtonSaveScript { get; private set; }
         public RibbonButton ButtonRunScript { get; private set; }
         public RibbonTabGroup TabGroupExactMassSearchTools { get; private set; }
         public RibbonTab TabExactMassSearch { get; private set; }
@@ -202,6 +204,7 @@ using RibbonLib.Interop;
             TabGroupRscriptTools = new RibbonTabGroup(ribbon, Cmd.cmdTabGroupRscriptTools);
             TabRscriptTools = new RibbonTab(ribbon, Cmd.cmdTabRscriptTools);
             GroupRscript = new RibbonGroup(ribbon, Cmd.cmdGroupRscript);
+            ButtonSaveScript = new RibbonButton(ribbon, Cmd.cmdButtonSaveScript);
             ButtonRunScript = new RibbonButton(ribbon, Cmd.cmdButtonRunScript);
             TabGroupExactMassSearchTools = new RibbonTabGroup(ribbon, Cmd.cmdTabGroupExactMassSearchTools);
             TabExactMassSearch = new RibbonTab(ribbon, Cmd.cmdTabExactMassSearch);
