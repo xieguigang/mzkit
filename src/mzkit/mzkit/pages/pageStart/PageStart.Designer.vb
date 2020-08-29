@@ -116,6 +116,7 @@ Partial Class PageStart
         '
         'LinkLabel2
         '
+        Me.LinkLabel2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LinkLabel2.AutoSize = True
         Me.LinkLabel2.DisabledLinkColor = System.Drawing.Color.Silver
         Me.LinkLabel2.Font = New System.Drawing.Font("Microsoft YaHei UI", 36.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
