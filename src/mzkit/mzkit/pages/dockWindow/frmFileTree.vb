@@ -1,4 +1,7 @@
 ﻿Public Class frmFileTree
+
+    Dim host As frmMain
+
     Public Sub New()
 
         ' This call is required by the designer.
@@ -6,5 +9,13 @@
 
         ' Add any initialization after the InitializeComponent() call.
         DoubleBuffered = True
+    End Sub
+
+    Public Sub frmFileTree_Load(host As frmMain)
+
+    End Sub
+
+    Private Sub ShowTICToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowTICToolStripMenuItem.Click
+
     End Sub
 End Class

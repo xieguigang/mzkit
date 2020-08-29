@@ -86,6 +86,7 @@ Public Class PageMzkitTools
     Dim matrixName As String
     Dim TreeView1 As TreeView
     Dim ListBox1 As ListBox
+    Dim ShowTICToolStripMenuItem As ToolStripMenuItem
 
     Friend _ribbonExportDataContextMenuStrip As ExportData
 
@@ -191,29 +192,6 @@ Public Class PageMzkitTools
             PictureBox1.BackgroundImage = TIC.TICplot(intensityMax:=maxY).AsGDIImage
 
             host.ShowPage(Me)
-
-        ElseIf e.Node.Tag Is Nothing AndAlso e.Node.Text = "TIC" Then
-            Dim raw = TreeView1.CurrentRawFile.raw
-            Dim TIC As New NamedCollection(Of ChromatogramTick) With {
-                .name = "TIC",
-                .value = raw.scans _
-                    .Where(Function(a) a.mz = 0R) _
-                    .Select(Function(m)
-                                Return New ChromatogramTick With {.Time = m.rt, .Intensity = m.intensity}
-                            End Function) _
-                    .ToArray
-            }
-
-            TIC.value = {
-                New ChromatogramTick With {.Time = raw.rtmin},
-                New ChromatogramTick With {.Time = raw.rtmax}
-            }.JoinIterates(TIC.value) _
-             .OrderBy(Function(c) c.Time) _
-             .ToArray
-            showMatrix(TIC.value, TIC.name)
-            PictureBox1.BackgroundImage = TIC.TICplot.AsGDIImage
-
-            host.ShowPage(Me)
         Else
             ' scan节点
             Dim raw As Task.Raw = e.Node.Parent.Tag
@@ -243,6 +221,8 @@ Public Class PageMzkitTools
 
         TabPage4.Controls.Add(startPage)
         startPage.Dock = DockStyle.Fill
+
+        AddHandler host.fileExplorer.ShowTICToolStripMenuItem.Click, AddressOf ShowTICToolStripMenuItem_Click
     End Sub
 
     Dim currentMatrix As [Variant](Of ms2(), ChromatogramTick())
@@ -300,84 +280,92 @@ Public Class PageMzkitTools
         End If
     End Sub
 
-    Private Sub ShowTICToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowTICToolStripMenuItem.Click
-        Dim raw = TreeView1.CurrentRawFile
+    Private Sub ShowTICToolStripMenuItem_Click(sender As Object, e As EventArgs)
+        Dim raw = TreeView1.CurrentRawFile.raw
 
-        ShowTICToolStripMenuItem.Checked = Not ShowTICToolStripMenuItem.Checked
-
-        If raw.raw Is Nothing Then
+        If raw Is Nothing Then
+            Return
+        ElseIf Not raw.cache.FileExists Then
+            Call missingCacheFile(raw)
             Return
         End If
 
-        If ShowTICToolStripMenuItem.Checked Then
-            If Not raw.raw.cache.FileExists Then
-                Call missingCacheFile(raw.raw)
-                Return
-            End If
+        Dim TIC As New NamedCollection(Of ChromatogramTick) With {
+            .name = "TIC",
+            .value = raw.scans _
+                .Where(Function(a) a.mz = 0R) _
+                .Select(Function(m)
+                            Return New ChromatogramTick With {.Time = m.rt, .Intensity = m.intensity}
+                        End Function) _
+                .ToArray
+        }
 
-            raw.tree.Nodes.Clear()
-            raw.tree.Nodes.Add(New TreeNode("TIC"))
+        TIC.value = {
+                New ChromatogramTick With {.Time = raw.rtmin},
+                New ChromatogramTick With {.Time = raw.rtmax}
+            }.JoinIterates(TIC.value) _
+             .OrderBy(Function(c) c.Time) _
+             .ToArray
+        showMatrix(TIC.value, TIC.name)
+        PictureBox1.BackgroundImage = TIC.TICplot.AsGDIImage
 
-            Using cache As New netCDFReader(raw.raw.cache)
-                Dim progress As New frmTaskProgress() With {.Text = $"Reading TIC raw data [{raw.raw.source}]"}
-                Dim showProgress As Action(Of String) = Sub(text) progress.Invoke(Sub() progress.Label1.Text = text)
-                Dim mzgroups As NamedCollection(Of ms2)() = {}
-                Dim runTask As New Thread(
-                        Sub()
-                            Dim ms1n = raw.raw.scans.Where(Function(a) a.mz = 0R).Count
-                            Dim i As i32 = 1
-                            Dim allMz As New List(Of ms2)
-                            Dim mztemp As ms2()
+        host.ShowPage(Me)
 
-                            For Each scan In raw.raw.scans
-                                If scan.mz = 0 Then
-                                    Dim entry = cache.getDataVariableEntry(scan.id)
-                                    Dim rt As String = entry.attributes.Where(Function(a) a.name = "retentionTime").FirstOrDefault?.value
+        'Using cache As New netCDFReader(raw.raw.cache)
+        '    Dim progress As New frmTaskProgress() With {.Text = $"Reading TIC raw data [{raw.raw.source}]"}
+        '    Dim showProgress As Action(Of String) = Sub(text) progress.Invoke(Sub() progress.Label1.Text = text)
+        '    Dim mzgroups As NamedCollection(Of ms2)() = {}
+        '    Dim runTask As New Thread(
+        '            Sub()
+        '                Dim ms1n = raw.raw.scans.Where(Function(a) a.mz = 0R).Count
+        '                Dim i As i32 = 1
+        '                Dim allMz As New List(Of ms2)
+        '                Dim mztemp As ms2()
 
-                                    mztemp = cache.getDataVariable(entry).numerics.AsMs2.ToArray
+        '                For Each scan In raw.raw.scans
+        '                    If scan.mz = 0 Then
+        '                        Dim entry = cache.getDataVariableEntry(scan.id)
+        '                        Dim rt As String = entry.attributes.Where(Function(a) a.name = "retentionTime").FirstOrDefault?.value
 
-                                    For i2 As Integer = 0 To mztemp.Length - 1
-                                        mztemp(i2).Annotation = rt
-                                    Next
+        '                        mztemp = cache.getDataVariable(entry).numerics.AsMs2.ToArray
 
-                                    allMz.AddRange(mztemp)
-                                    showProgress($"[{++i}/{ms1n}] {scan.id}")
-                                End If
-                            Next
+        '                        For i2 As Integer = 0 To mztemp.Length - 1
+        '                            mztemp(i2).Annotation = rt
+        '                        Next
 
-                            showProgress("Run m/z group....")
-                            mzgroups = allMz _
-                                .GroupBy(Function(mz) mz.mz, Tolerance.DeltaMass(5)) _
-                                .Select(Function(a)
-                                            Dim max = a.Select(Function(m) m.intensity).Max
+        '                        allMz.AddRange(mztemp)
+        '                        showProgress($"[{++i}/{ms1n}] {scan.id}")
+        '                    End If
+        '                Next
 
-                                            Return New NamedCollection(Of ms2) With {.value = a.value.Where(Function(m) m.intensity / max >= 0.05).OrderBy(Function(m) Val(m.Annotation)).ToArray}
-                                        End Function) _
-                                .ToArray
-                            progress.Invoke(Sub() progress.Close())
-                        End Sub)
+        '                showProgress("Run m/z group....")
+        '                mzgroups = allMz _
+        '                    .GroupBy(Function(mz) mz.mz, Tolerance.DeltaMass(5)) _
+        '                    .Select(Function(a)
+        '                                Dim max = a.Select(Function(m) m.intensity).Max
 
-                showStatusMessage("Run Raw Data Imports")
-                progress.Label2.Text = progress.Text
+        '                                Return New NamedCollection(Of ms2) With {.value = a.value.Where(Function(m) m.intensity / max >= 0.05).OrderBy(Function(m) Val(m.Annotation)).ToArray}
+        '                            End Function) _
+        '                    .ToArray
+        '                progress.Invoke(Sub() progress.Close())
+        '            End Sub)
 
-                Call runTask.Start()
-                Call progress.ShowDialog()
+        '    showStatusMessage("Run Raw Data Imports")
+        '    progress.Label2.Text = progress.Text
 
-                For Each mzblock In mzgroups
-                    Dim range As New DoubleRange(mzblock.Select(Function(m) m.mz))
+        '    Call runTask.Start()
+        '    Call progress.ShowDialog()
 
-                    raw.tree.Nodes.Add(New TreeNode($"m/z {range.Min.ToString("F3")} - {range.Max.ToString("F3")}") With {.Tag = mzblock.ToArray})
-                Next
+        '    For Each mzblock In mzgroups
+        '        Dim range As New DoubleRange(mzblock.Select(Function(m) m.mz))
 
-                showStatusMessage("Ready!")
-            End Using
+        '        raw.tree.Nodes.Add(New TreeNode($"m/z {range.Min.ToString("F3")} - {range.Max.ToString("F3")}") With {.Tag = mzblock.ToArray})
+        '    Next
 
-            host.Invoke(Sub() RibbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.NotAvailable)
-        Else
-            Call applyLevelFilter()
+        '    showStatusMessage("Ready!")
+        'End Using
 
-            host.Invoke(Sub() RibbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active)
-        End If
+        host.Invoke(Sub() RibbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.NotAvailable)
     End Sub
 
     Public Sub SaveImageToolStripMenuItem_Click()
@@ -398,21 +386,21 @@ Public Class PageMzkitTools
 
         If Not raw.raw Is Nothing Then
             raw.tree.Nodes.Clear()
-            raw.tree.addRawFile(raw.raw, MS1ToolStripMenuItem.Checked, MS2ToolStripMenuItem.Checked)
+            raw.tree.addRawFile(raw.raw, host.fileExplorer.MS1ToolStripMenuItem.Checked, host.fileExplorer.MS2ToolStripMenuItem.Checked)
         End If
     End Sub
 
-    Private Sub MS1ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MS1ToolStripMenuItem.Click
-        MS1ToolStripMenuItem.Checked = Not MS1ToolStripMenuItem.Checked
+    Private Sub MS1ToolStripMenuItem_Click(sender As Object, e As EventArgs)
+        host.fileExplorer.MS1ToolStripMenuItem.Checked = Not host.fileExplorer.MS1ToolStripMenuItem.Checked
         applyLevelFilter()
     End Sub
 
-    Private Sub MS2ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MS2ToolStripMenuItem.Click
-        MS2ToolStripMenuItem.Checked = Not MS2ToolStripMenuItem.Checked
+    Private Sub MS2ToolStripMenuItem_Click(sender As Object, e As EventArgs)
+        host.fileExplorer.MS2ToolStripMenuItem.Checked = Not host.fileExplorer.MS2ToolStripMenuItem.Checked
         applyLevelFilter()
     End Sub
 
-    Private Sub DeleteFileToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeleteFileToolStripMenuItem.Click
+    Private Sub DeleteFileToolStripMenuItem_Click(sender As Object, e As EventArgs)
         Dim current = TreeView1.CurrentRawFile
 
         If Not current.raw Is Nothing Then
@@ -574,7 +562,7 @@ Public Class PageMzkitTools
         Call showSpectrum(scanId.id, raw)
     End Sub
 
-    Private Sub SearchInFileToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SearchInFileToolStripMenuItem.Click
+    Private Sub SearchInFileToolStripMenuItem_Click(sender As Object, e As EventArgs)
         Call runMzSearch(Sub(mz) Call searchInFileByMz(mz))
     End Sub
 
@@ -641,7 +629,7 @@ Public Class PageMzkitTools
         End If
     End Sub
 
-    Private Sub MolecularNetworkingToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MolecularNetworkingToolStripMenuItem.Click
+    Private Sub MolecularNetworkingToolStripMenuItem_Click(sender As Object, e As EventArgs)
         If TreeView1.CurrentRawFile.raw Is Nothing Then
             Return
         End If
@@ -702,27 +690,27 @@ Public Class PageMzkitTools
         End If
     End Sub
 
-    Private Sub CustomToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CustomToolStripMenuItem.Click
+    Private Sub CustomToolStripMenuItem_Click(sender As Object, e As EventArgs)
         host.mzkitSearch.ComboBox1.SelectedIndex = 0
         SearchFormulaToolStripMenuItem_Click(sender, e)
     End Sub
 
-    Private Sub DefaultToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DefaultToolStripMenuItem.Click
+    Private Sub DefaultToolStripMenuItem_Click(sender As Object, e As EventArgs)
         host.mzkitSearch.ComboBox1.SelectedIndex = 1
         SearchFormulaToolStripMenuItem_Click(sender, e)
     End Sub
 
-    Private Sub SmallMoleculeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SmallMoleculeToolStripMenuItem.Click
+    Private Sub SmallMoleculeToolStripMenuItem_Click(sender As Object, e As EventArgs)
         host.mzkitSearch.ComboBox1.SelectedIndex = 2
         SearchFormulaToolStripMenuItem_Click(sender, e)
     End Sub
 
-    Private Sub NatureProductToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NatureProductToolStripMenuItem.Click
+    Private Sub NatureProductToolStripMenuItem_Click(sender As Object, e As EventArgs)
         host.mzkitSearch.ComboBox1.SelectedIndex = 3
         SearchFormulaToolStripMenuItem_Click(sender, e)
     End Sub
 
-    Private Sub GeneralFlavoneToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GeneralFlavoneToolStripMenuItem.Click
+    Private Sub GeneralFlavoneToolStripMenuItem_Click(sender As Object, e As EventArgs)
         host.mzkitSearch.ComboBox1.SelectedIndex = 4
         SearchFormulaToolStripMenuItem_Click(sender, e)
     End Sub
@@ -779,7 +767,7 @@ Public Class PageMzkitTools
         Next
     End Sub
 
-    Private Sub ShowXICToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowXICToolStripMenuItem.Click
+    Private Sub ShowXICToolStripMenuItem_Click(sender As Object, e As EventArgs)
         ' scan节点
         Dim raw As Task.Raw = TreeView1.CurrentRawFile.raw
         Dim plotTIC = getXICMatrix(raw)
@@ -845,19 +833,15 @@ Public Class PageMzkitTools
         Return plotTIC
     End Function
 
-    Private Sub AddToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AddToolStripMenuItem.Click
+    Private Sub AddToolStripMenuItem_Click(sender As Object, e As EventArgs)
         Dim XIC = getXICMatrix(TreeView1.CurrentRawFile.raw)
         XICCollection.Add(XIC)
-        ClearToolStripMenuItem.Text = $"Clear [{XICCollection.Count} XIC data]"
+        host.fileExplorer.ClearToolStripMenuItem.Text = $"Clear [{XICCollection.Count} XIC data]"
     End Sub
 
-    Private Sub ClearToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ClearToolStripMenuItem.Click
+    Private Sub ClearToolStripMenuItem_Click(sender As Object, e As EventArgs)
         XICCollection.Clear()
-        ClearToolStripMenuItem.Text = "Clear"
-    End Sub
-
-    Private Sub PictureBox1_Click(sender As Object, e As EventArgs) Handles PictureBox1.Click
-
+        host.fileExplorer.ClearToolStripMenuItem.Text = "Clear"
     End Sub
 
     Private Sub PictureBox1_DoubleClick(sender As Object, e As EventArgs) Handles PictureBox1.DoubleClick
@@ -869,7 +853,7 @@ Public Class PageMzkitTools
         End If
     End Sub
 
-    Private Sub ExportToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportToolStripMenuItem.Click
+    Private Sub ExportToolStripMenuItem_Click(sender As Object, e As EventArgs)
         If XICCollection.IsNullOrEmpty Then
             MessageBox.Show("No chromatogram data for XIC plot, please use XIC -> Add for add data!", "No data save", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         Else

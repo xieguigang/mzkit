@@ -154,7 +154,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="pages\dockWindow\DummyPropertyWindow.Designer.vb" />
-    <Compile Include="pages\dockWindow\DummyPropertyWindow.vb">
+    <Compile Include="pages\dockWindow\PropertyWindow.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="pages\dockWindow\frmSearchList.Designer.vb">

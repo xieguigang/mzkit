@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class PageMzkitTools
     Inherits System.Windows.Forms.UserControl
 
     'UserControl overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,29 +20,10 @@ Partial Class PageMzkitTools
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(PageMzkitTools))
-        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.ShowXICToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.AddToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ClearToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ExportToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ShowTICToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.MS1ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.MS2ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.MolecularNetworkingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripSeparator()
-        Me.SearchInFileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SearchFormulaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.CustomToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.DefaultToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SmallMoleculeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.NatureProductToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.GeneralFlavoneToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
-        Me.DeleteFileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
@@ -51,137 +32,12 @@ Partial Class PageMzkitTools
         Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
-        Me.ContextMenuStrip1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.CustomTabControl1.SuspendLayout()
         Me.TabPage5.SuspendLayout()
         Me.TabPage6.SuspendLayout()
         Me.SuspendLayout()
-        '
-        'ContextMenuStrip1
-        '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowXICToolStripMenuItem, Me.ShowTICToolStripMenuItem, Me.MS1ToolStripMenuItem, Me.MS2ToolStripMenuItem, Me.MolecularNetworkingToolStripMenuItem, Me.ToolStripMenuItem2, Me.SearchInFileToolStripMenuItem, Me.SearchFormulaToolStripMenuItem, Me.ToolStripMenuItem1, Me.DeleteFileToolStripMenuItem})
-        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(193, 192)
-        '
-        'ShowXICToolStripMenuItem
-        '
-        Me.ShowXICToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AddToolStripMenuItem, Me.ClearToolStripMenuItem, Me.ExportToolStripMenuItem})
-        Me.ShowXICToolStripMenuItem.Name = "ShowXICToolStripMenuItem"
-        Me.ShowXICToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
-        Me.ShowXICToolStripMenuItem.Text = "Show XIC"
-        '
-        'AddToolStripMenuItem
-        '
-        Me.AddToolStripMenuItem.Name = "AddToolStripMenuItem"
-        Me.AddToolStripMenuItem.Size = New System.Drawing.Size(108, 22)
-        Me.AddToolStripMenuItem.Text = "Add"
-        '
-        'ClearToolStripMenuItem
-        '
-        Me.ClearToolStripMenuItem.Image = CType(resources.GetObject("ClearToolStripMenuItem.Image"), System.Drawing.Image)
-        Me.ClearToolStripMenuItem.Name = "ClearToolStripMenuItem"
-        Me.ClearToolStripMenuItem.Size = New System.Drawing.Size(108, 22)
-        Me.ClearToolStripMenuItem.Text = "Clear"
-        '
-        'ExportToolStripMenuItem
-        '
-        Me.ExportToolStripMenuItem.Image = CType(resources.GetObject("ExportToolStripMenuItem.Image"), System.Drawing.Image)
-        Me.ExportToolStripMenuItem.Name = "ExportToolStripMenuItem"
-        Me.ExportToolStripMenuItem.Size = New System.Drawing.Size(108, 22)
-        Me.ExportToolStripMenuItem.Text = "Export"
-        '
-        'ShowTICToolStripMenuItem
-        '
-        Me.ShowTICToolStripMenuItem.Name = "ShowTICToolStripMenuItem"
-        Me.ShowTICToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
-        Me.ShowTICToolStripMenuItem.Text = "Show TIC"
-        '
-        'MS1ToolStripMenuItem
-        '
-        Me.MS1ToolStripMenuItem.Checked = True
-        Me.MS1ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.MS1ToolStripMenuItem.Name = "MS1ToolStripMenuItem"
-        Me.MS1ToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
-        Me.MS1ToolStripMenuItem.Text = "MS1"
-        '
-        'MS2ToolStripMenuItem
-        '
-        Me.MS2ToolStripMenuItem.Checked = True
-        Me.MS2ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.MS2ToolStripMenuItem.Name = "MS2ToolStripMenuItem"
-        Me.MS2ToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
-        Me.MS2ToolStripMenuItem.Text = "MS2"
-        '
-        'MolecularNetworkingToolStripMenuItem
-        '
-        Me.MolecularNetworkingToolStripMenuItem.Image = CType(resources.GetObject("MolecularNetworkingToolStripMenuItem.Image"), System.Drawing.Image)
-        Me.MolecularNetworkingToolStripMenuItem.Name = "MolecularNetworkingToolStripMenuItem"
-        Me.MolecularNetworkingToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
-        Me.MolecularNetworkingToolStripMenuItem.Text = "Molecular Networking"
-        '
-        'ToolStripMenuItem2
-        '
-        Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(189, 6)
-        '
-        'SearchInFileToolStripMenuItem
-        '
-        Me.SearchInFileToolStripMenuItem.Name = "SearchInFileToolStripMenuItem"
-        Me.SearchInFileToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
-        Me.SearchInFileToolStripMenuItem.Text = "Search In File"
-        '
-        'SearchFormulaToolStripMenuItem
-        '
-        Me.SearchFormulaToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CustomToolStripMenuItem, Me.DefaultToolStripMenuItem, Me.SmallMoleculeToolStripMenuItem, Me.NatureProductToolStripMenuItem, Me.GeneralFlavoneToolStripMenuItem})
-        Me.SearchFormulaToolStripMenuItem.Image = CType(resources.GetObject("SearchFormulaToolStripMenuItem.Image"), System.Drawing.Image)
-        Me.SearchFormulaToolStripMenuItem.Name = "SearchFormulaToolStripMenuItem"
-        Me.SearchFormulaToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
-        Me.SearchFormulaToolStripMenuItem.Text = "Search Formula"
-        '
-        'CustomToolStripMenuItem
-        '
-        Me.CustomToolStripMenuItem.Name = "CustomToolStripMenuItem"
-        Me.CustomToolStripMenuItem.Size = New System.Drawing.Size(158, 22)
-        Me.CustomToolStripMenuItem.Text = "Custom"
-        '
-        'DefaultToolStripMenuItem
-        '
-        Me.DefaultToolStripMenuItem.Name = "DefaultToolStripMenuItem"
-        Me.DefaultToolStripMenuItem.Size = New System.Drawing.Size(158, 22)
-        Me.DefaultToolStripMenuItem.Text = "Default"
-        '
-        'SmallMoleculeToolStripMenuItem
-        '
-        Me.SmallMoleculeToolStripMenuItem.Name = "SmallMoleculeToolStripMenuItem"
-        Me.SmallMoleculeToolStripMenuItem.Size = New System.Drawing.Size(158, 22)
-        Me.SmallMoleculeToolStripMenuItem.Text = "Small Molecule"
-        '
-        'NatureProductToolStripMenuItem
-        '
-        Me.NatureProductToolStripMenuItem.Name = "NatureProductToolStripMenuItem"
-        Me.NatureProductToolStripMenuItem.Size = New System.Drawing.Size(158, 22)
-        Me.NatureProductToolStripMenuItem.Text = "Nature Product"
-        '
-        'GeneralFlavoneToolStripMenuItem
-        '
-        Me.GeneralFlavoneToolStripMenuItem.Name = "GeneralFlavoneToolStripMenuItem"
-        Me.GeneralFlavoneToolStripMenuItem.Size = New System.Drawing.Size(158, 22)
-        Me.GeneralFlavoneToolStripMenuItem.Text = "General Flavone"
-        '
-        'ToolStripMenuItem1
-        '
-        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(189, 6)
-        '
-        'DeleteFileToolStripMenuItem
-        '
-        Me.DeleteFileToolStripMenuItem.Image = CType(resources.GetObject("DeleteFileToolStripMenuItem.Image"), System.Drawing.Image)
-        Me.DeleteFileToolStripMenuItem.Name = "DeleteFileToolStripMenuItem"
-        Me.DeleteFileToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
-        Me.DeleteFileToolStripMenuItem.Text = "Delete File"
         '
         'ImageList1
         '
@@ -207,7 +63,7 @@ Partial Class PageMzkitTools
         Me.DataGridView1.Location = New System.Drawing.Point(0, 0)
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.ReadOnly = True
-        Me.DataGridView1.Size = New System.Drawing.Size(645, 410)
+        Me.DataGridView1.Size = New System.Drawing.Size(1333, 483)
         Me.DataGridView1.TabIndex = 0
         '
         'CustomTabControl1
@@ -267,7 +123,7 @@ Partial Class PageMzkitTools
         Me.TabPage6.Controls.Add(Me.DataGridView1)
         Me.TabPage6.Location = New System.Drawing.Point(4, 23)
         Me.TabPage6.Name = "TabPage6"
-        Me.TabPage6.Size = New System.Drawing.Size(645, 410)
+        Me.TabPage6.Size = New System.Drawing.Size(1333, 483)
         Me.TabPage6.TabIndex = 2
         Me.TabPage6.Text = "Matrix Viewer"
         Me.TabPage6.UseVisualStyleBackColor = True
@@ -281,7 +137,6 @@ Partial Class PageMzkitTools
         Me.DoubleBuffered = True
         Me.Name = "PageMzkitTools"
         Me.Size = New System.Drawing.Size(1341, 510)
-        Me.ContextMenuStrip1.ResumeLayout(False)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.CustomTabControl1.ResumeLayout(False)
@@ -294,26 +149,7 @@ Partial Class PageMzkitTools
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents DataGridView1 As DataGridView
     Friend WithEvents ImageList1 As ImageList
-    Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
-    Friend WithEvents ShowTICToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents MS1ToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents MS2ToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents SearchInFileToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
-    Friend WithEvents DeleteFileToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolTip1 As ToolTip
-    Friend WithEvents SearchFormulaToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents MolecularNetworkingToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ToolStripMenuItem2 As ToolStripSeparator
-    Friend WithEvents CustomToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents DefaultToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents SmallMoleculeToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents NatureProductToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents GeneralFlavoneToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ShowXICToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents AddToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ClearToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ExportToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents CustomTabControl1 As CustomTabControl
     Friend WithEvents TabPage4 As TabPage
     Friend WithEvents TabPage5 As TabPage
