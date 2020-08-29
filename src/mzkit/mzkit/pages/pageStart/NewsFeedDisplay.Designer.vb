@@ -62,7 +62,7 @@ Partial Class NewsFeedDisplay
         Me.TextBox1.Multiline = True
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.ReadOnly = True
-        Me.TextBox1.Size = New System.Drawing.Size(463, 65)
+        Me.TextBox1.Size = New System.Drawing.Size(420, 60)
         Me.TextBox1.TabIndex = 2
         '
         'NewsFeedDisplay
@@ -73,7 +73,7 @@ Partial Class NewsFeedDisplay
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.LinkLabel1)
         Me.Name = "NewsFeedDisplay"
-        Me.Size = New System.Drawing.Size(474, 121)
+        Me.Size = New System.Drawing.Size(431, 116)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

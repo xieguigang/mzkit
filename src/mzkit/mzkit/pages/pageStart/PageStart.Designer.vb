@@ -68,10 +68,10 @@ Partial Class PageStart
         Me.FlowLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.FlowLayoutPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.FlowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
-        Me.FlowLayoutPanel1.Location = New System.Drawing.Point(553, 65)
+        Me.FlowLayoutPanel1.Location = New System.Drawing.Point(639, 65)
         Me.FlowLayoutPanel1.Margin = New System.Windows.Forms.Padding(0)
         Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
-        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(550, 281)
+        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(471, 281)
         Me.FlowLayoutPanel1.TabIndex = 1
         Me.FlowLayoutPanel1.WrapContents = False
         '
@@ -122,7 +122,7 @@ Partial Class PageStart
         Me.LinkLabel2.DisabledLinkColor = System.Drawing.Color.Silver
         Me.LinkLabel2.Font = New System.Drawing.Font("Microsoft YaHei UI", 36.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LinkLabel2.LinkColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(104, Byte), Integer), CType(CType(189, Byte), Integer))
-        Me.LinkLabel2.Location = New System.Drawing.Point(542, 3)
+        Me.LinkLabel2.Location = New System.Drawing.Point(628, 3)
         Me.LinkLabel2.Name = "LinkLabel2"
         Me.LinkLabel2.Size = New System.Drawing.Size(447, 62)
         Me.LinkLabel2.TabIndex = 6
