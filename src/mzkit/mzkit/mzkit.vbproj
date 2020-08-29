@@ -157,6 +157,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="pages\dockWindow\DummyPropertyWindow.Designer.vb" />
+    <Compile Include="pages\dockWindow\frmRScriptEdit.Designer.vb">
+      <DependentUpon>frmRScriptEdit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\dockWindow\frmRScriptEdit.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="pages\dockWindow\frmRsharp.Designer.vb">
       <DependentUpon>frmRsharp.vb</DependentUpon>
     </Compile>
@@ -229,6 +235,12 @@
       <DependentUpon>PageStart.vb</DependentUpon>
     </Compile>
     <Compile Include="pages\pageStart\PageStart.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="pages\PageRscriptEditor.Designer.vb">
+      <DependentUpon>PageRscriptEditor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\PageRscriptEditor.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="settings\UISettings.vb" />
