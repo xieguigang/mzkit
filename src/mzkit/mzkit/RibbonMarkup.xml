@@ -193,12 +193,12 @@
 
 		<Command Name="cmdTabDesign"
 				 Id="1032"
-				 LabelTitle="Design">
+				 LabelTitle="Mzkit Data Tools">
 		</Command>
 
 		<Command Name="cmdTabLayout"
 				 Id="1035"
-				 LabelTitle="Layout">
+				 LabelTitle="Data Viewer">
 		</Command>
 
 		<Command Name="cmdGroupDesign"
@@ -238,17 +238,17 @@
 
 		<Command Name="cmdButtonLayout1"
 				 Id="1043"
-				 LabelTitle="Layout 1">
+				 LabelTitle="Snapshot">
 			<Command.LargeImages>
-				<Image>Res/DropA32.bmp</Image>
+				<Image>Res/applets-screenshooter.png</Image>
 			</Command.LargeImages>
 		</Command>
 
 		<Command Name="cmdButtonLayout2"
 				 Id="1044"
-				 LabelTitle="Layout 2">
+				 LabelTitle="Save Matrix">
 			<Command.LargeImages>
-				<Image>Res/DropB32.bmp</Image>
+				<Image>Res/excel-icon.png</Image>
 			</Command.LargeImages>
 		</Command>
 

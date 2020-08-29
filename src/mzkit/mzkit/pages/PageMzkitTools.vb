@@ -383,6 +383,8 @@ Public Class PageMzkitTools
                     Call Process.Start(file.FileName)
                 End If
             End Using
+        Else
+            MyApplication.host.showStatusMessage("No plot image for save, please select one spectrum to start!", My.Resources.StatusAnnotations_Warning_32xLG_color)
         End If
     End Sub
 
@@ -573,6 +575,7 @@ Public Class PageMzkitTools
 
     Public Sub SaveMatrixToolStripMenuItem_Click()
         If matrix Is Nothing Then
+            MyApplication.host.showStatusMessage("No matrix data for save, please select one spectrum to start!", My.Resources.StatusAnnotations_Warning_32xLG_color)
             Return
         End If
         If matrix Like GetType(ms2()) Then
