@@ -65,7 +65,6 @@ Public Class frmMain
     Friend mzkitSearch As New PageMzSearch With {.Text = "M/Z Formula De-novo Search"}
     Friend mzkitCalculator As New PageMzCalculator With {.Text = "M/Z Calculator"}
     Friend mzkitMNtools As New PageMoleculeNetworking With {.Text = "Molecular Networking"}
-    Friend mzkitRsharpScripting As New PageScripting With {.Text = "Mzkit Automation"}
 
     Friend TreeView1 As TreeView
 
@@ -118,7 +117,7 @@ Public Class frmMain
         AddHandler ribbonItems.ButtonMzCalculator.ExecuteEvent, Sub(sender, e) Call ShowPage(mzkitCalculator)
         AddHandler ribbonItems.ButtonSettings.ExecuteEvent, AddressOf ShowSettings
         AddHandler ribbonItems.ButtonMzSearch.ExecuteEvent, Sub(sender, e) Call ShowPage(mzkitSearch)
-        AddHandler ribbonItems.ButtonRsharp.ExecuteEvent, Sub(sender, e) Call ShowPage(mzkitRsharpScripting)
+        AddHandler ribbonItems.ButtonRsharp.ExecuteEvent, AddressOf showRTerm
 
         AddHandler ribbonItems.ButtonDropA.ExecuteEvent, Sub(sender, e) ShowPage(mzkitTool)
         AddHandler ribbonItems.ButtonDropB.ExecuteEvent, Sub(sender, e) ShowPage(mzkitCalculator)
@@ -166,6 +165,13 @@ Public Class frmMain
         newScript.Text = "New R# Script"
 
         Me.Text = $"BioNovoGene Mzkit [{newScript.Text}]"
+    End Sub
+
+    Private Sub showRTerm(sender As Object, e As ExecuteEventArgs)
+        RtermPage.Show(dockPanel)
+        RtermPage.DockState = DockState.Document
+
+        Me.Text = $"BioNovoGene Mzkit [{RtermPage.Text}]"
     End Sub
 
     Private Sub ShowSettings(sender As Object, e As ExecuteEventArgs)
@@ -284,7 +290,7 @@ Public Class frmMain
         InitRecentItems()
         ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
 
-        panelMain.addPage(mzkitTool, mzkitSearch, mzkitCalculator, mzkitMNtools, mzkitRsharpScripting)
+        panelMain.addPage(mzkitTool, mzkitSearch, mzkitCalculator, mzkitMNtools)
         ShowPage(mzkitTool)
 
         mzkitTool.Ribbon_Load(Ribbon1)
@@ -451,6 +457,7 @@ Public Class frmMain
     Friend WithEvents panelMain As New frmDockDocument
     Friend startPage As New frmStartPage
     Friend settingsPage As New frmSettings
+    Friend RtermPage As New frmRsharp
 
     Private Sub initializeVSPanel()
         PanelBase.Controls.Add(Me.dockPanel)
@@ -490,6 +497,9 @@ Public Class frmMain
 
         settingsPage.Show(dockPanel)
         settingsPage.DockState = DockState.Hidden
+
+        RtermPage.Show(dockPanel)
+        RtermPage.DockState = DockState.Hidden
 
         MyApplication.RegisterOutput(output)
     End Sub
