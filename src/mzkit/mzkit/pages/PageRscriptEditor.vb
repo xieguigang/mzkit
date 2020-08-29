@@ -1,9 +1,6 @@
-﻿Imports System.Text
-Imports FastColoredTextBoxNS
-Imports Microsoft.VisualBasic.ComponentModel
+﻿Imports FastColoredTextBoxNS
 
 Public Class PageRscriptEditor
-    Implements ISaveHandle
 
     Private Sub FastColoredTextBox1_ToolTipNeeded(sender As Object, e As ToolTipNeededEventArgs) Handles FastColoredTextBox1.ToolTipNeeded
         If Not String.IsNullOrEmpty(e.HoveredWord) Then
@@ -51,12 +48,4 @@ Public Class PageRscriptEditor
         e.ChangedRange.SetStyle(green, "#.*$")
         e.ChangedRange.SetStyle(endSymbol, ";")
     End Sub
-
-    Public Function Save(path As String, encoding As Encoding) As Boolean Implements ISaveHandle.Save
-        Throw New NotImplementedException()
-    End Function
-
-    Public Function Save(path As String, Optional encoding As Microsoft.VisualBasic.Text.Encodings = Microsoft.VisualBasic.Text.Encodings.UTF8) As Boolean Implements ISaveHandle.Save
-        Throw New NotImplementedException()
-    End Function
 End Class

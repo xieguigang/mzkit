@@ -48,7 +48,10 @@
 #End Region
 
 Imports System.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports mzkit.DockSample
 Imports mzkit.My
 Imports RibbonLib
@@ -135,7 +138,7 @@ Public Class frmMain
 
         AddHandler ribbonItems.ButtonCalculatorExport.ExecuteEvent, Sub(sender, e) Call mzkitCalculator.ExportToolStripMenuItem_Click()
         AddHandler ribbonItems.ButtonExactMassSearchExport.ExecuteEvent, Sub(sender, e) Call mzkitTool.ExportExactMassSearchTable()
-        AddHandler ribbonItems.ButtonSave.ExecuteEvent, Sub(sender, e) Call saveCacheList()
+        AddHandler ribbonItems.ButtonSave.ExecuteEvent, Sub(sender, e) Call saveCurrentFile()
         AddHandler ribbonItems.ButtonNetworkExport.ExecuteEvent, Sub(sender, e) Call mzkitMNtools.saveNetwork()
         AddHandler ribbonItems.ButtonFormulaSearchExport.ExecuteEvent, Sub(sender, e) Call mzkitSearch.SaveSearchResultTable()
 
@@ -213,9 +216,40 @@ Public Class frmMain
         Me.Text = $"BioNovoGene Mzkit [{startPage.Text}]"
     End Sub
 
-    Private Sub saveCacheList()
+    Private Sub saveCurrentFile()
+        Dim active = dockPanel.ActiveDocument
+
+        If Not active Is Nothing Then
+            If CObj(active).GetType.ImplementInterface(Of ISaveHandle) Then
+                Dim file As String = Nothing
+                Dim content As ContentType() = Nothing
+
+                If CObj(active).GetType.ImplementInterface(Of IFileReference) Then
+                    file = DirectCast(CObj(active), IFileReference).FilePath
+                    content = DirectCast(CObj(active), IFileReference).MimeType
+                End If
+
+                If file.StringEmpty Then
+                    Using save As New SaveFileDialog
+
+                        If Not content.IsNullOrEmpty Then
+                            save.Filter = content.Select(Function(a) $"{a.Name}(*{a.FileExt})|*{a.FileExt}").JoinBy("|")
+                        End If
+
+                        If save.ShowDialog = DialogResult.OK Then
+                            Call DirectCast(CObj(active), ISaveHandle).Save(save.FileName)
+                        End If
+                    End Using
+                Else
+                    Call DirectCast(CObj(active), ISaveHandle).Save(DirectCast(CObj(active), IFileReference).FilePath)
+                End If
+
+                Return
+            End If
+        End If
+
         TreeView1.SaveRawFileCache
-        MyApplication.LogText("The raw file cache data was saved!")
+        Me.showStatusMessage("The raw file cache data was saved!")
     End Sub
 
     Private Sub MoleculeNetworkingToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MoleculeNetworkingToolStripMenuItem.Click
