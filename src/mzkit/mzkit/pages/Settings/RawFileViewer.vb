@@ -16,5 +16,6 @@ Public Class RawFileViewer : Implements ISaveSettings, IPageSettings
 
     Public Sub ShowPage() Implements IPageSettings.ShowPage
         Call MyApplication.host.ShowPage(MyApplication.host.mzkitTool)
+        Call MyApplication.host.ShowMzkitToolkit()
     End Sub
 End Class

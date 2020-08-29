@@ -123,7 +123,7 @@ Public Class frmMain
         AddHandler ribbonItems.ButtonPageNavBack.ExecuteEvent, AddressOf NavBack_Click
 
         AddHandler ribbonItems.ButtonMzCalculator.ExecuteEvent, Sub(sender, e) Call ShowPage(mzkitCalculator)
-        AddHandler ribbonItems.ButtonSettings.ExecuteEvent, Sub(sender, e) Call ShowPage(mzkitSettings)
+        AddHandler ribbonItems.ButtonSettings.ExecuteEvent, AddressOf ShowSettings
         AddHandler ribbonItems.ButtonMzSearch.ExecuteEvent, Sub(sender, e) Call ShowPage(mzkitSearch)
         AddHandler ribbonItems.ButtonRsharp.ExecuteEvent, Sub(sender, e) Call ShowPage(mzkitRsharpScripting)
 
@@ -165,6 +165,13 @@ Public Class frmMain
         InitializeFormulaProfile()
     End Sub
 
+    Private Sub ShowSettings(sender As Object, e As ExecuteEventArgs)
+        settingsPage.Show(dockPanel)
+        settingsPage.DockState = DockState.Document
+
+        Me.Text = $"BioNovoGene Mzkit [{settingsPage.Text}]"
+    End Sub
+
     Private Sub ShowExplorer(sender As Object, e As ExecuteEventArgs)
         fileExplorer.Show(dockPanel)
         fileExplorer.DockState = DockState.DockLeft
@@ -191,6 +198,8 @@ Public Class frmMain
 
         startPage.Show(dockPanel)
         startPage.DockState = DockState.Document
+
+        Me.Text = $"BioNovoGene Mzkit [{startPage.Text}]"
     End Sub
 
     Private Sub saveCacheList()
@@ -394,6 +403,7 @@ Public Class frmMain
     Friend output As New DummyOutputWindow
     Friend WithEvents panelMain As New frmDockDocument
     Friend startPage As New frmStartPage
+    Friend settingsPage As New frmSettings
 
     Private Sub initializeVSPanel()
         PanelBase.Controls.Add(Me.dockPanel)
@@ -431,7 +441,15 @@ Public Class frmMain
         panelMain.Show(dockPanel)
         panelMain.DockState = DockState.Document
 
+        settingsPage.Show(dockPanel)
+        settingsPage.DockState = DockState.Hidden
+
         MyApplication.RegisterOutput(output)
+    End Sub
+
+    Public Sub ShowMzkitToolkit()
+        panelMain.Show(dockPanel)
+        panelMain.DockState = DockState.Document
     End Sub
 
     Private Sub SetSchema(ByVal sender As Object, ByVal e As EventArgs)

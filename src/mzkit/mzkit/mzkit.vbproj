@@ -157,7 +157,9 @@
     <Compile Include="pages\dockWindow\frmSettings.Designer.vb">
       <DependentUpon>frmSettings.vb</DependentUpon>
     </Compile>
-    <Compile Include="pages\dockWindow\frmSettings.vb" />
+    <Compile Include="pages\dockWindow\frmSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="pages\dockWindow\frmStartPage.Designer.vb">
       <DependentUpon>frmStartPage.vb</DependentUpon>
     </Compile>
