@@ -174,12 +174,24 @@ Public Class frmMain
         AddHandler ribbonItems.ButtonRunScript.ExecuteEvent, AddressOf RunCurrentScript
         AddHandler ribbonItems.ButtonSaveScript.ExecuteEvent, AddressOf saveCurrentScript
 
+        AddHandler ribbonItems.HelpButton.ExecuteEvent, AddressOf showHelp
+
         _uiCollectionChangedEvent = New UICollectionChangedEvent()
 
         MyApplication.RegisterHost(Me)
 
         InitSpinner()
         InitializeFormulaProfile()
+    End Sub
+
+    Private Sub showHelp(sender As Object, e As ExecuteEventArgs)
+        For Each dir As String In {App.HOME, $"{App.HOME}/docs", $"{App.HOME}/../", $"{App.HOME}/../docs/"}
+            If $"{dir}/readme.pdf".FileExists Then
+                Call Process.Start($"{dir}/readme.pdf")
+            End If
+        Next
+
+        Me.showStatusMessage("Manul pdf file is missing...", My.Resources.StatusAnnotations_Warning_32xLG_color)
     End Sub
 
     Private Sub RunCurrentScript(sender As Object, e As ExecuteEventArgs)
