@@ -154,6 +154,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="pages\dockWindow\DummyPropertyWindow.Designer.vb" />
+    <Compile Include="pages\dockWindow\frmDockDocument.Designer.vb">
+      <DependentUpon>frmDockDocument.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\dockWindow\frmDockDocument.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="pages\dockWindow\PropertyWindow.vb">
       <SubType>Form</SubType>
     </Compile>

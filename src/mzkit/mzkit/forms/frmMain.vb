@@ -369,6 +369,7 @@ Public Class frmMain
     Friend fileExplorer As New frmFileTree
     Friend searchList As New frmSearchList
     Friend output As New DummyOutputWindow
+    Friend panelMain As New frmDockDocument
 
     Private Sub initializeVSPanel()
         PanelBase.Controls.Add(Me.dockPanel)
@@ -399,6 +400,9 @@ Public Class frmMain
 
         output.Show(dockPanel)
         output.DockState = DockState.DockBottomAutoHide
+
+        panelMain.Show(dockPanel)
+        panelMain.DockState = DockState.Document
     End Sub
 
     Private Sub SetSchema(ByVal sender As Object, ByVal e As EventArgs)
