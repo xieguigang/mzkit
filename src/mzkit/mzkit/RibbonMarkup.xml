@@ -456,7 +456,7 @@
 				<Image>Res/baobab.png</Image>
 			</Command.LargeImages>
 		</Command>
-
+<!--
 		<Command Name="cmdCheckBoxXICRelative"
 		 Id="1103"
 		 LabelTitle="Relative XIC intensity">
@@ -467,7 +467,7 @@
 				<Image>Res/Save16.bmp</Image>
 			</Command.SmallImages>
 		</Command>
-
+-->
 
 		<Command Name="cmdButtonExportImage"
 		 Id="1104"
@@ -676,7 +676,7 @@
 						<Group CommandName='cmdGroupDesign'>
 
 							<Spinner CommandName="cmdPPMSpinner" />
-							<CheckBox CommandName="cmdCheckBoxXICRelative" />
+						<!--	<CheckBox CommandName="cmdCheckBoxXICRelative" />-->
 							<!-- <Button CommandName='cmdButtonDesign3' /> -->
 						</Group>
 
