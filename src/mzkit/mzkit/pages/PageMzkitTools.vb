@@ -297,33 +297,55 @@ Public Class PageMzkitTools
     End Sub
 
     Private Sub ShowTICToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        Dim raw = TreeView1.CurrentRawFile.raw
+        Dim rawList As New List(Of Raw)
 
-        If raw Is Nothing Then
-            Return
-        ElseIf Not raw.cache.FileExists Then
-            Call missingCacheFile(raw)
+        For i As Integer = 0 To TreeView1.Nodes.Count - 1
+            If Not TreeView1.Nodes(i).Checked Then
+                If Not TreeView1.Nodes(i) Is TreeView1.SelectedNode Then
+                    Continue For
+                End If
+            End If
+
+            Dim raw As Raw = TreeView1.Nodes(i).Tag
+
+            If Not raw.cache.FileExists Then
+                Call missingCacheFile(raw)
+            End If
+
+            rawList.Add(raw)
+        Next
+
+        If rawList.Count = 0 Then
+            MyApplication.host.showStatusMessage("No file data selected for TIC plot...")
             Return
         End If
 
-        Dim TIC As New NamedCollection(Of ChromatogramTick) With {
-            .name = "TIC",
-            .value = raw.scans _
-                .Where(Function(a) a.mz = 0R) _
-                .Select(Function(m)
-                            Return New ChromatogramTick With {.Time = m.rt, .Intensity = m.intensity}
-                        End Function) _
-                .ToArray
-        }
+        Dim TICList As New List(Of NamedCollection(Of ChromatogramTick))
 
-        TIC.value = {
-                New ChromatogramTick With {.Time = raw.rtmin},
-                New ChromatogramTick With {.Time = raw.rtmax}
-            }.JoinIterates(TIC.value) _
-             .OrderBy(Function(c) c.Time) _
-             .ToArray
-        showMatrix(TIC.value, TIC.name)
-        PictureBox1.BackgroundImage = TIC.TICplot.AsGDIImage
+        For Each raw As Raw In rawList
+            Dim TIC As New NamedCollection(Of ChromatogramTick) With {
+                  .name = $"TIC [{raw.source.FileName}]",
+                  .value = raw.scans _
+                      .Where(Function(a) a.mz = 0R) _
+                      .Select(Function(m)
+                                  Return New ChromatogramTick With {.Time = m.rt, .Intensity = m.intensity}
+                              End Function) _
+                      .ToArray
+              }
+
+            TIC.value = {
+                    New ChromatogramTick With {.Time = raw.rtmin},
+                    New ChromatogramTick With {.Time = raw.rtmax}
+                }.JoinIterates(TIC.value) _
+                 .OrderBy(Function(c) c.Time) _
+                 .ToArray
+
+            TICList.Add(TIC)
+        Next
+
+        showMatrix(TICList(Scan0).value, TICList(Scan0).name)
+
+        PictureBox1.BackgroundImage = ChromatogramPlot.TICplot(TICList.ToArray).AsGDIImage
 
         MyApplication.host.ShowPage(Me)
 
