@@ -23,9 +23,10 @@ Partial Class PageSettings
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim TreeNode1 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Mzkit App")
-        Dim TreeNode2 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Raw File Viewer")
-        Dim TreeNode3 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Element Profile")
-        Dim TreeNode4 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Formula Search", New System.Windows.Forms.TreeNode() {TreeNode3})
+        Dim TreeNode2 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("XIC/TIC Plot")
+        Dim TreeNode3 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Raw File Viewer", New System.Windows.Forms.TreeNode() {TreeNode2})
+        Dim TreeNode4 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Element Profile")
+        Dim TreeNode5 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Formula Search", New System.Windows.Forms.TreeNode() {TreeNode4})
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.TreeView1 = New System.Windows.Forms.TreeView()
@@ -62,12 +63,14 @@ Partial Class PageSettings
         TreeNode1.Name = "Node0"
         TreeNode1.Text = "Mzkit App"
         TreeNode2.Name = "Node0"
-        TreeNode2.Text = "Raw File Viewer"
-        TreeNode3.Name = "Node1"
-        TreeNode3.Text = "Element Profile"
-        TreeNode4.Name = "Node0"
-        TreeNode4.Text = "Formula Search"
-        Me.TreeView1.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode1, TreeNode2, TreeNode4})
+        TreeNode2.Text = "XIC/TIC Plot"
+        TreeNode3.Name = "Node0"
+        TreeNode3.Text = "Raw File Viewer"
+        TreeNode4.Name = "Node1"
+        TreeNode4.Text = "Element Profile"
+        TreeNode5.Name = "Node0"
+        TreeNode5.Text = "Formula Search"
+        Me.TreeView1.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode1, TreeNode3, TreeNode5})
         Me.TreeView1.Size = New System.Drawing.Size(217, 430)
         Me.TreeView1.TabIndex = 2
         '
