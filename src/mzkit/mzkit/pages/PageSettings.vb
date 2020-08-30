@@ -48,6 +48,7 @@ Imports mzkit.My
 Public Class PageSettings
 
     Dim elementProfile As New ElementProfile With {.Text = "Formula Search"}
+    Dim presetProfile As New PresetProfile With {.Text = "Formula Search"}
     Dim appConfig As New AppConfig With {.Text = "Mzkit Settings"}
     Dim viewer As New RawFileViewer With {.Text = "Raw File Viewer"}
     Dim plotConfig As New PlotConfig With {.Text = "XIC/TIC Plot Style"}
@@ -59,7 +60,7 @@ Public Class PageSettings
     End Sub
 
     Private Sub PageSettings_Load(sender As Object, e As EventArgs) Handles Me.Load
-        pages = {elementProfile, appConfig, viewer, plotConfig}
+        pages = {elementProfile, appConfig, viewer, plotConfig, presetProfile}
 
         For Each page In pages
             Panel1.Controls.Add(page)
@@ -98,6 +99,7 @@ Public Class PageSettings
             Case "Mzkit App" : showPage(appConfig)
             Case "Raw File Viewer" : showPage(viewer)
             Case "XIC/TIC Plot" : showPage(plotConfig)
+            Case "Formula Search" : showPage(presetProfile)
         End Select
     End Sub
 

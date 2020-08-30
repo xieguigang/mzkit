@@ -261,6 +261,12 @@
     <Compile Include="pages\Settings\PlotConfig.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="pages\Settings\PresetProfile.Designer.vb">
+      <DependentUpon>PresetProfile.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\Settings\PresetProfile.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="settings\UISettings.vb" />
     <Compile Include="settings\PrecursorSearchSettings.vb" />
     <Compile Include="settings\Settings.vb" />
@@ -419,6 +425,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="pages\Settings\PlotConfig.resx">
       <DependentUpon>PlotConfig.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pages\Settings\PresetProfile.resx">
+      <DependentUpon>PresetProfile.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pages\Settings\RawFileViewer.resx">
       <DependentUpon>RawFileViewer.vb</DependentUpon>
