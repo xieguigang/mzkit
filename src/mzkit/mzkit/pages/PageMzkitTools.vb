@@ -316,8 +316,14 @@ Public Class PageMzkitTools
         Next
 
         If rawList.Count = 0 Then
-            MyApplication.host.showStatusMessage("No file data selected for TIC plot...")
-            Return
+            Dim current = TreeView1.CurrentRawFile.raw
+
+            If current Is Nothing Then
+                MyApplication.host.showStatusMessage("No file data selected for TIC plot...")
+                Return
+            Else
+                rawList.Add(current)
+            End If
         End If
 
         Dim TICList As New List(Of NamedCollection(Of ChromatogramTick))
