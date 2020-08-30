@@ -8,6 +8,10 @@ Public Class frmSettings
         Controls.Add(mzkitSettings)
         mzkitSettings.Dock = DockStyle.Fill
         Me.Text = "Application Settings"
+        Me.Icon = My.Resources.settings
+
+        Me.ShowIcon = True
+        '  Me.ShowInTaskbar = True
     End Sub
 
     Private Sub frmSettings_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing

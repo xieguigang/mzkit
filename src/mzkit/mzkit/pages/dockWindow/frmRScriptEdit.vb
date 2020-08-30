@@ -40,6 +40,10 @@ Public Class frmRScriptEdit
     Private Sub frmRScriptEdit_Load(sender As Object, e As EventArgs) Handles Me.Load
         Controls.Add(script)
         script.Dock = DockStyle.Fill
+        Me.Icon = My.Resources.Rscript
+
+        Me.ShowIcon = True
+        '   Me.ShowInTaskbar = True
     End Sub
 
     Public Function Save(path As String, encoding As Encoding) As Boolean Implements ISaveHandle.Save

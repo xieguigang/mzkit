@@ -19,5 +19,8 @@ Public Class frmDockDocument
 
     Private Sub frmDockDocument_Load(sender As Object, e As EventArgs) Handles Me.Load
         Text = "BioNovoGene M/Z Data Toolkit"
+        Me.Icon = My.Resources.toolkit
+        Me.ShowIcon = True
+        '  Me.ShowInTaskbar = True
     End Sub
 End Class

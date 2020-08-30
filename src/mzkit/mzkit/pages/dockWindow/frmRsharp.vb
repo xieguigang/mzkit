@@ -17,5 +17,9 @@ Public Class frmRsharp
         Routput.ReadOnly = True
 
         TabText = "R# Terminal"
+        Me.Icon = My.Resources.Rscript
+
+        Me.ShowIcon = True
+        '  Me.ShowInTaskbar = True
     End Sub
 End Class
