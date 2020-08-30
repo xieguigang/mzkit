@@ -27,10 +27,12 @@ Public Class frmRScriptEdit
     End Sub
 
     Private Sub frmRScriptEdit_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        ' 只保存新文件？
         If scriptFile.StringEmpty Then
             Dim result = MessageBox.Show("Save current script file?", "File Not Saved", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
 
             If result = DialogResult.Yes Then
+                MyApplication.host.SaveScript(Me)
             ElseIf result = DialogResult.Cancel Then
                 e.Cancel = True
             End If

@@ -319,24 +319,26 @@ Public Class frmMain
         Dim active = dockPanel.ActiveDocument
 
         If Not active Is Nothing AndAlso TypeOf CObj(active) Is frmRScriptEdit Then
-            Dim script As frmRScriptEdit = CObj(active)
+            Call SaveScript(DirectCast(CObj(active), frmRScriptEdit))
+        End If
+    End Sub
 
-            If script.scriptFile.StringEmpty Then
-                Using save As New SaveFileDialog With {.Filter = "R# script file(*.R)|*.R"}
+    Public Sub SaveScript(script As frmRScriptEdit)
+        If script.scriptFile.StringEmpty Then
+            Using save As New SaveFileDialog With {.Filter = "R# script file(*.R)|*.R"}
 
-                    If save.ShowDialog = DialogResult.OK Then
-                        script.scriptFile = save.FileName
-                        script.Save(save.FileName)
-                    End If
-                End Using
-            Else
-                Call script.Save(script.scriptFile)
-            End If
+                If save.ShowDialog = DialogResult.OK Then
+                    script.scriptFile = save.FileName
+                    script.Save(save.FileName)
+                End If
+            End Using
+        Else
+            Call script.Save(script.scriptFile)
+        End If
 
-            If Not script.scriptFile.StringEmpty Then
-                Globals.AddRecentFileHistory(script.scriptFile)
-                Me.showStatusMessage($"Save R# script file at location {script.scriptFile.GetFullPath}!")
-            End If
+        If Not script.scriptFile.StringEmpty Then
+            Globals.AddRecentFileHistory(script.scriptFile)
+            Me.showStatusMessage($"Save R# script file at location {script.scriptFile.GetFullPath}!")
         End If
     End Sub
 
