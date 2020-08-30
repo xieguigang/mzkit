@@ -40,6 +40,8 @@ Public Class frmFileTree
         treeView1.ShowLines = True
         treeView1.ShowRootLines = True
 
+        ExportToolStripMenuItem.Text = "Export XIC Ions"
+
         Me.TabText = "File Explorer"
     End Sub
 

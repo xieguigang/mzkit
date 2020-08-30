@@ -832,29 +832,17 @@ Public Class PageMzkitTools
 
         Dim progress As New frmProgressSpinner
         Dim plotImage As Image = Nothing
-        Dim explorer = MyApplication.host.fileExplorer
         Dim relative As Boolean = relativeInto()
 
         Call New Thread(
             Sub()
-                Dim files As IGrouping(Of String, TreeNode)() = explorer.Invoke(Function() explorer.GetSelectedNodes.GroupBy(Function(a) a.Parent.Text).ToArray)
                 Dim XICPlot As New List(Of NamedCollection(Of ChromatogramTick))
 
                 If Not plotTIC.IsEmpty Then
                     XICPlot.Add(plotTIC)
                 End If
 
-                For Each file In files
-                    Dim scans = file.Select(Function(a) DirectCast(a.Tag, ScanEntry)) _
-                        .Where(Function(a) a.mz > 0) _
-                        .GroupBy(Function(a) a.mz, Tolerance.DeltaMass(0.3)) _
-                        .ToArray
-                    raw = file.First.Parent.Tag
-
-                    For Each scanId In scans.Select(Function(a) a.value.First.id)
-                        XICPlot.Add(getXICMatrix(raw, scanId, ppm, relativeInto))
-                    Next
-                Next
+                XICPlot.AddRange(GetXICCollection(ppm))
 
                 plotImage = XICPlot.ToArray.TICplot(intensityMax:=maxY, isXIC:=True).AsGDIImage
                 progress.Invoke(Sub() progress.Close())
@@ -866,7 +854,22 @@ Public Class PageMzkitTools
         ShowTabPage(TabPage5)
     End Sub
 
-    ' Dim XICCollection As New List(Of NamedCollection(Of ChromatogramTick))
+    Public Iterator Function GetXICCollection(ppm As Double) As IEnumerable(Of NamedCollection(Of ChromatogramTick))
+        Dim explorer = MyApplication.host.fileExplorer
+        Dim files As IGrouping(Of String, TreeNode)() = explorer.Invoke(Function() explorer.GetSelectedNodes.GroupBy(Function(a) a.Parent.Text).ToArray)
+
+        For Each file In files
+            Dim scans = file.Select(Function(a) DirectCast(a.Tag, ScanEntry)) _
+                .Where(Function(a) a.mz > 0) _
+                .GroupBy(Function(a) a.mz, Tolerance.DeltaMass(0.3)) _
+                .ToArray
+            Dim Raw = file.First.Parent.Tag
+
+            For Each scanId In scans.Select(Function(a) a.value.First.id)
+                Yield getXICMatrix(Raw, scanId, ppm, relativeInto)
+            Next
+        Next
+    End Function
 
     Private Function relativeInto() As Boolean
         Return False ' MyApplication.host.ribbonItems.CheckBoxXICRelative.BooleanValue
@@ -906,7 +909,7 @@ Public Class PageMzkitTools
         Dim plotTIC As New NamedCollection(Of ChromatogramTick) With {
             .name = name,
             .value = XIC,
-            .description = ms2.mz
+            .description = ms2.mz & " " & raw.source.FileName
         }
 
         Return plotTIC
@@ -944,9 +947,8 @@ Public Class PageMzkitTools
                     Using OutFile As StreamWriter = file.FileName.OpenWriter()
                         Dim ppm As Double = Val(RibbonItems.PPMSpinner.DecimalValue)
 
-                        For Each xicNode As TreeNode In MyApplication.host.fileExplorer.GetSelectedNodes
-                            Dim xic = getXICMatrix(xicNode.Parent.Tag, xicNode.Text, ppm, relativeInto)
-                            Dim parent As New NamedValue With {.name = xic.description, .text = xic.value.Select(Function(a) a.Intensity).Max}
+                        For Each xic As NamedCollection(Of ChromatogramTick) In GetXICCollection(ppm)
+                            Dim parent As New NamedValue With {.name = xic.description.Split.First, .text = xic.value.Select(Function(a) a.Intensity).Max}
                             Dim ion As New MGF.Ions With {
                                 .Title = xic.name,
                                 .Peaks = xic.value _
@@ -958,7 +960,8 @@ Public Class PageMzkitTools
                                                 }
                                             End Function) _
                                     .ToArray,
-                                .PepMass = parent
+                                .PepMass = parent,
+                                .Rawfile = xic.description.GetTagValue(" ").Value
                             }
 
                             ion.WriteAsciiMgf(OutFile)
