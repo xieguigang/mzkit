@@ -568,6 +568,10 @@
     <None Include="Resources\LICENSE.txt" />
     <None Include="Resources\logo%402x.png" />
     <None Include="Res\preferences-system-notifications.png" />
+    <None Include="Resources\license.ico" />
+    <None Include="Resources\Rscript.ico" />
+    <None Include="Resources\settings.ico" />
+    <None Include="Resources\toolkit.ico" />
     <Content Include="RibbonMarkup.h" />
     <Content Include="RibbonMarkup.xml" />
     <None Include="Resources\header-foreground-image.png" />
