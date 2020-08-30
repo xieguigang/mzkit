@@ -40,7 +40,7 @@ Public Class frmRScriptEdit
     Private Sub frmRScriptEdit_Load(sender As Object, e As EventArgs) Handles Me.Load
         Controls.Add(script)
         script.Dock = DockStyle.Fill
-        Me.Icon = My.Resources.Rscript
+        Me.Icon = My.Resources.vs
 
         Me.ShowIcon = True
         '   Me.ShowInTaskbar = True
