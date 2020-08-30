@@ -808,7 +808,10 @@ Public Class PageMzkitTools
         XICPlot.Add(plotTIC)
 
         For Each file In files
-            Dim scans = file.Select(Function(a) DirectCast(a.Tag, ScanEntry)).GroupBy(Function(a) a.mz, Tolerance.DeltaMass(0.3)).ToArray
+            Dim scans = file.Select(Function(a) DirectCast(a.Tag, ScanEntry)) _
+                .Where(Function(a) a.mz > 0) _
+                .GroupBy(Function(a) a.mz, Tolerance.DeltaMass(0.3)) _
+                .ToArray
             raw = file.First.Parent.Tag
 
             For Each scanId In scans.Select(Function(a) a.value.First.id)
