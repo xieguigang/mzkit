@@ -156,6 +156,23 @@
 		</Command>
 
 
+		<Command Name="cmdButtonImportsRawFiles"
+				 Id="1017"
+				 LabelTitle="Imports Raw Files in Batch"
+				 LabelDescription="Imports Raw Files"
+				 TooltipTitle="Imports Raw Data"
+				 TooltipDescription="Imports Raw Data Files into the Raw Data File Viewer.">
+			<Command.LargeImages>
+				<Image>Res/folder-pictures.png</Image>
+			</Command.LargeImages>
+			<Command.SmallImages>
+				<Image>Res/folder-pictures.png</Image>
+			</Command.SmallImages>
+		</Command>
+
+
+
+
 		<Command Name="cmdTabAbout"
 					 Id="1020"
 					 LabelTitle="About">
@@ -842,7 +859,8 @@
 
 					<MenuGroup CommandName='cmdMenuGroupFile'>
 						<Button CommandName='cmdButtonNew' />
-
+						<Button CommandName="cmdButtonImportsRawFiles" />
+						
 						<DropDownButton CommandName='cmdButtonToolkits'>
 							<MenuGroup Class='MajorItems'>
 								<Button CommandName='cmdButtonDropA' />

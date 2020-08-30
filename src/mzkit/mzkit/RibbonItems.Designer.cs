@@ -13,8 +13,7 @@ using RibbonLib;
 using RibbonLib.Controls;
 using RibbonLib.Interop;
 
-namespace RibbonLib.Controls
-{
+
     partial class RibbonItems
     {
         private static class Cmd
@@ -77,6 +76,7 @@ namespace RibbonLib.Controls
             public const uint cmdButtonBioDeep = 1022;
             public const uint cmdRecentItems = 1014;
             public const uint cmdMenuGroupFile = 1005;
+            public const uint cmdButtonImportsRawFiles = 1017;
             public const uint cmdButtonToolkits = 1007;
             public const uint cmdButtonDropA = 1008;
             public const uint cmdButtonDropB = 1009;
@@ -158,6 +158,7 @@ namespace RibbonLib.Controls
         public RibbonButton ButtonBioDeep { get; private set; }
         public RibbonRecentItems RecentItems { get; private set; }
         public RibbonMenuGroup MenuGroupFile { get; private set; }
+        public RibbonButton ButtonImportsRawFiles { get; private set; }
         public RibbonDropDownButton ButtonToolkits { get; private set; }
         public RibbonButton ButtonDropA { get; private set; }
         public RibbonButton ButtonDropB { get; private set; }
@@ -237,6 +238,7 @@ namespace RibbonLib.Controls
             ButtonBioDeep = new RibbonButton(ribbon, Cmd.cmdButtonBioDeep);
             RecentItems = new RibbonRecentItems(ribbon, Cmd.cmdRecentItems);
             MenuGroupFile = new RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupFile);
+            ButtonImportsRawFiles = new RibbonButton(ribbon, Cmd.cmdButtonImportsRawFiles);
             ButtonToolkits = new RibbonDropDownButton(ribbon, Cmd.cmdButtonToolkits);
             ButtonDropA = new RibbonButton(ribbon, Cmd.cmdButtonDropA);
             ButtonDropB = new RibbonButton(ribbon, Cmd.cmdButtonDropB);
@@ -254,4 +256,3 @@ namespace RibbonLib.Controls
         }
 
     }
-}

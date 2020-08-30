@@ -113,6 +113,19 @@ Public Class frmMain
         End Using
     End Sub
 
+    Private Sub ImportsFiles(ByVal sender As Object, ByVal e As ExecuteEventArgs)
+        Using file As New OpenFileDialog With {
+            .Filter = "Raw Data(*.mzXML; *.mzML)|*.mzXML;*.mzML",
+            .Multiselect = True
+        }
+            If file.ShowDialog = DialogResult.OK Then
+                For Each path As String In file.FileNames
+                    Call mzkitTool.ImportsRaw(path)
+                Next
+            End If
+        End Using
+    End Sub
+
     Private Sub ExitToolsStripMenuItem_Click(ByVal sender As Object, ByVal e As ExecuteEventArgs)
         Me.Close()
     End Sub
@@ -132,6 +145,7 @@ Public Class frmMain
 
         AddHandler ribbonItems.ButtonExit.ExecuteEvent, AddressOf ExitToolsStripMenuItem_Click
         AddHandler ribbonItems.ButtonOpenRaw.ExecuteEvent, AddressOf OpenFile
+        AddHandler ribbonItems.ButtonImportsRawFiles.ExecuteEvent, AddressOf ImportsFiles
         AddHandler ribbonItems.ButtonAbout.ExecuteEvent, AddressOf About_Click
         AddHandler ribbonItems.ButtonPageNavBack.ExecuteEvent, AddressOf NavBack_Click
         AddHandler ribbonItems.ButtonNew.ExecuteEvent, AddressOf CreateNewScript
