@@ -784,9 +784,13 @@ Public Class PageMzkitTools
     End Sub
 
     Private Sub ShowXICToolStripMenuItem_Click(sender As Object, e As EventArgs)
+        If TypeOf TreeView1.SelectedNode.Tag Is Raw Then
+            Return
+        End If
+
         ' scan节点
         Dim raw As Task.Raw = TreeView1.CurrentRawFile.raw
-        Dim plotTIC = getXICMatrix(raw)
+        Dim plotTIC = getXICMatrix(raw, TreeView1.SelectedNode.Text)
         Dim maxY As Double = raw.scans _
             .Where(Function(a) a.mz > 0) _
             .Select(Function(a) a.intensity) _
@@ -798,16 +802,27 @@ Public Class PageMzkitTools
 
         showMatrix(plotTIC.value, Name)
 
-        Dim XICPlot = XICCollection.JoinIterates({plotTIC}).ToArray
+        Dim files = MyApplication.host.fileExplorer.GetSelectedNodes.GroupBy(Function(a) a.Parent.Text).ToArray
+        Dim XICPlot As New List(Of NamedCollection(Of ChromatogramTick))
+
+        XICPlot.Add(plotTIC)
+
+        For Each file In files
+            Dim scans = file.Select(Function(a) DirectCast(a.Tag, ScanEntry)).GroupBy(Function(a) a.mz, Tolerance.DeltaMass(0.3)).ToArray
+            raw = file.First.Parent.Tag
+
+            For Each scanId In scans.Select(Function(a) a.value.First.id)
+                XICPlot.Add(getXICMatrix(raw, scanId))
+            Next
+        Next
 
         ShowTabPage(TabPage5)
-        PictureBox1.BackgroundImage = XICPlot.TICplot(intensityMax:=maxY, isXIC:=True).AsGDIImage
+        PictureBox1.BackgroundImage = XICPlot.ToArray.TICplot(intensityMax:=maxY, isXIC:=True).AsGDIImage
     End Sub
 
-    Dim XICCollection As New List(Of NamedCollection(Of ChromatogramTick))
+    ' Dim XICCollection As New List(Of NamedCollection(Of ChromatogramTick))
 
-    Private Function getXICMatrix(raw As Raw) As NamedCollection(Of ChromatogramTick)
-        Dim scanId As String = TreeView1.SelectedNode.Text
+    Private Function getXICMatrix(raw As Raw, scanId As String) As NamedCollection(Of ChromatogramTick)
         Dim ms2 As ScanEntry = raw.scans.Where(Function(a) a.id = scanId).FirstOrDefault
         Dim ppm As Double = Val(RibbonItems.PPMSpinner.DecimalValue)
         Dim name As String = $"XIC [m/z={ms2.mz.ToString("F4")}, {ppm}ppm]"
@@ -847,16 +862,17 @@ Public Class PageMzkitTools
         Return plotTIC
     End Function
 
-    Private Sub AddToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        Dim XIC = getXICMatrix(TreeView1.CurrentRawFile.raw)
+    'Private Sub AddToolStripMenuItem_Click(sender As Object, e As EventArgs)
+    '    Dim XIC = getXICMatrix(TreeView1.CurrentRawFile.raw)
 
-        If Not XIC.IsEmpty Then
-            XICCollection.Add(XIC)
-        End If
-    End Sub
+    '    If Not XIC.IsEmpty Then
+    '        XICCollection.Add(XIC)
+    '    End If
+    'End Sub
 
     Private Sub ClearToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        XICCollection.Clear()
+        ' XICCollection.Clear()
+        MyApplication.host.fileExplorer.Clear()
         MyApplication.host.fileExplorer.ClearToolStripMenuItem.Text = "Clear"
     End Sub
 
@@ -870,16 +886,17 @@ Public Class PageMzkitTools
     End Sub
 
     Private Sub ExportToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        If XICCollection.IsNullOrEmpty Then
+        If MyApplication.host.fileExplorer.GetSelectedNodes.Count = 0 Then
             MessageBox.Show("No chromatogram data for XIC plot, please use XIC -> Add for add data!", "No data save", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         Else
             Using file As New SaveFileDialog With {.Filter = "Mgf ASCII spectrum data(*.mgf)|*.mgf", .FileName = "XIC.mgf"}
                 If file.ShowDialog = DialogResult.OK Then
                     Using OutFile As StreamWriter = file.FileName.OpenWriter()
-                        For Each xic In XICCollection
+                        For Each xicNode As TreeNode In MyApplication.host.fileExplorer.GetSelectedNodes
+                            Dim xic = getXICMatrix(xicNode.Parent.Tag, xicNode.Text)
                             Dim parent As New NamedValue With {.name = xic.description, .text = xic.value.Select(Function(a) a.Intensity).Max}
                             Dim ion As New MGF.Ions With {
-                                .Title = xic.name,
+                                .Title = xic.Name,
                                 .Peaks = xic.value _
                                     .Select(Function(a)
                                                 Return New ms2 With {

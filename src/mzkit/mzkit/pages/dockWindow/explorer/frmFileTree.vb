@@ -52,9 +52,17 @@ Public Class frmFileTree
     ''' 不包含 root node
     ''' </summary>
     ''' <returns></returns>
-    Public Function GetSelectedNode() As IEnumerable(Of TreeNode)
+    Public Function GetSelectedNodes() As IEnumerable(Of TreeNode)
         Return checked.AsEnumerable
     End Function
+
+    Public Sub Clear()
+        For Each item In checked
+            item.Checked = False
+        Next
+
+        checked.Clear()
+    End Sub
 
     Private Sub TreeView1_AfterCheck(sender As Object, e As TreeViewEventArgs) Handles treeView1.AfterCheck
         If TypeOf e.Node.Tag Is Raw Then
@@ -77,5 +85,7 @@ Public Class frmFileTree
                 checked.Remove(e.Node)
             End If
         End If
+
+        ClearToolStripMenuItem.Text = $"Clear [{checked.Count} XIC Ions]"
     End Sub
 End Class
