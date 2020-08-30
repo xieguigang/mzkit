@@ -2,6 +2,7 @@
 Imports mzkit.Kesoft.Windows.Forms.Win7StyleTreeView
 Imports mzkit.My
 Imports RibbonLib.Interop
+Imports Task
 
 Public Class frmFileTree
 
@@ -42,17 +43,39 @@ Public Class frmFileTree
         Me.TabText = "File Explorer"
     End Sub
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
     Dim checked As New List(Of TreeNode)
 
+    ''' <summary>
+    ''' 不包含 root node
+    ''' </summary>
+    ''' <returns></returns>
     Public Function GetSelectedNode() As IEnumerable(Of TreeNode)
         Return checked.AsEnumerable
     End Function
 
     Private Sub TreeView1_AfterCheck(sender As Object, e As TreeViewEventArgs) Handles treeView1.AfterCheck
-        If e.Node.Checked Then
-            checked.Add(e.Node)
+        If TypeOf e.Node.Tag Is Raw Then
+            Dim checked As Boolean = e.Node.Checked
+            Dim node As TreeNode
+
+            For i As Integer = 0 To e.Node.Nodes.Count - 1
+                node = e.Node.Nodes(i)
+                node.Checked = checked
+
+                If checked Then
+                    Me.checked.Add(node)
+                    Me.checked.Remove(node)
+                End If
+            Next
         Else
-            checked.Remove(e.Node)
+            If e.Node.Checked Then
+                checked.Add(e.Node)
+            Else
+                checked.Remove(e.Node)
+            End If
         End If
     End Sub
 End Class
