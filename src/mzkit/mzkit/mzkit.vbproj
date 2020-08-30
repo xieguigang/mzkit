@@ -143,6 +143,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="forms\frmProgressSpinner.Designer.vb">
+      <DependentUpon>frmProgressSpinner.vb</DependentUpon>
+    </Compile>
+    <Compile Include="forms\frmProgressSpinner.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="forms\frmLicense.Designer.vb">
       <DependentUpon>frmLicense.vb</DependentUpon>
     </Compile>
@@ -330,6 +336,9 @@
   <ItemGroup>
     <EmbeddedResource Include="forms\frmLicense.resx">
       <DependentUpon>frmLicense.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\frmProgressSpinner.resx">
+      <DependentUpon>frmProgressSpinner.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\DummyPropertyWindow.resx" />
     <EmbeddedResource Include="pages\dockWindow\explorer\frmFileTree.resx">
