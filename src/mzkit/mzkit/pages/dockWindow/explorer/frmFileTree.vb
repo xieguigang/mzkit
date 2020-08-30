@@ -56,15 +56,24 @@ Public Class frmFileTree
         Return checked.AsEnumerable
     End Function
 
+    Dim lockCheckList As Boolean
+
     Public Sub Clear()
-        For Each item In checked
-            item.Checked = False
+        lockCheckList = True
+
+        For i As Integer = 0 To checked.Count - 1
+            checked(i).Checked = False
         Next
 
         checked.Clear()
+        lockCheckList = False
     End Sub
 
     Private Sub TreeView1_AfterCheck(sender As Object, e As TreeViewEventArgs) Handles treeView1.AfterCheck
+        If lockCheckList Then
+            Return
+        End If
+
         If TypeOf e.Node.Tag Is Raw Then
             Dim checked As Boolean = e.Node.Checked
             Dim node As TreeNode
