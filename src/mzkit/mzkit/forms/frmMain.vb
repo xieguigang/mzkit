@@ -50,6 +50,7 @@
 Imports System.ComponentModel
 Imports System.IO
 Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Language
@@ -61,6 +62,7 @@ Imports RibbonLib
 Imports RibbonLib.Controls.Events
 Imports RibbonLib.Interop
 Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Components
 Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class frmMain
@@ -214,21 +216,38 @@ Public Class frmMain
         If Not active Is Nothing AndAlso TypeOf CObj(active) Is frmRScriptEdit Then
             Dim editor = DirectCast(CObj(active), frmRScriptEdit)
             Dim script As String = editor.script.FastColoredTextBox1.Text
+            Dim result As Object
 
             Using buffer As New MemoryStream
                 Using writer As New StreamWriter(buffer)
                     MyApplication.REngine.RedirectOutput(writer, OutputEnvironments.Html)
 
                     If editor.scriptFile.StringEmpty Then
-                        Call MyApplication.REngine.Evaluate(script)
+                        result = MyApplication.REngine.Evaluate(script)
                     Else
                         Call script.SaveTo(editor.scriptFile)
-                        Call MyApplication.REngine.Source(editor.scriptFile)
+                        result = MyApplication.REngine.Source(editor.scriptFile)
                     End If
 
                     writer.Flush()
                     RtermPage.Routput.AppendText(Encoding.UTF8.GetString(buffer.ToArray) & vbCrLf)
                 End Using
+
+                If TypeOf result Is Message AndAlso DirectCast(result, Message).level = MSG_TYPES.ERR Then
+                    Dim err As Message = result
+
+                    RtermPage.Routput.AppendText(err.ToString & vbCrLf)
+
+                    For i As Integer = 0 To err.message.Length - 1
+                        RtermPage.Routput.AppendText((i + 1) & ". " & err.message(i) & vbCrLf)
+                    Next
+
+                    RtermPage.Routput.AppendText(vbCrLf)
+
+                    For Each stack In err.environmentStack
+                        RtermPage.Routput.AppendText(stack.ToString & vbCrLf)
+                    Next
+                End If
             End Using
 
             RtermPage.Show(dockPanel)
@@ -595,7 +614,7 @@ Public Class frmMain
 
         fileExplorer.Show(dockPanel)
         fileExplorer.DockState = DockState.DockLeftAutoHide
-        TreeView1 = fileExplorer.TreeView1
+        TreeView1 = fileExplorer.treeView1
 
         searchList.Show(dockPanel)
         searchList.DockState = DockState.DockLeftAutoHide
