@@ -115,9 +115,15 @@ Public Class PageMzSearch
             Case FormulaSearchProfiles.Default
                 Return SearchOption.DefaultMetaboliteProfile
             Case FormulaSearchProfiles.NaturalProduct
-                Return SearchOption.NaturalProduct(DNPOrWileyType.DNP, True)
+                Return SearchOption.NaturalProduct(
+                    Globals.Settings.formula_search.naturalProductProfile.type,
+                    Globals.Settings.formula_search.naturalProductProfile.isCommon
+                )
             Case FormulaSearchProfiles.SmallMolecule
-                Return SearchOption.SmallMolecule(DNPOrWileyType.DNP, True)
+                Return SearchOption.SmallMolecule(
+                    Globals.Settings.formula_search.smallMoleculeProfile.type,
+                    Globals.Settings.formula_search.smallMoleculeProfile.isCommon
+                )
             Case FormulaSearchProfiles.GeneralFlavone
                 Return SearchOption.GeneralFlavone
             Case Else
