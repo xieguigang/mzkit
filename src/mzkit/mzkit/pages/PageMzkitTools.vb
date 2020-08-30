@@ -790,7 +790,8 @@ Public Class PageMzkitTools
 
         ' scan节点
         Dim raw As Task.Raw = TreeView1.CurrentRawFile.raw
-        Dim plotTIC = getXICMatrix(raw, TreeView1.SelectedNode.Text)
+        Dim ppm As Double = Val(RibbonItems.PPMSpinner.DecimalValue)
+        Dim plotTIC = getXICMatrix(raw, TreeView1.SelectedNode.Text, ppm, relativeInto)
         Dim maxY As Double = raw.scans _
             .Where(Function(a) a.mz > 0) _
             .Select(Function(a) a.intensity) _
@@ -807,34 +808,50 @@ Public Class PageMzkitTools
             showMatrix(plotTIC.value, Name)
         End If
 
-        Dim files = MyApplication.host.fileExplorer.GetSelectedNodes.GroupBy(Function(a) a.Parent.Text).ToArray
-        Dim XICPlot As New List(Of NamedCollection(Of ChromatogramTick))
+        Dim progress As New frmProgressSpinner
+        Dim plotImage As Image = Nothing
+        Dim explorer = MyApplication.host.fileExplorer
+        Dim relative As Boolean = relativeInto()
 
-        If Not plotTIC.IsEmpty Then
-            XICPlot.Add(plotTIC)
-        End If
+        Call New Thread(
+            Sub()
+                Dim files As IGrouping(Of String, TreeNode)() = explorer.Invoke(Function() explorer.GetSelectedNodes.GroupBy(Function(a) a.Parent.Text).ToArray)
+                Dim XICPlot As New List(Of NamedCollection(Of ChromatogramTick))
 
-        For Each file In files
-            Dim scans = file.Select(Function(a) DirectCast(a.Tag, ScanEntry)) _
-                .Where(Function(a) a.mz > 0) _
-                .GroupBy(Function(a) a.mz, Tolerance.DeltaMass(0.3)) _
-                .ToArray
-            raw = file.First.Parent.Tag
+                If Not plotTIC.IsEmpty Then
+                    XICPlot.Add(plotTIC)
+                End If
 
-            For Each scanId In scans.Select(Function(a) a.value.First.id)
-                XICPlot.Add(getXICMatrix(raw, scanId))
-            Next
-        Next
+                For Each file In files
+                    Dim scans = file.Select(Function(a) DirectCast(a.Tag, ScanEntry)) _
+                        .Where(Function(a) a.mz > 0) _
+                        .GroupBy(Function(a) a.mz, Tolerance.DeltaMass(0.3)) _
+                        .ToArray
+                    raw = file.First.Parent.Tag
 
+                    For Each scanId In scans.Select(Function(a) a.value.First.id)
+                        XICPlot.Add(getXICMatrix(raw, scanId, ppm, relativeInto))
+                    Next
+                Next
+
+                plotImage = XICPlot.ToArray.TICplot(intensityMax:=maxY, isXIC:=True).AsGDIImage
+                progress.Invoke(Sub() progress.Close())
+            End Sub).Start()
+
+        progress.ShowDialog()
+
+        PictureBox1.BackgroundImage = plotImage
         ShowTabPage(TabPage5)
-        PictureBox1.BackgroundImage = XICPlot.ToArray.TICplot(intensityMax:=maxY, isXIC:=True).AsGDIImage
     End Sub
 
     ' Dim XICCollection As New List(Of NamedCollection(Of ChromatogramTick))
 
-    Private Function getXICMatrix(raw As Raw, scanId As String) As NamedCollection(Of ChromatogramTick)
+    Private Function relativeInto() As Boolean
+        Return False ' MyApplication.host.ribbonItems.CheckBoxXICRelative.BooleanValue
+    End Function
+
+    Private Function getXICMatrix(raw As Raw, scanId As String, ppm As Double, relativeInto As Boolean) As NamedCollection(Of ChromatogramTick)
         Dim ms2 As ScanEntry = raw.scans.Where(Function(a) a.id = scanId).FirstOrDefault
-        Dim ppm As Double = Val(RibbonItems.PPMSpinner.DecimalValue)
         Dim name As String
 
         If ms2 Is Nothing OrElse ms2.mz = 0.0 Then
@@ -855,7 +872,7 @@ Public Class PageMzkitTools
                     End Function) _
             .ToArray
 
-        If Not MyApplication.host.ribbonItems.CheckBoxXICRelative.BooleanValue Then
+        If Not relativeInto Then
             XIC = {
                   New ChromatogramTick With {.Time = raw.rtmin},
                   New ChromatogramTick With {.Time = raw.rtmax}
@@ -903,11 +920,13 @@ Public Class PageMzkitTools
             Using file As New SaveFileDialog With {.Filter = "Mgf ASCII spectrum data(*.mgf)|*.mgf", .FileName = "XIC.mgf"}
                 If file.ShowDialog = DialogResult.OK Then
                     Using OutFile As StreamWriter = file.FileName.OpenWriter()
+                        Dim ppm As Double = Val(RibbonItems.PPMSpinner.DecimalValue)
+
                         For Each xicNode As TreeNode In MyApplication.host.fileExplorer.GetSelectedNodes
-                            Dim xic = getXICMatrix(xicNode.Parent.Tag, xicNode.Text)
+                            Dim xic = getXICMatrix(xicNode.Parent.Tag, xicNode.Text, ppm, relativeInto)
                             Dim parent As New NamedValue With {.name = xic.description, .text = xic.value.Select(Function(a) a.Intensity).Max}
                             Dim ion As New MGF.Ions With {
-                                .Title = xic.Name,
+                                .Title = xic.name,
                                 .Peaks = xic.value _
                                     .Select(Function(a)
                                                 Return New ms2 With {

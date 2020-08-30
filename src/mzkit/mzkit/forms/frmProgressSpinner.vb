@@ -22,6 +22,10 @@
     End Sub
 
     Private Sub frmProgressSpinner_Load(sender As Object, e As EventArgs) Handles Me.Load
+        ' SetStyle(ControlStyles.SupportsTransparentBackColor, True)
+        Me.TransparencyKey = Color.Green
+        Me.BackColor = Color.Green
+
         RunAnimation()
     End Sub
 End Class
