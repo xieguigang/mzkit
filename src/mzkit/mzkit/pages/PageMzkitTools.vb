@@ -206,7 +206,6 @@ Public Class PageMzkitTools
         AddHandler host.fileExplorer.ShowTICToolStripMenuItem.Click, AddressOf ShowTICToolStripMenuItem_Click
         AddHandler host.fileExplorer.ShowXICToolStripMenuItem.Click, AddressOf ShowXICToolStripMenuItem_Click
 
-        AddHandler host.fileExplorer.AddToolStripMenuItem.Click, AddressOf AddToolStripMenuItem_Click
         AddHandler host.fileExplorer.ClearToolStripMenuItem.Click, AddressOf ClearToolStripMenuItem_Click
         AddHandler host.fileExplorer.ExportToolStripMenuItem.Click, AddressOf ExportToolStripMenuItem_Click
 
@@ -853,7 +852,6 @@ Public Class PageMzkitTools
 
         If Not XIC.IsEmpty Then
             XICCollection.Add(XIC)
-            MyApplication.host.fileExplorer.ClearToolStripMenuItem.Text = $"Clear [{XICCollection.Count} XIC data]"
         End If
     End Sub
 

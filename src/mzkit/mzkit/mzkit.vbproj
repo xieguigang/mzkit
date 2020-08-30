@@ -157,6 +157,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="pages\dockWindow\DummyPropertyWindow.Designer.vb" />
+    <Compile Include="pages\dockWindow\explorer\Win7StyleTreeView.Designer.vb">
+      <DependentUpon>Win7StyleTreeView.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\dockWindow\explorer\Win7StyleTreeView.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="pages\dockWindow\frmRScriptEdit.Designer.vb">
       <DependentUpon>frmRScriptEdit.vb</DependentUpon>
     </Compile>
@@ -196,10 +202,10 @@
     <Compile Include="pages\dockWindow\frmSearchList.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="pages\dockWindow\frmFileTree.Designer.vb">
+    <Compile Include="pages\dockWindow\explorer\frmFileTree.Designer.vb">
       <DependentUpon>frmFileTree.vb</DependentUpon>
     </Compile>
-    <Compile Include="pages\dockWindow\frmFileTree.vb">
+    <Compile Include="pages\dockWindow\explorer\frmFileTree.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="pages\dockWindow\ToolWindow.Designer.vb" />
@@ -326,7 +332,7 @@
       <DependentUpon>frmLicense.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\DummyPropertyWindow.resx" />
-    <EmbeddedResource Include="pages\dockWindow\frmFileTree.resx">
+    <EmbeddedResource Include="pages\dockWindow\explorer\frmFileTree.resx">
       <DependentUpon>frmFileTree.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\frmSearchList.resx">

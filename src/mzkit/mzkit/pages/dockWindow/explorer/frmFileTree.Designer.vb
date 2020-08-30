@@ -29,12 +29,8 @@ Partial Class frmFileTree
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.TextBox2 = New System.Windows.Forms.TextBox()
-        Me.TreeView1 = New System.Windows.Forms.TreeView()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ShowXICToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.AddToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ClearToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ExportToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ShowTICToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MS1ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MS2ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -48,6 +44,9 @@ Partial Class frmFileTree
         Me.NatureProductToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.GeneralFlavoneToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ClearToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ExportToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripSeparator()
         Me.DeleteFileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Panel1.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
@@ -90,50 +89,18 @@ Partial Class frmFileTree
         Me.TextBox2.Size = New System.Drawing.Size(441, 25)
         Me.TextBox2.TabIndex = 1
         '
-        'TreeView1
-        '
-        Me.TreeView1.AllowDrop = True
-        Me.TreeView1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.TreeView1.ContextMenuStrip = Me.ContextMenuStrip1
-        Me.TreeView1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TreeView1.Location = New System.Drawing.Point(0, 30)
-        Me.TreeView1.Name = "TreeView1"
-        Me.TreeView1.Size = New System.Drawing.Size(446, 440)
-        Me.TreeView1.TabIndex = 1
-        '
         'ContextMenuStrip1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowXICToolStripMenuItem, Me.ShowTICToolStripMenuItem, Me.MS1ToolStripMenuItem, Me.MS2ToolStripMenuItem, Me.MolecularNetworkingToolStripMenuItem, Me.ToolStripMenuItem2, Me.SearchInFileToolStripMenuItem, Me.SearchFormulaToolStripMenuItem, Me.ToolStripMenuItem1, Me.DeleteFileToolStripMenuItem})
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowXICToolStripMenuItem, Me.ShowTICToolStripMenuItem, Me.MS1ToolStripMenuItem, Me.MS2ToolStripMenuItem, Me.MolecularNetworkingToolStripMenuItem, Me.ToolStripMenuItem2, Me.SearchInFileToolStripMenuItem, Me.SearchFormulaToolStripMenuItem, Me.ToolStripMenuItem1, Me.ClearToolStripMenuItem, Me.ExportToolStripMenuItem, Me.ToolStripMenuItem3, Me.DeleteFileToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
         Me.ContextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(193, 192)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(193, 242)
         '
         'ShowXICToolStripMenuItem
         '
-        Me.ShowXICToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AddToolStripMenuItem, Me.ClearToolStripMenuItem, Me.ExportToolStripMenuItem})
         Me.ShowXICToolStripMenuItem.Name = "ShowXICToolStripMenuItem"
         Me.ShowXICToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
         Me.ShowXICToolStripMenuItem.Text = "Show XIC"
-        '
-        'AddToolStripMenuItem
-        '
-        Me.AddToolStripMenuItem.Name = "AddToolStripMenuItem"
-        Me.AddToolStripMenuItem.Size = New System.Drawing.Size(108, 22)
-        Me.AddToolStripMenuItem.Text = "Add"
-        '
-        'ClearToolStripMenuItem
-        '
-        Me.ClearToolStripMenuItem.Image = CType(resources.GetObject("ClearToolStripMenuItem.Image"), System.Drawing.Image)
-        Me.ClearToolStripMenuItem.Name = "ClearToolStripMenuItem"
-        Me.ClearToolStripMenuItem.Size = New System.Drawing.Size(108, 22)
-        Me.ClearToolStripMenuItem.Text = "Clear"
-        '
-        'ExportToolStripMenuItem
-        '
-        Me.ExportToolStripMenuItem.Image = CType(resources.GetObject("ExportToolStripMenuItem.Image"), System.Drawing.Image)
-        Me.ExportToolStripMenuItem.Name = "ExportToolStripMenuItem"
-        Me.ExportToolStripMenuItem.Size = New System.Drawing.Size(108, 22)
-        Me.ExportToolStripMenuItem.Text = "Export"
         '
         'ShowTICToolStripMenuItem
         '
@@ -218,6 +185,23 @@ Partial Class frmFileTree
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
         Me.ToolStripMenuItem1.Size = New System.Drawing.Size(189, 6)
         '
+        'ClearToolStripMenuItem
+        '
+        Me.ClearToolStripMenuItem.Name = "ClearToolStripMenuItem"
+        Me.ClearToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
+        Me.ClearToolStripMenuItem.Text = "Clear"
+        '
+        'ExportToolStripMenuItem
+        '
+        Me.ExportToolStripMenuItem.Name = "ExportToolStripMenuItem"
+        Me.ExportToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
+        Me.ExportToolStripMenuItem.Text = "Export"
+        '
+        'ToolStripMenuItem3
+        '
+        Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
+        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(189, 6)
+        '
         'DeleteFileToolStripMenuItem
         '
         Me.DeleteFileToolStripMenuItem.Image = CType(resources.GetObject("DeleteFileToolStripMenuItem.Image"), System.Drawing.Image)
@@ -230,11 +214,9 @@ Partial Class frmFileTree
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(446, 470)
-        Me.Controls.Add(Me.TreeView1)
         Me.Controls.Add(Me.Panel1)
         Me.Name = "frmFileTree"
         Me.Text = "Form1"
-        Me.TabText = "File Explorer"
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
         Me.ContextMenuStrip1.ResumeLayout(False)
@@ -244,13 +226,9 @@ Partial Class frmFileTree
 
     Friend WithEvents Panel1 As Panel
     Friend WithEvents TextBox2 As TextBox
-    Friend WithEvents TreeView1 As TreeView
     Friend WithEvents Button1 As Button
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents ShowXICToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents AddToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ClearToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ExportToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ShowTICToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents MS1ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents MS2ToolStripMenuItem As ToolStripMenuItem
@@ -265,4 +243,7 @@ Partial Class frmFileTree
     Friend WithEvents GeneralFlavoneToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
     Friend WithEvents DeleteFileToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ClearToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ExportToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem3 As ToolStripSeparator
 End Class

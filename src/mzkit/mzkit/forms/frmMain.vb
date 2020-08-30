@@ -580,7 +580,6 @@ Public Class frmMain
         Call SetSchema(Nothing, Nothing)
 
         fileExplorer.Show(dockPanel)
-        fileExplorer.frmFileTree_Load(Me)
         fileExplorer.DockState = DockState.DockLeftAutoHide
         TreeView1 = fileExplorer.TreeView1
 
