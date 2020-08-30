@@ -247,6 +247,8 @@ Public Class frmMain
                     For Each stack In err.environmentStack
                         RtermPage.Routput.AppendText(stack.ToString & vbCrLf)
                     Next
+
+                    RtermPage.Routput.AppendText(vbCrLf)
                 End If
             End Using
 
