@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::418066a5cc5fcc7dbb73eae471dcb6e1, src\mzmath\ms2_math-core\Spectra\GlobalAlignment.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module GlobalAlignment
-    ' 
-    '         Properties: ppm20
-    ' 
-    '         Function: Align, AlignMatrix, CreateAlignment, (+2 Overloads) JaccardIndex, MzUnion
-    '                   SharedPeakCount, TopPeaks, TwoDirectionSSM
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module GlobalAlignment
+' 
+'         Properties: ppm20
+' 
+'         Function: Align, AlignMatrix, CreateAlignment, (+2 Overloads) JaccardIndex, MzUnion
+'                   SharedPeakCount, TopPeaks, TwoDirectionSSM
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -53,6 +53,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Extensions
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.Scripting
 Imports stdNum = System.Math
 
 Namespace Spectra
@@ -223,29 +224,32 @@ Namespace Spectra
         Public Function AlignMatrix(query As ms2(), ref As ms2(), tolerance As Tolerance) As ms2()
             Return ref _
                 .Select(Function(mz)
-
-                            ' 2017-10-29
-                            '
-                            ' 当找不到的时候，会返回一个空的structure对象，这个时候intensity为零
-                            ' 所以在这个Linq表达式中，后面不需要使用Where来删除对象了
-
-                            Dim subject = query _
-                                .Where(Function(q) tolerance(q.mz, mz.mz)) _
-                                .Shadows
-
-                            If subject.Length = 0 Then
-                                ' With single intensity ZERO
-                                Return New ms2 With {
-                                    .mz = mz.mz,
-                                    .intensity = 0,
-                                    .quantity = 0
-                                }
-                            Else
-                                ' 返回响应值最大的
-                                Return subject(Which.Max(subject!intensity))
-                            End If
+                            Return findMatch(mz, query, tolerance)
                         End Function) _
                 .ToArray
+        End Function
+
+        Private Function findMatch(mz As ms2, query As ms2(), tolerance As Tolerance) As ms2
+            ' 2017-10-29
+            '
+            ' 当找不到的时候，会返回一个空的structure对象，这个时候intensity为零
+            ' 所以在这个Linq表达式中，后面不需要使用Where来删除对象了
+            Dim match = query _
+                .Where(Function(q) tolerance(q.mz, mz.mz)) _
+                .ToArray
+
+            If match.Length = 0 Then
+                ' With single intensity ZERO
+                Return New ms2 With {
+                    .mz = mz.mz,
+                    .intensity = 0,
+                    .quantity = 0
+                }
+            Else
+                Dim subject As IVector(Of ms2) = match.Shadows
+                ' 返回响应值最大的
+                Return subject(Which.Max(subject!intensity))
+            End If
         End Function
 
         Public Iterator Function CreateAlignment(query As ms2(), ref As ms2(), tolerance As Tolerance) As IEnumerable(Of SSM2MatrixFragment)

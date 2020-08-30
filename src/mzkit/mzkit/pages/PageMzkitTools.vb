@@ -684,15 +684,25 @@ Public Class PageMzkitTools
                 ' Dim tree As New SpectrumTreeCluster(SpectrumTreeCluster.SSMCompares(Tolerance.DeltaMass(0.3), 0.75, 0.4), showReport:=False)
                 Dim run As New List(Of PeakMs2)
                 Dim nodes As New Dictionary(Of String, ScanEntry)
+                Dim idList As New Dictionary(Of String, Integer)
 
                 progress.Invoke(Sub() progress.Label1.Text = "loading cache ms2 scan data...")
 
                 Using cache As New netCDFReader(raw.cache)
                     For Each scan In raw.scans.Where(Function(s) s.mz > 0)
+                        Dim uid As String = $"M{CInt(scan.mz)}T{CInt(scan.rt)}"
+
+                        If idList.ContainsKey(uid) Then
+                            idList(uid) += 1
+                            uid = uid & "_" & (idList(uid) - 1)
+                        Else
+                            idList.Add(uid, 1)
+                        End If
+
                         run += New PeakMs2 With {
                             .rt = scan.rt,
                             .mz = scan.mz,
-                            .lib_guid = $"M{CInt(.mz)}T{CInt(.rt)}",
+                            .lib_guid = uid,
                             .mzInto = cache.getDataVariable(scan.id).numerics.AsMs2.ToArray.Centroid(Tolerance.DeltaMass(0.3)).ToArray
                         }
 
