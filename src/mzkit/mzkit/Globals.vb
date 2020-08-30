@@ -132,6 +132,7 @@ Module Globals
 
         explorer.Nodes.Add(rawFileNode)
         rawFileNode.addRawFile(raw, True, True)
+        rawFileNode.Checked = False
     End Sub
 
     <Extension>

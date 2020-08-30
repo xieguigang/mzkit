@@ -784,7 +784,7 @@ Public Class PageMzkitTools
     End Sub
 
     Private Sub ShowXICToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        If TypeOf TreeView1.SelectedNode.Tag Is Raw Then
+        If TypeOf TreeView1.SelectedNode.Tag Is Raw AndAlso MyApplication.host.fileExplorer.GetSelectedNodes.Count = 0 Then
             Return
         End If
 
@@ -797,15 +797,22 @@ Public Class PageMzkitTools
             .Max
 
         If plotTIC.value.IsNullOrEmpty Then
-            Return
+            ' 当前没有选中MS2，但是可以显示选中的XIC
+            If MyApplication.host.fileExplorer.GetSelectedNodes.Count > 0 Then
+            Else
+                MyApplication.host.showStatusMessage("No ion was selected for XIC plot...", My.Resources.StatusAnnotations_Warning_32xLG_color)
+                Return
+            End If
+        Else
+            showMatrix(plotTIC.value, Name)
         End If
-
-        showMatrix(plotTIC.value, Name)
 
         Dim files = MyApplication.host.fileExplorer.GetSelectedNodes.GroupBy(Function(a) a.Parent.Text).ToArray
         Dim XICPlot As New List(Of NamedCollection(Of ChromatogramTick))
 
-        XICPlot.Add(plotTIC)
+        If Not plotTIC.IsEmpty Then
+            XICPlot.Add(plotTIC)
+        End If
 
         For Each file In files
             Dim scans = file.Select(Function(a) DirectCast(a.Tag, ScanEntry)) _
@@ -828,12 +835,13 @@ Public Class PageMzkitTools
     Private Function getXICMatrix(raw As Raw, scanId As String) As NamedCollection(Of ChromatogramTick)
         Dim ms2 As ScanEntry = raw.scans.Where(Function(a) a.id = scanId).FirstOrDefault
         Dim ppm As Double = Val(RibbonItems.PPMSpinner.DecimalValue)
-        Dim name As String = $"XIC [m/z={ms2.mz.ToString("F4")}, {ppm}ppm]"
+        Dim name As String
 
         If ms2 Is Nothing OrElse ms2.mz = 0.0 Then
             MyApplication.host.showStatusMessage("XIC plot is not avaliable for MS1 parent!", My.Resources.StatusAnnotations_Warning_32xLG_color)
             Return Nothing
         Else
+            name = $"XIC [m/z={ms2.mz.ToString("F4")}, {ppm}ppm]"
             MyApplication.host.showStatusMessage(name, Nothing)
         End If
 
