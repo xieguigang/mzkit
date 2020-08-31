@@ -68,7 +68,11 @@ Export the XIC data to a specific file is also keeps simple, just mouse right cl
 
 ![](docs/manual/export-XIC.png)
 
-## Formula search
+<div style="page-break-after:always;"></div>
+
+## Data Annotations
+
+### Formula search
 
 You can search for the formula of one feature in your raw data file with mzkit for do some de-novo annotation with just simply mouse right click on one of the feature and then select ``Search Formula``, and then wait for a while to let mzkit for search all of the candidate formula by enumerates all of the possible element combinations:
 
