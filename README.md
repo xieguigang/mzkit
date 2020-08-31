@@ -26,6 +26,8 @@
 
 Mzkit is an open source raw data file toolkit for mass spectrometry data analysis, provides by the ``BioNovoGene`` corporation. The features of mzkit inlcudes: raw data file content viewer(XIC/TIC/Mass spectrum plot), build molecule network, formula de-novo search and annotation.
 
+<div style="page-break-after:always;"></div>
+
 ![](docs/manual/main.png)
 
 <div style="page-break-after:always;"></div>
@@ -113,5 +115,9 @@ You also can search of the formula by input any ``m/z`` value in the input box o
 Export the formula search result just like other data that we've introduced before, just click on the ``Formula Result`` tab page and then click on the Export button. this command will let you save the formula search result into a specific Excel table file. 
 
 <div style="page-break-after:always;"></div>
+
+# Credits
+
+This open source mass spectrometry data toolkit is provided by the R&D laboratory from BioNovoGene corporation.
 
 ![](docs/BioNovoGene.png)

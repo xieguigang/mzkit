@@ -1,3 +1,3 @@
 @echo off
 
-.\wkhtmltopdf.exe --margin-bottom 0 --margin-top 0 --margin-left 0 --margin-right 0 https://mzkit.org/ "D:\mzkit\dist\README.pdf"
+.\wkhtmltopdf.exe --margin-bottom 5 --margin-top 5 --margin-left 5 --margin-right 5 https://mzkit.org/ "D:\mzkit\dist\README.pdf"
