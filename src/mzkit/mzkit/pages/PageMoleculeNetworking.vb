@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::66ceca9709033a9152046cf3f7bf9059, src\mzkit\mzkit\pages\PageMoleculeNetworking.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class PageMoleculeNetworking
-    ' 
-    '     Sub: DataGridView1_CellContentClick, loadNetwork, PageMoleculeNetworking_Load, PageMoleculeNetworking_VisibleChanged, SaveImageToolStripMenuItem_Click
-    '          saveNetwork
-    ' 
-    ' /********************************************************************************/
+' Class PageMoleculeNetworking
+' 
+'     Sub: DataGridView1_CellContentClick, loadNetwork, PageMoleculeNetworking_Load, PageMoleculeNetworking_VisibleChanged, SaveImageToolStripMenuItem_Click
+'          saveNetwork
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -53,13 +53,13 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Imaging
+Imports mzkit.My
 Imports RibbonLib.Interop
 Imports Task
 
 Public Class PageMoleculeNetworking
 
     Dim g As NetworkGraph
-    Dim host As frmMain
     Dim rawMatrix As EntityClusterModel()
     Dim nodeInfo As Dictionary(Of String, ScanEntry)
 
@@ -131,14 +131,10 @@ Public Class PageMoleculeNetworking
 
     Private Sub PageMoleculeNetworking_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
         If Visible Then
-            host.ribbonItems.TabGroupNetworkTools.ContextAvailable = ContextAvailability.Active
+            MyApplication.host.ribbonItems.TabGroupNetworkTools.ContextAvailable = ContextAvailability.Active
         Else
-            host.ribbonItems.TabGroupNetworkTools.ContextAvailable = ContextAvailability.NotAvailable
+            MyApplication.host.ribbonItems.TabGroupNetworkTools.ContextAvailable = ContextAvailability.NotAvailable
         End If
-    End Sub
-
-    Private Sub PageMoleculeNetworking_Load(sender As Object, e As EventArgs) Handles Me.Load
-        host = DirectCast(ParentForm, frmMain)
     End Sub
 
     Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellContentClick
@@ -146,6 +142,7 @@ Public Class PageMoleculeNetworking
             Dim row = DataGridView1.Rows(e.RowIndex)
             Dim a = CStr(row.Cells(0).Value)
             Dim b = CStr(row.Cells(1).Value)
+            Dim host = MyApplication.host
 
             If a Is Nothing OrElse b Is Nothing Then
                 Return
@@ -154,7 +151,7 @@ Public Class PageMoleculeNetworking
             a = nodeInfo(a).id
             b = nodeInfo(b).id
 
-            Dim raw = host.mzkitTool.TreeView1.CurrentRawFile.raw
+            Dim raw = host.TreeView1.CurrentRawFile.raw
             Dim data1 = raw.GetSpectrum(a)
             Dim data2 = raw.GetSpectrum(b)
             Dim matrix As SSM2MatrixFragment() = GlobalAlignment.CreateAlignment(data1.ms2, data2.ms2, Tolerance.DeltaMass(0.3)).ToArray
@@ -162,7 +159,7 @@ Public Class PageMoleculeNetworking
             host.mzkitTool.showMatrix(matrix, $"{row.Cells(0).Value}_vs_{row.Cells(1).Value}")
 
             host.mzkitTool.PictureBox1.BackgroundImage = MassSpectra.AlignMirrorPlot(data1, data2).AsGDIImage
-            host.mzkitTool.TabControl1.SelectedTab = host.mzkitTool.TabPage1
+            host.mzkitTool.CustomTabControl1.SelectedTab = host.mzkitTool.TabPage5
 
             host.ShowPage(host.mzkitTool)
         End If

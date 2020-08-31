@@ -4463,6 +4463,12 @@
             Don't use
             </summary>
         </member>
+        <member name="P:RibbonLib.Ribbon.ResourceIdentifier">
+            <summary>
+            This is the Name parameter used for the UICC Compiler
+            Default value is APPLICATION or leave it empty.
+            </summary>
+        </member>
         <member name="P:RibbonLib.Ribbon.ResourceName">
             <summary>
             is a reference to an embedded resource file

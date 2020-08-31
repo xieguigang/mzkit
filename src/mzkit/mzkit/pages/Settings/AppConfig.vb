@@ -1,49 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::97272ff73963f2c3f37393e4812e29cb, src\mzkit\mzkit\pages\Settings\AppConfig.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class AppConfig
-    ' 
-    '     Sub: AppConfig_Load, CheckBox1_CheckedChanged, LinkLabel1_LinkClicked, LinkLabel2_LinkClicked, LinkLabel3_LinkClicked
-    '          LoadSettings, SaveSettings, selectColor, ShowPage
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Class AppConfig
+' 
+'     Sub: AppConfig_Load, CheckBox1_CheckedChanged, LinkLabel1_LinkClicked, LinkLabel2_LinkClicked, LinkLabel3_LinkClicked
+'          LoadSettings, SaveSettings, selectColor, ShowPage
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports mzkit.My
 Imports RibbonLib
 
 Public Class AppConfig : Implements ISaveSettings, IPageSettings
@@ -58,7 +59,7 @@ Public Class AppConfig : Implements ISaveSettings, IPageSettings
         CheckBox1.Checked = Globals.Settings.ui.rememberWindowsLocation
 
         If Globals.Settings.ui.background.IsNullOrEmpty Then
-            Dim colors As RibbonColors = DirectCast(ParentForm, frmMain).Ribbon1.GetColors
+            Dim colors As RibbonColors = MyApplication.host.Ribbon1.GetColors
 
             PictureBox1.BackColor = colors.BackgroundColor
             PictureBox2.BackColor = colors.HighlightColor
@@ -75,7 +76,7 @@ Public Class AppConfig : Implements ISaveSettings, IPageSettings
     End Sub
 
     Public Sub ShowPage() Implements IPageSettings.ShowPage
-        Call DirectCast(ParentForm, frmMain).ShowPage(DirectCast(ParentForm, frmMain).mzkitSettings)
+
     End Sub
 
     Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
@@ -105,7 +106,7 @@ Public Class AppConfig : Implements ISaveSettings, IPageSettings
             PictureBox3.BackColor = e.Color
         End If
 
-        Globals.Settings.ui.setColors(DirectCast(ParentForm, frmMain).Ribbon1)
+        Globals.Settings.ui.setColors(MyApplication.host.Ribbon1)
     End Sub
 
     Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked

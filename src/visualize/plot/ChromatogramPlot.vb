@@ -281,7 +281,7 @@ Public Module ChromatogramPlot
 
                 Call g.DrawAxis(
                     region, scaler, showGrid:=False,
-                    xlabel:=If(isXIC, "m/z ratio", "Time (s)"),
+                    xlabel:="Time (s)",
                     ylabel:="Intensity",
                     htmlLabel:=False,
                     XtickFormat:=If(isXIC, "F2", "F0"),

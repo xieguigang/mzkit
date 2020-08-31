@@ -40,7 +40,7 @@ Partial Class frmSplashScreen
         Me.Label1.AutoSize = True
         Me.Label1.BackColor = System.Drawing.Color.Transparent
         Me.Label1.Font = New System.Drawing.Font("Impact", 56.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(219, 12)
+        Me.Label1.Location = New System.Drawing.Point(219, 13)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(373, 93)
         Me.Label1.TabIndex = 2
@@ -49,8 +49,8 @@ Partial Class frmSplashScreen
         'LinkLabel1
         '
         Me.LinkLabel1.AutoSize = True
-        Me.LinkLabel1.Font = New System.Drawing.Font("微软雅黑", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.LinkLabel1.Location = New System.Drawing.Point(436, 103)
+        Me.LinkLabel1.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.LinkLabel1.Location = New System.Drawing.Point(436, 112)
         Me.LinkLabel1.Name = "LinkLabel1"
         Me.LinkLabel1.Size = New System.Drawing.Size(139, 21)
         Me.LinkLabel1.TabIndex = 3
@@ -61,9 +61,9 @@ Partial Class frmSplashScreen
         '
         Me.PictureBox2.BackgroundImage = Global.mzkit.My.Resources.Resources._42082
         Me.PictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox2.Location = New System.Drawing.Point(23, 12)
+        Me.PictureBox2.Location = New System.Drawing.Point(23, 13)
         Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(150, 150)
+        Me.PictureBox2.Size = New System.Drawing.Size(150, 163)
         Me.PictureBox2.TabIndex = 4
         Me.PictureBox2.TabStop = False
         '
@@ -74,18 +74,18 @@ Partial Class frmSplashScreen
         Me.Panel1.Controls.Add(Me.Label3)
         Me.Panel1.Controls.Add(Me.Label2)
         Me.Panel1.Controls.Add(Me.PictureBox1)
-        Me.Panel1.Location = New System.Drawing.Point(0, 178)
+        Me.Panel1.Location = New System.Drawing.Point(0, 193)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(604, 168)
+        Me.Panel1.Size = New System.Drawing.Size(604, 182)
         Me.Panel1.TabIndex = 1
         '
         'Label3
         '
         Me.Label3.AutoSize = True
         Me.Label3.BackColor = System.Drawing.Color.Transparent
-        Me.Label3.Font = New System.Drawing.Font("微软雅黑", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label3.Font = New System.Drawing.Font("Microsoft YaHei", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.Label3.ForeColor = System.Drawing.Color.White
-        Me.Label3.Location = New System.Drawing.Point(363, 8)
+        Me.Label3.Location = New System.Drawing.Point(363, 9)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(212, 85)
         Me.Label3.TabIndex = 2
@@ -96,9 +96,9 @@ Partial Class frmSplashScreen
         '
         Me.Label2.AutoSize = True
         Me.Label2.BackColor = System.Drawing.Color.Transparent
-        Me.Label2.Font = New System.Drawing.Font("微软雅黑", 7.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label2.Font = New System.Drawing.Font("Microsoft YaHei", 7.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.Label2.ForeColor = System.Drawing.Color.White
-        Me.Label2.Location = New System.Drawing.Point(2, 148)
+        Me.Label2.Location = New System.Drawing.Point(2, 160)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(341, 16)
         Me.Label2.TabIndex = 1
@@ -108,23 +108,24 @@ Partial Class frmSplashScreen
         '
         Me.PictureBox1.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox1.BackgroundImage = Global.mzkit.My.Resources.Resources.header_foreground_image
-        Me.PictureBox1.Location = New System.Drawing.Point(0, 96)
+        Me.PictureBox1.Location = New System.Drawing.Point(0, 104)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(616, 52)
+        Me.PictureBox1.Size = New System.Drawing.Size(616, 56)
         Me.PictureBox1.TabIndex = 0
         Me.PictureBox1.TabStop = False
         '
         'frmSplashScreen
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.ClientSize = New System.Drawing.Size(604, 342)
+        Me.ClientSize = New System.Drawing.Size(604, 371)
         Me.Controls.Add(Me.LinkLabel1)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.PictureBox2)
+        Me.DoubleBuffered = True
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "frmSplashScreen"
         Me.ShowIcon = False

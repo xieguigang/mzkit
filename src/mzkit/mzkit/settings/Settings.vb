@@ -51,6 +51,9 @@ Public Class Settings
     Public Property precursor_search As PrecursorSearchSettings
     Public Property formula_search As FormulaSearchProfile
     Public Property ui As UISettings
+    Public Property viewer As RawFileViewerSettings
+
+    Public Property recentFiles As String()
 
     Public Shared ReadOnly Property configFile As String = App.LocalData & "/settings.json"
 
@@ -77,3 +80,8 @@ Public Class Settings
     End Function
 End Class
 
+Public Class RawFileViewerSettings
+
+    Public Property XIC_ppm As Double = 20
+
+End Class

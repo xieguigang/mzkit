@@ -1,0 +1,159 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>System.Windows.Forms.Console</name>
+    </assembly>
+    <members>
+        <member name="E:ConsoleControl.ConsoleControl.LineEntered">
+            <summary>
+            This event is raised whenever text is entered into the console control
+            </summary>
+        </member>
+        <member name="P:ConsoleControl.ConsoleControl.ShowCursor">
+            <summary>
+            Gets or Sets a value indicating whether the console should show the cursor
+            </summary>
+        </member>
+        <member name="P:ConsoleControl.ConsoleControl.AllowInput">
+            <summary>
+            Gets or Sets a value indicating whether the console should allow keyboard input
+            </summary>
+        </member>
+        <member name="P:ConsoleControl.ConsoleControl.EchoInput">
+            <summary>
+            Gets or Sets a value indicating whether the console should echo any input it receives.
+            </summary>
+        </member>
+        <member name="P:ConsoleControl.ConsoleControl.CursorType">
+            <summary>
+            Gets or Sets the current cursor type.
+            </summary>
+        </member>
+        <member name="P:ConsoleControl.ConsoleControl.ConsoleBackgroundColor">
+            <summary>
+            Gets or Sets the background color of the console.
+            Default is Black.
+            </summary>
+        </member>
+        <member name="P:ConsoleControl.ConsoleControl.ConsoleForegroundColor">
+            <summary>
+            Gets or Sets the foreground color of the console.
+            Default is light gray.
+            </summary>
+        </member>
+        <member name="M:ConsoleControl.ConsoleControl.SetCursorPosition(System.Int32,System.Int32)">
+            <summary>
+            Sets the position of the cursor
+            </summary>
+            <param name="row">The row of the cursor position</param>
+            <param name="column">The column of the cursor position</param>
+        </member>
+        <member name="M:ConsoleControl.ConsoleControl.SetCursorPosition(ConsoleControl.Location)">
+            <summary>
+            Sets the position of the cursor
+            </summary>
+            <param name="location">The location of the cursor position</param>
+        </member>
+        <member name="M:ConsoleControl.ConsoleControl.GetCursorPosition">
+            <summary>
+            Gets the position of the cursor
+            </summary>
+            <returns>The location of the cursor</returns>
+        </member>
+        <member name="M:ConsoleControl.ConsoleControl.Write">
+            <summary>
+            Writes a newline (carriage return) to the console.
+            </summary>
+        </member>
+        <member name="M:ConsoleControl.ConsoleControl.Write(System.Char)">
+            <summary>
+            Writes a character to the console using the
+            current foreground color and background color.
+            </summary>
+            <param name="c">The character to write to the console.</param>
+        </member>
+        <member name="M:ConsoleControl.ConsoleControl.Write(System.Char,System.Drawing.Color,System.Drawing.Color)">
+            <summary>
+            Writes a character to the console using the
+            specified foreground color and background color
+            </summary>
+            <param name="c">The character to write to the console.</param>
+            <param name="fgColor">The foreground color</param>
+            <param name="bgColor">The background color</param>
+        </member>
+        <member name="M:ConsoleControl.ConsoleControl.Write(System.String)">
+            <summary>
+            Writes a string to the console using the current
+            foreground color and background color
+            </summary>
+            <param name="text">The string to write to the console</param>
+        </member>
+        <member name="M:ConsoleControl.ConsoleControl.Write(System.String,System.Drawing.Color,System.Drawing.Color)">
+            <summary>
+            Writes a string to the console using the specified
+            foreground color and background color
+            </summary>
+            <param name="text">The string to write to the console</param>
+            <param name="fgColor">The foreground color</param>
+            <param name="bgColor">The background color</param>
+        </member>
+        <member name="M:ConsoleControl.ConsoleControl.ScrollUp(System.Int32)">
+            <summary>
+            Scrolls the console screen window up the given.
+            number of lines.
+            </summary>
+            <param name="lines">The number of lines to scroll up</param>
+        </member>
+        <member name="M:ConsoleControl.ConsoleControl.ScrollUp">
+            <summary>
+            Scrolls the console screen window up one line.
+            </summary>
+        </member>
+        <member name="M:ConsoleControl.ConsoleControl.Clear">
+            <summary>
+            Clears the console screen
+            </summary>
+        </member>
+        <member name="M:ConsoleControl.ConsoleControl.SetBackgroundColorAt(System.Drawing.Color,System.Int32,System.Int32)">
+            <summary>
+            Sets the background color at the specified location
+            </summary>
+            <param name="color">The background color to set</param>
+            <param name="row">The row at which to set the background color</param>
+            <param name="column">The column at which to set the background color</param>
+        </member>
+        <member name="M:ConsoleControl.ConsoleControl.SetForegroundColorAt(System.Drawing.Color,System.Int32,System.Int32)">
+            <summary>
+            Sets the foreground color at the specified location
+            </summary>
+            <param name="color">The foreground color to set</param>
+            <param name="row">The row at which to set the foreground color</param>
+            <param name="column">The column at which to set the foreground color</param>
+        </member>
+        <member name="M:ConsoleControl.ConsoleControl.SetCharacterAt(System.Char,System.Int32,System.Int32)">
+            <summary>
+            Sets the character at the specified location
+            </summary>
+            <param name="character">The character to set</param>
+            <param name="row">The row at which to place the character</param>
+            <param name="column">The column at which to place the character</param>
+        </member>
+        <member name="F:ConsoleControl.ConsoleControl.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:ConsoleControl.ConsoleControl.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:ConsoleControl.ConsoleControl.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,59 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::5848af8064fd6d3189f38fb1c84e3d61, src\mzkit\mzkit\pages\PageMzSearch.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class PageMzSearch
-    ' 
-    '     Function: GetFormulaSearchProfileName, GetProfile
-    ' 
-    '     Sub: Button1_Click, DataGridView1_CellContentClick, doExactMassSearch, doMzSearch, PageMzSearch_Load
-    '          PageMzSearch_VisibleChanged, (+2 Overloads) runSearchInternal, SaveSearchResultTable, (+2 Overloads) ShowFormulaFinderResults
-    ' 
-    ' /********************************************************************************/
+' Class PageMzSearch
+' 
+'     Function: GetFormulaSearchProfileName, GetProfile
+' 
+'     Sub: Button1_Click, DataGridView1_CellContentClick, doExactMassSearch, doMzSearch, PageMzSearch_Load
+'          PageMzSearch_VisibleChanged, (+2 Overloads) runSearchInternal, SaveSearchResultTable, (+2 Overloads) ShowFormulaFinderResults
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports mzkit.My
 Imports RibbonLib.Interop
 Imports stdNum = System.Math
 
 Public Class PageMzSearch
-
-    Dim host As frmMain
 
     Private Sub doExactMassSearch(exact_mass As Double, ppm As Double)
         Dim progress As New frmTaskProgress
@@ -116,9 +115,15 @@ Public Class PageMzSearch
             Case FormulaSearchProfiles.Default
                 Return SearchOption.DefaultMetaboliteProfile
             Case FormulaSearchProfiles.NaturalProduct
-                Return SearchOption.NaturalProduct(DNPOrWileyType.DNP, True)
+                Return SearchOption.NaturalProduct(
+                    Globals.Settings.formula_search.naturalProductProfile.type,
+                    Globals.Settings.formula_search.naturalProductProfile.isCommon
+                )
             Case FormulaSearchProfiles.SmallMolecule
-                Return SearchOption.SmallMolecule(DNPOrWileyType.DNP, True)
+                Return SearchOption.SmallMolecule(
+                    Globals.Settings.formula_search.smallMoleculeProfile.type,
+                    Globals.Settings.formula_search.smallMoleculeProfile.isCommon
+                )
             Case FormulaSearchProfiles.GeneralFlavone
                 Return SearchOption.GeneralFlavone
             Case Else
@@ -149,7 +154,10 @@ Public Class PageMzSearch
         Dim searchResults = oMwtWin.SearchByPrecursorMz(mz, charge, ionMode).ToArray
 
         progress.Invoke(Sub() progress.Label2.Text = "output search result...")
-        host.Invoke(Sub() host.ToolStripStatusLabel1.Text = $"Run formula search for m/z {mz} with tolerance error {config.ppm} ppm, have {searchResults.Length} formula found!")
+        MyApplication.host.Invoke(
+            Sub()
+                MyApplication.host.ToolStripStatusLabel1.Text = $"Run formula search for m/z {mz} with tolerance error {config.ppm} ppm, have {searchResults.Length} formula found!"
+            End Sub)
 
         Call Me.Invoke(Sub() Call ShowFormulaFinderResults(searchResults))
         Call progress.Invoke(Sub() Call progress.Close())
@@ -170,7 +178,10 @@ Public Class PageMzSearch
         Dim searchResults = oMwtWin.SearchByExactMass(exact_mass).ToArray
 
         progress.Invoke(Sub() progress.Label2.Text = "output search result...")
-        host.Invoke(Sub() host.ToolStripStatusLabel1.Text = $"Run formula search for exact mass {exact_mass} with tolerance error {ppm} ppm, have {searchResults.Length} formula found!")
+        MyApplication.host.Invoke(
+            Sub()
+                MyApplication.host.ToolStripStatusLabel1.Text = $"Run formula search for exact mass {exact_mass} with tolerance error {ppm} ppm, have {searchResults.Length} formula found!"
+            End Sub)
 
         Call Me.Invoke(Sub() Call ShowFormulaFinderResults(searchResults))
         Call progress.Invoke(Sub() Call progress.Close())
@@ -233,15 +244,14 @@ Public Class PageMzSearch
     End Sub
 
     Private Sub PageMzSearch_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        host = DirectCast(ParentForm, frmMain)
         ComboBox1.SelectedIndex = 0
     End Sub
 
     Private Sub PageMzSearch_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
         If Visible Then
-            host.ribbonItems.TabGroupFormulaSearchTools.ContextAvailable = ContextAvailability.Active
+            MyApplication.host.ribbonItems.TabGroupFormulaSearchTools.ContextAvailable = ContextAvailability.Active
         Else
-            host.ribbonItems.TabGroupFormulaSearchTools.ContextAvailable = ContextAvailability.NotAvailable
+            MyApplication.host.ribbonItems.TabGroupFormulaSearchTools.ContextAvailable = ContextAvailability.NotAvailable
         End If
     End Sub
 

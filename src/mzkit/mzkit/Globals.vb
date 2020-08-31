@@ -65,6 +65,11 @@ Module Globals
         Settings = Settings.GetConfiguration()
     End Sub
 
+    Public Sub AddRecentFileHistory(file As String)
+        Settings.recentFiles = {file}.JoinIterates(Settings.recentFiles).Distinct.ToArray
+        Settings.Save()
+    End Sub
+
     <Extension>
     Public Sub SaveRawFileCache(explorer As TreeView)
         Dim files As New List(Of Task.Raw)
@@ -127,6 +132,7 @@ Module Globals
 
         explorer.Nodes.Add(rawFileNode)
         rawFileNode.addRawFile(raw, True, True)
+        rawFileNode.Checked = False
     End Sub
 
     <Extension>
@@ -159,5 +165,15 @@ Module Globals
         Else
             Return (DirectCast(node.Parent.Tag, Raw), node.Parent)
         End If
+    End Function
+
+    Public Function CheckFormOpened(form As Form) As Boolean
+        For i As Integer = 0 To Application.OpenForms.Count - 1
+            If Application.OpenForms.Item(i) Is form Then
+                Return True
+            End If
+        Next
+
+        Return False
     End Function
 End Module

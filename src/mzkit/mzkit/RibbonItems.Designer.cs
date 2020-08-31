@@ -13,8 +13,7 @@ using RibbonLib;
 using RibbonLib.Controls;
 using RibbonLib.Interop;
 
-namespace RibbonLib.Controls
-{
+
     partial class RibbonItems
     {
         private static class Cmd
@@ -23,8 +22,13 @@ namespace RibbonLib.Controls
             public const uint cmdTabDesign = 1032;
             public const uint cmdGroupDesign = 1036;
             public const uint cmdPPMSpinner = 1050;
-            public const uint cmdCheckBoxXICRelative = 1103;
-            public const uint cmdButtonDesign3 = 1042;
+            public const uint cmdGroupShowViewer = 1110;
+            public const uint cmdButtonShowPlotViewer = 1111;
+            public const uint cmdButtonShowMatrixViewer = 1112;
+            public const uint cmdGroupShowDockWindows = 1120;
+            public const uint cmdButtonShowExplorer = 1121;
+            public const uint cmdButtonShowSearchList = 1122;
+            public const uint cmdButtonShowProperties = 1123;
             public const uint cmdTabLayout = 1035;
             public const uint cmdGroupLayout = 1037;
             public const uint cmdButtonLayout1 = 1043;
@@ -33,6 +37,11 @@ namespace RibbonLib.Controls
             public const uint cmdTabCalculator = 1062;
             public const uint cmdGroupCalculator = 1063;
             public const uint cmdButtonCalculatorExport = 1064;
+            public const uint cmdTabGroupRscriptTools = 1130;
+            public const uint cmdTabRscriptTools = 1131;
+            public const uint cmdGroupRscript = 1132;
+            public const uint cmdButtonSaveScript = 1134;
+            public const uint cmdButtonRunScript = 1133;
             public const uint cmdTabGroupExactMassSearchTools = 1071;
             public const uint cmdTabExactMassSearch = 1072;
             public const uint cmdGroupExactMassSearch = 1073;
@@ -52,7 +61,10 @@ namespace RibbonLib.Controls
             public const uint cmdButtonNew = 1001;
             public const uint cmdButtonOpenRaw = 1002;
             public const uint cmdButtonSave = 1003;
+            public const uint cmdGroupExit = 1096;
             public const uint cmdButtonRsharp = 1107;
+            public const uint cmdButtonShowStartPage = 1108;
+            public const uint cmdButtonShowLogWindow = 1109;
             public const uint cmdTabTools = 1012;
             public const uint cmdGroupToolsActions = 1046;
             public const uint cmdButtonMzCalculator = 1013;
@@ -61,14 +73,15 @@ namespace RibbonLib.Controls
             public const uint cmdGroupAboutActions = 1047;
             public const uint cmdButtonAbout = 1021;
             public const uint cmdButtonBioDeep = 1022;
-            public const uint cmdButtonSettings = 1051;
             public const uint cmdRecentItems = 1014;
             public const uint cmdMenuGroupFile = 1005;
+            public const uint cmdButtonImportsRawFiles = 1017;
             public const uint cmdButtonToolkits = 1007;
             public const uint cmdButtonDropA = 1008;
             public const uint cmdButtonDropB = 1009;
             public const uint cmdButtonDropC = 1010;
             public const uint cmdButtonDropD = 5010;
+            public const uint cmdButtonSettings = 1051;
             public const uint cmdButtonLicense = 1101;
             public const uint cmdMenuGroupExit = 1006;
             public const uint cmdButtonExit = 1004;
@@ -90,8 +103,13 @@ namespace RibbonLib.Controls
         public RibbonTab TabDesign { get; private set; }
         public RibbonGroup GroupDesign { get; private set; }
         public RibbonSpinner PPMSpinner { get; private set; }
-        public RibbonCheckBox CheckBoxXICRelative { get; private set; }
-        public RibbonButton ButtonDesign3 { get; private set; }
+        public RibbonGroup GroupShowViewer { get; private set; }
+        public RibbonButton ButtonShowPlotViewer { get; private set; }
+        public RibbonButton ButtonShowMatrixViewer { get; private set; }
+        public RibbonGroup GroupShowDockWindows { get; private set; }
+        public RibbonButton ButtonShowExplorer { get; private set; }
+        public RibbonButton ButtonShowSearchList { get; private set; }
+        public RibbonButton ButtonShowProperties { get; private set; }
         public RibbonTab TabLayout { get; private set; }
         public RibbonGroup GroupLayout { get; private set; }
         public RibbonButton ButtonLayout1 { get; private set; }
@@ -100,6 +118,11 @@ namespace RibbonLib.Controls
         public RibbonTab TabCalculator { get; private set; }
         public RibbonGroup GroupCalculator { get; private set; }
         public RibbonButton ButtonCalculatorExport { get; private set; }
+        public RibbonTabGroup TabGroupRscriptTools { get; private set; }
+        public RibbonTab TabRscriptTools { get; private set; }
+        public RibbonGroup GroupRscript { get; private set; }
+        public RibbonButton ButtonSaveScript { get; private set; }
+        public RibbonButton ButtonRunScript { get; private set; }
         public RibbonTabGroup TabGroupExactMassSearchTools { get; private set; }
         public RibbonTab TabExactMassSearch { get; private set; }
         public RibbonGroup GroupExactMassSearch { get; private set; }
@@ -119,7 +142,10 @@ namespace RibbonLib.Controls
         public RibbonButton ButtonNew { get; private set; }
         public RibbonButton ButtonOpenRaw { get; private set; }
         public RibbonButton ButtonSave { get; private set; }
+        public RibbonGroup GroupExit { get; private set; }
         public RibbonButton ButtonRsharp { get; private set; }
+        public RibbonButton ButtonShowStartPage { get; private set; }
+        public RibbonButton ButtonShowLogWindow { get; private set; }
         public RibbonTab TabTools { get; private set; }
         public RibbonGroup GroupToolsActions { get; private set; }
         public RibbonButton ButtonMzCalculator { get; private set; }
@@ -128,14 +154,15 @@ namespace RibbonLib.Controls
         public RibbonGroup GroupAboutActions { get; private set; }
         public RibbonButton ButtonAbout { get; private set; }
         public RibbonButton ButtonBioDeep { get; private set; }
-        public RibbonButton ButtonSettings { get; private set; }
         public RibbonRecentItems RecentItems { get; private set; }
         public RibbonMenuGroup MenuGroupFile { get; private set; }
+        public RibbonButton ButtonImportsRawFiles { get; private set; }
         public RibbonDropDownButton ButtonToolkits { get; private set; }
         public RibbonButton ButtonDropA { get; private set; }
         public RibbonButton ButtonDropB { get; private set; }
         public RibbonButton ButtonDropC { get; private set; }
         public RibbonButton ButtonDropD { get; private set; }
+        public RibbonButton ButtonSettings { get; private set; }
         public RibbonButton ButtonLicense { get; private set; }
         public RibbonMenuGroup MenuGroupExit { get; private set; }
         public RibbonButton ButtonExit { get; private set; }
@@ -155,8 +182,13 @@ namespace RibbonLib.Controls
             TabDesign = new RibbonTab(ribbon, Cmd.cmdTabDesign);
             GroupDesign = new RibbonGroup(ribbon, Cmd.cmdGroupDesign);
             PPMSpinner = new RibbonSpinner(ribbon, Cmd.cmdPPMSpinner);
-            CheckBoxXICRelative = new RibbonCheckBox(ribbon, Cmd.cmdCheckBoxXICRelative);
-            ButtonDesign3 = new RibbonButton(ribbon, Cmd.cmdButtonDesign3);
+            GroupShowViewer = new RibbonGroup(ribbon, Cmd.cmdGroupShowViewer);
+            ButtonShowPlotViewer = new RibbonButton(ribbon, Cmd.cmdButtonShowPlotViewer);
+            ButtonShowMatrixViewer = new RibbonButton(ribbon, Cmd.cmdButtonShowMatrixViewer);
+            GroupShowDockWindows = new RibbonGroup(ribbon, Cmd.cmdGroupShowDockWindows);
+            ButtonShowExplorer = new RibbonButton(ribbon, Cmd.cmdButtonShowExplorer);
+            ButtonShowSearchList = new RibbonButton(ribbon, Cmd.cmdButtonShowSearchList);
+            ButtonShowProperties = new RibbonButton(ribbon, Cmd.cmdButtonShowProperties);
             TabLayout = new RibbonTab(ribbon, Cmd.cmdTabLayout);
             GroupLayout = new RibbonGroup(ribbon, Cmd.cmdGroupLayout);
             ButtonLayout1 = new RibbonButton(ribbon, Cmd.cmdButtonLayout1);
@@ -165,6 +197,11 @@ namespace RibbonLib.Controls
             TabCalculator = new RibbonTab(ribbon, Cmd.cmdTabCalculator);
             GroupCalculator = new RibbonGroup(ribbon, Cmd.cmdGroupCalculator);
             ButtonCalculatorExport = new RibbonButton(ribbon, Cmd.cmdButtonCalculatorExport);
+            TabGroupRscriptTools = new RibbonTabGroup(ribbon, Cmd.cmdTabGroupRscriptTools);
+            TabRscriptTools = new RibbonTab(ribbon, Cmd.cmdTabRscriptTools);
+            GroupRscript = new RibbonGroup(ribbon, Cmd.cmdGroupRscript);
+            ButtonSaveScript = new RibbonButton(ribbon, Cmd.cmdButtonSaveScript);
+            ButtonRunScript = new RibbonButton(ribbon, Cmd.cmdButtonRunScript);
             TabGroupExactMassSearchTools = new RibbonTabGroup(ribbon, Cmd.cmdTabGroupExactMassSearchTools);
             TabExactMassSearch = new RibbonTab(ribbon, Cmd.cmdTabExactMassSearch);
             GroupExactMassSearch = new RibbonGroup(ribbon, Cmd.cmdGroupExactMassSearch);
@@ -184,7 +221,10 @@ namespace RibbonLib.Controls
             ButtonNew = new RibbonButton(ribbon, Cmd.cmdButtonNew);
             ButtonOpenRaw = new RibbonButton(ribbon, Cmd.cmdButtonOpenRaw);
             ButtonSave = new RibbonButton(ribbon, Cmd.cmdButtonSave);
+            GroupExit = new RibbonGroup(ribbon, Cmd.cmdGroupExit);
             ButtonRsharp = new RibbonButton(ribbon, Cmd.cmdButtonRsharp);
+            ButtonShowStartPage = new RibbonButton(ribbon, Cmd.cmdButtonShowStartPage);
+            ButtonShowLogWindow = new RibbonButton(ribbon, Cmd.cmdButtonShowLogWindow);
             TabTools = new RibbonTab(ribbon, Cmd.cmdTabTools);
             GroupToolsActions = new RibbonGroup(ribbon, Cmd.cmdGroupToolsActions);
             ButtonMzCalculator = new RibbonButton(ribbon, Cmd.cmdButtonMzCalculator);
@@ -193,14 +233,15 @@ namespace RibbonLib.Controls
             GroupAboutActions = new RibbonGroup(ribbon, Cmd.cmdGroupAboutActions);
             ButtonAbout = new RibbonButton(ribbon, Cmd.cmdButtonAbout);
             ButtonBioDeep = new RibbonButton(ribbon, Cmd.cmdButtonBioDeep);
-            ButtonSettings = new RibbonButton(ribbon, Cmd.cmdButtonSettings);
             RecentItems = new RibbonRecentItems(ribbon, Cmd.cmdRecentItems);
             MenuGroupFile = new RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupFile);
+            ButtonImportsRawFiles = new RibbonButton(ribbon, Cmd.cmdButtonImportsRawFiles);
             ButtonToolkits = new RibbonDropDownButton(ribbon, Cmd.cmdButtonToolkits);
             ButtonDropA = new RibbonButton(ribbon, Cmd.cmdButtonDropA);
             ButtonDropB = new RibbonButton(ribbon, Cmd.cmdButtonDropB);
             ButtonDropC = new RibbonButton(ribbon, Cmd.cmdButtonDropC);
             ButtonDropD = new RibbonButton(ribbon, Cmd.cmdButtonDropD);
+            ButtonSettings = new RibbonButton(ribbon, Cmd.cmdButtonSettings);
             ButtonLicense = new RibbonButton(ribbon, Cmd.cmdButtonLicense);
             MenuGroupExit = new RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupExit);
             ButtonExit = new RibbonButton(ribbon, Cmd.cmdButtonExit);
@@ -212,4 +253,3 @@ namespace RibbonLib.Controls
         }
 
     }
-}

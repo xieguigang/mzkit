@@ -1,74 +1,85 @@
 ﻿#Region "Microsoft.VisualBasic::9f4b4c3e87676f6054cdd49f5172d821, src\mzkit\mzkit\forms\frmMain.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class frmMain
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: _recentItems_ExecuteEvent, _uiCollectionChangedEvent_ChangedEvent, About_Click, addPage, CopyToolStripMenuItem_Click
-    '          CutToolStripMenuItem_Click, ExitToolsStripMenuItem_Click, FormulaSearchToolToolStripMenuItem_Click, frmMain_Closing, frmMain_Load
-    '          InitializeFormulaProfile, InitRecentItems, InitSpinner, MoleculeNetworkingToolStripMenuItem_Click, MzCalculatorToolStripMenuItem_Click
-    '          NavBack_Click, OpenFile, PasteToolStripMenuItem_Click, RawFileViewerToolStripMenuItem_Click, SaveAsToolStripMenuItem_Click
-    '          saveCacheList, ShowPage, StatusBarToolStripMenuItem_Click, ToolBarToolStripMenuItem_Click
-    ' 
-    ' /********************************************************************************/
+' Class frmMain
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Sub: _recentItems_ExecuteEvent, _uiCollectionChangedEvent_ChangedEvent, About_Click, addPage, CopyToolStripMenuItem_Click
+'          CutToolStripMenuItem_Click, ExitToolsStripMenuItem_Click, FormulaSearchToolToolStripMenuItem_Click, frmMain_Closing, frmMain_Load
+'          InitializeFormulaProfile, InitRecentItems, InitSpinner, MoleculeNetworkingToolStripMenuItem_Click, MzCalculatorToolStripMenuItem_Click
+'          NavBack_Click, OpenFile, PasteToolStripMenuItem_Click, RawFileViewerToolStripMenuItem_Click, SaveAsToolStripMenuItem_Click
+'          saveCacheList, ShowPage, StatusBarToolStripMenuItem_Click, ToolBarToolStripMenuItem_Click
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.ComponentModel
+Imports System.IO
+Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
+Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
+Imports mzkit.DockSample
+Imports mzkit.My
 Imports RibbonLib
 Imports RibbonLib.Controls.Events
 Imports RibbonLib.Interop
+Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Components
+Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class frmMain
 
-    Dim pages As New List(Of Control)
+    Friend mzkitTool As New PageMzkitTools With {.Text = "Raw File Viewer"}
+    Friend mzkitSearch As New PageMzSearch With {.Text = "M/Z Formula De-novo Search"}
+    Friend mzkitCalculator As New PageMzCalculator With {.Text = "M/Z Calculator"}
+    Friend mzkitMNtools As New PageMoleculeNetworking With {.Text = "Molecular Networking"}
 
-    Friend mzkitTool As New PageMzkitTools
-    Friend mzkitSettings As New PageSettings
-    Friend mzkitSearch As New PageMzSearch
-    Friend mzkitCalculator As New PageMzCalculator
-    Friend mzkitMNtools As New PageMoleculeNetworking
-    Friend mzkitRsharpScripting As New PageScripting
+    Friend TreeView1 As TreeView
 
     Dim nav As New Stack(Of Control)
 
     Friend Sub ShowPage(page As Control, Optional pushStack As Boolean = True)
-        For Each page2 In pages
+        For Each page2 In panelMain.pages
             If Not page Is page2 Then
+                page2.Visible = False
                 page2.Hide()
             End If
         Next
@@ -77,46 +88,48 @@ Public Class frmMain
             nav.Push(page)
         End If
 
+        Me.Text = $"BioNovoGene Mzkit [{page.Text}]"
+        page.Visible = True
         page.Show()
+
+        panelMain.Show(dockPanel)
     End Sub
 
     Private Sub OpenFile(ByVal sender As Object, ByVal e As ExecuteEventArgs)
-        Call mzkitTool.ImportsRaw()
+        Using file As New OpenFileDialog With {.Filter = "Raw Data|*.mzXML;*.mzML|R# Script(*.R)|*.R"}
+            If file.ShowDialog = DialogResult.OK Then
+                If file.FileName.ExtensionSuffix("R") Then
+                    Dim newScript As New frmRScriptEdit With {.scriptFile = file.FileName}
+
+                    scriptFiles.Add(newScript)
+                    newScript.Show(dockPanel)
+                    newScript.DockState = DockState.Document
+                    newScript.Text = file.FileName.FileName
+                    newScript.LoadScript(file.FileName.ReadAllText)
+                Else
+                    Call mzkitTool.ImportsRaw(file.FileName)
+                End If
+
+                Globals.AddRecentFileHistory(file.FileName)
+            End If
+        End Using
     End Sub
 
-    Private Sub SaveAsToolStripMenuItem_Click(ByVal sender As Object, ByVal e As EventArgs)
-        Dim SaveFileDialog As New SaveFileDialog
-        SaveFileDialog.InitialDirectory = My.Computer.FileSystem.SpecialDirectories.MyDocuments
-        SaveFileDialog.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
-
-        If (SaveFileDialog.ShowDialog(Me) = System.Windows.Forms.DialogResult.OK) Then
-            Dim FileName As String = SaveFileDialog.FileName
-            ' TODO: Add code here to save the current contents of the form to a file.
-        End If
+    Private Sub ImportsFiles(ByVal sender As Object, ByVal e As ExecuteEventArgs)
+        Using file As New OpenFileDialog With {
+            .Filter = "Raw Data(*.mzXML; *.mzML)|*.mzXML;*.mzML",
+            .Multiselect = True
+        }
+            If file.ShowDialog = DialogResult.OK Then
+                For Each path As String In file.FileNames
+                    Call mzkitTool.ImportsRaw(path)
+                Next
+            End If
+        End Using
     End Sub
 
     Private Sub ExitToolsStripMenuItem_Click(ByVal sender As Object, ByVal e As ExecuteEventArgs)
         Me.Close()
-    End Sub
-
-    Private Sub CutToolStripMenuItem_Click(ByVal sender As Object, ByVal e As EventArgs)
-        ' Use My.Computer.Clipboard to insert the selected text or images into the clipboard
-    End Sub
-
-    Private Sub CopyToolStripMenuItem_Click(ByVal sender As Object, ByVal e As EventArgs)
-        ' Use My.Computer.Clipboard to insert the selected text or images into the clipboard
-    End Sub
-
-    Private Sub PasteToolStripMenuItem_Click(ByVal sender As Object, ByVal e As EventArgs)
-        'Use My.Computer.Clipboard.GetText() or My.Computer.Clipboard.GetData to retrieve information from the clipboard.
-    End Sub
-
-    Private Sub ToolBarToolStripMenuItem_Click(ByVal sender As Object, ByVal e As EventArgs)
-        ' Me.ToolStrip.Visible = Me.ToolBarToolStripMenuItem.Checked
-    End Sub
-
-    Private Sub StatusBarToolStripMenuItem_Click(ByVal sender As Object, ByVal e As EventArgs)
-        ' Me.StatusStrip.Visible = Me.StatusBarToolStripMenuItem.Checked
     End Sub
 
     Friend ribbonItems As RibbonItems
@@ -134,13 +147,15 @@ Public Class frmMain
 
         AddHandler ribbonItems.ButtonExit.ExecuteEvent, AddressOf ExitToolsStripMenuItem_Click
         AddHandler ribbonItems.ButtonOpenRaw.ExecuteEvent, AddressOf OpenFile
+        AddHandler ribbonItems.ButtonImportsRawFiles.ExecuteEvent, AddressOf ImportsFiles
         AddHandler ribbonItems.ButtonAbout.ExecuteEvent, AddressOf About_Click
         AddHandler ribbonItems.ButtonPageNavBack.ExecuteEvent, AddressOf NavBack_Click
+        AddHandler ribbonItems.ButtonNew.ExecuteEvent, AddressOf CreateNewScript
 
         AddHandler ribbonItems.ButtonMzCalculator.ExecuteEvent, Sub(sender, e) Call ShowPage(mzkitCalculator)
-        AddHandler ribbonItems.ButtonSettings.ExecuteEvent, Sub(sender, e) Call ShowPage(mzkitSettings)
+        AddHandler ribbonItems.ButtonSettings.ExecuteEvent, AddressOf ShowSettings
         AddHandler ribbonItems.ButtonMzSearch.ExecuteEvent, Sub(sender, e) Call ShowPage(mzkitSearch)
-        AddHandler ribbonItems.ButtonRsharp.ExecuteEvent, Sub(sender, e) Call ShowPage(mzkitRsharpScripting)
+        AddHandler ribbonItems.ButtonRsharp.ExecuteEvent, AddressOf showRTerm
 
         AddHandler ribbonItems.ButtonDropA.ExecuteEvent, Sub(sender, e) ShowPage(mzkitTool)
         AddHandler ribbonItems.ButtonDropB.ExecuteEvent, Sub(sender, e) ShowPage(mzkitCalculator)
@@ -149,7 +164,7 @@ Public Class frmMain
 
         AddHandler ribbonItems.ButtonCalculatorExport.ExecuteEvent, Sub(sender, e) Call mzkitCalculator.ExportToolStripMenuItem_Click()
         AddHandler ribbonItems.ButtonExactMassSearchExport.ExecuteEvent, Sub(sender, e) Call mzkitTool.ExportExactMassSearchTable()
-        AddHandler ribbonItems.ButtonSave.ExecuteEvent, Sub(sender, e) Call saveCacheList()
+        AddHandler ribbonItems.ButtonSave.ExecuteEvent, Sub(sender, e) Call saveCurrentFile()
         AddHandler ribbonItems.ButtonNetworkExport.ExecuteEvent, Sub(sender, e) Call mzkitMNtools.saveNetwork()
         AddHandler ribbonItems.ButtonFormulaSearchExport.ExecuteEvent, Sub(sender, e) Call mzkitSearch.SaveSearchResultTable()
 
@@ -159,15 +174,218 @@ Public Class frmMain
         AddHandler ribbonItems.ButtonExportImage.ExecuteEvent, Sub(sender, e) Call mzkitTool.SaveImageToolStripMenuItem_Click()
         AddHandler ribbonItems.ButtonExportMatrix.ExecuteEvent, Sub(sender, e) Call mzkitTool.SaveMatrixToolStripMenuItem_Click()
 
+        AddHandler ribbonItems.ButtonLayout1.ExecuteEvent, Sub(sender, e) Call mzkitTool.SaveImageToolStripMenuItem_Click()
+        AddHandler ribbonItems.ButtonLayout2.ExecuteEvent, Sub(sender, e) Call mzkitTool.SaveMatrixToolStripMenuItem_Click()
+
+        AddHandler ribbonItems.ButtonShowStartPage.ExecuteEvent, AddressOf showStartPage
+        AddHandler ribbonItems.ButtonShowLogWindow.ExecuteEvent, AddressOf showLoggingWindow
+
+        AddHandler ribbonItems.ButtonShowExplorer.ExecuteEvent, AddressOf ShowExplorer
+        AddHandler ribbonItems.ButtonShowSearchList.ExecuteEvent, AddressOf ShowSearchList
+        AddHandler ribbonItems.ButtonShowProperties.ExecuteEvent, AddressOf ShowProperties
+
+        AddHandler ribbonItems.ButtonShowPlotViewer.ExecuteEvent, Sub(sender, e) Call mzkitTool.ShowTabPage(mzkitTool.TabPage5)
+        AddHandler ribbonItems.ButtonShowMatrixViewer.ExecuteEvent, Sub(sender, e) Call mzkitTool.ShowTabPage(mzkitTool.TabPage6)
+
+        AddHandler ribbonItems.ButtonRunScript.ExecuteEvent, AddressOf RunCurrentScript
+        AddHandler ribbonItems.ButtonSaveScript.ExecuteEvent, AddressOf saveCurrentScript
+
+        AddHandler ribbonItems.HelpButton.ExecuteEvent, AddressOf showHelp
+
         _uiCollectionChangedEvent = New UICollectionChangedEvent()
+
+        MyApplication.RegisterHost(Me)
 
         InitSpinner()
         InitializeFormulaProfile()
     End Sub
 
-    Private Sub saveCacheList()
-        mzkitTool.TreeView1.SaveRawFileCache
-        ToolStripStatusLabel1.Text = "The raw file cache data was saved!"
+    Private Sub showHelp(sender As Object, e As ExecuteEventArgs)
+        For Each dir As String In {App.HOME, $"{App.HOME}/docs", $"{App.HOME}/../", $"{App.HOME}/../docs/"}
+            If $"{dir}/readme.pdf".FileExists Then
+                Call Process.Start($"{dir}/readme.pdf")
+            End If
+        Next
+
+        Me.showStatusMessage("Manul pdf file is missing...", My.Resources.StatusAnnotations_Warning_32xLG_color)
+    End Sub
+
+    Private Sub RunCurrentScript(sender As Object, e As ExecuteEventArgs)
+        Dim active = dockPanel.ActiveDocument
+
+        If Not active Is Nothing AndAlso TypeOf CObj(active) Is frmRScriptEdit Then
+            Dim editor = DirectCast(CObj(active), frmRScriptEdit)
+            Dim script As String = editor.script.FastColoredTextBox1.Text
+            Dim result As Object
+
+            Using buffer As New MemoryStream
+                Using writer As New StreamWriter(buffer)
+                    MyApplication.REngine.RedirectOutput(writer, OutputEnvironments.Html)
+
+                    If editor.scriptFile.StringEmpty Then
+                        result = MyApplication.REngine.Evaluate(script)
+                    Else
+                        Call script.SaveTo(editor.scriptFile)
+                        result = MyApplication.REngine.Source(editor.scriptFile)
+                    End If
+
+                    writer.Flush()
+                    RtermPage.Routput.AppendText(Encoding.UTF8.GetString(buffer.ToArray) & vbCrLf)
+                End Using
+
+                If TypeOf result Is Message AndAlso DirectCast(result, Message).level = MSG_TYPES.ERR Then
+                    Dim err As Message = result
+
+                    RtermPage.Routput.AppendText(err.ToString & vbCrLf)
+
+                    For i As Integer = 0 To err.message.Length - 1
+                        RtermPage.Routput.AppendText((i + 1) & ". " & err.message(i) & vbCrLf)
+                    Next
+
+                    RtermPage.Routput.AppendText(vbCrLf)
+
+                    For Each stack In err.environmentStack
+                        RtermPage.Routput.AppendText(stack.ToString & vbCrLf)
+                    Next
+
+                    RtermPage.Routput.AppendText(vbCrLf)
+                End If
+            End Using
+
+            RtermPage.Show(dockPanel)
+            RtermPage.DockState = DockState.Document
+        End If
+    End Sub
+
+    Dim scriptFiles As New List(Of frmRScriptEdit)
+
+    Public Sub CreateNewScript(sender As Object, e As ExecuteEventArgs)
+        Dim newScript As New frmRScriptEdit
+
+        newScript.Show(dockPanel)
+        newScript.DockState = DockState.Document
+        newScript.Text = "New R# Script"
+
+        scriptFiles.Add(newScript)
+
+        Me.Text = $"BioNovoGene Mzkit [{newScript.Text}]"
+    End Sub
+
+    Private Sub showRTerm(sender As Object, e As ExecuteEventArgs)
+        RtermPage.Show(dockPanel)
+        RtermPage.DockState = DockState.Document
+
+        Me.Text = $"BioNovoGene Mzkit [{RtermPage.Text}]"
+    End Sub
+
+    Private Sub ShowSettings(sender As Object, e As ExecuteEventArgs)
+        settingsPage.Show(dockPanel)
+        settingsPage.DockState = DockState.Document
+
+        Me.Text = $"BioNovoGene Mzkit [{settingsPage.Text}]"
+    End Sub
+
+    Private Sub ShowExplorer(sender As Object, e As ExecuteEventArgs)
+        fileExplorer.Show(dockPanel)
+        fileExplorer.DockState = DockState.DockLeft
+    End Sub
+
+    Private Sub ShowSearchList(sender As Object, e As ExecuteEventArgs)
+        searchList.Show(dockPanel)
+        searchList.DockState = DockState.DockLeft
+    End Sub
+
+    Private Sub ShowProperties(sender As Object, e As ExecuteEventArgs)
+        mzkitTool.ShowPropertyWindow()
+    End Sub
+
+    Private Sub showLoggingWindow(sender As Object, e As ExecuteEventArgs)
+        output.Show(dockPanel)
+        output.DockState = DockState.DockBottom
+    End Sub
+
+    Private Sub showStartPage(sender As Object, e As ExecuteEventArgs)
+        If Not Globals.CheckFormOpened(startPage) Then
+            startPage = New frmStartPage
+        End If
+
+        startPage.Show(dockPanel)
+        startPage.DockState = DockState.Document
+
+        Me.Text = $"BioNovoGene Mzkit [{startPage.Text}]"
+    End Sub
+
+    Private Sub saveCurrentScript()
+        Dim active = dockPanel.ActiveDocument
+
+        If Not active Is Nothing AndAlso TypeOf CObj(active) Is frmRScriptEdit Then
+            Call SaveScript(DirectCast(CObj(active), frmRScriptEdit))
+        End If
+    End Sub
+
+    Public Sub SaveScript(script As frmRScriptEdit)
+        If script.scriptFile.StringEmpty Then
+            Using save As New SaveFileDialog With {.Filter = "R# script file(*.R)|*.R"}
+
+                If save.ShowDialog = DialogResult.OK Then
+                    script.scriptFile = save.FileName
+                    script.Save(save.FileName)
+                End If
+            End Using
+        Else
+            Call script.Save(script.scriptFile)
+        End If
+
+        If Not script.scriptFile.StringEmpty Then
+            Globals.AddRecentFileHistory(script.scriptFile)
+            Me.showStatusMessage($"Save R# script file at location {script.scriptFile.GetFullPath}!")
+        End If
+    End Sub
+
+    Private Sub saveCurrentFile()
+        Dim active = dockPanel.ActiveDocument
+
+        If Not active Is Nothing Then
+            If TypeOf CObj(active) Is frmSettings Then
+
+                Call DirectCast(CObj(active), frmSettings).mzkitSettings.SaveSettings()
+
+            ElseIf CObj(active).GetType.ImplementInterface(Of ISaveHandle) Then
+                Dim file As String = Nothing
+                Dim content As ContentType() = Nothing
+
+                If CObj(active).GetType.ImplementInterface(Of IFileReference) Then
+                    file = DirectCast(CObj(active), IFileReference).FilePath
+                    content = DirectCast(CObj(active), IFileReference).MimeType
+                End If
+
+                If file.StringEmpty Then
+                    Using save As New SaveFileDialog
+
+                        If Not content.IsNullOrEmpty Then
+                            save.Filter = content.Select(Function(a) $"{a.Name}(*{a.FileExt})|*{a.FileExt}").JoinBy("|")
+                        End If
+
+                        If save.ShowDialog = DialogResult.OK Then
+                            file = save.FileName
+                            Call DirectCast(CObj(active), ISaveHandle).Save(save.FileName)
+                        End If
+                    End Using
+                Else
+                    Call DirectCast(CObj(active), ISaveHandle).Save(file)
+                End If
+
+                If Not file.StringEmpty Then
+                    Globals.AddRecentFileHistory(file)
+                    Me.showStatusMessage($"Current file saved at {file.GetFullPath}!")
+                End If
+
+                Return
+            End If
+        End If
+
+        TreeView1.SaveRawFileCache
+        Me.showStatusMessage("The raw file cache data was saved!")
     End Sub
 
     Private Sub MoleculeNetworkingToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MoleculeNetworkingToolStripMenuItem.Click
@@ -196,19 +414,15 @@ Public Class frmMain
         Call New frmSplashScreen() With {.isAboutScreen = True, .TopMost = True}.Show()
     End Sub
 
-    Private Sub addPage(ParamArray pageList As Control())
-        For Each page As Control In pageList
-            Panel1.Controls.Add(page)
-            pages.Add(page)
-            page.Dock = DockStyle.Fill
-        Next
-    End Sub
-
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ' 20200829 因为有一组控件需要放置在这里
+        ' 所以这个基础的panel需要首先进行初始化
+        Call initializeVSPanel()
+
         InitRecentItems()
         ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
 
-        addPage(mzkitTool, mzkitSettings, mzkitSearch, mzkitCalculator, mzkitMNtools, mzkitRsharpScripting)
+        panelMain.addPage(mzkitTool, mzkitSearch, mzkitCalculator, mzkitMNtools)
         ShowPage(mzkitTool)
 
         mzkitTool.Ribbon_Load(Ribbon1)
@@ -224,7 +438,10 @@ Public Class frmMain
             ' Call Globals.Settings.ui.setColors(Ribbon1)
         End If
 
-        ToolStripStatusLabel1.Text = "Ready!"
+        MyApplication.host.startPage.Show(MyApplication.host.dockPanel)
+        MyApplication.InitializeREngine()
+
+        showStatusMessage("Ready!")
     End Sub
 
     Private Sub _uiCollectionChangedEvent_ChangedEvent(ByVal sender As Object, ByVal e As UICollectionChangedEventArgs)
@@ -255,14 +472,32 @@ Public Class frmMain
     '    AddHandler _uiCollectionChangedEvent.ChangedEvent, AddressOf _uiCollectionChangedEvent_ChangedEvent
     'End Sub
 
+    Sub showStatusMessage(message As String, Optional icon As Image = Nothing)
+        MyApplication.host.Invoke(
+            Sub()
+                If icon Is Nothing Then
+                    icon = My.Resources.preferences_system_notifications
+                End If
+
+                ToolStripStatusLabel1.Image = icon
+                ToolStripStatusLabel1.Text = message
+
+                Call MyApplication.LogText(message)
+            End Sub)
+    End Sub
+
     Private Sub InitSpinner()
         Dim _spinner = ribbonItems.PPMSpinner
+
+        If Globals.Settings.viewer Is Nothing Then
+            Globals.Settings.viewer = New RawFileViewerSettings
+        End If
 
         _spinner.MaxValue = 30D
         _spinner.MinValue = 0
         _spinner.Increment = 0.5D
         _spinner.DecimalPlaces = 1
-        _spinner.DecimalValue = 10D
+        _spinner.DecimalValue = Globals.Settings.viewer.XIC_ppm
 
         _spinner.TooltipTitle = "PPM"
         _spinner.TooltipDescription = "Enter ppm error for search feature by m/z."
@@ -273,8 +508,13 @@ Public Class frmMain
     Private Sub InitRecentItems()
         ' prepare list of recent items
         recentItems = New List(Of RecentItemsPropertySet)()
-        recentItems.Add(New RecentItemsPropertySet() With {.Label = "Recent item 1", .LabelDescription = "Recent item 1 description", .Pinned = True})
-        recentItems.Add(New RecentItemsPropertySet() With {.Label = "Recent item 2", .LabelDescription = "Recent item 2 description", .Pinned = False})
+
+        For Each file In Globals.Settings.recentFiles.SafeQuery
+            recentItems.Add(New RecentItemsPropertySet() With {
+                            .Label = file.FileName,
+                            .LabelDescription = $"Location at {file.ParentPath}",
+                            .Pinned = True})
+        Next
 
         ribbonItems.RecentItems.RecentItems = recentItems
     End Sub
@@ -341,4 +581,102 @@ Public Class frmMain
         }
         Globals.Settings.Save()
     End Sub
+
+#Region "vs2015"
+
+    Friend WithEvents dockPanel As New WeifenLuo.WinFormsUI.Docking.DockPanel
+    Private vS2015LightTheme1 As New WeifenLuo.WinFormsUI.Docking.VS2015LightTheme
+    Private vsToolStripExtender1 As New WeifenLuo.WinFormsUI.Docking.VisualStudioToolStripExtender
+    Private ReadOnly _toolStripProfessionalRenderer As ToolStripRenderer = New ToolStripProfessionalRenderer()
+
+    Friend fileExplorer As New frmFileTree
+    Friend searchList As New frmSearchList
+    Friend output As New DummyOutputWindow
+    Friend WithEvents panelMain As New frmDockDocument
+    Friend startPage As New frmStartPage
+    Friend settingsPage As New frmSettings
+    Friend RtermPage As New frmRsharp
+
+    Private Sub initializeVSPanel()
+        PanelBase.Controls.Add(Me.dockPanel)
+
+        Me.dockPanel.Dock = DockStyle.Fill
+        Me.dockPanel.DockBackColor = System.Drawing.Color.FromArgb(CType(CType(41, Byte), Integer), CType(CType(57, Byte), Integer), CType(CType(85, Byte), Integer))
+        Me.dockPanel.DockBottomPortion = 150.0R
+        Me.dockPanel.DockLeftPortion = 200.0R
+        Me.dockPanel.DockRightPortion = 200.0R
+        Me.dockPanel.DockTopPortion = 150.0R
+        Me.dockPanel.Font = New System.Drawing.Font("Tahoma", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World, CType(0, Byte))
+
+        Me.dockPanel.Name = "dockPanel"
+        Me.dockPanel.RightToLeftLayout = True
+        Me.dockPanel.ShowAutoHideContentOnHover = False
+
+        Me.dockPanel.TabIndex = 0
+
+        Call SetSchema(Nothing, Nothing)
+
+        fileExplorer.Show(dockPanel)
+        fileExplorer.DockState = DockState.DockLeftAutoHide
+        TreeView1 = fileExplorer.treeView1
+
+        searchList.Show(dockPanel)
+        searchList.DockState = DockState.DockLeftAutoHide
+
+        output.Show(dockPanel)
+        output.DockState = DockState.DockBottomAutoHide
+
+        startPage.Show(dockPanel)
+        startPage.DockState = DockState.Document
+
+        panelMain.Show(dockPanel)
+        panelMain.DockState = DockState.Document
+
+        settingsPage.Show(dockPanel)
+        settingsPage.DockState = DockState.Hidden
+
+        RtermPage.Show(dockPanel)
+        RtermPage.DockState = DockState.Hidden
+
+        MyApplication.RegisterOutput(output)
+    End Sub
+
+    Public Sub ShowMzkitToolkit()
+        panelMain.Show(dockPanel)
+        panelMain.DockState = DockState.Document
+    End Sub
+
+    Private Sub SetSchema(ByVal sender As Object, ByVal e As EventArgs)
+        'If sender Is menuItemSchemaVS2005 Then
+        '    dockPanel.Theme = vS2005Theme1
+        '    EnableVSRenderer(VisualStudioToolStripExtender.VsVersion.Vs2005, vS2005Theme1)
+        'ElseIf sender Is menuItemSchemaVS2015Blue Then
+        '    dockPanel.Theme = vS2015BlueTheme1
+        '    EnableVSRenderer(VisualStudioToolStripExtender.VsVersion.Vs2015, vS2015BlueTheme1)
+        'ElseIf sender Is menuItemSchemaVS2015Light Then
+        dockPanel.Theme = vS2015LightTheme1
+        EnableVSRenderer(VisualStudioToolStripExtender.VsVersion.Vs2015, vS2015LightTheme1)
+        'ElseIf sender Is menuItemSchemaVS2015Dark Then
+        'dockPanel.Theme = vS2015DarkTheme1
+        'EnableVSRenderer(VisualStudioToolStripExtender.VsVersion.Vs2015, vS2015DarkTheme1)
+        'End If
+
+        If dockPanel.Theme.ColorPalette IsNot Nothing Then
+            StatusStrip.BackColor = dockPanel.Theme.ColorPalette.MainWindowStatusBarDefault.Background
+        End If
+    End Sub
+
+    Private Sub EnableVSRenderer(ByVal version As VisualStudioToolStripExtender.VsVersion, ByVal theme As ThemeBase)
+        ' vsToolStripExtender1.SetStyle(MainMenu, version, theme)
+        ' vsToolStripExtender1.SetStyle(ToolBar, version, theme)
+        vsToolStripExtender1.SetStyle(StatusStrip, version, theme)
+    End Sub
+
+    Private Sub frmMain_ResizeEnd(sender As Object, e As EventArgs) Handles Me.ResizeEnd
+        Ribbon1.Refresh()
+    End Sub
+
+
+#End Region
+
 End Class

@@ -4,9 +4,9 @@
 		<Command Name="cmdButtonNew"
 				 Id="1001"
 				 LabelTitle="&amp;New"
-				 LabelDescription="New Description"
+				 LabelDescription="New R# script file"
 				 TooltipTitle="New (Ctrl+N)"
-				 TooltipDescription="Create a new image.">
+				 TooltipDescription="Create a R# script file for mzkit automation.">
 			<Command.LargeImages>
 				<Image>Res/New32.bmp</Image>
 			</Command.LargeImages>
@@ -18,23 +18,23 @@
 		<Command Name="cmdButtonOpenRaw"
 				 Id="1002"
 				 LabelTitle="Open"
-				 LabelDescription="Open Description"
+				 LabelDescription="Open A file"
 				 TooltipTitle="Open (Ctrl+O)"
-				 TooltipDescription="Open an existing image.">
+				 TooltipDescription="Open an existing raw data file or R# script file.">
 			<Command.LargeImages>
-				<Image>Res/folder-drag-accept.png</Image>
+				<Image>Res/folder-publicshare.png</Image>
 			</Command.LargeImages>
 			<Command.SmallImages>
-				<Image>Res/folder-drag-accept.png</Image>
+				<Image>Res/folder-publicshare.png</Image>
 			</Command.SmallImages>
 		</Command>
 
 		<Command Name="cmdButtonSave"
 				 Id="1003"
 				 LabelTitle="Save"
-				 LabelDescription="Save Description"
+				 LabelDescription="Save Current File"
 				 TooltipTitle="Save (Ctrl+S)"
-				 TooltipDescription="Save the current image.">
+				 TooltipDescription="Save the current Script File or Application Configuration.">
 			<Command.LargeImages>
 				<Image>Res/media-flash.png</Image>
 			</Command.LargeImages>
@@ -84,8 +84,7 @@
 		<Command Name="cmdButtonDropA"
 			 Id="1008"
 			 LabelTitle="Mzkit Raw Data File Viewer"
-			 LabelDescription="Sub button A"
-			TooltipTitle="Drop A">
+			 LabelDescription="View MSMS and Chromatography data in MzXML/mzML/Mgf raw file data.">
 			<Command.LargeImages>
 				<Image>Res/application-x-object.png</Image>
 			</Command.LargeImages>
@@ -94,8 +93,7 @@
 		<Command Name="cmdButtonDropB"
 			 Id="1009"
 			 LabelTitle="M/z Calculator"
-			 LabelDescription="Sub button B"
-			TooltipTitle="Drop B">
+			 LabelDescription="Calculate Precursor M/z Information for a given exact mass value.">
 			<Command.LargeImages>
 				<Image>Res/libreoffice-math.png</Image>
 			</Command.LargeImages>
@@ -104,8 +102,7 @@
 		<Command Name="cmdButtonDropC"
 			 Id="1010"
 			 LabelTitle="Formula Search Tool"
-			 LabelDescription="Sub button C"
-		   TooltipTitle="Drop C">
+			 LabelDescription="Run De-Novo Formula Search for a specific given exact mass value.">
 			<Command.LargeImages>
 				<Image>Res/document-print-preview.png</Image>
 			</Command.LargeImages>
@@ -114,8 +111,7 @@
 		<Command Name="cmdButtonDropD"
 			 Id="5010"
 			 LabelTitle="Molecule Networking"
-			 LabelDescription="Sub button C"
-		   TooltipTitle="Drop C">
+			 LabelDescription="View network data created from the Spectrum similarity matrix calculation.">
 			<Command.LargeImages>
 				<Image>Res/preferences-system-sharing.png</Image>
 			</Command.LargeImages>
@@ -160,6 +156,23 @@
 		</Command>
 
 
+		<Command Name="cmdButtonImportsRawFiles"
+				 Id="1017"
+				 LabelTitle="Imports Raw Files in Batch"
+				 LabelDescription="Imports Raw Files"
+				 TooltipTitle="Imports Raw Data"
+				 TooltipDescription="Imports Raw Data Files into the Raw Data File Viewer.">
+			<Command.LargeImages>
+				<Image>Res/folder-pictures.png</Image>
+			</Command.LargeImages>
+			<Command.SmallImages>
+				<Image>Res/folder-pictures.png</Image>
+			</Command.SmallImages>
+		</Command>
+
+
+
+
 		<Command Name="cmdTabAbout"
 					 Id="1020"
 					 LabelTitle="About">
@@ -193,23 +206,24 @@
 
 		<Command Name="cmdTabDesign"
 				 Id="1032"
-				 LabelTitle="Design">
+				 LabelTitle="Mzkit Data Tools">
 		</Command>
 
 		<Command Name="cmdTabLayout"
 				 Id="1035"
-				 LabelTitle="Layout">
+				 LabelTitle="Data Viewer">
 		</Command>
 
 		<Command Name="cmdGroupDesign"
 				 Id="1036"
-				 LabelTitle="EEE">
+				 LabelTitle="Viewer Config">
 		</Command>
 
 		<Command Name="cmdGroupLayout"
 				 Id="1037"
-				 LabelTitle="ABC">
+				 LabelTitle="Viewer Actions">
 		</Command>
+
 
 
 		<Command Name="cmdButtonDesign1"
@@ -238,23 +252,23 @@
 
 		<Command Name="cmdButtonLayout1"
 				 Id="1043"
-				 LabelTitle="Layout 1">
+				 LabelTitle="Snapshot">
 			<Command.LargeImages>
-				<Image>Res/DropA32.bmp</Image>
+				<Image>Res/applets-screenshooter.png</Image>
 			</Command.LargeImages>
 		</Command>
 
 		<Command Name="cmdButtonLayout2"
 				 Id="1044"
-				 LabelTitle="Layout 2">
+				 LabelTitle="Save Matrix">
 			<Command.LargeImages>
-				<Image>Res/DropB32.bmp</Image>
+				<Image>Res/excel-icon.png</Image>
 			</Command.LargeImages>
 		</Command>
 
 		<Command Name="cmdGroupFileActions"
 				 Id="1045"
-				 LabelTitle="Process Raw File">
+				 LabelTitle="File Operations">
 		</Command>
 
 		<Command Name="cmdGroupToolsActions"
@@ -312,18 +326,21 @@
 
 		<Command Name="cmdTabCalculator"
 				 Id="1062"
-				 LabelTitle="Design">
+				 LabelTitle="Calculator Result">
 		</Command>
 
 		<Command Name="cmdGroupCalculator"
 				 Id="1063"
-				 LabelTitle="EEE">
+				 LabelTitle="Result Data">
 		</Command>
 
 
 		<Command Name="cmdButtonCalculatorExport"
 					Id="1064"
-					LabelTitle="Export Result Table">
+					LabelTitle="Export"
+					LabelDescription="Save M/Z Calculation result to Table File."
+		 TooltipTitle="Save Matrix"
+		 TooltipDescription="Save M/Z Calculation result to Table File.">
 			<Command.LargeImages>
 				<Image>Res/excel-icon.png</Image>
 			</Command.LargeImages>
@@ -364,18 +381,18 @@
 
 		<Command Name="cmdTabNetwork"
 				 Id="1082"
-				 LabelTitle="Design">
+				 LabelTitle="Network">
 		</Command>
 
 		<Command Name="cmdGroupNetwork"
 				 Id="1083"
-				 LabelTitle="EEE">
+				 LabelTitle="Network Result">
 		</Command>
 
 
 		<Command Name="cmdButtonNetworkExport"
 					Id="1084"
-					LabelTitle="Export Network">
+					LabelTitle="Export">
 			<Command.LargeImages>
 				<Image>Res/excel-icon.png</Image>
 			</Command.LargeImages>
@@ -385,7 +402,7 @@
 			Id="1085"
 			LabelTitle="Render Network">
 			<Command.LargeImages>
-				<Image>Res/excel-icon.png</Image>
+				<Image>Res/image-tiff.png</Image>
 			</Command.LargeImages>
 		</Command>
 
@@ -398,18 +415,22 @@
 
 		<Command Name="cmdTabFormulaSearch"
 				 Id="1092"
-				 LabelTitle="Design">
+				 LabelTitle="Formula Result">
 		</Command>
 
 		<Command Name="cmdGroupFormulaSearch"
 				 Id="1093"
-				 LabelTitle="EEE">
+				 LabelTitle="Data">
 		</Command>
 
 
 		<Command Name="cmdButtonFormulaSearchExport"
 					Id="1094"
-					LabelTitle="Export Formula Search Result">
+					LabelTitle="Export"
+					LabelDescription="Export Formula Search Result"
+		 TooltipTitle="Save Formula Table"
+		 TooltipDescription="Export Formula Search Result to a given file"
+		 >
 			<Command.LargeImages>
 				<Image>Res/excel-icon.png</Image>
 			</Command.LargeImages>
@@ -420,16 +441,22 @@
 				 LabelTitle="EEE">
 		</Command>
 
-		<Command Name="cmdComboFormulaSearchProfile3" Id="1099">
+		<Command Name="cmdGroupExit"
+						 Id="1096"
+						 LabelTitle="Application Tools">
 		</Command>
 
+
+
+		<Command Name="cmdComboFormulaSearchProfile3" Id="1099">
+		</Command>
 
 		<Command Name="cmdButtonLicense" Id="1101" LabelTitle="View License Information">
 			<Command.LargeImages>
 				<Image>Res/baobab.png</Image>
 			</Command.LargeImages>
 		</Command>
-
+<!--
 		<Command Name="cmdCheckBoxXICRelative"
 		 Id="1103"
 		 LabelTitle="Relative XIC intensity">
@@ -440,7 +467,7 @@
 				<Image>Res/Save16.bmp</Image>
 			</Command.SmallImages>
 		</Command>
-
+-->
 
 		<Command Name="cmdButtonExportImage"
 		 Id="1104"
@@ -489,6 +516,140 @@
 			</Command.SmallImages>
 		</Command>
 
+		<Command Name="cmdButtonShowStartPage"
+			 Id="1108"
+			 LabelTitle="Start Page"
+			 LabelDescription="Show Start Page"
+			 TooltipTitle="Show Start Page"
+			 TooltipDescription="Show Start Page">
+			<Command.LargeImages>
+				<Image>Res/applications-utilities.png</Image>
+			</Command.LargeImages>
+			<Command.SmallImages>
+				<Image>Res/applications-utilities.png</Image>
+			</Command.SmallImages>
+		</Command>
+
+		<Command Name="cmdButtonShowLogWindow"
+					 Id="1109"
+					 LabelTitle="Logging"
+					 LabelDescription="Show Application Logging Output Window"
+					 TooltipTitle="Show Logging Output"
+					 TooltipDescription="Show Application Logging Output Window">
+			<Command.LargeImages>
+				<Image>Res/preferences-system-notifications.png</Image>
+			</Command.LargeImages>
+			<Command.SmallImages>
+				<Image>Res/preferences-system-notifications.png</Image>
+			</Command.SmallImages>
+		</Command>
+
+		<Command Name="cmdGroupShowViewer"
+				 Id="1110"
+				 LabelTitle="Viewers">
+		</Command>
+
+
+		<Command Name="cmdButtonShowPlotViewer"
+			 Id="1111"
+			 LabelTitle="Plot"
+			 LabelDescription="Show M/Z Plot Viewer"
+			TooltipTitle="Show M/Z Plot Viewer">
+			<Command.LargeImages>
+				<Image>Res/pix.png</Image>
+			</Command.LargeImages>
+		</Command>
+
+		<Command Name="cmdButtonShowMatrixViewer"
+					 Id="1112"
+					 LabelTitle="Matrix"
+					 LabelDescription="Show M/Z Data Matrix Viewer"
+					TooltipTitle="Show M/Z Data Matrix Viewer">
+			<Command.LargeImages>
+				<Image>Res/application-x-object.png</Image>
+			</Command.LargeImages>
+		</Command>
+
+
+
+		<Command Name="cmdGroupShowDockWindows"
+						 Id="1120"
+						 LabelTitle="Dock Windows">
+		</Command>
+
+
+		<Command Name="cmdButtonShowExplorer"
+			 Id="1121"
+			 LabelTitle="Explorer"
+			 LabelDescription="Show Raw File Explorer"
+			TooltipTitle="File Explorer">
+			<Command.LargeImages>
+				<Image>Res/folder-documents.png</Image>
+			</Command.LargeImages>
+		</Command>
+
+		<Command Name="cmdButtonShowSearchList"
+					 Id="1122"
+					 LabelTitle="Search Results"
+					 LabelDescription="Show Feature Search Result List"
+					TooltipTitle="Feature Search List">
+			<Command.LargeImages>
+				<Image>Res/document-print-preview.png</Image>
+			</Command.LargeImages>
+		</Command>
+
+
+		<Command Name="cmdButtonShowProperties"
+					 Id="1123"
+					 LabelTitle="Properties"
+					 LabelDescription="Show M/Z Data Properties Viewer"
+					TooltipTitle="M/Z Data Properties">
+			<Command.LargeImages>
+				<Image>Res/application-x-object.png</Image>
+			</Command.LargeImages>
+		</Command>
+
+
+
+
+		<Command Name="cmdTabGroupRscriptTools"
+	Id="1130"
+	LabelTitle="R# Scripting">
+		</Command>
+
+		<Command Name="cmdTabRscriptTools"
+				 Id="1131"
+				 LabelTitle="R#">
+		</Command>
+
+		<Command Name="cmdGroupRscript"
+				 Id="1132"
+				 LabelTitle="Scripting">
+		</Command>
+
+
+		<Command Name="cmdButtonRunScript"
+					Id="1133"
+					LabelTitle="Run"
+					LabelDescription="Run R# Script"
+		 TooltipTitle="Run"
+		 TooltipDescription="Run R# script for mzkit Automation">
+			<Command.LargeImages>
+				<Image>Res/gparted.png</Image>
+			</Command.LargeImages>
+		</Command>
+
+		<Command Name="cmdButtonSaveScript"
+					Id="1134"
+					LabelTitle="Save"
+					LabelDescription="Save R# Script"
+		 TooltipTitle="Save Script"
+		 TooltipDescription="Save R# script for mzkit Automation">
+			<Command.LargeImages>
+				<Image>Res/document-save.png</Image>
+			</Command.LargeImages>
+		</Command>
+
 	</Application.Commands>
 
 	<Application.Views>
@@ -498,7 +659,7 @@
 				<ContextMenu Name="ContextMenu">
 					<MenuGroup>
 						<Button CommandName="cmdButtonExportImage" />
-						<Button CommandName="cmdButtonExportMatrix" />					
+						<Button CommandName="cmdButtonExportMatrix" />
 					</MenuGroup>
 				</ContextMenu>
 			</ContextPopup.ContextMenus>
@@ -506,7 +667,7 @@
 				<ContextMap CommandName="cmdContextMap" ContextMenu="ContextMenu" />
 			</ContextPopup.ContextMaps>
 		</ContextPopup>
-		
+
 		<Ribbon>
 
 			<Ribbon.ContextualTabs>
@@ -515,9 +676,28 @@
 						<Group CommandName='cmdGroupDesign'>
 
 							<Spinner CommandName="cmdPPMSpinner" />
-							<CheckBox CommandName="cmdCheckBoxXICRelative" />
-							<Button CommandName='cmdButtonDesign3' />
+						<!--	<CheckBox CommandName="cmdCheckBoxXICRelative" />-->
+							<!-- <Button CommandName='cmdButtonDesign3' /> -->
 						</Group>
+
+
+						<Group CommandName='cmdGroupShowViewer' SizeDefinition='TwoButtons'>
+
+							<Button CommandName='cmdButtonShowPlotViewer' />
+							<Button CommandName='cmdButtonShowMatrixViewer' />
+						</Group>
+
+
+						<Group CommandName='cmdGroupShowDockWindows' SizeDefinition='ThreeButtons'>
+
+							<Button CommandName='cmdButtonShowExplorer' />
+							<Button CommandName='cmdButtonShowSearchList' />
+							<Button CommandName='cmdButtonShowProperties' />
+						</Group>
+
+
+
+
 					</Tab>
 					<Tab CommandName='cmdTabLayout'>
 						<Group CommandName='cmdGroupLayout' SizeDefinition='TwoButtons'>
@@ -530,14 +710,27 @@
 
 				<TabGroup CommandName='cmdTabGroupCalculatorTools'>
 					<Tab CommandName='cmdTabCalculator'>
-						<Group CommandName='cmdGroupCalculator' SizeDefinition='TwoButtons'>
+						<Group CommandName='cmdGroupCalculator' SizeDefinition='OneButton'>
 							<Button CommandName='cmdButtonCalculatorExport' />
-							<Button CommandName='cmdButtonLayout2' />
+
 						</Group>
 					</Tab>
 				</TabGroup>
 
 
+
+				<TabGroup CommandName='cmdTabGroupRscriptTools'>
+					<Tab CommandName='cmdTabRscriptTools'>
+						<Group CommandName='cmdGroupRscript' SizeDefinition='TwoButtons'>
+	<Button CommandName='cmdButtonSaveScript' />						
+						<Button CommandName='cmdButtonRunScript' />
+												</Group>
+					</Tab>
+				</TabGroup>
+
+		
+				
+				
 				<TabGroup CommandName='cmdTabGroupExactMassSearchTools'>
 					<Tab CommandName='cmdTabExactMassSearch'>
 						<Group CommandName='cmdGroupExactMassSearch' SizeDefinition='TwoButtons'>
@@ -559,9 +752,9 @@
 
 				<TabGroup CommandName='cmdTabGroupFormulaSearchTools'>
 					<Tab CommandName='cmdTabFormulaSearch'>
-						<Group CommandName='cmdGroupFormulaSearch' SizeDefinition='TwoButtons'>
+						<Group CommandName='cmdGroupFormulaSearch' SizeDefinition='OneButton'>
 							<Button CommandName='cmdButtonFormulaSearchExport' />
-							<Button CommandName='cmdButtonNetworkRender' />
+
 						</Group>
 						<!--
 						<Group CommandName='cmdGroupFormulaSearchConfig2'>
@@ -602,8 +795,10 @@
 						<Button CommandName="cmdButtonOpenRaw" />
 						<Button CommandName="cmdButtonSave" />
 					</Group>
-					<Group CommandName="cmdGroupExit" SizeDefinition="OneButton">
+					<Group CommandName="cmdGroupExit" SizeDefinition="ThreeButtons">
 						<Button CommandName="cmdButtonRsharp" />
+						<Button CommandName="cmdButtonShowStartPage" />
+						<Button CommandName="cmdButtonShowLogWindow" />
 					</Group>
 				</Tab>
 
@@ -622,10 +817,10 @@
 					</Tab.ScalingPolicy>
 
 					<!-- useful part -->
-					<Group CommandName="cmdGroupToolsActions" SizeDefinition="ThreeButtons">
+					<Group CommandName="cmdGroupToolsActions" SizeDefinition="TwoButtons">
 						<Button CommandName="cmdButtonMzCalculator" />
 						<Button CommandName="cmdButtonMzSearch" />
-						<Button CommandName="cmdButtonSave" />
+						<!-- <Button CommandName="cmdButtonSave" /> -->
 					</Group>
 
 				</Tab>
@@ -645,10 +840,9 @@
 					</Tab.ScalingPolicy>
 
 					<!-- useful part -->
-					<Group CommandName="cmdGroupAboutActions" SizeDefinition="ThreeButtons">
+					<Group CommandName="cmdGroupAboutActions" SizeDefinition="TwoButtons">
 						<Button CommandName="cmdButtonAbout" />
 						<Button CommandName="cmdButtonBioDeep" />
-						<Button CommandName="cmdButtonSettings" />
 					</Group>
 
 				</Tab>
@@ -665,13 +859,14 @@
 
 					<MenuGroup CommandName='cmdMenuGroupFile'>
 						<Button CommandName='cmdButtonNew' />
-
+						<Button CommandName="cmdButtonImportsRawFiles" />
+						
 						<DropDownButton CommandName='cmdButtonToolkits'>
 							<MenuGroup Class='MajorItems'>
 								<Button CommandName='cmdButtonDropA' />
 								<Button CommandName='cmdButtonDropB' />
 								<Button CommandName='cmdButtonDropC' />
-								<Button CommandName='cmdButtonDropD' />								
+								<Button CommandName='cmdButtonDropD' />
 							</MenuGroup>
 						</DropDownButton>
 
@@ -680,7 +875,7 @@
 
 					<MenuGroup>
 
-
+						<Button CommandName="cmdButtonSettings" />
 
 						<SplitButton>
 
