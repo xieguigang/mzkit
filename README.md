@@ -118,6 +118,12 @@ Export the formula search result just like other data that we've introduced befo
 
 # Credits
 
-This open source mass spectrometry data toolkit is provided by the R&D laboratory from BioNovoGene corporation.
+This open source mass spectrometry data toolkit is developed at the BioDeep R&D laboratory and provided to you by BioNovoGene corporation.
 
 ![](docs/BioNovoGene.png)
+
+<style type="text/css">
+#content-wrapper {
+    background-color: white !important;    
+}
+</style>
