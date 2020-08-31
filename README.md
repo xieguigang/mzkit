@@ -9,7 +9,7 @@
 	* 1.1. [Imports raw data file](#Importsrawdatafile)
 	* 1.2. [Search Feature](#SearchFeature)
 	* 1.3. [XIC plot](#XICplot)
-    
+
 		* 1.3.1. [XIC overlay](#XICoverlay)
 
 	* 1.4. [TIC plot](#TICplot)
@@ -110,6 +110,8 @@ You can search for the formula of one feature in your raw data file with mzkit f
 Once the mzkit have been done of formula search, then all of the matched formula will be shown on the result page. there are some information about the each formula search result is listed in the result table, includes: formula result, its corresponding exact mass value, mass error of the searched m/z and the m/z calculated from the exact mass, ion charge value from your raw file, precursor type information, etc.
 
 ![](docs/manual/de-novo-formulas.png)
+
+<div style="page-break-after:always;"></div>
 
 You also can search of the formula by input any ``m/z`` value in the input box of the search result page. Click on the formula then you could submit the candidate formula into the biodeep database for search of the metabolite information.
 
