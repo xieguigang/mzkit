@@ -9,11 +9,15 @@
 	* 1.1. [Imports raw data file](#Importsrawdatafile)
 	* 1.2. [Search Feature](#SearchFeature)
 	* 1.3. [XIC plot](#XICplot)
+
 		* 1.3.1. [XIC overlay](#XICoverlay)
+
 	* 1.4. [TIC plot](#TICplot)
 	* 1.5. [View Mass spectra](#ViewMassspectra)
 	* 1.6. [Save Plot and Export matrix](#SavePlotandExportmatrix)
+
 		* 1.6.1. [Export XIC](#ExportXIC)
+        
 * 2. [Data Annotations](#DataAnnotations)
 	* 2.1. [Formula search](#Formulasearch)
 	* 2.2. [Export Formula Search Result](#ExportFormulaSearchResult)
