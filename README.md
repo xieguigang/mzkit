@@ -6,6 +6,8 @@ Mzkit is an open source raw data file toolkit for mass spectrometry data analysi
 
 ![](docs/manual/main.png)
 
+<div style="page-break-after:always;"></div>
+
 # Instruction
 
 ## Imports raw data file
