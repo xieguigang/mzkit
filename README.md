@@ -82,3 +82,10 @@ You also can search of the formula by input any ``m/z`` value in the input box o
 ![](docs/manual/export-formula-list.png)
 
 Export the formula search result just like other data that we've introduced before, just click on the ``Formula Result`` tab page and then click on the Export button. this command will let you save the formula search result into a specific Excel table file. 
+
+
+
+
+<script type="text/javascript">
+document.getElementById("sidebar").style.display = "none";
+</script>
