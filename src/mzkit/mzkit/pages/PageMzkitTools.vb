@@ -220,8 +220,6 @@ Public Class PageMzkitTools
         AddHandler host.fileExplorer.SmallMoleculeToolStripMenuItem.Click, AddressOf SmallMoleculeToolStripMenuItem_Click
         AddHandler host.fileExplorer.NatureProductToolStripMenuItem.Click, AddressOf NatureProductToolStripMenuItem_Click
         AddHandler host.fileExplorer.GeneralFlavoneToolStripMenuItem.Click, AddressOf GeneralFlavoneToolStripMenuItem_Click
-
-        AddHandler host.fileExplorer.DeleteFileToolStripMenuItem.Click, AddressOf DeleteFileToolStripMenuItem_Click
     End Sub
 
     Dim currentMatrix As [Variant](Of ms2(), ChromatogramTick())
@@ -272,7 +270,7 @@ Public Class PageMzkitTools
         End If
     End Sub
 
-    Private Sub setCurrentFile()
+    Public Sub setCurrentFile()
         If TreeView1.Nodes.Count = 0 Then
             MyApplication.host.showStatusMessage("No raw file opened.")
             Return
@@ -444,23 +442,6 @@ Public Class PageMzkitTools
     Private Sub MS2ToolStripMenuItem_Click(sender As Object, e As EventArgs)
         MyApplication.host.fileExplorer.MS2ToolStripMenuItem.Checked = Not MyApplication.host.fileExplorer.MS2ToolStripMenuItem.Checked
         applyLevelFilter()
-    End Sub
-
-    Private Sub DeleteFileToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        Dim current = TreeView1.CurrentRawFile
-
-        If Not current.raw Is Nothing Then
-            If MessageBox.Show($"Going to remove the raw data file [{current.raw.source.FileName}]?", "Delete File", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) = DialogResult.OK Then
-                TreeView1.Nodes.Remove(current.tree)
-                TreeView1.SaveRawFileCache
-
-                Call setCurrentFile()
-            End If
-        Else
-            MyApplication.host.showStatusMessage("No raw file for removes!", My.Resources.StatusAnnotations_Warning_32xLG_color)
-        End If
-
-        MyApplication.host.ToolStripStatusLabel2.Text = TreeView1.GetTotalCacheSize
     End Sub
 
     Public Sub SearchByMz(text As String)
