@@ -171,15 +171,15 @@ Public Class frmFileTree
     End Sub
 
     Private Sub treeView1_BeforeCollapse(sender As Object, e As TreeViewCancelEventArgs) Handles treeView1.BeforeCollapse
-        e.Node.Nodes.Clear()
-        e.Node.Nodes.Add(New TreeNode With {.Text = "n/a"})
+        'e.Node.Nodes.Clear()
+        'e.Node.Nodes.Add(New TreeNode With {.Text = "n/a"})
     End Sub
 
     Private Sub treeView1_BeforeExpand(sender As Object, e As TreeViewCancelEventArgs) Handles treeView1.BeforeExpand
-        e.Node.Nodes.Clear()
+        'e.Node.Nodes.Clear()
 
-        For Each scan In DirectCast(e.Node.Tag, Raw).scans
-            e.Node.Nodes.Add(New TreeNode With {.Tag = scan.id, .Text = scan.id, .Checked = e.Node.Checked})
-        Next
+        'For Each scan In DirectCast(e.Node.Tag, Raw).scans
+        '    e.Node.Nodes.Add(New TreeNode With {.Tag = scan.id, .Text = scan.id, .Checked = e.Node.Checked})
+        'Next
     End Sub
 End Class
