@@ -68,6 +68,12 @@ Namespace My
 
         Public Shared Sub InitializeREngine()
             _REngine = New RInterpreter
+
+            _REngine.LoadLibrary("base")
+            _REngine.LoadLibrary("utils")
+            _REngine.LoadLibrary("grDevice")
+            _REngine.LoadLibrary("math")
+
             _REngine.LoadLibrary(GetType(MyApplication))
         End Sub
 

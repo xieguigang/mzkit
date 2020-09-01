@@ -27,6 +27,28 @@ Namespace My
             Return table
         End Function
 
+        <ExportAPI("TIC")>
+        Public Shared Function TIC(file As Raw) As dataframe
+            Dim table As New dataframe With {.columns = New Dictionary(Of String, Array)}
+            Dim ms1 = file.scans.Where(Function(a) a.mz = 0).OrderBy(Function(a) a.rt).ToArray
+
+            table.columns("time") = ms1.Select(Function(a) a.rt).ToArray
+            table.columns("intensity") = ms1.Select(Function(a) a.TIC).ToArray
+
+            Return table
+        End Function
+
+        <ExportAPI("BPC")>
+        Public Shared Function BPC(file As Raw) As dataframe
+            Dim table As New dataframe With {.columns = New Dictionary(Of String, Array)}
+            Dim ms1 = file.scans.Where(Function(a) a.mz = 0).OrderBy(Function(a) a.rt).ToArray
+
+            table.columns("time") = ms1.Select(Function(a) a.rt).ToArray
+            table.columns("intensity") = ms1.Select(Function(a) a.BPC).ToArray
+
+            Return table
+        End Function
+
         ''' <summary>
         ''' Get a list of raw files that opened in current workspace
         ''' </summary>
