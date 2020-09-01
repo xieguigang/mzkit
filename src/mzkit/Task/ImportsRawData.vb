@@ -122,7 +122,9 @@ Public Class ImportsRawData
                     .id = name,
                     .mz = scan.precursorMz.value,
                     .rt = PeakMs2.RtInSecond(scan.retentionTime),
-                    .intensity = scan.basePeakIntensity,
+                    .BPC = scan.basePeakIntensity,
+                    .TIC = scan.totIonCurrent,
+                    .XIC = scan.precursorMz.precursorIntensity,
                     .polarity = Provider.ParseIonMode(scan.polarity),
                     .charge = scan.precursorMz.precursorCharge
                 }.DoCall(AddressOf nscans.Add)
@@ -202,7 +204,9 @@ Public Class ImportsRawData
                     .id = name,
                     .mz = parent.mz,
                     .rt = scan.scan_time,
-                    .intensity = parent.into,
+                    .BPC = parent.into,
+                    .XIC = parent.into,
+                    .TIC = parent.into,
                     .polarity = Provider.ParseIonMode(polarity)
                 }.DoCall(AddressOf nscans.Add)
 

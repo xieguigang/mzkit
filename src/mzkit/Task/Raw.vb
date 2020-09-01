@@ -78,7 +78,9 @@ Public Class ScanEntry
     Public Property mz As Double
     Public Property rt As Double
     Public Property charge As Double
-    Public Property intensity As Double
+    Public Property TIC As Double
+    Public Property BPC As Double
+    Public Property XIC As Double
     Public Property polarity As Integer
 
     Public Overrides Function ToString() As String
