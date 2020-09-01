@@ -192,6 +192,10 @@ Public Class frmMain
 
         AddHandler ribbonItems.HelpButton.ExecuteEvent, AddressOf showHelp
 
+        AddHandler ribbonItems.ButtonTIC.ExecuteEvent, Sub(sender, e) Call mzkitTool.TIC(isBPC:=False)
+        AddHandler ribbonItems.ButtonBPC.ExecuteEvent, Sub(sender, e) Call mzkitTool.TIC(isBPC:=True)
+        AddHandler ribbonItems.ButtonXIC.ExecuteEvent, AddressOf mzkitTool.ShowXICToolStripMenuItem_Click
+
         _uiCollectionChangedEvent = New UICollectionChangedEvent()
 
         MyApplication.RegisterHost(Me)

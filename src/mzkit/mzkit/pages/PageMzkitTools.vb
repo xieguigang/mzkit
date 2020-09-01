@@ -74,6 +74,7 @@ Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports mzkit.DockSample
 Imports mzkit.My
 Imports RibbonLib
+Imports RibbonLib.Controls.Events
 Imports RibbonLib.Interop
 Imports Task
 Imports WeifenLuo.WinFormsUI.Docking
@@ -308,7 +309,7 @@ Public Class PageMzkitTools
 
     Private Function rawTIC(raw As Raw, isBPC As Boolean) As NamedCollection(Of ChromatogramTick)
         Dim TIC As New NamedCollection(Of ChromatogramTick) With {
-            .name = $"TIC [{raw.source.FileName}]",
+            .name = $"{If(isBPC, "BPC", "TIC")} [{raw.source.FileName}]",
             .value = raw.scans _
                 .Where(Function(a) a.mz = 0R) _
                 .Select(Function(m)
@@ -327,7 +328,11 @@ Public Class PageMzkitTools
         Return TIC
     End Function
 
-    Private Sub ShowTICToolStripMenuItem_Click(sender As Object, e As EventArgs)
+    Public Sub ShowTICToolStripMenuItem_Click(sender As Object, e As EventArgs)
+        TIC(isBPC:=False)
+    End Sub
+
+    Public Sub TIC(isBPC As Boolean)
         Dim rawList As New List(Of Raw)
 
         For i As Integer = 0 To TreeView1.Nodes.Count - 1
@@ -360,7 +365,7 @@ Public Class PageMzkitTools
         Dim TICList As New List(Of NamedCollection(Of ChromatogramTick))
 
         For Each raw As Raw In rawList
-            TICList.Add(rawTIC(raw, False))
+            TICList.Add(rawTIC(raw, isBPC))
         Next
 
         showMatrix(TICList(Scan0).value, TICList(Scan0).name)
@@ -818,7 +823,7 @@ Public Class PageMzkitTools
         Next
     End Sub
 
-    Private Sub ShowXICToolStripMenuItem_Click(sender As Object, e As EventArgs)
+    Public Sub ShowXICToolStripMenuItem_Click(sender As Object, e As ExecuteEventArgs)
         If TypeOf TreeView1.SelectedNode.Tag Is Raw AndAlso MyApplication.host.fileExplorer.GetSelectedNodes.Count = 0 Then
             Return
         End If
