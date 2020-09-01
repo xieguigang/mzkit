@@ -33,6 +33,10 @@ using RibbonLib.Interop;
             public const uint cmdGroupLayout = 1037;
             public const uint cmdButtonLayout1 = 1043;
             public const uint cmdButtonLayout2 = 1044;
+            public const uint cmdGroupChromatography = 1141;
+            public const uint cmdButtonBPC = 1143;
+            public const uint cmdButtonTIC = 1144;
+            public const uint cmdButtonXIC = 1145;
             public const uint cmdTabGroupCalculatorTools = 1061;
             public const uint cmdTabCalculator = 1062;
             public const uint cmdGroupCalculator = 1063;
@@ -114,6 +118,10 @@ using RibbonLib.Interop;
         public RibbonGroup GroupLayout { get; private set; }
         public RibbonButton ButtonLayout1 { get; private set; }
         public RibbonButton ButtonLayout2 { get; private set; }
+        public RibbonGroup GroupChromatography { get; private set; }
+        public RibbonButton ButtonBPC { get; private set; }
+        public RibbonButton ButtonTIC { get; private set; }
+        public RibbonButton ButtonXIC { get; private set; }
         public RibbonTabGroup TabGroupCalculatorTools { get; private set; }
         public RibbonTab TabCalculator { get; private set; }
         public RibbonGroup GroupCalculator { get; private set; }
@@ -193,6 +201,10 @@ using RibbonLib.Interop;
             GroupLayout = new RibbonGroup(ribbon, Cmd.cmdGroupLayout);
             ButtonLayout1 = new RibbonButton(ribbon, Cmd.cmdButtonLayout1);
             ButtonLayout2 = new RibbonButton(ribbon, Cmd.cmdButtonLayout2);
+            GroupChromatography = new RibbonGroup(ribbon, Cmd.cmdGroupChromatography);
+            ButtonBPC = new RibbonButton(ribbon, Cmd.cmdButtonBPC);
+            ButtonTIC = new RibbonButton(ribbon, Cmd.cmdButtonTIC);
+            ButtonXIC = new RibbonButton(ribbon, Cmd.cmdButtonXIC);
             TabGroupCalculatorTools = new RibbonTabGroup(ribbon, Cmd.cmdTabGroupCalculatorTools);
             TabCalculator = new RibbonTab(ribbon, Cmd.cmdTabCalculator);
             GroupCalculator = new RibbonGroup(ribbon, Cmd.cmdGroupCalculator);

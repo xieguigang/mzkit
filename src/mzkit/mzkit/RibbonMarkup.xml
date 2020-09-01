@@ -649,6 +649,48 @@
 				<Image>Res/document-save.png</Image>
 			</Command.LargeImages>
 		</Command>
+		
+		
+		
+
+		<Command Name="cmdGroupChromatography"
+				 Id="1141"
+				 LabelTitle="Chromatography Data Plot">
+		</Command>
+
+		<Command Name="cmdButtonBPC"
+					Id="1143"
+					LabelTitle="BPC"
+					LabelDescription="Base Peak Chromatography"
+		 TooltipTitle="BPC plot"
+		 TooltipDescription="Base Peak Chromatography Data Plot">
+			<Command.LargeImages>
+				<Image>Res/gparted.png</Image>
+			</Command.LargeImages>
+		</Command>
+
+		<Command Name="cmdButtonTIC"
+					Id="1144"
+					LabelTitle="TIC"
+					LabelDescription="Total Ion Chromatography"
+		 TooltipTitle="TIC plot"
+		 TooltipDescription="Total ion Chromatography Data Plot">
+			<Command.LargeImages>
+				<Image>Res/document-save.png</Image>
+			</Command.LargeImages>
+		</Command>
+
+		<Command Name="cmdButtonXIC"
+					Id="1145"
+					LabelTitle="XIC"
+					LabelDescription="Selective Ion Chromatography"
+		 TooltipTitle="XIC plot"
+		 TooltipDescription="Selective Ion Chromatography Data Plot">
+			<Command.LargeImages>
+				<Image>Res/document-save.png</Image>
+			</Command.LargeImages>
+		</Command>
+
 
 	</Application.Commands>
 
@@ -703,6 +745,13 @@
 						<Group CommandName='cmdGroupLayout' SizeDefinition='TwoButtons'>
 							<Button CommandName='cmdButtonLayout1' />
 							<Button CommandName='cmdButtonLayout2' />
+						</Group>
+						
+						
+						<Group CommandName='cmdGroupChromatography' SizeDefinition='ThreeButtons'>
+							<Button CommandName='cmdButtonBPC' />
+							<Button CommandName='cmdButtonTIC' />
+							<Button CommandName='cmdButtonXIC' />
 						</Group>
 					</Tab>
 				</TabGroup>
