@@ -143,6 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="application\ApplicationEvents.vb" />
+    <Compile Include="application\RPackage.vb" />
     <Compile Include="forms\frmProgressSpinner.Designer.vb">
       <DependentUpon>frmProgressSpinner.vb</DependentUpon>
     </Compile>
