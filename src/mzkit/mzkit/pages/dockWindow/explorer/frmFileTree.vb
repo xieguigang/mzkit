@@ -169,4 +169,8 @@ Public Class frmFileTree
 
         lockCheckList = False
     End Sub
+
+    Private Sub treeView1_BeforeCollapse(sender As Object, e As TreeViewCancelEventArgs) Handles treeView1.BeforeCollapse
+
+    End Sub
 End Class

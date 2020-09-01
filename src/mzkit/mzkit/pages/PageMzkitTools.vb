@@ -152,7 +152,7 @@ Public Class PageMzkitTools
     Private Sub TreeView1_AfterSelect(sender As Object, e As TreeViewEventArgs)
         If TypeOf e.Node.Tag Is Task.Raw Then
 
-            Dim TIC = rawTIC(e.Node.Tag)
+            Dim TIC = rawTIC(e.Node.Tag, False)
 
             ' 原始文件节点
             ' 只显示当前文件的TIC图
@@ -179,7 +179,7 @@ Public Class PageMzkitTools
                             End Function) _
                     .ToArray
             }
-            Dim maxY As Double = selects.scans.Select(Function(a) a.intensity).Max
+            Dim maxY As Double = selects.scans.Select(Function(a) a.TIC).Max
 
             TIC.value = {
                 New ChromatogramTick With {.Time = selects.rtmin},
@@ -306,16 +306,16 @@ Public Class PageMzkitTools
         End If
     End Sub
 
-    Private Function rawTIC(raw As Raw) As NamedCollection(Of ChromatogramTick)
+    Private Function rawTIC(raw As Raw, isBPC As Boolean) As NamedCollection(Of ChromatogramTick)
         Dim TIC As New NamedCollection(Of ChromatogramTick) With {
-                  .name = $"TIC [{raw.source.FileName}]",
-                  .value = raw.scans _
-                      .Where(Function(a) a.mz = 0R) _
-                      .Select(Function(m)
-                                  Return New ChromatogramTick With {.Time = m.rt, .Intensity = m.intensity}
-                              End Function) _
-                      .ToArray
-              }
+            .name = $"TIC [{raw.source.FileName}]",
+            .value = raw.scans _
+                .Where(Function(a) a.mz = 0R) _
+                .Select(Function(m)
+                            Return New ChromatogramTick With {.Time = m.rt, .Intensity = If(isBPC, m.BPC, m.TIC)}
+                        End Function) _
+                .ToArray
+        }
 
         TIC.value = {
                 New ChromatogramTick With {.Time = raw.rtmin},
@@ -360,7 +360,7 @@ Public Class PageMzkitTools
         Dim TICList As New List(Of NamedCollection(Of ChromatogramTick))
 
         For Each raw As Raw In rawList
-            TICList.Add(rawTIC(raw))
+            TICList.Add(rawTIC(raw, False))
         Next
 
         showMatrix(TICList(Scan0).value, TICList(Scan0).name)
@@ -539,7 +539,7 @@ Public Class PageMzkitTools
                                 scan.mz.ToString("F4"),
                                 CInt(scan.rt),
                                 (scan.rt / 60).ToString("F2"),
-                                scan.intensity.ToString("G3"),
+                                scan.XIC.ToString("G3"),
                                 mode.M,
                                 mode.adduct,
                                 mode.charge,
@@ -555,7 +555,7 @@ Public Class PageMzkitTools
                                 scan.mz.ToString("F4"),
                                 CInt(scan.rt),
                                 (scan.rt / 60).ToString("F2"),
-                                scan.intensity.ToString("G3"),
+                                scan.XIC.ToString("G3"),
                                 mode.M,
                                 mode.adduct,
                                 mode.charge,
@@ -829,7 +829,7 @@ Public Class PageMzkitTools
         Dim plotTIC = getXICMatrix(raw, TreeView1.SelectedNode.Text, ppm, relativeInto)
         Dim maxY As Double = raw.scans _
             .Where(Function(a) a.mz > 0) _
-            .Select(Function(a) a.intensity) _
+            .Select(Function(a) a.XIC) _
             .Max
 
         If plotTIC.value.IsNullOrEmpty Then
@@ -905,7 +905,7 @@ Public Class PageMzkitTools
             .Select(Function(a)
                         Return New ChromatogramTick With {
                             .Time = a.rt,
-                            .Intensity = a.intensity
+                            .Intensity = a.XIC
                         }
                     End Function) _
             .ToArray
