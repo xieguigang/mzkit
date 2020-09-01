@@ -20,6 +20,7 @@ Namespace My
             table.columns(NameOf(Raw.rtmax)) = raws.Select(Function(a) a.rtmax).ToArray
             table.columns(NameOf(Raw.numOfScans)) = raws.Select(Function(a) a.numOfScans).ToArray
             table.columns(NameOf(Raw.cache)) = raws.Select(Function(a) a.cache).ToArray
+            table.columns("file_size") = raws.Select(Function(a) Lanudry(a.source.FileLength)).ToArray
 
             table.rownames = raws.Select(Function(a) a.source.FileName).ToArray
 
