@@ -82,7 +82,7 @@ Public Class PageMoleculeNetworking
                     {"scan", info.id},
                     {"m/z", info.mz},
                     {"rt", info.rt},
-                    {"intensity", info.intensity},
+                    {"intensity", info.XIC},
                     {"polarity", info.polarity},
                     {"charge", info.charge}
                 }})
@@ -97,7 +97,7 @@ Public Class PageMoleculeNetworking
         For Each node In g.vertex
             Dim info = nodeInfo(node.label)
 
-            DataGridView2.Rows.Add(node.label, node.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE), info.id, info.mz, info.rt, info.intensity, info.polarity, info.charge)
+            DataGridView2.Rows.Add(node.label, node.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE), info.id, info.mz, info.rt, info.XIC, info.polarity, info.charge)
         Next
         For Each edge In g.graphEdges
             DataGridView1.Rows.Add(edge.U.label, edge.V.label, edge.weight, "View")
