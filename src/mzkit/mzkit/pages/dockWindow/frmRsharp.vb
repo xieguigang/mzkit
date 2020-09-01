@@ -15,6 +15,7 @@ Public Class frmRsharp
         Routput.Multiline = True
         Routput.Dock = DockStyle.Fill
         Routput.ReadOnly = True
+        Routput.Font = New Font("Consolas", 10, FontStyle.Regular)
 
         TabText = "R# Terminal"
         Me.Icon = My.Resources.Rscript

@@ -142,7 +142,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="application\ApplicationEvents.vb" />
+    <Compile Include="application\RPackage.vb" />
     <Compile Include="forms\frmProgressSpinner.Designer.vb">
       <DependentUpon>frmProgressSpinner.vb</DependentUpon>
     </Compile>
@@ -302,7 +303,7 @@
       <DependentUpon>frmSplashScreen.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Globals.vb" />
+    <Compile Include="application\Globals.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -355,6 +356,9 @@
     <EmbeddedResource Include="pages\dockWindow\DummyPropertyWindow.resx" />
     <EmbeddedResource Include="pages\dockWindow\explorer\frmFileTree.resx">
       <DependentUpon>frmFileTree.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pages\dockWindow\frmRsharp.resx">
+      <DependentUpon>frmRsharp.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\frmSearchList.resx">
       <DependentUpon>frmSearchList.vb</DependentUpon>

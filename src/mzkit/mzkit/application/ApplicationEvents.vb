@@ -46,9 +46,10 @@
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports mzkit.DockSample
 Imports SMRUCC.Rsharp.Interpreter
-Imports SMRUCC.Rsharp.Runtime
+Imports REnv = SMRUCC.Rsharp.Runtime.Internal
 
 Namespace My
+
     ' The following events are available for MyApplication:
     ' Startup: Raised when the application starts, before the startup form is created.
     ' Shutdown: Raised after all application forms are closed.  This event is not raised if the application terminates abnormally.
@@ -67,6 +68,7 @@ Namespace My
 
         Public Shared Sub InitializeREngine()
             _REngine = New RInterpreter
+            _REngine.LoadLibrary(GetType(MyApplication))
         End Sub
 
         Public Overloads Shared Sub LogText(msg As String)
