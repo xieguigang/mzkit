@@ -199,6 +199,7 @@ Partial Class PageStart
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
+        Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.PictureBox5)
         Me.Controls.Add(Me.LinkLabel4)
         Me.Controls.Add(Me.PictureBox4)
@@ -208,7 +209,6 @@ Partial Class PageStart
         Me.Controls.Add(Me.LinkLabel1)
         Me.Controls.Add(Me.PictureBox2)
         Me.Controls.Add(Me.FlowLayoutPanel1)
-        Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.Label1)
         Me.DoubleBuffered = True
         Me.Name = "PageStart"

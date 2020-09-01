@@ -151,7 +151,19 @@ Public Class PageMzkitTools
 
     Private Sub TreeView1_AfterSelect(sender As Object, e As TreeViewEventArgs)
         If TypeOf e.Node.Tag Is Task.Raw Then
+
+            Dim TIC = rawTIC(e.Node.Tag)
+
             ' 原始文件节点
+            ' 只显示当前文件的TIC图
+            showMatrix(TIC.value, TIC.name)
+
+            PictureBox1.BackgroundImage = ChromatogramPlot.TICplot(TIC).AsGDIImage
+
+            MyApplication.host.ShowPage(Me)
+
+            MyApplication.host.Invoke(Sub() RibbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.NotAvailable)
+
         ElseIf TypeOf e.Node.Tag Is ms2() Then
             ' TIC 图绘制
             Dim raw = DirectCast(e.Node.Tag, ms2())
@@ -220,8 +232,6 @@ Public Class PageMzkitTools
         AddHandler host.fileExplorer.SmallMoleculeToolStripMenuItem.Click, AddressOf SmallMoleculeToolStripMenuItem_Click
         AddHandler host.fileExplorer.NatureProductToolStripMenuItem.Click, AddressOf NatureProductToolStripMenuItem_Click
         AddHandler host.fileExplorer.GeneralFlavoneToolStripMenuItem.Click, AddressOf GeneralFlavoneToolStripMenuItem_Click
-
-        AddHandler host.fileExplorer.DeleteFileToolStripMenuItem.Click, AddressOf DeleteFileToolStripMenuItem_Click
     End Sub
 
     Dim currentMatrix As [Variant](Of ms2(), ChromatogramTick())
@@ -272,7 +282,7 @@ Public Class PageMzkitTools
         End If
     End Sub
 
-    Private Sub setCurrentFile()
+    Public Sub setCurrentFile()
         If TreeView1.Nodes.Count = 0 Then
             MyApplication.host.showStatusMessage("No raw file opened.")
             Return
@@ -295,6 +305,27 @@ Public Class PageMzkitTools
             TreeView1.SelectedNode.SelectedImageIndex = 1
         End If
     End Sub
+
+    Private Function rawTIC(raw As Raw) As NamedCollection(Of ChromatogramTick)
+        Dim TIC As New NamedCollection(Of ChromatogramTick) With {
+                  .name = $"TIC [{raw.source.FileName}]",
+                  .value = raw.scans _
+                      .Where(Function(a) a.mz = 0R) _
+                      .Select(Function(m)
+                                  Return New ChromatogramTick With {.Time = m.rt, .Intensity = m.intensity}
+                              End Function) _
+                      .ToArray
+              }
+
+        TIC.value = {
+                New ChromatogramTick With {.Time = raw.rtmin},
+                New ChromatogramTick With {.Time = raw.rtmax}
+            }.JoinIterates(TIC.value) _
+             .OrderBy(Function(c) c.Time) _
+             .ToArray
+
+        Return TIC
+    End Function
 
     Private Sub ShowTICToolStripMenuItem_Click(sender As Object, e As EventArgs)
         Dim rawList As New List(Of Raw)
@@ -329,24 +360,7 @@ Public Class PageMzkitTools
         Dim TICList As New List(Of NamedCollection(Of ChromatogramTick))
 
         For Each raw As Raw In rawList
-            Dim TIC As New NamedCollection(Of ChromatogramTick) With {
-                  .name = $"TIC [{raw.source.FileName}]",
-                  .value = raw.scans _
-                      .Where(Function(a) a.mz = 0R) _
-                      .Select(Function(m)
-                                  Return New ChromatogramTick With {.Time = m.rt, .Intensity = m.intensity}
-                              End Function) _
-                      .ToArray
-              }
-
-            TIC.value = {
-                    New ChromatogramTick With {.Time = raw.rtmin},
-                    New ChromatogramTick With {.Time = raw.rtmax}
-                }.JoinIterates(TIC.value) _
-                 .OrderBy(Function(c) c.Time) _
-                 .ToArray
-
-            TICList.Add(TIC)
+            TICList.Add(rawTIC(raw))
         Next
 
         showMatrix(TICList(Scan0).value, TICList(Scan0).name)
@@ -444,23 +458,6 @@ Public Class PageMzkitTools
     Private Sub MS2ToolStripMenuItem_Click(sender As Object, e As EventArgs)
         MyApplication.host.fileExplorer.MS2ToolStripMenuItem.Checked = Not MyApplication.host.fileExplorer.MS2ToolStripMenuItem.Checked
         applyLevelFilter()
-    End Sub
-
-    Private Sub DeleteFileToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        Dim current = TreeView1.CurrentRawFile
-
-        If Not current.raw Is Nothing Then
-            If MessageBox.Show($"Going to remove the raw data file [{current.raw.source.FileName}]?", "Delete File", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) = DialogResult.OK Then
-                TreeView1.Nodes.Remove(current.tree)
-                TreeView1.SaveRawFileCache
-
-                Call setCurrentFile()
-            End If
-        Else
-            MyApplication.host.showStatusMessage("No raw file for removes!", My.Resources.StatusAnnotations_Warning_32xLG_color)
-        End If
-
-        MyApplication.host.ToolStripStatusLabel2.Text = TreeView1.GetTotalCacheSize
     End Sub
 
     Public Sub SearchByMz(text As String)

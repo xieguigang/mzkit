@@ -47,7 +47,11 @@ Partial Class frmFileTree
         Me.ClearToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExportToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripSeparator()
+        Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ClearSelectionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SelectAllToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DeleteFileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem4 = New System.Windows.Forms.ToolStripSeparator()
         Me.Panel1.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
@@ -91,10 +95,10 @@ Partial Class frmFileTree
         '
         'ContextMenuStrip1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowXICToolStripMenuItem, Me.ShowTICToolStripMenuItem, Me.MS1ToolStripMenuItem, Me.MS2ToolStripMenuItem, Me.MolecularNetworkingToolStripMenuItem, Me.ToolStripMenuItem2, Me.SearchInFileToolStripMenuItem, Me.SearchFormulaToolStripMenuItem, Me.ToolStripMenuItem1, Me.ClearToolStripMenuItem, Me.ExportToolStripMenuItem, Me.ToolStripMenuItem3, Me.DeleteFileToolStripMenuItem})
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowXICToolStripMenuItem, Me.ShowTICToolStripMenuItem, Me.MS1ToolStripMenuItem, Me.MS2ToolStripMenuItem, Me.MolecularNetworkingToolStripMenuItem, Me.ToolStripMenuItem2, Me.SearchInFileToolStripMenuItem, Me.SearchFormulaToolStripMenuItem, Me.ToolStripMenuItem1, Me.ClearToolStripMenuItem, Me.ExportToolStripMenuItem, Me.ToolStripMenuItem3, Me.FileToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
         Me.ContextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(193, 242)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(193, 264)
         '
         'ShowXICToolStripMenuItem
         '
@@ -202,12 +206,38 @@ Partial Class frmFileTree
         Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
         Me.ToolStripMenuItem3.Size = New System.Drawing.Size(189, 6)
         '
+        'FileToolStripMenuItem
+        '
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SelectAllToolStripMenuItem, Me.ClearSelectionsToolStripMenuItem, Me.ToolStripMenuItem4, Me.DeleteFileToolStripMenuItem})
+        Me.FileToolStripMenuItem.Image = CType(resources.GetObject("FileToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
+        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
+        Me.FileToolStripMenuItem.Text = "File"
+        '
+        'ClearSelectionsToolStripMenuItem
+        '
+        Me.ClearSelectionsToolStripMenuItem.Name = "ClearSelectionsToolStripMenuItem"
+        Me.ClearSelectionsToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ClearSelectionsToolStripMenuItem.Text = "Clear Selection"
+        '
+        'SelectAllToolStripMenuItem
+        '
+        Me.SelectAllToolStripMenuItem.Image = CType(resources.GetObject("SelectAllToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.SelectAllToolStripMenuItem.Name = "SelectAllToolStripMenuItem"
+        Me.SelectAllToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.SelectAllToolStripMenuItem.Text = "Select All"
+        '
         'DeleteFileToolStripMenuItem
         '
         Me.DeleteFileToolStripMenuItem.Image = CType(resources.GetObject("DeleteFileToolStripMenuItem.Image"), System.Drawing.Image)
         Me.DeleteFileToolStripMenuItem.Name = "DeleteFileToolStripMenuItem"
-        Me.DeleteFileToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
+        Me.DeleteFileToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.DeleteFileToolStripMenuItem.Text = "Delete File"
+        '
+        'ToolStripMenuItem4
+        '
+        Me.ToolStripMenuItem4.Name = "ToolStripMenuItem4"
+        Me.ToolStripMenuItem4.Size = New System.Drawing.Size(177, 6)
         '
         'frmFileTree
         '
@@ -242,8 +272,12 @@ Partial Class frmFileTree
     Friend WithEvents NatureProductToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents GeneralFlavoneToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
-    Friend WithEvents DeleteFileToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ClearToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ExportToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem3 As ToolStripSeparator
+    Friend WithEvents FileToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents SelectAllToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ClearSelectionsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem4 As ToolStripSeparator
+    Friend WithEvents DeleteFileToolStripMenuItem As ToolStripMenuItem
 End Class

@@ -32,8 +32,9 @@ Partial Class frmProgressSpinner
         Me.ClientSize = New System.Drawing.Size(128, 128)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "frmProgressSpinner"
+        Me.ShowIcon = False
+        Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
-        Me.Text = "Form1"
         Me.ResumeLayout(False)
 
     End Sub

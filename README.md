@@ -63,6 +63,7 @@ When you have click on the search button, then all of the ``M/z`` feature in you
 Expends the file content tree in the ``File Explorer``, and then mouse right click on one MS2 feature in your file, select ``XIC`` for create a XIC plot for a specific ion feature:
 
 ![](docs/manual/ion-XIC.png)
+> The XIC plot is a kind of time-signal chromatography plot of a specific m/z ion.
 
 ####  1.3.1. <a name='XICoverlay'></a>XIC overlay
 
@@ -75,6 +76,7 @@ you can click on the checkbox besides the Ms2 feature for select different ion f
 as the same as create a XIC plot, you also can create TIC plot for a single file or multiple file by select multiple file by check on checkbox:
 
 ![](docs/manual/TIC.png)
+> The TIC plot is similar to the XIC plot, data is generated from all ions.
 
 ###  1.5. <a name='ViewMassspectra'></a>View Mass spectra
 
@@ -130,7 +132,11 @@ This open source mass spectrometry data toolkit is developed at the BioDeep R&D 
 ![](docs/BioNovoGene.png)
 
 <style type="text/css">
-#content-wrapper {
-    background-color: white !important;    
-}
+	#content-wrapper {
+		background-color: white !important;    
+	}
 </style>
+
+<script type="text/javascript">
+	document.getElementById("sidebar").style.display = "none";
+</script>
