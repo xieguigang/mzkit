@@ -428,6 +428,7 @@ Public Class frmMain
         mzkitTool.Ribbon_Load(Ribbon1)
 
         If (Not Globals.Settings.ui Is Nothing) AndAlso
+            (Not (Globals.Settings.ui.width = 0 OrElse Globals.Settings.ui.height = 0)) AndAlso
             Globals.Settings.ui.window <> FormWindowState.Minimized AndAlso
             Globals.Settings.ui.rememberWindowsLocation Then
 
