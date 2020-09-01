@@ -357,6 +357,9 @@
     <EmbeddedResource Include="pages\dockWindow\explorer\frmFileTree.resx">
       <DependentUpon>frmFileTree.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="pages\dockWindow\frmRsharp.resx">
+      <DependentUpon>frmRsharp.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\frmSearchList.resx">
       <DependentUpon>frmSearchList.vb</DependentUpon>
     </EmbeddedResource>
