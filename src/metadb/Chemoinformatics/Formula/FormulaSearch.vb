@@ -141,6 +141,10 @@ Namespace Formula
         End Function
 
         Private Iterator Function SearchByExactMass(exact_mass As Double, parent As FormulaComposition, candidates As Stack(Of ElementSearchCandiate)) As IEnumerable(Of FormulaComposition)
+            If candidates.Count = 0 Then
+                Return
+            End If
+
             Dim current As ElementSearchCandiate = candidates.Pop
             Dim isto As Double = elements(current.Element).isotopic
 

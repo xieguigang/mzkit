@@ -77,6 +77,7 @@ Public Class PageMoleculeNetworking
 
         For Each row In rawMatrix
             Dim info = nodeInfo(row.ID)
+
             g.CreateNode(row.ID, New NodeData With {
                 .Properties = New Dictionary(Of String, String) From {
                     {NamesOf.REFLECTION_ID_MAPPING_NODETYPE, row.Cluster},
@@ -93,7 +94,7 @@ Public Class PageMoleculeNetworking
         Dim uniqueKey As String
 
         For Each row In rawMatrix
-            For Each link In row.Properties.Where(Function(l) l.Value >= cutoff)
+            For Each link In row.Properties.Where(Function(l) l.Value >= cutoff AndAlso l.Key <> row.ID)
                 uniqueKey = {row.ID, link.Key}.OrderBy(Function(str) str).JoinBy(" vs ")
 
                 If Not uniqueKey Like duplicatedEdges Then
