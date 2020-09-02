@@ -46,6 +46,7 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.visualize.Network
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
@@ -88,9 +89,17 @@ Public Class PageMoleculeNetworking
                 }})
         Next
 
+        Dim duplicatedEdges As New Index(Of String)
+        Dim uniqueKey As String
+
         For Each row In rawMatrix
             For Each link In row.Properties.Where(Function(l) l.Value >= cutoff)
-                g.CreateEdge(row.ID, link.Key, link.Value)
+                uniqueKey = {row.ID, link.Key}.OrderBy(Function(str) str).JoinBy(" vs ")
+
+                If Not uniqueKey Like duplicatedEdges Then
+                    Call duplicatedEdges.Add(uniqueKey)
+                    Call g.CreateEdge(row.ID, link.Key, link.Value)
+                End If
             Next
         Next
 

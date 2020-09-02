@@ -71,8 +71,8 @@ Namespace My
 
             _REngine.LoadLibrary("base")
             _REngine.LoadLibrary("utils")
-            _REngine.LoadLibrary("grDevice")
-            _REngine.LoadLibrary("math")
+            _REngine.LoadLibrary("grDevices")
+            _REngine.LoadLibrary("stats")
 
             _REngine.LoadLibrary(GetType(MyApplication))
         End Sub

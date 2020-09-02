@@ -823,7 +823,7 @@ Public Class PageMzkitTools
         Next
     End Sub
 
-    Public Sub ShowXICToolStripMenuItem_Click(sender As Object, e As ExecuteEventArgs)
+    Public Sub ShowXICToolStripMenuItem_Click()
         If TypeOf TreeView1.SelectedNode.Tag Is Raw AndAlso MyApplication.host.fileExplorer.GetSelectedNodes.Count = 0 Then
             Return
         End If

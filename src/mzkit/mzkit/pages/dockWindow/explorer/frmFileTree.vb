@@ -182,4 +182,8 @@ Public Class frmFileTree
         '    e.Node.Nodes.Add(New TreeNode With {.Tag = scan.id, .Text = scan.id, .Checked = e.Node.Checked})
         'Next
     End Sub
+
+    Private Sub treeView1_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles treeView1.AfterSelect
+        MyApplication.host.ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
+    End Sub
 End Class
