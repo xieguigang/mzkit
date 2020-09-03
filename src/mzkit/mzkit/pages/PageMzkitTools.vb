@@ -239,11 +239,13 @@ Public Class PageMzkitTools
     Dim propertyWin As New DummyPropertyWindow
 
     Public Sub ShowPropertyWindow()
-        If propertyWin.DockState = DockState.Hidden OrElse propertyWin.DockState = DockState.Unknown Then
-            propertyWin.Show(MyApplication.host.dockPanel)
-        End If
+        Dim dockRight = propertyWin.DockState = DockState.Hidden OrElse propertyWin.DockState = DockState.Unknown
 
-        propertyWin.DockState = DockState.DockRight
+        propertyWin.Show(MyApplication.host.dockPanel)
+
+        If dockRight Then
+            propertyWin.DockState = DockState.DockRight
+        End If
     End Sub
 
     Private Sub showSpectrum(scanId As String, raw As Raw)
@@ -599,8 +601,14 @@ Public Class PageMzkitTools
             MyApplication.host.searchList.Label2.Text = $"{ms2Hits.Length} ms2 hits for m/z={mz} with tolerance {ppm}ppm"
         End If
 
-        MyApplication.host.searchList.DockState = DockState.DockLeft
+        Dim dockLeft As Boolean = MyApplication.host.searchList.DockState = DockState.Hidden OrElse MyApplication.host.searchList.DockState = DockState.Unknown
+
         MyApplication.host.searchList.Show(MyApplication.host.dockPanel)
+        MyApplication.host.searchList.Activate()
+
+        If dockLeft Then
+            MyApplication.host.searchList.DockState = DockState.DockLeft
+        End If
     End Sub
 
     Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As EventArgs)
