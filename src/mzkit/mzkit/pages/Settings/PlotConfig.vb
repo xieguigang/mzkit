@@ -57,7 +57,7 @@ Public Class PlotConfig : Implements ISaveSettings, IPageSettings
         deleteColorButton.DropDownMenu = dropDowns
         dropDowns.DropDownButton = deleteColorButton
 
-        colorPicker.Location = New Point(50, 50)
+        colorPicker.Location = New Point(Label1.Location.X, 50)
         ' PictureBox1.BorderStyle = BorderStyle.FixedSingle
 
         AddHandler colorPicker.ColorSelected, AddressOf selectColor
@@ -217,5 +217,9 @@ Public Class PlotConfig : Implements ISaveSettings, IPageSettings
                 ListBox1.Items.Add(item.ToHtmlColor)
             Next
         End If
+    End Sub
+
+    Private Sub Label1_Click(sender As Object, e As EventArgs) Handles Label1.Click
+
     End Sub
 End Class

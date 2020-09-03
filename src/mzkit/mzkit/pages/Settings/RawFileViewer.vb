@@ -7,11 +7,11 @@ Public Class RawFileViewer : Implements ISaveSettings, IPageSettings
             Globals.Settings.viewer = New RawFileViewerSettings
         End If
 
-        TextBox1.Text = Globals.Settings.viewer.XIC_ppm
+        NumericUpDown1.Value = Globals.Settings.viewer.XIC_ppm
     End Sub
 
     Public Sub SaveSettings() Implements ISaveSettings.SaveSettings
-        Globals.Settings.viewer.XIC_ppm = Val(TextBox1.Text)
+        Globals.Settings.viewer.XIC_ppm = Val(NumericUpDown1.Value)
     End Sub
 
     Public Sub ShowPage() Implements IPageSettings.ShowPage

@@ -50,15 +50,15 @@ Partial Class PlotConfig
         Me.ListBox1.Font = New System.Drawing.Font("微软雅黑 Light", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.ListBox1.FormattingEnabled = True
         Me.ListBox1.ItemHeight = 26
-        Me.ListBox1.Location = New System.Drawing.Point(444, 60)
+        Me.ListBox1.Location = New System.Drawing.Point(398, 55)
         Me.ListBox1.Name = "ListBox1"
-        Me.ListBox1.Size = New System.Drawing.Size(160, 368)
+        Me.ListBox1.Size = New System.Drawing.Size(241, 446)
         Me.ListBox1.TabIndex = 1
         '
         'PictureBox1
         '
         Me.PictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.PictureBox1.Location = New System.Drawing.Point(303, 51)
+        Me.PictureBox1.Location = New System.Drawing.Point(257, 55)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(100, 42)
         Me.PictureBox1.TabIndex = 2
@@ -66,7 +66,7 @@ Partial Class PlotConfig
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(303, 119)
+        Me.Button1.Location = New System.Drawing.Point(257, 128)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(75, 23)
         Me.Button1.TabIndex = 3
@@ -76,7 +76,7 @@ Partial Class PlotConfig
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(442, 26)
+        Me.Label2.Location = New System.Drawing.Point(396, 26)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(65, 12)
         Me.Label2.TabIndex = 4
@@ -85,7 +85,7 @@ Partial Class PlotConfig
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(40, 329)
+        Me.Label3.Location = New System.Drawing.Point(29, 242)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(101, 12)
         Me.Label3.TabIndex = 5
@@ -95,7 +95,7 @@ Partial Class PlotConfig
         '
         Me.ComboBox1.FormattingEnabled = True
         Me.ComboBox1.Items.AddRange(New Object() {"ColorBrewer Set1", "ColorBrewer Paired1", "ColorBrewer Accent", "Cluster Colour", "Material Palette", "sciBASIC Category31"})
-        Me.ComboBox1.Location = New System.Drawing.Point(42, 360)
+        Me.ComboBox1.Location = New System.Drawing.Point(31, 270)
         Me.ComboBox1.Name = "ComboBox1"
         Me.ComboBox1.Size = New System.Drawing.Size(164, 20)
         Me.ComboBox1.TabIndex = 6

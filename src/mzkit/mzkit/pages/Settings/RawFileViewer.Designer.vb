@@ -23,38 +23,44 @@ Partial Class RawFileViewer
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.NumericUpDown1 = New System.Windows.Forms.NumericUpDown()
+        CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(40, 41)
+        Me.Label1.Location = New System.Drawing.Point(27, 31)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(90, 13)
+        Me.Label1.Size = New System.Drawing.Size(101, 12)
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "Default XIC PPM:"
         '
-        'TextBox1
+        'NumericUpDown1
         '
-        Me.TextBox1.Location = New System.Drawing.Point(162, 34)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(126, 20)
-        Me.TextBox1.TabIndex = 1
+        Me.NumericUpDown1.DecimalPlaces = 1
+        Me.NumericUpDown1.Increment = New Decimal(New Integer() {5, 0, 0, 65536})
+        Me.NumericUpDown1.Location = New System.Drawing.Point(144, 29)
+        Me.NumericUpDown1.Maximum = New Decimal(New Integer() {30, 0, 0, 0})
+        Me.NumericUpDown1.Name = "NumericUpDown1"
+        Me.NumericUpDown1.Size = New System.Drawing.Size(120, 21)
+        Me.NumericUpDown1.TabIndex = 1
+        Me.NumericUpDown1.Value = New Decimal(New Integer() {20, 0, 0, 0})
         '
         'RawFileViewer
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.Controls.Add(Me.TextBox1)
+        Me.Controls.Add(Me.NumericUpDown1)
         Me.Controls.Add(Me.Label1)
         Me.Name = "RawFileViewer"
-        Me.Size = New System.Drawing.Size(555, 413)
+        Me.Size = New System.Drawing.Size(555, 381)
+        CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
 
     Friend WithEvents Label1 As Label
-    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents NumericUpDown1 As NumericUpDown
 End Class
