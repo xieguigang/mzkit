@@ -236,12 +236,10 @@ Public Class PageMzkitTools
     End Sub
 
     Dim currentMatrix As [Variant](Of ms2(), ChromatogramTick())
-    Dim propertyWin As New DummyPropertyWindow
 
     Public Sub ShowPropertyWindow()
+        Dim propertyWin = MyApplication.host.propertyWin
         Dim dockRight = propertyWin.DockState = DockState.Hidden OrElse propertyWin.DockState = DockState.Unknown
-
-        propertyWin.Show(MyApplication.host.dockPanel)
 
         If dockRight Then
             propertyWin.DockState = DockState.DockRight
@@ -267,8 +265,9 @@ Public Class PageMzkitTools
             End If
 
             Dim draw As Image = scanData.MirrorPlot(titles:={title1, title2}).AsGDIImage
+            Dim propertyWin = MyApplication.host.propertyWin
 
-            MyApplication.host.Invoke(
+            propertyWin.Invoke(
                 Sub()
                     ' PropertyGrid1.SelectedObject = prop
                     'PropertyGrid1.Refresh()

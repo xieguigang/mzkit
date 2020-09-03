@@ -582,8 +582,14 @@ Public Class frmMain
             .x = Location.X,
             .y = Location.Y,
             .window = WindowState,
-            .rememberWindowsLocation = Globals.Settings.ui.rememberWindowsLocation
+            .rememberWindowsLocation = Globals.Settings.ui.rememberWindowsLocation,
+            .rememberLayouts = Globals.Settings.ui.rememberLayouts,
+            .fileExplorerDock = fileExplorer.DockState,
+            .OutputDock = output.DockState,
+            .propertyWindowDock = propertyWin.DockState,
+            .searchListDock = searchList.DockState
         }
+
         Globals.Settings.Save()
     End Sub
 
@@ -601,6 +607,7 @@ Public Class frmMain
     Friend startPage As New frmStartPage
     Friend settingsPage As New frmSettings
     Friend RtermPage As New frmRsharp
+    Friend propertyWin As New DummyPropertyWindow
 
     Private Sub initializeVSPanel()
         PanelBase.Controls.Add(Me.dockPanel)
@@ -622,14 +629,14 @@ Public Class frmMain
         Call SetSchema(Nothing, Nothing)
 
         fileExplorer.Show(dockPanel)
-        fileExplorer.DockState = DockState.DockLeftAutoHide
+
         TreeView1 = fileExplorer.treeView1
 
         searchList.Show(dockPanel)
-        searchList.DockState = DockState.DockLeftAutoHide
+        propertyWin.Show(dockPanel)
 
         output.Show(dockPanel)
-        output.DockState = DockState.DockBottomAutoHide
+
 
         startPage.Show(dockPanel)
         startPage.DockState = DockState.Document
@@ -642,6 +649,18 @@ Public Class frmMain
 
         RtermPage.Show(dockPanel)
         RtermPage.DockState = DockState.Hidden
+
+        If Globals.Settings.ui.rememberLayouts Then
+            fileExplorer.DockState = Globals.Settings.ui.fileExplorerDock
+            searchList.DockState = Globals.Settings.ui.searchListDock
+            output.DockState = Globals.Settings.ui.OutputDock
+            propertyWin.DockState = Globals.Settings.ui.propertyWindowDock
+        Else
+            fileExplorer.DockState = DockState.DockLeftAutoHide
+            searchList.DockState = DockState.DockLeftAutoHide
+            output.DockState = DockState.DockBottomAutoHide
+            propertyWin.DockState = DockState.DockRightAutoHide
+        End If
 
         MyApplication.RegisterOutput(output)
     End Sub

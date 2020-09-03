@@ -57,6 +57,7 @@ Public Class AppConfig : Implements ISaveSettings, IPageSettings
         End If
 
         CheckBox1.Checked = Globals.Settings.ui.rememberWindowsLocation
+        CheckBox2.Checked = Globals.Settings.ui.rememberLayouts
 
         'If Globals.Settings.ui.background.IsNullOrEmpty Then
         '    Dim colors As RibbonColors = MyApplication.host.Ribbon1.GetColors
@@ -90,6 +91,10 @@ Public Class AppConfig : Implements ISaveSettings, IPageSettings
         '' PictureBox1.BorderStyle = BorderStyle.FixedSingle
 
         'AddHandler colorPicker.ColorSelected, AddressOf selectColor
+    End Sub
+
+    Private Sub CheckBox2_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox2.CheckedChanged
+        Globals.Settings.ui.rememberLayouts = CheckBox2.Checked
     End Sub
 
     ' Private Sub selectColor(sender As Object, e As ColorSelectedArg) Handles colorPicker.ColorSelected
