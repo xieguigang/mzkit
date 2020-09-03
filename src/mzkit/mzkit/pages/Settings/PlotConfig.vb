@@ -65,11 +65,17 @@ Public Class PlotConfig : Implements ISaveSettings, IPageSettings
     End Sub
 
     Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox1.SelectedIndexChanged
-
+        selected = ListBox1.SelectedItem
+        selectedIndex = ListBox1.SelectedIndex
     End Sub
+
+    Dim selected As Object
+    Dim selectedIndex As Integer
 
     Private Sub ListBox1_MouseDown(sender As Object, e As MouseEventArgs) Handles ListBox1.MouseDown
         If Not (ListBox1.SelectedItem Is Nothing) Then
+            selected = ListBox1.SelectedItem
+            selectedIndex = ListBox1.SelectedIndex
             ListBox1.DoDragDrop(ListBox1.SelectedItem, DragDropEffects.Move)
         End If
     End Sub
@@ -82,14 +88,61 @@ Public Class PlotConfig : Implements ISaveSettings, IPageSettings
         Dim Point = ListBox1.PointToClient(New Point(e.X, e.Y))
         Dim Index = ListBox1.IndexFromPoint(Point)
         If (Index < 0) Then Index = ListBox1.Items.Count - 1
-        Dim Data = e.Data.GetData(GetType(String))
-        ListBox1.Items.Remove(Data)
-        ListBox1.Items.Insert(Index, Data)
+
+        If Index <> selectedIndex Then
+            Dim Data = e.Data.GetData(GetType(String))
+            ListBox1.Items.Remove(Data)
+            ListBox1.Items.Insert(Index, Data)
+        End If
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         If Not PictureBox1.BackColor.IsEmpty Then
             ListBox1.Items.Add(PictureBox1.BackColor.ToHtmlColor)
         End If
+    End Sub
+
+    Const WidthOfColorBar As Integer = 32
+
+    Private Sub ListBox1_DrawItem(sender As Object, e As DrawItemEventArgs) Handles ListBox1.DrawItem
+        If e.Index = -1 Then
+            Return
+        End If
+
+        Dim senderList As ListBox = sender
+        Dim mycolor As String = ListBox1.Items(e.Index).ToString
+        Dim brush1 As Brush = New SolidBrush(mycolor.TranslateColor)
+        Dim rect As Rectangle = e.Bounds
+        e.Graphics.FillRectangle(New SolidBrush(senderList.BackColor), rect)
+        Dim highlightcolor As Color = SystemColors.Highlight
+        If (e.State = DrawItemState.Focus) _
+            Or (e.State = DrawItemState.Selected) _
+            Or (e.State = DrawItemState.Selected + DrawItemState.Focus) Then
+            e.Graphics.FillRectangle(New SolidBrush(highlightcolor), e.Bounds)
+        Else
+            e.Graphics.FillRectangle(New SolidBrush(senderList.BackColor), e.Bounds)
+        End If
+        rect.Width = WidthOfColorBar
+        rect.Height -= 4
+        rect.X += 2
+        rect.Y += 2
+        e.Graphics.FillRectangle(brush1, rect)
+        e.Graphics.DrawRectangle(Pens.Black, rect)
+        e.Graphics.DrawString(mycolor, senderList.Font,
+            New SolidBrush(senderList.ForeColor), WidthOfColorBar + 5, rect.Y - 2)
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        If Not selected Is Nothing Then
+            ListBox1.Items.Remove(selected)
+
+            If ListBox1.Items.Count > 0 Then
+                ListBox1.SelectedIndex = 0
+            End If
+        End If
+    End Sub
+
+    Private Sub ListBox1_MouseMove(sender As Object, e As MouseEventArgs) Handles ListBox1.MouseMove
+
     End Sub
 End Class
