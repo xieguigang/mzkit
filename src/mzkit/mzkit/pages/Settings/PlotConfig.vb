@@ -119,7 +119,15 @@ Public Class PlotConfig : Implements ISaveSettings, IPageSettings
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         If Not PictureBox1.BackColor.IsEmpty Then
-            ListBox1.Items.Add(PictureBox1.BackColor.ToHtmlColor)
+            Dim colorHtml As String = PictureBox1.BackColor.ToHtmlColor
+
+            For i As Integer = 0 To ListBox1.Items.Count - 1
+                If ListBox1.Items(i).ToString = colorHtml Then
+                    Return
+                End If
+            Next
+
+            ListBox1.Items.Add(colorHtml)
         End If
     End Sub
 
@@ -181,5 +189,33 @@ Public Class PlotConfig : Implements ISaveSettings, IPageSettings
 
     Private Sub deleteColorButton_MouseLeave(sender As Object, e As EventArgs) Handles deleteColorButton.MouseLeave
         deleteColorButton.BackColor = Color.Silver
+    End Sub
+
+    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
+        Dim colors As Color() = Nothing
+
+        '        ColorBrewer Set1
+        'ColorBrewer Paired1
+        'ColorBrewer Accent
+        'Cluster Colour
+        'Material Palette
+        'sciBASIC Category31
+
+        Select Case ComboBox1.SelectedIndex
+            Case 0 : colors = Designer.GetColors("Set1:c8")
+            Case 1 : colors = Designer.GetColors("Paired1:c8")
+            Case 2 : colors = Designer.GetColors("Accent:c8")
+            Case 3 : colors = Designer.GetColors("Clusters")
+            Case 4 : colors = Designer.GetColors("material")
+            Case 5 : colors = Designer.GetColors("scibasic.category31()")
+        End Select
+
+        If Not colors.IsNullOrEmpty Then
+            ListBox1.Items.Clear()
+
+            For Each item In colors
+                ListBox1.Items.Add(item.ToHtmlColor)
+            Next
+        End If
     End Sub
 End Class
