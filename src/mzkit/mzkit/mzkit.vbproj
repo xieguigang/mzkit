@@ -231,6 +231,8 @@
     <Compile Include="pages\Settings\AppConfig.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="pages\Settings\buttons\DropDownButton.vb" />
+    <Compile Include="pages\Settings\buttons\NativeToolStripRenderer.vb" />
     <Compile Include="pages\Settings\ISaveSettings.vb" />
     <Compile Include="pages\PageScripting.Designer.vb">
       <DependentUpon>PageScripting.vb</DependentUpon>
