@@ -41,11 +41,15 @@ Partial Class PlotConfig
         '
         'ListBox1
         '
+        Me.ListBox1.AllowDrop = True
+        Me.ListBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.ListBox1.Font = New System.Drawing.Font("微软雅黑", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.ListBox1.FormattingEnabled = True
-        Me.ListBox1.ItemHeight = 12
+        Me.ListBox1.ItemHeight = 26
         Me.ListBox1.Location = New System.Drawing.Point(444, 62)
         Me.ListBox1.Name = "ListBox1"
-        Me.ListBox1.Size = New System.Drawing.Size(160, 388)
+        Me.ListBox1.Size = New System.Drawing.Size(160, 368)
         Me.ListBox1.TabIndex = 1
         '
         'PictureBox1

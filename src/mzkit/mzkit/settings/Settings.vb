@@ -83,5 +83,7 @@ End Class
 Public Class RawFileViewerSettings
 
     Public Property XIC_ppm As Double = 20
+    Public Property colorSet As String()
+
 
 End Class
