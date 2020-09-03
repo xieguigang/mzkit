@@ -5,24 +5,24 @@ Imports System.Windows.Forms
 Imports System.Windows.Forms.VisualStyles
 
 ' Thanks for fixes:
- * 
- *  * Marco Minerva, jachymko - http://www.codeplex.com/windowsformsaero
- *  * Ben Ryves - http://www.benryves.com/
- *
- * ** Note for anyone considering using this: **
- *
- * A better alternative to using this class is to use the MainMenu and ContextMenu
- * controls instead of MenuStrip and ContextMenuStrip, as they provide true native
- * rendering. If you require icons, try this:
- *
- * http://wyday.com/blog/2009/making-the-menus-in-your-net-app-look-professional/
- * 
- * Note from AlexxEG:
- * - I don't remeber where I got this from, but it was originally called
- *   "ToolStripAeroRenderer".
- *   
- *   Also, namespace was originally "Szotar.WindowsForms".
- 
+'* 
+'*  * Marco Minerva, jachymko - http://www.codeplex.com/windowsformsaero
+'*  * Ben Ryves - http://www.benryves.com/
+'*
+'* ** Note for anyone considering using this: **
+'*
+'* A better alternative to using this class is to use the MainMenu and ContextMenu
+'* controls instead of MenuStrip and ContextMenuStrip, as they provide true native
+'* rendering. If you require icons, try this:
+'*
+'* http://wyday.com/blog/2009/making-the-menus-in-your-net-app-look-professional/
+'* 
+'* Note from AlexxEG:
+'* - I don't remeber where I got this from, but it was originally called
+'*   "ToolStripAeroRenderer".
+'*   
+'*   Also, namespace was originally "Szotar.WindowsForms".
+
 
 Namespace UnFound
     Friend Enum ToolbarTheme

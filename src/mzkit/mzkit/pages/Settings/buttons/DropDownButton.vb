@@ -18,7 +18,7 @@ Namespace UnFound.Controls
         ''' <summary>
         ''' Occurs when the button is clicked.
         ''' </summary>
-        Public Overloads Event Click As EventHandler
+        Public Event ClickButton As EventHandler
         ''' <summary>
         ''' Occurs when the drop down button is clicked, opening the drop down menu.
         ''' </summary>
@@ -154,7 +154,7 @@ Namespace UnFound.Controls
         Protected Overrides Sub OnClick(ByVal e As EventArgs)
             ' The actual drop down button has it's own event.
             If dropDownState = ComboBoxState.Pressed Then Return
-            RaiseEvent Click(Me, EventArgs.Empty)
+            RaiseEvent ClickButton(Me, EventArgs.Empty)
 
             If p_DropDownMenu Is Nothing OrElse p_DropDownMenu.Items.Count = 0 OrElse Not Equals(Text, "") Then
                 Return

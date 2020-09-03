@@ -1,10 +1,16 @@
 ﻿Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports mzkit.My
+Imports mzkit.UnFound.Controls
 
 Public Class PlotConfig : Implements ISaveSettings, IPageSettings
 
     Dim WithEvents colorPicker As New ThemeColorPicker
+    Dim WithEvents deleteColorButton As New DropDownButton With {
+        .Text = "Delete Color",
+        .Enabled = True,
+        .BackColor = Color.Silver
+    }
 
     Public Sub LoadSettings() Implements ISaveSettings.LoadSettings
         If Globals.Settings.viewer Is Nothing Then
@@ -38,11 +44,25 @@ Public Class PlotConfig : Implements ISaveSettings, IPageSettings
 
     Private Sub PlotConfig_Load(sender As Object, e As EventArgs) Handles Me.Load
         Controls.Add(colorPicker)
+        Controls.Add(deleteColorButton)
+
+        Dim dropDowns As New DropDownMenu
+        Dim deleteAll As New ToolStripMenuItem() With {.Text = "Clear"}
+
+        dropDowns.Items.Add(deleteAll)
+
+        deleteColorButton.Location = New Point(Button1.Location.X, Button1.Location.Y + Button1.Height + 15)
+        deleteColorButton.Renderer = DropDownButton.Renderers.Native
+        deleteColorButton.DropDownMenu = dropDowns
+        dropDowns.DropDownButton = deleteColorButton
 
         colorPicker.Location = New Point(50, 50)
         ' PictureBox1.BorderStyle = BorderStyle.FixedSingle
 
         AddHandler colorPicker.ColorSelected, AddressOf selectColor
+
+        AddHandler deleteColorButton.ClickButton, AddressOf Button2_Click
+        AddHandler deleteColorButton.DropDownItemClicked, AddressOf clearAllColors
     End Sub
 
     Private Sub selectColor(sender As Object, e As ColorSelectedArg) Handles colorPicker.ColorSelected
@@ -132,7 +152,7 @@ Public Class PlotConfig : Implements ISaveSettings, IPageSettings
             New SolidBrush(senderList.ForeColor), WidthOfColorBar + 5, rect.Y - 2)
     End Sub
 
-    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+    Private Sub Button2_Click()
         If Not selected Is Nothing Then
             ListBox1.Items.Remove(selected)
 
@@ -142,7 +162,23 @@ Public Class PlotConfig : Implements ISaveSettings, IPageSettings
         End If
     End Sub
 
+    Private Sub clearAllColors()
+        ListBox1.Items.Clear()
+    End Sub
+
     Private Sub ListBox1_MouseMove(sender As Object, e As MouseEventArgs) Handles ListBox1.MouseMove
 
+    End Sub
+
+    Private Sub deleteColorButton_MouseEnter(sender As Object, e As EventArgs) Handles deleteColorButton.MouseEnter
+        deleteColorButton.BackColor = Color.White
+    End Sub
+
+    Private Sub deleteColorButton_MouseDown(sender As Object, e As MouseEventArgs) Handles deleteColorButton.MouseDown
+        deleteColorButton.BackColor = Color.Black
+    End Sub
+
+    Private Sub deleteColorButton_MouseLeave(sender As Object, e As EventArgs) Handles deleteColorButton.MouseLeave
+        deleteColorButton.BackColor = Color.Silver
     End Sub
 End Class
