@@ -17,6 +17,8 @@ Public Class frmRsharp
         Routput.ReadOnly = True
         Routput.Font = New Font("Consolas", 10, FontStyle.Regular)
         Routput.ScrollBars = ScrollBars.Vertical
+        Routput.BackColor = Color.White
+        Routput.ForeColor = Color.Black
 
         TabText = "R# Terminal"
         Me.Icon = My.Resources.Rscript
