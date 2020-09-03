@@ -48,7 +48,7 @@ Partial Class PlotConfig
         Me.ListBox1.Font = New System.Drawing.Font("微软雅黑 Light", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.ListBox1.FormattingEnabled = True
         Me.ListBox1.ItemHeight = 26
-        Me.ListBox1.Location = New System.Drawing.Point(444, 62)
+        Me.ListBox1.Location = New System.Drawing.Point(444, 60)
         Me.ListBox1.Name = "ListBox1"
         Me.ListBox1.Size = New System.Drawing.Size(160, 368)
         Me.ListBox1.TabIndex = 1

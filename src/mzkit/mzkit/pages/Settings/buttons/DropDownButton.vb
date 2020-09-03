@@ -364,7 +364,7 @@ Namespace UnFound.Controls
         ''' <summary>
         ''' Shows the DropDownButton at the button.
         ''' </summary>
-        ''' <paramname="selectFirstItem">Selects the first item so arrow keys can be used.</param>
+        ''' <param name="selectFirstItem">Selects the first item so arrow keys can be used.</param>
         Public Sub ShowContextMenuStrip(ByVal Optional selectFirstItem As Boolean = False)
             If p_DropDownMenu Is Nothing Then Return
             Dim width = p_DropDownMenu.Width

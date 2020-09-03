@@ -51,6 +51,7 @@ Public Class PlotConfig : Implements ISaveSettings, IPageSettings
 
         dropDowns.Items.Add(deleteAll)
 
+        deleteColorButton.Size = New Size(120, 24)
         deleteColorButton.Location = New Point(Button1.Location.X, Button1.Location.Y + Button1.Height + 15)
         deleteColorButton.Renderer = DropDownButton.Renderers.Native
         deleteColorButton.DropDownMenu = dropDowns
