@@ -37,9 +37,9 @@ Partial Class PageSettings
         'Button1
         '
         Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button1.Location = New System.Drawing.Point(704, 478)
+        Me.Button1.Location = New System.Drawing.Point(701, 396)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 23)
+        Me.Button1.Size = New System.Drawing.Size(75, 21)
         Me.Button1.TabIndex = 0
         Me.Button1.Text = "Apply"
         Me.Button1.UseVisualStyleBackColor = True
@@ -47,9 +47,9 @@ Partial Class PageSettings
         'Button2
         '
         Me.Button2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button2.Location = New System.Drawing.Point(805, 478)
+        Me.Button2.Location = New System.Drawing.Point(802, 396)
         Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(75, 23)
+        Me.Button2.Size = New System.Drawing.Size(75, 21)
         Me.Button2.TabIndex = 1
         Me.Button2.Text = "Close"
         Me.Button2.UseVisualStyleBackColor = True
@@ -58,7 +58,7 @@ Partial Class PageSettings
         '
         Me.TreeView1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.TreeView1.Location = New System.Drawing.Point(3, 78)
+        Me.TreeView1.Location = New System.Drawing.Point(3, 72)
         Me.TreeView1.Name = "TreeView1"
         TreeNode1.Name = "Node0"
         TreeNode1.Text = "Mzkit App"
@@ -71,7 +71,7 @@ Partial Class PageSettings
         TreeNode5.Name = "Node0"
         TreeNode5.Text = "Formula Search"
         Me.TreeView1.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode1, TreeNode3, TreeNode5})
-        Me.TreeView1.Size = New System.Drawing.Size(217, 430)
+        Me.TreeView1.Size = New System.Drawing.Size(217, 314)
         Me.TreeView1.TabIndex = 2
         '
         'Panel1
@@ -80,15 +80,15 @@ Partial Class PageSettings
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel1.Location = New System.Drawing.Point(226, 78)
+        Me.Panel1.Location = New System.Drawing.Point(226, 72)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(701, 390)
+        Me.Panel1.Size = New System.Drawing.Size(701, 314)
         Me.Panel1.TabIndex = 3
         '
         'LinkLabel1
         '
         Me.LinkLabel1.AutoSize = True
-        Me.LinkLabel1.Font = New System.Drawing.Font("Microsoft YaHei Light", 36.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.LinkLabel1.Font = New System.Drawing.Font("微软雅黑 Light", 36.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.LinkLabel1.Location = New System.Drawing.Point(3, 0)
         Me.LinkLabel1.Name = "LinkLabel1"
         Me.LinkLabel1.Size = New System.Drawing.Size(327, 62)
@@ -98,7 +98,7 @@ Partial Class PageSettings
         '
         'PageSettings
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.Controls.Add(Me.LinkLabel1)
@@ -108,7 +108,7 @@ Partial Class PageSettings
         Me.Controls.Add(Me.Button1)
         Me.DoubleBuffered = True
         Me.Name = "PageSettings"
-        Me.Size = New System.Drawing.Size(930, 510)
+        Me.Size = New System.Drawing.Size(930, 471)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

@@ -6,7 +6,10 @@ Public Class frmSettings
 
     Private Sub frmSettings_Load(sender As Object, e As EventArgs) Handles Me.Load
         Controls.Add(mzkitSettings)
+
+        mzkitSettings.Location = New Point
         mzkitSettings.Dock = DockStyle.Fill
+
         Me.Text = "Application Settings"
         Me.Icon = My.Resources.settings
 

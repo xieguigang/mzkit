@@ -44,6 +44,7 @@
 #End Region
 
 Imports mzkit.My
+Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class PageSettings
 
@@ -56,6 +57,7 @@ Public Class PageSettings
     Dim showPageLink As IPageSettings
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        DirectCast(ParentForm, frmSettings).DockState = DockState.Hidden
         MyApplication.host.ShowPage(MyApplication.host.mzkitTool)
     End Sub
 
