@@ -70,6 +70,10 @@ Module Globals
         Settings.Save()
     End Sub
 
+    Public Function GetColors() As String
+        Return Globals.Settings.viewer.colorSet.JoinBy(",")
+    End Function
+
     <Extension>
     Public Sub SaveRawFileCache(explorer As TreeView)
         Dim files As New List(Of Task.Raw)

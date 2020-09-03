@@ -159,7 +159,7 @@ Public Class PageMzkitTools
             ' 只显示当前文件的TIC图
             showMatrix(TIC.value, TIC.name)
 
-            PictureBox1.BackgroundImage = ChromatogramPlot.TICplot(TIC).AsGDIImage
+            PictureBox1.BackgroundImage = ChromatogramPlot.TICplot(TIC, colorsSchema:=Globals.GetColors).AsGDIImage
 
             MyApplication.host.ShowPage(Me)
 
@@ -189,7 +189,7 @@ Public Class PageMzkitTools
              .OrderBy(Function(c) c.Time) _
              .ToArray
             showMatrix(TIC.value, TIC.name)
-            PictureBox1.BackgroundImage = TIC.TICplot(intensityMax:=maxY).AsGDIImage
+            PictureBox1.BackgroundImage = TIC.TICplot(intensityMax:=maxY, colorsSchema:=Globals.GetColors).AsGDIImage
 
             MyApplication.host.ShowPage(Me)
         Else
@@ -372,7 +372,7 @@ Public Class PageMzkitTools
 
         showMatrix(TICList(Scan0).value, TICList(Scan0).name)
 
-        PictureBox1.BackgroundImage = ChromatogramPlot.TICplot(TICList.ToArray).AsGDIImage
+        PictureBox1.BackgroundImage = ChromatogramPlot.TICplot(TICList.ToArray, colorsSchema:=Globals.GetColors).AsGDIImage
 
         MyApplication.host.ShowPage(Me)
 
@@ -870,7 +870,7 @@ Public Class PageMzkitTools
 
                 XICPlot.AddRange(GetXICCollection(ppm))
 
-                plotImage = XICPlot.ToArray.TICplot(intensityMax:=maxY, isXIC:=True).AsGDIImage
+                plotImage = XICPlot.ToArray.TICplot(intensityMax:=maxY, isXIC:=True, colorsSchema:=Globals.GetColors).AsGDIImage
                 progress.Invoke(Sub() progress.Close())
             End Sub).Start()
 
