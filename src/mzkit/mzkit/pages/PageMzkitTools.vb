@@ -428,7 +428,7 @@ Public Class PageMzkitTools
         '    showStatusMessage("Ready!")
         'End Using
 
-        MyApplication.host.Invoke(Sub() RibbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.NotAvailable)
+        ' MyApplication.host.Invoke(Sub() RibbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.NotAvailable)
     End Sub
 
     Public Sub SaveImageToolStripMenuItem_Click()
@@ -1022,5 +1022,9 @@ Public Class PageMzkitTools
 
         CustomTabControl1.SelectedTab = tabpage
         tabpage.Visible = True
+    End Sub
+
+    Private Sub PictureBox1_Click(sender As Object, e As EventArgs) Handles PictureBox1.Click
+        RibbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
     End Sub
 End Class
