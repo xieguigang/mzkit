@@ -67,6 +67,7 @@ Public Class NetworkingNode
             .IteratesALL _
             .GroupBy(Function(a) a.mz, tolerance) _
             .ToArray
+        Dim rt = ions.OrderByDescending(Function(a) a.Ms2Intensity).First.rt
         Dim matrix As ms2() = mz _
             .Select(Function(a)
                         Return New ms2 With {
@@ -75,6 +76,8 @@ Public Class NetworkingNode
                             .quantity = .intensity
                         }
                     End Function) _
+            .ToArray _
+            .Centroid(tolerance) _
             .ToArray
         Dim products As String = matrix _
             .OrderByDescending(Function(a) a.intensity) _
@@ -85,7 +88,7 @@ Public Class NetworkingNode
         Return New LibraryMatrix With {
             .centroid = True,
             .ms2 = matrix,
-            .name = $"{ions.Select(Function(a) a.mz).Average.ToString("F3")} [{products}]"
+            .name = $"{ions.Select(Function(a) a.mz).Average.ToString("F3")} [max={rt}, {ions.Length} members]"
         }
     End Function
 

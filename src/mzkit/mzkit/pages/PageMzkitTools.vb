@@ -693,6 +693,8 @@ Public Class PageMzkitTools
         Dim runTask As New Thread(
             Sub()
 
+                Thread.Sleep(1000)
+
                 progress.Invoke(Sub() progress.Label1.Text = "loading cache ms2 scan data...")
 
                 Dim raw = getSelectedIonSpectrums().ToArray
