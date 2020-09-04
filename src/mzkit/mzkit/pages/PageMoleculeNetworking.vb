@@ -117,7 +117,11 @@ Public Class PageMoleculeNetworking
                 Thread.Sleep(500)
                 progress.Invoke(Sub() progress.Label1.Text = "Run network layouts...")
 
-                graph = graph.doRandomLayout.doForceLayout(iterations:=50)
+                graph = graph.doRandomLayout.doForceLayout(
+                    iterations:=Globals.Settings.network.layout_iterations,
+                    progressCallback:=Sub(msg)
+                                          progress.Invoke(Sub() progress.Label1.Text = msg)
+                                      End Sub)
                 progress.Invoke(Sub() progress.Label1.Text = "do network render plot...")
 
                 Dim plot As Image = graph.DrawImage(
