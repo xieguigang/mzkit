@@ -689,6 +689,7 @@ Public Class PageMzkitTools
         'End If
 
         ' Dim raw As Raw = TreeView1.CurrentRawFile.raw
+        Dim similarityCutoff As Double = MyApplication.host.ribbonItems.SpinnerSimilarity.DecimalValue
         Dim progress As New frmTaskProgress
         Dim runTask As New Thread(
             Sub()
@@ -767,7 +768,7 @@ Public Class PageMzkitTools
 
                 MyApplication.host.Invoke(
                     Sub()
-                        Call MyApplication.host.mzkitMNtools.loadNetwork(clusters, protocol, rawLinks, 0.8)
+                        Call MyApplication.host.mzkitMNtools.loadNetwork(clusters, protocol, rawLinks, similarityCutoff)
                         Call MyApplication.host.ShowPage(MyApplication.host.mzkitMNtools)
                     End Sub)
 

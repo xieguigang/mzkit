@@ -187,6 +187,7 @@ Public Class frmMain
         AddHandler ribbonItems.ButtonShowPlotViewer.ExecuteEvent, Sub(sender, e) Call mzkitTool.ShowTabPage(mzkitTool.TabPage5)
         AddHandler ribbonItems.ButtonShowMatrixViewer.ExecuteEvent, Sub(sender, e) Call mzkitTool.ShowTabPage(mzkitTool.TabPage6)
         AddHandler ribbonItems.ButtonNetworkRender.ExecuteEvent, Sub(sender, e) Call mzkitMNtools.RenderNetwork()
+        AddHandler ribbonItems.ButtonRefreshNetwork.ExecuteEvent, Sub(sender, e) Call mzkitMNtools.RefreshNetwork()
 
         AddHandler ribbonItems.ButtonRunScript.ExecuteEvent, AddressOf RunCurrentScript
         AddHandler ribbonItems.ButtonSaveScript.ExecuteEvent, AddressOf saveCurrentScript
@@ -509,6 +510,18 @@ Public Class frmMain
         _spinner.TooltipDescription = "Enter ppm error for search feature by m/z."
         _spinner.RepresentativeString = "XXXXXX"
 
+
+        _spinner = ribbonItems.SpinnerSimilarity
+
+        _spinner.MaxValue = 1
+        _spinner.MinValue = 0
+        _spinner.Increment = 0.01
+        _spinner.DecimalPlaces = 2
+        _spinner.DecimalValue = 0.6
+
+        _spinner.TooltipTitle = "Spectrum Similarity"
+        _spinner.TooltipDescription = "Enter similarity filter value for filtering of the node links."
+        _spinner.RepresentativeString = "XXXXXX"
     End Sub
 
     Private Sub InitRecentItems()

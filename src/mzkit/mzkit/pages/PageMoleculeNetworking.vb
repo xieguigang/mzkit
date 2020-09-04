@@ -144,6 +144,16 @@ Public Class PageMoleculeNetworking
         progress.ShowDialog()
     End Sub
 
+    Public Sub RefreshNetwork()
+        If rawMatrix.IsNullOrEmpty Then
+            Return
+        End If
+
+        Dim similarityCutoff As Double = MyApplication.host.ribbonItems.SpinnerSimilarity.DecimalValue
+
+        Call loadNetwork(rawMatrix, nodeInfo, rawLinks, similarityCutoff)
+    End Sub
+
     Public Sub loadNetwork(MN As IEnumerable(Of EntityClusterModel),
                            nodes As Protocols,
                            rawLinks As Dictionary(Of String, Dictionary(Of String, (id$, forward#, reverse#))),
