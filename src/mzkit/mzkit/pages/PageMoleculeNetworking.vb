@@ -80,6 +80,12 @@ Public Class PageMoleculeNetworking
 
         Dim progress As New frmTaskProgress
         Dim viewer As New frmPlotViewer
+        Dim showSingle As Boolean = False
+        Dim graph As NetworkGraph = g.Copy
+
+        If Not showSingle Then
+
+        End If
 
         viewer.Show(MyApplication.host.dockPanel)
         viewer.DockState = DockState.Hidden
@@ -92,7 +98,10 @@ Public Class PageMoleculeNetworking
                 g = g.doRandomLayout.doForceLayout(iterations:=1)
                 progress.Invoke(Sub() progress.Label1.Text = "do network render plot...")
 
-                Dim plot As Image = g.DrawImage(labelerIterations:=-1).AsGDIImage
+                Dim plot As Image = g.DrawImage(
+                    canvasSize:="1920,1080",
+                    labelerIterations:=-1
+                ).AsGDIImage
 
                 viewer.Invoke(Sub()
                                   viewer.PictureBox1.BackgroundImage = plot
