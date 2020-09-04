@@ -104,9 +104,9 @@ Public Class PageMoleculeNetworking
 
         Dim minRadius As Single = 20
         Dim degreeRange As New DoubleRange(graph.vertex.Select(Function(a) CDbl(a.degree.In + a.degree.Out)).ToArray)
-        Dim nodeRadius As Func(Of Graph.Node, Single) = Function(v) degreeRange.ScaleMapping(v.degree.In + v.degree.Out, New DoubleRange(25, 120))
+        Dim nodeRadius As Func(Of Graph.Node, Single) = Function(v) degreeRange.ScaleMapping(v.degree.In + v.degree.Out, New DoubleRange(25, 150))
         Dim nodeClusters = graph.vertex.Select(Function(a) a.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE)).Distinct.Indexing
-        Dim colorSet As SolidBrush() = Designer.GetColors("scibasic.category31()", nodeClusters.Count).Select(Function(a) New SolidBrush(a)).ToArray
+        Dim colorSet As SolidBrush() = Designer.GetColors("Set1:c9", nodeClusters.Count).Select(Function(a) New SolidBrush(a)).ToArray
 
         For Each v In graph.vertex
             v.data.color = colorSet(nodeClusters.IndexOf(v.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE)))
@@ -117,7 +117,7 @@ Public Class PageMoleculeNetworking
                 Thread.Sleep(500)
                 progress.Invoke(Sub() progress.Label1.Text = "Run network layouts...")
 
-                graph = graph.doRandomLayout.doForceLayout(iterations:=1)
+                graph = graph.doRandomLayout.doForceLayout(iterations:=50)
                 progress.Invoke(Sub() progress.Label1.Text = "do network render plot...")
 
                 Dim plot As Image = graph.DrawImage(
@@ -126,7 +126,9 @@ Public Class PageMoleculeNetworking
                     displayId:=False,
                     nodeRadius:=nodeRadius,
                     minLinkWidth:=1,
-                    hideDisconnectedNode:=True
+                    hideDisconnectedNode:=True,
+                    nodeStroke:="stroke: black; stroke-width: 2px; stroke-dash: solid;",
+                    throwEx:=False
                 ).AsGDIImage
 
                 viewer.Invoke(Sub()

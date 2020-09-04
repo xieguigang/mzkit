@@ -64,6 +64,15 @@ Namespace My
 
         Public Shared Sub RegisterOutput(log As DummyOutputWindow)
             _LogForm = log
+
+            Microsoft.VisualBasic.My.Log4VB.redirectError =
+                Sub(header, message, level)
+                    log.Invoke(Sub() log.AppendMessage($"[{header} {level.ToString}] {message}"))
+                End Sub
+            Microsoft.VisualBasic.My.Log4VB.redirectWarning =
+                Sub(header, message, level)
+                    log.Invoke(Sub() log.AppendMessage($"[{header} {level.ToString}] {message}"))
+                End Sub
         End Sub
 
         Public Shared Sub InitializeREngine()
