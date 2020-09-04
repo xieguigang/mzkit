@@ -186,6 +186,7 @@ Public Class frmMain
 
         AddHandler ribbonItems.ButtonShowPlotViewer.ExecuteEvent, Sub(sender, e) Call mzkitTool.ShowTabPage(mzkitTool.TabPage5)
         AddHandler ribbonItems.ButtonShowMatrixViewer.ExecuteEvent, Sub(sender, e) Call mzkitTool.ShowTabPage(mzkitTool.TabPage6)
+        AddHandler ribbonItems.ButtonNetworkRender.ExecuteEvent, Sub(sender, e) Call mzkitMNtools.RenderNetwork()
 
         AddHandler ribbonItems.ButtonRunScript.ExecuteEvent, AddressOf RunCurrentScript
         AddHandler ribbonItems.ButtonSaveScript.ExecuteEvent, AddressOf saveCurrentScript

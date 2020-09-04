@@ -43,23 +43,23 @@
 
 #End Region
 
+Imports System.Threading
 Imports System.Windows.Forms.ListViewItem
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.visualize.Network
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Imaging
 Imports mzkit.cooldatagridview
 Imports mzkit.My
 Imports RibbonLib.Interop
-Imports Task
 
 Public Class PageMoleculeNetworking
 
@@ -68,6 +68,28 @@ Public Class PageMoleculeNetworking
     Dim nodeInfo As Protocols
     Dim rawLinks As Dictionary(Of String, Dictionary(Of String, (id$, forward#, reverse#)))
     Dim tooltip As New PlotTooltip
+
+    Public Sub RenderNetwork()
+        If g Is Nothing Then
+            MyApplication.host.showStatusMessage("You should run molecular networking at first!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            Return
+        ElseIf g.vertex.Count > 500 OrElse g.graphEdges.Count > 700 Then
+            MyApplication.host.showStatusMessage("The network size is huge for create layout, entire progress will be very slow...", My.Resources.StatusAnnotations_Warning_32xLG_color)
+        End If
+
+        Dim progress As New frmTaskProgress
+        Dim task As New Thread(
+            Sub()
+                Thread.Sleep(500)
+                progress.Invoke(Sub() progress.Label1.Text = "Run network layouts...")
+
+                g = g.doRandomLayout.doForceLayout(iterations:=100)
+
+            End Sub)
+
+        task.Start()
+        progress.ShowDialog()
+    End Sub
 
     Public Sub loadNetwork(MN As IEnumerable(Of EntityClusterModel),
                            nodes As Protocols,
