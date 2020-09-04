@@ -60,6 +60,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports mzkit.cooldatagridview
 Imports mzkit.My
 Imports RibbonLib.Interop
+Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class PageMoleculeNetworking
 
@@ -84,7 +85,16 @@ Public Class PageMoleculeNetworking
                 progress.Invoke(Sub() progress.Label1.Text = "Run network layouts...")
 
                 g = g.doRandomLayout.doForceLayout(iterations:=100)
+                progress.Invoke(Sub() progress.Label1.Text = "do network render plot...")
 
+                Dim viewer As New frmPlotViewer
+                viewer.Invoke(Sub()
+                                  viewer.PictureBox1.BackgroundImage = g.DrawImage(labelerIterations:=-1).AsGDIImage
+                                  viewer.Show(MyApplication.host.dockPanel)
+                                  viewer.DockState = DockState.Document
+                              End Sub)
+
+                progress.Invoke(Sub() progress.Close())
             End Sub)
 
         task.Start()

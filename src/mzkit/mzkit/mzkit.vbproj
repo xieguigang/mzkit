@@ -162,6 +162,12 @@
     <Compile Include="forms\frmLicense.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="pages\dockWindow\frmPlotViewer.Designer.vb">
+      <DependentUpon>frmPlotViewer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\dockWindow\frmPlotViewer.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="pages\PlotTooltip.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -370,6 +376,9 @@
     <EmbeddedResource Include="pages\dockWindow\DummyPropertyWindow.resx" />
     <EmbeddedResource Include="pages\dockWindow\explorer\frmFileTree.resx">
       <DependentUpon>frmFileTree.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pages\dockWindow\frmPlotViewer.resx">
+      <DependentUpon>frmPlotViewer.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\frmRsharp.resx">
       <DependentUpon>frmRsharp.vb</DependentUpon>
