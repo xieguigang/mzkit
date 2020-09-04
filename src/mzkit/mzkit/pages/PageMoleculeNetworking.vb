@@ -50,6 +50,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.visualize.Network
 Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
@@ -102,22 +103,8 @@ Public Class PageMoleculeNetworking
         viewer.DockState = DockState.Hidden
 
         Dim minRadius As Single = 20
-        Dim nodeRadius As Func(Of Graph.Node, Single) =
-            Function(v)
-                Dim d = v.degree.In + v.degree.Out
-
-                If d = 0 Then
-                    Return minRadius
-                Else
-                    d = stdNum.Log(d * 100, 2)
-
-                    If d < minRadius Then
-                        Return minRadius
-                    Else
-                        Return d
-                    End If
-                End If
-            End Function
+        Dim degreeRange As New DoubleRange(graph.vertex.Select(Function(a) CDbl(a.degree.In + a.degree.Out)).ToArray)
+        Dim nodeRadius As Func(Of Graph.Node, Single) = Function(v) degreeRange.ScaleMapping(v.degree.In + v.degree.Out, New DoubleRange(25, 120))
         Dim nodeClusters = graph.vertex.Select(Function(a) a.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE)).Distinct.Indexing
         Dim colorSet As SolidBrush() = Designer.GetColors("scibasic.category31()", nodeClusters.Count).Select(Function(a) New SolidBrush(a)).ToArray
 
