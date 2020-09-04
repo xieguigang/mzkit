@@ -21,12 +21,16 @@ Public Class Protocols
     ReadOnly treeSimilar As Double
     ReadOnly intoCutoff As Double
 
-    Sub New()
-
+    Sub New(ms1_tolerance As Tolerance, ms2_tolerance As Tolerance, treeIdentical As Double, treeSimilar As Double, intoCutoff As Double)
+        Me.treeIdentical = treeIdentical
+        Me.treeSimilar = treeSimilar
+        Me.intoCutoff = intoCutoff
+        Me.ms1_tolerance = ms1_tolerance
+        Me.ms2_tolerance = ms2_tolerance
     End Sub
 
     Public Function RunProtocol(raw As IEnumerable(Of PeakMs2), progress As Action(Of String)) As ProtocolPipeline
-        Return New ProtocolPipeline()
+        Return New ProtocolPipeline(Me, centroidlized(raw), progress)
     End Function
 
     ''' <summary>
@@ -34,7 +38,7 @@ Public Class Protocols
     ''' </summary>
     ''' <param name="raw"></param>
     ''' <returns></returns>
-    Public Iterator Function BinaryTree(raw As IEnumerable(Of PeakMs2)) As IEnumerable(Of SpectrumCluster)
+    Friend Iterator Function BinaryTree(raw As IEnumerable(Of PeakMs2)) As IEnumerable(Of SpectrumCluster)
         Dim tree As New SpectrumTreeCluster(SpectrumTreeCluster.SSMCompares(ms2_tolerance, treeIdentical, treeSimilar))
 
         Call tree.doCluster(raw.ToArray)
@@ -65,13 +69,14 @@ Public Class Protocols
     End Function
 
     Private Function centroidlized(raw As IEnumerable(Of PeakMs2)) As PeakMs2()
-
-    End Function
-
-    Public Iterator Function ProduceNodes(raw As IEnumerable(Of PeakMs2)) As IEnumerable(Of NetworkingNode)
-        Dim groupByMz As NamedCollection(Of PeakMs2)() = raw _
+        Return raw _
             .AsParallel _
             .Select(AddressOf centroid) _
+            .ToArray
+    End Function
+
+    Friend Iterator Function ProduceNodes(raw As IEnumerable(Of PeakMs2)) As IEnumerable(Of NetworkingNode)
+        Dim groupByMz As NamedCollection(Of PeakMs2)() = raw _
             .GroupBy(Function(peak) peak.mz, ms1_tolerance) _
             .ToArray
 
@@ -82,7 +87,7 @@ Public Class Protocols
         Next
     End Function
 
-    Public Iterator Function Networking(nodes As IEnumerable(Of NetworkingNode), progress As Action(Of String)) As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double)))
+    Friend Iterator Function Networking(nodes As IEnumerable(Of NetworkingNode), progress As Action(Of String)) As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double)))
         Dim i As i32 = 1
         Dim rawData As NetworkingNode() = nodes.ToArray
 
@@ -116,7 +121,9 @@ Public Class ProtocolPipeline
     ReadOnly raw As PeakMs2()
 
     Sub New(protocol As Protocols, raw As PeakMs2(), progress As Action(Of String))
-
+        Me.raw = raw
+        Me.protocol = protocol
+        Me.progress = progress
     End Sub
 
 End Class
