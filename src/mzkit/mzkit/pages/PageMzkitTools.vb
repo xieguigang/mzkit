@@ -896,6 +896,41 @@ Public Class PageMzkitTools
         Next
     End Function
 
+    Private Iterator Function getSelectedIonSpectrums() As IEnumerable(Of PeakMs2)
+        Dim explorer = MyApplication.host.fileExplorer
+
+        For i As Integer = 0 To explorer.treeView1.Nodes.Count - 1
+            Dim file = explorer.treeView1.Nodes(i)
+            Dim raw As Raw = file.Tag
+
+            Using cache As New netCDFReader(raw.cache)
+                For j As Integer = 0 To file.Nodes.Count - 1
+                    Dim scan = file.Nodes(j)
+                    Dim scanId As String = scan.Text
+
+                    If scan.Checked Then
+                        Dim entry = cache.getDataVariableEntry(scanId)
+                        Dim mztemp = cache.getDataVariable(entry).numerics.AsMs2.ToArray
+                        Dim attrs = cache.getDataVariableEntry(scanId).attributes
+                        Dim info As New SpectrumProperty(scanId, attrs)
+
+                        Yield New PeakMs2 With {
+                            .mz = info.precursorMz,
+                            .scan = 0,
+                            .activation = info.activationMethod,
+                            .collisionEnergy = info.collisionEnergy,
+                            .file = raw.source.FileName,
+                            .lib_guid = scanId,
+                            .mzInto = mztemp,
+                            .precursor_type = "n/a",
+                            .rt = info.retentionTime
+                        }
+                    End If
+                Next
+            End Using
+        Next
+    End Function
+
     Private Function relativeInto() As Boolean
         Return False ' MyApplication.host.ribbonItems.CheckBoxXICRelative.BooleanValue
     End Function
