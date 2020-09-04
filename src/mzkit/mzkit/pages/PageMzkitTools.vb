@@ -56,6 +56,7 @@ Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
@@ -682,48 +683,58 @@ Public Class PageMzkitTools
     End Sub
 
     Private Sub MolecularNetworkingToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        If TreeView1.CurrentRawFile.raw Is Nothing Then
-            Return
-        End If
+        'If TreeView1.CurrentRawFile.raw Is Nothing Then
+        '    Return
+        'End If
 
-        Dim raw As Raw = TreeView1.CurrentRawFile.raw
+        ' Dim raw As Raw = TreeView1.CurrentRawFile.raw
         Dim progress As New frmTaskProgress
         Dim runTask As New Thread(
             Sub()
-                ' Dim tree As New SpectrumTreeCluster(SpectrumTreeCluster.SSMCompares(Tolerance.DeltaMass(0.3), 0.75, 0.4), showReport:=False)
-                Dim run As New List(Of PeakMs2)
-                Dim nodes As New Dictionary(Of String, ScanEntry)
-                Dim idList As New Dictionary(Of String, Integer)
 
                 progress.Invoke(Sub() progress.Label1.Text = "loading cache ms2 scan data...")
 
-                Using cache As New netCDFReader(raw.cache)
-                    For Each scan In raw.scans.Where(Function(s) s.mz > 0)
-                        Dim uid As String = $"M{CInt(scan.mz)}T{CInt(scan.rt)}"
+                Dim raw = getSelectedIonSpectrums().ToArray
+                Dim protocol As New Protocols(Tolerance.PPM(15), Tolerance.DeltaMass(0.3), 0.85, 0.7, 0.05)
+                Dim progressMsg As Action(Of String) =
+                    Sub(msg)
+                        progress.Invoke(Sub() progress.Label2.Text = msg)
+                    End Sub
 
-                        If idList.ContainsKey(uid) Then
-                            idList(uid) += 1
-                            uid = uid & "_" & (idList(uid) - 1)
-                        Else
-                            idList.Add(uid, 1)
-                        End If
 
-                        run += New PeakMs2 With {
-                            .rt = scan.rt,
-                            .mz = scan.mz,
-                            .lib_guid = uid,
-                            .mzInto = cache.getDataVariable(scan.id).numerics.AsMs2.ToArray.Centroid(Tolerance.DeltaMass(0.3)).ToArray
-                        }
+                'Dim run As New List(Of PeakMs2)
+                'Dim nodes As New Dictionary(Of String, ScanEntry)
+                'Dim idList As New Dictionary(Of String, Integer)
 
-                        progress.Invoke(Sub() progress.Label2.Text = scan.id)
-                        nodes.Add(run.Last.lib_guid, scan)
-                    Next
-                End Using
+
+
+                'Using cache As New netCDFReader(raw.cache)
+                '    For Each scan In raw.scans.Where(Function(s) s.mz > 0)
+                '        Dim uid As String = $"M{CInt(scan.mz)}T{CInt(scan.rt)}"
+
+                '        If idList.ContainsKey(uid) Then
+                '            idList(uid) += 1
+                '            uid = uid & "_" & (idList(uid) - 1)
+                '        Else
+                '            idList.Add(uid, 1)
+                '        End If
+
+                '        run += New PeakMs2 With {
+                '            .rt = scan.rt,
+                '            .mz = scan.mz,
+                '            .lib_guid = uid,
+                '            .mzInto = cache.getDataVariable(scan.id).numerics.AsMs2.ToArray.Centroid(Tolerance.DeltaMass(0.3)).ToArray
+                '        }
+
+                '        progress.Invoke(Sub() progress.Label2.Text = scan.id)
+                '        nodes.Add(run.Last.lib_guid, scan)
+                '    Next
+                'End Using
 
                 progress.Invoke(Sub() progress.Label2.Text = "run molecular networking....")
 
                 ' Call tree.doCluster(run)
-                Dim net = MoleculeNetworking.CreateMatrix(run, 0.8, Tolerance.DeltaMass(0.3), Sub(msg) progress.Invoke(Sub() progress.Label1.Text = msg)).ToArray
+                Dim net = protocol.RunProtocol(raw, progressMsg).ProduceNodes.Networking(Of IO.DataSet).ToArray   ' MoleculeNetworking.CreateMatrix(run, 0.8, Tolerance.DeltaMass(0.3), Sub(msg) progress.Invoke(Sub() progress.Label1.Text = msg)).ToArray
 
                 progress.Invoke(Sub() progress.Label1.Text = "run family clustering....")
 
@@ -739,6 +750,7 @@ Public Class PageMzkitTools
 
                 progress.Invoke(Sub() progress.Close())
             End Sub)
+
         runTask.Start()
         progress.ShowDialog()
     End Sub
