@@ -79,13 +79,17 @@ Public Class PageMoleculeNetworking
         For Each row In rawMatrix
             Dim info As NetworkingNode = nodeInfo.Cluster(row.ID)
             Dim rt As Double() = info.members.Select(Function(a) a.rt).ToArray
+            Dim maxrt As Double = info.members.OrderByDescending(Function(a) a.Ms2Intensity).First.rt
 
             g.CreateNode(row.ID, New NodeData With {
                 .Properties = New Dictionary(Of String, String) From {
                     {NamesOf.REFLECTION_ID_MAPPING_NODETYPE, row.Cluster},
                     {"member_size", info.members.Length},
                     {"m/z", info.mz},
-                    {"rt", $"[{rt.Min.ToString("F3")}, {rt.Max.ToString("F3")}]"}
+                    {"rt", maxrt},
+                    {"rtmin", rt.Min},
+                    {"rtmax", rt.Max},
+                    {"area", info.members.Sum(Function(a) a.Ms2Intensity)}
                 }})
         Next
 
@@ -106,7 +110,7 @@ Public Class PageMoleculeNetworking
         For Each node In g.vertex
             Dim info = nodeInfo.Cluster(node.label)
 
-            DataGridView2.Rows.Add(node.label, node.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE), info.members.Length, info.mz, node.data("rt"))
+            DataGridView2.Rows.Add(node.label, node.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE), info.members.Length, info.mz, node.data("rt"), node.data("rtmin"), node.data("rtmax"), node.data("area"))
         Next
         For Each edge In g.graphEdges
             DataGridView1.Rows.Add(edge.U.label, edge.V.label, edge.weight, "View")
@@ -119,7 +123,7 @@ Public Class PageMoleculeNetworking
         If Not g Is Nothing Then
             Using file As New FolderBrowserDialog With {.ShowNewFolderButton = True}
                 If file.ShowDialog = DialogResult.OK Then
-                    Call g.Tabular({"scan", "m/z", "rt", "intensity", "polarity", "charge"}).Save(output:=file.SelectedPath)
+                    Call g.Tabular({"member_size", "m/z", "rt", "rtmin", "rtmax", "area"}).Save(output:=file.SelectedPath)
                     Call Process.Start(file.SelectedPath)
                 End If
             End Using
