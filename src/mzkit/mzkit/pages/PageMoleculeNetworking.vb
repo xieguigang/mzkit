@@ -79,18 +79,23 @@ Public Class PageMoleculeNetworking
         End If
 
         Dim progress As New frmTaskProgress
+        Dim viewer As New frmPlotViewer
+
+        viewer.Show(MyApplication.host.dockPanel)
+        viewer.DockState = DockState.Hidden
+
         Dim task As New Thread(
             Sub()
                 Thread.Sleep(500)
                 progress.Invoke(Sub() progress.Label1.Text = "Run network layouts...")
 
-                g = g.doRandomLayout.doForceLayout(iterations:=100)
+                g = g.doRandomLayout.doForceLayout(iterations:=1)
                 progress.Invoke(Sub() progress.Label1.Text = "do network render plot...")
 
-                Dim viewer As New frmPlotViewer
+                Dim plot As Image = g.DrawImage(labelerIterations:=-1).AsGDIImage
+
                 viewer.Invoke(Sub()
-                                  viewer.PictureBox1.BackgroundImage = g.DrawImage(labelerIterations:=-1).AsGDIImage
-                                  viewer.Show(MyApplication.host.dockPanel)
+                                  viewer.PictureBox1.BackgroundImage = plot
                                   viewer.DockState = DockState.Document
                               End Sub)
 
