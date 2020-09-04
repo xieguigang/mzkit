@@ -319,6 +319,7 @@
     <Compile Include="Ms1\Tolerance\DeltaMass.vb" />
     <Compile Include="Ms1\Tolerance\Tolerance.vb" />
     <Compile Include="Spectra\Models\Fragments.vb" />
+    <Compile Include="Spectra\MoleculeNetworking\Protocols.vb" />
     <Compile Include="Spectra\SpectraEncoder.vb" />
     <Compile Include="Spectra\Models\PeakMs2.vb" />
     <Compile Include="Spectra\LibraryMatrixExtensions.vb" />
