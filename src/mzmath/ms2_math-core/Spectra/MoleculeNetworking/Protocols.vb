@@ -1,8 +1,10 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' 1. 按照母离子m/z二叉树聚类
@@ -18,6 +20,8 @@ Public Class Protocols
     ReadOnly treeIdentical As Double
     ReadOnly treeSimilar As Double
     ReadOnly intoCutoff As Double
+
+    ReadOnly progress As Action(Of String)
 
     ''' <summary>
     ''' 步骤1
@@ -67,46 +71,35 @@ Public Class Protocols
             Next
         Next
     End Function
+
+    Public Iterator Function Networking(nodes As IEnumerable(Of NetworkingNode)) As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double)))
+        Dim i As i32 = 1
+        Dim rawData As NetworkingNode() = nodes.ToArray
+
+        For Each scan As NetworkingNode In rawData
+            Dim scores = rawData _
+                .Where(Function(a) Not a Is scan) _
+                .AsParallel _
+                .Select(Function(a)
+                            Dim id As String = a.referenceId
+                            Dim score = GlobalAlignment.TwoDirectionSSM(scan.representation.ms2, a.representation.ms2, ms2_tolerance)
+
+                            Return (id, stdNum.Min(score.forward, score.reverse))
+                        End Function) _
+                .ToArray
+
+            Call progress($"[{++i}/{rawData.Length}] {scan.ToString} has {scores.Where(Function(a) a.Item2 >= 0.8).Count} homologous spectrum")
+
+            Yield New NamedValue(Of Dictionary(Of String, Double)) With {
+                .Name = scan.referenceId,
+                .Value = scores.ToDictionary(Function(a) a.id, Function(a) a.Item2)
+            }
+        Next
+    End Function
 End Class
 
-Public Class NetworkingNode
+Public Class ProtocolPipeline
 
-    Public Property representation As PeakMs2
 
-    Public Property members As PeakMs2()
-    Public Property mz As Double
-
-    Public Function GetXIC() As ChromatogramTick()
-        Return members _
-            .Select(Function(a)
-                        Return New ChromatogramTick With {
-                            .Time = a.rt,
-                            .Intensity = a.Ms2Intensity
-                        }
-                    End Function) _
-            .OrderBy(Function(a) a.Time) _
-            .ToArray
-    End Function
-
-    ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <param name="raw"></param>
-    ''' <param name="tolerance">ms2 tolerance</param>
-    ''' <returns></returns>
-    Public Shared Function Create(parentIon As Double, raw As SpectrumCluster, tolerance As Tolerance) As NetworkingNode
-        Dim ions As PeakMs2() = raw.cluster _
-            .Select(Function(a)
-                        Dim maxInto = a.mzInto.Select(Function(x) x.intensity).Max
-
-                        For i As Integer = 0 To a.mzInto.Length - 1
-                            a.mzInto(i).quantity = a.mzInto(i).intensity / maxInto
-                        Next
-
-                        Return a
-                    End Function) _
-            .ToArray
-
-    End Function
 
 End Class
