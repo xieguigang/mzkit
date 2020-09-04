@@ -21,6 +21,21 @@ Public Class Protocols
     ReadOnly treeSimilar As Double
     ReadOnly intoCutoff As Double
 
+    ReadOnly raw As New Dictionary(Of String, PeakMs2)
+    ReadOnly clusters As New Dictionary(Of String, NetworkingNode)
+
+    Default Public ReadOnly Property GetSpectrum(ref As String) As PeakMs2
+        Get
+            Return raw(ref)
+        End Get
+    End Property
+
+    Public ReadOnly Property Cluster(ref As String) As NetworkingNode
+        Get
+            Return clusters(ref)
+        End Get
+    End Property
+
     Sub New(ms1_tolerance As Tolerance, ms2_tolerance As Tolerance, treeIdentical As Double, treeSimilar As Double, intoCutoff As Double)
         Me.treeIdentical = treeIdentical
         Me.treeSimilar = treeSimilar
@@ -30,7 +45,17 @@ Public Class Protocols
     End Sub
 
     Public Function RunProtocol(raw As IEnumerable(Of PeakMs2), progress As Action(Of String)) As ProtocolPipeline
-        Return New ProtocolPipeline(Me, centroidlized(raw), progress)
+        Dim centroid As PeakMs2()
+
+        Call progress("run data centroidlized...")
+
+        centroid = centroidlized(raw)
+
+        For Each ion In centroid
+            Me.raw.Add(ion.lib_guid, ion)
+        Next
+
+        Return New ProtocolPipeline(Me, centroid, progress)
     End Function
 
     ''' <summary>
@@ -104,6 +129,7 @@ Public Class Protocols
                 .ToArray
 
             Call progress($"[{++i}/{rawData.Length}] {scan.ToString} has {scores.Where(Function(a) a.Item2 >= 0.8).Count} homologous spectrum")
+            Call clusters.Add(scan.referenceId, scan)
 
             Yield New NamedValue(Of Dictionary(Of String, Double)) With {
                 .Name = scan.referenceId,

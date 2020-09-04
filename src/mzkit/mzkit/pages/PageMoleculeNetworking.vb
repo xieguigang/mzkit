@@ -43,6 +43,7 @@
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
@@ -62,9 +63,9 @@ Public Class PageMoleculeNetworking
 
     Dim g As NetworkGraph
     Dim rawMatrix As EntityClusterModel()
-    Dim nodeInfo As Dictionary(Of String, ScanEntry)
+    Dim nodeInfo As Protocols
 
-    Public Sub loadNetwork(MN As IEnumerable(Of EntityClusterModel), nodes As Dictionary(Of String, ScanEntry), cutoff As Double)
+    Public Sub loadNetwork(MN As IEnumerable(Of EntityClusterModel), nodes As Protocols, cutoff As Double)
         DataGridView1.Rows.Clear()
         DataGridView2.Rows.Clear()
 
@@ -76,17 +77,15 @@ Public Class PageMoleculeNetworking
         nodeInfo = nodes
 
         For Each row In rawMatrix
-            Dim info = nodeInfo(row.ID)
+            Dim info As NetworkingNode = nodeInfo.Cluster(row.ID)
+            Dim rt As Double() = info.members.Select(Function(a) a.rt).ToArray
 
             g.CreateNode(row.ID, New NodeData With {
                 .Properties = New Dictionary(Of String, String) From {
                     {NamesOf.REFLECTION_ID_MAPPING_NODETYPE, row.Cluster},
-                    {"scan", info.id},
+                    {"member_size", info.members.Length},
                     {"m/z", info.mz},
-                    {"rt", info.rt},
-                    {"intensity", info.XIC},
-                    {"polarity", info.polarity},
-                    {"charge", info.charge}
+                    {"rt", $"[{rt.Min.ToString("F3")}, {rt.Max.ToString("F3")}]"}
                 }})
         Next
 
@@ -105,9 +104,9 @@ Public Class PageMoleculeNetworking
         Next
 
         For Each node In g.vertex
-            Dim info = nodeInfo(node.label)
+            Dim info = nodeInfo.Cluster(node.label)
 
-            DataGridView2.Rows.Add(node.label, node.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE), info.id, info.mz, info.rt, info.XIC, info.polarity, info.charge)
+            DataGridView2.Rows.Add(node.label, node.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE), info.members.Length, info.mz, node.data("rt"))
         Next
         For Each edge In g.graphEdges
             DataGridView1.Rows.Add(edge.U.label, edge.V.label, edge.weight, "View")
@@ -158,17 +157,13 @@ Public Class PageMoleculeNetworking
                 Return
             End If
 
-            a = nodeInfo(a).id
-            b = nodeInfo(b).id
-
-            Dim raw = host.TreeView1.CurrentRawFile.raw
-            Dim data1 = raw.GetSpectrum(a)
-            Dim data2 = raw.GetSpectrum(b)
-            Dim matrix As SSM2MatrixFragment() = GlobalAlignment.CreateAlignment(data1.ms2, data2.ms2, Tolerance.DeltaMass(0.3)).ToArray
+            Dim nodeA = nodeInfo.Cluster(a)
+            Dim nodeB = nodeInfo.Cluster(b)
+            Dim matrix As SSM2MatrixFragment() = GlobalAlignment.CreateAlignment(nodeA.representation.ms2, nodeB.representation.ms2, Tolerance.DeltaMass(0.3)).ToArray
 
             host.mzkitTool.showMatrix(matrix, $"{row.Cells(0).Value}_vs_{row.Cells(1).Value}")
 
-            host.mzkitTool.PictureBox1.BackgroundImage = MassSpectra.AlignMirrorPlot(data1, data2).AsGDIImage
+            host.mzkitTool.PictureBox1.BackgroundImage = MassSpectra.AlignMirrorPlot(nodeA.representation, nodeB.representation).AsGDIImage
             host.mzkitTool.CustomTabControl1.SelectedTab = host.mzkitTool.TabPage5
 
             host.ShowPage(host.mzkitTool)

@@ -744,7 +744,7 @@ Public Class PageMzkitTools
 
                 MyApplication.host.Invoke(
                     Sub()
-                        Call MyApplication.host.mzkitMNtools.loadNetwork(clusters, nodes, 0.8)
+                        Call MyApplication.host.mzkitMNtools.loadNetwork(clusters, protocol, 0.8)
                         Call MyApplication.host.ShowPage(MyApplication.host.mzkitMNtools)
                     End Sub)
 
