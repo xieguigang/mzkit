@@ -67,6 +67,7 @@ Public Class PageMoleculeNetworking
     Dim rawMatrix As EntityClusterModel()
     Dim nodeInfo As Protocols
     Dim rawLinks As Dictionary(Of String, Dictionary(Of String, (id$, forward#, reverse#)))
+    Dim tooltip As New PlotTooltip
 
     Public Sub loadNetwork(MN As IEnumerable(Of EntityClusterModel),
                            nodes As Protocols,
@@ -83,6 +84,7 @@ Public Class PageMoleculeNetworking
         g = New NetworkGraph
         rawMatrix = MN.ToArray
         nodeInfo = nodes
+        tooltip.LoadInfo(nodeInfo)
 
         Me.rawLinks = rawLinks
 
@@ -127,10 +129,10 @@ Public Class PageMoleculeNetworking
 
             ' DataGridView2.Rows.Add(node.label, node.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE), info.members.Length, info.mz, node.data("rt"), node.data("rtmin"), node.data("rtmax"), node.data("area"))
 
-            Dim row As New TreeListViewItem With {.Text = node.label, .ImageIndex = 0}
+            Dim row As New TreeListViewItem With {.Text = node.label, .ImageIndex = 0, .ToolTipText = node.label}
 
             For Each member In info.members
-                Dim ion As New TreeListViewItem(member.lib_guid) With {.ImageIndex = 1}
+                Dim ion As New TreeListViewItem(member.lib_guid) With {.ImageIndex = 1, .ToolTipText = member.lib_guid}
 
                 ion.SubItems.Add(New ListViewSubItem With {.Text = member.file})
                 ion.SubItems.Add(New ListViewSubItem With {.Text = member.mzInto.Length})
@@ -238,6 +240,7 @@ Public Class PageMoleculeNetworking
     Private Sub PageMoleculeNetworking_Load(sender As Object, e As EventArgs) Handles Me.Load
         DataGridView1.CoolGrid
         ' DataGridView2.CoolGrid
+        tooltip.OwnerDraw = True
     End Sub
 
     Private Sub TreeListView1_Click(sender As Object, e As EventArgs) Handles TreeListView1.Click
@@ -245,6 +248,10 @@ Public Class PageMoleculeNetworking
     End Sub
 
     Private Sub TreeListView1_DoubleClick(sender As Object, e As EventArgs) Handles TreeListView1.DoubleClick
+
+    End Sub
+
+    Private Sub TreeListView1_MouseMove(sender As Object, e As MouseEventArgs) Handles TreeListView1.MouseMove
 
     End Sub
 End Class

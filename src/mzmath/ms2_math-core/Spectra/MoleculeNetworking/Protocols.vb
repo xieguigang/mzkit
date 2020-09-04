@@ -26,13 +26,13 @@ Public Class Protocols
 
     Default Public ReadOnly Property GetSpectrum(ref As String) As PeakMs2
         Get
-            Return raw(ref)
+            Return raw.TryGetValue(ref)
         End Get
     End Property
 
     Public ReadOnly Property Cluster(ref As String) As NetworkingNode
         Get
-            Return clusters(ref)
+            Return clusters.TryGetValue(ref)
         End Get
     End Property
 

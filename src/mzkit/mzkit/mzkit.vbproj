@@ -162,6 +162,9 @@
     <Compile Include="forms\frmLicense.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="pages\PlotTooltip.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="pages\CollDatagridview.vb" />
     <Compile Include="pages\contextMenu\ExportData.vb">
       <SubType>Component</SubType>
