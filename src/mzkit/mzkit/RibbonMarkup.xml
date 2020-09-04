@@ -456,7 +456,7 @@
 				<Image>Res/baobab.png</Image>
 			</Command.LargeImages>
 		</Command>
-<!--
+		<!--
 		<Command Name="cmdCheckBoxXICRelative"
 		 Id="1103"
 		 LabelTitle="Relative XIC intensity">
@@ -649,9 +649,9 @@
 				<Image>Res/document-save.png</Image>
 			</Command.LargeImages>
 		</Command>
-		
-		
-		
+
+
+
 
 		<Command Name="cmdGroupChromatography"
 				 Id="1141"
@@ -718,7 +718,7 @@
 						<Group CommandName='cmdGroupDesign'>
 
 							<Spinner CommandName="cmdPPMSpinner" />
-						<!--	<CheckBox CommandName="cmdCheckBoxXICRelative" />-->
+							<!--	<CheckBox CommandName="cmdCheckBoxXICRelative" />-->
 							<!-- <Button CommandName='cmdButtonDesign3' /> -->
 						</Group>
 
@@ -746,8 +746,8 @@
 							<Button CommandName='cmdButtonLayout1' />
 							<Button CommandName='cmdButtonLayout2' />
 						</Group>
-						
-						
+
+
 						<Group CommandName='cmdGroupChromatography' SizeDefinition='ThreeButtons'>
 							<Button CommandName='cmdButtonBPC' />
 							<Button CommandName='cmdButtonTIC' />
@@ -771,15 +771,15 @@
 				<TabGroup CommandName='cmdTabGroupRscriptTools'>
 					<Tab CommandName='cmdTabRscriptTools'>
 						<Group CommandName='cmdGroupRscript' SizeDefinition='TwoButtons'>
-	<Button CommandName='cmdButtonSaveScript' />						
-						<Button CommandName='cmdButtonRunScript' />
-												</Group>
+							<Button CommandName='cmdButtonSaveScript' />
+							<Button CommandName='cmdButtonRunScript' />
+						</Group>
 					</Tab>
 				</TabGroup>
 
-		
-				
-				
+
+
+
 				<TabGroup CommandName='cmdTabGroupExactMassSearchTools'>
 					<Tab CommandName='cmdTabExactMassSearch'>
 						<Group CommandName='cmdGroupExactMassSearch' SizeDefinition='TwoButtons'>
@@ -909,7 +909,7 @@
 					<MenuGroup CommandName='cmdMenuGroupFile'>
 						<Button CommandName='cmdButtonNew' />
 						<Button CommandName="cmdButtonImportsRawFiles" />
-						
+
 						<DropDownButton CommandName='cmdButtonToolkits'>
 							<MenuGroup Class='MajorItems'>
 								<Button CommandName='cmdButtonDropA' />
