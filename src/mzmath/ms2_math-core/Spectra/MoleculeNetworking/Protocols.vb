@@ -64,7 +64,7 @@ Public Class Protocols
     ''' <param name="raw"></param>
     ''' <returns></returns>
     Friend Iterator Function BinaryTree(raw As IEnumerable(Of PeakMs2)) As IEnumerable(Of SpectrumCluster)
-        Dim tree As New SpectrumTreeCluster(SpectrumTreeCluster.SSMCompares(ms2_tolerance, treeIdentical, treeSimilar))
+        Dim tree As New SpectrumTreeCluster(SpectrumTreeCluster.SSMCompares(ms2_tolerance, treeIdentical, treeSimilar), showReport:=False)
 
         Call tree.doCluster(raw.ToArray)
 
@@ -84,7 +84,7 @@ Public Class Protocols
             .file = raw.file,
             .collisionEnergy = raw.collisionEnergy,
             .lib_guid = raw.lib_guid,
-            .meta = New Dictionary(Of String, String)(raw.meta),
+            .meta = If(raw.meta Is Nothing, New Dictionary(Of String, String), New Dictionary(Of String, String)(raw.meta)),
             .mz = raw.mz,
             .mzInto = raw.mzInto.Centroid(ms2_tolerance, intoCutoff).ToArray,
             .precursor_type = raw.precursor_type,

@@ -914,13 +914,18 @@ Public Class PageMzkitTools
         For i As Integer = 0 To explorer.treeView1.Nodes.Count - 1
             Dim file = explorer.treeView1.Nodes(i)
             Dim raw As Raw = file.Tag
+            Dim rawScans As New Dictionary(Of String, ScanEntry)
+
+            For Each scan In raw.scans
+                rawScans.Add(scan.id, scan)
+            Next
 
             Using cache As New netCDFReader(raw.cache)
                 For j As Integer = 0 To file.Nodes.Count - 1
                     Dim scan = file.Nodes(j)
                     Dim scanId As String = scan.Text
 
-                    If scan.Checked Then
+                    If scan.Checked AndAlso rawScans(scanId).mz > 0 Then
                         Dim entry = cache.getDataVariableEntry(scanId)
                         Dim mztemp = cache.getDataVariable(entry).numerics.AsMs2.ToArray
                         Dim attrs = cache.getDataVariableEntry(scanId).attributes
@@ -932,7 +937,7 @@ Public Class PageMzkitTools
                             .activation = info.activationMethod,
                             .collisionEnergy = info.collisionEnergy,
                             .file = raw.source.FileName,
-                            .lib_guid = scanId,
+                            .lib_guid = $"{ .file}#{scanId}",
                             .mzInto = mztemp,
                             .precursor_type = "n/a",
                             .rt = info.retentionTime
