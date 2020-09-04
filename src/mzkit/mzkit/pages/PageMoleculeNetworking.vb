@@ -84,7 +84,13 @@ Public Class PageMoleculeNetworking
         Dim graph As NetworkGraph = g.Copy
 
         If Not showSingle Then
+            Dim links = g.connectedNodes.ToList
 
+            For Each node In g.vertex.ToArray
+                If links.IndexOf(node) = -1 Then
+                    g.RemoveNode(node)
+                End If
+            Next
         End If
 
         viewer.Show(MyApplication.host.dockPanel)
