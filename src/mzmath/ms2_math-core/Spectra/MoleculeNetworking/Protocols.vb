@@ -68,7 +68,7 @@ Public Class Protocols
 
         Call tree.doCluster(raw.ToArray)
 
-        For Each cluster In tree.PopulateClusters
+        For Each cluster As SpectrumCluster In tree.PopulateClusters
             Yield cluster
         Next
     End Function
@@ -106,7 +106,7 @@ Public Class Protocols
             .ToArray
 
         For Each mz As NamedCollection(Of PeakMs2) In groupByMz
-            For Each cluster In BinaryTree(mz)
+            For Each cluster As SpectrumCluster In BinaryTree(mz)
                 Yield NetworkingNode.Create(Val(mz.name), cluster, ms2_tolerance)
             Next
         Next
