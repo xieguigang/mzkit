@@ -14,7 +14,7 @@ Imports RibbonLib.Controls
 Imports RibbonLib.Interop
 
 Partial Class RibbonItems
-    Private _Ribbon As Ribbon, _TabGroupTableTools As RibbonTabGroup, _TabDesign As RibbonTab, _GroupDesign As RibbonGroup, _PPMSpinner As RibbonSpinner, _GroupShowViewer As RibbonGroup, _ButtonShowPlotViewer As RibbonButton, _ButtonShowMatrixViewer As RibbonButton, _GroupShowDockWindows As RibbonGroup, _ButtonShowExplorer As RibbonButton, _ButtonShowSearchList As RibbonButton, _ButtonShowProperties As RibbonButton, _TabLayout As RibbonTab, _GroupLayout As RibbonGroup, _ButtonLayout1 As RibbonButton, _ButtonLayout2 As RibbonButton, _GroupChromatography As RibbonGroup, _ButtonBPC As RibbonButton, _ButtonTIC As RibbonButton, _ButtonXIC As RibbonButton, _TabGroupCalculatorTools As RibbonTabGroup, _TabCalculator As RibbonTab, _GroupCalculator As RibbonGroup, _ButtonCalculatorExport As RibbonButton, _TabGroupRscriptTools As RibbonTabGroup, _TabRscriptTools As RibbonTab, _GroupRscript As RibbonGroup, _ButtonSaveScript As RibbonButton, _ButtonRunScript As RibbonButton, _TabGroupExactMassSearchTools As RibbonTabGroup, _TabExactMassSearch As RibbonTab, _GroupExactMassSearch As RibbonGroup, _ButtonExactMassSearchExport As RibbonButton, _TabGroupNetworkTools As RibbonTabGroup, _TabNetwork As RibbonTab, _GroupNetwork As RibbonGroup, _ButtonNetworkExport As RibbonButton, _ButtonNetworkRender As RibbonButton, _TabGroupFormulaSearchTools As RibbonTabGroup, _TabFormulaSearch As RibbonTab, _GroupFormulaSearch As RibbonGroup, _ButtonFormulaSearchExport As RibbonButton, _HelpButton As RibbonHelpButton, _TabMain As RibbonTab, _GroupFileActions As RibbonGroup, _ButtonNew As RibbonButton, _ButtonOpenRaw As RibbonButton, _ButtonSave As RibbonButton, _GroupExit As RibbonGroup, _ButtonRsharp As RibbonButton, _ButtonShowStartPage As RibbonButton, _ButtonShowLogWindow As RibbonButton, _TabTools As RibbonTab, _GroupToolsActions As RibbonGroup, _ButtonMzCalculator As RibbonButton, _ButtonMzSearch As RibbonButton, _TabAbout As RibbonTab, _GroupAboutActions As RibbonGroup, _ButtonAbout As RibbonButton, _ButtonBioDeep As RibbonButton, _RecentItems As RibbonRecentItems, _MenuGroupFile As RibbonMenuGroup, _ButtonImportsRawFiles As RibbonButton, _ButtonToolkits As RibbonDropDownButton, _ButtonDropA As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton, _ButtonDropD As RibbonButton, _ButtonSettings As RibbonButton, _ButtonLicense As RibbonButton, _MenuGroupExit As RibbonMenuGroup, _ButtonExit As RibbonButton, _QAT As RibbonQuickAccessToolbar, _ButtonPageNavBack As RibbonButton, _ButtonExportImage As RibbonButton, _ButtonExportMatrix As RibbonButton
+    Private _Ribbon As Ribbon, _TabGroupTableTools As RibbonTabGroup, _TabDesign As RibbonTab, _GroupDesign As RibbonGroup, _PPMSpinner As RibbonSpinner, _GroupShowViewer As RibbonGroup, _ButtonShowPlotViewer As RibbonButton, _ButtonShowMatrixViewer As RibbonButton, _GroupShowDockWindows As RibbonGroup, _ButtonShowExplorer As RibbonButton, _ButtonShowSearchList As RibbonButton, _ButtonShowProperties As RibbonButton, _TabLayout As RibbonTab, _GroupLayout As RibbonGroup, _ButtonLayout1 As RibbonButton, _ButtonLayout2 As RibbonButton, _GroupChromatography As RibbonGroup, _ButtonBPC As RibbonButton, _ButtonTIC As RibbonButton, _ButtonXIC As RibbonButton, _TabGroupCalculatorTools As RibbonTabGroup, _TabCalculator As RibbonTab, _GroupCalculator As RibbonGroup, _ButtonCalculatorExport As RibbonButton, _TabGroupRscriptTools As RibbonTabGroup, _TabRscriptTools As RibbonTab, _GroupRscript As RibbonGroup, _ButtonSaveScript As RibbonButton, _ButtonRunScript As RibbonButton, _TabGroupExactMassSearchTools As RibbonTabGroup, _TabExactMassSearch As RibbonTab, _GroupExactMassSearch As RibbonGroup, _ButtonExactMassSearchExport As RibbonButton, _TabGroupNetworkTools As RibbonTabGroup, _TabNetwork As RibbonTab, _GroupNetwork As RibbonGroup, _ButtonNetworkExport As RibbonButton, _ButtonNetworkRender As RibbonButton, _GroupNetworkTools As RibbonGroup, _SpinnerSimilarity As RibbonSpinner, _GroupNetworkRenderTool As RibbonGroup, _ButtonRefreshNetwork As RibbonButton, _TabGroupFormulaSearchTools As RibbonTabGroup, _TabFormulaSearch As RibbonTab, _GroupFormulaSearch As RibbonGroup, _ButtonFormulaSearchExport As RibbonButton, _HelpButton As RibbonHelpButton, _TabMain As RibbonTab, _GroupFileActions As RibbonGroup, _ButtonNew As RibbonButton, _ButtonOpenRaw As RibbonButton, _ButtonSave As RibbonButton, _GroupExit As RibbonGroup, _ButtonRsharp As RibbonButton, _ButtonShowStartPage As RibbonButton, _ButtonShowLogWindow As RibbonButton, _TabTools As RibbonTab, _GroupToolsActions As RibbonGroup, _ButtonMzCalculator As RibbonButton, _ButtonMzSearch As RibbonButton, _TabAbout As RibbonTab, _GroupAboutActions As RibbonGroup, _ButtonAbout As RibbonButton, _ButtonBioDeep As RibbonButton, _RecentItems As RibbonRecentItems, _MenuGroupFile As RibbonMenuGroup, _ButtonImportsRawFiles As RibbonButton, _ButtonToolkits As RibbonDropDownButton, _ButtonDropA As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton, _ButtonDropD As RibbonButton, _ButtonSettings As RibbonButton, _ButtonLicense As RibbonButton, _MenuGroupExit As RibbonMenuGroup, _ButtonExit As RibbonButton, _QAT As RibbonQuickAccessToolbar, _ButtonPageNavBack As RibbonButton, _ButtonExportImage As RibbonButton, _ButtonExportMatrix As RibbonButton
 
     Private NotInheritable Class Cmd
         Public Const cmdTabGroupTableTools As UInteger = 1031
@@ -54,6 +54,10 @@ Partial Class RibbonItems
         Public Const cmdGroupNetwork As UInteger = 1083
         Public Const cmdButtonNetworkExport As UInteger = 1084
         Public Const cmdButtonNetworkRender As UInteger = 1085
+        Public Const cmdGroupNetworkTools As UInteger = 1151
+        Public Const cmdSpinnerSimilarity As UInteger = 1153
+        Public Const cmdGroupNetworkRenderTool As UInteger = 1150
+        Public Const cmdButtonRefreshNetwork As UInteger = 1154
         Public Const cmdTabGroupFormulaSearchTools As UInteger = 1091
         Public Const cmdTabFormulaSearch As UInteger = 1092
         Public Const cmdGroupFormulaSearch As UInteger = 1093
@@ -442,6 +446,42 @@ Partial Class RibbonItems
         End Set
     End Property
 
+    Public Property GroupNetworkTools As RibbonGroup
+        Get
+            Return _GroupNetworkTools
+        End Get
+        Private Set(ByVal value As RibbonGroup)
+            _GroupNetworkTools = value
+        End Set
+    End Property
+
+    Public Property SpinnerSimilarity As RibbonSpinner
+        Get
+            Return _SpinnerSimilarity
+        End Get
+        Private Set(ByVal value As RibbonSpinner)
+            _SpinnerSimilarity = value
+        End Set
+    End Property
+
+    Public Property GroupNetworkRenderTool As RibbonGroup
+        Get
+            Return _GroupNetworkRenderTool
+        End Get
+        Private Set(ByVal value As RibbonGroup)
+            _GroupNetworkRenderTool = value
+        End Set
+    End Property
+
+    Public Property ButtonRefreshNetwork As RibbonButton
+        Get
+            Return _ButtonRefreshNetwork
+        End Get
+        Private Set(ByVal value As RibbonButton)
+            _ButtonRefreshNetwork = value
+        End Set
+    End Property
+
     Public Property TabGroupFormulaSearchTools As RibbonTabGroup
         Get
             Return _TabGroupFormulaSearchTools
@@ -825,6 +865,10 @@ Partial Class RibbonItems
         GroupNetwork = New RibbonGroup(ribbon, Cmd.cmdGroupNetwork)
         ButtonNetworkExport = New RibbonButton(ribbon, Cmd.cmdButtonNetworkExport)
         ButtonNetworkRender = New RibbonButton(ribbon, Cmd.cmdButtonNetworkRender)
+        GroupNetworkTools = New RibbonGroup(ribbon, Cmd.cmdGroupNetworkTools)
+        SpinnerSimilarity = New RibbonSpinner(ribbon, Cmd.cmdSpinnerSimilarity)
+        GroupNetworkRenderTool = New RibbonGroup(ribbon, Cmd.cmdGroupNetworkRenderTool)
+        ButtonRefreshNetwork = New RibbonButton(ribbon, Cmd.cmdButtonRefreshNetwork)
         TabGroupFormulaSearchTools = New RibbonTabGroup(ribbon, Cmd.cmdTabGroupFormulaSearchTools)
         TabFormulaSearch = New RibbonTab(ribbon, Cmd.cmdTabFormulaSearch)
         GroupFormulaSearch = New RibbonGroup(ribbon, Cmd.cmdGroupFormulaSearch)

@@ -13,8 +13,6 @@ using RibbonLib;
 using RibbonLib.Controls;
 using RibbonLib.Interop;
 
-namespace RibbonLib.Controls
-{
     partial class RibbonItems
     {
         private static class Cmd
@@ -56,6 +54,10 @@ namespace RibbonLib.Controls
             public const uint cmdGroupNetwork = 1083;
             public const uint cmdButtonNetworkExport = 1084;
             public const uint cmdButtonNetworkRender = 1085;
+            public const uint cmdGroupNetworkTools = 1151;
+            public const uint cmdSpinnerSimilarity = 1153;
+            public const uint cmdGroupNetworkRenderTool = 1150;
+            public const uint cmdButtonRefreshNetwork = 1154;
             public const uint cmdTabGroupFormulaSearchTools = 1091;
             public const uint cmdTabFormulaSearch = 1092;
             public const uint cmdGroupFormulaSearch = 1093;
@@ -141,6 +143,10 @@ namespace RibbonLib.Controls
         public RibbonGroup GroupNetwork { get; private set; }
         public RibbonButton ButtonNetworkExport { get; private set; }
         public RibbonButton ButtonNetworkRender { get; private set; }
+        public RibbonGroup GroupNetworkTools { get; private set; }
+        public RibbonSpinner SpinnerSimilarity { get; private set; }
+        public RibbonGroup GroupNetworkRenderTool { get; private set; }
+        public RibbonButton ButtonRefreshNetwork { get; private set; }
         public RibbonTabGroup TabGroupFormulaSearchTools { get; private set; }
         public RibbonTab TabFormulaSearch { get; private set; }
         public RibbonGroup GroupFormulaSearch { get; private set; }
@@ -224,6 +230,10 @@ namespace RibbonLib.Controls
             GroupNetwork = new RibbonGroup(ribbon, Cmd.cmdGroupNetwork);
             ButtonNetworkExport = new RibbonButton(ribbon, Cmd.cmdButtonNetworkExport);
             ButtonNetworkRender = new RibbonButton(ribbon, Cmd.cmdButtonNetworkRender);
+            GroupNetworkTools = new RibbonGroup(ribbon, Cmd.cmdGroupNetworkTools);
+            SpinnerSimilarity = new RibbonSpinner(ribbon, Cmd.cmdSpinnerSimilarity);
+            GroupNetworkRenderTool = new RibbonGroup(ribbon, Cmd.cmdGroupNetworkRenderTool);
+            ButtonRefreshNetwork = new RibbonButton(ribbon, Cmd.cmdButtonRefreshNetwork);
             TabGroupFormulaSearchTools = new RibbonTabGroup(ribbon, Cmd.cmdTabGroupFormulaSearchTools);
             TabFormulaSearch = new RibbonTab(ribbon, Cmd.cmdTabFormulaSearch);
             GroupFormulaSearch = new RibbonGroup(ribbon, Cmd.cmdGroupFormulaSearch);
@@ -266,4 +276,3 @@ namespace RibbonLib.Controls
         }
 
     }
-}

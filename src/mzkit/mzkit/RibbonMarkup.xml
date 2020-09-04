@@ -691,6 +691,36 @@
 			</Command.LargeImages>
 		</Command>
 
+		<Command Name="cmdGroupNetworkRenderTool"
+		 Id="1150"
+		 LabelTitle="Refresh Network">
+		</Command>
+
+		<Command Name="cmdGroupNetworkTools"
+		 Id="1151"
+		 LabelTitle="Network Plot Data Tools">
+		</Command>
+
+		<Command Name="cmdSpinnerSimilarity"
+					Id="1153"
+					LabelTitle="Spectrum Similarity"
+					LabelDescription="Filter node links by spectrum similarity"
+		 TooltipTitle="Spectrum Similarity"
+		 TooltipDescription="Filter node links by spectrum similarity">
+
+		</Command>
+
+		<Command Name="cmdButtonRefreshNetwork"
+					Id="1154"
+					LabelTitle="Refresh"
+					LabelDescription="Refresh Network"
+		 TooltipTitle="Refresh Network"
+		 TooltipDescription="Refresh network table">
+			<Command.LargeImages>
+				<Image>Res/178151.png</Image>
+			</Command.LargeImages>
+		</Command>
+
 
 	</Application.Commands>
 
@@ -796,6 +826,15 @@
 							<Button CommandName='cmdButtonNetworkExport' />
 							<Button CommandName='cmdButtonNetworkRender' />
 						</Group>
+
+						<Group CommandName='cmdGroupNetworkTools'>
+							<Spinner CommandName="cmdSpinnerSimilarity" />
+						</Group>
+
+						<Group CommandName='cmdGroupNetworkRenderTool' SizeDefinition="OneButton">
+							<Button CommandName="cmdButtonRefreshNetwork" />
+						</Group>
+
 					</Tab>
 				</TabGroup>
 
