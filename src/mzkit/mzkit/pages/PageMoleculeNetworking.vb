@@ -109,7 +109,7 @@ Public Class PageMoleculeNetworking
                 If d = 0 Then
                     Return minRadius
                 Else
-                    d = stdNum.Log(d * 30, 2)
+                    d = stdNum.Log(d * 100, 2)
 
                     If d < minRadius Then
                         Return minRadius
