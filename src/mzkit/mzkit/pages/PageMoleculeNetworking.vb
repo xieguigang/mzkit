@@ -174,13 +174,33 @@ Public Class PageMoleculeNetworking
     End Sub
 
     Private Sub SaveImageToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveImageToolStripMenuItem.Click
-        'If Not PictureBox1.BackgroundImage Is Nothing Then
-        '    Using file As New SaveFileDialog With {.Filter = "image(*.png)|*.png"}
-        '        If file.ShowDialog = DialogResult.OK Then
-        '            Call PictureBox1.BackgroundImage.SaveAs(file.FileName)
-        '        End If
-        '    End Using
-        'End If
+        Dim cluster As TreeListViewItem
+        Dim host = MyApplication.host
+
+        If TreeListView1.SelectedItems.Count = 0 Then
+            Return
+        Else
+            cluster = TreeListView1.SelectedItems(0)
+        End If
+
+        If cluster.ChildrenCount > 0 Then
+            ' 是一个cluster
+            Dim clusterId As String = cluster.Text
+            Dim clusterSpectrum = nodeInfo.Cluster(clusterId).representation
+
+            host.mzkitTool.showMatrix(clusterSpectrum.ms2, clusterId)
+            host.mzkitTool.PictureBox1.BackgroundImage = MassSpectra.MirrorPlot(clusterSpectrum).AsGDIImage
+        Else
+            ' 是一个spectrum
+            Dim spectrumName As String = cluster.Text
+            Dim spectrum = nodeInfo.GetSpectrum(spectrumName)
+
+            host.mzkitTool.showMatrix(spectrum.mzInto, spectrumName)
+            host.mzkitTool.PictureBox1.BackgroundImage = MassSpectra.MirrorPlot(New LibraryMatrix With {.ms2 = spectrum.mzInto, .name = spectrumName}).AsGDIImage
+        End If
+
+        host.mzkitTool.CustomTabControl1.SelectedTab = host.mzkitTool.TabPage5
+        host.ShowPage(host.mzkitTool)
     End Sub
 
     Private Sub PageMoleculeNetworking_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
@@ -225,27 +245,7 @@ Public Class PageMoleculeNetworking
     End Sub
 
     Private Sub TreeListView1_DoubleClick(sender As Object, e As EventArgs) Handles TreeListView1.DoubleClick
-        Dim cluster = TreeListView1.SelectedItems.Item(0)
-        Dim host = MyApplication.host
 
-        If cluster.ChildrenCount > 0 Then
-            ' 是一个cluster
-            Dim clusterId As String = cluster.Text
-            Dim clusterSpectrum = nodeInfo.Cluster(clusterId).representation
-
-            host.mzkitTool.showMatrix(clusterSpectrum.ms2, clusterId)
-            host.mzkitTool.PictureBox1.BackgroundImage = MassSpectra.MirrorPlot(clusterSpectrum).AsGDIImage
-        Else
-            ' 是一个spectrum
-            Dim spectrumName As String = cluster.Text
-            Dim spectrum = nodeInfo.GetSpectrum(spectrumName)
-
-            host.mzkitTool.showMatrix(spectrum.mzInto, spectrumName)
-            host.mzkitTool.PictureBox1.BackgroundImage = MassSpectra.MirrorPlot(New LibraryMatrix With {.ms2 = spectrum.mzInto, .name = spectrumName}).AsGDIImage
-        End If
-
-        host.mzkitTool.CustomTabControl1.SelectedTab = host.mzkitTool.TabPage5
-        host.ShowPage(host.mzkitTool)
     End Sub
 End Class
 

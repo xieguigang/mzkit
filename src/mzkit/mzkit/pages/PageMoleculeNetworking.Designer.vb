@@ -28,6 +28,11 @@ Partial Class PageMoleculeNetworking
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.CompoundA = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CompoundB = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Similarity = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reverse = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column1 = New System.Windows.Forms.DataGridViewButtonColumn()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.TreeListView1 = New System.Windows.Forms.TreeListView()
         Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
@@ -41,11 +46,6 @@ Partial Class PageMoleculeNetworking
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.SaveImageToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.CompoundA = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.CompoundB = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Similarity = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.reverse = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column1 = New System.Windows.Forms.DataGridViewButtonColumn()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -86,6 +86,36 @@ Partial Class PageMoleculeNetworking
         Me.DataGridView1.Size = New System.Drawing.Size(942, 616)
         Me.DataGridView1.TabIndex = 0
         '
+        'CompoundA
+        '
+        Me.CompoundA.HeaderText = "CompoundA"
+        Me.CompoundA.Name = "CompoundA"
+        Me.CompoundA.ReadOnly = True
+        '
+        'CompoundB
+        '
+        Me.CompoundB.HeaderText = "CompoundB"
+        Me.CompoundB.Name = "CompoundB"
+        Me.CompoundB.ReadOnly = True
+        '
+        'Similarity
+        '
+        Me.Similarity.HeaderText = "forward"
+        Me.Similarity.Name = "Similarity"
+        Me.Similarity.ReadOnly = True
+        '
+        'reverse
+        '
+        Me.reverse.HeaderText = "reverse"
+        Me.reverse.Name = "reverse"
+        Me.reverse.ReadOnly = True
+        '
+        'Column1
+        '
+        Me.Column1.HeaderText = "View"
+        Me.Column1.Name = "Column1"
+        Me.Column1.ReadOnly = True
+        '
         'TabPage3
         '
         Me.TabPage3.Controls.Add(Me.TreeListView1)
@@ -99,18 +129,16 @@ Partial Class PageMoleculeNetworking
         '
         'TreeListView1
         '
-        Me.TreeListView1.Activation = System.Windows.Forms.ItemActivation.OneClick
         Me.TreeListView1.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2, Me.ColumnHeader3, Me.ColumnHeader4, Me.ColumnHeader5, Me.ColumnHeader6, Me.ColumnHeader7, Me.ColumnHeader8})
         TreeListViewItemCollectionComparer1.Column = 0
         TreeListViewItemCollectionComparer1.SortOrder = System.Windows.Forms.SortOrder.Ascending
         Me.TreeListView1.Comparer = TreeListViewItemCollectionComparer1
+        Me.TreeListView1.ContextMenuStrip = Me.ContextMenuStrip1
         Me.TreeListView1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TreeListView1.Font = New System.Drawing.Font("Microsoft YaHei", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TreeListView1.Font = New System.Drawing.Font("Microsoft YaHei", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TreeListView1.GridLines = True
         Me.TreeListView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
         Me.TreeListView1.HideSelection = False
-        Me.TreeListView1.HotTracking = True
-        Me.TreeListView1.HoverSelection = True
         Me.TreeListView1.Location = New System.Drawing.Point(3, 3)
         Me.TreeListView1.MultiSelect = False
         Me.TreeListView1.Name = "TreeListView1"
@@ -172,43 +200,14 @@ Partial Class PageMoleculeNetworking
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveImageToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
         Me.ContextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(135, 26)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(140, 26)
         '
         'SaveImageToolStripMenuItem
         '
+        Me.SaveImageToolStripMenuItem.Image = Global.mzkit.My.Resources.Resources.preferences_system_notifications
         Me.SaveImageToolStripMenuItem.Name = "SaveImageToolStripMenuItem"
-        Me.SaveImageToolStripMenuItem.Size = New System.Drawing.Size(134, 22)
-        Me.SaveImageToolStripMenuItem.Text = "Save Image"
-        '
-        'CompoundA
-        '
-        Me.CompoundA.HeaderText = "CompoundA"
-        Me.CompoundA.Name = "CompoundA"
-        Me.CompoundA.ReadOnly = True
-        '
-        'CompoundB
-        '
-        Me.CompoundB.HeaderText = "CompoundB"
-        Me.CompoundB.Name = "CompoundB"
-        Me.CompoundB.ReadOnly = True
-        '
-        'Similarity
-        '
-        Me.Similarity.HeaderText = "forward"
-        Me.Similarity.Name = "Similarity"
-        Me.Similarity.ReadOnly = True
-        '
-        'reverse
-        '
-        Me.reverse.HeaderText = "reverse"
-        Me.reverse.Name = "reverse"
-        Me.reverse.ReadOnly = True
-        '
-        'Column1
-        '
-        Me.Column1.HeaderText = "View"
-        Me.Column1.Name = "Column1"
-        Me.Column1.ReadOnly = True
+        Me.SaveImageToolStripMenuItem.Size = New System.Drawing.Size(139, 22)
+        Me.SaveImageToolStripMenuItem.Text = "Show Image"
         '
         'PageMoleculeNetworking
         '
