@@ -52,6 +52,7 @@ Public Class Settings
     Public Property formula_search As FormulaSearchProfile
     Public Property ui As UISettings
     Public Property viewer As RawFileViewerSettings
+    Public Property network As NetworkArguments
 
     Public Property recentFiles As String()
 

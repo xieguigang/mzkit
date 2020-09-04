@@ -288,6 +288,13 @@
     <Compile Include="pages\Settings\PresetProfile.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="pages\Settings\MolecularNetworking.Designer.vb">
+      <DependentUpon>MolecularNetworking.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\Settings\MolecularNetworking.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="settings\NetworkArguments.vb" />
     <Compile Include="settings\UISettings.vb" />
     <Compile Include="settings\PrecursorSearchSettings.vb" />
     <Compile Include="settings\Settings.vb" />
@@ -449,6 +456,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="pages\Settings\ElementProfile.resx">
       <DependentUpon>ElementProfile.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pages\Settings\MolecularNetworking.resx">
+      <DependentUpon>MolecularNetworking.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pages\Settings\PlotConfig.resx">
       <DependentUpon>PlotConfig.vb</DependentUpon>
