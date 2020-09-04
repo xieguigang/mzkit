@@ -111,6 +111,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.InteropServices.APIs">
+      <HintPath>..\dist\System.Runtime.InteropServices.APIs.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Windows.Forms.TabControl">
@@ -118,6 +121,9 @@
     </Reference>
     <Reference Include="System.Windows.Forms.ThemeColorPicker">
       <HintPath>..\dist\System.Windows.Forms.ThemeColorPicker.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms.TreeListView">
+      <HintPath>..\dist\System.Windows.Forms.TreeListView.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -156,6 +162,7 @@
     <Compile Include="forms\frmLicense.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="pages\CollDatagridview.vb" />
     <Compile Include="pages\contextMenu\ExportData.vb">
       <SubType>Component</SubType>
     </Compile>

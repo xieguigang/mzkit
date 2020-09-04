@@ -55,6 +55,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Imaging
+Imports mzkit.cooldatagridview
 Imports mzkit.My
 Imports RibbonLib.Interop
 Imports Task
@@ -172,6 +173,11 @@ Public Class PageMoleculeNetworking
 
             host.ShowPage(host.mzkitTool)
         End If
+    End Sub
+
+    Private Sub PageMoleculeNetworking_Load(sender As Object, e As EventArgs) Handles Me.Load
+        DataGridView1.CoolGrid
+        DataGridView2.CoolGrid
     End Sub
 End Class
 
