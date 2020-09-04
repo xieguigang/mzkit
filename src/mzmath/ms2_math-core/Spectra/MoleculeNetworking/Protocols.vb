@@ -112,7 +112,7 @@ Public Class Protocols
         Next
     End Function
 
-    Friend Iterator Function Networking(nodes As IEnumerable(Of NetworkingNode), progress As Action(Of String)) As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double)))
+    Friend Iterator Function Networking(nodes As IEnumerable(Of NetworkingNode), progress As Action(Of String)) As IEnumerable(Of NamedValue(Of Dictionary(Of String, (id As String, forward#, reverse#))))
         Dim i As i32 = 1
         Dim rawData As NetworkingNode() = nodes.ToArray
 
@@ -124,16 +124,19 @@ Public Class Protocols
                             Dim id As String = a.referenceId
                             Dim score = GlobalAlignment.TwoDirectionSSM(scan.representation.ms2, a.representation.ms2, ms2_tolerance)
 
-                            Return (id, stdNum.Min(score.forward, score.reverse))
+                            Return (id, score.forward, score.reverse)
                         End Function) _
                 .ToArray
 
             Call progress($"[{++i}/{rawData.Length}] {scan.ToString} has {scores.Where(Function(a) a.Item2 >= 0.8).Count} homologous spectrum")
             Call clusters.Add(scan.referenceId, scan)
 
-            Yield New NamedValue(Of Dictionary(Of String, Double)) With {
+            Yield New NamedValue(Of Dictionary(Of String, (String, Double, Double))) With {
                 .Name = scan.referenceId,
-                .Value = scores.ToDictionary(Function(a) a.id, Function(a) a.Item2)
+                .Value = scores.ToDictionary(Function(a) a.id,
+                                             Function(a)
+                                                 Return (a.id, a.forward, a.reverse)
+                                             End Function)
             }
         Next
     End Function

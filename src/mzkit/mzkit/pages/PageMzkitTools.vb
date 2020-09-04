@@ -79,6 +79,7 @@ Imports RibbonLib.Controls.Events
 Imports RibbonLib.Interop
 Imports Task
 Imports WeifenLuo.WinFormsUI.Docking
+Imports stdNum = System.Math
 
 Public Class PageMzkitTools
 
@@ -741,17 +742,30 @@ Public Class PageMzkitTools
                 progress.Invoke(Sub() progress.Label2.Text = "run molecular networking....")
 
                 ' Call tree.doCluster(run)
-                Dim net = protocol.RunProtocol(raw, progressMsg).ProduceNodes.Networking(Of IO.DataSet).ToArray   ' MoleculeNetworking.CreateMatrix(run, 0.8, Tolerance.DeltaMass(0.3), Sub(msg) progress.Invoke(Sub() progress.Label1.Text = msg)).ToArray
+                Dim links = protocol.RunProtocol(raw, progressMsg).ProduceNodes.Networking.ToArray
+                Dim net As IO.DataSet() = links _
+                    .Select(Function(a)
+                                Return New IO.DataSet With {
+                                    .ID = a.Name,
+                                    .Properties = a.Value _
+                                        .ToDictionary(Function(t) t.Key,
+                                                      Function(t)
+                                                          Return stdNum.Min(t.Value.forward, t.Value.reverse)
+                                                      End Function)
+                                }
+                            End Function) _
+                    .ToArray   ' MoleculeNetworking.CreateMatrix(run, 0.8, Tolerance.DeltaMass(0.3), Sub(msg) progress.Invoke(Sub() progress.Label1.Text = msg)).ToArray
 
                 progress.Invoke(Sub() progress.Label1.Text = "run family clustering....")
 
                 Dim clusters = net.ToKMeansModels.Kmeans(expected:=10, debug:=False)
+                Dim rawLinks = links.ToDictionary(Function(a) a.Name, Function(a) a.Value)
 
                 progress.Invoke(Sub() progress.Label1.Text = "initialize result output...")
 
                 MyApplication.host.Invoke(
                     Sub()
-                        Call MyApplication.host.mzkitMNtools.loadNetwork(clusters, protocol, 0.8)
+                        Call MyApplication.host.mzkitMNtools.loadNetwork(clusters, protocol, rawLinks, 0.8)
                         Call MyApplication.host.ShowPage(MyApplication.host.mzkitMNtools)
                     End Sub)
 

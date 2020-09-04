@@ -66,10 +66,15 @@ Public Class PageMoleculeNetworking
     Dim g As NetworkGraph
     Dim rawMatrix As EntityClusterModel()
     Dim nodeInfo As Protocols
+    Dim rawLinks As Dictionary(Of String, Dictionary(Of String, (id$, forward#, reverse#)))
 
-    Public Sub loadNetwork(MN As IEnumerable(Of EntityClusterModel), nodes As Protocols, cutoff As Double)
+    Public Sub loadNetwork(MN As IEnumerable(Of EntityClusterModel),
+                           nodes As Protocols,
+                           rawLinks As Dictionary(Of String, Dictionary(Of String, (id$, forward#, reverse#))),
+                           cutoff As Double)
+
         DataGridView1.Rows.Clear()
-        DataGridView2.Rows.Clear()
+        ' DataGridView2.Rows.Clear()
         TreeListView1.Items.Clear()
 
         ' g = TreeGraph(Of PeakMs2, PeakMs2).CreateGraph(MN.getRoot, Function(a) a.lib_guid, Function(a) $"M{CInt(a.mz)}T{CInt(a.rt)}")
@@ -78,6 +83,8 @@ Public Class PageMoleculeNetworking
         g = New NetworkGraph
         rawMatrix = MN.ToArray
         nodeInfo = nodes
+
+        Me.rawLinks = rawLinks
 
         For Each row In rawMatrix
             Dim info As NetworkingNode = nodeInfo.Cluster(row.ID)
@@ -100,12 +107,17 @@ Public Class PageMoleculeNetworking
         Dim uniqueKey As String
 
         For Each row In rawMatrix
+            Dim rawLink = rawLinks(row.ID)
+
             For Each link In row.Properties.Where(Function(l) l.Value >= cutoff AndAlso l.Key <> row.ID)
                 uniqueKey = {row.ID, link.Key}.OrderBy(Function(str) str).JoinBy(" vs ")
 
                 If Not uniqueKey Like duplicatedEdges Then
                     Call duplicatedEdges.Add(uniqueKey)
-                    Call g.CreateEdge(row.ID, link.Key, link.Value)
+                    Call g.CreateEdge(row.ID, link.Key, link.Value, New EdgeData With {.Properties = New Dictionary(Of String, String) From {
+                                      {"forward", rawLink.TryGetValue(link.Key).forward},
+                                      {"reverse", rawLink.TryGetValue(link.Key).reverse}
+                                 }})
                 End If
             Next
         Next
@@ -113,7 +125,7 @@ Public Class PageMoleculeNetworking
         For Each node In g.vertex
             Dim info = nodeInfo.Cluster(node.label)
 
-            DataGridView2.Rows.Add(node.label, node.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE), info.members.Length, info.mz, node.data("rt"), node.data("rtmin"), node.data("rtmax"), node.data("area"))
+            ' DataGridView2.Rows.Add(node.label, node.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE), info.members.Length, info.mz, node.data("rt"), node.data("rtmin"), node.data("rtmax"), node.data("area"))
 
             Dim row As New TreeListViewItem With {.Text = node.label, .ImageIndex = 0}
 
@@ -142,7 +154,7 @@ Public Class PageMoleculeNetworking
             TreeListView1.Items.Add(row)
         Next
         For Each edge In g.graphEdges
-            DataGridView1.Rows.Add(edge.U.label, edge.V.label, edge.weight, "View")
+            DataGridView1.Rows.Add(edge.U.label, edge.V.label, edge.data!forward, edge.data!reverse, "View")
         Next
 
         ' PictureBox1.BackgroundImage = g.DrawImage(labelerIterations:=-1).AsGDIImage
@@ -180,7 +192,7 @@ Public Class PageMoleculeNetworking
     End Sub
 
     Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellContentClick
-        If e.ColumnIndex = 3 AndAlso e.RowIndex > -1 Then
+        If e.ColumnIndex = 4 AndAlso e.RowIndex > -1 Then
             Dim row = DataGridView1.Rows(e.RowIndex)
             Dim a = CStr(row.Cells(0).Value)
             Dim b = CStr(row.Cells(1).Value)
@@ -205,7 +217,18 @@ Public Class PageMoleculeNetworking
 
     Private Sub PageMoleculeNetworking_Load(sender As Object, e As EventArgs) Handles Me.Load
         DataGridView1.CoolGrid
-        DataGridView2.CoolGrid
+        ' DataGridView2.CoolGrid
+    End Sub
+
+    Private Sub TreeListView1_Click(sender As Object, e As EventArgs) Handles TreeListView1.Click
+        Dim cluster = TreeListView1.SelectedItems.Item(0)
+
+        If cluster.ChildrenCount > 0 Then
+            ' 是一个cluster
+        Else
+            ' 是一个spectrum
+
+        End If
     End Sub
 End Class
 
