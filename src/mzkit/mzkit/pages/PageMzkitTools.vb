@@ -695,6 +695,13 @@ Public Class PageMzkitTools
                 progress.Invoke(Sub() progress.Label1.Text = "loading cache ms2 scan data...")
 
                 Dim raw = getSelectedIonSpectrums().ToArray
+
+                If raw.Length = 0 Then
+                    MyApplication.host.showStatusMessage("No spectrum data, please select a file or some spectrum...", My.Resources.StatusAnnotations_Warning_32xLG_color)
+                    progress.Invoke(Sub() progress.Close())
+                    Return
+                End If
+
                 Dim protocol As New Protocols(Tolerance.PPM(15), Tolerance.DeltaMass(0.3), 0.85, 0.7, 0.05)
                 Dim progressMsg As Action(Of String) =
                     Sub(msg)

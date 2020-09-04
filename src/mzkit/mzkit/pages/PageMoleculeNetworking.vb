@@ -43,6 +43,7 @@
 
 #End Region
 
+Imports System.Windows.Forms.ListViewItem
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -69,6 +70,7 @@ Public Class PageMoleculeNetworking
     Public Sub loadNetwork(MN As IEnumerable(Of EntityClusterModel), nodes As Protocols, cutoff As Double)
         DataGridView1.Rows.Clear()
         DataGridView2.Rows.Clear()
+        TreeListView1.Items.Clear()
 
         ' g = TreeGraph(Of PeakMs2, PeakMs2).CreateGraph(MN.getRoot, Function(a) a.lib_guid, Function(a) $"M{CInt(a.mz)}T{CInt(a.rt)}")
         '.doRandomLayout _
@@ -112,6 +114,22 @@ Public Class PageMoleculeNetworking
             Dim info = nodeInfo.Cluster(node.label)
 
             DataGridView2.Rows.Add(node.label, node.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE), info.members.Length, info.mz, node.data("rt"), node.data("rtmin"), node.data("rtmax"), node.data("area"))
+
+            Dim row As New TreeListViewItem With {.Text = node.label}
+
+            For Each member In info.members
+                row.Items.Add(New TreeListViewItem(member.lib_guid))
+            Next
+
+            row.SubItems.Add(New ListViewSubItem With {.Text = node.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE)})
+            row.SubItems.Add(New ListViewSubItem With {.Text = info.members.Length})
+            row.SubItems.Add(New ListViewSubItem With {.Text = info.mz})
+            row.SubItems.Add(New ListViewSubItem With {.Text = node.data("rt")})
+            row.SubItems.Add(New ListViewSubItem With {.Text = node.data("rtmin")})
+            row.SubItems.Add(New ListViewSubItem With {.Text = node.data("rtmax")})
+            row.SubItems.Add(New ListViewSubItem With {.Text = node.data("area")})
+
+            TreeListView1.Items.Add(row)
         Next
         For Each edge In g.graphEdges
             DataGridView1.Rows.Add(edge.U.label, edge.V.label, edge.weight, "View")

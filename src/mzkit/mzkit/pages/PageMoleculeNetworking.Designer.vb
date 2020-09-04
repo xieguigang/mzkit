@@ -23,6 +23,7 @@ Partial Class PageMoleculeNetworking
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim TreeListViewItemCollectionComparer1 As System.Windows.Forms.TreeListViewItemCollection.TreeListViewItemCollectionComparer = New System.Windows.Forms.TreeListViewItemCollection.TreeListViewItemCollectionComparer()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
@@ -32,8 +33,6 @@ Partial Class PageMoleculeNetworking
         Me.Column1 = New System.Windows.Forms.DataGridViewButtonColumn()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.DataGridView2 = New System.Windows.Forms.DataGridView()
-        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.SaveImageToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Compound = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ClusterId = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -42,18 +41,32 @@ Partial Class PageMoleculeNetworking
         Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.SaveImageToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.TreeListView1 = New System.Windows.Forms.TreeListView()
+        Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader3 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader4 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader5 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader6 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader7 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader8 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage2.SuspendLayout()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip1.SuspendLayout()
+        Me.TabPage3.SuspendLayout()
         Me.SuspendLayout()
         '
         'TabControl1
         '
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage2)
+        Me.TabControl1.Controls.Add(Me.TabPage3)
         Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl1.Location = New System.Drawing.Point(0, 0)
         Me.TabControl1.Name = "TabControl1"
@@ -128,19 +141,6 @@ Partial Class PageMoleculeNetworking
         Me.DataGridView2.Size = New System.Drawing.Size(942, 566)
         Me.DataGridView2.TabIndex = 0
         '
-        'ContextMenuStrip1
-        '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveImageToolStripMenuItem})
-        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(145, 26)
-        '
-        'SaveImageToolStripMenuItem
-        '
-        Me.SaveImageToolStripMenuItem.Name = "SaveImageToolStripMenuItem"
-        Me.SaveImageToolStripMenuItem.Size = New System.Drawing.Size(144, 22)
-        Me.SaveImageToolStripMenuItem.Text = "Save Image"
-        '
         'Compound
         '
         Me.Compound.HeaderText = "Compound"
@@ -181,6 +181,84 @@ Partial Class PageMoleculeNetworking
         Me.Column7.HeaderText = "area"
         Me.Column7.Name = "Column7"
         '
+        'ContextMenuStrip1
+        '
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveImageToolStripMenuItem})
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(145, 26)
+        '
+        'SaveImageToolStripMenuItem
+        '
+        Me.SaveImageToolStripMenuItem.Name = "SaveImageToolStripMenuItem"
+        Me.SaveImageToolStripMenuItem.Size = New System.Drawing.Size(144, 22)
+        Me.SaveImageToolStripMenuItem.Text = "Save Image"
+        '
+        'TabPage3
+        '
+        Me.TabPage3.Controls.Add(Me.TreeListView1)
+        Me.TabPage3.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage3.Name = "TabPage3"
+        Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage3.Size = New System.Drawing.Size(948, 572)
+        Me.TabPage3.TabIndex = 2
+        Me.TabPage3.Text = "TabPage3"
+        Me.TabPage3.UseVisualStyleBackColor = True
+        '
+        'TreeListView1
+        '
+        Me.TreeListView1.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2, Me.ColumnHeader3, Me.ColumnHeader4, Me.ColumnHeader5, Me.ColumnHeader6, Me.ColumnHeader7, Me.ColumnHeader8})
+        TreeListViewItemCollectionComparer1.Column = 0
+        TreeListViewItemCollectionComparer1.SortOrder = System.Windows.Forms.SortOrder.Ascending
+        Me.TreeListView1.Comparer = TreeListViewItemCollectionComparer1
+        Me.TreeListView1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TreeListView1.HideSelection = False
+        Me.TreeListView1.Location = New System.Drawing.Point(3, 3)
+        Me.TreeListView1.Name = "TreeListView1"
+        Me.TreeListView1.Size = New System.Drawing.Size(942, 566)
+        Me.TreeListView1.TabIndex = 0
+        Me.TreeListView1.UseCompatibleStateImageBehavior = False
+        '
+        'ColumnHeader1
+        '
+        Me.ColumnHeader1.Text = "Spectrum"
+        Me.ColumnHeader1.Width = 131
+        '
+        'ColumnHeader2
+        '
+        Me.ColumnHeader2.Text = "Cluster"
+        Me.ColumnHeader2.Width = 110
+        '
+        'ColumnHeader3
+        '
+        Me.ColumnHeader3.Text = "Scans"
+        Me.ColumnHeader3.Width = 88
+        '
+        'ColumnHeader4
+        '
+        Me.ColumnHeader4.Text = "m/z"
+        Me.ColumnHeader4.Width = 110
+        '
+        'ColumnHeader5
+        '
+        Me.ColumnHeader5.Text = "rt"
+        Me.ColumnHeader5.Width = 111
+        '
+        'ColumnHeader6
+        '
+        Me.ColumnHeader6.Text = "rtmin"
+        Me.ColumnHeader6.Width = 141
+        '
+        'ColumnHeader7
+        '
+        Me.ColumnHeader7.Text = "rtmax"
+        Me.ColumnHeader7.Width = 102
+        '
+        'ColumnHeader8
+        '
+        Me.ColumnHeader8.Text = "area"
+        Me.ColumnHeader8.Width = 117
+        '
         'PageMoleculeNetworking
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
@@ -195,6 +273,7 @@ Partial Class PageMoleculeNetworking
         Me.TabPage2.ResumeLayout(False)
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ContextMenuStrip1.ResumeLayout(False)
+        Me.TabPage3.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -218,4 +297,14 @@ Partial Class PageMoleculeNetworking
     Friend WithEvents Column5 As DataGridViewTextBoxColumn
     Friend WithEvents Column6 As DataGridViewTextBoxColumn
     Friend WithEvents Column7 As DataGridViewTextBoxColumn
+    Friend WithEvents TabPage3 As TabPage
+    Friend WithEvents TreeListView1 As TreeListView
+    Friend WithEvents ColumnHeader1 As ColumnHeader
+    Friend WithEvents ColumnHeader2 As ColumnHeader
+    Friend WithEvents ColumnHeader3 As ColumnHeader
+    Friend WithEvents ColumnHeader4 As ColumnHeader
+    Friend WithEvents ColumnHeader5 As ColumnHeader
+    Friend WithEvents ColumnHeader6 As ColumnHeader
+    Friend WithEvents ColumnHeader7 As ColumnHeader
+    Friend WithEvents ColumnHeader8 As ColumnHeader
 End Class

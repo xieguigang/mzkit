@@ -30,6 +30,10 @@ Public Class NetworkingNode
             .ToArray
     End Function
 
+    Public Overrides Function ToString() As String
+        Return referenceId
+    End Function
+
     ''' <summary>
     ''' 
     ''' </summary>
