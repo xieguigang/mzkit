@@ -51,16 +51,19 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.visualize.Network
+Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports mzkit.cooldatagridview
 Imports mzkit.My
 Imports RibbonLib.Interop
 Imports WeifenLuo.WinFormsUI.Docking
+Imports stdNum = System.Math
 
 Public Class PageMoleculeNetworking
 
@@ -79,39 +82,70 @@ Public Class PageMoleculeNetworking
         End If
 
         Dim progress As New frmTaskProgress
-        Dim viewer As New frmPlotViewer
+        Dim viewer As New frmPlotViewer With {.TabText = "Molecular Networking Viewer"}
         Dim showSingle As Boolean = False
         Dim graph As NetworkGraph = g.Copy
 
         If Not showSingle Then
-            Dim links = g.connectedNodes.ToList
+            Dim links = graph.connectedNodes.ToList
 
-            For Each node In g.vertex.ToArray
+            For Each node In graph.vertex.ToArray
                 If links.IndexOf(node) = -1 Then
-                    g.RemoveNode(node)
+                    graph.RemoveNode(node)
                 End If
             Next
         End If
 
+        Call graph.ComputeNodeDegrees
+
         viewer.Show(MyApplication.host.dockPanel)
         viewer.DockState = DockState.Hidden
+
+        Dim minRadius As Single = 20
+        Dim nodeRadius As Func(Of Graph.Node, Single) =
+            Function(v)
+                Dim d = v.degree.In + v.degree.Out
+
+                If d = 0 Then
+                    Return minRadius
+                Else
+                    d = stdNum.Log(d * 30, 2)
+
+                    If d < minRadius Then
+                        Return minRadius
+                    Else
+                        Return d
+                    End If
+                End If
+            End Function
+        Dim nodeClusters = graph.vertex.Select(Function(a) a.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE)).Distinct.Indexing
+        Dim colorSet As SolidBrush() = Designer.GetColors("scibasic.category31()", nodeClusters.Count).Select(Function(a) New SolidBrush(a)).ToArray
+
+        For Each v In graph.vertex
+            v.data.color = colorSet(nodeClusters.IndexOf(v.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE)))
+        Next
 
         Dim task As New Thread(
             Sub()
                 Thread.Sleep(500)
                 progress.Invoke(Sub() progress.Label1.Text = "Run network layouts...")
 
-                g = g.doRandomLayout.doForceLayout(iterations:=1)
+                graph = graph.doRandomLayout.doForceLayout(iterations:=1)
                 progress.Invoke(Sub() progress.Label1.Text = "do network render plot...")
 
-                Dim plot As Image = g.DrawImage(
+                Dim plot As Image = graph.DrawImage(
                     canvasSize:="1920,1080",
-                    labelerIterations:=-1
+                    labelerIterations:=-1,
+                    displayId:=False,
+                    nodeRadius:=nodeRadius,
+                    minLinkWidth:=1,
+                    hideDisconnectedNode:=True
                 ).AsGDIImage
 
                 viewer.Invoke(Sub()
                                   viewer.PictureBox1.BackgroundImage = plot
                                   viewer.DockState = DockState.Document
+                                  viewer.Show(MyApplication.host.dockPanel)
                               End Sub)
 
                 progress.Invoke(Sub() progress.Close())
