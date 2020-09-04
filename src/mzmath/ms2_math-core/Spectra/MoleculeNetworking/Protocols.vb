@@ -21,7 +21,13 @@ Public Class Protocols
     ReadOnly treeSimilar As Double
     ReadOnly intoCutoff As Double
 
-    ReadOnly progress As Action(Of String)
+    Sub New()
+
+    End Sub
+
+    Public Function RunProtocol(raw As IEnumerable(Of PeakMs2), progress As Action(Of String)) As ProtocolPipeline
+        Return New ProtocolPipeline()
+    End Function
 
     ''' <summary>
     ''' 步骤1
@@ -58,6 +64,10 @@ Public Class Protocols
         }
     End Function
 
+    Private Function centroidlized(raw As IEnumerable(Of PeakMs2)) As PeakMs2()
+
+    End Function
+
     Public Iterator Function ProduceNodes(raw As IEnumerable(Of PeakMs2)) As IEnumerable(Of NetworkingNode)
         Dim groupByMz As NamedCollection(Of PeakMs2)() = raw _
             .AsParallel _
@@ -72,7 +82,7 @@ Public Class Protocols
         Next
     End Function
 
-    Public Iterator Function Networking(nodes As IEnumerable(Of NetworkingNode)) As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double)))
+    Public Iterator Function Networking(nodes As IEnumerable(Of NetworkingNode), progress As Action(Of String)) As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double)))
         Dim i As i32 = 1
         Dim rawData As NetworkingNode() = nodes.ToArray
 
@@ -100,6 +110,13 @@ End Class
 
 Public Class ProtocolPipeline
 
+    ReadOnly protocol As Protocols
+    ReadOnly progress As Action(Of String)
 
+    ReadOnly raw As PeakMs2()
+
+    Sub New(protocol As Protocols, raw As PeakMs2(), progress As Action(Of String))
+
+    End Sub
 
 End Class
