@@ -113,17 +113,3 @@ Public Class Protocols
     End Function
 End Class
 
-Public Class ProtocolPipeline
-
-    ReadOnly protocol As Protocols
-    ReadOnly progress As Action(Of String)
-
-    ReadOnly raw As PeakMs2()
-
-    Sub New(protocol As Protocols, raw As PeakMs2(), progress As Action(Of String))
-        Me.raw = raw
-        Me.protocol = protocol
-        Me.progress = progress
-    End Sub
-
-End Class
