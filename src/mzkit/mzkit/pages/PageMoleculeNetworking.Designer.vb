@@ -24,6 +24,7 @@ Partial Class PageMoleculeNetworking
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim TreeListViewItemCollectionComparer1 As System.Windows.Forms.TreeListViewItemCollection.TreeListViewItemCollectionComparer = New System.Windows.Forms.TreeListViewItemCollection.TreeListViewItemCollectionComparer()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(PageMoleculeNetworking))
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
@@ -41,8 +42,6 @@ Partial Class PageMoleculeNetworking
         Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.SaveImageToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.TreeListView1 = New System.Windows.Forms.TreeListView()
         Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
@@ -53,13 +52,16 @@ Partial Class PageMoleculeNetworking
         Me.ColumnHeader6 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader7 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader8 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.SaveImageToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage2.SuspendLayout()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.ContextMenuStrip1.SuspendLayout()
         Me.TabPage3.SuspendLayout()
+        Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'TabControl1
@@ -71,7 +73,7 @@ Partial Class PageMoleculeNetworking
         Me.TabControl1.Location = New System.Drawing.Point(0, 0)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(956, 598)
+        Me.TabControl1.Size = New System.Drawing.Size(956, 648)
         Me.TabControl1.TabIndex = 0
         '
         'TabPage1
@@ -80,7 +82,7 @@ Partial Class PageMoleculeNetworking
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(948, 572)
+        Me.TabPage1.Size = New System.Drawing.Size(948, 622)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Network"
         Me.TabPage1.UseVisualStyleBackColor = True
@@ -93,7 +95,7 @@ Partial Class PageMoleculeNetworking
         Me.DataGridView1.Location = New System.Drawing.Point(3, 3)
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.ReadOnly = True
-        Me.DataGridView1.Size = New System.Drawing.Size(942, 566)
+        Me.DataGridView1.Size = New System.Drawing.Size(942, 616)
         Me.DataGridView1.TabIndex = 0
         '
         'CompoundA
@@ -126,7 +128,7 @@ Partial Class PageMoleculeNetworking
         Me.TabPage2.Location = New System.Drawing.Point(4, 22)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(948, 572)
+        Me.TabPage2.Size = New System.Drawing.Size(948, 622)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Compounds"
         Me.TabPage2.UseVisualStyleBackColor = True
@@ -138,7 +140,7 @@ Partial Class PageMoleculeNetworking
         Me.DataGridView2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DataGridView2.Location = New System.Drawing.Point(3, 3)
         Me.DataGridView2.Name = "DataGridView2"
-        Me.DataGridView2.Size = New System.Drawing.Size(942, 566)
+        Me.DataGridView2.Size = New System.Drawing.Size(942, 616)
         Me.DataGridView2.TabIndex = 0
         '
         'Compound
@@ -181,26 +183,13 @@ Partial Class PageMoleculeNetworking
         Me.Column7.HeaderText = "area"
         Me.Column7.Name = "Column7"
         '
-        'ContextMenuStrip1
-        '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveImageToolStripMenuItem})
-        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(145, 26)
-        '
-        'SaveImageToolStripMenuItem
-        '
-        Me.SaveImageToolStripMenuItem.Name = "SaveImageToolStripMenuItem"
-        Me.SaveImageToolStripMenuItem.Size = New System.Drawing.Size(144, 22)
-        Me.SaveImageToolStripMenuItem.Text = "Save Image"
-        '
         'TabPage3
         '
         Me.TabPage3.Controls.Add(Me.TreeListView1)
         Me.TabPage3.Location = New System.Drawing.Point(4, 22)
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage3.Size = New System.Drawing.Size(948, 572)
+        Me.TabPage3.Size = New System.Drawing.Size(948, 622)
         Me.TabPage3.TabIndex = 2
         Me.TabPage3.Text = "TabPage3"
         Me.TabPage3.UseVisualStyleBackColor = True
@@ -212,10 +201,13 @@ Partial Class PageMoleculeNetworking
         TreeListViewItemCollectionComparer1.SortOrder = System.Windows.Forms.SortOrder.Ascending
         Me.TreeListView1.Comparer = TreeListViewItemCollectionComparer1
         Me.TreeListView1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TreeListView1.Font = New System.Drawing.Font("Microsoft YaHei", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TreeListView1.GridLines = True
         Me.TreeListView1.HideSelection = False
         Me.TreeListView1.Location = New System.Drawing.Point(3, 3)
         Me.TreeListView1.Name = "TreeListView1"
-        Me.TreeListView1.Size = New System.Drawing.Size(942, 566)
+        Me.TreeListView1.Size = New System.Drawing.Size(942, 616)
+        Me.TreeListView1.SmallImageList = Me.ImageList1
         Me.TreeListView1.TabIndex = 0
         Me.TreeListView1.UseCompatibleStateImageBehavior = False
         '
@@ -259,21 +251,41 @@ Partial Class PageMoleculeNetworking
         Me.ColumnHeader8.Text = "area"
         Me.ColumnHeader8.Width = 117
         '
+        'ContextMenuStrip1
+        '
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveImageToolStripMenuItem})
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(135, 26)
+        '
+        'SaveImageToolStripMenuItem
+        '
+        Me.SaveImageToolStripMenuItem.Name = "SaveImageToolStripMenuItem"
+        Me.SaveImageToolStripMenuItem.Size = New System.Drawing.Size(134, 22)
+        Me.SaveImageToolStripMenuItem.Text = "Save Image"
+        '
+        'ImageList1
+        '
+        Me.ImageList1.ImageStream = CType(resources.GetObject("ImageList1.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.ImageList1.TransparentColor = System.Drawing.Color.Transparent
+        Me.ImageList1.Images.SetKeyName(0, "gnome-documents.png")
+        Me.ImageList1.Images.SetKeyName(1, "application-vnd.oasis.opendocument.database.png")
+        '
         'PageMoleculeNetworking
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.TabControl1)
         Me.DoubleBuffered = True
         Me.Name = "PageMoleculeNetworking"
-        Me.Size = New System.Drawing.Size(956, 598)
+        Me.Size = New System.Drawing.Size(956, 648)
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage2.ResumeLayout(False)
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.ContextMenuStrip1.ResumeLayout(False)
         Me.TabPage3.ResumeLayout(False)
+        Me.ContextMenuStrip1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -307,4 +319,5 @@ Partial Class PageMoleculeNetworking
     Friend WithEvents ColumnHeader6 As ColumnHeader
     Friend WithEvents ColumnHeader7 As ColumnHeader
     Friend WithEvents ColumnHeader8 As ColumnHeader
+    Friend WithEvents ImageList1 As ImageList
 End Class

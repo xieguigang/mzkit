@@ -115,10 +115,10 @@ Public Class PageMoleculeNetworking
 
             DataGridView2.Rows.Add(node.label, node.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE), info.members.Length, info.mz, node.data("rt"), node.data("rtmin"), node.data("rtmax"), node.data("area"))
 
-            Dim row As New TreeListViewItem With {.Text = node.label}
+            Dim row As New TreeListViewItem With {.Text = node.label, .ImageIndex = 0}
 
             For Each member In info.members
-                row.Items.Add(New TreeListViewItem(member.lib_guid))
+                row.Items.Add(New TreeListViewItem(member.lib_guid) With {.ImageIndex = 1})
             Next
 
             row.SubItems.Add(New ListViewSubItem With {.Text = node.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE)})
