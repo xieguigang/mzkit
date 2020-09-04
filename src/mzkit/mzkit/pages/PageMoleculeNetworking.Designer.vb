@@ -52,9 +52,9 @@ Partial Class PageMoleculeNetworking
         Me.ColumnHeader6 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader7 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader8 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.SaveImageToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -201,7 +201,7 @@ Partial Class PageMoleculeNetworking
         TreeListViewItemCollectionComparer1.SortOrder = System.Windows.Forms.SortOrder.Ascending
         Me.TreeListView1.Comparer = TreeListViewItemCollectionComparer1
         Me.TreeListView1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TreeListView1.Font = New System.Drawing.Font("Microsoft YaHei", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TreeListView1.Font = New System.Drawing.Font("Microsoft YaHei", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TreeListView1.GridLines = True
         Me.TreeListView1.HideSelection = False
         Me.TreeListView1.Location = New System.Drawing.Point(3, 3)
@@ -218,12 +218,12 @@ Partial Class PageMoleculeNetworking
         '
         'ColumnHeader2
         '
-        Me.ColumnHeader2.Text = "Cluster"
+        Me.ColumnHeader2.Text = "Cluster/File"
         Me.ColumnHeader2.Width = 110
         '
         'ColumnHeader3
         '
-        Me.ColumnHeader3.Text = "Scans"
+        Me.ColumnHeader3.Text = "Scans/Fragments"
         Me.ColumnHeader3.Width = 88
         '
         'ColumnHeader4
@@ -251,6 +251,13 @@ Partial Class PageMoleculeNetworking
         Me.ColumnHeader8.Text = "area"
         Me.ColumnHeader8.Width = 117
         '
+        'ImageList1
+        '
+        Me.ImageList1.ImageStream = CType(resources.GetObject("ImageList1.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.ImageList1.TransparentColor = System.Drawing.Color.Transparent
+        Me.ImageList1.Images.SetKeyName(0, "gnome-documents.png")
+        Me.ImageList1.Images.SetKeyName(1, "application-vnd.oasis.opendocument.database.png")
+        '
         'ContextMenuStrip1
         '
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveImageToolStripMenuItem})
@@ -263,13 +270,6 @@ Partial Class PageMoleculeNetworking
         Me.SaveImageToolStripMenuItem.Name = "SaveImageToolStripMenuItem"
         Me.SaveImageToolStripMenuItem.Size = New System.Drawing.Size(134, 22)
         Me.SaveImageToolStripMenuItem.Text = "Save Image"
-        '
-        'ImageList1
-        '
-        Me.ImageList1.ImageStream = CType(resources.GetObject("ImageList1.ImageStream"), System.Windows.Forms.ImageListStreamer)
-        Me.ImageList1.TransparentColor = System.Drawing.Color.Transparent
-        Me.ImageList1.Images.SetKeyName(0, "gnome-documents.png")
-        Me.ImageList1.Images.SetKeyName(1, "application-vnd.oasis.opendocument.database.png")
         '
         'PageMoleculeNetworking
         '

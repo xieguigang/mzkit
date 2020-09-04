@@ -118,7 +118,17 @@ Public Class PageMoleculeNetworking
             Dim row As New TreeListViewItem With {.Text = node.label, .ImageIndex = 0}
 
             For Each member In info.members
-                row.Items.Add(New TreeListViewItem(member.lib_guid) With {.ImageIndex = 1})
+                Dim ion As New TreeListViewItem(member.lib_guid) With {.ImageIndex = 1}
+
+                ion.SubItems.Add(New ListViewSubItem With {.Text = member.file})
+                ion.SubItems.Add(New ListViewSubItem With {.Text = member.mzInto.Length})
+                ion.SubItems.Add(New ListViewSubItem With {.Text = member.mz})
+                ion.SubItems.Add(New ListViewSubItem With {.Text = member.rt})
+                ion.SubItems.Add(New ListViewSubItem With {.Text = "n/a"})
+                ion.SubItems.Add(New ListViewSubItem With {.Text = "n/a"})
+                ion.SubItems.Add(New ListViewSubItem With {.Text = member.Ms2Intensity})
+
+                row.Items.Add(ion)
             Next
 
             row.SubItems.Add(New ListViewSubItem With {.Text = node.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE)})
