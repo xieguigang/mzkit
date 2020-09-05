@@ -4,6 +4,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Net.Http
 
 Public Class NetworkingNode
 
@@ -67,6 +68,7 @@ Public Class NetworkingNode
             .IteratesALL _
             .GroupBy(Function(a) a.mz, tolerance) _
             .ToArray
+        Dim files = ions.Select(Function(a) a.file).GroupBy(Function(a) a).OrderByDescending(Function(a) a.Count).First.Key
         Dim rt = ions.OrderByDescending(Function(a) a.Ms2Intensity).First.rt
         Dim matrix As ms2() = mz _
             .Select(Function(a)
@@ -82,13 +84,15 @@ Public Class NetworkingNode
         Dim products As String = matrix _
             .OrderByDescending(Function(a) a.intensity) _
             .Take(3) _
-            .Select(Function(a) a.mz.ToString("F3")) _
-            .JoinBy(", ")
+            .Select(Function(a) BitConverter.GetBytes(a.mz)) _
+            .IteratesALL _
+            .ToBase64String
+        Dim uid As String = $"{files}#M{CInt(ions.Select(Function(a) a.mz).Average)}T{CInt(rt)}_{products}"
 
         Return New LibraryMatrix With {
             .centroid = True,
             .ms2 = matrix,
-            .name = $"{ions.Select(Function(a) a.mz).Average.ToString("F3")} [max={rt}, {ions.Length} members]"
+            .name = uid
         }
     End Function
 

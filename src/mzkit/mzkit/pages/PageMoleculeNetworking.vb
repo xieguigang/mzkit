@@ -50,6 +50,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.visualize.Network
 Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis
@@ -175,12 +176,16 @@ Public Class PageMoleculeNetworking
         nodeInfo = nodes
         tooltip.LoadInfo(nodeInfo)
 
+        Dim colors As LoopArray(Of String) = Designer.GetColors("Set1:c9", 10).Select(AddressOf ToHtmlColor).AsLoop
+        Dim colorIndex As New Dictionary(Of String, String)
+
         Me.rawLinks = rawLinks
 
         For Each row In rawMatrix
             Dim info As NetworkingNode = nodeInfo.Cluster(row.ID)
             Dim rt As Double() = info.members.Select(Function(a) a.rt).ToArray
             Dim maxrt As Double = info.members.OrderByDescending(Function(a) a.Ms2Intensity).First.rt
+            Dim color As String = colorIndex.ComputeIfAbsent(row.Cluster, Function(cl) colors.Next)
 
             g.CreateNode(row.ID, New NodeData With {
                 .Properties = New Dictionary(Of String, String) From {
@@ -190,7 +195,8 @@ Public Class PageMoleculeNetworking
                     {"rt", maxrt},
                     {"rtmin", rt.Min},
                     {"rtmax", rt.Max},
-                    {"area", info.members.Sum(Function(a) a.Ms2Intensity)}
+                    {"area", info.members.Sum(Function(a) a.Ms2Intensity)},
+                    {"color", color}
                 }})
         Next
 
@@ -212,6 +218,9 @@ Public Class PageMoleculeNetworking
                 End If
             Next
         Next
+
+        Call g.ComputeNodeDegrees
+        Call g.ComputeBetweennessCentrality
 
         For Each node In g.vertex
             Dim info = nodeInfo.Cluster(node.label)
@@ -255,7 +264,7 @@ Public Class PageMoleculeNetworking
         If Not g Is Nothing Then
             Using file As New FolderBrowserDialog With {.ShowNewFolderButton = True}
                 If file.ShowDialog = DialogResult.OK Then
-                    Call g.Tabular({"member_size", "m/z", "rt", "rtmin", "rtmax", "area"}).Save(output:=file.SelectedPath)
+                    Call g.Tabular({"member_size", "m/z", "rt", "rtmin", "rtmax", "area", "forward", "reverse", "color"}).Save(output:=file.SelectedPath)
                     Call Process.Start(file.SelectedPath)
                 End If
             End Using
