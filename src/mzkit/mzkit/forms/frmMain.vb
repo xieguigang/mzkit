@@ -448,6 +448,9 @@ Public Class frmMain
         MyApplication.host.startPage.Show(MyApplication.host.dockPanel)
         MyApplication.InitializeREngine()
 
+        Timer1.Enabled = True
+        Timer1.Start()
+
         showStatusMessage("Ready!")
     End Sub
 
@@ -712,6 +715,16 @@ Public Class frmMain
 
     Private Sub frmMain_ResizeEnd(sender As Object, e As EventArgs) Handles Me.ResizeEnd
         Ribbon1.Refresh()
+    End Sub
+
+    Dim mzkitApp As Process = Process.GetCurrentProcess()
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        ToolStripStatusLabel3.Text = $"Memory: {StringFormats.Lanudry(mzkitApp.WorkingSet64)}"
+    End Sub
+
+    Private Sub ToolStripStatusLabel2_Click(sender As Object, e As EventArgs) Handles ToolStripStatusLabel2.Click
+
     End Sub
 
 
