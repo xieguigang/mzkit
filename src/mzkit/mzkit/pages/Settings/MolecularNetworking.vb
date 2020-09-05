@@ -1,4 +1,4 @@
-﻿Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
+﻿Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce
 Imports mzkit.My
 
 Public Class MolecularNetworking : Implements ISaveSettings, IPageSettings
