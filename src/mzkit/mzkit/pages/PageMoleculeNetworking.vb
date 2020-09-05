@@ -159,12 +159,21 @@ Public Class PageMoleculeNetworking
 
     Public Sub RefreshNetwork()
         If rawMatrix.IsNullOrEmpty Then
+            MyApplication.host.showStatusMessage("no network graph data!", My.Resources.StatusAnnotations_Warning_32xLG_color)
             Return
         End If
 
         Dim similarityCutoff As Double = MyApplication.host.ribbonItems.SpinnerSimilarity.DecimalValue
+        Dim buzy As New frmProgressSpinner
 
-        Call loadNetwork(rawMatrix, nodeInfo, rawLinks, similarityCutoff)
+        Call New Thread(Sub()
+                            Call Thread.Sleep(500)
+                            Call Me.Invoke(Sub() loadNetwork(rawMatrix, nodeInfo, rawLinks, similarityCutoff))
+                            Call buzy.Invoke(Sub() buzy.Close())
+
+                            MyApplication.host.showStatusMessage($"Refresh network with new similarity filter {similarityCutoff} success!")
+                        End Sub).Start()
+        Call buzy.ShowDialog()
     End Sub
 
     Public Sub loadNetwork(MN As IEnumerable(Of EntityClusterModel),
