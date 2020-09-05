@@ -123,7 +123,10 @@ Public Class PageMoleculeNetworking
                 progress.Invoke(Sub() progress.Label1.Text = "Run network layouts...")
 
                 graph = graph.doRandomLayout.doForceLayout(
-                    iterations:=Globals.Settings.network.layout_iterations,
+                    iterations:=Globals.Settings.network.layout.Iterations,
+                    Stiffness:=Globals.Settings.network.layout.Stiffness,
+                    Damping:=Globals.Settings.network.layout.Damping,
+                    Repulsion:=Globals.Settings.network.layout.Repulsion,
                     progressCallback:=Sub(msg)
                                           progress.Invoke(Sub() progress.Label1.Text = msg)
                                       End Sub)

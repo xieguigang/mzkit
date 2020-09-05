@@ -1,6 +1,8 @@
-﻿Public Class NetworkArguments
+﻿Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 
-    Public Property layout_iterations As Integer
+Public Class NetworkArguments
+
+    Public Property layout As ForceDirectedArgs
 
     Public Property nodeRadius As ElementRange
     Public Property linkWidth As ElementRange
