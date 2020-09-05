@@ -103,11 +103,11 @@ Public Class PageMoleculeNetworking
         viewer.Show(MyApplication.host.dockPanel)
         viewer.DockState = DockState.Hidden
 
-        Dim minRadius As Single = 20
+        Dim minRadius As Single = Globals.Settings.network.nodeRadius.min
         Dim degreeRange As New DoubleRange(graph.vertex.Select(Function(a) CDbl(a.degree.In + a.degree.Out)).ToArray)
         Dim similarityRange As New DoubleRange(graph.graphEdges.Select(Function(a) a.weight).ToArray)
-        Dim nodeRadiusRange As New DoubleRange(25, 120)
-        Dim linkWidthRange As New DoubleRange(2, 20)
+        Dim nodeRadiusRange As DoubleRange = Globals.Settings.network.nodeRadius.AsDoubleRange
+        Dim linkWidthRange As DoubleRange = Globals.Settings.network.linkWidth.AsDoubleRange
         Dim nodeRadius As Func(Of Graph.Node, Single) = Function(v) degreeRange.ScaleMapping(v.degree.In + v.degree.Out, nodeRadiusRange)
         Dim linkWidth As Func(Of Graph.Edge, Single) = Function(l) similarityRange.ScaleMapping(l.weight, linkWidthRange)
         Dim nodeClusters = graph.vertex.Select(Function(a) a.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE)).Distinct.Indexing
