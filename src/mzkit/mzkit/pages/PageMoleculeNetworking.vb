@@ -105,7 +105,11 @@ Public Class PageMoleculeNetworking
 
         Dim minRadius As Single = 20
         Dim degreeRange As New DoubleRange(graph.vertex.Select(Function(a) CDbl(a.degree.In + a.degree.Out)).ToArray)
-        Dim nodeRadius As Func(Of Graph.Node, Single) = Function(v) degreeRange.ScaleMapping(v.degree.In + v.degree.Out, New DoubleRange(25, 150))
+        Dim similarityRange As New DoubleRange(graph.graphEdges.Select(Function(a) a.weight).ToArray)
+        Dim nodeRadiusRange As New DoubleRange(25, 120)
+        Dim linkWidthRange As New DoubleRange(2, 20)
+        Dim nodeRadius As Func(Of Graph.Node, Single) = Function(v) degreeRange.ScaleMapping(v.degree.In + v.degree.Out, nodeRadiusRange)
+        Dim linkWidth As Func(Of Graph.Edge, Single) = Function(l) similarityRange.ScaleMapping(l.weight, linkWidthRange)
         Dim nodeClusters = graph.vertex.Select(Function(a) a.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE)).Distinct.Indexing
         Dim colorSet As SolidBrush() = Designer.GetColors("Set1:c9", nodeClusters.Count).Select(Function(a) New SolidBrush(a)).ToArray
 
@@ -133,7 +137,8 @@ Public Class PageMoleculeNetworking
                     minLinkWidth:=1,
                     hideDisconnectedNode:=True,
                     nodeStroke:="stroke: black; stroke-width: 2px; stroke-dash: solid;",
-                    throwEx:=False
+                    throwEx:=False,
+                    linkWidth:=linkWidth
                 ).AsGDIImage
 
                 viewer.Invoke(Sub()
