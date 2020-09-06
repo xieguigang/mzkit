@@ -63,7 +63,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.DataMining.KMeans
@@ -72,10 +71,8 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Text.Xml.Models
-Imports mzkit.DockSample
 Imports mzkit.My
 Imports RibbonLib
-Imports RibbonLib.Controls.Events
 Imports RibbonLib.Interop
 Imports Task
 Imports WeifenLuo.WinFormsUI.Docking
@@ -106,8 +103,10 @@ Public Class PageMzkitTools
         MyApplication.host.ToolStripStatusLabel2.Text = TreeView1.GetTotalCacheSize
     End Sub
 
-    Private Sub missingCacheFile(raw As Raw)
-        If MessageBox.Show($"The specific raw data cache is missing, run imports again?{vbCrLf}{raw.cache.GetFullPath}", "Cache Not Found!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) = DialogResult.OK Then
+    Private Function missingCacheFile(raw As Raw) As DialogResult
+        Dim options As DialogResult = MessageBox.Show($"The specific raw data cache is missing, run imports again?{vbCrLf}{raw.cache.GetFullPath}", $"[{raw.source.FileName}] Cache Not Found!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning)
+
+        If options = DialogResult.OK Then
             Dim newRaw = getRawCache(raw.source)
 
             For i As Integer = 0 To TreeView1.Nodes.Count - 1
@@ -119,7 +118,9 @@ Public Class PageMzkitTools
             MyApplication.host.showStatusMessage("Ready!")
             MyApplication.host.ToolStripStatusLabel2.Text = TreeView1.GetTotalCacheSize
         End If
-    End Sub
+
+        Return options
+    End Function
 
     Public Sub SaveFileCache()
         Call TreeView1.SaveRawFileCache
@@ -696,9 +697,12 @@ Public Class PageMzkitTools
 
                 Thread.Sleep(1000)
 
-                progress.Invoke(Sub() progress.Label1.Text = "loading cache ms2 scan data...")
+                progress.Invoke(Sub()
+                                    progress.Label2.Text = "Load Scan data"
+                                    progress.Label1.Text = "loading cache ms2 scan data..."
+                                End Sub)
 
-                Dim raw = getSelectedIonSpectrums().ToArray
+                Dim raw = getSelectedIonSpectrums(Sub(file) progress.Invoke(Sub() progress.Label2.Text = file)).ToArray
 
                 If raw.Length = 0 Then
                     MyApplication.host.showStatusMessage("No spectrum data, please select a file or some spectrum...", My.Resources.StatusAnnotations_Warning_32xLG_color)
@@ -932,7 +936,7 @@ Public Class PageMzkitTools
         Next
     End Function
 
-    Private Iterator Function getSelectedIonSpectrums() As IEnumerable(Of PeakMs2)
+    Private Iterator Function getSelectedIonSpectrums(progress As Action(Of String)) As IEnumerable(Of PeakMs2)
         Dim explorer = MyApplication.host.fileExplorer
 
         For i As Integer = 0 To explorer.treeView1.Nodes.Count - 1
@@ -940,9 +944,15 @@ Public Class PageMzkitTools
             Dim raw As Raw = file.Tag
             Dim rawScans As New Dictionary(Of String, ScanEntry)
 
-            For Each scan In raw.scans
-                rawScans.Add(scan.id, scan)
-            Next
+            If Not raw.cache.FileExists AndAlso missingCacheFile(raw) <> DialogResult.OK Then
+                Continue For
+            Else
+                For Each scan In raw.scans
+                    rawScans.Add(scan.id, scan)
+                Next
+
+                Call progress(raw.source.FileName)
+            End If
 
             Using cache As New netCDFReader(raw.cache)
                 For j As Integer = 0 To file.Nodes.Count - 1
