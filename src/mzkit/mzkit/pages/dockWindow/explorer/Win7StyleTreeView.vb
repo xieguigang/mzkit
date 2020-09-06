@@ -15,7 +15,7 @@ Namespace Kesoft.Windows.Forms.Win7StyleTreeView
             Helper.ApplyTreeViewThemeStyles(Me)
         End Sub
 
-        Public Sub New(ByVal container As IContainer)
+        Public Sub New(container As IContainer)
             container.Add(Me)
             Me.InitializeComponent()
             Helper.ApplyTreeViewThemeStyles(Me)
@@ -29,23 +29,23 @@ Namespace Kesoft.Windows.Forms.Win7StyleTreeView
             Private Const TvsExDoublebuffer As Integer = &H0004
 
             <DllImport("uxtheme.dll", CharSet:=CharSet.Auto)>
-            Private Shared Function SetWindowTheme(ByVal hWnd As IntPtr, ByVal subAppName As String, ByVal subIdList As String) As Integer
+            Private Shared Function SetWindowTheme(hWnd As IntPtr, subAppName As String, subIdList As String) As Integer
             End Function
 
             <DllImport("user32.dll", CharSet:=CharSet.Auto)>
-            Private Shared Function SendMessage(ByVal hWnd As IntPtr, ByVal msg As Integer, ByVal wParam As IntPtr, ByVal lParam As IntPtr) As IntPtr
+            Private Shared Function SendMessage(hWnd As IntPtr, msg As Integer, wParam As IntPtr, lParam As IntPtr) As IntPtr
             End Function
 
-            Private Shared Function TreeViewGetExtendedStyle(ByVal handle As IntPtr) As Integer
+            Private Shared Function TreeViewGetExtendedStyle(handle As IntPtr) As Integer
                 Dim ptr = SendMessage(handle, TvmGetextendedstyle, IntPtr.Zero, IntPtr.Zero)
                 Return ptr.ToInt32()
             End Function
 
-            Private Shared Sub TreeViewSetExtendedStyle(ByVal handle As IntPtr, ByVal extendedStyle As Integer, ByVal mask As Integer)
+            Private Shared Sub TreeViewSetExtendedStyle(handle As IntPtr, extendedStyle As Integer, mask As Integer)
                 SendMessage(handle, TvmSetextendedstyle, New IntPtr(mask), New IntPtr(extendedStyle))
             End Sub
 
-            Public Shared Sub ApplyTreeViewThemeStyles(ByVal treeView As TreeView)
+            Public Shared Sub ApplyTreeViewThemeStyles(treeView As TreeView)
                 If treeView Is Nothing Then
                     Throw New ArgumentNullException("treeView")
                 End If

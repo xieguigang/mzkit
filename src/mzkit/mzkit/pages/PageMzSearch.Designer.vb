@@ -4,7 +4,7 @@ Partial Class PageMzSearch
 
     'UserControl 重写释放以清理组件列表。
     <System.Diagnostics.DebuggerNonUserCode()>
-    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+    Protected Overrides Sub Dispose(disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
                 components.Dispose()

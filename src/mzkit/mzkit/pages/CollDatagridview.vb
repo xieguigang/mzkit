@@ -27,7 +27,7 @@ Imports System.Runtime.CompilerServices
 Namespace cooldatagridview
     Public Module CollDatagridview
         <Extension()>
-        Public Sub CoolGrid(ByVal dgv As DataGridView)
+        Public Sub CoolGrid(dgv As DataGridView)
             Dim cellStyle As DataGridViewCellStyle = New DataGridViewCellStyle()
             Dim headerStyle As DataGridViewCellStyle = New DataGridViewCellStyle()
             dgv.AllowDrop = True
@@ -65,7 +65,7 @@ Namespace cooldatagridview
         End Sub
 
         <Extension()>
-        Public Sub MoveToUp(ByVal dgv As DataGridView)
+        Public Sub MoveToUp(dgv As DataGridView)
             If dgv.Rows.Count > 0 Then
                 Dim indexUp = dgv.SelectedRows(0).Index
 
@@ -77,7 +77,7 @@ Namespace cooldatagridview
         End Sub
 
         <Extension()>
-        Public Sub MoveToDown(ByVal dgv As DataGridView)
+        Public Sub MoveToDown(dgv As DataGridView)
             If dgv.Rows.Count > 0 Then
                 Dim indexDown = dgv.SelectedRows(0).Index
 
@@ -89,7 +89,7 @@ Namespace cooldatagridview
         End Sub
 
         <Extension()>
-        Public Sub HideColumn(ByVal dgv As DataGridView, ByVal columnName As String)
+        Public Sub HideColumn(dgv As DataGridView, columnName As String)
             dgv.Columns(columnName).Visible = False
         End Sub
     End Module
