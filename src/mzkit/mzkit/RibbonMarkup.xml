@@ -456,7 +456,7 @@
 				<Image>Res/baobab.png</Image>
 			</Command.LargeImages>
 		</Command>
-<!--
+		<!--
 		<Command Name="cmdCheckBoxXICRelative"
 		 Id="1103"
 		 LabelTitle="Relative XIC intensity">
@@ -649,9 +649,9 @@
 				<Image>Res/document-save.png</Image>
 			</Command.LargeImages>
 		</Command>
-		
-		
-		
+
+
+
 
 		<Command Name="cmdGroupChromatography"
 				 Id="1141"
@@ -691,6 +691,36 @@
 			</Command.LargeImages>
 		</Command>
 
+		<Command Name="cmdGroupNetworkRenderTool"
+		 Id="1150"
+		 LabelTitle="Refresh Network">
+		</Command>
+
+		<Command Name="cmdGroupNetworkTools"
+		 Id="1151"
+		 LabelTitle="Network Plot Data Tools">
+		</Command>
+
+		<Command Name="cmdSpinnerSimilarity"
+					Id="1153"
+					LabelTitle="Spectrum Similarity"
+					LabelDescription="Filter node links by spectrum similarity"
+		 TooltipTitle="Spectrum Similarity"
+		 TooltipDescription="Filter node links by spectrum similarity">
+
+		</Command>
+
+		<Command Name="cmdButtonRefreshNetwork"
+					Id="1154"
+					LabelTitle="Refresh"
+					LabelDescription="Refresh Network"
+		 TooltipTitle="Refresh Network"
+		 TooltipDescription="Refresh network table">
+			<Command.LargeImages>
+				<Image>Res/178151.png</Image>
+			</Command.LargeImages>
+		</Command>
+
 
 	</Application.Commands>
 
@@ -718,7 +748,7 @@
 						<Group CommandName='cmdGroupDesign'>
 
 							<Spinner CommandName="cmdPPMSpinner" />
-						<!--	<CheckBox CommandName="cmdCheckBoxXICRelative" />-->
+							<!--	<CheckBox CommandName="cmdCheckBoxXICRelative" />-->
 							<!-- <Button CommandName='cmdButtonDesign3' /> -->
 						</Group>
 
@@ -746,8 +776,8 @@
 							<Button CommandName='cmdButtonLayout1' />
 							<Button CommandName='cmdButtonLayout2' />
 						</Group>
-						
-						
+
+
 						<Group CommandName='cmdGroupChromatography' SizeDefinition='ThreeButtons'>
 							<Button CommandName='cmdButtonBPC' />
 							<Button CommandName='cmdButtonTIC' />
@@ -771,15 +801,15 @@
 				<TabGroup CommandName='cmdTabGroupRscriptTools'>
 					<Tab CommandName='cmdTabRscriptTools'>
 						<Group CommandName='cmdGroupRscript' SizeDefinition='TwoButtons'>
-	<Button CommandName='cmdButtonSaveScript' />						
-						<Button CommandName='cmdButtonRunScript' />
-												</Group>
+							<Button CommandName='cmdButtonSaveScript' />
+							<Button CommandName='cmdButtonRunScript' />
+						</Group>
 					</Tab>
 				</TabGroup>
 
-		
-				
-				
+
+
+
 				<TabGroup CommandName='cmdTabGroupExactMassSearchTools'>
 					<Tab CommandName='cmdTabExactMassSearch'>
 						<Group CommandName='cmdGroupExactMassSearch' SizeDefinition='TwoButtons'>
@@ -796,6 +826,15 @@
 							<Button CommandName='cmdButtonNetworkExport' />
 							<Button CommandName='cmdButtonNetworkRender' />
 						</Group>
+
+						<Group CommandName='cmdGroupNetworkTools'>
+							<Spinner CommandName="cmdSpinnerSimilarity" />
+						</Group>
+
+						<Group CommandName='cmdGroupNetworkRenderTool' SizeDefinition="OneButton">
+							<Button CommandName="cmdButtonRefreshNetwork" />
+						</Group>
+
 					</Tab>
 				</TabGroup>
 
@@ -909,7 +948,7 @@
 					<MenuGroup CommandName='cmdMenuGroupFile'>
 						<Button CommandName='cmdButtonNew' />
 						<Button CommandName="cmdButtonImportsRawFiles" />
-						
+
 						<DropDownButton CommandName='cmdButtonToolkits'>
 							<MenuGroup Class='MajorItems'>
 								<Button CommandName='cmdButtonDropA' />

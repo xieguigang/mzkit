@@ -43,33 +43,145 @@
 
 #End Region
 
+Imports System.Threading
 Imports System.Windows.Forms.ListViewItem
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.ComponentModel.DataStructures
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.visualize.Network
+Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.ForceDirected
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports mzkit.cooldatagridview
 Imports mzkit.My
 Imports RibbonLib.Interop
-Imports Task
+Imports WeifenLuo.WinFormsUI.Docking
+Imports stdNum = System.Math
 
 Public Class PageMoleculeNetworking
 
     Dim g As NetworkGraph
     Dim rawMatrix As EntityClusterModel()
     Dim nodeInfo As Protocols
+    Dim rawLinks As Dictionary(Of String, Dictionary(Of String, (id$, forward#, reverse#)))
+    Dim tooltip As New PlotTooltip
 
-    Public Sub loadNetwork(MN As IEnumerable(Of EntityClusterModel), nodes As Protocols, cutoff As Double)
+    Public Sub RenderNetwork()
+        If g Is Nothing Then
+            MyApplication.host.showStatusMessage("You should run molecular networking at first!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            Return
+        ElseIf g.vertex.Count > 500 OrElse g.graphEdges.Count > 700 Then
+            MyApplication.host.showStatusMessage("The network size is huge for create layout, entire progress will be very slow...", My.Resources.StatusAnnotations_Warning_32xLG_color)
+        End If
+
+        Dim progress As New frmTaskProgress
+        Dim viewer As New frmPlotViewer With {.TabText = "Molecular Networking Viewer"}
+        Dim showSingle As Boolean = False
+        Dim graph As NetworkGraph = g.Copy
+
+        If Not showSingle Then
+            Dim links = graph.connectedNodes.ToList
+
+            For Each node In graph.vertex.ToArray
+                If links.IndexOf(node) = -1 Then
+                    graph.RemoveNode(node)
+                End If
+            Next
+        End If
+
+        Call graph.ComputeNodeDegrees
+
+        viewer.Show(MyApplication.host.dockPanel)
+        viewer.DockState = DockState.Hidden
+
+        Dim minRadius As Single = Globals.Settings.network.nodeRadius.min
+        Dim degreeRange As New DoubleRange(graph.vertex.Select(Function(a) CDbl(a.degree.In + a.degree.Out)).ToArray)
+        Dim similarityRange As New DoubleRange(graph.graphEdges.Select(Function(a) a.weight).ToArray)
+        Dim nodeRadiusRange As DoubleRange = Globals.Settings.network.nodeRadius.AsDoubleRange
+        Dim linkWidthRange As DoubleRange = Globals.Settings.network.linkWidth.AsDoubleRange
+        Dim nodeRadius As Func(Of Graph.Node, Single) = Function(v) degreeRange.ScaleMapping(v.degree.In + v.degree.Out, nodeRadiusRange)
+        Dim linkWidth As Func(Of Graph.Edge, Single) = Function(l) similarityRange.ScaleMapping(l.weight, linkWidthRange)
+        Dim nodeClusters = graph.vertex.Select(Function(a) a.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE)).Distinct.Indexing
+        Dim colorSet As SolidBrush() = Designer.GetColors("Set1:c9", nodeClusters.Count).Select(Function(a) New SolidBrush(a)).ToArray
+
+        For Each v In graph.vertex
+            v.data.color = colorSet(nodeClusters.IndexOf(v.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE)))
+        Next
+
+        Dim task As New Thread(
+            Sub()
+                Thread.Sleep(500)
+                progress.Invoke(Sub() progress.Label1.Text = "Run network layouts...")
+
+                Dim layouts = Planner.Plan(graph, Globals.Settings.network.layout.Iterations, Sub(msg) progress.Invoke(Sub() progress.Label1.Text = msg))
+
+                For Each node In graph.vertex
+                    node.data.initialPostion = New FDGVector2(layouts(node))
+                Next
+
+                progress.Invoke(Sub() progress.Label1.Text = "do network render plot...")
+
+                Dim plot As Image = graph.DrawImage(
+                    canvasSize:="1920,1080",
+                    labelerIterations:=-1,
+                    displayId:=False,
+                    nodeRadius:=nodeRadius,
+                    minLinkWidth:=1,
+                    hideDisconnectedNode:=True,
+                    nodeStroke:="stroke: black; stroke-width: 2px; stroke-dash: solid;",
+                    throwEx:=False,
+                    linkWidth:=linkWidth
+                ).AsGDIImage
+
+                viewer.Invoke(Sub()
+                                  viewer.PictureBox1.BackgroundImage = plot
+                                  viewer.DockState = DockState.Document
+                                  viewer.Show(MyApplication.host.dockPanel)
+                              End Sub)
+
+                progress.Invoke(Sub() progress.Close())
+            End Sub)
+
+        task.Start()
+        progress.ShowDialog()
+    End Sub
+
+    Public Sub RefreshNetwork()
+        If rawMatrix.IsNullOrEmpty Then
+            MyApplication.host.showStatusMessage("no network graph data!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            Return
+        End If
+
+        Dim similarityCutoff As Double = MyApplication.host.ribbonItems.SpinnerSimilarity.DecimalValue
+        Dim buzy As New frmProgressSpinner
+
+        Call New Thread(Sub()
+                            Call Thread.Sleep(500)
+                            Call Me.Invoke(Sub() loadNetwork(rawMatrix, nodeInfo, rawLinks, similarityCutoff))
+                            Call buzy.Invoke(Sub() buzy.Close())
+
+                            MyApplication.host.showStatusMessage($"Refresh network with new similarity filter {similarityCutoff} success!")
+                        End Sub).Start()
+        Call buzy.ShowDialog()
+    End Sub
+
+    Public Sub loadNetwork(MN As IEnumerable(Of EntityClusterModel),
+                           nodes As Protocols,
+                           rawLinks As Dictionary(Of String, Dictionary(Of String, (id$, forward#, reverse#))),
+                           cutoff As Double)
+
         DataGridView1.Rows.Clear()
-        DataGridView2.Rows.Clear()
+        ' DataGridView2.Rows.Clear()
         TreeListView1.Items.Clear()
 
         ' g = TreeGraph(Of PeakMs2, PeakMs2).CreateGraph(MN.getRoot, Function(a) a.lib_guid, Function(a) $"M{CInt(a.mz)}T{CInt(a.rt)}")
@@ -78,11 +190,18 @@ Public Class PageMoleculeNetworking
         g = New NetworkGraph
         rawMatrix = MN.ToArray
         nodeInfo = nodes
+        tooltip.LoadInfo(nodeInfo)
+
+        Dim colors As LoopArray(Of String) = Designer.GetColors("Set1:c9", 10).Select(AddressOf ToHtmlColor).AsLoop
+        Dim colorIndex As New Dictionary(Of String, String)
+
+        Me.rawLinks = rawLinks
 
         For Each row In rawMatrix
             Dim info As NetworkingNode = nodeInfo.Cluster(row.ID)
             Dim rt As Double() = info.members.Select(Function(a) a.rt).ToArray
             Dim maxrt As Double = info.members.OrderByDescending(Function(a) a.Ms2Intensity).First.rt
+            Dim color As String = colorIndex.ComputeIfAbsent(row.Cluster, Function(cl) colors.Next)
 
             g.CreateNode(row.ID, New NodeData With {
                 .Properties = New Dictionary(Of String, String) From {
@@ -92,7 +211,8 @@ Public Class PageMoleculeNetworking
                     {"rt", maxrt},
                     {"rtmin", rt.Min},
                     {"rtmax", rt.Max},
-                    {"area", info.members.Sum(Function(a) a.Ms2Intensity)}
+                    {"area", info.members.Sum(Function(a) a.Ms2Intensity)},
+                    {"color", color}
                 }})
         Next
 
@@ -100,25 +220,43 @@ Public Class PageMoleculeNetworking
         Dim uniqueKey As String
 
         For Each row In rawMatrix
+            Dim rawLink = rawLinks(row.ID)
+
             For Each link In row.Properties.Where(Function(l) l.Value >= cutoff AndAlso l.Key <> row.ID)
                 uniqueKey = {row.ID, link.Key}.OrderBy(Function(str) str).JoinBy(" vs ")
 
                 If Not uniqueKey Like duplicatedEdges Then
                     Call duplicatedEdges.Add(uniqueKey)
-                    Call g.CreateEdge(row.ID, link.Key, link.Value)
+                    Call g.CreateEdge(row.ID, link.Key, link.Value, New EdgeData With {.Properties = New Dictionary(Of String, String) From {
+                                      {"forward", rawLink.TryGetValue(link.Key).forward},
+                                      {"reverse", rawLink.TryGetValue(link.Key).reverse}
+                                 }})
                 End If
             Next
         Next
 
+        Call g.ComputeNodeDegrees
+        Call g.ComputeBetweennessCentrality
+
         For Each node In g.vertex
             Dim info = nodeInfo.Cluster(node.label)
 
-            DataGridView2.Rows.Add(node.label, node.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE), info.members.Length, info.mz, node.data("rt"), node.data("rtmin"), node.data("rtmax"), node.data("area"))
+            ' DataGridView2.Rows.Add(node.label, node.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE), info.members.Length, info.mz, node.data("rt"), node.data("rtmin"), node.data("rtmax"), node.data("area"))
 
-            Dim row As New TreeListViewItem With {.Text = node.label}
+            Dim row As New TreeListViewItem With {.Text = node.label, .ImageIndex = 0, .ToolTipText = node.label}
 
             For Each member In info.members
-                row.Items.Add(New TreeListViewItem(member.lib_guid))
+                Dim ion As New TreeListViewItem(member.lib_guid) With {.ImageIndex = 1, .ToolTipText = member.lib_guid}
+
+                ion.SubItems.Add(New ListViewSubItem With {.Text = member.file})
+                ion.SubItems.Add(New ListViewSubItem With {.Text = member.mzInto.Length})
+                ion.SubItems.Add(New ListViewSubItem With {.Text = member.mz})
+                ion.SubItems.Add(New ListViewSubItem With {.Text = member.rt})
+                ion.SubItems.Add(New ListViewSubItem With {.Text = "n/a"})
+                ion.SubItems.Add(New ListViewSubItem With {.Text = "n/a"})
+                ion.SubItems.Add(New ListViewSubItem With {.Text = member.Ms2Intensity})
+
+                row.Items.Add(ion)
             Next
 
             row.SubItems.Add(New ListViewSubItem With {.Text = node.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE)})
@@ -132,7 +270,7 @@ Public Class PageMoleculeNetworking
             TreeListView1.Items.Add(row)
         Next
         For Each edge In g.graphEdges
-            DataGridView1.Rows.Add(edge.U.label, edge.V.label, edge.weight, "View")
+            DataGridView1.Rows.Add(edge.U.label, edge.V.label, edge.data!forward, edge.data!reverse, "View")
         Next
 
         ' PictureBox1.BackgroundImage = g.DrawImage(labelerIterations:=-1).AsGDIImage
@@ -142,7 +280,7 @@ Public Class PageMoleculeNetworking
         If Not g Is Nothing Then
             Using file As New FolderBrowserDialog With {.ShowNewFolderButton = True}
                 If file.ShowDialog = DialogResult.OK Then
-                    Call g.Tabular({"member_size", "m/z", "rt", "rtmin", "rtmax", "area"}).Save(output:=file.SelectedPath)
+                    Call g.Tabular({"member_size", "m/z", "rt", "rtmin", "rtmax", "area", "forward", "reverse", "color"}).Save(output:=file.SelectedPath)
                     Call Process.Start(file.SelectedPath)
                 End If
             End Using
@@ -152,13 +290,33 @@ Public Class PageMoleculeNetworking
     End Sub
 
     Private Sub SaveImageToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveImageToolStripMenuItem.Click
-        'If Not PictureBox1.BackgroundImage Is Nothing Then
-        '    Using file As New SaveFileDialog With {.Filter = "image(*.png)|*.png"}
-        '        If file.ShowDialog = DialogResult.OK Then
-        '            Call PictureBox1.BackgroundImage.SaveAs(file.FileName)
-        '        End If
-        '    End Using
-        'End If
+        Dim cluster As TreeListViewItem
+        Dim host = MyApplication.host
+
+        If TreeListView1.SelectedItems.Count = 0 Then
+            Return
+        Else
+            cluster = TreeListView1.SelectedItems(0)
+        End If
+
+        If cluster.ChildrenCount > 0 Then
+            ' 是一个cluster
+            Dim clusterId As String = cluster.Text
+            Dim clusterSpectrum = nodeInfo.Cluster(clusterId).representation
+
+            host.mzkitTool.showMatrix(clusterSpectrum.ms2, clusterId)
+            host.mzkitTool.PictureBox1.BackgroundImage = MassSpectra.MirrorPlot(clusterSpectrum).AsGDIImage
+        Else
+            ' 是一个spectrum
+            Dim spectrumName As String = cluster.Text
+            Dim spectrum = nodeInfo.GetSpectrum(spectrumName)
+
+            host.mzkitTool.showMatrix(spectrum.mzInto, spectrumName)
+            host.mzkitTool.PictureBox1.BackgroundImage = MassSpectra.MirrorPlot(New LibraryMatrix With {.ms2 = spectrum.mzInto, .name = spectrumName}).AsGDIImage
+        End If
+
+        host.mzkitTool.CustomTabControl1.SelectedTab = host.mzkitTool.TabPage5
+        host.ShowPage(host.mzkitTool)
     End Sub
 
     Private Sub PageMoleculeNetworking_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
@@ -170,7 +328,7 @@ Public Class PageMoleculeNetworking
     End Sub
 
     Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellContentClick
-        If e.ColumnIndex = 3 AndAlso e.RowIndex > -1 Then
+        If e.ColumnIndex = 4 AndAlso e.RowIndex > -1 Then
             Dim row = DataGridView1.Rows(e.RowIndex)
             Dim a = CStr(row.Cells(0).Value)
             Dim b = CStr(row.Cells(1).Value)
@@ -195,7 +353,20 @@ Public Class PageMoleculeNetworking
 
     Private Sub PageMoleculeNetworking_Load(sender As Object, e As EventArgs) Handles Me.Load
         DataGridView1.CoolGrid
-        DataGridView2.CoolGrid
+        ' DataGridView2.CoolGrid
+        tooltip.OwnerDraw = True
+    End Sub
+
+    Private Sub TreeListView1_Click(sender As Object, e As EventArgs) Handles TreeListView1.Click
+
+    End Sub
+
+    Private Sub TreeListView1_DoubleClick(sender As Object, e As EventArgs) Handles TreeListView1.DoubleClick
+
+    End Sub
+
+    Private Sub TreeListView1_MouseMove(sender As Object, e As MouseEventArgs) Handles TreeListView1.MouseMove
+
     End Sub
 End Class
 

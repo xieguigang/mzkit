@@ -13,7 +13,7 @@ Public Class ExportData
         _ribbon = ribbon
     End Sub
 
-    Protected Overrides Sub OnOpening(ByVal e As CancelEventArgs)
+    Protected Overrides Sub OnOpening(e As CancelEventArgs)
         _ribbon.ShowContextPopup(_contextPopupID, Cursor.Position.X, Cursor.Position.Y)
         e.Cancel = True
     End Sub

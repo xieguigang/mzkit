@@ -5,7 +5,7 @@ Partial Class frmMain
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()>
-    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+    Protected Overrides Sub Dispose(disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
                 components.Dispose()
@@ -34,15 +34,17 @@ Partial Class frmMain
         Me.MzCalculatorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RawFileViewerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.ToolStripStatusLabel3 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.Ribbon1 = New RibbonLib.Ribbon()
         Me.PanelBase = New System.Windows.Forms.Panel()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.StatusStrip.SuspendLayout()
         Me.SuspendLayout()
         '
         'StatusStrip
         '
-        Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1, Me.ToolStripDropDownButton1, Me.ToolStripStatusLabel2})
+        Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1, Me.ToolStripDropDownButton1, Me.ToolStripStatusLabel2, Me.ToolStripStatusLabel3})
         Me.StatusStrip.Location = New System.Drawing.Point(0, 502)
         Me.StatusStrip.Name = "StatusStrip"
         Me.StatusStrip.Size = New System.Drawing.Size(1084, 22)
@@ -100,6 +102,13 @@ Partial Class frmMain
         Me.ToolStripStatusLabel2.Size = New System.Drawing.Size(135, 17)
         Me.ToolStripStatusLabel2.Text = "ToolStripStatusLabel2"
         '
+        'ToolStripStatusLabel3
+        '
+        Me.ToolStripStatusLabel3.Image = CType(resources.GetObject("ToolStripStatusLabel3.Image"), System.Drawing.Image)
+        Me.ToolStripStatusLabel3.Name = "ToolStripStatusLabel3"
+        Me.ToolStripStatusLabel3.Size = New System.Drawing.Size(135, 17)
+        Me.ToolStripStatusLabel3.Text = "ToolStripStatusLabel3"
+        '
         'Ribbon1
         '
         Me.Ribbon1.Location = New System.Drawing.Point(0, 0)
@@ -117,6 +126,11 @@ Partial Class frmMain
         Me.PanelBase.Name = "PanelBase"
         Me.PanelBase.Size = New System.Drawing.Size(1084, 336)
         Me.PanelBase.TabIndex = 10
+        '
+        'Timer1
+        '
+        Me.Timer1.Enabled = True
+        Me.Timer1.Interval = 1000
         '
         'frmMain
         '
@@ -147,4 +161,6 @@ Partial Class frmMain
     Friend WithEvents MoleculeNetworkingToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripStatusLabel2 As ToolStripStatusLabel
     Friend WithEvents PanelBase As Panel
+    Friend WithEvents ToolStripStatusLabel3 As ToolStripStatusLabel
+    Friend WithEvents Timer1 As Timer
 End Class

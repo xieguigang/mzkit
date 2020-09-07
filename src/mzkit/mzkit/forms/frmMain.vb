@@ -95,7 +95,7 @@ Public Class frmMain
         panelMain.Show(dockPanel)
     End Sub
 
-    Private Sub OpenFile(ByVal sender As Object, ByVal e As ExecuteEventArgs)
+    Private Sub OpenFile(sender As Object, e As ExecuteEventArgs)
         Using file As New OpenFileDialog With {.Filter = "Raw Data|*.mzXML;*.mzML|R# Script(*.R)|*.R"}
             If file.ShowDialog = DialogResult.OK Then
                 If file.FileName.ExtensionSuffix("R") Then
@@ -115,7 +115,7 @@ Public Class frmMain
         End Using
     End Sub
 
-    Private Sub ImportsFiles(ByVal sender As Object, ByVal e As ExecuteEventArgs)
+    Private Sub ImportsFiles(sender As Object, e As ExecuteEventArgs)
         Using file As New OpenFileDialog With {
             .Filter = "Raw Data(*.mzXML; *.mzML)|*.mzXML;*.mzML",
             .Multiselect = True
@@ -128,7 +128,7 @@ Public Class frmMain
         End Using
     End Sub
 
-    Private Sub ExitToolsStripMenuItem_Click(ByVal sender As Object, ByVal e As ExecuteEventArgs)
+    Private Sub ExitToolsStripMenuItem_Click(sender As Object, e As ExecuteEventArgs)
         Me.Close()
     End Sub
 
@@ -186,6 +186,8 @@ Public Class frmMain
 
         AddHandler ribbonItems.ButtonShowPlotViewer.ExecuteEvent, Sub(sender, e) Call mzkitTool.ShowTabPage(mzkitTool.TabPage5)
         AddHandler ribbonItems.ButtonShowMatrixViewer.ExecuteEvent, Sub(sender, e) Call mzkitTool.ShowTabPage(mzkitTool.TabPage6)
+        AddHandler ribbonItems.ButtonNetworkRender.ExecuteEvent, Sub(sender, e) Call mzkitMNtools.RenderNetwork()
+        AddHandler ribbonItems.ButtonRefreshNetwork.ExecuteEvent, Sub(sender, e) Call mzkitMNtools.RefreshNetwork()
 
         AddHandler ribbonItems.ButtonRunScript.ExecuteEvent, AddressOf RunCurrentScript
         AddHandler ribbonItems.ButtonSaveScript.ExecuteEvent, AddressOf saveCurrentScript
@@ -408,13 +410,13 @@ Public Class frmMain
         Call ShowPage(mzkitSearch)
     End Sub
 
-    Private Sub NavBack_Click(ByVal sender As Object, ByVal e As ExecuteEventArgs)
+    Private Sub NavBack_Click(sender As Object, e As ExecuteEventArgs)
         If nav.Count > 0 Then
             Call ShowPage(nav.Pop, pushStack:=False)
         End If
     End Sub
 
-    Private Sub About_Click(ByVal sender As Object, ByVal e As ExecuteEventArgs)
+    Private Sub About_Click(sender As Object, e As ExecuteEventArgs)
         Call New frmSplashScreen() With {.isAboutScreen = True, .TopMost = True}.Show()
     End Sub
 
@@ -446,10 +448,13 @@ Public Class frmMain
         MyApplication.host.startPage.Show(MyApplication.host.dockPanel)
         MyApplication.InitializeREngine()
 
+        Timer1.Enabled = True
+        Timer1.Start()
+
         showStatusMessage("Ready!")
     End Sub
 
-    Private Sub _uiCollectionChangedEvent_ChangedEvent(ByVal sender As Object, ByVal e As UICollectionChangedEventArgs)
+    Private Sub _uiCollectionChangedEvent_ChangedEvent(sender As Object, e As UICollectionChangedEventArgs)
         MessageBox.Show("Got ChangedEvent. Action = " & e.Action.ToString())
     End Sub
 
@@ -508,6 +513,18 @@ Public Class frmMain
         _spinner.TooltipDescription = "Enter ppm error for search feature by m/z."
         _spinner.RepresentativeString = "XXXXXX"
 
+
+        _spinner = ribbonItems.SpinnerSimilarity
+
+        _spinner.MaxValue = 1
+        _spinner.MinValue = 0
+        _spinner.Increment = 0.01
+        _spinner.DecimalPlaces = 2
+        _spinner.DecimalValue = 0.6
+
+        _spinner.TooltipTitle = "Spectrum Similarity"
+        _spinner.TooltipDescription = "Enter similarity filter value for filtering of the node links."
+        _spinner.RepresentativeString = "XXXXXX"
     End Sub
 
     Private Sub InitRecentItems()
@@ -524,7 +541,7 @@ Public Class frmMain
         ribbonItems.RecentItems.RecentItems = recentItems
     End Sub
 
-    Private Sub _recentItems_ExecuteEvent(ByVal sender As Object, ByVal e As ExecuteEventArgs)
+    Private Sub _recentItems_ExecuteEvent(sender As Object, e As ExecuteEventArgs)
         If e.Key.PropertyKey = RibbonProperties.RecentItems Then
             ' go over recent items
             Dim objectArray() As Object = CType(e.CurrentValue.PropVariant.Value, Object())
@@ -670,7 +687,7 @@ Public Class frmMain
         panelMain.DockState = DockState.Document
     End Sub
 
-    Private Sub SetSchema(ByVal sender As Object, ByVal e As EventArgs)
+    Private Sub SetSchema(sender As Object, e As EventArgs)
         'If sender Is menuItemSchemaVS2005 Then
         '    dockPanel.Theme = vS2005Theme1
         '    EnableVSRenderer(VisualStudioToolStripExtender.VsVersion.Vs2005, vS2005Theme1)
@@ -690,7 +707,7 @@ Public Class frmMain
         End If
     End Sub
 
-    Private Sub EnableVSRenderer(ByVal version As VisualStudioToolStripExtender.VsVersion, ByVal theme As ThemeBase)
+    Private Sub EnableVSRenderer(version As VisualStudioToolStripExtender.VsVersion, theme As ThemeBase)
         ' vsToolStripExtender1.SetStyle(MainMenu, version, theme)
         ' vsToolStripExtender1.SetStyle(ToolBar, version, theme)
         vsToolStripExtender1.SetStyle(StatusStrip, version, theme)
@@ -698,6 +715,17 @@ Public Class frmMain
 
     Private Sub frmMain_ResizeEnd(sender As Object, e As EventArgs) Handles Me.ResizeEnd
         Ribbon1.Refresh()
+    End Sub
+
+    Dim mzkitApp As Process = Process.GetCurrentProcess()
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        ToolStripStatusLabel3.Text = $"Memory: {StringFormats.Lanudry(mzkitApp.WorkingSet64)}"
+        mzkitApp.Refresh()
+    End Sub
+
+    Private Sub ToolStripStatusLabel2_Click(sender As Object, e As EventArgs) Handles ToolStripStatusLabel2.Click
+
     End Sub
 
 

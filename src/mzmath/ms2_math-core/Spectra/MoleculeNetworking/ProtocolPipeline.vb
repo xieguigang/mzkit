@@ -23,12 +23,16 @@ Public Class ProtocolPipeline
         Return Me
     End Function
 
-    Public Iterator Function Networking(Of T As {New, INamedValue, DynamicPropertyBase(Of Double)})() As IEnumerable(Of T)
-        For Each row As NamedValue(Of Dictionary(Of String, Double)) In protocol.Networking(nodes, progress)
+    Public Function Networking() As NamedValue(Of Dictionary(Of String, (id As String, forward#, reverse#)))()
+        Return protocol.Networking(nodes, progress).ToArray
+    End Function
+
+    Public Iterator Function Networking(Of T As {New, INamedValue, DynamicPropertyBase(Of Double)})(aggrate As Func(Of Double, Double, Double)) As IEnumerable(Of T)
+        For Each row As NamedValue(Of Dictionary(Of String, (String, forward#, reverse#))) In protocol.Networking(nodes, progress)
             Dim obj As New T With {.Key = row.Name}
 
             For Each homologous In row.Value
-                Call obj.Add(homologous.Key, homologous.Value)
+                Call obj.Add(homologous.Key, aggrate(homologous.Value.forward, homologous.Value.reverse))
             Next
 
             Yield obj

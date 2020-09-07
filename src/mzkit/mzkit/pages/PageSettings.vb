@@ -53,6 +53,7 @@ Public Class PageSettings
     Dim appConfig As New AppConfig With {.Text = "Mzkit Settings"}
     Dim viewer As New RawFileViewer With {.Text = "Raw File Viewer"}
     Dim plotConfig As New PlotConfig With {.Text = "XIC/TIC Plot Style"}
+    Dim mnSettings As New MolecularNetworking With {.Text = "Molecular Networking"}
     Dim pages As Control()
     Dim showPageLink As IPageSettings
 
@@ -62,7 +63,7 @@ Public Class PageSettings
     End Sub
 
     Private Sub PageSettings_Load(sender As Object, e As EventArgs) Handles Me.Load
-        pages = {elementProfile, appConfig, viewer, plotConfig, presetProfile}
+        pages = {elementProfile, appConfig, viewer, plotConfig, presetProfile, mnSettings}
 
         For Each page In pages
             Panel1.Controls.Add(page)
@@ -102,6 +103,7 @@ Public Class PageSettings
             Case "Raw File Viewer" : showPage(viewer)
             Case "XIC/TIC Plot" : showPage(plotConfig)
             Case "Formula Search" : showPage(presetProfile)
+            Case "Molecular Networking" : showPage(mnSettings)
         End Select
     End Sub
 

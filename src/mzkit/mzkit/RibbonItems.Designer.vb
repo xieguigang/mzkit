@@ -14,7 +14,7 @@ Imports RibbonLib.Controls
 Imports RibbonLib.Interop
 
 Partial Class RibbonItems
-    Private _Ribbon As Ribbon, _TabGroupTableTools As RibbonTabGroup, _TabDesign As RibbonTab, _GroupDesign As RibbonGroup, _PPMSpinner As RibbonSpinner, _GroupShowViewer As RibbonGroup, _ButtonShowPlotViewer As RibbonButton, _ButtonShowMatrixViewer As RibbonButton, _GroupShowDockWindows As RibbonGroup, _ButtonShowExplorer As RibbonButton, _ButtonShowSearchList As RibbonButton, _ButtonShowProperties As RibbonButton, _TabLayout As RibbonTab, _GroupLayout As RibbonGroup, _ButtonLayout1 As RibbonButton, _ButtonLayout2 As RibbonButton, _GroupChromatography As RibbonGroup, _ButtonBPC As RibbonButton, _ButtonTIC As RibbonButton, _ButtonXIC As RibbonButton, _TabGroupCalculatorTools As RibbonTabGroup, _TabCalculator As RibbonTab, _GroupCalculator As RibbonGroup, _ButtonCalculatorExport As RibbonButton, _TabGroupRscriptTools As RibbonTabGroup, _TabRscriptTools As RibbonTab, _GroupRscript As RibbonGroup, _ButtonSaveScript As RibbonButton, _ButtonRunScript As RibbonButton, _TabGroupExactMassSearchTools As RibbonTabGroup, _TabExactMassSearch As RibbonTab, _GroupExactMassSearch As RibbonGroup, _ButtonExactMassSearchExport As RibbonButton, _TabGroupNetworkTools As RibbonTabGroup, _TabNetwork As RibbonTab, _GroupNetwork As RibbonGroup, _ButtonNetworkExport As RibbonButton, _ButtonNetworkRender As RibbonButton, _TabGroupFormulaSearchTools As RibbonTabGroup, _TabFormulaSearch As RibbonTab, _GroupFormulaSearch As RibbonGroup, _ButtonFormulaSearchExport As RibbonButton, _HelpButton As RibbonHelpButton, _TabMain As RibbonTab, _GroupFileActions As RibbonGroup, _ButtonNew As RibbonButton, _ButtonOpenRaw As RibbonButton, _ButtonSave As RibbonButton, _GroupExit As RibbonGroup, _ButtonRsharp As RibbonButton, _ButtonShowStartPage As RibbonButton, _ButtonShowLogWindow As RibbonButton, _TabTools As RibbonTab, _GroupToolsActions As RibbonGroup, _ButtonMzCalculator As RibbonButton, _ButtonMzSearch As RibbonButton, _TabAbout As RibbonTab, _GroupAboutActions As RibbonGroup, _ButtonAbout As RibbonButton, _ButtonBioDeep As RibbonButton, _RecentItems As RibbonRecentItems, _MenuGroupFile As RibbonMenuGroup, _ButtonImportsRawFiles As RibbonButton, _ButtonToolkits As RibbonDropDownButton, _ButtonDropA As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton, _ButtonDropD As RibbonButton, _ButtonSettings As RibbonButton, _ButtonLicense As RibbonButton, _MenuGroupExit As RibbonMenuGroup, _ButtonExit As RibbonButton, _QAT As RibbonQuickAccessToolbar, _ButtonPageNavBack As RibbonButton, _ButtonExportImage As RibbonButton, _ButtonExportMatrix As RibbonButton
+    Private _Ribbon As Ribbon, _TabGroupTableTools As RibbonTabGroup, _TabDesign As RibbonTab, _GroupDesign As RibbonGroup, _PPMSpinner As RibbonSpinner, _GroupShowViewer As RibbonGroup, _ButtonShowPlotViewer As RibbonButton, _ButtonShowMatrixViewer As RibbonButton, _GroupShowDockWindows As RibbonGroup, _ButtonShowExplorer As RibbonButton, _ButtonShowSearchList As RibbonButton, _ButtonShowProperties As RibbonButton, _TabLayout As RibbonTab, _GroupLayout As RibbonGroup, _ButtonLayout1 As RibbonButton, _ButtonLayout2 As RibbonButton, _GroupChromatography As RibbonGroup, _ButtonBPC As RibbonButton, _ButtonTIC As RibbonButton, _ButtonXIC As RibbonButton, _TabGroupCalculatorTools As RibbonTabGroup, _TabCalculator As RibbonTab, _GroupCalculator As RibbonGroup, _ButtonCalculatorExport As RibbonButton, _TabGroupRscriptTools As RibbonTabGroup, _TabRscriptTools As RibbonTab, _GroupRscript As RibbonGroup, _ButtonSaveScript As RibbonButton, _ButtonRunScript As RibbonButton, _TabGroupExactMassSearchTools As RibbonTabGroup, _TabExactMassSearch As RibbonTab, _GroupExactMassSearch As RibbonGroup, _ButtonExactMassSearchExport As RibbonButton, _TabGroupNetworkTools As RibbonTabGroup, _TabNetwork As RibbonTab, _GroupNetwork As RibbonGroup, _ButtonNetworkExport As RibbonButton, _ButtonNetworkRender As RibbonButton, _GroupNetworkTools As RibbonGroup, _SpinnerSimilarity As RibbonSpinner, _GroupNetworkRenderTool As RibbonGroup, _ButtonRefreshNetwork As RibbonButton, _TabGroupFormulaSearchTools As RibbonTabGroup, _TabFormulaSearch As RibbonTab, _GroupFormulaSearch As RibbonGroup, _ButtonFormulaSearchExport As RibbonButton, _HelpButton As RibbonHelpButton, _TabMain As RibbonTab, _GroupFileActions As RibbonGroup, _ButtonNew As RibbonButton, _ButtonOpenRaw As RibbonButton, _ButtonSave As RibbonButton, _GroupExit As RibbonGroup, _ButtonRsharp As RibbonButton, _ButtonShowStartPage As RibbonButton, _ButtonShowLogWindow As RibbonButton, _TabTools As RibbonTab, _GroupToolsActions As RibbonGroup, _ButtonMzCalculator As RibbonButton, _ButtonMzSearch As RibbonButton, _TabAbout As RibbonTab, _GroupAboutActions As RibbonGroup, _ButtonAbout As RibbonButton, _ButtonBioDeep As RibbonButton, _RecentItems As RibbonRecentItems, _MenuGroupFile As RibbonMenuGroup, _ButtonImportsRawFiles As RibbonButton, _ButtonToolkits As RibbonDropDownButton, _ButtonDropA As RibbonButton, _ButtonDropB As RibbonButton, _ButtonDropC As RibbonButton, _ButtonDropD As RibbonButton, _ButtonSettings As RibbonButton, _ButtonLicense As RibbonButton, _MenuGroupExit As RibbonMenuGroup, _ButtonExit As RibbonButton, _QAT As RibbonQuickAccessToolbar, _ButtonPageNavBack As RibbonButton, _ButtonExportImage As RibbonButton, _ButtonExportMatrix As RibbonButton
 
     Private NotInheritable Class Cmd
         Public Const cmdTabGroupTableTools As UInteger = 1031
@@ -54,6 +54,10 @@ Partial Class RibbonItems
         Public Const cmdGroupNetwork As UInteger = 1083
         Public Const cmdButtonNetworkExport As UInteger = 1084
         Public Const cmdButtonNetworkRender As UInteger = 1085
+        Public Const cmdGroupNetworkTools As UInteger = 1151
+        Public Const cmdSpinnerSimilarity As UInteger = 1153
+        Public Const cmdGroupNetworkRenderTool As UInteger = 1150
+        Public Const cmdButtonRefreshNetwork As UInteger = 1154
         Public Const cmdTabGroupFormulaSearchTools As UInteger = 1091
         Public Const cmdTabFormulaSearch As UInteger = 1092
         Public Const cmdGroupFormulaSearch As UInteger = 1093
@@ -104,7 +108,7 @@ Partial Class RibbonItems
         Get
             Return _Ribbon
         End Get
-        Private Set(ByVal value As Ribbon)
+        Private Set(value As Ribbon)
             _Ribbon = value
         End Set
     End Property
@@ -113,7 +117,7 @@ Partial Class RibbonItems
         Get
             Return _TabGroupTableTools
         End Get
-        Private Set(ByVal value As RibbonTabGroup)
+        Private Set(value As RibbonTabGroup)
             _TabGroupTableTools = value
         End Set
     End Property
@@ -122,7 +126,7 @@ Partial Class RibbonItems
         Get
             Return _TabDesign
         End Get
-        Private Set(ByVal value As RibbonTab)
+        Private Set(value As RibbonTab)
             _TabDesign = value
         End Set
     End Property
@@ -131,7 +135,7 @@ Partial Class RibbonItems
         Get
             Return _GroupDesign
         End Get
-        Private Set(ByVal value As RibbonGroup)
+        Private Set(value As RibbonGroup)
             _GroupDesign = value
         End Set
     End Property
@@ -140,7 +144,7 @@ Partial Class RibbonItems
         Get
             Return _PPMSpinner
         End Get
-        Private Set(ByVal value As RibbonSpinner)
+        Private Set(value As RibbonSpinner)
             _PPMSpinner = value
         End Set
     End Property
@@ -149,7 +153,7 @@ Partial Class RibbonItems
         Get
             Return _GroupShowViewer
         End Get
-        Private Set(ByVal value As RibbonGroup)
+        Private Set(value As RibbonGroup)
             _GroupShowViewer = value
         End Set
     End Property
@@ -158,7 +162,7 @@ Partial Class RibbonItems
         Get
             Return _ButtonShowPlotViewer
         End Get
-        Private Set(ByVal value As RibbonButton)
+        Private Set(value As RibbonButton)
             _ButtonShowPlotViewer = value
         End Set
     End Property
@@ -167,7 +171,7 @@ Partial Class RibbonItems
         Get
             Return _ButtonShowMatrixViewer
         End Get
-        Private Set(ByVal value As RibbonButton)
+        Private Set(value As RibbonButton)
             _ButtonShowMatrixViewer = value
         End Set
     End Property
@@ -176,7 +180,7 @@ Partial Class RibbonItems
         Get
             Return _GroupShowDockWindows
         End Get
-        Private Set(ByVal value As RibbonGroup)
+        Private Set(value As RibbonGroup)
             _GroupShowDockWindows = value
         End Set
     End Property
@@ -185,7 +189,7 @@ Partial Class RibbonItems
         Get
             Return _ButtonShowExplorer
         End Get
-        Private Set(ByVal value As RibbonButton)
+        Private Set(value As RibbonButton)
             _ButtonShowExplorer = value
         End Set
     End Property
@@ -194,7 +198,7 @@ Partial Class RibbonItems
         Get
             Return _ButtonShowSearchList
         End Get
-        Private Set(ByVal value As RibbonButton)
+        Private Set(value As RibbonButton)
             _ButtonShowSearchList = value
         End Set
     End Property
@@ -203,7 +207,7 @@ Partial Class RibbonItems
         Get
             Return _ButtonShowProperties
         End Get
-        Private Set(ByVal value As RibbonButton)
+        Private Set(value As RibbonButton)
             _ButtonShowProperties = value
         End Set
     End Property
@@ -212,7 +216,7 @@ Partial Class RibbonItems
         Get
             Return _TabLayout
         End Get
-        Private Set(ByVal value As RibbonTab)
+        Private Set(value As RibbonTab)
             _TabLayout = value
         End Set
     End Property
@@ -221,7 +225,7 @@ Partial Class RibbonItems
         Get
             Return _GroupLayout
         End Get
-        Private Set(ByVal value As RibbonGroup)
+        Private Set(value As RibbonGroup)
             _GroupLayout = value
         End Set
     End Property
@@ -230,7 +234,7 @@ Partial Class RibbonItems
         Get
             Return _ButtonLayout1
         End Get
-        Private Set(ByVal value As RibbonButton)
+        Private Set(value As RibbonButton)
             _ButtonLayout1 = value
         End Set
     End Property
@@ -239,7 +243,7 @@ Partial Class RibbonItems
         Get
             Return _ButtonLayout2
         End Get
-        Private Set(ByVal value As RibbonButton)
+        Private Set(value As RibbonButton)
             _ButtonLayout2 = value
         End Set
     End Property
@@ -248,7 +252,7 @@ Partial Class RibbonItems
         Get
             Return _GroupChromatography
         End Get
-        Private Set(ByVal value As RibbonGroup)
+        Private Set(value As RibbonGroup)
             _GroupChromatography = value
         End Set
     End Property
@@ -257,7 +261,7 @@ Partial Class RibbonItems
         Get
             Return _ButtonBPC
         End Get
-        Private Set(ByVal value As RibbonButton)
+        Private Set(value As RibbonButton)
             _ButtonBPC = value
         End Set
     End Property
@@ -266,7 +270,7 @@ Partial Class RibbonItems
         Get
             Return _ButtonTIC
         End Get
-        Private Set(ByVal value As RibbonButton)
+        Private Set(value As RibbonButton)
             _ButtonTIC = value
         End Set
     End Property
@@ -275,7 +279,7 @@ Partial Class RibbonItems
         Get
             Return _ButtonXIC
         End Get
-        Private Set(ByVal value As RibbonButton)
+        Private Set(value As RibbonButton)
             _ButtonXIC = value
         End Set
     End Property
@@ -284,7 +288,7 @@ Partial Class RibbonItems
         Get
             Return _TabGroupCalculatorTools
         End Get
-        Private Set(ByVal value As RibbonTabGroup)
+        Private Set(value As RibbonTabGroup)
             _TabGroupCalculatorTools = value
         End Set
     End Property
@@ -293,7 +297,7 @@ Partial Class RibbonItems
         Get
             Return _TabCalculator
         End Get
-        Private Set(ByVal value As RibbonTab)
+        Private Set(value As RibbonTab)
             _TabCalculator = value
         End Set
     End Property
@@ -302,7 +306,7 @@ Partial Class RibbonItems
         Get
             Return _GroupCalculator
         End Get
-        Private Set(ByVal value As RibbonGroup)
+        Private Set(value As RibbonGroup)
             _GroupCalculator = value
         End Set
     End Property
@@ -311,7 +315,7 @@ Partial Class RibbonItems
         Get
             Return _ButtonCalculatorExport
         End Get
-        Private Set(ByVal value As RibbonButton)
+        Private Set(value As RibbonButton)
             _ButtonCalculatorExport = value
         End Set
     End Property
@@ -320,7 +324,7 @@ Partial Class RibbonItems
         Get
             Return _TabGroupRscriptTools
         End Get
-        Private Set(ByVal value As RibbonTabGroup)
+        Private Set(value As RibbonTabGroup)
             _TabGroupRscriptTools = value
         End Set
     End Property
@@ -329,7 +333,7 @@ Partial Class RibbonItems
         Get
             Return _TabRscriptTools
         End Get
-        Private Set(ByVal value As RibbonTab)
+        Private Set(value As RibbonTab)
             _TabRscriptTools = value
         End Set
     End Property
@@ -338,7 +342,7 @@ Partial Class RibbonItems
         Get
             Return _GroupRscript
         End Get
-        Private Set(ByVal value As RibbonGroup)
+        Private Set(value As RibbonGroup)
             _GroupRscript = value
         End Set
     End Property
@@ -347,7 +351,7 @@ Partial Class RibbonItems
         Get
             Return _ButtonSaveScript
         End Get
-        Private Set(ByVal value As RibbonButton)
+        Private Set(value As RibbonButton)
             _ButtonSaveScript = value
         End Set
     End Property
@@ -356,7 +360,7 @@ Partial Class RibbonItems
         Get
             Return _ButtonRunScript
         End Get
-        Private Set(ByVal value As RibbonButton)
+        Private Set(value As RibbonButton)
             _ButtonRunScript = value
         End Set
     End Property
@@ -365,7 +369,7 @@ Partial Class RibbonItems
         Get
             Return _TabGroupExactMassSearchTools
         End Get
-        Private Set(ByVal value As RibbonTabGroup)
+        Private Set(value As RibbonTabGroup)
             _TabGroupExactMassSearchTools = value
         End Set
     End Property
@@ -374,7 +378,7 @@ Partial Class RibbonItems
         Get
             Return _TabExactMassSearch
         End Get
-        Private Set(ByVal value As RibbonTab)
+        Private Set(value As RibbonTab)
             _TabExactMassSearch = value
         End Set
     End Property
@@ -383,7 +387,7 @@ Partial Class RibbonItems
         Get
             Return _GroupExactMassSearch
         End Get
-        Private Set(ByVal value As RibbonGroup)
+        Private Set(value As RibbonGroup)
             _GroupExactMassSearch = value
         End Set
     End Property
@@ -392,7 +396,7 @@ Partial Class RibbonItems
         Get
             Return _ButtonExactMassSearchExport
         End Get
-        Private Set(ByVal value As RibbonButton)
+        Private Set(value As RibbonButton)
             _ButtonExactMassSearchExport = value
         End Set
     End Property
@@ -401,7 +405,7 @@ Partial Class RibbonItems
         Get
             Return _TabGroupNetworkTools
         End Get
-        Private Set(ByVal value As RibbonTabGroup)
+        Private Set(value As RibbonTabGroup)
             _TabGroupNetworkTools = value
         End Set
     End Property
@@ -410,7 +414,7 @@ Partial Class RibbonItems
         Get
             Return _TabNetwork
         End Get
-        Private Set(ByVal value As RibbonTab)
+        Private Set(value As RibbonTab)
             _TabNetwork = value
         End Set
     End Property
@@ -419,7 +423,7 @@ Partial Class RibbonItems
         Get
             Return _GroupNetwork
         End Get
-        Private Set(ByVal value As RibbonGroup)
+        Private Set(value As RibbonGroup)
             _GroupNetwork = value
         End Set
     End Property
@@ -428,7 +432,7 @@ Partial Class RibbonItems
         Get
             Return _ButtonNetworkExport
         End Get
-        Private Set(ByVal value As RibbonButton)
+        Private Set(value As RibbonButton)
             _ButtonNetworkExport = value
         End Set
     End Property
@@ -437,8 +441,44 @@ Partial Class RibbonItems
         Get
             Return _ButtonNetworkRender
         End Get
-        Private Set(ByVal value As RibbonButton)
+        Private Set(value As RibbonButton)
             _ButtonNetworkRender = value
+        End Set
+    End Property
+
+    Public Property GroupNetworkTools As RibbonGroup
+        Get
+            Return _GroupNetworkTools
+        End Get
+        Private Set(value As RibbonGroup)
+            _GroupNetworkTools = value
+        End Set
+    End Property
+
+    Public Property SpinnerSimilarity As RibbonSpinner
+        Get
+            Return _SpinnerSimilarity
+        End Get
+        Private Set(value As RibbonSpinner)
+            _SpinnerSimilarity = value
+        End Set
+    End Property
+
+    Public Property GroupNetworkRenderTool As RibbonGroup
+        Get
+            Return _GroupNetworkRenderTool
+        End Get
+        Private Set(value As RibbonGroup)
+            _GroupNetworkRenderTool = value
+        End Set
+    End Property
+
+    Public Property ButtonRefreshNetwork As RibbonButton
+        Get
+            Return _ButtonRefreshNetwork
+        End Get
+        Private Set(value As RibbonButton)
+            _ButtonRefreshNetwork = value
         End Set
     End Property
 
@@ -446,7 +486,7 @@ Partial Class RibbonItems
         Get
             Return _TabGroupFormulaSearchTools
         End Get
-        Private Set(ByVal value As RibbonTabGroup)
+        Private Set(value As RibbonTabGroup)
             _TabGroupFormulaSearchTools = value
         End Set
     End Property
@@ -455,7 +495,7 @@ Partial Class RibbonItems
         Get
             Return _TabFormulaSearch
         End Get
-        Private Set(ByVal value As RibbonTab)
+        Private Set(value As RibbonTab)
             _TabFormulaSearch = value
         End Set
     End Property
@@ -464,7 +504,7 @@ Partial Class RibbonItems
         Get
             Return _GroupFormulaSearch
         End Get
-        Private Set(ByVal value As RibbonGroup)
+        Private Set(value As RibbonGroup)
             _GroupFormulaSearch = value
         End Set
     End Property
@@ -473,7 +513,7 @@ Partial Class RibbonItems
         Get
             Return _ButtonFormulaSearchExport
         End Get
-        Private Set(ByVal value As RibbonButton)
+        Private Set(value As RibbonButton)
             _ButtonFormulaSearchExport = value
         End Set
     End Property
@@ -482,7 +522,7 @@ Partial Class RibbonItems
         Get
             Return _HelpButton
         End Get
-        Private Set(ByVal value As RibbonHelpButton)
+        Private Set(value As RibbonHelpButton)
             _HelpButton = value
         End Set
     End Property
@@ -491,7 +531,7 @@ Partial Class RibbonItems
         Get
             Return _TabMain
         End Get
-        Private Set(ByVal value As RibbonTab)
+        Private Set(value As RibbonTab)
             _TabMain = value
         End Set
     End Property
@@ -500,7 +540,7 @@ Partial Class RibbonItems
         Get
             Return _GroupFileActions
         End Get
-        Private Set(ByVal value As RibbonGroup)
+        Private Set(value As RibbonGroup)
             _GroupFileActions = value
         End Set
     End Property
@@ -509,7 +549,7 @@ Partial Class RibbonItems
         Get
             Return _ButtonNew
         End Get
-        Private Set(ByVal value As RibbonButton)
+        Private Set(value As RibbonButton)
             _ButtonNew = value
         End Set
     End Property
@@ -518,7 +558,7 @@ Partial Class RibbonItems
         Get
             Return _ButtonOpenRaw
         End Get
-        Private Set(ByVal value As RibbonButton)
+        Private Set(value As RibbonButton)
             _ButtonOpenRaw = value
         End Set
     End Property
@@ -527,7 +567,7 @@ Partial Class RibbonItems
         Get
             Return _ButtonSave
         End Get
-        Private Set(ByVal value As RibbonButton)
+        Private Set(value As RibbonButton)
             _ButtonSave = value
         End Set
     End Property
@@ -536,7 +576,7 @@ Partial Class RibbonItems
         Get
             Return _GroupExit
         End Get
-        Private Set(ByVal value As RibbonGroup)
+        Private Set(value As RibbonGroup)
             _GroupExit = value
         End Set
     End Property
@@ -545,7 +585,7 @@ Partial Class RibbonItems
         Get
             Return _ButtonRsharp
         End Get
-        Private Set(ByVal value As RibbonButton)
+        Private Set(value As RibbonButton)
             _ButtonRsharp = value
         End Set
     End Property
@@ -554,7 +594,7 @@ Partial Class RibbonItems
         Get
             Return _ButtonShowStartPage
         End Get
-        Private Set(ByVal value As RibbonButton)
+        Private Set(value As RibbonButton)
             _ButtonShowStartPage = value
         End Set
     End Property
@@ -563,7 +603,7 @@ Partial Class RibbonItems
         Get
             Return _ButtonShowLogWindow
         End Get
-        Private Set(ByVal value As RibbonButton)
+        Private Set(value As RibbonButton)
             _ButtonShowLogWindow = value
         End Set
     End Property
@@ -572,7 +612,7 @@ Partial Class RibbonItems
         Get
             Return _TabTools
         End Get
-        Private Set(ByVal value As RibbonTab)
+        Private Set(value As RibbonTab)
             _TabTools = value
         End Set
     End Property
@@ -581,7 +621,7 @@ Partial Class RibbonItems
         Get
             Return _GroupToolsActions
         End Get
-        Private Set(ByVal value As RibbonGroup)
+        Private Set(value As RibbonGroup)
             _GroupToolsActions = value
         End Set
     End Property
@@ -590,7 +630,7 @@ Partial Class RibbonItems
         Get
             Return _ButtonMzCalculator
         End Get
-        Private Set(ByVal value As RibbonButton)
+        Private Set(value As RibbonButton)
             _ButtonMzCalculator = value
         End Set
     End Property
@@ -599,7 +639,7 @@ Partial Class RibbonItems
         Get
             Return _ButtonMzSearch
         End Get
-        Private Set(ByVal value As RibbonButton)
+        Private Set(value As RibbonButton)
             _ButtonMzSearch = value
         End Set
     End Property
@@ -608,7 +648,7 @@ Partial Class RibbonItems
         Get
             Return _TabAbout
         End Get
-        Private Set(ByVal value As RibbonTab)
+        Private Set(value As RibbonTab)
             _TabAbout = value
         End Set
     End Property
@@ -617,7 +657,7 @@ Partial Class RibbonItems
         Get
             Return _GroupAboutActions
         End Get
-        Private Set(ByVal value As RibbonGroup)
+        Private Set(value As RibbonGroup)
             _GroupAboutActions = value
         End Set
     End Property
@@ -626,7 +666,7 @@ Partial Class RibbonItems
         Get
             Return _ButtonAbout
         End Get
-        Private Set(ByVal value As RibbonButton)
+        Private Set(value As RibbonButton)
             _ButtonAbout = value
         End Set
     End Property
@@ -635,7 +675,7 @@ Partial Class RibbonItems
         Get
             Return _ButtonBioDeep
         End Get
-        Private Set(ByVal value As RibbonButton)
+        Private Set(value As RibbonButton)
             _ButtonBioDeep = value
         End Set
     End Property
@@ -644,7 +684,7 @@ Partial Class RibbonItems
         Get
             Return _RecentItems
         End Get
-        Private Set(ByVal value As RibbonRecentItems)
+        Private Set(value As RibbonRecentItems)
             _RecentItems = value
         End Set
     End Property
@@ -653,7 +693,7 @@ Partial Class RibbonItems
         Get
             Return _MenuGroupFile
         End Get
-        Private Set(ByVal value As RibbonMenuGroup)
+        Private Set(value As RibbonMenuGroup)
             _MenuGroupFile = value
         End Set
     End Property
@@ -662,7 +702,7 @@ Partial Class RibbonItems
         Get
             Return _ButtonImportsRawFiles
         End Get
-        Private Set(ByVal value As RibbonButton)
+        Private Set(value As RibbonButton)
             _ButtonImportsRawFiles = value
         End Set
     End Property
@@ -671,7 +711,7 @@ Partial Class RibbonItems
         Get
             Return _ButtonToolkits
         End Get
-        Private Set(ByVal value As RibbonDropDownButton)
+        Private Set(value As RibbonDropDownButton)
             _ButtonToolkits = value
         End Set
     End Property
@@ -680,7 +720,7 @@ Partial Class RibbonItems
         Get
             Return _ButtonDropA
         End Get
-        Private Set(ByVal value As RibbonButton)
+        Private Set(value As RibbonButton)
             _ButtonDropA = value
         End Set
     End Property
@@ -689,7 +729,7 @@ Partial Class RibbonItems
         Get
             Return _ButtonDropB
         End Get
-        Private Set(ByVal value As RibbonButton)
+        Private Set(value As RibbonButton)
             _ButtonDropB = value
         End Set
     End Property
@@ -698,7 +738,7 @@ Partial Class RibbonItems
         Get
             Return _ButtonDropC
         End Get
-        Private Set(ByVal value As RibbonButton)
+        Private Set(value As RibbonButton)
             _ButtonDropC = value
         End Set
     End Property
@@ -707,7 +747,7 @@ Partial Class RibbonItems
         Get
             Return _ButtonDropD
         End Get
-        Private Set(ByVal value As RibbonButton)
+        Private Set(value As RibbonButton)
             _ButtonDropD = value
         End Set
     End Property
@@ -716,7 +756,7 @@ Partial Class RibbonItems
         Get
             Return _ButtonSettings
         End Get
-        Private Set(ByVal value As RibbonButton)
+        Private Set(value As RibbonButton)
             _ButtonSettings = value
         End Set
     End Property
@@ -725,7 +765,7 @@ Partial Class RibbonItems
         Get
             Return _ButtonLicense
         End Get
-        Private Set(ByVal value As RibbonButton)
+        Private Set(value As RibbonButton)
             _ButtonLicense = value
         End Set
     End Property
@@ -734,7 +774,7 @@ Partial Class RibbonItems
         Get
             Return _MenuGroupExit
         End Get
-        Private Set(ByVal value As RibbonMenuGroup)
+        Private Set(value As RibbonMenuGroup)
             _MenuGroupExit = value
         End Set
     End Property
@@ -743,7 +783,7 @@ Partial Class RibbonItems
         Get
             Return _ButtonExit
         End Get
-        Private Set(ByVal value As RibbonButton)
+        Private Set(value As RibbonButton)
             _ButtonExit = value
         End Set
     End Property
@@ -752,7 +792,7 @@ Partial Class RibbonItems
         Get
             Return _QAT
         End Get
-        Private Set(ByVal value As RibbonQuickAccessToolbar)
+        Private Set(value As RibbonQuickAccessToolbar)
             _QAT = value
         End Set
     End Property
@@ -761,7 +801,7 @@ Partial Class RibbonItems
         Get
             Return _ButtonPageNavBack
         End Get
-        Private Set(ByVal value As RibbonButton)
+        Private Set(value As RibbonButton)
             _ButtonPageNavBack = value
         End Set
     End Property
@@ -770,7 +810,7 @@ Partial Class RibbonItems
         Get
             Return _ButtonExportImage
         End Get
-        Private Set(ByVal value As RibbonButton)
+        Private Set(value As RibbonButton)
             _ButtonExportImage = value
         End Set
     End Property
@@ -779,12 +819,12 @@ Partial Class RibbonItems
         Get
             Return _ButtonExportMatrix
         End Get
-        Private Set(ByVal value As RibbonButton)
+        Private Set(value As RibbonButton)
             _ButtonExportMatrix = value
         End Set
     End Property
 
-    Public Sub New(ByVal ribbon As Ribbon)
+    Public Sub New(ribbon As Ribbon)
         If ribbon Is Nothing Then Throw New ArgumentNullException(NameOf(ribbon), "Parameter is null")
         If initialized Then Return
         Me.Ribbon = ribbon
@@ -825,6 +865,10 @@ Partial Class RibbonItems
         GroupNetwork = New RibbonGroup(ribbon, Cmd.cmdGroupNetwork)
         ButtonNetworkExport = New RibbonButton(ribbon, Cmd.cmdButtonNetworkExport)
         ButtonNetworkRender = New RibbonButton(ribbon, Cmd.cmdButtonNetworkRender)
+        GroupNetworkTools = New RibbonGroup(ribbon, Cmd.cmdGroupNetworkTools)
+        SpinnerSimilarity = New RibbonSpinner(ribbon, Cmd.cmdSpinnerSimilarity)
+        GroupNetworkRenderTool = New RibbonGroup(ribbon, Cmd.cmdGroupNetworkRenderTool)
+        ButtonRefreshNetwork = New RibbonButton(ribbon, Cmd.cmdButtonRefreshNetwork)
         TabGroupFormulaSearchTools = New RibbonTabGroup(ribbon, Cmd.cmdTabGroupFormulaSearchTools)
         TabFormulaSearch = New RibbonTab(ribbon, Cmd.cmdTabFormulaSearch)
         GroupFormulaSearch = New RibbonGroup(ribbon, Cmd.cmdGroupFormulaSearch)
