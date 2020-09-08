@@ -1,0 +1,16 @@
+{
+  "short_name": "Mzkit Help",
+  "name": "Mzkit Help Document",
+  "icons": [
+    {
+      "src": "/src/mzkit/mzkit/vs.ico",
+      "type": "image/x-icon",
+      "sizes": "32x32"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#1A5A9B",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#1A5A9B"
+}
