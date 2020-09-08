@@ -873,7 +873,27 @@ Public Class PageMzkitTools
 
     Public Sub ShowXICToolStripMenuItem_Click()
         If TypeOf TreeView1.SelectedNode.Tag Is Raw AndAlso MyApplication.host.fileExplorer.GetSelectedNodes.Count = 0 Then
+            MyApplication.host.showStatusMessage("no raw file data for XIC plot!", My.Resources.StatusAnnotations_Warning_32xLG_color)
             Return
+        End If
+
+        Dim selectedCount As Integer = 0
+
+        For i As Integer = 0 To TreeView1.Nodes.Count - 1
+            Dim fileTree = TreeView1.Nodes(i)
+
+            For j As Integer = 0 To fileTree.Nodes.Count - 1
+                If fileTree.Nodes(j).Checked Then
+                    selectedCount += 1
+                End If
+            Next
+        Next
+
+        If selectedCount >= 500 Then
+            If MessageBox.Show("There are too many ions for create XIC plot, do you wan to uncheck some ions for reduce data for plot?", "Too much data!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) = DialogResult.Cancel Then
+                MyApplication.host.showStatusMessage("Show XIC plot for too many ions has been cancel!")
+                Return
+            End If
         End If
 
         ' scan节点

@@ -13,7 +13,6 @@
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
@@ -31,7 +30,7 @@
     <PublisherName>BioNovoGene</PublisherName>
     <SuiteName>mzkit</SuiteName>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>6</ApplicationRevision>
+    <ApplicationRevision>7</ApplicationRevision>
     <ApplicationVersion>1.12.1.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>

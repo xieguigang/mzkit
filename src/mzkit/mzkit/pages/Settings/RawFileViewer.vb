@@ -77,5 +77,13 @@ Public Class RawFileViewer : Implements ISaveSettings, IPageSettings
         Call MyApplication.host.ShowPage(MyApplication.host.mzkitTool)
         Call MyApplication.host.ShowMzkitToolkit()
     End Sub
+
+    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
+        If ComboBox1.SelectedIndex = TrimmingMethods.RelativeIntensity Then
+            NumericUpDown2.Value = Globals.Settings.viewer.intoCutoff
+        Else
+            NumericUpDown2.Value = Globals.Settings.viewer.quantile
+        End If
+    End Sub
 End Class
 
