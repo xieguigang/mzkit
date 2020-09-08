@@ -53,6 +53,7 @@ Public Class NetworkArguments
 
     Public Property treeNodeIdentical As Double = 0.9
     Public Property treeNodeSimilar As Double = 0.8
+    Public Property defaultFilter As Double = 0.8
 
 End Class
 

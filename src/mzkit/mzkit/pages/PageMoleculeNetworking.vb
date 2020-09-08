@@ -243,6 +243,12 @@ Public Class PageMoleculeNetworking
             Next
         Next
 
+        If g.graphEdges.Count >= 8000 AndAlso MessageBox.Show("There are two many edges in your network, do you wan to increase the similarity threshold for reduce network size?", "To many edges", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+            MyApplication.host.ribbonItems.SpinnerSimilarity.DecimalValue = 0.98
+            Call RefreshNetwork()
+            Return
+        End If
+
         Call g.ComputeNodeDegrees
         Call g.ComputeBetweennessCentrality
 

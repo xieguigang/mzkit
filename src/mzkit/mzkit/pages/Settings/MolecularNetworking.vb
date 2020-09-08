@@ -78,6 +78,9 @@ Public Class MolecularNetworking : Implements ISaveSettings, IPageSettings
 
         NumericUpDown3.Value = Globals.Settings.network.treeNodeIdentical
         NumericUpDown2.Value = Globals.Settings.network.treeNodeSimilar
+        NumericUpDown4.Value = Globals.Settings.network.defaultFilter
+
+        MyApplication.host.ribbonItems.SpinnerSimilarity.DecimalValue = Globals.Settings.network.defaultFilter
     End Sub
 
     Public Sub SaveSettings() Implements ISaveSettings.SaveSettings
@@ -96,6 +99,9 @@ Public Class MolecularNetworking : Implements ISaveSettings, IPageSettings
 
         Globals.Settings.network.treeNodeIdentical = NumericUpDown3.Value
         Globals.Settings.network.treeNodeSimilar = NumericUpDown2.Value
+        Globals.Settings.network.defaultFilter = NumericUpDown4.Value
+
+        MyApplication.host.ribbonItems.SpinnerSimilarity.DecimalValue = Globals.Settings.network.defaultFilter
     End Sub
 
     Public Sub ShowPage() Implements IPageSettings.ShowPage

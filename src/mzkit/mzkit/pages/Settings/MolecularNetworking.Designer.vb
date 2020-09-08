@@ -43,8 +43,10 @@ Partial Class MolecularNetworking
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.NumericUpDown2 = New System.Windows.Forms.NumericUpDown()
         Me.NumericUpDown3 = New System.Windows.Forms.NumericUpDown()
-        Me.Label9 = New System.Windows.Forms.Label()
         Me.Label10 = New System.Windows.Forms.Label()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.NumericUpDown4 = New System.Windows.Forms.NumericUpDown()
         CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
         CType(Me.TrackBar3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -58,6 +60,7 @@ Partial Class MolecularNetworking
         Me.GroupBox3.SuspendLayout()
         CType(Me.NumericUpDown2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown3, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NumericUpDown4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Label1
@@ -258,6 +261,8 @@ Partial Class MolecularNetworking
         '
         'GroupBox3
         '
+        Me.GroupBox3.Controls.Add(Me.NumericUpDown4)
+        Me.GroupBox3.Controls.Add(Me.Label11)
         Me.GroupBox3.Controls.Add(Me.NumericUpDown2)
         Me.GroupBox3.Controls.Add(Me.NumericUpDown3)
         Me.GroupBox3.Controls.Add(Me.Label10)
@@ -271,6 +276,7 @@ Partial Class MolecularNetworking
         '
         'NumericUpDown2
         '
+        Me.NumericUpDown2.DecimalPlaces = 2
         Me.NumericUpDown2.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
         Me.NumericUpDown2.Location = New System.Drawing.Point(126, 76)
         Me.NumericUpDown2.Maximum = New Decimal(New Integer() {9, 0, 0, 65536})
@@ -282,6 +288,7 @@ Partial Class MolecularNetworking
         '
         'NumericUpDown3
         '
+        Me.NumericUpDown3.DecimalPlaces = 2
         Me.NumericUpDown3.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
         Me.NumericUpDown3.Location = New System.Drawing.Point(126, 39)
         Me.NumericUpDown3.Maximum = New Decimal(New Integer() {1, 0, 0, 0})
@@ -290,6 +297,15 @@ Partial Class MolecularNetworking
         Me.NumericUpDown3.Size = New System.Drawing.Size(148, 20)
         Me.NumericUpDown3.TabIndex = 8
         Me.NumericUpDown3.Value = New Decimal(New Integer() {9, 0, 0, 65536})
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.Location = New System.Drawing.Point(26, 39)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(79, 13)
+        Me.Label10.TabIndex = 6
+        Me.Label10.Text = "Node Identical:"
         '
         'Label9
         '
@@ -300,14 +316,26 @@ Partial Class MolecularNetworking
         Me.Label9.TabIndex = 7
         Me.Label9.Text = "Node Similar:"
         '
-        'Label10
+        'Label11
         '
-        Me.Label10.AutoSize = True
-        Me.Label10.Location = New System.Drawing.Point(26, 39)
-        Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(79, 13)
-        Me.Label10.TabIndex = 6
-        Me.Label10.Text = "Node Identical:"
+        Me.Label11.AutoSize = True
+        Me.Label11.Location = New System.Drawing.Point(322, 39)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(97, 13)
+        Me.Label11.TabIndex = 10
+        Me.Label11.Text = "Default Edge Filter:"
+        '
+        'NumericUpDown4
+        '
+        Me.NumericUpDown4.DecimalPlaces = 2
+        Me.NumericUpDown4.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
+        Me.NumericUpDown4.Location = New System.Drawing.Point(443, 39)
+        Me.NumericUpDown4.Maximum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.NumericUpDown4.Minimum = New Decimal(New Integer() {6, 0, 0, 65536})
+        Me.NumericUpDown4.Name = "NumericUpDown4"
+        Me.NumericUpDown4.Size = New System.Drawing.Size(148, 20)
+        Me.NumericUpDown4.TabIndex = 11
+        Me.NumericUpDown4.Value = New Decimal(New Integer() {85, 0, 0, 131072})
         '
         'MolecularNetworking
         '
@@ -336,6 +364,7 @@ Partial Class MolecularNetworking
         Me.GroupBox3.PerformLayout()
         CType(Me.NumericUpDown2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NumericUpDown3, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NumericUpDown4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -364,4 +393,6 @@ Partial Class MolecularNetworking
     Friend WithEvents NumericUpDown3 As NumericUpDown
     Friend WithEvents Label10 As Label
     Friend WithEvents Label9 As Label
+    Friend WithEvents NumericUpDown4 As NumericUpDown
+    Friend WithEvents Label11 As Label
 End Class
