@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::751e644f0cbfa144734671ec1299cc77, src\mzkit\mzkit\Globals.vb"
+﻿#Region "Microsoft.VisualBasic::3cebafd485838873edbf7af88a066741, src\mzkit\mzkit\application\Globals.vb"
 
     ' Author:
     ' 
@@ -40,9 +40,9 @@
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: CurrentRawFile, LoadRawFileCache
+    '     Function: CheckFormOpened, CurrentRawFile, GetColors, GetTotalCacheSize, LoadRawFileCache
     ' 
-    '     Sub: (+2 Overloads) addRawFile, SaveRawFileCache
+    '     Sub: (+2 Overloads) addRawFile, AddRecentFileHistory, SaveRawFileCache
     ' 
     ' /********************************************************************************/
 

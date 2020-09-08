@@ -1,4 +1,77 @@
-﻿Imports System
+﻿#Region "Microsoft.VisualBasic::60056ac90086624a776aea1a0233f8fa, src\mzkit\mzkit\pages\Settings\buttons\DropDownButton.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class DropDownButton
+    ' 
+    ' 
+    '         Enum Renderers
+    ' 
+    '             [Default], Native
+    ' 
+    ' 
+    ' 
+    '         Delegate Sub
+    ' 
+    '             Properties: DropDownMenu, DropDownSelectedItem, Renderer
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    ' 
+    '             Function: IsInputKey, IsWinXP
+    ' 
+    '             Sub: DrawPreVistaStyle, DrawVisualStyle, DropDownButton_TextChanged, DropDownMenu_ItemAdded, DropDownMenu_ItemClicked
+    '                  DropDownMenu_ItemRemoved, OnClick, OnDropDownClicked, OnDropDownItemClicked, OnGotFocus
+    '                  OnKeyDown, OnLostFocus, OnMouseDown, OnMouseLeave, OnMouseMove
+    '                  OnMouseUp, OnPaint, ShowContextMenuStrip
+    ' 
+    '     Class DropDownItemEventArgs
+    ' 
+    '         Properties: Item, ItemIndex
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Class DropDownMenu
+    ' 
+    '         Properties: DropDownButton
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System
 Imports System.ComponentModel
 Imports System.Drawing
 Imports System.Windows.Forms
@@ -403,3 +476,4 @@ Namespace UnFound.Controls
         Public Property DropDownButton As DropDownButton
     End Class
 End Namespace
+

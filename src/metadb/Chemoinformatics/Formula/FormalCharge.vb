@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99d382e3191ae9582220ec5fe1597363, src\metadb\Chemoinformatics\Formula\FormalCharge.vb"
+﻿#Region "Microsoft.VisualBasic::30a177b8faf961ec308a83a38687f128, src\metadb\Chemoinformatics\Formula\FormalCharge.vb"
 
     ' Author:
     ' 
@@ -150,6 +150,3 @@ Namespace Formula
         End Function
     End Module
 End Namespace
-
-
-

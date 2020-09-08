@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09d6aabd4b04c73c016313811f72d7bb, src\mzkit\mzkit\DataControlHandler.vb"
+﻿#Region "Microsoft.VisualBasic::605d40b368e86a7ee569d372d2f2b5f5, src\mzkit\mzkit\DataControlHandler.vb"
 
     ' Author:
     ' 
@@ -77,4 +77,3 @@ Module DataControlHandler
         End Using
     End Sub
 End Module
-
