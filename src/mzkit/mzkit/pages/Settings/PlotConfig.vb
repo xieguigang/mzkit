@@ -72,6 +72,8 @@ Public Class PlotConfig : Implements ISaveSettings, IPageSettings
         For Each color As String In Globals.Settings.viewer.colorSet
             ListBox1.Items.Add(color)
         Next
+
+        CheckBox1.Checked = Globals.Settings.viewer.fill
     End Sub
 
     Public Sub SaveSettings() Implements ISaveSettings.SaveSettings
@@ -82,6 +84,7 @@ Public Class PlotConfig : Implements ISaveSettings, IPageSettings
         Next
 
         Globals.Settings.viewer.colorSet = colorSet.ToArray
+        Globals.Settings.viewer.fill = CheckBox1.Checked
     End Sub
 
     Public Sub ShowPage() Implements IPageSettings.ShowPage
