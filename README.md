@@ -149,6 +149,17 @@ Now you can use the saved network image for your publications:
 
 ## Appendix
 
+### Switch Between Toolkit
+
+You can switch between toolkit pages via the start menu of mzkit:
+
+![](docs/manual/switch_toolkit2.PNG)
+> click ``[File]`` -> ``[Mzkit Data Toolkits]``, and then click on one toolkit item then you can switch to the required toolkit page.
+
+or just select a page from the app switcher toolstrip menu:
+
+![](docs/manual/switch_toolkit1.PNG)
+
 ### Install Mzkit
 
 ![](docs/manual/setup.PNG)
