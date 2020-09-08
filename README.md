@@ -147,7 +147,21 @@ When you have launch the mzkit installer, then you will see a security warning d
 
 if you want to removes mzkit from your computer system, then you could follow this instruction for uninstall:
 
-1. 
+1. Open the control panel of your windows system, and then click of the like ``Uninstall a program``
+
+![](docs/manual/control_panel.PNG)
+
+2. Then you will see a list of program that installed on your windows, located the mzkit application
+
+![](docs/manual/app_list.PNG)
+
+3. Then right click on the mzkit, select uninstall, then you can removes mzkit from your windows system
+
+![](docs/manual/uninstall_right_click.png)
+
+Just click ``OK`` on the dialog:
+
+![](docs/manual/uninstaller.PNG)
 
 ##  3. <a name='Credits'></a>Credits
 
