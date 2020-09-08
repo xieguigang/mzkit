@@ -123,12 +123,19 @@ Public Class PageMoleculeNetworking
             Sub()
                 Thread.Sleep(500)
                 progress.Invoke(Sub() progress.Label1.Text = "Run network layouts...")
+                graph = graph _
+                    .doRandomLayout _
+                    .doForceLayout(
+                        parameters:=Globals.Settings.network.layout,
+                        progressCallback:=Sub(msg)
+                                              progress.Invoke(Sub() progress.Label1.Text = msg)
+                                          End Sub)
 
-                Dim layouts = Planner.Plan(graph, Globals.Settings.network.layout.Iterations, Sub(msg) progress.Invoke(Sub() progress.Label1.Text = msg))
+                ' Dim layouts = Planner.Plan(graph, Globals.Settings.network.layout.Iterations, Sub(msg) progress.Invoke(Sub() progress.Label1.Text = msg))
 
-                For Each node In graph.vertex
-                    node.data.initialPostion = New FDGVector2(layouts(node))
-                Next
+                'For Each node In graph.vertex
+                '    node.data.initialPostion = New FDGVector2(layouts(node))
+                'Next
 
                 progress.Invoke(Sub() progress.Label1.Text = "do network render plot...")
 

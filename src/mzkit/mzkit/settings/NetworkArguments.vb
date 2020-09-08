@@ -51,5 +51,8 @@ Public Class NetworkArguments
     Public Property nodeRadius As ElementRange
     Public Property linkWidth As ElementRange
 
+    Public Property treeNodeIdentical As Double = 0.9
+    Public Property treeNodeSimilar As Double = 0.8
+
 End Class
 

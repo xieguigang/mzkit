@@ -75,6 +75,9 @@ Public Class MolecularNetworking : Implements ISaveSettings, IPageSettings
 
         TrackBar4.Value = Globals.Settings.network.linkWidth.min
         TrackBar3.Value = Globals.Settings.network.linkWidth.max
+
+        NumericUpDown3.Value = Globals.Settings.network.treeNodeIdentical
+        NumericUpDown2.Value = Globals.Settings.network.treeNodeSimilar
     End Sub
 
     Public Sub SaveSettings() Implements ISaveSettings.SaveSettings
@@ -90,6 +93,9 @@ Public Class MolecularNetworking : Implements ISaveSettings, IPageSettings
         Globals.Settings.network.linkWidth = New ElementRange With {
             .min = TrackBar4.Value, .max = TrackBar3.Value
         }
+
+        Globals.Settings.network.treeNodeIdentical = NumericUpDown3.Value
+        Globals.Settings.network.treeNodeSimilar = NumericUpDown2.Value
     End Sub
 
     Public Sub ShowPage() Implements IPageSettings.ShowPage

@@ -723,7 +723,13 @@ Public Class PageMzkitTools
                     Return
                 End If
 
-                Dim protocol As New Protocols(Tolerance.PPM(15), Tolerance.DeltaMass(0.3), 0.85, 0.7, Globals.Settings.viewer.GetMethod)
+                Dim protocol As New Protocols(
+                    ms1_tolerance:=Tolerance.PPM(15),
+                    ms2_tolerance:=Tolerance.DeltaMass(0.3),
+                    treeIdentical:=Globals.Settings.network.treeNodeIdentical,
+                    treeSimilar:=Globals.Settings.network.treeNodeSimilar,
+                    intoCutoff:=Globals.Settings.viewer.GetMethod
+                )
                 Dim progressMsg As Action(Of String) =
                     Sub(msg)
                         progress.Invoke(Sub() progress.Label2.Text = msg)
@@ -778,7 +784,7 @@ Public Class PageMzkitTools
 
                 progress.Invoke(Sub() progress.Label1.Text = "run family clustering....")
 
-                Dim clusters = net.ToKMeansModels.Kmeans(expected:=10, debug:=False)
+                Dim clusters = net.ToKMeansModels.Kmeans(expected:=9, debug:=False)
                 Dim rawLinks = links.ToDictionary(Function(a) a.Name, Function(a) a.Value)
 
                 progress.Invoke(Sub() progress.Label1.Text = "initialize result output...")
