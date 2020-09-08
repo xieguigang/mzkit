@@ -11,9 +11,9 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyTitle("BioNovoGene Mass Spectrum Toolkit")>
 <Assembly: AssemblyDescription("BioNovoGene Mass Spectrum Toolkit")>
 <Assembly: AssemblyCompany("BioNovoGene")>
-<Assembly: AssemblyProduct("mzkit.org")>
+<Assembly: AssemblyProduct("BioDeep")>
 <Assembly: AssemblyCopyright("Copyright © gg.xie@bionovogene.com 2020")>
-<Assembly: AssemblyTrademark("BioDeep")>
+<Assembly: AssemblyTrademark("Mzkit")>
 
 <Assembly: ComVisible(False)>
 
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("1.0.0.0")>
-<Assembly: AssemblyFileVersion("1.0.0.0")>
+<Assembly: AssemblyVersion("1.32.*")>
+<Assembly: AssemblyFileVersion("2.3822.*")>
