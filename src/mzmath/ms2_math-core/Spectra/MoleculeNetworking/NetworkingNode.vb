@@ -132,7 +132,10 @@ Public Class NetworkingNode
             .Take(3) _
             .Select(Function(a) BitConverter.GetBytes(a.mz)) _
             .IteratesALL _
-            .ToBase64String
+            .ToBase64String _
+            .MD5 _
+            .Substring(0, 6) _
+            .ToUpper
         Dim uid As String = $"{files}#M{CInt(ions.Select(Function(a) a.mz).Average)}T{CInt(rt)}_{products}"
 
         Return New LibraryMatrix With {

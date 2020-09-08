@@ -289,7 +289,14 @@ Public Class PageMoleculeNetworking
             TreeListView1.Items.Add(row)
         Next
         For Each edge In g.graphEdges
-            DataGridView1.Rows.Add(edge.U.label, edge.V.label, edge.data!forward, edge.data!reverse, "View")
+            DataGridView1.Rows.Add(
+                edge.U.label,
+                edge.V.label,
+                stdNum.Min(Val(edge.data!forward), Val(edge.data!reverse)).ToString("F4"),
+                Val(edge.data!forward).ToString("F4"),
+                Val(edge.data!reverse).ToString("F4"),
+                "View Alignment"
+            )
             Application.DoEvents()
         Next
 
