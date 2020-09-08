@@ -119,10 +119,15 @@ Public Class PageMoleculeNetworking
             v.data.color = colorSet(nodeClusters.IndexOf(v.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE)))
         Next
 
+        progress.Invoke(Sub()
+                            progress.Label2.Text = "Molecular networking"
+                            progress.Label1.Text = "Refresh network"
+                        End Sub)
+
         Dim task As New Thread(
             Sub()
                 Thread.Sleep(500)
-                progress.Invoke(Sub() progress.Label1.Text = "Run network layouts...")
+                progress.Invoke(Sub() progress.Label2.Text = "Run network layouts...")
                 graph = graph _
                     .doRandomLayout _
                     .doForceLayout(
@@ -285,9 +290,17 @@ Public Class PageMoleculeNetworking
         Next
         For Each edge In g.graphEdges
             DataGridView1.Rows.Add(edge.U.label, edge.V.label, edge.data!forward, edge.data!reverse, "View")
+            Application.DoEvents()
         Next
 
-        ' PictureBox1.BackgroundImage = g.DrawImage(labelerIterations:=-1).AsGDIImage
+        DataGridView2.Rows.Clear()
+        DataGridView2.Rows.Add("nodes", g.vertex.Count)
+        DataGridView2.Rows.Add("edges", g.graphEdges.Count)
+        DataGridView2.Rows.Add("single nodes", g.vertex.Count - g.connectedNodes.Length)
+
+        For Each cluster In rawMatrix.GroupBy(Function(a) a.Cluster).OrderBy(Function(a) Val(a.Key))
+            DataGridView2.Rows.Add($"#Cluster_{cluster.Key}", cluster.Count)
+        Next
     End Sub
 
     Public Sub saveNetwork()
@@ -299,7 +312,7 @@ Public Class PageMoleculeNetworking
                 End If
             End Using
         Else
-            MessageBox.Show("No network graph object is found! Please goto raw file viewer page and select a raw file to run [Molecule Networking] analysis!", "No network graph object!", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            MessageBox.Show("No network graph Object Is found! Please GoTo raw file viewer page And Select a raw file To run [Molecule Networking] analysis!", "No network graph object!", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         End If
     End Sub
 
@@ -367,19 +380,7 @@ Public Class PageMoleculeNetworking
 
     Private Sub PageMoleculeNetworking_Load(sender As Object, e As EventArgs) Handles Me.Load
         DataGridView1.CoolGrid
-        ' DataGridView2.CoolGrid
+        DataGridView2.CoolGrid
         tooltip.OwnerDraw = True
-    End Sub
-
-    Private Sub TreeListView1_Click(sender As Object, e As EventArgs) Handles TreeListView1.Click
-
-    End Sub
-
-    Private Sub TreeListView1_DoubleClick(sender As Object, e As EventArgs) Handles TreeListView1.DoubleClick
-
-    End Sub
-
-    Private Sub TreeListView1_MouseMove(sender As Object, e As MouseEventArgs) Handles TreeListView1.MouseMove
-
     End Sub
 End Class

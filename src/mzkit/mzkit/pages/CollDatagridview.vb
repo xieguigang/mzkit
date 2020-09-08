@@ -87,11 +87,11 @@ Namespace cooldatagridview
             cellStyle.BackColor = Drawing.Color.White
             cellStyle.Font = New Drawing.Font("Microsoft Sans Serif", 10.0F, Drawing.FontStyle.Regular, Drawing.GraphicsUnit.Point, 0)
             cellStyle.ForeColor = Drawing.Color.Black
-            cellStyle.SelectionBackColor = Drawing.Color.Yellow
+            cellStyle.SelectionBackColor = Drawing.Color.SkyBlue
             cellStyle.SelectionForeColor = Drawing.Color.Black
             cellStyle.WrapMode = DataGridViewTriState.True
             dgv.DefaultCellStyle = cellStyle
-            dgv.ColumnHeadersHeight = 40
+            dgv.ColumnHeadersHeight = 30
             dgv.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing
             headerStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
             headerStyle.BackColor = Drawing.SystemColors.Window

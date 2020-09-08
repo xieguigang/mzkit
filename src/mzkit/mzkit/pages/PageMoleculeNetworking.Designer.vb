@@ -46,17 +46,24 @@ Partial Class PageMoleculeNetworking
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.SaveImageToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
+        Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.DataGridView2 = New System.Windows.Forms.DataGridView()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage3.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
+        Me.TabPage2.SuspendLayout()
+        CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TabControl1
         '
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage3)
+        Me.TabControl1.Controls.Add(Me.TabPage2)
         Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl1.Location = New System.Drawing.Point(0, 0)
         Me.TabControl1.Name = "TabControl1"
@@ -209,6 +216,38 @@ Partial Class PageMoleculeNetworking
         Me.ImageList1.Images.SetKeyName(0, "gnome-documents.png")
         Me.ImageList1.Images.SetKeyName(1, "application-vnd.oasis.opendocument.database.png")
         '
+        'TabPage2
+        '
+        Me.TabPage2.Controls.Add(Me.DataGridView2)
+        Me.TabPage2.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage2.Name = "TabPage2"
+        Me.TabPage2.Size = New System.Drawing.Size(948, 622)
+        Me.TabPage2.TabIndex = 3
+        Me.TabPage2.Text = "Network Statistics"
+        Me.TabPage2.UseVisualStyleBackColor = True
+        '
+        'DataGridView2
+        '
+        Me.DataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView2.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column2, Me.Column3})
+        Me.DataGridView2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DataGridView2.Location = New System.Drawing.Point(0, 0)
+        Me.DataGridView2.Name = "DataGridView2"
+        Me.DataGridView2.Size = New System.Drawing.Size(948, 622)
+        Me.DataGridView2.TabIndex = 0
+        '
+        'Column2
+        '
+        Me.Column2.HeaderText = "Information"
+        Me.Column2.Name = "Column2"
+        Me.Column2.ReadOnly = True
+        '
+        'Column3
+        '
+        Me.Column3.HeaderText = "Value"
+        Me.Column3.Name = "Column3"
+        Me.Column3.ReadOnly = True
+        '
         'PageMoleculeNetworking
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -222,6 +261,8 @@ Partial Class PageMoleculeNetworking
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage3.ResumeLayout(False)
         Me.ContextMenuStrip1.ResumeLayout(False)
+        Me.TabPage2.ResumeLayout(False)
+        CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -247,4 +288,8 @@ Partial Class PageMoleculeNetworking
     Friend WithEvents Similarity As DataGridViewTextBoxColumn
     Friend WithEvents reverse As DataGridViewTextBoxColumn
     Friend WithEvents Column1 As DataGridViewButtonColumn
+    Friend WithEvents TabPage2 As TabPage
+    Friend WithEvents DataGridView2 As DataGridView
+    Friend WithEvents Column2 As DataGridViewTextBoxColumn
+    Friend WithEvents Column3 As DataGridViewTextBoxColumn
 End Class

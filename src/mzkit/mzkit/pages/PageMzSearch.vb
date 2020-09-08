@@ -57,6 +57,9 @@ Public Class PageMzSearch
     Private Sub doExactMassSearch(exact_mass As Double, ppm As Double)
         Dim progress As New frmTaskProgress
 
+        progress.Label2.Text = "Do M/z Search"
+        progress.Label1.Text = "Initialized..."
+
         Call New Thread(
             Sub()
                 Call runSearchInternal(exact_mass, ppm, progress)
@@ -66,6 +69,9 @@ Public Class PageMzSearch
 
     Public Sub doMzSearch(mz As Double, charge As Integer, ionMode As Integer)
         Dim progress As New frmTaskProgress
+
+        progress.Label2.Text = "Do M/z Search"
+        progress.Label1.Text = "Initialized..."
 
         Call New Thread(
             Sub()

@@ -705,6 +705,10 @@ Public Class PageMzkitTools
         ' Dim raw As Raw = TreeView1.CurrentRawFile.raw
         Dim similarityCutoff As Double = MyApplication.host.ribbonItems.SpinnerSimilarity.DecimalValue
         Dim progress As New frmTaskProgress
+
+        progress.Label2.Text = "Run molecular networking"
+        progress.Label1.Text = "Initialized..."
+
         Dim runTask As New Thread(
             Sub()
 
