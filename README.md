@@ -129,6 +129,26 @@ Export the formula search result just like other data that we've introduced befo
 
 <div style="page-break-after:always;"></div>
 
+## Appendix
+
+### Install Mzkit
+
+![](docs/manual/setup.PNG)
+
+When you have extract the zip package of the mzkit compression package, then you could found a ``setup.exe`` install application in the top of folder. Click on this setup application, then your will going to install mzkit program into your computer system.
+
+![](docs/manual/installer_warning.PNG)
+
+When you have launch the mzkit installer, then you will see a security warning dialog from your windows system, just click on the ``Install`` for start the install progress, and then just needs to wait for the installer finish the progress of copy the mzkit application files.
+
+![](docs/manual/install_mzkit.png)
+
+### Uninstall Mzkit
+
+if you want to removes mzkit from your computer system, then you could follow this instruction for uninstall:
+
+1. 
+
 ##  3. <a name='Credits'></a>Credits
 
 This open source mass spectrometry data toolkit is developed at the BioDeep R&D laboratory and provided to you by BioNovoGene corporation.
