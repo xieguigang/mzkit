@@ -1,3 +1,5 @@
+<link rel="manifest" href="/manifest.json">
+
 # <span style="font-size: 3em;">Mzkit</span>
 
 ![](docs/manual/splash.PNG)
