@@ -1,79 +1,80 @@
 ﻿#Region "Microsoft.VisualBasic::489bcd437774f2d06ef009950691442a, src\assembly\assembly\MarkupData\mzML\XML\Spectrum.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class spectrumList
-    ' 
-    '         Properties: spectrums
-    ' 
-    '         Function: GetAllMs1
-    ' 
-    '     Class precursorList
-    ' 
-    '         Properties: precursor
-    ' 
-    '     Class spectrum
-    ' 
-    '         Properties: controllerNumber, controllerType, ms_level, precursorList, profile
-    '                     scan, scan_time, scanList, selectedIon
-    ' 
-    '         Function: GetRawMatrix, ScanData, ToString
-    ' 
-    '     Class scanList
-    ' 
-    '         Properties: cvParams, scans
-    ' 
-    '     Class scan
-    ' 
-    '         Properties: instrumentConfigurationRef
-    ' 
-    '     Class scanWindowList
-    ' 
-    '         Properties: scanWindows
-    ' 
-    '     Class scanWindow
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class spectrumList
+' 
+'         Properties: spectrums
+' 
+'         Function: GetAllMs1
+' 
+'     Class precursorList
+' 
+'         Properties: precursor
+' 
+'     Class spectrum
+' 
+'         Properties: controllerNumber, controllerType, ms_level, precursorList, profile
+'                     scan, scan_time, scanList, selectedIon
+' 
+'         Function: GetRawMatrix, ScanData, ToString
+' 
+'     Class scanList
+' 
+'         Properties: cvParams, scans
+' 
+'     Class scan
+' 
+'         Properties: instrumentConfigurationRef
+' 
+'     Class scanWindowList
+' 
+'         Properties: scanWindows
+' 
+'     Class scanWindow
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Language
@@ -188,7 +189,8 @@ Namespace MarkupData.mzML
         Public Function ScanData(Optional basename$ = Nothing,
                                  Optional centroid As Boolean = False,
                                  Optional raw As Boolean = False,
-                                 Optional centroidTolerance As Tolerance = Nothing) As PeakMs2
+                                 Optional centroidTolerance As Tolerance = Nothing,
+                                 Optional intocutoff As LowAbundanceTrimming = Nothing) As PeakMs2
 
             Dim ms2 As ms2() = GetRawMatrix()
             Dim mzInto As New LibraryMatrix With {
@@ -210,7 +212,7 @@ Namespace MarkupData.mzML
                         centroidTolerance = Tolerance.DeltaMass(0.1)
                     End If
 
-                    mzInto = mzInto.CentroidMode(centroidTolerance, 0.001)
+                    mzInto = mzInto.CentroidMode(centroidTolerance, intocutoff Or LowAbundanceTrimming.Default)
                 End If
 
                 activationMethod = precursorList.precursor(Scan0).GetActivationMethod()

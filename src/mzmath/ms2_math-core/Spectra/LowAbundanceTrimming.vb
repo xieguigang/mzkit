@@ -1,15 +1,22 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Math.Quantile
 
 Public MustInherit Class LowAbundanceTrimming
 
-    Protected ReadOnly threshold As Double
+    Protected ReadOnly m_threshold As Double
+
+    Public ReadOnly Property threshold As Double
+        Get
+            Return m_threshold
+        End Get
+    End Property
 
     Sub New(cutoff As Double)
         If cutoff > 1 Then
-            threshold = cutoff / 100
+            m_threshold = cutoff / 100
         Else
-            threshold = cutoff
+            m_threshold = cutoff
         End If
 
         If cutoff <= 0 Then
@@ -20,8 +27,10 @@ Public MustInherit Class LowAbundanceTrimming
     Public Shared ReadOnly Property intoCutff As New RelativeIntensityCutoff(0.05)
     Public Shared ReadOnly Property quantCutoff As New QuantileIntensityCutoff(0.65)
 
+    Public Shared ReadOnly Property [Default] As New [Default](Of LowAbundanceTrimming)(intoCutff)
+
     Public Function Trim(spectrum As IEnumerable(Of ms2)) As ms2()
-        If threshold <= 0 Then
+        If m_threshold <= 0 Then
             Return spectrum.ToArray
         Else
             Return lowAbundanceTrimming(spectrum.ToArray)
@@ -52,11 +61,11 @@ Public Class RelativeIntensityCutoff : Inherits LowAbundanceTrimming
             fragment.quantity = fragment.intensity / maxInto
         Next
 
-        Return spectrum.Where(Function(a) a.quantity >= threshold).ToArray
+        Return spectrum.Where(Function(a) a.quantity >= m_threshold).ToArray
     End Function
 
     Public Overrides Function ToString() As String
-        Return $"relative_intensity >= {threshold * 100}%"
+        Return $"relative_intensity >= {m_threshold * 100}%"
     End Function
 
 End Class
@@ -69,13 +78,13 @@ Public Class QuantileIntensityCutoff : Inherits LowAbundanceTrimming
 
     Protected Overrides Function lowAbundanceTrimming(spectrum() As ms2) As ms2()
         Dim quantile = spectrum.Select(Function(a) a.intensity).GKQuantile
-        Dim threshold As Double = quantile.Query(Me.threshold)
+        Dim threshold As Double = quantile.Query(Me.m_threshold)
 
         Return spectrum.Where(Function(a) a.intensity >= threshold).ToArray
     End Function
 
     Public Overrides Function ToString() As String
-        Return $"intensity_quantile >= {threshold}"
+        Return $"intensity_quantile >= {m_threshold}"
     End Function
 
 End Class

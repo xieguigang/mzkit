@@ -41,7 +41,7 @@ Public Class NetworkingNode
     ''' <param name="raw"></param>
     ''' <param name="tolerance">ms2 tolerance</param>
     ''' <returns></returns>
-    Public Shared Function Create(parentIon As Double, raw As SpectrumCluster, tolerance As Tolerance) As NetworkingNode
+    Public Shared Function Create(parentIon As Double, raw As SpectrumCluster, tolerance As Tolerance, cutoff As LowAbundanceTrimming) As NetworkingNode
         Dim ions As PeakMs2() = raw.cluster _
             .Select(Function(a)
                         Dim maxInto = a.mzInto.Select(Function(x) x.intensity).Max
@@ -53,7 +53,7 @@ Public Class NetworkingNode
                         Return a
                     End Function) _
             .ToArray
-        Dim nodeData As LibraryMatrix = unionRepresentative(ions, tolerance)
+        Dim nodeData As LibraryMatrix = unionRepresentative(ions, tolerance, cutoff)
 
         Return New NetworkingNode With {
             .mz = parentIon,
@@ -62,7 +62,7 @@ Public Class NetworkingNode
         }
     End Function
 
-    Private Shared Function unionRepresentative(ions As PeakMs2(), tolerance As Tolerance) As LibraryMatrix
+    Private Shared Function unionRepresentative(ions As PeakMs2(), tolerance As Tolerance, cutoff As LowAbundanceTrimming) As LibraryMatrix
         Dim mz As NamedCollection(Of ms2)() = ions _
             .Select(Function(i) i.mzInto) _
             .IteratesALL _
@@ -79,7 +79,7 @@ Public Class NetworkingNode
                         }
                     End Function) _
             .ToArray _
-            .Centroid(tolerance) _
+            .Centroid(tolerance, cutoff) _
             .ToArray
         Dim products As String = matrix _
             .OrderByDescending(Function(a) a.intensity) _

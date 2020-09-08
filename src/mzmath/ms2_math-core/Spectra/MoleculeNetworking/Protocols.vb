@@ -19,7 +19,7 @@ Public Class Protocols
 
     ReadOnly treeIdentical As Double
     ReadOnly treeSimilar As Double
-    ReadOnly intoCutoff As Double
+    ReadOnly intoCutoff As LowAbundanceTrimming
 
     ReadOnly raw As New Dictionary(Of String, PeakMs2)
     ReadOnly clusters As New Dictionary(Of String, NetworkingNode)
@@ -36,7 +36,7 @@ Public Class Protocols
         End Get
     End Property
 
-    Sub New(ms1_tolerance As Tolerance, ms2_tolerance As Tolerance, treeIdentical As Double, treeSimilar As Double, intoCutoff As Double)
+    Sub New(ms1_tolerance As Tolerance, ms2_tolerance As Tolerance, treeIdentical As Double, treeSimilar As Double, intoCutoff As LowAbundanceTrimming)
         Me.treeIdentical = treeIdentical
         Me.treeSimilar = treeSimilar
         Me.intoCutoff = intoCutoff
@@ -107,7 +107,7 @@ Public Class Protocols
 
         For Each mz As NamedCollection(Of PeakMs2) In groupByMz
             For Each cluster As SpectrumCluster In BinaryTree(mz)
-                Yield NetworkingNode.Create(Val(mz.name), cluster, ms2_tolerance)
+                Yield NetworkingNode.Create(Val(mz.name), cluster, ms2_tolerance, intoCutoff)
             Next
         Next
     End Function

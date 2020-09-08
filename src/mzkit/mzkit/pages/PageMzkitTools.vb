@@ -252,7 +252,7 @@ Public Class PageMzkitTools
     Private Sub showSpectrum(scanId As String, raw As Raw)
         If raw.cache.FileExists Then
             Dim prop As SpectrumProperty = Nothing
-            Dim scanData As LibraryMatrix = raw.GetSpectrum(scanId, prop)
+            Dim scanData As LibraryMatrix = raw.GetSpectrum(scanId, Globals.Settings.viewer.GetMethod, prop)
 
             showMatrix(scanData.ms2, scanId)
 
@@ -710,7 +710,7 @@ Public Class PageMzkitTools
                     Return
                 End If
 
-                Dim protocol As New Protocols(Tolerance.PPM(15), Tolerance.DeltaMass(0.3), 0.85, 0.7, 0.05)
+                Dim protocol As New Protocols(Tolerance.PPM(15), Tolerance.DeltaMass(0.3), 0.85, 0.7, Globals.Settings.viewer.GetMethod)
                 Dim progressMsg As Action(Of String) =
                     Sub(msg)
                         progress.Invoke(Sub() progress.Label2.Text = msg)
