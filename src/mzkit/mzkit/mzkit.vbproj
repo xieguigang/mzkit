@@ -30,7 +30,7 @@
     <PublisherName>BioNovoGene</PublisherName>
     <SuiteName>mzkit</SuiteName>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>13</ApplicationRevision>
+    <ApplicationRevision>17</ApplicationRevision>
     <ApplicationVersion>1.12.1.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>

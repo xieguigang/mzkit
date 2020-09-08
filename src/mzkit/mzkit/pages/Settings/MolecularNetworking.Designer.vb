@@ -41,12 +41,12 @@ Partial Class MolecularNetworking
         Me.Label7 = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.NumericUpDown4 = New System.Windows.Forms.NumericUpDown()
+        Me.Label11 = New System.Windows.Forms.Label()
         Me.NumericUpDown2 = New System.Windows.Forms.NumericUpDown()
         Me.NumericUpDown3 = New System.Windows.Forms.NumericUpDown()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.Label9 = New System.Windows.Forms.Label()
-        Me.Label11 = New System.Windows.Forms.Label()
-        Me.NumericUpDown4 = New System.Windows.Forms.NumericUpDown()
         CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
         CType(Me.TrackBar3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -58,9 +58,9 @@ Partial Class MolecularNetworking
         CType(Me.repulsion, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.stiffness, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox3.SuspendLayout()
+        CType(Me.NumericUpDown4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown3, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.NumericUpDown4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Label1
@@ -85,6 +85,8 @@ Partial Class MolecularNetworking
         '
         'GroupBox1
         '
+        Me.GroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.TrackBar3)
         Me.GroupBox1.Controls.Add(Me.Label4)
         Me.GroupBox1.Controls.Add(Me.TrackBar4)
@@ -95,14 +97,14 @@ Partial Class MolecularNetworking
         Me.GroupBox1.Controls.Add(Me.Label2)
         Me.GroupBox1.Location = New System.Drawing.Point(23, 336)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(719, 178)
+        Me.GroupBox1.Size = New System.Drawing.Size(850, 131)
         Me.GroupBox1.TabIndex = 2
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Network Styling"
         '
         'TrackBar3
         '
-        Me.TrackBar3.Location = New System.Drawing.Point(433, 123)
+        Me.TrackBar3.Location = New System.Drawing.Point(433, 79)
         Me.TrackBar3.Maximum = 30
         Me.TrackBar3.Minimum = 5
         Me.TrackBar3.Name = "TrackBar3"
@@ -115,7 +117,7 @@ Partial Class MolecularNetworking
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(390, 136)
+        Me.Label4.Location = New System.Drawing.Point(390, 92)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(20, 13)
         Me.Label4.TabIndex = 6
@@ -124,7 +126,7 @@ Partial Class MolecularNetworking
         'TrackBar4
         '
         Me.TrackBar4.LargeChange = 3
-        Me.TrackBar4.Location = New System.Drawing.Point(177, 123)
+        Me.TrackBar4.Location = New System.Drawing.Point(177, 79)
         Me.TrackBar4.Maximum = 15
         Me.TrackBar4.Minimum = 1
         Me.TrackBar4.Name = "TrackBar4"
@@ -136,7 +138,7 @@ Partial Class MolecularNetworking
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(26, 123)
+        Me.Label5.Location = New System.Drawing.Point(26, 79)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(96, 13)
         Me.Label5.TabIndex = 4
@@ -145,7 +147,7 @@ Partial Class MolecularNetworking
         'TrackBar2
         '
         Me.TrackBar2.LargeChange = 10
-        Me.TrackBar2.Location = New System.Drawing.Point(433, 37)
+        Me.TrackBar2.Location = New System.Drawing.Point(433, 29)
         Me.TrackBar2.Maximum = 200
         Me.TrackBar2.Minimum = 10
         Me.TrackBar2.Name = "TrackBar2"
@@ -158,7 +160,7 @@ Partial Class MolecularNetworking
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(390, 50)
+        Me.Label3.Location = New System.Drawing.Point(390, 42)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(20, 13)
         Me.Label3.TabIndex = 2
@@ -167,7 +169,7 @@ Partial Class MolecularNetworking
         'TrackBar1
         '
         Me.TrackBar1.LargeChange = 10
-        Me.TrackBar1.Location = New System.Drawing.Point(177, 37)
+        Me.TrackBar1.Location = New System.Drawing.Point(177, 29)
         Me.TrackBar1.Maximum = 100
         Me.TrackBar1.Minimum = 1
         Me.TrackBar1.Name = "TrackBar1"
@@ -179,7 +181,7 @@ Partial Class MolecularNetworking
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(26, 37)
+        Me.Label2.Location = New System.Drawing.Point(26, 29)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(107, 13)
         Me.Label2.TabIndex = 0
@@ -187,6 +189,8 @@ Partial Class MolecularNetworking
         '
         'GroupBox2
         '
+        Me.GroupBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox2.Controls.Add(Me.damping)
         Me.GroupBox2.Controls.Add(Me.repulsion)
         Me.GroupBox2.Controls.Add(Me.stiffness)
@@ -195,7 +199,7 @@ Partial Class MolecularNetworking
         Me.GroupBox2.Controls.Add(Me.Label6)
         Me.GroupBox2.Location = New System.Drawing.Point(23, 49)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(719, 154)
+        Me.GroupBox2.Size = New System.Drawing.Size(850, 154)
         Me.GroupBox2.TabIndex = 3
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Layouts"
@@ -224,6 +228,7 @@ Partial Class MolecularNetworking
         '
         'stiffness
         '
+        Me.stiffness.DecimalPlaces = 2
         Me.stiffness.Increment = New Decimal(New Integer() {5, 0, 0, 0})
         Me.stiffness.Location = New System.Drawing.Point(126, 36)
         Me.stiffness.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
@@ -261,6 +266,8 @@ Partial Class MolecularNetworking
         '
         'GroupBox3
         '
+        Me.GroupBox3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox3.Controls.Add(Me.NumericUpDown4)
         Me.GroupBox3.Controls.Add(Me.Label11)
         Me.GroupBox3.Controls.Add(Me.NumericUpDown2)
@@ -269,10 +276,31 @@ Partial Class MolecularNetworking
         Me.GroupBox3.Controls.Add(Me.Label9)
         Me.GroupBox3.Location = New System.Drawing.Point(23, 209)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(719, 121)
+        Me.GroupBox3.Size = New System.Drawing.Size(850, 121)
         Me.GroupBox3.TabIndex = 4
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Spectrum Tree"
+        '
+        'NumericUpDown4
+        '
+        Me.NumericUpDown4.DecimalPlaces = 2
+        Me.NumericUpDown4.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
+        Me.NumericUpDown4.Location = New System.Drawing.Point(443, 39)
+        Me.NumericUpDown4.Maximum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.NumericUpDown4.Minimum = New Decimal(New Integer() {6, 0, 0, 65536})
+        Me.NumericUpDown4.Name = "NumericUpDown4"
+        Me.NumericUpDown4.Size = New System.Drawing.Size(148, 20)
+        Me.NumericUpDown4.TabIndex = 11
+        Me.NumericUpDown4.Value = New Decimal(New Integer() {85, 0, 0, 131072})
+        '
+        'Label11
+        '
+        Me.Label11.AutoSize = True
+        Me.Label11.Location = New System.Drawing.Point(322, 39)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(97, 13)
+        Me.Label11.TabIndex = 10
+        Me.Label11.Text = "Default Edge Filter:"
         '
         'NumericUpDown2
         '
@@ -316,27 +344,6 @@ Partial Class MolecularNetworking
         Me.Label9.TabIndex = 7
         Me.Label9.Text = "Node Similar:"
         '
-        'Label11
-        '
-        Me.Label11.AutoSize = True
-        Me.Label11.Location = New System.Drawing.Point(322, 39)
-        Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(97, 13)
-        Me.Label11.TabIndex = 10
-        Me.Label11.Text = "Default Edge Filter:"
-        '
-        'NumericUpDown4
-        '
-        Me.NumericUpDown4.DecimalPlaces = 2
-        Me.NumericUpDown4.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
-        Me.NumericUpDown4.Location = New System.Drawing.Point(443, 39)
-        Me.NumericUpDown4.Maximum = New Decimal(New Integer() {1, 0, 0, 0})
-        Me.NumericUpDown4.Minimum = New Decimal(New Integer() {6, 0, 0, 65536})
-        Me.NumericUpDown4.Name = "NumericUpDown4"
-        Me.NumericUpDown4.Size = New System.Drawing.Size(148, 20)
-        Me.NumericUpDown4.TabIndex = 11
-        Me.NumericUpDown4.Value = New Decimal(New Integer() {85, 0, 0, 131072})
-        '
         'MolecularNetworking
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -347,7 +354,7 @@ Partial Class MolecularNetworking
         Me.Controls.Add(Me.NumericUpDown1)
         Me.Controls.Add(Me.Label1)
         Me.Name = "MolecularNetworking"
-        Me.Size = New System.Drawing.Size(770, 531)
+        Me.Size = New System.Drawing.Size(892, 531)
         CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
@@ -362,9 +369,9 @@ Partial Class MolecularNetworking
         CType(Me.stiffness, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox3.ResumeLayout(False)
         Me.GroupBox3.PerformLayout()
+        CType(Me.NumericUpDown4, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NumericUpDown2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NumericUpDown3, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.NumericUpDown4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
