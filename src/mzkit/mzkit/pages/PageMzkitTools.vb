@@ -179,6 +179,7 @@ Public Class PageMzkitTools
                             Dim rawData As ms2() = data.numerics.AsMs2.ToArray
 
                             ms1.AddRange(rawData.Select(Function(a) New ms1_scan With {.intensity = a.intensity, .mz = a.mz, .scan_time = scan.rt}))
+                            Application.DoEvents()
                         Next
                     End Using
 
