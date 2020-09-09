@@ -34,7 +34,7 @@ Mzkit is an open source raw data file toolkit for mass spectrometry data analysi
 		* 2.2.2. [step2 build network](#step2buildnetwork)
 		* 2.2.3. [step3 view network](#step3viewnetwork)
 		* 2.2.4. [Save Network Visual](#SaveNetworkVisual)
-		
+
 * 3. [Appendix](#Appendix)
 	* 3.1. [Switch Between Toolkit](#SwitchBetweenToolkit)
 	* 3.2. [Install Mzkit](#InstallMzkit)
@@ -158,9 +158,27 @@ Once we have the mass spectrum data selected, then we could run the matrix simil
 
 ![](docs/manual/molecular_networking.png)
 
-####  2.2.3. <a name='step3viewnetwork'></a>step3 view network
+####  2.2.3. <a name='step3viewnetwork'></a>step3 view network data
+
+once the networking progress have been done, then we could view the network result data in the ``Molecular Networking`` tool page. there are three tables in the tool page for show your network data: ``Network``, ``Compounds`` and ``Network Statistics``.
+
+![](docs/manual/network_viewer_tabs.PNG)
+
+1. the ``Network`` tab page contains the edges data in your network, which is the spectrum cluster simialrity result. all of the spectrum alignment its simialrity value is less than the ``Spectrum Similarity`` threshold value that will be removes from the network.
+
+![](docs/manual/network_edges_viewer.PNG)
+
+there are columns in the edge table: ``CompoundA`` and ``CompoundB`` is the spectrum reference id in this edge connected. and the ``simialrity``, ``forward`` and ``reverse`` column is the simialrity score value of the two spectrum matrix and the last ``View`` column contains the button that let you view the spectrum matrix alignment result visual plot.
+
+2. the ``Compounds`` tab page contains the spectrum cluster (**network nodes**) information in your network.
+
+![](docs/manual/network_nodes_viewer.PNG)
+
+#### step 4 network visualization
 
 
+
+#### Export Network Data
 
 ####  2.2.4. <a name='SaveNetworkVisual'></a>Save Network Visual
 
@@ -213,7 +231,7 @@ When you have launch the mzkit installer, then you will see a security warning d
 
 if you want to removes mzkit from your computer system, then you could follow this instruction for uninstall:
 
-1. Open the control panel of your windows system, and then click of the like ``Uninstall a program``
+1. Open the control panel of your windows system, and then click of the link ``Uninstall a program``
 
 ![](docs/manual/control_panel.PNG)
 
@@ -221,7 +239,7 @@ if you want to removes mzkit from your computer system, then you could follow th
 
 ![](docs/manual/app_list.PNG)
 
-3. Then right click on the mzkit, select uninstall, then you can removes mzkit from your windows system
+3. Then right click on the mzkit, select ``uninstall``, then you can removes mzkit from your windows system
 
 ![](docs/manual/uninstall_right_click.png)
 
@@ -233,7 +251,7 @@ Just click ``OK`` on the dialog:
 
 ##  4. <a name='Credits'></a>Credits
 
-This open source mass spectrometry data toolkit is developed at the BioDeep R&D laboratory and provided to you by BioNovoGene corporation.
+This open source mass spectrometry data toolkit is developed at the [BioDeep](http://www.biodeep.cn/) R&D laboratory and provided to you by ``BioNovoGene`` corporation.
 
 ![](docs/BioNovoGene.png)
 
