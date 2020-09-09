@@ -1,54 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::3d0967576022f3ee815431efa3e70337, src\mzkit\mzkit\pages\PageMzkitTools.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class PageMzkitTools
-    ' 
-    '     Function: getRawCache, getSelectedIonSpectrums, GetXICCollection, getXICMatrix, missingCacheFile
-    '               rawTIC, relativeInto
-    ' 
-    '     Sub: applyLevelFilter, ClearToolStripMenuItem_Click, CustomTabControl1_TabClosing, CustomToolStripMenuItem_Click, DataGridView1_CellContentClick
-    '          DefaultToolStripMenuItem_Click, ExportExactMassSearchTable, ExportToolStripMenuItem_Click, GeneralFlavoneToolStripMenuItem_Click, ImportsRaw
-    '          InitializeFileTree, ListBox1_SelectedIndexChanged, MolecularNetworkingToolStripMenuItem_Click, MS1ToolStripMenuItem_Click, MS2ToolStripMenuItem_Click
-    '          NatureProductToolStripMenuItem_Click, PageMzkitTools_Load, PictureBox1_Click, PictureBox1_DoubleClick, PictureBox1_MouseClick
-    '          Ribbon_Load, runMzSearch, SaveFileCache, SaveImageToolStripMenuItem_Click, SaveMatrixToolStripMenuItem_Click
-    '          SearchByMz, SearchFormulaToolStripMenuItem_Click, searchInFileByMz, SearchInFileToolStripMenuItem_Click, setCurrentFile
-    '          (+3 Overloads) showMatrix, ShowPropertyWindow, showSpectrum, ShowTabPage, ShowTICToolStripMenuItem_Click
-    '          ShowXICToolStripMenuItem_Click, SmallMoleculeToolStripMenuItem_Click, TIC, TreeView1_AfterSelect
-    ' 
-    ' /********************************************************************************/
+' Class PageMzkitTools
+' 
+'     Function: getRawCache, getSelectedIonSpectrums, GetXICCollection, getXICMatrix, missingCacheFile
+'               rawTIC, relativeInto
+' 
+'     Sub: applyLevelFilter, ClearToolStripMenuItem_Click, CustomTabControl1_TabClosing, CustomToolStripMenuItem_Click, DataGridView1_CellContentClick
+'          DefaultToolStripMenuItem_Click, ExportExactMassSearchTable, ExportToolStripMenuItem_Click, GeneralFlavoneToolStripMenuItem_Click, ImportsRaw
+'          InitializeFileTree, ListBox1_SelectedIndexChanged, MolecularNetworkingToolStripMenuItem_Click, MS1ToolStripMenuItem_Click, MS2ToolStripMenuItem_Click
+'          NatureProductToolStripMenuItem_Click, PageMzkitTools_Load, PictureBox1_Click, PictureBox1_DoubleClick, PictureBox1_MouseClick
+'          Ribbon_Load, runMzSearch, SaveFileCache, SaveImageToolStripMenuItem_Click, SaveMatrixToolStripMenuItem_Click
+'          SearchByMz, SearchFormulaToolStripMenuItem_Click, searchInFileByMz, SearchInFileToolStripMenuItem_Click, setCurrentFile
+'          (+3 Overloads) showMatrix, ShowPropertyWindow, showSpectrum, ShowTabPage, ShowTICToolStripMenuItem_Click
+'          ShowXICToolStripMenuItem_Click, SmallMoleculeToolStripMenuItem_Click, TIC, TreeView1_AfterSelect
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -66,6 +66,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.IO.netCDF
+Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
@@ -155,17 +156,32 @@ Public Class PageMzkitTools
 
     Private Sub TreeView1_AfterSelect(sender As Object, e As TreeViewEventArgs)
         If TypeOf e.Node.Tag Is Task.Raw Then
-            Dim TIC = rawTIC(e.Node.Tag, False)
+            'Dim TIC = rawTIC(e.Node.Tag, False)
 
-            ' 原始文件节点
-            ' 只显示当前文件的TIC图
-            showMatrix(TIC.value, TIC.name)
+            '' 原始文件节点
+            '' 只显示当前文件的TIC图
+            'showMatrix(TIC.value, TIC.name)
 
-            PictureBox1.BackgroundImage = ChromatogramPlot.TICplot(
-                ionData:=TIC,
-                colorsSchema:=Globals.GetColors,
-                fillCurve:=Globals.Settings.viewer.fill
-            ).AsGDIImage
+            'PictureBox1.BackgroundImage = ChromatogramPlot.TICplot(
+            '    ionData:=TIC,
+            '    colorsSchema:=Globals.GetColors,
+            '    fillCurve:=Globals.Settings.viewer.fill
+            ').AsGDIImage
+            Dim raw As Raw = DirectCast(e.Node.Tag, Raw)
+            Dim ms1 As New List(Of ms1_scan)
+
+            Using cache As New netCDFReader(raw.cache)
+                For Each scan In raw.scans.Where(Function(a) a.mz = 0.0)
+                    Dim data As CDFData = cache.getDataVariable(cache.getDataVariableEntry(scan.id))
+                    Dim rawData As ms2() = data.numerics.AsMs2.ToArray
+
+                    ms1.AddRange(rawData.Select(Function(a) New ms1_scan With {.intensity = a.intensity, .mz = a.mz, .scan_time = scan.rt}))
+                Next
+            End Using
+
+            Dim matrix = ms1.GroupBy(Function(a) a.mz, Tolerance.PPM(20)).ToArray
+
+            PictureBox1.BackgroundImage = MzrtPlot.Plot(matrix).AsGDIImage
 
             MyApplication.host.ShowPage(Me)
             MyApplication.host.Invoke(Sub() RibbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.NotAvailable)

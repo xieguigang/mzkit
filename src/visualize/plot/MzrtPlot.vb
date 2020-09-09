@@ -64,7 +64,7 @@ Public Module MzrtPlot
     ''' <param name="margin$"></param>
     ''' <param name="ptSize!"></param>
     ''' <returns></returns>
-    Public Function Plot(samples As IEnumerable(Of NamedValue(Of IMs1())),
+    Public Function Plot(samples As IEnumerable(Of NamedCollection(Of ms1_scan)),
                          Optional size$ = "8000,3000",
                          Optional bg$ = "white",
                          Optional margin$ = Resolution2K.PaddingWithTopTitleAndRightLegend,
@@ -75,17 +75,18 @@ Public Module MzrtPlot
         Dim colors = Designer.GetColors(sampleColors).AsLoop
         Dim serials = samples _
             .Select(Function(sample)
-                        Dim points = sample.Value _
+                        Dim points = sample.value _
                             .Select(Function(compound)
                                         Return New PointData() With {
-                                            .pt = New PointF(compound.rt, compound.mz)
+                                            .pt = New PointF(compound.scan_time, compound.mz),
+                                            .value = compound.intensity
                                         }
                                     End Function) _
                             .ToArray
                         Return New SerialData With {
-                            .title = sample.Name,
+                            .title = sample.name,
                             .pts = points,
-                            .PointSize = ptSize,
+                            .pointSize = ptSize,
                             .color = colors.Next
                         }
                     End Function) _
