@@ -22,8 +22,18 @@
 
 * 2. [Data Annotations](#DataAnnotations)
 	* 2.1. [Formula search](#Formulasearch)
-	* 2.2. [Export Formula Search Result](#ExportFormulaSearchResult)
-* 3. [Credits](#Credits)
+
+		* 2.1.1. [Export Formula Search Result](#ExportFormulaSearchResult)
+
+	* 2.2. [Molecular Networking](#MolecularNetworking)
+
+		* 2.2.1. [Save Network Visual](#SaveNetworkVisual)
+
+* 3. [Appendix](#Appendix)
+	* 3.1. [Switch Between Toolkit](#SwitchBetweenToolkit)
+	* 3.2. [Install Mzkit](#InstallMzkit)
+	* 3.3. [Uninstall Mzkit](#UninstallMzkit)
+* 4. [Credits](#Credits)
 
 <!-- vscode-markdown-toc-config
 	numbering=true
@@ -31,13 +41,16 @@
 	/vscode-markdown-toc-config -->
 <!-- /vscode-markdown-toc -->
 
+<div style="page-break-after:always;"></div>
+
 Mzkit is an open source raw data file toolkit for mass spectrometry data analysis, provides by the ``BioNovoGene`` corporation. The features of mzkit inlcudes: raw data file content viewer(XIC/TIC/Mass spectrum plot), build molecule network, formula de-novo search and annotation.
+
+<div style="font-size: 2em;">Product Screenshots</div>
+
+![](docs/manual/main.png)
 
 <div style="page-break-after:always;"></div>
 
-**Product Screenshots**
-
-![](docs/manual/main.png)
 ![](docs/manual/BPC_overlay.PNG)
 ![](docs/manual/MS.PNG)
 
@@ -125,15 +138,15 @@ You also can search of the formula by input any ``m/z`` value in the input box o
 
 ![](docs/manual/export-formula-list.png)
 
-####  2.2. <a name='ExportFormulaSearchResult'></a>Export Formula Search Result
+####  2.1.1. <a name='ExportFormulaSearchResult'></a>Export Formula Search Result
 
 Export the formula search result just like other data that we've introduced before, just click on the ``Formula Result`` tab page and then click on the Export button. this command will let you save the formula search result into a specific Excel table file. 
 
 <div style="page-break-after:always;"></div>
 
-### Molecular Networking
+###  2.2. <a name='MolecularNetworking'></a>Molecular Networking
 
-#### Save Network Visual
+####  2.2.1. <a name='SaveNetworkVisual'></a>Save Network Visual
 
 ![](docs/manual/network_viewer.PNG)
 
@@ -151,9 +164,9 @@ Now you can use the saved network image for your publications:
 
 <div style="page-break-after:always;"></div>
 
-## Appendix
+##  3. <a name='Appendix'></a>Appendix
 
-### Switch Between Toolkit
+###  3.1. <a name='SwitchBetweenToolkit'></a>Switch Between Toolkit
 
 You can switch between toolkit pages via the start menu of mzkit:
 
@@ -166,7 +179,7 @@ or just select a page from the app switcher toolstrip menu:
 
 <div style="page-break-after:always;"></div>
 
-### Install Mzkit
+###  3.2. <a name='InstallMzkit'></a>Install Mzkit
 
 ![](docs/manual/setup.PNG)
 
@@ -180,7 +193,7 @@ When you have launch the mzkit installer, then you will see a security warning d
 
 <div style="page-break-after:always;"></div>
 
-### Uninstall Mzkit
+###  3.3. <a name='UninstallMzkit'></a>Uninstall Mzkit
 
 if you want to removes mzkit from your computer system, then you could follow this instruction for uninstall:
 
@@ -202,7 +215,7 @@ Just click ``OK`` on the dialog:
 
 <div style="page-break-after:always;"></div>
 
-##  3. <a name='Credits'></a>Credits
+##  4. <a name='Credits'></a>Credits
 
 This open source mass spectrometry data toolkit is developed at the BioDeep R&D laboratory and provided to you by BioNovoGene corporation.
 
