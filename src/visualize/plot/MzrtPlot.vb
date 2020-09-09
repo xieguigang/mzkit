@@ -51,6 +51,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' 横坐标为rt，纵坐标为m/z的散点图绘制
@@ -81,7 +82,7 @@ Public Module MzrtPlot
             .Select(Function(compound)
                         Return New PointData() With {
                             .pt = New PointF(compound.scan_time, compound.mz),
-                            .value = compound.intensity
+                            .value = stdNum.Log(compound.intensity)
                         }
                     End Function) _
             .ToArray
@@ -105,7 +106,8 @@ Public Module MzrtPlot
             drawLine:=False,
             Xlabel:="rt in seconds",
             Ylabel:="m/z",
-            htmlLabel:=False
+            htmlLabel:=False,
+            gridFill:=Color.White.ToHtmlColor
         )
     End Function
 End Module

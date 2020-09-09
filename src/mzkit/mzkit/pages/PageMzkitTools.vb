@@ -179,7 +179,7 @@ Public Class PageMzkitTools
                 Next
             End Using
 
-            PictureBox1.BackgroundImage = MzrtPlot.Plot(ms1).AsGDIImage
+            PictureBox1.BackgroundImage = MzrtPlot.Plot(ms1, rawfile:=raw.source.FileName).AsGDIImage
 
             MyApplication.host.ShowPage(Me)
             MyApplication.host.Invoke(Sub() RibbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.NotAvailable)
