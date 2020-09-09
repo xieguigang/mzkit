@@ -1,4 +1,51 @@
-﻿Imports Microsoft.VisualBasic.Imaging
+﻿#Region "Microsoft.VisualBasic::73f6f64749d89ef81921cf82e41c4706, src\mzkit\mzkit\pages\Settings\PlotConfig.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class PlotConfig
+    ' 
+    '     Sub: Button1_Click, Button2_Click, clearAllColors, ComboBox1_SelectedIndexChanged, deleteColorButton_MouseDown
+    '          deleteColorButton_MouseEnter, deleteColorButton_MouseLeave, Label1_Click, ListBox1_DragDrop, ListBox1_DragEnter
+    '          ListBox1_DrawItem, ListBox1_MouseDown, ListBox1_MouseMove, ListBox1_SelectedIndexChanged, LoadSettings
+    '          PlotConfig_Load, SaveSettings, selectColor, ShowPage
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports mzkit.My
 Imports mzkit.UnFound.Controls
@@ -25,6 +72,8 @@ Public Class PlotConfig : Implements ISaveSettings, IPageSettings
         For Each color As String In Globals.Settings.viewer.colorSet
             ListBox1.Items.Add(color)
         Next
+
+        CheckBox1.Checked = Globals.Settings.viewer.fill
     End Sub
 
     Public Sub SaveSettings() Implements ISaveSettings.SaveSettings
@@ -35,6 +84,7 @@ Public Class PlotConfig : Implements ISaveSettings, IPageSettings
         Next
 
         Globals.Settings.viewer.colorSet = colorSet.ToArray
+        Globals.Settings.viewer.fill = CheckBox1.Checked
     End Sub
 
     Public Sub ShowPage() Implements IPageSettings.ShowPage
@@ -223,3 +273,4 @@ Public Class PlotConfig : Implements ISaveSettings, IPageSettings
 
     End Sub
 End Class
+

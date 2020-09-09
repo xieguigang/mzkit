@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb9889f93bfe93efb4e3a24b01f484fd, src\assembly\assembly\MarkupData\mzXML\MSData.vb"
+﻿#Region "Microsoft.VisualBasic::6f503ab08a616b20468de6cbe847e1ee, src\assembly\assembly\MarkupData\mzXML\MSData.vb"
 
     ' Author:
     ' 
@@ -69,6 +69,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Language.Default
@@ -146,7 +147,8 @@ Namespace MarkupData.mzXML
         Public Function ScanData(Optional basename$ = Nothing,
                                  Optional centroid As Boolean = False,
                                  Optional raw As Boolean = False,
-                                 Optional centroidTolerance As Tolerance = Nothing) As PeakMs2
+                                 Optional centroidTolerance As Tolerance = Nothing,
+                                 Optional intocutoff As LowAbundanceTrimming = Nothing) As PeakMs2
 
             Dim ms2 As ms2() = peaks _
                 .ExtractMzI _
@@ -173,7 +175,7 @@ Namespace MarkupData.mzXML
                     centroidTolerance = Tolerance.DeltaMass(0.1)
                 End If
 
-                mzInto = mzInto.CentroidMode(centroidTolerance, 0.001)
+                mzInto = mzInto.CentroidMode(centroidTolerance, intocutoff Or LowAbundanceTrimming.Default)
             End If
 
             If Not raw Then

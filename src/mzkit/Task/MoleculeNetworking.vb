@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f7284e23f4a43c5aff8cc17f4b72e6f, src\mzkit\Task\MoleculeNetworking.vb"
+﻿#Region "Microsoft.VisualBasic::a087eb67e3748d6c8b2a6fd688da619c, src\mzkit\Task\MoleculeNetworking.vb"
 
     ' Author:
     ' 
@@ -44,6 +44,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.csv.IO
@@ -83,7 +84,7 @@ Public Module MoleculeNetworking
     End Function
 
     <Extension>
-    Public Function GetSpectrum(raw As Raw, scanId As String, Optional ByRef properties As SpectrumProperty = Nothing) As LibraryMatrix
+    Public Function GetSpectrum(raw As Raw, scanId As String, cutoff As LowAbundanceTrimming, Optional ByRef properties As SpectrumProperty = Nothing) As LibraryMatrix
         Using cache As New netCDFReader(raw.cache)
             Dim data As CDFData = cache.getDataVariable(cache.getDataVariableEntry(scanId))
             Dim attrs = cache.getDataVariableEntry(scanId).attributes
@@ -91,7 +92,7 @@ Public Module MoleculeNetworking
             Dim scanData As New LibraryMatrix With {
                 .name = scanId,
                 .centroid = False,
-                .ms2 = rawData.Centroid(Tolerance.DeltaMass(0.1), 0.01).ToArray
+                .ms2 = rawData.Centroid(Tolerance.DeltaMass(0.1), cutoff).ToArray
             }
 
             properties = New SpectrumProperty(scanId, attrs)
@@ -100,4 +101,3 @@ Public Module MoleculeNetworking
         End Using
     End Function
 End Module
-

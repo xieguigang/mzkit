@@ -1,53 +1,54 @@
-﻿#Region "Microsoft.VisualBasic::b7f8ba228d88b57a3609f576041ef180, src\mzkit\mzkit\pages\PageMzkitTools.vb"
+﻿#Region "Microsoft.VisualBasic::3d0967576022f3ee815431efa3e70337, src\mzkit\mzkit\pages\PageMzkitTools.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Class PageMzkitTools
-' 
-'     Function: getXICMatrix
-' 
-'     Sub: AddToolStripMenuItem_Click, applyLevelFilter, Button1_Click, ClearToolStripMenuItem_Click, CustomToolStripMenuItem_Click
-'          DataGridView1_CellContentClick, DefaultToolStripMenuItem_Click, DeleteFileToolStripMenuItem_Click, ExportExactMassSearchTable, ExportToolStripMenuItem_Click
-'          GeneralFlavoneToolStripMenuItem_Click, ImportsRaw, InitializeFileTree, ListBox1_SelectedIndexChanged, missingCacheFile
-'          MolecularNetworkingToolStripMenuItem_Click, MS1ToolStripMenuItem_Click, MS2ToolStripMenuItem_Click, NatureProductToolStripMenuItem_Click, PageMzkitTools_Load
-'          PictureBox1_Click, PictureBox1_DoubleClick, runMzSearch, SaveFileCache, SaveImageToolStripMenuItem_Click
-'          SaveMatrixToolStripMenuItem_Click, SearchFormulaToolStripMenuItem_Click, searchInFileByMz, SearchInFileToolStripMenuItem_Click, setCurrentFile
-'          (+3 Overloads) showMatrix, showSpectrum, showStatusMessage, ShowTICToolStripMenuItem_Click, ShowXICToolStripMenuItem_Click
-'          SmallMoleculeToolStripMenuItem_Click, TreeView1_AfterSelect
-' 
-' /********************************************************************************/
+    ' Class PageMzkitTools
+    ' 
+    '     Function: getRawCache, getSelectedIonSpectrums, GetXICCollection, getXICMatrix, missingCacheFile
+    '               rawTIC, relativeInto
+    ' 
+    '     Sub: applyLevelFilter, ClearToolStripMenuItem_Click, CustomTabControl1_TabClosing, CustomToolStripMenuItem_Click, DataGridView1_CellContentClick
+    '          DefaultToolStripMenuItem_Click, ExportExactMassSearchTable, ExportToolStripMenuItem_Click, GeneralFlavoneToolStripMenuItem_Click, ImportsRaw
+    '          InitializeFileTree, ListBox1_SelectedIndexChanged, MolecularNetworkingToolStripMenuItem_Click, MS1ToolStripMenuItem_Click, MS2ToolStripMenuItem_Click
+    '          NatureProductToolStripMenuItem_Click, PageMzkitTools_Load, PictureBox1_Click, PictureBox1_DoubleClick, PictureBox1_MouseClick
+    '          Ribbon_Load, runMzSearch, SaveFileCache, SaveImageToolStripMenuItem_Click, SaveMatrixToolStripMenuItem_Click
+    '          SearchByMz, SearchFormulaToolStripMenuItem_Click, searchInFileByMz, SearchInFileToolStripMenuItem_Click, setCurrentFile
+    '          (+3 Overloads) showMatrix, ShowPropertyWindow, showSpectrum, ShowTabPage, ShowTICToolStripMenuItem_Click
+    '          ShowXICToolStripMenuItem_Click, SmallMoleculeToolStripMenuItem_Click, TIC, TreeView1_AfterSelect
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -162,7 +163,11 @@ Public Class PageMzkitTools
             ' 只显示当前文件的TIC图
             showMatrix(TIC.value, TIC.name)
 
-            PictureBox1.BackgroundImage = ChromatogramPlot.TICplot(TIC, colorsSchema:=Globals.GetColors).AsGDIImage
+            PictureBox1.BackgroundImage = ChromatogramPlot.TICplot(
+                ionData:=TIC,
+                colorsSchema:=Globals.GetColors,
+                fillCurve:=Globals.Settings.viewer.fill
+            ).AsGDIImage
 
             MyApplication.host.ShowPage(Me)
 
@@ -192,7 +197,11 @@ Public Class PageMzkitTools
              .OrderBy(Function(c) c.Time) _
              .ToArray
             showMatrix(TIC.value, TIC.name)
-            PictureBox1.BackgroundImage = TIC.TICplot(intensityMax:=maxY, colorsSchema:=Globals.GetColors).AsGDIImage
+            PictureBox1.BackgroundImage = TIC.TICplot(
+                intensityMax:=maxY,
+                colorsSchema:=Globals.GetColors,
+                fillCurve:=Globals.Settings.viewer.fill
+            ).AsGDIImage
 
             MyApplication.host.ShowPage(Me)
         Else
@@ -252,7 +261,7 @@ Public Class PageMzkitTools
     Private Sub showSpectrum(scanId As String, raw As Raw)
         If raw.cache.FileExists Then
             Dim prop As SpectrumProperty = Nothing
-            Dim scanData As LibraryMatrix = raw.GetSpectrum(scanId, prop)
+            Dim scanData As LibraryMatrix = raw.GetSpectrum(scanId, Globals.Settings.viewer.GetMethod, prop)
 
             showMatrix(scanData.ms2, scanId)
 
@@ -374,7 +383,11 @@ Public Class PageMzkitTools
 
         showMatrix(TICList(Scan0).value, TICList(Scan0).name)
 
-        PictureBox1.BackgroundImage = ChromatogramPlot.TICplot(TICList.ToArray, colorsSchema:=Globals.GetColors).AsGDIImage
+        PictureBox1.BackgroundImage = ChromatogramPlot.TICplot(
+            ionData:=TICList.ToArray,
+            colorsSchema:=Globals.GetColors,
+            fillCurve:=Globals.Settings.viewer.fill
+        ).AsGDIImage
 
         MyApplication.host.ShowPage(Me)
 
@@ -692,6 +705,10 @@ Public Class PageMzkitTools
         ' Dim raw As Raw = TreeView1.CurrentRawFile.raw
         Dim similarityCutoff As Double = MyApplication.host.ribbonItems.SpinnerSimilarity.DecimalValue
         Dim progress As New frmTaskProgress
+
+        progress.Label2.Text = "Run molecular networking"
+        progress.Label1.Text = "Initialized..."
+
         Dim runTask As New Thread(
             Sub()
 
@@ -710,7 +727,13 @@ Public Class PageMzkitTools
                     Return
                 End If
 
-                Dim protocol As New Protocols(Tolerance.PPM(15), Tolerance.DeltaMass(0.3), 0.85, 0.7, 0.05)
+                Dim protocol As New Protocols(
+                    ms1_tolerance:=Tolerance.PPM(15),
+                    ms2_tolerance:=Tolerance.DeltaMass(0.3),
+                    treeIdentical:=Globals.Settings.network.treeNodeIdentical,
+                    treeSimilar:=Globals.Settings.network.treeNodeSimilar,
+                    intoCutoff:=Globals.Settings.viewer.GetMethod
+                )
                 Dim progressMsg As Action(Of String) =
                     Sub(msg)
                         progress.Invoke(Sub() progress.Label2.Text = msg)
@@ -765,7 +788,7 @@ Public Class PageMzkitTools
 
                 progress.Invoke(Sub() progress.Label1.Text = "run family clustering....")
 
-                Dim clusters = net.ToKMeansModels.Kmeans(expected:=10, debug:=False)
+                Dim clusters = net.ToKMeansModels.Kmeans(expected:=9, debug:=False)
                 Dim rawLinks = links.ToDictionary(Function(a) a.Name, Function(a) a.Value)
 
                 progress.Invoke(Sub() progress.Label1.Text = "initialize result output...")
@@ -872,7 +895,27 @@ Public Class PageMzkitTools
 
     Public Sub ShowXICToolStripMenuItem_Click()
         If TypeOf TreeView1.SelectedNode.Tag Is Raw AndAlso MyApplication.host.fileExplorer.GetSelectedNodes.Count = 0 Then
+            MyApplication.host.showStatusMessage("no raw file data for XIC plot!", My.Resources.StatusAnnotations_Warning_32xLG_color)
             Return
+        End If
+
+        Dim selectedCount As Integer = 0
+
+        For i As Integer = 0 To TreeView1.Nodes.Count - 1
+            Dim fileTree = TreeView1.Nodes(i)
+
+            For j As Integer = 0 To fileTree.Nodes.Count - 1
+                If fileTree.Nodes(j).Checked Then
+                    selectedCount += 1
+                End If
+            Next
+        Next
+
+        If selectedCount >= 500 Then
+            If MessageBox.Show("There are too many ions for create XIC plot, do you wan to uncheck some ions for reduce data for plot?", "Too much data!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) = DialogResult.Cancel Then
+                MyApplication.host.showStatusMessage("Show XIC plot for too many ions has been cancel!")
+                Return
+            End If
         End If
 
         ' scan节点
@@ -909,7 +952,12 @@ Public Class PageMzkitTools
 
                 XICPlot.AddRange(GetXICCollection(ppm))
 
-                plotImage = XICPlot.ToArray.TICplot(intensityMax:=maxY, isXIC:=True, colorsSchema:=Globals.GetColors).AsGDIImage
+                plotImage = XICPlot.ToArray.TICplot(
+                    intensityMax:=maxY,
+                    isXIC:=True,
+                    colorsSchema:=Globals.GetColors,
+                    fillCurve:=Globals.Settings.viewer.fill
+                ).AsGDIImage
                 progress.Invoke(Sub() progress.Close())
             End Sub).Start()
 

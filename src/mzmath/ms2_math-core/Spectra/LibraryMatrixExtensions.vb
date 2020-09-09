@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5572d589ba1f8a51624e47d111f27927, src\mzmath\ms2_math-core\Spectra\LibraryMatrixExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::85d57564cb65e12dd53561b2f2df67ba, src\mzmath\ms2_math-core\Spectra\LibraryMatrixExtensions.vb"
 
     ' Author:
     ' 
@@ -89,8 +89,8 @@ Namespace Spectra
         ''' <returns></returns>
         ''' 
         <Extension>
-        Public Function CentroidMode([lib] As LibraryMatrix, tolerance As Tolerance, Optional intoCutoff# = 0.05) As LibraryMatrix
-            [lib].ms2 = [lib].ms2.Centroid(tolerance, intoCutoff).ToArray
+        Public Function CentroidMode([lib] As LibraryMatrix, tolerance As Tolerance, Optional cutoff As LowAbundanceTrimming = Nothing) As LibraryMatrix
+            [lib].ms2 = [lib].ms2.Centroid(tolerance, cutoff Or LowAbundanceTrimming.Default).ToArray
             [lib].centroid = True
 
             Return [lib]
@@ -100,17 +100,15 @@ Namespace Spectra
         ''' Convert profile matrix to centroid matrix
         ''' </summary>
         ''' <param name="peaks"></param>
-        ''' <param name="intoCutoff"></param>
+        ''' <param name="cutoff"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function Centroid(peaks As ms2(), tolerance As Tolerance, Optional intoCutoff# = 0.05) As IEnumerable(Of ms2)
+        Public Function Centroid(peaks As ms2(), tolerance As Tolerance, cutoff As LowAbundanceTrimming) As IEnumerable(Of ms2)
             Dim maxInto = If(peaks.IsNullOrEmpty, 0, peaks.Select(Function(p) p.intensity).Max)
 
             ' removes low intensity fragment peaks
             ' for save calculation time
-            peaks = peaks _
-                .Where(Function(p) p.intensity / maxInto >= intoCutoff) _
-                .ToArray
+            peaks = cutoff.Trim(peaks)
 
             If peaks.Length = 0 Then
                 Return {}

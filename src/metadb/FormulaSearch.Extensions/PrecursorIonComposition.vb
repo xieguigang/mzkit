@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc760adb7e67e76a06873e900f00e380, src\metadb\FormulaSearch.Extensions\PrecursorIonComposition.vb"
+﻿#Region "Microsoft.VisualBasic::4236f0bd08d93033cae4ec84f7977c49, src\metadb\FormulaSearch.Extensions\PrecursorIonComposition.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 

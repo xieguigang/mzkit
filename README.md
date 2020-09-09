@@ -1,3 +1,5 @@
+<link rel="manifest" href="/manifest.json">
+
 # <span style="font-size: 3em;">Mzkit</span>
 
 ![](docs/manual/splash.PNG)
@@ -123,9 +125,76 @@ You also can search of the formula by input any ``m/z`` value in the input box o
 
 ![](docs/manual/export-formula-list.png)
 
-###  2.2. <a name='ExportFormulaSearchResult'></a>Export Formula Search Result
+####  2.2. <a name='ExportFormulaSearchResult'></a>Export Formula Search Result
 
 Export the formula search result just like other data that we've introduced before, just click on the ``Formula Result`` tab page and then click on the Export button. this command will let you save the formula search result into a specific Excel table file. 
+
+<div style="page-break-after:always;"></div>
+
+### Molecular Networking
+
+#### Save Network Visual
+
+![](docs/manual/network_viewer.PNG)
+
+For export the network image, just mouse right click on the viewer panel, then you could see a popout menu ``Save Image`` that could use for viewer image saved.
+
+![](docs/manual/save_network.PNG)
+
+You also can save the network image via ``Save`` command in the ``Main`` menu tab page when the molecular networking viewer is current active document page in mzkit program.
+
+![](docs/manual/save_network2.PNG)
+
+Now you can use the saved network image for your publications:
+
+![](docs/manual/network_visualze.png)
+
+## Appendix
+
+### Switch Between Toolkit
+
+You can switch between toolkit pages via the start menu of mzkit:
+
+![](docs/manual/switch_toolkit2.PNG)
+> click ``[File]`` -> ``[Mzkit Data Toolkits]``, and then click on one toolkit item then you can switch to the required toolkit page.
+
+or just select a page from the app switcher toolstrip menu:
+
+![](docs/manual/switch_toolkit1.PNG)
+
+### Install Mzkit
+
+![](docs/manual/setup.PNG)
+
+When you have extract the zip package of the mzkit compression package, then you could found a ``setup.exe`` install application in the top of folder. Click on this setup application, then your will going to install mzkit program into your computer system.
+
+![](docs/manual/installer_warning.PNG)
+
+When you have launch the mzkit installer, then you will see a security warning dialog from your windows system, just click on the ``Install`` for start the install progress, and then just needs to wait for the installer finish the progress of copy the mzkit application files.
+
+![](docs/manual/install_mzkit.png)
+
+<div style="page-break-after:always;"></div>
+
+### Uninstall Mzkit
+
+if you want to removes mzkit from your computer system, then you could follow this instruction for uninstall:
+
+1. Open the control panel of your windows system, and then click of the like ``Uninstall a program``
+
+![](docs/manual/control_panel.PNG)
+
+2. Then you will see a list of program that installed on your windows, located the mzkit application
+
+![](docs/manual/app_list.PNG)
+
+3. Then right click on the mzkit, select uninstall, then you can removes mzkit from your windows system
+
+![](docs/manual/uninstall_right_click.png)
+
+Just click ``OK`` on the dialog:
+
+![](docs/manual/uninstaller.PNG)
 
 <div style="page-break-after:always;"></div>
 
