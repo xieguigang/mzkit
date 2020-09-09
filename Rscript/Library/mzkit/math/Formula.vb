@@ -60,15 +60,10 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports PNNL.OMICS.MwtWinDll.MWElementAndMassRoutines
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
-Imports SMRUCC.Rsharp.Runtime.Components
-Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
-Imports MwtWin = PNNL.OMICS.MwtWinDll
-Imports MwtWinFormula = PNNL.OMICS.MwtWinDll.FormulaFinder.FormulaFinderResult
 Imports REnv = SMRUCC.Rsharp.Runtime.Internal.ConsolePrinter
 
 ''' <summary>
@@ -79,22 +74,22 @@ Module Formula
 
     Sub New()
         Call REnv.AttachConsoleFormatter(Of FormulaComposition)(AddressOf FormulaCompositionString)
-        Call REnv.AttachConsoleFormatter(Of MwtWinFormula())(AddressOf printFormulas)
+        Call REnv.AttachConsoleFormatter(Of FormulaComposition())(AddressOf printFormulas)
     End Sub
 
-    Private Function printFormulas(formulas As MwtWinFormula()) As String
+    Private Function printFormulas(formulas As FormulaComposition()) As String
         Dim table As New List(Of String())
 
         table += {"formula", "mass", "da", "ppm", "charge", "m/z"}
 
-        For Each formula As MwtWinFormula In formulas
+        For Each formula As FormulaComposition In formulas
             table += New String() {
                 formula.EmpiricalFormula,
-                formula.Mass,
-                formula.DeltaMass,
-                formula.DeltaMassIsPPM,
-                formula.ChargeState,
-                formula.MZ
+                formula.exact_mass,
+                formula.ppm,
+                formula.ppm,
+                formula.charge,
+                formula.exact_mass / formula.charge
             }
         Next
 
@@ -106,29 +101,19 @@ Module Formula
     End Function
 
     <ExportAPI("find.formula")>
-    Public Function FormulaFinder(mass#, Optional tolerance# = 0.1,
+    Public Function FormulaFinder(mass#,
+                                  Optional ppm# = 5,
                                   <RRawVectorArgument(GetType(String))>
-                                  Optional candidateElements As Object = "C|H|N|O",
-                                  Optional elementMode As emElementModeConstants = emElementModeConstants.emIsotopicMass) As MwtWinFormula()
+                                  Optional candidateElements As Object = "C|H|N|O") As FormulaComposition()
 
-        Dim oMwtWin As New MwtWin.MolecularWeightCalculator()
-
-        oMwtWin.SetElementMode(elementMode)
-        oMwtWin.FormulaFinder.CandidateElements.Clear()
+        Dim opts As New SearchOption(-9999, 9999, ppm)
 
         For Each element As String In DirectCast(candidateElements, String())
-            Call oMwtWin.FormulaFinder.AddCandidateElement(element)
+            Call opts.AddElement(element, 0, 30)
         Next
 
-        Dim searchOptions As New MwtWin.FormulaFinder.FormulaFinderOptions() With {
-            .LimitChargeRange = False,
-            .ChargeMin = 1,
-            .ChargeMax = 1,
-            .FindTargetMZ = False
-        }
-        Dim results As MwtWinFormula() = oMwtWin.FormulaFinder _
-            .FindMatchesByMass(mass, tolerance, searchOptions) _
-            .ToArray
+        Dim oMwtWin As New FormulaSearch(opts)
+        Dim results As FormulaComposition() = oMwtWin.SearchByExactMass(mass).ToArray
 
         Return results
     End Function

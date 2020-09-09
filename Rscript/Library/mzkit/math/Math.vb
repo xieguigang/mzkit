@@ -258,6 +258,7 @@ Module MzMath
 
         Dim spectrum As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(ms2list, env)
         Dim mzrange = getTolerance(tolerance, env)
+        Dim threshold As New RelativeIntensityCutoff(intocutoff)
 
         If spectrum.isError Then
             Return spectrum.getError
@@ -269,7 +270,7 @@ Module MzMath
             compares:=compares,
             showReport:=showReport,
             mzwidth:=mzrange,
-            intocutoff:=intocutoff
+            intocutoff:=threshold
         ).doCluster(spectrum:=spectrum.populates(Of PeakMs2)(env).ToArray)
     End Function
 
@@ -314,12 +315,14 @@ Module MzMath
             Return errors.TryCast(Of Message)
         End If
 
+        Dim threshold As LowAbundanceTrimming = New RelativeIntensityCutoff(intoCutoff)
+
         If inputType Is GetType(pipeline) OrElse inputType Is GetType(PeakMs2()) Then
             Dim source As IEnumerable(Of PeakMs2) = If(inputType Is GetType(pipeline), DirectCast(ions, pipeline).populates(Of PeakMs2)(env), DirectCast(ions, PeakMs2()))
             Dim converter = Iterator Function() As IEnumerable(Of PeakMs2)
                                 For Each peak As PeakMs2 In source
                                     peak.mzInto = peak.mzInto _
-                                        .Centroid(errors, intoCutoff) _
+                                        .Centroid(errors, threshold) _
                                         .ToArray
 
                                     Yield peak
@@ -335,7 +338,7 @@ Module MzMath
             Dim ms2Peak As PeakMs2 = DirectCast(ions, PeakMs2)
 
             ms2Peak.mzInto = ms2Peak.mzInto _
-                .Centroid(errors, intoCutoff) _
+                .Centroid(errors, threshold) _
                 .ToArray
 
             Return ms2Peak
@@ -343,7 +346,7 @@ Module MzMath
             Dim ms2 As LibraryMatrix = DirectCast(ions, LibraryMatrix)
 
             If Not ms2.centroid Then
-                ms2 = ms2.CentroidMode(errors, intoCutoff)
+                ms2 = ms2.CentroidMode(errors, threshold)
             End If
 
             Return ms2

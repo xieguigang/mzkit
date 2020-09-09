@@ -95,7 +95,7 @@ Public Module MoleculeNetworking
                 .ms2 = rawData.Centroid(Tolerance.DeltaMass(0.1), cutoff).ToArray
             }
 
-            properties = New SpectrumProperty(scanId, attrs)
+            properties = New SpectrumProperty(scanId, raw.source.FileName, attrs)
 
             Return scanData
         End Using

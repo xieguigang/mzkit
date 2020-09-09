@@ -236,4 +236,18 @@ Public Class frmFileTree
     Private Sub treeView1_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles treeView1.AfterSelect
         MyApplication.host.ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
     End Sub
+
+    Private Sub CollapseToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CollapseToolStripMenuItem.Click
+        Dim current = treeView1.CurrentRawFile
+
+        If current.tree Is Nothing Then
+            Return
+        Else
+            current.tree.Collapse()
+        End If
+    End Sub
+
+    Private Sub TextBox2_Click(sender As Object, e As EventArgs) Handles TextBox2.Click
+        MyApplication.host.showStatusMessage("Input a number for m/z search, or input formula text for precursor ion match!")
+    End Sub
 End Class

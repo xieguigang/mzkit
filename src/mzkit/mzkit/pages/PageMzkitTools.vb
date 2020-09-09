@@ -85,7 +85,6 @@ Public Class PageMzkitTools
     Dim matrix As [Variant](Of ms2(), ChromatogramTick(), SSM2MatrixFragment())
     Dim matrixName As String
     Dim TreeView1 As TreeView
-    Dim ListBox1 As ListBox
 
     Friend _ribbonExportDataContextMenuStrip As ExportData
 
@@ -186,11 +185,9 @@ Public Class PageMzkitTools
         Dim host = MyApplication.host
         RibbonItems = host.ribbonItems
         TreeView1 = host.TreeView1
-        ListBox1 = host.searchList.ListBox1
 
         Call InitializeFileTree()
 
-        AddHandler ListBox1.SelectedIndexChanged, AddressOf ListBox1_SelectedIndexChanged
         AddHandler TreeView1.AfterSelect, AddressOf TreeView1_AfterSelect
         AddHandler host.fileExplorer.Button1.Click, Sub(obj, evt) Call SearchByMz(host.fileExplorer.TextBox2.Text)
 
@@ -224,7 +221,7 @@ Public Class PageMzkitTools
         End If
     End Sub
 
-    Private Sub showSpectrum(scanId As String, raw As Raw)
+    Friend Sub showSpectrum(scanId As String, raw As Raw)
         If raw.cache.FileExists Then
             Dim prop As SpectrumProperty = Nothing
             Dim scanData As LibraryMatrix = raw.GetSpectrum(scanId, Globals.Settings.viewer.GetMethod, prop)
@@ -274,7 +271,7 @@ Public Class PageMzkitTools
             If selectedFile <> MyApplication.host.ToolStripStatusLabel1.Text Then
                 selectedFile = $"{ .source.FileName} [{ .numOfScans} scans]"
                 MyApplication.host.showStatusMessage(selectedFile)
-                ListBox1.Items.Clear()
+                MyApplication.host.searchList.ListBox1.Items.Clear()
             End If
 
             MyApplication.host.Text = $"BioNovoGene Mzkit [{ .source.GetFullPath}]"
@@ -567,36 +564,8 @@ Public Class PageMzkitTools
     Private Sub searchInFileByMz(mz As Double)
         Dim ppm As Double = Val(RibbonItems.PPMSpinner.DecimalValue)
         Dim raw = TreeView1.CurrentRawFile.raw
-        Dim ms2Hits = raw.scans.Where(Function(m) PPMmethod.PPM(m.mz, mz) <= ppm).ToArray
 
-        ListBox1.Items.Clear()
-
-        For Each hit As ScanEntry In ms2Hits
-            ListBox1.Items.Add(hit)
-        Next
-
-        If ms2Hits.Length = 0 Then
-            MyApplication.host.searchList.Label2.Text = "no hits!"
-            MessageBox.Show($"Sorry, no hits was found for m/z={mz} with tolerance {ppm}ppm...", "No hits found!", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        Else
-            MyApplication.host.searchList.Label2.Text = $"{ms2Hits.Length} ms2 hits for m/z={mz} with tolerance {ppm}ppm"
-        End If
-
-        Dim dockLeft As Boolean = MyApplication.host.searchList.DockState = DockState.Hidden OrElse MyApplication.host.searchList.DockState = DockState.Unknown
-
-        MyApplication.host.searchList.Show(MyApplication.host.dockPanel)
-        MyApplication.host.searchList.Activate()
-
-        If dockLeft Then
-            MyApplication.host.searchList.DockState = DockState.DockLeft
-        End If
-    End Sub
-
-    Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As EventArgs)
-        Dim scanId As ScanEntry = ListBox1.SelectedItem
-        Dim raw = TreeView1.CurrentRawFile.raw
-
-        Call showSpectrum(scanId.id, raw)
+        Call MyApplication.host.searchList.searchInFileByMz(mz, ppm, raw)
     End Sub
 
     Private Sub SearchInFileToolStripMenuItem_Click(sender As Object, e As EventArgs)
@@ -844,7 +813,7 @@ Public Class PageMzkitTools
         Next
     End Sub
 
-    Sub showMatrix(matrix As ChromatogramTick(), name As String)
+    Public Sub showMatrix(matrix As ChromatogramTick(), name As String)
         Me.matrix = matrix
         matrixName = name
 
@@ -887,11 +856,7 @@ Public Class PageMzkitTools
         ' scan节点
         Dim raw As Task.Raw = TreeView1.CurrentRawFile.raw
         Dim ppm As Double = Val(RibbonItems.PPMSpinner.DecimalValue)
-        Dim plotTIC = getXICMatrix(raw, TreeView1.SelectedNode.Text, ppm, relativeInto)
-        Dim maxY As Double = raw.scans _
-            .Where(Function(a) a.mz > 0) _
-            .Select(Function(a) a.XIC) _
-            .Max
+        Dim plotTIC As NamedCollection(Of ChromatogramTick) = getXICMatrix(raw, TreeView1.SelectedNode.Text, ppm, relativeInto)
 
         If plotTIC.value.IsNullOrEmpty Then
             ' 当前没有选中MS2，但是可以显示选中的XIC
@@ -901,9 +866,13 @@ Public Class PageMzkitTools
                 Return
             End If
         Else
-            showMatrix(plotTIC.value, Name)
+            Call showMatrix(plotTIC.value, Name)
         End If
 
+        Call ShowXIC(ppm, plotTIC, AddressOf GetXICCollection, raw.GetXICMaxYAxis)
+    End Sub
+
+    Public Sub ShowXIC(ppm As Double, plotTIC As NamedCollection(Of ChromatogramTick), getXICCollection As Func(Of Double, IEnumerable(Of NamedCollection(Of ChromatogramTick))), maxY As Double)
         Dim progress As New frmProgressSpinner
         Dim plotImage As Image = Nothing
         Dim relative As Boolean = relativeInto()
@@ -916,7 +885,7 @@ Public Class PageMzkitTools
                     XICPlot.Add(plotTIC)
                 End If
 
-                XICPlot.AddRange(GetXICCollection(ppm))
+                XICPlot.AddRange(getXICCollection(ppm))
 
                 plotImage = XICPlot.ToArray.TICplot(
                     intensityMax:=maxY,
@@ -977,7 +946,7 @@ Public Class PageMzkitTools
                         Dim entry = cache.getDataVariableEntry(scanId)
                         Dim mztemp = cache.getDataVariable(entry).numerics.AsMs2.ToArray
                         Dim attrs = cache.getDataVariableEntry(scanId).attributes
-                        Dim info As New SpectrumProperty(scanId, attrs)
+                        Dim info As New SpectrumProperty(scanId, raw.source.FileName, attrs)
 
                         Yield New PeakMs2 With {
                             .mz = info.precursorMz,
@@ -1000,7 +969,7 @@ Public Class PageMzkitTools
         Return False ' MyApplication.host.ribbonItems.CheckBoxXICRelative.BooleanValue
     End Function
 
-    Private Function getXICMatrix(raw As Raw, scanId As String, ppm As Double, relativeInto As Boolean) As NamedCollection(Of ChromatogramTick)
+    Friend Shared Function getXICMatrix(raw As Raw, scanId As String, ppm As Double, relativeInto As Boolean) As NamedCollection(Of ChromatogramTick)
         Dim ms2 As ScanEntry = raw.scans.Where(Function(a) a.id = scanId).FirstOrDefault
         Dim name As String
 

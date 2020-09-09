@@ -4,6 +4,9 @@
 
 ![](docs/manual/splash.PNG)
 
+Mzkit is an open source raw data file toolkit for mass spectrometry data analysis, provides by the ``BioNovoGene`` corporation. The features of mzkit inlcudes: raw data file content viewer(XIC/TIC/Mass spectrum plot), build molecule network, formula de-novo search and annotation.
+
+<div style="page-break-after:always;"></div>
 <div style="font-size: 3em;">--==== TOC ====--</div>
 
 <!-- vscode-markdown-toc -->
@@ -22,8 +25,23 @@
 
 * 2. [Data Annotations](#DataAnnotations)
 	* 2.1. [Formula search](#Formulasearch)
-	* 2.2. [Export Formula Search Result](#ExportFormulaSearchResult)
-* 3. [Credits](#Credits)
+
+		* 2.1.1. [Export Formula Search Result](#ExportFormulaSearchResult)
+
+	* 2.2. [Molecular Networking](#MolecularNetworking)
+
+		* 2.2.1. [step1 select ions](#step1selections)
+		* 2.2.2. [step2 build network](#step2buildnetwork)
+		* 2.2.3. [step3 view network data](#step3viewnetworkdata)
+		* 2.2.4. [step 4 network visualization](#step4networkvisualization)
+		* 2.2.5. [Export Network Data](#ExportNetworkData)
+		* 2.2.6. [Save Network Visual](#SaveNetworkVisual)
+		
+* 3. [Appendix](#Appendix)
+	* 3.1. [Switch Between Toolkit](#SwitchBetweenToolkit)
+	* 3.2. [Install Mzkit](#InstallMzkit)
+	* 3.3. [Uninstall Mzkit](#UninstallMzkit)
+* 4. [Credits](#Credits)
 
 <!-- vscode-markdown-toc-config
 	numbering=true
@@ -31,11 +49,8 @@
 	/vscode-markdown-toc-config -->
 <!-- /vscode-markdown-toc -->
 
-Mzkit is an open source raw data file toolkit for mass spectrometry data analysis, provides by the ``BioNovoGene`` corporation. The features of mzkit inlcudes: raw data file content viewer(XIC/TIC/Mass spectrum plot), build molecule network, formula de-novo search and annotation.
-
 <div style="page-break-after:always;"></div>
-
-**Product Screenshots**
+<div style="font-size: 2em;">Product Screenshots</div>
 
 ![](docs/manual/main.png)
 ![](docs/manual/BPC_overlay.PNG)
@@ -54,6 +69,8 @@ For view the file content of the mzXML or mzML datafile in mzkit, you must impor
 Then you should see the files that you've imports into mzkit on the ``File Explorer`` dock panel if there is no error occurs during the raw data file imports progress. Now you can click on the raw data file tree to expend it and click one of the feature in your raw file to view the content data.
 
 ![](docs/manual/file-explorer.png)
+
+<div style="page-break-after:always;"></div>
 
 ###  1.2. <a name='SearchFeature'></a>Search Feature
 
@@ -125,15 +142,49 @@ You also can search of the formula by input any ``m/z`` value in the input box o
 
 ![](docs/manual/export-formula-list.png)
 
-####  2.2. <a name='ExportFormulaSearchResult'></a>Export Formula Search Result
+####  2.1.1. <a name='ExportFormulaSearchResult'></a>Export Formula Search Result
 
 Export the formula search result just like other data that we've introduced before, just click on the ``Formula Result`` tab page and then click on the Export button. this command will let you save the formula search result into a specific Excel table file. 
 
 <div style="page-break-after:always;"></div>
 
-### Molecular Networking
+###  2.2. <a name='MolecularNetworking'></a>Molecular Networking
 
-#### Save Network Visual
+The molecular networking in mass spectrum data is a kind of spectrum similarity network. You can build a molecule network use mzkit in a very easy way:
+
+####  2.2.1. <a name='step1selections'></a>step1 select ions
+
+For create a spectrum similarity network, it required some ms2 ions data provides to mzkit for run spectrum matrix alignment and evaluate the simialrity scores between these spectrum matrix data. select the ions data just like plot XIC operation it does in mzkit: check on the ms2 feature in the ``file explorer`` dock panel.
+
+####  2.2.2. <a name='step2buildnetwork'></a>step2 build network
+
+Once we have the mass spectrum data selected, then we could run the matrix similarity between these matrix for build a network. now we mouse right click of the file tree in the ``file explorer``, and then choose the ``Molecular Networking`` menu item:
+
+![](docs/manual/molecular_networking.png)
+
+####  2.2.3. <a name='step3viewnetworkdata'></a>step3 view network data
+
+once the networking progress have been done, then we could view the network result data in the ``Molecular Networking`` tool page. there are three tables in the tool page for show your network data: ``Network``, ``Compounds`` and ``Network Statistics``.
+
+![](docs/manual/network_viewer_tabs.PNG)
+
+1. the ``Network`` tab page contains the edges data in your network, which is the spectrum cluster simialrity result. all of the spectrum alignment its simialrity value is less than the ``Spectrum Similarity`` threshold value that will be removes from the network.
+
+![](docs/manual/network_edges_viewer.PNG)
+
+there are columns in the edge table: ``CompoundA`` and ``CompoundB`` is the spectrum reference id in this edge connected. and the ``simialrity``, ``forward`` and ``reverse`` column is the simialrity score value of the two spectrum matrix and the last ``View`` column contains the button that let you view the spectrum matrix alignment result visual plot.
+
+2. the ``Compounds`` tab page contains the spectrum cluster (**network nodes**) information in your network.
+
+![](docs/manual/network_nodes_viewer.PNG)
+
+####  2.2.4. <a name='step4networkvisualization'></a>step 4 network visualization
+
+
+
+####  2.2.5. <a name='ExportNetworkData'></a>Export Network Data
+
+####  2.2.6. <a name='SaveNetworkVisual'></a>Save Network Visual
 
 ![](docs/manual/network_viewer.PNG)
 
@@ -149,9 +200,11 @@ Now you can use the saved network image for your publications:
 
 ![](docs/manual/network_visualze.png)
 
-## Appendix
+<div style="page-break-after:always;"></div>
 
-### Switch Between Toolkit
+##  3. <a name='Appendix'></a>Appendix
+
+###  3.1. <a name='SwitchBetweenToolkit'></a>Switch Between Toolkit
 
 You can switch between toolkit pages via the start menu of mzkit:
 
@@ -162,7 +215,9 @@ or just select a page from the app switcher toolstrip menu:
 
 ![](docs/manual/switch_toolkit1.PNG)
 
-### Install Mzkit
+<div style="page-break-after:always;"></div>
+
+###  3.2. <a name='InstallMzkit'></a>Install Mzkit
 
 ![](docs/manual/setup.PNG)
 
@@ -176,11 +231,11 @@ When you have launch the mzkit installer, then you will see a security warning d
 
 <div style="page-break-after:always;"></div>
 
-### Uninstall Mzkit
+###  3.3. <a name='UninstallMzkit'></a>Uninstall Mzkit
 
 if you want to removes mzkit from your computer system, then you could follow this instruction for uninstall:
 
-1. Open the control panel of your windows system, and then click of the like ``Uninstall a program``
+1. Open the control panel of your windows system, and then click of the link ``Uninstall a program``
 
 ![](docs/manual/control_panel.PNG)
 
@@ -188,7 +243,7 @@ if you want to removes mzkit from your computer system, then you could follow th
 
 ![](docs/manual/app_list.PNG)
 
-3. Then right click on the mzkit, select uninstall, then you can removes mzkit from your windows system
+3. Then right click on the mzkit, select ``uninstall``, then you can removes mzkit from your windows system
 
 ![](docs/manual/uninstall_right_click.png)
 
@@ -198,9 +253,9 @@ Just click ``OK`` on the dialog:
 
 <div style="page-break-after:always;"></div>
 
-##  3. <a name='Credits'></a>Credits
+##  4. <a name='Credits'></a>Credits
 
-This open source mass spectrometry data toolkit is developed at the BioDeep R&D laboratory and provided to you by BioNovoGene corporation.
+This open source mass spectrometry data toolkit is developed at the [BioDeep](http://www.biodeep.cn/) R&D laboratory and provided to you by ``BioNovoGene`` corporation.
 
 ![](docs/BioNovoGene.png)
 
@@ -211,5 +266,7 @@ This open source mass spectrometry data toolkit is developed at the BioDeep R&D 
 </style>
 
 <script type="text/javascript">
-	document.getElementById("sidebar").style.display = "none";
+	document.ready = function() {
+		document.getElementById("sidebar").style.display = "none";
+	}
 </script>
