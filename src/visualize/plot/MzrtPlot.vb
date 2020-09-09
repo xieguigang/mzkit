@@ -72,13 +72,14 @@ Public Module MzrtPlot
                          Optional bg$ = "white",
                          Optional margin$ = Resolution2K.PaddingWithTopTitleAndRightLegend,
                          Optional rawfile$ = "n/a",
-                         Optional ptSize! = 12,
+                         Optional ptSize! = 24,
                          Optional sampleColors$ = "Set1:c8",
                          Optional mapLevels As Integer = 25) As GraphicsData
 
         ' 先转换为散点图的数据系列
         Dim colors As String() = Designer.GetColors(sampleColors, mapLevels).Select(Function(c) c.ToHtmlColor).ToArray
         Dim points As PointData() = samples _
+            .Where(Function(a) a.intensity > 0) _
             .Select(Function(compound)
                         Return New PointData() With {
                             .pt = New PointF(compound.scan_time, compound.mz),
