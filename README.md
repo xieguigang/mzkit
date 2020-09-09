@@ -215,5 +215,7 @@ This open source mass spectrometry data toolkit is developed at the BioDeep R&D 
 </style>
 
 <script type="text/javascript">
-	document.getElementById("sidebar").style.display = "none";
+	document.ready = function() {
+		document.getElementById("sidebar").style.display = "none";
+	}
 </script>
