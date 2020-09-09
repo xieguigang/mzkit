@@ -293,7 +293,7 @@
   <ItemGroup>
     <Compile Include="ChromatogramPeakPlot.vb" />
     <Compile Include="ChromatogramPlot.vb" />
-    <Compile Include="GCMSscanVisual.vb" />
+    <Compile Include="ScanVisual3D.vb" />
     <Compile Include="MassSpectraMirrorPlot.vb" />
     <Compile Include="UVsignalPlot.vb" />
     <Compile Include="MzrtPlot.vb" />

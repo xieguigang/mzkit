@@ -126,7 +126,7 @@ Public Module ScanVisual3D
                               Optional sn_threshold# = 5,
                               Optional angleCutoff# = 6,
                               Optional peakwidth As DoubleRange = Nothing,
-                              Optional viewDistance% = 14000,
+                              Optional viewDistance% = 10000,
                               Optional viewAngle$ = "-90,-90,-30",
                               Optional fov% = 800) As GraphicsData
 
