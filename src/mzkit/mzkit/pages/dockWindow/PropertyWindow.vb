@@ -55,7 +55,7 @@ Namespace DockSample
         Public Sub New()
             InitializeComponent()
             ' comboBox.SelectedIndex = 0
-            propertyGrid.SelectedObject = New SpectrumProperty("n/a", {})
+            propertyGrid.SelectedObject = New SpectrumProperty("n/a", "n/a", {})
 
             DoubleBuffered = True
         End Sub

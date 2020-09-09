@@ -630,7 +630,11 @@ Public Class PageMzkitTools
         Dim scanId As ScanEntry = ListBox1.SelectedItem
         Dim raw = TreeView1.CurrentRawFile.raw
 
-        Call showSpectrum(scanId.id, raw)
+        If Not scanId Is Nothing Then
+            Call showSpectrum(scanId.id, raw)
+        Else
+            MyApplication.host.showStatusMessage("no ion scan was selected...", My.Resources.StatusAnnotations_Warning_32xLG_color)
+        End If
     End Sub
 
     Private Sub SearchInFileToolStripMenuItem_Click(sender As Object, e As EventArgs)
@@ -1011,7 +1015,7 @@ Public Class PageMzkitTools
                         Dim entry = cache.getDataVariableEntry(scanId)
                         Dim mztemp = cache.getDataVariable(entry).numerics.AsMs2.ToArray
                         Dim attrs = cache.getDataVariableEntry(scanId).attributes
-                        Dim info As New SpectrumProperty(scanId, attrs)
+                        Dim info As New SpectrumProperty(scanId, raw.source.FileName, attrs)
 
                         Yield New PeakMs2 With {
                             .mz = info.precursorMz,

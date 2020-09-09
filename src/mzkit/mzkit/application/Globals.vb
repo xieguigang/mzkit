@@ -158,6 +158,11 @@ Module Globals
         Next
     End Sub
 
+    ''' <summary>
+    ''' 这个函数总是返回当前选中的节点的文件根节点相关的数据
+    ''' </summary>
+    ''' <param name="explorer"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function CurrentRawFile(explorer As TreeView) As (raw As Raw, tree As TreeNode)
         Dim node = explorer.SelectedNode
