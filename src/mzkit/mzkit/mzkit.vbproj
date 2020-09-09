@@ -30,7 +30,7 @@
     <PublisherName>BioNovoGene</PublisherName>
     <SuiteName>mzkit</SuiteName>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>18</ApplicationRevision>
+    <ApplicationRevision>19</ApplicationRevision>
     <ApplicationVersion>1.12.1.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -507,6 +507,10 @@
     <EmbeddedResource Include="RibbonMarkup.ribbon" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\Library\R.graph\R.graph.vbproj">
+      <Project>{1579d1a8-73c4-4f97-bb57-3d1e62343599}</Project>
+      <Name>R.graph</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\R#\R.vbproj">
       <Project>{0c2eb77c-39f2-460d-a3f8-ce905f867637}</Project>
       <Name>R</Name>
@@ -598,6 +602,10 @@
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\text%25html\MIME-htmls.vbproj">
       <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
       <Name>MIME-htmls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Rscript\Library\mzkit\mzkit.vbproj">
+      <Project>{7a42d5a0-8058-459c-a139-195b6022a710}</Project>
+      <Name>mzkit</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\assembly\assembly\assembly.vbproj">
       <Project>{95f7d65e-9db1-4605-9fd3-25433277af88}</Project>
