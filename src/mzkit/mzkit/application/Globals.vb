@@ -185,4 +185,12 @@ Module Globals
 
         Return False
     End Function
+
+    <Extension>
+    Public Function GetXICMaxYAxis(raw As Raw) As Double
+        Return raw.scans _
+            .Where(Function(a) a.mz > 0) _
+            .Select(Function(a) a.XIC) _
+            .Max
+    End Function
 End Module

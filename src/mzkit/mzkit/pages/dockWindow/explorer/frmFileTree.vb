@@ -246,4 +246,8 @@ Public Class frmFileTree
             current.tree.Collapse()
         End If
     End Sub
+
+    Private Sub TextBox2_Click(sender As Object, e As EventArgs) Handles TextBox2.Click
+        MyApplication.host.showStatusMessage("Input a number for m/z search, or input formula text for precursor ion match!")
+    End Sub
 End Class
