@@ -32,9 +32,11 @@ Mzkit is an open source raw data file toolkit for mass spectrometry data analysi
 
 		* 2.2.1. [step1 select ions](#step1selections)
 		* 2.2.2. [step2 build network](#step2buildnetwork)
-		* 2.2.3. [step3 view network](#step3viewnetwork)
-		* 2.2.4. [Save Network Visual](#SaveNetworkVisual)
-
+		* 2.2.3. [step3 view network data](#step3viewnetworkdata)
+		* 2.2.4. [step 4 network visualization](#step4networkvisualization)
+		* 2.2.5. [Export Network Data](#ExportNetworkData)
+		* 2.2.6. [Save Network Visual](#SaveNetworkVisual)
+		
 * 3. [Appendix](#Appendix)
 	* 3.1. [Switch Between Toolkit](#SwitchBetweenToolkit)
 	* 3.2. [Install Mzkit](#InstallMzkit)
@@ -160,7 +162,7 @@ Once we have the mass spectrum data selected, then we could run the matrix simil
 
 ![](docs/manual/molecular_networking.png)
 
-####  2.2.3. <a name='step3viewnetwork'></a>step3 view network data
+####  2.2.3. <a name='step3viewnetworkdata'></a>step3 view network data
 
 once the networking progress have been done, then we could view the network result data in the ``Molecular Networking`` tool page. there are three tables in the tool page for show your network data: ``Network``, ``Compounds`` and ``Network Statistics``.
 
@@ -176,13 +178,13 @@ there are columns in the edge table: ``CompoundA`` and ``CompoundB`` is the spec
 
 ![](docs/manual/network_nodes_viewer.PNG)
 
-#### step 4 network visualization
+####  2.2.4. <a name='step4networkvisualization'></a>step 4 network visualization
 
 
 
-#### Export Network Data
+####  2.2.5. <a name='ExportNetworkData'></a>Export Network Data
 
-####  2.2.4. <a name='SaveNetworkVisual'></a>Save Network Visual
+####  2.2.6. <a name='SaveNetworkVisual'></a>Save Network Visual
 
 ![](docs/manual/network_viewer.PNG)
 
