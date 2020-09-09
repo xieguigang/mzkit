@@ -103,7 +103,7 @@ Module Assembly
         Dim topNProduct As Array = x _
             .Select(Function(a)
                         Return a.Peaks _
-                            .Centroid(da3) _
+                            .Centroid(da3, LowAbundanceTrimming.Default) _
                             .OrderByDescending(Function(p) p.intensity) _
                             .Take(topN) _
                             .Select(Function(p)
