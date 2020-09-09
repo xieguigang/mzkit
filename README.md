@@ -149,6 +149,8 @@ Now you can use the saved network image for your publications:
 
 ![](docs/manual/network_visualze.png)
 
+<div style="page-break-after:always;"></div>
+
 ## Appendix
 
 ### Switch Between Toolkit
@@ -161,6 +163,8 @@ You can switch between toolkit pages via the start menu of mzkit:
 or just select a page from the app switcher toolstrip menu:
 
 ![](docs/manual/switch_toolkit1.PNG)
+
+<div style="page-break-after:always;"></div>
 
 ### Install Mzkit
 
