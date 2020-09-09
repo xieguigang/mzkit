@@ -30,8 +30,11 @@ Mzkit is an open source raw data file toolkit for mass spectrometry data analysi
 
 	* 2.2. [Molecular Networking](#MolecularNetworking)
 
-		* 2.2.1. [Save Network Visual](#SaveNetworkVisual)
-
+		* 2.2.1. [step1 select ions](#step1selections)
+		* 2.2.2. [step2 build network](#step2buildnetwork)
+		* 2.2.3. [step3 view network](#step3viewnetwork)
+		* 2.2.4. [Save Network Visual](#SaveNetworkVisual)
+		
 * 3. [Appendix](#Appendix)
 	* 3.1. [Switch Between Toolkit](#SwitchBetweenToolkit)
 	* 3.2. [Install Mzkit](#InstallMzkit)
@@ -143,7 +146,23 @@ Export the formula search result just like other data that we've introduced befo
 
 ###  2.2. <a name='MolecularNetworking'></a>Molecular Networking
 
-####  2.2.1. <a name='SaveNetworkVisual'></a>Save Network Visual
+The molecular networking in mass spectrum data is a kind of spectrum similarity network. You can build a molecule network use mzkit in a very easy way:
+
+####  2.2.1. <a name='step1selections'></a>step1 select ions
+
+For create a spectrum similarity network, it required some ms2 ions data provides to mzkit for run spectrum matrix alignment and evaluate the simialrity scores between these spectrum matrix data. select the ions data just like plot XIC operation it does in mzkit: check on the ms2 feature in the ``file explorer`` dock panel.
+
+####  2.2.2. <a name='step2buildnetwork'></a>step2 build network
+
+Once we have the mass spectrum data selected, then we could run the matrix similarity between these matrix for build a network. now we mouse right click of the file tree in the ``file explorer``, and then choose the ``Molecular Networking`` menu item:
+
+![](docs/manual/molecular_networking.png)
+
+####  2.2.3. <a name='step3viewnetwork'></a>step3 view network
+
+
+
+####  2.2.4. <a name='SaveNetworkVisual'></a>Save Network Visual
 
 ![](docs/manual/network_viewer.PNG)
 
