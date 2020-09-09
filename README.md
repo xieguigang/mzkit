@@ -68,6 +68,8 @@ Then you should see the files that you've imports into mzkit on the ``File Explo
 
 ![](docs/manual/file-explorer.png)
 
+<div style="page-break-after:always;"></div>
+
 ###  1.2. <a name='SearchFeature'></a>Search Feature
 
 the search bar on the top of the file tree is the ``m/z`` search input: you can input a specific ``m/z`` value or ``formula`` expression in the search bar for search the matched features in your raw data file. This operation is usually apply for the ``XIC`` data search.
