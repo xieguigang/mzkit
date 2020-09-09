@@ -73,7 +73,7 @@ Public Module MzrtPlot
                          Optional margin$ = Resolution2K.PaddingWithTopTitleAndRightLegend,
                          Optional rawfile$ = "n/a",
                          Optional ptSize! = 24,
-                         Optional sampleColors$ = "Set1:c8",
+                         Optional sampleColors$ = "YlOrBr:c8",
                          Optional mapLevels As Integer = 25) As GraphicsData
 
         ' 先转换为散点图的数据系列
