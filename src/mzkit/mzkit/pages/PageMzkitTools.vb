@@ -179,9 +179,7 @@ Public Class PageMzkitTools
                 Next
             End Using
 
-            Dim matrix = ms1.GroupBy(Function(a) a.mz, Tolerance.PPM(20)).ToArray
-
-            PictureBox1.BackgroundImage = MzrtPlot.Plot(matrix).AsGDIImage
+            PictureBox1.BackgroundImage = MzrtPlot.Plot(ms1).AsGDIImage
 
             MyApplication.host.ShowPage(Me)
             MyApplication.host.Invoke(Sub() RibbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.NotAvailable)
