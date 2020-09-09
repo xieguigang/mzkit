@@ -167,19 +167,27 @@ Public Class PageMzkitTools
             '    colorsSchema:=Globals.GetColors,
             '    fillCurve:=Globals.Settings.viewer.fill
             ').AsGDIImage
+            Dim spinner As New frmProgressSpinner
             Dim raw As Raw = DirectCast(e.Node.Tag, Raw)
-            Dim ms1 As New List(Of ms1_scan)
+            Dim task As New Thread(
+                Sub()
+                    Dim ms1 As New List(Of ms1_scan)
 
-            Using cache As New netCDFReader(raw.cache)
-                For Each scan In raw.scans.Where(Function(a) a.mz = 0.0)
-                    Dim data As CDFData = cache.getDataVariable(cache.getDataVariableEntry(scan.id))
-                    Dim rawData As ms2() = data.numerics.AsMs2.ToArray
+                    Using cache As New netCDFReader(raw.cache)
+                        For Each scan In raw.scans.Where(Function(a) a.mz = 0.0)
+                            Dim data As CDFData = cache.getDataVariable(cache.getDataVariableEntry(scan.id))
+                            Dim rawData As ms2() = data.numerics.AsMs2.ToArray
 
-                    ms1.AddRange(rawData.Select(Function(a) New ms1_scan With {.intensity = a.intensity, .mz = a.mz, .scan_time = scan.rt}))
-                Next
-            End Using
+                            ms1.AddRange(rawData.Select(Function(a) New ms1_scan With {.intensity = a.intensity, .mz = a.mz, .scan_time = scan.rt}))
+                        Next
+                    End Using
 
-            PictureBox1.BackgroundImage = MzrtPlot.Plot(ms1, rawfile:=raw.source.FileName).AsGDIImage
+                    Me.Invoke(Sub() PictureBox1.BackgroundImage = MzrtPlot.Plot(ms1, rawfile:=raw.source.FileName).AsGDIImage)
+                    spinner.Invoke(Sub() Call spinner.Close())
+                End Sub)
+
+            Call task.Start()
+            Call spinner.ShowDialog()
 
             MyApplication.host.ShowPage(Me)
             MyApplication.host.Invoke(Sub() RibbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.NotAvailable)
