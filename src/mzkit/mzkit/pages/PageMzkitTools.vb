@@ -156,7 +156,6 @@ Public Class PageMzkitTools
 
     Private Sub TreeView1_AfterSelect(sender As Object, e As TreeViewEventArgs)
         If TypeOf e.Node.Tag Is Task.Raw Then
-
             Dim TIC = rawTIC(e.Node.Tag, False)
 
             ' 原始文件节点
@@ -170,40 +169,7 @@ Public Class PageMzkitTools
             ).AsGDIImage
 
             MyApplication.host.ShowPage(Me)
-
             MyApplication.host.Invoke(Sub() RibbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.NotAvailable)
-
-        ElseIf TypeOf e.Node.Tag Is ms2() Then
-            ' TIC 图绘制
-            Dim raw = DirectCast(e.Node.Tag, ms2())
-            Dim selects = TreeView1.CurrentRawFile.raw
-            Dim TIC As New NamedCollection(Of ChromatogramTick) With {
-                .name = $"m/z {raw.Select(Function(m) m.mz).Min.ToString("F3")} - {raw.Select(Function(m) m.mz).Max.ToString("F3")}",
-                .value = raw _
-                    .Select(Function(a)
-                                Return New ChromatogramTick With {
-                                    .Time = Val(a.Annotation),
-                                    .Intensity = a.intensity
-                                }
-                            End Function) _
-                    .ToArray
-            }
-            Dim maxY As Double = selects.scans.Select(Function(a) a.TIC).Max
-
-            TIC.value = {
-                New ChromatogramTick With {.Time = selects.rtmin},
-                New ChromatogramTick With {.Time = selects.rtmax}
-            }.JoinIterates(TIC.value) _
-             .OrderBy(Function(c) c.Time) _
-             .ToArray
-            showMatrix(TIC.value, TIC.name)
-            PictureBox1.BackgroundImage = TIC.TICplot(
-                intensityMax:=maxY,
-                colorsSchema:=Globals.GetColors,
-                fillCurve:=Globals.Settings.viewer.fill
-            ).AsGDIImage
-
-            MyApplication.host.ShowPage(Me)
         Else
             ' scan节点
             Dim raw As Task.Raw = e.Node.Parent.Tag
