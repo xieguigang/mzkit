@@ -76,7 +76,7 @@ Public Class frmSearchList
     End Sub
 
     Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox1.SelectedIndexChanged
-        Dim scanId As ScanEntry = ListBox1.SelectedItem
+        Dim scanId As ScanEntry = TryCast(ListBox1.SelectedItem, ScanEntry)
 
         If Not scanId Is Nothing Then
             Call MyApplication.host.mzkitTool.showSpectrum(scanId.id, raw)

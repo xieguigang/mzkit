@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <StartupObject>mzkit.My.MyApplication</StartupObject>
     <RootNamespace>mzkit</RootNamespace>
-    <AssemblyName>mzkit</AssemblyName>
+    <AssemblyName>mzkit_win32</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -30,7 +30,7 @@
     <PublisherName>BioNovoGene</PublisherName>
     <SuiteName>mzkit</SuiteName>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>19</ApplicationRevision>
+    <ApplicationRevision>23</ApplicationRevision>
     <ApplicationVersion>1.12.1.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -44,7 +44,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>mzkit.xml</DocumentationFile>
+    <DocumentationFile>mzkit_win32.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -54,7 +54,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>mzkit.xml</DocumentationFile>
+    <DocumentationFile>mzkit_win32.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -72,7 +72,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\mzkit\</OutputPath>
-    <DocumentationFile>mzkit.xml</DocumentationFile>
+    <DocumentationFile>mzkit_win32.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -85,7 +85,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Debug\</OutputPath>
-    <DocumentationFile>mzkit.xml</DocumentationFile>
+    <DocumentationFile>mzkit_win32.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -95,7 +95,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Release\</OutputPath>
-    <DocumentationFile>mzkit.xml</DocumentationFile>
+    <DocumentationFile>mzkit_win32.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -106,7 +106,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\dist\bin\</OutputPath>
-    <DocumentationFile>mzkit.xml</DocumentationFile>
+    <DocumentationFile>mzkit_win32.xml</DocumentationFile>
     <Optimize>false</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
@@ -507,6 +507,14 @@
     <EmbeddedResource Include="RibbonMarkup.ribbon" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\Library\R.base\R.base.vbproj">
+      <Project>{6ec3d3f5-f19d-4899-af88-161f6238e6e8}</Project>
+      <Name>R.base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\Library\R.graphics\R.graphics.vbproj">
+      <Project>{c5c3428c-d64c-4e79-b239-77adc66b1156}</Project>
+      <Name>R.graphics</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\Library\R.graph\R.graph.vbproj">
       <Project>{1579d1a8-73c4-4f97-bb57-3d1e62343599}</Project>
       <Name>R.graph</Name>
@@ -661,7 +669,7 @@
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.8">
       <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.8 %28x86 和 x64%29</ProductName>
+      <ProductName>Microsoft .NET Framework 4.8 %28x86 and x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
