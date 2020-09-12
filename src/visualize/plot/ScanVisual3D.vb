@@ -66,6 +66,7 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports stdNum = System.Math
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models.Isometric
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models
 
 Public Module ScanVisual3D
 
@@ -256,8 +257,8 @@ Public Module ScanVisual3D
                 ' Call model.RenderAs3DChart(g, camera, region, Nothing)
                 Dim isometricView As New IsometricEngine
 
-                For Each model3D In model.shapes
-                    isometricView.Add(model3D, Color.Black)
+                For Each Model3D As Shape3D In model.shapes
+                    isometricView.Add(Model3D, Color.Black)
                 Next
 
                 isometricView.Draw(g)
@@ -270,6 +271,13 @@ Public Module ScanVisual3D
 
     <Extension>
     Private Iterator Function shapes(models As IEnumerable(Of Element3D)) As IEnumerable(Of Shape3D)
-
+        For Each model As Element3D In models
+            Select Case model.GetType
+                Case GetType(Line)
+                    With DirectCast(model, Line)
+                        Yield New Isometric.Shapes.Line(.A, .B)
+                    End With
+            End Select
+        Next
     End Function
 End Module
