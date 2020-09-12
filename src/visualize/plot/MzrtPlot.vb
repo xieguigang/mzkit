@@ -47,10 +47,13 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports stdNum = System.Math
 
 ''' <summary>
@@ -68,13 +71,16 @@ Public Module MzrtPlot
     ''' <param name="ptSize!"></param>
     ''' <returns></returns>
     Public Function Plot(samples As IEnumerable(Of ms1_scan),
-                         Optional size$ = "8000,6000",
+                         Optional size$ = "5000,4000",
                          Optional bg$ = "white",
                          Optional margin$ = Resolution2K.PaddingWithTopTitleAndRightLegend,
                          Optional rawfile$ = "n/a",
                          Optional ptSize! = 24,
-                         Optional sampleColors$ = "YlOrBr:c8",
-                         Optional mapLevels As Integer = 25) As GraphicsData
+                         Optional sampleColors$ = "green,blue,darkblue",
+                         Optional mapLevels As Integer = 25,
+                         Optional legendTitleCSS$ = CSSFont.PlotSubTitle,
+                         Optional tickCSS$ = CSSFont.Win7Large,
+                         Optional axisStroke$ = Stroke.AxisStroke) As GraphicsData
 
         ' 先转换为散点图的数据系列
         Dim colors As String() = Designer.GetColors(sampleColors, mapLevels).Select(Function(c) c.ToHtmlColor).ToArray
@@ -100,7 +106,12 @@ Public Module MzrtPlot
             points(i).color = colors(CInt(intensityRange.ScaleMapping(points(i).value, indexRange)))
         Next
 
-        Return Scatter.Plot(
+        Dim brushes = colors.Select(Function(colorStr) New SolidBrush(colorStr.TranslateColor)).ToArray
+        Dim ticks = points.Select(Function(a) a.value ^ stdNum.E).CreateAxisTicks
+        Dim tickStyle As Font = CSSFont.TryParse(tickCSS).GDIObject
+        Dim legendTitleStyle As Font = CSSFont.TryParse(legendTitleCSS).GDIObject
+        Dim tickAxisStroke As Pen = Stroke.TryParse(axisStroke).GDIObject
+        Dim chart As GraphicsData = Scatter.Plot(
             {serials},
             size:=size, padding:=margin, bg:=bg,
             showGrid:=True,
@@ -108,7 +119,31 @@ Public Module MzrtPlot
             Xlabel:="rt in seconds",
             Ylabel:="m/z",
             htmlLabel:=False,
-            gridFill:=Color.White.ToHtmlColor
+            gridFill:=Color.White.ToHtmlColor,
+            XaxisAbsoluteScalling:=True,
+            showLegend:=False,
+            tickFontStyle:=tickCSS,
+            axisStroke:=axisStroke
         )
+
+        ' 绘制标尺
+        chart = chart.GraphicsPlots(
+            Sub(ByRef g, region)
+                Dim canvas = region.PlotRegion
+                Dim width = canvas.Width * 0.15
+                Dim legendLayout As New Rectangle(region.Width - width - region.Padding.Right / 3, canvas.Top, width, canvas.Height * 0.3)
+
+                Call g.ColorMapLegend(
+                    layout:=legendLayout,
+                    designer:=brushes,
+                    ticks:=ticks,
+                    titleFont:=legendTitleStyle,
+                    title:="Intensity",
+                    tickFont:=tickStyle,
+                    tickAxisStroke:=tickAxisStroke
+                )
+            End Sub)
+
+        Return chart
     End Function
 End Module
