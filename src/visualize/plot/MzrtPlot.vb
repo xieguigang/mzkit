@@ -76,7 +76,7 @@ Public Module MzrtPlot
                          Optional margin$ = Resolution2K.PaddingWithTopTitleAndRightLegend,
                          Optional rawfile$ = "n/a",
                          Optional ptSize! = 24,
-                         Optional sampleColors$ = "green,blue,darkblue",
+                         Optional sampleColors$ = "darkblue,blue,skyblue,green,orange,red,darkred",
                          Optional mapLevels As Integer = 25,
                          Optional legendTitleCSS$ = CSSFont.PlotSubTitle,
                          Optional tickCSS$ = CSSFont.Win7Large,
