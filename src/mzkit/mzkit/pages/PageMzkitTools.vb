@@ -105,7 +105,7 @@ Public Class PageMzkitTools
     End Sub
 
     Private Function missingCacheFile(raw As Raw) As DialogResult
-        Dim options As DialogResult = MessageBox.Show($"The specific raw data cache is missing, run imports again?{vbCrLf}{raw.cache.GetFullPath}", $"[{raw.source.FileName}] Cache Not Found!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning)
+        Dim options As DialogResult = MessageBox.Show($"The specific raw data cache is missing, run imports again?{vbCrLf}{raw.source.GetFullPath}", $"[{raw.source.FileName}] Cache Not Found!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning)
 
         If options = DialogResult.OK Then
             Dim newRaw = getRawCache(raw.source)
@@ -173,7 +173,7 @@ Public Class PageMzkitTools
                 Sub()
                     Dim ms1 As New List(Of ms1_scan)
 
-                    Using cache As New netCDFReader(raw.cache)
+                    Using cache As New netCDFReader(raw.ms1_cache)
                         For Each scan In raw.scans.Where(Function(a) a.mz = 0.0)
                             Dim data As CDFData = cache.getDataVariable(cache.getDataVariableEntry(scan.id))
                             Dim rawData As ms2() = data.numerics.AsMs2.ToArray
@@ -245,7 +245,7 @@ Public Class PageMzkitTools
     End Sub
 
     Friend Sub showSpectrum(scanId As String, raw As Raw)
-        If raw.cache.FileExists Then
+        If raw.cacheFileExists Then
             Dim prop As SpectrumProperty = Nothing
             Dim scanData As LibraryMatrix = raw.GetSpectrum(scanId, Globals.Settings.viewer.GetMethod, prop)
 
@@ -300,7 +300,7 @@ Public Class PageMzkitTools
             MyApplication.host.Text = $"BioNovoGene Mzkit [{ .source.GetFullPath}]"
         End With
 
-        If Not TreeView1.CurrentRawFile.raw.cache.FileExists Then
+        If Not TreeView1.CurrentRawFile.raw.cacheFileExists Then
             TreeView1.SelectedNode.ImageIndex = 1
             TreeView1.SelectedNode.SelectedImageIndex = 1
         End If
@@ -343,7 +343,7 @@ Public Class PageMzkitTools
 
             Dim raw As Raw = TreeView1.Nodes(i).Tag
 
-            If Not raw.cache.FileExists Then
+            If Not raw.cacheFileExists Then
                 Call missingCacheFile(raw)
             End If
 
@@ -625,7 +625,7 @@ Public Class PageMzkitTools
         Dim current = TreeView1.CurrentRawFile
         Dim node = TreeView1.SelectedNode
 
-        If Not node Is Nothing AndAlso current.raw.cache.FileExists Then
+        If Not node Is Nothing AndAlso current.raw.cacheFileExists Then
             Dim mz = current.raw.scans.Where(Function(scan) scan.id = node.Text).FirstOrDefault
 
             If Not mz Is Nothing AndAlso mz.mz > 0 Then
@@ -638,7 +638,7 @@ Public Class PageMzkitTools
         Dim current = TreeView1.CurrentRawFile
         Dim node = TreeView1.SelectedNode
 
-        If Not node Is Nothing AndAlso current.raw.cache.FileExists Then
+        If Not node Is Nothing AndAlso current.raw.cacheFileExists Then
             Dim mz = current.raw.scans.Where(Function(scan) scan.id = node.Text).FirstOrDefault
 
             If Not mz Is Nothing AndAlso mz.mz > 0 Then
@@ -950,7 +950,7 @@ Public Class PageMzkitTools
             Dim raw As Raw = file.Tag
             Dim rawScans As New Dictionary(Of String, ScanEntry)
 
-            If Not raw.cache.FileExists AndAlso missingCacheFile(raw) <> DialogResult.OK Then
+            If Not (raw.ms1_cache.FileExists AndAlso raw.ms2_cache.FileExists) AndAlso missingCacheFile(raw) <> DialogResult.OK Then
                 Continue For
             Else
                 For Each scan In raw.scans
@@ -960,7 +960,7 @@ Public Class PageMzkitTools
                 Call progress(raw.source.FileName)
             End If
 
-            Using cache As New netCDFReader(raw.cache)
+            Using cache As New netCDFReader(raw.ms2_cache)
                 For j As Integer = 0 To file.Nodes.Count - 1
                     Dim scan = file.Nodes(j)
                     Dim scanId As String = scan.Text

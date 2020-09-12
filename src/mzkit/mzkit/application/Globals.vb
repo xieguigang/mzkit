@@ -96,7 +96,7 @@ Module Globals
         Dim size As Double
 
         For Each node As TreeNode In explorer.Nodes
-            size += DirectCast(node.Tag, Raw).cache.FileLength
+            size += DirectCast(node.Tag, Raw).ms1_cache.FileLength + DirectCast(node.Tag, Raw).ms2_cache.FileLength
         Next
 
         If size = 0.0 Then

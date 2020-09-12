@@ -71,6 +71,12 @@ Public Class Raw
 
     Public Property scans As ScanEntry()
 
+    Public ReadOnly Property cacheFileExists As Boolean
+        Get
+            Return ms1_cache.FileExists AndAlso ms2_cache.FileExists
+        End Get
+    End Property
+
 End Class
 
 Public Class ScanEntry
