@@ -53,7 +53,8 @@
 Public Class Raw
 
     Public Property source As String
-    Public Property cache As String
+    Public Property ms1_cache As String
+    Public Property ms2_cache As String
 
     Public Property rtmin As Double
     Public Property rtmax As Double

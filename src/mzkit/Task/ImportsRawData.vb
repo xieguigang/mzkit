@@ -61,7 +61,7 @@ Imports mzML = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Public Class ImportsRawData
 
     ReadOnly source As String
-    ReadOnly temp As String
+    ReadOnly temp1, temp2 As String
     ReadOnly showProgress As Action(Of String)
     ReadOnly success As Action
 
@@ -69,11 +69,13 @@ Public Class ImportsRawData
 
     Sub New(file As String, progress As Action(Of String), finished As Action)
         source = file
-        temp = App.AppSystemTemp & "/" & file.GetFullPath.MD5 & ".cdf"
+        temp1 = App.AppSystemTemp & "/" & file.GetFullPath.MD5 & "_1.cdf"
+        temp2 = App.AppSystemTemp & "/" & file.GetFullPath.MD5 & "_2.cdf"
         showProgress = progress
         success = finished
         raw = New Raw With {
-            .cache = temp.GetFullPath,
+            .ms1_cache = temp1.GetFullPath,
+            .ms2_cache = temp2.GetFullPath,
             .source = source.GetFullPath
         }
     End Sub
@@ -91,7 +93,7 @@ Public Class ImportsRawData
     End Sub
 
     Private Sub importsMzXML()
-        Using cache As New CDFWriter(temp, Encodings.UTF8WithoutBOM)
+        Using cache1 As New CDFWriter(temp1, Encodings.UTF8WithoutBOM), cache2 As New CDFWriter(temp2, Encodings.UTF8WithoutBOM)
             Dim attrs As attribute()
             Dim data As Double()
             Dim name As String
@@ -115,7 +117,19 @@ Public Class ImportsRawData
                 }
                 data = scan.peaks.Base64Decode(True)
                 name = scan.getName & $" scan={nscans.Count + 1}"
-                cache.AddVariable(name, New CDFData With {.numerics = data}, New Dimension With {.name = "m/z-int,scan_" & scan.num, .size = data.Length}, attrs)
+
+                Dim scanData As New CDFData With {.numerics = data}
+                Dim scanSize As New Dimension With {
+                    .name = "m/z-int,scan_" & scan.num,
+                    .size = data.Length
+                }
+
+                If scan.msLevel = 1 Then
+                    cache1.AddVariable(name, scanData, scanSize, attrs)
+                Else
+                    cache2.AddVariable(name, scanData, scanSize, attrs)
+                End If
+
                 rt.Add(PeakMs2.RtInSecond(scan.retentionTime))
 
                 Call New ScanEntry With {
@@ -132,7 +146,8 @@ Public Class ImportsRawData
                 Call showProgress(name)
             Next
 
-            cache.GlobalAttributes(New attribute With {.name = NameOf(nscans), .type = CDFDataTypes.INT, .value = nscans.Count})
+            cache1.GlobalAttributes(New attribute With {.name = NameOf(nscans), .type = CDFDataTypes.INT, .value = nscans.Where(Function(a) a.mz = 0.0).Count})
+            cache2.GlobalAttributes(New attribute With {.name = NameOf(nscans), .type = CDFDataTypes.INT, .value = nscans.Where(Function(a) a.mz > 0.0).Count})
 
             raw.scans = nscans.ToArray
             raw.rtmin = rt.Min
@@ -143,7 +158,7 @@ Public Class ImportsRawData
     End Sub
 
     Private Sub importsMzML()
-        Using cache As New CDFWriter(temp, Encodings.UTF8WithoutBOM)
+        Using cache1 As New CDFWriter(temp1, Encodings.UTF8WithoutBOM), cache2 As New CDFWriter(temp2, Encodings.UTF8WithoutBOM)
             Dim attrs As attribute()
             Dim data As New List(Of Double)
             Dim name As String
@@ -198,7 +213,18 @@ Public Class ImportsRawData
                 End If
 
                 rt.Add(scan.scan_time)
-                cache.AddVariable(name, New CDFData With {.numerics = data}, New Dimension With {.name = "m/z-int,scan_" & scan.index, .size = data.Count}, attrs)
+
+                Dim scanData As New CDFData With {.numerics = data}
+                Dim scanSize As New Dimension With {
+                    .name = "m/z-int,scan_" & scan.index,
+                    .size = data.Count
+                }
+
+                If scan.ms_level = 1 Then
+                    cache1.AddVariable(name, scanData, scanSize, attrs)
+                Else
+                    cache2.AddVariable(name, scanData, scanSize, attrs)
+                End If
 
                 Call New ScanEntry With {
                     .id = name,
@@ -213,7 +239,8 @@ Public Class ImportsRawData
                 Call showProgress(name)
             Next
 
-            cache.GlobalAttributes(New attribute With {.name = NameOf(nscans), .type = CDFDataTypes.INT, .value = nscans.Count})
+            cache1.GlobalAttributes(New attribute With {.name = NameOf(nscans), .type = CDFDataTypes.INT, .value = nscans.Where(Function(a) a.mz = 0.0).Count})
+            cache2.GlobalAttributes(New attribute With {.name = NameOf(nscans), .type = CDFDataTypes.INT, .value = nscans.Where(Function(a) a.mz > 0.0).Count})
 
             raw.scans = nscans.ToArray
             raw.rtmin = rt.Min
