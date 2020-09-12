@@ -92,6 +92,19 @@ Module Globals
     End Sub
 
     <Extension>
+    Public Function FindRaw(explorer As TreeView, sourceName As String) As Raw
+        For Each node As TreeNode In explorer.Nodes
+            Dim raw As Raw = DirectCast(node.Tag, Raw)
+
+            If raw.source.FileName = sourceName Then
+                Return raw
+            End If
+        Next
+
+        Return Nothing
+    End Function
+
+    <Extension>
     Public Function GetTotalCacheSize(explorer As TreeView) As String
         Dim size As Double
 

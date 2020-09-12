@@ -338,6 +338,20 @@ Public Class PageMzkitTools
         TIC(isBPC:=False)
     End Sub
 
+    Public Sub TIC(raw As Raw)
+        Dim TICList As NamedCollection(Of ChromatogramTick) = rawTIC(raw, isBPC:=False)
+
+        showMatrix(TICList.value, TICList.name)
+
+        PictureBox1.BackgroundImage = ChromatogramPlot.TICplot(
+            ionData:={TICList},
+            colorsSchema:=Globals.GetColors,
+            fillCurve:=Globals.Settings.viewer.fill
+        ).AsGDIImage
+
+        MyApplication.host.ShowPage(Me)
+    End Sub
+
     Public Sub TIC(isBPC As Boolean)
         Dim rawList As New List(Of Raw)
 

@@ -66,6 +66,7 @@ Imports RibbonLib.Controls.Events
 Imports RibbonLib.Interop
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports Task
 Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class frmMain
@@ -102,13 +103,7 @@ Public Class frmMain
         Using file As New OpenFileDialog With {.Filter = "Raw Data|*.mzXML;*.mzML|R# Script(*.R)|*.R"}
             If file.ShowDialog = DialogResult.OK Then
                 If file.FileName.ExtensionSuffix("R") Then
-                    Dim newScript As New frmRScriptEdit With {.scriptFile = file.FileName}
-
-                    scriptFiles.Add(newScript)
-                    newScript.Show(dockPanel)
-                    newScript.DockState = DockState.Document
-                    newScript.Text = file.FileName.FileName
-                    newScript.LoadScript(file.FileName.ReadAllText)
+                    Call openRscript(file.FileName)
                 Else
                     Call mzkitTool.ImportsRaw(file.FileName)
                 End If
@@ -116,6 +111,16 @@ Public Class frmMain
                 Globals.AddRecentFileHistory(file.FileName)
             End If
         End Using
+    End Sub
+
+    Private Sub openRscript(fileName As String)
+        Dim newScript As New frmRScriptEdit With {.scriptFile = fileName}
+
+        scriptFiles.Add(newScript)
+        newScript.Show(dockPanel)
+        newScript.DockState = DockState.Document
+        newScript.Text = fileName.FileName
+        newScript.LoadScript(fileName.ReadAllText)
     End Sub
 
     Private Sub ImportsFiles(sender As Object, e As ExecuteEventArgs)
@@ -202,6 +207,8 @@ Public Class frmMain
         AddHandler ribbonItems.ButtonXIC.ExecuteEvent, AddressOf mzkitTool.ShowXICToolStripMenuItem_Click
 
         AddHandler ribbonItems.ButtonResetLayout.ExecuteEvent, AddressOf resetLayout
+
+        AddHandler ribbonItems.RecentItems.ExecuteEvent, AddressOf _recentItems_ExecuteEvent
 
         _uiCollectionChangedEvent = New UICollectionChangedEvent()
 
@@ -585,6 +592,14 @@ Public Class frmMain
             Dim propLabel As PropVariant
             e.CommandExecutionProperties.GetValue(RibbonProperties.Label, propLabel)
             Dim label As String = CStr(propLabel.Value)
+            Dim sourceFile As String = Nothing
+
+            For Each file As String In Globals.Settings.recentFiles.SafeQuery
+                If label = file.FileName Then
+                    sourceFile = file
+                    Exit For
+                End If
+            Next
 
             ' get selected item label description
             Dim propLabelDescription As PropVariant
@@ -595,6 +610,22 @@ Public Class frmMain
             Dim propPinned As PropVariant
             e.CommandExecutionProperties.GetValue(RibbonProperties.Pinned, propPinned)
             Dim pinned As Boolean = CBool(propPinned.Value)
+
+            If label.ExtensionSuffix("R") Then
+                If Not sourceFile.FileExists Then
+                    MessageBox.Show($"The given R# script file [{label}] is not exists on your file system!", "File Not Found", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Else
+                    Call openRscript(sourceFile)
+                End If
+            Else
+                Dim raw As Raw = Globals.FindRaw(fileExplorer.treeView1, label)
+
+                If raw Is Nothing Then
+                    MessageBox.Show($"The given raw data file [{label}] is not exists on your file system!", "File Not Found", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Else
+                    Call mzkitTool.TIC(raw)
+                End If
+            End If
         End If
     End Sub
 
