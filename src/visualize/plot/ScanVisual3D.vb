@@ -65,6 +65,7 @@ Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports stdNum = System.Math
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models.Isometric
 
 Public Module ScanVisual3D
 
@@ -252,11 +253,23 @@ Public Module ScanVisual3D
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 ' 要先绘制三维图形，要不然会将图例遮住的
-                Call model.RenderAs3DChart(g, camera, region, Nothing)
+                ' Call model.RenderAs3DChart(g, camera, region, Nothing)
+                Dim isometricView As New IsometricEngine
+
+                For Each model3D In model.shapes
+                    isometricView.Add(model3D, Color.Black)
+                Next
+
+                isometricView.Draw(g)
             End Sub
 
         Return plotRegion _
             .Size _
             .GraphicsPlots(padding, bg, plotInternal)
+    End Function
+
+    <Extension>
+    Private Iterator Function shapes(models As IEnumerable(Of Element3D)) As IEnumerable(Of Shape3D)
+
     End Function
 End Module
