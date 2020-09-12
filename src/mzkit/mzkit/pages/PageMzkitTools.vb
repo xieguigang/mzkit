@@ -185,7 +185,7 @@ Public Class PageMzkitTools
                             Dim data As CDFData = cache.getDataVariable(cache.getDataVariableEntry(scan.id))
                             Dim rawData As ms2() = data.numerics.AsMs2.ToArray
 
-                            ms1.AddRange(rawData.Centroid(Tolerance.PPM(20), New RelativeIntensityCutoff(0.01)).Select(Function(a) New ms1_scan With {.intensity = a.intensity, .mz = a.mz, .scan_time = scan.rt}))
+                            ms1.AddRange(rawData.Centroid(Tolerance.DeltaMass(0.3), New RelativeIntensityCutoff(0.01)).Select(Function(a) New ms1_scan With {.intensity = a.intensity, .mz = a.mz, .scan_time = scan.rt}))
                             Application.DoEvents()
                         Next
                     End Using
