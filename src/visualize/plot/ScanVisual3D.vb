@@ -218,36 +218,36 @@ Public Module ScanVisual3D
             arrowFactor
         )
         ' 添加TIC曲线多边形
-        model += TICArea
+        ' model += TICArea
 
         Dim axisStroke As Pen = Stroke.TryParse(axisStrokeCss)
         Dim massFragmentStroke As Pen = Stroke.TryParse(massFragmentStrokeCSS)
         Dim massZ#
 
         ' 添加ms scan信号柱模型
-        For Each scan As NamedCollection(Of ms1_scan) In time_scans
+        'For Each scan As NamedCollection(Of ms1_scan) In time_scans
 
-            ' 每一个ROI的ms scan的X都是相同的
-            Dim rtX# = timeScaler.TranslateY(Val(scan.name))
-            Dim msScans As ms1_scan() = scan.ToArray
-            Dim A As New Point3D(rtX, Y.Min, Z.Min)
-            Dim B As New Point3D(rtX, Y.Min, Z.Max)
+        '    ' 每一个ROI的ms scan的X都是相同的
+        '    Dim rtX# = timeScaler.TranslateY(Val(scan.name))
+        '    Dim msScans As ms1_scan() = scan.ToArray
+        '    Dim A As New Point3D(rtX, Y.Min, Z.Min)
+        '    Dim B As New Point3D(rtX, Y.Min, Z.Max)
 
-            ' 添加绘制基础的线轴的模型
-            model += New Line(A, B) With {
-                .Stroke = axisStroke
-            }
+        '    ' 添加绘制基础的线轴的模型
+        '    model += New Line(A, B) With {
+        '        .Stroke = axisStroke
+        '    }
 
-            For Each mz As ms1_scan In msScans
-                massZ = massScaler.TranslateY(-mz.mz)
-                A = New Point3D(rtX, Y.Min, massZ)
-                B = New Point3D(rtX, intensityScaler.TranslateY(mz.intensity), massZ)
+        '    For Each mz As ms1_scan In msScans
+        '        massZ = massScaler.TranslateY(-mz.mz)
+        '        A = New Point3D(rtX, Y.Min, massZ)
+        '        B = New Point3D(rtX, intensityScaler.TranslateY(mz.intensity), massZ)
 
-                model += New Line(A, B) With {
-                    .Stroke = massFragmentStroke
-                }
-            Next
-        Next
+        '        model += New Line(A, B) With {
+        '            .Stroke = massFragmentStroke
+        '        }
+        '    Next
+        'Next
 
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)

@@ -183,7 +183,7 @@ Public Class PageMzkitTools
                         Next
                     End Using
 
-                    Me.Invoke(Sub() PictureBox1.BackgroundImage = ScanVisual3D.PlotScans(ms1, viewDistance:=5000).AsGDIImage) ' MzrtPlot.Plot(ms1, rawfile:=raw.source.FileName).AsGDIImage)
+                    Me.Invoke(Sub() PictureBox1.BackgroundImage = ScanVisual3D.PlotScans(ms1, viewDistance:=3000).AsGDIImage) ' MzrtPlot.Plot(ms1, rawfile:=raw.source.FileName).AsGDIImage)
                     spinner.Invoke(Sub() Call spinner.Close())
                 End Sub)
 
