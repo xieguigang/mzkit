@@ -13,6 +13,7 @@ using RibbonLib;
 using RibbonLib.Controls;
 using RibbonLib.Interop;
 
+
     partial class RibbonItems
     {
         private static class Cmd
@@ -68,10 +69,11 @@ using RibbonLib.Interop;
             public const uint cmdButtonNew = 1001;
             public const uint cmdButtonOpenRaw = 1002;
             public const uint cmdButtonSave = 1003;
-            public const uint cmdGroupExit = 1096;
+            public const uint cmdTabGroupWindowTools = 1023;
             public const uint cmdButtonRsharp = 1107;
             public const uint cmdButtonShowStartPage = 1108;
             public const uint cmdButtonShowLogWindow = 1109;
+            public const uint cmdButtonResetLayout = 1019;
             public const uint cmdTabTools = 1012;
             public const uint cmdGroupToolsActions = 1046;
             public const uint cmdButtonMzCalculator = 1013;
@@ -157,10 +159,11 @@ using RibbonLib.Interop;
         public RibbonButton ButtonNew { get; private set; }
         public RibbonButton ButtonOpenRaw { get; private set; }
         public RibbonButton ButtonSave { get; private set; }
-        public RibbonGroup GroupExit { get; private set; }
+        public RibbonGroup TabGroupWindowTools { get; private set; }
         public RibbonButton ButtonRsharp { get; private set; }
         public RibbonButton ButtonShowStartPage { get; private set; }
         public RibbonButton ButtonShowLogWindow { get; private set; }
+        public RibbonButton ButtonResetLayout { get; private set; }
         public RibbonTab TabTools { get; private set; }
         public RibbonGroup GroupToolsActions { get; private set; }
         public RibbonButton ButtonMzCalculator { get; private set; }
@@ -244,10 +247,11 @@ using RibbonLib.Interop;
             ButtonNew = new RibbonButton(ribbon, Cmd.cmdButtonNew);
             ButtonOpenRaw = new RibbonButton(ribbon, Cmd.cmdButtonOpenRaw);
             ButtonSave = new RibbonButton(ribbon, Cmd.cmdButtonSave);
-            GroupExit = new RibbonGroup(ribbon, Cmd.cmdGroupExit);
+            TabGroupWindowTools = new RibbonGroup(ribbon, Cmd.cmdTabGroupWindowTools);
             ButtonRsharp = new RibbonButton(ribbon, Cmd.cmdButtonRsharp);
             ButtonShowStartPage = new RibbonButton(ribbon, Cmd.cmdButtonShowStartPage);
             ButtonShowLogWindow = new RibbonButton(ribbon, Cmd.cmdButtonShowLogWindow);
+            ButtonResetLayout = new RibbonButton(ribbon, Cmd.cmdButtonResetLayout);
             TabTools = new RibbonTab(ribbon, Cmd.cmdTabTools);
             GroupToolsActions = new RibbonGroup(ribbon, Cmd.cmdGroupToolsActions);
             ButtonMzCalculator = new RibbonButton(ribbon, Cmd.cmdButtonMzCalculator);
