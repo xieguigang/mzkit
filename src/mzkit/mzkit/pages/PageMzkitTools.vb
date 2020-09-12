@@ -167,8 +167,15 @@ Public Class PageMzkitTools
             '    colorsSchema:=Globals.GetColors,
             '    fillCurve:=Globals.Settings.viewer.fill
             ').AsGDIImage
-            Dim spinner As New frmProgressSpinner
+
             Dim raw As Raw = DirectCast(e.Node.Tag, Raw)
+
+            If Not raw.cacheFileExists Then
+                MessageBox.Show("Sorry, can not view file data, the cache file is missing...", "Cache Missing", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Return
+            End If
+
+            Dim spinner As New frmProgressSpinner
             Dim task As New Thread(
                 Sub()
                     Dim ms1 As New List(Of ms1_scan)

@@ -130,7 +130,7 @@ Public Module MzrtPlot
         chart = chart.GraphicsPlots(
             Sub(ByRef g, region)
                 Dim canvas = region.PlotRegion
-                Dim width = canvas.Width * 0.15
+                Dim width = canvas.Width * 0.125
                 Dim legendLayout As New Rectangle(region.Width - width - region.Padding.Right / 3, canvas.Top, width, canvas.Height * 0.3)
 
                 Call g.ColorMapLegend(
