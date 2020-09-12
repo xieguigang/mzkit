@@ -877,7 +877,7 @@ Public Class PageMzkitTools
         Next
 
         If selectedCount >= 500 Then
-            If MessageBox.Show("There are too many ions for create XIC plot, do you wan to uncheck some ions for reduce data for plot?", "Too much data!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) = DialogResult.Cancel Then
+            If MessageBox.Show("There are too many ions for create XIC plot, probably you should uncheck some ions for reduce data, continute to procedure?", "Too much data!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) = DialogResult.Cancel Then
                 MyApplication.host.showStatusMessage("Show XIC plot for too many ions has been cancel!")
                 Return
             End If

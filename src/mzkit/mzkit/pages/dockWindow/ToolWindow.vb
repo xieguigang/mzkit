@@ -55,6 +55,74 @@ Namespace DockSample
             AutoScaleMode = AutoScaleMode.Dpi
             DoubleBuffered = True
         End Sub
+
+        ''' <summary>
+        ''' float
+        ''' </summary>
+        ''' <param name="sender"></param>
+        ''' <param name="e"></param>
+        Private Sub option1ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles floatToolStripMenuItem.Click
+            DockState = DockState.Float
+
+            dockToolStripMenuItem.Enabled = True
+            autoHideToolStripMenuItem.Enabled = True
+            floatToolStripMenuItem.Enabled = False
+        End Sub
+
+        ''' <summary>
+        ''' dock
+        ''' </summary>
+        ''' <param name="sender"></param>
+        ''' <param name="e"></param>
+        Private Sub option2ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles dockToolStripMenuItem.Click
+            Select Case DockState
+                Case DockState.DockBottomAutoHide
+                    DockState = DockState.DockBottom
+                Case DockState.DockLeftAutoHide
+                    DockState = DockState.DockLeft
+                Case DockState.DockRightAutoHide
+                    DockState = DockState.DockRight
+                Case DockState.DockTopAutoHide
+                    DockState = DockState.DockTop
+                Case Else
+
+            End Select
+
+            dockToolStripMenuItem.Enabled = False
+            autoHideToolStripMenuItem.Enabled = True
+            floatToolStripMenuItem.Enabled = True
+        End Sub
+
+        ''' <summary>
+        ''' auto hide
+        ''' </summary>
+        ''' <param name="sender"></param>
+        ''' <param name="e"></param>
+        Private Sub option3ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles autoHideToolStripMenuItem.Click
+            Select Case DockState
+                Case DockState.DockBottom
+                    DockState = DockState.DockBottomAutoHide
+                Case DockState.DockLeft
+                    DockState = DockState.DockLeftAutoHide
+                Case DockState.DockRight
+                    DockState = DockState.DockRightAutoHide
+                Case DockState.DockTop
+                    DockState = DockState.DockTopAutoHide
+            End Select
+
+            dockToolStripMenuItem.Enabled = True
+            autoHideToolStripMenuItem.Enabled = False
+            floatToolStripMenuItem.Enabled = True
+        End Sub
+
+        ''' <summary>
+        ''' close
+        ''' </summary>
+        ''' <param name="sender"></param>
+        ''' <param name="e"></param>
+        Private Sub option4ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles closeToolStripMenuItem.Click
+            DockState = DockState.Hidden
+        End Sub
     End Class
 End Namespace
 
