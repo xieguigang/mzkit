@@ -229,10 +229,14 @@ Public Class frmMain
         For Each dir As String In {App.HOME, $"{App.HOME}/docs", $"{App.HOME}/../", $"{App.HOME}/../docs/"}
             If $"{dir}/readme.pdf".FileExists Then
                 Call Process.Start($"{dir}/readme.pdf")
+                Return
             End If
         Next
 
-        Me.showStatusMessage("Manul pdf file is missing...", My.Resources.StatusAnnotations_Warning_32xLG_color)
+        ' try open online page
+        Call Process.Start("https://mzkit.org/dist/README.pdf")
+
+        ' Me.showStatusMessage("Manul pdf file is missing...", My.Resources.StatusAnnotations_Warning_32xLG_color)
     End Sub
 
     Private Sub RunCurrentScript(sender As Object, e As ExecuteEventArgs)

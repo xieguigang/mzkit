@@ -29,11 +29,13 @@
     <ProductName>mzkit</ProductName>
     <PublisherName>BioNovoGene</PublisherName>
     <SuiteName>mzkit</SuiteName>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>33</ApplicationRevision>
-    <ApplicationVersion>1.12.1.%2a</ApplicationVersion>
+    <ApplicationRevision>146</ApplicationRevision>
+    <ApplicationVersion>1.12.2.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <ExcludeDeploymentUrl>true</ExcludeDeploymentUrl>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
