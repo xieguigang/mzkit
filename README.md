@@ -88,6 +88,8 @@ Expends the file content tree in the ``File Explorer``, and then mouse right cli
 ![](docs/manual/ion-XIC.png)
 > The XIC plot is a kind of time-signal chromatography plot of a specific m/z ion.
 
+<div style="page-break-after:always;"></div>
+
 ####  1.3.1. <a name='XICoverlay'></a>XIC overlay
 
 you can click on the checkbox besides the Ms2 feature for select different ion feature for create the XIC overlay plot:
