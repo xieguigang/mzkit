@@ -41,13 +41,14 @@ Mzkit is an open source raw data file toolkit for mass spectrometry data analysi
 	* 3.1. [Switch Between Toolkit](#SwitchBetweenToolkit)
 	* 3.2. [Install Mzkit](#InstallMzkit)
 	* 3.3. [Uninstall Mzkit](#UninstallMzkit)
-* 4. [Credits](#Credits)
 
 <!-- vscode-markdown-toc-config
 	numbering=true
 	autoSave=true
 	/vscode-markdown-toc-config -->
 <!-- /vscode-markdown-toc -->
+
+<hr />
 
 **Credits**
 
