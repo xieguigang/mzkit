@@ -192,6 +192,8 @@ Just click on the ``Export`` command button beside the ``Render Network`` button
 
 ![](docs/manual/export-network.PNG)
 
+<div style="page-break-after:always;"></div>
+
 ####  2.2.6. <a name='SaveNetworkVisual'></a>Save Network Visual
 
 ![](docs/manual/network_viewer.PNG)
