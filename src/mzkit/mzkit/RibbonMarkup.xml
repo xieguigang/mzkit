@@ -244,31 +244,6 @@
 		</Command>
 
 
-
-		<Command Name="cmdButtonDesign1"
-					Id="1040"
-					LabelTitle="Design 1">
-			<Command.LargeImages>
-				<Image>Res/DropA32.bmp</Image>
-			</Command.LargeImages>
-		</Command>
-
-		<Command Name="cmdButtonDesign2"
-				 Id="1041"
-				 LabelTitle="Design 2">
-			<Command.LargeImages>
-				<Image>Res/DropB32.bmp</Image>
-			</Command.LargeImages>
-		</Command>
-
-		<Command Name="cmdButtonDesign3"
-				 Id="1042"
-				 LabelTitle="Design 3">
-			<Command.LargeImages>
-				<Image>Res/DropC32.bmp</Image>
-			</Command.LargeImages>
-		</Command>
-
 		<Command Name="cmdButtonLayout1"
 				 Id="1043"
 				 LabelTitle="Snapshot">
@@ -736,7 +711,7 @@
 		 TooltipTitle="Refresh Network"
 		 TooltipDescription="Refresh network table">
 			<Command.LargeImages>
-				<Image>Res/office_chart_area_256px_540041_easyicon.net.png</Image>
+				<Image>Res/system-software-update.png</Image>
 			</Command.LargeImages>
 		</Command>
 

@@ -873,6 +873,10 @@ Public Class PageMzkitTools
     End Sub
 
     Public Sub ShowXICToolStripMenuItem_Click()
+        If TreeView1.SelectedNode Is Nothing Then
+            Return
+        End If
+
         If TypeOf TreeView1.SelectedNode.Tag Is Raw AndAlso MyApplication.host.fileExplorer.GetSelectedNodes.Count = 0 Then
             MyApplication.host.showStatusMessage("no raw file data for XIC plot!", My.Resources.StatusAnnotations_Warning_32xLG_color)
             Return
