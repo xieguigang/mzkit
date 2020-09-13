@@ -758,6 +758,9 @@ Public Class frmMain
 
     Private Sub frmMain_ResizeEnd(sender As Object, e As EventArgs) Handles Me.ResizeEnd
         Ribbon1.Refresh()
+
+        ' Me.ResumeLayout(performLayout:=False)
+        ' Me.PerformLayout()
     End Sub
 
     Dim mzkitApp As Process = Process.GetCurrentProcess()
@@ -769,6 +772,10 @@ Public Class frmMain
 
     Private Sub ToolStripStatusLabel2_Click(sender As Object, e As EventArgs) Handles ToolStripStatusLabel2.Click
 
+    End Sub
+
+    Private Sub frmMain_ResizeBegin(sender As Object, e As EventArgs) Handles Me.ResizeBegin
+        ' Me.SuspendLayout()
     End Sub
 
 

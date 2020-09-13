@@ -684,7 +684,7 @@
 		 TooltipTitle="BPC plot"
 		 TooltipDescription="Base Peak Chromatography Data Plot">
 			<Command.LargeImages>
-				<Image>Res/178151.png</Image>
+				<Image>Res/office_chart_area_256px_540041_easyicon.net.png</Image>
 			</Command.LargeImages>
 		</Command>
 
@@ -695,7 +695,7 @@
 		 TooltipTitle="TIC plot"
 		 TooltipDescription="Total ion Chromatography Data Plot">
 			<Command.LargeImages>
-				<Image>Res/178151.png</Image>
+				<Image>Res/office_chart_area_256px_540041_easyicon.net.png</Image>
 			</Command.LargeImages>
 		</Command>
 
@@ -706,7 +706,7 @@
 		 TooltipTitle="XIC plot"
 		 TooltipDescription="Selective Ion Chromatography Data Plot">
 			<Command.LargeImages>
-				<Image>Res/178151.png</Image>
+				<Image>Res/office_chart_area_256px_540041_easyicon.net.png</Image>
 			</Command.LargeImages>
 		</Command>
 
@@ -736,7 +736,7 @@
 		 TooltipTitle="Refresh Network"
 		 TooltipDescription="Refresh network table">
 			<Command.LargeImages>
-				<Image>Res/178151.png</Image>
+				<Image>Res/office_chart_area_256px_540041_easyicon.net.png</Image>
 			</Command.LargeImages>
 		</Command>
 
