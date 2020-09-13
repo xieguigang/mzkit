@@ -49,6 +49,12 @@ Mzkit is an open source raw data file toolkit for mass spectrometry data analysi
 	/vscode-markdown-toc-config -->
 <!-- /vscode-markdown-toc -->
 
+**Credits**
+
+> This open source mass spectrometry data toolkit is developed at the [BioDeep](http://www.biodeep.cn/) R&D laboratory and provided to you by ``BioNovoGene`` corporation.
+
+![](docs/BioNovoGene.png)
+
 <div style="page-break-after:always;"></div>
 <div style="font-size: 2em;">Product Screenshots</div>
 
@@ -260,14 +266,6 @@ if you want to removes mzkit from your computer system, then you could follow th
 Just click ``OK`` on the dialog:
 
 ![](docs/manual/uninstaller.PNG)
-
-<div style="page-break-after:always;"></div>
-
-##  4. <a name='Credits'></a>Credits
-
-This open source mass spectrometry data toolkit is developed at the [BioDeep](http://www.biodeep.cn/) R&D laboratory and provided to you by ``BioNovoGene`` corporation.
-
-![](docs/BioNovoGene.png)
 
 <style type="text/css">
 	#content-wrapper {
