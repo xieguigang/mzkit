@@ -168,21 +168,27 @@ once the networking progress have been done, then we could view the network resu
 
 ![](docs/manual/network_viewer_tabs.PNG)
 
-1. the ``Network`` tab page contains the edges data in your network, which is the spectrum cluster simialrity result. all of the spectrum alignment its simialrity value is less than the ``Spectrum Similarity`` threshold value that will be removes from the network.
++ 1. the ``Network`` tab page contains the edges data in your network, which is the spectrum cluster simialrity result. all of the spectrum alignment its simialrity value is less than the ``Spectrum Similarity`` threshold value that will be removes from the network.
 
 ![](docs/manual/network_edges_viewer.PNG)
 
 there are columns in the edge table: ``CompoundA`` and ``CompoundB`` is the spectrum reference id in this edge connected. and the ``simialrity``, ``forward`` and ``reverse`` column is the simialrity score value of the two spectrum matrix and the last ``View`` column contains the button that let you view the spectrum matrix alignment result visual plot.
 
-2. the ``Compounds`` tab page contains the spectrum cluster (**network nodes**) information in your network.
++ 2. the ``Compounds`` tab page contains the spectrum cluster (**network nodes**) information in your network.
 
 ![](docs/manual/network_nodes_viewer.PNG)
 
 ####  2.2.4. <a name='step4networkvisualization'></a>step 4 network visualization
 
-
+The mzkit program provides a small build-in network visualization engine that could let you visual the resulted molecular network with just a simple mouse click. As you can see in the previous screenshot, there is a ``Render Network`` command button on the top menu when the ``Network`` tab is actived. No we just click on it, and wait for the network layout calculation progress complete, and then we will see a new tag page which is named ``Molecular Networking Viewer`` will be shown in the document area of the mzkit program.
 
 ####  2.2.5. <a name='ExportNetworkData'></a>Export Network Data
+
+There is not too much style tweaking in the mzkit build-in network visualizer, so that you may be want to export the network data into table and then visualize it in other network visualization software like the famous ``Cytoscape``.
+
+Just click on the ``Export`` command button beside the ``Render Network`` button in the ``Network`` menu tab, then a dialog of save network data will be trigger and opened. Select a location in the dialog and then you can save the network table data into a given location for visualization in other software.
+
+![](docs/manual/export-network.PNG)
 
 ####  2.2.6. <a name='SaveNetworkVisual'></a>Save Network Visual
 
