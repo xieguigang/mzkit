@@ -81,6 +81,6 @@ Partial Class frmTaskProgress
     End Sub
 
     Friend WithEvents ProgressBar1 As ProgressBar
-    Friend WithEvents Label1 As Label
-    Friend WithEvents Label2 As Label
+    Dim WithEvents Label1 As Label
+    Dim WithEvents Label2 As Label
 End Class
