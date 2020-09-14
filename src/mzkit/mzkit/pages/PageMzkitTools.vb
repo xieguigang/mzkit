@@ -217,6 +217,7 @@ Public Class PageMzkitTools
         TreeView1 = host.TreeView1
 
         Call InitializeFileTree()
+        Call Globals.SplashScreenUpdater("Attatch Command Events...")
 
         AddHandler TreeView1.AfterSelect, AddressOf TreeView1_AfterSelect
         AddHandler host.fileExplorer.Button1.Click, Sub(obj, evt) Call SearchByMz(host.fileExplorer.TextBox2.Text)

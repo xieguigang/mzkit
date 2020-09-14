@@ -77,6 +77,16 @@ Namespace My
                 End Sub
         End Sub
 
+        Public Shared Function GetSplashScreen() As frmSplashScreen
+            For i As Integer = 0 To Application.OpenForms.Count - 1
+                If TypeOf Application.OpenForms(i) Is frmSplashScreen Then
+                    Return DirectCast(Application.OpenForms(i), frmSplashScreen)
+                End If
+            Next
+
+            Return Nothing
+        End Function
+
         Public Shared Sub InitializeREngine()
             _REngine = New RInterpreter
 

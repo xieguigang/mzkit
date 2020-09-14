@@ -119,12 +119,16 @@ Module Globals
         End If
     End Function
 
+    Friend SplashScreenUpdater As Action(Of String)
+
     <Extension>
     Public Function LoadRawFileCache(explorer As TreeView) As Integer
         Dim rawBuffer As Byte() = cacheList.ReadBinary
 
         If rawBuffer.IsNullOrEmpty Then
             Return 0
+        Else
+            Call SplashScreenUpdater("Load raw file list...")
         End If
 
         Dim files As Dictionary(Of String, Raw) = rawBuffer _
@@ -133,6 +137,7 @@ Module Globals
         Dim i As Integer
 
         For Each raw As Raw In files.SafeQuery.Values
+            Call SplashScreenUpdater($"[Raw File Viewer] Loading {raw.source.FileName}...")
             Call explorer.addRawFile(raw)
             i += 1
         Next

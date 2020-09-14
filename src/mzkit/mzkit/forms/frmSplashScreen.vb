@@ -61,6 +61,10 @@ Public Class frmSplashScreen
 
     End Sub
 
+    Public Sub UpdateInformation(message As String)
+        Invoke(Sub() Information.Text = message)
+    End Sub
+
     Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
         Process.Start("http://mzkit.org/")
     End Sub

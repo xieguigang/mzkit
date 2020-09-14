@@ -48,8 +48,12 @@ Public Class frmDockDocument
 
     Friend pages As New List(Of Control)
 
-    Public Sub addPage(ParamArray pageList As Control())
+    Public Sub addPage(update As Action(Of String), ParamArray pageList As Control())
+        Globals.SplashScreenUpdater = update
+
         For Each page As Control In pageList
+            Call update("Load [" & page.Text & "]")
+
             Controls.Add(page)
             pages.Add(page)
             page.Dock = DockStyle.Fill

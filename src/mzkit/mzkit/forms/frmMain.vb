@@ -213,9 +213,6 @@ Public Class frmMain
         _uiCollectionChangedEvent = New UICollectionChangedEvent()
 
         MyApplication.RegisterHost(Me)
-
-        InitSpinner()
-        InitializeFormulaProfile()
     End Sub
 
     Private Sub resetLayout()
@@ -444,22 +441,44 @@ Public Class frmMain
     End Sub
 
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Dim splashScreen As frmSplashScreen = MyApplication.GetSplashScreen
+
+        If splashScreen Is Nothing Then
+            MessageBox.Show("The program is corrupt, please re-install and then run again...", "Program File Damaged!", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            App.Exit()
+        End If
+
+        splashScreen.UpdateInformation("Initialize of the ribbon UI...")
+
+        InitSpinner()
+        InitializeFormulaProfile()
+
+        splashScreen.UpdateInformation("Initialize of the VisualStudio UI...")
+
         ' 20200829 因为有一组控件需要放置在这里
         ' 所以这个基础的panel需要首先进行初始化
         Call initializeVSPanel()
 
+        splashScreen.UpdateInformation("Load recent items...")
+
         InitRecentItems()
         ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
 
-        panelMain.addPage(mzkitTool, mzkitSearch, mzkitCalculator, mzkitMNtools)
+        splashScreen.UpdateInformation("Create mzkit toolkit pages...")
+
+        panelMain.addPage(AddressOf splashScreen.UpdateInformation, mzkitTool, mzkitSearch, mzkitCalculator, mzkitMNtools)
         ShowPage(mzkitTool)
 
         mzkitTool.Ribbon_Load(Ribbon1)
+
+        splashScreen.UpdateInformation("Load configurations...")
 
         If (Not Globals.Settings.ui Is Nothing) AndAlso
             (Not (Globals.Settings.ui.width = 0 OrElse Globals.Settings.ui.height = 0)) AndAlso
             Globals.Settings.ui.window <> FormWindowState.Minimized AndAlso
             Globals.Settings.ui.rememberWindowsLocation Then
+
+            splashScreen.UpdateInformation("Apply UI layout...")
 
             Me.Location = Globals.Settings.ui.getLocation
             Me.Size = Globals.Settings.ui.getSize
@@ -468,12 +487,18 @@ Public Class frmMain
             ' Call Globals.Settings.ui.setColors(Ribbon1)
         End If
 
+        splashScreen.UpdateInformation("Fetch news from bionovogene...")
+
         MyApplication.host.startPage.Show(MyApplication.host.dockPanel)
+
+        splashScreen.UpdateInformation("Initialize of the R# automation scripting engine...")
+
         MyApplication.InitializeREngine()
 
         Timer1.Enabled = True
         Timer1.Start()
 
+        splashScreen.UpdateInformation("Ready!")
         showStatusMessage("Ready!")
     End Sub
 
