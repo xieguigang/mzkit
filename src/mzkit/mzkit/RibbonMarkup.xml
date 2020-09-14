@@ -211,8 +211,9 @@
 		<Command Name="cmdButtonBioDeep"
 					 Id="1022"
 					 LabelTitle="BioDeep"
-					 LabelDescription="Show Information about BioNovoGene M/z toolkit"
-					TooltipTitle="Show Application About">
+					 LabelDescription="Visit the BioNovoGene BioDeep data analysis platform"
+					 TooltipTitle="BioDeep Cloud"
+					TooltipDescription="Visit the BioNovoGene BioDeep data analysis platform">
 			<Command.LargeImages>
 				<Image>Res/BioDeep.png</Image>
 			</Command.LargeImages>
