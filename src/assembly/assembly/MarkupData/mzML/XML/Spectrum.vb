@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::489bcd437774f2d06ef009950691442a, src\assembly\assembly\MarkupData\mzML\XML\Spectrum.vb"
+﻿#Region "Microsoft.VisualBasic::001c0802ed28c6b6a2967fb20b2341d2, src\assembly\assembly\MarkupData\mzML\XML\Spectrum.vb"
 
     ' Author:
     ' 
@@ -74,6 +74,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Language
@@ -188,7 +189,8 @@ Namespace MarkupData.mzML
         Public Function ScanData(Optional basename$ = Nothing,
                                  Optional centroid As Boolean = False,
                                  Optional raw As Boolean = False,
-                                 Optional centroidTolerance As Tolerance = Nothing) As PeakMs2
+                                 Optional centroidTolerance As Tolerance = Nothing,
+                                 Optional intocutoff As LowAbundanceTrimming = Nothing) As PeakMs2
 
             Dim ms2 As ms2() = GetRawMatrix()
             Dim mzInto As New LibraryMatrix With {
@@ -210,7 +212,7 @@ Namespace MarkupData.mzML
                         centroidTolerance = Tolerance.DeltaMass(0.1)
                     End If
 
-                    mzInto = mzInto.CentroidMode(centroidTolerance, 0.001)
+                    mzInto = mzInto.CentroidMode(centroidTolerance, intocutoff Or LowAbundanceTrimming.Default)
                 End If
 
                 activationMethod = precursorList.precursor(Scan0).GetActivationMethod()

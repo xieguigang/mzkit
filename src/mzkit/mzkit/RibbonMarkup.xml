@@ -36,10 +36,10 @@
 				 TooltipTitle="Save (Ctrl+S)"
 				 TooltipDescription="Save the current Script File or Application Configuration.">
 			<Command.LargeImages>
-				<Image>Res/media-flash.png</Image>
+				<Image>Res/document-save.png</Image>
 			</Command.LargeImages>
 			<Command.SmallImages>
-				<Image>Res/media-flash.png</Image>
+				<Image>Res/document-save.png</Image>
 			</Command.SmallImages>
 		</Command>
 
@@ -172,6 +172,25 @@
 
 
 
+		<Command Name="cmdButtonResetLayout"
+				 Id="1019"
+				 LabelTitle="Reset"
+				 LabelDescription="Reset Windows Layout"
+				 TooltipTitle="Reset"
+				 TooltipDescription="Reset All Windows Layout To Their Defaults.">
+			<Command.LargeImages>
+				<Image>Res/gnome-window-manager.png</Image>
+			</Command.LargeImages>
+			<Command.SmallImages>
+				<Image>Res/gnome-window-manager.png</Image>
+			</Command.SmallImages>
+		</Command>
+
+
+		<Command Name="cmdTabGroupWindowTools"
+			Id="1023"
+			LabelTitle="Application Windows Tools">
+		</Command>
 
 		<Command Name="cmdTabAbout"
 					 Id="1020"
@@ -225,31 +244,6 @@
 				 LabelTitle="Viewer Actions">
 		</Command>
 
-
-
-		<Command Name="cmdButtonDesign1"
-					Id="1040"
-					LabelTitle="Design 1">
-			<Command.LargeImages>
-				<Image>Res/DropA32.bmp</Image>
-			</Command.LargeImages>
-		</Command>
-
-		<Command Name="cmdButtonDesign2"
-				 Id="1041"
-				 LabelTitle="Design 2">
-			<Command.LargeImages>
-				<Image>Res/DropB32.bmp</Image>
-			</Command.LargeImages>
-		</Command>
-
-		<Command Name="cmdButtonDesign3"
-				 Id="1042"
-				 LabelTitle="Design 3">
-			<Command.LargeImages>
-				<Image>Res/DropC32.bmp</Image>
-			</Command.LargeImages>
-		</Command>
 
 		<Command Name="cmdButtonLayout1"
 				 Id="1043"
@@ -666,7 +660,7 @@
 		 TooltipTitle="BPC plot"
 		 TooltipDescription="Base Peak Chromatography Data Plot">
 			<Command.LargeImages>
-				<Image>Res/178151.png</Image>
+				<Image>Res/office_chart_area_256px_540041_easyicon.net.png</Image>
 			</Command.LargeImages>
 		</Command>
 
@@ -677,7 +671,7 @@
 		 TooltipTitle="TIC plot"
 		 TooltipDescription="Total ion Chromatography Data Plot">
 			<Command.LargeImages>
-				<Image>Res/178151.png</Image>
+				<Image>Res/office_chart_area_256px_540041_easyicon.net.png</Image>
 			</Command.LargeImages>
 		</Command>
 
@@ -688,7 +682,7 @@
 		 TooltipTitle="XIC plot"
 		 TooltipDescription="Selective Ion Chromatography Data Plot">
 			<Command.LargeImages>
-				<Image>Res/178151.png</Image>
+				<Image>Res/office_chart_area_256px_540041_easyicon.net.png</Image>
 			</Command.LargeImages>
 		</Command>
 
@@ -718,7 +712,7 @@
 		 TooltipTitle="Refresh Network"
 		 TooltipDescription="Refresh network table">
 			<Command.LargeImages>
-				<Image>Res/178151.png</Image>
+				<Image>Res/system-software-update.png</Image>
 			</Command.LargeImages>
 		</Command>
 
@@ -872,7 +866,7 @@
 						<ScalingPolicy>
 							<ScalingPolicy.IdealSizes>
 								<Scale Group="cmdGroupFileActions" Size="Large" />
-								<Scale Group="cmdGroupExit" Size="Large" />
+								<!-- <Scale Group="cmdGroupExit" Size="Large" /> -->
 							</ScalingPolicy.IdealSizes>
 							<Scale Group="cmdGroupFileActions" Size="Medium" />
 						</ScalingPolicy>
@@ -884,11 +878,16 @@
 						<Button CommandName="cmdButtonOpenRaw" />
 						<Button CommandName="cmdButtonSave" />
 					</Group>
-					<Group CommandName="cmdGroupExit" SizeDefinition="ThreeButtons">
+					<Group CommandName="cmdTabGroupWindowTools" SizeDefinition="FourButtons">
 						<Button CommandName="cmdButtonRsharp" />
 						<Button CommandName="cmdButtonShowStartPage" />
 						<Button CommandName="cmdButtonShowLogWindow" />
+				
+						<Button CommandName="cmdButtonResetLayout" />
+	
 					</Group>
+					
+					
 				</Tab>
 
 

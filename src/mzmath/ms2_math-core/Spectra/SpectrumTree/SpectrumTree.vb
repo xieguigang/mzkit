@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a40dc44ee09d1bdee850700f9f09002, src\mzmath\ms2_math-core\Spectra\SpectrumTree\SpectrumTree.vb"
+﻿#Region "Microsoft.VisualBasic::94615414c7b03675cf88d1cadf514e86, src\mzmath\ms2_math-core\Spectra\SpectrumTree\SpectrumTree.vb"
 
     ' Author:
     ' 
@@ -81,7 +81,7 @@ Namespace Spectra
         Dim Ms2Compares As Comparison(Of PeakMs2) = SSMCompares(Tolerance.PPM(20))
 
         ReadOnly mzWidth As Tolerance
-        ReadOnly intocutoff As Double
+        ReadOnly intocutoff As LowAbundanceTrimming
 
         Public ReadOnly Property allMs2Scans As New List(Of PeakMs2)
 
@@ -96,12 +96,12 @@ Namespace Spectra
         ''' <param name="showReport">Show progress report?</param>
         Sub New(Optional compares As Comparison(Of PeakMs2) = Nothing,
                 Optional mzwidth As Tolerance = Nothing,
-                Optional intocutoff As Double = 0.05,
+                Optional intocutoff As LowAbundanceTrimming = Nothing,
                 Optional showReport As Boolean = True)
 
             Me.showReport = showReport
             Me.mzWidth = mzwidth
-            Me.intocutoff = intocutoff
+            Me.intocutoff = intocutoff Or LowAbundanceTrimming.Default
 
             If Me.mzWidth Is Nothing Then
                 Me.mzWidth = Tolerance.DeltaMass(0.1)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66ceca9709033a9152046cf3f7bf9059, src\mzkit\mzkit\pages\PageMoleculeNetworking.vb"
+﻿#Region "Microsoft.VisualBasic::df8d384da7ee4636fea05ef9bf8afc3d, src\mzkit\mzkit\pages\PageMoleculeNetworking.vb"
 
 ' Author:
 ' 
@@ -36,8 +36,9 @@
 
 ' Class PageMoleculeNetworking
 ' 
-'     Sub: DataGridView1_CellContentClick, loadNetwork, PageMoleculeNetworking_Load, PageMoleculeNetworking_VisibleChanged, SaveImageToolStripMenuItem_Click
-'          saveNetwork
+'     Sub: DataGridView1_CellContentClick, loadNetwork, PageMoleculeNetworking_Load, PageMoleculeNetworking_VisibleChanged, RefreshNetwork
+'          RenderNetwork, SaveImageToolStripMenuItem_Click, saveNetwork, TreeListView1_Click, TreeListView1_DoubleClick
+'          TreeListView1_MouseMove
 ' 
 ' /********************************************************************************/
 
@@ -118,16 +119,26 @@ Public Class PageMoleculeNetworking
             v.data.color = colorSet(nodeClusters.IndexOf(v.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE)))
         Next
 
+        progress.Label2.Text = "Molecular networking"
+        progress.Label1.Text = "Refresh network"
+
         Dim task As New Thread(
             Sub()
                 Thread.Sleep(500)
-                progress.Invoke(Sub() progress.Label1.Text = "Run network layouts...")
+                progress.Invoke(Sub() progress.Label2.Text = "Run network layouts...")
+                graph = graph _
+                    .doRandomLayout _
+                    .doForceLayout(
+                        parameters:=Globals.Settings.network.layout,
+                        progressCallback:=Sub(msg)
+                                              progress.Invoke(Sub() progress.Label1.Text = msg)
+                                          End Sub)
 
-                Dim layouts = Planner.Plan(graph, Globals.Settings.network.layout.Iterations, Sub(msg) progress.Invoke(Sub() progress.Label1.Text = msg))
+                ' Dim layouts = Planner.Plan(graph, Globals.Settings.network.layout.Iterations, Sub(msg) progress.Invoke(Sub() progress.Label1.Text = msg))
 
-                For Each node In graph.vertex
-                    node.data.initialPostion = New FDGVector2(layouts(node))
-                Next
+                'For Each node In graph.vertex
+                '    node.data.initialPostion = New FDGVector2(layouts(node))
+                'Next
 
                 progress.Invoke(Sub() progress.Label1.Text = "do network render plot...")
 
@@ -235,6 +246,12 @@ Public Class PageMoleculeNetworking
             Next
         Next
 
+        If g.graphEdges.Count >= 8000 AndAlso MessageBox.Show("There are two many edges in your network, do you wan to increase the similarity threshold for reduce network size?", "To many edges", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+            MyApplication.host.ribbonItems.SpinnerSimilarity.DecimalValue = 0.98
+            Call RefreshNetwork()
+            Return
+        End If
+
         Call g.ComputeNodeDegrees
         Call g.ComputeBetweennessCentrality
 
@@ -270,10 +287,25 @@ Public Class PageMoleculeNetworking
             TreeListView1.Items.Add(row)
         Next
         For Each edge In g.graphEdges
-            DataGridView1.Rows.Add(edge.U.label, edge.V.label, edge.data!forward, edge.data!reverse, "View")
+            DataGridView1.Rows.Add(
+                edge.U.label,
+                edge.V.label,
+                stdNum.Min(Val(edge.data!forward), Val(edge.data!reverse)).ToString("F4"),
+                Val(edge.data!forward).ToString("F4"),
+                Val(edge.data!reverse).ToString("F4"),
+                "View Alignment"
+            )
+            Application.DoEvents()
         Next
 
-        ' PictureBox1.BackgroundImage = g.DrawImage(labelerIterations:=-1).AsGDIImage
+        DataGridView2.Rows.Clear()
+        DataGridView2.Rows.Add("nodes", g.vertex.Count)
+        DataGridView2.Rows.Add("edges", g.graphEdges.Count)
+        DataGridView2.Rows.Add("single nodes", g.vertex.Count - g.connectedNodes.Length)
+
+        For Each cluster In rawMatrix.GroupBy(Function(a) a.Cluster).OrderBy(Function(a) Val(a.Key))
+            DataGridView2.Rows.Add($"#Cluster_{cluster.Key}", cluster.Count)
+        Next
     End Sub
 
     Public Sub saveNetwork()
@@ -285,7 +317,7 @@ Public Class PageMoleculeNetworking
                 End If
             End Using
         Else
-            MessageBox.Show("No network graph object is found! Please goto raw file viewer page and select a raw file to run [Molecule Networking] analysis!", "No network graph object!", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            MessageBox.Show("No network graph Object Is found! Please GoTo raw file viewer page And Select a raw file To run [Molecule Networking] analysis!", "No network graph object!", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         End If
     End Sub
 
@@ -328,7 +360,7 @@ Public Class PageMoleculeNetworking
     End Sub
 
     Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellContentClick
-        If e.ColumnIndex = 4 AndAlso e.RowIndex > -1 Then
+        If e.ColumnIndex = 5 AndAlso e.RowIndex > -1 Then
             Dim row = DataGridView1.Rows(e.RowIndex)
             Dim a = CStr(row.Cells(0).Value)
             Dim b = CStr(row.Cells(1).Value)
@@ -353,20 +385,7 @@ Public Class PageMoleculeNetworking
 
     Private Sub PageMoleculeNetworking_Load(sender As Object, e As EventArgs) Handles Me.Load
         DataGridView1.CoolGrid
-        ' DataGridView2.CoolGrid
+        DataGridView2.CoolGrid
         tooltip.OwnerDraw = True
     End Sub
-
-    Private Sub TreeListView1_Click(sender As Object, e As EventArgs) Handles TreeListView1.Click
-
-    End Sub
-
-    Private Sub TreeListView1_DoubleClick(sender As Object, e As EventArgs) Handles TreeListView1.DoubleClick
-
-    End Sub
-
-    Private Sub TreeListView1_MouseMove(sender As Object, e As MouseEventArgs) Handles TreeListView1.MouseMove
-
-    End Sub
 End Class
-

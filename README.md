@@ -1,7 +1,12 @@
+<link rel="manifest" href="/manifest.json">
+
 # <span style="font-size: 3em;">Mzkit</span>
 
 ![](docs/manual/splash.PNG)
 
+Mzkit is an open source raw data file toolkit for mass spectrometry data analysis, provides by the ``BioNovoGene`` corporation. The features of mzkit inlcudes: raw data file content viewer(XIC/TIC/Mass spectrum plot), build molecule network, formula de-novo search and annotation.
+
+<div style="page-break-after:always;"></div>
 <div style="font-size: 3em;">--==== TOC ====--</div>
 
 <!-- vscode-markdown-toc -->
@@ -13,15 +18,30 @@
 		* 1.3.1. [XIC overlay](#XICoverlay)
 
 	* 1.4. [TIC plot](#TICplot)
-	* 1.5. [View Mass spectra](#ViewMassspectra)
-	* 1.6. [Save Plot and Export matrix](#SavePlotandExportmatrix)
+	* 1.5. [Raw Scatter](#RawScatter)
+	* 1.6. [View Mass spectra](#ViewMassspectra)
+	* 1.7. [Save Plot and Export matrix](#SavePlotandExportmatrix)
 
-		* 1.6.1. [Export XIC](#ExportXIC)
+		* 1.7.1. [Export XIC](#ExportXIC)
 
 * 2. [Data Annotations](#DataAnnotations)
 	* 2.1. [Formula search](#Formulasearch)
-	* 2.2. [Export Formula Search Result](#ExportFormulaSearchResult)
-* 3. [Credits](#Credits)
+
+		* 2.1.1. [Export Formula Search Result](#ExportFormulaSearchResult)
+
+	* 2.2. [Molecular Networking](#MolecularNetworking)
+
+		* 2.2.1. [step1 select ions](#step1selections)
+		* 2.2.2. [step2 build network](#step2buildnetwork)
+		* 2.2.3. [step3 view network data](#step3viewnetworkdata)
+		* 2.2.4. [step4 network visualization](#step4networkvisualization)
+		* 2.2.5. [Export Network Data](#ExportNetworkData)
+		* 2.2.6. [Save Network Visual](#SaveNetworkVisual)
+
+* 3. [Appendix](#Appendix)
+	* 3.1. [Switch Between Toolkit](#SwitchBetweenToolkit)
+	* 3.2. [Install Mzkit](#InstallMzkit)
+	* 3.3. [Uninstall Mzkit](#UninstallMzkit)
 
 <!-- vscode-markdown-toc-config
 	numbering=true
@@ -29,11 +49,16 @@
 	/vscode-markdown-toc-config -->
 <!-- /vscode-markdown-toc -->
 
-Mzkit is an open source raw data file toolkit for mass spectrometry data analysis, provides by the ``BioNovoGene`` corporation. The features of mzkit inlcudes: raw data file content viewer(XIC/TIC/Mass spectrum plot), build molecule network, formula de-novo search and annotation.
+<hr />
+
+**Credits**
+
+> This open source mass spectrometry data toolkit is developed at the [BioDeep](http://www.biodeep.cn/) R&D laboratory and brought to you by ``BioNovoGene`` corporation.
+
+![](docs/BioNovoGene.png)
 
 <div style="page-break-after:always;"></div>
-
-**Product Screenshots**
+<div style="font-size: 2em;">Product Screenshots</div>
 
 ![](docs/manual/main.png)
 ![](docs/manual/BPC_overlay.PNG)
@@ -53,6 +78,8 @@ Then you should see the files that you've imports into mzkit on the ``File Explo
 
 ![](docs/manual/file-explorer.png)
 
+<div style="page-break-after:always;"></div>
+
 ###  1.2. <a name='SearchFeature'></a>Search Feature
 
 the search bar on the top of the file tree is the ``m/z`` search input: you can input a specific ``m/z`` value or ``formula`` expression in the search bar for search the matched features in your raw data file. This operation is usually apply for the ``XIC`` data search.
@@ -69,6 +96,8 @@ Expends the file content tree in the ``File Explorer``, and then mouse right cli
 ![](docs/manual/ion-XIC.png)
 > The XIC plot is a kind of time-signal chromatography plot of a specific m/z ion.
 
+<div style="page-break-after:always;"></div>
+
 ####  1.3.1. <a name='XICoverlay'></a>XIC overlay
 
 you can click on the checkbox besides the Ms2 feature for select different ion feature for create the XIC overlay plot:
@@ -82,13 +111,21 @@ as the same as create a XIC plot, you also can create TIC plot for a single file
 ![](docs/manual/TIC.png)
 > The TIC plot is similar to the XIC plot, data is generated from all ions.
 
-###  1.5. <a name='ViewMassspectra'></a>View Mass spectra
+<div style="page-break-after:always;"></div>
+
+###  1.5. <a name='RawScatter'></a>Raw Scatter
+
+just click on the node of the raw file, then you will open the raw scatter plot of your specific raw data file, example as:
+
+![](docs/manual/raw-scatter.PNG)
+
+###  1.6. <a name='ViewMassspectra'></a>View Mass spectra
 
 For view the mass spectra data in your file, just click on one of the scan feature in your raw data file:
 
 ![](docs/manual/ms2-plot.png)
 
-###  1.6. <a name='SavePlotandExportmatrix'></a>Save Plot and Export matrix
+###  1.7. <a name='SavePlotandExportmatrix'></a>Save Plot and Export matrix
 
 The mzkit application provides the function for save the plot image and the plot data in your raw data file. for example, select the ``Data Viewer`` tab page in mzkit, you will see two viewer action buttons in the menu:
 
@@ -97,7 +134,7 @@ The mzkit application provides the function for save the plot image and the plot
 
 ![](docs/manual/export-plot-matrix.png)
 
-####  1.6.1. <a name='ExportXIC'></a>Export XIC
+####  1.7.1. <a name='ExportXIC'></a>Export XIC
 
 Export the XIC data to a specific file is also keeps simple, just mouse right click on the file content tree and then choose ``Export XIC Ions``.
 
@@ -123,17 +160,122 @@ You also can search of the formula by input any ``m/z`` value in the input box o
 
 ![](docs/manual/export-formula-list.png)
 
-###  2.2. <a name='ExportFormulaSearchResult'></a>Export Formula Search Result
+####  2.1.1. <a name='ExportFormulaSearchResult'></a>Export Formula Search Result
 
 Export the formula search result just like other data that we've introduced before, just click on the ``Formula Result`` tab page and then click on the Export button. this command will let you save the formula search result into a specific Excel table file. 
 
 <div style="page-break-after:always;"></div>
 
-##  3. <a name='Credits'></a>Credits
+###  2.2. <a name='MolecularNetworking'></a>Molecular Networking
 
-This open source mass spectrometry data toolkit is developed at the BioDeep R&D laboratory and provided to you by BioNovoGene corporation.
+The molecular networking in mass spectrum data is a kind of spectrum similarity network. You can build a molecule network use mzkit in a very easy way:
 
-![](docs/BioNovoGene.png)
+####  2.2.1. <a name='step1selections'></a>step1 select ions
+
+For create a spectrum similarity network, it required some ms2 ions data provides to mzkit for run spectrum matrix alignment and evaluate the simialrity scores between these spectrum matrix data. select the ions data just like plot XIC operation it does in mzkit: check on the ms2 feature in the ``file explorer`` dock panel.
+
+####  2.2.2. <a name='step2buildnetwork'></a>step2 build network
+
+Once we have the mass spectrum data selected, then we could run the matrix similarity between these matrix for build a network. now we mouse right click of the file tree in the ``file explorer``, and then choose the ``Molecular Networking`` menu item:
+
+![](docs/manual/molecular_networking.png)
+
+####  2.2.3. <a name='step3viewnetworkdata'></a>step3 view network data
+
+once the networking progress have been done, then we could view the network result data in the ``Molecular Networking`` tool page. there are three tables in the tool page for show your network data: ``Network``, ``Compounds`` and ``Network Statistics``.
+
+![](docs/manual/network_viewer_tabs.PNG)
+
++ 1. the ``Network`` tab page contains the edges data in your network, which is the spectrum cluster simialrity result. all of the spectrum alignment its simialrity value is less than the ``Spectrum Similarity`` threshold value that will be removes from the network.
+
+![](docs/manual/network_edges_viewer.PNG)
+
+there are columns in the edge table: ``CompoundA`` and ``CompoundB`` is the spectrum reference id in this edge connected. and the ``simialrity``, ``forward`` and ``reverse`` column is the simialrity score value of the two spectrum matrix and the last ``View`` column contains the button that let you view the spectrum matrix alignment result visual plot.
+
++ 2. the ``Compounds`` tab page contains the spectrum cluster (**network nodes**) information in your network.
+
+![](docs/manual/network_nodes_viewer.PNG)
+
+####  2.2.4. <a name='step4networkvisualization'></a>step4 network visualization
+
+The mzkit program provides a small build-in network visualization engine that could let you visual the resulted molecular network with just a simple mouse click. As you can see in the previous screenshot, there is a ``Render Network`` command button on the top menu when the ``Network`` tab is actived. No we just click on it, and wait for the network layout calculation progress complete, and then we will see a new tag page which is named ``Molecular Networking Viewer`` will be shown in the document area of the mzkit program.
+
+####  2.2.5. <a name='ExportNetworkData'></a>Export Network Data
+
+There is not too much style tweaking in the mzkit build-in network visualizer, so that you may be want to export the network data into table and then visualize it in other network visualization software like the famous ``Cytoscape``.
+
+Just click on the ``Export`` command button beside the ``Render Network`` button in the ``Network`` menu tab, then a dialog of save network data will be trigger and opened. Select a location in the dialog and then you can save the network table data into a given location for visualization in other software.
+
+![](docs/manual/export-network.PNG)
+
+<div style="page-break-after:always;"></div>
+
+####  2.2.6. <a name='SaveNetworkVisual'></a>Save Network Visual
+
+![](docs/manual/network_viewer.PNG)
+
+For export the network image, just mouse right click on the viewer panel, then you could see a popout menu ``Save Image`` that could use for viewer image saved.
+
+![](docs/manual/save_network.PNG)
+
+You also can save the network image via ``Save`` command in the ``Main`` menu tab page when the molecular networking viewer is current active document page in mzkit program.
+
+![](docs/manual/save_network2.PNG)
+
+Now you can use the saved network image for your publications:
+
+![](docs/manual/network_visualze.png)
+
+<div style="page-break-after:always;"></div>
+
+##  3. <a name='Appendix'></a>Appendix
+
+###  3.1. <a name='SwitchBetweenToolkit'></a>Switch Between Toolkit
+
+You can switch between toolkit pages via the start menu of mzkit:
+
+![](docs/manual/switch_toolkit2.PNG)
+> click ``[File]`` -> ``[Mzkit Data Toolkits]``, and then click on one toolkit item then you can switch to the required toolkit page.
+
+or just select a page from the app switcher toolstrip menu:
+
+![](docs/manual/switch_toolkit1.PNG)
+
+<div style="page-break-after:always;"></div>
+
+###  3.2. <a name='InstallMzkit'></a>Install Mzkit
+
+![](docs/manual/setup.PNG)
+
+When you have extract the zip package of the mzkit compression package, then you could found a ``setup.exe`` install application in the top of folder. Click on this setup application, then your will going to install mzkit program into your computer system.
+
+![](docs/manual/installer_warning.PNG)
+
+When you have launch the mzkit installer, then you will see a security warning dialog from your windows system, just click on the ``Install`` for start the install progress, and then just needs to wait for the installer finish the progress of copy the mzkit application files.
+
+![](docs/manual/install_mzkit.png)
+
+<div style="page-break-after:always;"></div>
+
+###  3.3. <a name='UninstallMzkit'></a>Uninstall Mzkit
+
+if you want to removes mzkit from your computer system, then you could follow this instruction for uninstall:
+
+1. Open the control panel of your windows system, and then click of the link ``Uninstall a program``
+
+![](docs/manual/control_panel.PNG)
+
+2. Then you will see a list of program that installed on your windows, located the mzkit application
+
+![](docs/manual/app_list.PNG)
+
+3. Then right click on the mzkit, select ``uninstall``, then you can removes mzkit from your windows system
+
+![](docs/manual/uninstall_right_click.png)
+
+Just click ``OK`` on the dialog:
+
+![](docs/manual/uninstaller.PNG)
 
 <style type="text/css">
 	#content-wrapper {
@@ -142,5 +284,7 @@ This open source mass spectrometry data toolkit is developed at the BioDeep R&D 
 </style>
 
 <script type="text/javascript">
-	document.getElementById("sidebar").style.display = "none";
+	document.ready = function() {
+		document.getElementById("sidebar").style.display = "none";
+	}
 </script>

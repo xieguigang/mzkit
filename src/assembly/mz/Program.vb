@@ -265,7 +265,7 @@ Imports stdNum = System.Math
     Public Function CentroidPeaksData(args As CommandLine) As Integer
         Dim in$ = args <= "/mgf"
         Dim ms2Tolerance As Tolerance = Tolerance.ParseScript(args("/ms2.tolerance") Or "da:0.1")
-        Dim intoCutoff# = args("/into.cutoff") Or 0.05
+        Dim intoCutoff As New RelativeIntensityCutoff(args("/into.cutoff") Or 0.05)
         Dim out$ = args("/out") Or $"{[in].TrimSuffix}.centroid.mgf"
         Dim centroidIons = MgfReader.StreamParser([in]) _
             .Select(Function(p)

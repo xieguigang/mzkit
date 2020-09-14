@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b626490c3ce01a6afd2dd25d355fc4e, src\mzkit\mzkit\settings\Settings.vb"
+﻿#Region "Microsoft.VisualBasic::a5af5dbc5055cbfd84acae02c705bdfc, src\mzkit\mzkit\settings\Settings.vb"
 
     ' Author:
     ' 
@@ -36,14 +36,30 @@
 
     ' Class Settings
     ' 
-    '     Properties: configFile, formula_search, precursor_search, ui
+    '     Properties: configFile, formula_search, network, precursor_search, recentFiles
+    '                 ui, viewer
     ' 
     '     Function: DefaultProfile, GetConfiguration, Save
+    ' 
+    ' Class RawFileViewerSettings
+    ' 
+    '     Properties: colorSet, intoCutoff, method, quantile, XIC_ppm
+    ' 
+    '     Function: GetMethod
+    ' 
+    ' Enum TrimmingMethods
+    ' 
+    '     Quantile, RelativeIntensity
+    ' 
+    '  
+    ' 
+    ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Class Settings
@@ -86,5 +102,22 @@ Public Class RawFileViewerSettings
     Public Property XIC_ppm As Double = 20
     Public Property colorSet As String()
 
+    Public Property method As TrimmingMethods = TrimmingMethods.RelativeIntensity
+    Public Property intoCutoff As Double = 0.05
+    Public Property quantile As Double = 0.65
+    Public Property fill As Boolean
+
+    Public Function GetMethod() As LowAbundanceTrimming
+        If method = TrimmingMethods.RelativeIntensity Then
+            Return New RelativeIntensityCutoff(intoCutoff)
+        Else
+            Return New QuantileIntensityCutoff(quantile)
+        End If
+    End Function
 
 End Class
+
+Public Enum TrimmingMethods
+    RelativeIntensity
+    Quantile
+End Enum

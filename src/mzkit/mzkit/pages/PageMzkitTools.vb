@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b7f8ba228d88b57a3609f576041ef180, src\mzkit\mzkit\pages\PageMzkitTools.vb"
+﻿#Region "Microsoft.VisualBasic::3d0967576022f3ee815431efa3e70337, src\mzkit\mzkit\pages\PageMzkitTools.vb"
 
 ' Author:
 ' 
@@ -36,16 +36,17 @@
 
 ' Class PageMzkitTools
 ' 
-'     Function: getXICMatrix
+'     Function: getRawCache, getSelectedIonSpectrums, GetXICCollection, getXICMatrix, missingCacheFile
+'               rawTIC, relativeInto
 ' 
-'     Sub: AddToolStripMenuItem_Click, applyLevelFilter, Button1_Click, ClearToolStripMenuItem_Click, CustomToolStripMenuItem_Click
-'          DataGridView1_CellContentClick, DefaultToolStripMenuItem_Click, DeleteFileToolStripMenuItem_Click, ExportExactMassSearchTable, ExportToolStripMenuItem_Click
-'          GeneralFlavoneToolStripMenuItem_Click, ImportsRaw, InitializeFileTree, ListBox1_SelectedIndexChanged, missingCacheFile
-'          MolecularNetworkingToolStripMenuItem_Click, MS1ToolStripMenuItem_Click, MS2ToolStripMenuItem_Click, NatureProductToolStripMenuItem_Click, PageMzkitTools_Load
-'          PictureBox1_Click, PictureBox1_DoubleClick, runMzSearch, SaveFileCache, SaveImageToolStripMenuItem_Click
-'          SaveMatrixToolStripMenuItem_Click, SearchFormulaToolStripMenuItem_Click, searchInFileByMz, SearchInFileToolStripMenuItem_Click, setCurrentFile
-'          (+3 Overloads) showMatrix, showSpectrum, showStatusMessage, ShowTICToolStripMenuItem_Click, ShowXICToolStripMenuItem_Click
-'          SmallMoleculeToolStripMenuItem_Click, TreeView1_AfterSelect
+'     Sub: applyLevelFilter, ClearToolStripMenuItem_Click, CustomTabControl1_TabClosing, CustomToolStripMenuItem_Click, DataGridView1_CellContentClick
+'          DefaultToolStripMenuItem_Click, ExportExactMassSearchTable, ExportToolStripMenuItem_Click, GeneralFlavoneToolStripMenuItem_Click, ImportsRaw
+'          InitializeFileTree, ListBox1_SelectedIndexChanged, MolecularNetworkingToolStripMenuItem_Click, MS1ToolStripMenuItem_Click, MS2ToolStripMenuItem_Click
+'          NatureProductToolStripMenuItem_Click, PageMzkitTools_Load, PictureBox1_Click, PictureBox1_DoubleClick, PictureBox1_MouseClick
+'          Ribbon_Load, runMzSearch, SaveFileCache, SaveImageToolStripMenuItem_Click, SaveMatrixToolStripMenuItem_Click
+'          SearchByMz, SearchFormulaToolStripMenuItem_Click, searchInFileByMz, SearchInFileToolStripMenuItem_Click, setCurrentFile
+'          (+3 Overloads) showMatrix, ShowPropertyWindow, showSpectrum, ShowTabPage, ShowTICToolStripMenuItem_Click
+'          ShowXICToolStripMenuItem_Click, SmallMoleculeToolStripMenuItem_Click, TIC, TreeView1_AfterSelect
 ' 
 ' /********************************************************************************/
 
@@ -65,6 +66,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.IO.netCDF
+Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
@@ -84,7 +86,6 @@ Public Class PageMzkitTools
     Dim matrix As [Variant](Of ms2(), ChromatogramTick(), SSM2MatrixFragment())
     Dim matrixName As String
     Dim TreeView1 As TreeView
-    Dim ListBox1 As ListBox
 
     Friend _ribbonExportDataContextMenuStrip As ExportData
 
@@ -104,7 +105,7 @@ Public Class PageMzkitTools
     End Sub
 
     Private Function missingCacheFile(raw As Raw) As DialogResult
-        Dim options As DialogResult = MessageBox.Show($"The specific raw data cache is missing, run imports again?{vbCrLf}{raw.cache.GetFullPath}", $"[{raw.source.FileName}] Cache Not Found!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning)
+        Dim options As DialogResult = MessageBox.Show($"The specific raw data cache is missing, run imports again?{vbCrLf}{raw.source.GetFullPath}", $"[{raw.source.FileName}] Cache Not Found!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning)
 
         If options = DialogResult.OK Then
             Dim newRaw = getRawCache(raw.source)
@@ -155,46 +156,49 @@ Public Class PageMzkitTools
 
     Private Sub TreeView1_AfterSelect(sender As Object, e As TreeViewEventArgs)
         If TypeOf e.Node.Tag Is Task.Raw Then
+            'Dim TIC = rawTIC(e.Node.Tag, False)
 
-            Dim TIC = rawTIC(e.Node.Tag, False)
+            '' 原始文件节点
+            '' 只显示当前文件的TIC图
+            'showMatrix(TIC.value, TIC.name)
 
-            ' 原始文件节点
-            ' 只显示当前文件的TIC图
-            showMatrix(TIC.value, TIC.name)
+            'PictureBox1.BackgroundImage = ChromatogramPlot.TICplot(
+            '    ionData:=TIC,
+            '    colorsSchema:=Globals.GetColors,
+            '    fillCurve:=Globals.Settings.viewer.fill
+            ').AsGDIImage
 
-            PictureBox1.BackgroundImage = ChromatogramPlot.TICplot(TIC, colorsSchema:=Globals.GetColors).AsGDIImage
+            Dim raw As Raw = DirectCast(e.Node.Tag, Raw)
+
+            If Not raw.cacheFileExists Then
+                MessageBox.Show("Sorry, can not view file data, the cache file is missing...", "Cache Missing", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Return
+            End If
+
+            Dim spinner As New frmProgressSpinner
+            Dim task As New Thread(
+                Sub()
+                    Dim ms1 As New List(Of ms1_scan)
+
+                    Using cache As New netCDFReader(raw.ms1_cache)
+                        For Each scan In raw.scans.Where(Function(a) a.mz = 0.0)
+                            Dim data As CDFData = cache.getDataVariable(cache.getDataVariableEntry(scan.id))
+                            Dim rawData As ms2() = data.numerics.AsMs2.ToArray
+
+                            ms1.AddRange(rawData.Centroid(Tolerance.DeltaMass(0.3), New RelativeIntensityCutoff(0.01)).Select(Function(a) New ms1_scan With {.intensity = a.intensity, .mz = a.mz, .scan_time = scan.rt}))
+                            Application.DoEvents()
+                        Next
+                    End Using
+
+                    Me.Invoke(Sub() PictureBox1.BackgroundImage = MzrtPlot.Plot(ms1, margin:="padding:200px 600px 200px 200px;", rawfile:=raw.source.FileName).AsGDIImage)
+                    spinner.Invoke(Sub() Call spinner.Close())
+                End Sub)
+
+            Call task.Start()
+            Call spinner.ShowDialog()
 
             MyApplication.host.ShowPage(Me)
-
             MyApplication.host.Invoke(Sub() RibbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.NotAvailable)
-
-        ElseIf TypeOf e.Node.Tag Is ms2() Then
-            ' TIC 图绘制
-            Dim raw = DirectCast(e.Node.Tag, ms2())
-            Dim selects = TreeView1.CurrentRawFile.raw
-            Dim TIC As New NamedCollection(Of ChromatogramTick) With {
-                .name = $"m/z {raw.Select(Function(m) m.mz).Min.ToString("F3")} - {raw.Select(Function(m) m.mz).Max.ToString("F3")}",
-                .value = raw _
-                    .Select(Function(a)
-                                Return New ChromatogramTick With {
-                                    .Time = Val(a.Annotation),
-                                    .Intensity = a.intensity
-                                }
-                            End Function) _
-                    .ToArray
-            }
-            Dim maxY As Double = selects.scans.Select(Function(a) a.TIC).Max
-
-            TIC.value = {
-                New ChromatogramTick With {.Time = selects.rtmin},
-                New ChromatogramTick With {.Time = selects.rtmax}
-            }.JoinIterates(TIC.value) _
-             .OrderBy(Function(c) c.Time) _
-             .ToArray
-            showMatrix(TIC.value, TIC.name)
-            PictureBox1.BackgroundImage = TIC.TICplot(intensityMax:=maxY, colorsSchema:=Globals.GetColors).AsGDIImage
-
-            MyApplication.host.ShowPage(Me)
         Else
             ' scan节点
             Dim raw As Task.Raw = e.Node.Parent.Tag
@@ -211,11 +215,9 @@ Public Class PageMzkitTools
         Dim host = MyApplication.host
         RibbonItems = host.ribbonItems
         TreeView1 = host.TreeView1
-        ListBox1 = host.searchList.ListBox1
 
         Call InitializeFileTree()
 
-        AddHandler ListBox1.SelectedIndexChanged, AddressOf ListBox1_SelectedIndexChanged
         AddHandler TreeView1.AfterSelect, AddressOf TreeView1_AfterSelect
         AddHandler host.fileExplorer.Button1.Click, Sub(obj, evt) Call SearchByMz(host.fileExplorer.TextBox2.Text)
 
@@ -249,10 +251,10 @@ Public Class PageMzkitTools
         End If
     End Sub
 
-    Private Sub showSpectrum(scanId As String, raw As Raw)
-        If raw.cache.FileExists Then
+    Friend Sub showSpectrum(scanId As String, raw As Raw)
+        If raw.cacheFileExists Then
             Dim prop As SpectrumProperty = Nothing
-            Dim scanData As LibraryMatrix = raw.GetSpectrum(scanId, prop)
+            Dim scanData As LibraryMatrix = raw.GetSpectrum(scanId, Globals.Settings.viewer.GetMethod, prop)
 
             showMatrix(scanData.ms2, scanId)
 
@@ -299,13 +301,13 @@ Public Class PageMzkitTools
             If selectedFile <> MyApplication.host.ToolStripStatusLabel1.Text Then
                 selectedFile = $"{ .source.FileName} [{ .numOfScans} scans]"
                 MyApplication.host.showStatusMessage(selectedFile)
-                ListBox1.Items.Clear()
+                MyApplication.host.searchList.ListBox1.Items.Clear()
             End If
 
             MyApplication.host.Text = $"BioNovoGene Mzkit [{ .source.GetFullPath}]"
         End With
 
-        If Not TreeView1.CurrentRawFile.raw.cache.FileExists Then
+        If Not TreeView1.CurrentRawFile.raw.cacheFileExists Then
             TreeView1.SelectedNode.ImageIndex = 1
             TreeView1.SelectedNode.SelectedImageIndex = 1
         End If
@@ -336,6 +338,20 @@ Public Class PageMzkitTools
         TIC(isBPC:=False)
     End Sub
 
+    Public Sub TIC(raw As Raw)
+        Dim TICList As NamedCollection(Of ChromatogramTick) = rawTIC(raw, isBPC:=False)
+
+        showMatrix(TICList.value, TICList.name)
+
+        PictureBox1.BackgroundImage = ChromatogramPlot.TICplot(
+            ionData:={TICList},
+            colorsSchema:=Globals.GetColors,
+            fillCurve:=Globals.Settings.viewer.fill
+        ).AsGDIImage
+
+        MyApplication.host.ShowPage(Me)
+    End Sub
+
     Public Sub TIC(isBPC As Boolean)
         Dim rawList As New List(Of Raw)
 
@@ -348,7 +364,7 @@ Public Class PageMzkitTools
 
             Dim raw As Raw = TreeView1.Nodes(i).Tag
 
-            If Not raw.cache.FileExists Then
+            If Not raw.cacheFileExists Then
                 Call missingCacheFile(raw)
             End If
 
@@ -374,7 +390,11 @@ Public Class PageMzkitTools
 
         showMatrix(TICList(Scan0).value, TICList(Scan0).name)
 
-        PictureBox1.BackgroundImage = ChromatogramPlot.TICplot(TICList.ToArray, colorsSchema:=Globals.GetColors).AsGDIImage
+        PictureBox1.BackgroundImage = ChromatogramPlot.TICplot(
+            ionData:=TICList.ToArray,
+            colorsSchema:=Globals.GetColors,
+            fillCurve:=Globals.Settings.viewer.fill
+        ).AsGDIImage
 
         MyApplication.host.ShowPage(Me)
 
@@ -588,36 +608,8 @@ Public Class PageMzkitTools
     Private Sub searchInFileByMz(mz As Double)
         Dim ppm As Double = Val(RibbonItems.PPMSpinner.DecimalValue)
         Dim raw = TreeView1.CurrentRawFile.raw
-        Dim ms2Hits = raw.scans.Where(Function(m) PPMmethod.PPM(m.mz, mz) <= ppm).ToArray
 
-        ListBox1.Items.Clear()
-
-        For Each hit As ScanEntry In ms2Hits
-            ListBox1.Items.Add(hit)
-        Next
-
-        If ms2Hits.Length = 0 Then
-            MyApplication.host.searchList.Label2.Text = "no hits!"
-            MessageBox.Show($"Sorry, no hits was found for m/z={mz} with tolerance {ppm}ppm...", "No hits found!", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        Else
-            MyApplication.host.searchList.Label2.Text = $"{ms2Hits.Length} ms2 hits for m/z={mz} with tolerance {ppm}ppm"
-        End If
-
-        Dim dockLeft As Boolean = MyApplication.host.searchList.DockState = DockState.Hidden OrElse MyApplication.host.searchList.DockState = DockState.Unknown
-
-        MyApplication.host.searchList.Show(MyApplication.host.dockPanel)
-        MyApplication.host.searchList.Activate()
-
-        If dockLeft Then
-            MyApplication.host.searchList.DockState = DockState.DockLeft
-        End If
-    End Sub
-
-    Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As EventArgs)
-        Dim scanId As ScanEntry = ListBox1.SelectedItem
-        Dim raw = TreeView1.CurrentRawFile.raw
-
-        Call showSpectrum(scanId.id, raw)
+        Call MyApplication.host.searchList.searchInFileByMz(mz, ppm, raw)
     End Sub
 
     Private Sub SearchInFileToolStripMenuItem_Click(sender As Object, e As EventArgs)
@@ -654,7 +646,7 @@ Public Class PageMzkitTools
         Dim current = TreeView1.CurrentRawFile
         Dim node = TreeView1.SelectedNode
 
-        If Not node Is Nothing AndAlso current.raw.cache.FileExists Then
+        If Not node Is Nothing AndAlso current.raw.cacheFileExists Then
             Dim mz = current.raw.scans.Where(Function(scan) scan.id = node.Text).FirstOrDefault
 
             If Not mz Is Nothing AndAlso mz.mz > 0 Then
@@ -667,7 +659,7 @@ Public Class PageMzkitTools
         Dim current = TreeView1.CurrentRawFile
         Dim node = TreeView1.SelectedNode
 
-        If Not node Is Nothing AndAlso current.raw.cache.FileExists Then
+        If Not node Is Nothing AndAlso current.raw.cacheFileExists Then
             Dim mz = current.raw.scans.Where(Function(scan) scan.id = node.Text).FirstOrDefault
 
             If Not mz Is Nothing AndAlso mz.mz > 0 Then
@@ -692,6 +684,10 @@ Public Class PageMzkitTools
         ' Dim raw As Raw = TreeView1.CurrentRawFile.raw
         Dim similarityCutoff As Double = MyApplication.host.ribbonItems.SpinnerSimilarity.DecimalValue
         Dim progress As New frmTaskProgress
+
+        progress.Label2.Text = "Run molecular networking"
+        progress.Label1.Text = "Initialized..."
+
         Dim runTask As New Thread(
             Sub()
 
@@ -710,7 +706,13 @@ Public Class PageMzkitTools
                     Return
                 End If
 
-                Dim protocol As New Protocols(Tolerance.PPM(15), Tolerance.DeltaMass(0.3), 0.85, 0.7, 0.05)
+                Dim protocol As New Protocols(
+                    ms1_tolerance:=Tolerance.PPM(15),
+                    ms2_tolerance:=Tolerance.DeltaMass(0.3),
+                    treeIdentical:=Globals.Settings.network.treeNodeIdentical,
+                    treeSimilar:=Globals.Settings.network.treeNodeSimilar,
+                    intoCutoff:=Globals.Settings.viewer.GetMethod
+                )
                 Dim progressMsg As Action(Of String) =
                     Sub(msg)
                         progress.Invoke(Sub() progress.Label2.Text = msg)
@@ -765,7 +767,7 @@ Public Class PageMzkitTools
 
                 progress.Invoke(Sub() progress.Label1.Text = "run family clustering....")
 
-                Dim clusters = net.ToKMeansModels.Kmeans(expected:=10, debug:=False)
+                Dim clusters = net.ToKMeansModels.Kmeans(expected:=9, debug:=False)
                 Dim rawLinks = links.ToDictionary(Function(a) a.Name, Function(a) a.Value)
 
                 progress.Invoke(Sub() progress.Label1.Text = "initialize result output...")
@@ -855,7 +857,7 @@ Public Class PageMzkitTools
         Next
     End Sub
 
-    Sub showMatrix(matrix As ChromatogramTick(), name As String)
+    Public Sub showMatrix(matrix As ChromatogramTick(), name As String)
         Me.matrix = matrix
         matrixName = name
 
@@ -871,18 +873,38 @@ Public Class PageMzkitTools
     End Sub
 
     Public Sub ShowXICToolStripMenuItem_Click()
-        If TypeOf TreeView1.SelectedNode.Tag Is Raw AndAlso MyApplication.host.fileExplorer.GetSelectedNodes.Count = 0 Then
+        If TreeView1.SelectedNode Is Nothing Then
             Return
+        End If
+
+        If TypeOf TreeView1.SelectedNode.Tag Is Raw AndAlso MyApplication.host.fileExplorer.GetSelectedNodes.Count = 0 Then
+            MyApplication.host.showStatusMessage("no raw file data for XIC plot!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            Return
+        End If
+
+        Dim selectedCount As Integer = 0
+
+        For i As Integer = 0 To TreeView1.Nodes.Count - 1
+            Dim fileTree = TreeView1.Nodes(i)
+
+            For j As Integer = 0 To fileTree.Nodes.Count - 1
+                If fileTree.Nodes(j).Checked Then
+                    selectedCount += 1
+                End If
+            Next
+        Next
+
+        If selectedCount >= 500 Then
+            If MessageBox.Show("There are too many ions for create XIC plot, probably you should uncheck some ions for reduce data, continute to procedure?", "Too much data!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) = DialogResult.Cancel Then
+                MyApplication.host.showStatusMessage("Show XIC plot for too many ions has been cancel!")
+                Return
+            End If
         End If
 
         ' scan节点
         Dim raw As Task.Raw = TreeView1.CurrentRawFile.raw
         Dim ppm As Double = Val(RibbonItems.PPMSpinner.DecimalValue)
-        Dim plotTIC = getXICMatrix(raw, TreeView1.SelectedNode.Text, ppm, relativeInto)
-        Dim maxY As Double = raw.scans _
-            .Where(Function(a) a.mz > 0) _
-            .Select(Function(a) a.XIC) _
-            .Max
+        Dim plotTIC As NamedCollection(Of ChromatogramTick) = getXICMatrix(raw, TreeView1.SelectedNode.Text, ppm, relativeInto)
 
         If plotTIC.value.IsNullOrEmpty Then
             ' 当前没有选中MS2，但是可以显示选中的XIC
@@ -892,9 +914,13 @@ Public Class PageMzkitTools
                 Return
             End If
         Else
-            showMatrix(plotTIC.value, Name)
+            Call showMatrix(plotTIC.value, Name)
         End If
 
+        Call ShowXIC(ppm, plotTIC, AddressOf GetXICCollection, raw.GetXICMaxYAxis)
+    End Sub
+
+    Public Sub ShowXIC(ppm As Double, plotTIC As NamedCollection(Of ChromatogramTick), getXICCollection As Func(Of Double, IEnumerable(Of NamedCollection(Of ChromatogramTick))), maxY As Double)
         Dim progress As New frmProgressSpinner
         Dim plotImage As Image = Nothing
         Dim relative As Boolean = relativeInto()
@@ -907,9 +933,14 @@ Public Class PageMzkitTools
                     XICPlot.Add(plotTIC)
                 End If
 
-                XICPlot.AddRange(GetXICCollection(ppm))
+                XICPlot.AddRange(getXICCollection(ppm))
 
-                plotImage = XICPlot.ToArray.TICplot(intensityMax:=maxY, isXIC:=True, colorsSchema:=Globals.GetColors).AsGDIImage
+                plotImage = XICPlot.ToArray.TICplot(
+                    intensityMax:=maxY,
+                    isXIC:=True,
+                    colorsSchema:=Globals.GetColors,
+                    fillCurve:=Globals.Settings.viewer.fill
+                ).AsGDIImage
                 progress.Invoke(Sub() progress.Close())
             End Sub).Start()
 
@@ -944,7 +975,7 @@ Public Class PageMzkitTools
             Dim raw As Raw = file.Tag
             Dim rawScans As New Dictionary(Of String, ScanEntry)
 
-            If Not raw.cache.FileExists AndAlso missingCacheFile(raw) <> DialogResult.OK Then
+            If Not (raw.ms1_cache.FileExists AndAlso raw.ms2_cache.FileExists) AndAlso missingCacheFile(raw) <> DialogResult.OK Then
                 Continue For
             Else
                 For Each scan In raw.scans
@@ -954,7 +985,7 @@ Public Class PageMzkitTools
                 Call progress(raw.source.FileName)
             End If
 
-            Using cache As New netCDFReader(raw.cache)
+            Using cache As New netCDFReader(raw.ms2_cache)
                 For j As Integer = 0 To file.Nodes.Count - 1
                     Dim scan = file.Nodes(j)
                     Dim scanId As String = scan.Text
@@ -963,7 +994,7 @@ Public Class PageMzkitTools
                         Dim entry = cache.getDataVariableEntry(scanId)
                         Dim mztemp = cache.getDataVariable(entry).numerics.AsMs2.ToArray
                         Dim attrs = cache.getDataVariableEntry(scanId).attributes
-                        Dim info As New SpectrumProperty(scanId, attrs)
+                        Dim info As New SpectrumProperty(scanId, raw.source.FileName, attrs)
 
                         Yield New PeakMs2 With {
                             .mz = info.precursorMz,
@@ -986,7 +1017,7 @@ Public Class PageMzkitTools
         Return False ' MyApplication.host.ribbonItems.CheckBoxXICRelative.BooleanValue
     End Function
 
-    Private Function getXICMatrix(raw As Raw, scanId As String, ppm As Double, relativeInto As Boolean) As NamedCollection(Of ChromatogramTick)
+    Friend Shared Function getXICMatrix(raw As Raw, scanId As String, ppm As Double, relativeInto As Boolean) As NamedCollection(Of ChromatogramTick)
         Dim ms2 As ScanEntry = raw.scans.Where(Function(a) a.id = scanId).FirstOrDefault
         Dim name As String
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f4b4c3e87676f6054cdd49f5172d821, src\mzkit\mzkit\forms\frmMain.vb"
+﻿#Region "Microsoft.VisualBasic::ddb51a2631fc6ed823b1dfb36c3dd6b9, src\mzkit\mzkit\forms\frmMain.vb"
 
 ' Author:
 ' 
@@ -37,11 +37,14 @@
 ' Class frmMain
 ' 
 '     Constructor: (+1 Overloads) Sub New
-'     Sub: _recentItems_ExecuteEvent, _uiCollectionChangedEvent_ChangedEvent, About_Click, addPage, CopyToolStripMenuItem_Click
-'          CutToolStripMenuItem_Click, ExitToolsStripMenuItem_Click, FormulaSearchToolToolStripMenuItem_Click, frmMain_Closing, frmMain_Load
-'          InitializeFormulaProfile, InitRecentItems, InitSpinner, MoleculeNetworkingToolStripMenuItem_Click, MzCalculatorToolStripMenuItem_Click
-'          NavBack_Click, OpenFile, PasteToolStripMenuItem_Click, RawFileViewerToolStripMenuItem_Click, SaveAsToolStripMenuItem_Click
-'          saveCacheList, ShowPage, StatusBarToolStripMenuItem_Click, ToolBarToolStripMenuItem_Click
+'     Sub: _recentItems_ExecuteEvent, _uiCollectionChangedEvent_ChangedEvent, About_Click, CreateNewScript, EnableVSRenderer
+'          ExitToolsStripMenuItem_Click, FormulaSearchToolToolStripMenuItem_Click, frmMain_Closing, frmMain_Load, frmMain_ResizeEnd
+'          ImportsFiles, InitializeFormulaProfile, initializeVSPanel, InitRecentItems, InitSpinner
+'          MoleculeNetworkingToolStripMenuItem_Click, MzCalculatorToolStripMenuItem_Click, NavBack_Click, OpenFile, RawFileViewerToolStripMenuItem_Click
+'          RunCurrentScript, saveCurrentFile, saveCurrentScript, SaveScript, SetSchema
+'          ShowExplorer, showHelp, showLoggingWindow, ShowMzkitToolkit, ShowPage
+'          ShowProperties, showRTerm, ShowSearchList, ShowSettings, showStartPage
+'          showStatusMessage, Timer1_Tick, ToolStripStatusLabel2_Click
 ' 
 ' /********************************************************************************/
 
@@ -63,6 +66,7 @@ Imports RibbonLib.Controls.Events
 Imports RibbonLib.Interop
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports Task
 Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class frmMain
@@ -99,13 +103,7 @@ Public Class frmMain
         Using file As New OpenFileDialog With {.Filter = "Raw Data|*.mzXML;*.mzML|R# Script(*.R)|*.R"}
             If file.ShowDialog = DialogResult.OK Then
                 If file.FileName.ExtensionSuffix("R") Then
-                    Dim newScript As New frmRScriptEdit With {.scriptFile = file.FileName}
-
-                    scriptFiles.Add(newScript)
-                    newScript.Show(dockPanel)
-                    newScript.DockState = DockState.Document
-                    newScript.Text = file.FileName.FileName
-                    newScript.LoadScript(file.FileName.ReadAllText)
+                    Call openRscript(file.FileName)
                 Else
                     Call mzkitTool.ImportsRaw(file.FileName)
                 End If
@@ -113,6 +111,16 @@ Public Class frmMain
                 Globals.AddRecentFileHistory(file.FileName)
             End If
         End Using
+    End Sub
+
+    Private Sub openRscript(fileName As String)
+        Dim newScript As New frmRScriptEdit With {.scriptFile = fileName}
+
+        scriptFiles.Add(newScript)
+        newScript.Show(dockPanel)
+        newScript.DockState = DockState.Document
+        newScript.Text = fileName.FileName
+        newScript.LoadScript(fileName.ReadAllText)
     End Sub
 
     Private Sub ImportsFiles(sender As Object, e As ExecuteEventArgs)
@@ -198,6 +206,10 @@ Public Class frmMain
         AddHandler ribbonItems.ButtonBPC.ExecuteEvent, Sub(sender, e) Call mzkitTool.TIC(isBPC:=True)
         AddHandler ribbonItems.ButtonXIC.ExecuteEvent, AddressOf mzkitTool.ShowXICToolStripMenuItem_Click
 
+        AddHandler ribbonItems.ButtonResetLayout.ExecuteEvent, AddressOf resetLayout
+
+        AddHandler ribbonItems.RecentItems.ExecuteEvent, AddressOf _recentItems_ExecuteEvent
+
         _uiCollectionChangedEvent = New UICollectionChangedEvent()
 
         MyApplication.RegisterHost(Me)
@@ -206,14 +218,25 @@ Public Class frmMain
         InitializeFormulaProfile()
     End Sub
 
+    Private Sub resetLayout()
+        fileExplorer.DockState = DockState.DockLeft
+        searchList.DockState = DockState.DockLeftAutoHide
+        output.DockState = DockState.DockBottomAutoHide
+        propertyWin.DockState = DockState.DockRightAutoHide
+    End Sub
+
     Private Sub showHelp(sender As Object, e As ExecuteEventArgs)
         For Each dir As String In {App.HOME, $"{App.HOME}/docs", $"{App.HOME}/../", $"{App.HOME}/../docs/"}
             If $"{dir}/readme.pdf".FileExists Then
                 Call Process.Start($"{dir}/readme.pdf")
+                Return
             End If
         Next
 
-        Me.showStatusMessage("Manul pdf file is missing...", My.Resources.StatusAnnotations_Warning_32xLG_color)
+        ' try open online page
+        Call Process.Start("https://mzkit.org/dist/README.pdf")
+
+        ' Me.showStatusMessage("Manul pdf file is missing...", My.Resources.StatusAnnotations_Warning_32xLG_color)
     End Sub
 
     Private Sub RunCurrentScript(sender As Object, e As ExecuteEventArgs)
@@ -573,6 +596,14 @@ Public Class frmMain
             Dim propLabel As PropVariant
             e.CommandExecutionProperties.GetValue(RibbonProperties.Label, propLabel)
             Dim label As String = CStr(propLabel.Value)
+            Dim sourceFile As String = Nothing
+
+            For Each file As String In Globals.Settings.recentFiles.SafeQuery
+                If label = file.FileName Then
+                    sourceFile = file
+                    Exit For
+                End If
+            Next
 
             ' get selected item label description
             Dim propLabelDescription As PropVariant
@@ -583,6 +614,22 @@ Public Class frmMain
             Dim propPinned As PropVariant
             e.CommandExecutionProperties.GetValue(RibbonProperties.Pinned, propPinned)
             Dim pinned As Boolean = CBool(propPinned.Value)
+
+            If label.ExtensionSuffix("R") Then
+                If Not sourceFile.FileExists Then
+                    MessageBox.Show($"The given R# script file [{label}] is not exists on your file system!", "File Not Found", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Else
+                    Call openRscript(sourceFile)
+                End If
+            Else
+                Dim raw As Raw = Globals.FindRaw(fileExplorer.treeView1, label)
+
+                If raw Is Nothing Then
+                    MessageBox.Show($"The given raw data file [{label}] is not exists on your file system!", "File Not Found", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Else
+                    Call mzkitTool.TIC(raw)
+                End If
+            End If
         End If
     End Sub
 
@@ -715,6 +762,9 @@ Public Class frmMain
 
     Private Sub frmMain_ResizeEnd(sender As Object, e As EventArgs) Handles Me.ResizeEnd
         Ribbon1.Refresh()
+
+        ' Me.ResumeLayout(performLayout:=False)
+        ' Me.PerformLayout()
     End Sub
 
     Dim mzkitApp As Process = Process.GetCurrentProcess()
@@ -726,6 +776,10 @@ Public Class frmMain
 
     Private Sub ToolStripStatusLabel2_Click(sender As Object, e As EventArgs) Handles ToolStripStatusLabel2.Click
 
+    End Sub
+
+    Private Sub frmMain_ResizeBegin(sender As Object, e As EventArgs) Handles Me.ResizeBegin
+        ' Me.SuspendLayout()
     End Sub
 
 

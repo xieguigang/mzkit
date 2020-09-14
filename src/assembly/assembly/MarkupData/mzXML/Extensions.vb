@@ -65,15 +65,20 @@ Namespace MarkupData.mzXML
             Return peaksData
         End Function
 
+        ''' <summary>
+        ''' [intensity, m/z]
+        ''' </summary>
+        ''' <param name="floats"></param>
+        ''' <returns></returns>
         <Extension>
-        Public Function AsMs2(floats As Double()) As IEnumerable(Of ms2)
+        Public Function AsMs2(floats As IEnumerable(Of Double)) As IEnumerable(Of ms2)
             Return floats _
                 .Split(2) _
                 .Select(Function(buffer, i)
                             Return New ms2 With {
                                 .Annotation = i + 1S,
                                 .intensity = buffer(Scan0), ' 信号强度, 归一化为 0-100 之间的数值
-                                .mz = buffer(1),          ' m/z质核比数据
+                                .mz = buffer(1),            ' m/z质核比数据
                                 .quantity = .intensity
                             }
                         End Function)

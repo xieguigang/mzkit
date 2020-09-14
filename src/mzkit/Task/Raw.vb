@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef3d7fa15a94ee2bf09368c587a9633a, src\mzkit\Task\Raw.vb"
+﻿#Region "Microsoft.VisualBasic::1570af52a085ba56778e4a1b283e4d89, src\mzkit\Task\Raw.vb"
 
     ' Author:
     ' 
@@ -41,8 +41,8 @@
     ' 
     ' Class ScanEntry
     ' 
-    '     Properties: charge, id, intensity, mz, polarity
-    '                 rt
+    '     Properties: BPC, charge, id, mz, polarity
+    '                 rt, TIC, XIC
     ' 
     '     Function: ToString
     ' 
@@ -53,7 +53,8 @@
 Public Class Raw
 
     Public Property source As String
-    Public Property cache As String
+    Public Property ms1_cache As String
+    Public Property ms2_cache As String
 
     Public Property rtmin As Double
     Public Property rtmax As Double
@@ -69,6 +70,12 @@ Public Class Raw
     End Property
 
     Public Property scans As ScanEntry()
+
+    Public ReadOnly Property cacheFileExists As Boolean
+        Get
+            Return ms1_cache.FileExists AndAlso ms2_cache.FileExists
+        End Get
+    End Property
 
 End Class
 

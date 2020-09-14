@@ -1,47 +1,47 @@
-﻿#Region "Microsoft.VisualBasic::6fa4c7c690f3542171f57e1baa096514, src\mzkit\Task\ImportsRawData.vb"
+﻿#Region "Microsoft.VisualBasic::57015c606b43fc535d8df35b8bac7720, src\mzkit\Task\ImportsRawData.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class ImportsRawData
-    ' 
-    '     Properties: raw
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: importsMzML, importsMzXML, RunImports
-    ' 
-    ' /********************************************************************************/
+' Class ImportsRawData
+' 
+'     Properties: raw
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Sub: importsMzML, importsMzXML, RunImports
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -49,6 +49,8 @@ Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.IO.netCDF
@@ -61,19 +63,23 @@ Imports mzML = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Public Class ImportsRawData
 
     ReadOnly source As String
-    ReadOnly temp As String
+    ReadOnly temp1, temp2 As String
     ReadOnly showProgress As Action(Of String)
     ReadOnly success As Action
+    ReadOnly tolerance As Tolerance = Tolerance.PPM(20)
+    ReadOnly intoCutoff As LowAbundanceTrimming = New RelativeIntensityCutoff(0.01)
 
     Public ReadOnly Property raw As Raw
 
     Sub New(file As String, progress As Action(Of String), finished As Action)
         source = file
-        temp = App.AppSystemTemp & "/" & file.GetFullPath.MD5 & ".cdf"
+        temp1 = App.AppSystemTemp & "/" & file.GetFullPath.MD5 & "_1.cdf"
+        temp2 = App.AppSystemTemp & "/" & file.GetFullPath.MD5 & "_2.cdf"
         showProgress = progress
         success = finished
         raw = New Raw With {
-            .cache = temp.GetFullPath,
+            .ms1_cache = temp1.GetFullPath,
+            .ms2_cache = temp2.GetFullPath,
             .source = source.GetFullPath
         }
     End Sub
@@ -91,7 +97,7 @@ Public Class ImportsRawData
     End Sub
 
     Private Sub importsMzXML()
-        Using cache As New CDFWriter(temp, Encodings.UTF8WithoutBOM)
+        Using cache1 As New CDFWriter(temp1, Encodings.UTF8WithoutBOM), cache2 As New CDFWriter(temp2, Encodings.UTF8WithoutBOM)
             Dim attrs As attribute()
             Dim data As Double()
             Dim name As String
@@ -113,9 +119,21 @@ Public Class ImportsRawData
                     New attribute With {.name = NameOf(scan.precursorMz.activationMethod), .type = CDFDataTypes.CHAR, .value = scan.precursorMz.activationMethod Or "n/a".AsDefault},
                     New attribute With {.name = NameOf(scan.precursorMz.precursorCharge), .type = CDFDataTypes.DOUBLE, .value = scan.precursorMz.precursorCharge}
                 }
-                data = scan.peaks.Base64Decode(True)
+                data = compress(scan.peaks.Base64Decode(True)).ToArray
                 name = scan.getName & $" scan={nscans.Count + 1}"
-                cache.AddVariable(name, New CDFData With {.numerics = data}, New Dimension With {.name = "m/z-int,scan_" & scan.num, .size = data.Length}, attrs)
+
+                Dim scanData As New CDFData With {.numerics = data}
+                Dim scanSize As New Dimension With {
+                    .name = "m/z-int,scan_" & scan.num,
+                    .size = data.Length
+                }
+
+                If scan.msLevel = 1 Then
+                    cache1.AddVariable(name, scanData, scanSize, attrs)
+                Else
+                    cache2.AddVariable(name, scanData, scanSize, attrs)
+                End If
+
                 rt.Add(PeakMs2.RtInSecond(scan.retentionTime))
 
                 Call New ScanEntry With {
@@ -132,7 +150,8 @@ Public Class ImportsRawData
                 Call showProgress(name)
             Next
 
-            cache.GlobalAttributes(New attribute With {.name = NameOf(nscans), .type = CDFDataTypes.INT, .value = nscans.Count})
+            cache1.GlobalAttributes(New attribute With {.name = NameOf(nscans), .type = CDFDataTypes.INT, .value = nscans.Where(Function(a) a.mz = 0.0).Count})
+            cache2.GlobalAttributes(New attribute With {.name = NameOf(nscans), .type = CDFDataTypes.INT, .value = nscans.Where(Function(a) a.mz > 0.0).Count})
 
             raw.scans = nscans.ToArray
             raw.rtmin = rt.Min
@@ -142,8 +161,15 @@ Public Class ImportsRawData
         End Using
     End Sub
 
+    Private Iterator Function compress(raw As IEnumerable(Of Double)) As IEnumerable(Of Double)
+        For Each mz In raw.AsMs2.ToArray.Centroid(tolerance, intoCutoff)
+            Yield mz.intensity
+            Yield mz.mz
+        Next
+    End Function
+
     Private Sub importsMzML()
-        Using cache As New CDFWriter(temp, Encodings.UTF8WithoutBOM)
+        Using cache1 As New CDFWriter(temp1, Encodings.UTF8WithoutBOM), cache2 As New CDFWriter(temp2, Encodings.UTF8WithoutBOM)
             Dim attrs As attribute()
             Dim data As New List(Of Double)
             Dim name As String
@@ -198,7 +224,19 @@ Public Class ImportsRawData
                 End If
 
                 rt.Add(scan.scan_time)
-                cache.AddVariable(name, New CDFData With {.numerics = data}, New Dimension With {.name = "m/z-int,scan_" & scan.index, .size = data.Count}, attrs)
+                data = New List(Of Double)(compress(data))
+
+                Dim scanData As New CDFData With {.numerics = data}
+                Dim scanSize As New Dimension With {
+                    .name = "m/z-int,scan_" & scan.index,
+                    .size = data.Count
+                }
+
+                If scan.ms_level = 1 Then
+                    cache1.AddVariable(name, scanData, scanSize, attrs)
+                Else
+                    cache2.AddVariable(name, scanData, scanSize, attrs)
+                End If
 
                 Call New ScanEntry With {
                     .id = name,
@@ -213,7 +251,8 @@ Public Class ImportsRawData
                 Call showProgress(name)
             Next
 
-            cache.GlobalAttributes(New attribute With {.name = NameOf(nscans), .type = CDFDataTypes.INT, .value = nscans.Count})
+            cache1.GlobalAttributes(New attribute With {.name = NameOf(nscans), .type = CDFDataTypes.INT, .value = nscans.Where(Function(a) a.mz = 0.0).Count})
+            cache2.GlobalAttributes(New attribute With {.name = NameOf(nscans), .type = CDFDataTypes.INT, .value = nscans.Where(Function(a) a.mz > 0.0).Count})
 
             raw.scans = nscans.ToArray
             raw.rtmin = rt.Min

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::751e644f0cbfa144734671ec1299cc77, src\mzkit\mzkit\Globals.vb"
+﻿#Region "Microsoft.VisualBasic::3cebafd485838873edbf7af88a066741, src\mzkit\mzkit\application\Globals.vb"
 
     ' Author:
     ' 
@@ -40,9 +40,9 @@
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: CurrentRawFile, LoadRawFileCache
+    '     Function: CheckFormOpened, CurrentRawFile, GetColors, GetTotalCacheSize, LoadRawFileCache
     ' 
-    '     Sub: (+2 Overloads) addRawFile, SaveRawFileCache
+    '     Sub: (+2 Overloads) addRawFile, AddRecentFileHistory, SaveRawFileCache
     ' 
     ' /********************************************************************************/
 
@@ -92,11 +92,24 @@ Module Globals
     End Sub
 
     <Extension>
+    Public Function FindRaw(explorer As TreeView, sourceName As String) As Raw
+        For Each node As TreeNode In explorer.Nodes
+            Dim raw As Raw = DirectCast(node.Tag, Raw)
+
+            If raw.source.FileName = sourceName Then
+                Return raw
+            End If
+        Next
+
+        Return Nothing
+    End Function
+
+    <Extension>
     Public Function GetTotalCacheSize(explorer As TreeView) As String
         Dim size As Double
 
         For Each node As TreeNode In explorer.Nodes
-            size += DirectCast(node.Tag, Raw).cache.FileLength
+            size += DirectCast(node.Tag, Raw).ms1_cache.FileLength + DirectCast(node.Tag, Raw).ms2_cache.FileLength
         Next
 
         If size = 0.0 Then
@@ -158,6 +171,11 @@ Module Globals
         Next
     End Sub
 
+    ''' <summary>
+    ''' 这个函数总是返回当前选中的节点的文件根节点相关的数据
+    ''' </summary>
+    ''' <param name="explorer"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function CurrentRawFile(explorer As TreeView) As (raw As Raw, tree As TreeNode)
         Dim node = explorer.SelectedNode
@@ -179,5 +197,13 @@ Module Globals
         Next
 
         Return False
+    End Function
+
+    <Extension>
+    Public Function GetXICMaxYAxis(raw As Raw) As Double
+        Return raw.scans _
+            .Where(Function(a) a.mz > 0) _
+            .Select(Function(a) a.XIC) _
+            .Max
     End Function
 End Module

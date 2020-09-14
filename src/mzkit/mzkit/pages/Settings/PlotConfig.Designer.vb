@@ -29,15 +29,16 @@ Partial Class PlotConfig
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.ComboBox1 = New System.Windows.Forms.ComboBox()
+        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(29, 26)
+        Me.Label1.Location = New System.Drawing.Point(29, 28)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(167, 12)
+        Me.Label1.Size = New System.Drawing.Size(132, 13)
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "Set Overlay Plot Color Set:"
         '
@@ -47,28 +48,28 @@ Partial Class PlotConfig
         Me.ListBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.ListBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
-        Me.ListBox1.Font = New System.Drawing.Font("微软雅黑 Light", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.ListBox1.Font = New System.Drawing.Font("Microsoft YaHei Light", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.ListBox1.FormattingEnabled = True
         Me.ListBox1.ItemHeight = 26
-        Me.ListBox1.Location = New System.Drawing.Point(398, 55)
+        Me.ListBox1.Location = New System.Drawing.Point(398, 60)
         Me.ListBox1.Name = "ListBox1"
-        Me.ListBox1.Size = New System.Drawing.Size(241, 446)
+        Me.ListBox1.Size = New System.Drawing.Size(241, 472)
         Me.ListBox1.TabIndex = 1
         '
         'PictureBox1
         '
         Me.PictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.PictureBox1.Location = New System.Drawing.Point(257, 55)
+        Me.PictureBox1.Location = New System.Drawing.Point(257, 60)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(100, 42)
+        Me.PictureBox1.Size = New System.Drawing.Size(100, 45)
         Me.PictureBox1.TabIndex = 2
         Me.PictureBox1.TabStop = False
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(257, 128)
+        Me.Button1.Location = New System.Drawing.Point(257, 139)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 23)
+        Me.Button1.Size = New System.Drawing.Size(75, 25)
         Me.Button1.TabIndex = 3
         Me.Button1.Text = "Add Color"
         Me.Button1.UseVisualStyleBackColor = True
@@ -76,18 +77,18 @@ Partial Class PlotConfig
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(396, 26)
+        Me.Label2.Location = New System.Drawing.Point(396, 28)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(65, 12)
+        Me.Label2.Size = New System.Drawing.Size(53, 13)
         Me.Label2.TabIndex = 4
         Me.Label2.Text = "Color Set:"
         '
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(29, 242)
+        Me.Label3.Location = New System.Drawing.Point(29, 262)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(101, 12)
+        Me.Label3.Size = New System.Drawing.Size(83, 13)
         Me.Label3.TabIndex = 5
         Me.Label3.Text = "Preset ColorSet:"
         '
@@ -95,15 +96,26 @@ Partial Class PlotConfig
         '
         Me.ComboBox1.FormattingEnabled = True
         Me.ComboBox1.Items.AddRange(New Object() {"ColorBrewer Set1", "ColorBrewer Paired1", "ColorBrewer Accent", "Cluster Colour", "Material Palette", "sciBASIC Category31"})
-        Me.ComboBox1.Location = New System.Drawing.Point(31, 270)
+        Me.ComboBox1.Location = New System.Drawing.Point(31, 293)
         Me.ComboBox1.Name = "ComboBox1"
-        Me.ComboBox1.Size = New System.Drawing.Size(164, 20)
+        Me.ComboBox1.Size = New System.Drawing.Size(164, 21)
         Me.ComboBox1.TabIndex = 6
+        '
+        'CheckBox1
+        '
+        Me.CheckBox1.AutoSize = True
+        Me.CheckBox1.Location = New System.Drawing.Point(32, 337)
+        Me.CheckBox1.Name = "CheckBox1"
+        Me.CheckBox1.Size = New System.Drawing.Size(84, 17)
+        Me.CheckBox1.TabIndex = 7
+        Me.CheckBox1.Text = "Fill Plot Area"
+        Me.CheckBox1.UseVisualStyleBackColor = True
         '
         'PlotConfig
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.CheckBox1)
         Me.Controls.Add(Me.ComboBox1)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)
@@ -112,7 +124,7 @@ Partial Class PlotConfig
         Me.Controls.Add(Me.ListBox1)
         Me.Controls.Add(Me.Label1)
         Me.Name = "PlotConfig"
-        Me.Size = New System.Drawing.Size(798, 510)
+        Me.Size = New System.Drawing.Size(798, 553)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -126,4 +138,5 @@ Partial Class PlotConfig
     Friend WithEvents Label2 As Label
     Friend WithEvents Label3 As Label
     Friend WithEvents ComboBox1 As ComboBox
+    Friend WithEvents CheckBox1 As CheckBox
 End Class

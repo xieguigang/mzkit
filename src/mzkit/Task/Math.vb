@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::39b3a2d35a8bececb0ddaa31c09ea87d, src\mzkit\Task\Math.vb"
+﻿#Region "Microsoft.VisualBasic::a149388d6cf07c1c78fdd5c816e91bce, src\mzkit\Task\Math.vb"
 
     ' Author:
     ' 
@@ -56,4 +56,3 @@ Public Module Math
         Return exact_mass
     End Function
 End Module
-

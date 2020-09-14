@@ -139,7 +139,6 @@ Partial Class frmMain
         Me.Controls.Add(Me.PanelBase)
         Me.Controls.Add(Me.StatusStrip)
         Me.Controls.Add(Me.Ribbon1)
-        Me.DoubleBuffered = True
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmMain"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen

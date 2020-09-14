@@ -26,35 +26,40 @@
         Private Sub InitializeComponent()
             components = New ComponentModel.Container()
             contextMenuStrip1 = New Windows.Forms.ContextMenuStrip(components)
-            option1ToolStripMenuItem = New Windows.Forms.ToolStripMenuItem()
-            option2ToolStripMenuItem = New Windows.Forms.ToolStripMenuItem()
-            option3ToolStripMenuItem = New Windows.Forms.ToolStripMenuItem()
+            floatToolStripMenuItem = New Windows.Forms.ToolStripMenuItem()
+            dockToolStripMenuItem = New Windows.Forms.ToolStripMenuItem()
+            autoHideToolStripMenuItem = New Windows.Forms.ToolStripMenuItem()
+            closeToolStripMenuItem = New Windows.Forms.ToolStripMenuItem()
             contextMenuStrip1.SuspendLayout()
             SuspendLayout()
             ' 
             ' contextMenuStrip1
             ' 
-            contextMenuStrip1.Items.AddRange(New Windows.Forms.ToolStripItem() {option1ToolStripMenuItem, option2ToolStripMenuItem, option3ToolStripMenuItem})
+            contextMenuStrip1.Items.AddRange(New Windows.Forms.ToolStripItem() {floatToolStripMenuItem, dockToolStripMenuItem, autoHideToolStripMenuItem, closeToolStripMenuItem})
             contextMenuStrip1.Name = "contextMenuStrip1"
             contextMenuStrip1.Size = New Drawing.Size(113, 70)
             ' 
             ' option1ToolStripMenuItem
             ' 
-            option1ToolStripMenuItem.Name = "option1ToolStripMenuItem"
-            option1ToolStripMenuItem.Size = New Drawing.Size(152, 22)
-            option1ToolStripMenuItem.Text = "Option&1"
+            floatToolStripMenuItem.Name = "option1ToolStripMenuItem"
+            floatToolStripMenuItem.Size = New Drawing.Size(152, 22)
+            floatToolStripMenuItem.Text = "Float"
             ' 
             ' option2ToolStripMenuItem
             ' 
-            option2ToolStripMenuItem.Name = "option2ToolStripMenuItem"
-            option2ToolStripMenuItem.Size = New Drawing.Size(152, 22)
-            option2ToolStripMenuItem.Text = "Option&2"
+            dockToolStripMenuItem.Name = "option2ToolStripMenuItem"
+            dockToolStripMenuItem.Size = New Drawing.Size(152, 22)
+            dockToolStripMenuItem.Text = "Dock"
             ' 
             ' option3ToolStripMenuItem
             ' 
-            option3ToolStripMenuItem.Name = "option3ToolStripMenuItem"
-            option3ToolStripMenuItem.Size = New Drawing.Size(152, 22)
-            option3ToolStripMenuItem.Text = "Option&3"
+            autoHideToolStripMenuItem.Name = "option3ToolStripMenuItem"
+            autoHideToolStripMenuItem.Size = New Drawing.Size(152, 22)
+            autoHideToolStripMenuItem.Text = "Auto Hide"
+
+            closeToolStripMenuItem.Name = "option4ToolStripMenuItem"
+            closeToolStripMenuItem.Size = New Drawing.Size(152, 22)
+            closeToolStripMenuItem.Text = "Close"
             ' 
             ' ToolWindow
             ' 
@@ -71,8 +76,9 @@
 #End Region
 
         Private contextMenuStrip1 As Windows.Forms.ContextMenuStrip
-        Private option1ToolStripMenuItem As Windows.Forms.ToolStripMenuItem
-        Private option2ToolStripMenuItem As Windows.Forms.ToolStripMenuItem
-        Private option3ToolStripMenuItem As Windows.Forms.ToolStripMenuItem
+        Private WithEvents floatToolStripMenuItem As Windows.Forms.ToolStripMenuItem
+        Private WithEvents dockToolStripMenuItem As Windows.Forms.ToolStripMenuItem
+        Private WithEvents autoHideToolStripMenuItem As Windows.Forms.ToolStripMenuItem
+        Private WithEvents closeToolStripMenuItem As Windows.Forms.ToolStripMenuItem
     End Class
 End Namespace

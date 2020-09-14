@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::edbd21cf1de93034e2a90b558a3c4ea9, src\metadb\FormulaSearch.Extensions\PrecursorIonSearch.vb"
+﻿#Region "Microsoft.VisualBasic::cb6aa37ad5425a6430700b3284916659, src\metadb\FormulaSearch.Extensions\PrecursorIonSearch.vb"
 
     ' Author:
     ' 
@@ -108,4 +108,3 @@ Public Class PrecursorIonSearch : Inherits FormulaSearch
         Next
     End Function
 End Class
-

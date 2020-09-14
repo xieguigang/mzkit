@@ -318,6 +318,7 @@
     <Compile Include="Ms1\Tolerance\PPM.vb" />
     <Compile Include="Ms1\Tolerance\DeltaMass.vb" />
     <Compile Include="Ms1\Tolerance\Tolerance.vb" />
+    <Compile Include="Spectra\LowAbundanceTrimming.vb" />
     <Compile Include="Spectra\Models\Fragments.vb" />
     <Compile Include="Spectra\MoleculeNetworking\ProtocolPipeline.vb" />
     <Compile Include="Spectra\MoleculeNetworking\NetworkingNode.vb" />

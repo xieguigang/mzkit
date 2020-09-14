@@ -112,20 +112,20 @@ Module MRMQCReport
         Dim QC_variants As New List(Of Double)
         Dim tabulateMean As Double
 
-        For Each metabolite In QCResult
-            RSD = metabolite.Values.RSD
+        For Each metabolite As DataSet In QCResult
+            RSD = metabolite.Vector.RSD
             linear = ref(metabolite.ID)
             title = $"QC scatter of {metabolite.ID}(RSD: {stdNum.Round(RSD, 3)})"
             samples = metabolite.Properties.NamedValues
             image = Visual.DrawStandardCurve(linear, title, samples, labelerIterations:=2000).AsGDIImage
-            mean = metabolite.Values.Average
-            tabulateMean = metabolite.Values.TabulateMode
+            mean = metabolite.Vector.Average
+            tabulateMean = metabolite.Vector.TabulateMode
             TOCData += New DataSet With {
                 .ID = metabolite.ID,
                 .Properties = New Dictionary(Of String, Double) From {
                     {"RSD", RSD},
                     {"Mean", mean},
-                    {"SD", metabolite.Values.SD}
+                    {"SD", metabolite.Vector.SD}
                 }
             }
 
@@ -149,7 +149,7 @@ Module MRMQCReport
                                     <hr/>
                                     <ul>
                                         <li>Mean: <%= mean %></li>
-                                        <li>SD: <%= metabolite.Values.SD %></li>
+                                        <li>SD: <%= metabolite.Vector.SD %></li>
                                         <li>RSD : <strong><%= stdNum.Round(RSD * 100, 2) %></strong></li>
                                     </ul>
                                     <img src=<%= New DataURI(image).ToString %> style="width: 70%"/>
