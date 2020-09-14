@@ -178,19 +178,17 @@ Public Class PageMzkitTools
             Dim spinner As New frmProgressSpinner
             Dim task As New Thread(
                 Sub()
-                    Dim ms1 As New List(Of ms1_scan)
+                    Dim image As Image
 
-                    Using cache As New netCDFReader(raw.ms1_cache)
-                        For Each scan In raw.scans.Where(Function(a) a.mz = 0.0)
-                            Dim data As CDFData = cache.getDataVariable(cache.getDataVariableEntry(scan.id))
-                            Dim rawData As ms2() = data.numerics.AsMs2.ToArray
+                    If raw.scatter.FileLength < 0 Then
+                        raw.scatter = App.AppSystemTemp & "/" & raw.source.GetFullPath.MD5 & ".scatter"
+                        image = raw.DrawScatter
+                        image.SaveAs(raw.scatter)
+                    Else
+                        image = raw.scatter.LoadImage
+                    End If
 
-                            ms1.AddRange(rawData.Centroid(Tolerance.DeltaMass(0.3), New RelativeIntensityCutoff(0.01)).Select(Function(a) New ms1_scan With {.intensity = a.intensity, .mz = a.mz, .scan_time = scan.rt}))
-                            Application.DoEvents()
-                        Next
-                    End Using
-
-                    Me.Invoke(Sub() PictureBox1.BackgroundImage = MzrtPlot.Plot(ms1, margin:="padding:200px 600px 200px 200px;", rawfile:=raw.source.FileName).AsGDIImage)
+                    Me.Invoke(Sub() PictureBox1.BackgroundImage = image)
                     spinner.Invoke(Sub() Call spinner.Close())
                 End Sub)
 

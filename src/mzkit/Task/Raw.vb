@@ -56,6 +56,12 @@ Public Class Raw
     Public Property ms1_cache As String
     Public Property ms2_cache As String
 
+    ''' <summary>
+    ''' 为了提升性能所缓存下来的原始数据散点图
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property scatter As String
+
     Public Property rtmin As Double
     Public Property rtmax As Double
 

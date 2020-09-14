@@ -55,6 +55,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
@@ -63,6 +64,7 @@ Imports mzML = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Public Class ImportsRawData
 
     ReadOnly source As String
+    ReadOnly scatterTemp As String
     ReadOnly temp1, temp2 As String
     ReadOnly showProgress As Action(Of String)
     ReadOnly success As Action
@@ -75,12 +77,14 @@ Public Class ImportsRawData
         source = file
         temp1 = App.AppSystemTemp & "/" & file.GetFullPath.MD5 & "_1.cdf"
         temp2 = App.AppSystemTemp & "/" & file.GetFullPath.MD5 & "_2.cdf"
+        scatterTemp = App.AppSystemTemp & "/" & file.GetFullPath.MD5 & ".scatter"
         showProgress = progress
         success = finished
         raw = New Raw With {
             .ms1_cache = temp1.GetFullPath,
             .ms2_cache = temp2.GetFullPath,
-            .source = source.GetFullPath
+            .source = source.GetFullPath,
+            .scatter = scatterTemp
         }
     End Sub
 
@@ -90,6 +94,9 @@ Public Class ImportsRawData
         Else
             Call importsMzML()
         End If
+
+        Call showProgress("Create snapshot...")
+        Call raw.DrawScatter.SaveAs(raw.scatter, autoDispose:=True)
 
         Call showProgress("Job Done!")
         Call Thread.Sleep(1500)

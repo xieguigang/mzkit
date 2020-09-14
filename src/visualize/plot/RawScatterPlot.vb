@@ -44,7 +44,6 @@
 
 Imports System.Drawing
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
@@ -59,7 +58,7 @@ Imports stdNum = System.Math
 ''' <summary>
 ''' 横坐标为rt，纵坐标为m/z的散点图绘制
 ''' </summary>
-Public Module MzrtPlot
+Public Module RawScatterPlot
 
     ''' <summary>
     ''' The scatter plots of the samples ``m/z`` and ``rt``.
@@ -124,7 +123,8 @@ Public Module MzrtPlot
             YaxisAbsoluteScalling:=True,
             showLegend:=False,
             tickFontStyle:=tickCSS,
-            axisStroke:=axisStroke
+            axisStroke:=axisStroke,
+            scatterReorder:=True
         )
 
         ' 绘制标尺
