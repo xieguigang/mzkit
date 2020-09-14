@@ -121,22 +121,21 @@ Public Class PageMoleculeNetworking
             v.data.color = colorSet(nodeClusters.IndexOf(v.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE)))
         Next
 
-        progress.ShowProgressTitle("Molecular networking")
-        progress.ShowProgressDetails("Refresh network")
+        progress.ShowProgressTitle("Molecular networking", directAccess:=True)
+        progress.ShowProgressDetails("Refresh network", directAccess:=True)
         progress.TaskCancel = Sub() cancel.Value = True
 
         Dim task As New Thread(
             Sub()
                 Thread.Sleep(500)
-                progress.Invoke(Sub() progress.ShowProgressTitle("Run network layouts..."))
+                progress.ShowProgressTitle("Run network layouts...")
                 graph = graph _
                     .doRandomLayout _
                     .doForceLayout(
                         parameters:=Globals.Settings.network.layout,
-                        progressCallback:=Sub(msg)
-                                              progress.Invoke(Sub() progress.ShowProgressDetails(msg))
-                                          End Sub,
-                        cancel:=cancel)
+                        progressCallback:=AddressOf progress.ShowProgressDetails,
+                        cancel:=cancel
+                    )
 
                 ' Dim layouts = Planner.Plan(graph, Globals.Settings.network.layout.Iterations, Sub(msg) progress.Invoke(Sub() progress.ShowProgressDetails ( msg))
 
@@ -144,7 +143,7 @@ Public Class PageMoleculeNetworking
                 '    node.data.initialPostion = New FDGVector2(layouts(node))
                 'Next
 
-                progress.Invoke(Sub() progress.ShowProgressDetails("do network render plot..."))
+                progress.ShowProgressDetails("do network render plot...")
 
                 Dim plot As Image = graph.DrawImage(
                     canvasSize:="1920,1080",

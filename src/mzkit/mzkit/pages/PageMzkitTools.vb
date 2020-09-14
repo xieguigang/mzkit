@@ -136,12 +136,12 @@ Public Class PageMzkitTools
 
     Public Function getRawCache(fileName As String) As Raw
         Dim progress As New frmTaskProgress() With {.Text = $"Imports raw data [{fileName}]"}
-        Dim showProgress As Action(Of String) = Sub(text) progress.Invoke(Sub() progress.ShowProgressDetails(text))
+        Dim showProgress As Action(Of String) = AddressOf progress.ShowProgressDetails
         Dim task As New Task.ImportsRawData(fileName, showProgress, Sub() Call progress.Invoke(Sub() progress.Close()))
         Dim runTask As New Thread(AddressOf task.RunImports)
 
         MyApplication.host.showStatusMessage("Run Raw Data Imports")
-        progress.ShowProgressTitle(progress.Text)
+        progress.ShowProgressTitle(progress.Text, directAccess:=True)
 
         Call runTask.Start()
         Call progress.ShowDialog()
@@ -684,20 +684,17 @@ Public Class PageMzkitTools
         Dim similarityCutoff As Double = MyApplication.host.ribbonItems.SpinnerSimilarity.DecimalValue
         Dim progress As New frmTaskProgress
 
-        progress.ShowProgressTitle("Run molecular networking")
-        progress.ShowProgressDetails("Initialized...")
+        progress.ShowProgressTitle("Run molecular networking", directAccess:=True)
+        progress.ShowProgressDetails("Initialized...", directAccess:=True)
 
         Dim runTask As New Thread(
             Sub()
-
                 Thread.Sleep(1000)
 
-                progress.Invoke(Sub()
-                                    progress.ShowProgressTitle("Load Scan data")
-                                    progress.ShowProgressDetails("loading cache ms2 scan data...")
-                                End Sub)
+                progress.ShowProgressTitle("Load Scan data")
+                progress.ShowProgressDetails("loading cache ms2 scan data...")
 
-                Dim raw = getSelectedIonSpectrums(Sub(file) progress.Invoke(Sub() progress.ShowProgressTitle(file))).ToArray
+                Dim raw = getSelectedIonSpectrums(AddressOf progress.ShowProgressTitle).ToArray
 
                 If raw.Length = 0 Then
                     MyApplication.host.showStatusMessage("No spectrum data, please select a file or some spectrum...", My.Resources.StatusAnnotations_Warning_32xLG_color)
@@ -712,11 +709,7 @@ Public Class PageMzkitTools
                     treeSimilar:=Globals.Settings.network.treeNodeSimilar,
                     intoCutoff:=Globals.Settings.viewer.GetMethod
                 )
-                Dim progressMsg As Action(Of String) =
-                    Sub(msg)
-                        progress.Invoke(Sub() progress.ShowProgressTitle(msg))
-                    End Sub
-
+                Dim progressMsg As Action(Of String) = AddressOf progress.ShowProgressTitle
 
                 'Dim run As New List(Of PeakMs2)
                 'Dim nodes As New Dictionary(Of String, ScanEntry)
@@ -747,7 +740,7 @@ Public Class PageMzkitTools
                 '    Next
                 'End Using
 
-                progress.Invoke(Sub() progress.ShowProgressTitle("run molecular networking...."))
+                progress.ShowProgressTitle("run molecular networking....")
 
                 ' Call tree.doCluster(run)
                 Dim links = protocol.RunProtocol(raw, progressMsg).ProduceNodes.Networking.ToArray
@@ -764,12 +757,12 @@ Public Class PageMzkitTools
                             End Function) _
                     .ToArray   ' MoleculeNetworking.CreateMatrix(run, 0.8, Tolerance.DeltaMass(0.3), Sub(msg) progress.Invoke(Sub() progress.ShowProgressDetails ( msg)).ToArray
 
-                progress.Invoke(Sub() progress.ShowProgressDetails("run family clustering...."))
+                progress.ShowProgressDetails("run family clustering....")
 
                 Dim clusters = net.ToKMeansModels.Kmeans(expected:=9, debug:=False)
                 Dim rawLinks = links.ToDictionary(Function(a) a.Name, Function(a) a.Value)
 
-                progress.Invoke(Sub() progress.ShowProgressDetails("initialize result output..."))
+                progress.ShowProgressDetails("initialize result output...")
 
                 MyApplication.host.Invoke(
                     Sub()

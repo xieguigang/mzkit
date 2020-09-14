@@ -54,20 +54,20 @@ Public Class frmTaskProgress
         e.Graphics.DrawRectangle(New Pen(Color.Black, 1), New Rectangle(0, 0, Width - 1, Height - 1))
     End Sub
 
-    Public Sub ShowProgressTitle(title As String)
-        Invoke(Sub()
-                   If Not dialogClosed Then
-                       Label2.Text = title
-                   End If
-               End Sub)
+    Public Sub ShowProgressTitle(title As String, Optional directAccess As Boolean = False)
+        If directAccess Then
+            Label2.Text = title
+        ElseIf Not dialogClosed Then
+            Invoke(Sub() Label2.Text = title)
+        End If
     End Sub
 
-    Public Sub ShowProgressDetails(message As String)
-        Invoke(Sub()
-                   If Not dialogClosed Then
-                       Label1.Text = message
-                   End If
-               End Sub)
+    Public Sub ShowProgressDetails(message As String, Optional directAccess As Boolean = False)
+        If directAccess Then
+            Label1.Text = message
+        ElseIf Not dialogClosed Then
+            Invoke(Sub() Label1.Text = message)
+        End If
     End Sub
 
     Private Sub frmTaskProgress_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
@@ -75,12 +75,14 @@ Public Class frmTaskProgress
             Return
         End If
 
-        If e.KeyCode = Keys.Escape Then
-            Label2.Text = "Task Cancel..."
-            dialogClosed = True
-            TaskCancel()
-            Thread.Sleep(1000)
-            Me.Close()
-        End If
+        SyncLock Label1
+            SyncLock Label2
+                If e.KeyCode = Keys.Escape Then
+                    Label2.Text = "Task Cancel..."
+                    dialogClosed = True
+                    TaskCancel()
+                End If
+            End SyncLock
+        End SyncLock
     End Sub
 End Class
