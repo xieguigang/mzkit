@@ -110,6 +110,12 @@ as the same as create a XIC plot, you also can create TIC plot for a single file
 ![](docs/manual/TIC.png)
 > The TIC plot is similar to the XIC plot, data is generated from all ions.
 
+### Raw Scatter
+
+just click on the node of the raw file, then you will open the raw scatter plot of your specific raw data file, example as:
+
+![](docs/manual/raw-scatter.PNG)
+
 ###  1.5. <a name='ViewMassspectra'></a>View Mass spectra
 
 For view the mass spectra data in your file, just click on one of the scan feature in your raw data file:
