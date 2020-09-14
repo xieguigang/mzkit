@@ -63,6 +63,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.ForceDirected
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Language
 Imports mzkit.cooldatagridview
 Imports mzkit.My
 Imports RibbonLib.Interop
@@ -114,6 +115,7 @@ Public Class PageMoleculeNetworking
         Dim linkWidth As Func(Of Graph.Edge, Single) = Function(l) similarityRange.ScaleMapping(l.weight, linkWidthRange)
         Dim nodeClusters = graph.vertex.Select(Function(a) a.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE)).Distinct.Indexing
         Dim colorSet As SolidBrush() = Designer.GetColors("Set1:c9", nodeClusters.Count).Select(Function(a) New SolidBrush(a)).ToArray
+        Dim cancel As Value(Of Boolean) = False
 
         For Each v In graph.vertex
             v.data.color = colorSet(nodeClusters.IndexOf(v.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE)))
@@ -121,6 +123,7 @@ Public Class PageMoleculeNetworking
 
         progress.ShowProgressTitle("Molecular networking")
         progress.ShowProgressDetails("Refresh network")
+        progress.TaskCancel = Sub() cancel.Value = True
 
         Dim task As New Thread(
             Sub()
@@ -132,7 +135,8 @@ Public Class PageMoleculeNetworking
                         parameters:=Globals.Settings.network.layout,
                         progressCallback:=Sub(msg)
                                               progress.Invoke(Sub() progress.ShowProgressDetails(msg))
-                                          End Sub)
+                                          End Sub,
+                        cancel:=cancel)
 
                 ' Dim layouts = Planner.Plan(graph, Globals.Settings.network.layout.Iterations, Sub(msg) progress.Invoke(Sub() progress.ShowProgressDetails ( msg))
 

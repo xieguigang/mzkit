@@ -71,14 +71,14 @@ Public Class frmTaskProgress
     End Sub
 
     Private Sub frmTaskProgress_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
+        If TaskCancel Is Nothing Then
+            Return
+        End If
+
         If e.KeyCode = Keys.Escape Then
             Label2.Text = "Task Cancel..."
             dialogClosed = True
-
-            If Not TaskCancel Is Nothing Then
-                Call TaskCancel()
-            End If
-
+            TaskCancel()
             Thread.Sleep(1000)
             Me.Close()
         End If
