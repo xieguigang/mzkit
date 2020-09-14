@@ -190,7 +190,7 @@ Public Class PageMzkitTools
                         Next
                     End Using
 
-                    Me.Invoke(Sub() PictureBox1.BackgroundImage = MzrtPlot.Plot(ms1, rawfile:=raw.source.FileName).AsGDIImage)
+                    Me.Invoke(Sub() PictureBox1.BackgroundImage = MzrtPlot.Plot(ms1, margin:="padding:200px 600px 200px 200px;", rawfile:=raw.source.FileName).AsGDIImage)
                     spinner.Invoke(Sub() Call spinner.Close())
                 End Sub)
 

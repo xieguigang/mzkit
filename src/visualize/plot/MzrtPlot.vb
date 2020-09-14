@@ -121,6 +121,7 @@ Public Module MzrtPlot
             htmlLabel:=False,
             gridFill:=Color.White.ToHtmlColor,
             XaxisAbsoluteScalling:=True,
+            YaxisAbsoluteScalling:=True,
             showLegend:=False,
             tickFontStyle:=tickCSS,
             axisStroke:=axisStroke
