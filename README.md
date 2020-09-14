@@ -52,7 +52,7 @@ Mzkit is an open source raw data file toolkit for mass spectrometry data analysi
 
 **Credits**
 
-> This open source mass spectrometry data toolkit is developed at the [BioDeep](http://www.biodeep.cn/) R&D laboratory and provided to you by ``BioNovoGene`` corporation.
+> This open source mass spectrometry data toolkit is developed at the [BioDeep](http://www.biodeep.cn/) R&D laboratory and brought to you by ``BioNovoGene`` corporation.
 
 ![](docs/BioNovoGene.png)
 
