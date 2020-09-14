@@ -37,7 +37,7 @@ Mzkit is an open source raw data file toolkit for mass spectrometry data analysi
 		* 2.2.4. [step4 network visualization](#step4networkvisualization)
 		* 2.2.5. [Export Network Data](#ExportNetworkData)
 		* 2.2.6. [Save Network Visual](#SaveNetworkVisual)
-		
+
 * 3. [Appendix](#Appendix)
 	* 3.1. [Switch Between Toolkit](#SwitchBetweenToolkit)
 	* 3.2. [Install Mzkit](#InstallMzkit)
@@ -110,6 +110,8 @@ as the same as create a XIC plot, you also can create TIC plot for a single file
 
 ![](docs/manual/TIC.png)
 > The TIC plot is similar to the XIC plot, data is generated from all ions.
+
+<div style="page-break-after:always;"></div>
 
 ###  1.5. <a name='RawScatter'></a>Raw Scatter
 
