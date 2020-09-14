@@ -14,29 +14,22 @@ Mzkit is an open source raw data file toolkit for mass spectrometry data analysi
 	* 1.1. [Imports raw data file](#Importsrawdatafile)
 	* 1.2. [Search Feature](#SearchFeature)
 	* 1.3. [XIC plot](#XICplot)
-
 		* 1.3.1. [XIC overlay](#XICoverlay)
-
 	* 1.4. [TIC plot](#TICplot)
-	* 1.5. [View Mass spectra](#ViewMassspectra)
-	* 1.6. [Save Plot and Export matrix](#SavePlotandExportmatrix)
-
-		* 1.6.1. [Export XIC](#ExportXIC)
-
+	* 1.5. [Raw Scatter](#RawScatter)
+	* 1.6. [View Mass spectra](#ViewMassspectra)
+	* 1.7. [Save Plot and Export matrix](#SavePlotandExportmatrix)
+		* 1.7.1. [Export XIC](#ExportXIC)
 * 2. [Data Annotations](#DataAnnotations)
 	* 2.1. [Formula search](#Formulasearch)
-
 		* 2.1.1. [Export Formula Search Result](#ExportFormulaSearchResult)
-
 	* 2.2. [Molecular Networking](#MolecularNetworking)
-
 		* 2.2.1. [step1 select ions](#step1selections)
 		* 2.2.2. [step2 build network](#step2buildnetwork)
 		* 2.2.3. [step3 view network data](#step3viewnetworkdata)
 		* 2.2.4. [step 4 network visualization](#step4networkvisualization)
 		* 2.2.5. [Export Network Data](#ExportNetworkData)
 		* 2.2.6. [Save Network Visual](#SaveNetworkVisual)
-		
 * 3. [Appendix](#Appendix)
 	* 3.1. [Switch Between Toolkit](#SwitchBetweenToolkit)
 	* 3.2. [Install Mzkit](#InstallMzkit)
@@ -110,19 +103,19 @@ as the same as create a XIC plot, you also can create TIC plot for a single file
 ![](docs/manual/TIC.png)
 > The TIC plot is similar to the XIC plot, data is generated from all ions.
 
-### Raw Scatter
+###  1.5. <a name='RawScatter'></a>Raw Scatter
 
 just click on the node of the raw file, then you will open the raw scatter plot of your specific raw data file, example as:
 
 ![](docs/manual/raw-scatter.PNG)
 
-###  1.5. <a name='ViewMassspectra'></a>View Mass spectra
+###  1.6. <a name='ViewMassspectra'></a>View Mass spectra
 
 For view the mass spectra data in your file, just click on one of the scan feature in your raw data file:
 
 ![](docs/manual/ms2-plot.png)
 
-###  1.6. <a name='SavePlotandExportmatrix'></a>Save Plot and Export matrix
+###  1.7. <a name='SavePlotandExportmatrix'></a>Save Plot and Export matrix
 
 The mzkit application provides the function for save the plot image and the plot data in your raw data file. for example, select the ``Data Viewer`` tab page in mzkit, you will see two viewer action buttons in the menu:
 
@@ -131,7 +124,7 @@ The mzkit application provides the function for save the plot image and the plot
 
 ![](docs/manual/export-plot-matrix.png)
 
-####  1.6.1. <a name='ExportXIC'></a>Export XIC
+####  1.7.1. <a name='ExportXIC'></a>Export XIC
 
 Export the XIC data to a specific file is also keeps simple, just mouse right click on the file content tree and then choose ``Export XIC Ions``.
 
