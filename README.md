@@ -14,22 +14,30 @@ Mzkit is an open source raw data file toolkit for mass spectrometry data analysi
 	* 1.1. [Imports raw data file](#Importsrawdatafile)
 	* 1.2. [Search Feature](#SearchFeature)
 	* 1.3. [XIC plot](#XICplot)
+
 		* 1.3.1. [XIC overlay](#XICoverlay)
+
 	* 1.4. [TIC plot](#TICplot)
 	* 1.5. [Raw Scatter](#RawScatter)
 	* 1.6. [View Mass spectra](#ViewMassspectra)
 	* 1.7. [Save Plot and Export matrix](#SavePlotandExportmatrix)
+
 		* 1.7.1. [Export XIC](#ExportXIC)
+
 * 2. [Data Annotations](#DataAnnotations)
 	* 2.1. [Formula search](#Formulasearch)
+
 		* 2.1.1. [Export Formula Search Result](#ExportFormulaSearchResult)
+
 	* 2.2. [Molecular Networking](#MolecularNetworking)
+
 		* 2.2.1. [step1 select ions](#step1selections)
 		* 2.2.2. [step2 build network](#step2buildnetwork)
 		* 2.2.3. [step3 view network data](#step3viewnetworkdata)
 		* 2.2.4. [step4 network visualization](#step4networkvisualization)
 		* 2.2.5. [Export Network Data](#ExportNetworkData)
 		* 2.2.6. [Save Network Visual](#SaveNetworkVisual)
+		
 * 3. [Appendix](#Appendix)
 	* 3.1. [Switch Between Toolkit](#SwitchBetweenToolkit)
 	* 3.2. [Install Mzkit](#InstallMzkit)
