@@ -1,47 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::57015c606b43fc535d8df35b8bac7720, src\mzkit\Task\ImportsRawData.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class ImportsRawData
-    ' 
-    '     Properties: raw
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: importsMzML, importsMzXML, RunImports
-    ' 
-    ' /********************************************************************************/
+' Class ImportsRawData
+' 
+'     Properties: raw
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Sub: importsMzML, importsMzXML, RunImports
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -49,6 +49,8 @@ Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.IO.netCDF
@@ -64,6 +66,8 @@ Public Class ImportsRawData
     ReadOnly temp1, temp2 As String
     ReadOnly showProgress As Action(Of String)
     ReadOnly success As Action
+    ReadOnly tolerance As Tolerance = Tolerance.PPM(20)
+    ReadOnly intoCutoff As LowAbundanceTrimming = New RelativeIntensityCutoff(0.01)
 
     Public ReadOnly Property raw As Raw
 
@@ -115,7 +119,7 @@ Public Class ImportsRawData
                     New attribute With {.name = NameOf(scan.precursorMz.activationMethod), .type = CDFDataTypes.CHAR, .value = scan.precursorMz.activationMethod Or "n/a".AsDefault},
                     New attribute With {.name = NameOf(scan.precursorMz.precursorCharge), .type = CDFDataTypes.DOUBLE, .value = scan.precursorMz.precursorCharge}
                 }
-                data = scan.peaks.Base64Decode(True)
+                data = compress(scan.peaks.Base64Decode(True)).ToArray
                 name = scan.getName & $" scan={nscans.Count + 1}"
 
                 Dim scanData As New CDFData With {.numerics = data}
@@ -156,6 +160,13 @@ Public Class ImportsRawData
             Call showProgress("Write cache data...")
         End Using
     End Sub
+
+    Private Iterator Function compress(raw As IEnumerable(Of Double)) As IEnumerable(Of Double)
+        For Each mz In raw.AsMs2.ToArray.Centroid(tolerance, intoCutoff)
+            Yield mz.intensity
+            Yield mz.mz
+        Next
+    End Function
 
     Private Sub importsMzML()
         Using cache1 As New CDFWriter(temp1, Encodings.UTF8WithoutBOM), cache2 As New CDFWriter(temp2, Encodings.UTF8WithoutBOM)
@@ -213,6 +224,7 @@ Public Class ImportsRawData
                 End If
 
                 rt.Add(scan.scan_time)
+                data = New List(Of Double)(compress(data))
 
                 Dim scanData As New CDFData With {.numerics = data}
                 Dim scanSize As New Dimension With {
