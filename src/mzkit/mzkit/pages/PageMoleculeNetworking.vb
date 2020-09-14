@@ -302,6 +302,7 @@ Public Class PageMoleculeNetworking
         DataGridView2.Rows.Add("nodes", g.vertex.Count)
         DataGridView2.Rows.Add("edges", g.graphEdges.Count)
         DataGridView2.Rows.Add("single nodes", g.vertex.Count - g.connectedNodes.Length)
+        DataGridView2.Rows.Add("similarity_threshold", cutoff)
 
         For Each cluster In rawMatrix.GroupBy(Function(a) a.Cluster).OrderBy(Function(a) Val(a.Key))
             DataGridView2.Rows.Add($"#Cluster_{cluster.Key}", cluster.Count)
@@ -312,7 +313,24 @@ Public Class PageMoleculeNetworking
         If Not g Is Nothing Then
             Using file As New FolderBrowserDialog With {.ShowNewFolderButton = True}
                 If file.ShowDialog = DialogResult.OK Then
-                    Call g.Tabular({"member_size", "m/z", "rt", "rtmin", "rtmax", "area", "forward", "reverse", "color"}).Save(output:=file.SelectedPath)
+                    Dim meta As New Dictionary(Of String, String)
+
+                    For i As Integer = 0 To DataGridView2.Rows.Count - 1
+                        Dim key As String = Scripting.ToString(DataGridView2.Rows(i).Cells(0).Value)
+                        Dim val As String = Scripting.ToString(DataGridView2.Rows(i).Cells(1).Value)
+
+                        meta(key) = val
+                    Next
+
+                    Call g.Tabular(
+                        properties:={"member_size", "m/z", "rt", "rtmin", "rtmax", "area", "forward", "reverse", "color"},
+                        creators:={My.User.Name},
+                        title:="Molecular Networking",
+                        description:="Molecular Networking Model",
+                        keywords:={"spectrum"},
+                        links:={"http://mzkit.org"},
+                        meta:=meta
+                    ).Save(output:=file.SelectedPath)
                     Call Process.Start(file.SelectedPath)
                 End If
             End Using
