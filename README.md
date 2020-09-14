@@ -27,7 +27,7 @@ Mzkit is an open source raw data file toolkit for mass spectrometry data analysi
 		* 2.2.1. [step1 select ions](#step1selections)
 		* 2.2.2. [step2 build network](#step2buildnetwork)
 		* 2.2.3. [step3 view network data](#step3viewnetworkdata)
-		* 2.2.4. [step 4 network visualization](#step4networkvisualization)
+		* 2.2.4. [step4 network visualization](#step4networkvisualization)
 		* 2.2.5. [Export Network Data](#ExportNetworkData)
 		* 2.2.6. [Save Network Visual](#SaveNetworkVisual)
 * 3. [Appendix](#Appendix)
@@ -186,7 +186,7 @@ there are columns in the edge table: ``CompoundA`` and ``CompoundB`` is the spec
 
 ![](docs/manual/network_nodes_viewer.PNG)
 
-####  2.2.4. <a name='step4networkvisualization'></a>step 4 network visualization
+####  2.2.4. <a name='step4networkvisualization'></a>step4 network visualization
 
 The mzkit program provides a small build-in network visualization engine that could let you visual the resulted molecular network with just a simple mouse click. As you can see in the previous screenshot, there is a ``Render Network`` command button on the top menu when the ``Network`` tab is actived. No we just click on it, and wait for the network layout calculation progress complete, and then we will see a new tag page which is named ``Molecular Networking Viewer`` will be shown in the document area of the mzkit program.
 
