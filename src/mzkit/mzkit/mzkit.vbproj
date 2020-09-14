@@ -31,7 +31,7 @@
     <SuiteName>mzkit</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>162</ApplicationRevision>
+    <ApplicationRevision>163</ApplicationRevision>
     <ApplicationVersion>1.12.2.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
