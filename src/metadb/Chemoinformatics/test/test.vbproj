@@ -114,6 +114,14 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\mzmath\ms2_math-core\MassSpectrum.math-core.vbproj">
+      <Project>{A2130297-2B4A-4B02-80B2-5CFA860F6DAE}</Project>
+      <Name>MassSpectrum.math-core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\FormulaSearch.Extensions\FormulaSearch.Extensions.vbproj">
+      <Project>{7ACFED27-3BC8-47E1-A1A2-226C82C6DC1F}</Project>
+      <Name>FormulaSearch.Extensions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Chemoinformatics.vbproj">
       <Project>{c3faf972-2d6d-4fcb-8e1f-a66fe130d485}</Project>
       <Name>Chemoinformatics</Name>

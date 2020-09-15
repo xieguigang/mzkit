@@ -115,6 +115,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PeakAnnotation.vb" />
     <Compile Include="PrecursorIonComposition.vb" />
     <Compile Include="PrecursorIonSearch.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
