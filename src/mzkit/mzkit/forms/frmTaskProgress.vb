@@ -85,4 +85,8 @@ Public Class frmTaskProgress
             End SyncLock
         End SyncLock
     End Sub
+
+    Private Sub frmTaskProgress_Load(sender As Object, e As EventArgs) Handles Me.Load
+        DoubleBuffered = True
+    End Sub
 End Class

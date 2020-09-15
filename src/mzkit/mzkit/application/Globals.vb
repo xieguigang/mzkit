@@ -81,6 +81,7 @@ Module Globals
         For Each node As TreeNode In explorer.Nodes
             files.Add(node.Tag)
             progress(files.Last.source)
+            Application.DoEvents()
         Next
 
         Dim obj As Dictionary(Of String, Raw) = files.ToDictionary(Function(raw) raw.source.FileName)
@@ -92,6 +93,8 @@ Module Globals
         Using buffer = cacheList.Open(doClear:=True)
             Call DirectCast(model, JsonObject).WriteBuffer(buffer)
         End Using
+
+        Application.DoEvents()
     End Sub
 
     <Extension>

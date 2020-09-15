@@ -70,6 +70,8 @@ Public Class frmSplashScreen
     End Sub
 
     Private Sub frmSplashScreen_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        DoubleBuffered = True
+
         Label3.Text = Label3.Text.Replace("%s", My.User.Name)
         Label4.Text = "Built: " & GetType(MyApplication).Assembly.FromAssembly.AssemblyVersion
         Label4.Location = New Point(Width - Label4.Width - 5, Label4.Location.Y)
