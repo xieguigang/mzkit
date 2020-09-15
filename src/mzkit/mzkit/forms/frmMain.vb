@@ -55,6 +55,8 @@ Imports System.IO
 Imports System.Text
 Imports System.Threading
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
+Imports Microsoft.VisualBasic.ApplicationServices.Development
+Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Language
@@ -502,6 +504,14 @@ Public Class frmMain
 
         Timer1.Enabled = True
         Timer1.Start()
+
+        Dim text As New StringBuilder
+
+        Using output As New StringWriter(text)
+            Call GetType(MyApplication).Assembly.FromAssembly.AppSummary("Welcome to the BioNovoGene M/z Data Toolkit!", "", output)
+        End Using
+
+        Call MyApplication.LogText(text.ToString)
 
         splashScreen.UpdateInformation("Ready!")
         showStatusMessage("Ready!")
