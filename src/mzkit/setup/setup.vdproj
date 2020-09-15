@@ -11,6 +11,7 @@
 "SccLocalPath" = "8:"
 "SccAuxPath" = "8:"
 "SccProvider" = "8:"
+"BackwardsCompatibleGUIDGeneration" = "8:TRUE"
     "Hierarchy"
     {
         "Entry"
@@ -131,6 +132,12 @@
         {
         "MsmKey" = "8:_1927790E5089B0558511506FB83EC009"
         "OwnerKey" = "8:_9B1AD369B6AF4B6664F28C59A2A29CD4"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_258D321B9E934FA797180E193A4B6FEF"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -472,13 +479,13 @@
         "Entry"
         {
         "MsmKey" = "8:_82B874A3E15FD8B2C809177D97243C40"
-        "OwnerKey" = "8:_F2AC233868A0AE4DF97BFF0CC274E7B2"
+        "OwnerKey" = "8:_A974B82B75E364922515D8303709B782"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_82B874A3E15FD8B2C809177D97243C40"
-        "OwnerKey" = "8:_A974B82B75E364922515D8303709B782"
+        "OwnerKey" = "8:_F2AC233868A0AE4DF97BFF0CC274E7B2"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -2081,6 +2088,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_258D321B9E934FA797180E193A4B6FEF"
+            {
+            "SourcePath" = "8:..\\..\\..\\DATA\\test\\003_Ex2_Orbitrap_CID.mzXML"
+            "TargetName" = "8:003_Ex2_Orbitrap_CID.mzXML"
+            "Tag" = "8:"
+            "Folder" = "8:_B9D8DBF2CB264DB68138AECF6EEAB14E"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_2701DDE06972109FAF671DFAE5155136"
@@ -3753,6 +3780,17 @@
             "Property" = "8:TARGETDIR"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_B9D8DBF2CB264DB68138AECF6EEAB14E"
+                    {
+                    "Name" = "8:demo"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_0C9882E9413F450B8940D37AF0999BDD"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
         }
@@ -3771,20 +3809,20 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:mzkit_win32"
-        "ProductCode" = "8:{D4D50904-FE62-4417-84C6-50F9B4115926}"
-        "PackageCode" = "8:{F6ED9258-9FC4-416A-ACB6-C88760F98C62}"
+        "ProductCode" = "8:{B42C1981-75C3-4386-9A55-7FE995EE5A59}"
+        "PackageCode" = "8:{016E2DF7-D5DE-4A9A-83E9-05A9B1332B9F}"
         "UpgradeCode" = "8:{2EA3A56D-9F20-40D2-99DA-4AA0842E10AD}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.124.11499"
+        "ProductVersion" = "8:1.124.11534"
         "Manufacturer" = "8:BioNovoGene"
-        "ARPHELPTELEPHONE" = "8:"
+        "ARPHELPTELEPHONE" = "8:0512-62959105"
         "ARPHELPLINK" = "8:http://mzkit.org"
         "Title" = "8:BioNovoGene M/z Toolkit Setup"
-        "Subject" = "8:"
+        "Subject" = "8:market@bionovogene.com"
         "ARPCONTACT" = "8:xieguigang"
         "Keywords" = "8:mzkit"
         "ARPCOMMENTS" = "8:Installer for BioNovoGene M/z Toolkit "
