@@ -57,8 +57,8 @@ Public Class PageMzSearch
     Private Sub doExactMassSearch(exact_mass As Double, ppm As Double)
         Dim progress As New frmTaskProgress
 
-        progress.ShowProgressTitle("Do M/z Search")
-        progress.ShowProgressDetails("Initialized...")
+        progress.ShowProgressTitle("Do M/z Search", directAccess:=True)
+        progress.ShowProgressDetails("Initialized...", directAccess:=True)
 
         Call New Thread(
             Sub()
@@ -70,8 +70,8 @@ Public Class PageMzSearch
     Public Sub doMzSearch(mz As Double, charge As Integer, ionMode As Integer)
         Dim progress As New frmTaskProgress
 
-        progress.ShowProgressTitle("Do M/z Search")
-        progress.ShowProgressDetails("Initialized...")
+        progress.ShowProgressTitle("Do M/z Search", directAccess:=True)
+        progress.ShowProgressDetails("Initialized...", directAccess:=True)
 
         Call New Thread(
             Sub()
