@@ -1871,7 +1871,7 @@
                 {
                 "Name" = "8:.NET Framework"
                 "Message" = "8:[VSDNETMSG]"
-                "FrameworkVersion" = "8:.NETFramework,Version=v4.7.2"
+                "FrameworkVersion" = "8:.NETFramework,Version=v4.8"
                 "AllowLaterVersions" = "11:FALSE"
                 "InstallUrl" = "8:http://go.microsoft.com/fwlink/?LinkId=863262"
                 }
@@ -3847,7 +3847,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:mzkit_win32"
         "ProductCode" = "8:{B4A8A783-AE03-4C4B-8DE8-CF7410FD780A}"
-        "PackageCode" = "8:{D396A6F5-81CC-4428-B90A-BCE2D39F23EB}"
+        "PackageCode" = "8:{52952E14-66C1-408F-BFDE-5706090433FA}"
         "UpgradeCode" = "8:{2EA3A56D-9F20-40D2-99DA-4AA0842E10AD}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
