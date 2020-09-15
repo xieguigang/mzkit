@@ -84,7 +84,7 @@ Public Class ImportsRawData
             .ms1_cache = temp1.GetFullPath,
             .ms2_cache = temp2.GetFullPath,
             .source = source.GetFullPath,
-            .scatter = scatterTemp
+            .scatter = scatterTemp.GetFullPath
         }
     End Sub
 

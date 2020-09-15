@@ -182,6 +182,7 @@ Public Class PageMzkitTools
 
                     If raw.scatter.FileLength < 0 Then
                         raw.scatter = App.AppSystemTemp & "/" & raw.source.GetFullPath.MD5 & ".scatter"
+                        raw.scatter = raw.scatter.GetFullPath
                         image = raw.DrawScatter
                         image.SaveAs(raw.scatter)
                     Else
