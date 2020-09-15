@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30330.147
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "mzkit", "mzkit\mzkit\mzkit.vbproj", "{2CD05F2C-B62F-4859-844D-E2968D05B4EA}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "mzkit_win32", "mzkit\mzkit\mzkit_win32.vbproj", "{2CD05F2C-B62F-4859-844D-E2968D05B4EA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "modules", "modules", "{E81656A5-E861-498F-B925-6AF2422565C0}"
 EndProject
@@ -110,6 +110,8 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "application_xml", "..\..\GCModeller\src\runtime\sciBASIC#\mime\application%xml\application_xml.vbproj", "{25AF39F4-76AF-411F-AC19-0DD1E128D801}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "application.vnd.openxmlformats-officedocument.spreadsheetml.sheet", "..\..\GCModeller\src\runtime\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\application.vnd.openxmlformats-officedocument.spreadsheetml.sheet.vbproj", "{E695D793-C970-422B-BA74-703EE43194FC}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "setup", "mzkit\setup\setup.vdproj", "{B4BF50CA-CE68-4A17-95D9-833CB80C1253}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -6875,8 +6877,8 @@ Global
 		{25AF39F4-76AF-411F-AC19-0DD1E128D801}.mysqli_X64_release|x86.Build.0 = Debug|Any CPU
 		{25AF39F4-76AF-411F-AC19-0DD1E128D801}.mzkit|Any CPU.ActiveCfg = Debug|Any CPU
 		{25AF39F4-76AF-411F-AC19-0DD1E128D801}.mzkit|Any CPU.Build.0 = Debug|Any CPU
-		{25AF39F4-76AF-411F-AC19-0DD1E128D801}.mzkit|x64.ActiveCfg = Debug|x64
-		{25AF39F4-76AF-411F-AC19-0DD1E128D801}.mzkit|x64.Build.0 = Debug|x64
+		{25AF39F4-76AF-411F-AC19-0DD1E128D801}.mzkit|x64.ActiveCfg = Release|x64
+		{25AF39F4-76AF-411F-AC19-0DD1E128D801}.mzkit|x64.Build.0 = Release|x64
 		{25AF39F4-76AF-411F-AC19-0DD1E128D801}.mzkit|x86.ActiveCfg = Debug|Any CPU
 		{25AF39F4-76AF-411F-AC19-0DD1E128D801}.mzkit|x86.Build.0 = Debug|Any CPU
 		{25AF39F4-76AF-411F-AC19-0DD1E128D801}.node-debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -7095,6 +7097,81 @@ Global
 		{E695D793-C970-422B-BA74-703EE43194FC}.Yilia-Release_x64|x64.Build.0 = Release|x64
 		{E695D793-C970-422B-BA74-703EE43194FC}.Yilia-Release_x64|x86.ActiveCfg = Release|x86
 		{E695D793-C970-422B-BA74-703EE43194FC}.Yilia-Release_x64|x86.Build.0 = Release|x86
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.BioDeep_database|Any CPU.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.BioDeep_database|x64.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.BioDeep_database|x86.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.Biodeep_UNIX_x64|Any CPU.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.Biodeep_UNIX_x64|x64.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.Biodeep_UNIX_x64|x86.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.Biodeep|Any CPU.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.Biodeep|x64.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.Biodeep|x86.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.Biostack|Any CPU.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.Biostack|x64.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.Biostack|x86.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.Biostack-Debug|Any CPU.ActiveCfg = Debug
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.Biostack-Debug|x64.ActiveCfg = Debug
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.Biostack-Debug|x86.ActiveCfg = Debug
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.Debug|Any CPU.ActiveCfg = Debug
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.Debug|x64.ActiveCfg = Debug
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.Debug|x86.ActiveCfg = Debug
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.DEMO|Any CPU.ActiveCfg = Debug
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.DEMO|x64.ActiveCfg = Debug
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.DEMO|x86.ActiveCfg = Debug
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.docs|Any CPU.ActiveCfg = Debug
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.docs|x64.ActiveCfg = Debug
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.docs|x86.ActiveCfg = Debug
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.GCModeller(Release_X64)|Any CPU.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.GCModeller(Release_X64)|x64.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.GCModeller(Release_X64)|x86.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.GCModeller(UNIX-Release_X64)|Any CPU.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.GCModeller(UNIX-Release_X64)|x64.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.GCModeller(UNIX-Release_X64)|x86.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.GTA5-game-test|Any CPU.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.GTA5-game-test|x64.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.GTA5-game-test|x86.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.installer_x64|Any CPU.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.installer_x64|x64.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.installer_x64|x86.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.mysqli_X64_release|Any CPU.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.mysqli_X64_release|x64.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.mysqli_X64_release|x86.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.mzkit|Any CPU.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.mzkit|x64.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.mzkit|x86.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.node-debug|Any CPU.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.node-debug|x64.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.node-debug|x86.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.PlantMAT|Any CPU.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.PlantMAT|x64.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.PlantMAT|x86.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.ProteoWizard.d|Any CPU.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.ProteoWizard.d|x64.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.ProteoWizard.d|x86.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.Publish|Any CPU.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.Publish|x64.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.Publish|x86.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.Release|Any CPU.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.Release|x64.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.Release|x86.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.Rsharp_app_release|Any CPU.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.Rsharp_app_release|x64.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.Rsharp_app_release|x86.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.sciBASIC.NET-test-release|Any CPU.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.sciBASIC.NET-test-release|x64.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.sciBASIC.NET-test-release|x86.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.Surveillance-of-infectious-diseases|Any CPU.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.Surveillance-of-infectious-diseases|x64.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.Surveillance-of-infectious-diseases|x86.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.test|Any CPU.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.test|x64.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.test|x86.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.WebAssembly|Any CPU.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.WebAssembly|x64.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.WebAssembly|x86.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.Yilia-Release_x64|Any CPU.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.Yilia-Release_x64|x64.ActiveCfg = Release
+		{B4BF50CA-CE68-4A17-95D9-833CB80C1253}.Yilia-Release_x64|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
