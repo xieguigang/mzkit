@@ -56,9 +56,19 @@ Public Class frmTaskProgress
 
     Public Sub ShowProgressTitle(title As String, Optional directAccess As Boolean = False)
         If directAccess Then
-            Label2.Text = title
+            If TaskCancel Is Nothing Then
+                Label2.Text = title
+            Else
+                Label2.Text = $"{title} [Press ESC for cancel task]"
+            End If
         ElseIf Not dialogClosed Then
-            Invoke(Sub() Label2.Text = title)
+            Invoke(Sub()
+                       If TaskCancel Is Nothing Then
+                           Label2.Text = title
+                       Else
+                           Label2.Text = $"{title} [Press ESC for cancel task]"
+                       End If
+                   End Sub)
         End If
     End Sub
 

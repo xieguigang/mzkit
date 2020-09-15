@@ -1,49 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::533b4c2a3d1a68dff0985c66e055f114, src\metadb\Chemoinformatics\Formula\FormulaSearch.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class FormulaSearch
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: ConstructAndVerifyCompoundWork, PPM, (+2 Overloads) SearchByExactMass, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class FormulaSearch
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: ConstructAndVerifyCompoundWork, PPM, (+2 Overloads) SearchByExactMass, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports Microsoft.VisualBasic.Language
 Imports stdNum = System.Math
 
 Namespace Formula
@@ -60,11 +61,15 @@ Namespace Formula
             Me.elements = Element.MemoryLoadElements
         End Sub
 
-        Public Iterator Function SearchByExactMass(exact_mass As Double, Optional doVerify As Boolean = True) As IEnumerable(Of FormulaComposition)
+        Public Iterator Function SearchByExactMass(exact_mass As Double, Optional doVerify As Boolean = True, Optional cancel As Value(Of Boolean) = Nothing) As IEnumerable(Of FormulaComposition)
             Dim elements As New Stack(Of ElementSearchCandiate)(opts.candidateElements.AsEnumerable.Reverse)
             Dim seed As New FormulaComposition(New Dictionary(Of String, Integer), "")
 
-            For Each formula As FormulaComposition In SearchByExactMass(exact_mass, seed, elements)
+            If cancel Is Nothing Then
+                cancel = False
+            End If
+
+            For Each formula As FormulaComposition In SearchByExactMass(exact_mass, seed, elements, cancel)
                 If doVerify Then
                     Dim counts As New ElementNumType(formula)
                     Dim checked As Boolean = False
@@ -142,7 +147,7 @@ Namespace Formula
             Return blnHOK
         End Function
 
-        Private Iterator Function SearchByExactMass(exact_mass As Double, parent As FormulaComposition, candidates As Stack(Of ElementSearchCandiate)) As IEnumerable(Of FormulaComposition)
+        Private Iterator Function SearchByExactMass(exact_mass As Double, parent As FormulaComposition, candidates As Stack(Of ElementSearchCandiate), cancel As Value(Of Boolean)) As IEnumerable(Of FormulaComposition)
             If candidates.Count = 0 Then
                 Return
             End If
@@ -158,6 +163,10 @@ Namespace Formula
                     Continue For
                 End If
 
+                If cancel.Value Then
+                    Exit For
+                End If
+
                 If ppm <= opts.ppm Then
                     formula.ppm = ppm
                     ' populate current formula that match exact mass ppm condition
@@ -167,7 +176,12 @@ Namespace Formula
                         ' 还可以再增加分子质量
                         ' stack必须要在这里进行重新初始化
                         ' 否则会被其他的循环所修改产生bug
-                        For Each subtree In SearchByExactMass(exact_mass, parent:=formula, New Stack(Of ElementSearchCandiate)(candidates.AsEnumerable.Reverse))
+                        For Each subtree In SearchByExactMass(
+                            exact_mass:=exact_mass,
+                            parent:=formula,
+                            candidates:=New Stack(Of ElementSearchCandiate)(candidates.AsEnumerable.Reverse),
+                            cancel:=cancel
+                        )
                             Yield subtree
                         Next
                     End If
