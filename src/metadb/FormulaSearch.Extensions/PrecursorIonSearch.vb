@@ -60,9 +60,16 @@ Public Class PrecursorIonSearch : Inherits FormulaSearch
                    Optional progress As Action(Of String) = Nothing,
                    Optional precursorTypeProgress As Action(Of String) = Nothing)
 
-        MyBase.New(opts, progress)
+        Call MyBase.New(opts, progress)
 
-        Me.precursorTypeProgress = precursorTypeProgress
+        If precursorTypeProgress Is Nothing Then
+            Me.precursorTypeProgress =
+                Sub()
+                    ' do nothing 
+                End Sub
+        Else
+            Me.precursorTypeProgress = precursorTypeProgress
+        End If
     End Sub
 
     Public Function AddPrecursorTypeRanges(ParamArray precursor_types As String()) As PrecursorIonSearch

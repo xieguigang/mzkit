@@ -50,7 +50,7 @@ comment  intensity         mz
             .Select(Function(a) New ms2 With {.mz = Val(a(2)), .intensity = Val(a(1))}) _
             .ToArray
 
-        Dim result = New PeakAnnotation().RunAnnotations(precursor, products, charge)
+        Dim result = New PeakAnnotation().RunAnnotations(precursor, products, charge).toarray
 
         Pause()
     End Sub
