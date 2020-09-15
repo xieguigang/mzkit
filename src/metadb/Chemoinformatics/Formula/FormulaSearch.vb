@@ -82,7 +82,9 @@ Namespace Formula
                     End If
                 End If
 
-                progressReport($"find {formula} with tolerance error {formula.ppm} ppm!")
+                If Not progressReport Is Nothing Then
+                    Call progressReport($"find {formula} with tolerance error {formula.ppm} ppm!")
+                End If
 
                 Yield formula
             Next
