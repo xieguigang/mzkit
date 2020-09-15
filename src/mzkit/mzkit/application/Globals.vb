@@ -75,16 +75,19 @@ Module Globals
     End Function
 
     <Extension>
-    Public Sub SaveRawFileCache(explorer As TreeView)
+    Public Sub SaveRawFileCache(explorer As TreeView, progress As Action(Of String))
         Dim files As New List(Of Task.Raw)
 
         For Each node As TreeNode In explorer.Nodes
             files.Add(node.Tag)
+            progress(files.Last.source)
         Next
 
         Dim obj As Dictionary(Of String, Raw) = files.ToDictionary(Function(raw) raw.source.FileName)
         Dim schema = obj.GetType
         Dim model As JsonElement = schema.GetJsonElement(obj, New JSONSerializerOptions)
+
+        progress("write workspace file...")
 
         Using buffer = cacheList.Open(doClear:=True)
             Call DirectCast(model, JsonObject).WriteBuffer(buffer)

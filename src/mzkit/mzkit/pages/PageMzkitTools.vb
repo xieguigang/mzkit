@@ -123,8 +123,8 @@ Public Class PageMzkitTools
         Return options
     End Function
 
-    Public Sub SaveFileCache()
-        Call TreeView1.SaveRawFileCache
+    Public Sub SaveFileCache(progress As Action(Of String))
+        Call TreeView1.SaveRawFileCache(progress)
     End Sub
 
     Public Sub ImportsRaw(fileName As String)

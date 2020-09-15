@@ -173,7 +173,10 @@ Public Class frmFileTree
         If Not current.raw Is Nothing Then
             If MessageBox.Show($"Going to remove the raw data file [{current.raw.source.FileName}]?", "Delete File", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) = DialogResult.OK Then
                 treeView1.Nodes.Remove(current.tree)
-                treeView1.SaveRawFileCache
+                treeView1.SaveRawFileCache(
+                    Sub()
+                        ' do nothing
+                    End Sub)
 
                 Call MyApplication.host.mzkitTool.setCurrentFile()
             End If

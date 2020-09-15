@@ -411,7 +411,11 @@ Public Class frmMain
             End If
         End If
 
-        TreeView1.SaveRawFileCache
+        TreeView1.SaveRawFileCache(
+            Sub()
+                ' do nothing
+            End Sub)
+
         Me.showStatusMessage("The raw file cache data was saved!")
     End Sub
 
@@ -668,10 +672,10 @@ Public Class frmMain
         Call New Thread(
             Sub()
                 Call Thread.Sleep(100)
-                Call mzkitTool.Invoke(Sub() mzkitTool.SaveFileCache())
+                Call mzkitTool.Invoke(Sub() mzkitTool.SaveFileCache(AddressOf progress.ShowProgressDetails))
                 Call progress.ShowProgressDetails("Save app settings...")
                 Call Invoke(Sub() Call SaveSettings())
-                Call progress.Close()
+                Call progress.Invoke(Sub() progress.Close())
             End Sub).Start()
         Call progress.ShowDialog()
     End Sub
