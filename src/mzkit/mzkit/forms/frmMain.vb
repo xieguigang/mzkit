@@ -53,6 +53,7 @@
 Imports System.ComponentModel
 Imports System.IO
 Imports System.Text
+Imports System.Threading
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Emit.Delegates
@@ -659,8 +660,23 @@ Public Class frmMain
     End Sub
 
     Private Sub frmMain_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-        mzkitTool.SaveFileCache()
+        Dim progress As New frmTaskProgress
 
+        progress.ShowProgressTitle("App Exit...", directAccess:=True)
+        progress.ShowProgressDetails("Save raw data file viewer workspace...", directAccess:=True)
+
+        Call New Thread(
+            Sub()
+                Call Thread.Sleep(100)
+                Call mzkitTool.Invoke(Sub() mzkitTool.SaveFileCache())
+                Call progress.ShowProgressDetails("Save app settings...")
+                Call Invoke(Sub() Call SaveSettings())
+                Call progress.Close()
+            End Sub).Start()
+        Call progress.ShowDialog()
+    End Sub
+
+    Private Sub SaveSettings()
         If Globals.Settings.ui Is Nothing Then
             Globals.Settings.ui = New UISettings
         End If

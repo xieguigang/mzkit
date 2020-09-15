@@ -69,6 +69,7 @@ Public Class frmProgressSpinner
         ' SetStyle(ControlStyles.SupportsTransparentBackColor, True)
         Me.TransparencyKey = Color.Green
         Me.BackColor = Color.Green
+        Me.DoubleBuffered = True
 
         RunAnimation()
     End Sub
