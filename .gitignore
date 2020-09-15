@@ -8,6 +8,8 @@
 *.sln.docstates
 .RData
 
+src/mzkit/setup/installer/
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
