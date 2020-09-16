@@ -84,8 +84,15 @@ Module Globals
             Application.DoEvents()
         Next
 
-        Dim obj As Dictionary(Of String, Raw) = files.ToDictionary(Function(raw) raw.source.FileName)
-        Dim schema = obj.GetType
+        ' fix for duplicated file name
+        Dim obj As Dictionary(Of String, Raw()) = files _
+            .GroupBy(Function(raw) raw.source.FileName) _
+            .ToDictionary(Function(a) a.Key,
+                          Function(a)
+                              Return a.ToArray
+                          End Function)
+
+        Dim schema As Type = obj.GetType
         Dim model As JsonElement = schema.GetJsonElement(obj, New JSONSerializerOptions)
 
         progress("write workspace file...")
@@ -135,15 +142,17 @@ Module Globals
             Call SplashScreenUpdater("Load raw file list...")
         End If
 
-        Dim files As Dictionary(Of String, Raw) = rawBuffer _
+        Dim files As Dictionary(Of String, Raw()) = rawBuffer _
             .DoCall(AddressOf BSONFormat.Load) _
-            .CreateObject(GetType(Dictionary(Of String, Raw)))
+            .CreateObject(GetType(Dictionary(Of String, Raw())))
         Dim i As Integer
 
-        For Each raw As Raw In files.SafeQuery.Values
-            Call SplashScreenUpdater($"[Raw File Viewer] Loading {raw.source.FileName}...")
-            Call explorer.addRawFile(raw)
-            i += 1
+        For Each rawList As Raw() In files.SafeQuery.Values
+            For Each raw In rawList
+                Call SplashScreenUpdater($"[Raw File Viewer] Loading {raw.source.FileName}...")
+                Call explorer.addRawFile(raw)
+                i += 1
+            Next
         Next
 
         Return i
@@ -152,9 +161,9 @@ Module Globals
     <Extension>
     Public Sub addRawFile(explorer As TreeView, raw As Raw)
         Dim rawFileNode As New TreeNode($"{raw.source.FileName} [{raw.numOfScans} Scans]") With {
-                .Checked = True,
-                .Tag = raw
-            }
+            .Checked = True,
+            .Tag = raw
+        }
 
         explorer.Nodes.Add(rawFileNode)
         rawFileNode.addRawFile(raw, True, True)
