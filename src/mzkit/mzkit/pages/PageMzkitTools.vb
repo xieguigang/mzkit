@@ -338,13 +338,17 @@ Public Class PageMzkitTools
         TIC(isBPC:=False)
     End Sub
 
-    Public Sub TIC(raw As Raw)
-        Dim TICList As NamedCollection(Of ChromatogramTick) = rawTIC(raw, isBPC:=False)
+    Public Sub TIC(rawList As IEnumerable(Of Raw))
+        Dim TICList As New List(Of NamedCollection(Of ChromatogramTick))
 
-        showMatrix(TICList.value, TICList.name)
+        For Each raw As Raw In rawList
+            TICList.Add(rawTIC(raw, isBPC))
+        Next
+
+        showMatrix(TICList(Scan0).value, TICList(Scan0).name)
 
         PictureBox1.BackgroundImage = ChromatogramPlot.TICplot(
-            ionData:={TICList},
+            ionData:=TICList.ToArray,
             colorsSchema:=Globals.GetColors,
             fillCurve:=Globals.Settings.viewer.fill
         ).AsGDIImage
@@ -382,21 +386,7 @@ Public Class PageMzkitTools
             End If
         End If
 
-        Dim TICList As New List(Of NamedCollection(Of ChromatogramTick))
 
-        For Each raw As Raw In rawList
-            TICList.Add(rawTIC(raw, isBPC))
-        Next
-
-        showMatrix(TICList(Scan0).value, TICList(Scan0).name)
-
-        PictureBox1.BackgroundImage = ChromatogramPlot.TICplot(
-            ionData:=TICList.ToArray,
-            colorsSchema:=Globals.GetColors,
-            fillCurve:=Globals.Settings.viewer.fill
-        ).AsGDIImage
-
-        MyApplication.host.ShowPage(Me)
 
         'Using cache As New netCDFReader(raw.raw.cache)
         '    Dim progress As New frmTaskProgress() With {.Text = $"Reading TIC raw data [{raw.raw.source}]"}

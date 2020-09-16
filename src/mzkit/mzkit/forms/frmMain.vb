@@ -662,7 +662,7 @@ Public Class frmMain
                     Call openRscript(sourceFile)
                 End If
             Else
-                Dim raw As Raw = Globals.FindRaw(fileExplorer.treeView1, label)
+                Dim raw As Raw() = Globals.FindRaws(fileExplorer.treeView1, label).ToArray
 
                 If raw Is Nothing Then
                     MessageBox.Show($"The given raw data file [{label}] is not exists on your file system!", "File Not Found", MessageBoxButtons.OK, MessageBoxIcon.Information)
