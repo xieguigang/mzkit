@@ -928,13 +928,18 @@ Public Class PageMzkitTools
 
                 XICPlot.AddRange(getXICCollection(ppm))
 
-                plotImage = XICPlot.ToArray.TICplot(
-                    intensityMax:=maxY,
-                    isXIC:=True,
-                    colorsSchema:=Globals.GetColors,
-                    fillCurve:=Globals.Settings.viewer.fill
-                ).AsGDIImage
-                progress.Invoke(Sub() progress.Close())
+                If XICPlot.Count = 0 Then
+                    Call MyApplication.host.showStatusMessage("No XIC ions data for generate plot!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+                Else
+                    plotImage = XICPlot.ToArray.TICplot(
+                        intensityMax:=maxY,
+                        isXIC:=True,
+                        colorsSchema:=Globals.GetColors,
+                        fillCurve:=Globals.Settings.viewer.fill
+                    ).AsGDIImage
+                End If
+
+                Call progress.Invoke(Sub() progress.Close())
             End Sub).Start()
 
         progress.ShowDialog()
