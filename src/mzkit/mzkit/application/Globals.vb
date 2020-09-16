@@ -148,7 +148,7 @@ Module Globals
         Dim i As Integer
 
         For Each rawList As Raw() In files.SafeQuery.Values
-            For Each raw In rawList
+            For Each raw As Raw In rawList.SafeQuery
                 Call SplashScreenUpdater($"[Raw File Viewer] Loading {raw.source.FileName}...")
                 Call explorer.addRawFile(raw)
                 i += 1
