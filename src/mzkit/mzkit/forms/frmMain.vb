@@ -64,6 +64,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports mzkit.DockSample
 Imports mzkit.My
+Imports mzkit.SmileWei.EmbeddedApp
 Imports RibbonLib
 Imports RibbonLib.Controls.Events
 Imports RibbonLib.Interop
@@ -453,6 +454,8 @@ Public Class frmMain
         If splashScreen Is Nothing Then
             MessageBox.Show("The program is corrupt, please re-install and then run again...", "Program File Damaged!", MessageBoxButtons.OK, MessageBoxIcon.Error)
             App.Exit()
+        Else
+            Call Win32API.AllocConsole()
         End If
 
         splashScreen.UpdateInformation("Initialize of the ribbon UI...")
