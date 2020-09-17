@@ -64,6 +64,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports mzkit.DockSample
 Imports mzkit.My
+Imports mzkit.SmileWei.EmbeddedApp
 Imports RibbonLib
 Imports RibbonLib.Controls.Events
 Imports RibbonLib.Interop
@@ -247,39 +248,12 @@ Public Class frmMain
             Dim script As String = editor.script.FastColoredTextBox1.Text
             Dim result As Object
 
-            Using buffer As New MemoryStream
-                Using writer As New StreamWriter(buffer)
-                    MyApplication.REngine.RedirectOutput(writer, OutputEnvironments.Html)
-
-                    If editor.scriptFile.StringEmpty Then
-                        result = MyApplication.REngine.Evaluate(script)
-                    Else
-                        Call script.SaveTo(editor.scriptFile)
-                        result = MyApplication.REngine.Source(editor.scriptFile)
-                    End If
-
-                    writer.Flush()
-                    RtermPage.Routput.AppendText(Encoding.UTF8.GetString(buffer.ToArray) & vbCrLf)
-                End Using
-
-                If TypeOf result Is Message AndAlso DirectCast(result, Message).level = MSG_TYPES.ERR Then
-                    Dim err As Message = result
-
-                    RtermPage.Routput.AppendText(err.ToString & vbCrLf)
-
-                    For i As Integer = 0 To err.message.Length - 1
-                        RtermPage.Routput.AppendText((i + 1) & ". " & err.message(i) & vbCrLf)
-                    Next
-
-                    RtermPage.Routput.AppendText(vbCrLf)
-
-                    For Each stack In err.environmentStack
-                        RtermPage.Routput.AppendText(stack.ToString & vbCrLf)
-                    Next
-
-                    RtermPage.Routput.AppendText(vbCrLf)
-                End If
-            End Using
+            If editor.scriptFile.StringEmpty Then
+                result = MyApplication.REngine.Evaluate(script)
+            Else
+                Call script.SaveTo(editor.scriptFile)
+                result = MyApplication.REngine.Source(editor.scriptFile)
+            End If
 
             RtermPage.Show(dockPanel)
             RtermPage.DockState = DockState.Document
@@ -662,7 +636,7 @@ Public Class frmMain
                     Call openRscript(sourceFile)
                 End If
             Else
-                Dim raw As Raw = Globals.FindRaw(fileExplorer.treeView1, label)
+                Dim raw As Raw() = Globals.FindRaws(fileExplorer.treeView1, label).ToArray
 
                 If raw Is Nothing Then
                     MessageBox.Show($"The given raw data file [{label}] is not exists on your file system!", "File Not Found", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -687,7 +661,9 @@ Public Class frmMain
                 Call Invoke(Sub() Call SaveSettings())
                 Call progress.Invoke(Sub() progress.Close())
             End Sub).Start()
+
         Call progress.ShowDialog()
+        Call App.Exit()
     End Sub
 
     Private Sub SaveSettings()
@@ -835,6 +811,10 @@ Public Class frmMain
 
     Private Sub frmMain_ResizeBegin(sender As Object, e As EventArgs) Handles Me.ResizeBegin
         ' Me.SuspendLayout()
+    End Sub
+
+    Private Sub frmMain_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
+
     End Sub
 
 

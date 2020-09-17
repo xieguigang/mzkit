@@ -57,7 +57,7 @@ Imports Task
 
 Module Globals
 
-    ReadOnly cacheList As String = App.LocalData & "/cacheList.dat"
+    ReadOnly defaultWorkspace As String = App.LocalData & "/cacheList.dat"
 
     Public ReadOnly Property Settings As Settings
 
@@ -84,13 +84,20 @@ Module Globals
             Application.DoEvents()
         Next
 
-        Dim obj As Dictionary(Of String, Raw) = files.ToDictionary(Function(raw) raw.source.FileName)
-        Dim schema = obj.GetType
+        ' fix for duplicated file name
+        Dim obj As Dictionary(Of String, Raw()) = files _
+            .GroupBy(Function(raw) raw.source.FileName) _
+            .ToDictionary(Function(a) a.Key,
+                          Function(a)
+                              Return a.ToArray
+                          End Function)
+
+        Dim schema As Type = obj.GetType
         Dim model As JsonElement = schema.GetJsonElement(obj, New JSONSerializerOptions)
 
         progress("write workspace file...")
 
-        Using buffer = cacheList.Open(doClear:=True)
+        Using buffer = defaultWorkspace.Open(doClear:=True)
             Call DirectCast(model, JsonObject).WriteBuffer(buffer)
         End Using
 
@@ -98,16 +105,14 @@ Module Globals
     End Sub
 
     <Extension>
-    Public Function FindRaw(explorer As TreeView, sourceName As String) As Raw
+    Public Iterator Function FindRaws(explorer As TreeView, sourceName As String) As IEnumerable(Of Raw)
         For Each node As TreeNode In explorer.Nodes
             Dim raw As Raw = DirectCast(node.Tag, Raw)
 
             If raw.source.FileName = sourceName Then
-                Return raw
+                Yield raw
             End If
         Next
-
-        Return Nothing
     End Function
 
     <Extension>
@@ -129,7 +134,7 @@ Module Globals
 
     <Extension>
     Public Function LoadRawFileCache(explorer As TreeView) As Integer
-        Dim rawBuffer As Byte() = cacheList.ReadBinary
+        Dim rawBuffer As Byte() = defaultWorkspace.ReadBinary
 
         If rawBuffer.IsNullOrEmpty Then
             Return 0
@@ -137,15 +142,17 @@ Module Globals
             Call SplashScreenUpdater("Load raw file list...")
         End If
 
-        Dim files As Dictionary(Of String, Raw) = rawBuffer _
+        Dim files As Dictionary(Of String, Raw()) = rawBuffer _
             .DoCall(AddressOf BSONFormat.Load) _
-            .CreateObject(GetType(Dictionary(Of String, Raw)))
+            .CreateObject(GetType(Dictionary(Of String, Raw())))
         Dim i As Integer
 
-        For Each raw As Raw In files.SafeQuery.Values
-            Call SplashScreenUpdater($"[Raw File Viewer] Loading {raw.source.FileName}...")
-            Call explorer.addRawFile(raw)
-            i += 1
+        For Each rawList As Raw() In files.SafeQuery.Values
+            For Each raw As Raw In rawList.SafeQuery
+                Call SplashScreenUpdater($"[Raw File Viewer] Loading {raw.source.FileName}...")
+                Call explorer.addRawFile(raw)
+                i += 1
+            Next
         Next
 
         Return i
@@ -154,9 +161,9 @@ Module Globals
     <Extension>
     Public Sub addRawFile(explorer As TreeView, raw As Raw)
         Dim rawFileNode As New TreeNode($"{raw.source.FileName} [{raw.numOfScans} Scans]") With {
-                .Checked = True,
-                .Tag = raw
-            }
+            .Checked = True,
+            .Tag = raw
+        }
 
         explorer.Nodes.Add(rawFileNode)
         rawFileNode.addRawFile(raw, True, True)

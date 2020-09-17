@@ -338,13 +338,17 @@ Public Class PageMzkitTools
         TIC(isBPC:=False)
     End Sub
 
-    Public Sub TIC(raw As Raw)
-        Dim TICList As NamedCollection(Of ChromatogramTick) = rawTIC(raw, isBPC:=False)
+    Public Sub TIC(rawList As IEnumerable(Of Raw), Optional isBPC As Boolean = False)
+        Dim TICList As New List(Of NamedCollection(Of ChromatogramTick))
 
-        showMatrix(TICList.value, TICList.name)
+        For Each raw As Raw In rawList
+            TICList.Add(rawTIC(raw, isBPC))
+        Next
+
+        showMatrix(TICList(Scan0).value, TICList(Scan0).name)
 
         PictureBox1.BackgroundImage = ChromatogramPlot.TICplot(
-            ionData:={TICList},
+            ionData:=TICList.ToArray,
             colorsSchema:=Globals.GetColors,
             fillCurve:=Globals.Settings.viewer.fill
         ).AsGDIImage
@@ -382,77 +386,7 @@ Public Class PageMzkitTools
             End If
         End If
 
-        Dim TICList As New List(Of NamedCollection(Of ChromatogramTick))
-
-        For Each raw As Raw In rawList
-            TICList.Add(rawTIC(raw, isBPC))
-        Next
-
-        showMatrix(TICList(Scan0).value, TICList(Scan0).name)
-
-        PictureBox1.BackgroundImage = ChromatogramPlot.TICplot(
-            ionData:=TICList.ToArray,
-            colorsSchema:=Globals.GetColors,
-            fillCurve:=Globals.Settings.viewer.fill
-        ).AsGDIImage
-
-        MyApplication.host.ShowPage(Me)
-
-        'Using cache As New netCDFReader(raw.raw.cache)
-        '    Dim progress As New frmTaskProgress() With {.Text = $"Reading TIC raw data [{raw.raw.source}]"}
-        '    Dim showProgress As Action(Of String) = Sub(text) progress.Invoke(Sub() progress.ShowProgressDetails ( text)
-        '    Dim mzgroups As NamedCollection(Of ms2)() = {}
-        '    Dim runTask As New Thread(
-        '            Sub()
-        '                Dim ms1n = raw.raw.scans.Where(Function(a) a.mz = 0R).Count
-        '                Dim i As i32 = 1
-        '                Dim allMz As New List(Of ms2)
-        '                Dim mztemp As ms2()
-
-        '                For Each scan In raw.raw.scans
-        '                    If scan.mz = 0 Then
-        '                        Dim entry = cache.getDataVariableEntry(scan.id)
-        '                        Dim rt As String = entry.attributes.Where(Function(a) a.name = "retentionTime").FirstOrDefault?.value
-
-        '                        mztemp = cache.getDataVariable(entry).numerics.AsMs2.ToArray
-
-        '                        For i2 As Integer = 0 To mztemp.Length - 1
-        '                            mztemp(i2).Annotation = rt
-        '                        Next
-
-        '                        allMz.AddRange(mztemp)
-        '                        showProgress($"[{++i}/{ms1n}] {scan.id}")
-        '                    End If
-        '                Next
-
-        '                showProgress("Run m/z group....")
-        '                mzgroups = allMz _
-        '                    .GroupBy(Function(mz) mz.mz, Tolerance.DeltaMass(5)) _
-        '                    .Select(Function(a)
-        '                                Dim max = a.Select(Function(m) m.intensity).Max
-
-        '                                Return New NamedCollection(Of ms2) With {.value = a.value.Where(Function(m) m.intensity / max >= 0.05).OrderBy(Function(m) Val(m.Annotation)).ToArray}
-        '                            End Function) _
-        '                    .ToArray
-        '                progress.Invoke(Sub() progress.Close())
-        '            End Sub)
-
-        '    showStatusMessage("Run Raw Data Imports")
-        '    progress.ShowProgressTitle (progress.Text
-
-        '    Call runTask.Start()
-        '    Call progress.ShowDialog()
-
-        '    For Each mzblock In mzgroups
-        '        Dim range As New DoubleRange(mzblock.Select(Function(m) m.mz))
-
-        '        raw.tree.Nodes.Add(New TreeNode($"m/z {range.Min.ToString("F3")} - {range.Max.ToString("F3")}") With {.Tag = mzblock.ToArray})
-        '    Next
-
-        '    showStatusMessage("Ready!")
-        'End Using
-
-        ' MyApplication.host.Invoke(Sub() RibbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.NotAvailable)
+        Call TIC(rawList, isBPC)
     End Sub
 
     Public Sub SaveImageToolStripMenuItem_Click()
@@ -928,13 +862,18 @@ Public Class PageMzkitTools
 
                 XICPlot.AddRange(getXICCollection(ppm))
 
-                plotImage = XICPlot.ToArray.TICplot(
-                    intensityMax:=maxY,
-                    isXIC:=True,
-                    colorsSchema:=Globals.GetColors,
-                    fillCurve:=Globals.Settings.viewer.fill
-                ).AsGDIImage
-                progress.Invoke(Sub() progress.Close())
+                If XICPlot.Count = 0 Then
+                    Call MyApplication.host.showStatusMessage("No XIC ions data for generate plot!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+                Else
+                    plotImage = XICPlot.ToArray.TICplot(
+                        intensityMax:=maxY,
+                        isXIC:=True,
+                        colorsSchema:=Globals.GetColors,
+                        fillCurve:=Globals.Settings.viewer.fill
+                    ).AsGDIImage
+                End If
+
+                Call progress.Invoke(Sub() progress.Close())
             End Sub).Start()
 
         progress.ShowDialog()

@@ -34,7 +34,7 @@
 				 LabelTitle="Save"
 				 LabelDescription="Save Current File"
 				 TooltipTitle="Save (Ctrl+S)"
-				 TooltipDescription="Save the current Script File or Application Configuration.">
+				 TooltipDescription="Save the current script file, image plot or application configuration.">
 			<Command.LargeImages>
 				<Image>Res/document-save.png</Image>
 			</Command.LargeImages>
@@ -990,7 +990,7 @@
 					<QuickAccessToolbar.ApplicationDefaults>
 						<Button CommandName="cmdButtonPageNavBack" ApplicationDefaults.IsChecked="true" />
 						<Button CommandName="cmdButtonOpenRaw" ApplicationDefaults.IsChecked="true" />
-						<Button CommandName="cmdButtonRsharp" ApplicationDefaults.IsChecked="true" />
+						<Button CommandName="cmdButtonSave" ApplicationDefaults.IsChecked="true" />
 					</QuickAccessToolbar.ApplicationDefaults>
 				</QuickAccessToolbar>
 			</Ribbon.QuickAccessToolbar>
