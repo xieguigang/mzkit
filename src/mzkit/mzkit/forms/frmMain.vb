@@ -661,6 +661,7 @@ Public Class frmMain
                 Call Invoke(Sub() Call SaveSettings())
                 Call progress.Invoke(Sub() progress.Close())
             End Sub).Start()
+
         Call progress.ShowDialog()
         Call App.Exit()
     End Sub
