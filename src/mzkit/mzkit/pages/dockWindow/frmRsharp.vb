@@ -50,7 +50,6 @@ Imports mzkit.SmileWei.EmbeddedApp
 
 Public Class frmRsharp
 
-    Friend Routput As New TextBox
     Friend WithEvents AppContainer1 As New SmileWei.EmbeddedApp.AppContainer
 
     Private Sub frmRsharp_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
@@ -59,15 +58,7 @@ Public Class frmRsharp
     End Sub
 
     Private Sub frmRsharp_Load(sender As Object, e As EventArgs) Handles Me.Load
-        Controls.Add(Routput)
-
-        Routput.Multiline = True
-        Routput.Dock = DockStyle.Fill
-        Routput.ReadOnly = True
-        Routput.Font = New Font("Consolas", 10, FontStyle.Regular)
-        Routput.ScrollBars = ScrollBars.Vertical
-        Routput.BackColor = Color.White
-        Routput.ForeColor = Color.Black
+        Call Win32API.AllocConsole()
 
         TabText = "R# Terminal"
         Me.Icon = My.Resources.Rscript

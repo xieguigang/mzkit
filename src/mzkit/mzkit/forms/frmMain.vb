@@ -248,39 +248,12 @@ Public Class frmMain
             Dim script As String = editor.script.FastColoredTextBox1.Text
             Dim result As Object
 
-            Using buffer As New MemoryStream
-                Using writer As New StreamWriter(buffer)
-                    MyApplication.REngine.RedirectOutput(writer, OutputEnvironments.Html)
-
-                    If editor.scriptFile.StringEmpty Then
-                        result = MyApplication.REngine.Evaluate(script)
-                    Else
-                        Call script.SaveTo(editor.scriptFile)
-                        result = MyApplication.REngine.Source(editor.scriptFile)
-                    End If
-
-                    writer.Flush()
-                    RtermPage.Routput.AppendText(Encoding.UTF8.GetString(buffer.ToArray) & vbCrLf)
-                End Using
-
-                If TypeOf result Is Message AndAlso DirectCast(result, Message).level = MSG_TYPES.ERR Then
-                    Dim err As Message = result
-
-                    RtermPage.Routput.AppendText(err.ToString & vbCrLf)
-
-                    For i As Integer = 0 To err.message.Length - 1
-                        RtermPage.Routput.AppendText((i + 1) & ". " & err.message(i) & vbCrLf)
-                    Next
-
-                    RtermPage.Routput.AppendText(vbCrLf)
-
-                    For Each stack In err.environmentStack
-                        RtermPage.Routput.AppendText(stack.ToString & vbCrLf)
-                    Next
-
-                    RtermPage.Routput.AppendText(vbCrLf)
-                End If
-            End Using
+            If editor.scriptFile.StringEmpty Then
+                result = MyApplication.REngine.Evaluate(script)
+            Else
+                Call script.SaveTo(editor.scriptFile)
+                result = MyApplication.REngine.Source(editor.scriptFile)
+            End If
 
             RtermPage.Show(dockPanel)
             RtermPage.DockState = DockState.Document
@@ -454,8 +427,6 @@ Public Class frmMain
         If splashScreen Is Nothing Then
             MessageBox.Show("The program is corrupt, please re-install and then run again...", "Program File Damaged!", MessageBoxButtons.OK, MessageBoxIcon.Error)
             App.Exit()
-        Else
-            Call Win32API.AllocConsole()
         End If
 
         splashScreen.UpdateInformation("Initialize of the ribbon UI...")
@@ -838,6 +809,10 @@ Public Class frmMain
 
     Private Sub frmMain_ResizeBegin(sender As Object, e As EventArgs) Handles Me.ResizeBegin
         ' Me.SuspendLayout()
+    End Sub
+
+    Private Sub frmMain_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
+
     End Sub
 
 
