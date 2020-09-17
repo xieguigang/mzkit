@@ -12,6 +12,7 @@ Imports Microsoft.VisualBasic.Text
 Public Class ViewerProject : Implements ISaveHandle, IFileReference
 
     Dim cacheFiles As Dictionary(Of String, Raw())
+    Dim scriptFiles As String()
 
     Public Property FilePath As String Implements IFileReference.FilePath
 
@@ -28,7 +29,9 @@ Public Class ViewerProject : Implements ISaveHandle, IFileReference
     End Property
 
     Public Shared Function LoadWorkspace(cacheList As String, progress As Action(Of String)) As ViewerProject
-        Dim viewer As New ViewerProject With {.FilePath = cacheList}
+        Dim viewer As New ViewerProject With {
+            .FilePath = cacheList
+        }
         Dim rawBuffer As Byte() = cacheList.ReadBinary
 
         If rawBuffer.IsNullOrEmpty Then

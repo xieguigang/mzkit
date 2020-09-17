@@ -57,7 +57,7 @@ Imports Task
 
 Module Globals
 
-    ReadOnly cacheList As String = App.LocalData & "/cacheList.dat"
+    ReadOnly defaultWorkspace As String = App.LocalData & "/cacheList.dat"
 
     Public ReadOnly Property Settings As Settings
 
@@ -97,7 +97,7 @@ Module Globals
 
         progress("write workspace file...")
 
-        Using buffer = cacheList.Open(doClear:=True)
+        Using buffer = defaultWorkspace.Open(doClear:=True)
             Call DirectCast(model, JsonObject).WriteBuffer(buffer)
         End Using
 
@@ -134,7 +134,7 @@ Module Globals
 
     <Extension>
     Public Function LoadRawFileCache(explorer As TreeView) As Integer
-        Dim rawBuffer As Byte() = cacheList.ReadBinary
+        Dim rawBuffer As Byte() = defaultWorkspace.ReadBinary
 
         If rawBuffer.IsNullOrEmpty Then
             Return 0
