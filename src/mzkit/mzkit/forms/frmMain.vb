@@ -84,6 +84,10 @@ Public Class frmMain
 
     Dim nav As New Stack(Of Control)
 
+    Public Function GetPPMError() As Double
+        Return Val(ribbonItems.PPMSpinner.DecimalValue)
+    End Function
+
     Friend Sub ShowPage(page As Control, Optional pushStack As Boolean = True)
         For Each page2 In panelMain.pages
             If Not page Is page2 Then

@@ -232,16 +232,16 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="forms\ISplashScreenUpdater.vb" />
-    <Compile Include="pages\dockWindow\explorer\frmFeatureSearch.Designer.vb">
+    <Compile Include="pages\dockWindow\documents\frmFeatureSearch.Designer.vb">
       <DependentUpon>frmFeatureSearch.vb</DependentUpon>
     </Compile>
-    <Compile Include="pages\dockWindow\explorer\frmFeatureSearch.vb">
+    <Compile Include="pages\dockWindow\documents\frmFeatureSearch.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="pages\dockWindow\frmPlotViewer.Designer.vb">
+    <Compile Include="pages\dockWindow\documents\frmPlotViewer.Designer.vb">
       <DependentUpon>frmPlotViewer.vb</DependentUpon>
     </Compile>
-    <Compile Include="pages\dockWindow\frmPlotViewer.vb">
+    <Compile Include="pages\dockWindow\documents\frmPlotViewer.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="pages\dockWindow\terminal\AppContainer.Designer.vb" />
@@ -266,10 +266,10 @@
     <Compile Include="pages\dockWindow\explorer\Win7StyleTreeView.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="pages\dockWindow\frmRScriptEdit.Designer.vb">
+    <Compile Include="pages\dockWindow\documents\frmRScriptEdit.Designer.vb">
       <DependentUpon>frmRScriptEdit.vb</DependentUpon>
     </Compile>
-    <Compile Include="pages\dockWindow\frmRScriptEdit.vb">
+    <Compile Include="pages\dockWindow\documents\frmRScriptEdit.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="pages\dockWindow\frmRsharp.Designer.vb">
@@ -311,8 +311,8 @@
     <Compile Include="pages\dockWindow\explorer\frmFileTree.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="pages\dockWindow\ToolWindow.Designer.vb" />
-    <Compile Include="pages\dockWindow\ToolWindow.vb">
+    <Compile Include="pages\dockWindow\base\ToolWindow.Designer.vb" />
+    <Compile Include="pages\dockWindow\base\ToolWindow.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="pages\pageStart\NewsFeedDisplay.Designer.vb">
@@ -461,11 +461,14 @@
     <EmbeddedResource Include="forms\frmProgressSpinner.resx">
       <DependentUpon>frmProgressSpinner.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="pages\dockWindow\documents\frmFeatureSearch.resx">
+      <DependentUpon>frmFeatureSearch.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\DummyPropertyWindow.resx" />
     <EmbeddedResource Include="pages\dockWindow\explorer\frmFileTree.resx">
       <DependentUpon>frmFileTree.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="pages\dockWindow\frmPlotViewer.resx">
+    <EmbeddedResource Include="pages\dockWindow\documents\frmPlotViewer.resx">
       <DependentUpon>frmPlotViewer.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\frmRsharp.resx">
@@ -477,7 +480,7 @@
     <EmbeddedResource Include="pages\dockWindow\frmStartPage.resx">
       <DependentUpon>frmStartPage.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="pages\dockWindow\ToolWindow.resx" />
+    <EmbeddedResource Include="pages\dockWindow\base\ToolWindow.resx" />
     <EmbeddedResource Include="pages\PageMoleculeNetworking.resx">
       <DependentUpon>PageMoleculeNetworking.vb</DependentUpon>
     </EmbeddedResource>

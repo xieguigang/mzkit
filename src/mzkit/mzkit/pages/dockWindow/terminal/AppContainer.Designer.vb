@@ -10,7 +10,7 @@ Namespace SmileWei.EmbeddedApp
         ''' <summary> 
         ''' 清理所有正在使用的资源。
         ''' </summary>
-        ''' <paramname="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        ''' <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
         Protected Overrides Sub Dispose(ByVal disposing As Boolean)
             If disposing AndAlso components IsNot Nothing Then
                 components.Dispose()

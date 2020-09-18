@@ -431,7 +431,7 @@ Public Class PageMzkitTools
         Else
             ' formula
             Dim exact_mass As Double = Math.EvaluateFormula(text)
-            Dim ppm As Double = Val(RibbonItems.PPMSpinner.DecimalValue)
+            Dim ppm As Double = MyApplication.host.GetPPMError()
             Dim raw As Raw = TreeView1.CurrentRawFile.raw
 
             DataGridView1.Rows.Clear()
@@ -540,7 +540,7 @@ Public Class PageMzkitTools
     End Sub
 
     Private Sub searchInFileByMz(mz As Double)
-        Dim ppm As Double = Val(RibbonItems.PPMSpinner.DecimalValue)
+        Dim ppm As Double = MyApplication.host.GetPPMError()
         Dim raw = TreeView1.CurrentRawFile.raw
 
         Call MyApplication.host.searchList.searchInFileByMz(mz, ppm, raw)
@@ -830,7 +830,7 @@ Public Class PageMzkitTools
 
         ' scan节点
         Dim raw As Task.Raw = TreeView1.CurrentRawFile.raw
-        Dim ppm As Double = Val(RibbonItems.PPMSpinner.DecimalValue)
+        Dim ppm As Double = MyApplication.host.GetPPMError()
         Dim plotTIC As NamedCollection(Of ChromatogramTick) = getXICMatrix(raw, TreeView1.SelectedNode.Text, ppm, relativeInto)
 
         If plotTIC.value.IsNullOrEmpty Then
@@ -1019,7 +1019,7 @@ Public Class PageMzkitTools
             Using file As New SaveFileDialog With {.Filter = "Mgf ASCII spectrum data(*.mgf)|*.mgf", .FileName = "XIC.mgf"}
                 If file.ShowDialog = DialogResult.OK Then
                     Using OutFile As StreamWriter = file.FileName.OpenWriter()
-                        Dim ppm As Double = Val(RibbonItems.PPMSpinner.DecimalValue)
+                        Dim ppm As Double = MyApplication.host.GetPPMError()
 
                         For Each xic As NamedCollection(Of ChromatogramTick) In GetXICCollection(ppm)
                             Dim parent As New NamedValue With {.name = xic.description.Split.First, .text = xic.value.Select(Function(a) a.Intensity).Max}
