@@ -58,9 +58,8 @@ Public Class frmRsharp
     End Sub
 
     Private Sub frmRsharp_Load(sender As Object, e As EventArgs) Handles Me.Load
-        Call Win32API.AllocConsole()
-
         TabText = "R# Terminal"
+
         Me.Icon = My.Resources.Rscript
 
         Me.ShowIcon = True
@@ -75,11 +74,12 @@ Public Class frmRsharp
 
         Me.Controls.Add(Me.AppContainer1)
 
-        AppContainer1.EmbedProcess(Process.GetCurrentProcess, Win32API.GetConsoleWindow, AppContainer1)
+        Call Win32API.AllocConsole()
+        Call AppContainer1.EmbedProcess(Process.GetCurrentProcess, Win32API.GetConsoleWindow, AppContainer1)
 
         Call New Thread(Sub()
                             Call New Shell(New PS1("> "), Sub(str)
-                                                              Console.WriteLine(str)
+                                                              Console.Out.WriteLine(str)
                                                           End Sub) With {
                               .Quite = "!.R#::quit" & Rnd()
                           }.Run()

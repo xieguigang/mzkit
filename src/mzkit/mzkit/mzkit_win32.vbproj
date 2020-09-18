@@ -332,12 +332,6 @@
     </Compile>
     <Compile Include="pages\Settings\buttons\NativeToolStripRenderer.vb" />
     <Compile Include="pages\Settings\ISaveSettings.vb" />
-    <Compile Include="pages\PageScripting.Designer.vb">
-      <DependentUpon>PageScripting.vb</DependentUpon>
-    </Compile>
-    <Compile Include="pages\PageScripting.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="pages\Settings\RawFileViewer.Designer.vb">
       <DependentUpon>RawFileViewer.vb</DependentUpon>
     </Compile>
@@ -495,9 +489,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="pages\PageRscriptEditor.resx">
       <DependentUpon>PageRscriptEditor.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="pages\PageScripting.resx">
-      <DependentUpon>PageScripting.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pages\PageSettings.resx">
       <DependentUpon>PageSettings.vb</DependentUpon>
