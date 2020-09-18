@@ -232,6 +232,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="forms\ISplashScreenUpdater.vb" />
+    <Compile Include="pages\dockWindow\explorer\frmFeatureSearch.Designer.vb">
+      <DependentUpon>frmFeatureSearch.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\dockWindow\explorer\frmFeatureSearch.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="pages\dockWindow\frmPlotViewer.Designer.vb">
       <DependentUpon>frmPlotViewer.vb</DependentUpon>
     </Compile>
