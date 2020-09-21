@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>ConEmu.Control.WinForms</id>
+    <version>1.0.20160518.0</version> <!-- 1.0, because Nuget only upgrades automatically with the same first components, so probably shan't keep the date in them. -->
+    <title>ConEmu Console Emulator — Windows Forms Control Embedding</title>
+    <authors>Maximus5,hypersw</authors>
+    <owners>Maximus5,hypersw</owners>
+    <projectUrl>http://conemu.github.io/</projectUrl>
+    <iconUrl>http://conemu.github.io/img/logo.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>This is a console emulator control that embeds a fully functional console view in a Windows Forms window.</summary>
+    <description>This is a console emulator control that embeds a fully functional console view in a Windows Forms window. It is capable of running any console application with full interactivity and advanced console functions. Applications will detect it as an actual console and will not fall back to the output redirection mode with reduced interactivity or formatting.</description>
+    <licenseUrl>https://opensource.org/licenses/BSD-3-Clause</licenseUrl>
+    <dependencies>
+      <dependency id="ConEmu.Core" version="[16.03.10,)" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="ConEmu.WinForms.dll" target="lib/net40"/>
+    <file src="ConEmu.WinForms.Xml" target="lib/net40"/>
+  </files>
+</package>
