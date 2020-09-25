@@ -79,6 +79,7 @@ Public Class frmMain
     Friend mzkitSearch As New PageMzSearch With {.Text = "M/Z Formula De-novo Search"}
     Friend mzkitCalculator As New PageMzCalculator With {.Text = "M/Z Calculator"}
     Friend mzkitMNtools As New PageMoleculeNetworking With {.Text = "Molecular Networking"}
+    Friend mzkitSpectrumSearch As New PageSpectrumSearch With {.Text = "Spectrum Similarity Search"}
 
     Friend TreeView1 As TreeView
 
@@ -177,6 +178,7 @@ Public Class frmMain
         AddHandler ribbonItems.ButtonDropB.ExecuteEvent, Sub(sender, e) ShowPage(mzkitCalculator)
         AddHandler ribbonItems.ButtonDropC.ExecuteEvent, Sub(sender, e) ShowPage(mzkitSearch)
         AddHandler ribbonItems.ButtonDropD.ExecuteEvent, Sub(sender, e) ShowPage(mzkitMNtools)
+        AddHandler ribbonItems.ButtonShowSpectrumSearchPage.ExecuteEvent, Sub(sender, e) ShowPage(mzkitSpectrumSearch)
 
         AddHandler ribbonItems.ButtonCalculatorExport.ExecuteEvent, Sub(sender, e) Call mzkitCalculator.ExportToolStripMenuItem_Click()
         AddHandler ribbonItems.ButtonExactMassSearchExport.ExecuteEvent, Sub(sender, e) Call mzkitTool.ExportExactMassSearchTable()
@@ -451,7 +453,7 @@ Public Class frmMain
 
         splashScreen.UpdateInformation("Create mzkit toolkit pages...")
 
-        panelMain.addPage(AddressOf splashScreen.UpdateInformation, mzkitTool, mzkitSearch, mzkitCalculator, mzkitMNtools)
+        panelMain.addPage(AddressOf splashScreen.UpdateInformation, mzkitTool, mzkitSearch, mzkitCalculator, mzkitMNtools, mzkitSpectrumSearch)
         ShowPage(mzkitTool)
 
         mzkitTool.Ribbon_Load(Ribbon1)
