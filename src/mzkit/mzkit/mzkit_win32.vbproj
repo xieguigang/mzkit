@@ -186,6 +186,9 @@
       <HintPath>..\dist\System.Runtime.InteropServices.APIs.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.ConsoleEmulator">
+      <HintPath>..\dist\System.Windows.Forms.ConsoleEmulator.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Windows.Forms.TabControl">
       <HintPath>..\dist\System.Windows.Forms.TabControl.dll</HintPath>
@@ -246,10 +249,7 @@
     <Compile Include="pages\dockWindow\documents\frmPlotViewer.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="pages\dockWindow\terminal\AppContainer.Designer.vb" />
-    <Compile Include="pages\dockWindow\terminal\AppContainer.vb">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="pages\dockWindow\R\GuiMacro.vb" />
     <Compile Include="pages\PlotTooltip.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -274,10 +274,10 @@
     <Compile Include="pages\dockWindow\documents\frmRScriptEdit.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="pages\dockWindow\frmRsharp.Designer.vb">
+    <Compile Include="pages\dockWindow\R\frmRsharp.Designer.vb">
       <DependentUpon>frmRsharp.vb</DependentUpon>
     </Compile>
-    <Compile Include="pages\dockWindow\frmRsharp.vb">
+    <Compile Include="pages\dockWindow\R\frmRsharp.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="pages\dockWindow\frmSettings.Designer.vb">
@@ -467,7 +467,7 @@
     <EmbeddedResource Include="pages\dockWindow\documents\frmPlotViewer.resx">
       <DependentUpon>frmPlotViewer.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="pages\dockWindow\frmRsharp.resx">
+    <EmbeddedResource Include="pages\dockWindow\R\frmRsharp.resx">
       <DependentUpon>frmRsharp.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\frmSearchList.resx">
