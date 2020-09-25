@@ -74,7 +74,7 @@ Public Class PageMzCalculator
             mzText = type.CalcMZ(exact_mass)
             mzText = If(Val(mzText) < 0, "n/a", mzText)
 
-            Call show.Rows.Add(type.ToString, type.adducts, type.M, type.charge, mzText)
+            Call show.Rows.Add(type.ToString, type.adducts, type.M, type.charge, mzText, "Search")
         Next
     End Sub
 
@@ -124,5 +124,27 @@ Public Class PageMzCalculator
             host.ribbonItems.TabGroupCalculatorTools.ContextAvailable = ContextAvailability.NotAvailable
             host.ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
         End If
+    End Sub
+
+    Private Sub DataGridView1_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellClick
+        If e.ColumnIndex = 5 AndAlso e.RowIndex > -1 Then
+            RunFeatureSearch(DataGridView1, e, 1)
+        End If
+    End Sub
+
+    Private Sub RunFeatureSearch(grid As DataGridView, e As DataGridViewCellEventArgs, ionMode As Integer)
+        Dim row = grid.Rows(e.RowIndex)
+        Dim mz As Double = Val(row.Cells(4).Value)
+        Dim ppm As Double = MyApplication.host.GetPPMError
+    End Sub
+
+    Private Sub DataGridView2_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView2.CellClick
+        If e.ColumnIndex = 5 AndAlso e.RowIndex > -1 Then
+            RunFeatureSearch(DataGridView2, e, -1)
+        End If
+    End Sub
+
+    Private Sub DataGridView2_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView2.CellContentClick
+
     End Sub
 End Class

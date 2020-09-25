@@ -1,68 +1,123 @@
 ﻿#Region "Microsoft.VisualBasic::f97ca52c4dbf4fad3f0388a0a3288aa3, src\mzkit\mzkit\pages\dockWindow\frmSettings.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class frmSettings
-    ' 
-    '     Sub: frmSettings_Closing, frmSettings_Load
-    ' 
-    ' /********************************************************************************/
+' Class frmSettings
+' 
+'     Sub: frmSettings_Closing, frmSettings_Load
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.ComponentModel
+Imports mzkit.My
+Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class frmSettings
 
-    Friend mzkitSettings As New PageSettings With {.Text = "Settings"}
+    Private Sub frmSettings_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        e.Cancel = True
+        Me.DockState = WeifenLuo.WinFormsUI.Docking.DockState.Hidden
+    End Sub
 
-    Private Sub frmSettings_Load(sender As Object, e As EventArgs) Handles Me.Load
-        Controls.Add(mzkitSettings)
+    Dim elementProfile As New ElementProfile With {.Text = "Formula Search"}
+    Dim presetProfile As New PresetProfile With {.Text = "Formula Search"}
+    Dim appConfig As New AppConfig With {.Text = "Mzkit Settings"}
+    Dim viewer As New RawFileViewer With {.Text = "Raw File Viewer"}
+    Dim plotConfig As New PlotConfig With {.Text = "XIC/TIC Plot Style"}
+    Dim mnSettings As New MolecularNetworking With {.Text = "Molecular Networking"}
+    Dim pages As Control()
+    Dim showPageLink As IPageSettings
 
-        mzkitSettings.Location = New Point
-        mzkitSettings.Dock = DockStyle.Fill
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        DirectCast(ParentForm, frmSettings).DockState = DockState.Hidden
+        MyApplication.host.ShowPage(MyApplication.host.mzkitTool)
+    End Sub
+
+    Private Sub PageSettings_Load(sender As Object, e As EventArgs) Handles Me.Load
+        pages = {elementProfile, appConfig, viewer, plotConfig, presetProfile, mnSettings}
+
+        For Each page In pages
+            Panel1.Controls.Add(page)
+            page.Dock = DockStyle.Fill
+            Call DirectCast(CObj(page), ISaveSettings).LoadSettings()
+        Next
+
+        showPage(appConfig)
 
         Me.Text = "Application Settings"
         Me.Icon = My.Resources.settings
 
         Me.ShowIcon = True
-        '  Me.ShowInTaskbar = True
     End Sub
 
-    Private Sub frmSettings_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-        e.Cancel = True
-        Me.DockState = WeifenLuo.WinFormsUI.Docking.DockState.Hidden
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Call SaveSettings()
+    End Sub
+
+    Public Sub SaveSettings()
+        For Each page In pages
+            Call DirectCast(CObj(page), ISaveSettings).SaveSettings()
+        Next
+
+        Call MyApplication.host.showStatusMessage("New settings value applied and saved!")
+    End Sub
+
+    Sub showPage(page As Control)
+        For Each page2 In From ctl In pages Where Not ctl Is page
+            page2.Hide()
+        Next
+
+        LinkLabel1.Text = page.Text
+        page.Show()
+        showPageLink = DirectCast(CObj(page), IPageSettings)
+    End Sub
+
+    Private Sub TreeView1_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles TreeView1.AfterSelect
+        Select Case e.Node.Text
+            Case "Element Profile" : showPage(elementProfile)
+            Case "Mzkit App" : showPage(appConfig)
+            Case "Raw File Viewer" : showPage(viewer)
+            Case "XIC/TIC Plot" : showPage(plotConfig)
+            Case "Formula Search" : showPage(presetProfile)
+            Case "Molecular Networking" : showPage(mnSettings)
+        End Select
+    End Sub
+
+    Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
+        Call showPageLink.ShowPage()
     End Sub
 End Class

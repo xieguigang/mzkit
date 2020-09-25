@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ca6d4d5c346b561f965efaa401fea88, src\mzkit\mzkit\pages\PageRscriptEditor.vb"
+﻿#Region "Microsoft.VisualBasic::310ade9e37960b11ea0f812bf8bec7ad, src\mzkit\mzkit\pages\dockWindow\frmRScriptEdit.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,44 @@
 
     ' Summaries:
 
-    ' Class PageRscriptEditor
+    ' Class frmRScriptEdit
     ' 
-    '     Sub: FastColoredTextBox1_GotFocus, FastColoredTextBox1_TextChanged, FastColoredTextBox1_ToolTipNeeded, PageRscriptEditor_Load
+    '     Properties: MimeType, scriptFile
+    ' 
+    '     Function: (+2 Overloads) Save
+    ' 
+    '     Sub: frmRScriptEdit_Closing, frmRScriptEdit_Load, LoadScript
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.ComponentModel
+Imports System.Text
 Imports FastColoredTextBoxNS
+Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
+Imports Microsoft.VisualBasic.Text
 Imports mzkit.My
 Imports RibbonLib.Interop
 
-Public Class PageRscriptEditor
+Public Class frmRScriptEdit
+    Implements ISaveHandle
+    Implements IFileReference
+
+    Public Property scriptFile As String Implements IFileReference.FilePath
+
+    Public ReadOnly Property MimeType As ContentType() Implements IFileReference.MimeType
+        Get
+            Return {
+                New ContentType With {.Details = "http://r_lang.dev.smrucc.org/", .FileExt = ".R", .MIMEType = "text/r_sharp", .Name = "R# script"}
+            }
+        End Get
+    End Property
+
+    Public Sub LoadScript(script As String)
+        FastColoredTextBox1.Text = script
+    End Sub
 
     Private Sub FastColoredTextBox1_ToolTipNeeded(sender As Object, e As ToolTipNeededEventArgs) Handles FastColoredTextBox1.ToolTipNeeded
         If Not String.IsNullOrEmpty(e.HoveredWord) Then
@@ -58,13 +83,6 @@ Public Class PageRscriptEditor
         Dim hoveredWord = range.GetFragment("[^\n]").Text
         e.ToolTipTitle = hoveredWord
         e.ToolTipText = "This is tooltip for '" & hoveredWord & "'"
-    End Sub
-
-    Private Sub PageRscriptEditor_Load(sender As Object, e As EventArgs) Handles Me.Load
-        Dim syntaxHighlighter As New SyntaxHighlighter(FastColoredTextBox1)
-
-        FastColoredTextBox1.Text = "#!/usr/local/bin/R#"
-        FastColoredTextBox1.SyntaxHighlighter = syntaxHighlighter
     End Sub
 
     Dim blue As New TextStyle(Brushes.Blue, Nothing, FontStyle.Regular)
@@ -98,5 +116,36 @@ Public Class PageRscriptEditor
     Private Sub FastColoredTextBox1_GotFocus(sender As Object, e As EventArgs) Handles FastColoredTextBox1.GotFocus
         MyApplication.host.ribbonItems.TabGroupRscriptTools.ContextAvailable = ContextAvailability.Active
     End Sub
-End Class
 
+    Private Sub frmRScriptEdit_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        ' 只保存新文件？
+        If scriptFile.StringEmpty Then
+            Dim result = MessageBox.Show("Save current script file?", "File Not Saved", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
+
+            If result = DialogResult.Yes Then
+                MyApplication.host.SaveScript(Me)
+            ElseIf result = DialogResult.Cancel Then
+                e.Cancel = True
+            End If
+        End If
+    End Sub
+
+    Private Sub frmRScriptEdit_Load(sender As Object, e As EventArgs) Handles Me.Load
+        Me.Icon = My.Resources.vs
+
+        Me.ShowIcon = True
+
+        Dim syntaxHighlighter As New SyntaxHighlighter(FastColoredTextBox1)
+
+        FastColoredTextBox1.Text = "#!/usr/local/bin/R#"
+        FastColoredTextBox1.SyntaxHighlighter = syntaxHighlighter
+    End Sub
+
+    Public Function Save(path As String, encoding As Encoding) As Boolean Implements ISaveHandle.Save
+        Return FastColoredTextBox1.Text.SaveTo(path, encoding)
+    End Function
+
+    Public Function Save(path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
+        Return Save(path, encoding.CodePage)
+    End Function
+End Class

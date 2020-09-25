@@ -24,18 +24,31 @@ Partial Class frmRsharp
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.termPanel = New System.Windows.Forms.Panel()
         Me.SuspendLayout()
+        '
+        'termPanel
+        '
+        Me.termPanel.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(54, Byte), Integer))
+        Me.termPanel.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.termPanel.Location = New System.Drawing.Point(0, 0)
+        Me.termPanel.Name = "termPanel"
+        Me.termPanel.Size = New System.Drawing.Size(1067, 637)
+        Me.termPanel.TabIndex = 1
         '
         'frmRsharp
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 17.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1067, 637)
+        Me.Controls.Add(Me.termPanel)
         Me.Font = New System.Drawing.Font("Consolas", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Margin = New System.Windows.Forms.Padding(4)
         Me.Name = "frmRsharp"
         Me.Text = "Form1"
         Me.ResumeLayout(False)
 
     End Sub
+
+    Private WithEvents termPanel As Panel
 End Class

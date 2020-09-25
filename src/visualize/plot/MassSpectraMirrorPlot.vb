@@ -91,12 +91,12 @@ Public Module MassSpectra
                                     Optional intoCutoff# = 0.05,
                                     Optional title$ = "BioDeep™ MS/MS alignment Viewer",
                                     Optional labelDisplayIntensity# = 0.3) As GraphicsData
-
-        Dim mzRange As DoubleRange = query _
+        Dim mz As Double() = query _
             .Trim(intoCutoff) _
             .Join(ref.Trim(intoCutoff)) _
             .Select(Function(mass) mass.mz) _
-            .Range
+            .ToArray
+        Dim mzRange As DoubleRange = mz.Range
         Dim qMatrix As (x#, into#)() = query.Select(Function(q) (q.mz, q.intensity)).ToArray
         Dim sMatrix As (x#, into#)() = ref.Select(Function(s) (s.mz, s.intensity)).ToArray
 

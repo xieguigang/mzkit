@@ -103,6 +103,7 @@ Namespace Spectra
             End Get
         End Property
 
+        <DebuggerStepThrough>
         Sub New()
             Call MyBase.New({})
         End Sub
@@ -125,7 +126,11 @@ Namespace Spectra
         ''' <returns></returns>
         Public Shared Operator /(matrix As LibraryMatrix, x#) As LibraryMatrix
             For Each ms2 As ms2 In matrix.ms2
-                ms2.intensity = ms2.quantity / x
+                If ms2.quantity = 0 Then
+                    ms2.intensity = 0
+                Else
+                    ms2.intensity = ms2.quantity / x
+                End If
             Next
 
             Return matrix

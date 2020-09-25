@@ -1,8 +1,10 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class PageRscriptEditor
-    Inherits System.Windows.Forms.UserControl
+﻿Imports WeifenLuo.WinFormsUI.Docking
 
-    'UserControl overrides dispose to clean up the component list.
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+Partial Class frmRScriptEdit
+    Inherits DockContent
+
+    'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()> _
     Protected Overrides Sub Dispose(disposing As Boolean)
         Try
@@ -23,7 +25,7 @@ Partial Class PageRscriptEditor
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(PageRscriptEditor))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmRScriptEdit))
         Me.FastColoredTextBox1 = New FastColoredTextBoxNS.FastColoredTextBox()
         CType(Me.FastColoredTextBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -48,19 +50,20 @@ Partial Class PageRscriptEditor
         Me.FastColoredTextBox1.RightBracket2 = Global.Microsoft.VisualBasic.ChrW(125)
         Me.FastColoredTextBox1.SelectionColor = System.Drawing.Color.FromArgb(CType(CType(60, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.FastColoredTextBox1.ServiceColors = CType(resources.GetObject("FastColoredTextBox1.ServiceColors"), FastColoredTextBoxNS.ServiceColors)
-        Me.FastColoredTextBox1.Size = New System.Drawing.Size(814, 469)
-        Me.FastColoredTextBox1.TabIndex = 0
+        Me.FastColoredTextBox1.Size = New System.Drawing.Size(800, 450)
+        Me.FastColoredTextBox1.TabIndex = 1
         Me.FastColoredTextBox1.Text = "FastColoredTextBox1"
         Me.FastColoredTextBox1.WordWrap = True
         Me.FastColoredTextBox1.Zoom = 100
         '
-        'PageRscriptEditor
+        'frmRScriptEdit
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.ClientSize = New System.Drawing.Size(800, 450)
         Me.Controls.Add(Me.FastColoredTextBox1)
-        Me.Name = "PageRscriptEditor"
-        Me.Size = New System.Drawing.Size(814, 469)
+        Me.Name = "frmRScriptEdit"
+        Me.Text = "Form1"
         CType(Me.FastColoredTextBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
