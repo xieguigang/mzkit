@@ -27,7 +27,7 @@ Public Class PageSpectrumSearch
 
         PictureBox1.BackgroundImage = New LibraryMatrix With {
             .centroid = True,
-            .ms2 = ms2.ToArray,
+            .ms2 = ms2.Where(Function(a) a.mz > 0).ToArray,
             .name = "custom spectrum"
         }.MirrorPlot _
          .AsGDIImage
