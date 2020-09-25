@@ -454,7 +454,8 @@
 		
 		<Command Name="cmdButtonShowSpectrumSearchPage"
 		 Id="1102"
-		 LabelTitle="Spectrum Similarity Search">
+		 LabelTitle="Search"
+		 LabelDescription="Spectrum Similarity Search">
 			<Command.LargeImages>
 				<Image>Res/tracker.png</Image>
 			</Command.LargeImages>

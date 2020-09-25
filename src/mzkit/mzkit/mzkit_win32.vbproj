@@ -364,6 +364,12 @@
     <Compile Include="pages\Settings\MolecularNetworking.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="pages\toolkit\PageSpectrumSearch.Designer.vb">
+      <DependentUpon>PageSpectrumSearch.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\toolkit\PageSpectrumSearch.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="settings\NetworkArguments.vb" />
     <Compile Include="settings\UISettings.vb" />
     <Compile Include="settings\PrecursorSearchSettings.vb" />
@@ -533,6 +539,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="pages\Settings\RawFileViewer.resx">
       <DependentUpon>RawFileViewer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pages\toolkit\PageSpectrumSearch.resx">
+      <DependentUpon>PageSpectrumSearch.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RibbonMarkup.ribbon" />
   </ItemGroup>
