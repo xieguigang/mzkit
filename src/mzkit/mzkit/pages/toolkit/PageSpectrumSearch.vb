@@ -2,6 +2,7 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
+Imports mzkit.My
 
 Public Class PageSpectrumSearch
 
@@ -24,6 +25,11 @@ Public Class PageSpectrumSearch
                 .quantity = .intensity
             }
         Next
+
+        If ms2.All(Function(mz) mz.intensity = 0) OrElse ms2.All(Function(mz) mz.mz = 0) Then
+            MyApplication.host.showStatusMessage("all of the mass spectrum fragment their intensity or product m/z is ZERO!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            Return
+        End If
 
         PictureBox1.BackgroundImage = New LibraryMatrix With {
             .centroid = True,
