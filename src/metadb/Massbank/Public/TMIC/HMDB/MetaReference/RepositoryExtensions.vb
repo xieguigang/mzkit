@@ -44,6 +44,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports XmlLinq = Microsoft.VisualBasic.Text.Xml.Linq.Data
 
 Namespace TMIC.HMDB.Repository

@@ -46,6 +46,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.BioDeep.Chemistry.Massbank.DATA
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Namespace Massbank
