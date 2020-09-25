@@ -249,7 +249,7 @@ Public Class frmMain
 
         If Not active Is Nothing AndAlso TypeOf CObj(active) Is frmRScriptEdit Then
             Dim editor = DirectCast(CObj(active), frmRScriptEdit)
-            Dim script As String = editor.script.FastColoredTextBox1.Text
+            Dim script As String = editor.FastColoredTextBox1.Text
             Dim result As Object
 
             If editor.scriptFile.StringEmpty Then
@@ -355,7 +355,7 @@ Public Class frmMain
         If Not active Is Nothing Then
             If TypeOf CObj(active) Is frmSettings Then
 
-                Call DirectCast(CObj(active), frmSettings).mzkitSettings.SaveSettings()
+                Call DirectCast(CObj(active), frmSettings).SaveSettings()
 
             ElseIf CObj(active).GetType.ImplementInterface(Of ISaveHandle) Then
                 Dim file As String = Nothing
