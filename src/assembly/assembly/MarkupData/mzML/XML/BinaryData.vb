@@ -54,6 +54,7 @@
 #End Region
 
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Namespace MarkupData.mzML
 
