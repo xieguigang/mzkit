@@ -64,9 +64,14 @@ Public Class frmRsharp
 
         Controls.Add(console1)
 
+        console1.Font = New Font("Consolas", 10.0!)
         console1.Dock = DockStyle.Fill
-        console = console1.Console
         console1.Ps1Pattern = "[>]\s"
+
+        console = console1.Console
+
+        console.ForegroundColor = ConsoleColor.Black
+        console.BackgroundColor = ConsoleColor.White
 
         MyApplication.RegisterConsole(console)
     End Sub
