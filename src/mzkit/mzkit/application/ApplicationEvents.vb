@@ -49,7 +49,12 @@ Imports Microsoft.VisualBasic.ApplicationServices
 Imports mzkit.DockSample
 Imports SMRUCC.Rsharp.Interpreter
 Imports REnv = SMRUCC.Rsharp.Runtime.Internal
+Imports SMRUCC.Rsharp.Runtime.Components
 Imports Microsoft.VisualBasic.Windows.Forms
+Imports System.IO
+Imports SMRUCC.Rsharp.Runtime
+Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 
 Namespace My
 
@@ -98,12 +103,38 @@ Namespace My
         Public Shared Sub ExecuteRScript(scriptText As String, isFile As Boolean)
             Dim result As Object
 
-            If isFile Then
-                result = MyApplication.REngine.Source(scriptText)
-            Else
-                result = MyApplication.REngine.Evaluate(scriptText)
-            End If
+            Using buffer As New MemoryStream
+                Using writer As New StreamWriter(buffer)
+                    MyApplication.REngine.RedirectOutput(writer, OutputEnvironments.Html)
 
+                    If isFile Then
+                        result = MyApplication.REngine.Source(scriptText)
+                    Else
+                        result = MyApplication.REngine.Evaluate(scriptText)
+                    End If
+
+                    writer.Flush()
+                    console.WriteLine(Encoding.UTF8.GetString(buffer.ToArray))
+                End Using
+
+                If TypeOf result Is Message AndAlso DirectCast(result, Message).level = MSG_TYPES.ERR Then
+                    Dim err As Message = result
+
+                    console.WriteLine(err.ToString & vbCrLf)
+
+                    For i As Integer = 0 To err.message.Length - 1
+                        console.WriteLine((i + 1) & ". " & err.message(i) & vbCrLf)
+                    Next
+
+                    console.WriteLine(vbCrLf)
+
+                    For Each stack In err.environmentStack
+                        console.WriteLine(stack.ToString & vbCrLf)
+                    Next
+
+                    console.WriteLine(vbCrLf)
+                End If
+            End Using
         End Sub
 
         Public Shared Sub InitializeREngine()

@@ -252,14 +252,12 @@ Public Class frmMain
         If Not active Is Nothing AndAlso TypeOf CObj(active) Is frmRScriptEdit Then
             Dim editor = DirectCast(CObj(active), frmRScriptEdit)
             Dim script As String = editor.FastColoredTextBox1.Text
-            Dim result As Object
 
-            If editor.scriptFile.StringEmpty Then
-                result = MyApplication.REngine.Evaluate(script)
-            Else
+            If Not editor.scriptFile.StringEmpty Then
                 Call script.SaveTo(editor.scriptFile)
-                result = MyApplication.REngine.Source(editor.scriptFile)
             End If
+
+            Call MyApplication.ExecuteRScript(script, isFile:=Not editor.scriptFile.StringEmpty)
 
             RtermPage.Show(dockPanel)
             RtermPage.DockState = DockState.Document
