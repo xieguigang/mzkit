@@ -68,6 +68,8 @@ Public Class frmRsharp
         console = console1.Console
 
         MyApplication.RegisterConsole(console)
+
+
     End Sub
 
 End Class

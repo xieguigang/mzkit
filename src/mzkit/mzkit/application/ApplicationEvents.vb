@@ -45,16 +45,21 @@
 
 #End Region
 
+Imports System.IO
+Imports System.Text
+Imports System.Threading
 Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
+Imports Microsoft.VisualBasic.ApplicationServices.Development
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal
+Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Windows.Forms
 Imports mzkit.DockSample
 Imports SMRUCC.Rsharp.Interpreter
-Imports REnv = SMRUCC.Rsharp.Runtime.Internal
-Imports SMRUCC.Rsharp.Runtime.Components
-Imports Microsoft.VisualBasic.Windows.Forms
-Imports System.IO
 Imports SMRUCC.Rsharp.Runtime
-Imports System.Text
-Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
+Imports SMRUCC.Rsharp.Runtime.Components
+Imports REnv = SMRUCC.Rsharp.Runtime
+Imports RProgram = SMRUCC.Rsharp.Interpreter.Program
 
 Namespace My
 
@@ -70,8 +75,9 @@ Namespace My
         Public Shared ReadOnly Property LogForm As DummyOutputWindow
         Public Shared ReadOnly Property REngine As RInterpreter
 
-
         Shared WithEvents console As Console
+        Shared Rtask As Thread
+        Shared cancel As New ManualResetEvent(initialState:=False)
 
         Public Shared Sub RegisterOutput(log As DummyOutputWindow)
             _LogForm = log
@@ -116,29 +122,52 @@ Namespace My
                     writer.Flush()
                     console.WriteLine(Encoding.UTF8.GetString(buffer.ToArray))
                 End Using
-
-                If TypeOf result Is Message AndAlso DirectCast(result, Message).level = MSG_TYPES.ERR Then
-                    Dim err As Message = result
-
-                    console.WriteLine(err.ToString & vbCrLf)
-
-                    For i As Integer = 0 To err.message.Length - 1
-                        console.WriteLine((i + 1) & ". " & err.message(i) & vbCrLf)
-                    Next
-
-                    console.WriteLine(vbCrLf)
-
-                    For Each stack In err.environmentStack
-                        console.WriteLine(stack.ToString & vbCrLf)
-                    Next
-
-                    console.WriteLine(vbCrLf)
-                End If
             End Using
+
+            Call handleResult(result)
+        End Sub
+
+        Private Shared Sub handleResult(result As Object)
+            If TypeOf result Is Message AndAlso DirectCast(result, Message).level = MSG_TYPES.ERR Then
+                Dim err As Message = result
+
+                console.WriteLine(err.ToString & vbCrLf)
+
+                For i As Integer = 0 To err.message.Length - 1
+                    console.WriteLine((i + 1) & ". " & err.message(i) & vbCrLf)
+                Next
+
+                console.WriteLine(vbCrLf)
+
+                For Each stack In err.environmentStack
+                    console.WriteLine(stack.ToString & vbCrLf)
+                Next
+
+                console.WriteLine(vbCrLf)
+            End If
         End Sub
 
         Public Shared Sub InitializeREngine()
+            Dim Rcore = GetType(RInterpreter).Assembly.FromAssembly
+            Dim framework = GetType(App).Assembly.FromAssembly
+
+            Call console.WriteLine($"
+   , __           | 
+  /|/  \  |  |    | Documentation: https://r_lang.dev.SMRUCC.org/
+   |___/--+--+--  |
+   | \  --+--+--  | Version {Rcore.AssemblyVersion} ({Rcore.BuiltTime.ToString})
+   |  \_/ |  |    | sciBASIC.NET Runtime: {framework.AssemblyVersion}         
+                  
+Welcome to the R# language
+")
+            Call console.WriteLine("Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+")
+
             _REngine = New RInterpreter
+
+            _REngine.strict = False
 
             _REngine.LoadLibrary("base")
             _REngine.LoadLibrary("utils")
@@ -146,6 +175,52 @@ Namespace My
             _REngine.LoadLibrary("stats")
 
             _REngine.LoadLibrary(GetType(MyApplication))
+
+            AddHandler console.CancelKeyPress,
+                Sub()
+                    ' ctrl + C just break the current executation
+                    ' not exit program running
+                    cancel.Set()
+
+                    If Not Rtask Is Nothing Then
+                        Rtask.Abort()
+                    End If
+                End Sub
+
+            Call New Thread(AddressOf New Shell(New PS1("> "), AddressOf doRunScriptWithSpecialCommand, dev:=console) With {.Quite = "!.R#::quit" & Rnd()}.Run).Start()
+        End Sub
+
+        Private Shared Sub doRunScriptWithSpecialCommand(script As String)
+            Select Case script
+                Case "CLS"
+                    Call console.Clear()
+                Case Else
+                    If Not script Is Nothing Then
+                        Rtask = New Thread(Sub() Call doRunScript(script))
+                        Rtask.Start()
+
+                        ' block the running task thread at here
+                        cancel.Reset()
+                        cancel.WaitOne()
+                    Else
+                        console.WriteLine()
+                    End If
+            End Select
+        End Sub
+
+        Private Shared Sub doRunScript(script As String)
+            Dim error$ = Nothing
+            Dim program As RProgram = RProgram.BuildProgram(script, [error]:=[error])
+            Dim result As Object
+
+            If Not [error].StringEmpty Then
+                result = REnv.Internal.debug.stop([error], REngine.globalEnvir)
+            Else
+                result = REnv.TryCatch(Function() REngine.Run(program), debug:=REngine.debug)
+            End If
+
+            Call handleResult(result)
+            Call cancel.Set()
         End Sub
 
         Public Overloads Shared Sub LogText(msg As String)
