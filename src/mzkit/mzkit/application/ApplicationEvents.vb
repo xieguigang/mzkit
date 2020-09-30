@@ -1,54 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::4d3f6ba5b3e9471ead1cc0621e43f93b, src\mzkit\mzkit\application\ApplicationEvents.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class MyApplication
-    ' 
-    '         Properties: host, LogForm, REngine
-    ' 
-    '         Sub: InitializeREngine, LogText, MyApplication_UnhandledException, RegisterHost, RegisterOutput
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class MyApplication
+' 
+'         Properties: host, LogForm, REngine
+' 
+'         Sub: InitializeREngine, LogText, MyApplication_UnhandledException, RegisterHost, RegisterOutput
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
+Imports System.Text
+Imports System.Threading
 Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
+Imports Microsoft.VisualBasic.ApplicationServices.Development
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal
+Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Windows.Forms
 Imports mzkit.DockSample
 Imports SMRUCC.Rsharp.Interpreter
-Imports REnv = SMRUCC.Rsharp.Runtime.Internal
+Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Components
+Imports REnv = SMRUCC.Rsharp.Runtime
+Imports RProgram = SMRUCC.Rsharp.Interpreter.Program
 
 Namespace My
 
@@ -64,6 +75,10 @@ Namespace My
         Public Shared ReadOnly Property LogForm As DummyOutputWindow
         Public Shared ReadOnly Property REngine As RInterpreter
 
+        Shared WithEvents console As Console
+        Shared Rtask As Thread
+        Shared cancel As New ManualResetEvent(initialState:=False)
+
         Public Shared Sub RegisterOutput(log As DummyOutputWindow)
             _LogForm = log
 
@@ -77,6 +92,10 @@ Namespace My
                 End Sub
         End Sub
 
+        Public Shared Sub RegisterConsole(console As Console)
+            _console = console
+        End Sub
+
         Public Shared Function GetSplashScreen() As frmSplashScreen
             For i As Integer = 0 To Application.OpenForms.Count - 1
                 If TypeOf Application.OpenForms(i) Is frmSplashScreen Then
@@ -87,8 +106,70 @@ Namespace My
             Return Nothing
         End Function
 
+        Public Shared Sub ExecuteRScript(scriptText As String, isFile As Boolean)
+            Dim result As Object
+
+            Using buffer As New MemoryStream
+                Using writer As New StreamWriter(buffer)
+                    MyApplication.REngine.RedirectOutput(writer, OutputEnvironments.Html)
+
+                    If isFile Then
+                        result = MyApplication.REngine.Source(scriptText)
+                    Else
+                        result = MyApplication.REngine.Evaluate(scriptText)
+                    End If
+
+                    Call REngine.Print(RInterpreter.lastVariableName)
+
+                    writer.Flush()
+                    console.WriteLine(Encoding.UTF8.GetString(buffer.ToArray))
+                End Using
+            End Using
+
+            Call handleResult(result)
+        End Sub
+
+        Private Shared Sub handleResult(result As Object)
+            If TypeOf result Is Message AndAlso DirectCast(result, Message).level = MSG_TYPES.ERR Then
+                Dim err As Message = result
+
+                console.WriteLine(err.ToString & vbCrLf)
+
+                For i As Integer = 0 To err.message.Length - 1
+                    console.WriteLine((i + 1) & ". " & err.message(i) & vbCrLf)
+                Next
+
+                console.WriteLine(vbCrLf)
+
+                For Each stack In err.environmentStack
+                    console.WriteLine(stack.ToString & vbCrLf)
+                Next
+
+                console.WriteLine(vbCrLf)
+            End If
+        End Sub
+
         Public Shared Sub InitializeREngine()
+            Dim Rcore = GetType(RInterpreter).Assembly.FromAssembly
+            Dim framework = GetType(App).Assembly.FromAssembly
+
+            Call console.WriteLine($"
+   , __           | 
+  /|/  \  |  |    | Documentation: https://r_lang.dev.SMRUCC.org/
+   |___/--+--+--  |
+   | \  --+--+--  | Version {Rcore.AssemblyVersion} ({Rcore.BuiltTime.ToString})
+   |  \_/ |  |    | sciBASIC.NET Runtime: {framework.AssemblyVersion}         
+                  
+Welcome to the R# language
+")
+            Call console.WriteLine("Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+")
+
             _REngine = New RInterpreter
+
+            _REngine.strict = False
 
             _REngine.LoadLibrary("base")
             _REngine.LoadLibrary("utils")
@@ -96,6 +177,42 @@ Namespace My
             _REngine.LoadLibrary("stats")
 
             _REngine.LoadLibrary(GetType(MyApplication))
+
+            AddHandler console.CancelKeyPress,
+                Sub()
+                    ' ctrl + C just break the current executation
+                    ' not exit program running
+                    cancel.Set()
+
+                    If Not Rtask Is Nothing Then
+                        Rtask.Abort()
+                    End If
+                End Sub
+
+            Call New Thread(AddressOf New Shell(New PS1("> "), AddressOf doRunScriptWithSpecialCommand, dev:=console) With {.Quite = "!.R#::quit" & Rnd()}.Run).Start()
+        End Sub
+
+        Private Shared Sub doRunScriptWithSpecialCommand(script As String)
+            Select Case script
+                Case "CLS"
+                    Call console.Clear()
+                Case Else
+                    If Not script Is Nothing Then
+                        Rtask = New Thread(Sub() Call doRunScript(script))
+                        Rtask.Start()
+
+                        ' block the running task thread at here
+                        cancel.Reset()
+                        cancel.WaitOne()
+                    Else
+                        console.WriteLine()
+                    End If
+            End Select
+        End Sub
+
+        Private Shared Sub doRunScript(script As String)
+            Call ExecuteRScript(script, isFile:=False)
+            Call cancel.Set()
         End Sub
 
         Public Overloads Shared Sub LogText(msg As String)

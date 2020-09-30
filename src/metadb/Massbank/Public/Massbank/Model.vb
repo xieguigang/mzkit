@@ -145,12 +145,14 @@ Namespace Massbank
         <Extension>
         Private Function __internalTable(values$()) As Dictionary(Of String, String())
             Dim data As NamedValue(Of String)() = values _
-            .Select(Function(l) l.GetTagValue(" ", trim:=True)) _
-            .ToArray
+                .Select(Function(l) l.GetTagValue(" ", trim:=True)) _
+                .ToArray
             Dim table As Dictionary(Of String, String()) = data _
-            .GroupBy(Function(k) k.Name) _
-            .ToDictionary(Function(l) l.Key,
-                          Function(l) l.Values)
+                .GroupBy(Function(k) k.Name) _
+                .ToDictionary(Function(l) l.Key,
+                              Function(l)
+                                  Return l.Values
+                              End Function)
             Return table
         End Function
     End Module

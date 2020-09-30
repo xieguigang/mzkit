@@ -43,8 +43,13 @@
 #End Region
 
 Imports System.ComponentModel
+Imports Microsoft.VisualBasic.Windows.Forms
+Imports mzkit.My
 
 Public Class frmRsharp
+
+    Dim console1 As New ConsoleControl
+    Friend WithEvents console As Console
 
     Private Sub frmRsharp_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
         e.Cancel = True
@@ -55,12 +60,21 @@ Public Class frmRsharp
         TabText = "R# Terminal"
 
         Me.Icon = My.Resources.Rscript
-
         Me.ShowIcon = True
 
+        Controls.Add(console1)
 
+        console1.Font = New Font("Consolas", 10.0!)
+        console1.Dock = DockStyle.Fill
+        console1.Ps1Pattern = "[>]\s"
+
+        console = console1.Console
+
+        console.ForegroundColor = ConsoleColor.Black
+        console.BackgroundColor = ConsoleColor.White
+
+        MyApplication.RegisterConsole(console)
     End Sub
-
 
 End Class
 
