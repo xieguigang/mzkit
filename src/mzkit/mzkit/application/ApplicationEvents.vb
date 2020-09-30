@@ -1,47 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::4d3f6ba5b3e9471ead1cc0621e43f93b, src\mzkit\mzkit\application\ApplicationEvents.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class MyApplication
-    ' 
-    '         Properties: host, LogForm, REngine
-    ' 
-    '         Sub: InitializeREngine, LogText, MyApplication_UnhandledException, RegisterHost, RegisterOutput
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class MyApplication
+' 
+'         Properties: host, LogForm, REngine
+' 
+'         Sub: InitializeREngine, LogText, MyApplication_UnhandledException, RegisterHost, RegisterOutput
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -49,6 +49,7 @@ Imports Microsoft.VisualBasic.ApplicationServices
 Imports mzkit.DockSample
 Imports SMRUCC.Rsharp.Interpreter
 Imports REnv = SMRUCC.Rsharp.Runtime.Internal
+Imports Microsoft.VisualBasic.Windows.Forms
 
 Namespace My
 
@@ -64,6 +65,9 @@ Namespace My
         Public Shared ReadOnly Property LogForm As DummyOutputWindow
         Public Shared ReadOnly Property REngine As RInterpreter
 
+
+        Shared WithEvents console As Console
+
         Public Shared Sub RegisterOutput(log As DummyOutputWindow)
             _LogForm = log
 
@@ -77,6 +81,10 @@ Namespace My
                 End Sub
         End Sub
 
+        Public Shared Sub RegisterConsole(console As Console)
+            _console = console
+        End Sub
+
         Public Shared Function GetSplashScreen() As frmSplashScreen
             For i As Integer = 0 To Application.OpenForms.Count - 1
                 If TypeOf Application.OpenForms(i) Is frmSplashScreen Then
@@ -86,6 +94,17 @@ Namespace My
 
             Return Nothing
         End Function
+
+        Public Shared Sub ExecuteRScript(scriptText As String, isFile As Boolean)
+            Dim result As Object
+
+            If isFile Then
+                result = MyApplication.REngine.Source(scriptText)
+            Else
+                result = MyApplication.REngine.Evaluate(scriptText)
+            End If
+
+        End Sub
 
         Public Shared Sub InitializeREngine()
             _REngine = New RInterpreter
