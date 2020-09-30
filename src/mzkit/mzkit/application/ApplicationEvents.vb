@@ -209,17 +209,7 @@ Type 'q()' to quit R.
         End Sub
 
         Private Shared Sub doRunScript(script As String)
-            Dim error$ = Nothing
-            Dim program As RProgram = RProgram.BuildProgram(script, [error]:=[error])
-            Dim result As Object
-
-            If Not [error].StringEmpty Then
-                result = REnv.Internal.debug.stop([error], REngine.globalEnvir)
-            Else
-                result = REnv.TryCatch(Function() REngine.Run(program), debug:=REngine.debug)
-            End If
-
-            Call handleResult(result)
+            Call ExecuteRScript(script, isFile:=False)
             Call cancel.Set()
         End Sub
 
