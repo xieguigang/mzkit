@@ -119,6 +119,8 @@ Namespace My
                         result = MyApplication.REngine.Evaluate(scriptText)
                     End If
 
+                    Call REngine.Print(RInterpreter.lastVariableName)
+
                     writer.Flush()
                     console.WriteLine(Encoding.UTF8.GetString(buffer.ToArray))
                 End Using

@@ -66,10 +66,9 @@ Public Class frmRsharp
 
         console1.Dock = DockStyle.Fill
         console = console1.Console
+        console1.Ps1Pattern = "[>]\s"
 
         MyApplication.RegisterConsole(console)
-
-
     End Sub
 
 End Class
