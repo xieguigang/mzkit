@@ -43,6 +43,7 @@
 #End Region
 
 Imports System.ComponentModel
+Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class frmDockDocument
 
@@ -62,7 +63,7 @@ Public Class frmDockDocument
 
     Private Sub frmDockDocument_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
         e.Cancel = True
-        Me.DockState = WeifenLuo.WinFormsUI.Docking.DockState.Document
+        Me.DockState = DockState.Document
     End Sub
 
     Private Sub frmDockDocument_Load(sender As Object, e As EventArgs) Handles Me.Load

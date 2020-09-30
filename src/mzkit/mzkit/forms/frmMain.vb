@@ -64,6 +64,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports mzkit.DockSample
 Imports mzkit.My
+Imports mzkit.SmileWei.EmbeddedApp
 Imports RibbonLib
 Imports RibbonLib.Controls.Events
 Imports RibbonLib.Interop
@@ -78,10 +79,15 @@ Public Class frmMain
     Friend mzkitSearch As New PageMzSearch With {.Text = "M/Z Formula De-novo Search"}
     Friend mzkitCalculator As New PageMzCalculator With {.Text = "M/Z Calculator"}
     Friend mzkitMNtools As New PageMoleculeNetworking With {.Text = "Molecular Networking"}
+    Friend mzkitSpectrumSearch As New PageSpectrumSearch With {.Text = "Spectrum Similarity Search"}
 
     Friend TreeView1 As TreeView
 
     Dim nav As New Stack(Of Control)
+
+    Public Function GetPPMError() As Double
+        Return Val(ribbonItems.PPMSpinner.DecimalValue)
+    End Function
 
     Friend Sub ShowPage(page As Control, Optional pushStack As Boolean = True)
         For Each page2 In panelMain.pages
@@ -172,6 +178,7 @@ Public Class frmMain
         AddHandler ribbonItems.ButtonDropB.ExecuteEvent, Sub(sender, e) ShowPage(mzkitCalculator)
         AddHandler ribbonItems.ButtonDropC.ExecuteEvent, Sub(sender, e) ShowPage(mzkitSearch)
         AddHandler ribbonItems.ButtonDropD.ExecuteEvent, Sub(sender, e) ShowPage(mzkitMNtools)
+        AddHandler ribbonItems.ButtonShowSpectrumSearchPage.ExecuteEvent, Sub(sender, e) ShowPage(mzkitSpectrumSearch)
 
         AddHandler ribbonItems.ButtonCalculatorExport.ExecuteEvent, Sub(sender, e) Call mzkitCalculator.ExportToolStripMenuItem_Click()
         AddHandler ribbonItems.ButtonExactMassSearchExport.ExecuteEvent, Sub(sender, e) Call mzkitTool.ExportExactMassSearchTable()
@@ -244,42 +251,15 @@ Public Class frmMain
 
         If Not active Is Nothing AndAlso TypeOf CObj(active) Is frmRScriptEdit Then
             Dim editor = DirectCast(CObj(active), frmRScriptEdit)
-            Dim script As String = editor.script.FastColoredTextBox1.Text
+            Dim script As String = editor.FastColoredTextBox1.Text
             Dim result As Object
 
-            Using buffer As New MemoryStream
-                Using writer As New StreamWriter(buffer)
-                    MyApplication.REngine.RedirectOutput(writer, OutputEnvironments.Html)
-
-                    If editor.scriptFile.StringEmpty Then
-                        result = MyApplication.REngine.Evaluate(script)
-                    Else
-                        Call script.SaveTo(editor.scriptFile)
-                        result = MyApplication.REngine.Source(editor.scriptFile)
-                    End If
-
-                    writer.Flush()
-                    RtermPage.Routput.AppendText(Encoding.UTF8.GetString(buffer.ToArray) & vbCrLf)
-                End Using
-
-                If TypeOf result Is Message AndAlso DirectCast(result, Message).level = MSG_TYPES.ERR Then
-                    Dim err As Message = result
-
-                    RtermPage.Routput.AppendText(err.ToString & vbCrLf)
-
-                    For i As Integer = 0 To err.message.Length - 1
-                        RtermPage.Routput.AppendText((i + 1) & ". " & err.message(i) & vbCrLf)
-                    Next
-
-                    RtermPage.Routput.AppendText(vbCrLf)
-
-                    For Each stack In err.environmentStack
-                        RtermPage.Routput.AppendText(stack.ToString & vbCrLf)
-                    Next
-
-                    RtermPage.Routput.AppendText(vbCrLf)
-                End If
-            End Using
+            If editor.scriptFile.StringEmpty Then
+                result = MyApplication.REngine.Evaluate(script)
+            Else
+                Call script.SaveTo(editor.scriptFile)
+                result = MyApplication.REngine.Source(editor.scriptFile)
+            End If
 
             RtermPage.Show(dockPanel)
             RtermPage.DockState = DockState.Document
@@ -377,7 +357,7 @@ Public Class frmMain
         If Not active Is Nothing Then
             If TypeOf CObj(active) Is frmSettings Then
 
-                Call DirectCast(CObj(active), frmSettings).mzkitSettings.SaveSettings()
+                Call DirectCast(CObj(active), frmSettings).SaveSettings()
 
             ElseIf CObj(active).GetType.ImplementInterface(Of ISaveHandle) Then
                 Dim file As String = Nothing
@@ -473,7 +453,7 @@ Public Class frmMain
 
         splashScreen.UpdateInformation("Create mzkit toolkit pages...")
 
-        panelMain.addPage(AddressOf splashScreen.UpdateInformation, mzkitTool, mzkitSearch, mzkitCalculator, mzkitMNtools)
+        panelMain.addPage(AddressOf splashScreen.UpdateInformation, mzkitTool, mzkitSearch, mzkitCalculator, mzkitMNtools, mzkitSpectrumSearch)
         ShowPage(mzkitTool)
 
         mzkitTool.Ribbon_Load(Ribbon1)
@@ -687,7 +667,9 @@ Public Class frmMain
                 Call Invoke(Sub() Call SaveSettings())
                 Call progress.Invoke(Sub() progress.Close())
             End Sub).Start()
+
         Call progress.ShowDialog()
+        Call App.Exit()
     End Sub
 
     Private Sub SaveSettings()
@@ -835,6 +817,10 @@ Public Class frmMain
 
     Private Sub frmMain_ResizeBegin(sender As Object, e As EventArgs) Handles Me.ResizeBegin
         ' Me.SuspendLayout()
+    End Sub
+
+    Private Sub frmMain_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
+
     End Sub
 
 

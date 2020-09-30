@@ -38,6 +38,8 @@
     <ExcludeDeploymentUrl>true</ExcludeDeploymentUrl>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -167,6 +169,9 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic.Windows.Forms.Console">
+      <HintPath>..\dist\Microsoft.VisualBasic.Windows.Forms.Console.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.TextEdit">
       <HintPath>..\dist\Microsoft.VisualStudio.TextEdit.dll</HintPath>
     </Reference>
@@ -232,13 +237,19 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="forms\ISplashScreenUpdater.vb" />
-    <Compile Include="pages\dockWindow\frmPlotViewer.Designer.vb">
-      <DependentUpon>frmPlotViewer.vb</DependentUpon>
+    <Compile Include="pages\dockWindow\documents\frmFeatureSearch.Designer.vb">
+      <DependentUpon>frmFeatureSearch.vb</DependentUpon>
     </Compile>
-    <Compile Include="pages\dockWindow\frmPlotViewer.vb">
+    <Compile Include="pages\dockWindow\documents\frmFeatureSearch.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="pages\PlotTooltip.vb">
+    <Compile Include="pages\dockWindow\documents\frmPlotViewer.Designer.vb">
+      <DependentUpon>frmPlotViewer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\dockWindow\documents\frmPlotViewer.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="pages\toolkit\PlotTooltip.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="pages\CollDatagridview.vb" />
@@ -256,16 +267,16 @@
     <Compile Include="pages\dockWindow\explorer\Win7StyleTreeView.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="pages\dockWindow\frmRScriptEdit.Designer.vb">
+    <Compile Include="pages\dockWindow\documents\frmRScriptEdit.Designer.vb">
       <DependentUpon>frmRScriptEdit.vb</DependentUpon>
     </Compile>
-    <Compile Include="pages\dockWindow\frmRScriptEdit.vb">
+    <Compile Include="pages\dockWindow\documents\frmRScriptEdit.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="pages\dockWindow\frmRsharp.Designer.vb">
+    <Compile Include="pages\dockWindow\R\frmRsharp.Designer.vb">
       <DependentUpon>frmRsharp.vb</DependentUpon>
     </Compile>
-    <Compile Include="pages\dockWindow\frmRsharp.vb">
+    <Compile Include="pages\dockWindow\R\frmRsharp.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="pages\dockWindow\frmSettings.Designer.vb">
@@ -301,8 +312,8 @@
     <Compile Include="pages\dockWindow\explorer\frmFileTree.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="pages\dockWindow\ToolWindow.Designer.vb" />
-    <Compile Include="pages\dockWindow\ToolWindow.vb">
+    <Compile Include="pages\dockWindow\base\ToolWindow.Designer.vb" />
+    <Compile Include="pages\dockWindow\base\ToolWindow.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="pages\pageStart\NewsFeedDisplay.Designer.vb">
@@ -322,12 +333,6 @@
     </Compile>
     <Compile Include="pages\Settings\buttons\NativeToolStripRenderer.vb" />
     <Compile Include="pages\Settings\ISaveSettings.vb" />
-    <Compile Include="pages\PageScripting.Designer.vb">
-      <DependentUpon>PageScripting.vb</DependentUpon>
-    </Compile>
-    <Compile Include="pages\PageScripting.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="pages\Settings\RawFileViewer.Designer.vb">
       <DependentUpon>RawFileViewer.vb</DependentUpon>
     </Compile>
@@ -338,12 +343,6 @@
       <DependentUpon>PageStart.vb</DependentUpon>
     </Compile>
     <Compile Include="pages\pageStart\PageStart.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="pages\PageRscriptEditor.Designer.vb">
-      <DependentUpon>PageRscriptEditor.vb</DependentUpon>
-    </Compile>
-    <Compile Include="pages\PageRscriptEditor.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="pages\Settings\PlotConfig.Designer.vb">
@@ -364,21 +363,21 @@
     <Compile Include="pages\Settings\MolecularNetworking.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="pages\toolkit\PageSpectrumSearch.Designer.vb">
+      <DependentUpon>PageSpectrumSearch.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\toolkit\PageSpectrumSearch.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="settings\NetworkArguments.vb" />
     <Compile Include="settings\UISettings.vb" />
     <Compile Include="settings\PrecursorSearchSettings.vb" />
     <Compile Include="settings\Settings.vb" />
     <Compile Include="DataControlHandler.vb" />
-    <Compile Include="pages\PageSettings.Designer.vb">
-      <DependentUpon>PageSettings.vb</DependentUpon>
-    </Compile>
-    <Compile Include="pages\PageSettings.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="pages\PageMzkitTools.Designer.vb">
+    <Compile Include="pages\toolkit\PageMzkitTools.Designer.vb">
       <DependentUpon>PageMzkitTools.vb</DependentUpon>
     </Compile>
-    <Compile Include="pages\PageMzkitTools.vb">
+    <Compile Include="pages\toolkit\PageMzkitTools.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="forms\frmMain.Designer.vb">
@@ -417,22 +416,22 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="pages\PageMzSearch.Designer.vb">
+    <Compile Include="pages\toolkit\PageMzSearch.Designer.vb">
       <DependentUpon>PageMzSearch.vb</DependentUpon>
     </Compile>
-    <Compile Include="pages\PageMzSearch.vb">
+    <Compile Include="pages\toolkit\PageMzSearch.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="pages\PageMzCalculator.Designer.vb">
+    <Compile Include="pages\toolkit\PageMzCalculator.Designer.vb">
       <DependentUpon>PageMzCalculator.vb</DependentUpon>
     </Compile>
-    <Compile Include="pages\PageMzCalculator.vb">
+    <Compile Include="pages\toolkit\PageMzCalculator.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="pages\PageMoleculeNetworking.Designer.vb">
+    <Compile Include="pages\toolkit\PageMoleculeNetworking.Designer.vb">
       <DependentUpon>PageMoleculeNetworking.vb</DependentUpon>
     </Compile>
-    <Compile Include="pages\PageMoleculeNetworking.vb">
+    <Compile Include="pages\toolkit\PageMoleculeNetworking.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="pages\Settings\ElementProfile.Designer.vb">
@@ -442,6 +441,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="RibbonItems.Designer.vb" />
+    <Compile Include="Win32API.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="forms\frmLicense.resx">
@@ -450,14 +450,23 @@
     <EmbeddedResource Include="forms\frmProgressSpinner.resx">
       <DependentUpon>frmProgressSpinner.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="pages\dockWindow\documents\frmFeatureSearch.resx">
+      <DependentUpon>frmFeatureSearch.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pages\dockWindow\documents\frmRScriptEdit.resx">
+      <DependentUpon>frmRScriptEdit.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\DummyPropertyWindow.resx" />
     <EmbeddedResource Include="pages\dockWindow\explorer\frmFileTree.resx">
       <DependentUpon>frmFileTree.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="pages\dockWindow\frmPlotViewer.resx">
+    <EmbeddedResource Include="pages\dockWindow\documents\frmPlotViewer.resx">
       <DependentUpon>frmPlotViewer.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="pages\dockWindow\frmRsharp.resx">
+    <EmbeddedResource Include="pages\dockWindow\frmSettings.resx">
+      <DependentUpon>frmSettings.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pages\dockWindow\R\frmRsharp.resx">
       <DependentUpon>frmRsharp.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\frmSearchList.resx">
@@ -466,27 +475,18 @@
     <EmbeddedResource Include="pages\dockWindow\frmStartPage.resx">
       <DependentUpon>frmStartPage.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="pages\dockWindow\ToolWindow.resx" />
-    <EmbeddedResource Include="pages\PageMoleculeNetworking.resx">
+    <EmbeddedResource Include="pages\dockWindow\base\ToolWindow.resx" />
+    <EmbeddedResource Include="pages\toolkit\PageMoleculeNetworking.resx">
       <DependentUpon>PageMoleculeNetworking.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="pages\PageMzCalculator.resx">
+    <EmbeddedResource Include="pages\toolkit\PageMzCalculator.resx">
       <DependentUpon>PageMzCalculator.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="pages\PageMzkitTools.resx">
+    <EmbeddedResource Include="pages\toolkit\PageMzkitTools.resx">
       <DependentUpon>PageMzkitTools.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="pages\PageMzSearch.resx">
+    <EmbeddedResource Include="pages\toolkit\PageMzSearch.resx">
       <DependentUpon>PageMzSearch.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="pages\PageRscriptEditor.resx">
-      <DependentUpon>PageRscriptEditor.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="pages\PageScripting.resx">
-      <DependentUpon>PageScripting.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="pages\PageSettings.resx">
-      <DependentUpon>PageSettings.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="forms\frmTaskProgress.resx">
       <DependentUpon>frmTaskProgress.vb</DependentUpon>
@@ -538,6 +538,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="pages\Settings\RawFileViewer.resx">
       <DependentUpon>RawFileViewer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pages\toolkit\PageSpectrumSearch.resx">
+      <DependentUpon>PageSpectrumSearch.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RibbonMarkup.ribbon" />
   </ItemGroup>

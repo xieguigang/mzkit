@@ -34,7 +34,7 @@
 				 LabelTitle="Save"
 				 LabelDescription="Save Current File"
 				 TooltipTitle="Save (Ctrl+S)"
-				 TooltipDescription="Save the current Script File or Application Configuration.">
+				 TooltipDescription="Save the current script file, image plot or application configuration.">
 			<Command.LargeImages>
 				<Image>Res/document-save.png</Image>
 			</Command.LargeImages>
@@ -451,18 +451,18 @@
 				<Image>Res/baobab.png</Image>
 			</Command.LargeImages>
 		</Command>
-		<!--
-		<Command Name="cmdCheckBoxXICRelative"
-		 Id="1103"
-		 LabelTitle="Relative XIC intensity">
+		
+		<Command Name="cmdButtonShowSpectrumSearchPage"
+		 Id="1102"
+		 LabelTitle="Search"
+		 LabelDescription="Spectrum Similarity Search">
 			<Command.LargeImages>
-				<Image>Res/Save32.bmp</Image>
+				<Image>Res/tracker.png</Image>
 			</Command.LargeImages>
 			<Command.SmallImages>
-				<Image>Res/Save16.bmp</Image>
+				<Image>Res/tracker.png</Image>
 			</Command.SmallImages>
 		</Command>
--->
 
 		<Command Name="cmdButtonExportImage"
 		 Id="1104"
@@ -905,10 +905,10 @@
 					</Tab.ScalingPolicy>
 
 					<!-- useful part -->
-					<Group CommandName="cmdGroupToolsActions" SizeDefinition="TwoButtons">
+					<Group CommandName="cmdGroupToolsActions" SizeDefinition="ThreeButtons">
 						<Button CommandName="cmdButtonMzCalculator" />
 						<Button CommandName="cmdButtonMzSearch" />
-						<!-- <Button CommandName="cmdButtonSave" /> -->
+						<Button CommandName="cmdButtonShowSpectrumSearchPage" /> 
 					</Group>
 
 				</Tab>
@@ -990,7 +990,7 @@
 					<QuickAccessToolbar.ApplicationDefaults>
 						<Button CommandName="cmdButtonPageNavBack" ApplicationDefaults.IsChecked="true" />
 						<Button CommandName="cmdButtonOpenRaw" ApplicationDefaults.IsChecked="true" />
-						<Button CommandName="cmdButtonRsharp" ApplicationDefaults.IsChecked="true" />
+						<Button CommandName="cmdButtonSave" ApplicationDefaults.IsChecked="true" />
 					</QuickAccessToolbar.ApplicationDefaults>
 				</QuickAccessToolbar>
 			</Ribbon.QuickAccessToolbar>
