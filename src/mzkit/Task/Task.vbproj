@@ -122,8 +122,8 @@
     <Compile Include="Math.vb" />
     <Compile Include="MoleculeNetworking.vb" />
     <Compile Include="SpectrumProperty.vb" />
-    <Compile Include="Raw.vb" />
-    <Compile Include="ImportsRawData.vb" />
+    <Compile Include="Imports\Raw.vb" />
+    <Compile Include="Imports\ImportsRawData.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
