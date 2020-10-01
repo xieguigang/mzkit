@@ -109,7 +109,9 @@ Public Class ImportsRawData
             Dim attrs As attribute()
             Dim data As Double()
             Dim name As String
-            Dim nscans As New List(Of ScanEntry)
+            Dim nscans As New List(Of Ms1ScanEntry)
+            Dim ms1Parent As Ms1ScanEntry = Nothing
+            Dim ms2Temp As New List(Of ScanEntry)
             Dim rt As New List(Of Double)
 
             For Each scan As mzXML.scan In mzXML.XML.LoadScans(source)
@@ -138,28 +140,45 @@ Public Class ImportsRawData
 
                 If scan.msLevel = 1 Then
                     cache1.AddVariable(name, scanData, scanSize, attrs)
+
+                    If Not ms1Parent Is Nothing Then
+                        ms1Parent.products = ms2Temp.PopAll
+                        nscans.Add(ms1Parent)
+                    End If
+
+                    ms1Parent = New Ms1ScanEntry With {
+                       .id = name,
+                       .rt = PeakMs2.RtInSecond(scan.retentionTime),
+                       .BPC = scan.basePeakIntensity,
+                       .TIC = scan.totIonCurrent,
+                       .XIC = scan.precursorMz.precursorIntensity
+                    }
                 Else
                     cache2.AddVariable(name, scanData, scanSize, attrs)
+
+                    Call New ScanEntry With {
+                       .id = name,
+                       .mz = scan.precursorMz.value,
+                       .rt = PeakMs2.RtInSecond(scan.retentionTime),
+                       .BPC = scan.basePeakIntensity,
+                       .TIC = scan.totIonCurrent,
+                       .XIC = scan.precursorMz.precursorIntensity,
+                       .polarity = Provider.ParseIonMode(scan.polarity),
+                       .charge = scan.precursorMz.precursorCharge
+                   }.DoCall(AddressOf ms2Temp.Add)
                 End If
 
                 rt.Add(PeakMs2.RtInSecond(scan.retentionTime))
 
-                Call New ScanEntry With {
-                    .id = name,
-                    .mz = scan.precursorMz.value,
-                    .rt = PeakMs2.RtInSecond(scan.retentionTime),
-                    .BPC = scan.basePeakIntensity,
-                    .TIC = scan.totIonCurrent,
-                    .XIC = scan.precursorMz.precursorIntensity,
-                    .polarity = Provider.ParseIonMode(scan.polarity),
-                    .charge = scan.precursorMz.precursorCharge
-                }.DoCall(AddressOf nscans.Add)
-
                 Call showProgress(name)
             Next
 
-            cache1.GlobalAttributes(New attribute With {.name = NameOf(nscans), .type = CDFDataTypes.INT, .value = nscans.Where(Function(a) a.mz = 0.0).Count})
-            cache2.GlobalAttributes(New attribute With {.name = NameOf(nscans), .type = CDFDataTypes.INT, .value = nscans.Where(Function(a) a.mz > 0.0).Count})
+            If nscans.Last.id <> ms1Parent.id Then
+                nscans.Add(ms1Parent)
+            End If
+
+            cache1.GlobalAttributes(New attribute With {.name = NameOf(nscans), .type = CDFDataTypes.INT, .value = nscans.Count})
+            cache2.GlobalAttributes(New attribute With {.name = NameOf(nscans), .type = CDFDataTypes.INT, .value = nscans.Sum(Function(a) a.products.TryCount)})
 
             raw.scans = nscans.ToArray
             raw.rtmin = rt.Min
