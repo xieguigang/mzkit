@@ -75,7 +75,7 @@ Public Class Raw
         End Get
     End Property
 
-    Public Property scans As ScanEntry()
+    Public Property scans As Ms1ScanEntry()
 
     Public ReadOnly Property cacheFileExists As Boolean
         Get
@@ -85,16 +85,23 @@ Public Class Raw
 
 End Class
 
-Public Class ScanEntry
+Public Class Ms1ScanEntry
 
     Public Property id As String
-    Public Property mz As Double
     Public Property rt As Double
-    Public Property charge As Double
     Public Property TIC As Double
     Public Property BPC As Double
     Public Property XIC As Double
+
+    Public Property products As ScanEntry()
+
+End Class
+
+Public Class ScanEntry : Inherits Ms1ScanEntry
+
+    Public Property mz As Double
     Public Property polarity As Integer
+    Public Property charge As Double
 
     Public Overrides Function ToString() As String
         Return id
