@@ -19,12 +19,22 @@ Public Module DrawScatter
         Dim ms1 As New List(Of ms1_scan)
 
         Using cache As New netCDFReader(raw.ms1_cache)
-            For Each scan In raw.scans.Where(Function(a) a.mz = 0.0)
+            For Each scan In raw.scans
                 Dim data As CDFData = cache.getDataVariable(cache.getDataVariableEntry(scan.id))
                 Dim rawData As ms2() = data.numerics.AsMs2.ToArray
 
-                ms1.AddRange(rawData.Centroid(Tolerance.DeltaMass(0.3), New RelativeIntensityCutoff(0.01)).Select(Function(a) New ms1_scan With {.intensity = a.intensity, .mz = a.mz, .scan_time = scan.rt}))
-                Application.DoEvents()
+                Call rawData _
+                    .Centroid(Tolerance.DeltaMass(0.3), New RelativeIntensityCutoff(0.01)) _
+                    .Select(Function(a)
+                                Return New ms1_scan With {
+                                    .intensity = a.intensity,
+                                    .mz = a.mz,
+                                    .scan_time = scan.rt
+                                }
+                            End Function) _
+                    .DoCall(AddressOf ms1.AddRange)
+
+                Call Application.DoEvents()
             Next
         End Using
 
