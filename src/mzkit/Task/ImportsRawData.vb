@@ -202,6 +202,8 @@ Public Class ImportsRawData
             Dim name As String
             Dim nscans As New List(Of ScanEntry)
             Dim rt As New List(Of Double)
+            Dim ms1Parent As Ms1ScanEntry = Nothing
+            Dim ms2Temp As New List(Of ScanEntry)
 
             For Each scan As spectrum In mzML.Xml.LoadScans(source)
                 Dim parent As (mz As Double, into As Double) = Nothing
@@ -261,25 +263,41 @@ Public Class ImportsRawData
 
                 If scan.ms_level = 1 Then
                     cache1.AddVariable(name, scanData, scanSize, attrs)
+
+                    If Not ms1Parent Is Nothing Then
+                        ms1Parent.products = ms2Temp.PopAll
+                        nscans.Add(ms1Parent)
+                    End If
+
+                    ms1Parent = New Ms1ScanEntry With {
+                        .id = name,
+                        .rt = scan.scan_time,
+                        .BPC = parent.into,
+                        .XIC = parent.into,
+                        .TIC = parent.into
+                    }
                 Else
                     cache2.AddVariable(name, scanData, scanSize, attrs)
+                    ms2Temp.Add(New ScanEntry With {
+                        .id = name,
+                        .mz = parent.mz,
+                        .rt = scan.scan_time,
+                        .BPC = parent.into,
+                        .XIC = parent.into,
+                        .TIC = parent.into,
+                        .polarity = Provider.ParseIonMode(polarity)
+                    })
                 End If
-
-                Call New ScanEntry With {
-                    .id = name,
-                    .mz = parent.mz,
-                    .rt = scan.scan_time,
-                    .BPC = parent.into,
-                    .XIC = parent.into,
-                    .TIC = parent.into,
-                    .polarity = Provider.ParseIonMode(polarity)
-                }.DoCall(AddressOf nscans.Add)
 
                 Call showProgress(name)
             Next
 
-            cache1.GlobalAttributes(New attribute With {.name = NameOf(nscans), .type = CDFDataTypes.INT, .value = nscans.Where(Function(a) a.mz = 0.0).Count})
-            cache2.GlobalAttributes(New attribute With {.name = NameOf(nscans), .type = CDFDataTypes.INT, .value = nscans.Where(Function(a) a.mz > 0.0).Count})
+            cache1.GlobalAttributes(New attribute With {.name = NameOf(nscans), .type = CDFDataTypes.INT, .value = nscans.Count})
+            cache2.GlobalAttributes(New attribute With {.name = NameOf(nscans), .type = CDFDataTypes.INT, .value = nscans.Sum(Function(a) a.products.TryCount)})
+
+            If nscans.Last.id <> ms1Parent.id Then
+                nscans.Add(ms1Parent)
+            End If
 
             raw.scans = nscans.ToArray
             raw.rtmin = rt.Min
