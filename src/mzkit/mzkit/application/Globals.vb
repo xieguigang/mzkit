@@ -173,17 +173,9 @@ Module Globals
 
     <Extension>
     Public Sub addRawFile(rawFileNode As TreeNode, raw As Raw, ms1 As Boolean, ms2 As Boolean)
-        For Each scan As ScanEntry In raw.scans
-            If scan.mz = 0 AndAlso Not ms1 Then
-                Continue For
-            End If
-            If scan.mz > 0 AndAlso Not ms2 Then
-                Continue For
-            End If
-
+        For Each scan As Ms1ScanEntry In raw.scans
             Dim scanNode As New TreeNode(scan.id) With {
-                .Tag = scan,
-                .ToolTipText = "m/z: " & scan.mz
+                .Tag = scan
             }
 
             rawFileNode.Nodes.Add(scanNode)

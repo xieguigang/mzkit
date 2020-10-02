@@ -136,13 +136,13 @@ Namespace My
                 console.WriteLine(err.ToString & vbCrLf)
 
                 For i As Integer = 0 To err.message.Length - 1
-                    console.WriteLine((i + 1) & ". " & err.message(i) & vbCrLf)
+                    console.WriteLine((i + 1) & ". " & err.message(i))
                 Next
 
                 console.WriteLine(vbCrLf)
 
                 For Each stack In err.environmentStack
-                    console.WriteLine(stack.ToString & vbCrLf)
+                    console.WriteLine(stack.ToString)
                 Next
 
                 console.WriteLine(vbCrLf)
