@@ -58,7 +58,11 @@ Imports Task
 
 Module Globals
 
+    ''' <summary>
+    ''' 这个是未进行任何工作区保存所保存的一个默认的临时文件的位置
+    ''' </summary>
     Dim defaultWorkspace As String = App.LocalData & "/cacheList.dat"
+    Dim currentWorkspace As ViewerProject
 
     Public ReadOnly Property Settings As Settings
 
@@ -174,6 +178,7 @@ Module Globals
         Next
 
         explorer.Nodes.Add(rawFiles)
+        currentWorkspace = files
 
         If files.GetAutomationScripts.SafeQuery.Count > 0 Then
             Dim scripts As New TreeNode("R# Automation")
@@ -194,7 +199,9 @@ Module Globals
     End Function
 
     <Extension>
-    Public Sub addRawFile(rawFileNode As TreeNode, raw As Raw)
+    Public Sub loadRawFile(rawFileNode As TreeView, raw As Raw)
+        rawFileNode.Nodes.Clear()
+
         For Each scan As Ms1ScanEntry In raw.scans
             Dim scanNode As New TreeNode(scan.id) With {
                 .Tag = scan

@@ -219,31 +219,30 @@ Public Class PageMzkitTools
     Private Sub PageMzkitTools_Load(sender As Object, e As EventArgs) Handles Me.Load
         Dim host = MyApplication.host
         RibbonItems = host.ribbonItems
-        TreeView1 = host.TreeView1
 
         Call InitializeFileTree()
         Call Globals.SplashScreenUpdater("Attatch Command Events...")
 
-        AddHandler TreeView1.AfterSelect, AddressOf TreeView1_AfterSelect
-        AddHandler host.fileExplorer.Button1.Click, Sub(obj, evt) Call SearchByMz(host.fileExplorer.TextBox2.Text)
+        'AddHandler TreeView1.AfterSelect, AddressOf TreeView1_AfterSelect
+        'AddHandler host.fileExplorer.Button1.Click, Sub(obj, evt) Call SearchByMz(host.fileExplorer.TextBox2.Text)
 
-        AddHandler host.fileExplorer.ShowTICToolStripMenuItem.Click, AddressOf ShowTICToolStripMenuItem_Click
-        AddHandler host.fileExplorer.ShowXICToolStripMenuItem.Click, AddressOf ShowXICToolStripMenuItem_Click
+        'AddHandler host.fileExplorer.ShowTICToolStripMenuItem.Click, AddressOf ShowTICToolStripMenuItem_Click
+        'AddHandler host.fileExplorer.ShowXICToolStripMenuItem.Click, AddressOf ShowXICToolStripMenuItem_Click
 
-        AddHandler host.fileExplorer.ClearToolStripMenuItem.Click, AddressOf ClearToolStripMenuItem_Click
-        AddHandler host.fileExplorer.ExportToolStripMenuItem.Click, AddressOf ExportToolStripMenuItem_Click
+        'AddHandler host.fileExplorer.ClearToolStripMenuItem.Click, AddressOf ClearToolStripMenuItem_Click
+        'AddHandler host.fileExplorer.ExportToolStripMenuItem.Click, AddressOf ExportToolStripMenuItem_Click
 
-        AddHandler host.fileExplorer.MS1ToolStripMenuItem.Click, AddressOf MS1ToolStripMenuItem_Click
-        AddHandler host.fileExplorer.MS2ToolStripMenuItem.Click, AddressOf MS2ToolStripMenuItem_Click
+        'AddHandler host.fileExplorer.MS1ToolStripMenuItem.Click, AddressOf MS1ToolStripMenuItem_Click
+        'AddHandler host.fileExplorer.MS2ToolStripMenuItem.Click, AddressOf MS2ToolStripMenuItem_Click
 
-        AddHandler host.fileExplorer.MolecularNetworkingToolStripMenuItem.Click, AddressOf MolecularNetworkingToolStripMenuItem_Click
+        'AddHandler host.fileExplorer.MolecularNetworkingToolStripMenuItem.Click, AddressOf MolecularNetworkingToolStripMenuItem_Click
 
-        AddHandler host.fileExplorer.SearchInFileToolStripMenuItem.Click, AddressOf SearchInFileToolStripMenuItem_Click
-        AddHandler host.fileExplorer.CustomToolStripMenuItem.Click, AddressOf CustomToolStripMenuItem_Click
-        AddHandler host.fileExplorer.DefaultToolStripMenuItem.Click, AddressOf DefaultToolStripMenuItem_Click
-        AddHandler host.fileExplorer.SmallMoleculeToolStripMenuItem.Click, AddressOf SmallMoleculeToolStripMenuItem_Click
-        AddHandler host.fileExplorer.NatureProductToolStripMenuItem.Click, AddressOf NatureProductToolStripMenuItem_Click
-        AddHandler host.fileExplorer.GeneralFlavoneToolStripMenuItem.Click, AddressOf GeneralFlavoneToolStripMenuItem_Click
+        'AddHandler host.fileExplorer.SearchInFileToolStripMenuItem.Click, AddressOf SearchInFileToolStripMenuItem_Click
+        'AddHandler host.fileExplorer.CustomToolStripMenuItem.Click, AddressOf CustomToolStripMenuItem_Click
+        'AddHandler host.fileExplorer.DefaultToolStripMenuItem.Click, AddressOf DefaultToolStripMenuItem_Click
+        'AddHandler host.fileExplorer.SmallMoleculeToolStripMenuItem.Click, AddressOf SmallMoleculeToolStripMenuItem_Click
+        'AddHandler host.fileExplorer.NatureProductToolStripMenuItem.Click, AddressOf NatureProductToolStripMenuItem_Click
+        'AddHandler host.fileExplorer.GeneralFlavoneToolStripMenuItem.Click, AddressOf GeneralFlavoneToolStripMenuItem_Click
     End Sub
 
     Dim currentMatrix As [Variant](Of ms2(), ChromatogramTick())
@@ -362,36 +361,13 @@ Public Class PageMzkitTools
     End Sub
 
     Public Sub TIC(isBPC As Boolean)
-        Dim rawList As New List(Of Raw)
+        Dim rawList As Raw() = fileExplorer.GetSelectedRaws.ToArray
 
-        For i As Integer = 0 To TreeView1.Nodes.Count - 1
-            If Not TreeView1.Nodes(i).Checked Then
-                If Not TreeView1.Nodes(i) Is TreeView1.SelectedNode Then
-                    Continue For
-                End If
-            End If
-
-            Dim raw As Raw = TreeView1.Nodes(i).Tag
-
-            If Not raw.cacheFileExists Then
-                Call missingCacheFile(raw)
-            End If
-
-            rawList.Add(raw)
-        Next
-
-        If rawList.Count = 0 Then
-            Dim current = TreeView1.CurrentRawFile.raw
-
-            If current Is Nothing Then
-                MyApplication.host.showStatusMessage("No file data selected for TIC plot...")
-                Return
-            Else
-                rawList.Add(current)
-            End If
+        If rawList.Length = 0 Then
+            MyApplication.host.showStatusMessage("No file data selected for TIC plot...")
+        Else
+            Call TIC(rawList, isBPC)
         End If
-
-        Call TIC(rawList, isBPC)
     End Sub
 
     Public Sub SaveImageToolStripMenuItem_Click()
@@ -410,21 +386,21 @@ Public Class PageMzkitTools
     End Sub
 
     Private Sub applyLevelFilter()
-        Dim raw = TreeView1.CurrentRawFile
+        'Dim raw = TreeView1.CurrentRawFile
 
-        If Not raw.raw Is Nothing Then
-            raw.tree.Nodes.Clear()
-            raw.tree.addRawFile(raw.raw, MyApplication.host.fileExplorer.MS1ToolStripMenuItem.Checked, MyApplication.host.fileExplorer.MS2ToolStripMenuItem.Checked)
-        End If
+        'If Not raw.raw Is Nothing Then
+        '    raw.tree.Nodes.Clear()
+        '    raw.tree.addRawFile(raw.raw, MyApplication.host.fileExplorer.MS1ToolStripMenuItem.Checked, MyApplication.host.fileExplorer.MS2ToolStripMenuItem.Checked)
+        'End If
     End Sub
 
     Private Sub MS1ToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        MyApplication.host.fileExplorer.MS1ToolStripMenuItem.Checked = Not MyApplication.host.fileExplorer.MS1ToolStripMenuItem.Checked
+        ' MyApplication.host.fileExplorer.MS1ToolStripMenuItem.Checked = Not MyApplication.host.fileExplorer.MS1ToolStripMenuItem.Checked
         applyLevelFilter()
     End Sub
 
     Private Sub MS2ToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        MyApplication.host.fileExplorer.MS2ToolStripMenuItem.Checked = Not MyApplication.host.fileExplorer.MS2ToolStripMenuItem.Checked
+        ' MyApplication.host.fileExplorer.MS2ToolStripMenuItem.Checked = Not MyApplication.host.fileExplorer.MS2ToolStripMenuItem.Checked
         applyLevelFilter()
     End Sub
 
@@ -546,7 +522,7 @@ Public Class PageMzkitTools
 
     Private Sub searchInFileByMz(mz As Double)
         Dim ppm As Double = MyApplication.host.GetPPMError()
-        Dim raw = TreeView1.CurrentRawFile.raw
+        Dim raw = fileExplorer.CurrentRawFile
 
         Call MyApplication.host.rawFeaturesList.searchInFileByMz(mz, ppm, raw)
     End Sub
@@ -582,7 +558,7 @@ Public Class PageMzkitTools
     End Sub
 
     Private Sub runMzSearch(searchAction As Action(Of Double))
-        Dim current = TreeView1.CurrentRawFile
+        Dim current = fileExplorer.CurrentRawFile
         Dim node = TreeView1.SelectedNode
 
         If Not node Is Nothing AndAlso current.raw.cacheFileExists Then
@@ -805,51 +781,51 @@ Public Class PageMzkitTools
     End Sub
 
     Public Sub ShowXICToolStripMenuItem_Click()
-        If TreeView1.SelectedNode Is Nothing Then
-            Return
-        End If
+        'If TreeView1.SelectedNode Is Nothing Then
+        '    Return
+        'End If
 
-        If TypeOf TreeView1.SelectedNode.Tag Is Raw AndAlso MyApplication.host.fileExplorer.GetSelectedNodes.Count = 0 Then
-            MyApplication.host.showStatusMessage("no raw file data for XIC plot!", My.Resources.StatusAnnotations_Warning_32xLG_color)
-            Return
-        End If
+        'If TypeOf TreeView1.SelectedNode.Tag Is Raw AndAlso MyApplication.host.fileExplorer.GetSelectedNodes.Count = 0 Then
+        '    MyApplication.host.showStatusMessage("no raw file data for XIC plot!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+        '    Return
+        'End If
 
-        Dim selectedCount As Integer = 0
+        'Dim selectedCount As Integer = 0
 
-        For i As Integer = 0 To TreeView1.Nodes.Count - 1
-            Dim fileTree = TreeView1.Nodes(i)
+        'For i As Integer = 0 To TreeView1.Nodes.Count - 1
+        '    Dim fileTree = TreeView1.Nodes(i)
 
-            For j As Integer = 0 To fileTree.Nodes.Count - 1
-                If fileTree.Nodes(j).Checked Then
-                    selectedCount += 1
-                End If
-            Next
-        Next
+        '    For j As Integer = 0 To fileTree.Nodes.Count - 1
+        '        If fileTree.Nodes(j).Checked Then
+        '            selectedCount += 1
+        '        End If
+        '    Next
+        'Next
 
-        If selectedCount >= 500 Then
-            If MessageBox.Show("There are too many ions for create XIC plot, probably you should uncheck some ions for reduce data, continute to procedure?", "Too much data!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) = DialogResult.Cancel Then
-                MyApplication.host.showStatusMessage("Show XIC plot for too many ions has been cancel!")
-                Return
-            End If
-        End If
+        'If selectedCount >= 500 Then
+        '    If MessageBox.Show("There are too many ions for create XIC plot, probably you should uncheck some ions for reduce data, continute to procedure?", "Too much data!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) = DialogResult.Cancel Then
+        '        MyApplication.host.showStatusMessage("Show XIC plot for too many ions has been cancel!")
+        '        Return
+        '    End If
+        'End If
 
-        ' scan节点
-        Dim raw As Task.Raw = TreeView1.CurrentRawFile.raw
-        Dim ppm As Double = MyApplication.host.GetPPMError()
-        Dim plotTIC As NamedCollection(Of ChromatogramTick) = getXICMatrix(raw, TreeView1.SelectedNode.Text, ppm, relativeInto)
+        '' scan节点
+        'Dim raw As Task.Raw = TreeView1.CurrentRawFile.raw
+        'Dim ppm As Double = MyApplication.host.GetPPMError()
+        'Dim plotTIC As NamedCollection(Of ChromatogramTick) = getXICMatrix(raw, TreeView1.SelectedNode.Text, ppm, relativeInto)
 
-        If plotTIC.value.IsNullOrEmpty Then
-            ' 当前没有选中MS2，但是可以显示选中的XIC
-            If MyApplication.host.fileExplorer.GetSelectedNodes.Count > 0 Then
-            Else
-                MyApplication.host.showStatusMessage("No ion was selected for XIC plot...", My.Resources.StatusAnnotations_Warning_32xLG_color)
-                Return
-            End If
-        Else
-            Call showMatrix(plotTIC.value, Name)
-        End If
+        'If plotTIC.value.IsNullOrEmpty Then
+        '    ' 当前没有选中MS2，但是可以显示选中的XIC
+        '    If MyApplication.host.fileExplorer.GetSelectedNodes.Count > 0 Then
+        '    Else
+        '        MyApplication.host.showStatusMessage("No ion was selected for XIC plot...", My.Resources.StatusAnnotations_Warning_32xLG_color)
+        '        Return
+        '    End If
+        'Else
+        '    Call showMatrix(plotTIC.value, Name)
+        'End If
 
-        Call ShowXIC(ppm, plotTIC, AddressOf GetXICCollection, raw.GetXICMaxYAxis)
+        'Call ShowXIC(ppm, plotTIC, AddressOf GetXICCollection, raw.GetXICMaxYAxis)
     End Sub
 
     Public Sub ShowXIC(ppm As Double, plotTIC As NamedCollection(Of ChromatogramTick), getXICCollection As Func(Of Double, IEnumerable(Of NamedCollection(Of ChromatogramTick))), maxY As Double)
@@ -886,23 +862,6 @@ Public Class PageMzkitTools
         PictureBox1.BackgroundImage = plotImage
         ShowTabPage(TabPage5)
     End Sub
-
-    Public Iterator Function GetXICCollection(ppm As Double) As IEnumerable(Of NamedCollection(Of ChromatogramTick))
-        Dim explorer = MyApplication.host.fileExplorer
-        Dim files As IGrouping(Of String, TreeNode)() = explorer.Invoke(Function() explorer.GetSelectedNodes.GroupBy(Function(a) a.Parent.Text).ToArray)
-
-        For Each file In files
-            Dim scans = file.Select(Function(a) DirectCast(a.Tag, ScanEntry)) _
-                .Where(Function(a) a.mz > 0) _
-                .GroupBy(Function(a) a.mz, Tolerance.DeltaMass(0.3)) _
-                .ToArray
-            Dim Raw = file.First.Parent.Tag
-
-            For Each scanId In scans.Select(Function(a) a.value.First.id)
-                Yield getXICMatrix(Raw, scanId, ppm, relativeInto)
-            Next
-        Next
-    End Function
 
     Private Iterator Function getSelectedIonSpectrums(progress As Action(Of String)) As IEnumerable(Of PeakMs2)
         Dim explorer = MyApplication.host.fileExplorer
