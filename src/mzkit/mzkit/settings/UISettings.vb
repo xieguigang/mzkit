@@ -62,7 +62,7 @@ Public Class UISettings
 
 
     Public Property fileExplorerDock As DockState = DockState.DockLeft
-    Public Property searchListDock As DockState = DockState.DockLeftAutoHide
+    Public Property featureListDock As DockState = DockState.DockLeftAutoHide
     Public Property OutputDock As DockState = DockState.DockBottomAutoHide
     Public Property propertyWindowDock As DockState = DockState.DockRightAutoHide
 

@@ -1,0 +1,60 @@
+﻿Imports System.ComponentModel
+Imports mzkit.Kesoft.Windows.Forms.Win7StyleTreeView
+Imports mzkit.My
+Imports RibbonLib.Interop
+
+''' <summary>
+''' 显示一个workspace对象里面所包含有的文件列表
+''' </summary>
+Public Class frmFileExplorer
+
+    Friend WithEvents treeView1 As New Win7StyleTreeView
+    Friend WithEvents TextBox2 As New TextBox
+
+    Sub New()
+
+        ' This call is required by the designer.
+        InitializeComponent()
+
+        ' Add any initialization after the InitializeComponent() call.
+        DoubleBuffered = True
+    End Sub
+
+    Private Sub frmFileExplorer_Activated(sender As Object, e As EventArgs) Handles Me.Activated
+        MyApplication.host.ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
+    End Sub
+
+    Private Sub frmFileExplorer_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        e.Cancel = True
+        Me.Hide()
+    End Sub
+
+    Private Sub frmFileExplorer_Load(sender As Object, e As EventArgs) Handles Me.Load
+        Controls.Add(treeView1)
+        Controls.Add(TextBox2)
+
+        Me.TextBox2.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TextBox2.Font = New System.Drawing.Font("微软雅黑", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBox2.Location = New System.Drawing.Point(2, 2)
+        Me.TextBox2.Name = "TextBox2"
+        Me.TextBox2.Size = New System.Drawing.Size(441, 25)
+        Me.TextBox2.TabIndex = 1
+
+        treeView1.Location = New Point(1, TextBox2.Height + 5)
+        treeView1.Size = New Size(Width - 2, Me.Height - TextBox2.Height - 25)
+        treeView1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        treeView1.HotTracking = True
+        treeView1.CheckBoxes = True
+        '    treeView1.ContextMenuStrip = contextMenuStrip1
+        treeView1.ShowLines = True
+        treeView1.ShowRootLines = True
+
+        '   ExportToolStripMenuItem.Text = "Export XIC Ions"
+
+        Me.TabText = "File Explorer"
+    End Sub
+End Class

@@ -301,7 +301,7 @@ Public Class PageMzkitTools
             If selectedFile <> MyApplication.host.ToolStripStatusLabel1.Text Then
                 selectedFile = $"{ .source.FileName} [{ .numOfScans} scans]"
                 MyApplication.host.showStatusMessage(selectedFile)
-                MyApplication.host.searchList.ListBox1.Items.Clear()
+                MyApplication.host.rawFeaturesList.ListBox1.Items.Clear()
             End If
 
             MyApplication.host.Text = $"BioNovoGene Mzkit [{ .source.GetFullPath}]"
@@ -542,7 +542,7 @@ Public Class PageMzkitTools
         Dim ppm As Double = MyApplication.host.GetPPMError()
         Dim raw = TreeView1.CurrentRawFile.raw
 
-        Call MyApplication.host.searchList.searchInFileByMz(mz, ppm, raw)
+        Call MyApplication.host.rawFeaturesList.searchInFileByMz(mz, ppm, raw)
     End Sub
 
     Private Sub SearchInFileToolStripMenuItem_Click(sender As Object, e As EventArgs)

@@ -227,7 +227,7 @@ Public Class frmMain
 
     Private Sub resetLayout()
         fileExplorer.DockState = DockState.DockLeft
-        searchList.DockState = DockState.DockLeftAutoHide
+        rawFeaturesList.DockState = DockState.DockLeftAutoHide
         output.DockState = DockState.DockBottomAutoHide
         propertyWin.DockState = DockState.DockRightAutoHide
     End Sub
@@ -298,8 +298,8 @@ Public Class frmMain
     End Sub
 
     Private Sub ShowSearchList(sender As Object, e As ExecuteEventArgs)
-        searchList.Show(dockPanel)
-        searchList.DockState = DockState.DockLeft
+        rawFeaturesList.Show(dockPanel)
+        rawFeaturesList.DockState = DockState.DockLeft
     End Sub
 
     Private Sub ShowProperties(sender As Object, e As ExecuteEventArgs)
@@ -686,7 +686,7 @@ Public Class frmMain
             .fileExplorerDock = fileExplorer.DockState,
             .OutputDock = output.DockState,
             .propertyWindowDock = propertyWin.DockState,
-            .searchListDock = searchList.DockState
+            .featureListDock = rawFeaturesList.DockState
         }
 
         Globals.Settings.Save()
@@ -699,8 +699,8 @@ Public Class frmMain
     Private vsToolStripExtender1 As New WeifenLuo.WinFormsUI.Docking.VisualStudioToolStripExtender
     Private ReadOnly _toolStripProfessionalRenderer As ToolStripRenderer = New ToolStripProfessionalRenderer()
 
-    Friend fileExplorer As New frmFileTree
-    Friend searchList As New frmSearchList
+    Friend fileExplorer As New frmFileExplorer
+    Friend rawFeaturesList As New frmRawFeaturesList
     Friend output As New DummyOutputWindow
     Friend WithEvents panelMain As New frmDockDocument
     Friend startPage As New frmStartPage
@@ -731,7 +731,7 @@ Public Class frmMain
 
         TreeView1 = fileExplorer.treeView1
 
-        searchList.Show(dockPanel)
+        rawFeaturesList.Show(dockPanel)
         propertyWin.Show(dockPanel)
 
         output.Show(dockPanel)
@@ -751,12 +751,12 @@ Public Class frmMain
 
         If Globals.Settings.ui.rememberLayouts Then
             fileExplorer.DockState = Globals.Settings.ui.fileExplorerDock
-            searchList.DockState = Globals.Settings.ui.searchListDock
+            rawFeaturesList.DockState = Globals.Settings.ui.featureListDock
             output.DockState = Globals.Settings.ui.OutputDock
             propertyWin.DockState = Globals.Settings.ui.propertyWindowDock
         Else
             fileExplorer.DockState = DockState.DockLeftAutoHide
-            searchList.DockState = DockState.DockLeftAutoHide
+            rawFeaturesList.DockState = DockState.DockLeftAutoHide
             output.DockState = DockState.DockBottomAutoHide
             propertyWin.DockState = DockState.DockRightAutoHide
         End If
