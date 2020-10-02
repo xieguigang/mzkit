@@ -2,8 +2,8 @@
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmFileExplorer
-    ' Inherits ToolWindow
-    Inherits Form
+    Inherits ToolWindow
+    ' Inherits Form
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()> _
