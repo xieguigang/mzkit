@@ -317,7 +317,6 @@ Public Class PageMzkitTools
         Dim TIC As New NamedCollection(Of ChromatogramTick) With {
             .name = $"{If(isBPC, "BPC", "TIC")} [{raw.source.FileName}]",
             .value = raw.scans _
-                .Where(Function(a) a.mz = 0R) _
                 .Select(Function(m)
                             Return New ChromatogramTick With {.Time = m.rt, .Intensity = If(isBPC, m.BPC, m.TIC)}
                         End Function) _
@@ -581,7 +580,7 @@ Public Class PageMzkitTools
         Dim node = TreeView1.SelectedNode
 
         If Not node Is Nothing AndAlso current.raw.cacheFileExists Then
-            Dim mz = current.raw.scans.Where(Function(scan) scan.id = node.Text).FirstOrDefault
+            Dim mz = current.raw.GetMs2Scans.Where(Function(scan) scan.id = node.Text).FirstOrDefault
 
             If Not mz Is Nothing AndAlso mz.mz > 0 Then
                 Call searchAction(mz.mz)
@@ -594,7 +593,7 @@ Public Class PageMzkitTools
         Dim node = TreeView1.SelectedNode
 
         If Not node Is Nothing AndAlso current.raw.cacheFileExists Then
-            Dim mz = current.raw.scans.Where(Function(scan) scan.id = node.Text).FirstOrDefault
+            Dim mz = current.raw.GetMs2Scans.Where(Function(scan) scan.id = node.Text).FirstOrDefault
 
             If Not mz Is Nothing AndAlso mz.mz > 0 Then
                 Dim charge As Double = mz.charge
@@ -961,7 +960,8 @@ Public Class PageMzkitTools
             MyApplication.host.showStatusMessage(name, Nothing)
         End If
 
-        Dim XIC As ChromatogramTick() = raw.scans _
+        Dim XIC As ChromatogramTick() = raw _
+            .GetMs2Scans _
             .Where(Function(a) PPMmethod.PPM(a.mz, ms2.mz) <= ppm) _
             .Select(Function(a)
                         Return New ChromatogramTick With {

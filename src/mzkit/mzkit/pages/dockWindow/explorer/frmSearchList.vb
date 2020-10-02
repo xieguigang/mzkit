@@ -86,7 +86,7 @@ Public Class frmSearchList
     End Sub
 
     Friend Sub searchInFileByMz(mz As Double, ppm As Double, raw As Raw)
-        Dim ms2Hits = raw.scans.Where(Function(m) PPMmethod.PPM(m.mz, mz) <= ppm).ToArray
+        Dim ms2Hits = raw.GetMs2Scans.Where(Function(m) PPMmethod.PPM(m.mz, mz) <= ppm).ToArray
 
         ListBox1.Items.Clear()
 

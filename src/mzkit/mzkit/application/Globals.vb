@@ -220,10 +220,10 @@ Module Globals
 
     <Extension>
     Public Function GetXICMaxYAxis(raw As Raw) As Double
-        Dim XIC = raw.scans _
-             .Where(Function(a) a.mz > 0) _
-             .Select(Function(a) a.XIC) _
-             .ToArray
+        Dim XIC As Double() = raw _
+            .GetMs2Scans _
+            .Select(Function(a) a.XIC) _
+            .ToArray
 
         If XIC.Length = 0 Then
             Return 0
