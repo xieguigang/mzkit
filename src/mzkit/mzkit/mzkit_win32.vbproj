@@ -460,6 +460,12 @@
     <EmbeddedResource Include="pages\dockWindow\documents\frmPlotViewer.resx">
       <DependentUpon>frmPlotViewer.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="pages\dockWindow\explorer\frmFileExplorer.resx">
+      <DependentUpon>frmFileExplorer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pages\dockWindow\explorer\frmRawFeaturesList.resx">
+      <DependentUpon>frmRawFeaturesList.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\frmSettings.resx">
       <DependentUpon>frmSettings.vb</DependentUpon>
     </EmbeddedResource>

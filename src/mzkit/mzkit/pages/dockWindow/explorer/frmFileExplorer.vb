@@ -9,7 +9,6 @@ Imports RibbonLib.Interop
 Public Class frmFileExplorer
 
     Friend WithEvents treeView1 As New Win7StyleTreeView
-    Friend WithEvents TextBox2 As New TextBox
 
     Sub New()
 
@@ -31,16 +30,6 @@ Public Class frmFileExplorer
 
     Private Sub frmFileExplorer_Load(sender As Object, e As EventArgs) Handles Me.Load
         Controls.Add(treeView1)
-        Controls.Add(TextBox2)
-
-        Me.TextBox2.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TextBox2.Font = New System.Drawing.Font("微软雅黑", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox2.Location = New System.Drawing.Point(2, 2)
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(441, 25)
-        Me.TextBox2.TabIndex = 1
 
         treeView1.Location = New Point(1, TextBox2.Height + 5)
         treeView1.Size = New Size(Width - 2, Me.Height - TextBox2.Height - 25)
