@@ -58,7 +58,7 @@ Imports Task
 
 Module Globals
 
-    ReadOnly defaultWorkspace As String = App.LocalData & "/cacheList.dat"
+    Dim defaultWorkspace As String = App.LocalData & "/cacheList.dat"
 
     Public ReadOnly Property Settings As Settings
 
@@ -121,7 +121,7 @@ Module Globals
         Dim size As Double
 
         For Each node As TreeNode In explorer.Nodes
-            size += DirectCast(node.Tag, Raw).ms1_cache.FileLength + DirectCast(node.Tag, Raw).ms2_cache.FileLength
+            size += DirectCast(node.Tag, Raw).GetCacheFileSize
         Next
 
         If size = 0.0 Then
@@ -134,51 +134,70 @@ Module Globals
     Friend SplashScreenUpdater As Action(Of String)
 
     <Extension>
-    Public Function LoadRawFileCache(explorer As TreeView) As Integer
-        Dim rawBuffer As Byte() = defaultWorkspace.ReadBinary
+    Public Function LoadRawFileCache(explorer As TreeView, Optional defaultWorkspace As String = Nothing) As Integer
+        If defaultWorkspace.StringEmpty Then
+            defaultWorkspace = Globals.defaultWorkspace
+        End If
 
-        If rawBuffer.IsNullOrEmpty Then
+        If Not defaultWorkspace.FileExists Then
             Return 0
         Else
             Call SplashScreenUpdater("Load raw file list...")
         End If
 
-        Dim files As Dictionary(Of String, Raw()) = rawBuffer _
-            .DoCall(AddressOf BSONFormat.Load) _
-            .CreateObject(GetType(Dictionary(Of String, Raw())))
+        Dim files As ViewerProject = ViewerProject.LoadWorkspace(defaultWorkspace, SplashScreenUpdater)
         Dim i As Integer
+        Dim rawFiles As New TreeNode("Raw Data Files")
 
-        For Each rawList As Raw() In files.SafeQuery.Values
-            For Each raw As Raw In rawList.SafeQuery
-                Call SplashScreenUpdater($"[Raw File Viewer] Loading {raw.source.FileName}...")
-                Call explorer.addRawFile(raw)
-                i += 1
-            Next
+        For Each raw As Raw In files.GetRawDataFiles
+            Call SplashScreenUpdater($"[Raw File Viewer] Loading {raw.source.FileName}...")
+
+            Dim rawFileNode As New TreeNode($"{raw.source.FileName} [{raw.numOfScans} Scans]") With {
+                .Checked = True,
+                .Tag = raw
+            }
+
+            rawFiles.Nodes.Add(rawFileNode)
+            'rawFileNode.addRawFile(raw, True, True)
+            rawFileNode.Checked = False
+
+            i += 1
         Next
+
+        explorer.Nodes.Add(rawFiles)
+
+        If files.GetAutomationScripts.SafeQuery.Count > 0 Then
+            Dim scripts As New TreeNode("R# Automation")
+
+            For Each script As String In files.GetAutomationScripts
+                Dim fileNode As New TreeNode(script.FileName) With {
+                    .Checked = False,
+                    .Tag = script
+                }
+
+                scripts.Nodes.Add(fileNode)
+            Next
+
+            explorer.Nodes.Add(scripts)
+        End If
 
         Return i
     End Function
 
     <Extension>
-    Public Sub addRawFile(explorer As TreeView, raw As Raw)
-        Dim rawFileNode As New TreeNode($"{raw.source.FileName} [{raw.numOfScans} Scans]") With {
-            .Checked = True,
-            .Tag = raw
-        }
-
-        explorer.Nodes.Add(rawFileNode)
-        rawFileNode.addRawFile(raw, True, True)
-        rawFileNode.Checked = False
-    End Sub
-
-    <Extension>
-    Public Sub addRawFile(rawFileNode As TreeNode, raw As Raw, ms1 As Boolean, ms2 As Boolean)
+    Public Sub addRawFile(rawFileNode As TreeNode, raw As Raw)
         For Each scan As Ms1ScanEntry In raw.scans
             Dim scanNode As New TreeNode(scan.id) With {
                 .Tag = scan
             }
 
             rawFileNode.Nodes.Add(scanNode)
+
+            For Each ms2 As ScanEntry In scan.products.SafeQuery
+                Dim productNode As New TreeNode(ms2.id) With {.Tag = ms2}
+
+                scanNode.Nodes.Add(productNode)
+            Next
         Next
     End Sub
 

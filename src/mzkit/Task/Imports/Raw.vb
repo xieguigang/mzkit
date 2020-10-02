@@ -85,6 +85,10 @@ Public Class Raw
         End Get
     End Property
 
+    Public Function GetCacheFileSize() As Long
+        Return ms1_cache.FileLength + ms2_cache.FileLength + scatter.FileLength
+    End Function
+
     Public Function GetMs2Scans() As IEnumerable(Of ScanEntry)
         Return scans.Select(Function(a) a.products).IteratesALL
     End Function
