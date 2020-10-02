@@ -110,7 +110,7 @@ Public Class frmMain
                 If file.FileName.ExtensionSuffix("R") Then
                     Call openRscript(file.FileName)
                 Else
-                    Call mzkitTool.ImportsRaw(file.FileName)
+                    Call fileExplorer.ImportsRaw(file.FileName)
                 End If
 
                 Globals.AddRecentFileHistory(file.FileName)
@@ -135,7 +135,7 @@ Public Class frmMain
         }
             If file.ShowDialog = DialogResult.OK Then
                 For Each path As String In file.FileNames
-                    Call mzkitTool.ImportsRaw(path)
+                    Call fileExplorer.ImportsRaw(path)
                 Next
             End If
         End Using
@@ -656,7 +656,7 @@ Public Class frmMain
         Call New Thread(
             Sub()
                 Call Thread.Sleep(100)
-                Call mzkitTool.Invoke(Sub() mzkitTool.SaveFileCache(AddressOf progress.ShowProgressDetails))
+                Call fileExplorer.Invoke(Sub() fileExplorer.SaveFileCache(AddressOf progress.ShowProgressDetails))
                 Call progress.ShowProgressDetails("Save app settings...")
                 Call Invoke(Sub() Call SaveSettings())
                 Call progress.Invoke(Sub() progress.Close())

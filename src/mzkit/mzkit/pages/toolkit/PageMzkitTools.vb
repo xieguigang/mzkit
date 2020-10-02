@@ -105,60 +105,28 @@ Public Class PageMzkitTools
         MyApplication.host.ToolStripStatusLabel2.Text = fileExplorer.GetTotalCacheSize
     End Sub
 
-    Private Function missingCacheFile(raw As Raw) As DialogResult
-        Dim options As DialogResult = MessageBox.Show($"The specific raw data cache is missing, run imports again?{vbCrLf}{raw.source.GetFullPath}", $"[{raw.source.FileName}] Cache Not Found!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning)
+    'Private Function missingCacheFile(raw As Raw) As DialogResult
+    '    Dim options As DialogResult = MessageBox.Show($"The specific raw data cache is missing, run imports again?{vbCrLf}{raw.source.GetFullPath}", $"[{raw.source.FileName}] Cache Not Found!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning)
 
-        If options = DialogResult.OK Then
-            Dim newRaw = getRawCache(raw.source)
+    '    If options = DialogResult.OK Then
+    '        Dim newRaw = getRawCache(raw.source)
 
-            For i As Integer = 0 To TreeView1.Nodes.Count - 1
-                If TreeView1.Nodes(i).Tag Is raw Then
-                    TreeView1.Nodes(i).Tag = newRaw
-                End If
-            Next
+    '        For i As Integer = 0 To TreeView1.Nodes.Count - 1
+    '            If TreeView1.Nodes(i).Tag Is raw Then
+    '                TreeView1.Nodes(i).Tag = newRaw
+    '            End If
+    '        Next
 
-            MyApplication.host.showStatusMessage("Ready!")
-            MyApplication.host.ToolStripStatusLabel2.Text = TreeView1.GetTotalCacheSize
-        End If
+    '        MyApplication.host.showStatusMessage("Ready!")
+    '        MyApplication.host.ToolStripStatusLabel2.Text = TreeView1.GetTotalCacheSize
+    '    End If
 
-        Return options
-    End Function
+    '    Return options
+    'End Function
 
-    Public Sub SaveFileCache(progress As Action(Of String))
-        Call TreeView1.SaveRawFileCache(progress)
-    End Sub
-
-    Public Sub ImportsRaw(fileName As String)
-        Call TreeView1.addRawFile(getRawCache(fileName))
-
-        MyApplication.host.showStatusMessage("Ready!")
-        MyApplication.host.ToolStripStatusLabel2.Text = TreeView1.GetTotalCacheSize
-    End Sub
-
-    ''' <summary>
-    ''' do raw data file imports task
-    ''' </summary>
-    ''' <param name="fileName"></param>
-    ''' <returns></returns>
-    Public Function getRawCache(fileName As String) As Raw
-        Dim progress As New frmTaskProgress() With {.Text = $"Imports raw data [{fileName}]"}
-        Dim showProgress As Action(Of String) = AddressOf progress.ShowProgressDetails
-        Dim task As New Task.ImportsRawData(fileName, showProgress, Sub() Call progress.Invoke(Sub() progress.Close()))
-        Dim runTask As New Thread(AddressOf task.RunImports)
-
-        MyApplication.host.showStatusMessage("Run Raw Data Imports")
-        progress.ShowProgressTitle(progress.Text, directAccess:=True)
-
-        Call runTask.Start()
-        Call progress.ShowDialog()
-
-        'Call New frmRawViewer() With {
-        '    .MdiParent = Me,
-        '    .Text = file.FileName,
-        '    .rawFile = task.raw
-        '}.Show()
-        Return task.raw
-    End Function
+    'Public Sub SaveFileCache(progress As Action(Of String))
+    '    Call TreeView1.SaveRawFileCache(progress)
+    'End Sub
 
     Private Sub TreeView1_AfterSelect(sender As Object, e As TreeViewEventArgs)
         If TypeOf e.Node.Tag Is Task.Raw Then
@@ -221,7 +189,7 @@ Public Class PageMzkitTools
         RibbonItems = host.ribbonItems
 
         Call InitializeFileTree()
-        Call Globals.SplashScreenUpdater("Attatch Command Events...")
+        Call Globals.sharedProgressUpdater("Attatch Command Events...")
 
         'AddHandler TreeView1.AfterSelect, AddressOf TreeView1_AfterSelect
         'AddHandler host.fileExplorer.Button1.Click, Sub(obj, evt) Call SearchByMz(host.fileExplorer.TextBox2.Text)
@@ -290,32 +258,32 @@ Public Class PageMzkitTools
             PictureBox1.BackgroundImage = draw
             ShowTabPage(TabPage5)
         Else
-            Call missingCacheFile(raw)
+            ' Call missingCacheFile(raw)
         End If
     End Sub
 
     Public Sub setCurrentFile()
-        If TreeView1.Nodes.Count = 0 Then
-            MyApplication.host.showStatusMessage("No raw file opened.")
-            Return
-        End If
+        'If TreeView1.Nodes.Count = 0 Then
+        '    MyApplication.host.showStatusMessage("No raw file opened.")
+        '    Return
+        'End If
 
-        With TreeView1.CurrentRawFile.raw
-            Static selectedFile As String
+        'With TreeView1.CurrentRawFile.raw
+        '    Static selectedFile As String
 
-            If selectedFile <> MyApplication.host.ToolStripStatusLabel1.Text Then
-                selectedFile = $"{ .source.FileName} [{ .numOfScans} scans]"
-                MyApplication.host.showStatusMessage(selectedFile)
-                MyApplication.host.rawFeaturesList.ListBox1.Items.Clear()
-            End If
+        '    If selectedFile <> MyApplication.host.ToolStripStatusLabel1.Text Then
+        '        selectedFile = $"{ .source.FileName} [{ .numOfScans} scans]"
+        '        MyApplication.host.showStatusMessage(selectedFile)
+        '        MyApplication.host.rawFeaturesList.ListBox1.Items.Clear()
+        '    End If
 
-            MyApplication.host.Text = $"BioNovoGene Mzkit [{ .source.GetFullPath}]"
-        End With
+        '    MyApplication.host.Text = $"BioNovoGene Mzkit [{ .source.GetFullPath}]"
+        'End With
 
-        If Not TreeView1.CurrentRawFile.raw.cacheFileExists Then
-            TreeView1.SelectedNode.ImageIndex = 1
-            TreeView1.SelectedNode.SelectedImageIndex = 1
-        End If
+        'If Not TreeView1.CurrentRawFile.raw.cacheFileExists Then
+        '    TreeView1.SelectedNode.ImageIndex = 1
+        '    TreeView1.SelectedNode.SelectedImageIndex = 1
+        'End If
     End Sub
 
     Private Function rawTIC(raw As Raw, isBPC As Boolean) As NamedCollection(Of ChromatogramTick)
@@ -413,7 +381,7 @@ Public Class PageMzkitTools
             ' formula
             Dim exact_mass As Double = Math.EvaluateFormula(text)
             Dim ppm As Double = MyApplication.host.GetPPMError()
-            Dim raw As Raw = TreeView1.CurrentRawFile.raw
+            Dim raw As Raw '= TreeView1.CurrentRawFile.raw
 
             DataGridView1.Rows.Clear()
             DataGridView1.Columns.Clear()
@@ -524,7 +492,7 @@ Public Class PageMzkitTools
         Dim ppm As Double = MyApplication.host.GetPPMError()
         Dim raw = fileExplorer.CurrentRawFile
 
-        Call MyApplication.host.rawFeaturesList.searchInFileByMz(mz, ppm, raw)
+        ' Call MyApplication.host.rawFeaturesList.searchInFileByMz(mz, ppm, raw)
     End Sub
 
     Private Sub SearchInFileToolStripMenuItem_Click(sender As Object, e As EventArgs)
@@ -558,37 +526,37 @@ Public Class PageMzkitTools
     End Sub
 
     Private Sub runMzSearch(searchAction As Action(Of Double))
-        Dim current = fileExplorer.CurrentRawFile
-        Dim node = TreeView1.SelectedNode
+        'Dim current = fileExplorer.CurrentRawFile
+        'Dim node = TreeView1.SelectedNode
 
-        If Not node Is Nothing AndAlso current.raw.cacheFileExists Then
-            Dim mz = current.raw.GetMs2Scans.Where(Function(scan) scan.id = node.Text).FirstOrDefault
+        'If Not node Is Nothing AndAlso current.raw.cacheFileExists Then
+        '    Dim mz = current.raw.GetMs2Scans.Where(Function(scan) scan.id = node.Text).FirstOrDefault
 
-            If Not mz Is Nothing AndAlso mz.mz > 0 Then
-                Call searchAction(mz.mz)
-            End If
-        End If
+        '    If Not mz Is Nothing AndAlso mz.mz > 0 Then
+        '        Call searchAction(mz.mz)
+        '    End If
+        'End If
     End Sub
 
     Private Sub SearchFormulaToolStripMenuItem_Click(sender As Object, e As EventArgs) ' Handles SearchFormulaToolStripMenuItem.Click
-        Dim current = TreeView1.CurrentRawFile
-        Dim node = TreeView1.SelectedNode
+        'Dim current = TreeView1.CurrentRawFile
+        'Dim node = TreeView1.SelectedNode
 
-        If Not node Is Nothing AndAlso current.raw.cacheFileExists Then
-            Dim mz = current.raw.GetMs2Scans.Where(Function(scan) scan.id = node.Text).FirstOrDefault
+        'If Not node Is Nothing AndAlso current.raw.cacheFileExists Then
+        '    Dim mz = current.raw.GetMs2Scans.Where(Function(scan) scan.id = node.Text).FirstOrDefault
 
-            If Not mz Is Nothing AndAlso mz.mz > 0 Then
-                Dim charge As Double = mz.charge
-                Dim ionMode As Integer = mz.polarity
+        '    If Not mz Is Nothing AndAlso mz.mz > 0 Then
+        '        Dim charge As Double = mz.charge
+        '        Dim ionMode As Integer = mz.polarity
 
-                If charge = 0 Then
-                    charge = 1
-                End If
+        '        If charge = 0 Then
+        '            charge = 1
+        '        End If
 
-                MyApplication.host.mzkitSearch.doMzSearch(mz.mz, charge, ionMode)
-                MyApplication.host.ShowPage(MyApplication.host.mzkitSearch)
-            End If
-        End If
+        '        MyApplication.host.mzkitSearch.doMzSearch(mz.mz, charge, ionMode)
+        '        MyApplication.host.ShowPage(MyApplication.host.mzkitSearch)
+        '    End If
+        'End If
     End Sub
 
     Private Sub MolecularNetworkingToolStripMenuItem_Click(sender As Object, e As EventArgs)
@@ -698,7 +666,7 @@ Public Class PageMzkitTools
             Dim scanId As String = DataGridView1.Rows(e.RowIndex).Cells(0).Value?.ToString
 
             If Not scanId.StringEmpty Then
-                Call showSpectrum(scanId, TreeView1.CurrentRawFile.raw)
+                ' Call showSpectrum(scanId, TreeView1.CurrentRawFile.raw)
             End If
         End If
     End Sub
@@ -871,15 +839,15 @@ Public Class PageMzkitTools
             Dim raw As Raw = file.Tag
             Dim rawScans As New Dictionary(Of String, ScanEntry)
 
-            If Not (raw.ms1_cache.FileExists AndAlso raw.ms2_cache.FileExists) AndAlso missingCacheFile(raw) <> DialogResult.OK Then
-                Continue For
-            Else
-                For Each scan In raw.scans
-                    rawScans.Add(scan.id, scan)
-                Next
+            'If Not (raw.ms1_cache.FileExists AndAlso raw.ms2_cache.FileExists) AndAlso missingCacheFile(raw) <> DialogResult.OK Then
+            '    Continue For
+            'Else
+            '    For Each scan In raw.scans
+            '        rawScans.Add(scan.id, scan)
+            '    Next
 
-                Call progress(raw.source.FileName)
-            End If
+            '    Call progress(raw.source.FileName)
+            'End If
 
             Using cache As New netCDFReader(raw.ms2_cache)
                 For j As Integer = 0 To file.Nodes.Count - 1
@@ -964,8 +932,8 @@ Public Class PageMzkitTools
 
     Private Sub ClearToolStripMenuItem_Click(sender As Object, e As EventArgs)
         ' XICCollection.Clear()
-        MyApplication.host.fileExplorer.Clear()
-        MyApplication.host.fileExplorer.ClearToolStripMenuItem.Text = "Clear"
+        ' MyApplication.host.fileExplorer.Clear()
+        '  MyApplication.host.fileExplorer.ClearToolStripMenuItem.Text = "Clear"
     End Sub
 
     Private Sub PictureBox1_DoubleClick(sender As Object, e As EventArgs) Handles PictureBox1.DoubleClick
@@ -978,37 +946,37 @@ Public Class PageMzkitTools
     End Sub
 
     Private Sub ExportToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        If MyApplication.host.fileExplorer.GetSelectedNodes.Count = 0 Then
-            MessageBox.Show("No chromatogram data for XIC plot, please use XIC -> Add for add data!", "No data save", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-        Else
-            Using file As New SaveFileDialog With {.Filter = "Mgf ASCII spectrum data(*.mgf)|*.mgf", .FileName = "XIC.mgf"}
-                If file.ShowDialog = DialogResult.OK Then
-                    Using OutFile As StreamWriter = file.FileName.OpenWriter()
-                        Dim ppm As Double = MyApplication.host.GetPPMError()
+        'If MyApplication.host.fileExplorer.GetSelectedNodes.Count = 0 Then
+        '    MessageBox.Show("No chromatogram data for XIC plot, please use XIC -> Add for add data!", "No data save", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        'Else
+        '    Using file As New SaveFileDialog With {.Filter = "Mgf ASCII spectrum data(*.mgf)|*.mgf", .FileName = "XIC.mgf"}
+        '        If file.ShowDialog = DialogResult.OK Then
+        '            Using OutFile As StreamWriter = file.FileName.OpenWriter()
+        '                Dim ppm As Double = MyApplication.host.GetPPMError()
 
-                        For Each xic As NamedCollection(Of ChromatogramTick) In GetXICCollection(ppm)
-                            Dim parent As New NamedValue With {.name = xic.description.Split.First, .text = xic.value.Select(Function(a) a.Intensity).Max}
-                            Dim ion As New MGF.Ions With {
-                                .Title = xic.name,
-                                .Peaks = xic.value _
-                                    .Select(Function(a)
-                                                Return New ms2 With {
-                                                    .mz = a.Time,
-                                                    .intensity = a.Intensity,
-                                                    .quantity = a.Intensity
-                                                }
-                                            End Function) _
-                                    .ToArray,
-                                .PepMass = parent,
-                                .Rawfile = xic.description.GetTagValue(" ").Value
-                            }
+        '                For Each xic As NamedCollection(Of ChromatogramTick) In GetXICCollection(ppm)
+        '                    Dim parent As New NamedValue With {.name = xic.description.Split.First, .text = xic.value.Select(Function(a) a.Intensity).Max}
+        '                    Dim ion As New MGF.Ions With {
+        '                        .Title = xic.name,
+        '                        .Peaks = xic.value _
+        '                            .Select(Function(a)
+        '                                        Return New ms2 With {
+        '                                            .mz = a.Time,
+        '                                            .intensity = a.Intensity,
+        '                                            .quantity = a.Intensity
+        '                                        }
+        '                                    End Function) _
+        '                            .ToArray,
+        '                        .PepMass = parent,
+        '                        .Rawfile = xic.description.GetTagValue(" ").Value
+        '                    }
 
-                            ion.WriteAsciiMgf(OutFile)
-                        Next
-                    End Using
-                End If
-            End Using
-        End If
+        '                    ion.WriteAsciiMgf(OutFile)
+        '                Next
+        '            End Using
+        '        End If
+        '    End Using
+        'End If
     End Sub
 
     Private Sub PictureBox1_MouseClick(sender As Object, e As MouseEventArgs) Handles PictureBox1.MouseClick

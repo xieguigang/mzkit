@@ -1,4 +1,5 @@
 ﻿Imports System.ComponentModel
+Imports System.Threading
 Imports mzkit.Kesoft.Windows.Forms.Win7StyleTreeView
 Imports mzkit.My
 Imports RibbonLib.Interop
@@ -84,5 +85,45 @@ Public Class frmFileExplorer
         '   ExportToolStripMenuItem.Text = "Export XIC Ions"
 
         Me.TabText = "File Explorer"
+    End Sub
+
+    Public Sub ImportsRaw(fileName As String)
+        Dim newRaw = getRawCache(fileName)
+
+        treeView1.Nodes(0).Nodes.Add(New TreeNode(newRaw.source.FileName) With {.Tag = newRaw})
+
+        MyApplication.host.showStatusMessage("Ready!")
+        MyApplication.host.ToolStripStatusLabel2.Text = GetTotalCacheSize()
+    End Sub
+
+
+    ''' <summary>
+    ''' do raw data file imports task
+    ''' </summary>
+    ''' <param name="fileName"></param>
+    ''' <returns></returns>
+    Public Function getRawCache(fileName As String) As Raw
+        Dim progress As New frmTaskProgress() With {.Text = $"Imports raw data [{fileName}]"}
+        Dim showProgress As Action(Of String) = AddressOf progress.ShowProgressDetails
+        Dim task As New Task.ImportsRawData(fileName, showProgress, Sub() Call progress.Invoke(Sub() progress.Close()))
+        Dim runTask As New Thread(AddressOf task.RunImports)
+
+        MyApplication.host.showStatusMessage("Run Raw Data Imports")
+        progress.ShowProgressTitle(progress.Text, directAccess:=True)
+
+        Call runTask.Start()
+        Call progress.ShowDialog()
+
+        'Call New frmRawViewer() With {
+        '    .MdiParent = Me,
+        '    .Text = file.FileName,
+        '    .rawFile = task.raw
+        '}.Show()
+        Return task.raw
+    End Function
+
+
+    Public Sub SaveFileCache(progress As Action(Of String))
+        Call treeView1.SaveRawFileCache(progress)
     End Sub
 End Class

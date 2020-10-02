@@ -135,7 +135,7 @@ Module Globals
         End If
     End Function
 
-    Friend SplashScreenUpdater As Action(Of String)
+    Friend sharedProgressUpdater As Action(Of String)
 
     ''' <summary>
     ''' two root nodes:
@@ -155,15 +155,15 @@ Module Globals
         If Not defaultWorkspace.FileExists Then
             Return 0
         Else
-            Call SplashScreenUpdater("Load raw file list...")
+            Call sharedProgressUpdater("Load raw file list...")
         End If
 
-        Dim files As ViewerProject = ViewerProject.LoadWorkspace(defaultWorkspace, SplashScreenUpdater)
+        Dim files As ViewerProject = ViewerProject.LoadWorkspace(defaultWorkspace, sharedProgressUpdater)
         Dim i As Integer
         Dim rawFiles As New TreeNode("Raw Data Files")
 
         For Each raw As Raw In files.GetRawDataFiles
-            Call SplashScreenUpdater($"[Raw File Viewer] Loading {raw.source.FileName}...")
+            Call sharedProgressUpdater($"[Raw File Viewer] Loading {raw.source.FileName}...")
 
             Dim rawFileNode As New TreeNode($"{raw.source.FileName} [{raw.numOfScans} Scans]") With {
                 .Checked = True,
