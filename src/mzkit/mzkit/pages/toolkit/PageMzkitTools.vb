@@ -94,17 +94,6 @@ Public Class PageMzkitTools
         _ribbonExportDataContextMenuStrip = New ExportData(ribbon, RibbonItems.cmdContextMap)
     End Sub
 
-    Sub InitializeFileTree()
-        If fileExplorer.treeView1.LoadRawFileCache(Globals.Settings.workspaceFile) = 0 Then
-            MyApplication.host.showStatusMessage($"It seems that you don't have any raw file opended. You could open raw file through [File] -> [Open Raw File].", My.Resources.StatusAnnotations_Warning_32xLG_color)
-        Else
-            fileExplorer.selectRawFile(Scan0)
-            setCurrentFile()
-        End If
-
-        MyApplication.host.ToolStripStatusLabel2.Text = fileExplorer.GetTotalCacheSize
-    End Sub
-
     'Private Function missingCacheFile(raw As Raw) As DialogResult
     '    Dim options As DialogResult = MessageBox.Show($"The specific raw data cache is missing, run imports again?{vbCrLf}{raw.source.GetFullPath}", $"[{raw.source.FileName}] Cache Not Found!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning)
 
@@ -188,7 +177,7 @@ Public Class PageMzkitTools
         Dim host = MyApplication.host
         RibbonItems = host.ribbonItems
 
-        Call InitializeFileTree()
+        ' Call InitializeFileTree()
         Call Globals.sharedProgressUpdater("Attatch Command Events...")
 
         'AddHandler TreeView1.AfterSelect, AddressOf TreeView1_AfterSelect

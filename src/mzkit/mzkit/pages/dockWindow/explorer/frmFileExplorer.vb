@@ -68,6 +68,17 @@ Public Class frmFileExplorer
         Next
     End Function
 
+    Sub InitializeFileTree()
+        If treeView1.LoadRawFileCache(Globals.Settings.workspaceFile) = 0 Then
+            MyApplication.host.showStatusMessage($"It seems that you don't have any raw file opended. You could open raw file through [File] -> [Open Raw File].", My.Resources.StatusAnnotations_Warning_32xLG_color)
+        Else
+            selectRawFile(Scan0)
+            ' setCurrentFile()
+        End If
+
+        MyApplication.host.ToolStripStatusLabel2.Text = GetTotalCacheSize()
+    End Sub
+
     Private Sub frmFileExplorer_Load(sender As Object, e As EventArgs) Handles Me.Load
         Controls.Add(treeView1)
 
@@ -85,6 +96,8 @@ Public Class frmFileExplorer
         '   ExportToolStripMenuItem.Text = "Export XIC Ions"
 
         Me.TabText = "File Explorer"
+
+        Call InitializeFileTree()
     End Sub
 
     Public Sub ImportsRaw(fileName As String)
