@@ -66,7 +66,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.IO.netCDF
-Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
@@ -85,7 +84,9 @@ Public Class PageMzkitTools
     Dim RibbonItems As RibbonItems
     Dim matrix As [Variant](Of ms2(), ChromatogramTick(), SSM2MatrixFragment())
     Dim matrixName As String
-    Dim TreeView1 As TreeView
+
+    Dim fileExplorer As frmFileExplorer
+    Dim featureExplorer As frmRawFeaturesList
 
     Friend _ribbonExportDataContextMenuStrip As ExportData
 
@@ -94,14 +95,14 @@ Public Class PageMzkitTools
     End Sub
 
     Sub InitializeFileTree()
-        If TreeView1.LoadRawFileCache = 0 Then
+        If fileExplorer.treeView1.LoadRawFileCache(Globals.Settings.workspaceFile) = 0 Then
             MyApplication.host.showStatusMessage($"It seems that you don't have any raw file opended. You could open raw file through [File] -> [Open Raw File].", My.Resources.StatusAnnotations_Warning_32xLG_color)
         Else
-            TreeView1.SelectedNode = TreeView1.Nodes.Item(Scan0)
+            fileExplorer.selectRawFile(Scan0)
             setCurrentFile()
         End If
 
-        MyApplication.host.ToolStripStatusLabel2.Text = TreeView1.GetTotalCacheSize
+        MyApplication.host.ToolStripStatusLabel2.Text = fileExplorer.GetTotalCacheSize
     End Sub
 
     Private Function missingCacheFile(raw As Raw) As DialogResult
@@ -134,6 +135,11 @@ Public Class PageMzkitTools
         MyApplication.host.ToolStripStatusLabel2.Text = TreeView1.GetTotalCacheSize
     End Sub
 
+    ''' <summary>
+    ''' do raw data file imports task
+    ''' </summary>
+    ''' <param name="fileName"></param>
+    ''' <returns></returns>
     Public Function getRawCache(fileName As String) As Raw
         Dim progress As New frmTaskProgress() With {.Text = $"Imports raw data [{fileName}]"}
         Dim showProgress As Action(Of String) = AddressOf progress.ShowProgressDetails

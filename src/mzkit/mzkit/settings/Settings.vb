@@ -72,6 +72,8 @@ Public Class Settings
 
     Public Property recentFiles As String()
 
+    Public Property workspaceFile As String
+
     Public Shared ReadOnly Property configFile As String = App.LocalData & "/settings.json"
 
     Public Shared Function DefaultProfile() As Settings

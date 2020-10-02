@@ -28,6 +28,16 @@ Public Class frmFileExplorer
         Me.Hide()
     End Sub
 
+    Public Sub selectRawFile(index As Integer)
+        Dim raw As TreeNode = treeView1.Nodes.Item(0)
+
+        treeView1.SelectedNode = raw.Nodes.Item(index)
+    End Sub
+
+    Public Function GetTotalCacheSize() As String
+        Return treeView1.Nodes.Item(0).GetTotalCacheSize
+    End Function
+
     Private Sub frmFileExplorer_Load(sender As Object, e As EventArgs) Handles Me.Load
         Controls.Add(treeView1)
 

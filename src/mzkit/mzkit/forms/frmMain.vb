@@ -54,7 +54,6 @@ Imports System.ComponentModel
 Imports System.IO
 Imports System.Text
 Imports System.Threading
-Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.ComponentModel
@@ -64,12 +63,9 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports mzkit.DockSample
 Imports mzkit.My
-Imports mzkit.SmileWei.EmbeddedApp
 Imports RibbonLib
 Imports RibbonLib.Controls.Events
 Imports RibbonLib.Interop
-Imports SMRUCC.Rsharp.Runtime
-Imports SMRUCC.Rsharp.Runtime.Components
 Imports Task
 Imports WeifenLuo.WinFormsUI.Docking
 

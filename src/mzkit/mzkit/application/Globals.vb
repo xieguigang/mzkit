@@ -117,7 +117,7 @@ Module Globals
     End Function
 
     <Extension>
-    Public Function GetTotalCacheSize(explorer As TreeView) As String
+    Public Function GetTotalCacheSize(explorer As TreeNode) As String
         Dim size As Double
 
         For Each node As TreeNode In explorer.Nodes
@@ -133,6 +133,15 @@ Module Globals
 
     Friend SplashScreenUpdater As Action(Of String)
 
+    ''' <summary>
+    ''' two root nodes:
+    ''' 
+    ''' 1. Raw Data Files
+    ''' 2. R# Automation
+    ''' </summary>
+    ''' <param name="explorer"></param>
+    ''' <param name="defaultWorkspace"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function LoadRawFileCache(explorer As TreeView, Optional defaultWorkspace As String = Nothing) As Integer
         If defaultWorkspace.StringEmpty Then
