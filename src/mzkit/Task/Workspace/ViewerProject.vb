@@ -27,7 +27,11 @@ Public Class ViewerProject : Implements ISaveHandle, IFileReference
 
     Public ReadOnly Property Count As Integer
         Get
-            Return cacheFiles.Values.Select(Function(a) a.Length).Sum
+            If cacheFiles Is Nothing Then
+                Return 0
+            Else
+                Return cacheFiles.Values.Select(Function(a) a.Length).Sum
+            End If
         End Get
     End Property
 
@@ -38,7 +42,11 @@ Public Class ViewerProject : Implements ISaveHandle, IFileReference
     End Property
 
     Public Function GetRawDataFiles() As IEnumerable(Of Raw)
-        Return cacheFiles.Values.IteratesALL
+        If cacheFiles Is Nothing Then
+            Return {}
+        Else
+            Return cacheFiles.Values.IteratesALL
+        End If
     End Function
 
     Public Function GetAutomationScripts() As IEnumerable(Of String)

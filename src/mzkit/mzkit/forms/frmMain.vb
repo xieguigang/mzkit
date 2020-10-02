@@ -427,6 +427,8 @@ Public Class frmMain
         If splashScreen Is Nothing Then
             MessageBox.Show("The program is corrupt, please re-install and then run again...", "Program File Damaged!", MessageBoxButtons.OK, MessageBoxIcon.Error)
             App.Exit()
+        Else
+            Globals.sharedProgressUpdater = AddressOf splashScreen.UpdateInformation
         End If
 
         splashScreen.UpdateInformation("Initialize of the ribbon UI...")
@@ -447,7 +449,7 @@ Public Class frmMain
 
         splashScreen.UpdateInformation("Create mzkit toolkit pages...")
 
-        panelMain.addPage(AddressOf splashScreen.UpdateInformation, mzkitTool, mzkitSearch, mzkitCalculator, mzkitMNtools, mzkitSpectrumSearch)
+        panelMain.addPage(mzkitTool, mzkitSearch, mzkitCalculator, mzkitMNtools, mzkitSpectrumSearch)
         ShowPage(mzkitTool)
 
         mzkitTool.Ribbon_Load(Ribbon1)

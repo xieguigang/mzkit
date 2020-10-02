@@ -49,11 +49,9 @@ Public Class frmDockDocument
 
     Friend pages As New List(Of Control)
 
-    Public Sub addPage(update As Action(Of String), ParamArray pageList As Control())
-        Globals.sharedProgressUpdater = update
-
+    Public Sub addPage(ParamArray pageList As Control())
         For Each page As Control In pageList
-            Call update("Load [" & page.Text & "]")
+            Call Globals.sharedProgressUpdater("Load [" & page.Text & "]")
 
             Controls.Add(page)
             pages.Add(page)
