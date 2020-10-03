@@ -64,6 +64,10 @@ Namespace DockSample
             e.Cancel = True
             Me.Hide()
         End Sub
+
+        Public Function getPropertyObject() As Object
+            Return propertyGrid.SelectedObject
+        End Function
     End Class
 End Namespace
 

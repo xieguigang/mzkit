@@ -23,6 +23,7 @@ Public Class frmFileExplorer
 
     Private Sub frmFileExplorer_Activated(sender As Object, e As EventArgs) Handles Me.Activated
         MyApplication.host.ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
+        Call treeView1_AfterSelect(Nothing, Nothing)
     End Sub
 
     Private Sub frmFileExplorer_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
@@ -154,7 +155,7 @@ Public Class frmFileExplorer
             Return
         End If
 
-        If TypeOf treeView1.SelectedNode.Tag Is Raw Then
+        If TypeOf treeView1.SelectedNode.Tag Is Raw AndAlso Not TypeOf MyApplication.host.propertyWin.getPropertyObject Is RawFileProperty Then
             Call showRawFile(DirectCast(treeView1.SelectedNode.Tag, Raw))
 
             Dim propertyWin = MyApplication.host.propertyWin
@@ -168,5 +169,9 @@ Public Class frmFileExplorer
 
     Private Sub treeView1_AfterCheck(sender As Object, e As TreeViewEventArgs) Handles treeView1.AfterCheck
 
+    End Sub
+
+    Private Sub treeView1_GotFocus(sender As Object, e As EventArgs) Handles treeView1.GotFocus
+        ' Call treeView1_AfterSelect(Nothing, Nothing)
     End Sub
 End Class

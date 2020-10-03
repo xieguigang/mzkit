@@ -10,6 +10,8 @@
     Public Property ms_scans As Integer
     Public Property msms_scans As Integer
 
+    ReadOnly raw As Raw
+
     Sub New(raw As Raw)
         source = raw.source.FileName
         fileSize = StringFormats.Lanudry(raw.source.FileLength)
@@ -19,4 +21,8 @@
         ms_scans = raw.scans.TryCount
         msms_scans = raw.GetMs2Scans.Count
     End Sub
+
+    Public Function getRaw() As Raw
+        Return raw
+    End Function
 End Class
