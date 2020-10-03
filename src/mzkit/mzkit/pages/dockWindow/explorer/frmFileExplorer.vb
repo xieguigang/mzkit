@@ -155,7 +155,7 @@ Public Class frmFileExplorer
             Return
         End If
 
-        If TypeOf treeView1.SelectedNode.Tag Is Raw AndAlso Not TypeOf MyApplication.host.propertyWin.getPropertyObject Is RawFileProperty Then
+        If TypeOf treeView1.SelectedNode.Tag Is Raw Then
             Call showRawFile(DirectCast(treeView1.SelectedNode.Tag, Raw))
 
             Dim propertyWin = MyApplication.host.propertyWin
