@@ -41,12 +41,10 @@ Public Class frmRawFeaturesList
         treeView1.HotTracking = True
         treeView1.CheckBoxes = True
         treeView1.BringToFront()
-        '    treeView1.ContextMenuStrip = contextMenuStrip1
+        treeView1.ContextMenuStrip = ContextMenuStrip1
         treeView1.ShowLines = True
         treeView1.ShowRootLines = True
         treeView1.Dock = DockStyle.Fill
-
-        '   ExportToolStripMenuItem.Text = "Export XIC Ions"
 
         Me.TabText = "Features Explorer"
     End Sub

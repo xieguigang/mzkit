@@ -748,6 +748,7 @@
     <None Include="Resources\Rscript.ico" />
     <None Include="Resources\settings.ico" />
     <None Include="Resources\toolkit.ico" />
+    <None Include="Res\preferences-system-sharing.png" />
     <Content Include="RibbonMarkup.h" />
     <Content Include="RibbonMarkup.xml" />
     <None Include="Resources\header-foreground-image.png" />
