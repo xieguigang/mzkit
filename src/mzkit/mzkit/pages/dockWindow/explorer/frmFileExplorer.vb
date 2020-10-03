@@ -84,6 +84,8 @@ Public Class frmFileExplorer
     Private Sub frmFileExplorer_Load(sender As Object, e As EventArgs) Handles Me.Load
         Controls.Add(treeView1)
 
+        ContextMenuStrip1.RenderMode = ToolStripRenderMode.System
+
         treeView1.Location = New Point(1, TextBox2.Height + 5)
         treeView1.Size = New Size(Width - 2, Me.Height - TextBox2.Height - 25)
         treeView1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
@@ -92,7 +94,7 @@ Public Class frmFileExplorer
         treeView1.HotTracking = True
         treeView1.BringToFront()
         treeView1.CheckBoxes = True
-        '   treeView1.ContextMenuStrip = contextMenuStrip1
+        treeView1.ContextMenuStrip = ContextMenuStrip1
         treeView1.ShowLines = True
         treeView1.ShowRootLines = True
         treeView1.BorderStyle = BorderStyle.FixedSingle
@@ -173,5 +175,22 @@ Public Class frmFileExplorer
 
     Private Sub treeView1_GotFocus(sender As Object, e As EventArgs) Handles treeView1.GotFocus
         ' Call treeView1_AfterSelect(Nothing, Nothing)
+    End Sub
+
+    Private Sub TICOverlapToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TICOverlapToolStripMenuItem.Click
+        MyApplication.host.mzkitTool.TIC(isBPC:=False)
+    End Sub
+
+    Private Sub BPCOverlapToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BPCOverlapToolStripMenuItem.Click
+        MyApplication.host.mzkitTool.TIC(isBPC:=True)
+    End Sub
+
+    ''' <summary>
+    ''' 将原始数据文件从当前工作区移除
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub DeleteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeleteToolStripMenuItem.Click
+
     End Sub
 End Class

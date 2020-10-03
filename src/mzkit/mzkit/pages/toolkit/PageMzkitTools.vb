@@ -85,9 +85,6 @@ Public Class PageMzkitTools
     Dim matrix As [Variant](Of ms2(), ChromatogramTick(), SSM2MatrixFragment())
     Dim matrixName As String
 
-    Dim fileExplorer As frmFileExplorer
-    Dim featureExplorer As frmRawFeaturesList
-
     Friend _ribbonExportDataContextMenuStrip As ExportData
 
     Public Sub Ribbon_Load(ribbon As Ribbon)
@@ -259,10 +256,6 @@ Public Class PageMzkitTools
         Return TIC
     End Function
 
-    Public Sub ShowTICToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        TIC(isBPC:=False)
-    End Sub
-
     Public Sub TIC(rawList As IEnumerable(Of Raw), Optional isBPC As Boolean = False)
         Dim TICList As New List(Of NamedCollection(Of ChromatogramTick))
 
@@ -282,7 +275,7 @@ Public Class PageMzkitTools
     End Sub
 
     Public Sub TIC(isBPC As Boolean)
-        Dim rawList As Raw() = fileExplorer.GetSelectedRaws.ToArray
+        Dim rawList As Raw() = MyApplication.fileExplorer.GetSelectedRaws.ToArray
 
         If rawList.Length = 0 Then
             MyApplication.host.showStatusMessage("No file data selected for TIC plot...")
@@ -443,7 +436,7 @@ Public Class PageMzkitTools
 
     Private Sub searchInFileByMz(mz As Double)
         Dim ppm As Double = MyApplication.host.GetPPMError()
-        Dim raw = fileExplorer.CurrentRawFile
+        Dim raw = MyApplication.fileExplorer.CurrentRawFile
 
         ' Call MyApplication.host.rawFeaturesList.searchInFileByMz(mz, ppm, raw)
     End Sub

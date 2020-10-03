@@ -79,6 +79,22 @@ Namespace My
         Shared Rtask As Thread
         Shared cancel As New ManualResetEvent(initialState:=False)
 
+#Region "mzkit"
+        Public Shared ReadOnly Property mzkitRawViewer As PageMzkitTools
+            Get
+                Return _host.mzkitTool
+            End Get
+        End Property
+#End Region
+
+#Region "dock windows"
+        Public Shared ReadOnly Property fileExplorer As frmFileExplorer
+            Get
+                Return _host.fileExplorer
+            End Get
+        End Property
+#End Region
+
         Public Shared Sub RegisterOutput(log As OutputWindow)
             _LogForm = log
 

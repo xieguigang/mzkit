@@ -31,7 +31,14 @@ Partial Class frmFileExplorer
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
+        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.DeleteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ChromatogramOverlapToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BPCOverlapToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.TICOverlapToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Panel1.SuspendLayout()
+        Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'TextBox2
@@ -77,6 +84,44 @@ Partial Class frmFileExplorer
         Me.ImageList1.TransparentColor = System.Drawing.Color.Transparent
         Me.ImageList1.Images.SetKeyName(0, "edit-find.png")
         '
+        'ContextMenuStrip1
+        '
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ChromatogramOverlapToolStripMenuItem, Me.ToolStripMenuItem1, Me.DeleteToolStripMenuItem})
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(201, 76)
+        '
+        'ToolStripMenuItem1
+        '
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(177, 6)
+        '
+        'DeleteToolStripMenuItem
+        '
+        Me.DeleteToolStripMenuItem.Image = CType(resources.GetObject("DeleteToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.DeleteToolStripMenuItem.Name = "DeleteToolStripMenuItem"
+        Me.DeleteToolStripMenuItem.Size = New System.Drawing.Size(200, 22)
+        Me.DeleteToolStripMenuItem.Text = "Delete"
+        '
+        'ChromatogramOverlapToolStripMenuItem
+        '
+        Me.ChromatogramOverlapToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BPCOverlapToolStripMenuItem, Me.TICOverlapToolStripMenuItem})
+        Me.ChromatogramOverlapToolStripMenuItem.Image = CType(resources.GetObject("ChromatogramOverlapToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.ChromatogramOverlapToolStripMenuItem.Name = "ChromatogramOverlapToolStripMenuItem"
+        Me.ChromatogramOverlapToolStripMenuItem.Size = New System.Drawing.Size(200, 22)
+        Me.ChromatogramOverlapToolStripMenuItem.Text = "Chromatogram Overlap"
+        '
+        'BPCOverlapToolStripMenuItem
+        '
+        Me.BPCOverlapToolStripMenuItem.Name = "BPCOverlapToolStripMenuItem"
+        Me.BPCOverlapToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.BPCOverlapToolStripMenuItem.Text = "BPC Overlap"
+        '
+        'TICOverlapToolStripMenuItem
+        '
+        Me.TICOverlapToolStripMenuItem.Name = "TICOverlapToolStripMenuItem"
+        Me.TICOverlapToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.TICOverlapToolStripMenuItem.Text = "TIC Overlap"
+        '
         'frmFileExplorer
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -87,6 +132,7 @@ Partial Class frmFileExplorer
         Me.Text = "Form1"
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
+        Me.ContextMenuStrip1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -95,4 +141,10 @@ Partial Class frmFileExplorer
     Friend WithEvents Panel1 As Panel
     Friend WithEvents Button1 As Button
     Friend WithEvents ImageList1 As ImageList
+    Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
+    Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
+    Friend WithEvents DeleteToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ChromatogramOverlapToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents BPCOverlapToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents TICOverlapToolStripMenuItem As ToolStripMenuItem
 End Class
