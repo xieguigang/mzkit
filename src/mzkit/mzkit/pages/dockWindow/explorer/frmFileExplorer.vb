@@ -73,7 +73,7 @@ Public Class frmFileExplorer
         If treeView1.LoadRawFileCache(Globals.Settings.workspaceFile) = 0 Then
             MyApplication.host.showStatusMessage($"It seems that you don't have any raw file opended. You could open raw file through [File] -> [Open Raw File].", My.Resources.StatusAnnotations_Warning_32xLG_color)
         Else
-            selectRawFile(Scan0)
+            ' selectRawFile(Scan0)
             ' setCurrentFile()
         End If
 

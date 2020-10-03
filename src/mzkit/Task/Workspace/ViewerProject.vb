@@ -86,6 +86,9 @@ Public Class ViewerProject : Implements ISaveHandle, IFileReference
 
         Call progress("File reading success!")
 
+        viewer.cacheFiles = workspace.cacheFiles
+        viewer.scriptFiles = workspace.scriptFiles
+
         Return viewer
     End Function
 
