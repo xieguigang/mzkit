@@ -198,6 +198,19 @@ Module Globals
         Return i
     End Function
 
+    ''' <summary>
+    ''' 加载原始数据文件之中的ms1和ms2 scan树
+    ''' 
+    ''' ```
+    ''' + ms1
+    '''    + ms2
+    '''    + ms2
+    ''' + ms1
+    '''    + ms2
+    ''' ```
+    ''' </summary>
+    ''' <param name="rawFileNode"></param>
+    ''' <param name="raw"></param>
     <Extension>
     Public Sub loadRawFile(rawFileNode As TreeView, raw As Raw)
         rawFileNode.Nodes.Clear()

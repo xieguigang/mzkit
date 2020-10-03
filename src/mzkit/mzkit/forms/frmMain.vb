@@ -725,15 +725,14 @@ Public Class frmMain
 
         Call SetSchema(Nothing, Nothing)
 
+        output.Show(dockPanel)
+        MyApplication.RegisterOutput(output)
         fileExplorer.Show(dockPanel)
 
         TreeView1 = fileExplorer.treeView1
 
         rawFeaturesList.Show(dockPanel)
         propertyWin.Show(dockPanel)
-
-        output.Show(dockPanel)
-
 
         startPage.Show(dockPanel)
         startPage.DockState = DockState.Document
@@ -758,8 +757,6 @@ Public Class frmMain
             output.DockState = DockState.DockBottomAutoHide
             propertyWin.DockState = DockState.DockRightAutoHide
         End If
-
-        MyApplication.RegisterOutput(output)
     End Sub
 
     Public Sub ShowMzkitToolkit()
