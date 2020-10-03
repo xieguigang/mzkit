@@ -88,10 +88,13 @@ Public Class frmFileExplorer
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         treeView1.HotTracking = True
+        treeView1.BringToFront()
         treeView1.CheckBoxes = True
-        '    treeView1.ContextMenuStrip = contextMenuStrip1
+        '   treeView1.ContextMenuStrip = contextMenuStrip1
         treeView1.ShowLines = True
         treeView1.ShowRootLines = True
+        treeView1.BorderStyle = BorderStyle.FixedSingle
+        treeView1.Dock = DockStyle.Fill
 
         '   ExportToolStripMenuItem.Text = "Export XIC Ions"
 
