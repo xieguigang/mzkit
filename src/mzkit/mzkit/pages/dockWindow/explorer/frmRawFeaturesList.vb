@@ -1,4 +1,5 @@
 ﻿Imports System.ComponentModel
+Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -122,6 +123,8 @@ Public Class frmRawFeaturesList
                 End If
             Next
         End If
+
+        Me.checked = Me.checked.Distinct.ToList
 
         ClearToolStripMenuItem.Text = $"Clear [{checked.Count} XIC Ions]"
     End Sub
@@ -263,5 +266,18 @@ Public Class frmRawFeaturesList
         End If
 
         Call MyApplication.mzkitRawViewer.ShowXIC(ppm, plotTIC, AddressOf GetXICCollection, raw.GetXICMaxYAxis)
+    End Sub
+
+    Private Sub MolecularNetworkingToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MolecularNetworkingToolStripMenuItem.Click
+        Dim similarityCutoff As Double = MyApplication.host.ribbonItems.SpinnerSimilarity.DecimalValue
+        Dim progress As New frmTaskProgress
+
+        progress.ShowProgressTitle("Run molecular networking", directAccess:=True)
+        progress.ShowProgressDetails("Initialized...", directAccess:=True)
+
+        Dim runTask As New Thread(Sub() Call MyApplication.mzkitRawViewer.MolecularNetworkingTool(progress, similarityCutoff))
+
+        runTask.Start()
+        progress.ShowDialog()
     End Sub
 End Class

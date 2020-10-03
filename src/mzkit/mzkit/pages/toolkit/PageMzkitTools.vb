@@ -505,76 +505,63 @@ Public Class PageMzkitTools
         'End If
     End Sub
 
-    Private Sub MolecularNetworkingToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        'If TreeView1.CurrentRawFile.raw Is Nothing Then
-        '    Return
-        'End If
+    Friend Sub MolecularNetworkingTool(progress As frmTaskProgress, similarityCutoff As Double)
+        Thread.Sleep(1000)
 
-        ' Dim raw As Raw = TreeView1.CurrentRawFile.raw
-        Dim similarityCutoff As Double = MyApplication.host.ribbonItems.SpinnerSimilarity.DecimalValue
-        Dim progress As New frmTaskProgress
+        progress.ShowProgressTitle("Load Scan data")
+        progress.ShowProgressDetails("loading cache ms2 scan data...")
 
-        progress.ShowProgressTitle("Run molecular networking", directAccess:=True)
-        progress.ShowProgressDetails("Initialized...", directAccess:=True)
+        Dim raw = getSelectedIonSpectrums(AddressOf progress.ShowProgressTitle).ToArray
 
-        Dim runTask As New Thread(
-            Sub()
-                Thread.Sleep(1000)
+        If raw.Length = 0 Then
+            MyApplication.host.showStatusMessage("No spectrum data, please select a file or some spectrum...", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            progress.Invoke(Sub() progress.Close())
+            Return
+        End If
 
-                progress.ShowProgressTitle("Load Scan data")
-                progress.ShowProgressDetails("loading cache ms2 scan data...")
-
-                Dim raw = getSelectedIonSpectrums(AddressOf progress.ShowProgressTitle).ToArray
-
-                If raw.Length = 0 Then
-                    MyApplication.host.showStatusMessage("No spectrum data, please select a file or some spectrum...", My.Resources.StatusAnnotations_Warning_32xLG_color)
-                    progress.Invoke(Sub() progress.Close())
-                    Return
-                End If
-
-                Dim protocol As New Protocols(
+        Dim protocol As New Protocols(
                     ms1_tolerance:=Tolerance.PPM(15),
                     ms2_tolerance:=Tolerance.DeltaMass(0.3),
                     treeIdentical:=Globals.Settings.network.treeNodeIdentical,
                     treeSimilar:=Globals.Settings.network.treeNodeSimilar,
                     intoCutoff:=Globals.Settings.viewer.GetMethod
                 )
-                Dim progressMsg As Action(Of String) = AddressOf progress.ShowProgressTitle
+        Dim progressMsg As Action(Of String) = AddressOf progress.ShowProgressTitle
 
-                'Dim run As New List(Of PeakMs2)
-                'Dim nodes As New Dictionary(Of String, ScanEntry)
-                'Dim idList As New Dictionary(Of String, Integer)
+        'Dim run As New List(Of PeakMs2)
+        'Dim nodes As New Dictionary(Of String, ScanEntry)
+        'Dim idList As New Dictionary(Of String, Integer)
 
 
 
-                'Using cache As New netCDFReader(raw.cache)
-                '    For Each scan In raw.scans.Where(Function(s) s.mz > 0)
-                '        Dim uid As String = $"M{CInt(scan.mz)}T{CInt(scan.rt)}"
+        'Using cache As New netCDFReader(raw.cache)
+        '    For Each scan In raw.scans.Where(Function(s) s.mz > 0)
+        '        Dim uid As String = $"M{CInt(scan.mz)}T{CInt(scan.rt)}"
 
-                '        If idList.ContainsKey(uid) Then
-                '            idList(uid) += 1
-                '            uid = uid & "_" & (idList(uid) - 1)
-                '        Else
-                '            idList.Add(uid, 1)
-                '        End If
+        '        If idList.ContainsKey(uid) Then
+        '            idList(uid) += 1
+        '            uid = uid & "_" & (idList(uid) - 1)
+        '        Else
+        '            idList.Add(uid, 1)
+        '        End If
 
-                '        run += New PeakMs2 With {
-                '            .rt = scan.rt,
-                '            .mz = scan.mz,
-                '            .lib_guid = uid,
-                '            .mzInto = cache.getDataVariable(scan.id).numerics.AsMs2.ToArray.Centroid(Tolerance.DeltaMass(0.3)).ToArray
-                '        }
+        '        run += New PeakMs2 With {
+        '            .rt = scan.rt,
+        '            .mz = scan.mz,
+        '            .lib_guid = uid,
+        '            .mzInto = cache.getDataVariable(scan.id).numerics.AsMs2.ToArray.Centroid(Tolerance.DeltaMass(0.3)).ToArray
+        '        }
 
-                '        progress.Invoke(Sub() progress.ShowProgressTitle (scan.id)
-                '        nodes.Add(run.Last.lib_guid, scan)
-                '    Next
-                'End Using
+        '        progress.Invoke(Sub() progress.ShowProgressTitle (scan.id)
+        '        nodes.Add(run.Last.lib_guid, scan)
+        '    Next
+        'End Using
 
-                progress.ShowProgressTitle("run molecular networking....")
+        progress.ShowProgressTitle("run molecular networking....")
 
-                ' Call tree.doCluster(run)
-                Dim links = protocol.RunProtocol(raw, progressMsg).ProduceNodes.Networking.ToArray
-                Dim net As IO.DataSet() = links _
+        ' Call tree.doCluster(run)
+        Dim links = protocol.RunProtocol(raw, progressMsg).ProduceNodes.Networking.ToArray
+        Dim net As IO.DataSet() = links _
                     .Select(Function(a)
                                 Return New IO.DataSet With {
                                     .ID = a.Name,
@@ -587,24 +574,20 @@ Public Class PageMzkitTools
                             End Function) _
                     .ToArray   ' MoleculeNetworking.CreateMatrix(run, 0.8, Tolerance.DeltaMass(0.3), Sub(msg) progress.Invoke(Sub() progress.ShowProgressDetails ( msg)).ToArray
 
-                progress.ShowProgressDetails("run family clustering....")
+        progress.ShowProgressDetails("run family clustering....")
 
-                Dim clusters = net.ToKMeansModels.Kmeans(expected:=9, debug:=False)
-                Dim rawLinks = links.ToDictionary(Function(a) a.Name, Function(a) a.Value)
+        Dim clusters = net.ToKMeansModels.Kmeans(expected:=9, debug:=False)
+        Dim rawLinks = links.ToDictionary(Function(a) a.Name, Function(a) a.Value)
 
-                progress.ShowProgressDetails("initialize result output...")
+        progress.ShowProgressDetails("initialize result output...")
 
-                MyApplication.host.Invoke(
+        MyApplication.host.Invoke(
                     Sub()
                         Call MyApplication.host.mzkitMNtools.loadNetwork(clusters, protocol, rawLinks, similarityCutoff)
                         Call MyApplication.host.ShowPage(MyApplication.host.mzkitMNtools)
                     End Sub)
 
-                progress.Invoke(Sub() progress.Close())
-            End Sub)
-
-        runTask.Start()
-        progress.ShowDialog()
+        progress.Invoke(Sub() progress.Close())
     End Sub
 
     Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellContentClick
@@ -730,49 +713,31 @@ Public Class PageMzkitTools
     End Sub
 
     Private Iterator Function getSelectedIonSpectrums(progress As Action(Of String)) As IEnumerable(Of PeakMs2)
-        Dim explorer = MyApplication.host.fileExplorer
+        Dim raw = MyApplication.featureExplorer.CurrentRawFile
 
-        For i As Integer = 0 To explorer.treeView1.Nodes.Count - 1
-            Dim file = explorer.treeView1.Nodes(i)
-            Dim raw As Raw = file.Tag
-            Dim rawScans As New Dictionary(Of String, ScanEntry)
+        Using cache As New netCDFReader(raw.ms2_cache)
 
-            'If Not (raw.ms1_cache.FileExists AndAlso raw.ms2_cache.FileExists) AndAlso missingCacheFile(raw) <> DialogResult.OK Then
-            '    Continue For
-            'Else
-            '    For Each scan In raw.scans
-            '        rawScans.Add(scan.id, scan)
-            '    Next
+            For Each ionNode As TreeNode In MyApplication.featureExplorer.GetSelectedNodes.Where(Function(a) TypeOf a.Tag Is ScanEntry)
+                Dim scanId As String = ionNode.Text
+                Dim entry = cache.getDataVariableEntry(scanId)
+                Dim mztemp = cache.getDataVariable(entry).numerics.AsMs2.ToArray
+                Dim attrs = cache.getDataVariableEntry(scanId).attributes
+                Dim info As New SpectrumProperty(scanId, raw.source.FileName, attrs)
 
-            '    Call progress(raw.source.FileName)
-            'End If
+                Yield New PeakMs2 With {
+                    .mz = info.precursorMz,
+                    .scan = 0,
+                    .activation = info.activationMethod,
+                    .collisionEnergy = info.collisionEnergy,
+                    .file = raw.source.FileName,
+                    .lib_guid = $"{ .file}#{scanId}",
+                    .mzInto = mztemp,
+                    .precursor_type = "n/a",
+                    .rt = info.retentionTime
+                }
+            Next
 
-            Using cache As New netCDFReader(raw.ms2_cache)
-                For j As Integer = 0 To file.Nodes.Count - 1
-                    Dim scan = file.Nodes(j)
-                    Dim scanId As String = scan.Text
-
-                    If scan.Checked AndAlso rawScans(scanId).mz > 0 Then
-                        Dim entry = cache.getDataVariableEntry(scanId)
-                        Dim mztemp = cache.getDataVariable(entry).numerics.AsMs2.ToArray
-                        Dim attrs = cache.getDataVariableEntry(scanId).attributes
-                        Dim info As New SpectrumProperty(scanId, raw.source.FileName, attrs)
-
-                        Yield New PeakMs2 With {
-                            .mz = info.precursorMz,
-                            .scan = 0,
-                            .activation = info.activationMethod,
-                            .collisionEnergy = info.collisionEnergy,
-                            .file = raw.source.FileName,
-                            .lib_guid = $"{ .file}#{scanId}",
-                            .mzInto = mztemp,
-                            .precursor_type = "n/a",
-                            .rt = info.retentionTime
-                        }
-                    End If
-                Next
-            End Using
-        Next
+        End Using
     End Function
 
     Private Function relativeInto() As Boolean

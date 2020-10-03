@@ -94,6 +94,12 @@ Namespace My
             End Get
         End Property
 
+        Public Shared ReadOnly Property featureExplorer As frmRawFeaturesList
+            Get
+                Return _host.rawFeaturesList
+            End Get
+        End Property
+
         Public Shared ReadOnly Property RtermPage As frmRsharp
             Get
                 Return _host.RtermPage
