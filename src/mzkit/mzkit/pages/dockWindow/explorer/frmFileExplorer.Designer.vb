@@ -32,11 +32,12 @@ Partial Class frmFileExplorer
         Me.Button1 = New System.Windows.Forms.Button()
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
-        Me.DeleteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ChromatogramOverlapToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.BPCOverlapToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TICOverlapToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.DeleteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.RunAutomationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Panel1.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
@@ -86,21 +87,9 @@ Partial Class frmFileExplorer
         '
         'ContextMenuStrip1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ChromatogramOverlapToolStripMenuItem, Me.ToolStripMenuItem1, Me.DeleteToolStripMenuItem})
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ChromatogramOverlapToolStripMenuItem, Me.RunAutomationToolStripMenuItem, Me.ToolStripMenuItem1, Me.DeleteToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(201, 76)
-        '
-        'ToolStripMenuItem1
-        '
-        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(177, 6)
-        '
-        'DeleteToolStripMenuItem
-        '
-        Me.DeleteToolStripMenuItem.Image = CType(resources.GetObject("DeleteToolStripMenuItem.Image"), System.Drawing.Image)
-        Me.DeleteToolStripMenuItem.Name = "DeleteToolStripMenuItem"
-        Me.DeleteToolStripMenuItem.Size = New System.Drawing.Size(200, 22)
-        Me.DeleteToolStripMenuItem.Text = "Delete"
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(201, 98)
         '
         'ChromatogramOverlapToolStripMenuItem
         '
@@ -121,6 +110,25 @@ Partial Class frmFileExplorer
         Me.TICOverlapToolStripMenuItem.Name = "TICOverlapToolStripMenuItem"
         Me.TICOverlapToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.TICOverlapToolStripMenuItem.Text = "TIC Overlap"
+        '
+        'ToolStripMenuItem1
+        '
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(197, 6)
+        '
+        'DeleteToolStripMenuItem
+        '
+        Me.DeleteToolStripMenuItem.Image = CType(resources.GetObject("DeleteToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.DeleteToolStripMenuItem.Name = "DeleteToolStripMenuItem"
+        Me.DeleteToolStripMenuItem.Size = New System.Drawing.Size(200, 22)
+        Me.DeleteToolStripMenuItem.Text = "Delete"
+        '
+        'RunAutomationToolStripMenuItem
+        '
+        Me.RunAutomationToolStripMenuItem.Image = Global.mzkit.My.Resources.Resources._42082
+        Me.RunAutomationToolStripMenuItem.Name = "RunAutomationToolStripMenuItem"
+        Me.RunAutomationToolStripMenuItem.Size = New System.Drawing.Size(200, 22)
+        Me.RunAutomationToolStripMenuItem.Text = "Run Automation"
         '
         'frmFileExplorer
         '
@@ -147,4 +155,5 @@ Partial Class frmFileExplorer
     Friend WithEvents ChromatogramOverlapToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents BPCOverlapToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents TICOverlapToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents RunAutomationToolStripMenuItem As ToolStripMenuItem
 End Class

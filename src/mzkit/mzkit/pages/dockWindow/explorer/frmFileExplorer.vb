@@ -152,6 +152,10 @@ Public Class frmFileExplorer
         Call MyApplication.host.mzkitTool.showScatter(raw)
     End Sub
 
+    Public Sub AddScript(script As String)
+        treeView1.Nodes(1).Nodes.Add(New TreeNode(script.FileName) With {.Tag = script})
+    End Sub
+
     Private Sub treeView1_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles treeView1.AfterSelect
         If treeView1.SelectedNode Is Nothing Then
             Return
@@ -198,6 +202,42 @@ Public Class frmFileExplorer
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Private Sub DeleteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeleteToolStripMenuItem.Click
+        If treeView1.SelectedNode Is Nothing Then
+            Return
+        End If
 
+        Dim node = treeView1.SelectedNode
+
+        ' 跳过根节点
+        If node.Tag Is Nothing Then
+            Return
+        End If
+
+        Dim fileName As String
+
+        If TypeOf node.Tag Is Raw Then
+            fileName = DirectCast(node.Tag, Raw).source.FileName
+        Else
+            fileName = DirectCast(node.Tag, String).FileName
+        End If
+
+        If MessageBox.Show($"Going to removes {fileName} from your workspace?", "Delete workspace file", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+            If TypeOf node.Tag Is Raw Then
+                treeView1.Nodes(0).Nodes.Remove(node)
+            Else
+                treeView1.Nodes(1).Nodes.Remove(node)
+            End If
+        End If
+    End Sub
+
+    Private Sub RunAutomationToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RunAutomationToolStripMenuItem.Click
+        If treeView1.SelectedNode Is Nothing OrElse treeView1.SelectedNode.Tag Is Nothing OrElse Not TypeOf treeView1.SelectedNode.Tag Is String Then
+            Return
+        End If
+
+        Dim scriptFile As String = DirectCast(treeView1.SelectedNode.Tag, String)
+
+        Call MyApplication.RtermPage.ShowPage()
+        Call MyApplication.ExecuteRScript(scriptFile, isFile:=True)
     End Sub
 End Class

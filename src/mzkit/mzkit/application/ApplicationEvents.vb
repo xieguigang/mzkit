@@ -93,6 +93,13 @@ Namespace My
                 Return _host.fileExplorer
             End Get
         End Property
+
+        Public Shared ReadOnly Property RtermPage As frmRsharp
+            Get
+                Return _host.RtermPage
+            End Get
+        End Property
+
 #End Region
 
         Public Shared Sub RegisterOutput(log As OutputWindow)

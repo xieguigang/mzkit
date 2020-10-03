@@ -108,6 +108,7 @@ Public Class frmMain
         Using file As New OpenFileDialog With {.Filter = "Raw Data|*.mzXML;*.mzML|R# Script(*.R)|*.R"}
             If file.ShowDialog = DialogResult.OK Then
                 If file.FileName.ExtensionSuffix("R") Then
+                    Call fileExplorer.AddScript(file.FileName.GetFullPath)
                     Call openRscript(file.FileName)
                 Else
                     Call fileExplorer.ImportsRaw(file.FileName)
@@ -242,7 +243,7 @@ Public Class frmMain
         ' Me.showStatusMessage("Manul pdf file is missing...", My.Resources.StatusAnnotations_Warning_32xLG_color)
     End Sub
 
-    Private Sub RunCurrentScript(sender As Object, e As ExecuteEventArgs)
+    Friend Sub RunCurrentScript(sender As Object, e As ExecuteEventArgs)
         Dim active = dockPanel.ActiveDocument
 
         If Not active Is Nothing AndAlso TypeOf CObj(active) Is frmRScriptEdit Then

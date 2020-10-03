@@ -45,6 +45,7 @@
 Imports System.ComponentModel
 Imports Microsoft.VisualBasic.Windows.Forms
 Imports mzkit.My
+Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class frmRsharp
 
@@ -74,6 +75,11 @@ Public Class frmRsharp
         console.BackgroundColor = ConsoleColor.White
 
         MyApplication.RegisterConsole(console)
+    End Sub
+
+    Public Sub ShowPage()
+        Me.Show(MyApplication.host.dockPanel)
+        DockState = DockState.Document
     End Sub
 
 End Class
