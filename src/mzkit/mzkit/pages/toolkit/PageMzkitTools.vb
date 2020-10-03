@@ -113,37 +113,8 @@ Public Class PageMzkitTools
     '    Return options
     'End Function
 
-    'Public Sub SaveFileCache(progress As Action(Of String))
-    '    Call TreeView1.SaveRawFileCache(progress)
-    'End Sub
-
-    Private Sub TreeView1_AfterSelect(sender As Object, e As TreeViewEventArgs)
-        If TypeOf e.Node.Tag Is Task.Raw Then
-            'Dim TIC = rawTIC(e.Node.Tag, False)
-
-            '' 原始文件节点
-            '' 只显示当前文件的TIC图
-            'showMatrix(TIC.value, TIC.name)
-
-            'PictureBox1.BackgroundImage = ChromatogramPlot.TICplot(
-            '    ionData:=TIC,
-            '    colorsSchema:=Globals.GetColors,
-            '    fillCurve:=Globals.Settings.viewer.fill
-            ').AsGDIImage
-
-
-
-
-        Else
-            ' scan节点
-            Dim raw As Task.Raw = e.Node.Parent.Tag
-            Dim scanId As String = e.Node.Text
-
-            Call showSpectrum(scanId, raw)
-            Call MyApplication.host.ShowPage(Me)
-        End If
-
-        Call setCurrentFile()
+    Public Sub ShowPage()
+        MyApplication.host.ShowPage(Me)
     End Sub
 
     Public Sub showScatter(raw As Raw)

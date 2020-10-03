@@ -215,6 +215,13 @@ Public Class frmRawFeaturesList
 
     Private Sub treeView1_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles treeView1.AfterSelect
         MyApplication.host.ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
+
+        ' scan节点
+        Dim raw As Task.Raw = CurrentRawFile
+        Dim scanId As String = e.Node.Text
+
+        Call MyApplication.host.mzkitTool.showSpectrum(scanId, raw)
+        Call MyApplication.host.mzkitTool.ShowPage
     End Sub
 
     Private Sub CollapseToolStripMenuItem_Click(sender As Object, e As EventArgs) 'Handles CollapseToolStripMenuItem.Click
