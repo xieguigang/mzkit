@@ -484,27 +484,6 @@ Public Class PageMzkitTools
         'End If
     End Sub
 
-    Private Sub SearchFormulaToolStripMenuItem_Click(sender As Object, e As EventArgs) ' Handles SearchFormulaToolStripMenuItem.Click
-        'Dim current = TreeView1.CurrentRawFile
-        'Dim node = TreeView1.SelectedNode
-
-        'If Not node Is Nothing AndAlso current.raw.cacheFileExists Then
-        '    Dim mz = current.raw.GetMs2Scans.Where(Function(scan) scan.id = node.Text).FirstOrDefault
-
-        '    If Not mz Is Nothing AndAlso mz.mz > 0 Then
-        '        Dim charge As Double = mz.charge
-        '        Dim ionMode As Integer = mz.polarity
-
-        '        If charge = 0 Then
-        '            charge = 1
-        '        End If
-
-        '        MyApplication.host.mzkitSearch.doMzSearch(mz.mz, charge, ionMode)
-        '        MyApplication.host.ShowPage(MyApplication.host.mzkitSearch)
-        '    End If
-        'End If
-    End Sub
-
     Friend Sub MolecularNetworkingTool(progress As frmTaskProgress, similarityCutoff As Double)
         Thread.Sleep(1000)
 
@@ -610,31 +589,6 @@ Public Class PageMzkitTools
                 ' Call showSpectrum(scanId, TreeView1.CurrentRawFile.raw)
             End If
         End If
-    End Sub
-
-    Private Sub CustomToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        MyApplication.host.mzkitSearch.ComboBox1.SelectedIndex = 0
-        SearchFormulaToolStripMenuItem_Click(sender, e)
-    End Sub
-
-    Private Sub DefaultToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        MyApplication.host.mzkitSearch.ComboBox1.SelectedIndex = 1
-        SearchFormulaToolStripMenuItem_Click(sender, e)
-    End Sub
-
-    Private Sub SmallMoleculeToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        MyApplication.host.mzkitSearch.ComboBox1.SelectedIndex = 2
-        SearchFormulaToolStripMenuItem_Click(sender, e)
-    End Sub
-
-    Private Sub NatureProductToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        MyApplication.host.mzkitSearch.ComboBox1.SelectedIndex = 3
-        SearchFormulaToolStripMenuItem_Click(sender, e)
-    End Sub
-
-    Private Sub GeneralFlavoneToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        MyApplication.host.mzkitSearch.ComboBox1.SelectedIndex = 4
-        SearchFormulaToolStripMenuItem_Click(sender, e)
     End Sub
 
     Sub showMatrix(matrix As ms2(), name As String)

@@ -204,12 +204,24 @@ Public Class frmFileExplorer
     Private Sub DeleteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeleteToolStripMenuItem.Click
         If treeView1.SelectedNode Is Nothing Then
             Return
+        Else
+            Call deleteFileNode(node:=treeView1.SelectedNode)
         End If
+    End Sub
 
-        Dim node = treeView1.SelectedNode
+    Public Function findRawFileNode(raw As Raw) As TreeNode
+        For Each node As TreeNode In treeView1.Nodes(0).Nodes
+            If node.Tag Is raw Then
+                Return node
+            End If
+        Next
 
+        Return Nothing
+    End Function
+
+    Public Sub deleteFileNode(node As TreeNode)
         ' 跳过根节点
-        If node.Tag Is Nothing Then
+        If node Is Nothing OrElse node.Tag Is Nothing Then
             Return
         End If
 
@@ -228,6 +240,8 @@ Public Class frmFileExplorer
                 treeView1.Nodes(1).Nodes.Remove(node)
             End If
         End If
+
+        MyApplication.host.ToolStripStatusLabel2.Text = GetTotalCacheSize()
     End Sub
 
     Private Sub RunAutomationToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RunAutomationToolStripMenuItem.Click

@@ -146,42 +146,12 @@ Public Class frmRawFeaturesList
         lockCheckList = False
     End Sub
 
-    Private Sub DeleteFileToolStripMenuItem_Click(sender As Object, e As EventArgs) 'Handles DeleteFileToolStripMenuItem.Click
-        Dim current = treeView1.CurrentRawFile
+    Private Sub DeleteFileToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeleteFileToolStripMenuItem.Click
+        Call MyApplication.fileExplorer.deleteFileNode(MyApplication.fileExplorer.findRawFileNode(CurrentRawFile))
 
-        If Not current.raw Is Nothing Then
-            If MessageBox.Show($"Going to remove the raw data file [{current.raw.source.FileName}]?", "Delete File", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) = DialogResult.OK Then
-                treeView1.Nodes.Remove(current.tree)
-                treeView1.SaveRawFileCache(
-                    Sub()
-                        ' do nothing
-                    End Sub)
-
-                Call MyApplication.host.mzkitTool.setCurrentFile()
-            End If
-        End If
-
-        If treeView1.Nodes.Count = 0 Then
-            MyApplication.host.showStatusMessage("No raw file for removes!", My.Resources.StatusAnnotations_Warning_32xLG_color)
-        Else
-            Do While treeView1.Nodes.Count > 0
-                Dim clearOne As Boolean = False
-
-                For i As Integer = 0 To treeView1.Nodes.Count - 1
-                    If treeView1.Nodes(i).Checked Then
-                        treeView1.Nodes.Remove(treeView1.Nodes(i))
-                        clearOne = True
-                        Exit For
-                    End If
-                Next
-
-                If Not clearOne Then
-                    Exit Do
-                End If
-            Loop
-        End If
-
-        ' MyApplication.host.ToolStripStatusLabel2.Text =  treeView1.GetTotalCacheSize
+        _CurrentRawFile = Nothing
+        treeView1.Nodes.Clear()
+        checked.Clear()
     End Sub
 
     Private Sub SelectAllToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SelectAllToolStripMenuItem.Click
@@ -279,5 +249,50 @@ Public Class frmRawFeaturesList
 
         runTask.Start()
         progress.ShowDialog()
+    End Sub
+
+    Private Sub CustomToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CustomToolStripMenuItem.Click
+        MyApplication.host.mzkitSearch.ComboBox1.SelectedIndex = 0
+        SearchFormulaToolStripMenuItem_Click(sender, e)
+    End Sub
+
+    Private Sub DefaultToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DefaultToolStripMenuItem.Click
+        MyApplication.host.mzkitSearch.ComboBox1.SelectedIndex = 1
+        SearchFormulaToolStripMenuItem_Click(sender, e)
+    End Sub
+
+    Private Sub SmallMoleculeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SmallMoleculeToolStripMenuItem.Click
+        MyApplication.host.mzkitSearch.ComboBox1.SelectedIndex = 2
+        SearchFormulaToolStripMenuItem_Click(sender, e)
+    End Sub
+
+    Private Sub NatureProductToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NaturalProductToolStripMenuItem.Click
+        MyApplication.host.mzkitSearch.ComboBox1.SelectedIndex = 3
+        SearchFormulaToolStripMenuItem_Click(sender, e)
+    End Sub
+
+    Private Sub GeneralFlavoneToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GeneralFlavoneToolStripMenuItem.Click
+        MyApplication.host.mzkitSearch.ComboBox1.SelectedIndex = 4
+        SearchFormulaToolStripMenuItem_Click(sender, e)
+    End Sub
+
+    Private Sub SearchFormulaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SearchFormulaToolStripMenuItem.Click
+        Dim node = treeView1.SelectedNode
+
+        If Not node Is Nothing AndAlso CurrentRawFile.cacheFileExists Then
+            Dim mz = CurrentRawFile.GetMs2Scans.Where(Function(scan) scan.id = node.Text).FirstOrDefault
+
+            If Not mz Is Nothing AndAlso mz.mz > 0 Then
+                Dim charge As Double = mz.charge
+                Dim ionMode As Integer = mz.polarity
+
+                If charge = 0 Then
+                    charge = 1
+                End If
+
+                MyApplication.host.mzkitSearch.doMzSearch(mz.mz, charge, ionMode)
+                MyApplication.host.ShowPage(MyApplication.host.mzkitSearch)
+            End If
+        End If
     End Sub
 End Class
