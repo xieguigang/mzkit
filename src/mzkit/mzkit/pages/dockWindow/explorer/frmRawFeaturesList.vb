@@ -103,7 +103,7 @@ Public Class frmRawFeaturesList
             Return
         End If
 
-        If TypeOf e.Node.Tag Is Raw Then
+        If TypeOf e.Node.Tag Is Ms1ScanEntry Then
             Dim checked As Boolean = e.Node.Checked
             Dim node As TreeNode
 
@@ -200,19 +200,6 @@ Public Class frmRawFeaturesList
         lockCheckList = False
     End Sub
 
-    Private Sub treeView1_BeforeCollapse(sender As Object, e As TreeViewCancelEventArgs) Handles treeView1.BeforeCollapse
-        'e.Node.Nodes.Clear()
-        'e.Node.Nodes.Add(New TreeNode With {.Text = "n/a"})
-    End Sub
-
-    Private Sub treeView1_BeforeExpand(sender As Object, e As TreeViewCancelEventArgs) Handles treeView1.BeforeExpand
-        'e.Node.Nodes.Clear()
-
-        'For Each scan In DirectCast(e.Node.Tag, Raw).scans
-        '    e.Node.Nodes.Add(New TreeNode With {.Tag = scan.id, .Text = scan.id, .Checked = e.Node.Checked})
-        'Next
-    End Sub
-
     Private Sub treeView1_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles treeView1.AfterSelect
         MyApplication.host.ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
 
@@ -221,7 +208,7 @@ Public Class frmRawFeaturesList
         Dim scanId As String = e.Node.Text
 
         Call MyApplication.host.mzkitTool.showSpectrum(scanId, raw)
-        Call MyApplication.host.mzkitTool.ShowPage
+        Call MyApplication.host.mzkitTool.ShowPage()
     End Sub
 
     Private Sub CollapseToolStripMenuItem_Click(sender As Object, e As EventArgs) 'Handles CollapseToolStripMenuItem.Click
