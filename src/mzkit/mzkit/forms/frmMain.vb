@@ -299,7 +299,7 @@ Public Class frmMain
     End Sub
 
     Private Sub ShowProperties(sender As Object, e As ExecuteEventArgs)
-        mzkitTool.ShowPropertyWindow()
+        ShowPropertyWindow()
     End Sub
 
     Private Sub showLoggingWindow(sender As Object, e As ExecuteEventArgs)
@@ -705,6 +705,14 @@ Public Class frmMain
     Friend settingsPage As New frmSettings
     Friend RtermPage As New frmRsharp
     Friend propertyWin As New DummyPropertyWindow
+
+    Public Sub ShowPropertyWindow()
+        Dim dockRight = propertyWin.DockState = DockState.Hidden OrElse propertyWin.DockState = DockState.Unknown
+
+        If dockRight Then
+            propertyWin.DockState = DockState.DockRight
+        End If
+    End Sub
 
     Private Sub initializeVSPanel()
         PanelBase.Controls.Add(Me.dockPanel)

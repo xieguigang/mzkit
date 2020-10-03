@@ -179,15 +179,6 @@ Public Class PageMzkitTools
 
     Dim currentMatrix As [Variant](Of ms2(), ChromatogramTick())
 
-    Public Sub ShowPropertyWindow()
-        Dim propertyWin = MyApplication.host.propertyWin
-        Dim dockRight = propertyWin.DockState = DockState.Hidden OrElse propertyWin.DockState = DockState.Unknown
-
-        If dockRight Then
-            propertyWin.DockState = DockState.DockRight
-        End If
-    End Sub
-
     Friend Sub showSpectrum(scanId As String, raw As Raw)
         If raw.cacheFileExists Then
             Dim prop As SpectrumProperty = Nothing
@@ -209,18 +200,16 @@ Public Class PageMzkitTools
             Dim draw As Image = scanData.MirrorPlot(titles:={title1, title2}).AsGDIImage
             Dim propertyWin = MyApplication.host.propertyWin
 
-            propertyWin.Invoke(
-                Sub()
-                    ' PropertyGrid1.SelectedObject = prop
-                    'PropertyGrid1.Refresh()
-                    propertyWin.propertyGrid.SelectedObject = prop
-                    propertyWin.propertyGrid.Refresh()
 
-                    ShowPropertyWindow()
-                End Sub)
+            ' PropertyGrid1.SelectedObject = prop
+            'PropertyGrid1.Refresh()
+            propertyWin.propertyGrid.SelectedObject = prop
+            propertyWin.propertyGrid.Refresh()
 
             PictureBox1.BackgroundImage = draw
             ShowTabPage(TabPage5)
+
+            MyApplication.host.ShowPropertyWindow()
         Else
             ' Call missingCacheFile(raw)
         End If
