@@ -1,8 +1,13 @@
 ﻿Imports System.ComponentModel
+Imports System.IO
 Imports System.Threading
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports mzkit.Kesoft.Windows.Forms.Win7StyleTreeView
 Imports mzkit.My
 Imports RibbonLib.Interop
@@ -293,6 +298,63 @@ Public Class frmRawFeaturesList
                 MyApplication.host.mzkitSearch.doMzSearch(mz.mz, charge, ionMode)
                 MyApplication.host.ShowPage(MyApplication.host.mzkitSearch)
             End If
+        End If
+    End Sub
+
+    Private Sub XICToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles XICToolStripMenuItem.Click
+        If GetSelectedNodes.Count = 0 Then
+            MessageBox.Show("No chromatogram data for XIC plot, please use XIC -> Add for add data!", "No data save", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        Else
+            Dim ppm As Double = MyApplication.host.GetPPMError()
+
+            Call exportMgf(
+                Iterator Function() As IEnumerable(Of MGF.Ions)
+
+                    For Each xic As NamedCollection(Of ChromatogramTick) In GetXICCollection(ppm)
+                        Dim parent As New NamedValue With {.name = xic.description.Split.First, .text = xic.value.Select(Function(a) a.Intensity).Max}
+                        Dim ion As New MGF.Ions With {
+                            .Title = xic.name,
+                            .Peaks = xic.value _
+                                .Select(Function(a)
+                                            Return New ms2 With {
+                                                .mz = a.Time,
+                                                .intensity = a.Intensity,
+                                                .quantity = a.Intensity
+                                            }
+                                        End Function) _
+                                .ToArray,
+                            .PepMass = parent,
+                            .Rawfile = xic.description.GetTagValue(" ").Value
+                        }
+
+                        Yield ion
+                    Next
+
+                End Function)
+        End If
+    End Sub
+
+    Private Sub exportMgf(getIons As Func(Of IEnumerable(Of MGF.Ions)))
+        Using file As New SaveFileDialog With {.Filter = "Mgf ASCII spectrum data(*.mgf)|*.mgf", .FileName = "XIC.mgf"}
+            If file.ShowDialog = DialogResult.OK Then
+                Using OutFile As StreamWriter = file.FileName.OpenWriter()
+                    For Each ion In getIons()
+                        ion.WriteAsciiMgf(OutFile)
+                    Next
+                End Using
+            End If
+        End Using
+    End Sub
+
+    Private Sub IonScansToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles IonScansToolStripMenuItem.Click
+        If GetSelectedNodes.Count = 0 Then
+            MessageBox.Show("No chromatogram data for XIC plot, please use XIC -> Add for add data!", "No data save", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        Else
+            Call exportMgf(Iterator Function() As IEnumerable(Of Ions)
+                               For Each peak In MyApplication.mzkitRawViewer.getSelectedIonSpectrums(Nothing)
+                                   Yield peak.MgfIon
+                               Next
+                           End Function)
         End If
     End Sub
 End Class

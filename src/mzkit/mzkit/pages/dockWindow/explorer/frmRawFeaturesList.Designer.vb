@@ -49,6 +49,8 @@ Partial Class frmRawFeaturesList
         Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripSeparator()
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExportIonsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.XICToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.IonScansToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CollapseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripSeparator()
         Me.SelectAllToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -209,10 +211,23 @@ Partial Class frmRawFeaturesList
         '
         'ExportIonsToolStripMenuItem
         '
+        Me.ExportIonsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.XICToolStripMenuItem, Me.IonScansToolStripMenuItem})
         Me.ExportIonsToolStripMenuItem.Image = CType(resources.GetObject("ExportIonsToolStripMenuItem.Image"), System.Drawing.Image)
         Me.ExportIonsToolStripMenuItem.Name = "ExportIonsToolStripMenuItem"
         Me.ExportIonsToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ExportIonsToolStripMenuItem.Text = "Export Ions"
+        '
+        'XICToolStripMenuItem
+        '
+        Me.XICToolStripMenuItem.Name = "XICToolStripMenuItem"
+        Me.XICToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.XICToolStripMenuItem.Text = "XIC"
+        '
+        'IonScansToolStripMenuItem
+        '
+        Me.IonScansToolStripMenuItem.Name = "IonScansToolStripMenuItem"
+        Me.IonScansToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.IonScansToolStripMenuItem.Text = "Ion Scans"
         '
         'CollapseToolStripMenuItem
         '
@@ -293,4 +308,6 @@ Partial Class frmRawFeaturesList
     Friend WithEvents SmallMoleculeToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents NaturalProductToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents GeneralFlavoneToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents XICToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents IonScansToolStripMenuItem As ToolStripMenuItem
 End Class

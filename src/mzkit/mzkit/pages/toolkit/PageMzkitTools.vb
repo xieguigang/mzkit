@@ -678,7 +678,7 @@ Public Class PageMzkitTools
         ShowTabPage(TabPage5)
     End Sub
 
-    Private Iterator Function getSelectedIonSpectrums(progress As Action(Of String)) As IEnumerable(Of PeakMs2)
+    Friend Iterator Function getSelectedIonSpectrums(progress As Action(Of String)) As IEnumerable(Of PeakMs2)
         Dim raw = MyApplication.featureExplorer.CurrentRawFile
 
         Using cache As New netCDFReader(raw.ms2_cache)
@@ -689,6 +689,11 @@ Public Class PageMzkitTools
                 Dim mztemp = cache.getDataVariable(entry).numerics.AsMs2.ToArray
                 Dim attrs = cache.getDataVariableEntry(scanId).attributes
                 Dim info As New SpectrumProperty(scanId, raw.source.FileName, attrs)
+                Dim guid As String = $"{raw.source.FileName}#{scanId}"
+
+                If Not progress Is Nothing Then
+                    Call progress(guid)
+                End If
 
                 Yield New PeakMs2 With {
                     .mz = info.precursorMz,
@@ -696,7 +701,7 @@ Public Class PageMzkitTools
                     .activation = info.activationMethod,
                     .collisionEnergy = info.collisionEnergy,
                     .file = raw.source.FileName,
-                    .lib_guid = $"{ .file}#{scanId}",
+                    .lib_guid = guid,
                     .mzInto = mztemp,
                     .precursor_type = "n/a",
                     .rt = info.retentionTime
@@ -777,40 +782,6 @@ Public Class PageMzkitTools
             Call PictureBox1.BackgroundImage.SaveAs(temp)
             Call Process.Start(temp)
         End If
-    End Sub
-
-    Private Sub ExportToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        'If MyApplication.host.fileExplorer.GetSelectedNodes.Count = 0 Then
-        '    MessageBox.Show("No chromatogram data for XIC plot, please use XIC -> Add for add data!", "No data save", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-        'Else
-        '    Using file As New SaveFileDialog With {.Filter = "Mgf ASCII spectrum data(*.mgf)|*.mgf", .FileName = "XIC.mgf"}
-        '        If file.ShowDialog = DialogResult.OK Then
-        '            Using OutFile As StreamWriter = file.FileName.OpenWriter()
-        '                Dim ppm As Double = MyApplication.host.GetPPMError()
-
-        '                For Each xic As NamedCollection(Of ChromatogramTick) In GetXICCollection(ppm)
-        '                    Dim parent As New NamedValue With {.name = xic.description.Split.First, .text = xic.value.Select(Function(a) a.Intensity).Max}
-        '                    Dim ion As New MGF.Ions With {
-        '                        .Title = xic.name,
-        '                        .Peaks = xic.value _
-        '                            .Select(Function(a)
-        '                                        Return New ms2 With {
-        '                                            .mz = a.Time,
-        '                                            .intensity = a.Intensity,
-        '                                            .quantity = a.Intensity
-        '                                        }
-        '                                    End Function) _
-        '                            .ToArray,
-        '                        .PepMass = parent,
-        '                        .Rawfile = xic.description.GetTagValue(" ").Value
-        '                    }
-
-        '                    ion.WriteAsciiMgf(OutFile)
-        '                Next
-        '            End Using
-        '        End If
-        '    End Using
-        'End If
     End Sub
 
     Private Sub PictureBox1_MouseClick(sender As Object, e As MouseEventArgs) Handles PictureBox1.MouseClick
