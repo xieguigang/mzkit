@@ -85,6 +85,10 @@ Public Class Raw
         End Get
     End Property
 
+    Public Function FindMs2Scan(id As String) As ScanEntry
+        Return GetMs2Scans.Where(Function(a) a.id = id).FirstOrDefault
+    End Function
+
     Public Function GetCacheFileSize() As Long
         Return ms1_cache.FileLength + ms2_cache.FileLength + scatter.FileLength
     End Function

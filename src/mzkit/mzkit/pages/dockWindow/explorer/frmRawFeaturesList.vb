@@ -1,5 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports mzkit.Kesoft.Windows.Forms.Win7StyleTreeView
 Imports mzkit.My
@@ -56,21 +57,18 @@ Public Class frmRawFeaturesList
         treeView1.loadRawFile(raw)
     End Sub
 
-    'Public Iterator Function GetXICCollection(ppm As Double) As IEnumerable(Of NamedCollection(Of ChromatogramTick))
-    '    Dim files As IGrouping(Of String, TreeNode)() = GetSelectedNodes.GroupBy(Function(a) a.Parent.Text).ToArray
+    Public Iterator Function GetXICCollection(ppm As Double) As IEnumerable(Of NamedCollection(Of ChromatogramTick))
+        Dim scans = GetSelectedNodes _
+            .Where(Function(t) TypeOf t.Tag Is ScanEntry) _
+            .Select(Function(a) DirectCast(a.Tag, ScanEntry)) _
+            .GroupBy(Function(a) a.mz, Tolerance.DeltaMass(0.3)) _
+            .ToArray
+        Dim raw As Raw = CurrentRawFile
 
-    '    For Each file In files
-    '        Dim scans = file.Select(Function(a) DirectCast(a.Tag, ScanEntry)) _
-    '            .Where(Function(a) a.mz > 0) _
-    '            .GroupBy(Function(a) a.mz, Tolerance.DeltaMass(0.3)) _
-    '            .ToArray
-    '        Dim Raw = file.First.Parent.Tag
-
-    '        For Each scanId In scans.Select(Function(a) a.value.First.id)
-    '            Yield getXICMatrix(Raw, scanId, ppm, relativeInto)
-    '        Next
-    '    Next
-    'End Function
+        For Each scanId In scans.Select(Function(a) a.First.id)
+            Yield MyApplication.mzkitRawViewer.getXICMatrix(raw, scanId, ppm, relativeInto:=False)
+        Next
+    End Function
 
     ''' <summary>
     ''' 
@@ -103,7 +101,13 @@ Public Class frmRawFeaturesList
             Return
         End If
 
-        If TypeOf e.Node.Tag Is Ms1ScanEntry Then
+        If TypeOf e.Node.Tag Is ScanEntry Then
+            If e.Node.Checked Then
+                checked.Add(e.Node)
+            Else
+                checked.Remove(e.Node)
+            End If
+        Else
             Dim checked As Boolean = e.Node.Checked
             Dim node As TreeNode
 
@@ -113,21 +117,16 @@ Public Class frmRawFeaturesList
 
                 If checked Then
                     Me.checked.Add(node)
+                Else
                     Me.checked.Remove(node)
                 End If
             Next
-        Else
-            If e.Node.Checked Then
-                checked.Add(e.Node)
-            Else
-                checked.Remove(e.Node)
-            End If
         End If
 
-        '  ClearToolStripMenuItem.Text = $"Clear [{checked.Count} XIC Ions]"
+        ClearToolStripMenuItem.Text = $"Clear [{checked.Count} XIC Ions]"
     End Sub
 
-    Private Sub ClearSelectionsToolStripMenuItem_Click(sender As Object, e As EventArgs) 'Handles ClearSelectionsToolStripMenuItem.Click
+    Private Sub ClearSelectionsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ClearToolStripMenuItem.Click
         lockCheckList = True
         checked.Clear()
 
@@ -179,10 +178,10 @@ Public Class frmRawFeaturesList
             Loop
         End If
 
-        '  MyApplication.host.ToolStripStatusLabel2.Text = treeView1.GetTotalCacheSize
+        ' MyApplication.host.ToolStripStatusLabel2.Text =  treeView1.GetTotalCacheSize
     End Sub
 
-    Private Sub SelectAllToolStripMenuItem_Click(sender As Object, e As EventArgs) ' Handles SelectAllToolStripMenuItem.Click
+    Private Sub SelectAllToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SelectAllToolStripMenuItem.Click
         lockCheckList = True
         checked.Clear()
 
@@ -211,13 +210,17 @@ Public Class frmRawFeaturesList
         Call MyApplication.host.mzkitTool.ShowPage()
     End Sub
 
-    Private Sub CollapseToolStripMenuItem_Click(sender As Object, e As EventArgs) 'Handles CollapseToolStripMenuItem.Click
-        Dim current = treeView1.CurrentRawFile
+    Private Sub CollapseToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CollapseToolStripMenuItem.Click
+        Dim currentNode = treeView1.SelectedNode
 
-        If current.tree Is Nothing Then
+        If currentNode Is Nothing Then
             Return
+        End If
+
+        If TypeOf currentNode.Tag Is ScanEntry Then
+            currentNode.Parent.Collapse()
         Else
-            current.tree.Collapse()
+            currentNode.Collapse()
         End If
     End Sub
 
@@ -231,5 +234,34 @@ Public Class frmRawFeaturesList
 
     Private Sub ShowBPCToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowBPCToolStripMenuItem.Click
         Call MyApplication.host.mzkitTool.TIC({CurrentRawFile}, isBPC:=True)
+    End Sub
+
+    Friend Sub ShowXICToolStripMenuItem_Click() Handles ShowXICToolStripMenuItem.Click
+        Dim ions = GetSelectedNodes.ToArray
+
+        If ions.Length >= 500 Then
+            If MessageBox.Show("There are too many ions for create XIC plot, probably you should uncheck some ions for reduce data, continute to procedure?", "Too much data!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) = DialogResult.Cancel Then
+                MyApplication.host.showStatusMessage("Show XIC plot for too many ions has been cancel!")
+                Return
+            End If
+        End If
+
+        ' scan节点
+        Dim raw As Task.Raw = CurrentRawFile
+        Dim ppm As Double = MyApplication.host.GetPPMError()
+        Dim plotTIC As NamedCollection(Of ChromatogramTick) = MyApplication.mzkitRawViewer.getXICMatrix(raw, treeView1.SelectedNode.Text, ppm, relativeInto:=False)
+
+        If plotTIC.value.IsNullOrEmpty Then
+            ' 当前没有选中MS2，但是可以显示选中的XIC
+            If ions.Length > 0 Then
+            Else
+                MyApplication.host.showStatusMessage("No ion was selected for XIC plot...", My.Resources.StatusAnnotations_Warning_32xLG_color)
+                Return
+            End If
+        Else
+            Call MyApplication.mzkitRawViewer.showMatrix(plotTIC.value, Name)
+        End If
+
+        Call MyApplication.mzkitRawViewer.ShowXIC(ppm, plotTIC, AddressOf GetXICCollection, raw.GetXICMaxYAxis)
     End Sub
 End Class

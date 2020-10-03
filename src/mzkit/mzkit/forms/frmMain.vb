@@ -211,7 +211,7 @@ Public Class frmMain
 
         AddHandler ribbonItems.ButtonTIC.ExecuteEvent, Sub(sender, e) Call mzkitTool.TIC(isBPC:=False)
         AddHandler ribbonItems.ButtonBPC.ExecuteEvent, Sub(sender, e) Call mzkitTool.TIC(isBPC:=True)
-        AddHandler ribbonItems.ButtonXIC.ExecuteEvent, AddressOf mzkitTool.ShowXICToolStripMenuItem_Click
+        AddHandler ribbonItems.ButtonXIC.ExecuteEvent, AddressOf rawFeaturesList.ShowXICToolStripMenuItem_Click
 
         AddHandler ribbonItems.ButtonResetLayout.ExecuteEvent, AddressOf resetLayout
 

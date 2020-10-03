@@ -694,54 +694,6 @@ Public Class PageMzkitTools
         Next
     End Sub
 
-    Public Sub ShowXICToolStripMenuItem_Click()
-        'If TreeView1.SelectedNode Is Nothing Then
-        '    Return
-        'End If
-
-        'If TypeOf TreeView1.SelectedNode.Tag Is Raw AndAlso MyApplication.host.fileExplorer.GetSelectedNodes.Count = 0 Then
-        '    MyApplication.host.showStatusMessage("no raw file data for XIC plot!", My.Resources.StatusAnnotations_Warning_32xLG_color)
-        '    Return
-        'End If
-
-        'Dim selectedCount As Integer = 0
-
-        'For i As Integer = 0 To TreeView1.Nodes.Count - 1
-        '    Dim fileTree = TreeView1.Nodes(i)
-
-        '    For j As Integer = 0 To fileTree.Nodes.Count - 1
-        '        If fileTree.Nodes(j).Checked Then
-        '            selectedCount += 1
-        '        End If
-        '    Next
-        'Next
-
-        'If selectedCount >= 500 Then
-        '    If MessageBox.Show("There are too many ions for create XIC plot, probably you should uncheck some ions for reduce data, continute to procedure?", "Too much data!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) = DialogResult.Cancel Then
-        '        MyApplication.host.showStatusMessage("Show XIC plot for too many ions has been cancel!")
-        '        Return
-        '    End If
-        'End If
-
-        '' scan节点
-        'Dim raw As Task.Raw = TreeView1.CurrentRawFile.raw
-        'Dim ppm As Double = MyApplication.host.GetPPMError()
-        'Dim plotTIC As NamedCollection(Of ChromatogramTick) = getXICMatrix(raw, TreeView1.SelectedNode.Text, ppm, relativeInto)
-
-        'If plotTIC.value.IsNullOrEmpty Then
-        '    ' 当前没有选中MS2，但是可以显示选中的XIC
-        '    If MyApplication.host.fileExplorer.GetSelectedNodes.Count > 0 Then
-        '    Else
-        '        MyApplication.host.showStatusMessage("No ion was selected for XIC plot...", My.Resources.StatusAnnotations_Warning_32xLG_color)
-        '        Return
-        '    End If
-        'Else
-        '    Call showMatrix(plotTIC.value, Name)
-        'End If
-
-        'Call ShowXIC(ppm, plotTIC, AddressOf GetXICCollection, raw.GetXICMaxYAxis)
-    End Sub
-
     Public Sub ShowXIC(ppm As Double, plotTIC As NamedCollection(Of ChromatogramTick), getXICCollection As Func(Of Double, IEnumerable(Of NamedCollection(Of ChromatogramTick))), maxY As Double)
         Dim progress As New frmProgressSpinner
         Dim plotImage As Image = Nothing
@@ -827,8 +779,8 @@ Public Class PageMzkitTools
         Return False ' MyApplication.host.ribbonItems.CheckBoxXICRelative.BooleanValue
     End Function
 
-    Friend Shared Function getXICMatrix(raw As Raw, scanId As String, ppm As Double, relativeInto As Boolean) As NamedCollection(Of ChromatogramTick)
-        Dim ms2 As ScanEntry = raw.scans.Where(Function(a) a.id = scanId).FirstOrDefault
+    Friend Function getXICMatrix(raw As Raw, scanId As String, ppm As Double, relativeInto As Boolean) As NamedCollection(Of ChromatogramTick)
+        Dim ms2 As ScanEntry = raw.FindMs2Scan(scanId)
         Dim name As String
 
         If ms2 Is Nothing OrElse ms2.mz = 0.0 Then
