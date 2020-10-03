@@ -293,10 +293,10 @@
     <Compile Include="pages\dockWindow\documents\frmPlotViewer.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="pages\dockWindow\DummyOutputWindow.Designer.vb">
-      <DependentUpon>DummyOutputWindow.vb</DependentUpon>
+    <Compile Include="pages\dockWindow\tools\OutputWindow.Designer.vb">
+      <DependentUpon>OutputWindow.vb</DependentUpon>
     </Compile>
-    <Compile Include="pages\dockWindow\DummyOutputWindow.vb">
+    <Compile Include="pages\dockWindow\tools\OutputWindow.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="pages\dockWindow\explorer\frmRawFeaturesList.Designer.vb">
@@ -311,10 +311,10 @@
     <Compile Include="pages\dockWindow\explorer\frmFileExplorer.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="pages\dockWindow\PropertyWindow.designer.vb">
+    <Compile Include="pages\dockWindow\tools\PropertyWindow.designer.vb">
       <DependentUpon>PropertyWindow.vb</DependentUpon>
     </Compile>
-    <Compile Include="pages\dockWindow\PropertyWindow.vb">
+    <Compile Include="pages\dockWindow\tools\PropertyWindow.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="pages\toolkit\PlotTooltip.vb">
@@ -516,7 +516,7 @@
     <EmbeddedResource Include="pages\dockWindow\frmSettings.resx">
       <DependentUpon>frmSettings.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="pages\dockWindow\PropertyWindow.resx">
+    <EmbeddedResource Include="pages\dockWindow\tools\PropertyWindow.resx">
       <DependentUpon>PropertyWindow.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\R\frmRsharp.resx">

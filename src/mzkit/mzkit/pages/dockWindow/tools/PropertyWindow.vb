@@ -45,11 +45,10 @@
 #End Region
 
 Imports System.ComponentModel
-Imports System.Windows.Forms
 Imports Task
 
 Namespace DockSample
-    Partial Public Class DummyPropertyWindow
+    Partial Public Class PropertyWindow
         Inherits ToolWindow
 
         Public Sub New()

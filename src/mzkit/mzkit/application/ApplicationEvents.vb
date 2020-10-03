@@ -72,14 +72,14 @@ Namespace My
     Partial Friend Class MyApplication
 
         Public Shared ReadOnly Property host As frmMain
-        Public Shared ReadOnly Property LogForm As DummyOutputWindow
+        Public Shared ReadOnly Property LogForm As OutputWindow
         Public Shared ReadOnly Property REngine As RInterpreter
 
         Shared WithEvents console As Console
         Shared Rtask As Thread
         Shared cancel As New ManualResetEvent(initialState:=False)
 
-        Public Shared Sub RegisterOutput(log As DummyOutputWindow)
+        Public Shared Sub RegisterOutput(log As OutputWindow)
             _LogForm = log
 
             Microsoft.VisualBasic.My.Log4VB.redirectError =

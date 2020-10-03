@@ -1,7 +1,7 @@
 ﻿Imports System
 
 Namespace DockSample
-    Partial Class DummyPropertyWindow
+    Partial Class PropertyWindow
         ''' <summary>
         ''' Required designer variable.
         ''' </summary>
@@ -25,7 +25,7 @@ Namespace DockSample
         ''' the contents of this method with the code editor.
         ''' </summary>
         Private Sub InitializeComponent()
-            Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(DummyPropertyWindow))
+            Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(PropertyWindow))
             Me.propertyGrid = New System.Windows.Forms.PropertyGrid()
             Me.SuspendLayout()
             '

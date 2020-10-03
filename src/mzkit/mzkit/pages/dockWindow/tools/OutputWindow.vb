@@ -48,7 +48,7 @@
 Imports System.ComponentModel
 
 Namespace DockSample
-    Partial Public Class DummyOutputWindow
+    Partial Public Class OutputWindow
         Inherits ToolWindow
 
         Public Sub New()

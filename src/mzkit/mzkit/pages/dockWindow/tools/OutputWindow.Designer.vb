@@ -1,5 +1,5 @@
 ﻿Namespace DockSample
-    Partial Class DummyOutputWindow
+    Partial Class OutputWindow
         ''' <summary>
         ''' Required designer variable.
         ''' </summary>
@@ -23,7 +23,7 @@
         ''' the contents of this method with the code editor.
         ''' </summary>
         Private Sub InitializeComponent()
-            Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(DummyOutputWindow))
+            Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(OutputWindow))
             Me.textBox1 = New System.Windows.Forms.TextBox()
             Me.textBox2 = New System.Windows.Forms.TextBox()
             Me.comboBox = New System.Windows.Forms.ComboBox()

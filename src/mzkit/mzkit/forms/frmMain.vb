@@ -699,12 +699,12 @@ Public Class frmMain
 
     Friend fileExplorer As New frmFileExplorer
     Friend rawFeaturesList As New frmRawFeaturesList
-    Friend output As New DummyOutputWindow
+    Friend output As New OutputWindow
     Friend WithEvents panelMain As New frmDockDocument
     Friend startPage As New frmStartPage
     Friend settingsPage As New frmSettings
     Friend RtermPage As New frmRsharp
-    Friend propertyWin As New DummyPropertyWindow
+    Friend propertyWin As New PropertyWindow
 
     Public Sub ShowPropertyWindow()
         Dim dockRight = propertyWin.DockState = DockState.Hidden OrElse propertyWin.DockState = DockState.Unknown
