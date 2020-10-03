@@ -330,12 +330,12 @@ Public Class frmRawFeaturesList
                         Yield ion
                     Next
 
-                End Function)
+                End Function, "XIC.mgf")
         End If
     End Sub
 
-    Private Sub exportMgf(getIons As Func(Of IEnumerable(Of MGF.Ions)))
-        Using file As New SaveFileDialog With {.Filter = "Mgf ASCII spectrum data(*.mgf)|*.mgf", .FileName = "XIC.mgf"}
+    Private Sub exportMgf(getIons As Func(Of IEnumerable(Of MGF.Ions)), defaultFileName$)
+        Using file As New SaveFileDialog With {.Filter = "Mgf ASCII spectrum data(*.mgf)|*.mgf", .FileName = defaultFileName}
             If file.ShowDialog = DialogResult.OK Then
                 Using OutFile As StreamWriter = file.FileName.OpenWriter()
                     For Each ion In getIons()
@@ -354,7 +354,7 @@ Public Class frmRawFeaturesList
                                For Each peak In MyApplication.mzkitRawViewer.getSelectedIonSpectrums(Nothing)
                                    Yield peak.MgfIon
                                Next
-                           End Function)
+                           End Function, "Ions_scan.mgf")
         End If
     End Sub
 End Class
