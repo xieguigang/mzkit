@@ -213,7 +213,7 @@ Type 'q()' to quit R.
                 Case "CLS"
                     Call console.Clear()
                 Case Else
-                    If Not script Is Nothing Then
+                    If Not script.StringEmpty Then
                         Rtask = New Thread(Sub() Call doRunScript(script))
                         Rtask.Start()
 
