@@ -131,36 +131,9 @@ Public Class PageMzkitTools
             '    fillCurve:=Globals.Settings.viewer.fill
             ').AsGDIImage
 
-            Dim raw As Raw = DirectCast(e.Node.Tag, Raw)
 
-            If Not raw.cacheFileExists Then
-                MessageBox.Show("Sorry, can not view file data, the cache file is missing...", "Cache Missing", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-                Return
-            End If
 
-            Dim spinner As New frmProgressSpinner
-            Dim task As New Thread(
-                Sub()
-                    Dim image As Image
 
-                    If raw.scatter.FileLength < 0 Then
-                        raw.scatter = App.AppSystemTemp & "/" & raw.source.GetFullPath.MD5 & ".scatter"
-                        raw.scatter = raw.scatter.GetFullPath
-                        image = raw.DrawScatter
-                        image.SaveAs(raw.scatter)
-                    Else
-                        image = raw.scatter.LoadImage
-                    End If
-
-                    Me.Invoke(Sub() PictureBox1.BackgroundImage = image)
-                    spinner.Invoke(Sub() Call spinner.Close())
-                End Sub)
-
-            Call task.Start()
-            Call spinner.ShowDialog()
-
-            MyApplication.host.ShowPage(Me)
-            MyApplication.host.Invoke(Sub() RibbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.NotAvailable)
         Else
             ' scan节点
             Dim raw As Task.Raw = e.Node.Parent.Tag
@@ -171,6 +144,37 @@ Public Class PageMzkitTools
         End If
 
         Call setCurrentFile()
+    End Sub
+
+    Public Sub showScatter(raw As Raw)
+        If Not raw.cacheFileExists Then
+            MessageBox.Show("Sorry, can not view file data, the cache file is missing...", "Cache Missing", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
+        Dim spinner As New frmProgressSpinner
+        Dim task As New Thread(
+            Sub()
+                Dim image As Image
+
+                If raw.scatter.FileLength < 0 Then
+                    raw.scatter = App.AppSystemTemp & "/" & raw.source.GetFullPath.MD5 & ".scatter"
+                    raw.scatter = raw.scatter.GetFullPath
+                    image = raw.DrawScatter
+                    image.SaveAs(raw.scatter)
+                Else
+                    image = raw.scatter.LoadImage
+                End If
+
+                Me.Invoke(Sub() PictureBox1.BackgroundImage = image)
+                spinner.Invoke(Sub() Call spinner.Close())
+            End Sub)
+
+        Call task.Start()
+        Call spinner.ShowDialog()
+
+        MyApplication.host.ShowPage(Me)
+        MyApplication.host.Invoke(Sub() RibbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.NotAvailable)
     End Sub
 
     Private Sub PageMzkitTools_Load(sender As Object, e As EventArgs) Handles Me.Load

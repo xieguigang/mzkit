@@ -140,6 +140,9 @@ Module Globals
     ''' <returns></returns>
     <Extension>
     Public Function LoadRawFileCache(explorer As TreeView, Optional defaultWorkspace As String = Nothing) As Integer
+        Dim scripts As New TreeNode("R# Automation")
+        Dim rawFiles As New TreeNode("Raw Data Files")
+
         If defaultWorkspace.StringEmpty Then
             defaultWorkspace = Globals.defaultWorkspace
         End If
@@ -152,7 +155,6 @@ Module Globals
 
         Dim files As ViewerProject = ViewerProject.LoadWorkspace(defaultWorkspace, sharedProgressUpdater)
         Dim i As Integer
-        Dim rawFiles As New TreeNode("Raw Data Files")
 
         For Each raw As Raw In files.GetRawDataFiles
             Call sharedProgressUpdater($"[Raw File Viewer] Loading {raw.source.FileName}...")
@@ -170,10 +172,11 @@ Module Globals
         Next
 
         explorer.Nodes.Add(rawFiles)
+        explorer.Nodes.Add(scripts)
         currentWorkspace = files
 
         If files.GetAutomationScripts.SafeQuery.Count > 0 Then
-            Dim scripts As New TreeNode("R# Automation")
+
 
             For Each script As String In files.GetAutomationScripts
                 Dim fileNode As New TreeNode(script.FileName) With {
@@ -183,8 +186,6 @@ Module Globals
 
                 scripts.Nodes.Add(fileNode)
             Next
-
-            explorer.Nodes.Add(scripts)
         End If
 
         Return i

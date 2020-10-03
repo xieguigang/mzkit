@@ -34,6 +34,7 @@ Public Class frmFileExplorer
         Dim raw As TreeNode = treeView1.Nodes.Item(0)
 
         treeView1.SelectedNode = raw.Nodes.Item(index)
+        showRawFile(treeView1.SelectedNode.Tag)
     End Sub
 
     Public Function GetTotalCacheSize() As String
@@ -141,5 +142,20 @@ Public Class frmFileExplorer
 
     Public Sub SaveFileCache(progress As Action(Of String))
         Call treeView1.SaveRawFileCache(progress)
+    End Sub
+
+    Private Sub showRawFile(raw As Raw)
+        Call MyApplication.host.rawFeaturesList.LoadRaw(raw)
+        Call MyApplication.host.mzkitTool.showScatter(raw)
+    End Sub
+
+    Private Sub treeView1_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles treeView1.AfterSelect
+        If treeView1.SelectedNode Is Nothing Then
+            Return
+        End If
+
+        If TypeOf treeView1.SelectedNode.Tag Is Raw Then
+            Call showRawFile(DirectCast(treeView1.SelectedNode.Tag, Raw))
+        End If
     End Sub
 End Class
