@@ -82,31 +82,23 @@ Module Globals
     <Extension>
     Public Sub SaveRawFileCache(explorer As TreeView, progress As Action(Of String))
         Dim files As New List(Of Task.Raw)
+        Dim rawFileNodes = explorer.Nodes(Scan0)
 
-        For Each node As TreeNode In explorer.Nodes
+        For Each node As TreeNode In rawFileNodes.Nodes
             files.Add(node.Tag)
             progress(files.Last.source)
             Application.DoEvents()
         Next
 
-        ' fix for duplicated file name
-        Dim obj As Dictionary(Of String, Raw()) = files _
-            .GroupBy(Function(raw) raw.source.FileName) _
-            .ToDictionary(Function(a) a.Key,
-                          Function(a)
-                              Return a.ToArray
-                          End Function)
+        Dim scripts As New List(Of String)
 
-        Dim schema As Type = obj.GetType
-        Dim model As JsonElement = schema.GetJsonElement(obj, New JSONSerializerOptions)
+        If explorer.Nodes.Count > 1 Then
+            For Each node As TreeNode In explorer.Nodes(1).Nodes
+                scripts.Add(node.Tag)
+            Next
+        End If
 
-        progress("write workspace file...")
-
-        Using buffer = defaultWorkspace.Open(doClear:=True)
-            Call DirectCast(model, JsonObject).WriteBuffer(buffer)
-        End Using
-
-        Application.DoEvents()
+        Call currentWorkspace.SaveAs(files, scripts).Save(defaultWorkspace)
     End Sub
 
     <Extension>
