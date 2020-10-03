@@ -156,6 +156,17 @@ Public Class frmFileExplorer
 
         If TypeOf treeView1.SelectedNode.Tag Is Raw Then
             Call showRawFile(DirectCast(treeView1.SelectedNode.Tag, Raw))
+
+            Dim propertyWin = MyApplication.host.propertyWin
+
+            propertyWin.propertyGrid.SelectedObject = New RawFileProperty(DirectCast(treeView1.SelectedNode.Tag, Raw))
+            propertyWin.propertyGrid.Refresh()
+
+            MyApplication.host.ShowPropertyWindow()
         End If
+    End Sub
+
+    Private Sub treeView1_AfterCheck(sender As Object, e As TreeViewEventArgs) Handles treeView1.AfterCheck
+
     End Sub
 End Class

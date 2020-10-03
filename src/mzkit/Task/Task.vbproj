@@ -143,13 +143,14 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Properties\RawFileProperty.vb" />
     <Compile Include="Workspace\WorkspaceFile.vb" />
     <Compile Include="Workspace\ViewerProject.vb" />
     <Compile Include="DrawScatter.vb" />
     <Compile Include="NewsFeed.vb" />
     <Compile Include="Math.vb" />
     <Compile Include="MoleculeNetworking.vb" />
-    <Compile Include="SpectrumProperty.vb" />
+    <Compile Include="Properties\SpectrumProperty.vb" />
     <Compile Include="Imports\Raw.vb" />
     <Compile Include="Imports\ImportsRawData.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
