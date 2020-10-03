@@ -787,13 +787,14 @@ Public Class PageMzkitTools
             MyApplication.host.showStatusMessage("XIC plot is not avaliable for MS1 parent!", My.Resources.StatusAnnotations_Warning_32xLG_color)
             Return Nothing
         Else
-            name = $"XIC [m/z={ms2.mz.ToString("F4")}, {ppm}ppm]"
             MyApplication.host.showStatusMessage(name, Nothing)
         End If
 
-        Dim XIC As ChromatogramTick() = raw _
+        Dim selectedIons = raw _
             .GetMs2Scans _
             .Where(Function(a) PPMmethod.PPM(a.mz, ms2.mz) <= ppm) _
+            .ToArray
+        Dim XIC As ChromatogramTick() = selectedIons _
             .Select(Function(a)
                         Return New ChromatogramTick With {
                             .Time = a.rt,
@@ -801,6 +802,10 @@ Public Class PageMzkitTools
                         }
                     End Function) _
             .ToArray
+        Dim mzmin = Aggregate ion In selectedIons Into Min(ion.mz)
+        Dim mzmax = Aggregate ion In selectedIons Into Max(ion.mz)
+
+        name = $"XIC [m/z={ms2.mz.ToString("F4")}] [mzmin={mzmin.ToString("F4")}, mzmax={mzmax.ToString("F4")}]"
 
         If Not relativeInto Then
             XIC = {
