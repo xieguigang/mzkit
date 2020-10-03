@@ -32,10 +32,13 @@ Partial Class frmRawFeaturesList
         Me.Button1 = New System.Windows.Forms.Button()
         Me.ImageList2 = New System.Windows.Forms.ImageList(Me.components)
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.ShowXICToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ChromatogramPlotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ShowBPCToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ShowTICToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ShowXICToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
         Me.MolecularNetworkingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.IonSearchToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SearchFormulaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripSeparator()
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -94,22 +97,35 @@ Partial Class frmRawFeaturesList
         '
         'ContextMenuStrip1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowTICToolStripMenuItem, Me.ShowXICToolStripMenuItem, Me.ToolStripMenuItem1, Me.MolecularNetworkingToolStripMenuItem, Me.SearchFormulaToolStripMenuItem, Me.ToolStripMenuItem2, Me.FileToolStripMenuItem})
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ChromatogramPlotToolStripMenuItem, Me.ShowXICToolStripMenuItem, Me.ToolStripMenuItem1, Me.MolecularNetworkingToolStripMenuItem, Me.IonSearchToolStripMenuItem, Me.SearchFormulaToolStripMenuItem, Me.ToolStripMenuItem2, Me.FileToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
         Me.ContextMenuStrip1.Size = New System.Drawing.Size(193, 148)
+        '
+        'ChromatogramPlotToolStripMenuItem
+        '
+        Me.ChromatogramPlotToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowBPCToolStripMenuItem, Me.ShowTICToolStripMenuItem})
+        Me.ChromatogramPlotToolStripMenuItem.Image = CType(resources.GetObject("ChromatogramPlotToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.ChromatogramPlotToolStripMenuItem.Name = "ChromatogramPlotToolStripMenuItem"
+        Me.ChromatogramPlotToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
+        Me.ChromatogramPlotToolStripMenuItem.Text = "Chromatogram Plot"
+        '
+        'ShowBPCToolStripMenuItem
+        '
+        Me.ShowBPCToolStripMenuItem.Name = "ShowBPCToolStripMenuItem"
+        Me.ShowBPCToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ShowBPCToolStripMenuItem.Text = "Show BPC"
+        '
+        'ShowTICToolStripMenuItem
+        '
+        Me.ShowTICToolStripMenuItem.Name = "ShowTICToolStripMenuItem"
+        Me.ShowTICToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ShowTICToolStripMenuItem.Text = "Show TIC"
         '
         'ShowXICToolStripMenuItem
         '
         Me.ShowXICToolStripMenuItem.Name = "ShowXICToolStripMenuItem"
         Me.ShowXICToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
         Me.ShowXICToolStripMenuItem.Text = "Show XIC"
-        '
-        'ShowTICToolStripMenuItem
-        '
-        Me.ShowTICToolStripMenuItem.Image = CType(resources.GetObject("ShowTICToolStripMenuItem.Image"), System.Drawing.Image)
-        Me.ShowTICToolStripMenuItem.Name = "ShowTICToolStripMenuItem"
-        Me.ShowTICToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
-        Me.ShowTICToolStripMenuItem.Text = "Show TIC"
         '
         'ToolStripMenuItem1
         '
@@ -122,6 +138,12 @@ Partial Class frmRawFeaturesList
         Me.MolecularNetworkingToolStripMenuItem.Name = "MolecularNetworkingToolStripMenuItem"
         Me.MolecularNetworkingToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
         Me.MolecularNetworkingToolStripMenuItem.Text = "Molecular Networking"
+        '
+        'IonSearchToolStripMenuItem
+        '
+        Me.IonSearchToolStripMenuItem.Name = "IonSearchToolStripMenuItem"
+        Me.IonSearchToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
+        Me.IonSearchToolStripMenuItem.Text = "Ion Search"
         '
         'SearchFormulaToolStripMenuItem
         '
@@ -147,7 +169,7 @@ Partial Class frmRawFeaturesList
         '
         Me.ExportIonsToolStripMenuItem.Image = CType(resources.GetObject("ExportIonsToolStripMenuItem.Image"), System.Drawing.Image)
         Me.ExportIonsToolStripMenuItem.Name = "ExportIonsToolStripMenuItem"
-        Me.ExportIonsToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ExportIonsToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
         Me.ExportIonsToolStripMenuItem.Text = "Export Ions"
         '
         'CollapseToolStripMenuItem
@@ -165,14 +187,14 @@ Partial Class frmRawFeaturesList
         '
         Me.SelectAllToolStripMenuItem.Image = Global.mzkit.My.Resources.Resources.preferences_system_notifications
         Me.SelectAllToolStripMenuItem.Name = "SelectAllToolStripMenuItem"
-        Me.SelectAllToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.SelectAllToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
         Me.SelectAllToolStripMenuItem.Text = "Select All"
         '
         'ClearToolStripMenuItem
         '
         Me.ClearToolStripMenuItem.Image = CType(resources.GetObject("ClearToolStripMenuItem.Image"), System.Drawing.Image)
         Me.ClearToolStripMenuItem.Name = "ClearToolStripMenuItem"
-        Me.ClearToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ClearToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
         Me.ClearToolStripMenuItem.Text = "Clear"
         '
         'ToolStripMenuItem4
@@ -184,7 +206,7 @@ Partial Class frmRawFeaturesList
         '
         Me.DeleteFileToolStripMenuItem.Image = CType(resources.GetObject("DeleteFileToolStripMenuItem.Image"), System.Drawing.Image)
         Me.DeleteFileToolStripMenuItem.Name = "DeleteFileToolStripMenuItem"
-        Me.DeleteFileToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.DeleteFileToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
         Me.DeleteFileToolStripMenuItem.Text = "Delete File!"
         '
         'frmRawFeaturesList
@@ -207,7 +229,6 @@ Partial Class frmRawFeaturesList
     Friend WithEvents ImageList2 As ImageList
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents ShowXICToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ShowTICToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents MolecularNetworkingToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
     Friend WithEvents SearchFormulaToolStripMenuItem As ToolStripMenuItem
@@ -220,4 +241,8 @@ Partial Class frmRawFeaturesList
     Friend WithEvents ClearToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem4 As ToolStripSeparator
     Friend WithEvents DeleteFileToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents IonSearchToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ChromatogramPlotToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ShowTICToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ShowBPCToolStripMenuItem As ToolStripMenuItem
 End Class

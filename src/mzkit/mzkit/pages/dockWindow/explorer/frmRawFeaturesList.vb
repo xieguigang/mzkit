@@ -33,6 +33,8 @@ Public Class frmRawFeaturesList
     Private Sub frmFileExplorer_Load(sender As Object, e As EventArgs) Handles Me.Load
         Controls.Add(treeView1)
 
+        ContextMenuStrip1.RenderMode = ToolStripRenderMode.System
+
         treeView1.Location = New Point(1, TextBox2.Height + 5)
         treeView1.Size = New Size(Width - 2, Me.Height - TextBox2.Height - 25)
         treeView1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
@@ -221,5 +223,13 @@ Public Class frmRawFeaturesList
 
     Private Sub TextBox2_Click(sender As Object, e As EventArgs) Handles TextBox2.Click
         MyApplication.host.showStatusMessage("Input a number for m/z search, or input formula text for precursor ion match!")
+    End Sub
+
+    Private Sub ShowTICToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowTICToolStripMenuItem.Click
+        Call MyApplication.host.mzkitTool.TIC({CurrentRawFile}, isBPC:=False)
+    End Sub
+
+    Private Sub ShowBPCToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowBPCToolStripMenuItem.Click
+        Call MyApplication.host.mzkitTool.TIC({CurrentRawFile}, isBPC:=True)
     End Sub
 End Class
