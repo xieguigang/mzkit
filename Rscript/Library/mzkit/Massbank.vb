@@ -91,8 +91,8 @@ Module Massbank
         End Select
     End Function
 
-    Public Function KEGGPathwayCoverages()
-
+    Public Function KEGGPathwayCoverages() As Object
+        Throw New NotImplementedException
     End Function
 
     <ExportAPI("chebi.secondary2main.mapping")>
@@ -136,7 +136,7 @@ Module Massbank
             mapping = DirectCast(mapping, String).LoadJSON(Of Dictionary(Of String, String()))
         End If
 
-        Return SecondaryIDSolver.FromMaps(mapping).AsRReturn
+        Return SecondaryIDSolver.FromMaps(DirectCast(mapping, Dictionary(Of String, String()))).AsRReturn
     End Function
 
     ''' <summary>

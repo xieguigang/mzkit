@@ -151,7 +151,7 @@ Module ProteoWizard
     Public Function ConvertThermoRawFile(raw As String(), output$,
                                          Optional filetype As OutFileTypes = OutFileTypes.mzXML,
                                          Optional filters As filter() = Nothing,
-                                         Optional parallel As Boolean = False,
+                                         Optional parallel As Object = False,
                                          Optional env As Environment = Nothing) As Object
 
         Dim bin As ProteoWizardCLI = GetServices(env)
