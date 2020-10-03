@@ -39,20 +39,21 @@ Partial Class frmRawFeaturesList
         Me.TextBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TextBox2.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.TextBox2.Font = New System.Drawing.Font("Microsoft YaHei", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox2.Location = New System.Drawing.Point(4, 5)
+        Me.TextBox2.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBox2.Location = New System.Drawing.Point(7, 5)
         Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(401, 28)
+        Me.TextBox2.Size = New System.Drawing.Size(403, 22)
         Me.TextBox2.TabIndex = 0
         '
         'Panel1
         '
+        Me.Panel1.BackColor = System.Drawing.Color.White
         Me.Panel1.Controls.Add(Me.Button1)
         Me.Panel1.Controls.Add(Me.TextBox2)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel1.Location = New System.Drawing.Point(0, 0)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(445, 38)
+        Me.Panel1.Size = New System.Drawing.Size(445, 33)
         Me.Panel1.TabIndex = 2
         '
         'Button1
@@ -63,9 +64,9 @@ Partial Class frmRawFeaturesList
         Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button1.ImageIndex = 0
         Me.Button1.ImageList = Me.ImageList2
-        Me.Button1.Location = New System.Drawing.Point(409, 2)
+        Me.Button1.Location = New System.Drawing.Point(415, 4)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(32, 32)
+        Me.Button1.Size = New System.Drawing.Size(24, 24)
         Me.Button1.TabIndex = 1
         Me.Button1.UseVisualStyleBackColor = False
         '
