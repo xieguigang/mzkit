@@ -108,9 +108,10 @@ Namespace My
         <ExportAPI("list.raw")>
         Public Shared Function ListFiles() As Raw()
             Dim list As New List(Of Raw)
+            Dim fileNodes As TreeNode = fileExplorer.treeView1.Nodes(0)
 
-            For i As Integer = 0 To host.fileExplorer.treeView1.Nodes.Count - 1
-                list.Add(host.fileExplorer.treeView1.Nodes(i).Tag)
+            For Each raw As TreeNode In fileNodes.Nodes
+                list.Add(raw.Tag)
             Next
 
             Return list.ToArray
