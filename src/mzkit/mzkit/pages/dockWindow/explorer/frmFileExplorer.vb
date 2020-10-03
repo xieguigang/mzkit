@@ -170,7 +170,14 @@ Public Class frmFileExplorer
     End Sub
 
     Private Sub treeView1_AfterCheck(sender As Object, e As TreeViewEventArgs) Handles treeView1.AfterCheck
-
+        If e.Node.Tag Is Nothing Then
+            ' 是顶层的节点
+            For Each fileNode As TreeNode In e.Node.Nodes
+                fileNode.Checked = e.Node.Checked
+            Next
+        Else
+            ' do nothing
+        End If
     End Sub
 
     Private Sub treeView1_GotFocus(sender As Object, e As EventArgs) Handles treeView1.GotFocus

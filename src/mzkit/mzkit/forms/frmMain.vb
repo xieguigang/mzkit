@@ -250,7 +250,8 @@ Public Class frmMain
             Dim script As String = editor.FastColoredTextBox1.Text
 
             If Not editor.scriptFile.StringEmpty Then
-                Call script.SaveTo(editor.scriptFile)
+                script = editor.scriptFile
+                script.SaveTo(editor.scriptFile)
             End If
 
             Call MyApplication.ExecuteRScript(script, isFile:=Not editor.scriptFile.StringEmpty)
