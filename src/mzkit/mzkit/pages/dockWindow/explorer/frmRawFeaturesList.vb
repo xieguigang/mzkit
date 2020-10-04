@@ -367,4 +367,8 @@ Public Class frmRawFeaturesList
 
         Call FeatureSearchHandler.SearchByMz(DirectCast(currentScan, ScanEntry).mz, {CurrentRawFile})
     End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Call FeatureSearchHandler.SearchByMz(Strings.Trim(TextBox2.Text), {CurrentRawFile})
+    End Sub
 End Class
