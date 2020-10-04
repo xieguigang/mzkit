@@ -6,6 +6,10 @@ Imports Task
 Public Class frmFeatureSearch
 
     Public Sub AddFileMatch(file As String, targetMz As Double, matches As ScanEntry())
+
+    End Sub
+
+    Public Sub AddFileMatch(file As String, targetMz As Double, matches As ScanEntry())
         Dim row As New TreeListViewItem With {.Text = file.FileName, .ImageIndex = 0, .ToolTipText = file}
         Dim i As i32 = 1
 

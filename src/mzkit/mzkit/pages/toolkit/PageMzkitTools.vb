@@ -296,25 +296,6 @@ Public Class PageMzkitTools
         End If
     End Sub
 
-    Private Sub applyLevelFilter()
-        'Dim raw = TreeView1.CurrentRawFile
-
-        'If Not raw.raw Is Nothing Then
-        '    raw.tree.Nodes.Clear()
-        '    raw.tree.addRawFile(raw.raw, MyApplication.host.fileExplorer.MS1ToolStripMenuItem.Checked, MyApplication.host.fileExplorer.MS2ToolStripMenuItem.Checked)
-        'End If
-    End Sub
-
-    Private Sub MS1ToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        ' MyApplication.host.fileExplorer.MS1ToolStripMenuItem.Checked = Not MyApplication.host.fileExplorer.MS1ToolStripMenuItem.Checked
-        applyLevelFilter()
-    End Sub
-
-    Private Sub MS2ToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        ' MyApplication.host.fileExplorer.MS2ToolStripMenuItem.Checked = Not MyApplication.host.fileExplorer.MS2ToolStripMenuItem.Checked
-        applyLevelFilter()
-    End Sub
-
     Public Sub SearchByMz(text As String)
         If text.StringEmpty Then
             Return

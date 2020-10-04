@@ -200,7 +200,7 @@ Public Class ImportsRawData
             Dim attrs As attribute()
             Dim data As New List(Of Double)
             Dim name As String
-            Dim nscans As New List(Of ScanEntry)
+            Dim nscans As New List(Of Ms1ScanEntry)
             Dim rt As New List(Of Double)
             Dim ms1Parent As Ms1ScanEntry = Nothing
             Dim ms2Temp As New List(Of ScanEntry)

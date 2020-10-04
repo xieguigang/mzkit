@@ -99,7 +99,7 @@ Public Class Raw
 
 End Class
 
-Public Class Ms1ScanEntry
+Public MustInherit Class MsScanEntry
 
     Public Property id As String
     Public Property rt As Double
@@ -107,11 +107,15 @@ Public Class Ms1ScanEntry
     Public Property BPC As Double
     Public Property XIC As Double
 
-    Public Property products As ScanEntry()
-
 End Class
 
-Public Class ScanEntry : Inherits Ms1ScanEntry
+Public Class Ms1ScanEntry : Inherits MsScanEntry
+
+    Public Property products As ScanEntry()
+End Class
+
+
+Public Class ScanEntry : Inherits MsScanEntry
 
     Public Property mz As Double
     Public Property polarity As Integer
