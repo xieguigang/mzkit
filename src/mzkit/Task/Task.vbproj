@@ -143,6 +143,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Imports\ImportsMgf.vb" />
+    <Compile Include="Imports\ImportsTask.vb" />
     <Compile Include="ParentMatch.vb" />
     <Compile Include="Properties\RawFileProperty.vb" />
     <Compile Include="Workspace\WorkspaceFile.vb" />
