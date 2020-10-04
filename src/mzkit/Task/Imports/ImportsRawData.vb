@@ -46,6 +46,7 @@
 #End Region
 
 Imports System.Threading
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
@@ -92,8 +93,10 @@ Public Class ImportsRawData
     Public Sub RunImports()
         If source.ExtensionSuffix("mzxml") Then
             Call importsMzXML()
-        Else
+        ElseIf source.ExtensionSuffix("mzml") Then
             Call importsMzML()
+        Else
+            Call importsMgf()
         End If
 
         Call showProgress("Create snapshot...")
@@ -102,6 +105,88 @@ Public Class ImportsRawData
         Call showProgress("Job Done!")
         Call Thread.Sleep(1500)
         Call success()
+    End Sub
+
+    Private Sub importsMgf()
+        Using cache1 As New CDFWriter(temp1, Encodings.UTF8WithoutBOM), cache2 As New CDFWriter(temp2, Encodings.UTF8WithoutBOM)
+            Dim attrs As attribute()
+            Dim data As Double()
+            Dim name As String
+            Dim nscans As New List(Of Ms1ScanEntry)
+            Dim ms1Parent As Ms1ScanEntry = Nothing
+            Dim ms2Temp As New List(Of ScanEntry)
+            Dim rt As New List(Of Double)
+
+            For Each scan As MGF.Ions In MGF.ReadIons(source)
+                Dim msLevel As String = scan.Meta.TryGetValue("msLevel", [default]:=If(scan.PepMass.name = "0", "1", "2"))
+
+                attrs = {
+                    New attribute With {.name = NameOf(mzXML.scan.msLevel), .type = CDFDataTypes.INT, .value = msLevel},
+                    New attribute With {.name = NameOf(mzXML.scan.collisionEnergy), .type = CDFDataTypes.CHAR, .value = scan.Meta.TryGetValue("collisionEnergy", [default]:="n/a")},
+                    New attribute With {.name = NameOf(mzXML.scan.centroided), .type = CDFDataTypes.CHAR, .value = scan.Meta.TryGetValue("centroided", [default]:="n/a")},
+                    New attribute With {.name = NameOf(mzXML.scan.precursorMz), .type = CDFDataTypes.DOUBLE, .value = scan.PepMass.name},
+                    New attribute With {.name = NameOf(mzXML.scan.retentionTime), .type = CDFDataTypes.DOUBLE, .value = scan.RtInSeconds},
+                    New attribute With {.name = NameOf(mzXML.scan.polarity), .type = CDFDataTypes.CHAR, .value = scan.Meta.TryGetValue("polarity", "1")},
+                    New attribute With {.name = NameOf(mzXML.precursorMz.activationMethod), .type = CDFDataTypes.CHAR, .value = scan.Meta.TryGetValue("precursorMz", [default]:="n/a")},
+                    New attribute With {.name = NameOf(mzXML.precursorMz.precursorCharge), .type = CDFDataTypes.DOUBLE, .value = scan.Charge}
+                }
+                data = compress(scan.Peaks)
+                name = scan.Title & $" scan={nscans.Count + 1}"
+
+                Dim scanData As New CDFData With {.numerics = data}
+                Dim scanSize As New Dimension With {
+                    .name = "m/z-int,scan_" & scan.Meta.TryGetValue("scan", nscans.Count),
+                    .size = data.Length
+                }
+
+                If msLevel = "1" OrElse scan.PepMass.name = "0" Then
+                    cache1.AddVariable(name, scanData, scanSize, attrs)
+
+                    If Not ms1Parent Is Nothing Then
+                        ms1Parent.products = ms2Temp.PopAll
+                        nscans.Add(ms1Parent)
+                    End If
+
+                    ms1Parent = New Ms1ScanEntry With {
+                       .id = name,
+                       .rt = scan.RtInSeconds,
+                       .BPC = scan.PepMass.text,
+                       .TIC = scan.PepMass.text,
+                       .XIC = scan.PepMass.text
+                    }
+                Else
+                    cache2.AddVariable(name, scanData, scanSize, attrs)
+
+                    Call New ScanEntry With {
+                       .id = name,
+                       .mz = scan.PepMass.name,
+                       .rt = scan.RtInSeconds,
+                       .BPC = scan.PepMass.text,
+                       .TIC = scan.PepMass.text,
+                       .XIC = scan.PepMass.text,
+                       .polarity = scan.Meta.TryGetValue("polarity", "1"),
+                       .charge = scan.Charge
+                   }.DoCall(AddressOf ms2Temp.Add)
+                End If
+
+                rt.Add(scan.RtInSeconds)
+
+                Call showProgress(name)
+            Next
+
+            If nscans.Last.id <> ms1Parent.id Then
+                nscans.Add(ms1Parent)
+            End If
+
+            cache1.GlobalAttributes(New attribute With {.name = NameOf(nscans), .type = CDFDataTypes.INT, .value = nscans.Count})
+            cache2.GlobalAttributes(New attribute With {.name = NameOf(nscans), .type = CDFDataTypes.INT, .value = nscans.Sum(Function(a) a.products.TryCount)})
+
+            raw.scans = nscans.ToArray
+            raw.rtmin = rt.Min
+            raw.rtmax = rt.Max
+
+            Call showProgress("Write cache data...")
+        End Using
     End Sub
 
     Private Sub importsMzXML()
@@ -188,8 +273,12 @@ Public Class ImportsRawData
         End Using
     End Sub
 
-    Private Iterator Function compress(raw As IEnumerable(Of Double)) As IEnumerable(Of Double)
-        For Each mz In raw.AsMs2.ToArray.Centroid(tolerance, intoCutoff)
+    Private Function compress(raw As IEnumerable(Of Double)) As IEnumerable(Of Double)
+        Return compress(raw.AsMs2.ToArray)
+    End Function
+
+    Private Iterator Function compress(raw As ms2()) As IEnumerable(Of Double)
+        For Each mz In raw.Centroid(tolerance, intoCutoff)
             Yield mz.intensity
             Yield mz.mz
         Next
