@@ -48,7 +48,7 @@ Namespace DockSample
             Me.Name = "DummyPropertyWindow"
             Me.Padding = New System.Windows.Forms.Padding(0, 3, 0, 3)
             Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockRight
-            Me.TabText = "M/Z Properties"
+            Me.TabText = "Properties"
             Me.Text = "Properties"
             Me.ResumeLayout(False)
 

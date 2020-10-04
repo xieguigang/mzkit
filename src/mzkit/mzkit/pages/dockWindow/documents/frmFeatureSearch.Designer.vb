@@ -24,6 +24,7 @@ Partial Class frmFeatureSearch
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim TreeListViewItemCollectionComparer1 As System.Windows.Forms.TreeListViewItemCollection.TreeListViewItemCollectionComparer = New System.Windows.Forms.TreeListViewItemCollection.TreeListViewItemCollectionComparer()
         Me.TreeListView1 = New System.Windows.Forms.TreeListView()
         Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
@@ -35,6 +36,7 @@ Partial Class frmFeatureSearch
         Me.ColumnHeader7 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader8 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader9 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.SuspendLayout()
         '
         'TreeListView1
@@ -47,7 +49,7 @@ Partial Class frmFeatureSearch
         Me.TreeListView1.HideSelection = False
         Me.TreeListView1.Location = New System.Drawing.Point(0, 0)
         Me.TreeListView1.Name = "TreeListView1"
-        Me.TreeListView1.Size = New System.Drawing.Size(800, 488)
+        Me.TreeListView1.Size = New System.Drawing.Size(800, 274)
         Me.TreeListView1.TabIndex = 0
         Me.TreeListView1.UseCompatibleStateImageBehavior = False
         '
@@ -89,11 +91,17 @@ Partial Class frmFeatureSearch
         '
         Me.ColumnHeader9.Text = "TIC"
         '
+        'ImageList1
+        '
+        Me.ImageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit
+        Me.ImageList1.ImageSize = New System.Drawing.Size(16, 16)
+        Me.ImageList1.TransparentColor = System.Drawing.Color.Transparent
+        '
         'frmFeatureSearch
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(800, 488)
+        Me.ClientSize = New System.Drawing.Size(800, 274)
         Me.Controls.Add(Me.TreeListView1)
         Me.Name = "frmFeatureSearch"
         Me.Text = "Form1"
@@ -111,4 +119,5 @@ Partial Class frmFeatureSearch
     Friend WithEvents ColumnHeader7 As ColumnHeader
     Friend WithEvents ColumnHeader8 As ColumnHeader
     Friend WithEvents ColumnHeader9 As ColumnHeader
+    Friend WithEvents ImageList1 As ImageList
 End Class
