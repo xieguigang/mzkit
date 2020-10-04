@@ -585,11 +585,11 @@
 
 		<Command Name="cmdButtonShowSearchList"
 					 Id="1122"
-					 LabelTitle="Search Results"
-					 LabelDescription="Show Feature Search Result List"
-					TooltipTitle="Feature Search List">
+					 LabelTitle="Features"
+					 LabelDescription="Show Feature List"
+					TooltipTitle="Feature List">
 			<Command.LargeImages>
-				<Image>Res/document-print-preview.png</Image>
+				<Image>Res/folder-pictures.png</Image>
 			</Command.LargeImages>
 		</Command>
 

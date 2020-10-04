@@ -98,4 +98,9 @@ Public Class frmFeatureSearch
             Call MyApplication.host.mzkitTool.ShowPage()
         End If
     End Sub
+
+    Private Sub frmFeatureSearch_Load(sender As Object, e As EventArgs) Handles Me.Load
+        Text = "Feature Search Result"
+        TabText = Text
+    End Sub
 End Class

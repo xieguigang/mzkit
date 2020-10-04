@@ -719,11 +719,7 @@ Public Class frmMain
     Friend propertyWin As New PropertyWindow
 
     Public Sub ShowPropertyWindow()
-        Dim dockRight = propertyWin.DockState = DockState.Hidden OrElse propertyWin.DockState = DockState.Unknown
-
-        If dockRight Then
-            propertyWin.DockState = DockState.DockRight
-        End If
+        propertyWin.DockState = DockState.DockRight
     End Sub
 
     Private Sub initializeVSPanel()
