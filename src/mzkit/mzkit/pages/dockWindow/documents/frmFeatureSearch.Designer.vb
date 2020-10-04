@@ -28,11 +28,19 @@ Partial Class frmFeatureSearch
         Me.TreeListView1 = New System.Windows.Forms.TreeListView()
         Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader3 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader4 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader5 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader6 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader7 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader8 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader9 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader10 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.SuspendLayout()
         '
         'TreeListView1
         '
-        Me.TreeListView1.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2})
+        Me.TreeListView1.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2, Me.ColumnHeader3, Me.ColumnHeader4, Me.ColumnHeader5, Me.ColumnHeader6, Me.ColumnHeader7, Me.ColumnHeader8, Me.ColumnHeader9, Me.ColumnHeader10})
         TreeListViewItemCollectionComparer1.Column = 0
         TreeListViewItemCollectionComparer1.SortOrder = System.Windows.Forms.SortOrder.Ascending
         Me.TreeListView1.Comparer = TreeListViewItemCollectionComparer1
@@ -40,25 +48,58 @@ Partial Class frmFeatureSearch
         Me.TreeListView1.HideSelection = False
         Me.TreeListView1.Location = New System.Drawing.Point(0, 0)
         Me.TreeListView1.Name = "TreeListView1"
-        Me.TreeListView1.Size = New System.Drawing.Size(800, 450)
+        Me.TreeListView1.Size = New System.Drawing.Size(800, 488)
         Me.TreeListView1.TabIndex = 0
         Me.TreeListView1.UseCompatibleStateImageBehavior = False
         '
         'ColumnHeader1
         '
         Me.ColumnHeader1.Text = "Raw Data File/Feature"
-        Me.ColumnHeader1.Width = 215
+        Me.ColumnHeader1.Width = 193
         '
         'ColumnHeader2
         '
-        Me.ColumnHeader2.Text = "Number of Matches"
-        Me.ColumnHeader2.Width = 144
+        Me.ColumnHeader2.Text = "#Features"
+        Me.ColumnHeader2.Width = 81
+        '
+        'ColumnHeader3
+        '
+        Me.ColumnHeader3.Text = "M/z"
+        '
+        'ColumnHeader4
+        '
+        Me.ColumnHeader4.Text = "rt"
+        '
+        'ColumnHeader5
+        '
+        Me.ColumnHeader5.Text = "PPM"
+        '
+        'ColumnHeader6
+        '
+        Me.ColumnHeader6.Text = "Polarity"
+        '
+        'ColumnHeader7
+        '
+        Me.ColumnHeader7.Text = "Charge"
+        '
+        'ColumnHeader8
+        '
+        Me.ColumnHeader8.Text = "BPC"
+        '
+        'ColumnHeader9
+        '
+        Me.ColumnHeader9.Text = "TIC"
+        '
+        'ColumnHeader10
+        '
+        Me.ColumnHeader10.Text = "Fragments"
+        Me.ColumnHeader10.Width = 84
         '
         'frmFeatureSearch
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(800, 450)
+        Me.ClientSize = New System.Drawing.Size(800, 488)
         Me.Controls.Add(Me.TreeListView1)
         Me.Name = "frmFeatureSearch"
         Me.Text = "Form1"
@@ -69,4 +110,12 @@ Partial Class frmFeatureSearch
     Friend WithEvents TreeListView1 As TreeListView
     Friend WithEvents ColumnHeader1 As ColumnHeader
     Friend WithEvents ColumnHeader2 As ColumnHeader
+    Friend WithEvents ColumnHeader3 As ColumnHeader
+    Friend WithEvents ColumnHeader4 As ColumnHeader
+    Friend WithEvents ColumnHeader5 As ColumnHeader
+    Friend WithEvents ColumnHeader6 As ColumnHeader
+    Friend WithEvents ColumnHeader7 As ColumnHeader
+    Friend WithEvents ColumnHeader8 As ColumnHeader
+    Friend WithEvents ColumnHeader9 As ColumnHeader
+    Friend WithEvents ColumnHeader10 As ColumnHeader
 End Class
