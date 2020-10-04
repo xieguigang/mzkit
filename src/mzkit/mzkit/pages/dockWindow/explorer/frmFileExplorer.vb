@@ -277,4 +277,14 @@ Public Class frmFileExplorer
         Call MyApplication.RtermPage.ShowPage()
         Call MyApplication.ExecuteRScript(scriptFile, isFile:=True)
     End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Dim raws As New List(Of Raw)
+
+        For Each node As TreeNode In treeView1.Nodes(0).Nodes
+            raws.Add(node.Tag)
+        Next
+
+        Call FeatureSearchHandler.SearchByMz(TextBox2.Text, raws)
+    End Sub
 End Class
