@@ -219,10 +219,10 @@ Public Class frmFileExplorer
         Return Nothing
     End Function
 
-    Public Sub deleteFileNode(node As TreeNode)
+    Public Function deleteFileNode(node As TreeNode) As DialogResult
         ' 跳过根节点
         If node Is Nothing OrElse node.Tag Is Nothing Then
-            Return
+            Return DialogResult.No
         End If
 
         Dim fileName As String
@@ -233,7 +233,14 @@ Public Class frmFileExplorer
             fileName = DirectCast(node.Tag, String).FileName
         End If
 
-        If MessageBox.Show($"Going to removes {fileName} from your workspace?", "Delete workspace file", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+        Dim opt As DialogResult = MessageBox.Show(
+            text:=$"Going to removes {fileName} from your workspace?",
+            caption:="Delete workspace file",
+            buttons:=MessageBoxButtons.YesNo,
+            icon:=MessageBoxIcon.Question
+        )
+
+        If opt = DialogResult.Yes Then
             If TypeOf node.Tag Is Raw Then
                 treeView1.Nodes(0).Nodes.Remove(node)
             Else
@@ -242,7 +249,9 @@ Public Class frmFileExplorer
         End If
 
         MyApplication.host.ToolStripStatusLabel2.Text = GetTotalCacheSize()
-    End Sub
+
+        Return opt
+    End Function
 
     Private Sub RunAutomationToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RunAutomationToolStripMenuItem.Click
         If treeView1.SelectedNode Is Nothing OrElse treeView1.SelectedNode.Tag Is Nothing OrElse Not TypeOf treeView1.SelectedNode.Tag Is String Then

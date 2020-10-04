@@ -152,11 +152,11 @@ Public Class frmRawFeaturesList
     End Sub
 
     Private Sub DeleteFileToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeleteFileToolStripMenuItem.Click
-        Call MyApplication.fileExplorer.deleteFileNode(MyApplication.fileExplorer.findRawFileNode(CurrentRawFile))
-
-        _CurrentRawFile = Nothing
-        treeView1.Nodes.Clear()
-        checked.Clear()
+        If MyApplication.fileExplorer.deleteFileNode(MyApplication.fileExplorer.findRawFileNode(CurrentRawFile)) = DialogResult.Yes Then
+            _CurrentRawFile = Nothing
+            treeView1.Nodes.Clear()
+            checked.Clear()
+        End If
     End Sub
 
     Private Sub SelectAllToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SelectAllToolStripMenuItem.Click
