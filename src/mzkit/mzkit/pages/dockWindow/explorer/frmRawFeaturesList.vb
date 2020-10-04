@@ -357,4 +357,19 @@ Public Class frmRawFeaturesList
                            End Function, "Ions_scan.mgf")
         End If
     End Sub
+
+    Private Sub IonSearchToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles IonSearchToolStripMenuItem.Click
+        Dim currentScan = treeView1.SelectedNode?.Tag
+
+        If currentScan Is Nothing OrElse Not TypeOf currentScan Is ScanEntry Then
+            Return
+        End If
+
+        Dim mz As Double = DirectCast(currentScan, ScanEntry).mz
+        Dim ppm As Double = MyApplication.host.GetPPMError()
+        Dim tolerance As Tolerance = Tolerance.PPM(ppm)
+        Dim result = CurrentRawFile.GetMs2Scans.Where(Function(a) tolerance(a.mz, mz)).ToArray
+
+
+    End Sub
 End Class

@@ -52,9 +52,7 @@
 
 #End Region
 
-Imports System.IO
 Imports System.Threading
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
@@ -76,7 +74,6 @@ Imports mzkit.My
 Imports RibbonLib
 Imports RibbonLib.Interop
 Imports Task
-Imports WeifenLuo.WinFormsUI.Docking
 Imports stdNum = System.Math
 
 Public Class PageMzkitTools

@@ -107,7 +107,7 @@ Partial Class frmRawFeaturesList
         '
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ChromatogramPlotToolStripMenuItem, Me.ShowXICToolStripMenuItem, Me.ToolStripMenuItem1, Me.MolecularNetworkingToolStripMenuItem, Me.IonSearchToolStripMenuItem, Me.SearchFormulaToolStripMenuItem, Me.ToolStripMenuItem2, Me.FileToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(193, 148)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(193, 170)
         '
         'ChromatogramPlotToolStripMenuItem
         '
@@ -220,13 +220,13 @@ Partial Class frmRawFeaturesList
         'XICToolStripMenuItem
         '
         Me.XICToolStripMenuItem.Name = "XICToolStripMenuItem"
-        Me.XICToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.XICToolStripMenuItem.Size = New System.Drawing.Size(124, 22)
         Me.XICToolStripMenuItem.Text = "XIC"
         '
         'IonScansToolStripMenuItem
         '
         Me.IonScansToolStripMenuItem.Name = "IonScansToolStripMenuItem"
-        Me.IonScansToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.IonScansToolStripMenuItem.Size = New System.Drawing.Size(124, 22)
         Me.IonScansToolStripMenuItem.Text = "Ion Scans"
         '
         'CollapseToolStripMenuItem
