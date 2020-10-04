@@ -49,6 +49,10 @@ Public Class ViewerProject : Implements ISaveHandle, IFileReference
         End If
     End Function
 
+    Public Function FindRawFile(path As String) As Raw
+        Return GetRawDataFiles.Where(Function(a) a.source.GetFullPath = path.GetFullPath).FirstOrDefault
+    End Function
+
     Public Function GetAutomationScripts() As IEnumerable(Of String)
         Return scriptFiles.AsEnumerable
     End Function

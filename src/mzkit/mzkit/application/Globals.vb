@@ -66,6 +66,12 @@ Module Globals
 
     Public ReadOnly Property Settings As Settings
 
+    Public ReadOnly Property workspace As ViewerProject
+        Get
+            Return currentWorkspace
+        End Get
+    End Property
+
     Sub New()
         Settings = Settings.GetConfiguration()
     End Sub
