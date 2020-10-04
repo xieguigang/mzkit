@@ -42,4 +42,10 @@ Public Class PageSpectrumSearch
     Private Sub PageSpectrumSearch_Load(sender As Object, e As EventArgs) Handles Me.Load
         PictureBox1.BackgroundImageLayout = ImageLayout.Zoom
     End Sub
+
+    Private Sub PageSpectrumSearch_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp, DataGridView1.KeyUp, PictureBox1.KeyUp, TabPage1.KeyUp
+        If e.KeyCode = Keys.C AndAlso e.Control Then
+
+        End If
+    End Sub
 End Class
