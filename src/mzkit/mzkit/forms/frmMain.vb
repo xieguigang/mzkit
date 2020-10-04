@@ -119,10 +119,11 @@ Public Class frmMain
         End Using
     End Sub
 
-    Private Sub openRscript(fileName As String)
+    Public Sub openRscript(fileName As String)
         Dim newScript As New frmRScriptEdit With {.scriptFile = fileName}
 
         scriptFiles.Add(newScript)
+
         newScript.Show(dockPanel)
         newScript.DockState = DockState.Document
         newScript.Text = fileName.FileName
@@ -262,7 +263,7 @@ Public Class frmMain
         End If
     End Sub
 
-    Dim scriptFiles As New List(Of frmRScriptEdit)
+    Friend ReadOnly scriptFiles As New List(Of frmRScriptEdit)
 
     Public Sub CreateNewScript(sender As Object, e As ExecuteEventArgs)
         Dim newScript As New frmRScriptEdit
@@ -335,6 +336,9 @@ Public Class frmMain
                 If save.ShowDialog = DialogResult.OK Then
                     script.scriptFile = save.FileName
                     script.Save(save.FileName)
+                    script.Text = save.FileName.FileName
+
+                    fileExplorer.AddScript(save.FileName)
                 End If
             End Using
         Else
@@ -351,50 +355,56 @@ Public Class frmMain
         Dim active = dockPanel.ActiveDocument
 
         If Not active Is Nothing Then
-            If TypeOf CObj(active) Is frmSettings Then
+            Call saveCurrentDocument(active)
+        Else
+            TreeView1.SaveRawFileCache(
+                Sub()
+                    ' do nothing
+                End Sub)
 
-                Call DirectCast(CObj(active), frmSettings).SaveSettings()
+            Me.showStatusMessage("The workspace was saved!")
+        End If
+    End Sub
 
-            ElseIf CObj(active).GetType.ImplementInterface(Of ISaveHandle) Then
-                Dim file As String = Nothing
-                Dim content As ContentType() = Nothing
+    Private Sub saveCurrentDocument(active As IDockContent)
+        If TypeOf CObj(active) Is frmSettings Then
 
-                If CObj(active).GetType.ImplementInterface(Of IFileReference) Then
-                    file = DirectCast(CObj(active), IFileReference).FilePath
-                    content = DirectCast(CObj(active), IFileReference).MimeType
-                End If
+            Call DirectCast(CObj(active), frmSettings).SaveSettings()
 
-                If file.StringEmpty Then
-                    Using save As New SaveFileDialog
+        ElseIf TypeOf active Is frmRScriptEdit Then
 
-                        If Not content.IsNullOrEmpty Then
-                            save.Filter = content.Select(Function(a) $"{a.Name}(*{a.FileExt})|*{a.FileExt}").JoinBy("|")
-                        End If
+            Call saveCurrentScript()
 
-                        If save.ShowDialog = DialogResult.OK Then
-                            file = save.FileName
-                            Call DirectCast(CObj(active), ISaveHandle).Save(save.FileName)
-                        End If
-                    End Using
-                Else
-                    Call DirectCast(CObj(active), ISaveHandle).Save(file)
-                End If
+        ElseIf CObj(active).GetType.ImplementInterface(Of ISaveHandle) Then
+            Dim file As String = Nothing
+            Dim content As ContentType() = Nothing
 
-                If Not file.StringEmpty Then
-                    Globals.AddRecentFileHistory(file)
-                    Me.showStatusMessage($"Current file saved at {file.GetFullPath}!")
-                End If
+            If CObj(active).GetType.ImplementInterface(Of IFileReference) Then
+                file = DirectCast(CObj(active), IFileReference).FilePath
+                content = DirectCast(CObj(active), IFileReference).MimeType
+            End If
 
-                Return
+            If file.StringEmpty Then
+                Using save As New SaveFileDialog
+
+                    If Not content.IsNullOrEmpty Then
+                        save.Filter = content.Select(Function(a) $"{a.Name}(*{a.FileExt})|*{a.FileExt}").JoinBy("|")
+                    End If
+
+                    If save.ShowDialog = DialogResult.OK Then
+                        file = save.FileName
+                        Call DirectCast(CObj(active), ISaveHandle).Save(save.FileName)
+                    End If
+                End Using
+            Else
+                Call DirectCast(CObj(active), ISaveHandle).Save(file)
+            End If
+
+            If Not file.StringEmpty Then
+                Globals.AddRecentFileHistory(file)
+                Me.showStatusMessage($"Current file saved at {file.GetFullPath}!")
             End If
         End If
-
-        TreeView1.SaveRawFileCache(
-            Sub()
-                ' do nothing
-            End Sub)
-
-        Me.showStatusMessage("The raw file cache data was saved!")
     End Sub
 
     Private Sub MoleculeNetworkingToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MoleculeNetworkingToolStripMenuItem.Click

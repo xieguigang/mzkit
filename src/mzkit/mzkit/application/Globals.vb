@@ -94,7 +94,7 @@ Module Globals
 
         If explorer.Nodes.Count > 1 Then
             For Each node As TreeNode In explorer.Nodes(1).Nodes
-                scripts.Add(node.Tag)
+                scripts.Add(DirectCast(node.Tag, String).GetFullPath)
             Next
         End If
 

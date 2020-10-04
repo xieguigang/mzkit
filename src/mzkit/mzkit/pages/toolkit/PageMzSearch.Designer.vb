@@ -43,14 +43,14 @@ Partial Class PageMzSearch
         '
         'TextBox1
         '
-        Me.TextBox1.Location = New System.Drawing.Point(111, 60)
+        Me.TextBox1.Location = New System.Drawing.Point(88, 60)
         Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(195, 20)
+        Me.TextBox1.Size = New System.Drawing.Size(124, 20)
         Me.TextBox1.TabIndex = 23
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(332, 57)
+        Me.Button1.Location = New System.Drawing.Point(218, 57)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(112, 25)
         Me.Button1.TabIndex = 24
@@ -72,7 +72,7 @@ Partial Class PageMzSearch
         '
         Me.ComboBox1.FormattingEnabled = True
         Me.ComboBox1.Items.AddRange(New Object() {"Custom", "Default", "Small Molecule", "Natural Product", "General Flavone"})
-        Me.ComboBox1.Location = New System.Drawing.Point(642, 59)
+        Me.ComboBox1.Location = New System.Drawing.Point(469, 60)
         Me.ComboBox1.Name = "ComboBox1"
         Me.ComboBox1.Size = New System.Drawing.Size(158, 21)
         Me.ComboBox1.TabIndex = 26
@@ -80,7 +80,7 @@ Partial Class PageMzSearch
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(520, 63)
+        Me.Label2.Location = New System.Drawing.Point(346, 64)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(116, 13)
         Me.Label2.TabIndex = 27

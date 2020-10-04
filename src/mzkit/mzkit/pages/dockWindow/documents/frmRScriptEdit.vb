@@ -128,6 +128,10 @@ Public Class frmRScriptEdit
                 e.Cancel = True
             End If
         End If
+
+        If Not e.Cancel Then
+            MyApplication.host.scriptFiles.Remove(Me)
+        End If
     End Sub
 
     Private Sub frmRScriptEdit_Load(sender As Object, e As EventArgs) Handles Me.Load

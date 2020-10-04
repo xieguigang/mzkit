@@ -170,6 +170,20 @@ Public Class frmFileExplorer
             propertyWin.propertyGrid.Refresh()
 
             MyApplication.host.ShowPropertyWindow()
+        ElseIf TypeOf treeView1.SelectedNode.Tag Is String Then
+            ' 选择了一个脚本文件
+            Dim path As String = DirectCast(treeView1.SelectedNode.Tag, String).GetFullPath
+            Dim script = MyApplication.host.scriptFiles _
+                .Where(Function(a) a.scriptFile.GetFullPath = path) _
+                .FirstOrDefault
+
+            If Not script Is Nothing Then
+                script.Show(MyApplication.host.dockPanel)
+            Else
+                ' 脚本文件还没有被打开
+                ' 在这里打开脚本文件
+                MyApplication.host.openRscript(path)
+            End If
         End If
     End Sub
 
