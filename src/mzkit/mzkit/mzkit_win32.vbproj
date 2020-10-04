@@ -294,6 +294,7 @@
     <Compile Include="pages\dockWindow\documents\frmPlotViewer.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="pages\dockWindow\documents\FeatureSearchHandler.vb" />
     <Compile Include="pages\dockWindow\tools\OutputWindow.Designer.vb">
       <DependentUpon>OutputWindow.vb</DependentUpon>
     </Compile>

@@ -296,131 +296,48 @@ Public Class PageMzkitTools
         End If
     End Sub
 
-    Public Sub SearchByMz(text As String)
-        If text.StringEmpty Then
-            Return
-        ElseIf text.IsNumeric Then
-            Call searchInFileByMz(mz:=Val(text))
-        Else
-            ' formula
-            Dim exact_mass As Double = Math.EvaluateFormula(text)
-            Dim ppm As Double = MyApplication.host.GetPPMError()
-            Dim raw As Raw '= TreeView1.CurrentRawFile.raw
+    Public Shared Iterator Function MatchByFormula(formula As String, raw As Raw) As IEnumerable(Of ParentMatch)
+        ' formula
+        Dim exact_mass As Double = Math.EvaluateFormula(formula)
+        Dim ppm As Double = MyApplication.host.GetPPMError()
 
-            DataGridView1.Rows.Clear()
-            DataGridView1.Columns.Clear()
+        ' MyApplication.host.showStatusMessage($"Search MS ions for [{Text}] exact_mass={exact_mass} with tolerance error {ppm} ppm")
 
-            MyApplication.host.showStatusMessage($"Search MS ions for [{text}] exact_mass={exact_mass} with tolerance error {ppm} ppm")
+        ' C25H40N4O5
+        Dim pos = MzCalculator.EvaluateAll(exact_mass, "+", False).ToArray
+        Dim neg = MzCalculator.EvaluateAll(exact_mass, "-", False).ToArray
+        Dim info As PrecursorInfo()
 
-            DataGridView1.Columns.Add(New DataGridViewLinkColumn With {
-                  .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
-                  .ValueType = GetType(String),
-                  .HeaderText = "scan Id"})
+        For Each scan As ScanEntry In raw.GetMs2Scans
+            If scan.polarity > 0 Then
+                info = pos
+            Else
+                info = neg
+            End If
 
-            DataGridView1.Columns.Add(New DataGridViewTextBoxColumn() With {
-                  .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
-                  .ValueType = GetType(String),
-                  .HeaderText = "m/z"})
-
-            DataGridView1.Columns.Add(New DataGridViewTextBoxColumn() With {
-                  .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
-                  .ValueType = GetType(String),
-                  .HeaderText = "rt"})
-
-            DataGridView1.Columns.Add(New DataGridViewTextBoxColumn() With {
-                  .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
-                  .ValueType = GetType(String),
-                  .HeaderText = "rt(min)"})
-
-            DataGridView1.Columns.Add(New DataGridViewTextBoxColumn() With {
-                  .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
-                  .ValueType = GetType(String),
-                  .HeaderText = "intensity"})
-
-            DataGridView1.Columns.Add(New DataGridViewTextBoxColumn() With {
-                  .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
-                  .ValueType = GetType(String),
-                  .HeaderText = "M"})
-
-            DataGridView1.Columns.Add(New DataGridViewTextBoxColumn() With {
-                  .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
-                  .ValueType = GetType(String),
-                  .HeaderText = "adducts"})
-
-            DataGridView1.Columns.Add(New DataGridViewTextBoxColumn() With {
-                  .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
-                  .ValueType = GetType(String),
-                  .HeaderText = "charge"})
-
-            DataGridView1.Columns.Add(New DataGridViewTextBoxColumn() With {
-                  .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
-                  .ValueType = GetType(String),
-                  .HeaderText = "precursor_type"})
-
-            DataGridView1.Columns.Add(New DataGridViewTextBoxColumn() With {
-                  .AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
-                  .ValueType = GetType(String),
-                  .HeaderText = "ppm"})
-
-            ' C25H40N4O5
-            Dim pos = MzCalculator.EvaluateAll(exact_mass, "+", False).ToArray
-            Dim neg = MzCalculator.EvaluateAll(exact_mass, "-", False).ToArray
-
-            For Each scan As ScanEntry In raw.scans
-                If scan.polarity > 0 Then
-                    For Each mode In pos
-                        If PPMmethod.PPM(scan.mz, Val(mode.mz)) <= ppm Then
-                            DataGridView1.Rows.Add(
-                                scan.id,
-                                scan.mz.ToString("F4"),
-                                CInt(scan.rt),
-                                (scan.rt / 60).ToString("F2"),
-                                scan.XIC.ToString("G3"),
-                                mode.M,
-                                mode.adduct,
-                                mode.charge,
-                                mode.precursor_type,
-                                PPMmethod.PPM(scan.mz, Val(mode.mz)).ToString("F2"))
-                        End If
-                    Next
-                ElseIf scan.polarity < 0 Then
-                    For Each mode In neg
-                        If PPMmethod.PPM(scan.mz, Val(mode.mz)) <= ppm Then
-                            DataGridView1.Rows.Add(
-                                scan.id,
-                                scan.mz.ToString("F4"),
-                                CInt(scan.rt),
-                                (scan.rt / 60).ToString("F2"),
-                                scan.XIC.ToString("G3"),
-                                mode.M,
-                                mode.adduct,
-                                mode.charge,
-                                mode.precursor_type,
-                                PPMmethod.PPM(scan.mz, Val(mode.mz)).ToString("F2"))
-                        End If
-                    Next
+            For Each mode As PrecursorInfo In info
+                If PPMmethod.PPM(scan.mz, Val(mode.mz)) <= ppm Then
+                    Yield New ParentMatch With {
+                        .id = scan.id,
+                        .mz = scan.mz,
+                        .rt = CInt(scan.rt),
+                        .BPC = scan.BPC,
+                        .TIC = scan.TIC,
+                        .M = mode.M,
+                        .adducts = mode.adduct,
+                        .charge = mode.charge,
+                        .precursor_type = mode.precursor_type,
+                        .ppm = PPMmethod.PPM(scan.mz, Val(mode.mz)).ToString("F2"),
+                        .polarity = scan.polarity,
+                        .XIC = 0
+                    }
                 End If
             Next
-
-            CustomTabControl1.SelectedTab = TabPage6
-
-            MyApplication.host.ribbonItems.TabGroupExactMassSearchTools.ContextAvailable = ContextAvailability.Active
-        End If
-    End Sub
+        Next
+    End Function
 
     Public Sub ExportExactMassSearchTable()
         Call DataGridView1.SaveDataGrid
-    End Sub
-
-    Private Sub searchInFileByMz(mz As Double)
-        Dim ppm As Double = MyApplication.host.GetPPMError()
-        Dim raw = MyApplication.fileExplorer.CurrentRawFile
-
-        ' Call MyApplication.host.rawFeaturesList.searchInFileByMz(mz, ppm, raw)
-    End Sub
-
-    Private Sub SearchInFileToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        Call runMzSearch(Sub(mz) Call searchInFileByMz(mz))
     End Sub
 
     Public Sub SaveMatrixToolStripMenuItem_Click()
@@ -447,19 +364,6 @@ Public Class PageMzkitTools
                 End If
             End Using
         End If
-    End Sub
-
-    Private Sub runMzSearch(searchAction As Action(Of Double))
-        'Dim current = fileExplorer.CurrentRawFile
-        'Dim node = TreeView1.SelectedNode
-
-        'If Not node Is Nothing AndAlso current.raw.cacheFileExists Then
-        '    Dim mz = current.raw.GetMs2Scans.Where(Function(scan) scan.id = node.Text).FirstOrDefault
-
-        '    If Not mz Is Nothing AndAlso mz.mz > 0 Then
-        '        Call searchAction(mz.mz)
-        '    End If
-        'End If
     End Sub
 
     Friend Sub MolecularNetworkingTool(progress As frmTaskProgress, similarityCutoff As Double)

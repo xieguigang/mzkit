@@ -365,13 +365,6 @@ Public Class frmRawFeaturesList
             Return
         End If
 
-        Dim mz As Double = DirectCast(currentScan, ScanEntry).mz
-        Dim ppm As Double = MyApplication.host.GetPPMError()
-        Dim tolerance As Tolerance = Tolerance.PPM(ppm)
-        Dim result = CurrentRawFile.GetMs2Scans.Where(Function(a) tolerance(a.mz, mz)).ToArray
-        Dim display As New frmFeatureSearch
-
-        display.AddFileMatch(CurrentRawFile.source, mz, result)
-        display.Show(MyApplication.host.dockPanel)
+        Call FeatureSearchHandler.SearchByMz(DirectCast(currentScan, ScanEntry).mz, {CurrentRawFile})
     End Sub
 End Class
