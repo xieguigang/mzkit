@@ -391,6 +391,7 @@
     <Compile Include="Ms1\Tolerance\PPM.vb" />
     <Compile Include="Ms1\Tolerance\DeltaMass.vb" />
     <Compile Include="Ms1\Tolerance\Tolerance.vb" />
+    <Compile Include="Spectra\Models\ms2.vb" />
     <Compile Include="Spectra\Models\Trimming\QuantileIntensityCutoff.vb" />
     <Compile Include="Spectra\Models\Trimming\RelativeIntensityCutoff.vb" />
     <Compile Include="Spectra\Models\Trimming\LowAbundanceTrimming.vb" />
