@@ -97,5 +97,17 @@ Namespace Spectra
         Protected MustOverride Function lowAbundanceTrimming(spectrum As ms2()) As ms2()
         Public MustOverride Overrides Function ToString() As String
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="str">
+        ''' 1. 0.xxx percentage
+        ''' 2. q:0.xxx quantile
+        ''' </param>
+        ''' <returns></returns>
+        Public Shared Function ParseScript(str As String) As LowAbundanceTrimming
+
+        End Function
+
     End Class
 End Namespace

@@ -92,6 +92,9 @@ Namespace Spectra
         ''' <param name="compares">
         ''' By default is SSM method <see cref="SSMCompares(Tolerance, Double, Double, Func(Of Double, Double, Double))"/>
         ''' </param>
+        ''' <param name="mzwidth">
+        ''' apply for centroid algorithm
+        ''' </param>
         ''' <param name="showReport">Show progress report?</param>
         Sub New(Optional compares As Comparison(Of PeakMs2) = Nothing,
                 Optional mzwidth As Tolerance = Nothing,
@@ -115,7 +118,7 @@ Namespace Spectra
         End Function
 
         ''' <summary>
-        ''' 
+        ''' 默认是取forward和reverse之间的最低分
         ''' </summary>
         ''' <param name="tolerance">By default is m/z tolerance with ppm20</param>
         ''' <param name="equalsScore">判断两个质谱图是相同的所需的最低得分</param>
