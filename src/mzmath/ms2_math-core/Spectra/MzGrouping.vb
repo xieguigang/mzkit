@@ -11,13 +11,13 @@ Namespace Spectra
 
         <Extension>
         Public Function Unique(ions As IEnumerable(Of PeakMs2),
-                                        Optional eq# = 0.85,
-                                        Optional gt# = 0.6,
-                                        Optional mzwidth$ = "da:0.1",
-                                        Optional tolerance$ = "da:0.3",
-                                        Optional precursor$ = "ppm:20",
-                                        Optional rtwidth# = 5,
-                                        Optional trim$ = "0.05") As IEnumerable(Of PeakMs2)
+                               Optional eq# = 0.85,
+                               Optional gt# = 0.6,
+                               Optional mzwidth$ = "da:0.1",
+                               Optional tolerance$ = "da:0.3",
+                               Optional precursor$ = "ppm:20",
+                               Optional rtwidth# = 5,
+                               Optional trim$ = "0.05") As IEnumerable(Of PeakMs2)
 
             ' group by peak clustering at first
             Dim comparision = SpectrumTreeCluster.SSMCompares(Ms1.Tolerance.ParseScript(tolerance), eq, gt)

@@ -1,50 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::6d4d94f2b3d48897f8b9bb29da22546d, Rscript\Library\mzkit\math\Math.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module MzMath
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: centroid, exact_mass, GetClusters, ms1Scans, mz
-    '               mz_deco, mz_groups, peaktable, ppm, printMzTable
-    '               SpectrumTreeCluster, SSMCompares, XICTable
-    ' 
-    ' /********************************************************************************/
+' Module MzMath
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: centroid, exact_mass, GetClusters, ms1Scans, mz
+'               mz_deco, mz_groups, peaktable, ppm, printMzTable
+'               SpectrumTreeCluster, SSMCompares, XICTable
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
@@ -53,6 +55,7 @@ Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
@@ -193,7 +196,7 @@ Module MzMath
         Dim y As Double() = REnv.asVector(Of Double)(b)
 
         Return REnv _
-            .BinaryCoreInternal(Of Double, Double, Double)(x, y, Function(xi, yi) PPMmethod.ppm(xi, yi)) _
+            .BinaryCoreInternal(Of Double, Double, Double)(x, y, Function(xi, yi) PPMmethod.PPM(xi, yi)) _
             .ToArray
     End Function
 
@@ -284,8 +287,56 @@ Module MzMath
         Return tree.PopulateClusters.ToArray
     End Function
 
-    Public Function MzUnique()
+    ''' <summary>
+    ''' data pre-processing helper
+    ''' </summary>
+    ''' <param name="ions"></param>
+    ''' <param name="eq#"></param>
+    ''' <param name="gt#"></param>
+    ''' <param name="mzwidth$"></param>
+    ''' <param name="tolerance$"></param>
+    ''' <param name="precursor$"></param>
+    ''' <param name="rtwidth#"></param>
+    ''' <param name="trim$"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("ions.unique")>
+    Public Function MzUnique(<RRawVectorArgument> ions As Object,
+                             Optional eq# = 0.85,
+                             Optional gt# = 0.6,
+                             Optional mzwidth$ = "da:0.1",
+                             Optional tolerance$ = "da:0.3",
+                             Optional precursor$ = "ppm:20",
+                             Optional rtwidth# = 5,
+                             Optional trim$ = "0.05",
+                             Optional env As Environment = Nothing) As Object
 
+        Dim data As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(ions, env, suppress:=True)
+        Dim ionstream As IEnumerable(Of PeakMs2)
+
+        If data.isError Then
+            data = pipeline.TryCreatePipeline(Of MGF.Ions)(ions, env)
+
+            If data.isError Then
+                Return data.getError
+            End If
+
+            ionstream = data.populates(Of MGF.Ions)(env).IonPeaks
+        Else
+            ionstream = data.populates(Of PeakMs2)(env)
+        End If
+
+        Return ionstream _
+            .Unique(
+                eq:=eq,
+                gt:=gt,
+                mzwidth:=mzwidth,
+                tolerance:=tolerance,
+                precursor:=precursor,
+                rtwidth:=rtwidth,
+                trim:=trim
+            ) _
+            .DoCall(AddressOf pipeline.CreateFromPopulator)
     End Function
 
     ''' <summary>
