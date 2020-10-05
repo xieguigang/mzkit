@@ -395,6 +395,7 @@
     <Compile Include="Spectra\Models\Trimming\RelativeIntensityCutoff.vb" />
     <Compile Include="Spectra\Models\Trimming\LowAbundanceTrimming.vb" />
     <Compile Include="Spectra\Models\Fragments.vb" />
+    <Compile Include="Spectra\Models\Xml\Ms2AlignMatrix.vb" />
     <Compile Include="Spectra\MoleculeNetworking\ProtocolPipeline.vb" />
     <Compile Include="Spectra\MoleculeNetworking\NetworkingNode.vb" />
     <Compile Include="Spectra\MoleculeNetworking\Protocols.vb" />
@@ -402,7 +403,7 @@
     <Compile Include="Spectra\Models\PeakMs2.vb" />
     <Compile Include="Spectra\LibraryMatrixExtensions.vb" />
     <Compile Include="Spectra\GlobalAlignment.vb" />
-    <Compile Include="Spectra\Models\ms2AlignMatrix.vb" />
+    <Compile Include="Spectra\Models\Xml\SSM2MatrixFragment.vb" />
     <Compile Include="Spectra\Models\LibraryMatrix.vb" />
     <Compile Include="Ms1\ms1.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
