@@ -56,6 +56,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Spectra
 
@@ -106,8 +107,17 @@ Namespace Spectra
         ''' </param>
         ''' <returns></returns>
         Public Shared Function ParseScript(str As String) As LowAbundanceTrimming
+            If str.StartsWith("q:") Then
+                Dim threshold = str.Replace("q:", "").Trim.DoCall(AddressOf ParseDouble)
+                Dim quantile As New QuantileIntensityCutoff(threshold)
 
+                Return quantile
+            Else
+                Dim threshold = Val(Strings.Trim(str))
+                Dim intocutoff As New RelativeIntensityCutoff(threshold)
+
+                Return intocutoff
+            End If
         End Function
-
     End Class
 End Namespace
