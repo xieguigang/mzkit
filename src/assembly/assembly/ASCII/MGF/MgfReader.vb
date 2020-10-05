@@ -66,6 +66,7 @@ Namespace ASCII.MGF
             Return ions _
                 .Select(Function(ion)
                             Dim meta As New MetaData(ion.Meta)
+                            Dim id As String = ion.Accession Or ion.Title.AsDefault
 
                             meta!ion_intensity = ion.PepMass.text
 
@@ -77,7 +78,7 @@ Namespace ASCII.MGF
                                 .mzInto = ion.Peaks,
                                 .rt = ion.RtInSeconds,
                                 .scan = meta.scan,
-                                .lib_guid = ion.Accession,
+                                .lib_guid = id,
                                 .meta = meta,
                                 .precursor_type = meta.precursor_type
                             }

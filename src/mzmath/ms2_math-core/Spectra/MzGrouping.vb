@@ -51,15 +51,20 @@ Namespace Spectra
             For Each cluster As SpectrumCluster In clusters
                 ' group by mz/rt
                 ' by mz
-                Dim mzgroups = cluster.cluster.GroupBy(Function(a) a.mz, parentErr)
+                Dim mzgroups = cluster.cluster _
+                    .GroupBy(Function(a) a.mz, parentErr) _
+                    .ToArray
 
                 ' by rt
                 For Each mz As NamedCollection(Of PeakMs2) In mzgroups
-                    Dim rtgroups = mz.GroupBy(Function(a) a.rt, offsets:=rtwidth)
+                    Dim rtgroups = mz.GroupBy(Function(a) a.rt, offsets:=rtwidth).ToArray
                     Dim mzval As Double = Aggregate ion In mz Into Average(ion.mz)
 
                     For Each rt As NamedCollection(Of PeakMs2) In rtgroups
-                        Dim members As String() = rt.Select(Function(a) a.lib_guid).ToArray
+                        Dim members As String() = rt _
+                            .Select(Function(a) a.lib_guid) _
+                            .Distinct _
+                            .ToArray
                         Dim rtval As Double = Aggregate ion In rt Into Average(ion.rt)
                         Dim peaks As ms2() = rt _
                             .Select(Function(a) a.mzInto) _
