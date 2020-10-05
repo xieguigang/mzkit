@@ -169,7 +169,7 @@ Module MzMath
     End Function
 
     ''' <summary>
-    ''' do mz grouping under the given tolerance
+    ''' do ``m/z`` grouping under the given tolerance
     ''' </summary>
     ''' <param name="ms1"></param>
     ''' <param name="tolerance"></param>
@@ -282,6 +282,10 @@ Module MzMath
     <ExportAPI("cluster.nodes")>
     Public Function GetClusters(tree As SpectrumTreeCluster) As SpectrumCluster()
         Return tree.PopulateClusters.ToArray
+    End Function
+
+    Public Function MzUnique()
+
     End Function
 
     ''' <summary>
