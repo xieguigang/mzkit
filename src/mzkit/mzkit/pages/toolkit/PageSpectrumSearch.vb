@@ -146,14 +146,7 @@ Public Class PageSpectrumSearch
             End If
         Else
             ' 选择的是一个scan数据节点
-            Dim result As AlignmentOutput = cluster.Tag
-            Dim alignment = result.GetAlignmentMirror
-
-            MyApplication.host.ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
-
-
-
-            Call MyApplication.host.mzkitTool.showSpectrum(scan_id, raw)
+            Call MyApplication.host.mzkitTool.showAlignment(DirectCast(cluster.Tag, AlignmentOutput))
             Call MyApplication.host.mzkitTool.ShowPage()
         End If
 

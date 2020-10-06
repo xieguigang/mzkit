@@ -211,6 +211,28 @@ Public Class PageMzkitTools
         End If
     End Sub
 
+    Public Sub showAlignment(result As AlignmentOutput)
+        Dim alignment = result.GetAlignmentMirror
+        Dim prop As New AlignmentProperty(result)
+
+        MyApplication.host.ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
+
+        showMatrix(result.alignments, $"{result.query.id}_vs_{result.reference.id}")
+
+        Dim draw As Image = MassSpectra.AlignMirrorPlot(alignment.query, alignment.ref).AsGDIImage
+        Dim propertyWin = MyApplication.host.propertyWin
+
+        ' PropertyGrid1.SelectedObject = prop
+        'PropertyGrid1.Refresh()
+        propertyWin.propertyGrid.SelectedObject = prop
+        propertyWin.propertyGrid.Refresh()
+
+        PictureBox1.BackgroundImage = draw
+        ShowTabPage(TabPage5)
+
+        MyApplication.host.ShowPropertyWindow()
+    End Sub
+
     Public Sub setCurrentFile()
         'If TreeView1.Nodes.Count = 0 Then
         '    MyApplication.host.showStatusMessage("No raw file opened.")
