@@ -1,4 +1,5 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
@@ -15,6 +16,10 @@ Public Class PageSpectrumSearch
     End Sub
 
     Private Sub DataGridView1_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellEndEdit
+        Call refreshPreviews()
+    End Sub
+
+    Private Sub refreshPreviews()
         ' do previews
         Dim ms2 As New List(Of ms2)
 
@@ -44,8 +49,36 @@ Public Class PageSpectrumSearch
     End Sub
 
     Private Sub PageSpectrumSearch_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp, DataGridView1.KeyUp, PictureBox1.KeyUp, TabPage1.KeyUp
-        If e.KeyCode = Keys.C AndAlso e.Control Then
 
+    End Sub
+
+    Private Sub TabPage1_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown, DataGridView1.KeyDown, PictureBox1.KeyDown, TabPage1.KeyDown
+        If e.KeyCode = Keys.V AndAlso e.Control AndAlso Clipboard.ContainsText Then
+            Call loadFromMgfIon()
+        End If
+    End Sub
+
+    Private Sub loadFromMgfIon()
+        Dim ion As MGF.Ions = MGF.MgfReader.StreamParser(Clipboard.GetText.LineTokens).FirstOrDefault
+
+        If ion Is Nothing OrElse ion.Peaks.IsNullOrEmpty Then
+            Call MyApplication.host.showStatusMessage("invalid mgf text format!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+        Else
+            DataGridView1.Rows.Clear()
+
+            For Each ms2 As ms2 In ion.Peaks
+                DataGridView1.Rows.Add(ms2.mz, ms2.intensity)
+            Next
+
+            Call refreshPreviews()
+        End If
+    End Sub
+
+    Private Sub PasteMgfTextToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PasteMgfTextToolStripMenuItem.Click
+        If Clipboard.ContainsText Then
+            Call loadFromMgfIon()
+        Else
+            Call MyApplication.host.showStatusMessage("no content data in your clipboard...", My.Resources.StatusAnnotations_Warning_32xLG_color)
         End If
     End Sub
 End Class

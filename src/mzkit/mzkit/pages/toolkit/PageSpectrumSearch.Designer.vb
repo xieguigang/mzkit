@@ -22,7 +22,9 @@ Partial Class PageSpectrumSearch
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim TreeListViewItemCollectionComparer1 As System.Windows.Forms.TreeListViewItemCollection.TreeListViewItemCollectionComparer = New System.Windows.Forms.TreeListViewItemCollection.TreeListViewItemCollectionComparer()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(PageSpectrumSearch))
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
@@ -39,11 +41,14 @@ Partial Class PageSpectrumSearch
         Me.ColumnHeader4 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader5 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader6 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.PasteMgfTextToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage2.SuspendLayout()
+        Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'TabControl1
@@ -77,6 +82,7 @@ Partial Class PageSpectrumSearch
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2})
+        Me.DataGridView1.ContextMenuStrip = Me.ContextMenuStrip1
         Me.DataGridView1.Location = New System.Drawing.Point(6, 41)
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.RowTemplate.Height = 23
@@ -180,6 +186,19 @@ Partial Class PageSpectrumSearch
         Me.ColumnHeader6.Text = "rt"
         Me.ColumnHeader6.Width = 94
         '
+        'ContextMenuStrip1
+        '
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PasteMgfTextToolStripMenuItem})
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 48)
+        '
+        'PasteMgfTextToolStripMenuItem
+        '
+        Me.PasteMgfTextToolStripMenuItem.Image = CType(resources.GetObject("PasteMgfTextToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.PasteMgfTextToolStripMenuItem.Name = "PasteMgfTextToolStripMenuItem"
+        Me.PasteMgfTextToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.PasteMgfTextToolStripMenuItem.Text = "Paste Mgf Text"
+        '
         'PageSpectrumSearch
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -193,6 +212,7 @@ Partial Class PageSpectrumSearch
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage2.ResumeLayout(False)
+        Me.ContextMenuStrip1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -213,4 +233,6 @@ Partial Class PageSpectrumSearch
     Friend WithEvents ColumnHeader4 As ColumnHeader
     Friend WithEvents ColumnHeader5 As ColumnHeader
     Friend WithEvents ColumnHeader6 As ColumnHeader
+    Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
+    Friend WithEvents PasteMgfTextToolStripMenuItem As ToolStripMenuItem
 End Class
