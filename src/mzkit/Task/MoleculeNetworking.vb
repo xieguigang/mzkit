@@ -140,7 +140,7 @@ Public Module MoleculeNetworking
 
         Using cache As New netCDFReader(file.ms2_cache)
             For Each scan As Ms1ScanEntry In file.scans
-                For Each subject In scan.products
+                For Each subject As ScanEntry In scan.products.SafeQuery
                     Dim scanId = subject.id
 
                     data = cache.getDataVariable(cache.getDataVariableEntry(scanId))
