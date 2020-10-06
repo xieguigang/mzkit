@@ -617,9 +617,17 @@
       <Project>{1579d1a8-73c4-4f97-bb57-3d1e62343599}</Project>
       <Name>R.graph</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\Library\R.math\R.math.vbproj">
+      <Project>{de1c8d67-3e8e-436a-a88d-a39a050342e2}</Project>
+      <Name>R.math</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\R#\R.vbproj">
       <Project>{0c2eb77c-39f2-460d-a3f8-ce905f867637}</Project>
       <Name>R</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\studio\R-terminal\R-cmd.vbproj">
+      <Project>{3a35ac34-f313-4f72-89e9-eacca217bc8d}</Project>
+      <Name>R-cmd</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\BinaryData.vbproj">
       <Project>{487D7C92-D05A-4908-BF81-E6BABA0BF592}</Project>
