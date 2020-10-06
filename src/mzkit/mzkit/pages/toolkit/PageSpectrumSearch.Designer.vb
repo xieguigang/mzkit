@@ -47,6 +47,7 @@ Partial Class PageSpectrumSearch
         Me.ColumnHeader6 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ContextMenuStrip3 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ViewAlignmentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -177,6 +178,7 @@ Partial Class PageSpectrumSearch
         '
         'TreeListView1
         '
+        Me.TreeListView1.Activation = System.Windows.Forms.ItemActivation.OneClick
         Me.TreeListView1.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2, Me.ColumnHeader3, Me.ColumnHeader4, Me.ColumnHeader5, Me.ColumnHeader6})
         TreeListViewItemCollectionComparer1.Column = 0
         TreeListViewItemCollectionComparer1.SortOrder = System.Windows.Forms.SortOrder.Ascending
@@ -188,7 +190,9 @@ Partial Class PageSpectrumSearch
         Me.TreeListView1.HideSelection = False
         Me.TreeListView1.Location = New System.Drawing.Point(3, 3)
         Me.TreeListView1.Name = "TreeListView1"
+        Me.TreeListView1.ShowItemToolTips = True
         Me.TreeListView1.Size = New System.Drawing.Size(1285, 685)
+        Me.TreeListView1.SmallImageList = Me.ImageList1
         Me.TreeListView1.TabIndex = 0
         Me.TreeListView1.UseCompatibleStateImageBehavior = False
         '
@@ -227,14 +231,21 @@ Partial Class PageSpectrumSearch
         Me.ContextMenuStrip3.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ViewAlignmentToolStripMenuItem})
         Me.ContextMenuStrip3.Name = "ContextMenuStrip3"
         Me.ContextMenuStrip3.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.ContextMenuStrip3.Size = New System.Drawing.Size(181, 48)
+        Me.ContextMenuStrip3.Size = New System.Drawing.Size(100, 26)
         '
         'ViewAlignmentToolStripMenuItem
         '
         Me.ViewAlignmentToolStripMenuItem.Image = CType(resources.GetObject("ViewAlignmentToolStripMenuItem.Image"), System.Drawing.Image)
         Me.ViewAlignmentToolStripMenuItem.Name = "ViewAlignmentToolStripMenuItem"
-        Me.ViewAlignmentToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.ViewAlignmentToolStripMenuItem.Text = "View Alignment"
+        Me.ViewAlignmentToolStripMenuItem.Size = New System.Drawing.Size(99, 22)
+        Me.ViewAlignmentToolStripMenuItem.Text = "View"
+        '
+        'ImageList1
+        '
+        Me.ImageList1.ImageStream = CType(resources.GetObject("ImageList1.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.ImageList1.TransparentColor = System.Drawing.Color.Transparent
+        Me.ImageList1.Images.SetKeyName(0, "folder-pictures.png")
+        Me.ImageList1.Images.SetKeyName(1, "application-x-object.png")
         '
         'PageSpectrumSearch
         '
@@ -278,4 +289,5 @@ Partial Class PageSpectrumSearch
     Friend WithEvents SavePreviewPlotToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ContextMenuStrip3 As ContextMenuStrip
     Friend WithEvents ViewAlignmentToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ImageList1 As ImageList
 End Class

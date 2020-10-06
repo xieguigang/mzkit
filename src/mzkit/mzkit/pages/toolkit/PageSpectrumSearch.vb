@@ -103,13 +103,23 @@ Public Class PageSpectrumSearch
         TreeListView1.Items.Clear()
 
         For Each fileSearch In getSpectrumInput.SearchFiles(raws, Tolerance.DeltaMass(0.3), 0.8)
-            Dim fileRow As New TreeListViewItem With {.Text = fileSearch.name}
+            Dim fileRow As New TreeListViewItem With {
+                .Text = fileSearch.name,
+                .ToolTipText = fileSearch.description,
+                .ImageIndex = 0,
+                .StateImageIndex = 0
+            }
             Dim i As i32 = 1
 
             fileRow.SubItems.Add(If(fileSearch.Count = 0, "no hits", fileSearch.Count))
 
             For Each result As AlignmentOutput In fileSearch
-                Dim alignRow As New TreeListViewItem With {.Text = result.reference.id, .Tag = result}
+                Dim alignRow As New TreeListViewItem With {
+                    .Text = result.reference.id,
+                    .Tag = result,
+                    .ImageIndex = 1,
+                    .StateImageIndex = 1
+                }
 
                 alignRow.SubItems.Add(++i)
                 alignRow.SubItems.Add(result.forward)

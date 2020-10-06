@@ -163,6 +163,6 @@ Public Module MoleculeNetworking
             Next
         End Using
 
-        Return New NamedCollection(Of AlignmentOutput)(file.source.FileName, alignments)
+        Return New NamedCollection(Of AlignmentOutput)(file.source.FileName, alignments, file.source)
     End Function
 End Module
