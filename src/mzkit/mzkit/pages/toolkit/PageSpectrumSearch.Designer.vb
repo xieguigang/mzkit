@@ -24,7 +24,7 @@ Partial Class PageSpectrumSearch
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(PageSpectrumSearch))
-        Dim TreeListViewItemCollectionComparer1 As System.Windows.Forms.TreeListViewItemCollection.TreeListViewItemCollectionComparer = New System.Windows.Forms.TreeListViewItemCollection.TreeListViewItemCollectionComparer()
+        Dim TreeListViewItemCollectionComparer2 As System.Windows.Forms.TreeListViewItemCollection.TreeListViewItemCollectionComparer = New System.Windows.Forms.TreeListViewItemCollection.TreeListViewItemCollectionComparer()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
@@ -106,6 +106,7 @@ Partial Class PageSpectrumSearch
         '
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PasteMgfTextToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
         Me.ContextMenuStrip1.Size = New System.Drawing.Size(152, 26)
         '
         'PasteMgfTextToolStripMenuItem
@@ -131,12 +132,14 @@ Partial Class PageSpectrumSearch
         '
         Me.ContextMenuStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SavePreviewPlotToolStripMenuItem})
         Me.ContextMenuStrip2.Name = "ContextMenuStrip2"
-        Me.ContextMenuStrip2.Size = New System.Drawing.Size(167, 26)
+        Me.ContextMenuStrip2.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
+        Me.ContextMenuStrip2.Size = New System.Drawing.Size(181, 48)
         '
         'SavePreviewPlotToolStripMenuItem
         '
+        Me.SavePreviewPlotToolStripMenuItem.Image = CType(resources.GetObject("SavePreviewPlotToolStripMenuItem.Image"), System.Drawing.Image)
         Me.SavePreviewPlotToolStripMenuItem.Name = "SavePreviewPlotToolStripMenuItem"
-        Me.SavePreviewPlotToolStripMenuItem.Size = New System.Drawing.Size(166, 22)
+        Me.SavePreviewPlotToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.SavePreviewPlotToolStripMenuItem.Text = "Save Preview Plot"
         '
         'Label1
@@ -172,9 +175,9 @@ Partial Class PageSpectrumSearch
         'TreeListView1
         '
         Me.TreeListView1.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2, Me.ColumnHeader3, Me.ColumnHeader4, Me.ColumnHeader5, Me.ColumnHeader6})
-        TreeListViewItemCollectionComparer1.Column = 0
-        TreeListViewItemCollectionComparer1.SortOrder = System.Windows.Forms.SortOrder.Ascending
-        Me.TreeListView1.Comparer = TreeListViewItemCollectionComparer1
+        TreeListViewItemCollectionComparer2.Column = 0
+        TreeListViewItemCollectionComparer2.SortOrder = System.Windows.Forms.SortOrder.Ascending
+        Me.TreeListView1.Comparer = TreeListViewItemCollectionComparer2
         Me.TreeListView1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TreeListView1.Font = New System.Drawing.Font("Microsoft YaHei", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TreeListView1.GridLines = True
