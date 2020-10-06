@@ -832,6 +832,17 @@ Public Class frmMain
 
     End Sub
 
+    ''' <summary>
+    ''' 不太清楚为什么<see cref="App.Exit(Integer)"/>没有
+    ''' 正常通过<see cref="App.Running"/>中断R终端线程
+    ''' 在这里强制退出
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub frmMain_Closed(sender As Object, e As EventArgs) Handles Me.Closed
+        End
+    End Sub
+
 
 #End Region
 
