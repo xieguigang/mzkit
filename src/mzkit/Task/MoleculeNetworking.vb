@@ -111,4 +111,8 @@ Public Module MoleculeNetworking
 
         Return scanData
     End Function
+
+    Public Iterator Function SearchFiles(spectrum As LibraryMatrix, files As IEnumerable(Of Raw)) As IEnumerable(Of namedcollection(Of ))
+
+    End Function
 End Module

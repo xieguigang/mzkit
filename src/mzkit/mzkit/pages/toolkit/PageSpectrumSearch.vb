@@ -7,20 +7,11 @@ Imports mzkit.My
 
 Public Class PageSpectrumSearch
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-
-    End Sub
-
-    Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellContentClick
-
-    End Sub
-
     Private Sub DataGridView1_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellEndEdit
         Call refreshPreviews()
     End Sub
 
-    Private Sub refreshPreviews()
-        ' do previews
+    Private Function getSpectrumInput() As LibraryMatrix
         Dim ms2 As New List(Of ms2)
 
         For i As Integer = 0 To DataGridView1.Rows.Count - 1
@@ -31,25 +22,26 @@ Public Class PageSpectrumSearch
             }
         Next
 
-        If ms2.All(Function(mz) mz.intensity = 0) OrElse ms2.All(Function(mz) mz.mz = 0) Then
-            MyApplication.host.showStatusMessage("all of the mass spectrum fragment their intensity or product m/z is ZERO!", My.Resources.StatusAnnotations_Warning_32xLG_color)
-            Return
-        End If
-
-        PictureBox1.BackgroundImage = New LibraryMatrix With {
+        Return New LibraryMatrix With {
             .centroid = True,
             .ms2 = ms2.Where(Function(a) a.mz > 0).ToArray,
             .name = "custom spectrum"
-        }.MirrorPlot _
-         .AsGDIImage
+        }
+    End Function
+
+    Private Sub refreshPreviews()
+        ' do previews
+        Dim previews = getSpectrumInput()
+
+        If previews.All(Function(mz) mz.intensity = 0) OrElse previews.All(Function(mz) mz.mz = 0) Then
+            MyApplication.host.showStatusMessage("all of the mass spectrum fragment their intensity or product m/z is ZERO!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+        Else
+            PictureBox1.BackgroundImage = previews.MirrorPlot.AsGDIImage
+        End If
     End Sub
 
     Private Sub PageSpectrumSearch_Load(sender As Object, e As EventArgs) Handles Me.Load
         PictureBox1.BackgroundImageLayout = ImageLayout.Zoom
-    End Sub
-
-    Private Sub PageSpectrumSearch_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp, DataGridView1.KeyUp, PictureBox1.KeyUp, TabPage1.KeyUp
-
     End Sub
 
     Private Sub TabPage1_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown, DataGridView1.KeyDown, PictureBox1.KeyDown, TabPage1.KeyDown
@@ -99,5 +91,9 @@ Public Class PageSpectrumSearch
                 Call PictureBox1.BackgroundImage.SaveAs(file.FileName)
             End If
         End Using
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+
     End Sub
 End Class

@@ -396,6 +396,7 @@
     <Compile Include="Spectra\Models\Trimming\RelativeIntensityCutoff.vb" />
     <Compile Include="Spectra\Models\Trimming\LowAbundanceTrimming.vb" />
     <Compile Include="Spectra\Models\Fragments.vb" />
+    <Compile Include="Spectra\Models\Xml\AlignmentOutput.vb" />
     <Compile Include="Spectra\Models\Xml\Ms2AlignMatrix.vb" />
     <Compile Include="Spectra\MzGrouping.vb" />
     <Compile Include="Spectra\MoleculeNetworking\ProtocolPipeline.vb" />
