@@ -4,6 +4,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports mzkit.My
+Imports Task
 
 Public Class PageSpectrumSearch
 
@@ -94,6 +95,14 @@ Public Class PageSpectrumSearch
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Dim raws = Globals.workspace.GetRawDataFiles
 
+        TreeListView1.Items.Clear()
+
+        For Each fileSearch In getSpectrumInput.SearchFiles(raws)
+            Dim fileRow As New TreeListViewItem With {.Text = fileSearch.name}
+
+            fileRow.SubItems.Add(If(fileSearch.Count = 0, "no hits", fileSearch.Count))
+        Next
     End Sub
 End Class
