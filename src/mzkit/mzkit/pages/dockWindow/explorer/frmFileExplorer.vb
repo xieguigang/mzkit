@@ -179,10 +179,13 @@ Public Class frmFileExplorer
 
             If Not script Is Nothing Then
                 script.Show(MyApplication.host.dockPanel)
-            Else
+            ElseIf path.FileExists Then
                 ' 脚本文件还没有被打开
                 ' 在这里打开脚本文件
                 MyApplication.host.openRscript(path)
+            Else
+                MyApplication.host.showStatusMessage($"script file '{path.FileName}' is not exists...", My.Resources.StatusAnnotations_Warning_32xLG_color)
+                e.Node.ImageIndex = 1
             End If
         End If
     End Sub
