@@ -680,7 +680,7 @@ Public Class frmMain
         Call App.Exit()
     End Sub
 
-    Private Sub SaveSettings()
+    Friend Sub SaveSettings()
         If Globals.Settings.ui Is Nothing Then
             Globals.Settings.ui = New UISettings
         End If

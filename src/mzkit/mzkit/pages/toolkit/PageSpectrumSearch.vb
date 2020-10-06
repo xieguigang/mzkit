@@ -59,7 +59,13 @@ Public Class PageSpectrumSearch
     End Sub
 
     Private Sub loadFromMgfIon()
-        Dim ion As MGF.Ions = MGF.MgfReader.StreamParser(Clipboard.GetText.LineTokens).FirstOrDefault
+        Dim textLines As String() = Clipboard.GetText.LineTokens
+
+        If textLines.IsNullOrEmpty Then
+            Return
+        End If
+
+        Dim ion As MGF.Ions = MGF.MgfReader.StreamParser(textLines).FirstOrDefault
 
         If ion Is Nothing OrElse ion.Peaks.IsNullOrEmpty Then
             Call MyApplication.host.showStatusMessage("invalid mgf text format!", My.Resources.StatusAnnotations_Warning_32xLG_color)
@@ -75,10 +81,23 @@ Public Class PageSpectrumSearch
     End Sub
 
     Private Sub PasteMgfTextToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PasteMgfTextToolStripMenuItem.Click
-        If Clipboard.ContainsText Then
+        If Clipboard.ContainsText OrElse Clipboard.GetText.StringEmpty Then
             Call loadFromMgfIon()
         Else
             Call MyApplication.host.showStatusMessage("no content data in your clipboard...", My.Resources.StatusAnnotations_Warning_32xLG_color)
         End If
+    End Sub
+
+    Private Sub SavePreviewPlotToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SavePreviewPlotToolStripMenuItem.Click
+        If PictureBox1.BackgroundImage Is Nothing Then
+            Call MyApplication.host.showStatusMessage("no plot image for save...", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            Return
+        End If
+
+        Using file As New SaveFileDialog With {.Filter = "plot image(*.png)|*.png"}
+            If file.ShowDialog = DialogResult.OK Then
+                Call PictureBox1.BackgroundImage.SaveAs(file.FileName)
+            End If
+        End Using
     End Sub
 End Class

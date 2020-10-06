@@ -255,6 +255,17 @@ Type 'q()' to quit R.
         Private Sub MyApplication_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
             Call App.LogException(e.Exception)
             Call MessageBox.Show(e.Exception.ToString, "Unknown Error!", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            Try
+                Call host.SaveSettings()
+                Call fileExplorer.SaveFileCache(Sub()
+                                                    ' do nothing
+                                                End Sub)
+            Catch ex As Exception
+
+            End Try
+
+            End
         End Sub
     End Class
 End Namespace
