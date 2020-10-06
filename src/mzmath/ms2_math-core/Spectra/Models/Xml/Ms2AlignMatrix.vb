@@ -23,5 +23,37 @@ Namespace Spectra.Xml
         Sub New(source As IEnumerable(Of SSM2MatrixFragment))
             Call MyBase.New(source)
         End Sub
+
+        Public Function GetQueryMatrix() As LibraryMatrix
+            Return New LibraryMatrix With {
+                .name = "query",
+                .ms2 = Me _
+                    .Where(Function(a) a.query > 0) _
+                    .Select(Function(a)
+                                Return New ms2 With {
+                                    .mz = a.mz,
+                                    .intensity = a.query,
+                                    .quantity = a.query
+                                }
+                            End Function) _
+                    .ToArray
+            }
+        End Function
+
+        Public Function GetReferenceMatrix() As LibraryMatrix
+            Return New LibraryMatrix With {
+                .name = "subject",
+                .ms2 = Me _
+                    .Where(Function(a) a.ref > 0) _
+                    .Select(Function(a)
+                                Return New ms2 With {
+                                    .mz = a.mz,
+                                    .intensity = a.ref,
+                                    .quantity = a.ref
+                                }
+                            End Function) _
+                    .ToArray
+            }
+        End Function
     End Class
 End Namespace
