@@ -143,8 +143,8 @@ Module Globals
     ''' <returns></returns>
     <Extension>
     Public Function LoadRawFileCache(explorer As TreeView, Optional defaultWorkspace As String = Nothing) As Integer
-        Dim scripts As New TreeNode("R# Automation")
-        Dim rawFiles As New TreeNode("Raw Data Files")
+        Dim scripts As New TreeNode("R# Automation") With {.ImageIndex = 1, .SelectedImageIndex = 1, .StateImageIndex = 1}
+        Dim rawFiles As New TreeNode("Raw Data Files") With {.ImageIndex = 0, .StateImageIndex = 0, .SelectedImageIndex = 0}
 
         If defaultWorkspace.StringEmpty Then
             defaultWorkspace = Globals.defaultWorkspace
@@ -164,7 +164,10 @@ Module Globals
 
             Dim rawFileNode As New TreeNode($"{raw.source.FileName} [{raw.numOfScans} Scans]") With {
                 .Checked = True,
-                .Tag = raw
+                .Tag = raw,
+                .ImageIndex = 2,
+                .SelectedImageIndex = 2,
+                .StateImageIndex = 2
             }
 
             rawFiles.Nodes.Add(rawFileNode)
@@ -184,7 +187,10 @@ Module Globals
             For Each script As String In files.GetAutomationScripts
                 Dim fileNode As New TreeNode(script.FileName) With {
                     .Checked = False,
-                    .Tag = script
+                    .Tag = script,
+                    .ImageIndex = 3,
+                    .StateImageIndex = 3,
+                    .SelectedImageIndex = 3
                 }
 
                 scripts.Nodes.Add(fileNode)

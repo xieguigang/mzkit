@@ -99,6 +99,7 @@ Public Class frmFileExplorer
         treeView1.ShowRootLines = True
         treeView1.BorderStyle = BorderStyle.FixedSingle
         treeView1.Dock = DockStyle.Fill
+        treeView1.ImageList = ImageList2
 
         '   ExportToolStripMenuItem.Text = "Export XIC Ions"
 
@@ -185,7 +186,9 @@ Public Class frmFileExplorer
                 MyApplication.host.openRscript(path)
             Else
                 MyApplication.host.showStatusMessage($"script file '{path.FileName}' is not exists...", My.Resources.StatusAnnotations_Warning_32xLG_color)
-                e.Node.ImageIndex = 1
+                e.Node.ImageIndex = 4
+                e.Node.SelectedImageIndex = 4
+                e.Node.StateImageIndex = 4
             End If
         End If
     End Sub

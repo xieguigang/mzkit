@@ -38,6 +38,7 @@ Partial Class frmFileExplorer
         Me.RunAutomationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
         Me.DeleteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ImageList2 = New System.Windows.Forms.ImageList(Me.components)
         Me.Panel1.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
@@ -130,6 +131,16 @@ Partial Class frmFileExplorer
         Me.DeleteToolStripMenuItem.Size = New System.Drawing.Size(200, 22)
         Me.DeleteToolStripMenuItem.Text = "Delete"
         '
+        'ImageList2
+        '
+        Me.ImageList2.ImageStream = CType(resources.GetObject("ImageList2.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.ImageList2.TransparentColor = System.Drawing.Color.Transparent
+        Me.ImageList2.Images.SetKeyName(0, "folder-pictures.png")
+        Me.ImageList2.Images.SetKeyName(1, "folder-documents.png")
+        Me.ImageList2.Images.SetKeyName(2, "application-x-object.png")
+        Me.ImageList2.Images.SetKeyName(3, "text-x-generic.png")
+        Me.ImageList2.Images.SetKeyName(4, "StatusAnnotations_Warning_32xLG_color.png")
+        '
         'frmFileExplorer
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -156,4 +167,5 @@ Partial Class frmFileExplorer
     Friend WithEvents BPCOverlapToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents TICOverlapToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents RunAutomationToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ImageList2 As ImageList
 End Class
