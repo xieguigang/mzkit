@@ -284,6 +284,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="forms\ISplashScreenUpdater.vb" />
+    <Compile Include="pages\dockWindow\documents\frmSpectrumSearch.Designer.vb">
+      <DependentUpon>frmSpectrumSearch.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\dockWindow\documents\frmSpectrumSearch.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="pages\dockWindow\documents\frmFeatureSearch.Designer.vb">
       <DependentUpon>frmFeatureSearch.vb</DependentUpon>
     </Compile>
