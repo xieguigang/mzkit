@@ -3,10 +3,15 @@ Imports System.IO
 Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.IO.netCDF
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports mzkit.Kesoft.Windows.Forms.Win7StyleTreeView
 Imports mzkit.My
@@ -370,5 +375,24 @@ Public Class frmRawFeaturesList
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Call FeatureSearchHandler.SearchByMz(Strings.Trim(TextBox2.Text), {CurrentRawFile})
+    End Sub
+
+    Private Sub SpectrumSearchToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SpectrumSearchToolStripMenuItem.Click
+        Dim currentScan = treeView1.SelectedNode?.Tag
+
+        If currentScan Is Nothing OrElse Not TypeOf currentScan Is ScanEntry Then
+            Return
+        End If
+
+        Dim ms2 As ScanEntry = currentScan
+
+        Using cache As New netCDFReader(CurrentRawFile.ms2_cache)
+            Dim products As ms2() = cache.getDataVariable(ms2.id).numerics.AsMs2.ToArray
+            Dim searchPage As New frmSpectrumSearch
+
+            searchPage.Show(MyApplication.host.dockPanel)
+            searchPage.page.loadMs2(products)
+            searchPage.page.runSearch()
+        End Using
     End Sub
 End Class

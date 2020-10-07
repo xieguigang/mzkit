@@ -57,6 +57,7 @@ Partial Class frmRawFeaturesList
         Me.ClearToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem4 = New System.Windows.Forms.ToolStripSeparator()
         Me.DeleteFileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SpectrumSearchToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Panel1.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
@@ -105,9 +106,9 @@ Partial Class frmRawFeaturesList
         '
         'ContextMenuStrip1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ChromatogramPlotToolStripMenuItem, Me.ShowXICToolStripMenuItem, Me.ToolStripMenuItem1, Me.MolecularNetworkingToolStripMenuItem, Me.IonSearchToolStripMenuItem, Me.SearchFormulaToolStripMenuItem, Me.ToolStripMenuItem2, Me.FileToolStripMenuItem})
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ChromatogramPlotToolStripMenuItem, Me.ShowXICToolStripMenuItem, Me.ToolStripMenuItem1, Me.MolecularNetworkingToolStripMenuItem, Me.SpectrumSearchToolStripMenuItem, Me.IonSearchToolStripMenuItem, Me.SearchFormulaToolStripMenuItem, Me.ToolStripMenuItem2, Me.FileToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(193, 148)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(193, 192)
         '
         'ChromatogramPlotToolStripMenuItem
         '
@@ -164,36 +165,36 @@ Partial Class frmRawFeaturesList
         'CustomToolStripMenuItem
         '
         Me.CustomToolStripMenuItem.Name = "CustomToolStripMenuItem"
-        Me.CustomToolStripMenuItem.Size = New System.Drawing.Size(158, 22)
+        Me.CustomToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.CustomToolStripMenuItem.Text = "Custom"
         '
         'ToolStripMenuItem5
         '
         Me.ToolStripMenuItem5.Name = "ToolStripMenuItem5"
-        Me.ToolStripMenuItem5.Size = New System.Drawing.Size(155, 6)
+        Me.ToolStripMenuItem5.Size = New System.Drawing.Size(177, 6)
         '
         'DefaultToolStripMenuItem
         '
         Me.DefaultToolStripMenuItem.Name = "DefaultToolStripMenuItem"
-        Me.DefaultToolStripMenuItem.Size = New System.Drawing.Size(158, 22)
+        Me.DefaultToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.DefaultToolStripMenuItem.Text = "Default"
         '
         'SmallMoleculeToolStripMenuItem
         '
         Me.SmallMoleculeToolStripMenuItem.Name = "SmallMoleculeToolStripMenuItem"
-        Me.SmallMoleculeToolStripMenuItem.Size = New System.Drawing.Size(158, 22)
+        Me.SmallMoleculeToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.SmallMoleculeToolStripMenuItem.Text = "Small Molecule"
         '
         'NaturalProductToolStripMenuItem
         '
         Me.NaturalProductToolStripMenuItem.Name = "NaturalProductToolStripMenuItem"
-        Me.NaturalProductToolStripMenuItem.Size = New System.Drawing.Size(158, 22)
+        Me.NaturalProductToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.NaturalProductToolStripMenuItem.Text = "Natural Product"
         '
         'GeneralFlavoneToolStripMenuItem
         '
         Me.GeneralFlavoneToolStripMenuItem.Name = "GeneralFlavoneToolStripMenuItem"
-        Me.GeneralFlavoneToolStripMenuItem.Size = New System.Drawing.Size(158, 22)
+        Me.GeneralFlavoneToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.GeneralFlavoneToolStripMenuItem.Text = "General Flavone"
         '
         'ToolStripMenuItem2
@@ -214,7 +215,7 @@ Partial Class frmRawFeaturesList
         Me.ExportIonsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.XICToolStripMenuItem, Me.IonScansToolStripMenuItem})
         Me.ExportIonsToolStripMenuItem.Image = CType(resources.GetObject("ExportIonsToolStripMenuItem.Image"), System.Drawing.Image)
         Me.ExportIonsToolStripMenuItem.Name = "ExportIonsToolStripMenuItem"
-        Me.ExportIonsToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
+        Me.ExportIonsToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ExportIonsToolStripMenuItem.Text = "Export Ions"
         '
         'XICToolStripMenuItem
@@ -232,39 +233,45 @@ Partial Class frmRawFeaturesList
         'CollapseToolStripMenuItem
         '
         Me.CollapseToolStripMenuItem.Name = "CollapseToolStripMenuItem"
-        Me.CollapseToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
+        Me.CollapseToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.CollapseToolStripMenuItem.Text = "Collapse"
         '
         'ToolStripMenuItem3
         '
         Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
-        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(130, 6)
+        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(177, 6)
         '
         'SelectAllToolStripMenuItem
         '
         Me.SelectAllToolStripMenuItem.Image = Global.mzkit.My.Resources.Resources.preferences_system_notifications
         Me.SelectAllToolStripMenuItem.Name = "SelectAllToolStripMenuItem"
-        Me.SelectAllToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
+        Me.SelectAllToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.SelectAllToolStripMenuItem.Text = "Select All"
         '
         'ClearToolStripMenuItem
         '
         Me.ClearToolStripMenuItem.Image = CType(resources.GetObject("ClearToolStripMenuItem.Image"), System.Drawing.Image)
         Me.ClearToolStripMenuItem.Name = "ClearToolStripMenuItem"
-        Me.ClearToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
+        Me.ClearToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ClearToolStripMenuItem.Text = "Clear"
         '
         'ToolStripMenuItem4
         '
         Me.ToolStripMenuItem4.Name = "ToolStripMenuItem4"
-        Me.ToolStripMenuItem4.Size = New System.Drawing.Size(130, 6)
+        Me.ToolStripMenuItem4.Size = New System.Drawing.Size(177, 6)
         '
         'DeleteFileToolStripMenuItem
         '
         Me.DeleteFileToolStripMenuItem.Image = CType(resources.GetObject("DeleteFileToolStripMenuItem.Image"), System.Drawing.Image)
         Me.DeleteFileToolStripMenuItem.Name = "DeleteFileToolStripMenuItem"
-        Me.DeleteFileToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
+        Me.DeleteFileToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.DeleteFileToolStripMenuItem.Text = "Delete File!"
+        '
+        'SpectrumSearchToolStripMenuItem
+        '
+        Me.SpectrumSearchToolStripMenuItem.Name = "SpectrumSearchToolStripMenuItem"
+        Me.SpectrumSearchToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
+        Me.SpectrumSearchToolStripMenuItem.Text = "Spectrum Search"
         '
         'frmRawFeaturesList
         '
@@ -310,4 +317,5 @@ Partial Class frmRawFeaturesList
     Friend WithEvents GeneralFlavoneToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents XICToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents IonScansToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents SpectrumSearchToolStripMenuItem As ToolStripMenuItem
 End Class

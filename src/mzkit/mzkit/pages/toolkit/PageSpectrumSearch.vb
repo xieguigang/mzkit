@@ -5,8 +5,8 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports mzkit.My
-Imports RibbonLib.Interop
 Imports Task
 
 Public Class PageSpectrumSearch
@@ -66,14 +66,18 @@ Public Class PageSpectrumSearch
         If ion Is Nothing OrElse ion.Peaks.IsNullOrEmpty Then
             Call MyApplication.host.showStatusMessage("invalid mgf text format!", My.Resources.StatusAnnotations_Warning_32xLG_color)
         Else
-            DataGridView1.Rows.Clear()
-
-            For Each ms2 As ms2 In ion.Peaks
-                DataGridView1.Rows.Add(ms2.mz, ms2.intensity)
-            Next
-
-            Call refreshPreviews()
+            Call loadMs2(ion.Peaks)
         End If
+    End Sub
+
+    Public Sub loadMs2(products As IEnumerable(Of ms2))
+        DataGridView1.Rows.Clear()
+
+        For Each ms2 As ms2 In products
+            DataGridView1.Rows.Add(ms2.mz, ms2.intensity)
+        Next
+
+        Call refreshPreviews()
     End Sub
 
     Private Sub PasteMgfTextToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PasteMgfTextToolStripMenuItem.Click
@@ -98,6 +102,10 @@ Public Class PageSpectrumSearch
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Call runSearch()
+    End Sub
+
+    Public Sub runSearch()
         Dim raws = Globals.workspace.GetRawDataFiles
 
         TreeListView1.Items.Clear()

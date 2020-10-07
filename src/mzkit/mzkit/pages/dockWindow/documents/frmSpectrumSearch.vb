@@ -1,8 +1,8 @@
 ﻿Public Class frmSpectrumSearch
 
-    Private Sub frmSpectrumSearch_Load(sender As Object, e As EventArgs) Handles Me.Load
-        Dim page As New PageSpectrumSearch With {.Text = "Spectrum Similarity Search"}
+    Friend page As New PageSpectrumSearch With {.Text = "Spectrum Similarity Search"}
 
+    Private Sub frmSpectrumSearch_Load(sender As Object, e As EventArgs) Handles Me.Load
         Controls.Add(page)
 
         page.Dock = DockStyle.Fill
