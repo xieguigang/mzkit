@@ -271,12 +271,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="application\ApplicationEvents.vb" />
-    <Compile Include="application\InstallerCustomActions.Designer.vb">
-      <DependentUpon>InstallerCustomActions.vb</DependentUpon>
-    </Compile>
-    <Compile Include="application\InstallerCustomActions.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="application\RPackage.vb" />
     <Compile Include="forms\frmProgressSpinner.Designer.vb">
       <DependentUpon>frmProgressSpinner.vb</DependentUpon>

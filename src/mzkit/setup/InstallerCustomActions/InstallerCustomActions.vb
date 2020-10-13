@@ -13,11 +13,11 @@ Public Class InstallerCustomActions
 
     End Sub
 
-    Public Overrides Sub Commit(savedState As IDictionary)
-        MyBase.Commit(savedState)
+    Protected Overrides Sub OnCommitted(savedState As IDictionary)
+        MyBase.OnCommitted(savedState)
 
         Call Directory.SetCurrentDirectory(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location))
-        Call Process.Start(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + $"\{App.AssemblyName}.exe")
+        Call Process.Start(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + $"\mzkit_win32.exe")
         Call Process.Start("http://www.biodeep.cn/")
     End Sub
 End Class
