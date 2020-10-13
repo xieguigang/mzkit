@@ -229,6 +229,7 @@
       <HintPath>..\dist\Microsoft.Windows.Ribbon.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
@@ -270,6 +271,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="application\ApplicationEvents.vb" />
+    <Compile Include="application\InstallerCustomActions.Designer.vb">
+      <DependentUpon>InstallerCustomActions.vb</DependentUpon>
+    </Compile>
+    <Compile Include="application\InstallerCustomActions.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="application\RPackage.vb" />
     <Compile Include="forms\frmProgressSpinner.Designer.vb">
       <DependentUpon>frmProgressSpinner.vb</DependentUpon>
