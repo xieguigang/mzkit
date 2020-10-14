@@ -151,8 +151,7 @@ Public Class ImportsRawData
                        .id = name,
                        .rt = scan.RtInSeconds,
                        .BPC = scan.PepMass.text,
-                       .TIC = scan.PepMass.text,
-                       .XIC = scan.PepMass.text
+                       .TIC = scan.PepMass.text
                     }
                 Else
                     cache2.AddVariable(name, scanData, scanSize, attrs)
@@ -235,8 +234,7 @@ Public Class ImportsRawData
                        .id = name,
                        .rt = PeakMs2.RtInSecond(scan.retentionTime),
                        .BPC = scan.basePeakIntensity,
-                       .TIC = scan.totIonCurrent,
-                       .XIC = scan.precursorMz.precursorIntensity
+                       .TIC = scan.totIonCurrent
                     }
                 Else
                     cache2.AddVariable(name, scanData, scanSize, attrs)
@@ -350,6 +348,9 @@ Public Class ImportsRawData
                     .size = data.Count
                 }
 
+                Dim BPC As Double = Val(scan.cvParams.KeyItem("base peak intensity")?.value)
+                Dim TIC As Double = Val(scan.cvParams.KeyItem("total ion current")?.value)
+
                 If scan.ms_level = 1 Then
                     cache1.AddVariable(name, scanData, scanSize, attrs)
 
@@ -361,9 +362,8 @@ Public Class ImportsRawData
                     ms1Parent = New Ms1ScanEntry With {
                         .id = name,
                         .rt = scan.scan_time,
-                        .BPC = parent.into,
-                        .XIC = parent.into,
-                        .TIC = parent.into
+                        .BPC = BPC,
+                        .TIC = TIC
                     }
                 Else
                     cache2.AddVariable(name, scanData, scanSize, attrs)
