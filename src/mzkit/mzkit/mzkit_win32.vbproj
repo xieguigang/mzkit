@@ -247,6 +247,9 @@
     <Reference Include="System.Windows.Forms.TreeListView">
       <HintPath>..\dist\System.Windows.Forms.TreeListView.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Notification">
+      <HintPath>..\dist\System.Windows.Notification.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />

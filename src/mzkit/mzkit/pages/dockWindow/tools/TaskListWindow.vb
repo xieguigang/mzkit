@@ -1,4 +1,5 @@
 ﻿Imports System.ComponentModel
+Imports Vip.Notification
 
 Public Class TaskListWindow
 
@@ -29,6 +30,8 @@ Public Class TaskUI
     Dim status As ListViewItem.ListViewSubItem
     Dim progress As ListViewItem.ListViewSubItem
 
+    Dim taskTitle, taskContent As String
+
     Sub New(task$, content$, list As TaskListWindow)
         row = New TreeListViewItem With {.Text = task, .ImageIndex = 0}
         status = New ListViewItem.ListViewSubItem With {.Text = "Pending", .BackColor = Color.Yellow}
@@ -41,6 +44,9 @@ Public Class TaskUI
 
         window = list
         window.TreeListView1.Items.Add(row)
+
+        taskTitle = task
+        taskContent = content
     End Sub
 
     Public Sub Running()
@@ -62,5 +68,7 @@ Public Class TaskUI
                           progress.Text = ""
                           status.BackColor = Color.SkyBlue
                       End Sub)
+
+        Call Alert.ShowSucess($"{taskTitle} Job Done!{vbCrLf}{taskContent}")
     End Sub
 End Class
