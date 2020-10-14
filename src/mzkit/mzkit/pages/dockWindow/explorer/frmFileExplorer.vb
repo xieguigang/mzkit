@@ -171,6 +171,7 @@ Public Class frmFileExplorer
             propertyWin.propertyGrid.Refresh()
 
             MyApplication.host.ShowPropertyWindow()
+            MyApplication.host.Text = $"BioNovoGene Mzkit [{DirectCast(treeView1.SelectedNode.Tag, Raw).source.GetFullPath}]"
         ElseIf TypeOf treeView1.SelectedNode.Tag Is String Then
             ' 选择了一个脚本文件
             Dim path As String = DirectCast(treeView1.SelectedNode.Tag, String).GetFullPath
@@ -180,10 +181,12 @@ Public Class frmFileExplorer
 
             If Not script Is Nothing Then
                 script.Show(MyApplication.host.dockPanel)
+                MyApplication.host.Text = $"BioNovoGene Mzkit [{path.GetFullPath}]"
             ElseIf path.FileExists Then
                 ' 脚本文件还没有被打开
                 ' 在这里打开脚本文件
                 MyApplication.host.openRscript(path)
+                MyApplication.host.Text = $"BioNovoGene Mzkit [{path.GetFullPath}]"
             Else
                 MyApplication.host.showStatusMessage($"script file '{path.FileName}' is not exists...", My.Resources.StatusAnnotations_Warning_32xLG_color)
                 e.Node.ImageIndex = 4
