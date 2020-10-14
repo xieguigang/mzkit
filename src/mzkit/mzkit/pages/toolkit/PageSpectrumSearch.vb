@@ -115,41 +115,42 @@ Public Class PageSpectrumSearch
 
         TreeListView1.Items.Clear()
 
-        Call New Thread(Sub()
-                            For Each fileSearch In getSpectrumInput.SearchFiles(raws, Tolerance.DeltaMass(0.3), 0.8, AddressOf progress.ShowProgressDetails)
-                                Dim fileRow As New TreeListViewItem With {
-                                    .Text = fileSearch.name,
-                                    .ToolTipText = fileSearch.description,
-                                    .ImageIndex = 0,
-                                    .StateImageIndex = 0
-                                }
-                                Dim i As i32 = 1
+        Call New Thread(
+            Sub()
+                For Each fileSearch In getSpectrumInput.SearchFiles(raws, Tolerance.DeltaMass(0.3), 0.8, AddressOf progress.ShowProgressDetails)
+                    Dim fileRow As New TreeListViewItem With {
+                        .Text = fileSearch.name,
+                        .ToolTipText = fileSearch.description,
+                        .ImageIndex = 0,
+                        .StateImageIndex = 0
+                    }
+                    Dim i As i32 = 1
 
-                                fileRow.SubItems.Add(If(fileSearch.Count = 0, "no hits", fileSearch.Count))
+                    fileRow.SubItems.Add(If(fileSearch.Count = 0, "no hits", fileSearch.Count))
 
-                                For Each result As AlignmentOutput In fileSearch
-                                    Dim alignRow As New TreeListViewItem With {
-                                        .Text = result.reference.id,
-                                        .Tag = result,
-                                        .ImageIndex = 1,
-                                        .StateImageIndex = 1
-                                    }
+                    For Each result As AlignmentOutput In fileSearch
+                        Dim alignRow As New TreeListViewItem With {
+                            .Text = result.reference.id,
+                            .Tag = result,
+                            .ImageIndex = 1,
+                            .StateImageIndex = 1
+                        }
 
-                                    alignRow.SubItems.Add(++i)
-                                    alignRow.SubItems.Add(result.forward)
-                                    alignRow.SubItems.Add(result.reverse)
-                                    alignRow.SubItems.Add(result.reference.mz)
-                                    alignRow.SubItems.Add(result.reference.rt)
+                        alignRow.SubItems.Add(++i)
+                        alignRow.SubItems.Add(result.forward)
+                        alignRow.SubItems.Add(result.reverse)
+                        alignRow.SubItems.Add(result.reference.mz)
+                        alignRow.SubItems.Add(result.reference.rt)
 
-                                    fileRow.Items.Add(alignRow)
-                                Next
+                        fileRow.Items.Add(alignRow)
+                    Next
 
-                                Me.Invoke(Sub() Call TreeListView1.Items.Add(fileRow))
-                            Next
+                    Me.Invoke(Sub() Call TreeListView1.Items.Add(fileRow))
+                Next
 
-                            Call progress.ShowProgressDetails("Search job done!")
-                            Call progress.Close()
-                        End Sub).Start()
+                Call progress.ShowProgressDetails("Search job done!")
+                Call progress.Invoke(Sub() Call progress.Close())
+            End Sub).Start()
 
         Call progress.ShowDialog()
 
