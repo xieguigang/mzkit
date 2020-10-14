@@ -63,7 +63,7 @@ Public Class frmSettings
     Dim showPageLink As IPageSettings
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-        DirectCast(ParentForm, frmSettings).DockState = DockState.Hidden
+        DockState = DockState.Hidden
         MyApplication.host.ShowPage(MyApplication.host.mzkitTool)
     End Sub
 
