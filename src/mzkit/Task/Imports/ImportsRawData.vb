@@ -371,9 +371,9 @@ Public Class ImportsRawData
                         .id = name,
                         .mz = parent.mz,
                         .rt = scan.scan_time,
-                        .BPC = parent.into,
+                        .BPC = BPC,
                         .XIC = parent.into,
-                        .TIC = parent.into,
+                        .TIC = TIC,
                         .polarity = Provider.ParseIonMode(polarity)
                     })
                 End If
