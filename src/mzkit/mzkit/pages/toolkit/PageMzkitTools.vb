@@ -233,30 +233,6 @@ Public Class PageMzkitTools
         MyApplication.host.ShowPropertyWindow()
     End Sub
 
-    Public Sub setCurrentFile()
-        'If TreeView1.Nodes.Count = 0 Then
-        '    MyApplication.host.showStatusMessage("No raw file opened.")
-        '    Return
-        'End If
-
-        'With TreeView1.CurrentRawFile.raw
-        '    Static selectedFile As String
-
-        '    If selectedFile <> MyApplication.host.ToolStripStatusLabel1.Text Then
-        '        selectedFile = $"{ .source.FileName} [{ .numOfScans} scans]"
-        '        MyApplication.host.showStatusMessage(selectedFile)
-        '        MyApplication.host.rawFeaturesList.ListBox1.Items.Clear()
-        '    End If
-
-        '    MyApplication.host.Text = $"BioNovoGene Mzkit [{ .source.GetFullPath}]"
-        'End With
-
-        'If Not TreeView1.CurrentRawFile.raw.cacheFileExists Then
-        '    TreeView1.SelectedNode.ImageIndex = 1
-        '    TreeView1.SelectedNode.SelectedImageIndex = 1
-        'End If
-    End Sub
-
     Private Function rawTIC(raw As Raw, isBPC As Boolean) As NamedCollection(Of ChromatogramTick)
         Dim TIC As New NamedCollection(Of ChromatogramTick) With {
             .name = $"{If(isBPC, "BPC", "TIC")} [{raw.source.FileName}]",

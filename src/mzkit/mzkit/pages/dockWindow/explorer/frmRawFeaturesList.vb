@@ -191,6 +191,8 @@ Public Class frmRawFeaturesList
 
         Call MyApplication.host.mzkitTool.showSpectrum(scanId, raw)
         Call MyApplication.host.mzkitTool.ShowPage()
+
+        MyApplication.host.Text = $"BioNovoGene Mzkit [{CurrentRawFile.source.GetFullPath}]"
     End Sub
 
     Private Sub CollapseToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CollapseToolStripMenuItem.Click
