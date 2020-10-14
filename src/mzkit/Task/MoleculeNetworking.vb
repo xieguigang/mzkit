@@ -118,11 +118,14 @@ Public Module MoleculeNetworking
     Public Iterator Function SearchFiles(spectrum As LibraryMatrix,
                                          files As IEnumerable(Of Raw),
                                          tolerance As Tolerance,
-                                         dotcutoff As Double) As IEnumerable(Of NamedCollection(Of AlignmentOutput))
+                                         dotcutoff As Double,
+                                         progress As Action(Of String)) As IEnumerable(Of NamedCollection(Of AlignmentOutput))
 
         For Each result As NamedCollection(Of AlignmentOutput) In files _
             .AsParallel _
             .Select(Function(a) spectrum.alignSearch(a, tolerance, dotcutoff))
+
+            Call progress($"Spectrum search job done! [{result.name}]")
 
             Yield result
         Next
