@@ -103,7 +103,7 @@ Public Class frmMain
         panelMain.Show(dockPanel)
     End Sub
 
-    Private Sub OpenFile(sender As Object, e As ExecuteEventArgs)
+    Public Sub OpenFile()
         Using file As New OpenFileDialog With {.Filter = "Raw Data|*.mzXML;*.mzML|R# Script(*.R)|*.R"}
             If file.ShowDialog = DialogResult.OK Then
                 If file.FileName.ExtensionSuffix("R") Then

@@ -37,12 +37,15 @@ Partial Class PageStart
         Me.LinkLabel3 = New System.Windows.Forms.LinkLabel()
         Me.PictureBox5 = New System.Windows.Forms.PictureBox()
         Me.LinkLabel4 = New System.Windows.Forms.LinkLabel()
+        Me.PictureBox6 = New System.Windows.Forms.PictureBox()
+        Me.LinkLabel5 = New System.Windows.Forms.LinkLabel()
         Me.Panel1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Panel1
@@ -150,7 +153,7 @@ Partial Class PageStart
         '
         Me.PictureBox4.BackgroundImage = CType(resources.GetObject("PictureBox4.BackgroundImage"), System.Drawing.Image)
         Me.PictureBox4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox4.Location = New System.Drawing.Point(72, 269)
+        Me.PictureBox4.Location = New System.Drawing.Point(72, 306)
         Me.PictureBox4.Name = "PictureBox4"
         Me.PictureBox4.Size = New System.Drawing.Size(32, 30)
         Me.PictureBox4.TabIndex = 9
@@ -162,7 +165,7 @@ Partial Class PageStart
         Me.LinkLabel3.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LinkLabel3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.LinkLabel3.ImageList = Me.ImageList1
-        Me.LinkLabel3.Location = New System.Drawing.Point(110, 280)
+        Me.LinkLabel3.Location = New System.Drawing.Point(110, 317)
         Me.LinkLabel3.Name = "LinkLabel3"
         Me.LinkLabel3.Size = New System.Drawing.Size(161, 20)
         Me.LinkLabel3.TabIndex = 8
@@ -174,7 +177,7 @@ Partial Class PageStart
         '
         Me.PictureBox5.BackgroundImage = CType(resources.GetObject("PictureBox5.BackgroundImage"), System.Drawing.Image)
         Me.PictureBox5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox5.Location = New System.Drawing.Point(72, 314)
+        Me.PictureBox5.Location = New System.Drawing.Point(72, 349)
         Me.PictureBox5.Name = "PictureBox5"
         Me.PictureBox5.Size = New System.Drawing.Size(32, 30)
         Me.PictureBox5.TabIndex = 11
@@ -186,7 +189,7 @@ Partial Class PageStart
         Me.LinkLabel4.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LinkLabel4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.LinkLabel4.ImageList = Me.ImageList1
-        Me.LinkLabel4.Location = New System.Drawing.Point(110, 325)
+        Me.LinkLabel4.Location = New System.Drawing.Point(110, 360)
         Me.LinkLabel4.Name = "LinkLabel4"
         Me.LinkLabel4.Size = New System.Drawing.Size(105, 20)
         Me.LinkLabel4.TabIndex = 10
@@ -194,11 +197,37 @@ Partial Class PageStart
         Me.LinkLabel4.Text = "Visit BioDeep"
         Me.LinkLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
+        'PictureBox6
+        '
+        Me.PictureBox6.BackgroundImage = CType(resources.GetObject("PictureBox6.BackgroundImage"), System.Drawing.Image)
+        Me.PictureBox6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.PictureBox6.Location = New System.Drawing.Point(72, 264)
+        Me.PictureBox6.Name = "PictureBox6"
+        Me.PictureBox6.Size = New System.Drawing.Size(32, 30)
+        Me.PictureBox6.TabIndex = 13
+        Me.PictureBox6.TabStop = False
+        '
+        'LinkLabel5
+        '
+        Me.LinkLabel5.AutoSize = True
+        Me.LinkLabel5.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LinkLabel5.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.LinkLabel5.ImageList = Me.ImageList1
+        Me.LinkLabel5.Location = New System.Drawing.Point(110, 275)
+        Me.LinkLabel5.Name = "LinkLabel5"
+        Me.LinkLabel5.Size = New System.Drawing.Size(129, 20)
+        Me.LinkLabel5.TabIndex = 12
+        Me.LinkLabel5.TabStop = True
+        Me.LinkLabel5.Text = "View Demo Data"
+        Me.LinkLabel5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
         'PageStart
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
+        Me.Controls.Add(Me.PictureBox6)
+        Me.Controls.Add(Me.LinkLabel5)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.PictureBox5)
         Me.Controls.Add(Me.LinkLabel4)
@@ -219,6 +248,7 @@ Partial Class PageStart
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -237,4 +267,6 @@ Partial Class PageStart
     Friend WithEvents LinkLabel3 As LinkLabel
     Friend WithEvents PictureBox5 As PictureBox
     Friend WithEvents LinkLabel4 As LinkLabel
+    Friend WithEvents PictureBox6 As PictureBox
+    Friend WithEvents LinkLabel5 As LinkLabel
 End Class

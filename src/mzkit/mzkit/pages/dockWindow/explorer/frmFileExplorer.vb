@@ -138,7 +138,7 @@ Public Class frmFileExplorer
         End If
     End Sub
 
-    Private Sub addFileNode(newRaw As Raw)
+    Public Sub addFileNode(newRaw As Raw)
         Me.Invoke(Sub()
                       treeView1.Nodes(0).Nodes.Add(New TreeNode(newRaw.source.FileName) With {.Tag = newRaw})
                   End Sub)
@@ -177,9 +177,17 @@ Public Class frmFileExplorer
         Call treeView1.SaveRawFileCache(progress)
     End Sub
 
-    Private Sub showRawFile(raw As Raw)
+    Public Sub showRawFile(raw As Raw)
         Call MyApplication.host.rawFeaturesList.LoadRaw(raw)
         Call MyApplication.host.mzkitTool.showScatter(raw)
+
+        Dim propertyWin = MyApplication.host.propertyWin
+
+        propertyWin.propertyGrid.SelectedObject = New RawFileProperty(raw)
+        propertyWin.propertyGrid.Refresh()
+
+        MyApplication.host.ShowPropertyWindow()
+        MyApplication.host.Text = $"BioNovoGene Mzkit [{raw.source.GetFullPath}]"
     End Sub
 
     Public Sub AddScript(script As String)
@@ -194,13 +202,6 @@ Public Class frmFileExplorer
         If TypeOf treeView1.SelectedNode.Tag Is Raw Then
             Call showRawFile(DirectCast(treeView1.SelectedNode.Tag, Raw))
 
-            Dim propertyWin = MyApplication.host.propertyWin
-
-            propertyWin.propertyGrid.SelectedObject = New RawFileProperty(DirectCast(treeView1.SelectedNode.Tag, Raw))
-            propertyWin.propertyGrid.Refresh()
-
-            MyApplication.host.ShowPropertyWindow()
-            MyApplication.host.Text = $"BioNovoGene Mzkit [{DirectCast(treeView1.SelectedNode.Tag, Raw).source.GetFullPath}]"
         ElseIf TypeOf treeView1.SelectedNode.Tag Is String Then
             ' 选择了一个脚本文件
             Dim path As String = DirectCast(treeView1.SelectedNode.Tag, String).GetFullPath
@@ -260,6 +261,16 @@ Public Class frmFileExplorer
             Call deleteFileNode(node:=treeView1.SelectedNode)
         End If
     End Sub
+
+    Public Function findRawFileNode(sourceName As String) As TreeNode
+        For Each node As TreeNode In treeView1.Nodes(0).Nodes
+            If DirectCast(node.Tag, Raw).source.FileName = sourceName Then
+                Return node
+            End If
+        Next
+
+        Return Nothing
+    End Function
 
     Public Function findRawFileNode(raw As Raw) As TreeNode
         For Each node As TreeNode In treeView1.Nodes(0).Nodes
