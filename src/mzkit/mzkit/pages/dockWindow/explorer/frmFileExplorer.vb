@@ -121,6 +121,8 @@ Public Class frmFileExplorer
             Dim taskList As TaskListWindow = MyApplication.host.taskWin
             Dim task As TaskUI = taskList.Add("Imports Raw Data", fileName)
 
+            taskList.Show(MyApplication.host.dockPanel)
+
             Call MyApplication.TaskQueue.AddToQueue(
                 Sub()
                     Call task.Running()
