@@ -260,6 +260,11 @@ Public Class PageMzkitTools
             TICList.Add(rawTIC(raw, isBPC))
         Next
 
+        If TICList.All(Function(file) file.All(Function(t) t.Intensity = 0.0)) Then
+            MyApplication.host.showStatusMessage("not able to create a TIC/BPC plot due to the reason of all of the tick intensity data is ZERO, please check your raw data file!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            Return
+        End If
+
         showMatrix(TICList(Scan0).value, TICList(Scan0).name)
 
         PictureBox1.BackgroundImage = ChromatogramPlot.TICplot(
