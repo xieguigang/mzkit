@@ -296,4 +296,8 @@ Public Class frmFileExplorer
 
         Call FeatureSearchHandler.SearchByMz(TextBox2.Text, raws)
     End Sub
+
+    Private Sub ImportsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImportsToolStripMenuItem.Click
+        Call MyApplication.host.ImportsFiles()
+    End Sub
 End Class

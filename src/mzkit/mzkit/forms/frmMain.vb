@@ -129,7 +129,10 @@ Public Class frmMain
         newScript.LoadScript(fileName.ReadAllText)
     End Sub
 
-    Private Sub ImportsFiles(sender As Object, e As ExecuteEventArgs)
+    ''' <summary>
+    ''' imports raw data files
+    ''' </summary>
+    Public Sub ImportsFiles()
         Using file As New OpenFileDialog With {
             .Filter = "Raw Data(*.mzXML; *.mzML)|*.mzXML;*.mzML",
             .Multiselect = True
