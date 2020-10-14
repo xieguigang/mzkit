@@ -695,7 +695,8 @@ Public Class frmMain
             .fileExplorerDock = fileExplorer.DockState,
             .OutputDock = output.DockState,
             .propertyWindowDock = propertyWin.DockState,
-            .featureListDock = rawFeaturesList.DockState
+            .featureListDock = rawFeaturesList.DockState,
+            .taskListDock = taskWin.DockState
         }
 
         Globals.Settings.Save()
@@ -716,6 +717,7 @@ Public Class frmMain
     Friend settingsPage As New frmSettings
     Friend RtermPage As New frmRsharp
     Friend propertyWin As New PropertyWindow
+    Friend taskWin As New TaskListWindow
 
     Public Sub ShowPropertyWindow()
         propertyWin.DockState = DockState.DockRight
@@ -760,6 +762,9 @@ Public Class frmMain
 
         RtermPage.Show(dockPanel)
         RtermPage.DockState = DockState.Hidden
+
+        taskWin.Show(dockPanel)
+        taskWin.DockState = DockState.DockBottomAutoHide
 
         If Globals.Settings.ui.rememberLayouts Then
             fileExplorer.DockState = Globals.Settings.ui.fileExplorerDock
