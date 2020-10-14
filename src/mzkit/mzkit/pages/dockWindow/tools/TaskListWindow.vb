@@ -59,6 +59,7 @@ Public Class TaskUI
     Public Sub Finish()
         window.Invoke(Sub()
                           status.Text = "Finished"
+                          progress.Text = ""
                           status.BackColor = Color.SkyBlue
                       End Sub)
     End Sub
