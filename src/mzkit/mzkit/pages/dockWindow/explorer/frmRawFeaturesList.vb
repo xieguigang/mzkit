@@ -134,7 +134,7 @@ Public Class frmRawFeaturesList
             Next
         End If
 
-        Me.checked = Me.checked.Distinct.ToList
+        Me.checked = Me.checked.Distinct.AsList
 
         ClearToolStripMenuItem.Text = $"Clear [{checked.Count} XIC Ions]"
     End Sub
