@@ -110,12 +110,7 @@ Public Class frmFileExplorer
 
     Public Sub ImportsRaw(fileName As String)
         If treeView1.Nodes.Item(0).Nodes.Count = 0 Then
-            Dim newRaw As Raw = getRawCache(fileName)
-
-            treeView1.Nodes(0).Nodes.Add(New TreeNode(newRaw.source.FileName) With {.Tag = newRaw})
-
-            MyApplication.host.showStatusMessage("Ready!")
-            MyApplication.host.ToolStripStatusLabel2.Text = GetTotalCacheSize()
+            Call addFileNode(getRawCache(fileName))
         Else
             ' work in background
             Dim taskList As TaskListWindow = MyApplication.host.taskWin
@@ -129,25 +124,28 @@ Public Class frmFileExplorer
 
                     Dim importsTask As New Task.ImportsRawData(
                         file:=fileName,
-                        progress:=Sub()
+                        progress:=Sub(msg)
                                       ' do nothing
+                                      Call task.ProgressMessage(msg)
                                   End Sub,
                         finished:=Sub()
                                       Call task.Finish()
                                   End Sub)
 
                     importsTask.RunImports()
-
-                    Me.Invoke(Sub()
-                                  treeView1.Nodes(0).Nodes.Add(New TreeNode(fileName) With {.Tag = importsTask.raw})
-                              End Sub)
-
-                    MyApplication.host.showStatusMessage("Ready!")
-                    MyApplication.host.UpdateCacheSize(GetTotalCacheSize)
+                    addFileNode(importsTask.raw)
                 End Sub)
         End If
     End Sub
 
+    Private Sub addFileNode(newRaw As Raw)
+        Me.Invoke(Sub()
+                      treeView1.Nodes(0).Nodes.Add(New TreeNode(newRaw.source.FileName) With {.Tag = newRaw})
+                  End Sub)
+
+        MyApplication.host.showStatusMessage("Ready!")
+        MyApplication.host.UpdateCacheSize(GetTotalCacheSize)
+    End Sub
 
     ''' <summary>
     ''' do raw data file imports task

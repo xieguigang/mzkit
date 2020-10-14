@@ -27,14 +27,17 @@ Public Class TaskUI
     Dim window As TaskListWindow
     Dim row As TreeListViewItem
     Dim status As ListViewItem.ListViewSubItem
+    Dim progress As ListViewItem.ListViewSubItem
 
     Sub New(task$, content$, list As TaskListWindow)
         row = New TreeListViewItem With {.Text = task, .ImageIndex = 0}
         status = New ListViewItem.ListViewSubItem With {.Text = "Pending", .BackColor = Color.Yellow}
+        progress = New ListViewItem.ListViewSubItem With {.Text = "..."}
 
         row.SubItems.Add(New ListViewItem.ListViewSubItem With {.Text = content})
         row.SubItems.Add(New ListViewItem.ListViewSubItem With {.Text = Now.ToString})
         row.SubItems.Add(status)
+        row.SubItems.Add(progress)
 
         window = list
         window.TreeListView1.Items.Add(row)
@@ -44,6 +47,12 @@ Public Class TaskUI
         window.Invoke(Sub()
                           status.Text = "Running..."
                           status.BackColor = Color.Green
+                      End Sub)
+    End Sub
+
+    Public Sub ProgressMessage(message As String)
+        window.Invoke(Sub()
+                          progress.Text = message
                       End Sub)
     End Sub
 

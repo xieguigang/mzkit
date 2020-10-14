@@ -33,11 +33,12 @@ Partial Class TaskListWindow
         Me.ColumnHeader3 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader4 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
+        Me.ColumnHeader5 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.SuspendLayout()
         '
         'TreeListView1
         '
-        Me.TreeListView1.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2, Me.ColumnHeader3, Me.ColumnHeader4})
+        Me.TreeListView1.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2, Me.ColumnHeader3, Me.ColumnHeader4, Me.ColumnHeader5})
         TreeListViewItemCollectionComparer1.Column = 0
         TreeListViewItemCollectionComparer1.SortOrder = System.Windows.Forms.SortOrder.Ascending
         Me.TreeListView1.Comparer = TreeListViewItemCollectionComparer1
@@ -56,28 +57,33 @@ Partial Class TaskListWindow
         'ColumnHeader1
         '
         Me.ColumnHeader1.Text = "Task"
-        Me.ColumnHeader1.Width = 152
+        Me.ColumnHeader1.Width = 113
         '
         'ColumnHeader2
         '
         Me.ColumnHeader2.Text = "Content"
-        Me.ColumnHeader2.Width = 488
+        Me.ColumnHeader2.Width = 353
         '
         'ColumnHeader3
         '
         Me.ColumnHeader3.Text = "Start Time"
-        Me.ColumnHeader3.Width = 139
+        Me.ColumnHeader3.Width = 108
         '
         'ColumnHeader4
         '
         Me.ColumnHeader4.Text = "Status"
-        Me.ColumnHeader4.Width = 149
+        Me.ColumnHeader4.Width = 63
         '
         'ImageList1
         '
         Me.ImageList1.ImageStream = CType(resources.GetObject("ImageList1.ImageStream"), System.Windows.Forms.ImageListStreamer)
         Me.ImageList1.TransparentColor = System.Drawing.Color.Transparent
         Me.ImageList1.Images.SetKeyName(0, "text-x-generic.png")
+        '
+        'ColumnHeader5
+        '
+        Me.ColumnHeader5.Text = "Progress"
+        Me.ColumnHeader5.Width = 337
         '
         'TaskListWindow
         '
@@ -97,4 +103,5 @@ Partial Class TaskListWindow
     Friend WithEvents ColumnHeader3 As ColumnHeader
     Friend WithEvents ColumnHeader4 As ColumnHeader
     Friend WithEvents ImageList1 As ImageList
+    Friend WithEvents ColumnHeader5 As ColumnHeader
 End Class
