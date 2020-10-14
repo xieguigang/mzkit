@@ -109,12 +109,41 @@ Public Class frmFileExplorer
     End Sub
 
     Public Sub ImportsRaw(fileName As String)
-        Dim newRaw = getRawCache(fileName)
+        If treeView1.Nodes.Item(0).Nodes.Count = 0 Then
+            Dim newRaw As Raw = getRawCache(fileName)
 
-        treeView1.Nodes(0).Nodes.Add(New TreeNode(newRaw.source.FileName) With {.Tag = newRaw})
+            treeView1.Nodes(0).Nodes.Add(New TreeNode(newRaw.source.FileName) With {.Tag = newRaw})
 
-        MyApplication.host.showStatusMessage("Ready!")
-        MyApplication.host.ToolStripStatusLabel2.Text = GetTotalCacheSize()
+            MyApplication.host.showStatusMessage("Ready!")
+            MyApplication.host.ToolStripStatusLabel2.Text = GetTotalCacheSize()
+        Else
+            ' work in background
+            Dim taskList As TaskListWindow = MyApplication.host.taskWin
+            Dim task As TaskUI = taskList.Add("Imports Raw Data", fileName)
+
+            Call MyApplication.TaskQueue.AddToQueue(
+                Sub()
+                    Call task.Running()
+
+                    Dim importsTask As New Task.ImportsRawData(
+                        file:=fileName,
+                        progress:=Sub()
+                                      ' do nothing
+                                  End Sub,
+                        finished:=Sub()
+                                      Call task.Finish()
+                                  End Sub)
+
+                    importsTask.RunImports()
+
+                    Me.Invoke(Sub()
+                                  treeView1.Nodes(0).Nodes.Add(New TreeNode(fileName) With {.Tag = importsTask.raw})
+                              End Sub)
+
+                    MyApplication.host.showStatusMessage("Ready!")
+                    MyApplication.host.UpdateCacheSize(GetTotalCacheSize)
+                End Sub)
+        End If
     End Sub
 
 

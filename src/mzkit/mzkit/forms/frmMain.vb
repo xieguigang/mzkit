@@ -549,6 +549,10 @@ Public Class frmMain
             End Sub)
     End Sub
 
+    Sub UpdateCacheSize(newSize As String)
+        Me.Invoke(Sub() ToolStripStatusLabel2.Text = newSize)
+    End Sub
+
     Private Sub InitSpinner()
         Dim _spinner = ribbonItems.PPMSpinner
 
