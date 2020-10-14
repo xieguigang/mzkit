@@ -42,7 +42,7 @@ Public Class TaskUI
 
     Public Sub Running()
         window.Invoke(Sub()
-                          status.Text = "Running"
+                          status.Text = "Running..."
                           status.BackColor = Color.Green
                       End Sub)
     End Sub
