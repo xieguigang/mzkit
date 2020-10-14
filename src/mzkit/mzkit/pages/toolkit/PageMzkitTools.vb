@@ -212,6 +212,10 @@ Public Class PageMzkitTools
     End Sub
 
     Public Sub showAlignment(result As AlignmentOutput)
+        If result Is Nothing Then
+            Return
+        End If
+
         Dim alignment = result.GetAlignmentMirror
         Dim prop As New AlignmentProperty(result)
 

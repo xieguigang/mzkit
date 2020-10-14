@@ -54,6 +54,14 @@ Public Class frmFileExplorer
         End If
     End Function
 
+    Public Iterator Function GetRawFiles() As IEnumerable(Of Raw)
+        Dim rawList = treeView1.Nodes.Item(Scan0)
+
+        For i As Integer = 0 To rawList.Nodes.Count - 1
+            Yield DirectCast(rawList.Nodes(i).Tag, Raw)
+        Next
+    End Function
+
     Public Iterator Function GetSelectedRaws() As IEnumerable(Of Raw)
         Dim rawList = treeView1.Nodes.Item(Scan0)
 
