@@ -53,6 +53,7 @@ Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Windows.Forms
 Imports mzkit.DockSample
 Imports SMRUCC.Rsharp.Interpreter
@@ -78,6 +79,8 @@ Namespace My
         Shared WithEvents console As Console
         Shared Rtask As Thread
         Shared cancel As New ManualResetEvent(initialState:=False)
+
+        Public Shared ReadOnly TaskQueue As New ThreadQueue
 
 #Region "mzkit"
         Public Shared ReadOnly Property mzkitRawViewer As PageMzkitTools

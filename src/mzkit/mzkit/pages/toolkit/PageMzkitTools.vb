@@ -212,6 +212,10 @@ Public Class PageMzkitTools
     End Sub
 
     Public Sub showAlignment(result As AlignmentOutput)
+        If result Is Nothing Then
+            Return
+        End If
+
         Dim alignment = result.GetAlignmentMirror
         Dim prop As New AlignmentProperty(result)
 
@@ -231,30 +235,6 @@ Public Class PageMzkitTools
         ShowTabPage(TabPage5)
 
         MyApplication.host.ShowPropertyWindow()
-    End Sub
-
-    Public Sub setCurrentFile()
-        'If TreeView1.Nodes.Count = 0 Then
-        '    MyApplication.host.showStatusMessage("No raw file opened.")
-        '    Return
-        'End If
-
-        'With TreeView1.CurrentRawFile.raw
-        '    Static selectedFile As String
-
-        '    If selectedFile <> MyApplication.host.ToolStripStatusLabel1.Text Then
-        '        selectedFile = $"{ .source.FileName} [{ .numOfScans} scans]"
-        '        MyApplication.host.showStatusMessage(selectedFile)
-        '        MyApplication.host.rawFeaturesList.ListBox1.Items.Clear()
-        '    End If
-
-        '    MyApplication.host.Text = $"BioNovoGene Mzkit [{ .source.GetFullPath}]"
-        'End With
-
-        'If Not TreeView1.CurrentRawFile.raw.cacheFileExists Then
-        '    TreeView1.SelectedNode.ImageIndex = 1
-        '    TreeView1.SelectedNode.SelectedImageIndex = 1
-        'End If
     End Sub
 
     Private Function rawTIC(raw As Raw, isBPC As Boolean) As NamedCollection(Of ChromatogramTick)
@@ -283,6 +263,11 @@ Public Class PageMzkitTools
         For Each raw As Raw In rawList
             TICList.Add(rawTIC(raw, isBPC))
         Next
+
+        If TICList.All(Function(file) file.All(Function(t) t.Intensity = 0.0)) Then
+            MyApplication.host.showStatusMessage("not able to create a TIC/BPC plot due to the reason of all of the tick intensity data is ZERO, please check your raw data file!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            Return
+        End If
 
         showMatrix(TICList(Scan0).value, TICList(Scan0).name)
 

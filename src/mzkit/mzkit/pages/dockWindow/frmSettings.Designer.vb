@@ -56,7 +56,7 @@ Partial Class frmSettings
         Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Panel1.Location = New System.Drawing.Point(235, 81)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(675, 347)
+        Me.Panel1.Size = New System.Drawing.Size(675, 315)
         Me.Panel1.TabIndex = 8
         '
         'TreeView1
@@ -78,13 +78,13 @@ Partial Class frmSettings
         TreeNode6.Name = "Node0"
         TreeNode6.Text = "Molecular Networking"
         Me.TreeView1.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode1, TreeNode3, TreeNode5, TreeNode6})
-        Me.TreeView1.Size = New System.Drawing.Size(217, 347)
+        Me.TreeView1.Size = New System.Drawing.Size(217, 315)
         Me.TreeView1.TabIndex = 7
         '
         'Button2
         '
         Me.Button2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button2.Location = New System.Drawing.Point(793, 450)
+        Me.Button2.Location = New System.Drawing.Point(797, 413)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(75, 21)
         Me.Button2.TabIndex = 6
@@ -94,7 +94,7 @@ Partial Class frmSettings
         'Button1
         '
         Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button1.Location = New System.Drawing.Point(692, 450)
+        Me.Button1.Location = New System.Drawing.Point(696, 413)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(75, 21)
         Me.Button1.TabIndex = 5

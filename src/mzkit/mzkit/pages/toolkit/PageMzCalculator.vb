@@ -135,7 +135,8 @@ Public Class PageMzCalculator
     Private Sub RunFeatureSearch(grid As DataGridView, e As DataGridViewCellEventArgs, ionMode As Integer)
         Dim row = grid.Rows(e.RowIndex)
         Dim mz As Double = Val(row.Cells(4).Value)
-        Dim ppm As Double = MyApplication.host.GetPPMError
+
+        Call FeatureSearchHandler.SearchByMz(mz, MyApplication.fileExplorer.GetRawFiles())
     End Sub
 
     Private Sub DataGridView2_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView2.CellClick
@@ -145,6 +146,10 @@ Public Class PageMzCalculator
     End Sub
 
     Private Sub DataGridView2_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView2.CellContentClick
+
+    End Sub
+
+    Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellContentClick
 
     End Sub
 End Class

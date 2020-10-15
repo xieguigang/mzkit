@@ -43,6 +43,7 @@
 
 #End Region
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -98,6 +99,19 @@ Namespace ASCII.MGF
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function StreamParser(path$, Optional filter As Func(Of String(), Boolean) = Nothing) As IEnumerable(Of Ions)
             Return path.ReadAllLines.StreamParser(filter)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function StreamParser(stream As Stream, Optional filter As Func(Of String(), Boolean) = Nothing) As IEnumerable(Of Ions)
+            Using reader As New StreamReader(stream)
+                Dim lines As New List(Of String)
+
+                Do While Not reader.EndOfStream
+                    lines.Add(reader.ReadLine)
+                Loop
+
+                Return lines.ToArray.StreamParser(filter)
+            End Using
         End Function
 
         <Extension>

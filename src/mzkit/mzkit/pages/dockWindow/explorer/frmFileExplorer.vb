@@ -54,6 +54,14 @@ Public Class frmFileExplorer
         End If
     End Function
 
+    Public Iterator Function GetRawFiles() As IEnumerable(Of Raw)
+        Dim rawList = treeView1.Nodes.Item(Scan0)
+
+        For i As Integer = 0 To rawList.Nodes.Count - 1
+            Yield DirectCast(rawList.Nodes(i).Tag, Raw)
+        Next
+    End Function
+
     Public Iterator Function GetSelectedRaws() As IEnumerable(Of Raw)
         Dim rawList = treeView1.Nodes.Item(Scan0)
 
@@ -109,14 +117,43 @@ Public Class frmFileExplorer
     End Sub
 
     Public Sub ImportsRaw(fileName As String)
-        Dim newRaw = getRawCache(fileName)
+        If treeView1.Nodes.Item(0).Nodes.Count = 0 Then
+            Call addFileNode(getRawCache(fileName))
+        Else
+            ' work in background
+            Dim taskList As TaskListWindow = MyApplication.host.taskWin
+            Dim task As TaskUI = taskList.Add("Imports Raw Data", fileName)
 
-        treeView1.Nodes(0).Nodes.Add(New TreeNode(newRaw.source.FileName) With {.Tag = newRaw})
+            taskList.Show(MyApplication.host.dockPanel)
 
-        MyApplication.host.showStatusMessage("Ready!")
-        MyApplication.host.ToolStripStatusLabel2.Text = GetTotalCacheSize()
+            Call MyApplication.TaskQueue.AddToQueue(
+                Sub()
+                    Call task.Running()
+
+                    Dim importsTask As New Task.ImportsRawData(
+                        file:=fileName,
+                        progress:=Sub(msg)
+                                      ' do nothing
+                                      Call task.ProgressMessage(msg)
+                                  End Sub,
+                        finished:=Sub()
+                                      Call task.Finish()
+                                  End Sub)
+
+                    importsTask.RunImports()
+                    addFileNode(importsTask.raw)
+                End Sub)
+        End If
     End Sub
 
+    Public Sub addFileNode(newRaw As Raw)
+        Me.Invoke(Sub()
+                      treeView1.Nodes(0).Nodes.Add(New TreeNode(newRaw.source.FileName) With {.Tag = newRaw})
+                  End Sub)
+
+        MyApplication.host.showStatusMessage("Ready!")
+        MyApplication.host.UpdateCacheSize(GetTotalCacheSize)
+    End Sub
 
     ''' <summary>
     ''' do raw data file imports task
@@ -148,9 +185,17 @@ Public Class frmFileExplorer
         Call treeView1.SaveRawFileCache(progress)
     End Sub
 
-    Private Sub showRawFile(raw As Raw)
+    Public Sub showRawFile(raw As Raw)
         Call MyApplication.host.rawFeaturesList.LoadRaw(raw)
         Call MyApplication.host.mzkitTool.showScatter(raw)
+
+        Dim propertyWin = MyApplication.host.propertyWin
+
+        propertyWin.propertyGrid.SelectedObject = New RawFileProperty(raw)
+        propertyWin.propertyGrid.Refresh()
+
+        MyApplication.host.ShowPropertyWindow()
+        MyApplication.host.Text = $"BioNovoGene Mzkit [{raw.source.GetFullPath}]"
     End Sub
 
     Public Sub AddScript(script As String)
@@ -165,12 +210,6 @@ Public Class frmFileExplorer
         If TypeOf treeView1.SelectedNode.Tag Is Raw Then
             Call showRawFile(DirectCast(treeView1.SelectedNode.Tag, Raw))
 
-            Dim propertyWin = MyApplication.host.propertyWin
-
-            propertyWin.propertyGrid.SelectedObject = New RawFileProperty(DirectCast(treeView1.SelectedNode.Tag, Raw))
-            propertyWin.propertyGrid.Refresh()
-
-            MyApplication.host.ShowPropertyWindow()
         ElseIf TypeOf treeView1.SelectedNode.Tag Is String Then
             ' 选择了一个脚本文件
             Dim path As String = DirectCast(treeView1.SelectedNode.Tag, String).GetFullPath
@@ -180,10 +219,12 @@ Public Class frmFileExplorer
 
             If Not script Is Nothing Then
                 script.Show(MyApplication.host.dockPanel)
+                MyApplication.host.Text = $"BioNovoGene Mzkit [{path.GetFullPath}]"
             ElseIf path.FileExists Then
                 ' 脚本文件还没有被打开
                 ' 在这里打开脚本文件
                 MyApplication.host.openRscript(path)
+                MyApplication.host.Text = $"BioNovoGene Mzkit [{path.GetFullPath}]"
             Else
                 MyApplication.host.showStatusMessage($"script file '{path.FileName}' is not exists...", My.Resources.StatusAnnotations_Warning_32xLG_color)
                 e.Node.ImageIndex = 4
@@ -228,6 +269,16 @@ Public Class frmFileExplorer
             Call deleteFileNode(node:=treeView1.SelectedNode)
         End If
     End Sub
+
+    Public Function findRawFileNode(sourceName As String) As TreeNode
+        For Each node As TreeNode In treeView1.Nodes(0).Nodes
+            If DirectCast(node.Tag, Raw).source.FileName = sourceName Then
+                Return node
+            End If
+        Next
+
+        Return Nothing
+    End Function
 
     Public Function findRawFileNode(raw As Raw) As TreeNode
         For Each node As TreeNode In treeView1.Nodes(0).Nodes
@@ -292,5 +343,9 @@ Public Class frmFileExplorer
         Next
 
         Call FeatureSearchHandler.SearchByMz(TextBox2.Text, raws)
+    End Sub
+
+    Private Sub ImportsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImportsToolStripMenuItem.Click
+        Call MyApplication.host.ImportsFiles()
     End Sub
 End Class

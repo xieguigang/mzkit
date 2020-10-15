@@ -229,6 +229,7 @@
       <HintPath>..\dist\Microsoft.Windows.Ribbon.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
@@ -245,6 +246,9 @@
     </Reference>
     <Reference Include="System.Windows.Forms.TreeListView">
       <HintPath>..\dist\System.Windows.Forms.TreeListView.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Notification">
+      <HintPath>..\dist\System.Windows.Notification.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -303,6 +307,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="pages\dockWindow\documents\FeatureSearchHandler.vb" />
+    <Compile Include="pages\dockWindow\tools\TaskListWindow.Designer.vb">
+      <DependentUpon>TaskListWindow.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\dockWindow\tools\TaskListWindow.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="pages\dockWindow\tools\OutputWindow.Designer.vb">
       <DependentUpon>OutputWindow.vb</DependentUpon>
     </Compile>
@@ -536,6 +546,9 @@
       <DependentUpon>frmStartPage.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\base\ToolWindow.resx" />
+    <EmbeddedResource Include="pages\dockWindow\tools\TaskListWindow.resx">
+      <DependentUpon>TaskListWindow.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="pages\toolkit\PageMoleculeNetworking.resx">
       <DependentUpon>PageMoleculeNetworking.vb</DependentUpon>
     </EmbeddedResource>

@@ -1,13 +1,29 @@
-﻿Public Class RawFileProperty
+﻿Imports System.ComponentModel
 
+Public Class RawFileProperty
+
+    <Description("the data file its source path.")>
+    <Category("Local File")>
     Public Property source As String
+    <Description("the data file its file length.")>
+    <Category("Local File")>
     Public Property fileSize As String
+    <Description("the cache file its source path.")>
+    <Category("Local File")>
     Public Property cacheSize As String
 
+    <Description("the rt lower bound of the ions in current data file.")>
+    <Category("Data Summary")>
     Public Property rtmin As Double
+    <Description("the rt upper bound of the ions in current data file.")>
+    <Category("Data Summary")>
     Public Property rtmax As Double
 
+    <Description("the number of the MS1 scans in current data file.")>
+    <Category("Data Summary")>
     Public Property ms_scans As Integer
+    <Description("the number of the MS/MS scans in current data file.")>
+    <Category("Data Summary")>
     Public Property msms_scans As Integer
 
     ReadOnly raw As Raw

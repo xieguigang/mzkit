@@ -134,7 +134,7 @@ Public Class frmRawFeaturesList
             Next
         End If
 
-        Me.checked = Me.checked.Distinct.ToList
+        Me.checked = Me.checked.Distinct.AsList
 
         ClearToolStripMenuItem.Text = $"Clear [{checked.Count} XIC Ions]"
     End Sub
@@ -191,6 +191,8 @@ Public Class frmRawFeaturesList
 
         Call MyApplication.host.mzkitTool.showSpectrum(scanId, raw)
         Call MyApplication.host.mzkitTool.ShowPage()
+
+        MyApplication.host.Text = $"BioNovoGene Mzkit [{CurrentRawFile.source.GetFullPath}]"
     End Sub
 
     Private Sub CollapseToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CollapseToolStripMenuItem.Click
@@ -227,6 +229,12 @@ Public Class frmRawFeaturesList
                 MyApplication.host.showStatusMessage("Show XIC plot for too many ions has been cancel!")
                 Return
             End If
+        ElseIf CurrentRawFile Is Nothing Then
+            MyApplication.host.showStatusMessage("No raw data file is selected!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            Return
+        ElseIf treeView1.SelectedNode Is Nothing OrElse treeView1.SelectedNode.Text Is Nothing Then
+            MyApplication.host.showStatusMessage("No ion data selected for create XIC plot!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            Return
         End If
 
         ' scan节点

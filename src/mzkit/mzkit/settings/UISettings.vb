@@ -65,6 +65,7 @@ Public Class UISettings
     Public Property featureListDock As DockState = DockState.DockLeftAutoHide
     Public Property OutputDock As DockState = DockState.DockBottomAutoHide
     Public Property propertyWindowDock As DockState = DockState.DockRightAutoHide
+    Public Property taskListDock As DockState = DockState.DockBottomAutoHide
 
     ' set ribbon colors
     ' _ribbon.SetColors(Color.Wheat, Color.IndianRed, Color.BlueViolet)
