@@ -151,6 +151,8 @@ Public Class frmFileExplorer
                       treeView1.Nodes(0).Nodes.Add(New TreeNode(newRaw.source.FileName) With {.Tag = newRaw})
                   End Sub)
 
+        Globals.workspace.Add(newRaw)
+
         MyApplication.host.showStatusMessage("Ready!")
         MyApplication.host.UpdateCacheSize(GetTotalCacheSize)
     End Sub
@@ -185,7 +187,13 @@ Public Class frmFileExplorer
         Call treeView1.SaveRawFileCache(progress)
     End Sub
 
+    Dim lockFileDelete As Boolean = False
+
     Public Sub showRawFile(raw As Raw)
+        If lockFileDelete Then
+            Return
+        End If
+
         Call MyApplication.host.rawFeaturesList.LoadRaw(raw)
         Call MyApplication.host.mzkitTool.showScatter(raw)
 
@@ -282,9 +290,13 @@ Public Class frmFileExplorer
         ElseIf fileList.Count = 0 Then
             Call deleteFileNode(node:=treeView1.SelectedNode, confirmDialog:=True)
         ElseIf Messagebox.Show($"Confirm to remove {fileList.Count} files from current workspace?", "File Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+            lockFileDelete = True
+
             For Each file In fileList
                 Call deleteFileNode(file, confirmDialog:=False)
             Next
+
+            lockFileDelete = False
         End If
     End Sub
 
