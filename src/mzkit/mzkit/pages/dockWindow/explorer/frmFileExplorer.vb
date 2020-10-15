@@ -263,10 +263,28 @@ Public Class frmFileExplorer
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Private Sub DeleteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeleteToolStripMenuItem.Click
-        If treeView1.SelectedNode Is Nothing Then
+        Dim fileList As New List(Of TreeNode)
+
+        For Each node As TreeNode In treeView1.Nodes(0).Nodes
+            If node.Checked Then
+                fileList.Add(node)
+            End If
+        Next
+
+        For Each node As TreeNode In treeView1.Nodes(1).Nodes
+            If node.Checked Then
+                fileList.Add(node)
+            End If
+        Next
+
+        If fileList.Count = 0 AndAlso treeView1.SelectedNode Is Nothing Then
             Return
-        Else
-            Call deleteFileNode(node:=treeView1.SelectedNode)
+        ElseIf fileList.Count = 0 Then
+            Call deleteFileNode(node:=treeView1.SelectedNode, confirmDialog:=True)
+        ElseIf Messagebox.Show($"Confirm to remove {fileList.Count} files from current workspace?", "File Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+            For Each file In fileList
+                Call deleteFileNode(file, confirmDialog:=False)
+            Next
         End If
     End Sub
 
@@ -290,7 +308,7 @@ Public Class frmFileExplorer
         Return Nothing
     End Function
 
-    Public Function deleteFileNode(node As TreeNode) As DialogResult
+    Public Function deleteFileNode(node As TreeNode, confirmDialog As Boolean) As DialogResult
         ' 跳过根节点
         If node Is Nothing OrElse node.Tag Is Nothing Then
             Return DialogResult.No
@@ -304,12 +322,18 @@ Public Class frmFileExplorer
             fileName = DirectCast(node.Tag, String).FileName
         End If
 
-        Dim opt As DialogResult = MessageBox.Show(
-            text:=$"Going to removes {fileName} from your workspace?",
-            caption:="Delete workspace file",
-            buttons:=MessageBoxButtons.YesNo,
-            icon:=MessageBoxIcon.Question
-        )
+        Dim opt As DialogResult
+
+        If confirmDialog Then
+            opt = MessageBox.Show(
+                text:=$"Going to removes {fileName} from your workspace?",
+                caption:="Delete workspace file",
+                buttons:=MessageBoxButtons.YesNo,
+                icon:=MessageBoxIcon.Question
+            )
+        Else
+            opt = DialogResult.Yes
+        End If
 
         If opt = DialogResult.Yes Then
             If TypeOf node.Tag Is Raw Then
