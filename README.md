@@ -31,7 +31,12 @@ SOFTWARE.
 ```
 
 <div style="page-break-after:always;"></div>
+
+<div style="width: 100%; text-align: center;">
 <div style="font-size: 3em;">--==== TOC ====--</div>
+</div>
+
+<hr />
 
 <!-- vscode-markdown-toc -->
 * 1. [Raw Data Viewer Instruction](#RawDataViewerInstruction)
