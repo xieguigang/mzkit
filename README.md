@@ -1,6 +1,6 @@
 <link rel="manifest" href="/manifest.json">
 
-# <span style="font-size: 3em;">Mzkit</span>
+# <span style="font-size: 3em;">Mzkit</span> [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4091067.svg)](https://doi.org/10.5281/zenodo.4091067)
 
 ![](docs/manual/splash.PNG)
 
