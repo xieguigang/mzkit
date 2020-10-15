@@ -197,6 +197,7 @@ Public Class ImportsRawData
             Dim ms1Parent As Ms1ScanEntry = Nothing
             Dim ms2Temp As New List(Of ScanEntry)
             Dim rt As New List(Of Double)
+            Dim i As i32 = 1
 
             For Each scan As mzXML.scan In mzXML.XML.LoadScans(source)
                 If scan.peaks.compressedLen = 0 OrElse DirectCast(scan.peaks, IBase64Container).BinaryArray.StringEmpty Then
@@ -214,7 +215,12 @@ Public Class ImportsRawData
                     New attribute With {.name = NameOf(scan.precursorMz.precursorCharge), .type = CDFDataTypes.DOUBLE, .value = scan.precursorMz.precursorCharge}
                 }
                 data = compress(scan.peaks.Base64Decode(True)).ToArray
-                name = scan.getName & $" scan={nscans.Count + 1}"
+
+                If scan.msLevel = 1 Then
+                    name = scan.getName & $" scan={nscans.Count + 1}"
+                Else
+                    name = scan.getName & $" index={++i}"
+                End If
 
                 Dim scanData As New CDFData With {.numerics = data}
                 Dim scanSize As New Dimension With {
@@ -291,6 +297,7 @@ Public Class ImportsRawData
             Dim rt As New List(Of Double)
             Dim ms1Parent As Ms1ScanEntry = Nothing
             Dim ms2Temp As New List(Of ScanEntry)
+            Dim j As i32 = 1
 
             For Each scan As spectrum In mzML.Xml.LoadScans(source)
                 Dim parent As (mz As Double, into As Double) = Nothing
@@ -336,7 +343,7 @@ Public Class ImportsRawData
                 If scan.ms_level = 1 Then
                     name = $"[MS1] {scanType}_{nscans.Count + 1}, ({polarity}) retentionTime={CInt(scan.scan_time)}"
                 Else
-                    name = $"[MS/MS] {scanType}_{nscans.Count + 1}, ({polarity}) M{CInt(parent.mz)}T{CInt(scan.scan_time)}"
+                    name = $"[MS/MS] {scanType}_index={++j}, ({polarity}) M{CInt(parent.mz)}T{CInt(scan.scan_time)}"
                 End If
 
                 rt.Add(scan.scan_time)
