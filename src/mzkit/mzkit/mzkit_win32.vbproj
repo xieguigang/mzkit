@@ -288,6 +288,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="forms\ISplashScreenUpdater.vb" />
+    <Compile Include="pages\contextMenu\ToggleSlider.Designer.vb">
+      <DependentUpon>ToggleSlider.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\contextMenu\ToggleSlider.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="pages\dockWindow\documents\frmSpectrumSearch.Designer.vb">
       <DependentUpon>frmSpectrumSearch.vb</DependentUpon>
     </Compile>
@@ -517,6 +523,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="forms\frmProgressSpinner.resx">
       <DependentUpon>frmProgressSpinner.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pages\contextMenu\ToggleSlider.resx">
+      <DependentUpon>ToggleSlider.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\documents\frmFeatureSearch.resx">
       <DependentUpon>frmFeatureSearch.vb</DependentUpon>
