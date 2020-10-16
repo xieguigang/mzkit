@@ -49,6 +49,14 @@ Public Class ViewerProject : Implements ISaveHandle, IFileReference
         End If
     End Function
 
+    Public Sub Add(raw As Raw)
+        If Not cacheFiles.ContainsKey(raw.source.FileName) Then
+            cacheFiles.Add(raw.source.FileName, {})
+        End If
+
+        cacheFiles(raw.source.FileName) = cacheFiles(raw.source.FileName).JoinIterates(raw).ToArray
+    End Sub
+
     Public Function FindRawFile(path As String) As Raw
         Return GetRawDataFiles.Where(Function(a) a.source.GetFullPath = path.GetFullPath).FirstOrDefault
     End Function

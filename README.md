@@ -1,10 +1,10 @@
 <link rel="manifest" href="/manifest.json">
 
-# <span style="font-size: 3em;">Mzkit</span>
+# <span style="font-size: 3em;">Mzkit</span> [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4091067.svg)](https://doi.org/10.5281/zenodo.4091067)
 
 ![](docs/manual/splash.PNG)
 
-Mzkit is an open source raw data file toolkit for mass spectrometry data analysis, provides by the ``BioNovoGene`` corporation. The features of mzkit inlcudes: raw data file content viewer(XIC/TIC/Mass spectrum plot), build molecule network, formula de-novo search and annotation.
+Mzkit is an open source raw data file toolkit for mass spectrometry data analysis, provides by the ``BioNovoGene`` corporation. The features of mzkit inlcudes: raw data file content viewer(XIC/TIC/Mass spectrum plot), build molecule network, formula de-novo search and de-novo annotation.
 
 ```
 MIT License
@@ -31,7 +31,12 @@ SOFTWARE.
 ```
 
 <div style="page-break-after:always;"></div>
+
+<div style="width: 100%; text-align: center;">
 <div style="font-size: 3em;">--==== TOC ====--</div>
+</div>
+
+<hr />
 
 <!-- vscode-markdown-toc -->
 * 1. [Raw Data Viewer Instruction](#RawDataViewerInstruction)
@@ -92,6 +97,8 @@ SOFTWARE.
 
 ##  1. <a name='RawDataViewerInstruction'></a>Raw Data Viewer Instruction
 
+**Important Note: this application only supports the open source ``mzXML/mzML`` raw data file formats. For view the data in the vendor format file like the ``Thermo *.Raw`` required convert to the mzXML file format at first. It is recommended that convert the vendor format file to mzXML via [ProteoWizard](https://github.com/ProteoWizard/pwiz).**
+
 ###  1.1. <a name='Importsrawdatafile'></a>Imports raw data file
 
 For view the file content of the mzXML or mzML datafile in mzkit, you must imports the raw data file into the mzkit at first. Here is how: select the ``Main`` tabpage of mzkit you will see the ``Open`` command for the raw data imports operation. Then you are going to click this ``Open`` command button, choose the raw data file for imports and wait for it finished. 
@@ -101,6 +108,12 @@ For view the file content of the mzXML or mzML datafile in mzkit, you must impor
 Then you should see the files that you've imports into mzkit on the ``File Explorer`` dock panel if there is no error occurs during the raw data file imports progress. Now you can click on the raw data file tree to expend it and click one of the feature in your raw file to view the content data.
 
 ![](docs/manual/file-explorer.png)
+
+#### Background Task
+
+For improvements of the user experience when you are using the mzkit application, the raw data files is imports to mzkit application under a background task. You can see the background task progress throught the ``Task List`` window:
+
+![](docs/manual/Task_list.PNG)
 
 <div style="page-break-after:always;"></div>
 
