@@ -74,7 +74,7 @@ Public Class PageMzCalculator
             mzText = type.CalcMZ(exact_mass)
             mzText = If(Val(mzText) < 0, "n/a", mzText)
 
-            Call show.Rows.Add(type.ToString, type.adducts, type.M, type.charge, mzText, "Search")
+            Call show.Rows.Add(type.ToString, type.adducts, type.M, type.charge, mzText, "Search"， "Search")
         Next
     End Sub
 
@@ -142,6 +142,8 @@ Public Class PageMzCalculator
     Private Sub DataGridView2_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView2.CellClick
         If e.ColumnIndex = 5 AndAlso e.RowIndex > -1 Then
             RunFeatureSearch(DataGridView2, e, -1)
+        ElseIf e.ColumnIndex = 6 AndAlso e.RowIndex > -1 Then
+
         End If
     End Sub
 
