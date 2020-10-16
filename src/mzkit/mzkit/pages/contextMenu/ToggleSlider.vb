@@ -51,14 +51,12 @@ Partial Public Class ToggleSlider
         End Set
     End Property
 
-    Private Text As String = "toggleSlider1"
-
-    Public Property ToggleBarText As String
+    Public Overrides Property Text As String
         Get
-            Return Text
+            Return MyBase.Text
         End Get
-        Set(ByVal value As String)
-            Text = value
+        Set(value As String)
+            MyBase.Text = value
             Invalidate()
         End Set
     End Property
@@ -88,7 +86,7 @@ Partial Public Class ToggleSlider
         End If
 
         pevent.Graphics.FillEllipse(New SolidBrush(ToggleColorDisabled_Color), CSng(posx), CSng(posy), CSng(circle_size.Width / 2), CSng(circle_size.Height / 2))
-        TextRenderer.DrawText(pevent.Graphics, ToggleBarText, Font, New Point(circle_size.Width, circle_size.Height / 10), ForeColor)
+        TextRenderer.DrawText(pevent.Graphics, Text, Font, New Point(circle_size.Width, circle_size.Height / 10), ForeColor)
         SetStyle(ControlStyles.SupportsTransparentBackColor, True)
     End Sub
 
