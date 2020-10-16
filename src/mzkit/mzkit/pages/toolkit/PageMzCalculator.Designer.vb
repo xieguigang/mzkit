@@ -224,7 +224,6 @@ Partial Class PageMzCalculator
         Me.ToggleSlider1.Name = "ToggleSlider1"
         Me.ToggleSlider1.Size = New System.Drawing.Size(231, 42)
         Me.ToggleSlider1.TabIndex = 11
-        Me.ToggleSlider1.Text = "Toggle M/Z Search"
         Me.ToggleSlider1.ToggleCircleColor = System.Drawing.Color.DeepSkyBlue
         Me.ToggleSlider1.ToggleColorBar = System.Drawing.Color.Silver
         '
