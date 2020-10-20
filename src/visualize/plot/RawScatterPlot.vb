@@ -79,7 +79,8 @@ Public Module RawScatterPlot
                          Optional mapLevels As Integer = 25,
                          Optional legendTitleCSS$ = CSSFont.PlotSubTitle,
                          Optional tickCSS$ = CSSFont.Win7Large,
-                         Optional axisStroke$ = Stroke.AxisStroke) As GraphicsData
+                         Optional axisStroke$ = Stroke.AxisStroke,
+                         Optional labelFontStyle$ = CSSFont.Win7VeryLarge) As GraphicsData
 
         ' 先转换为散点图的数据系列
         Dim colors As String() = Designer.GetColors(sampleColors, mapLevels).Select(Function(c) c.ToHtmlColor).ToArray
@@ -124,7 +125,8 @@ Public Module RawScatterPlot
             showLegend:=False,
             tickFontStyle:=tickCSS,
             axisStroke:=axisStroke,
-            scatterReorder:=True
+            scatterReorder:=True,
+            labelFontStyle:=labelFontStyle
         )
 
         ' 绘制标尺

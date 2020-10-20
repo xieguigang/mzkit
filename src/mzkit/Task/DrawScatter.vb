@@ -11,6 +11,7 @@ Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Public Module DrawScatter
 
@@ -38,6 +39,13 @@ Public Module DrawScatter
             Next
         End Using
 
-        Return RawScatterPlot.Plot(ms1, margin:="padding:200px 600px 200px 200px;", rawfile:=raw.source.FileName).AsGDIImage
+        Return RawScatterPlot.Plot(
+            samples:=ms1,
+            margin:="padding:200px 600px 300px 300px;",
+            rawfile:=raw.source.FileName,
+            tickCSS:=CSSFont.Win7VeryLarge,
+            legendTitleCSS:=CSSFont.Win7VeryVeryLarge,
+            labelFontStyle:=CSSFont.Win7VeryVeryLarge
+).AsGDIImage
     End Function
 End Module
