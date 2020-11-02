@@ -284,9 +284,10 @@ Public Class ProteoWizardCLI : Inherits InteropService
         Call input.__INFO_ECHO
         Call args.SetValue(args.TrimNewLine(" "))
 
-        Dim proc = Me.RunProgram(args, )
-        proc.Run()
-        std = proc.StandardOutput
+        'Dim proc = Me.RunProgram(args, )
+        'proc.Run()
+        'std = proc.StandardOutput
+        std = CommandLine.Call(ProteoWizardCLI.BIN, args)
 
         Return std
     End Function
