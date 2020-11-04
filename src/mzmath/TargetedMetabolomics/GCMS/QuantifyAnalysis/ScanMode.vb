@@ -252,7 +252,7 @@ Namespace GCMS.QuantifyAnalysis
                         .ID = target.ID,
                         .baseline = target.baseline,
                         .integration = target.integration,
-                        .content = standardCurve.linear(TPA),
+                        .content = standardCurve.linear.GetY(TPA),
                         .mass_spectra = target.mass_spectra,
                         .maxInto = target.maxInto,
                         .ri = target.ri,
