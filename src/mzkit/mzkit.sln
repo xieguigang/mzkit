@@ -123,6 +123,7 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{1579d1a8-73c4-4f97-bb57-3d1e62343599}*SharedItemsImports = 4
 		..\..\..\GCModeller\src\R-sharp\studio\Rstudio.common\Rstudio.common.projitems*{3a35ac34-f313-4f72-89e9-eacca217bc8d}*SharedItemsImports = 4
+		..\..\..\GCModeller\src\runtime\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\TcpRequest\TcpRequest.projitems*{3a35ac34-f313-4f72-89e9-eacca217bc8d}*SharedItemsImports = 4
 		..\..\Rscript\Library\mzkit.interopArguments\mzkit.interopArguments.projitems*{7a42d5a0-8058-459c-a139-195b6022a710}*SharedItemsImports = 4
 		..\..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{c5c3428c-d64c-4e79-b239-77adc66b1156}*SharedItemsImports = 4
 	EndGlobalSection
