@@ -4,6 +4,7 @@ Imports mzkit.Kesoft.Windows.Forms.Win7StyleTreeView
 Imports mzkit.My
 Imports RibbonLib.Interop
 Imports Task
+Imports Vip.Notification
 
 ''' <summary>
 ''' 显示一个workspace对象里面所包含有的文件列表
@@ -124,8 +125,8 @@ Public Class frmFileExplorer
             Dim taskList As TaskListWindow = MyApplication.host.taskWin
             Dim task As TaskUI = taskList.Add("Imports Raw Data", fileName)
 
-            taskList.Show(MyApplication.host.dockPanel)
-
+            Call taskList.Show(MyApplication.host.dockPanel)
+            Call Alert.ShowSucess($"Imports raw data files in background,{vbCrLf}you can open [Task List] panel for view task progress.")
             Call MyApplication.TaskQueue.AddToQueue(
                 Sub()
                     Call task.Running()
@@ -289,7 +290,7 @@ Public Class frmFileExplorer
             Return
         ElseIf fileList.Count = 0 Then
             Call deleteFileNode(node:=treeView1.SelectedNode, confirmDialog:=True)
-        ElseIf Messagebox.Show($"Confirm to remove {fileList.Count} files from current workspace?", "File Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+        ElseIf MessageBox.Show($"Confirm to remove {fileList.Count} files from current workspace?", "File Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
             lockFileDelete = True
 
             For Each file In fileList
