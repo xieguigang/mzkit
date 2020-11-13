@@ -275,6 +275,12 @@
   <ItemGroup>
     <Compile Include="application\ApplicationEvents.vb" />
     <Compile Include="application\RPackage.vb" />
+    <Compile Include="forms\frmTweaks\frmTweaks.Designer.vb">
+      <DependentUpon>frmTweaks.vb</DependentUpon>
+    </Compile>
+    <Compile Include="forms\frmTweaks\frmTweaks.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="forms\frmProgressSpinner.Designer.vb">
       <DependentUpon>frmProgressSpinner.vb</DependentUpon>
     </Compile>
@@ -523,6 +529,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="forms\frmProgressSpinner.resx">
       <DependentUpon>frmProgressSpinner.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\frmTweaks\frmTweaks.resx">
+      <DependentUpon>frmTweaks.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pages\contextMenu\ToggleSlider.resx">
       <DependentUpon>ToggleSlider.vb</DependentUpon>
