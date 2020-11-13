@@ -78,6 +78,7 @@ Public Class Raw
     End Property
 
     Public Property scans As Ms1ScanEntry()
+    Public Property UVscans As UVScan()
 
     Public ReadOnly Property cacheFileExists As Boolean
         Get
@@ -129,4 +130,11 @@ Public Class ScanEntry : Inherits MsScanEntry
     Public Overrides Function ToString() As String
         Return id
     End Function
+End Class
+
+Public Class UVScan
+
+    Public Property wavelength As Double()
+    Public Property intensity As Double()
+
 End Class
