@@ -60,6 +60,7 @@ Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.Text
 Imports mzML = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 
@@ -297,14 +298,16 @@ Public Class ImportsRawData
             Dim rt As New List(Of Double)
             Dim ms1Parent As Ms1ScanEntry = Nothing
             Dim ms2Temp As New List(Of ScanEntry)
+            Dim UVscans As New List(Of GeneralSignal)
             Dim j As i32 = 1
+            Dim UVdetecor As String = GetPhotodiodeArrayDetectorInstrumentConfigurationId(source)
 
             For Each scan As spectrum In mzML.Xml.LoadScans(source)
                 Dim parent As (mz As Double, into As Double) = Nothing
 
-                If Not scan.cvParams.KeyItem("electromagnetic radiation spectrum") Is Nothing Then
-                    Call showProgress($"skip electromagnetic radiation spectrum at {scan.scan_time}...")
-                    Continue For
+                If Not scan.cvParams.KeyItem(UVScanType) Is Nothing Then
+                    Call showProgress($"load electromagnetic radiation spectrum at {scan.scan_time}...")
+                    Call UVscans.Add(scan.CreateGeneralSignal(UVdetecor))
                 End If
 
                 If scan.ms_level > 1 Then
@@ -398,6 +401,16 @@ Public Class ImportsRawData
             raw.scans = nscans.ToArray
             raw.rtmin = rt.Min
             raw.rtmax = rt.Max
+            raw.UVscans = UVscans _
+                .Select(Function(uv)
+                            Return New UVScan With {
+                                .intensity = uv.Strength,
+                                .scan_time = Val(uv.meta("scan_time")),
+                                .total_ion_current = Val(uv.meta("total_ion_current")),
+                                .wavelength = uv.Measures
+                            }
+                        End Function) _
+                .ToArray
 
             Call showProgress("Write cache data...")
         End Using
