@@ -136,5 +136,7 @@ Public Class UVScan
 
     Public Property wavelength As Double()
     Public Property intensity As Double()
+    Public Property total_ion_current As Double
+    Public Property scan_time As Double
 
 End Class
