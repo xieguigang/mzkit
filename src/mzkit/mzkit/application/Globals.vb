@@ -154,6 +154,10 @@ Module Globals
         End If
 
         If Not defaultWorkspace.FileExists Then
+            currentWorkspace = New ViewerProject With {
+                .FilePath = defaultWorkspace
+            }
+
             Return 0
         Else
             Call sharedProgressUpdater("Load raw file list...")
@@ -183,8 +187,6 @@ Module Globals
         currentWorkspace = files
 
         If files.GetAutomationScripts.SafeQuery.Count > 0 Then
-
-
             For Each script As String In files.GetAutomationScripts
                 Dim fileNode As New TreeNode(script.FileName) With {
                     .Checked = False,
