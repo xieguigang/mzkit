@@ -59,6 +59,7 @@ Public Class frmRsharp
 
     Private Sub frmRsharp_Load(sender As Object, e As EventArgs) Handles Me.Load
         TabText = "R# Terminal"
+        Text = TabText
 
         Me.Icon = My.Resources.Rscript
         Me.ShowIcon = True
