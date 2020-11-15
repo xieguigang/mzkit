@@ -1,0 +1,1 @@
+If you have already installed the mzkit application, please uninstall the previous version before you install the new version of the mzkit application.
