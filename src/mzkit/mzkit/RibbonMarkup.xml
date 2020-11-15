@@ -716,12 +716,22 @@
 			</Command.LargeImages>
 		</Command>
 
-
+		<Command Name="cmdFontControl" Id="1155">
+		</Command>
 	</Application.Commands>
 
 	<Application.Views>
 
 		<ContextPopup>
+
+			<ContextPopup.MiniToolbars>
+				<MiniToolbar Name="MiniToolbar">
+					<MenuGroup>
+						<FontControl CommandName="cmdFontControl"/>
+					</MenuGroup>				
+				</MiniToolbar>
+			</ContextPopup.MiniToolbars>
+			
 			<ContextPopup.ContextMenus>
 				<ContextMenu Name="ContextMenu">
 					<MenuGroup>

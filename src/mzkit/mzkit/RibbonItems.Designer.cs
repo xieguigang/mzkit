@@ -98,6 +98,7 @@ namespace RibbonLib.Controls
             public const uint cmdButtonExit = 1004;
             public const uint cmdQAT = 1015;
             public const uint cmdButtonPageNavBack = 1053;
+            public const uint cmdFontControl = 1155;
             public const uint cmdButtonExportImage = 1104;
             public const uint cmdButtonExportMatrix = 1105;
             public const uint cmdContextMap = 1106;
@@ -189,6 +190,7 @@ namespace RibbonLib.Controls
         public RibbonButton ButtonExit { get; private set; }
         public RibbonQuickAccessToolbar QAT { get; private set; }
         public RibbonButton ButtonPageNavBack { get; private set; }
+        public RibbonFontControl FontControl { get; private set; }
         public RibbonButton ButtonExportImage { get; private set; }
         public RibbonButton ButtonExportMatrix { get; private set; }
 
@@ -278,6 +280,7 @@ namespace RibbonLib.Controls
             ButtonExit = new RibbonButton(ribbon, Cmd.cmdButtonExit);
             QAT = new RibbonQuickAccessToolbar(ribbon, Cmd.cmdQAT, Cmd.cmdCustomizeQAT);
             ButtonPageNavBack = new RibbonButton(ribbon, Cmd.cmdButtonPageNavBack);
+            FontControl = new RibbonFontControl(ribbon, Cmd.cmdFontControl);
             ButtonExportImage = new RibbonButton(ribbon, Cmd.cmdButtonExportImage);
             ButtonExportMatrix = new RibbonButton(ribbon, Cmd.cmdButtonExportMatrix);
             initialized = true;
