@@ -282,6 +282,8 @@ or just select a page from the app switcher toolstrip menu:
 
 ###  3.2. <a name='InstallMzkit'></a>Install Mzkit
 
+> If you have already installed the mzkit application, please uninstall the previous version before you install the new version of the mzkit application.
+
 ![](docs/manual/setup.PNG)
 
 When you have extract the zip package of the mzkit compression package, then you could found a ``setup.exe`` install application in the top of folder. Click on this setup application, then your will going to install mzkit program into your computer system.
