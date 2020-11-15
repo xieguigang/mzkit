@@ -146,6 +146,9 @@ Module Globals
         Dim scripts As New TreeNode("R# Automation") With {.ImageIndex = 1, .SelectedImageIndex = 1, .StateImageIndex = 1}
         Dim rawFiles As New TreeNode("Raw Data Files") With {.ImageIndex = 0, .StateImageIndex = 0, .SelectedImageIndex = 0}
 
+        explorer.Nodes.Add(rawFiles)
+        explorer.Nodes.Add(scripts)
+
         If defaultWorkspace.StringEmpty Then
             defaultWorkspace = Globals.defaultWorkspace
         End If
@@ -177,8 +180,6 @@ Module Globals
             i += 1
         Next
 
-        explorer.Nodes.Add(rawFiles)
-        explorer.Nodes.Add(scripts)
         currentWorkspace = files
 
         If files.GetAutomationScripts.SafeQuery.Count > 0 Then

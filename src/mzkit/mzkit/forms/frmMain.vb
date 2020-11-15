@@ -470,8 +470,11 @@ Public Class frmMain
 
         splashScreen.UpdateInformation("Load configurations...")
 
-        If (Not Globals.Settings.ui Is Nothing) AndAlso
-            (Not (Globals.Settings.ui.width = 0 OrElse Globals.Settings.ui.height = 0)) AndAlso
+        If Globals.Settings.ui Is Nothing Then
+            Globals.Settings.ui = New UISettings
+        End If
+
+        If (Not (Globals.Settings.ui.width = 0 OrElse Globals.Settings.ui.height = 0)) AndAlso
             Globals.Settings.ui.window <> FormWindowState.Minimized AndAlso
             Globals.Settings.ui.rememberWindowsLocation Then
 
@@ -589,10 +592,12 @@ Public Class frmMain
         recentItems = New List(Of RecentItemsPropertySet)()
 
         For Each file In Globals.Settings.recentFiles.SafeQuery
-            recentItems.Add(New RecentItemsPropertySet() With {
-                            .Label = file.FileName,
-                            .LabelDescription = $"Location at {file.ParentPath}",
-                            .Pinned = True})
+            recentItems.Add(
+                item:=New RecentItemsPropertySet() With {
+                    .Label = file.FileName,
+                    .LabelDescription = $"Location at {file.ParentPath}",
+                    .Pinned = True
+            })
         Next
 
         ribbonItems.RecentItems.RecentItems = recentItems

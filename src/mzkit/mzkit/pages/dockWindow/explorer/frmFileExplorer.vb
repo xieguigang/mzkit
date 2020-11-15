@@ -306,6 +306,10 @@ Public Class frmFileExplorer
     End Sub
 
     Public Function findRawFileNode(sourceName As String) As TreeNode
+        If treeView1.Nodes.Count = 0 Then
+            Return Nothing
+        End If
+
         For Each node As TreeNode In treeView1.Nodes(0).Nodes
             If DirectCast(node.Tag, Raw).source.FileName = sourceName Then
                 Return node
