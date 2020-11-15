@@ -13,8 +13,7 @@ using RibbonLib;
 using RibbonLib.Controls;
 using RibbonLib.Interop;
 
-namespace RibbonLib.Controls
-{
+
     partial class RibbonItems
     {
         private static class Cmd
@@ -98,7 +97,8 @@ namespace RibbonLib.Controls
             public const uint cmdButtonExit = 1004;
             public const uint cmdQAT = 1015;
             public const uint cmdButtonPageNavBack = 1053;
-            public const uint cmdFontControl = 1155;
+            public const uint cmdFontControl = 1165;
+            public const uint cmdLegendCheckBox = 1166;
             public const uint cmdButtonExportImage = 1104;
             public const uint cmdButtonExportMatrix = 1105;
             public const uint cmdContextMap = 1106;
@@ -191,6 +191,7 @@ namespace RibbonLib.Controls
         public RibbonQuickAccessToolbar QAT { get; private set; }
         public RibbonButton ButtonPageNavBack { get; private set; }
         public RibbonFontControl FontControl { get; private set; }
+        public RibbonCheckBox LegendCheckBox { get; private set; }
         public RibbonButton ButtonExportImage { get; private set; }
         public RibbonButton ButtonExportMatrix { get; private set; }
 
@@ -281,10 +282,10 @@ namespace RibbonLib.Controls
             QAT = new RibbonQuickAccessToolbar(ribbon, Cmd.cmdQAT, Cmd.cmdCustomizeQAT);
             ButtonPageNavBack = new RibbonButton(ribbon, Cmd.cmdButtonPageNavBack);
             FontControl = new RibbonFontControl(ribbon, Cmd.cmdFontControl);
+            LegendCheckBox = new RibbonCheckBox(ribbon, Cmd.cmdLegendCheckBox);
             ButtonExportImage = new RibbonButton(ribbon, Cmd.cmdButtonExportImage);
             ButtonExportMatrix = new RibbonButton(ribbon, Cmd.cmdButtonExportMatrix);
             initialized = true;
         }
 
     }
-}

@@ -317,6 +317,8 @@
 #define cmdButtonRefreshNetwork_TooltipTitle_RESID 60224
 #define cmdButtonRefreshNetwork_TooltipDescription_RESID 60225
 #define cmdButtonRefreshNetwork_LargeImages_RESID 60226
-#define cmdFontControl 1155 
-#define InternalCmd2_LabelTitle_RESID 60227
-#define InternalCmd4_LabelTitle_RESID 60228
+#define cmdFontControl 1165 
+#define cmdLegendCheckBox 1166 
+#define cmdLegendCheckBox_LabelTitle_RESID 60227
+#define InternalCmd2_LabelTitle_RESID 60228
+#define InternalCmd4_LabelTitle_RESID 60229
