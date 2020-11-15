@@ -712,6 +712,7 @@ Public Class frmMain
         }
 
         Globals.Settings.Save()
+        App.Exit()
     End Sub
 
 #Region "vs2015"
