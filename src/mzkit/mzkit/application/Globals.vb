@@ -235,7 +235,7 @@ Module Globals
         Next
 
         If Not raw.UVscans.IsNullOrEmpty Then
-            Dim uv As New TreeNode($"'{raw.UVscans.Length}' UV scans") With {.Tag = "UV"}
+            Dim uv As New TreeNode($"'{raw.UVscans.Length}' UV scans")
 
             rawFileNode.Nodes.Add(uv)
             hasUVscans = True

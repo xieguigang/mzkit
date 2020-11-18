@@ -191,7 +191,7 @@ Public Class frmRawFeaturesList
 
         If TypeOf e.Node.Tag Is UVScan Then
             Call MyApplication.host.mzkitTool.showUVscans({DirectCast(e.Node.Tag, UVScan).GetSignalModel}, $"UV scan at {DirectCast(e.Node.Tag, UVScan).scan_time.ToString("F2")} sec", "wavelength (nm)")
-        Else
+        ElseIf Not e.Node.Tag Is Nothing Then
             ' scan节点
             Dim raw As Task.Raw = CurrentRawFile
             Dim scanId As String = e.Node.Text
