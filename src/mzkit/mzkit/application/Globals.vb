@@ -217,7 +217,7 @@ Module Globals
     ''' <param name="rawFileNode"></param>
     ''' <param name="raw"></param>
     <Extension>
-    Public Sub loadRawFile(rawFileNode As TreeView, raw As Raw)
+    Public Sub loadRawFile(rawFileNode As TreeView, raw As Raw, ByRef hasUVscans As Boolean)
         rawFileNode.Nodes.Clear()
 
         For Each scan As Ms1ScanEntry In raw.scans
@@ -238,10 +238,13 @@ Module Globals
             Dim uv As New TreeNode($"'{raw.UVscans.Length}' UV scans") With {.Tag = "UV"}
 
             rawFileNode.Nodes.Add(uv)
+            hasUVscans = True
 
             For Each scan In raw.UVscans
                 uv.Nodes.Add(New TreeNode(scan.ToString) With {.Tag = scan})
             Next
+        Else
+            hasUVscans = False
         End If
     End Sub
 

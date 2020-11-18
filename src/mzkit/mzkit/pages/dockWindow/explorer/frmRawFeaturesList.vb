@@ -48,6 +48,7 @@ Public Class frmRawFeaturesList
         Controls.Add(treeView1)
 
         ContextMenuStrip1.RenderMode = ToolStripRenderMode.System
+        ShowPDAToolStripMenuItem.Enabled = False
 
         treeView1.Location = New Point(1, TextBox2.Height + 5)
         treeView1.Size = New Size(Width - 2, Me.Height - TextBox2.Height - 25)
@@ -67,7 +68,7 @@ Public Class frmRawFeaturesList
 
     Public Sub LoadRaw(raw As Raw)
         _CurrentRawFile = raw
-        treeView1.loadRawFile(raw)
+        treeView1.loadRawFile(raw, hasUVscans:=ShowPDAToolStripMenuItem.Enabled)
     End Sub
 
     Public Iterator Function GetXICCollection(ppm As Double) As IEnumerable(Of NamedCollection(Of ChromatogramTick))
@@ -409,5 +410,9 @@ Public Class frmRawFeaturesList
             searchPage.page.loadMs2(products)
             searchPage.page.runSearch()
         End Using
+    End Sub
+
+    Private Sub ShowPDAToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowPDAToolStripMenuItem.Click
+
     End Sub
 End Class
