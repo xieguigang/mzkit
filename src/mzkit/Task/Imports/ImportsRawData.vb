@@ -306,8 +306,16 @@ Public Class ImportsRawData
                 Dim parent As (mz As Double, into As Double) = Nothing
 
                 If Not scan.cvParams.KeyItem(UVScanType) Is Nothing Then
+                    If Not ms1Parent Is Nothing Then
+                        ms1Parent.products = ms2Temp.PopAll
+                        nscans.Add(ms1Parent)
+                        ms1Parent = Nothing
+                    End If
+
                     Call showProgress($"load electromagnetic radiation spectrum at {scan.scan_time}...")
                     Call UVscans.Add(scan.CreateGeneralSignal(UVdetecor))
+
+                    Continue For
                 End If
 
                 If scan.ms_level > 1 Then

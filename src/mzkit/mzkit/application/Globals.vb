@@ -233,6 +233,16 @@ Module Globals
                 scanNode.Nodes.Add(productNode)
             Next
         Next
+
+        If Not raw.UVscans.IsNullOrEmpty Then
+            Dim uv As New TreeNode($"'{raw.UVscans.Length}' UV scans") With {.Tag = "UV"}
+
+            rawFileNode.Nodes.Add(uv)
+
+            For Each scan In raw.UVscans
+                uv.Nodes.Add(New TreeNode(scan.ToString) With {.Tag = scan})
+            Next
+        End If
     End Sub
 
     ''' <summary>
