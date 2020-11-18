@@ -14,6 +14,7 @@ Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports mzkit.Kesoft.Windows.Forms.Win7StyleTreeView
 Imports mzkit.My
@@ -189,7 +190,7 @@ Public Class frmRawFeaturesList
         MyApplication.host.ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
 
         If TypeOf e.Node.Tag Is UVScan Then
-            Call MyApplication.host.mzkitTool.showUVscans({DirectCast(e.Node.Tag, UVScan).GetSignalModel}, $"UV scan at {DirectCast(e.Node.Tag, UVScan).scan_time.ToString("F2")} sec")
+            Call MyApplication.host.mzkitTool.showUVscans({DirectCast(e.Node.Tag, UVScan).GetSignalModel}, $"UV scan at {DirectCast(e.Node.Tag, UVScan).scan_time.ToString("F2")} sec", "wavelength (nm)")
         Else
             ' scan节点
             Dim raw As Task.Raw = CurrentRawFile
@@ -413,6 +414,15 @@ Public Class frmRawFeaturesList
     End Sub
 
     Private Sub ShowPDAToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowPDAToolStripMenuItem.Click
+        Dim PDA_time = CurrentRawFile.UVscans.Select(Function(a) a.scan_time).ToArray
+        Dim PDA_ions = CurrentRawFile.UVscans.Select(Function(a) a.total_ion_current).ToArray
+        Dim PDA As New GeneralSignal With {
+            .Measures = PDA_time,
+            .measureUnit = "seconds",
+            .meta = New Dictionary(Of String, String),
+            .Strength = PDA_ions
+        }
 
+        Call MyApplication.host.mzkitTool.showUVscans({PDA}, $"UV scan PDA plot", "scan_time (seconds)")
     End Sub
 End Class
