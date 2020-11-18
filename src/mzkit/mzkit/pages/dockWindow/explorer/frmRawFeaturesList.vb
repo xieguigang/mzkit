@@ -7,9 +7,11 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.IO.netCDF
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Xml.Models
@@ -185,11 +187,16 @@ Public Class frmRawFeaturesList
     Private Sub treeView1_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles treeView1.AfterSelect
         MyApplication.host.ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
 
-        ' scan节点
-        Dim raw As Task.Raw = CurrentRawFile
-        Dim scanId As String = e.Node.Text
+        If TypeOf e.Node.Tag Is UVScan Then
+            Call MyApplication.host.mzkitTool.showUVscans({DirectCast(e.Node.Tag, UVScan).GetSignalModel})
+        Else
+            ' scan节点
+            Dim raw As Task.Raw = CurrentRawFile
+            Dim scanId As String = e.Node.Text
 
-        Call MyApplication.host.mzkitTool.showSpectrum(scanId, raw)
+            Call MyApplication.host.mzkitTool.showSpectrum(scanId, raw)
+        End If
+
         Call MyApplication.host.mzkitTool.ShowPage()
 
         MyApplication.host.Text = $"BioNovoGene Mzkit [{CurrentRawFile.source.GetFullPath}]"

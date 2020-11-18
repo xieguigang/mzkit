@@ -71,6 +71,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports mzkit.My
 Imports RibbonLib
@@ -209,6 +210,13 @@ Public Class PageMzkitTools
         Else
             ' Call missingCacheFile(raw)
         End If
+    End Sub
+
+    Friend Sub showUVscans(scans As IEnumerable(Of GeneralSignal))
+        Dim plot = UVsignalPlot.Plot(scans, Function() "wavelength(nm)").AsGDIImage
+
+        PictureBox1.BackgroundImage = plot
+        ShowTabPage(TabPage5)
     End Sub
 
     Public Sub showAlignment(result As AlignmentOutput)
