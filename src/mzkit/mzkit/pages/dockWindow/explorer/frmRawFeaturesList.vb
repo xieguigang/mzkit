@@ -453,9 +453,12 @@ Public Class frmRawFeaturesList
     End Sub
 
     Private Sub ShowUVOverlapToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowUVOverlapToolStripMenuItem.Click
-        Dim selects = UVchecked.Select(Function(a) DirectCast(a.Tag, UVScan).GetSignalModel).ToArray
-        Dim rtRange As DoubleRange = UVchecked.Select(Function(a) DirectCast(a.Tag, UVScan).scan_time).ToArray
+        If UVchecked > 0 Then
+            Dim selects = UVchecked.Select(Function(a) DirectCast(a.Tag, UVScan).GetSignalModel).ToArray
+            Dim rtRange As DoubleRange = UVchecked.Select(Function(a) DirectCast(a.Tag, UVScan).scan_time).ToArray
+            Dim title As String = $"UV scan at scan_time range [{rtRange.Min.ToString("F2")}, {rtRange.Max.ToString("F2")}]"
 
-        Call MyApplication.host.mzkitTool.showUVscans(selects, $"UV scan at [{rtRange.Min.ToString("F2")}, {rtRange.Max.ToString("F2")}]", "wavelength (nm)")
+            Call MyApplication.host.mzkitTool.showUVscans(selects, title, "wavelength (nm)")
+        End If
     End Sub
 End Class
