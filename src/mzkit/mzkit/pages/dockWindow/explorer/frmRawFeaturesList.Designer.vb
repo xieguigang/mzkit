@@ -36,6 +36,7 @@ Partial Class frmRawFeaturesList
         Me.ShowBPCToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ShowTICToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ShowXICToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ShowPDAToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
         Me.MolecularNetworkingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SpectrumSearchToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -58,7 +59,7 @@ Partial Class frmRawFeaturesList
         Me.ClearToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem4 = New System.Windows.Forms.ToolStripSeparator()
         Me.DeleteFileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ShowPDAToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ShowUVOverlapToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Panel1.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
@@ -107,9 +108,9 @@ Partial Class frmRawFeaturesList
         '
         'ContextMenuStrip1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ChromatogramPlotToolStripMenuItem, Me.ShowXICToolStripMenuItem, Me.ShowPDAToolStripMenuItem, Me.ToolStripMenuItem1, Me.MolecularNetworkingToolStripMenuItem, Me.SpectrumSearchToolStripMenuItem, Me.IonSearchToolStripMenuItem, Me.SearchFormulaToolStripMenuItem, Me.ToolStripMenuItem2, Me.FileToolStripMenuItem})
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ChromatogramPlotToolStripMenuItem, Me.ShowXICToolStripMenuItem, Me.ShowPDAToolStripMenuItem, Me.ShowUVOverlapToolStripMenuItem, Me.ToolStripMenuItem1, Me.MolecularNetworkingToolStripMenuItem, Me.SpectrumSearchToolStripMenuItem, Me.IonSearchToolStripMenuItem, Me.SearchFormulaToolStripMenuItem, Me.ToolStripMenuItem2, Me.FileToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(193, 214)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(193, 236)
         '
         'ChromatogramPlotToolStripMenuItem
         '
@@ -136,6 +137,12 @@ Partial Class frmRawFeaturesList
         Me.ShowXICToolStripMenuItem.Name = "ShowXICToolStripMenuItem"
         Me.ShowXICToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
         Me.ShowXICToolStripMenuItem.Text = "Show XIC"
+        '
+        'ShowPDAToolStripMenuItem
+        '
+        Me.ShowPDAToolStripMenuItem.Name = "ShowPDAToolStripMenuItem"
+        Me.ShowPDAToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
+        Me.ShowPDAToolStripMenuItem.Text = "Show PDA"
         '
         'ToolStripMenuItem1
         '
@@ -274,11 +281,11 @@ Partial Class frmRawFeaturesList
         Me.DeleteFileToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.DeleteFileToolStripMenuItem.Text = "Delete File!"
         '
-        'ShowPDAToolStripMenuItem
+        'ShowUVOverlapToolStripMenuItem
         '
-        Me.ShowPDAToolStripMenuItem.Name = "ShowPDAToolStripMenuItem"
-        Me.ShowPDAToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
-        Me.ShowPDAToolStripMenuItem.Text = "Show PDA"
+        Me.ShowUVOverlapToolStripMenuItem.Name = "ShowUVOverlapToolStripMenuItem"
+        Me.ShowUVOverlapToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
+        Me.ShowUVOverlapToolStripMenuItem.Text = "Show UV Overlap"
         '
         'frmRawFeaturesList
         '
@@ -326,4 +333,5 @@ Partial Class frmRawFeaturesList
     Friend WithEvents IonScansToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SpectrumSearchToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ShowPDAToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ShowUVOverlapToolStripMenuItem As ToolStripMenuItem
 End Class
