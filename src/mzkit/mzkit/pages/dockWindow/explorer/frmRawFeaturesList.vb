@@ -188,7 +188,7 @@ Public Class frmRawFeaturesList
         MyApplication.host.ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
 
         If TypeOf e.Node.Tag Is UVScan Then
-            Call MyApplication.host.mzkitTool.showUVscans({DirectCast(e.Node.Tag, UVScan).GetSignalModel})
+            Call MyApplication.host.mzkitTool.showUVscans({DirectCast(e.Node.Tag, UVScan).GetSignalModel}, $"UV scan at {DirectCast(e.Node.Tag, UVScan).scan_time.ToString("F2")} sec")
         Else
             ' scan节点
             Dim raw As Task.Raw = CurrentRawFile

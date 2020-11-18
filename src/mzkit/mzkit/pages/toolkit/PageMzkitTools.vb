@@ -212,8 +212,8 @@ Public Class PageMzkitTools
         End If
     End Sub
 
-    Friend Sub showUVscans(scans As IEnumerable(Of GeneralSignal))
-        Dim plot = UVsignalPlot.Plot(scans, Function() $"UV scans", size:="1920,1600", pt_size:=24, line_width:=16, title:="UV scans", xlabel:="wavelength(nm)").AsGDIImage
+    Friend Sub showUVscans(scans As IEnumerable(Of GeneralSignal), title$)
+        Dim plot = UVsignalPlot.Plot(scans, Function() $"UV scans", size:="1920,1440", pt_size:=24, line_width:=18, title:=title, xlabel:="wavelength(nm)").AsGDIImage
 
         PictureBox1.BackgroundImage = plot
         ShowTabPage(TabPage5)
