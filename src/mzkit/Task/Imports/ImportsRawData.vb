@@ -402,7 +402,7 @@ Public Class ImportsRawData
             cache1.GlobalAttributes(New attribute With {.name = NameOf(nscans), .type = CDFDataTypes.INT, .value = nscans.Count})
             cache2.GlobalAttributes(New attribute With {.name = NameOf(nscans), .type = CDFDataTypes.INT, .value = nscans.Sum(Function(a) a.products.TryCount)})
 
-            If nscans.Last.id <> ms1Parent.id Then
+            If Not ms1Parent Is Nothing AndAlso nscans.Last.id <> ms1Parent.id Then
                 nscans.Add(ms1Parent)
             End If
 
