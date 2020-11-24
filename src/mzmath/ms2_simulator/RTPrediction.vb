@@ -45,7 +45,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.BioDeep.Chemistry.Model
-Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.Bootstrapping.Multivariate
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
