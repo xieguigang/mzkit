@@ -17,9 +17,11 @@ Namespace mzData.mzWebCache
             Dim msms As ms2()
             Dim trim As LowAbundanceTrimming = New RelativeIntensityCutoff(0.03)
             Dim ms1Err As Tolerance = Tolerance.ParseScript(mzErr)
+            Dim scan_id As String
 
             For Each scan As scan In raw
                 scan_time = PeakMs2.RtInSecond(scan.retentionTime)
+                scan_id = scan.getName
                 msms = scan.peaks _
                     .ExtractMzI _
                     .Where(Function(p) p.intensity > 0) _
@@ -46,7 +48,7 @@ Namespace mzData.mzWebCache
                         .BPC = scan.basePeakIntensity,
                         .TIC = scan.totIonCurrent,
                         .rt = scan_time,
-                        .scan_id = scan.ToString,
+                        .scan_id = scan_id,
                         .mz = msms.Select(Function(a) a.mz).ToArray,
                         .into = msms.Select(Function(a) a.intensity).ToArray
                     }
@@ -54,7 +56,7 @@ Namespace mzData.mzWebCache
                     Call New ScanMS2 With {
                         .rt = scan_time,
                         .parentMz = scan.precursorMz.value,
-                        .scan_id = scan.ToString,
+                        .scan_id = scan_id,
                         .intensity = scan.basePeakIntensity,
                         .mz = msms.Select(Function(a) a.mz).ToArray,
                         .into = msms.Select(Function(a) a.intensity).ToArray
@@ -86,6 +88,8 @@ Namespace mzData.mzWebCache
 
                     Call writer.WriteLine("-----")
                 Next
+
+                Call writer.Flush()
             End Using
         End Sub
 

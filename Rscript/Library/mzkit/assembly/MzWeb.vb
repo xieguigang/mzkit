@@ -20,13 +20,11 @@ Module MzWeb
     <ExportAPI("write.cache")>
     Public Function writeStream(scans As pipeline, Optional file As Object = Nothing, Optional env As Environment = Nothing) As Object
         Dim stream As Stream
-        Dim autoClose As Boolean = False
 
         If file Is Nothing Then
             stream = Console.OpenStandardOutput
         ElseIf TypeOf file Is String Then
-            stream = DirectCast(file, String).Open
-            autoClose = True
+            stream = DirectCast(file, String).Open(doClear:=True)
         ElseIf TypeOf file Is Stream Then
             stream = DirectCast(file, Stream)
         Else
@@ -34,11 +32,6 @@ Module MzWeb
         End If
 
         Call scans.populates(Of ScanMS1)(env).Write(stream)
-
-        If autoClose Then
-            Call stream.Flush()
-            Call stream.Close()
-        End If
 
         Return True
     End Function
