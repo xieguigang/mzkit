@@ -22,6 +22,12 @@ Namespace mzData.mzWebCache
             For Each scan As scan In raw
                 scan_time = PeakMs2.RtInSecond(scan.retentionTime)
                 scan_id = scan.getName
+
+                If scan.peaks Is Nothing OrElse scan.peaks.compressedLen = 0 OrElse scan.peaks.value.StringEmpty Then
+                    Call $"missing scan value of [{scan_id}]".Warning
+                    Continue For
+                End If
+
                 msms = scan.peaks _
                     .ExtractMzI _
                     .Where(Function(p) p.intensity > 0) _
@@ -95,11 +101,18 @@ Namespace mzData.mzWebCache
 
         <Extension>
         Private Function vectorBase64(vec As Double()) As String
-            Using buffer As New MemoryStream
-                Dim data As Byte()
+            Dim convertToNetworkByteOrder As Boolean = BitConverter.IsLittleEndian
+            Dim data As Byte()
 
+            Using buffer As New MemoryStream
                 For Each x As Double In vec
                     data = BitConverter.GetBytes(x)
+
+                    If convertToNetworkByteOrder Then
+                        ' 需要颠倒为network byteorder
+                        Call Array.Reverse(data)
+                    End If
+
                     buffer.Write(data, Scan0, data.Length)
                 Next
 
