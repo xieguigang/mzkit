@@ -141,7 +141,7 @@ Public Class UVScan
     Public Property scan_time As Double
 
     Public Overrides Function ToString() As String
-        Return $"total_ions:{total_ion_current} at {CInt(scan_time)} sec"
+        Return $"total_ions:{total_ion_current.ToString("G3")} at {CInt(scan_time)} sec"
     End Function
 
     Public Function GetSignalModel() As GeneralSignal

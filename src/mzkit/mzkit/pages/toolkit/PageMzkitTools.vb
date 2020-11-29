@@ -217,7 +217,7 @@ Public Class PageMzkitTools
         Dim plot = UVsignalPlot.Plot(
             signals:=scanCollection,
             legendTitle:=Function(scan) If(scanCollection.Length = 1, $"UV scans", scan("title")),
-            size:="1920,1440",
+            size:="2560,1440",
             pt_size:=10,
             line_width:=10,
             title:=title,
