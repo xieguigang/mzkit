@@ -151,7 +151,9 @@ Public Class UVScan
             .measureUnit = "wavelength",
             .reference = ToString(),
             .Strength = intensity,
-            .meta = New Dictionary(Of String, String)
+            .meta = New Dictionary(Of String, String) From {
+                {"title", .reference}
+            }
         }
     End Function
 
