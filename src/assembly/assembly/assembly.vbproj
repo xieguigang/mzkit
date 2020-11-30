@@ -388,6 +388,9 @@
     <Compile Include="MarkupData\mzML\XML\Components.vb" />
     <Compile Include="MarkupData\mzML\XML\Configurations.vb" />
     <Compile Include="mzData\mzWebCache\Cache.vb" />
+    <Compile Include="mzData\mzWebCache\mzMLScans.vb" />
+    <Compile Include="mzData\mzWebCache\mzXMLScans.vb" />
+    <Compile Include="mzData\mzWebCache\ScanPopulator.vb" />
     <Compile Include="mzData\mzWebCache\Scan.vb" />
     <Compile Include="NamespaceDoc.vb" />
     <Compile Include="SpectrumTree.vb" />
