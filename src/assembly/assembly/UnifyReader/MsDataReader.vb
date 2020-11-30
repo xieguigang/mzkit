@@ -12,6 +12,7 @@ Namespace DataReader
         Public MustOverride Function GetBPC(scan As Scan) As Double
         Public MustOverride Function GetTIC(scan As Scan) As Double
         Public MustOverride Function GetParentMz(scan As Scan) As Double
+        Public MustOverride Function GetPolarity(scan As Scan) As String
 
     End Class
 End Namespace
