@@ -48,5 +48,9 @@ Namespace DataReader
         Public Overrides Function GetParentMz(scan As scan) As Double
             Return scan.precursorMz.value
         End Function
+
+        Public Overrides Function GetPolarity(scan As scan) As String
+            Return scan.polarity
+        End Function
     End Class
 End Namespace

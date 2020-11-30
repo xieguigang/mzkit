@@ -27,7 +27,7 @@ Namespace DataReader
         End Function
 
         Public Overrides Function GetMsMs(scan As spectrum) As ms2()
-            Dim mz = scan.ByteArray("m/z array").Base64Decode
+            Dim mz As Double() = scan.ByteArray("m/z array").Base64Decode
             Dim intensity = scan.ByteArray("intensity array").Base64Decode
             Dim msms As ms2() = mz _
                 .Select(Function(mzi, i)
