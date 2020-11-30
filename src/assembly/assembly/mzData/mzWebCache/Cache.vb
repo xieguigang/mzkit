@@ -1,5 +1,7 @@
 ﻿Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -10,7 +12,23 @@ Namespace mzData.mzWebCache
 
     Public Module Cache
 
-        Public Iterator Function Load(raw As IEnumerable(Of scan), Optional mzErr$ = "da:0.1") As IEnumerable(Of ScanMS1)
+        ''' <summary>
+        ''' load scan data from ``mzml`` file
+        ''' </summary>
+        ''' <param name="raw"></param>
+        ''' <param name="mzErr$"></param>
+        ''' <returns></returns>
+        Public Iterator Function Load(raw As IEnumerable(Of spectrum), Optional mzErr$ = "da:0.1") As IEnumerable(Of ScanMS1)
+
+        End Function
+
+        ''' <summary>
+        ''' load scan data from ``mzxml`` file
+        ''' </summary>
+        ''' <param name="raw"></param>
+        ''' <param name="mzErr$"></param>
+        ''' <returns></returns>
+        Public Iterator Function Load(raw As IEnumerable(Of mzXML.scan), Optional mzErr$ = "da:0.1") As IEnumerable(Of ScanMS1)
             Dim ms1 As ScanMS1 = Nothing
             Dim ms2 As New List(Of ScanMS2)
             Dim scan_time As Double
@@ -19,7 +37,7 @@ Namespace mzData.mzWebCache
             Dim ms1Err As Tolerance = Tolerance.ParseScript(mzErr)
             Dim scan_id As String
 
-            For Each scan As scan In raw
+            For Each scan As mzXML.scan In raw
                 scan_time = PeakMs2.RtInSecond(scan.retentionTime)
                 scan_id = scan.getName
 
