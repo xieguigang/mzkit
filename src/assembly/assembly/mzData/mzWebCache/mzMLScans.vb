@@ -1,4 +1,5 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
+﻿Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
 
 Namespace mzData.mzWebCache
@@ -9,10 +10,12 @@ Namespace mzData.mzWebCache
             MyBase.New(mzErr)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Protected Overrides Function loadScans(rawfile As String) As IEnumerable(Of mzML.spectrum)
             Return mzML.Xml.LoadScans(rawfile)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Protected Overrides Function dataReader() As MsDataReader(Of mzML.spectrum)
             Return New mzMLScan()
         End Function

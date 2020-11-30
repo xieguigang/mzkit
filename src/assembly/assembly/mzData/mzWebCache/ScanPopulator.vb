@@ -22,8 +22,18 @@ Namespace mzData.mzWebCache
         Protected MustOverride Function dataReader() As MsDataReader(Of Scan)
         Protected MustOverride Function loadScans(rawfile As String) As IEnumerable(Of Scan)
 
+        Private Iterator Function PopulateValidScans(scans As IEnumerable(Of Scan)) As IEnumerable(Of Scan)
+            For Each scan As Scan In scans
+                If reader.IsEmpty(scan) Then
+                    Call $"missing scan value of [{reader.GetScanId(scan)}]".Warning
+                Else
+                    Yield scan
+                End If
+            Next
+        End Function
+
         Public Iterator Function Load(scans As IEnumerable(Of Scan)) As IEnumerable(Of ScanMS1)
-            For Each scan As Scan In scans.Where(Function(s) Not reader.IsEmpty(s))
+            For Each scan As Scan In PopulateValidScans(scans)
                 Dim scan_time As Double = reader.GetScanTime(scan)
                 Dim scan_id As String = reader.GetScanId(scan)
                 Dim msms As ms2() = reader.GetMsMs(scan).Centroid(ms1Err, trim).ToArray
