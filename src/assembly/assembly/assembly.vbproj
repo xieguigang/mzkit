@@ -381,6 +381,7 @@
     <Compile Include="ASCII\MSP\MspParser.vb" />
     <Compile Include="ASCII\MSP\Comments.vb" />
     <Compile Include="ASCII\MSP\MspData.vb" />
+    <Compile Include="MarkupData\Base64Decode.vb" />
     <Compile Include="MarkupData\mzML\RawScanParser.vb" />
     <Compile Include="MarkupData\mzML\ExtractUVData.vb" />
     <Compile Include="MarkupData\mzML\XML\BinaryData.vb" />
