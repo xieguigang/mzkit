@@ -3,7 +3,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 
 Namespace DataReader
 
-    Public Class mzXMLScans : Inherits MsDataReader(Of scan)
+    Public Class mzXMLScan : Inherits MsDataReader(Of scan)
 
         Public Overrides Function GetScanTime(scan As scan) As Double
             Return PeakMs2.RtInSecond(scan.retentionTime)
