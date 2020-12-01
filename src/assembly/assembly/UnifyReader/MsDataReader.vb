@@ -5,7 +5,7 @@ Namespace DataReader
     Public MustInherit Class MsDataReader(Of Scan)
 
         Public MustOverride Function GetScanTime(scan As Scan) As Double
-        Public MustOverride Function GetScanId(scan As Scan) As Double
+        Public MustOverride Function GetScanId(scan As Scan) As String
         Public MustOverride Function IsEmpty(scan As Scan) As Boolean
         Public MustOverride Function GetMsMs(scan As Scan) As ms2()
         Public MustOverride Function GetMsLevel(scan As Scan) As Integer

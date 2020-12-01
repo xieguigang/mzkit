@@ -11,7 +11,7 @@ Namespace DataReader
             Return scan.scan_time
         End Function
 
-        Public Overrides Function GetScanId(scan As spectrum) As Double
+        Public Overrides Function GetScanId(scan As spectrum) As String
             Dim scanType As String = scan.scanList.scans(0).cvParams.KeyItem("filter string")?.value
             Dim polarity As String = GetPolarity(scan)
 

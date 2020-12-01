@@ -9,7 +9,7 @@ Namespace DataReader
             Return PeakMs2.RtInSecond(scan.retentionTime)
         End Function
 
-        Public Overrides Function GetScanId(scan As scan) As Double
+        Public Overrides Function GetScanId(scan As scan) As String
             Return scan.getName
         End Function
 
