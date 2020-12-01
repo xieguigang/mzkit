@@ -1,4 +1,5 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
+﻿Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -7,6 +8,7 @@ Namespace DataReader
 
     Public Class mzMLScan : Inherits MsDataReader(Of spectrum)
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function GetScanTime(scan As spectrum) As Double
             Return scan.scan_time
         End Function
@@ -22,8 +24,9 @@ Namespace DataReader
             End If
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function IsEmpty(scan As spectrum) As Boolean
-            Return True
+            Return Not scan.cvParams.KeyItem(UVScanType) Is Nothing
         End Function
 
         Public Overrides Function GetMsMs(scan As spectrum) As ms2()
@@ -42,22 +45,27 @@ Namespace DataReader
             Return msms
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function GetMsLevel(scan As spectrum) As Integer
             Return CInt(Val(scan.ms_level))
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function GetBPC(scan As spectrum) As Double
             Return Val(scan.cvParams.KeyItem("base peak intensity")?.value)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function GetTIC(scan As spectrum) As Double
             Return Val(scan.cvParams.KeyItem("total ion current")?.value)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function GetParentMz(scan As spectrum) As Double
             Return scan.selectedIon.mz
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function GetPolarity(scan As spectrum) As String
             If Not scan.cvParams.KeyItem("positive scan") Is Nothing Then
                 Return "+"
