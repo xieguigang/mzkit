@@ -43,7 +43,7 @@ Namespace mzData.mzWebCache
 
                     For Each product As ScanMS2 In scan.products
                         Call writer.WriteLine(product.scan_id)
-                        Call writer.WriteLine({product.parentMz, product.rt, product.intensity}.JoinBy(","))
+                        Call writer.WriteLine({product.parentMz, product.rt, product.intensity, product.polarity}.JoinBy(","))
                         Call writer.WriteLine(product.mz.vectorBase64)
                         Call writer.WriteLine(product.into.vectorBase64)
                     Next

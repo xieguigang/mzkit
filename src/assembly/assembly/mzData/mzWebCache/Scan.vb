@@ -4,6 +4,7 @@
 
         Public Property parentMz As Double
         Public Property intensity As Double
+        Public Property polarity As Integer
 
     End Class
 

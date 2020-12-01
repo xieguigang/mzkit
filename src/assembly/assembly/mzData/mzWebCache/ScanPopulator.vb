@@ -63,7 +63,8 @@ Namespace mzData.mzWebCache
                         .scan_id = scan_id,
                         .intensity = reader.GetBPC(scan),
                         .mz = msms.Select(Function(a) a.mz).ToArray,
-                        .into = msms.Select(Function(a) a.intensity).ToArray
+                        .into = msms.Select(Function(a) a.intensity).ToArray,
+                        .polarity = PrecursorType.ParseIonMode(reader.GetPolarity(scan), True)
                     }.DoCall(AddressOf products.Add)
                 End If
             Next
