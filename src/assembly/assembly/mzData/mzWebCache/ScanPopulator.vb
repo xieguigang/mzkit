@@ -69,10 +69,12 @@ Namespace mzData.mzWebCache
                 End If
             Next
 
-            ms1.products = products.ToArray
-            products.Clear()
+            If Not ms1 Is Nothing Then
+                ms1.products = products.ToArray
+                products.Clear()
 
-            Yield ms1
+                Yield ms1
+            End If
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
