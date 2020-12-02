@@ -63,6 +63,7 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Imports REnv = SMRUCC.Rsharp.Runtime
 
 <Package("visual")>
+<RTypeExport("overlaps", GetType(ChromatogramOverlap))>
 Module Visual
 
     Sub Main()
@@ -70,7 +71,30 @@ Module Visual
         Call Internal.generic.add("plot", GetType(GeneralSignal()), AddressOf plotSignal2)
         Call Internal.generic.add("plot", GetType(MGF.Ions), AddressOf plotMS)
         Call Internal.generic.add("plot", GetType(Chromatogram), AddressOf plotChromatogram)
+        Call Internal.generic.add("plot", GetType(ChromatogramOverlap), AddressOf plotChromatogram2)
     End Sub
+
+    <ExportAPI("add")>
+    Public Function addOverlaps(overlaps As ChromatogramOverlap, name$, data As Chromatogram) As ChromatogramOverlap
+        Call overlaps.overlaps.Add(name, data)
+        Return overlaps
+    End Function
+
+    Private Function plotChromatogram2(x As ChromatogramOverlap, args As list, env As Environment) As Object
+        Dim isBPC As Boolean = args.getValue("bpc", env, [default]:=False)
+        Dim overlaps As New List(Of NamedCollection(Of ChromatogramTick))
+        Dim data As NamedCollection(Of ChromatogramTick)
+
+        For Each raw In x.overlaps
+            data = New NamedCollection(Of ChromatogramTick) With {
+                .name = raw.Key,
+                .value = raw.Value.GetTicks(isBPC).ToArray
+            }
+            overlaps.Add(data)
+        Next
+
+        Return overlaps.ToArray.TICplot
+    End Function
 
     Private Function plotChromatogram(x As Chromatogram, args As list, env As Environment) As Object
         Dim isBPC As Boolean = args.getValue("bpc", env, [default]:=False)
