@@ -6,7 +6,7 @@ Partial Class frmRawFeaturesList
     Inherits ToolWindow
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -23,7 +23,7 @@ Partial Class frmRawFeaturesList
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmRawFeaturesList))
@@ -36,8 +36,10 @@ Partial Class frmRawFeaturesList
         Me.ShowBPCToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ShowTICToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ShowXICToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ShowPDAToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
         Me.MolecularNetworkingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SpectrumSearchToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.IonSearchToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SearchFormulaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CustomToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -57,7 +59,7 @@ Partial Class frmRawFeaturesList
         Me.ClearToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem4 = New System.Windows.Forms.ToolStripSeparator()
         Me.DeleteFileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SpectrumSearchToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ShowUVOverlapToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Panel1.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
@@ -106,9 +108,9 @@ Partial Class frmRawFeaturesList
         '
         'ContextMenuStrip1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ChromatogramPlotToolStripMenuItem, Me.ShowXICToolStripMenuItem, Me.ToolStripMenuItem1, Me.MolecularNetworkingToolStripMenuItem, Me.SpectrumSearchToolStripMenuItem, Me.IonSearchToolStripMenuItem, Me.SearchFormulaToolStripMenuItem, Me.ToolStripMenuItem2, Me.FileToolStripMenuItem})
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ChromatogramPlotToolStripMenuItem, Me.ShowXICToolStripMenuItem, Me.ShowPDAToolStripMenuItem, Me.ShowUVOverlapToolStripMenuItem, Me.ToolStripMenuItem1, Me.MolecularNetworkingToolStripMenuItem, Me.SpectrumSearchToolStripMenuItem, Me.IonSearchToolStripMenuItem, Me.SearchFormulaToolStripMenuItem, Me.ToolStripMenuItem2, Me.FileToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(193, 192)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(193, 236)
         '
         'ChromatogramPlotToolStripMenuItem
         '
@@ -136,6 +138,12 @@ Partial Class frmRawFeaturesList
         Me.ShowXICToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
         Me.ShowXICToolStripMenuItem.Text = "Show XIC"
         '
+        'ShowPDAToolStripMenuItem
+        '
+        Me.ShowPDAToolStripMenuItem.Name = "ShowPDAToolStripMenuItem"
+        Me.ShowPDAToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
+        Me.ShowPDAToolStripMenuItem.Text = "Show PDA"
+        '
         'ToolStripMenuItem1
         '
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
@@ -147,6 +155,12 @@ Partial Class frmRawFeaturesList
         Me.MolecularNetworkingToolStripMenuItem.Name = "MolecularNetworkingToolStripMenuItem"
         Me.MolecularNetworkingToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
         Me.MolecularNetworkingToolStripMenuItem.Text = "Molecular Networking"
+        '
+        'SpectrumSearchToolStripMenuItem
+        '
+        Me.SpectrumSearchToolStripMenuItem.Name = "SpectrumSearchToolStripMenuItem"
+        Me.SpectrumSearchToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
+        Me.SpectrumSearchToolStripMenuItem.Text = "Spectrum Search"
         '
         'IonSearchToolStripMenuItem
         '
@@ -165,36 +179,36 @@ Partial Class frmRawFeaturesList
         'CustomToolStripMenuItem
         '
         Me.CustomToolStripMenuItem.Name = "CustomToolStripMenuItem"
-        Me.CustomToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.CustomToolStripMenuItem.Size = New System.Drawing.Size(158, 22)
         Me.CustomToolStripMenuItem.Text = "Custom"
         '
         'ToolStripMenuItem5
         '
         Me.ToolStripMenuItem5.Name = "ToolStripMenuItem5"
-        Me.ToolStripMenuItem5.Size = New System.Drawing.Size(177, 6)
+        Me.ToolStripMenuItem5.Size = New System.Drawing.Size(155, 6)
         '
         'DefaultToolStripMenuItem
         '
         Me.DefaultToolStripMenuItem.Name = "DefaultToolStripMenuItem"
-        Me.DefaultToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.DefaultToolStripMenuItem.Size = New System.Drawing.Size(158, 22)
         Me.DefaultToolStripMenuItem.Text = "Default"
         '
         'SmallMoleculeToolStripMenuItem
         '
         Me.SmallMoleculeToolStripMenuItem.Name = "SmallMoleculeToolStripMenuItem"
-        Me.SmallMoleculeToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.SmallMoleculeToolStripMenuItem.Size = New System.Drawing.Size(158, 22)
         Me.SmallMoleculeToolStripMenuItem.Text = "Small Molecule"
         '
         'NaturalProductToolStripMenuItem
         '
         Me.NaturalProductToolStripMenuItem.Name = "NaturalProductToolStripMenuItem"
-        Me.NaturalProductToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.NaturalProductToolStripMenuItem.Size = New System.Drawing.Size(158, 22)
         Me.NaturalProductToolStripMenuItem.Text = "Natural Product"
         '
         'GeneralFlavoneToolStripMenuItem
         '
         Me.GeneralFlavoneToolStripMenuItem.Name = "GeneralFlavoneToolStripMenuItem"
-        Me.GeneralFlavoneToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.GeneralFlavoneToolStripMenuItem.Size = New System.Drawing.Size(158, 22)
         Me.GeneralFlavoneToolStripMenuItem.Text = "General Flavone"
         '
         'ToolStripMenuItem2
@@ -267,11 +281,11 @@ Partial Class frmRawFeaturesList
         Me.DeleteFileToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.DeleteFileToolStripMenuItem.Text = "Delete File!"
         '
-        'SpectrumSearchToolStripMenuItem
+        'ShowUVOverlapToolStripMenuItem
         '
-        Me.SpectrumSearchToolStripMenuItem.Name = "SpectrumSearchToolStripMenuItem"
-        Me.SpectrumSearchToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
-        Me.SpectrumSearchToolStripMenuItem.Text = "Spectrum Search"
+        Me.ShowUVOverlapToolStripMenuItem.Name = "ShowUVOverlapToolStripMenuItem"
+        Me.ShowUVOverlapToolStripMenuItem.Size = New System.Drawing.Size(192, 22)
+        Me.ShowUVOverlapToolStripMenuItem.Text = "Show UV Overlap"
         '
         'frmRawFeaturesList
         '
@@ -318,4 +332,6 @@ Partial Class frmRawFeaturesList
     Friend WithEvents XICToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents IonScansToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SpectrumSearchToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ShowPDAToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ShowUVOverlapToolStripMenuItem As ToolStripMenuItem
 End Class

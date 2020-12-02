@@ -146,11 +146,18 @@ Module Globals
         Dim scripts As New TreeNode("R# Automation") With {.ImageIndex = 1, .SelectedImageIndex = 1, .StateImageIndex = 1}
         Dim rawFiles As New TreeNode("Raw Data Files") With {.ImageIndex = 0, .StateImageIndex = 0, .SelectedImageIndex = 0}
 
+        explorer.Nodes.Add(rawFiles)
+        explorer.Nodes.Add(scripts)
+
         If defaultWorkspace.StringEmpty Then
             defaultWorkspace = Globals.defaultWorkspace
         End If
 
         If Not defaultWorkspace.FileExists Then
+            currentWorkspace = New ViewerProject With {
+                .FilePath = defaultWorkspace
+            }
+
             Return 0
         Else
             Call sharedProgressUpdater("Load raw file list...")
@@ -177,13 +184,9 @@ Module Globals
             i += 1
         Next
 
-        explorer.Nodes.Add(rawFiles)
-        explorer.Nodes.Add(scripts)
         currentWorkspace = files
 
         If files.GetAutomationScripts.SafeQuery.Count > 0 Then
-
-
             For Each script As String In files.GetAutomationScripts
                 Dim fileNode As New TreeNode(script.FileName) With {
                     .Checked = False,
@@ -214,7 +217,7 @@ Module Globals
     ''' <param name="rawFileNode"></param>
     ''' <param name="raw"></param>
     <Extension>
-    Public Sub loadRawFile(rawFileNode As TreeView, raw As Raw)
+    Public Sub loadRawFile(rawFileNode As TreeView, raw As Raw, ByRef hasUVscans As Boolean)
         rawFileNode.Nodes.Clear()
 
         For Each scan As Ms1ScanEntry In raw.scans
@@ -230,6 +233,19 @@ Module Globals
                 scanNode.Nodes.Add(productNode)
             Next
         Next
+
+        If Not raw.UVscans.IsNullOrEmpty Then
+            Dim uv As New TreeNode($"'{raw.UVscans.Length}' UV scans")
+
+            rawFileNode.Nodes.Add(uv)
+            hasUVscans = True
+
+            For Each scan In raw.UVscans
+                uv.Nodes.Add(New TreeNode(scan.ToString) With {.Tag = scan})
+            Next
+        Else
+            hasUVscans = False
+        End If
     End Sub
 
     ''' <summary>

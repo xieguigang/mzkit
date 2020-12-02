@@ -40,7 +40,11 @@ Public Class frmFileExplorer
     End Sub
 
     Public Function GetTotalCacheSize() As String
-        Return treeView1.Nodes.Item(0).GetTotalCacheSize
+        If treeView1.Nodes.Count > 0 Then
+            Return treeView1.Nodes.Item(0).GetTotalCacheSize
+        Else
+            Return "0 KB"
+        End If
     End Function
 
     Public Function CurrentRawFile() As Raw
@@ -302,6 +306,10 @@ Public Class frmFileExplorer
     End Sub
 
     Public Function findRawFileNode(sourceName As String) As TreeNode
+        If treeView1.Nodes.Count = 0 Then
+            Return Nothing
+        End If
+
         For Each node As TreeNode In treeView1.Nodes(0).Nodes
             If DirectCast(node.Tag, Raw).source.FileName = sourceName Then
                 Return node

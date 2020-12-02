@@ -381,12 +381,21 @@
     <Compile Include="ASCII\MSP\MspParser.vb" />
     <Compile Include="ASCII\MSP\Comments.vb" />
     <Compile Include="ASCII\MSP\MspData.vb" />
+    <Compile Include="MarkupData\Base64Decode.vb" />
     <Compile Include="MarkupData\mzML\RawScanParser.vb" />
     <Compile Include="MarkupData\mzML\ExtractUVData.vb" />
     <Compile Include="MarkupData\mzML\XML\BinaryData.vb" />
     <Compile Include="MarkupData\mzML\XML\Ions.vb" />
     <Compile Include="MarkupData\mzML\XML\Components.vb" />
     <Compile Include="MarkupData\mzML\XML\Configurations.vb" />
+    <Compile Include="UnifyReader\mzMLScan.vb" />
+    <Compile Include="UnifyReader\mzXMLScan.vb" />
+    <Compile Include="UnifyReader\MsDataReader.vb" />
+    <Compile Include="mzData\mzWebCache\Cache.vb" />
+    <Compile Include="mzData\mzWebCache\mzMLScans.vb" />
+    <Compile Include="mzData\mzWebCache\mzXMLScans.vb" />
+    <Compile Include="mzData\mzWebCache\ScanPopulator.vb" />
+    <Compile Include="mzData\mzWebCache\Scan.vb" />
     <Compile Include="NamespaceDoc.vb" />
     <Compile Include="SpectrumTree.vb" />
     <Compile Include="MarkupData\IBase64Container.vb" />
@@ -434,9 +443,7 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="mzData\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\math-core.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>

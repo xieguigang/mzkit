@@ -53,6 +53,7 @@ Imports Microsoft.VisualBasic.Math.Quantile
 
 Namespace MarkupData
 
+    <HideModuleName>
     Public Module MS1Extensions
 
         ReadOnly ppm50 As [Default](Of Tolerance) = New PPMmethod(50).Interface

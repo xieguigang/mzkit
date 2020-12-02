@@ -7,11 +7,15 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.IO.netCDF
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports mzkit.Kesoft.Windows.Forms.Win7StyleTreeView
 Imports mzkit.My
@@ -46,6 +50,8 @@ Public Class frmRawFeaturesList
         Controls.Add(treeView1)
 
         ContextMenuStrip1.RenderMode = ToolStripRenderMode.System
+        ShowPDAToolStripMenuItem.Enabled = False
+        ShowUVOverlapToolStripMenuItem.Enabled = False
 
         treeView1.Location = New Point(1, TextBox2.Height + 5)
         treeView1.Size = New Size(Width - 2, Me.Height - TextBox2.Height - 25)
@@ -65,7 +71,8 @@ Public Class frmRawFeaturesList
 
     Public Sub LoadRaw(raw As Raw)
         _CurrentRawFile = raw
-        treeView1.loadRawFile(raw)
+        treeView1.loadRawFile(raw, hasUVscans:=ShowPDAToolStripMenuItem.Enabled)
+        ShowUVOverlapToolStripMenuItem.Enabled = ShowPDAToolStripMenuItem.Enabled
     End Sub
 
     Public Iterator Function GetXICCollection(ppm As Double) As IEnumerable(Of NamedCollection(Of ChromatogramTick))
@@ -85,6 +92,7 @@ Public Class frmRawFeaturesList
     ''' 
     ''' </summary>
     Dim checked As New List(Of TreeNode)
+    Dim UVchecked As New List(Of TreeNode)
 
     ''' <summary>
     ''' 不包含 root node
@@ -102,8 +110,12 @@ Public Class frmRawFeaturesList
         For i As Integer = 0 To checked.Count - 1
             checked(i).Checked = False
         Next
+        For i As Integer = 0 To UVchecked.Count - 1
+            UVchecked(i).Checked = False
+        Next
 
         checked.Clear()
+        UVchecked.Clear()
         lockCheckList = False
     End Sub
 
@@ -118,23 +130,41 @@ Public Class frmRawFeaturesList
             Else
                 checked.Remove(e.Node)
             End If
+        ElseIf TypeOf e.Node.Tag Is UVScan Then
+            If e.Node.Checked Then
+                UVchecked.Add(e.Node)
+            Else
+                UVchecked.Remove(e.Node)
+            End If
         Else
             Dim checked As Boolean = e.Node.Checked
             Dim node As TreeNode
+
+            ' ms1 批量选择ms2
+            ' 或者uv批量选择uvscans
 
             For i As Integer = 0 To e.Node.Nodes.Count - 1
                 node = e.Node.Nodes(i)
                 node.Checked = checked
 
                 If checked Then
-                    Me.checked.Add(node)
+                    If TypeOf node.Tag Is ScanEntry Then
+                        Me.checked.Add(node)
+                    ElseIf TypeOf node.Tag Is UVScan Then
+                        Me.UVchecked.Add(node)
+                    End If
                 Else
-                    Me.checked.Remove(node)
+                    If TypeOf node.Tag Is ScanEntry Then
+                        Me.checked.Remove(node)
+                    ElseIf TypeOf node.Tag Is UVScan Then
+                        Me.UVchecked.Remove(node)
+                    End If
                 End If
             Next
         End If
 
         Me.checked = Me.checked.Distinct.AsList
+        Me.UVchecked = Me.UVchecked.Distinct.AsList
 
         ClearToolStripMenuItem.Text = $"Clear [{checked.Count} XIC Ions]"
     End Sub
@@ -185,11 +215,16 @@ Public Class frmRawFeaturesList
     Private Sub treeView1_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles treeView1.AfterSelect
         MyApplication.host.ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
 
-        ' scan节点
-        Dim raw As Task.Raw = CurrentRawFile
-        Dim scanId As String = e.Node.Text
+        If TypeOf e.Node.Tag Is UVScan Then
+            Call MyApplication.host.mzkitTool.showUVscans({DirectCast(e.Node.Tag, UVScan).GetSignalModel}, $"UV scan at {DirectCast(e.Node.Tag, UVScan).scan_time.ToString("F2")} sec", "wavelength (nm)")
+        ElseIf Not e.Node.Tag Is Nothing Then
+            ' scan节点
+            Dim raw As Task.Raw = CurrentRawFile
+            Dim scanId As String = e.Node.Text
 
-        Call MyApplication.host.mzkitTool.showSpectrum(scanId, raw)
+            Call MyApplication.host.mzkitTool.showSpectrum(scanId, raw)
+        End If
+
         Call MyApplication.host.mzkitTool.ShowPage()
 
         MyApplication.host.Text = $"BioNovoGene Mzkit [{CurrentRawFile.source.GetFullPath}]"
@@ -402,5 +437,28 @@ Public Class frmRawFeaturesList
             searchPage.page.loadMs2(products)
             searchPage.page.runSearch()
         End Using
+    End Sub
+
+    Private Sub ShowPDAToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowPDAToolStripMenuItem.Click
+        Dim PDA_time = CurrentRawFile.UVscans.Select(Function(a) a.scan_time).ToArray
+        Dim PDA_ions = CurrentRawFile.UVscans.Select(Function(a) a.total_ion_current).ToArray
+        Dim PDA As New GeneralSignal With {
+            .Measures = PDA_time,
+            .measureUnit = "seconds",
+            .meta = New Dictionary(Of String, String),
+            .Strength = PDA_ions
+        }
+
+        Call MyApplication.host.mzkitTool.showUVscans({PDA}, $"UV scan PDA plot", "scan_time (seconds)")
+    End Sub
+
+    Private Sub ShowUVOverlapToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowUVOverlapToolStripMenuItem.Click
+        If UVchecked > 0 Then
+            Dim selects = UVchecked.Select(Function(a) DirectCast(a.Tag, UVScan).GetSignalModel).ToArray
+            Dim rtRange As DoubleRange = UVchecked.Select(Function(a) DirectCast(a.Tag, UVScan).scan_time).ToArray
+            Dim title As String = $"UV scan at scan_time range [{rtRange.Min.ToString("F2")}, {rtRange.Max.ToString("F2")}]"
+
+            Call MyApplication.host.mzkitTool.showUVscans(selects, title, "wavelength (nm)")
+        End If
     End Sub
 End Class

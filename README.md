@@ -41,6 +41,9 @@ SOFTWARE.
 <!-- vscode-markdown-toc -->
 * 1. [Raw Data Viewer Instruction](#RawDataViewerInstruction)
 	* 1.1. [Imports raw data file](#Importsrawdatafile)
+
+		* 1.1.1. [Background Task](#BackgroundTask)
+
 	* 1.2. [Search Feature](#SearchFeature)
 	* 1.3. [XIC plot](#XICplot)
 
@@ -68,6 +71,7 @@ SOFTWARE.
 		* 2.2.6. [Save Network Visual](#SaveNetworkVisual)
 
 * 3. [Appendix](#Appendix)
+
 	* 3.1. [Switch Between Toolkit](#SwitchBetweenToolkit)
 	* 3.2. [Install Mzkit](#InstallMzkit)
 	* 3.3. [Uninstall Mzkit](#UninstallMzkit)
@@ -109,7 +113,7 @@ Then you should see the files that you've imports into mzkit on the ``File Explo
 
 ![](docs/manual/file-explorer.png)
 
-#### Background Task
+####  1.1.1. <a name='BackgroundTask'></a>Background Task
 
 For improvements of the user experience when you are using the mzkit application, the raw data files is imports to mzkit application under a background task. You can see the background task progress throught the ``Task List`` window:
 
@@ -281,6 +285,8 @@ or just select a page from the app switcher toolstrip menu:
 <div style="page-break-after:always;"></div>
 
 ###  3.2. <a name='InstallMzkit'></a>Install Mzkit
+
+> If you have already installed the mzkit application, please uninstall the previous version before you install the new version of the mzkit application.
 
 ![](docs/manual/setup.PNG)
 

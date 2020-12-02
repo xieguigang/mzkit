@@ -716,12 +716,32 @@
 			</Command.LargeImages>
 		</Command>
 
+		<Command Name="cmdFontControl" Id="1165">
+		</Command>
 
+		<Command Name="cmdLegendCheckBox"
+		 Id="1166"
+		 LabelTitle="Show Legend">			
+		</Command>
+		
 	</Application.Commands>
 
 	<Application.Views>
 
 		<ContextPopup>
+
+			<ContextPopup.MiniToolbars>
+				<MiniToolbar Name="MiniToolbar">
+					<MenuGroup>
+						<FontControl CommandName="cmdFontControl"/>
+					</MenuGroup>
+
+					<MenuGroup>
+						<CheckBox CommandName="cmdLegendCheckBox" />
+					</MenuGroup>
+				</MiniToolbar>
+			</ContextPopup.MiniToolbars>
+			
 			<ContextPopup.ContextMenus>
 				<ContextMenu Name="ContextMenu">
 					<MenuGroup>

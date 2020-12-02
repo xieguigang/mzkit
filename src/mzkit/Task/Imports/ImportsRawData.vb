@@ -50,7 +50,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
-Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -60,6 +59,7 @@ Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.Text
 Imports mzML = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 
@@ -297,13 +297,23 @@ Public Class ImportsRawData
             Dim rt As New List(Of Double)
             Dim ms1Parent As Ms1ScanEntry = Nothing
             Dim ms2Temp As New List(Of ScanEntry)
+            Dim UVscans As New List(Of GeneralSignal)
             Dim j As i32 = 1
+            Dim UVdetecor As String = GetPhotodiodeArrayDetectorInstrumentConfigurationId(source)
 
             For Each scan As spectrum In mzML.Xml.LoadScans(source)
                 Dim parent As (mz As Double, into As Double) = Nothing
 
-                If Not scan.cvParams.KeyItem("electromagnetic radiation spectrum") Is Nothing Then
-                    Call showProgress($"skip electromagnetic radiation spectrum at {scan.scan_time}...")
+                If Not scan.cvParams.KeyItem(UVScanType) Is Nothing Then
+                    If Not ms1Parent Is Nothing Then
+                        ms1Parent.products = ms2Temp.PopAll
+                        nscans.Add(ms1Parent)
+                        ms1Parent = Nothing
+                    End If
+
+                    Call showProgress($"load electromagnetic radiation spectrum at {scan.scan_time}...")
+                    Call UVscans.Add(scan.CreateGeneralSignal(UVdetecor))
+
                     Continue For
                 End If
 
@@ -391,13 +401,23 @@ Public Class ImportsRawData
             cache1.GlobalAttributes(New attribute With {.name = NameOf(nscans), .type = CDFDataTypes.INT, .value = nscans.Count})
             cache2.GlobalAttributes(New attribute With {.name = NameOf(nscans), .type = CDFDataTypes.INT, .value = nscans.Sum(Function(a) a.products.TryCount)})
 
-            If nscans.Last.id <> ms1Parent.id Then
+            If Not ms1Parent Is Nothing AndAlso nscans.Last.id <> ms1Parent.id Then
                 nscans.Add(ms1Parent)
             End If
 
             raw.scans = nscans.ToArray
             raw.rtmin = rt.Min
             raw.rtmax = rt.Max
+            raw.UVscans = UVscans _
+                .Select(Function(uv)
+                            Return New UVScan With {
+                                .intensity = uv.Strength,
+                                .scan_time = Val(uv.meta("scan_time")),
+                                .total_ion_current = Val(uv.meta("total_ion_current")),
+                                .wavelength = uv.Measures
+                            }
+                        End Function) _
+                .ToArray
 
             Call showProgress("Write cache data...")
         End Using

@@ -16,12 +16,12 @@ Public Class ViewerProject : Implements ISaveHandle, IFileReference
     ''' <summary>
     ''' 原始数据文件的缓存对象列表
     ''' </summary>
-    Dim cacheFiles As Dictionary(Of String, Raw())
+    Dim cacheFiles As New Dictionary(Of String, Raw())
 
     ''' <summary>
     ''' 自动化脚本的文件路径列表
     ''' </summary>
-    Dim scriptFiles As String()
+    Dim scriptFiles As String() = {}
 
     Public Property FilePath As String Implements IFileReference.FilePath
 

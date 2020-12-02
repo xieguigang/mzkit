@@ -51,6 +51,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.SignalProcessing
 
 Public Class Raw
 
@@ -78,6 +79,7 @@ Public Class Raw
     End Property
 
     Public Property scans As Ms1ScanEntry()
+    Public Property UVscans As UVScan()
 
     Public ReadOnly Property cacheFileExists As Boolean
         Get
@@ -129,4 +131,30 @@ Public Class ScanEntry : Inherits MsScanEntry
     Public Overrides Function ToString() As String
         Return id
     End Function
+End Class
+
+Public Class UVScan
+
+    Public Property wavelength As Double()
+    Public Property intensity As Double()
+    Public Property total_ion_current As Double
+    Public Property scan_time As Double
+
+    Public Overrides Function ToString() As String
+        Return $"total_ions:{total_ion_current.ToString("G3")} at {CInt(scan_time)} sec"
+    End Function
+
+    Public Function GetSignalModel() As GeneralSignal
+        Return New GeneralSignal With {
+            .description = ToString(),
+            .Measures = wavelength,
+            .measureUnit = "wavelength",
+            .reference = ToString(),
+            .Strength = intensity,
+            .meta = New Dictionary(Of String, String) From {
+                {"title", .reference}
+            }
+        }
+    End Function
+
 End Class

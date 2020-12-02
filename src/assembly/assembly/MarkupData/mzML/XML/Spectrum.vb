@@ -131,10 +131,14 @@ Namespace MarkupData.mzML
         ''' <returns></returns>
         Public ReadOnly Property selectedIon As (mz As Double, intensity As Double)
             Get
-                Dim mz = precursorList.precursor(Scan0).selectedIonList.GetIonMz
-                Dim into = precursorList.precursor(Scan0).selectedIonList.GetIonIntensity
+                If Not precursorList Is Nothing Then
+                    Dim mz = precursorList.precursor(Scan0).selectedIonList.GetIonMz
+                    Dim into = precursorList.precursor(Scan0).selectedIonList.GetIonIntensity
 
-                Return (mz(Scan0), into(Scan0))
+                    Return (mz(Scan0), into(Scan0))
+                Else
+                    Return (0, 0)
+                End If
             End Get
         End Property
 

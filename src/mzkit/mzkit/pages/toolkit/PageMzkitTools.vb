@@ -71,6 +71,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports mzkit.My
 Imports RibbonLib
@@ -209,6 +210,22 @@ Public Class PageMzkitTools
         Else
             ' Call missingCacheFile(raw)
         End If
+    End Sub
+
+    Friend Sub showUVscans(scans As IEnumerable(Of GeneralSignal), title$, xlabe$)
+        Dim scanCollection = scans.ToArray
+        Dim plot = UVsignalPlot.Plot(
+            signals:=scanCollection,
+            legendTitle:=Function(scan) If(scanCollection.Length = 1, $"UV scans", scan("title")),
+            size:="2560,1440",
+            pt_size:=10,
+            line_width:=10,
+            title:=title,
+            xlabel:=xlabe
+        ).AsGDIImage
+
+        PictureBox1.BackgroundImage = plot
+        ShowTabPage(TabPage5)
     End Sub
 
     Public Sub showAlignment(result As AlignmentOutput)

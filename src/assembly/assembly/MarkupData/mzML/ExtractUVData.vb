@@ -76,10 +76,25 @@ Namespace MarkupData.mzML
             Next
         End Function
 
-        <Extension>
-        Private Function CreateGeneralSignal(rawScan As spectrum, instrumentConfigurationId As String) As GeneralSignal
-            Const type As String = "electromagnetic radiation spectrum"
+        Public Const UVScanType As String = "electromagnetic radiation spectrum"
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="rawScan"></param>
+        ''' <param name="instrumentConfigurationId"></param>
+        ''' <returns>
+        ''' metadata contains:
+        ''' 
+        ''' 1. total_ion_current
+        ''' 2. lowest_wavelength
+        ''' 3. highest_wavelength
+        ''' 4. scan_time
+        ''' 5. rawfile
+        ''' 6. scan
+        ''' </returns>
+        <Extension>
+        Public Function CreateGeneralSignal(rawScan As spectrum, instrumentConfigurationId As String) As GeneralSignal
             Dim descriptor As Double() = rawScan.binaryDataArrayList.list(Scan0).Base64Decode
             Dim intensity As Double() = rawScan.binaryDataArrayList.list(1).Base64Decode
             Dim info As New Dictionary(Of String, String)
@@ -102,7 +117,7 @@ Namespace MarkupData.mzML
             info.Add("scan", title.KeyItem("scan").Value)
 
             Return New GeneralSignal With {
-                .description = type,
+                .description = UVScanType,
                 .meta = info,
                 .measureUnit = "wavelength(nanometer)",
                 .Measures = descriptor,
@@ -111,9 +126,11 @@ Namespace MarkupData.mzML
             }
         End Function
 
+        Public Const UVdetector As String = "photodiode array detector"
+
         Public Function GetPhotodiodeArrayDetectorInstrumentConfigurationId(rawdata As String) As String
             For Each configuration As instrumentConfiguration In rawdata.LoadXmlDataSet(Of instrumentConfiguration)(, xmlns:=Xml.xmlns)
-                If configuration.componentList.detector.Any(Function(dev) dev.cvParams.Any(Function(a) a.name = "photodiode array detector")) Then
+                If configuration.componentList.detector.Any(Function(dev) dev.cvParams.Any(Function(a) a.name = UVdetector)) Then
                     Return configuration.id
                 End If
             Next
