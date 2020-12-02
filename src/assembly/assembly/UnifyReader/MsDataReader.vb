@@ -1,4 +1,5 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 
 Namespace DataReader
 
@@ -13,6 +14,21 @@ Namespace DataReader
         Public MustOverride Function GetTIC(scan As Scan) As Double
         Public MustOverride Function GetParentMz(scan As Scan) As Double
         Public MustOverride Function GetPolarity(scan As Scan) As String
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <returns>
+        ''' <see cref="MsDataReader(Of Scan)"/>
+        ''' </returns>
+        Public Shared Function ScanProvider() As Object
+            Select Case GetType(Scan)
+                Case GetType(mzXML.scan) : Return New mzXMLScan
+                Case GetType(mzML.spectrum) : Return New mzMLScan
+                Case Else
+                    Throw New NotImplementedException(GetType(Scan).ToString)
+            End Select
+        End Function
 
     End Class
 End Namespace

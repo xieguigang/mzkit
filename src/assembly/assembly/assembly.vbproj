@@ -388,6 +388,7 @@
     <Compile Include="MarkupData\mzML\XML\Ions.vb" />
     <Compile Include="MarkupData\mzML\XML\Components.vb" />
     <Compile Include="MarkupData\mzML\XML\Configurations.vb" />
+    <Compile Include="UnifyReader\Chromatogram.vb" />
     <Compile Include="UnifyReader\mzMLScan.vb" />
     <Compile Include="UnifyReader\mzXMLScan.vb" />
     <Compile Include="UnifyReader\MsDataReader.vb" />
