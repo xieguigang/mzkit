@@ -65,7 +65,7 @@ Imports REnv = SMRUCC.Rsharp.Runtime
 <Package("visual")>
 Module Visual
 
-    Sub New()
+    Sub Main()
         Call Internal.generic.add("plot", GetType(GeneralSignal), AddressOf plotSignal)
         Call Internal.generic.add("plot", GetType(GeneralSignal()), AddressOf plotSignal2)
         Call Internal.generic.add("plot", GetType(MGF.Ions), AddressOf plotMS)
