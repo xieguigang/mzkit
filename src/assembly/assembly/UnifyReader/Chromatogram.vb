@@ -1,4 +1,6 @@
-﻿Namespace DataReader
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+
+Namespace DataReader
 
     Public Class Chromatogram
 
@@ -8,6 +10,16 @@
 
         Public Overrides Function ToString() As String
             Return $"Chromatogram between scan_time [{CInt(scan_time.Min)},{CInt(scan_time.Max)}]"
+        End Function
+
+        Public Iterator Function GetTicks(Optional isbpc As Boolean = False) As IEnumerable(Of ChromatogramTick)
+            For i As Integer = 0 To scan_time.Length - 1
+                If isbpc Then
+                    Yield New ChromatogramTick With {.Time = scan_time(i), .Intensity = BPC(i)}
+                Else
+                    Yield New ChromatogramTick With {.Time = scan_time(i), .Intensity = TIC(i)}
+                End If
+            Next
         End Function
 
         Public Shared Function GetChromatogram(Of Scan)(scans As IEnumerable(Of Scan)) As Chromatogram
