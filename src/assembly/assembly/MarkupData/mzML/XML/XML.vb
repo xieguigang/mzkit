@@ -46,9 +46,6 @@
 #End Region
 
 Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
-Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Text.Xml.Linq
 
 Namespace MarkupData.mzML

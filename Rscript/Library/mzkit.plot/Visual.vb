@@ -82,6 +82,8 @@ Module Visual
 
     Private Function plotChromatogram2(x As ChromatogramOverlap, args As list, env As Environment) As Object
         Dim isBPC As Boolean = args.getValue("bpc", env, [default]:=False)
+        Dim alpha As Integer = args.getValue("opacity", env, [default]:=100)
+        Dim colorSet As String = args.getValue("colors", env, [default]:="Paired:c12")
         Dim overlaps As New List(Of NamedCollection(Of ChromatogramTick))
         Dim data As NamedCollection(Of ChromatogramTick)
 
@@ -93,7 +95,15 @@ Module Visual
             overlaps.Add(data)
         Next
 
-        Return overlaps.ToArray.TICplot
+        Return overlaps _
+            .OrderByDescending(Function(c)
+                                   Return Aggregate tick As ChromatogramTick In c Into Sum(tick.Intensity)
+                               End Function) _
+            .ToArray _
+            .TICplot(
+                fillAlpha:=alpha,
+                colorsSchema:=colorSet
+            )
     End Function
 
     Private Function plotChromatogram(x As Chromatogram, args As list, env As Environment) As Object
