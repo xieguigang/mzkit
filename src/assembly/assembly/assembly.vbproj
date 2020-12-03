@@ -382,6 +382,7 @@
     <Compile Include="ASCII\MSP\Comments.vb" />
     <Compile Include="ASCII\MSP\MspData.vb" />
     <Compile Include="MarkupData\Base64Decode.vb" />
+    <Compile Include="MarkupData\imzML\XML\XML.vb" />
     <Compile Include="MarkupData\mzML\RawScanParser.vb" />
     <Compile Include="MarkupData\mzML\ExtractUVData.vb" />
     <Compile Include="MarkupData\mzML\XML\BinaryData.vb" />
@@ -444,7 +445,9 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="MarkupData\imzML\ibd\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\math-core.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
@@ -462,6 +465,9 @@
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
       <Name>MassSpectrum.math-core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="MarkupData\imzML\README.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
