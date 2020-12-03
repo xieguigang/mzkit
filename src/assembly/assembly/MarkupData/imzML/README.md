@@ -1,4 +1,5 @@
 ﻿# general data structure of imzML
+> https://ms-imaging.org/wp/imzml/data-structure/
 
 imzML consists of two separate files: one for the metadata and one for the MS data. The metadata is saved in an XML 
 file (*.imzML). The mass spectral data is saved in a binary file (*.ibd). The connection between the two files is 
