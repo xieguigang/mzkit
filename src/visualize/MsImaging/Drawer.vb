@@ -27,7 +27,8 @@ Public Class Drawer : Implements IDisposable
                               Optional threshold As Double = 0.1,
                               Optional pixelSize$ = "5,5",
                               Optional ppm As Double = 5,
-                              Optional colorSet As String = "YlGnBu:c8") As Bitmap
+                              Optional colorSet As String = "YlGnBu:c8",
+                              Optional mapLevels% = 25) As Bitmap
 
         Dim dimSize As Size = pixelSize.SizeParser
         Dim pixels As New List(Of PixelData)
@@ -56,7 +57,7 @@ Public Class Drawer : Implements IDisposable
         Dim levelRange As DoubleRange = New Double() {0, 1}
         Dim color As SolidBrush
         Dim colors As SolidBrush() = Designer _
-            .GetColors(colorSet) _
+            .GetColors(colorSet, mapLevels) _
             .Select(Function(c) New SolidBrush(c)) _
             .ToArray
         Dim index As Integer
