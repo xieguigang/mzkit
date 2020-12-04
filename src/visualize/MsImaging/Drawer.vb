@@ -3,6 +3,8 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Public Class Drawer : Implements IDisposable
@@ -24,10 +26,10 @@ Public Class Drawer : Implements IDisposable
     Public Function DrawLayer(mz As Double,
                               Optional threshold As Double = 0.1,
                               Optional pixelSize$ = "5,5",
-                              Optional ppm As Double = 5) As Bitmap
+                              Optional ppm As Double = 5,
+                              Optional colorSet As String = "YlGnBu:c8") As Bitmap
 
         Dim dimSize As Size = pixelSize.SizeParser
-        Dim layer As New Bitmap(dimension.Width * dimSize.Width, dimension.Height * dimSize.Height)
         Dim pixels As New List(Of PixelData)
         Dim pixel As PixelData
 
@@ -41,7 +43,7 @@ Public Class Drawer : Implements IDisposable
             pixel = New PixelData With {
                 .x = point.x,
                 .y = point.y,
-                .intensity = into?.intensity
+                .intensity = If(into Is Nothing, 0, into.intensity)
             }
             pixels.Add(pixel)
         Next
@@ -49,12 +51,36 @@ Public Class Drawer : Implements IDisposable
         Dim intensityRange As DoubleRange = pixels _
             .Select(Function(p) p.intensity) _
             .Range
+        Dim levelRange As DoubleRange = New Double() {0, 1}
+        Dim color As SolidBrush
+        Dim colors As SolidBrush() = Designer _
+            .GetColors(colorSet) _
+            .Select(Function(c) New SolidBrush(c)) _
+            .ToArray
+        Dim index As Integer
+        Dim indexrange As DoubleRange = New Double() {0, colors.Length - 1}
+        Dim level As Double
+        Dim rect As Rectangle
+        Dim pos As Point
 
-        For Each point As PixelData In pixels
+        Using layer As Graphics2D = New Bitmap(dimension.Width * dimSize.Width, dimension.Height * dimSize.Height)
+            For Each point As PixelData In pixels
+                level = intensityRange.ScaleMapping(point.intensity, levelRange)
 
-        Next
+                If level < threshold Then
+                    color = Brushes.Transparent
+                Else
+                    index = levelRange.ScaleMapping(level, indexrange)
+                    color = colors(index)
+                End If
 
-        Return layer
+                pos = New Point((point.x - 1) * dimSize.Width, (point.y - 1) * dimSize.Height)
+                rect = New Rectangle(pos, dimSize)
+                layer.FillRectangle(color, rect)
+            Next
+
+            Return layer.ImageResource
+        End Using
     End Function
 
     Protected Overridable Sub Dispose(disposing As Boolean)
