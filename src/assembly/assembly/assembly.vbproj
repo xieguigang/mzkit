@@ -384,6 +384,7 @@
     <Compile Include="MarkupData\Base64Decode.vb" />
     <Compile Include="MarkupData\imzML\ibd\Format.vb" />
     <Compile Include="MarkupData\imzML\ibd\ibdReader.vb" />
+    <Compile Include="MarkupData\imzML\XML\ibdPtr.vb" />
     <Compile Include="MarkupData\imzML\XML\ScanData.vb" />
     <Compile Include="MarkupData\imzML\XML\XML.vb" />
     <Compile Include="MarkupData\mzML\RawScanParser.vb" />
