@@ -16,7 +16,10 @@ Namespace MarkupData.imzML
         Public Property IntPtr As ibdPtr
 
         Sub New(scan As spectrum)
-            totalIon = Double.Parse(scan.cvParams.KeyItem("total ion current")?.value)
+            If Not scan.cvParams Is Nothing Then
+                totalIon = Double.Parse(scan.cvParams.KeyItem("total ion current")?.value)
+            End If
+
             x = Integer.Parse(scan.scanList.scans(Scan0).cvParams.KeyItem("position x")?.value)
             y = Integer.Parse(scan.scanList.scans(Scan0).cvParams.KeyItem("position y")?.value)
             MzPtr = ibdPtr.ParsePtr(scan.binaryDataArrayList(Scan0))

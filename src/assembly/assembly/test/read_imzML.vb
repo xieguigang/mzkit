@@ -1,9 +1,17 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 
 Module read_imzML
 
     Sub Main()
+        Call readmzML()
         Call testReadIbd()
+    End Sub
+
+    Sub readmzML()
+        Dim scans = imzML.XML.LoadScans("E:\demo\HR2MSI mouse urinary bladder S096.imzML").ToArray
+
+        Pause()
     End Sub
 
     Sub testReadIbd()
