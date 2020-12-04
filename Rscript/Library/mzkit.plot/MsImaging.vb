@@ -47,7 +47,9 @@ Module MsImaging
                 Call g.Clear(bg.GetBrush)
             End If
 
-            For Each layer As Bitmap In layers
+            ' 在这里是反向叠加图层的
+            ' 向量中最开始的图层表示为最上层的图层，即最后进行绘制的图层
+            For Each layer As Bitmap In layers.Reverse
                 Call g.DrawImageUnscaled(layer, New Point)
             Next
 
