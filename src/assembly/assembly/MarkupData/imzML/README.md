@@ -12,7 +12,7 @@ Both files carry the same universally unique identifier (UUID). This can help to
 defined in the controlled vocabulary and this parameter is located in the imzML file in the fileContent tag. 
 Comparing both UUIDs allows to find out if the two files build a pair of corresponding files.
 
-![](./data structure imzml3.png)
+![](./data%20structure%20imzml3.png)
 
 ## XML
 

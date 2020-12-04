@@ -287,6 +287,7 @@
   <ItemGroup>
     <Compile Include="assembly\Assembly.vb" />
     <Compile Include="assembly\ERS.vb" />
+    <Compile Include="assembly\data.vb" />
     <Compile Include="assembly\MzWeb.vb" />
     <Compile Include="math\Math.vb" />
     <Compile Include="assembly\ProteoWizard.vb" />
