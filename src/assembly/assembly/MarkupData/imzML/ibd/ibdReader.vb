@@ -34,6 +34,20 @@ Namespace MarkupData.imzML
             magic = stream.ReadBytes(16).Select(Function(b) b.ToString("X2")).JoinBy("")
         End Sub
 
+        Public Function ReadArray(offset As Long, encodedLength As Integer, arrayLength As Integer) As Double()
+            Dim externalArray As Byte()
+            Dim sizeof As Integer = encodedLength / arrayLength
+
+            stream.Seek(offset, SeekOrigin.Begin)
+            externalArray = stream.ReadBytes(encodedLength)
+
+            If sizeof = 4 Then
+                Return externalArray.Split(4).Select(Function(bytes) CDbl(BitConverter.ToSingle(bytes, Scan0))).ToArray
+            Else
+                Return externalArray.Split(8).Select(Function(bytes) BitConverter.ToDouble(bytes, Scan0)).ToArray
+            End If
+        End Function
+
         Public Overrides Function ToString() As String
             Return magic.Substring(0, 8) & "-" &
                    magic.Substring(8, 4) & "-" &

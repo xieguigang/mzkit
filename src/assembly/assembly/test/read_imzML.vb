@@ -9,6 +9,9 @@ Module read_imzML
     Sub testReadIbd()
         Dim ibd As New ibdReader("E:\demo\HR2MSI mouse urinary bladder S096.ibd".Open([readOnly]:=True, doClear:=False), Format.Processed)
 
+        Dim testMzArray = ibd.ReadArray(16, 9032, 1129)
+        Dim testIntoArray = ibd.ReadArray(9048, 4516, 1129)
+
         Pause()
     End Sub
 End Module
