@@ -7,7 +7,7 @@ Module read_imzML
     End Sub
 
     Sub testReadIbd()
-        Dim ibd As New ibdReader("E:\demo\HR2MSI mouse urinary bladder S096.ibd".Open([readOnly]:=True, doClear:=False))
+        Dim ibd As New ibdReader("E:\demo\HR2MSI mouse urinary bladder S096.ibd".Open([readOnly]:=True, doClear:=False), Format.Processed)
 
         Pause()
     End Sub

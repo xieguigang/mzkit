@@ -15,16 +15,22 @@ Namespace MarkupData.imzML
         ''' is possible even if the names of both files are different.
         ''' </summary>
         Dim magic As String
+        Dim format As Format
 
-        Public ReadOnly Property UniversallyUniqueIdentifier As String
+        ''' <summary>
+        ''' Universal Unique Identifier
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property UUID As String
             Get
                 Return Me.ToString
             End Get
         End Property
 
-        Sub New(file As Stream)
+        Sub New(file As Stream, layout As Format)
             stream = New BinaryDataReader(file)
             stream.ByteOrder = ByteOrder.LittleEndian
+            format = layout
             magic = stream.ReadBytes(16).Select(Function(b) b.ToString("X2")).JoinBy("")
         End Sub
 
