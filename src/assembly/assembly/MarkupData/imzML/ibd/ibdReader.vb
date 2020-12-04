@@ -8,12 +8,33 @@ Namespace MarkupData.imzML
         ReadOnly stream As BinaryDataReader
 
         Dim disposedValue As Boolean
+
+        ''' <summary>
+        ''' The first 16 bytes of the binary file are reserved for an Universally Unique Identifier. 
+        ''' It is also saved in the imzML file so that a correct assignment of ibd and imzML file 
+        ''' is possible even if the names of both files are different.
+        ''' </summary>
         Dim magic As String
+
+        Public ReadOnly Property UniversallyUniqueIdentifier As String
+            Get
+                Return Me.ToString
+            End Get
+        End Property
 
         Sub New(file As Stream)
             stream = New BinaryDataReader(file)
-            magic = stream.ReadString(16)
+            stream.ByteOrder = ByteOrder.LittleEndian
+            magic = stream.ReadBytes(16).Select(Function(b) b.ToString("X2")).JoinBy("")
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return magic.Substring(0, 8) & "-" &
+                   magic.Substring(8, 4) & "-" &
+                   magic.Substring(12, 4) & "-" &
+                   magic.Substring(16, 4) & "-" &
+                   magic.Substring(20)
+        End Function
 
         Protected Overridable Sub Dispose(disposing As Boolean)
             If Not disposedValue Then
