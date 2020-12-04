@@ -33,6 +33,8 @@ Public Class Drawer : Implements IDisposable
         Dim pixels As New List(Of PixelData)
         Dim pixel As PixelData
 
+        Call "loading pixel datas...".__INFO_ECHO
+
         For Each point As ScanData In Me.pixels
             Dim msScan As ms2() = ibd.GetMSMS(point)
             Dim into As ms2 = msScan _
@@ -62,6 +64,8 @@ Public Class Drawer : Implements IDisposable
         Dim level As Double
         Dim rect As Rectangle
         Dim pos As Point
+
+        Call "rendering pixel blocks...".__INFO_ECHO
 
         Using layer As Graphics2D = New Bitmap(dimension.Width * dimSize.Width, dimension.Height * dimSize.Height)
             For Each point As PixelData In pixels

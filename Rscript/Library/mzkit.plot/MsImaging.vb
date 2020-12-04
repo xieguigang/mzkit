@@ -20,9 +20,9 @@ Module MsImaging
                           <RRawVectorArgument>
                           Optional pixelSize As Object = "5,5",
                           Optional ppm As Double = 5,
-                          Optional colorSet$ = "YlGnBu:c8") As Bitmap
+                          Optional color$ = "YlGnBu:c8") As Bitmap
 
-        Return viewer.DrawLayer(mz, threshold, InteropArgumentHelper.getSize(pixelSize, "5,5"), ppm, colorSet)
+        Return viewer.DrawLayer(mz, threshold, InteropArgumentHelper.getSize(pixelSize, "5,5"), ppm, color)
     End Function
 
     ''' <summary>
