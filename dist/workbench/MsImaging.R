@@ -28,6 +28,9 @@ let extract_layer as function(mz, colors, file) {
 	);
 	
 	save.graphics(img, file = file);
+	
+	# returns current image layer for layers flatten
+	img;
 }
 
 let R = extract_layer(mz = 616.1767, colors = "OrRd:c8", file = output_red_layer);
