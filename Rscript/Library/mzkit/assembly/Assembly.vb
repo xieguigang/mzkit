@@ -344,7 +344,13 @@ Module Assembly
         End If
     End Function
 
-    <ExportAPI("ion_mode")>
+    ''' <summary>
+    ''' get polarity data for each ms2 scans
+    ''' </summary>
+    ''' <param name="scans"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("polarity")>
     <RApiReturn(GetType(Integer))>
     Public Function ionMode(scans As pipeline, Optional env As Environment = Nothing) As Object
         Dim polar As New List(Of Integer)
