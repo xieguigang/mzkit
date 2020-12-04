@@ -15,12 +15,23 @@ const output_red_layer   = `${!script$dir}/ms_imaging/HR2MSI_mouse_urinary_bladd
 const output_green_layer = `${!script$dir}/ms_imaging/HR2MSI_mouse_urinary_bladder_S096_PE(38_1)_green.png`;
 const output_blue_layer  = `${!script$dir}/ms_imaging/HR2MSI_mouse_urinary_bladder_S096_PC(34_1)_blue.png`;
 
-let R = HR2MSI_mouse_urinary_bladder :> layer(mz = 616.1767, ppm = 5, color = "OrRd:c8");
-let G = HR2MSI_mouse_urinary_bladder :> layer(mz = 812.5566, ppm = 5, color = "YlGn:c8");
-let B = HR2MSI_mouse_urinary_bladder :> layer(mz = 798.541,  ppm = 5, color = "PuBu:c8");
+const scan_ppm as double  = 20;
+const threshold as double = 0;
 
-save.graphics(R, file = output_red_layer);
-save.graphics(G, file = output_green_layer);
-save.graphics(B, file = output_blue_layer);
+let extract_layer as function(mz, colors, file) {
+	let img = HR2MSI_mouse_urinary_bladder 
+	:> layer(
+		mz        = mz, 
+		ppm       = scan_ppm, 
+		threshold = threshold, 
+		color     = colors
+	);
+	
+	save.graphics(img, file = file);
+}
+
+let R = extract_layer(mz = 616.1767, colors = "OrRd:c8", file = output_red_layer);
+let G = extract_layer(mz = 812.5566, colors = "YlGn:c8", file = output_green_layer);
+let B = extract_layer(mz = 798.541,  colors = "PuBu:c8", file = output_blue_layer);
 
 save.graphics(flatten(layers = [R, G, B]), file = output_img);
