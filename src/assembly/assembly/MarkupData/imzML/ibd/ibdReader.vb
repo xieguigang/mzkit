@@ -49,11 +49,12 @@ Namespace MarkupData.imzML
         End Function
 
         Public Overrides Function ToString() As String
-            Return magic.Substring(0, 8) & "-" &
-                   magic.Substring(8, 4) & "-" &
-                   magic.Substring(12, 4) & "-" &
-                   magic.Substring(16, 4) & "-" &
-                   magic.Substring(20)
+            Return $"[{format.ToString}] " &
+                magic.Substring(0, 8) & "-" &
+                magic.Substring(8, 4) & "-" &
+                magic.Substring(12, 4) & "-" &
+                magic.Substring(16, 4) & "-" &
+                magic.Substring(20)
         End Function
 
         Protected Overridable Sub Dispose(disposing As Boolean)
