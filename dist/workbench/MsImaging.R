@@ -9,10 +9,18 @@ imports "MsImaging" from "mzkit.plot";
 # Blue  798.541  PC(34:1) [M+K]+
 
 const HR2MSI_mouse_urinary_bladder = viewer("E:\demo\HR2MSI mouse urinary bladder S096.imzML");
-const output_img as string = `${!script$dir}/ms_imaging/HR2MSI_mouse_urinary_bladder_S096.png`;
 
-let R = HR2MSI_mouse_urinary_bladder :> layer(mz = 616.1767, ppm = 20, color = "OrRd:c8");
-let G = HR2MSI_mouse_urinary_bladder :> layer(mz = 812.5566, ppm = 20, color = "YlGn:c8");
-let B = HR2MSI_mouse_urinary_bladder :> layer(mz = 798.541,  ppm = 20, color = "PuBu:c8");
+const output_img         = `${!script$dir}/ms_imaging/HR2MSI_mouse_urinary_bladder_S096.png`;
+const output_red_layer   = `${!script$dir}/ms_imaging/HR2MSI_mouse_urinary_bladder_S096_Heme_red.png`;
+const output_green_layer = `${!script$dir}/ms_imaging/HR2MSI_mouse_urinary_bladder_S096_PE(38_1)_green.png`;
+const output_blue_layer  = `${!script$dir}/ms_imaging/HR2MSI_mouse_urinary_bladder_S096_PC(34_1)_blue.png`;
+
+let R = HR2MSI_mouse_urinary_bladder :> layer(mz = 616.1767, ppm = 5, color = "OrRd:c8");
+let G = HR2MSI_mouse_urinary_bladder :> layer(mz = 812.5566, ppm = 5, color = "YlGn:c8");
+let B = HR2MSI_mouse_urinary_bladder :> layer(mz = 798.541,  ppm = 5, color = "PuBu:c8");
+
+save.graphics(R, file = output_red_layer);
+save.graphics(G, file = output_green_layer);
+save.graphics(B, file = output_blue_layer);
 
 save.graphics(flatten(layers = [R, G, B]), file = output_img);
