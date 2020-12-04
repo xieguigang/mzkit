@@ -80,6 +80,11 @@ Namespace MarkupData.imzML
                 magic.Substring(20)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function Open(ibd As String) As ibdReader
+            Return New ibdReader(ibd.Open(FileMode.Open, doClear:=False, [readOnly]:=True), Format.Processed)
+        End Function
+
         Protected Overridable Sub Dispose(disposing As Boolean)
             If Not disposedValue Then
                 If disposing Then
