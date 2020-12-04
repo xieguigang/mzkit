@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::4071f04a5b8974528b20586281b85e96, Rscript\Library\mzkit\assembly\Assembly.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Assembly
-    ' 
-    '     Function: GetFileType, getMs1Scans, IonPeaks, mzMLScanLoader, mzXML2Mgf
-    '               mzXMLScanLoader, PeakMs2FileIndex, rawScans, ReadMgfIons, ReadMslIons
-    '               summaryIons, writeMgfIons
-    ' 
-    '     Sub: Main
-    ' 
-    ' /********************************************************************************/
+' Module Assembly
+' 
+'     Function: GetFileType, getMs1Scans, IonPeaks, mzMLScanLoader, mzXML2Mgf
+'               mzXMLScanLoader, PeakMs2FileIndex, rawScans, ReadMgfIons, ReadMslIons
+'               summaryIons, writeMgfIons
+' 
+'     Sub: Main
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -51,6 +51,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSL
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
@@ -237,7 +238,7 @@ Module Assembly
                         .WriteAsciiMgf(mgfWriter, relativeInto)
                 Next
             End Using
-        ElseIf ions.GetType Is GetType(ions()) Then
+        ElseIf ions.GetType Is GetType(Ions()) Then
             Using mgfWriter As StreamWriter = file.OpenWriter(Encodings.ASCII, append:=False)
                 For Each ion As Ions In DirectCast(ions, Ions())
                     Call ion.WriteAsciiMgf(mgfWriter, relativeInto)
@@ -341,6 +342,30 @@ Module Assembly
         Else
             Return mzXMLAssembly.XML.LoadScans(file).DoCall(AddressOf pipeline.CreateFromPopulator)
         End If
+    End Function
+
+    <ExportAPI("ion_mode")>
+    <RApiReturn(GetType(Integer))>
+    Public Function ionMode(scans As pipeline, Optional env As Environment = Nothing) As Object
+        Dim polar As New List(Of Integer)
+
+        If scans.elementType Like GetType(mzXML.scan) Then
+            Dim reader As mzXMLScan = MsDataReader(Of scan).ScanProvider()
+
+            For Each scanVal As scan In scans.populates(Of scan)(env).Where(Function(s) reader.GetMsLevel(s) = 2)
+                Call polar.Add(PrecursorType.ParseIonMode(reader.GetPolarity(scanVal)))
+            Next
+        ElseIf scans.elementType Like GetType(mzML.spectrum) Then
+            Dim reader As mzMLScan = MsDataReader(Of scan).ScanProvider()
+
+            For Each scanVal As mzML.spectrum In scans.populates(Of mzML.spectrum)(env).Where(Function(s) reader.GetMsLevel(s) = 2)
+                Call polar.Add(PrecursorType.ParseIonMode(reader.GetPolarity(scanVal)))
+            Next
+        Else
+            Return Message.InCompatibleType(GetType(mzXML.scan), scans.elementType, env)
+        End If
+
+        Return polar.ToArray
     End Function
 
     <Extension>
