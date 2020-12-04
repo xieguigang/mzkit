@@ -63,6 +63,8 @@ Namespace MarkupData.mzML
         <XmlAttribute> Public Property index As Integer
         <XmlAttribute> Public Property id As String
         <XmlAttribute> Public Property defaultArrayLength As String
+        <XmlAttribute> Public Property dataProcessingRef As String
+        <XmlAttribute> Public Property sourceFileRef As String
 
         Public Property binaryDataArrayList As binaryDataArrayList
 

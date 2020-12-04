@@ -54,6 +54,7 @@ Imports Microsoft.VisualBasic.Text.Xml.Linq
 
 Namespace MarkupData.mzML
 
+    <HideModuleName>
     Public Module Extensions
 
         Public Const Xmlns$ = "http://psi.hupo.org/ms/mzml"
