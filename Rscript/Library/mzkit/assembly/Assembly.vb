@@ -438,27 +438,49 @@ Module Assembly
     Public Function getMs1Scans(<RRawVectorArgument> raw As Object, Optional env As Environment = Nothing) As Object
         Dim files As String() = REnv.asVector(Of String)(raw)
         Dim ms1 As New List(Of ms1_scan)
-        Dim peakScans As PeakMs2
+        Dim peakScans As ms2()
+        Dim rt_sec As Double
 
         For Each file As String In files
             Select Case file.ExtensionSuffix.ToLower
                 Case "mzxml"
-                    Dim basename$ = file.FileName
+                    Dim reader As New mzXMLScan
 
-                    For Each scan As scan In mzXMLAssembly.XML _
+                    For Each scan As scan In mzXML.XML _
                         .LoadScans(file) _
                         .Where(Function(s)
                                    Return s.msLevel = 1
                                End Function)
 
                         ' ms1的数据总是使用raw intensity值
-                        peakScans = scan.ScanData(basename, raw:=True)
-                        ms1 += peakScans.mzInto _
+                        peakScans = reader.GetMsMs(scan)
+                        rt_sec = reader.GetScanTime(scan)
+                        ms1 += peakScans _
                             .Select(Function(frag)
                                         Return New ms1_scan With {
                                             .intensity = frag.intensity,
                                             .mz = frag.mz,
-                                            .scan_time = peakScans.rt
+                                            .scan_time = rt_sec
+                                        }
+                                    End Function)
+                    Next
+                Case "mzml"
+                    Dim reader As New mzMLScan
+
+                    For Each scan As mzML.spectrum In mzML.Xml _
+                        .LoadScans(file) _
+                        .Where(Function(s)
+                                   Return reader.GetMsLevel(s) = 1
+                               End Function)
+
+                        peakScans = reader.GetMsMs(scan)
+                        rt_sec = reader.GetScanTime(scan)
+                        ms1 += peakScans _
+                            .Select(Function(frag)
+                                        Return New ms1_scan With {
+                                            .intensity = frag.intensity,
+                                            .mz = frag.mz,
+                                            .scan_time = rt_sec
                                         }
                                     End Function)
                     Next
