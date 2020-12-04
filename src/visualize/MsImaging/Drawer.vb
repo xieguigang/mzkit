@@ -1,15 +1,61 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
+﻿Imports System.Drawing
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Public Class Drawer : Implements IDisposable
 
     Dim disposedValue As Boolean
     Dim ibd As ibdReader
     Dim pixels As ScanData()
+    Dim dimension As Size
 
     Sub New(imzML As String)
         ibd = ibdReader.Open(imzML.ChangeSuffix("ibd"))
         pixels = XML.LoadScans(file:=imzML).ToArray
+        dimension = New Size With {
+            .Width = pixels.Select(Function(p) p.x).Max,
+            .Height = pixels.Select(Function(p) p.y).Max
+        }
     End Sub
+
+    Public Function DrawLayer(mz As Double,
+                              Optional threshold As Double = 0.1,
+                              Optional pixelSize$ = "5,5",
+                              Optional ppm As Double = 5) As Bitmap
+
+        Dim dimSize As Size = pixelSize.SizeParser
+        Dim layer As New Bitmap(dimension.Width * dimSize.Width, dimension.Height * dimSize.Height)
+        Dim pixels As New List(Of PixelData)
+        Dim pixel As PixelData
+
+        For Each point As ScanData In Me.pixels
+            Dim msScan As ms2() = ibd.GetMSMS(point)
+            Dim into As ms2 = msScan _
+                .Where(Function(mzi) PPMmethod.PPM(mzi.mz, mz) <= ppm) _
+                .OrderByDescending(Function(mzi) mzi.intensity) _
+                .FirstOrDefault
+
+            pixel = New PixelData With {
+                .x = point.x,
+                .y = point.y,
+                .intensity = into?.intensity
+            }
+            pixels.Add(pixel)
+        Next
+
+        Dim intensityRange As DoubleRange = pixels _
+            .Select(Function(p) p.intensity) _
+            .Range
+
+        For Each point As PixelData In pixels
+
+        Next
+
+        Return layer
+    End Function
 
     Protected Overridable Sub Dispose(disposing As Boolean)
         If Not disposedValue Then
