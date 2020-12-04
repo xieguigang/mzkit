@@ -1,4 +1,6 @@
 ﻿Imports System.IO
+Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.IO
 
 Namespace MarkupData.imzML
@@ -33,6 +35,27 @@ Namespace MarkupData.imzML
             format = layout
             magic = stream.ReadBytes(16).Select(Function(b) b.ToString("X2")).JoinBy("")
         End Sub
+
+        Public Function GetMSMS(scan As ScanData) As ms2()
+            Dim mz As Double() = ReadArray(scan.MzPtr)
+            Dim intensity As Double() = ReadArray(scan.IntPtr)
+            Dim data As ms2() = mz _
+                .Select(Function(mzi, i)
+                            Return New ms2 With {
+                                .mz = mzi,
+                                .intensity = intensity(i),
+                                .quantity = .intensity
+                            }
+                        End Function) _
+                .ToArray
+
+            Return data
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function ReadArray(ptr As ibdPtr) As Double()
+            Return ReadArray(ptr.offset, ptr.encodedLength, ptr.arrayLength)
+        End Function
 
         Public Function ReadArray(offset As Long, encodedLength As Integer, arrayLength As Integer) As Double()
             Dim externalArray As Byte()

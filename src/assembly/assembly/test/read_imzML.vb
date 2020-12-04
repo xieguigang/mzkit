@@ -9,7 +9,10 @@ Module read_imzML
     End Sub
 
     Sub readmzML()
-        Dim scans = imzML.XML.LoadScans("E:\demo\HR2MSI mouse urinary bladder S096.imzML").ToArray
+        Dim scans = imzML.XML.LoadScans("E:\demo\HR2MSI mouse urinary bladder S096.imzML").First
+        Dim ibd As New ibdReader("E:\demo\HR2MSI mouse urinary bladder S096.ibd".Open([readOnly]:=True, doClear:=False), Format.Processed)
+        Dim data = ibd.GetMSMS(scans)
+
 
         Pause()
     End Sub
