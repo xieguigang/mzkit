@@ -16,7 +16,7 @@ const output_green_layer = `${!script$dir}/ms_imaging/HR2MSI_mouse_urinary_bladd
 const output_blue_layer  = `${!script$dir}/ms_imaging/HR2MSI_mouse_urinary_bladder_S096_PC(34_1)_blue.png`;
 
 const scan_ppm as double  = 20;
-const threshold as double = 0;
+const threshold as double = 0.0001;
 
 let extract_layer as function(mz, colors, file) {
 	let img = HR2MSI_mouse_urinary_bladder 
