@@ -5,6 +5,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Public Class Drawer : Implements IDisposable
@@ -23,7 +24,7 @@ Public Class Drawer : Implements IDisposable
         }
     End Sub
 
-    Public Iterator Function LoadPixels(mz As Double, ppm As Double) As IEnumerable(Of PixelData)
+    Public Iterator Function LoadPixels(mz As Double, ppm As Double, Optional skipZero As Boolean = True) As IEnumerable(Of PixelData)
         Dim pixel As PixelData
 
         For Each point As ScanData In Me.pixels
@@ -33,11 +34,15 @@ Public Class Drawer : Implements IDisposable
                 .OrderByDescending(Function(mzi) mzi.intensity) _
                 .FirstOrDefault
 
-            pixel = New PixelData With {
-                .x = point.x,
-                .y = point.y,
-                .intensity = If(into Is Nothing, 0, into.intensity)
-            }
+            If skipZero AndAlso into Is Nothing Then
+                Continue For
+            Else
+                pixel = New PixelData With {
+                    .x = point.x,
+                    .y = point.y,
+                    .intensity = If(into Is Nothing, 0, into.intensity)
+                }
+            End If
 
             Yield pixel
         Next
@@ -53,18 +58,15 @@ Public Class Drawer : Implements IDisposable
             .Select(Function(c) New SolidBrush(c)) _
             .ToArray
         Dim index As Integer
-        Dim levelRange As DoubleRange = New Double() {0, 1}
         Dim level As Double
         Dim rect As Rectangle
         Dim pos As Point
         Dim indexrange As DoubleRange = New Double() {0, colors.Length - 1}
-        Dim intensityRange As DoubleRange = pixels _
-            .Select(Function(p) p.intensity) _
-            .Range
+        Dim levelRange As DoubleRange = New Double() {0, 1}
 
         Using layer As Graphics2D = New Bitmap(dimension.Width * dimSize.Width, dimension.Height * dimSize.Height)
-            For Each point As PixelData In pixels
-                level = intensityRange.ScaleMapping(point.intensity, levelRange)
+            For Each point As PixelData In PixelData.ScalePixels(pixels)
+                level = point.level
 
                 If level < threshold Then
                     color = Brushes.Transparent
@@ -91,13 +93,54 @@ Public Class Drawer : Implements IDisposable
 
         Dim dimSize As Size = pixelSize.SizeParser
 
-        Call "loading pixel datas...".__INFO_ECHO
+        Call $"loading pixel datas [m/z={mz.ToString("F4")}]...".__INFO_ECHO
 
-        Dim pixels As PixelData() = LoadPixels(mz, ppm)
+        Dim pixels As PixelData() = LoadPixels(mz, ppm).ToArray
 
-        Call "rendering pixel blocks...".__INFO_ECHO
+        Call $"rendering {pixels.Length} pixel blocks...".__INFO_ECHO
 
         Return RenderPixels(pixels, dimension, dimSize, colorSet, mapLevels, threshold)
+    End Function
+
+    Public Function DrawLayer(mz As Double(),
+                              Optional threshold As Double = 0.1,
+                              Optional pixelSize$ = "5,5",
+                              Optional ppm As Double = 5,
+                              Optional colorSet As String = "YlGnBu:c8",
+                              Optional mapLevels% = 25) As Bitmap
+
+        Dim dimSize As Size = pixelSize.SizeParser
+        Dim pixels As New List(Of PixelData)
+        Dim rawPixels As PixelData()
+
+        For Each mzi As Double In mz
+            Call $"loading pixel datas [m/z={mzi.ToString("F4")}]...".__INFO_ECHO
+
+            rawPixels = LoadPixels(mzi, ppm).ToArray
+            rawPixels = PixelData.ScalePixels(rawPixels)
+            pixels.AddRange(rawPixels)
+        Next
+
+        Call $"building pixel matrix from {pixels.Count} raw pixels...".__INFO_ECHO
+
+        Dim matrix As PixelData() = pixels _
+            .GroupBy(Function(p) p.x) _
+            .AsParallel _
+            .Select(Function(x)
+                        Return x _
+                            .GroupBy(Function(p) p.y) _
+                            .Select(Function(point)
+                                        ' [x, y] point
+                                        ' get the max level pixel
+                                        Return (From pt In point Order By pt.level Descending).First
+                                    End Function)
+                    End Function) _
+            .IteratesALL _
+            .ToArray
+
+        Call $"rendering {matrix.Length} pixel blocks...".__INFO_ECHO
+
+        Return RenderPixels(matrix, dimension, dimSize, colorSet, mapLevels, threshold)
     End Function
 
     Protected Overridable Sub Dispose(disposing As Boolean)
