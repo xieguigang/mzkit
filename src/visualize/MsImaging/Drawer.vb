@@ -8,6 +8,9 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
+''' <summary>
+''' MS-imaging render canvas
+''' </summary>
 Public Class Drawer : Implements IDisposable
 
     Dim disposedValue As Boolean
@@ -84,6 +87,16 @@ Public Class Drawer : Implements IDisposable
         End Using
     End Function
 
+    ''' <summary>
+    ''' apply for metabolite rendering
+    ''' </summary>
+    ''' <param name="mz"></param>
+    ''' <param name="threshold"></param>
+    ''' <param name="pixelSize$"></param>
+    ''' <param name="ppm"></param>
+    ''' <param name="colorSet"></param>
+    ''' <param name="mapLevels%"></param>
+    ''' <returns></returns>
     Public Function DrawLayer(mz As Double,
                               Optional threshold As Double = 0.1,
                               Optional pixelSize$ = "5,5",
@@ -102,6 +115,16 @@ Public Class Drawer : Implements IDisposable
         Return RenderPixels(pixels, dimension, dimSize, colorSet, mapLevels, threshold)
     End Function
 
+    ''' <summary>
+    ''' apply for pathway rendering 
+    ''' </summary>
+    ''' <param name="mz"></param>
+    ''' <param name="threshold"></param>
+    ''' <param name="pixelSize$"></param>
+    ''' <param name="ppm"></param>
+    ''' <param name="colorSet"></param>
+    ''' <param name="mapLevels%"></param>
+    ''' <returns></returns>
     Public Function DrawLayer(mz As Double(),
                               Optional threshold As Double = 0.1,
                               Optional pixelSize$ = "5,5",
@@ -118,7 +141,8 @@ Public Class Drawer : Implements IDisposable
 
             rawPixels = LoadPixels(mzi, ppm).ToArray
             rawPixels = PixelData.ScalePixels(rawPixels)
-            pixels.AddRange(rawPixels)
+
+            Call pixels.AddRange(rawPixels)
         Next
 
         Call $"building pixel matrix from {pixels.Count} raw pixels...".__INFO_ECHO
