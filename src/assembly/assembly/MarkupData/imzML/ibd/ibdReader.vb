@@ -16,7 +16,7 @@ Namespace MarkupData.imzML
         ''' It is also saved in the imzML file so that a correct assignment of ibd and imzML file 
         ''' is possible even if the names of both files are different.
         ''' </summary>
-        Dim magic As String
+        Dim magic As Guid
         Dim format As Format
 
         ''' <summary>
@@ -25,7 +25,7 @@ Namespace MarkupData.imzML
         ''' <returns></returns>
         Public ReadOnly Property UUID As String
             Get
-                Return Me.ToString
+                Return magic.ToString
             End Get
         End Property
 
@@ -33,7 +33,7 @@ Namespace MarkupData.imzML
             stream = New BinaryDataReader(file)
             stream.ByteOrder = ByteOrder.LittleEndian
             format = layout
-            magic = stream.ReadBytes(16).Select(Function(b) b.ToString("X2")).JoinBy("")
+            magic = New Guid(stream.ReadBytes(16))
         End Sub
 
         Public Function GetMSMS(scan As ScanData) As ms2()
@@ -72,12 +72,7 @@ Namespace MarkupData.imzML
         End Function
 
         Public Overrides Function ToString() As String
-            Return $"[{format.ToString}] " &
-                magic.Substring(0, 8) & "-" &
-                magic.Substring(8, 4) & "-" &
-                magic.Substring(12, 4) & "-" &
-                magic.Substring(16, 4) & "-" &
-                magic.Substring(20)
+            Return $"[{format.ToString}] " & UUID
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
