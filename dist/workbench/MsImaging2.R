@@ -25,7 +25,8 @@ HR2MSI_mouse_urinary_bladder
 	], 
 	ppm       = scan_ppm, 
 	threshold = threshold, 
-	color     = "Spectral:c8"
+	color     = "blue,green,red"
 )
+:> flatten(bg = "black")
 :> save.graphics(file = output_img)
 ;
