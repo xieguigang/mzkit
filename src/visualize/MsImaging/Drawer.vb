@@ -23,18 +23,8 @@ Public Class Drawer : Implements IDisposable
         }
     End Sub
 
-    Public Function DrawLayer(mz As Double,
-                              Optional threshold As Double = 0.1,
-                              Optional pixelSize$ = "5,5",
-                              Optional ppm As Double = 5,
-                              Optional colorSet As String = "YlGnBu:c8",
-                              Optional mapLevels% = 25) As Bitmap
-
-        Dim dimSize As Size = pixelSize.SizeParser
-        Dim pixels As New List(Of PixelData)
+    Public Iterator Function LoadPixels(mz As Double, ppm As Double) As IEnumerable(Of PixelData)
         Dim pixel As PixelData
-
-        Call "loading pixel datas...".__INFO_ECHO
 
         For Each point As ScanData In Me.pixels
             Dim msScan As ms2() = ibd.GetMSMS(point)
@@ -48,25 +38,29 @@ Public Class Drawer : Implements IDisposable
                 .y = point.y,
                 .intensity = If(into Is Nothing, 0, into.intensity)
             }
-            pixels.Add(pixel)
-        Next
 
-        Dim intensityRange As DoubleRange = pixels _
-            .Select(Function(p) p.intensity) _
-            .Range
-        Dim levelRange As DoubleRange = New Double() {0, 1}
+            Yield pixel
+        Next
+    End Function
+
+    Public Shared Function RenderPixels(pixels As PixelData(), dimension As Size, dimSize As Size,
+                                        Optional colorSet As String = "YlGnBu:c8",
+                                        Optional mapLevels% = 25,
+                                        Optional threshold As Double = 0.1) As Bitmap
         Dim color As SolidBrush
         Dim colors As SolidBrush() = Designer _
             .GetColors(colorSet, mapLevels) _
             .Select(Function(c) New SolidBrush(c)) _
             .ToArray
         Dim index As Integer
-        Dim indexrange As DoubleRange = New Double() {0, colors.Length - 1}
+        Dim levelRange As DoubleRange = New Double() {0, 1}
         Dim level As Double
         Dim rect As Rectangle
         Dim pos As Point
-
-        Call "rendering pixel blocks...".__INFO_ECHO
+        Dim indexrange As DoubleRange = New Double() {0, colors.Length - 1}
+        Dim intensityRange As DoubleRange = pixels _
+            .Select(Function(p) p.intensity) _
+            .Range
 
         Using layer As Graphics2D = New Bitmap(dimension.Width * dimSize.Width, dimension.Height * dimSize.Height)
             For Each point As PixelData In pixels
@@ -86,6 +80,24 @@ Public Class Drawer : Implements IDisposable
 
             Return layer.ImageResource
         End Using
+    End Function
+
+    Public Function DrawLayer(mz As Double,
+                              Optional threshold As Double = 0.1,
+                              Optional pixelSize$ = "5,5",
+                              Optional ppm As Double = 5,
+                              Optional colorSet As String = "YlGnBu:c8",
+                              Optional mapLevels% = 25) As Bitmap
+
+        Dim dimSize As Size = pixelSize.SizeParser
+
+        Call "loading pixel datas...".__INFO_ECHO
+
+        Dim pixels As PixelData() = LoadPixels(mz, ppm)
+
+        Call "rendering pixel blocks...".__INFO_ECHO
+
+        Return RenderPixels(pixels, dimension, dimSize, colorSet, mapLevels, threshold)
     End Function
 
     Protected Overridable Sub Dispose(disposing As Boolean)
