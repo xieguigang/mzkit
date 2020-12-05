@@ -14,6 +14,8 @@ const scan_ppm as double  = 20;
 const threshold as double = 0.0001;
 const output_img          = `${!script$dir}/ms_imaging/HR2MSI_mouse_urinary_bladder_S096_Figure_1.png`;
 
+print(output_img);
+
 HR2MSI_mouse_urinary_bladder 
 :> layer(
 	mz = [
@@ -25,5 +27,5 @@ HR2MSI_mouse_urinary_bladder
 	threshold = threshold, 
 	color     = "Spectral:c8"
 )
-:> save.graphics(file = file)
+:> save.graphics(file = output_img)
 ;
