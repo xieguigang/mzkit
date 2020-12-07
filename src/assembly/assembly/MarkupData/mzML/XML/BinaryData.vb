@@ -107,11 +107,13 @@ Namespace MarkupData.mzML
             End If
         End Function
 
-        Public Function GetCompressionType() As String Implements IBase64Container.GetCompressionType
+        Public Function GetCompressionType() As CompressionMode Implements IBase64Container.GetCompressionType
             If Not cvParams.KeyItem("zlib compression") Is Nothing Then
-                Return "zlib"
+                Return CompressionMode.zlib
             ElseIf Not cvParams.KeyItem("no compression") Is Nothing Then
-                Return "none"
+                Return CompressionMode.none
+            ElseIf Not cvParams.KeyItem("gzip compression") Is Nothing Then
+                Return CompressionMode.gzip
             Else
                 Throw New NotImplementedException
             End If

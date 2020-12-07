@@ -63,7 +63,7 @@ Namespace MarkupData
         ''' 3. none
         ''' </summary>
         ''' <returns></returns>
-        Function GetCompressionType() As String
+        Function GetCompressionType() As CompressionMode
 
     End Interface
 End Namespace
