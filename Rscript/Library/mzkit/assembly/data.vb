@@ -1,6 +1,7 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
@@ -51,5 +52,39 @@ Module data
             .ToArray
 
         Return xicFilter
+    End Function
+
+    ''' <summary>
+    ''' get intensity value from the ion scan points
+    ''' </summary>
+    ''' <param name="ticks"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("intensity")>
+    <RApiReturn(GetType(Double))>
+    Public Function getIntensity(<RRawVectorArgument> ticks As Object, Optional env As Environment = Nothing) As Object
+        Dim scans As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ticks, env)
+
+        If scans.isError Then
+            Return scans.getError
+        End If
+
+        Return scans.populates(Of ms1_scan)(env) _
+            .Select(Function(x) x.intensity) _
+            .DoCall(AddressOf vector.asVector)
+    End Function
+
+    <ExportAPI("scan_time")>
+    <RApiReturn(GetType(Double))>
+    Public Function getScantime(<RRawVectorArgument> ticks As Object, Optional env As Environment = Nothing) As Object
+        Dim scans As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ticks, env)
+
+        If scans.isError Then
+            Return scans.getError
+        End If
+
+        Return scans.populates(Of ms1_scan)(env) _
+            .Select(Function(x) x.scan_time) _
+            .DoCall(AddressOf vector.asVector)
     End Function
 End Module
