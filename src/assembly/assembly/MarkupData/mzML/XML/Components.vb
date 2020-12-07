@@ -180,6 +180,9 @@ Namespace MarkupData.mzML
         End Function
     End Class
 
+    ''' <summary>
+    ''' [<see cref="cvParam.name"/> => <see cref="cvParam"/>]
+    ''' </summary>
     Public Class cvParam : Implements INamedValue
 
         <XmlAttribute> Public Property cvRef As String
