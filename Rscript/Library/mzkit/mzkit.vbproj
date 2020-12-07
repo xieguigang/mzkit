@@ -289,6 +289,7 @@
     <Compile Include="assembly\ERS.vb" />
     <Compile Include="assembly\data.vb" />
     <Compile Include="assembly\MzWeb.vb" />
+    <Compile Include="zzz.vb" />
     <Compile Include="math\Math.vb" />
     <Compile Include="assembly\ProteoWizard.vb" />
     <Compile Include="math\Formula.vb" />

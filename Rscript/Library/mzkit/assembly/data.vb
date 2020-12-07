@@ -7,15 +7,25 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 
+''' <summary>
+''' m/z data operator module
+''' </summary>
 <Package("data")>
 Module data
 
-    Friend Sub Main()
-
+    <RInitialize>
+    Sub Main()
+        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(ms1_scan()), AddressOf XICTable)
     End Sub
 
     Private Function XICTable(XIC As ms1_scan(), args As list, env As Environment) As dataframe
+        Dim table As New dataframe With {.columns = New Dictionary(Of String, Array)}
 
+        table.columns("mz") = XIC.Select(Function(a) a.mz).ToArray
+        table.columns("scan_time") = XIC.Select(Function(a) a.scan_time).ToArray
+        table.columns("intensity") = XIC.Select(Function(a) a.intensity).ToArray
+
+        Return table
     End Function
 
     <ExportAPI("XIC")>
