@@ -100,6 +100,8 @@ Namespace MarkupData.mzML
         Public Function GetCompressionType() As String Implements IBase64Container.GetCompressionType
             If Not cvParams.KeyItem("zlib compression") Is Nothing Then
                 Return "zlib"
+            ElseIf Not cvParams.KeyItem("no compression") Is Nothing Then
+                Return "none"
             Else
                 Throw New NotImplementedException
             End If
