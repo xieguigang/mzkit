@@ -91,6 +91,7 @@ using RibbonLib.Interop;
             public const uint cmdButtonDropB = 1009;
             public const uint cmdButtonDropC = 1010;
             public const uint cmdButtonDropD = 5010;
+            public const uint cmdButtonMsImaging = 1167;
             public const uint cmdButtonSettings = 1051;
             public const uint cmdButtonLicense = 1101;
             public const uint cmdMenuGroupExit = 1006;
@@ -184,6 +185,7 @@ using RibbonLib.Interop;
         public RibbonButton ButtonDropB { get; private set; }
         public RibbonButton ButtonDropC { get; private set; }
         public RibbonButton ButtonDropD { get; private set; }
+        public RibbonButton ButtonMsImaging { get; private set; }
         public RibbonButton ButtonSettings { get; private set; }
         public RibbonButton ButtonLicense { get; private set; }
         public RibbonMenuGroup MenuGroupExit { get; private set; }
@@ -275,6 +277,7 @@ using RibbonLib.Interop;
             ButtonDropB = new RibbonButton(ribbon, Cmd.cmdButtonDropB);
             ButtonDropC = new RibbonButton(ribbon, Cmd.cmdButtonDropC);
             ButtonDropD = new RibbonButton(ribbon, Cmd.cmdButtonDropD);
+            ButtonMsImaging = new RibbonButton(ribbon, Cmd.cmdButtonMsImaging);
             ButtonSettings = new RibbonButton(ribbon, Cmd.cmdButtonSettings);
             ButtonLicense = new RibbonButton(ribbon, Cmd.cmdButtonLicense);
             MenuGroupExit = new RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupExit);
