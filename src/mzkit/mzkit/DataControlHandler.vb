@@ -59,16 +59,16 @@ Module DataControlHandler
                         row.Add(table.Columns(i).HeaderText)
                     Next
 
-                    writeTsv.WriteLine(row.PopAll.JoinBy(","))
+                    writeTsv.WriteLine(row.PopAll.JoinBy(vbTab))
 
                     For j As Integer = 0 To table.Rows.Count - 1
                         Dim rowObj = table.Rows(j)
 
                         For i As Integer = 0 To rowObj.Cells.Count - 1
-                            row.Add(Microsoft.VisualBasic.Scripting.ToString(rowObj.Cells(i).Value))
+                            row.Add(Scripting.ToString(rowObj.Cells(i).Value))
                         Next
 
-                        writeTsv.WriteLine(row.PopAll.Select(Function(s) $"""{s}""").JoinBy(","))
+                        writeTsv.WriteLine(row.PopAll.Select(Function(s) $"""{s}""").JoinBy(vbTab))
                     Next
                 End Using
 
