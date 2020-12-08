@@ -195,6 +195,12 @@ Namespace MarkupData.mzXML
 
     Public Class peaks : Implements IBase64Container
 
+        ''' <summary>
+        ''' 1. zlib
+        ''' 2. gzip
+        ''' 3. none
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property compressionType As String
         <XmlAttribute> Public Property compressedLen As Integer
         <XmlAttribute> Public Property precision As Double
@@ -212,8 +218,12 @@ Namespace MarkupData.mzXML
             Return precision
         End Function
 
-        Public Function GetCompressionType() As String Implements IBase64Container.GetCompressionType
-            Return compressionType
+        Public Function GetCompressionType() As CompressionMode Implements IBase64Container.GetCompressionType
+            If charToModes.ContainsKey(compressionType) Then
+                Return charToModes(compressionType)
+            Else
+                Throw New NotImplementedException(compressionType)
+            End If
         End Function
     End Class
 

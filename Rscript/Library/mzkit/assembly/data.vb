@@ -1,20 +1,31 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 
+''' <summary>
+''' m/z data operator module
+''' </summary>
 <Package("data")>
 Module data
 
-    Friend Sub Main()
-
+    <RInitialize>
+    Sub Main()
+        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(ms1_scan()), AddressOf XICTable)
     End Sub
 
     Private Function XICTable(XIC As ms1_scan(), args As list, env As Environment) As dataframe
+        Dim table As New dataframe With {.columns = New Dictionary(Of String, Array)}
 
+        table.columns("mz") = XIC.Select(Function(a) a.mz).ToArray
+        table.columns("scan_time") = XIC.Select(Function(a) a.scan_time).ToArray
+        table.columns("intensity") = XIC.Select(Function(a) a.intensity).ToArray
+
+        Return table
     End Function
 
     <ExportAPI("XIC")>
@@ -51,5 +62,39 @@ Module data
             .ToArray
 
         Return xicFilter
+    End Function
+
+    ''' <summary>
+    ''' get intensity value from the ion scan points
+    ''' </summary>
+    ''' <param name="ticks"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("intensity")>
+    <RApiReturn(GetType(Double))>
+    Public Function getIntensity(<RRawVectorArgument> ticks As Object, Optional env As Environment = Nothing) As Object
+        Dim scans As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ticks, env)
+
+        If scans.isError Then
+            Return scans.getError
+        End If
+
+        Return scans.populates(Of ms1_scan)(env) _
+            .Select(Function(x) x.intensity) _
+            .DoCall(AddressOf vector.asVector)
+    End Function
+
+    <ExportAPI("scan_time")>
+    <RApiReturn(GetType(Double))>
+    Public Function getScantime(<RRawVectorArgument> ticks As Object, Optional env As Environment = Nothing) As Object
+        Dim scans As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ticks, env)
+
+        If scans.isError Then
+            Return scans.getError
+        End If
+
+        Return scans.populates(Of ms1_scan)(env) _
+            .Select(Function(x) x.scan_time) _
+            .DoCall(AddressOf vector.asVector)
     End Function
 End Module

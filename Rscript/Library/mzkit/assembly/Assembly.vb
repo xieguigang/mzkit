@@ -77,7 +77,7 @@ Imports REnv = SMRUCC.Rsharp.Runtime
 <Package("assembly", Category:=APICategories.UtilityTools)>
 Module Assembly
 
-    <RInitializeAttribute>
+    <RInitialize>
     Sub Main()
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(Ions()), AddressOf summaryIons)
     End Sub
@@ -438,57 +438,71 @@ Module Assembly
     Public Function getMs1Scans(<RRawVectorArgument> raw As Object, Optional env As Environment = Nothing) As Object
         Dim files As String() = REnv.asVector(Of String)(raw)
         Dim ms1 As New List(Of ms1_scan)
-        Dim peakScans As ms2()
-        Dim rt_sec As Double
 
         For Each file As String In files
             Select Case file.ExtensionSuffix.ToLower
                 Case "mzxml"
-                    Dim reader As New mzXMLScan
-
-                    For Each scan As scan In mzXML.XML _
-                        .LoadScans(file) _
-                        .Where(Function(s)
-                                   Return s.msLevel = 1
-                               End Function)
-
-                        ' ms1的数据总是使用raw intensity值
-                        peakScans = reader.GetMsMs(scan)
-                        rt_sec = reader.GetScanTime(scan)
-                        ms1 += peakScans _
-                            .Select(Function(frag)
-                                        Return New ms1_scan With {
-                                            .intensity = frag.intensity,
-                                            .mz = frag.mz,
-                                            .scan_time = rt_sec
-                                        }
-                                    End Function)
-                    Next
+                    ms1 += mzXMLMs1(file).IteratesALL
                 Case "mzml"
-                    Dim reader As New mzMLScan
-
-                    For Each scan As mzML.spectrum In mzML.Xml _
-                        .LoadScans(file) _
-                        .Where(Function(s)
-                                   Return reader.GetMsLevel(s) = 1
-                               End Function)
-
-                        peakScans = reader.GetMsMs(scan)
-                        rt_sec = reader.GetScanTime(scan)
-                        ms1 += peakScans _
-                            .Select(Function(frag)
-                                        Return New ms1_scan With {
-                                            .intensity = frag.intensity,
-                                            .mz = frag.mz,
-                                            .scan_time = rt_sec
-                                        }
-                                    End Function)
-                    Next
+                    ms1 += mzMLMs1(file).IteratesALL
                 Case Else
                     Throw New NotImplementedException
             End Select
         Next
 
         Return ms1.ToArray
+    End Function
+
+    Private Iterator Function mzXMLMs1(file As String) As IEnumerable(Of ms1_scan())
+        Dim reader As New mzXMLScan
+        Dim peakScans As ms2()
+        Dim rt_sec As Double
+
+        For Each scan As scan In mzXML.XML _
+            .LoadScans(file) _
+            .Where(Function(s)
+                       Return s.msLevel = 1
+                   End Function)
+
+            ' ms1的数据总是使用raw intensity值
+            peakScans = reader.GetMsMs(scan)
+            rt_sec = reader.GetScanTime(scan)
+
+            Yield peakScans _
+                .Select(Function(frag)
+                            Return New ms1_scan With {
+                                .intensity = frag.intensity,
+                                .mz = frag.mz,
+                                .scan_time = rt_sec
+                            }
+                        End Function) _
+                .ToArray
+        Next
+    End Function
+
+    Private Iterator Function mzMLMs1(file As String) As IEnumerable(Of ms1_scan())
+        Dim reader As New mzMLScan
+        Dim peakScans As ms2()
+        Dim rt_sec As Double
+
+        For Each scan As mzML.spectrum In mzML.Xml _
+            .LoadScans(file) _
+            .Where(Function(s)
+                       Return reader.GetMsLevel(s) = 1
+                   End Function)
+
+            peakScans = reader.GetMsMs(scan)
+            rt_sec = reader.GetScanTime(scan)
+
+            Yield peakScans _
+                .Select(Function(frag)
+                            Return New ms1_scan With {
+                                .intensity = frag.intensity,
+                                .mz = frag.mz,
+                                .scan_time = rt_sec
+                            }
+                        End Function) _
+                .ToArray
+        Next
     End Function
 End Module
