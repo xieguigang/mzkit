@@ -219,10 +219,20 @@ Public Class frmMain
         AddHandler ribbonItems.ButtonResetLayout.ExecuteEvent, AddressOf resetLayout
 
         AddHandler ribbonItems.RecentItems.ExecuteEvent, AddressOf _recentItems_ExecuteEvent
+        AddHandler ribbonItems.ButtonMsImaging.ExecuteEvent, AddressOf showMsImaging
 
         _uiCollectionChangedEvent = New UICollectionChangedEvent()
 
         MyApplication.RegisterHost(Me)
+    End Sub
+
+    Private Sub showMsImaging()
+        Dim viewer As New frmMsImagingViewer
+
+        viewer.Show(dockPanel)
+        viewer.DockState = DockState.Document
+
+        Me.Text = $"BioNovoGene Mzkit [{viewer.Text}]"
     End Sub
 
     Private Sub resetLayout()
