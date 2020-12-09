@@ -724,6 +724,17 @@
 		 LabelTitle="Show Legend">			
 		</Command>
 		
+		<Command Name="cmdButtonMsImaging"
+					Id="1167"
+					LabelTitle="MS-Imaging Viewer"
+					LabelDescription="MS-Imaging Viewer"
+		 TooltipTitle="MS-Imaging Viewer"
+		 TooltipDescription="MS-Imaging Viewer">
+			<Command.LargeImages>
+				<Image>Res/system-software-update.png</Image>
+			</Command.LargeImages>
+		</Command>
+		
 	</Application.Commands>
 
 	<Application.Views>
@@ -975,6 +986,8 @@
 								<Button CommandName='cmdButtonDropB' />
 								<Button CommandName='cmdButtonDropC' />
 								<Button CommandName='cmdButtonDropD' />
+								
+								<!-- <Button CommandName='cmdButtonMsImaging' /> -->
 							</MenuGroup>
 						</DropDownButton>
 
