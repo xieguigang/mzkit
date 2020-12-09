@@ -356,13 +356,13 @@ Module Assembly
         Dim polar As New List(Of Integer)
 
         If scans.elementType Like GetType(mzXML.scan) Then
-            Dim reader As mzXMLScan = MsDataReader(Of scan).ScanProvider()
+            Dim reader As mzXMLScan = MsDataReader(Of mzXML.scan).ScanProvider()
 
-            For Each scanVal As scan In scans.populates(Of scan)(env).Where(Function(s) reader.GetMsLevel(s) = 2)
+            For Each scanVal As mzXML.scan In scans.populates(Of mzXML.scan)(env).Where(Function(s) reader.GetMsLevel(s) = 2)
                 Call polar.Add(PrecursorType.ParseIonMode(reader.GetPolarity(scanVal)))
             Next
         ElseIf scans.elementType Like GetType(mzML.spectrum) Then
-            Dim reader As mzMLScan = MsDataReader(Of scan).ScanProvider()
+            Dim reader As mzMLScan = MsDataReader(Of mzML.spectrum).ScanProvider()
 
             For Each scanVal As mzML.spectrum In scans.populates(Of mzML.spectrum)(env).Where(Function(s) reader.GetMsLevel(s) = 2)
                 Call polar.Add(PrecursorType.ParseIonMode(reader.GetPolarity(scanVal)))
