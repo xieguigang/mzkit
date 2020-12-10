@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports mzkit.My
+Imports Task
 Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class frmMsImagingViewer
@@ -10,6 +11,7 @@ Public Class frmMsImagingViewer
     Public Property FilePath As String Implements IFileReference.FilePath
 
     Dim render As Drawer
+    Dim params As MsImageProperty
 
     Public ReadOnly Property MimeType As ContentType() Implements IFileReference.MimeType
         Get
@@ -26,7 +28,9 @@ Public Class frmMsImagingViewer
 
     Public Sub LoadRender(render As Drawer)
         Me.render = render
+        Me.params = New MsImageProperty(render)
 
+        MyApplication.host.msImageParameters.PropertyGrid1.SelectedObject = params
     End Sub
 
 End Class

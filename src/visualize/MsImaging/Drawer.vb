@@ -14,9 +14,16 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 Public Class Drawer : Implements IDisposable
 
     Dim disposedValue As Boolean
-    Dim ibd As ibdReader
     Dim pixels As ScanData()
-    Dim dimension As Size
+
+    Public ReadOnly Property ibd As ibdReader
+    Public ReadOnly Property dimension As Size
+
+    Public ReadOnly Property UUID As String
+        Get
+            Return ibd.UUID
+        End Get
+    End Property
 
     Sub New(imzML As String)
         ibd = ibdReader.Open(imzML.ChangeSuffix("ibd"))
