@@ -276,6 +276,10 @@
 				 LabelTitle="About mzkit">
 		</Command>
 
+		<Command Name="cmdGroupDemoActions"
+				 Id="1048"
+				 LabelTitle="About mzkit">
+		</Command>
 
 		<Command Name="cmdPPMSpinner"
 		 Id="1050"
@@ -734,7 +738,18 @@
 				<Image>Res/system-software-update.png</Image>
 			</Command.LargeImages>
 		</Command>
-		
+
+		<Command Name="cmdButtonMsDemo"
+					Id="1168"
+					LabelTitle="MS-Demo"
+					LabelDescription="Demo Data"
+		 TooltipTitle="Demo Data"
+		 TooltipDescription="Demo Data">
+			<Command.LargeImages>
+				<Image>Res/system-software-update.png</Image>
+			</Command.LargeImages>
+		</Command>
+
 	</Application.Commands>
 
 	<Application.Views>
@@ -963,6 +978,11 @@
 						<Button CommandName="cmdButtonAbout" />
 						<Button CommandName="cmdButtonBioDeep" />
 					</Group>
+
+					<Group CommandName="cmdGroupDemoActions">
+						<Button CommandName="cmdButtonMsDemo" />
+					</Group>
+					
 
 				</Tab>
 
