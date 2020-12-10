@@ -59,68 +59,70 @@
 
 #End Region
 
-Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Public Class Settings
+Namespace Configuration
 
-    Public Property precursor_search As PrecursorSearchSettings
-    Public Property formula_search As FormulaSearchProfile
-    Public Property ui As UISettings
-    Public Property viewer As RawFileViewerSettings
-    Public Property network As NetworkArguments
+    Public Class Settings
 
-    Public Property recentFiles As String()
+        Public Property precursor_search As PrecursorSearchSettings
+        Public Property formula_search As FormulaSearchProfile
+        Public Property ui As UISettings
+        Public Property viewer As RawFileViewerSettings
+        Public Property network As NetworkArguments
 
-    Public Property workspaceFile As String
+        Public Property recentFiles As String()
 
-    Public Shared ReadOnly Property configFile As String = App.LocalData & "/settings.json"
+        Public Property workspaceFile As String
 
-    Public Shared Function DefaultProfile() As Settings
-        Return New Settings With {
-            .precursor_search = New PrecursorSearchSettings With {
-                .ppm = 5, .precursor_types = {"M", "M+H", "M-H", "M+H-H2O", "M-H2O-H"}
+        Public Shared ReadOnly Property configFile As String = App.LocalData & "/settings.json"
+
+        Public Shared Function DefaultProfile() As Settings
+            Return New Settings With {
+                .precursor_search = New PrecursorSearchSettings With {
+                    .ppm = 5, .precursor_types = {"M", "M+H", "M-H", "M+H-H2O", "M-H2O-H"}
+                }
             }
-        }
-    End Function
+        End Function
 
-    Public Shared Function GetConfiguration() As Settings
-        Dim config As Settings = configFile.LoadJsonFile(Of Settings)
+        Public Shared Function GetConfiguration() As Settings
+            Dim config As Settings = configFile.LoadJsonFile(Of Settings)
 
-        If config Is Nothing Then
-            config = DefaultProfile()
-        End If
+            If config Is Nothing Then
+                config = DefaultProfile()
+            End If
 
-        Return config
-    End Function
+            Return config
+        End Function
 
-    Public Function Save() As Boolean
-        Return Me.GetJson.SaveTo(configFile)
-    End Function
-End Class
+        Public Function Save() As Boolean
+            Return Me.GetJson.SaveTo(configFile)
+        End Function
+    End Class
 
-Public Class RawFileViewerSettings
+    Public Class RawFileViewerSettings
 
-    Public Property XIC_ppm As Double = 20
-    Public Property colorSet As String()
+        Public Property XIC_ppm As Double = 20
+        Public Property colorSet As String()
 
-    Public Property method As TrimmingMethods = TrimmingMethods.RelativeIntensity
-    Public Property intoCutoff As Double = 0.05
-    Public Property quantile As Double = 0.65
-    Public Property fill As Boolean
+        Public Property method As TrimmingMethods = TrimmingMethods.RelativeIntensity
+        Public Property intoCutoff As Double = 0.05
+        Public Property quantile As Double = 0.65
+        Public Property fill As Boolean
 
-    Public Function GetMethod() As LowAbundanceTrimming
-        If method = TrimmingMethods.RelativeIntensity Then
-            Return New RelativeIntensityCutoff(intoCutoff)
-        Else
-            Return New QuantileIntensityCutoff(quantile)
-        End If
-    End Function
+        Public Function GetMethod() As LowAbundanceTrimming
+            If method = TrimmingMethods.RelativeIntensity Then
+                Return New RelativeIntensityCutoff(intoCutoff)
+            Else
+                Return New QuantileIntensityCutoff(quantile)
+            End If
+        End Function
 
-End Class
+    End Class
 
-Public Enum TrimmingMethods
-    RelativeIntensity
-    Quantile
-End Enum
+    Public Enum TrimmingMethods
+        RelativeIntensity
+        Quantile
+    End Enum
+End Namespace

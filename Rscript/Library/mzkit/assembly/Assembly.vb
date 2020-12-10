@@ -356,13 +356,13 @@ Module Assembly
         Dim polar As New List(Of Integer)
 
         If scans.elementType Like GetType(mzXML.scan) Then
-            Dim reader As mzXMLScan = MsDataReader(Of scan).ScanProvider()
+            Dim reader As mzXMLScan = MsDataReader(Of mzXML.scan).ScanProvider()
 
-            For Each scanVal As scan In scans.populates(Of scan)(env).Where(Function(s) reader.GetMsLevel(s) = 2)
+            For Each scanVal As mzXML.scan In scans.populates(Of mzXML.scan)(env).Where(Function(s) reader.GetMsLevel(s) = 2)
                 Call polar.Add(PrecursorType.ParseIonMode(reader.GetPolarity(scanVal)))
             Next
         ElseIf scans.elementType Like GetType(mzML.spectrum) Then
-            Dim reader As mzMLScan = MsDataReader(Of scan).ScanProvider()
+            Dim reader As mzMLScan = MsDataReader(Of mzML.spectrum).ScanProvider()
 
             For Each scanVal As mzML.spectrum In scans.populates(Of mzML.spectrum)(env).Where(Function(s) reader.GetMsLevel(s) = 2)
                 Call polar.Add(PrecursorType.ParseIonMode(reader.GetPolarity(scanVal)))
@@ -435,16 +435,27 @@ Module Assembly
     ''' <returns></returns>
     <ExportAPI("ms1.scans")>
     <RApiReturn(GetType(ms1_scan()))>
-    Public Function getMs1Scans(<RRawVectorArgument> raw As Object, Optional env As Environment = Nothing) As Object
+    Public Function getMs1Scans(<RRawVectorArgument> raw As Object, Optional centroid As Object = Nothing, Optional env As Environment = Nothing) As Object
         Dim files As String() = REnv.asVector(Of String)(raw)
         Dim ms1 As New List(Of ms1_scan)
+        Dim tolerance As Tolerance = Nothing
+
+        If Not centroid Is Nothing Then
+            With getTolerance(centroid, env)
+                If .GetUnderlyingType Is GetType(Message) Then
+                    Return .TryCast(Of Message)
+                Else
+                    tolerance = .TryCast(Of Tolerance)
+                End If
+            End With
+        End If
 
         For Each file As String In files
             Select Case file.ExtensionSuffix.ToLower
                 Case "mzxml"
-                    ms1 += mzXMLMs1(file).IteratesALL
+                    ms1 += mzXMLMs1(file, tolerance).IteratesALL
                 Case "mzml"
-                    ms1 += mzMLMs1(file).IteratesALL
+                    ms1 += mzMLMs1(file, tolerance).IteratesALL
                 Case Else
                     Throw New NotImplementedException
             End Select
@@ -453,7 +464,7 @@ Module Assembly
         Return ms1.ToArray
     End Function
 
-    Private Iterator Function mzXMLMs1(file As String) As IEnumerable(Of ms1_scan())
+    Private Iterator Function mzXMLMs1(file As String, centroid As Tolerance) As IEnumerable(Of ms1_scan())
         Dim reader As New mzXMLScan
         Dim peakScans As ms2()
         Dim rt_sec As Double
@@ -468,6 +479,10 @@ Module Assembly
             peakScans = reader.GetMsMs(scan)
             rt_sec = reader.GetScanTime(scan)
 
+            If Not centroid Is Nothing Then
+                peakScans = peakScans.Centroid(centroid, LowAbundanceTrimming.intoCutff).ToArray
+            End If
+
             Yield peakScans _
                 .Select(Function(frag)
                             Return New ms1_scan With {
@@ -480,7 +495,7 @@ Module Assembly
         Next
     End Function
 
-    Private Iterator Function mzMLMs1(file As String) As IEnumerable(Of ms1_scan())
+    Private Iterator Function mzMLMs1(file As String, centroid As Tolerance) As IEnumerable(Of ms1_scan())
         Dim reader As New mzMLScan
         Dim peakScans As ms2()
         Dim rt_sec As Double
@@ -493,6 +508,10 @@ Module Assembly
 
             peakScans = reader.GetMsMs(scan)
             rt_sec = reader.GetScanTime(scan)
+
+            If Not centroid Is Nothing Then
+                peakScans = peakScans.Centroid(centroid, LowAbundanceTrimming.intoCutff).ToArray
+            End If
 
             Yield peakScans _
                 .Select(Function(frag)

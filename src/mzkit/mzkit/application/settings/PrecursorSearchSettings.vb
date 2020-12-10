@@ -70,51 +70,54 @@ Imports System.ComponentModel
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 
-Public Class PrecursorSearchSettings
+Namespace Configuration
 
-    Public Property ppm As Double
-    Public Property precursor_types As String()
+    Public Class PrecursorSearchSettings
 
-End Class
+        Public Property ppm As Double
+        Public Property precursor_types As String()
 
-Public Enum FormulaSearchProfiles
-    <Description("Custom_Profile")> Custom
-    <Description("Default_Profile")> [Default]
-    <Description("Small_Molecule")> SmallMolecule
-    <Description("Natural_Product")> NaturalProduct
-    GeneralFlavone
-End Enum
+    End Class
 
-Public Class FormulaSearchProfile
+    Public Enum FormulaSearchProfiles
+        <Description("Custom_Profile")> Custom
+        <Description("Default_Profile")> [Default]
+        <Description("Small_Molecule")> SmallMolecule
+        <Description("Natural_Product")> NaturalProduct
+        GeneralFlavone
+    End Enum
 
-    Public Property elements As Dictionary(Of String, ElementRange)
-    Public Property smallMoleculeProfile As PresetProfileSettings
-    Public Property naturalProductProfile As PresetProfileSettings
+    Public Class FormulaSearchProfile
 
-    Public Function CreateOptions() As SearchOption
-        Dim opts = New SearchOption(-99999, 99999, 5)
+        Public Property elements As Dictionary(Of String, ElementRange)
+        Public Property smallMoleculeProfile As PresetProfileSettings
+        Public Property naturalProductProfile As PresetProfileSettings
 
-        For Each element In elements
-            opts.AddElement(element.Key, element.Value.min, element.Value.max)
-        Next
+        Public Function CreateOptions() As SearchOption
+            Dim opts = New SearchOption(-99999, 99999, 5)
 
-        Return opts
-    End Function
-End Class
+            For Each element In elements
+                opts.AddElement(element.Key, element.Value.min, element.Value.max)
+            Next
 
-Public Class PresetProfileSettings
+            Return opts
+        End Function
+    End Class
 
-    Public Property type As DNPOrWileyType
-    Public Property isCommon As Boolean
+    Public Class PresetProfileSettings
 
-End Class
+        Public Property type As DNPOrWileyType
+        Public Property isCommon As Boolean
 
-Public Class ElementRange
+    End Class
 
-    Public Property min As Integer
-    Public Property max As Integer
+    Public Class ElementRange
 
-    Public Function AsDoubleRange() As DoubleRange
-        Return New DoubleRange(min, max)
-    End Function
-End Class
+        Public Property min As Integer
+        Public Property max As Integer
+
+        Public Function AsDoubleRange() As DoubleRange
+            Return New DoubleRange(min, max)
+        End Function
+    End Class
+End Namespace

@@ -461,10 +461,10 @@
     <Compile Include="pages\toolkit\PageSpectrumSearch.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="settings\NetworkArguments.vb" />
-    <Compile Include="settings\UISettings.vb" />
-    <Compile Include="settings\PrecursorSearchSettings.vb" />
-    <Compile Include="settings\Settings.vb" />
+    <Compile Include="application\settings\NetworkArguments.vb" />
+    <Compile Include="application\settings\UISettings.vb" />
+    <Compile Include="application\settings\PrecursorSearchSettings.vb" />
+    <Compile Include="application\settings\Settings.vb" />
     <Compile Include="DataControlHandler.vb" />
     <Compile Include="pages\toolkit\PageMzkitTools.Designer.vb">
       <DependentUpon>PageMzkitTools.vb</DependentUpon>

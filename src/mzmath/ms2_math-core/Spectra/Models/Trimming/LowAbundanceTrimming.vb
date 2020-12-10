@@ -82,6 +82,10 @@ Namespace Spectra
             End If
         End Sub
 
+        ''' <summary>
+        ''' default ``5%`` percentage cutoff
+        ''' </summary>
+        ''' <returns></returns>
         Public Shared ReadOnly Property intoCutff As New RelativeIntensityCutoff(0.05)
         Public Shared ReadOnly Property quantCutoff As New QuantileIntensityCutoff(0.65)
 

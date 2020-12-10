@@ -46,6 +46,7 @@
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
@@ -127,6 +128,17 @@ Module Visual
 
     Private Function plotMS(spectrum As Object, args As list, env As Environment) As Object
         Return SpectrumPlot(spectrum)
+    End Function
+
+    <ExportAPI("raw_scatter")>
+    Public Function PlotRawScatter(<RRawVectorArgument> ms1_scans As Object, Optional env As Environment = Nothing) As Object
+        Dim points As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ms1_scans, env)
+
+        If points.isError Then
+            Return points.getError
+        End If
+
+        Return RawScatterPlot.Plot(points.populates(Of ms1_scan)(env))
     End Function
 
     ''' <summary>
