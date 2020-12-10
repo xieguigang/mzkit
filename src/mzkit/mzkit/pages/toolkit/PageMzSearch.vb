@@ -49,6 +49,7 @@ Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 Imports Microsoft.VisualBasic.Language
+Imports mzkit.Configuration
 Imports mzkit.My
 Imports RibbonLib.Interop
 Imports stdNum = System.Math
