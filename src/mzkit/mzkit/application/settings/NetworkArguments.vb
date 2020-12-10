@@ -44,16 +44,18 @@
 
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce
 
-Public Class NetworkArguments
+Namespace Configuration
 
-    Public Property layout As ForceDirectedArgs
+    Public Class NetworkArguments
 
-    Public Property nodeRadius As ElementRange
-    Public Property linkWidth As ElementRange
+        Public Property layout As ForceDirectedArgs
 
-    Public Property treeNodeIdentical As Double = 0.85
-    Public Property treeNodeSimilar As Double = 0.8
-    Public Property defaultFilter As Double = 0.8
+        Public Property nodeRadius As ElementRange
+        Public Property linkWidth As ElementRange
 
-End Class
+        Public Property treeNodeIdentical As Double = 0.85
+        Public Property treeNodeSimilar As Double = 0.8
+        Public Property defaultFilter As Double = 0.8
 
+    End Class
+End Namespace
