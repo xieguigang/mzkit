@@ -62,6 +62,7 @@ Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
+Imports mzkit.Configuration
 Imports mzkit.DockSample
 Imports mzkit.My
 Imports RibbonLib
