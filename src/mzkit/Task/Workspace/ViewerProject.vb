@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Text
+Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.json
@@ -91,9 +92,20 @@ Public Class ViewerProject : Implements ISaveHandle, IFileReference
         Else
             Call progress("Load raw file list...")
 
-            workspace = rawBuffer _
-               .DoCall(AddressOf BSONFormat.Load) _
-               .CreateObject(GetType(WorkspaceFile))
+            Try
+                workspace = rawBuffer _
+                   .DoCall(AddressOf BSONFormat.Load) _
+                   .CreateObject(GetType(WorkspaceFile))
+            Catch ex As Exception
+                Call App.LogException(ex)
+                Call progress($"The workspace file is damaged, skip loading {cacheList}...")
+                Call Thread.Sleep(1000)
+
+                workspace = New WorkspaceFile With {
+                    .cacheFiles = New Dictionary(Of String, Raw()),
+                    .scriptFiles = {}
+                }
+            End Try
         End If
 
         Call progress("File reading success!")

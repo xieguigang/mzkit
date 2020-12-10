@@ -54,6 +54,7 @@ Imports System.ComponentModel
 Imports System.IO
 Imports System.Text
 Imports System.Threading
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.ComponentModel
@@ -104,11 +105,13 @@ Public Class frmMain
     End Sub
 
     Public Sub OpenFile()
-        Using file As New OpenFileDialog With {.Filter = "Raw Data|*.mzXML;*.mzML|R# Script(*.R)|*.R"}
+        Using file As New OpenFileDialog With {.Filter = "Raw Data|*.mzXML;*.mzML|Image mzML(*.imzML)|*.imzML|R# Script(*.R)|*.R"}
             If file.ShowDialog = DialogResult.OK Then
                 If file.FileName.ExtensionSuffix("R") Then
                     Call fileExplorer.AddScript(file.FileName.GetFullPath)
                     Call openRscript(file.FileName)
+                ElseIf file.FileName.ExtensionSuffix("imzML") Then
+                    Call showMsImaging(file.FileName)
                 Else
                     Call fileExplorer.ImportsRaw(file.FileName)
                 End If
@@ -219,10 +222,29 @@ Public Class frmMain
         AddHandler ribbonItems.ButtonResetLayout.ExecuteEvent, AddressOf resetLayout
 
         AddHandler ribbonItems.RecentItems.ExecuteEvent, AddressOf _recentItems_ExecuteEvent
+        ' AddHandler ribbonItems.ButtonMsImaging.ExecuteEvent, AddressOf showMsImaging
 
         _uiCollectionChangedEvent = New UICollectionChangedEvent()
 
         MyApplication.RegisterHost(Me)
+    End Sub
+
+    Private Sub showMsImaging(imzML As String)
+        Dim viewer As New frmMsImagingViewer
+        Dim progress As New frmProgressSpinner
+
+        Call New Thread(Sub()
+                            Dim canvas As New Drawer(imzML)
+
+                            viewer.render = canvas
+                            viewer.Show(dockPanel)
+                            viewer.DockState = DockState.Document
+                            progress.Invoke(Sub() progress.Close())
+
+                            Me.Text = $"BioNovoGene Mzkit [{viewer.Text} {imzML.FileName}]"
+                        End Sub).Start()
+
+        Call progress.ShowDialog()
     End Sub
 
     Private Sub resetLayout()

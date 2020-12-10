@@ -130,6 +130,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChromatogramOverlap.vb" />
+    <Compile Include="MsImaging.vb" />
     <Compile Include="zzz.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -208,6 +209,10 @@
     <ProjectReference Include="..\..\..\src\mzmath\ms2_math-core\MassSpectrum.math-core.vbproj">
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
       <Name>MassSpectrum.math-core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\visualize\MsImaging\MsImaging.vbproj">
+      <Project>{37a4ced9-2ce6-468e-b781-3b0a05e3beee}</Project>
+      <Name>MsImaging</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\src\visualize\plot\msplots.vbproj">
       <Project>{f2147043-7c16-48f8-838b-3d2cf14b0a7b}</Project>

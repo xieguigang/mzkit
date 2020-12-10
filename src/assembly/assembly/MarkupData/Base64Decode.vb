@@ -19,12 +19,12 @@ Namespace MarkupData
             Dim byteStream As MemoryStream
 
             Select Case stream.GetCompressionType
-                Case "zlib"
+                Case CompressionMode.zlib
                     ' 2018-11-15 经过测试，与zlib的结果一致
                     byteStream = bytes.UnZipStream
-                Case "gzip"
+                Case CompressionMode.gzip
                     byteStream = bytes.UnGzipStream
-                Case "none"
+                Case CompressionMode.none
                     byteStream = New MemoryStream(bytes)
                 Case Else
                     Throw New NotImplementedException(stream.GetCompressionType)

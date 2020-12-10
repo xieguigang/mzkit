@@ -56,6 +56,14 @@ Namespace MarkupData
         Property BinaryArray As String
 
         Function GetPrecision() As Integer
-        Function GetCompressionType() As String
+
+        ''' <summary>
+        ''' 1. zlib
+        ''' 2. gzip
+        ''' 3. none
+        ''' </summary>
+        ''' <returns></returns>
+        Function GetCompressionType() As CompressionMode
+
     End Interface
 End Namespace

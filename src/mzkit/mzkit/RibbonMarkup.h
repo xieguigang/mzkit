@@ -320,5 +320,11 @@
 #define cmdFontControl 1165 
 #define cmdLegendCheckBox 1166 
 #define cmdLegendCheckBox_LabelTitle_RESID 60227
-#define InternalCmd2_LabelTitle_RESID 60228
-#define InternalCmd4_LabelTitle_RESID 60229
+#define cmdButtonMsImaging 1167 
+#define cmdButtonMsImaging_LabelTitle_RESID 60228
+#define cmdButtonMsImaging_LabelDescription_RESID 60229
+#define cmdButtonMsImaging_TooltipTitle_RESID 60230
+#define cmdButtonMsImaging_TooltipDescription_RESID 60231
+#define cmdButtonMsImaging_LargeImages_RESID 60232
+#define InternalCmd2_LabelTitle_RESID 60233
+#define InternalCmd4_LabelTitle_RESID 60234

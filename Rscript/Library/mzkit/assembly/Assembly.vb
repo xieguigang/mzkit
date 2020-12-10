@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::4071f04a5b8974528b20586281b85e96, Rscript\Library\mzkit\assembly\Assembly.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Assembly
-    ' 
-    '     Function: GetFileType, getMs1Scans, IonPeaks, mzMLScanLoader, mzXML2Mgf
-    '               mzXMLScanLoader, PeakMs2FileIndex, rawScans, ReadMgfIons, ReadMslIons
-    '               summaryIons, writeMgfIons
-    ' 
-    '     Sub: Main
-    ' 
-    ' /********************************************************************************/
+' Module Assembly
+' 
+'     Function: GetFileType, getMs1Scans, IonPeaks, mzMLScanLoader, mzXML2Mgf
+'               mzXMLScanLoader, PeakMs2FileIndex, rawScans, ReadMgfIons, ReadMslIons
+'               summaryIons, writeMgfIons
+' 
+'     Sub: Main
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -51,6 +51,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSL
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
@@ -76,7 +77,7 @@ Imports REnv = SMRUCC.Rsharp.Runtime
 <Package("assembly", Category:=APICategories.UtilityTools)>
 Module Assembly
 
-    <RInitializeAttribute>
+    <RInitialize>
     Sub Main()
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(Ions()), AddressOf summaryIons)
     End Sub
@@ -237,7 +238,7 @@ Module Assembly
                         .WriteAsciiMgf(mgfWriter, relativeInto)
                 Next
             End Using
-        ElseIf ions.GetType Is GetType(ions()) Then
+        ElseIf ions.GetType Is GetType(Ions()) Then
             Using mgfWriter As StreamWriter = file.OpenWriter(Encodings.ASCII, append:=False)
                 For Each ion As Ions In DirectCast(ions, Ions())
                     Call ion.WriteAsciiMgf(mgfWriter, relativeInto)
@@ -343,6 +344,36 @@ Module Assembly
         End If
     End Function
 
+    ''' <summary>
+    ''' get polarity data for each ms2 scans
+    ''' </summary>
+    ''' <param name="scans"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("polarity")>
+    <RApiReturn(GetType(Integer))>
+    Public Function ionMode(scans As pipeline, Optional env As Environment = Nothing) As Object
+        Dim polar As New List(Of Integer)
+
+        If scans.elementType Like GetType(mzXML.scan) Then
+            Dim reader As mzXMLScan = MsDataReader(Of mzXML.scan).ScanProvider()
+
+            For Each scanVal As mzXML.scan In scans.populates(Of mzXML.scan)(env).Where(Function(s) reader.GetMsLevel(s) = 2)
+                Call polar.Add(PrecursorType.ParseIonMode(reader.GetPolarity(scanVal)))
+            Next
+        ElseIf scans.elementType Like GetType(mzML.spectrum) Then
+            Dim reader As mzMLScan = MsDataReader(Of mzML.spectrum).ScanProvider()
+
+            For Each scanVal As mzML.spectrum In scans.populates(Of mzML.spectrum)(env).Where(Function(s) reader.GetMsLevel(s) = 2)
+                Call polar.Add(PrecursorType.ParseIonMode(reader.GetPolarity(scanVal)))
+            Next
+        Else
+            Return Message.InCompatibleType(GetType(mzXML.scan), scans.elementType, env)
+        End If
+
+        Return polar.ToArray
+    End Function
+
     <Extension>
     Private Iterator Function mzMLScanLoader(path As String, relativeInto As Boolean, onlyMs2 As Boolean) As IEnumerable(Of PeakMs2)
         Dim basename$ = path.BaseName
@@ -407,35 +438,71 @@ Module Assembly
     Public Function getMs1Scans(<RRawVectorArgument> raw As Object, Optional env As Environment = Nothing) As Object
         Dim files As String() = REnv.asVector(Of String)(raw)
         Dim ms1 As New List(Of ms1_scan)
-        Dim peakScans As PeakMs2
 
         For Each file As String In files
             Select Case file.ExtensionSuffix.ToLower
                 Case "mzxml"
-                    Dim basename$ = file.FileName
-
-                    For Each scan As scan In mzXMLAssembly.XML _
-                        .LoadScans(file) _
-                        .Where(Function(s)
-                                   Return s.msLevel = 1
-                               End Function)
-
-                        ' ms1的数据总是使用raw intensity值
-                        peakScans = scan.ScanData(basename, raw:=True)
-                        ms1 += peakScans.mzInto _
-                            .Select(Function(frag)
-                                        Return New ms1_scan With {
-                                            .intensity = frag.intensity,
-                                            .mz = frag.mz,
-                                            .scan_time = peakScans.rt
-                                        }
-                                    End Function)
-                    Next
+                    ms1 += mzXMLMs1(file).IteratesALL
+                Case "mzml"
+                    ms1 += mzMLMs1(file).IteratesALL
                 Case Else
                     Throw New NotImplementedException
             End Select
         Next
 
         Return ms1.ToArray
+    End Function
+
+    Private Iterator Function mzXMLMs1(file As String) As IEnumerable(Of ms1_scan())
+        Dim reader As New mzXMLScan
+        Dim peakScans As ms2()
+        Dim rt_sec As Double
+
+        For Each scan As scan In mzXML.XML _
+            .LoadScans(file) _
+            .Where(Function(s)
+                       Return s.msLevel = 1
+                   End Function)
+
+            ' ms1的数据总是使用raw intensity值
+            peakScans = reader.GetMsMs(scan)
+            rt_sec = reader.GetScanTime(scan)
+
+            Yield peakScans _
+                .Select(Function(frag)
+                            Return New ms1_scan With {
+                                .intensity = frag.intensity,
+                                .mz = frag.mz,
+                                .scan_time = rt_sec
+                            }
+                        End Function) _
+                .ToArray
+        Next
+    End Function
+
+    Private Iterator Function mzMLMs1(file As String) As IEnumerable(Of ms1_scan())
+        Dim reader As New mzMLScan
+        Dim peakScans As ms2()
+        Dim rt_sec As Double
+
+        For Each scan As mzML.spectrum In mzML.Xml _
+            .LoadScans(file) _
+            .Where(Function(s)
+                       Return reader.GetMsLevel(s) = 1
+                   End Function)
+
+            peakScans = reader.GetMsMs(scan)
+            rt_sec = reader.GetScanTime(scan)
+
+            Yield peakScans _
+                .Select(Function(frag)
+                            Return New ms1_scan With {
+                                .intensity = frag.intensity,
+                                .mz = frag.mz,
+                                .scan_time = rt_sec
+                            }
+                        End Function) _
+                .ToArray
+        Next
     End Function
 End Module
