@@ -230,20 +230,23 @@ Public Class frmMain
         MyApplication.RegisterHost(Me)
     End Sub
 
+    Dim viewer As New frmMsImagingViewer
+
     Private Sub showMsImaging(imzML As String)
-        Dim viewer As New frmMsImagingViewer
         Dim progress As New frmProgressSpinner
 
-        Call New Thread(Sub()
-                            Dim canvas As New Drawer(imzML)
+        Call viewer.Show(dockPanel)
+        Call New Thread(
+            Sub()
+                Dim canvas As New Drawer(imzML)
 
-                            viewer.render = canvas
-                            viewer.Show(dockPanel)
-                            viewer.DockState = DockState.Document
-                            progress.Invoke(Sub() progress.Close())
+                Call viewer.Invoke(Sub() viewer.LoadRender(canvas))
+                Call viewer.Invoke(Sub() viewer.DockState = DockState.Document)
 
-                            Me.Text = $"BioNovoGene Mzkit [{viewer.Text} {imzML.FileName}]"
-                        End Sub).Start()
+                Call progress.Invoke(Sub() progress.Close())
+
+                Invoke(Sub() Text = $"BioNovoGene Mzkit [{viewer.Text} {imzML.FileName}]")
+            End Sub).Start()
 
         Call progress.ShowDialog()
     End Sub
@@ -754,6 +757,7 @@ Public Class frmMain
     Friend RtermPage As New frmRsharp
     Friend propertyWin As New PropertyWindow
     Friend taskWin As New TaskListWindow
+    Friend msImageParameters As New frmMsImagingTweaks
 
     Public Sub ShowPropertyWindow()
         propertyWin.DockState = DockState.DockRight
@@ -801,6 +805,9 @@ Public Class frmMain
 
         taskWin.Show(dockPanel)
         taskWin.DockState = DockState.DockBottomAutoHide
+
+        msImageParameters.Show(dockPanel)
+        msImageParameters.DockState = DockState.Hidden
 
         If Globals.Settings.ui.rememberLayouts Then
             fileExplorer.DockState = Globals.Settings.ui.fileExplorerDock
