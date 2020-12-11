@@ -60,6 +60,8 @@ Public Class Drawer : Implements IDisposable
                 .OrderByDescending(Function(mzi) mzi.intensity) _
                 .FirstOrDefault
 
+            Call Application.DoEvents()
+
             If skipZero AndAlso into Is Nothing Then
                 Continue For
             Else

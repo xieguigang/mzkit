@@ -1,4 +1,5 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
+﻿Imports System.Threading
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports mzkit.My
@@ -51,12 +52,22 @@ Public Class frmMsImagingViewer
             Call MyApplication.host.showStatusMessage("No ions selected for rendering!", My.Resources.StatusAnnotations_Warning_32xLG_color)
         Else
             Dim selectedMz As New List(Of Double)
+            Dim progress As New frmProgressSpinner
 
             For i As Integer = 0 To mz.Count - 1
                 selectedMz.Add(Val(CStr(mz.Item(i))))
             Next
 
-            PictureBox1.BackgroundImage = render.DrawLayer(selectedMz.ToArray)
+            MyApplication.host.showStatusMessage($"Run MS-Image rendering for {mz.Count} selected ions...")
+
+            Call New Thread(
+                Sub()
+                    Call Invoke(Sub() PictureBox1.BackgroundImage = render.DrawLayer(selectedMz.ToArray))
+                    Call progress.Invoke(Sub() progress.Close())
+                End Sub).Start()
+
+            Call progress.ShowDialog()
+            Call MyApplication.host.showStatusMessage("Rendering Complete!", My.Resources.preferences_system_notifications)
         End If
     End Sub
 End Class
