@@ -45,9 +45,14 @@
 #End Region
 
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
+Imports SMRUCC.Rsharp.Runtime.Interop
 Imports Task
+Imports WeifenLuo.WinFormsUI.Docking
 Imports REnv = SMRUCC.Rsharp.Runtime.Internal
 
 Namespace My
@@ -115,6 +120,28 @@ Namespace My
             Next
 
             Return list.ToArray
+        End Function
+
+        <ExportAPI("view")>
+        Public Shared Function View(<RRawVectorArgument> x As Object, Optional env As Environment = Nothing) As Message
+            If x Is Nothing Then
+                Return Nothing
+            End If
+
+            If TypeOf x Is GraphicsData Then
+                x = DirectCast(x, GraphicsData).AsGDIImage
+            End If
+
+            If TypeOf x Is Image Then
+                Dim viewer As New frmPlotViewer With {.TabText = "View Image"}
+
+                viewer.Show(MyApplication.host.dockPanel)
+                viewer.DockState = DockState.Document
+            Else
+                Return Internal.debug.stop(New InvalidProgramException, env)
+            End If
+
+            Return Nothing
         End Function
     End Class
 End Namespace
