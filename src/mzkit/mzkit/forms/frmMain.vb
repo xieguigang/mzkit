@@ -754,6 +754,7 @@ Public Class frmMain
     Friend RtermPage As New frmRsharp
     Friend propertyWin As New PropertyWindow
     Friend taskWin As New TaskListWindow
+    Friend plotParams As New frmTweaks
 
     Public Sub ShowPropertyWindow()
         propertyWin.DockState = DockState.DockRight
@@ -783,6 +784,9 @@ Public Class frmMain
         fileExplorer.Show(dockPanel)
 
         TreeView1 = fileExplorer.treeView1
+
+        plotParams.Show(dockPanel)
+        plotParams.DockState = DockState.Hidden
 
         rawFeaturesList.Show(dockPanel)
         propertyWin.Show(dockPanel)
