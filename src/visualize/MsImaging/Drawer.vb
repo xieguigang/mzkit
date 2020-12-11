@@ -34,13 +34,13 @@ Public Class Drawer : Implements IDisposable
         }
     End Sub
 
-    Public Iterator Function LoadPixels(mz As Double, ppm As Double, Optional skipZero As Boolean = True) As IEnumerable(Of PixelData)
+    Public Iterator Function LoadPixels(mz As Double, tolerance As Tolerance, Optional skipZero As Boolean = True) As IEnumerable(Of PixelData)
         Dim pixel As PixelData
 
         For Each point As ScanData In Me.pixels
             Dim msScan As ms2() = ibd.GetMSMS(point)
             Dim into As ms2 = msScan _
-                .Where(Function(mzi) PPMmethod.PPM(mzi.mz, mz) <= ppm) _
+                .Where(Function(mzi) tolerance(mzi.mz, mz)) _
                 .OrderByDescending(Function(mzi) mzi.intensity) _
                 .FirstOrDefault
 
@@ -100,22 +100,23 @@ Public Class Drawer : Implements IDisposable
     ''' <param name="mz"></param>
     ''' <param name="threshold"></param>
     ''' <param name="pixelSize$"></param>
-    ''' <param name="ppm"></param>
+    ''' <param name="toleranceErr"></param>
     ''' <param name="colorSet"></param>
     ''' <param name="mapLevels%"></param>
     ''' <returns></returns>
     Public Function DrawLayer(mz As Double,
                               Optional threshold As Double = 0.1,
                               Optional pixelSize$ = "5,5",
-                              Optional ppm As Double = 5,
+                              Optional toleranceErr As String = "da:0.1",
                               Optional colorSet As String = "YlGnBu:c8",
                               Optional mapLevels% = 25) As Bitmap
 
         Dim dimSize As Size = pixelSize.SizeParser
+        Dim tolerance As Tolerance = Tolerance.ParseScript(toleranceErr)
 
-        Call $"loading pixel datas [m/z={mz.ToString("F4")}]...".__INFO_ECHO
+        Call $"loading pixel datas [m/z={mz.ToString("F4")}] with tolerance {tolerance}...".__INFO_ECHO
 
-        Dim pixels As PixelData() = LoadPixels(mz, ppm).ToArray
+        Dim pixels As PixelData() = LoadPixels(mz, tolerance).ToArray
 
         Call $"rendering {pixels.Length} pixel blocks...".__INFO_ECHO
 
@@ -128,25 +129,26 @@ Public Class Drawer : Implements IDisposable
     ''' <param name="mz"></param>
     ''' <param name="threshold"></param>
     ''' <param name="pixelSize$"></param>
-    ''' <param name="ppm"></param>
+    ''' <param name="toleranceErr"></param>
     ''' <param name="colorSet"></param>
     ''' <param name="mapLevels%"></param>
     ''' <returns></returns>
     Public Function DrawLayer(mz As Double(),
                               Optional threshold As Double = 0.1,
                               Optional pixelSize$ = "5,5",
-                              Optional ppm As Double = 5,
+                              Optional toleranceErr As String = "da:0.1",
                               Optional colorSet As String = "YlGnBu:c8",
                               Optional mapLevels% = 25) As Bitmap
 
         Dim dimSize As Size = pixelSize.SizeParser
         Dim pixels As New List(Of PixelData)
         Dim rawPixels As PixelData()
+        Dim tolerance As Tolerance = Tolerance.ParseScript(toleranceErr)
 
         For Each mzi As Double In mz
-            Call $"loading pixel datas [m/z={mzi.ToString("F4")}]...".__INFO_ECHO
+            Call $"loading pixel datas [m/z={mzi.ToString("F4")}] with tolerance {tolerance}...".__INFO_ECHO
 
-            rawPixels = LoadPixels(mzi, ppm).ToArray
+            rawPixels = LoadPixels(mzi, tolerance).ToArray
             rawPixels = PixelData.ScalePixels(rawPixels)
 
             Call pixels.AddRange(rawPixels)
