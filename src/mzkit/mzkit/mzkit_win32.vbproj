@@ -361,6 +361,12 @@
     <Compile Include="pages\dockWindow\tools\PropertyWindow.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="pages\pageStart\DemoDataPage.Designer.vb">
+      <DependentUpon>DemoDataPage.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\pageStart\DemoDataPage.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="pages\toolkit\PlotTooltip.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -584,6 +590,9 @@
     <EmbeddedResource Include="pages\dockWindow\base\ToolWindow.resx" />
     <EmbeddedResource Include="pages\dockWindow\tools\TaskListWindow.resx">
       <DependentUpon>TaskListWindow.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pages\pageStart\DemoDataPage.resx">
+      <DependentUpon>DemoDataPage.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pages\toolkit\PageMoleculeNetworking.resx">
       <DependentUpon>PageMoleculeNetworking.vb</DependentUpon>

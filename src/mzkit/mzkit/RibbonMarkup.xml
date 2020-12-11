@@ -742,11 +742,11 @@
 		<Command Name="cmdButtonMsDemo"
 					Id="1168"
 					LabelTitle="MS-Demo"
-					LabelDescription="Demo Data"
+					LabelDescription="View Demo Data"
 		 TooltipTitle="Demo Data"
 		 TooltipDescription="Demo Data">
 			<Command.LargeImages>
-				<Image>Res/system-software-update.png</Image>
+				<Image>Res/folder-pictures.png</Image>
 			</Command.LargeImages>
 		</Command>
 
@@ -979,7 +979,7 @@
 						<Button CommandName="cmdButtonBioDeep" />
 					</Group>
 
-					<Group CommandName="cmdGroupDemoActions">
+					<Group CommandName="cmdGroupDemoActions" SizeDefinition="OneButton">
 						<Button CommandName="cmdButtonMsDemo" />
 					</Group>
 					
