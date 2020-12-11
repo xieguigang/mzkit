@@ -10,9 +10,9 @@ imports "MsImaging" from "mzkit.plot";
 
 const HR2MSI_mouse_urinary_bladder = viewer("E:\demo\HR2MSI mouse urinary bladder S096.imzML");
 
-const scan_ppm as double  = 20;
-const threshold as double = 0.0001;
-const output_img          = `${!script$dir}/ms_imaging/HR2MSI_mouse_urinary_bladder_S096_Figure_1.png`;
+const scan_err   as character = "da:0.1";
+const threshold  as double    = 0.0001;
+const output_img as character = `${!script$dir}/ms_imaging/HR2MSI_mouse_urinary_bladder_S096_Figure_1.png`;
 
 print(output_img);
 
@@ -23,7 +23,7 @@ HR2MSI_mouse_urinary_bladder
 		812.5566, # PE(38:1) [M+K]+
 		798.541   # PC(34:1) [M+K]+
 	], 
-	ppm       = scan_ppm, 
+	tolerance = scan_err, 
 	threshold = threshold, 
 	color     = "darkblue,blue,skyblue,green,Lime,SpringGreen,Fuchsia,Magenta,purple,BlueViolet,red,red,red"
 )

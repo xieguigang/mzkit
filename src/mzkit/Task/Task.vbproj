@@ -147,6 +147,7 @@
     <Compile Include="Imports\ImportsTask.vb" />
     <Compile Include="ParentMatch.vb" />
     <Compile Include="Properties\AlignmentProperty.vb" />
+    <Compile Include="Properties\ToleranceMethod.vb" />
     <Compile Include="Properties\PlotProperty.vb" />
     <Compile Include="Properties\MsImageProperty.vb" />
     <Compile Include="Properties\RawFileProperty.vb" />
