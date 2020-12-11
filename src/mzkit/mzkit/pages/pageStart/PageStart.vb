@@ -113,7 +113,7 @@ Public Class PageStart
         MyApplication.host.CreateNewScript(Nothing, Nothing)
     End Sub
 
-    Private Sub LinkLabel5_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel5.LinkClicked
+    Private Sub LinkLabel5_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs)
         Dim findRaw = MyApplication.fileExplorer.findRawFileNode("003_Ex2_Orbitrap_CID.mzXML")
         Dim demoPath As String = $"{App.HOME}/demo/003_Ex2_Orbitrap_CID.mzXML"
 

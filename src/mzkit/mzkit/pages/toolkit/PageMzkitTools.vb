@@ -584,7 +584,7 @@ Public Class PageMzkitTools
 
     Friend Function getXICMatrix(raw As Raw, scanId As String, ppm As Double, relativeInto As Boolean) As NamedCollection(Of ChromatogramTick)
         Dim ms2 As ScanEntry = raw.FindMs2Scan(scanId)
-        Dim name As String
+        Dim name As String = raw.source.FileName
 
         If ms2 Is Nothing OrElse ms2.mz = 0.0 Then
             MyApplication.host.showStatusMessage("XIC plot is not avaliable for MS1 parent!", My.Resources.StatusAnnotations_Warning_32xLG_color)

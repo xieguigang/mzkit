@@ -741,7 +741,7 @@
 
 		<Command Name="cmdButtonMsDemo"
 					Id="1168"
-					LabelTitle="MS-Demo"
+					LabelTitle="Demo Data"
 					LabelDescription="View Demo Data"
 		 TooltipTitle="Demo Data"
 		 TooltipDescription="Demo Data">

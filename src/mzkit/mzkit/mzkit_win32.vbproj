@@ -331,6 +331,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="pages\dockWindow\documents\FeatureSearchHandler.vb" />
+    <Compile Include="pages\dockWindow\frmDemo.Designer.vb">
+      <DependentUpon>frmDemo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\dockWindow\frmDemo.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="pages\dockWindow\tools\TaskListWindow.Designer.vb">
       <DependentUpon>TaskListWindow.vb</DependentUpon>
     </Compile>

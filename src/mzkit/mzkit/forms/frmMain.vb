@@ -224,6 +224,7 @@ Public Class frmMain
 
         AddHandler ribbonItems.RecentItems.ExecuteEvent, AddressOf _recentItems_ExecuteEvent
         ' AddHandler ribbonItems.ButtonMsImaging.ExecuteEvent, AddressOf showMsImaging
+        AddHandler ribbonItems.ButtonMsDemo.ExecuteEvent, Sub() msDemo.ShowPage()
 
         _uiCollectionChangedEvent = New UICollectionChangedEvent()
 
@@ -759,6 +760,7 @@ Public Class frmMain
     Friend taskWin As New TaskListWindow
     Friend plotParams As New frmTweaks
     Friend msImageParameters As New frmMsImagingTweaks
+    Friend msDemo As New frmDemo
 
     Public Sub ShowPropertyWindow()
         propertyWin.DockState = DockState.DockRight
@@ -812,6 +814,9 @@ Public Class frmMain
 
         msImageParameters.Show(dockPanel)
         msImageParameters.DockState = DockState.Hidden
+
+        msDemo.Show(dockPanel)
+        msDemo.DockState = DockState.Hidden
 
         If Globals.Settings.ui.rememberLayouts Then
             fileExplorer.DockState = Globals.Settings.ui.fileExplorerDock
