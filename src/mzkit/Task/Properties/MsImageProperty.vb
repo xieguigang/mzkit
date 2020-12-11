@@ -1,6 +1,7 @@
 ﻿Imports System.ComponentModel
 Imports System.Drawing
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 
 Public Class MsImageProperty
 
@@ -12,8 +13,9 @@ Public Class MsImageProperty
     <Category("Render")> Public Property background As Color
     <Category("Render")> <DisplayName("width")> Public Property pixel_width As Integer = 10
     <Category("Render")> <DisplayName("height")> Public Property pixel_height As Integer = 10
-    <Category("Render")> Public Property threshold As Double = 0.1
+    <Category("Render")> Public Property threshold As Double = 0.01
     <Category("Render")> Public Property ppm As Double = 30
+    <Category("Render")> Public Property colors As Palettes = Palettes.Office2016
     <Category("Render")> Public Property mapLevels As Integer = 30
 
     Sub New(render As Drawer)

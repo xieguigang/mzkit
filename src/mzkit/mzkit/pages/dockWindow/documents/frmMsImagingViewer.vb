@@ -81,7 +81,8 @@ Public Class frmMsImagingViewer
                                         pixelSize:=size,
                                         threshold:=params.threshold,
                                         ppm:=params.ppm,
-                                        mapLevels:=params.mapLevels
+                                        mapLevels:=params.mapLevels,
+                                        colorSet:=params.colors.Description
                                     )
                                 End Sub)
                     Call progress.Invoke(Sub() progress.Close())
