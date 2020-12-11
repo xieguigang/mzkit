@@ -1,4 +1,5 @@
-﻿Imports System.IO
+﻿Imports System.Configuration.Install
+Imports System.IO
 Imports System.Reflection
 
 Public Class InstallerCustomActions
@@ -13,9 +14,7 @@ Public Class InstallerCustomActions
 
     End Sub
 
-    Protected Overrides Sub OnCommitted(savedState As IDictionary)
-        MyBase.OnCommitted(savedState)
-
+    Private Sub InstallerCustomActions_Committed(sender As Object, e As InstallEventArgs) Handles Me.Committed
         Call Directory.SetCurrentDirectory(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location))
         Call Process.Start(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + $"\mzkit_win32.exe")
         Call Process.Start("http://www.biodeep.cn/")
