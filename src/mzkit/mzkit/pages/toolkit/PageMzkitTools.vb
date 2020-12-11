@@ -193,16 +193,33 @@ Public Class PageMzkitTools
                 title2 = scanData.name
             End If
 
-            Dim draw As Image = scanData.MirrorPlot(titles:={title1, title2}).AsGDIImage
-            Dim propertyWin = MyApplication.host.propertyWin
+            Call MyApplication.RegisterPlot(
+                Sub(args)
+                    PictureBox1.BackgroundImage = scanData _
+                        .MirrorPlot(
+                            titles:={title1, title2},
+                            margin:=args.GetPadding.ToString,
+                            drawLegend:=args.show_legend,
+                            bg:=args.background.ToHtmlColor,
+                            plotTitle:=args.title,
+                            size:=$"{args.width},{args.height}"
+                        ) _
+                        .AsGDIImage
+                End Sub,
+                width:=1200,
+                height:=800,
+                padding:="padding: 100px 30px 50px 100px;",
+                bg:="white",
+                title:="BioDeep™ MS/MS alignment Viewer"
+            )
 
+            Dim propertyWin = MyApplication.host.propertyWin
 
             ' PropertyGrid1.SelectedObject = prop
             'PropertyGrid1.Refresh()
             propertyWin.propertyGrid.SelectedObject = prop
             propertyWin.propertyGrid.Refresh()
 
-            PictureBox1.BackgroundImage = draw
             ShowTabPage(TabPage5)
 
             MyApplication.host.ShowPropertyWindow()
@@ -211,19 +228,30 @@ Public Class PageMzkitTools
         End If
     End Sub
 
-    Friend Sub showUVscans(scans As IEnumerable(Of GeneralSignal), title$, xlabe$)
-        Dim scanCollection = scans.ToArray
-        Dim plot = UVsignalPlot.Plot(
-            signals:=scanCollection,
-            legendTitle:=Function(scan) If(scanCollection.Length = 1, $"UV scans", scan("title")),
-            size:="2560,1440",
-            pt_size:=10,
-            line_width:=10,
-            title:=title,
-            xlabel:=xlabe
-        ).AsGDIImage
+    Friend Sub showUVscans(scans As IEnumerable(Of GeneralSignal), title$, xlable$)
+        Dim scanCollection As GeneralSignal() = scans.ToArray
 
-        PictureBox1.BackgroundImage = plot
+        Call MyApplication.RegisterPlot(
+            Sub(args)
+                PictureBox1.BackgroundImage = UVsignalPlot.Plot(
+                    signals:=scanCollection,
+                    legendTitle:=Function(scan) If(scanCollection.Length = 1, $"UV scans", scan("title")),
+                    size:=$"{args.width},{args.height}",
+                    pt_size:=args.point_size,
+                    line_width:=args.line_width,
+                    title:=args.title,
+                    xlabel:=args.xlabel,
+                    ylabel:=args.ylabel,
+                    showLegend:=args.show_legend,
+                    showGrid:=args.show_grid
+                ).AsGDIImage
+            End Sub, width:=2560, height:=1440,
+                     padding:="padding:125px 50px 150px 200px;",
+                     bg:="white",
+                     title:=title,
+                     xlab:=xlable,
+                     ylab:="intensity")
+
         ShowTabPage(TabPage5)
     End Sub
 

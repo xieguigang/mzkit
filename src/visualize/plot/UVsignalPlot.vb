@@ -67,7 +67,9 @@ Public Module UVsignalPlot
                          Optional line_width As Single = 5,
                          Optional title$ = "UV absorption",
                          Optional xlabel$ = "time (sec)",
-                         Optional ylabel$ = "intensity") As GraphicsData
+                         Optional ylabel$ = "intensity",
+                         Optional showLegend As Boolean = True,
+                         Optional showGrid As Boolean = True) As GraphicsData
 
         Dim colors As LoopArray(Of Color) = Designer.GetColors(colorSet)
         Dim data As SerialData() = signals _
@@ -123,7 +125,9 @@ Public Module UVsignalPlot
             YtickFormat:="G2",
             title:=title,
             ablines:=ablines,
-            titleFontCSS:=CSSFont.Win7LargeBold
+            titleFontCSS:=CSSFont.Win7LargeBold,
+            showLegend:=showLegend,
+            showGrid:=showGrid
         )
     End Function
 End Module

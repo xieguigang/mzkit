@@ -2,9 +2,9 @@
 
 Public Class frmTweaks
 
-    Dim params As New PlotProperty
+    Friend ReadOnly params As New PlotProperty
 
-    Public Property draw As Action
+    Public Property draw As Action(Of PlotProperty)
 
     Private Sub frmTweaks_Load(sender As Object, e As EventArgs) Handles Me.Load
         PropertyGrid1.SelectedObject = params
@@ -16,7 +16,7 @@ Public Class frmTweaks
     Private Sub PropertyGrid1_PropertyValueChanged(s As Object, e As PropertyValueChangedEventArgs) Handles PropertyGrid1.PropertyValueChanged
         ' 进行重绘？
         If Not draw Is Nothing Then
-            Call _draw()
+            Call _draw(params)
         End If
     End Sub
 End Class
