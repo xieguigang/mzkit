@@ -29,6 +29,12 @@ Namespace MarkupData.imzML
             End Get
         End Property
 
+        Public ReadOnly Property size As Long
+            Get
+                Return stream.Length
+            End Get
+        End Property
+
         Sub New(file As Stream, layout As Format)
             stream = New BinaryDataReader(file)
             stream.ByteOrder = ByteOrder.LittleEndian

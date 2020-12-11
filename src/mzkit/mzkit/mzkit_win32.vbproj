@@ -275,6 +275,12 @@
   <ItemGroup>
     <Compile Include="application\ApplicationEvents.vb" />
     <Compile Include="application\RPackage.vb" />
+    <Compile Include="forms\frmTweaks\frmMsImagingTweaks.Designer.vb">
+      <DependentUpon>frmMsImagingTweaks.vb</DependentUpon>
+    </Compile>
+    <Compile Include="forms\frmTweaks\frmMsImagingTweaks.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="forms\frmTweaks\frmTweaks.Designer.vb">
       <DependentUpon>frmTweaks.vb</DependentUpon>
     </Compile>
@@ -535,6 +541,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="forms\frmProgressSpinner.resx">
       <DependentUpon>frmProgressSpinner.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\frmTweaks\frmMsImagingTweaks.resx">
+      <DependentUpon>frmMsImagingTweaks.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="forms\frmTweaks\frmTweaks.resx">
       <DependentUpon>frmTweaks.vb</DependentUpon>

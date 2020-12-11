@@ -1,15 +1,17 @@
-﻿Imports System.Text
-Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
-Imports Microsoft.VisualBasic.Text
+Imports mzkit.My
+Imports Task
+Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class frmMsImagingViewer
     Implements IFileReference
 
     Public Property FilePath As String Implements IFileReference.FilePath
 
-    Public Property render As Drawer
+    Dim render As Drawer
+    Dim params As MsImageProperty
 
     Public ReadOnly Property MimeType As ContentType() Implements IFileReference.MimeType
         Get
@@ -21,5 +23,14 @@ Public Class frmMsImagingViewer
 
     Private Sub frmMsImagingViewer_Load(sender As Object, e As EventArgs) Handles Me.Load
         TabText = Text
+        MyApplication.host.msImageParameters.DockState = DockState.DockLeft
     End Sub
+
+    Public Sub LoadRender(render As Drawer)
+        Me.render = render
+        Me.params = New MsImageProperty(render)
+
+        MyApplication.host.msImageParameters.PropertyGrid1.SelectedObject = params
+    End Sub
+
 End Class

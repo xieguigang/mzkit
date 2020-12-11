@@ -148,6 +148,7 @@
     <Compile Include="ParentMatch.vb" />
     <Compile Include="Properties\AlignmentProperty.vb" />
     <Compile Include="Properties\PlotProperty.vb" />
+    <Compile Include="Properties\MsImageProperty.vb" />
     <Compile Include="Properties\RawFileProperty.vb" />
     <Compile Include="Workspace\WorkspaceFile.vb" />
     <Compile Include="Workspace\ViewerProject.vb" />
@@ -249,6 +250,10 @@
     <ProjectReference Include="..\..\mzmath\ms2_math-core\MassSpectrum.math-core.vbproj">
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
       <Name>MassSpectrum.math-core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\visualize\MsImaging\MsImaging.vbproj">
+      <Project>{37a4ced9-2ce6-468e-b781-3b0a05e3beee}</Project>
+      <Name>MsImaging</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\visualize\plot\msplots.vbproj">
       <Project>{f2147043-7c16-48f8-838b-3d2cf14b0a7b}</Project>

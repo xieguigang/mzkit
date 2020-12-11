@@ -83,6 +83,8 @@ using RibbonLib.Interop;
             public const uint cmdGroupAboutActions = 1047;
             public const uint cmdButtonAbout = 1021;
             public const uint cmdButtonBioDeep = 1022;
+            public const uint cmdGroupDemoActions = 1048;
+            public const uint cmdButtonMsDemo = 1168;
             public const uint cmdRecentItems = 1014;
             public const uint cmdMenuGroupFile = 1005;
             public const uint cmdButtonImportsRawFiles = 1017;
@@ -176,6 +178,8 @@ using RibbonLib.Interop;
         public RibbonGroup GroupAboutActions { get; private set; }
         public RibbonButton ButtonAbout { get; private set; }
         public RibbonButton ButtonBioDeep { get; private set; }
+        public RibbonGroup GroupDemoActions { get; private set; }
+        public RibbonButton ButtonMsDemo { get; private set; }
         public RibbonRecentItems RecentItems { get; private set; }
         public RibbonMenuGroup MenuGroupFile { get; private set; }
         public RibbonButton ButtonImportsRawFiles { get; private set; }
@@ -267,6 +271,8 @@ using RibbonLib.Interop;
             GroupAboutActions = new RibbonGroup(ribbon, Cmd.cmdGroupAboutActions);
             ButtonAbout = new RibbonButton(ribbon, Cmd.cmdButtonAbout);
             ButtonBioDeep = new RibbonButton(ribbon, Cmd.cmdButtonBioDeep);
+            GroupDemoActions = new RibbonGroup(ribbon, Cmd.cmdGroupDemoActions);
+            ButtonMsDemo = new RibbonButton(ribbon, Cmd.cmdButtonMsDemo);
             RecentItems = new RibbonRecentItems(ribbon, Cmd.cmdRecentItems);
             MenuGroupFile = new RibbonMenuGroup(ribbon, Cmd.cmdMenuGroupFile);
             ButtonImportsRawFiles = new RibbonButton(ribbon, Cmd.cmdButtonImportsRawFiles);
