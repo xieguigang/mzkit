@@ -1,4 +1,5 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
+﻿Imports System.Threading
+Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports mzkit.My
@@ -12,6 +13,8 @@ Public Class frmMsImagingViewer
 
     Dim render As Drawer
     Dim params As MsImageProperty
+    Dim WithEvents checks As ToolStripMenuItem
+    Dim WithEvents tweaks As PropertyGrid
 
     Public ReadOnly Property MimeType As ContentType() Implements IFileReference.MimeType
         Get
@@ -24,13 +27,73 @@ Public Class frmMsImagingViewer
     Private Sub frmMsImagingViewer_Load(sender As Object, e As EventArgs) Handles Me.Load
         TabText = Text
         MyApplication.host.msImageParameters.DockState = DockState.DockLeft
+        PictureBox1.BackgroundImageLayout = ImageLayout.Zoom
     End Sub
 
     Public Sub LoadRender(render As Drawer)
+        Dim checks As CheckedListBox = MyApplication.host.msImageParameters.CheckedListBox1
+
+        Me.checks = MyApplication.host.msImageParameters.RenderingToolStripMenuItem
         Me.render = render
         Me.params = New MsImageProperty(render)
+        Me.tweaks = MyApplication.host.msImageParameters.PropertyGrid1
 
         MyApplication.host.msImageParameters.PropertyGrid1.SelectedObject = params
+        MyApplication.host.msImageParameters.CheckedListBox1.Items.Clear()
+
+        For Each mz As Double In render.LoadMzArray(20)
+            Call checks.Items.Add(mz.ToString("F4"))
+            Call Application.DoEvents()
+        Next
     End Sub
 
+    Private Sub checks_Click(sender As Object, e As EventArgs) Handles checks.Click
+        Dim mz As Object() = (From item In MyApplication.host.msImageParameters.CheckedListBox1.CheckedItems).ToArray
+
+        If mz.Length = 0 Then
+            mz = (From item In MyApplication.host.msImageParameters.CheckedListBox1.SelectedItems).ToArray
+        End If
+
+        If mz.Length = 0 Then
+            Call MyApplication.host.showStatusMessage("No ions selected for rendering!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+        Else
+            Dim selectedMz As New List(Of Double)
+            Dim progress As New frmProgressSpinner
+            Dim size As String = $"{params.pixel_width},{params.pixel_height}"
+            Dim bg As Color = params.background
+
+            For i As Integer = 0 To mz.Length - 1
+                selectedMz.Add(Val(CStr(mz(i))))
+            Next
+
+            If selectedMz.Count = 1 Then
+                MyApplication.host.showStatusMessage($"Run MS-Image rendering for selected ion m/z {selectedMz(Scan0)}...")
+            Else
+                MyApplication.host.showStatusMessage($"Run MS-Image rendering for {selectedMz.Count} selected ions...")
+            End If
+
+            Call New Thread(
+                Sub()
+                    Call Invoke(Sub() PictureBox1.BackColor = bg)
+                    Call Invoke(Sub()
+                                    PictureBox1.BackgroundImage = render.DrawLayer(
+                                        mz:=selectedMz.ToArray,
+                                        pixelSize:=size,
+                                        threshold:=params.threshold,
+                                        ppm:=params.ppm,
+                                        mapLevels:=params.mapLevels,
+                                        colorSet:=params.colors.Description
+                                    )
+                                End Sub)
+                    Call progress.Invoke(Sub() progress.Close())
+                End Sub).Start()
+
+            Call progress.ShowDialog()
+            Call MyApplication.host.showStatusMessage("Rendering Complete!", My.Resources.preferences_system_notifications)
+        End If
+    End Sub
+
+    Private Sub tweaks_PropertyValueChanged(s As Object, e As PropertyValueChangedEventArgs) Handles tweaks.PropertyValueChanged
+        PictureBox1.BackColor = params.background
+    End Sub
 End Class

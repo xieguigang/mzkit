@@ -13,7 +13,8 @@ using RibbonLib;
 using RibbonLib.Controls;
 using RibbonLib.Interop;
 
-
+namespace RibbonLib.Controls
+{
     partial class RibbonItems
     {
         private static class Cmd
@@ -295,3 +296,4 @@ using RibbonLib.Interop;
         }
 
     }
+}

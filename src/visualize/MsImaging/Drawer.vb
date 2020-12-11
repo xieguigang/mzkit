@@ -7,6 +7,8 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports Microsoft.VisualBasic.Math
+Imports Application = Microsoft.VisualBasic.Parallel
 
 ''' <summary>
 ''' MS-imaging render canvas
@@ -33,6 +35,20 @@ Public Class Drawer : Implements IDisposable
             .Height = pixels.Select(Function(p) p.y).Max
         }
     End Sub
+    
+    Public Function LoadMzArray(ppm As Double) As Double()
+        Dim mzlist = pixels _
+            .Select(Function(p) Application.DoEvents(Function() ibd.ReadArray(p.MzPtr))) _
+            .IteratesALL _
+            .Distinct _
+            .ToArray
+        Dim groups = mzlist _
+            .GroupBy(Function(mz) mz, Tolerance.PPM(ppm)) _
+            .Select(Function(mz) Val(mz.name)) _
+            .ToArray
+
+        Return groups
+    End Function
 
     Public Iterator Function LoadPixels(mz As Double, tolerance As Tolerance, Optional skipZero As Boolean = True) As IEnumerable(Of PixelData)
         Dim pixel As PixelData
@@ -43,6 +59,8 @@ Public Class Drawer : Implements IDisposable
                 .Where(Function(mzi) tolerance(mzi.mz, mz)) _
                 .OrderByDescending(Function(mzi) mzi.intensity) _
                 .FirstOrDefault
+
+            Call Application.DoEvents()
 
             If skipZero AndAlso into Is Nothing Then
                 Continue For

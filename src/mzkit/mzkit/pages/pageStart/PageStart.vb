@@ -112,23 +112,5 @@ Public Class PageStart
         ' 打开R终端页面
         MyApplication.host.CreateNewScript(Nothing, Nothing)
     End Sub
-
-    Private Sub LinkLabel5_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel5.LinkClicked
-        Dim findRaw = MyApplication.fileExplorer.findRawFileNode("003_Ex2_Orbitrap_CID.mzXML")
-        Dim demoPath As String = $"{App.HOME}/demo/003_Ex2_Orbitrap_CID.mzXML"
-
-        If findRaw Is Nothing Then
-            If Not demoPath.FileExists Then
-                MyApplication.host.showStatusMessage("the demo data file is missing!", My.Resources.StatusAnnotations_Warning_32xLG_color)
-                Return
-            End If
-            MyApplication.fileExplorer.addFileNode(MyApplication.fileExplorer.getRawCache(demoPath))
-            findRaw = MyApplication.fileExplorer.findRawFileNode("003_Ex2_Orbitrap_CID.mzXML")
-        End If
-
-        MyApplication.fileExplorer.treeView1.SelectedNode = findRaw
-        MyApplication.fileExplorer.showRawFile(DirectCast(findRaw.Tag, Raw))
-        MyApplication.host.ShowMzkitToolkit()
-    End Sub
 End Class
 

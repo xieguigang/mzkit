@@ -55,10 +55,8 @@
 Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
-Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.MoleculeNetworking
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
@@ -77,6 +75,7 @@ Imports mzkit.My
 Imports RibbonLib
 Imports RibbonLib.Interop
 Imports Task
+Imports WeifenLuo.WinFormsUI.Docking
 Imports stdNum = System.Math
 
 Public Class PageMzkitTools
@@ -585,7 +584,7 @@ Public Class PageMzkitTools
 
     Friend Function getXICMatrix(raw As Raw, scanId As String, ppm As Double, relativeInto As Boolean) As NamedCollection(Of ChromatogramTick)
         Dim ms2 As ScanEntry = raw.FindMs2Scan(scanId)
-        Dim name As String
+        Dim name As String = raw.source.FileName
 
         If ms2 Is Nothing OrElse ms2.mz = 0.0 Then
             MyApplication.host.showStatusMessage("XIC plot is not avaliable for MS1 parent!", My.Resources.StatusAnnotations_Warning_32xLG_color)
@@ -688,5 +687,6 @@ Public Class PageMzkitTools
 
     Private Sub PictureBox1_Click(sender As Object, e As EventArgs) Handles PictureBox1.Click
         RibbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
+        MyApplication.host.plotParams.DockState = DockState.DockRight
     End Sub
 End Class

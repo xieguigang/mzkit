@@ -54,22 +54,24 @@ Public Class frmProgressSpinner
 
     Private Sub OnFrameChanged(o As Object, e As EventArgs)
         Me.Invalidate()
+
+        ' BackgroundImage = theImage
     End Sub
 
     Private Sub frmProgressSpinner_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
+        Dim g = e.Graphics
+
         'Get the next frame ready for rendering for the image in this thread.
         ImageAnimator.UpdateFrames()
-        Dim g = e.Graphics
         'Draw the current frame in the animation for all of the images
-
-        g.DrawImage(theImage, 0, 0, theImage.Width, theImage.Height)
+        g.DrawImageUnscaled(theImage, 0, 0, theImage.Width, theImage.Height)
     End Sub
 
     Private Sub frmProgressSpinner_Load(sender As Object, e As EventArgs) Handles Me.Load
         ' SetStyle(ControlStyles.SupportsTransparentBackColor, True)
         Me.TransparencyKey = Color.Green
         Me.BackColor = Color.Green
-        Me.DoubleBuffered = True
+        Me.DoubleBuffered = False
 
         RunAnimation()
     End Sub
