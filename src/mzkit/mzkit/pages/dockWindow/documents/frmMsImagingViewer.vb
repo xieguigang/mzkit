@@ -47,9 +47,13 @@ Public Class frmMsImagingViewer
     End Sub
 
     Private Sub checks_Click(sender As Object, e As EventArgs) Handles checks.Click
-        Dim mz = MyApplication.host.msImageParameters.CheckedListBox1.SelectedItems
+        Dim mz As Object() = (From item In MyApplication.host.msImageParameters.CheckedListBox1.CheckedItems).ToArray
 
-        If mz.Count = 0 Then
+        If mz.Length = 0 Then
+            mz = (From item In MyApplication.host.msImageParameters.CheckedListBox1.SelectedItems).ToArray
+        End If
+
+        If mz.Length = 0 Then
             Call MyApplication.host.showStatusMessage("No ions selected for rendering!", My.Resources.StatusAnnotations_Warning_32xLG_color)
         Else
             Dim selectedMz As New List(Of Double)
@@ -57,8 +61,8 @@ Public Class frmMsImagingViewer
             Dim size As String = $"{params.pixel_width},{params.pixel_height}"
             Dim bg As Color = params.background
 
-            For i As Integer = 0 To mz.Count - 1
-                selectedMz.Add(Val(CStr(mz.Item(i))))
+            For i As Integer = 0 To mz.Length - 1
+                selectedMz.Add(Val(CStr(mz(i))))
             Next
 
             If selectedMz.Count = 1 Then
