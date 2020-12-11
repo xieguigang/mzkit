@@ -280,6 +280,12 @@
         "Entry"
         {
         "MsmKey" = "8:_2AD640095B38E13CCB7148B3573306AF"
+        "OwnerKey" = "8:_9C4972F836DD4DC2A5DD79708F667B7D"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_2AD640095B38E13CCB7148B3573306AF"
         "OwnerKey" = "8:_E22493DDDC2641C48A737494E060E8B5"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -389,6 +395,12 @@
         {
         "MsmKey" = "8:_35306309CD54CF32A4AEB4F936F88D87"
         "OwnerKey" = "8:_B0525F6BE04245AB8B11DBA0EEEBB8C6"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_35306309CD54CF32A4AEB4F936F88D87"
+        "OwnerKey" = "8:_9C4972F836DD4DC2A5DD79708F667B7D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -568,6 +580,12 @@
         "Entry"
         {
         "MsmKey" = "8:_53727E8E0ED7DCD986A2F691F76B4A12"
+        "OwnerKey" = "8:_9C4972F836DD4DC2A5DD79708F667B7D"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_53727E8E0ED7DCD986A2F691F76B4A12"
         "OwnerKey" = "8:_E22493DDDC2641C48A737494E060E8B5"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -701,6 +719,12 @@
         {
         "MsmKey" = "8:_82B874A3E15FD8B2C809177D97243C40"
         "OwnerKey" = "8:_B0525F6BE04245AB8B11DBA0EEEBB8C6"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_82B874A3E15FD8B2C809177D97243C40"
+        "OwnerKey" = "8:_9C4972F836DD4DC2A5DD79708F667B7D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -916,6 +940,12 @@
         "Entry"
         {
         "MsmKey" = "8:_95BB91C2C95DF8AABAF68E6D60659B8D"
+        "OwnerKey" = "8:_9C4972F836DD4DC2A5DD79708F667B7D"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_95BB91C2C95DF8AABAF68E6D60659B8D"
         "OwnerKey" = "8:_BB93BCD46704EBBF94E7320C96EB13F0"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -1125,6 +1155,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_9C4972F836DD4DC2A5DD79708F667B7D"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_9DAC289121D06F8310A0270D46BB65C0"
         "OwnerKey" = "8:_B996598E8CFA411CB74725B5C88D2AF3"
         "MsmSig" = "8:_UNDEFINED"
@@ -1252,6 +1288,12 @@
         "Entry"
         {
         "MsmKey" = "8:_B1D378A7AA940DA74769EC292198F9D4"
+        "OwnerKey" = "8:_9C4972F836DD4DC2A5DD79708F667B7D"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_B1D378A7AA940DA74769EC292198F9D4"
         "OwnerKey" = "8:_E22493DDDC2641C48A737494E060E8B5"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -1283,6 +1325,12 @@
         {
         "MsmKey" = "8:_B40681F77F206EE669B196BC25DB9285"
         "OwnerKey" = "8:_2AD640095B38E13CCB7148B3573306AF"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_B40681F77F206EE669B196BC25DB9285"
+        "OwnerKey" = "8:_9C4972F836DD4DC2A5DD79708F667B7D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1439,6 +1487,12 @@
         {
         "MsmKey" = "8:_CE608A6F6CAB6E5E9AAA0002FA4DAEB7"
         "OwnerKey" = "8:_B996598E8CFA411CB74725B5C88D2AF3"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CE608A6F6CAB6E5E9AAA0002FA4DAEB7"
+        "OwnerKey" = "8:_9C4972F836DD4DC2A5DD79708F667B7D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1703,6 +1757,12 @@
         {
         "MsmKey" = "8:_F8B2ECCF8348340C2131CE5234D1133A"
         "OwnerKey" = "8:_B0525F6BE04245AB8B11DBA0EEEBB8C6"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F8B2ECCF8348340C2131CE5234D1133A"
+        "OwnerKey" = "8:_9C4972F836DD4DC2A5DD79708F667B7D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -2165,6 +2225,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_B996598E8CFA411CB74725B5C88D2AF3"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_9C4972F836DD4DC2A5DD79708F667B7D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -2750,7 +2816,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.Data.ChartPlots, Version=1.23.7650.33925, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.Data.ChartPlots, Version=1.23.7650.34620, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_007CC57F5071F45BB6E36217E2E0AACB"
@@ -2781,7 +2847,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:R#, Version=2.13.7650.33925, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:R#, Version=2.13.7650.34619, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_02F7273E9BBFC91CB37A039AD2AB9A78"
@@ -3069,7 +3135,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.Data.Csv, Version=1.0.7650.33923, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.Data.Csv, Version=1.0.7650.34618, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_24865FFF13A5397A0D0D2D4EEBAB33B7"
@@ -3182,7 +3248,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.Imaging, Version=4.7.7650.33925, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.Imaging, Version=4.7.7650.34619, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_2AD640095B38E13CCB7148B3573306AF"
@@ -3213,7 +3279,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:SMRUCC.genomics.Core, Version=2.0.33.33923, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:SMRUCC.genomics.Core, Version=2.0.33.34618, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_2DDF2D24AD27CEC6A33D17AE736605D0"
@@ -3295,7 +3361,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:REnv, Version=2.333.7650.33924, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:REnv, Version=2.333.7650.34617, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_35306309CD54CF32A4AEB4F936F88D87"
@@ -3408,7 +3474,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.Data.Csv, Version=1.0.7650.33923, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.Data.Csv, Version=1.0.7650.34618, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_522499B83C6E5A7347AE0B009DA2B54E"
@@ -3583,7 +3649,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.Data.Storage, Version=1.50.7650.33924, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.Data.Storage, Version=1.50.7650.34619, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_6CB9C2C47AC0E0C7206F6440A9A788E2"
@@ -3707,7 +3773,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:R.math, Version=1.331.7650.33926, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:R.math, Version=1.331.7650.34620, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_7C5DCA4D1663873679D9387655D175AD"
@@ -3986,7 +4052,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.Data.Storage, Version=1.50.7650.33924, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.Data.Storage, Version=1.50.7650.34619, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_90C36BEDC22165B835AC4C21CF694615"
@@ -4079,7 +4145,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.Math.Core, Version=10.1.7650.33922, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.Math.Core, Version=10.1.7650.34617, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_95BB91C2C95DF8AABAF68E6D60659B8D"
@@ -4141,7 +4207,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:R.graphics, Version=1.33.7650.33926, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:R.graphics, Version=1.33.7650.34620, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_9DAC289121D06F8310A0270D46BB65C0"
@@ -4234,7 +4300,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.Data.visualize.Network.Visualizer, Version=4.1230.7650.33926, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.Data.visualize.Network.Visualizer, Version=4.1230.7650.34620, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_A0FAF170EEB4E39C933AA989AF0E2514"
@@ -4522,7 +4588,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.DataMining.HierarchicalClustering, Version=1.0.7650.33926, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.DataMining.HierarchicalClustering, Version=1.0.7650.34620, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_BA8D1A2A353671AD88AE12296D8E379A"
@@ -4739,7 +4805,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:BioNovoGene.Analytical.MassSpectrometry.Math, Version=1.231.7650.33923, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:BioNovoGene.Analytical.MassSpectrometry.Math, Version=1.231.7650.34620, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_D01E957CCF1621DD84F4737C5945A930"
@@ -4863,7 +4929,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.DataMining.HierarchicalClustering, Version=1.0.7650.33926, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.DataMining.HierarchicalClustering, Version=1.0.7650.34620, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_D85C0B5351EF9AB72E0CAC33429E1124"
@@ -4956,7 +5022,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:R.graph, Version=1.231.7650.33927, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:R.graph, Version=1.231.7650.34622, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_E156A54382A1AA751122C9C44616E524"
@@ -4987,7 +5053,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:R.base, Version=1.33.7650.33926, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:R.base, Version=1.33.7650.34621, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_E15FCAB2F561D03C1C0C4916A477A849"
@@ -5080,7 +5146,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a, Version=4.7.7650.33921, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a, Version=4.7.7650.34616, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_F8B2ECCF8348340C2131CE5234D1133A"
@@ -5173,7 +5239,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.MachineLearning, Version=1.10.7650.33924, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.MachineLearning, Version=1.10.7650.34619, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_FAEBBF90EC2691BBFBEBA521920B2036"
@@ -5966,6 +6032,34 @@
         }
         "ProjectOutput"
         {
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_9C4972F836DD4DC2A5DD79708F667B7D"
+            {
+            "SourcePath" = "8:E:\\GCModeller\\src\\R-sharp\\studio\\Rstudio\\obj\\x64\\mzkit\\Rstudio.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_DFC62C483790469DA2EF3F39E6499DDA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{F78107E5-2D25-4504-BFB4-FADD4DE01DBB}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_B0525F6BE04245AB8B11DBA0EEEBB8C6"
             {
             "SourcePath" = "8:E:\\GCModeller\\src\\R-sharp\\studio\\R-terminal\\obj\\x64\\mzkit\\R#.exe"
