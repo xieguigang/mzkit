@@ -42,7 +42,7 @@ Partial Class DemoDataPage
         'LinkLabel1
         '
         Me.LinkLabel1.AutoSize = True
-        Me.LinkLabel1.Location = New System.Drawing.Point(65, 128)
+        Me.LinkLabel1.Location = New System.Drawing.Point(88, 158)
         Me.LinkLabel1.Name = "LinkLabel1"
         Me.LinkLabel1.Size = New System.Drawing.Size(263, 12)
         Me.LinkLabel1.TabIndex = 0
@@ -53,7 +53,7 @@ Partial Class DemoDataPage
         '
         Me.PictureBox1.BackgroundImage = CType(resources.GetObject("PictureBox1.BackgroundImage"), System.Drawing.Image)
         Me.PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox1.Location = New System.Drawing.Point(428, 33)
+        Me.PictureBox1.Location = New System.Drawing.Point(466, 42)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(442, 223)
         Me.PictureBox1.TabIndex = 1
@@ -63,7 +63,7 @@ Partial Class DemoDataPage
         '
         Me.Label1.AutoSize = True
         Me.Label1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Label1.Location = New System.Drawing.Point(426, 271)
+        Me.Label1.Location = New System.Drawing.Point(464, 280)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(473, 24)
         Me.Label1.TabIndex = 2
@@ -73,7 +73,7 @@ Partial Class DemoDataPage
         'LinkLabel2
         '
         Me.LinkLabel2.AutoSize = True
-        Me.LinkLabel2.Location = New System.Drawing.Point(426, 305)
+        Me.LinkLabel2.Location = New System.Drawing.Point(464, 314)
         Me.LinkLabel2.Name = "LinkLabel2"
         Me.LinkLabel2.Size = New System.Drawing.Size(311, 12)
         Me.LinkLabel2.TabIndex = 3
@@ -84,7 +84,7 @@ Partial Class DemoDataPage
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("微软雅黑", 21.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label2.Location = New System.Drawing.Point(20, 59)
+        Me.Label2.Location = New System.Drawing.Point(43, 89)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(291, 39)
         Me.Label2.TabIndex = 4
@@ -94,7 +94,7 @@ Partial Class DemoDataPage
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("微软雅黑", 21.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label3.Location = New System.Drawing.Point(423, 366)
+        Me.Label3.Location = New System.Drawing.Point(461, 375)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(472, 39)
         Me.Label3.TabIndex = 5
@@ -104,7 +104,7 @@ Partial Class DemoDataPage
         '
         Me.PictureBox2.BackgroundImage = CType(resources.GetObject("PictureBox2.BackgroundImage"), System.Drawing.Image)
         Me.PictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox2.Location = New System.Drawing.Point(27, 113)
+        Me.PictureBox2.Location = New System.Drawing.Point(50, 143)
         Me.PictureBox2.Name = "PictureBox2"
         Me.PictureBox2.Size = New System.Drawing.Size(32, 32)
         Me.PictureBox2.TabIndex = 6
@@ -114,7 +114,7 @@ Partial Class DemoDataPage
         '
         Me.PictureBox3.BackgroundImage = CType(resources.GetObject("PictureBox3.BackgroundImage"), System.Drawing.Image)
         Me.PictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox3.Location = New System.Drawing.Point(445, 422)
+        Me.PictureBox3.Location = New System.Drawing.Point(483, 431)
         Me.PictureBox3.Name = "PictureBox3"
         Me.PictureBox3.Size = New System.Drawing.Size(32, 32)
         Me.PictureBox3.TabIndex = 7
@@ -123,7 +123,7 @@ Partial Class DemoDataPage
         'LinkLabel3
         '
         Me.LinkLabel3.AutoSize = True
-        Me.LinkLabel3.Location = New System.Drawing.Point(482, 436)
+        Me.LinkLabel3.Location = New System.Drawing.Point(520, 445)
         Me.LinkLabel3.Name = "LinkLabel3"
         Me.LinkLabel3.Size = New System.Drawing.Size(161, 12)
         Me.LinkLabel3.TabIndex = 8
@@ -132,9 +132,11 @@ Partial Class DemoDataPage
         '
         'PictureBox4
         '
-        Me.PictureBox4.Location = New System.Drawing.Point(67, 305)
+        Me.PictureBox4.BackgroundImage = CType(resources.GetObject("PictureBox4.BackgroundImage"), System.Drawing.Image)
+        Me.PictureBox4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.PictureBox4.Location = New System.Drawing.Point(18, 290)
         Me.PictureBox4.Name = "PictureBox4"
-        Me.PictureBox4.Size = New System.Drawing.Size(271, 281)
+        Me.PictureBox4.Size = New System.Drawing.Size(459, 287)
         Me.PictureBox4.TabIndex = 9
         Me.PictureBox4.TabStop = False
         '
@@ -143,7 +145,6 @@ Partial Class DemoDataPage
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.Controls.Add(Me.PictureBox4)
         Me.Controls.Add(Me.LinkLabel3)
         Me.Controls.Add(Me.PictureBox3)
         Me.Controls.Add(Me.PictureBox2)
@@ -153,6 +154,7 @@ Partial Class DemoDataPage
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.PictureBox1)
         Me.Controls.Add(Me.LinkLabel1)
+        Me.Controls.Add(Me.PictureBox4)
         Me.Name = "DemoDataPage"
         Me.Size = New System.Drawing.Size(993, 661)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
