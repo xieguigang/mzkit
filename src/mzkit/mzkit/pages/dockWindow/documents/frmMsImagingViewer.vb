@@ -1,6 +1,7 @@
 ﻿Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports mzkit.My
 Imports Task
@@ -53,16 +54,31 @@ Public Class frmMsImagingViewer
         Else
             Dim selectedMz As New List(Of Double)
             Dim progress As New frmProgressSpinner
+            Dim size As String = $"{params.pixel_width},{params.pixel_height}"
+            Dim bg As Color = params.background
 
             For i As Integer = 0 To mz.Count - 1
                 selectedMz.Add(Val(CStr(mz.Item(i))))
             Next
 
-            MyApplication.host.showStatusMessage($"Run MS-Image rendering for {mz.Count} selected ions...")
+            If selectedMz.Count = 1 Then
+                MyApplication.host.showStatusMessage($"Run MS-Image rendering for selected ion m/z {selectedMz(Scan0)}...")
+            Else
+                MyApplication.host.showStatusMessage($"Run MS-Image rendering for {selectedMz.Count} selected ions...")
+            End If
 
             Call New Thread(
                 Sub()
-                    Call Invoke(Sub() PictureBox1.BackgroundImage = render.DrawLayer(selectedMz.ToArray))
+                    Call Invoke(Sub() PictureBox1.BackColor = bg)
+                    Call Invoke(Sub()
+                                    PictureBox1.BackgroundImage = render.DrawLayer(
+                                        mz:=selectedMz.ToArray,
+                                        pixelSize:=size,
+                                        threshold:=params.threshold,
+                                        ppm:=params.ppm,
+                                        mapLevels:=params.mapLevels
+                                    )
+                                End Sub)
                     Call progress.Invoke(Sub() progress.Close())
                 End Sub).Start()
 
