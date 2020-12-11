@@ -1,7 +1,6 @@
 ﻿Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports mzkit.My
 Imports Task
@@ -15,6 +14,7 @@ Public Class frmMsImagingViewer
     Dim render As Drawer
     Dim params As MsImageProperty
     Dim WithEvents checks As ToolStripMenuItem
+    Dim WithEvents tweaks As PropertyGrid
 
     Public ReadOnly Property MimeType As ContentType() Implements IFileReference.MimeType
         Get
@@ -36,6 +36,7 @@ Public Class frmMsImagingViewer
         Me.checks = MyApplication.host.msImageParameters.RenderingToolStripMenuItem
         Me.render = render
         Me.params = New MsImageProperty(render)
+        Me.tweaks = MyApplication.host.msImageParameters.PropertyGrid1
 
         MyApplication.host.msImageParameters.PropertyGrid1.SelectedObject = params
         MyApplication.host.msImageParameters.CheckedListBox1.Items.Clear()
@@ -89,5 +90,9 @@ Public Class frmMsImagingViewer
             Call progress.ShowDialog()
             Call MyApplication.host.showStatusMessage("Rendering Complete!", My.Resources.preferences_system_notifications)
         End If
+    End Sub
+
+    Private Sub tweaks_PropertyValueChanged(s As Object, e As PropertyValueChangedEventArgs) Handles tweaks.PropertyValueChanged
+        PictureBox1.BackColor = params.background
     End Sub
 End Class
