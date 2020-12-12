@@ -37,7 +37,10 @@ Partial Class frmUVScans
         'CheckedListBox1
         '
         Me.CheckedListBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.CheckedListBox1.CheckOnClick = True
+        Me.CheckedListBox1.ContextMenuStrip = Me.ContextMenuStrip1
         Me.CheckedListBox1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CheckedListBox1.Font = New System.Drawing.Font("Microsoft YaHei UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CheckedListBox1.FormattingEnabled = True
         Me.CheckedListBox1.Location = New System.Drawing.Point(0, 0)
         Me.CheckedListBox1.Name = "CheckedListBox1"
@@ -49,20 +52,20 @@ Partial Class frmUVScans
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowPDAToolStripMenuItem, Me.ShowUVOverlapToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
         Me.ContextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 70)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(166, 48)
         '
         'ShowPDAToolStripMenuItem
         '
         Me.ShowPDAToolStripMenuItem.Image = CType(resources.GetObject("ShowPDAToolStripMenuItem.Image"), System.Drawing.Image)
         Me.ShowPDAToolStripMenuItem.Name = "ShowPDAToolStripMenuItem"
-        Me.ShowPDAToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ShowPDAToolStripMenuItem.Size = New System.Drawing.Size(165, 22)
         Me.ShowPDAToolStripMenuItem.Text = "Show PDA"
         '
         'ShowUVOverlapToolStripMenuItem
         '
         Me.ShowUVOverlapToolStripMenuItem.Image = CType(resources.GetObject("ShowUVOverlapToolStripMenuItem.Image"), System.Drawing.Image)
         Me.ShowUVOverlapToolStripMenuItem.Name = "ShowUVOverlapToolStripMenuItem"
-        Me.ShowUVOverlapToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ShowUVOverlapToolStripMenuItem.Size = New System.Drawing.Size(165, 22)
         Me.ShowUVOverlapToolStripMenuItem.Text = "Show UV Overlap"
         '
         'frmUVScans

@@ -238,7 +238,7 @@ Module Globals
         Next
 
         If Not raw.UVscans.IsNullOrEmpty Then
-            MyApplication.host.UVScansList.DockState = DockState.DockLeft
+            MyApplication.host.UVScansList.DockState = DockState.DockLeftAutoHide
             MyApplication.host.UVScansList.CheckedListBox1.Items.Clear()
             MyApplication.host.UVScansList.Clear()
 

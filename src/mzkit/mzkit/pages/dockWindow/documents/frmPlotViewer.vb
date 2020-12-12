@@ -97,6 +97,6 @@ Public Class frmPlotViewer : Implements ISaveHandle, IFileReference
     End Sub
 
     Private Sub PictureBox1_Click(sender As Object, e As EventArgs) Handles PictureBox1.Click
-        MyApplication.host.plotParams.DockState = DockState.DockRight
+        MyApplication.host.plotParams.DockState = DockState.DockRightAutoHide
     End Sub
 End Class
