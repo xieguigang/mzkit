@@ -129,6 +129,10 @@ Namespace Ms1
             Return stdNum.Abs([error]) <= DeltaTolerance
         End Function
 
+        Public Function GetScript() As String
+            Return ToScript(Me)
+        End Function
+
         Public Shared Function DeltaMass(da#) As DAmethod
             Return New DAmethod(da)
         End Function

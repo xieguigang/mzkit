@@ -67,13 +67,15 @@ Public Module MassSpectra
     Public Function MirrorPlot(library As LibraryMatrix,
                                Optional size$ = "1200,800",
                                Optional margin$ = "padding: 100px 30px 50px 100px;",
+                               Optional bg$ = "white",
                                Optional intoCutoff# = 0.05,
                                Optional titles$() = Nothing,
                                Optional plotTitle$ = "BioDeep™ MS/MS alignment Viewer",
-                               Optional labelDisplayIntensity# = 0.3) As GraphicsData
+                               Optional labelDisplayIntensity# = 0.3,
+                               Optional drawLegend As Boolean = True) As GraphicsData
 
-        Dim a As New LibraryMatrix With {.ms2 = library.ms2, .Name = titles.ElementAtOrDefault(0, library.Name)}
-        Dim b As New LibraryMatrix With {.ms2 = library.ms2, .Name = titles.ElementAtOrDefault(1, library.Name)}
+        Dim a As New LibraryMatrix With {.ms2 = library.ms2, .name = titles.ElementAtOrDefault(0, library.name)}
+        Dim b As New LibraryMatrix With {.ms2 = library.ms2, .name = titles.ElementAtOrDefault(1, library.name)}
 
         Return AlignMirrorPlot(
             a, b,
@@ -81,16 +83,20 @@ Public Module MassSpectra
             intoCutoff:=intoCutoff,
             margin:=margin,
             title:=plotTitle,
-            labelDisplayIntensity:=labelDisplayIntensity
+            labelDisplayIntensity:=labelDisplayIntensity,
+            drawLegend:=drawLegend,
+            bg:=bg
         )
     End Function
 
     Public Function AlignMirrorPlot(query As LibraryMatrix, ref As LibraryMatrix,
                                     Optional size$ = "1200,800",
                                     Optional margin$ = "padding: 100px 30px 50px 100px;",
+                                    Optional bg$ = "white",
                                     Optional intoCutoff# = 0.05,
                                     Optional title$ = "BioDeep™ MS/MS alignment Viewer",
-                                    Optional labelDisplayIntensity# = 0.3) As GraphicsData
+                                    Optional labelDisplayIntensity# = 0.3,
+                                    Optional drawLegend As Boolean = True) As GraphicsData
         Dim mz As Double() = query _
             .Trim(intoCutoff) _
             .Join(ref.Trim(intoCutoff)) _
@@ -107,8 +113,8 @@ Public Module MassSpectra
 
         Return AlignmentPlot.PlotAlignment(
             qMatrix, sMatrix,
-            queryName:=query.Name,
-            subjectName:=ref.Name,
+            queryName:=query.name,
+            subjectName:=ref.name,
             xrange:=$"{mzRange.Min},{mzRange.Max}",
             yrange:="0,100",
             size:=size, padding:=margin,
@@ -118,7 +124,9 @@ Public Module MassSpectra
             titleCSS:=CSSFont.Win7Large,
             format:="F0",
             yAxislabelPosition:=YlabelPosition.LeftCenter,
-            labelPlotStrength:=labelDisplayIntensity
+            labelPlotStrength:=labelDisplayIntensity,
+            drawLegend:=drawLegend,
+            bg:=bg
         )
     End Function
 End Module

@@ -80,7 +80,7 @@ Public Class frmMsImagingViewer
                                         mz:=selectedMz.ToArray,
                                         pixelSize:=size,
                                         threshold:=params.threshold,
-                                        ppm:=params.ppm,
+                                        toleranceErr:=params.GetTolerance.GetScript,
                                         mapLevels:=params.mapLevels,
                                         colorSet:=params.colors.Description
                                     )

@@ -52,15 +52,17 @@ Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
+Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Windows.Forms
 Imports mzkit.DockSample
 Imports SMRUCC.Rsharp.Interpreter
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
-Imports REnv = SMRUCC.Rsharp.Runtime
-Imports RProgram = SMRUCC.Rsharp.Interpreter.Program
+Imports Task
 
 Namespace My
 
@@ -91,6 +93,12 @@ Namespace My
 #End Region
 
 #Region "dock windows"
+        Public Shared ReadOnly Property PlotParameters As frmTweaks
+            Get
+                Return _host.plotParams
+            End Get
+        End Property
+
         Public Shared ReadOnly Property fileExplorer As frmFileExplorer
             Get
                 Return _host.fileExplorer
@@ -110,6 +118,37 @@ Namespace My
         End Property
 
 #End Region
+
+        Public Shared Sub RegisterPlot(plot As Action(Of PlotProperty),
+                                       Optional width% = 2048,
+                                       Optional height% = 1600,
+                                       Optional padding$ = g.DefaultPadding,
+                                       Optional bg$ = "white",
+                                       Optional title$ = "mzkit data plot",
+                                       Optional showLegend As Boolean = True,
+                                       Optional showGrid As Boolean = True,
+                                       Optional xlab$ = "X",
+                                       Optional ylab$ = "Y")
+
+            Dim margin As Padding = padding
+
+            With PlotParameters.params
+                .width = width
+                .height = height
+                .background = bg.TranslateColor
+                .title = title
+                .xlabel = xlab
+                .ylabel = ylab
+
+                .padding_top = margin.Top
+                .padding_right = margin.Right
+                .padding_left = margin.Left
+                .padding_bottom = margin.Bottom
+            End With
+
+            PlotParameters.draw = plot
+            PlotParameters.draw()(PlotParameters.params)
+        End Sub
 
         Public Shared Sub RegisterOutput(log As OutputWindow)
             _LogForm = log
