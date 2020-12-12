@@ -57,4 +57,12 @@ Public Class frmUVScans
 
         Call MyApplication.host.mzkitTool.showUVscans(signals, title, "wavelength (nm)")
     End Sub
+
+    Private Sub CheckedListBox1_ItemCheck(sender As Object, e As ItemCheckEventArgs) Handles CheckedListBox1.ItemCheck
+        If e.NewValue = CheckState.Checked Then
+            UVchecked.Add(e.Index)
+        Else
+            UVchecked.Remove(e.Index)
+        End If
+    End Sub
 End Class
