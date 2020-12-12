@@ -20,6 +20,7 @@ Imports mzkit.Kesoft.Windows.Forms.Win7StyleTreeView
 Imports mzkit.My
 Imports RibbonLib.Interop
 Imports Task
+Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class frmRawFeaturesList
 
@@ -49,8 +50,6 @@ Public Class frmRawFeaturesList
         Controls.Add(treeView1)
 
         ContextMenuStrip1.RenderMode = ToolStripRenderMode.System
-        ShowPDAToolStripMenuItem.Enabled = False
-        ShowUVOverlapToolStripMenuItem.Enabled = False
 
         treeView1.Location = New Point(1, TextBox2.Height + 5)
         treeView1.Size = New Size(Width - 2, Me.Height - TextBox2.Height - 25)
@@ -69,9 +68,14 @@ Public Class frmRawFeaturesList
     End Sub
 
     Public Sub LoadRaw(raw As Raw)
+        Dim hasUVscans As Boolean = False
+
         _CurrentRawFile = raw
-        treeView1.loadRawFile(raw, hasUVscans:=ShowPDAToolStripMenuItem.Enabled)
-        ShowUVOverlapToolStripMenuItem.Enabled = ShowPDAToolStripMenuItem.Enabled
+        treeView1.loadRawFile(raw, hasUVscans)
+
+        If Not hasUVscans Then
+            MyApplication.host.UVScansList.DockState = DockState.Hidden
+        End If
     End Sub
 
     Public Iterator Function GetXICCollection(ppm As Double) As IEnumerable(Of NamedCollection(Of ChromatogramTick))
@@ -91,7 +95,6 @@ Public Class frmRawFeaturesList
     ''' 
     ''' </summary>
     Dim checked As New List(Of TreeNode)
-    Dim UVchecked As New List(Of TreeNode)
 
     ''' <summary>
     ''' 不包含 root node
@@ -109,12 +112,8 @@ Public Class frmRawFeaturesList
         For i As Integer = 0 To checked.Count - 1
             checked(i).Checked = False
         Next
-        For i As Integer = 0 To UVchecked.Count - 1
-            UVchecked(i).Checked = False
-        Next
 
         checked.Clear()
-        UVchecked.Clear()
         lockCheckList = False
     End Sub
 
@@ -128,12 +127,6 @@ Public Class frmRawFeaturesList
                 checked.Add(e.Node)
             Else
                 checked.Remove(e.Node)
-            End If
-        ElseIf TypeOf e.Node.Tag Is UVScan Then
-            If e.Node.Checked Then
-                UVchecked.Add(e.Node)
-            Else
-                UVchecked.Remove(e.Node)
             End If
         Else
             Dim checked As Boolean = e.Node.Checked
@@ -150,20 +143,19 @@ Public Class frmRawFeaturesList
                     If TypeOf node.Tag Is ScanEntry Then
                         Me.checked.Add(node)
                     ElseIf TypeOf node.Tag Is UVScan Then
-                        Me.UVchecked.Add(node)
+
                     End If
                 Else
                     If TypeOf node.Tag Is ScanEntry Then
                         Me.checked.Remove(node)
                     ElseIf TypeOf node.Tag Is UVScan Then
-                        Me.UVchecked.Remove(node)
+
                     End If
                 End If
             Next
         End If
 
         Me.checked = Me.checked.Distinct.AsList
-        Me.UVchecked = Me.UVchecked.Distinct.AsList
 
         ClearToolStripMenuItem.Text = $"Clear [{checked.Count} XIC Ions]"
     End Sub
@@ -215,7 +207,7 @@ Public Class frmRawFeaturesList
         MyApplication.host.ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
 
         If TypeOf e.Node.Tag Is UVScan Then
-            Call MyApplication.host.mzkitTool.showUVscans({DirectCast(e.Node.Tag, UVScan).GetSignalModel}, $"UV scan at {DirectCast(e.Node.Tag, UVScan).scan_time.ToString("F2")} sec", "wavelength (nm)")
+
         ElseIf Not e.Node.Tag Is Nothing Then
             ' scan节点
             Dim raw As Task.Raw = CurrentRawFile
@@ -436,28 +428,5 @@ Public Class frmRawFeaturesList
             searchPage.page.loadMs2(products)
             searchPage.page.runSearch()
         End Using
-    End Sub
-
-    Private Sub ShowPDAToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowPDAToolStripMenuItem.Click
-        Dim PDA_time = CurrentRawFile.UVscans.Select(Function(a) a.scan_time).ToArray
-        Dim PDA_ions = CurrentRawFile.UVscans.Select(Function(a) a.total_ion_current).ToArray
-        Dim PDA As New GeneralSignal With {
-            .Measures = PDA_time,
-            .measureUnit = "seconds",
-            .meta = New Dictionary(Of String, String),
-            .Strength = PDA_ions
-        }
-
-        Call MyApplication.host.mzkitTool.showUVscans({PDA}, $"UV scan PDA plot", "scan_time (seconds)")
-    End Sub
-
-    Private Sub ShowUVOverlapToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowUVOverlapToolStripMenuItem.Click
-        If UVchecked > 0 Then
-            Dim selects = UVchecked.Select(Function(a) DirectCast(a.Tag, UVScan).GetSignalModel).ToArray
-            Dim rtRange As DoubleRange = UVchecked.Select(Function(a) DirectCast(a.Tag, UVScan).scan_time).ToArray
-            Dim title As String = $"UV scan at scan_time range [{rtRange.Min.ToString("F2")}, {rtRange.Max.ToString("F2")}]"
-
-            Call MyApplication.host.mzkitTool.showUVscans(selects, title, "wavelength (nm)")
-        End If
     End Sub
 End Class

@@ -240,6 +240,7 @@ Module Globals
         If Not raw.UVscans.IsNullOrEmpty Then
             MyApplication.host.UVScansList.DockState = DockState.DockLeft
             MyApplication.host.UVScansList.CheckedListBox1.Items.Clear()
+            MyApplication.host.UVScansList.Clear()
 
             hasUVscans = True
 
