@@ -52,7 +52,9 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 Imports mzkit.Configuration
+Imports mzkit.My
 Imports Task
+Imports WeifenLuo.WinFormsUI.Docking
 
 Module Globals
 
@@ -236,13 +238,13 @@ Module Globals
         Next
 
         If Not raw.UVscans.IsNullOrEmpty Then
-            Dim uv As New TreeNode($"'{raw.UVscans.Length}' UV scans")
+            MyApplication.host.UVScansList.DockState = DockState.DockLeft
+            MyApplication.host.UVScansList.CheckedListBox1.Items.Clear()
 
-            rawFileNode.Nodes.Add(uv)
             hasUVscans = True
 
             For Each scan In raw.UVscans
-                uv.Nodes.Add(New TreeNode(scan.ToString) With {.Tag = scan})
+                MyApplication.host.UVScansList.CheckedListBox1.Items.Add(scan)
             Next
         Else
             hasUVscans = False
