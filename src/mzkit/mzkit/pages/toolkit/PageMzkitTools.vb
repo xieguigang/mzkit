@@ -66,6 +66,7 @@ Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
@@ -262,20 +263,26 @@ Public Class PageMzkitTools
 
         Dim alignment = result.GetAlignmentMirror
         Dim prop As New AlignmentProperty(result)
+        Dim propertyWin = MyApplication.host.propertyWin
+        Dim alignName As String = $"{result.query.id}_vs_{result.reference.id}"
 
         MyApplication.host.ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
 
-        showMatrix(result.alignments, $"{result.query.id}_vs_{result.reference.id}")
+        Call showMatrix(result.alignments, alignName)
+        Call MyApplication.RegisterPlot(
+            Sub(args)
+                PictureBox1.BackgroundImage = MassSpectra.AlignMirrorPlot(
+                    query:=alignment.query,
+                    ref:=alignment.ref,
+                    size:=$"{args.width},{args.height}",
+                    title:=args.title,
+                    drawLegend:=args.show_legend
+                ).AsGDIImage
+            End Sub, width:=1200, height:=800, padding:="padding: 100px 30px 50px 100px;", title:=alignName)
 
-        Dim draw As Image = MassSpectra.AlignMirrorPlot(alignment.query, alignment.ref).AsGDIImage
-        Dim propertyWin = MyApplication.host.propertyWin
-
-        ' PropertyGrid1.SelectedObject = prop
-        'PropertyGrid1.Refresh()
         propertyWin.propertyGrid.SelectedObject = prop
         propertyWin.propertyGrid.Refresh()
 
-        PictureBox1.BackgroundImage = draw
         ShowTabPage(TabPage5)
 
         MyApplication.host.ShowPropertyWindow()
@@ -314,12 +321,16 @@ Public Class PageMzkitTools
         End If
 
         showMatrix(TICList(Scan0).value, TICList(Scan0).name)
-
-        PictureBox1.BackgroundImage = ChromatogramPlot.TICplot(
-            ionData:=TICList.ToArray,
-            colorsSchema:=Globals.GetColors,
-            fillCurve:=Globals.Settings.viewer.fill
-        ).AsGDIImage
+        MyApplication.RegisterPlot(
+            Sub(args)
+                PictureBox1.BackgroundImage = ChromatogramPlot.TICplot(
+                    ionData:=TICList.ToArray,
+                    colorsSchema:=Globals.GetColors,
+                    fillCurve:=Globals.Settings.viewer.fill,
+                    size:=$"{args.width},{args.height}",
+                    margin:=args.GetPadding.ToString
+                ).AsGDIImage
+            End Sub, width:=1600, height:=100, padding:=g.DefaultPadding)
 
         MyApplication.host.ShowPage(Me)
     End Sub
@@ -394,12 +405,12 @@ Public Class PageMzkitTools
         End If
 
         Dim protocol As New Protocols(
-                    ms1_tolerance:=Tolerance.PPM(15),
-                    ms2_tolerance:=Tolerance.DeltaMass(0.3),
-                    treeIdentical:=Globals.Settings.network.treeNodeIdentical,
-                    treeSimilar:=Globals.Settings.network.treeNodeSimilar,
-                    intoCutoff:=Globals.Settings.viewer.GetMethod
-                )
+            ms1_tolerance:=Tolerance.PPM(15),
+            ms2_tolerance:=Tolerance.DeltaMass(0.3),
+            treeIdentical:=Globals.Settings.network.treeNodeIdentical,
+            treeSimilar:=Globals.Settings.network.treeNodeSimilar,
+            intoCutoff:=Globals.Settings.viewer.GetMethod
+        )
         Dim progressMsg As Action(Of String) = AddressOf progress.ShowProgressTitle
 
         'Dim run As New List(Of PeakMs2)
