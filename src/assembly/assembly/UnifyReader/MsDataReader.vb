@@ -31,6 +31,7 @@ Namespace DataReader
             Select Case GetType(Scan)
                 Case GetType(mzXML.scan) : Return New mzXMLScan
                 Case GetType(mzML.spectrum) : Return New mzMLScan
+                Case GetType(imzML.ScanReader) : Return New imzMLScan
                 Case Else
                     Throw New NotImplementedException(GetType(Scan).ToString)
             End Select

@@ -751,6 +751,9 @@ Public Class frmMain
 
     Friend fileExplorer As New frmFileExplorer
     Friend rawFeaturesList As New frmRawFeaturesList
+    Friend UVScansList As New frmUVScans
+    Friend spectrumTreeExplorer As New frmTreeExplorer
+
     Friend output As New OutputWindow
     Friend WithEvents panelMain As New frmDockDocument
     Friend startPage As New frmStartPage
@@ -790,6 +793,12 @@ Public Class frmMain
         fileExplorer.Show(dockPanel)
 
         TreeView1 = fileExplorer.treeView1
+
+        UVScansList.Show(dockPanel)
+        UVScansList.DockState = DockState.Hidden
+
+        spectrumTreeExplorer.Show(dockPanel)
+        spectrumTreeExplorer.DockState = DockState.Hidden
 
         plotParams.Show(dockPanel)
         plotParams.DockState = DockState.Hidden

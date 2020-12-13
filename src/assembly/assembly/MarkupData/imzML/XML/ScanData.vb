@@ -26,6 +26,17 @@ Namespace MarkupData.imzML
             IntPtr = ibdPtr.ParsePtr(scan.binaryDataArrayList(1))
         End Sub
 
+        Sub New()
+        End Sub
+
+        Sub New(copy As ScanData)
+            totalIon = copy.totalIon
+            x = copy.x
+            y = copy.y
+            MzPtr = copy.MzPtr
+            IntPtr = copy.IntPtr
+        End Sub
+
         Public Overrides Function ToString() As String
             Return $"[{x}, {y}] {totalIon.ToString("F3")}"
         End Function
