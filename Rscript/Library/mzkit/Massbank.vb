@@ -43,12 +43,14 @@
 
 #End Region
 
+Imports System.Text.RegularExpressions
 Imports BioNovoGene.BioDeep.Chemistry
 Imports BioNovoGene.BioDeep.Chemistry.LipidMaps
 Imports BioNovoGene.BioDeep.Chemistry.TMIC
 Imports BioNovoGene.BioDeep.Chemoinformatics.SDF
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -144,6 +146,100 @@ Module Massbank
         Return sdfStream.populates(Of SDF)(env) _
             .CreateMeta _
             .DoCall(AddressOf pipeline.CreateFromPopulator)
+    End Function
+
+    <ExportAPI("lipid.nameMaps")>
+    Public Function lipidnameMapping(lipidmaps As EntityObject()) As EntityObject()
+        Dim maps As New Dictionary(Of String, EntityObject)
+        Dim lipidClass As New Regex("[A-Z]{2,}")
+        Dim m As Match
+
+        For Each lipid As EntityObject In lipidmaps
+            Dim name As String = lipid!NAME
+
+            If name <> "NULL" Then
+                m = lipidClass.Match(name)
+
+                If m.Success AndAlso name.StartsWith(m.Value) Then
+                    maps(name) = New EntityObject With {
+                        .ID = name,
+                        .Properties = lipid.Properties
+                    }
+
+                    Dim nameAlt As String = name2(name)
+
+                    If nameAlt <> name Then
+                        maps(nameAlt) = New EntityObject With {
+                            .ID = nameAlt,
+                            .Properties = lipid.Properties
+                        }
+                    End If
+                End If
+            End If
+
+            If lipid!SYNONYMS <> "NULL" Then
+                Dim synonyms As String() = lipid!SYNONYMS.StringSplit(";\s*")
+
+                For Each str As String In synonyms
+                    m = lipidClass.Match(str)
+
+                    If m.Success AndAlso str.StartsWith(m.Value) Then
+                        maps(str) = New EntityObject With {
+                            .ID = str,
+                            .Properties = lipid.Properties
+                        }
+
+                        Dim nameAlt As String = name2(str)
+
+                        If nameAlt <> str Then
+                            maps(nameAlt) = New EntityObject With {
+                                .ID = nameAlt,
+                                .Properties = lipid.Properties
+                            }
+                        End If
+                    End If
+                Next
+            End If
+
+            If lipid!ABBREVIATION <> "NULL" Then
+                Dim abbreviation As String() = lipid!ABBREVIATION.StringSplit(";\s*")
+
+                For Each str As String In abbreviation
+                    m = lipidClass.Match(str)
+
+                    If m.Success AndAlso str.StartsWith(m.Value) Then
+                        maps(str) = New EntityObject With {
+                            .ID = str,
+                            .Properties = lipid.Properties
+                        }
+
+                        Dim nameAlt As String = name2(str)
+
+                        If nameAlt <> str Then
+                            maps(nameAlt) = New EntityObject With {
+                                .ID = nameAlt,
+                                .Properties = lipid.Properties
+                            }
+                        End If
+                    End If
+                Next
+            End If
+        Next
+
+        Return maps.Values.ToArray
+    End Function
+
+    Private Function name2(name1 As String) As String
+        If name1.IndexOf("("c) > -1 Then
+            Return name1
+        ElseIf name1.IndexOf(" "c) = -1 Then
+            Return name1
+        Else
+            Dim token As String() = name1.Split
+            Dim name As String = $"{token(0)}({token.Skip(1).JoinBy("/")})"
+
+            Return name
+        End If
     End Function
 
     Public Function KEGGPathwayCoverages() As Object

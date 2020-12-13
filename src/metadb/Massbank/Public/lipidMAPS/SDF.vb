@@ -63,6 +63,7 @@ Namespace LipidMaps
         Public Property PUBCHEM_SUBSTANCE_URL As String
         Public Property LIPID_MAPS_CMPD_URL As String
         Public Property LM_ID As String
+        Public Property PLANTFA_ID As String
         Public Property COMMON_NAME As String
         Public Property SYSTEMATIC_NAME As String
         Public Property SYNONYMS As String
@@ -73,6 +74,8 @@ Namespace LipidMaps
         Public Property EXACT_MASS As String
         Public Property FORMULA As String
         Public Property LIPIDBANK_ID As String
+        Public Property SWISSLIPIDS_ID As String
+        Public Property HMDB_ID As String
         ''' <summary>
         ''' PubChem Substance accession identifier (SID)
         ''' </summary>
