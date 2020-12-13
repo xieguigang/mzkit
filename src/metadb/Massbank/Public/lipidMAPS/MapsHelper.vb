@@ -83,6 +83,17 @@ Namespace LipidMaps
             Return Nothing
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function CreateMeta(lipidMaps As IEnumerable(Of SDF)) As IEnumerable(Of MetaData)
+            Return lipidMaps.Select(Function(sdf) MetaData.Data(sdf))
+        End Function
+
+        ''' <summary>
+        ''' 创建lipidmap之中的分子信息到其他的数据库的映射
+        ''' </summary>
+        ''' <param name="lipidMaps"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function CreateMaps(lipidMaps As IEnumerable(Of SDF)) As NamedValue(Of Dictionary(Of String, MetaData()))()
             Dim out As New List(Of NamedValue(Of Dictionary(Of String, MetaData())))

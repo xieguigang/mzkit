@@ -44,6 +44,7 @@
 #End Region
 
 Imports BioNovoGene.BioDeep.Chemistry
+Imports BioNovoGene.BioDeep.Chemistry.LipidMaps
 Imports BioNovoGene.BioDeep.Chemistry.TMIC
 Imports BioNovoGene.BioDeep.Chemoinformatics.SDF
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -56,6 +57,7 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports ChEBIRepo = SMRUCC.genomics.Assembly.ELIXIR.EBI.ChEBI.DATA
+Imports Rdataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime.Internal.Invokes.base
 
 ''' <summary>
@@ -63,6 +65,16 @@ Imports REnv = SMRUCC.Rsharp.Runtime.Internal.Invokes.base
 ''' </summary>
 <Package("massbank")>
 Module Massbank
+
+    Sub New()
+        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(LipidMaps.MetaData()), AddressOf createLipidMapTable)
+    End Sub
+
+    Public Function createLipidMapTable(lipidmap As LipidMaps.MetaData(), args As list, env As Environment) As Rdataframe
+        Dim table As New Rdataframe With {.columns = New Dictionary(Of String, Array)}
+
+        Return table
+    End Function
 
     ''' <summary>
     ''' read MoNA database file.
@@ -99,12 +111,31 @@ Module Massbank
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("read.SDF")>
-    Public Function readSDF(file As String, Optional env As Environment = Nothing) As pipeline
+    Public Function readSDF(file As String, Optional parseStruct As Boolean = True, Optional env As Environment = Nothing) As pipeline
         If Not file.FileExists Then
             Return Internal.debug.stop({$"the required file is not exists on your file system!", $"file: {file}"}, env)
         Else
-            Return SDF.IterateParser(file).DoCall(AddressOf pipeline.CreateFromPopulator)
+            Return SDF.IterateParser(file, parseStruct).DoCall(AddressOf pipeline.CreateFromPopulator)
         End If
+    End Function
+
+    ''' <summary>
+    ''' populate lipidmaps meta data objects from the loaded sdf data stream
+    ''' </summary>
+    ''' <param name="sdf"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("as.lipidmaps")>
+    Public Function toLipidMaps(<RRawVectorArgument> sdf As Object, Optional env As Environment = Nothing) As Object
+        Dim sdfStream As pipeline = pipeline.TryCreatePipeline(Of SDF)(sdf, env)
+
+        If sdfStream.isError Then
+            Return sdfStream.getError
+        End If
+
+        Return sdfStream.populates(Of SDF)(env) _
+            .CreateMeta _
+            .DoCall(AddressOf pipeline.CreateFromPopulator)
     End Function
 
     Public Function KEGGPathwayCoverages() As Object
