@@ -170,7 +170,13 @@ Module Formula
         Return kcf.CreateGraph
     End Function
 
-    <ExportAPI("read.SDF")>
+    ''' <summary>
+    ''' parse a single sdf text block
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="parseStruct"></param>
+    ''' <returns></returns>
+    <ExportAPI("parse.SDF")>
     Public Function readSDF(data As String, Optional parseStruct As Boolean = True) As SDF
         Return SDF.ParseSDF(data.SolveStream, parseStruct)
     End Function

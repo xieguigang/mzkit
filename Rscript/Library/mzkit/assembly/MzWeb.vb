@@ -11,6 +11,9 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 
+''' <summary>
+''' biodeep mzweb data viewer raw data file helper
+''' </summary>
 <Package("mzweb")>
 Module MzWeb
 

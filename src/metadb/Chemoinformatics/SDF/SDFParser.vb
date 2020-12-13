@@ -175,7 +175,13 @@ Namespace SDF
             End If
 
             If ID.StringEmpty Then
-                ID = (metaData!ID)(Scan0)
+                ' 20201213 unsure for missing ID
+                ' use inchikey instead
+                If metaData.ContainsKey("ID") Then
+                    ID = (metaData!ID)(Scan0)
+                Else
+                    ID = (metaData!INCHI_KEY)(Scan0)
+                End If
             End If
 
             Return New SDF With {

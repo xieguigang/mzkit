@@ -88,11 +88,13 @@ Namespace SDF
         ''' <returns></returns>
         <XmlAttribute>
         Public Property ID As String Implements IKeyedEntity(Of String).Key
+
         ''' <summary>
         ''' Details of the software used to generate the compound structure
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property Software As String
+        <XmlAttribute>
+        Public Property Software As String
 
         Public Property name As String
 
