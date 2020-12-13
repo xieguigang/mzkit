@@ -48,6 +48,7 @@ Imports BioNovoGene.BioDeep.Chemistry.LipidMaps
 Imports BioNovoGene.BioDeep.Chemistry.TMIC
 Imports BioNovoGene.BioDeep.Chemoinformatics.SDF
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -71,7 +72,14 @@ Module Massbank
     End Sub
 
     Public Function createLipidMapTable(lipidmap As LipidMaps.MetaData(), args As list, env As Environment) As Rdataframe
-        Dim table As New Rdataframe With {.columns = New Dictionary(Of String, Array)}
+        Dim table As New Rdataframe With {
+            .columns = New Dictionary(Of String, Array),
+            .rownames = lipidmap.Select(Function(m) m.LM_ID).ToArray
+        }
+
+        For Each col As NamedValue(Of Array) In lipidmap.ProjectVectors
+            Call table.columns.Add(col.Name, col.Value)
+        Next
 
         Return table
     End Function
