@@ -80,6 +80,16 @@ Public Class Drawer : Implements IDisposable
         Next
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="pixels"></param>
+    ''' <param name="dimension">the scan size</param>
+    ''' <param name="dimSize">pixel size</param>
+    ''' <param name="colorSet"></param>
+    ''' <param name="mapLevels"></param>
+    ''' <param name="threshold"></param>
+    ''' <returns></returns>
     Public Shared Function RenderPixels(pixels As PixelData(), dimension As Size, dimSize As Size,
                                         Optional colorSet As String = "YlGnBu:c8",
                                         Optional mapLevels% = 25,
@@ -145,6 +155,34 @@ Public Class Drawer : Implements IDisposable
         Return RenderPixels(pixels, dimension, dimSize, colorSet, mapLevels, threshold)
     End Function
 
+    Public Shared Function ScalePixels(rawPixels As PixelData(), tolerance As Tolerance) As PixelData()
+        Dim pixels As New List(Of PixelData)
+
+        For Each mzi In rawPixels.GroupBy(Function(x) x.mz, tolerance).ToArray
+            rawPixels = PixelData.ScalePixels(mzi.ToArray)
+            pixels.AddRange(rawPixels)
+        Next
+
+        Return pixels.ToArray
+    End Function
+
+    Public Shared Function GetPixelsMatrix(rawPixels As PixelData()) As PixelData()
+        Return rawPixels _
+            .GroupBy(Function(p) p.x) _
+            .AsParallel _
+            .Select(Function(x)
+                        Return x _
+                            .GroupBy(Function(p) p.y) _
+                            .Select(Function(point)
+                                        ' [x, y] point
+                                        ' get the max level pixel
+                                        Return (From pt In point Order By pt.level Descending).First
+                                    End Function)
+                    End Function) _
+            .IteratesALL _
+            .ToArray
+    End Function
+
     ''' <summary>
     ''' apply for pathway rendering 
     ''' </summary>
@@ -163,35 +201,17 @@ Public Class Drawer : Implements IDisposable
                               Optional mapLevels% = 25) As Bitmap
 
         Dim dimSize As Size = pixelSize.SizeParser
-        Dim pixels As New List(Of PixelData)
         Dim rawPixels As PixelData()
         Dim tolerance As Tolerance = Tolerance.ParseScript(toleranceErr)
 
         Call $"loading pixel datas [m/z={mz.Select(Function(mzi) mzi.ToString("F4")).JoinBy(", ")}] with tolerance {tolerance}...".__INFO_ECHO
 
         rawPixels = LoadPixels(mz, tolerance).ToArray
+        rawPixels = ScalePixels(rawPixels, tolerance)
 
-        For Each mzi In rawPixels.GroupBy(Function(x) x.mz, tolerance).ToArray
-            rawPixels = PixelData.ScalePixels(mzi.ToArray)
-            pixels.AddRange(rawPixels)
-        Next
+        Call $"building pixel matrix from {rawPixels.Count} raw pixels...".__INFO_ECHO
 
-        Call $"building pixel matrix from {pixels.Count} raw pixels...".__INFO_ECHO
-
-        Dim matrix As PixelData() = pixels _
-            .GroupBy(Function(p) p.x) _
-            .AsParallel _
-            .Select(Function(x)
-                        Return x _
-                            .GroupBy(Function(p) p.y) _
-                            .Select(Function(point)
-                                        ' [x, y] point
-                                        ' get the max level pixel
-                                        Return (From pt In point Order By pt.level Descending).First
-                                    End Function)
-                    End Function) _
-            .IteratesALL _
-            .ToArray
+        Dim matrix As PixelData() = GetPixelsMatrix(rawPixels)
 
         Call $"rendering {matrix.Length} pixel blocks...".__INFO_ECHO
 

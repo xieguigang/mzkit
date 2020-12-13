@@ -2,6 +2,7 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports mzkit.My
 Imports Task
 Imports WeifenLuo.WinFormsUI.Docking
@@ -60,7 +61,6 @@ Public Class frmMsImagingViewer
             Dim selectedMz As New List(Of Double)
             Dim progress As New frmProgressSpinner
             Dim size As String = $"{params.pixel_width},{params.pixel_height}"
-            Dim bg As Color = params.background
 
             For i As Integer = 0 To mz.Length - 1
                 selectedMz.Add(Val(CStr(mz(i))))
@@ -74,16 +74,26 @@ Public Class frmMsImagingViewer
 
             Call New Thread(
                 Sub()
-                    Call Invoke(Sub() PictureBox1.BackColor = bg)
+                    Dim pixels = render.LoadPixels(selectedMz.ToArray, params.GetTolerance).ToArray
+                    Dim dimensionSize As Size = render.dimension
+
+                    pixels = Drawer.ScalePixels(pixels, params.GetTolerance)
+                    pixels = Drawer.GetPixelsMatrix(pixels)
+
                     Call Invoke(Sub()
-                                    PictureBox1.BackgroundImage = render.DrawLayer(
-                                        mz:=selectedMz.ToArray,
-                                        pixelSize:=size,
-                                        threshold:=params.threshold,
-                                        toleranceErr:=params.GetTolerance.GetScript,
-                                        mapLevels:=params.mapLevels,
-                                        colorSet:=params.colors.Description
-                                    )
+                                    Call MyApplication.RegisterPlot(
+                                        Sub(args)
+                                            PictureBox1.BackgroundImage = Drawer.RenderPixels(
+                                                pixels:=pixels,
+                                                dimension:=dimensionSize,
+                                                dimSize:=size.SizeParser,
+                                                threshold:=params.threshold,
+                                                mapLevels:=params.mapLevels,
+                                                colorSet:=params.colors.Description
+                                            )
+
+                                            PictureBox1.BackColor = params.background
+                                        End Sub)
                                 End Sub)
                     Call progress.Invoke(Sub() progress.Close())
                 End Sub).Start()
