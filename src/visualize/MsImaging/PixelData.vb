@@ -6,6 +6,7 @@ Public Class PixelData
     Public Property y As Integer
     Public Property intensity As Double
     Public Property level As Double
+    Public Property mz As Double
 
     Public Overrides Function ToString() As String
         Return $"Dim [{x},{y}] as intensity = {intensity}"

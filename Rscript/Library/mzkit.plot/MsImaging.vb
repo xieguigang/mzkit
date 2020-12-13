@@ -37,7 +37,7 @@ Module MsImaging
     <ExportAPI("pixels")>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <RApiReturn(GetType(PixelData))>
-    Public Function LoadPixels(imzML As Drawer, mz As Double,
+    Public Function LoadPixels(imzML As Drawer, mz As Double(),
                                Optional tolerance As Object = "da:0.1",
                                Optional skip_zero As Boolean = True,
                                Optional env As Environment = Nothing) As pipeline
