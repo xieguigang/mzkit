@@ -9,6 +9,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Math
 Imports Application = Microsoft.VisualBasic.Parallel
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 ''' <summary>
 ''' MS-imaging render canvas
@@ -35,7 +36,7 @@ Public Class Drawer : Implements IDisposable
             .Height = pixels.Select(Function(p) p.y).Max
         }
     End Sub
-    
+
     Public Function LoadMzArray(ppm As Double) As Double()
         Dim mzlist = pixels _
             .Select(Function(p) Application.DoEvents(Function() ibd.ReadArray(p.MzPtr))) _
@@ -50,32 +51,45 @@ Public Class Drawer : Implements IDisposable
         Return groups
     End Function
 
-    Public Iterator Function LoadPixels(mz As Double, tolerance As Tolerance, Optional skipZero As Boolean = True) As IEnumerable(Of PixelData)
+    Public Iterator Function LoadPixels(mz As Double(), tolerance As Tolerance, Optional skipZero As Boolean = True) As IEnumerable(Of PixelData)
         Dim pixel As PixelData
 
         For Each point As ScanData In Me.pixels
             Dim msScan As ms2() = ibd.GetMSMS(point)
-            Dim into As ms2 = msScan _
-                .Where(Function(mzi) tolerance(mzi.mz, mz)) _
-                .OrderByDescending(Function(mzi) mzi.intensity) _
-                .FirstOrDefault
+            Dim into As NamedCollection(Of ms2)() = msScan _
+                .Where(Function(mzi) mz.Any(Function(dmz) tolerance(mzi.mz, dmz))) _
+                .GroupBy(Function(a) a.mz, tolerance) _
+                .ToArray
 
             Call Application.DoEvents()
 
-            If skipZero AndAlso into Is Nothing Then
+            If skipZero AndAlso into.Length Then
                 Continue For
             Else
-                pixel = New PixelData With {
-                    .x = point.x,
-                    .y = point.y,
-                    .intensity = If(into Is Nothing, 0, into.intensity)
-                }
-            End If
+                For Each mzi As NamedCollection(Of ms2) In into
+                    pixel = New PixelData With {
+                        .x = point.x,
+                        .y = point.y,
+                        .mz = Val(mzi.name),
+                        .intensity = Aggregate x In mzi Into Max(x.intensity)
+                    }
 
-            Yield pixel
+                    Yield pixel
+                Next
+            End If
         Next
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="pixels"></param>
+    ''' <param name="dimension">the scan size</param>
+    ''' <param name="dimSize">pixel size</param>
+    ''' <param name="colorSet"></param>
+    ''' <param name="mapLevels"></param>
+    ''' <param name="threshold"></param>
+    ''' <returns></returns>
     Public Shared Function RenderPixels(pixels As PixelData(), dimension As Size, dimSize As Size,
                                         Optional colorSet As String = "YlGnBu:c8",
                                         Optional mapLevels% = 25,
@@ -134,11 +148,39 @@ Public Class Drawer : Implements IDisposable
 
         Call $"loading pixel datas [m/z={mz.ToString("F4")}] with tolerance {tolerance}...".__INFO_ECHO
 
-        Dim pixels As PixelData() = LoadPixels(mz, tolerance).ToArray
+        Dim pixels As PixelData() = LoadPixels({mz}, tolerance).ToArray
 
         Call $"rendering {pixels.Length} pixel blocks...".__INFO_ECHO
 
         Return RenderPixels(pixels, dimension, dimSize, colorSet, mapLevels, threshold)
+    End Function
+
+    Public Shared Function ScalePixels(rawPixels As PixelData(), tolerance As Tolerance) As PixelData()
+        Dim pixels As New List(Of PixelData)
+
+        For Each mzi In rawPixels.GroupBy(Function(x) x.mz, tolerance).ToArray
+            rawPixels = PixelData.ScalePixels(mzi.ToArray)
+            pixels.AddRange(rawPixels)
+        Next
+
+        Return pixels.ToArray
+    End Function
+
+    Public Shared Function GetPixelsMatrix(rawPixels As PixelData()) As PixelData()
+        Return rawPixels _
+            .GroupBy(Function(p) p.x) _
+            .AsParallel _
+            .Select(Function(x)
+                        Return x _
+                            .GroupBy(Function(p) p.y) _
+                            .Select(Function(point)
+                                        ' [x, y] point
+                                        ' get the max level pixel
+                                        Return (From pt In point Order By pt.level Descending).First
+                                    End Function)
+                    End Function) _
+            .IteratesALL _
+            .ToArray
     End Function
 
     ''' <summary>
@@ -159,35 +201,17 @@ Public Class Drawer : Implements IDisposable
                               Optional mapLevels% = 25) As Bitmap
 
         Dim dimSize As Size = pixelSize.SizeParser
-        Dim pixels As New List(Of PixelData)
         Dim rawPixels As PixelData()
         Dim tolerance As Tolerance = Tolerance.ParseScript(toleranceErr)
 
-        For Each mzi As Double In mz
-            Call $"loading pixel datas [m/z={mzi.ToString("F4")}] with tolerance {tolerance}...".__INFO_ECHO
+        Call $"loading pixel datas [m/z={mz.Select(Function(mzi) mzi.ToString("F4")).JoinBy(", ")}] with tolerance {tolerance}...".__INFO_ECHO
 
-            rawPixels = LoadPixels(mzi, tolerance).ToArray
-            rawPixels = PixelData.ScalePixels(rawPixels)
+        rawPixels = LoadPixels(mz, tolerance).ToArray
+        rawPixels = ScalePixels(rawPixels, tolerance)
 
-            Call pixels.AddRange(rawPixels)
-        Next
+        Call $"building pixel matrix from {rawPixels.Count} raw pixels...".__INFO_ECHO
 
-        Call $"building pixel matrix from {pixels.Count} raw pixels...".__INFO_ECHO
-
-        Dim matrix As PixelData() = pixels _
-            .GroupBy(Function(p) p.x) _
-            .AsParallel _
-            .Select(Function(x)
-                        Return x _
-                            .GroupBy(Function(p) p.y) _
-                            .Select(Function(point)
-                                        ' [x, y] point
-                                        ' get the max level pixel
-                                        Return (From pt In point Order By pt.level Descending).First
-                                    End Function)
-                    End Function) _
-            .IteratesALL _
-            .ToArray
+        Dim matrix As PixelData() = GetPixelsMatrix(rawPixels)
 
         Call $"rendering {matrix.Length} pixel blocks...".__INFO_ECHO
 
