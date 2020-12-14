@@ -55,6 +55,7 @@ let plotSingleFile as function(file) {
 	chromatogram;
 }
 
+# docker run -it -v "$PWD:$PWD" -w "$PWD" mzkit:v1.15_visual R# "$PWD/visual.R" --data "$PWD"
 list.files(dir    = ?"--data"   || stop("no raw data input folder path provided!"), pattern = "*.mz*ML")
 :> runPlot(folder = ?"--output" || (?"--data"))
 ;
