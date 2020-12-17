@@ -166,6 +166,7 @@ Global
 		..\..\GCModeller\src\R-sharp\studio\Rstudio.common\Rstudio.common.projitems*{3a35ac34-f313-4f72-89e9-eacca217bc8d}*SharedItemsImports = 4
 		..\..\GCModeller\src\runtime\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\TcpRequest\TcpRequest.projitems*{3a35ac34-f313-4f72-89e9-eacca217bc8d}*SharedItemsImports = 4
 		..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{53af2b13-ccd5-4f73-94d5-612191e785a9}*SharedItemsImports = 13
+		..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{5a462f24-fa61-452b-985b-d2fc080cac76}*SharedItemsImports = 4
 		..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{77ba269a-2995-4737-80d3-ef533baa69cd}*SharedItemsImports = 4
 		Library\mzkit.interop\mzkit.interop.projitems*{77ba269a-2995-4737-80d3-ef533baa69cd}*SharedItemsImports = 4
 		Library\mzkit.interopArguments\mzkit.interopArguments.projitems*{7a42d5a0-8058-459c-a139-195b6022a710}*SharedItemsImports = 4
@@ -9866,8 +9867,8 @@ Global
 		{3D5402E3-72CD-4E40-A68E-A919250AB5EE}.mzkit_UnixDocker|x86.Build.0 = Debug|Any CPU
 		{3D5402E3-72CD-4E40-A68E-A919250AB5EE}.mzkit|Any CPU.ActiveCfg = Debug|Any CPU
 		{3D5402E3-72CD-4E40-A68E-A919250AB5EE}.mzkit|Any CPU.Build.0 = Debug|Any CPU
-		{3D5402E3-72CD-4E40-A68E-A919250AB5EE}.mzkit|x64.ActiveCfg = Debug|x64
-		{3D5402E3-72CD-4E40-A68E-A919250AB5EE}.mzkit|x64.Build.0 = Debug|x64
+		{3D5402E3-72CD-4E40-A68E-A919250AB5EE}.mzkit|x64.ActiveCfg = mzkit|x64
+		{3D5402E3-72CD-4E40-A68E-A919250AB5EE}.mzkit|x64.Build.0 = mzkit|x64
 		{3D5402E3-72CD-4E40-A68E-A919250AB5EE}.mzkit|x86.ActiveCfg = Debug|Any CPU
 		{3D5402E3-72CD-4E40-A68E-A919250AB5EE}.mzkit|x86.Build.0 = Debug|Any CPU
 		{3D5402E3-72CD-4E40-A68E-A919250AB5EE}.node-debug|Any CPU.ActiveCfg = Debug|Any CPU
