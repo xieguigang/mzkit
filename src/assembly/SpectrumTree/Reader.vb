@@ -1,5 +1,7 @@
 ﻿Imports System.IO
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Data.IO
+Imports Microsoft.VisualBasic.Linq
 
 Public Class Reader : Implements IDisposable
 
@@ -35,9 +37,60 @@ Public Class Reader : Implements IDisposable
 
         Return New BlockNode With {
             .scan0 = scan0,
-            .left = left,
-            .right = right
+            .left = New BlockNode With {.scan0 = left},
+            .right = New BlockNode With {.scan0 = right}
         }
+    End Function
+
+    Public Shared Function ReadSpectra(reader As BinaryDataReader) As PeakMs2
+        Dim libid As String = reader.ReadString(BinaryStringFormat.ZeroTerminated)
+        Dim file As String = reader.ReadString(BinaryStringFormat.ZeroTerminated)
+        Dim scan As Integer = reader.ReadInt32
+        Dim precursor_type As String = reader.ReadString(BinaryStringFormat.ZeroTerminated)
+        Dim activation As String = reader.ReadString(BinaryStringFormat.ZeroTerminated)
+        Dim collisionEnergy As Double = reader.ReadDouble
+        Dim mz As Double = reader.ReadDouble
+        Dim rt As Double = reader.ReadDouble
+        Dim nmeta As Integer = reader.ReadInt32
+        Dim meta As New Dictionary(Of String, String)
+        Dim key As String
+        Dim value As String
+
+        For i As Integer = 0 To nmeta - 1
+            key = reader.ReadString(BinaryStringFormat.ZeroTerminated)
+            value = reader.ReadString(BinaryStringFormat.ZeroTerminated)
+
+            meta(key) = value
+        Next
+
+        Dim products As New List(Of ms2)
+        Dim nproducts As Integer = reader.ReadInt32
+
+        For i As Integer = 0 To nproducts - 1
+            Call New ms2 With {
+                .mz = reader.ReadDouble,
+                .intensity = reader.ReadDouble,
+                .quantity = reader.ReadDouble,
+                .Annotation = reader.ReadString(BinaryStringFormat.ZeroTerminated)
+            }.DoCall(AddressOf products.Add)
+        Next
+
+        Return New PeakMs2 With {
+            .lib_guid = libid,
+            .file = file,
+            .scan = scan,
+            .precursor_type = precursor_type,
+            .activation = activation,
+            .collisionEnergy = collisionEnergy,
+            .mz = mz,
+            .rt = rt,
+            .meta = meta,
+            .mzInto = products.ToArray
+        }
+    End Function
+
+    Public Shared Function OpenParallelReadFile(filepath As String) As Stream
+        Return File.Open(filepath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)
     End Function
 
     Protected Overridable Sub Dispose(disposing As Boolean)

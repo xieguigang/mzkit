@@ -72,7 +72,7 @@ Public Class Writer : Implements IDisposable
             Call writer.Write(spectra.lib_guid, BinaryStringFormat.ZeroTerminated)
             Call writer.Write(spectra.file, BinaryStringFormat.ZeroTerminated)
             Call writer.Write(spectra.scan)
-            Call writer.Write(spectra.precursor_type)
+            Call writer.Write(spectra.precursor_type, BinaryStringFormat.ZeroTerminated)
             Call writer.Write(spectra.activation, BinaryStringFormat.ZeroTerminated)
             Call writer.Write(spectra.collisionEnergy)
             Call writer.Write(spectra.mz)
