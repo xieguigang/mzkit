@@ -20,15 +20,36 @@ Namespace Spectra
 
     End Class
 
+    Public Enum ScoreAggregates
+        min
+        max
+        sum
+    End Enum
+
     Public Class CosAlignment : Inherits AlignmentProvider
 
-        Public Sub New(mzwidth As Tolerance, intocutoff As LowAbundanceTrimming)
+        ''' <summary>
+        ''' 1. min
+        ''' 2. max
+        ''' 3. sum
+        ''' </summary>
+        ReadOnly scoreAggregate As Func(Of Double, Double, Double)
+
+        Public Sub New(mzwidth As Tolerance, intocutoff As LowAbundanceTrimming, Optional aggregate As ScoreAggregates = ScoreAggregates.min)
             MyBase.New(mzwidth, intocutoff)
+
+            Select Case aggregate
+                Case ScoreAggregates.min : scoreAggregate = AddressOf stdNum.Min
+                Case ScoreAggregates.max : scoreAggregate = AddressOf stdNum.Max
+                Case ScoreAggregates.sum : scoreAggregate = Function(a, b) a + b
+                Case Else
+                    Throw New InvalidProgramException(aggregate)
+            End Select
         End Sub
 
         Public Overrides Function GetScore(a As ms2(), b As ms2()) As Double
             Dim scores = GlobalAlignment.TwoDirectionSSM(a, b, mzwidth)
-            Dim min As Double = stdNum.Min(scores.forward, scores.reverse)
+            Dim min As Double = scoreAggregate(scores.forward, scores.reverse)
 
             Return min
         End Function

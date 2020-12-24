@@ -52,8 +52,6 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
-Imports Microsoft.VisualBasic.Language.Default
-Imports stdNum = System.Math
 
 Namespace Spectra
 
@@ -84,13 +82,11 @@ Namespace Spectra
 
         Public ReadOnly Property allMs2Scans As New List(Of PeakMs2)
 
-        Const InvalidScoreRange$ = "Scores for x < y should be in range (0, 1] and its value is also less than score for spectra equals!"
-
         ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="compares">
-        ''' By default is SSM method <see cref="SSMCompares(Tolerance, Double, Double, Func(Of Double, Double, Double))"/>
+        ''' By default is SSM method <see cref="SSMCompares"/>
         ''' </param>
         ''' <param name="mzwidth">
         ''' apply for centroid algorithm
@@ -125,34 +121,19 @@ Namespace Spectra
         ''' <param name="gtScore">将质谱图划分到二叉树的右节点的所需要的最低得分</param>
         ''' <returns></returns>
         Public Shared Function SSMCompares(Optional tolerance As Tolerance = Nothing,
+                                           Optional intocutoff As LowAbundanceTrimming = Nothing,
                                            Optional equalsScore# = 0.85,
                                            Optional gtScore# = 0.6,
-                                           Optional scoreAggregate As Func(Of Double, Double, Double) = Nothing) As Comparison(Of PeakMs2)
-
-            Static scoreMin As New [Default](Of Func(Of Double, Double, Double))(AddressOf stdNum.Min)
-
-            If equalsScore < 0 OrElse equalsScore > 1 Then
-                Throw New InvalidConstraintException("Scores for spectra equals is invalid, it should be in range (0, 1].")
-            End If
-            If gtScore < 0 OrElse gtScore > 1 OrElse gtScore > equalsScore Then
-                Throw New InvalidConstraintException(InvalidScoreRange)
-            End If
+                                           Optional scoreAggregate As ScoreAggregates = ScoreAggregates.min) As Comparison(Of PeakMs2)
 
             tolerance = tolerance Or ppm20
-            scoreAggregate = scoreAggregate Or scoreMin
+            intocutoff = intocutoff Or LowAbundanceTrimming.Default
 
-            Return Function(x As PeakMs2, y As PeakMs2) As Integer
-                       Dim score = GlobalAlignment.TwoDirectionSSM(x.mzInto, y.mzInto, tolerance)
-                       Dim scoreVal = scoreAggregate(score.forward, score.reverse)
-
-                       If scoreVal >= equalsScore Then
-                           Return 0
-                       ElseIf scoreVal >= gtScore Then
-                           Return 1
-                       Else
-                           Return -1
-                       End If
-                   End Function
+            Return AddressOf New Comparison(
+                align:=New CosAlignment(tolerance, intocutoff, scoreAggregate),
+                equalsScore:=equalsScore,
+                gtScore:=gtScore
+            ).Compares
         End Function
 
         ''' <summary>
