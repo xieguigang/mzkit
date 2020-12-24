@@ -215,7 +215,7 @@ Module MzMath
     Public Function SSMCompares(Optional tolerance As Object = "da:0.1",
                                 Optional equals_score# = 0.85,
                                 Optional gt_score# = 0.6,
-                                Optional score_aggregate As Object = "min",
+                                Optional score_aggregate As ScoreAggregates = ScoreAggregates.min,
                                 Optional env As Environment = Nothing) As Object
 
         Dim errors = Math.getTolerance(tolerance, env)
@@ -227,16 +227,16 @@ Module MzMath
         Dim aggregate As Func(Of Double, Double, Double)
         Dim handler As IAggregate
 
-        If score_aggregate Is Nothing Then
-            Return Internal.debug.stop("you must specific a aggregate function!", env)
-        ElseIf TypeOf score_aggregate Is String Then
-            handler = NumberAggregate.GetAggregater(score_aggregate)
-            aggregate = Function(x, y) handler({x, y})
-        Else
-            Return Internal.debug.stop(Message.InCompatibleType(GetType(Func(Of Double, Double, Double)), score_aggregate.GetType, env), env)
-        End If
+        'If score_aggregate Is Nothing Then
+        '    Return Internal.debug.stop("you must specific a aggregate function!", env)
+        'ElseIf TypeOf score_aggregate Is String Then
+        '    handler = NumberAggregate.GetAggregater(score_aggregate)
+        '    aggregate = Function(x, y) handler({x, y})
+        'Else
+        '    Return Internal.debug.stop(Message.InCompatibleType(GetType(Func(Of Double, Double, Double)), score_aggregate.GetType, env), env)
+        'End If
 
-        Return Spectra.SpectrumTreeCluster.SSMCompares(errors.TryCast(Of Tolerance), equals_score, gt_score, aggregate)
+        Return Spectra.SpectrumTreeCluster.SSMCompares(errors.TryCast(Of Tolerance), Nothing, equals_score, gt_score, score_aggregate)
     End Function
 
     ''' <summary>
