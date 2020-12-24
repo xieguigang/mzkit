@@ -403,11 +403,11 @@ Public Module ChromatogramPlot
                     End If
 
                     ' 计算在右上角的位置
-                    Dim maxSize = legends.MaxLegendSize(g)
+                    Dim maxSize As SizeF = legends.MaxLegendSize(g)
                     Dim top = region.PlotRegion.Top + maxSize.Height + 5
                     Dim maxLen = maxSize.Width
                     Dim legendShapeWidth% = 70
-                    Dim left = region.PlotRegion.Right - (maxLen + legendShapeWidth) * cols
+                    Dim left As Double = region.PlotRegion.Right - (maxLen + legendShapeWidth) * cols
                     Dim position As New Point With {
                         .X = left,
                         .Y = top
