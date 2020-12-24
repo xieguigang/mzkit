@@ -10,7 +10,7 @@ Public Class Writer : Implements IDisposable
 
     Dim disposedValue As Boolean
 
-    Const magic As String = "spectrum_tree"
+    Friend Const magic As String = "spectrum_tree"
 
     Sub New(output As Stream)
         outfile = New BinaryDataWriter(output, Encodings.ASCII)
@@ -20,15 +20,17 @@ Public Class Writer : Implements IDisposable
         Dim bin As BinaryTree(Of PeakMs2, PeakMs2) = tree.getRoot
 
         Call outfile.Write(magic, BinaryStringFormat.NoPrefixOrTermination)
+        Call outfile.Write(CByte(1))
         Call write(bin)
         Call outfile.Flush()
     End Sub
 
     Private Sub write(node As BinaryTree(Of PeakMs2, PeakMs2))
-        Dim pos As Long
+        Dim pos As Long = outfile.BaseStream.Position
         Dim size As Long
 
-        Call outfile.Write(CByte(1))
+        ' data size
+        Call outfile.Write(0&)
 
         ' write current cluster
         ' id key of current cluster
@@ -36,11 +38,6 @@ Public Class Writer : Implements IDisposable
         ' spectrum counts
         Call outfile.Write(node.Members.Length)
         Call outfile.Flush()
-
-        pos = outfile.BaseStream.Position
-
-        ' data size
-        Call outfile.Write(0&)
 
         ' write spectra data
         For Each spectra As PeakMs2 In node.Members
@@ -55,6 +52,7 @@ Public Class Writer : Implements IDisposable
         If node.Left Is Nothing Then
             Call outfile.Write(CByte(0))
         Else
+            Call outfile.Write(CByte(1))
             Call write(node.Left)
         End If
 
@@ -62,6 +60,7 @@ Public Class Writer : Implements IDisposable
         If node.Right Is Nothing Then
             Call outfile.Write(CByte(0))
         Else
+            Call outfile.Write(CByte(1))
             Call write(node.Right)
         End If
 
@@ -95,7 +94,7 @@ Public Class Writer : Implements IDisposable
             Next
 
             Call writer.Flush()
-            Call outfile.Write(buf)
+            Call outfile.Write(buf.ToArray)
 
             Return buf.Length
         End Using
@@ -105,6 +104,9 @@ Public Class Writer : Implements IDisposable
         If Not disposedValue Then
             If disposing Then
                 ' TODO: 释放托管状态(托管对象)
+                Call outfile.Flush()
+                Call outfile.Close()
+                Call outfile.Dispose()
             End If
 
             ' TODO: 释放未托管的资源(未托管的对象)并替代终结器
