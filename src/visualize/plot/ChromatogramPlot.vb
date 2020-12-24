@@ -296,7 +296,7 @@ Public Module ChromatogramPlot
 
                 End If
 
-                Dim legends As New List(Of Legend)
+                Dim legends As New List(Of LegendObject)
                 Dim peakTimes As New List(Of NamedValue(Of ChromatogramTick))
                 Dim fillColor As Brush
                 Dim parallelOffset As New PointF
@@ -306,7 +306,7 @@ Public Module ChromatogramPlot
                     Dim line = ionData(i)
                     Dim chromatogram = line.value
 
-                    legends += New Legend With {
+                    legends += New LegendObject With {
                         .title = line.name,
                         .color = curvePen.Color.ToHtmlColor,
                         .fontstyle = legendFontCSS,
@@ -413,7 +413,7 @@ Public Module ChromatogramPlot
                         .Y = top
                     }
 
-                    For Each block As Legend() In legends.Split(deln)
+                    For Each block As LegendObject() In legends.Split(deln)
                         g.DrawLegends(position, block, $"{legendShapeWidth},10", d:=0)
                         position = New Point With {
                             .X = position.X + maxLen + legendShapeWidth,
