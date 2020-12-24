@@ -4,6 +4,9 @@ Imports MathCore = Microsoft.VisualBasic.Math
 
 Namespace Spectra.Xml
 
+    ''' <summary>
+    ''' read biodeep spectra alignment output matrix
+    ''' </summary>
     Public Class Ms2AlignMatrix : Inherits IVector(Of SSM2MatrixFragment)
 
         ''' <summary>

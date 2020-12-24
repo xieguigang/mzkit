@@ -519,6 +519,7 @@
     </Compile>
     <Compile Include="Ms1\Peaktable.vb" />
     <Compile Include="Ms1\PrecursorType\PrecursorType.vb" />
+    <Compile Include="Spectra\SpectrumTree\AlignmentProvider.vb" />
     <Compile Include="Spectra\SpectrumTree\SpectrumCluster.vb" />
     <Compile Include="Spectra\SpectrumTree\SpectrumTree.vb" />
   </ItemGroup>
