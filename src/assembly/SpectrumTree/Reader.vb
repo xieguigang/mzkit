@@ -9,15 +9,23 @@ Public Class Reader : Implements IDisposable
     Dim disposedValue As Boolean
 
     Public ReadOnly Property root As BlockNode
+    Public ReadOnly Property filepath As String
+    ''' <summary>
+    ''' 因为进行树搜索必须要经过根节点，所以在这里将其数据缓存了下来
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property rootCluster As PeakMs2()
 
-    Sub New(buf As Stream)
-        infile = New BinaryDataReader(buf)
+    Sub New(file As String)
+        infile = New BinaryDataReader(OpenParallelReadFile(file))
+        filepath = file
 
         If infile.ReadString(Writer.magic.Length) <> Writer.magic Then
             Throw New InvalidDataException("invalid magic header!")
         End If
 
         root = ReadNextNode(infile.BaseStream.Position)
+        rootCluster = root.ReadNode(infile.BaseStream).ToArray
     End Sub
 
     Public Function ReadNextNode(pos As Long) As BlockNode
