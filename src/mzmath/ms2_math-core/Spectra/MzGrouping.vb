@@ -20,7 +20,7 @@ Namespace Spectra
                                Optional trim$ = "0.05") As IEnumerable(Of PeakMs2)
 
             ' group by peak clustering at first
-            Dim comparision = SpectrumTreeCluster.SSMCompares(Ms1.Tolerance.ParseScript(tolerance), eq, gt)
+            Dim comparision = SpectrumTreeCluster.SSMCompares(Ms1.Tolerance.ParseScript(tolerance), Nothing, eq, gt)
             Dim centroidErr As Tolerance = Ms1.Tolerance.ParseScript(mzwidth)
             Dim intocutoff As LowAbundanceTrimming = LowAbundanceTrimming.ParseScript(trim)
             Dim tree As New SpectrumTreeCluster(
