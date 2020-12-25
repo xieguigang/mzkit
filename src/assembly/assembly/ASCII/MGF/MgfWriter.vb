@@ -66,7 +66,7 @@ Namespace ASCII.MGF
                     .text = matrix.Ms2Intensity
                 },
                 .RtInSeconds = matrix.rt,
-                .Title = $"{matrix.file}#{matrix.scan}",
+                .Title = If(matrix.file.StringEmpty, matrix.lib_guid, $"{matrix.file}#{matrix.scan}"),
                 .Meta = New MetaData With {
                     .collisionEnergy = matrix.collisionEnergy,
                     .activation = matrix.activation,
@@ -74,7 +74,7 @@ Namespace ASCII.MGF
                     .precursor_type = matrix.precursor_type
                 },
                 .Rawfile = matrix.file,
-                .Accession = $"{matrix.file}#{matrix.scan}"
+                .Accession = matrix.lib_guid
             }
         End Function
 
@@ -164,8 +164,13 @@ Namespace ASCII.MGF
                 mz = fragment.mz
                 into = getInto(fragment)
 
-                ' write mgf text file data
-                Call $"{mz} {into}".DoCall(AddressOf out.WriteLine)
+                If fragment.Annotation.StringEmpty Then
+                    ' write mgf text file data
+                    Call $"{mz} {into}".DoCall(AddressOf out.WriteLine)
+                Else
+                    ' write mzkit extended data
+                    Call $"{mz} {into} {fragment.Annotation}".DoCall(AddressOf out.WriteLine)
+                End If
             Next
 
             Call out.WriteLine("END IONS")
