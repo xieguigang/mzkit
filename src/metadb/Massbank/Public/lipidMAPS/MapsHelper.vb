@@ -71,16 +71,34 @@ Namespace LipidMaps
         ''' <returns>[lipid class -> carbons, description = raw name]</returns>
         Public Function LipidName(name As String) As NamedValue(Of String)
             Dim lipidClass As String = name.StringReplace("\(.+\)", "")
-            Dim carbons As Integer()() = name _
+            Dim components As String() = name _
                 .Match("\(.+\)") _
                 .GetStackValue("(", ")") _
                 .Split("/"c) _
                 .Select(Function(a) a.Split("_"c)) _
                 .IteratesALL _
+                .ToArray
+            Dim carbons As Integer()() = components _
                 .Select(Function(t)
-                            Return t.Split(":"c).Select(Function(x) CInt(Val(x))).ToArray
+                            Return t.Split(":"c) _
+                                .Select(Function(x)
+                                            If x.IsPattern("d\d+") Then
+                                                Return CInt(Val(x.Replace("d", "")))
+                                            Else
+                                                Return CInt(Val(x))
+                                            End If
+                                        End Function) _
+                                .ToArray
                         End Function) _
                 .ToArray
+
+            If components.Length = 1 AndAlso components(Scan0).IndexOf(":"c) = -1 Then
+                Return New NamedValue(Of String) With {
+                    .Description = name,
+                    .Name = lipidClass,
+                    .Value = components(Scan0)
+                }
+            End If
 
             Dim c1 = Aggregate part In carbons Into Sum(part(0))
             Dim c2 = Aggregate part In carbons Into Sum(part(1))
