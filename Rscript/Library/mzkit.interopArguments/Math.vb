@@ -55,7 +55,7 @@ Module Math
         If val Is Nothing Then
             Return Tolerance.DefaultTolerance.DefaultValue
         ElseIf val.GetType.IsInheritsFrom(GetType(Tolerance)) Then
-            Return val
+            Return DirectCast(val, Tolerance)
         ElseIf val.GetType Is GetType(String) Then
             Return Tolerance.ParseScript(val)
         ElseIf val.GetType Is GetType(String()) Then
