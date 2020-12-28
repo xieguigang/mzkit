@@ -49,6 +49,7 @@ Imports BioNovoGene.BioDeep.Chemoinformatics.SDF
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
 Namespace LipidMaps
 
@@ -62,6 +63,52 @@ Namespace LipidMaps
         Public Const lipidbank$ = NameOf(lipidbank)
         Public Const lipidmap$ = NameOf(lipidmap)
         Public Const pubchem$ = NameOf(pubchem)
+
+        ''' <summary>
+        ''' parse lipid name components
+        ''' </summary>
+        ''' <param name="name"></param>
+        ''' <returns>[lipid class -> carbons, description = raw name]</returns>
+        Public Function LipidName(name As String) As NamedValue(Of String)
+            Dim lipidClass As String = name.StringReplace("\(.+\)", "")
+            Dim components As String() = name _
+                .Match("\(.+\)") _
+                .GetStackValue("(", ")") _
+                .Split("/"c) _
+                .Select(Function(a) a.Split("_"c)) _
+                .IteratesALL _
+                .ToArray
+            Dim carbons As Integer()() = components _
+                .Select(Function(t)
+                            Return t.Split(":"c) _
+                                .Select(Function(x)
+                                            If x.IsPattern("d\d+") Then
+                                                Return CInt(Val(x.Replace("d", "")))
+                                            Else
+                                                Return CInt(Val(x))
+                                            End If
+                                        End Function) _
+                                .ToArray
+                        End Function) _
+                .ToArray
+
+            If components.Length = 1 AndAlso components(Scan0).IndexOf(":"c) = -1 Then
+                Return New NamedValue(Of String) With {
+                    .Description = name,
+                    .Name = lipidClass,
+                    .Value = components(Scan0)
+                }
+            End If
+
+            Dim c1 = Aggregate part In carbons Into Sum(part(0))
+            Dim c2 = Aggregate part In carbons Into Sum(part(1))
+
+            Return New NamedValue(Of String) With {
+                .Name = lipidClass,
+                .Value = $"{c1}:{c2}",
+                .Description = name
+            }
+        End Function
 
         <Extension>
         Public Function AssertMap(maps As NamedValue(Of Dictionary(Of String, MetaData()))(), xref As Dictionary(Of String, String)) As String
