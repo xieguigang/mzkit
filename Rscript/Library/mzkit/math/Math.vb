@@ -53,17 +53,19 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math.Scripting
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
-Imports NumberAggregate = Microsoft.VisualBasic.Math.Scripting.Aggregate
+Imports any = Microsoft.VisualBasic.Scripting
 Imports REnv = SMRUCC.Rsharp.Runtime
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' mass spectrometry data math toolkit
@@ -120,7 +122,7 @@ Module MzMath
     ''' <returns></returns>
     <ExportAPI("mz")>
     Public Function mz(mass As Double, Optional mode As Object = "+") As PrecursorInfo()
-        Return MzCalculator.EvaluateAll(mass, Scripting.ToString(mode, "+")).ToArray
+        Return MzCalculator.EvaluateAll(mass, any.ToString(mode, "+")).ToArray
     End Function
 
     ''' <summary>
@@ -131,7 +133,7 @@ Module MzMath
     ''' <returns></returns>
     <ExportAPI("exact_mass")>
     Public Function exact_mass(mz As Double, Optional mode As Object = "+") As PrecursorInfo()
-        Return MzCalculator.EvaluateAll(mz, Scripting.ToString(mode, "+"), True).ToArray
+        Return MzCalculator.EvaluateAll(mz, any.ToString(mode, "+"), True).ToArray
     End Function
 
     ''' <summary>
@@ -421,5 +423,50 @@ Module MzMath
                     $"given: {methodVec(Scan0)}"
                 }, env)
         End Select
+    End Function
+
+    ''' <summary>
+    ''' reorder scan points into a sequence for data analysis
+    ''' </summary>
+    ''' <param name="scans"></param>
+    ''' <param name="mzwidth"></param>
+    ''' <param name="rtwidth"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("sequenceOrder")>
+    Public Function sequenceOrder(<RRawVectorArgument> scans As Object,
+                                  Optional mzwidth As Object = "da:0.1",
+                                  Optional rtwidth As Double = 60,
+                                  Optional env As Environment = Nothing) As Object
+
+        Dim points As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(scans, env)
+
+        If points.isError Then
+            Return points.getError
+        End If
+
+        Dim mzwindow As [Variant](Of Tolerance, Message) = getTolerance(mzwidth, env)
+
+        If mzwindow Like GetType(Message) Then
+            Return mzwindow.TryCast(Of Message)
+        End If
+
+        Dim mzgroup As NamedCollection(Of ms1_scan)() = points.populates(Of ms1_scan)(env) _
+            .GroupBy(Function(mzi) mzi.mz, mzwindow.TryCast(Of Tolerance)) _
+            .OrderBy(Function(a) Val(a.name)) _
+            .ToArray
+        Dim sequence As New List(Of ms1_scan)
+
+        For Each mzBlock As NamedCollection(Of ms1_scan) In mzgroup
+            For Each block As NamedCollection(Of ms1_scan) In mzBlock _
+                .AsEnumerable _
+                .GroupBy(Function(i) i.scan_time, Function(x, y) stdNum.Abs(x - y) <= rtwidth) _
+                .OrderBy(Function(a) Val(a.name))
+
+                sequence += block.OrderBy(Function(a) a.scan_time)
+            Next
+        Next
+
+        Return sequence.ToArray
     End Function
 End Module

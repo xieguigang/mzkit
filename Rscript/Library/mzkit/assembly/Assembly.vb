@@ -432,6 +432,9 @@ Module Assembly
     ''' <param name="raw">
     ''' the file path of the raw data files.
     ''' </param>
+    ''' <param name="centroid">
+    ''' the tolerance value of m/z for convert to centroid mode
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("ms1.scans")>
     <RApiReturn(GetType(ms1_scan))>
