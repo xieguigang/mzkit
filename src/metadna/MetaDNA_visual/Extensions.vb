@@ -47,7 +47,8 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 
-<Extension, HideModuleName> Public Module Extensions
+<Extension, HideModuleName>
+Public Module Extensions
 
     ''' <summary>
     ''' Dump the infer network as network csv table for file saved
@@ -66,6 +67,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
         If applyLayout Then
             Call metaDNA.doForceLayout(iterations:=2000)
         End If
-        Return metaDNA.Tabular({"candidates", "intensity", "infer.depth", "score.forward", "score.reverse"})
+
+        Return metaDNA.Tabular(properties:={"candidates", "intensity", "infer.depth", "score.forward", "score.reverse"})
     End Function
 End Module
