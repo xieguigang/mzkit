@@ -224,18 +224,6 @@ Module MzMath
             Return errors.TryCast(Of Message)
         End If
 
-        Dim aggregate As Func(Of Double, Double, Double)
-        Dim handler As IAggregate
-
-        'If score_aggregate Is Nothing Then
-        '    Return Internal.debug.stop("you must specific a aggregate function!", env)
-        'ElseIf TypeOf score_aggregate Is String Then
-        '    handler = NumberAggregate.GetAggregater(score_aggregate)
-        '    aggregate = Function(x, y) handler({x, y})
-        'Else
-        '    Return Internal.debug.stop(Message.InCompatibleType(GetType(Func(Of Double, Double, Double)), score_aggregate.GetType, env), env)
-        'End If
-
         Return Spectra.SpectrumTreeCluster.SSMCompares(errors.TryCast(Of Tolerance), Nothing, equals_score, gt_score, score_aggregate)
     End Function
 
@@ -408,5 +396,30 @@ Module MzMath
         Else
             Return Internal.debug.stop(New InvalidCastException(inputType.FullName), env)
         End If
+    End Function
+
+    ''' <summary>
+    ''' Create tolerance object
+    ''' </summary>
+    ''' <param name="threshold"></param>
+    ''' <param name="method"></param>
+    ''' <returns></returns>
+    <ExportAPI("tolerance")>
+    Public Function createTolerance(threshold As Double,
+                                    <RRawVectorArgument(GetType(String))>
+                                    Optional method As Object = "ppm|da",
+                                    Optional env As Environment = Nothing) As Object
+
+        Dim methodVec As String() = REnv.asVector(Of String)(method)
+
+        Select Case methodVec(Scan0).ToLower
+            Case "da" : Return Tolerance.DeltaMass(threshold)
+            Case "ppm" : Return Tolerance.PPM(threshold)
+            Case Else
+                Return Internal.debug.stop({
+                    $"invalid method name: '{methodVec(Scan0)}'!",
+                    $"given: {methodVec(Scan0)}"
+                }, env)
+        End Select
     End Function
 End Module

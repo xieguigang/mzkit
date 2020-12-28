@@ -164,7 +164,6 @@ Global
 		..\..\GCModeller\src\R-sharp\studio\Rstudio.common\Rstudio.common.projitems*{14010b90-bc3b-42d9-a52c-30ca537d3c11}*SharedItemsImports = 13
 		..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{1579d1a8-73c4-4f97-bb57-3d1e62343599}*SharedItemsImports = 4
 		..\..\GCModeller\src\R-sharp\studio\Rstudio.common\Rstudio.common.projitems*{3a35ac34-f313-4f72-89e9-eacca217bc8d}*SharedItemsImports = 4
-		..\..\GCModeller\src\runtime\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\TcpRequest\TcpRequest.projitems*{3a35ac34-f313-4f72-89e9-eacca217bc8d}*SharedItemsImports = 4
 		..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{53af2b13-ccd5-4f73-94d5-612191e785a9}*SharedItemsImports = 13
 		..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{5a462f24-fa61-452b-985b-d2fc080cac76}*SharedItemsImports = 4
 		..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{77ba269a-2995-4737-80d3-ef533baa69cd}*SharedItemsImports = 4
