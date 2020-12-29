@@ -14,6 +14,7 @@ Namespace mzData.mzWebCache
         Sub New(file As String)
             Me.file = New BinaryDataWriter(file.Open(IO.FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False), encoding:=Encodings.ASCII)
             Me.file.Write(Magic)
+            Me.file.Write(0&)
             Me.file.ByteOrder = ByteOrder.LittleEndian
         End Sub
 
@@ -47,6 +48,14 @@ Namespace mzData.mzWebCache
         End Sub
 
         Private Sub writeIndex()
+            Dim indexPos As Long
+
+            file.Flush()
+            indexPos = file.Position
+            file.Seek(Magic.Length, IO.SeekOrigin.Begin)
+            file.Write(indexPos)
+            file.Seek(indexPos, IO.SeekOrigin.Begin)
+
             For Each entry In scanIndex
                 Call file.Write(entry.Value)
                 Call file.Write(entry.Key, BinaryStringFormat.ZeroTerminated)
