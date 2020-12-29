@@ -69,7 +69,7 @@ Namespace mzData.mzWebCache
             Dim size As Integer = pointTo(scanId)
             Dim data As ScanMS2()
 
-            file.Seek(size, SeekOrigin.Current)
+            file.Seek(size + index(scanId), SeekOrigin.Begin)
             data = populateMs2Products.ToArray
 
             Return data

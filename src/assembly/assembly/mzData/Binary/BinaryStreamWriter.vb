@@ -46,13 +46,15 @@ Namespace mzData.mzWebCache
             Call file.Write(scan.into)
             Call file.Flush()
 
-            Dim size As Integer = file.Position - start - 4
+            Dim size As Integer = file.Position - start
 
             Call file.Write(scan.products.Length)
 
             For Each product As ScanMS2 In scan.products
                 Call Write(product)
             Next
+
+            Call file.Flush()
 
             Using file.TemporarySeek(start, IO.SeekOrigin.Begin)
                 ' write data size offset of ms1 
