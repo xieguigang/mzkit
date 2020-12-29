@@ -65,10 +65,14 @@ Namespace mzData.mzWebCache
             End Using
         End Sub
 
-        Public Iterator Function ReadScan2(scanId As String) As IEnumerable(Of ScanMS2)
+        Public Function ReadScan2(scanId As String) As ScanMS2()
             Dim size As Integer = pointTo(scanId)
+            Dim data As ScanMS2()
 
+            file.Seek(size, SeekOrigin.Current)
+            data = populateMs2Products.ToArray
 
+            Return data
         End Function
 
         Private Function pointTo(scanId As String) As Integer

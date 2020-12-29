@@ -47,7 +47,7 @@ Namespace mzData.mzWebCache
             Call file.Write(scan.products.Length)
             Call file.Flush()
 
-            Dim size As Integer = file.Position - start
+            Dim size As Integer = file.Position - start - 4
 
             For Each product As ScanMS2 In scan.products
                 Call Write(product)
