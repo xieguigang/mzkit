@@ -8,11 +8,17 @@ Namespace mzData.mzWebCache
 
         Dim disposedValue As Boolean
         Dim file As BinaryDataReader
-        Dim index As Dictionary(Of String, Long)
+        Dim index As New Dictionary(Of String, Long)
 
         Public ReadOnly Property magic As String Implements IMagicBlock.magic
             Get
                 Return BinaryStreamWriter.Magic
+            End Get
+        End Property
+
+        Public ReadOnly Property EnumerateIndex As IEnumerable(Of String)
+            Get
+                Return index.Keys
             End Get
         End Property
 
@@ -28,8 +34,71 @@ Namespace mzData.mzWebCache
         End Sub
 
         Private Sub loadIndex()
+            Dim indexPos As Long = file.ReadInt64
+            Dim count As Integer = file.ReadInt32
+            Dim scanPos As Long
+            Dim scanId As String
 
+            Using file.TemporarySeek()
+                file.Seek(indexPos, IO.SeekOrigin.Begin)
+
+                For i As Integer = 0 To count - 1
+                    scanPos = file.ReadInt64
+                    scanId = file.ReadString(BinaryStringFormat.ZeroTerminated)
+                    index(scanId) = scanPos
+                Next
+            End Using
         End Sub
+
+        Public Function ReadScan(scanId As String, Optional skipProducts As Boolean = False) As ScanMS1
+            Dim ms1 As New ScanMS1 With {.scan_id = scanId}
+            Dim pos As Long = index(scanId)
+
+            Call file.Seek(pos, IO.SeekOrigin.Begin)
+
+            If file.ReadString(BinaryStringFormat.ZeroTerminated) <> scanId Then
+                Throw New InvalidProgramException("unsure why these two scan id mismatch?")
+            End If
+
+            ms1.rt = file.ReadInt32
+            ms1.BPC = file.ReadDouble
+            ms1.TIC = file.ReadDouble
+
+            Dim nsize As Integer = file.ReadInt32
+            Dim mz As Double() = file.ReadDoubles(nsize)
+            Dim into As Double() = file.ReadDoubles(nsize)
+
+            If Not skipProducts Then
+                ms1.products = populateMs2Products.ToArray
+            End If
+
+            ms1.mz = mz
+            ms1.into = into
+
+            Return ms1
+        End Function
+
+        Private Iterator Function populateMs2Products() As IEnumerable(Of ScanMS2)
+            Dim nsize As Integer = file.ReadInt32
+            Dim ms2 As ScanMS2
+            Dim productSize As Integer
+
+            For i As Integer = 0 To nsize - 1
+                ms2 = New ScanMS2 With {
+                    .scan_id = file.ReadString(BinaryStringFormat.ZeroTerminated),
+                    .parentMz = file.ReadDouble,
+                    .rt = file.ReadInt32,
+                    .intensity = file.ReadDouble,
+                    .polarity = file.ReadInt32
+                }
+                productSize = file.ReadInt32
+
+                ms2.mz = file.ReadDoubles(productSize)
+                ms2.into = file.ReadDoubles(productSize)
+
+                Yield ms2
+            Next
+        End Function
 
         Protected Overridable Sub Dispose(disposing As Boolean)
             If Not disposedValue Then

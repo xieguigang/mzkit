@@ -16,9 +16,12 @@ Namespace mzData.mzWebCache
             Me.file.Write(Magic)
             Me.file.Write(0&)
             Me.file.ByteOrder = ByteOrder.LittleEndian
+            Me.file.Flush()
         End Sub
 
         Public Sub Write(scan As ScanMS1)
+            Call scanIndex.Add(scan.scan_id, file.Position)
+
             Call file.Write(scan.scan_id, BinaryStringFormat.ZeroTerminated)
             Call file.Write(scan.rt)
             Call file.Write(scan.BPC)
@@ -33,7 +36,6 @@ Namespace mzData.mzWebCache
             Next
 
             Call file.Flush()
-            Call scanIndex.Add(scan.scan_id, file.Position)
         End Sub
 
         Private Sub Write(scan As ScanMS2)
@@ -55,6 +57,7 @@ Namespace mzData.mzWebCache
             file.Seek(Magic.Length, IO.SeekOrigin.Begin)
             file.Write(indexPos)
             file.Seek(indexPos, IO.SeekOrigin.Begin)
+            file.Write(scanIndex.Count)
 
             For Each entry In scanIndex
                 Call file.Write(entry.Value)
