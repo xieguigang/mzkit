@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.Data.IO
+Imports Microsoft.VisualBasic.Text
 
 Namespace mzData.mzWebCache
 
@@ -11,7 +12,7 @@ Namespace mzData.mzWebCache
         Public Const Magic As String = "BioNovoGene/mzWebStream"
 
         Sub New(file As String)
-            Me.file = New BinaryDataWriter(file.Open(IO.FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False))
+            Me.file = New BinaryDataWriter(file.Open(IO.FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False), encoding:=Encodings.ASCII)
             Me.file.Write(Magic)
             Me.file.ByteOrder = ByteOrder.LittleEndian
         End Sub
@@ -45,9 +46,18 @@ Namespace mzData.mzWebCache
             Call file.Write(scan.into)
         End Sub
 
+        Private Sub writeIndex()
+            For Each entry In scanIndex
+                Call file.Write(entry.Value)
+                Call file.Write(entry.Key, BinaryStringFormat.ZeroTerminated)
+            Next
+        End Sub
+
         Protected Overridable Sub Dispose(disposing As Boolean)
             If Not disposedValue Then
                 If disposing Then
+                    Call writeIndex()
+
                     ' TODO: 释放托管状态(托管对象)
                     Call file.Flush()
                     Call file.Dispose()
