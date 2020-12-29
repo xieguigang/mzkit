@@ -64,6 +64,10 @@ Namespace mzData.mzWebCache
             End Using
         End Sub
 
+        Public Iterator Function ReadScan2(scanId As String) As IEnumerable(Of ScanMS2)
+
+        End Function
+
         Public Function ReadScan(scanId As String, Optional skipProducts As Boolean = False) As ScanMS1
             Dim ms1 As New ScanMS1 With {.scan_id = scanId}
             Dim pos As Long = index(scanId)
