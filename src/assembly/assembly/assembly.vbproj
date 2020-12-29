@@ -497,7 +497,7 @@
     <Compile Include="mzData\mzWebCache\mzMLScans.vb" />
     <Compile Include="mzData\mzWebCache\mzXMLScans.vb" />
     <Compile Include="mzData\mzWebCache\ScanPopulator.vb" />
-    <Compile Include="mzData\mzWebCache\Scan.vb" />
+    <Compile Include="mzData\Stream\Scan.vb" />
     <Compile Include="NamespaceDoc.vb" />
     <Compile Include="SpectrumTree.vb" />
     <Compile Include="MarkupData\IBase64Container.vb" />
@@ -545,7 +545,9 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="mzData\Binary\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\BinaryData.vbproj">
       <Project>{487d7c92-d05a-4908-bf81-e6baba0bf592}</Project>
