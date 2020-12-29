@@ -3,6 +3,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
 Namespace mzData.mzWebCache
@@ -35,9 +36,11 @@ Namespace mzData.mzWebCache
         End Function
 
         Public Iterator Function Load(scans As IEnumerable(Of Scan)) As IEnumerable(Of ScanMS1)
+            Dim i As i32 = 1
+
             For Each scan As Scan In PopulateValidScans(scans)
                 Dim scan_time As Double = reader.GetScanTime(scan)
-                Dim scan_id As String = reader.GetScanId(scan)
+                Dim scan_id As String = $"[{++i}]{reader.GetScanId(scan)}"
                 Dim msms As ms2() = reader.GetMsMs(scan).Centroid(ms1Err, trim).ToArray
 
                 If reader.GetMsLevel(scan) = 1 Then

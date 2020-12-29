@@ -10,6 +10,11 @@ Namespace mzData.mzWebCache
         Dim file As BinaryDataReader
         Dim index As New Dictionary(Of String, Long)
 
+        Public ReadOnly Property rtmin As Double
+        Public ReadOnly Property rtmax As Double
+        Public ReadOnly Property mzmin As Double
+        Public ReadOnly Property mzmax As Double
+
         Public ReadOnly Property magic As String Implements IMagicBlock.magic
             Get
                 Return BinaryStreamWriter.Magic
@@ -23,7 +28,10 @@ Namespace mzData.mzWebCache
         End Property
 
         Sub New(file As String)
-            Me.file = New BinaryDataReader(file.Open(IO.FileMode.OpenOrCreate, doClear:=False, [readOnly]:=True), encoding:=Encodings.ASCII)
+            Me.file = New BinaryDataReader(
+                input:=file.Open(IO.FileMode.OpenOrCreate, doClear:=False, [readOnly]:=True),
+                encoding:=Encodings.ASCII
+            )
             Me.file.ByteOrder = ByteOrder.LittleEndian
 
             If Not Me.VerifyMagicSignature(Me.file) Then
@@ -34,15 +42,21 @@ Namespace mzData.mzWebCache
         End Sub
 
         Private Sub loadIndex()
-            Dim indexPos As Long = file.ReadInt64
-            Dim count As Integer = file.ReadInt32
+            Dim nsize As Integer
             Dim scanPos As Long
             Dim scanId As String
+            Dim range As Double() = file.ReadDoubles(4)
+
+            _mzmin = range(0)
+            _mzmax = range(1)
+            _rtmin = range(2)
+            _rtmax = range(3)
 
             Using file.TemporarySeek()
-                file.Seek(indexPos, IO.SeekOrigin.Begin)
+                file.Seek(file.ReadInt64, IO.SeekOrigin.Begin)
+                nsize = file.ReadInt32
 
-                For i As Integer = 0 To count - 1
+                For i As Integer = 0 To nsize - 1
                     scanPos = file.ReadInt64
                     scanId = file.ReadString(BinaryStringFormat.ZeroTerminated)
                     index(scanId) = scanPos

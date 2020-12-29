@@ -8,18 +8,30 @@ Namespace mzData.mzWebCache
         Dim file As BinaryDataWriter
         Dim disposedValue As Boolean
         Dim scanIndex As New Dictionary(Of String, Long)
+        Dim mzmin As Double = Integer.MaxValue
+        Dim mzmax As Double = Integer.MinValue
+        Dim rtmin As Double = Integer.MaxValue
+        Dim rtmax As Double = Integer.MinValue
 
         Public Const Magic As String = "BioNovoGene/mzWebStream"
 
         Sub New(file As String)
             Me.file = New BinaryDataWriter(file.Open(IO.FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False), encoding:=Encodings.ASCII)
             Me.file.Write(Magic)
+            Call Me.file.Write(New Double() {0, 0, 0, 0})
             Me.file.Write(0&)
             Me.file.ByteOrder = ByteOrder.LittleEndian
             Me.file.Flush()
         End Sub
 
         Public Sub Write(scan As ScanMS1)
+            If rtmin > scan.rt Then
+                rtmin = scan.rt
+            End If
+            If rtmax < scan.rt Then
+                rtmax = scan.rt
+            End If
+
             Call scanIndex.Add(scan.scan_id, file.Position)
 
             Call file.Write(scan.scan_id, BinaryStringFormat.ZeroTerminated)
@@ -39,6 +51,13 @@ Namespace mzData.mzWebCache
         End Sub
 
         Private Sub Write(scan As ScanMS2)
+            If mzmin > scan.parentMz Then
+                mzmin = scan.parentMz
+            End If
+            If mzmax < scan.parentMz Then
+                mzmax = scan.parentMz
+            End If
+
             Call file.Write(scan.scan_id, BinaryStringFormat.ZeroTerminated)
             Call file.Write(scan.parentMz)
             Call file.Write(scan.rt)
@@ -55,6 +74,7 @@ Namespace mzData.mzWebCache
             file.Flush()
             indexPos = file.Position
             file.Seek(Magic.Length, IO.SeekOrigin.Begin)
+            file.Write({mzmin, mzmax, rtmin, rtmax})
             file.Write(indexPos)
             file.Seek(indexPos, IO.SeekOrigin.Begin)
             file.Write(scanIndex.Count)
