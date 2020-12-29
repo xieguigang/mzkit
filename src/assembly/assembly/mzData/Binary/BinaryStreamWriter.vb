@@ -18,7 +18,7 @@ Namespace mzData.mzWebCache
         Sub New(file As String)
             Me.file = New BinaryDataWriter(file.Open(IO.FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False), encoding:=Encodings.ASCII)
             Me.file.Write(Magic, BinaryStringFormat.NoPrefixOrTermination)
-            Call Me.file.Write(New Double() {0, 0, 0, 0})
+            Me.file.Write(New Double() {0, 0, 0, 0})
             Me.file.Write(0&)
             Me.file.ByteOrder = ByteOrder.LittleEndian
             Me.file.Flush()
@@ -54,7 +54,7 @@ Namespace mzData.mzWebCache
             Next
 
             Using file.TemporarySeek(start, IO.SeekOrigin.Begin)
-                Call file.Write(0)
+                Call file.Write(size)
             End Using
 
             Call file.Flush()

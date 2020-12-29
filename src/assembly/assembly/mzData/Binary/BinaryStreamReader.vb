@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Data.IO
+﻿Imports System.IO
+Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Text
 
 Namespace mzData.mzWebCache
@@ -65,18 +66,28 @@ Namespace mzData.mzWebCache
         End Sub
 
         Public Iterator Function ReadScan2(scanId As String) As IEnumerable(Of ScanMS2)
+            Dim size As Integer = pointTo(scanId)
+
 
         End Function
 
-        Public Function ReadScan(scanId As String, Optional skipProducts As Boolean = False) As ScanMS1
-            Dim ms1 As New ScanMS1 With {.scan_id = scanId}
-            Dim pos As Long = index(scanId)
+        Private Function pointTo(scanId As String) As Integer
+            Dim dataSize As Integer
 
-            Call file.Seek(pos, IO.SeekOrigin.Begin)
+            file.Seek(offset:=index(scanId), origin:=SeekOrigin.Begin)
+            dataSize = file.ReadInt32
 
             If file.ReadString(BinaryStringFormat.ZeroTerminated) <> scanId Then
                 Throw New InvalidProgramException("unsure why these two scan id mismatch?")
             End If
+
+            Return dataSize
+        End Function
+
+        Public Function ReadScan(scanId As String, Optional skipProducts As Boolean = False) As ScanMS1
+            Dim ms1 As New ScanMS1 With {.scan_id = scanId}
+
+            Call pointTo(scanId)
 
             ms1.rt = file.ReadInt32
             ms1.BPC = file.ReadDouble
