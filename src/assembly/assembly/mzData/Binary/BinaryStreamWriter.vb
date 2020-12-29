@@ -25,6 +25,8 @@ Namespace mzData.mzWebCache
         End Sub
 
         Public Sub Write(scan As ScanMS1)
+            Dim start As Long = file.Position
+
             If rtmin > scan.rt Then
                 rtmin = scan.rt
             End If
@@ -34,6 +36,7 @@ Namespace mzData.mzWebCache
 
             Call scanIndex.Add(scan.scan_id, file.Position)
 
+            Call file.Write(0)
             Call file.Write(scan.scan_id, BinaryStringFormat.ZeroTerminated)
             Call file.Write(scan.rt)
             Call file.Write(scan.BPC)
@@ -42,10 +45,17 @@ Namespace mzData.mzWebCache
             Call file.Write(scan.mz)
             Call file.Write(scan.into)
             Call file.Write(scan.products.Length)
+            Call file.Flush()
+
+            Dim size As Integer = file.Position - start
 
             For Each product As ScanMS2 In scan.products
                 Call Write(product)
             Next
+
+            Using file.TemporarySeek(start, IO.SeekOrigin.Begin)
+                Call file.Write(0)
+            End Using
 
             Call file.Flush()
         End Sub
