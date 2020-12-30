@@ -489,6 +489,7 @@
     <Compile Include="MarkupData\mzML\XML\Configurations.vb" />
     <Compile Include="mzData\Binary\BinaryStreamWriter.vb" />
     <Compile Include="mzData\Binary\BinaryStreamReader.vb" />
+    <Compile Include="mzData\Stream\MSScan.vb" />
     <Compile Include="UnifyReader\Chromatogram.vb" />
     <Compile Include="UnifyReader\imzMLScan.vb" />
     <Compile Include="UnifyReader\Provider.vb" />

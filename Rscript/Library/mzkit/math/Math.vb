@@ -426,7 +426,7 @@ Module MzMath
     End Function
 
     ''' <summary>
-    ''' reorder scan points into a sequence for data analysis
+    ''' reorder scan points into a sequence for downstream data analysis
     ''' </summary>
     ''' <param name="scans"></param>
     ''' <param name="mzwidth"></param>
@@ -451,22 +451,8 @@ Module MzMath
             Return mzwindow.TryCast(Of Message)
         End If
 
-        Dim mzgroup As NamedCollection(Of ms1_scan)() = points.populates(Of ms1_scan)(env) _
-            .GroupBy(Function(mzi) mzi.mz, mzwindow.TryCast(Of Tolerance)) _
-            .OrderBy(Function(a) Val(a.name)) _
+        Return points.populates(Of ms1_scan)(env) _
+            .SequenceOrder(mzwindow.TryCast(Of Tolerance), rtwidth) _
             .ToArray
-        Dim sequence As New List(Of ms1_scan)
-
-        For Each mzBlock As NamedCollection(Of ms1_scan) In mzgroup
-            For Each block As NamedCollection(Of ms1_scan) In mzBlock _
-                .AsEnumerable _
-                .GroupBy(Function(i) i.scan_time, Function(x, y) stdNum.Abs(x - y) <= rtwidth) _
-                .OrderBy(Function(a) Val(a.name))
-
-                sequence += block.OrderBy(Function(a) a.scan_time)
-            Next
-        Next
-
-        Return sequence.ToArray
     End Function
 End Module
