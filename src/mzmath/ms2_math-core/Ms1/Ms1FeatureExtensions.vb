@@ -97,7 +97,7 @@ Public Module Ms1FeatureExtensions
     ''' <param name="rtwin"></param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function SequenceOrder(Of T As IMs1)(seq As IEnumerable(Of T), mzwidth As Tolerance, rtwin As Double) As IEnumerable(Of IMs1)
+    Public Iterator Function SequenceOrder(Of T As IMs1)(seq As IEnumerable(Of T), mzwidth As Tolerance, rtwin As Double) As IEnumerable(Of T)
         Dim mzgroup As NamedCollection(Of T)() = seq _
             .GroupBy(Function(mzi) mzi.mz, mzwidth) _
             .OrderBy(Function(a) Val(a.name)) _
