@@ -1,3 +1,5 @@
+imports "assembly" from "mzkit";
+
 #' Hello, world!
 #'
 #' This is an example function named 'hello' 
@@ -13,5 +15,6 @@
 #'   Check Package:             'Ctrl + Shift + E'
 #'   Test Package:              'Ctrl + Shift + T'
 let .onload as function() {
-  print("Hello, world!")
+  print(description(package = "mzkit")$title)
+  print(description(package = "mzkit")$description)
 }
