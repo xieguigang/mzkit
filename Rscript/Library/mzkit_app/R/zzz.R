@@ -14,7 +14,8 @@ imports "assembly" from "mzkit";
 #'   Install Package:           'Ctrl + Shift + B'
 #'   Check Package:             'Ctrl + Shift + E'
 #'   Test Package:              'Ctrl + Shift + T'
-let .onload as function() {
-  print(description(package = "mzkit")$title)
-  print(description(package = "mzkit")$description)
+#' 
+let .onLoad as function() {
+  print(description(package = "mzkit")$title);
+  print(description(package = "mzkit")$description);
 }
