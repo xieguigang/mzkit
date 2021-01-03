@@ -54,8 +54,8 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports ProteoWizard.Interop
 Imports ProteoWizard.Interop.filters
+Imports SMRUCC.Rsharp.Development.Configuration
 Imports SMRUCC.Rsharp.Runtime
-Imports SMRUCC.Rsharp.System.Configuration
 
 ''' <summary>
 ''' ProteoWizard helper
