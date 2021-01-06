@@ -1,57 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::b9ae3a7ea3d1401c1d078be457a8a544, src\metadb\Chemoinformatics\SDF\Struct\Elements.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Atom
-    ' 
-    '         Properties: Atom, Coordination
-    ' 
-    '         Function: ensureValidFormat, Parse, splitJointNegativeNum, splitJointNum, ToString
-    ' 
-    '     Class Bound
-    ' 
-    '         Properties: i, j, Stereo, Type
-    ' 
-    '         Function: Parse, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Atom
+' 
+'         Properties: Atom, Coordination
+' 
+'         Function: ensureValidFormat, Parse, splitJointNegativeNum, splitJointNum, ToString
+' 
+'     Class Bound
+' 
+'         Properties: i, j, Stereo, Type
+' 
+'         Function: Parse, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Windows.Media.Media3D
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -162,11 +161,11 @@ Namespace SDF.Models
                 .DoCall(AddressOf ensureValidFormat) _
                 .ToArray
             Dim xyz As New Point3D With {
-                .X = t(0),
-                .Y = t(1),
-                .Z = t(2)
+                .X = Val(t(0)),
+                .Y = Val(t(1)),
+                .Z = Val(t(2))
             }
-            Dim name$ = t(3)
+            Dim name As String = t(3)
 
             Return New Atom With {
                 .Atom = name,
