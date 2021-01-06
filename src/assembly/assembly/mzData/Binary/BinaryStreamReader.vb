@@ -93,7 +93,7 @@ Namespace mzData.mzWebCache
 
             Call pointTo(scanId)
 
-            ms1.rt = file.ReadInt32
+            ms1.rt = file.ReadDouble
             ms1.BPC = file.ReadDouble
             ms1.TIC = file.ReadDouble
 
@@ -120,7 +120,7 @@ Namespace mzData.mzWebCache
                 ms2 = New ScanMS2 With {
                     .scan_id = file.ReadString(BinaryStringFormat.ZeroTerminated),
                     .parentMz = file.ReadDouble,
-                    .rt = file.ReadInt32,
+                    .rt = file.ReadDouble,
                     .intensity = file.ReadDouble,
                     .polarity = file.ReadInt32
                 }
