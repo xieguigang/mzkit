@@ -183,6 +183,35 @@ Export the XIC data to a specific file is also keeps simple, just mouse right cl
 
 <div style="page-break-after:always;"></div>
 
+### Ms-Imaging
+
+mzkit software is also supports the ``imzML`` file format for run ms-imaging rendering, here is how to view the imzML raw data file in mzkit application:
+
+a. click of the open button on the file menu:
+
+![](docs/manual/open_raw.PNG)
+
+b. then you will see a pop out dialog for select raw data file, select the ``imzML`` file format in the file fiter, like:
+
+![](docs/manual/imzML_filter.PNG)
+
+c. after the imzML raw data file has been imported into mzkit, then a raw data view for ms-imaging will be open, it looks like:
+
+![](docs/manual/ms-imaging-viewer.PNG)
+
+two components for view ms-imaging contains:
+
++ ``[MsImaging Parameters]`` Panel for select ions and adjust rendering parameters.
++ ``[MS-Imaging Viewer]`` tab page for show the rendering image output of the selected ions.
+
+d. select target ions in the explorer panel, and then mouse right click on the ions, select ``rendering`` menu item for run ms-imaging rendering:
+
+![](docs/manual/render-ions.PNG)
+
+e. finally, you will see the imaging on the ``[MS-Imaging Viewer]`` tab page after loading pixels data from the related ``ibd`` data files:
+
+
+
 ##  2. <a name='DataAnnotations'></a>Data Annotations
 
 ###  2.1. <a name='Formulasearch'></a>Formula search
