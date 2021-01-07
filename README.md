@@ -95,7 +95,7 @@ SOFTWARE.
 
 ![](docs/manual/main.png)
 ![](docs/manual/BPC_overlay.PNG)
-![](docs/manual/MS.PNG)
+![](docs/manual/ms-imaging1.PNG)
 
 <div style="page-break-after:always;"></div>
 
@@ -210,7 +210,13 @@ d. select target ions in the explorer panel, and then mouse right click on the i
 
 e. finally, you will see the imaging on the ``[MS-Imaging Viewer]`` tab page after loading pixels data from the related ``ibd`` data files:
 
+![](docs/manual/ms-imaging1.PNG)
 
+f. you can tweaks of the image from the ``[MsImaging Parameters]`` Panel.
+
+![](docs/manual/ms-imaging2.PNG)
+
+> change different color schema for rendering the MS-image in mzkit application.
 
 ##  2. <a name='DataAnnotations'></a>Data Annotations
 
