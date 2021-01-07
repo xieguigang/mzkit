@@ -63,7 +63,7 @@ Public Class Drawer : Implements IDisposable
 
             Call Application.DoEvents()
 
-            If skipZero AndAlso into.Length Then
+            If skipZero AndAlso into.Length = 0 Then
                 Continue For
             Else
                 For Each mzi As NamedCollection(Of ms2) In into
