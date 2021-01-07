@@ -328,7 +328,7 @@ Public Class PageMoleculeNetworking
                     Next
 
                     Call g.Tabular(
-                        properties:={"member_size", "m/z", "rt", "rtmin", "rtmax", "area", "forward", "reverse", "color"},
+                        propertyNames:={"member_size", "m/z", "rt", "rtmin", "rtmax", "area", "forward", "reverse", "color"},
                         creators:={My.User.Name},
                         title:="Molecular Networking",
                         description:="Molecular Networking Model",
