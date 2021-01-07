@@ -4,7 +4,7 @@
 
 ![](docs/manual/splash.PNG)
 
-Mzkit is an open source raw data file toolkit for mass spectrometry data analysis, provides by the ``BioNovoGene`` corporation. The features of mzkit inlcudes: raw data file content viewer(XIC/TIC/Mass spectrum plot), build molecule network, formula de-novo search and de-novo annotation.
+``Mzkit`` is an open source raw data file toolkit for mass spectrometry data analysis, provides by the ``BioNovoGene`` corporation. The features of mzkit inlcudes: raw data file content viewer(XIC/TIC/Mass spectrum plot/MS-Imaging), build molecule network, formula de-novo search and de-novo annotation.
 
 ```
 MIT License
@@ -101,7 +101,7 @@ SOFTWARE.
 
 ##  1. <a name='RawDataViewerInstruction'></a>Raw Data Viewer Instruction
 
-**Important Note: this application only supports the open source ``mzXML/mzML`` raw data file formats. For view the data in the vendor format file like the ``Thermo *.Raw`` required convert to the mzXML file format at first. It is recommended that convert the vendor format file to mzXML via [ProteoWizard](https://github.com/ProteoWizard/pwiz).**
+**Important Note: this application only supports the open source ``mzXML/mzML/imzML`` raw data file formats. For view the data in the vendor format file like the ``Thermo *.Raw`` required convert to the mzXML file format at first. It is recommended that convert the vendor format file to mzXML via [ProteoWizard](https://github.com/ProteoWizard/pwiz).**
 
 ###  1.1. <a name='Importsrawdatafile'></a>Imports raw data file
 
