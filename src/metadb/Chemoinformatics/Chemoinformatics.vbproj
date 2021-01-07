@@ -443,6 +443,7 @@
     <Compile Include="SDF\Struct\Elements.vb" />
     <Compile Include="SDF\Struct\Enums.vb" />
     <Compile Include="SDF\Struct\Mol.vb" />
+    <Compile Include="SDF\Struct\Point3D.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
