@@ -112,7 +112,7 @@ Namespace MRM
                                             Optional maxDeletions As Integer = 1,
                                             Optional isWorkCurveMode As Boolean = True) As IEnumerable(Of StandardCurve)
 
-            Dim [IS] As Dictionary(Of String, [IS]) = ISvector.ToDictionary(Function(i) i.ID)
+            Dim [IS] As Dictionary(Of String, [IS]) = ISvector.SafeQuery.ToDictionary(Function(i) i.ID)
             Dim blanks As New Dictionary(Of String, DataSet)
 
             If Not blankControls.IsNullOrEmpty Then
