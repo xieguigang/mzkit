@@ -54,6 +54,7 @@ Imports System.ComponentModel
 Imports System.IO
 Imports System.Text
 Imports System.Threading
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.CommandLine
@@ -113,6 +114,8 @@ Public Class frmMain
                     Call openRscript(file.FileName)
                 ElseIf file.FileName.ExtensionSuffix("imzML") Then
                     Call showMsImaging(file.FileName)
+                ElseIf file.FileName.ExtensionSuffix("mzml") AndAlso RawScanParser.IsMRMData(file.FileName) Then
+
                 Else
                     Call fileExplorer.ImportsRaw(file.FileName)
                 End If
