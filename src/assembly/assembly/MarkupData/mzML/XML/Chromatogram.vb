@@ -65,6 +65,10 @@ Namespace MarkupData.mzML
         Public Property precursor As precursor
         Public Property product As product
 
+        Public Overrides Function ToString() As String
+            Return id
+        End Function
+
     End Class
 
     Public Interface IMRMSelector
