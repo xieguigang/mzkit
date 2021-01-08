@@ -1,5 +1,7 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language
 Imports mzkit.My
 
 Public Class frmSRMIonsExplorer
@@ -22,6 +24,18 @@ Public Class frmSRMIonsExplorer
     End Sub
 
     Private Sub ShowTICOverlapToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowTICOverlapToolStripMenuItem.Click
+        Dim list As New List(Of NamedCollection(Of ChromatogramTick))
 
+        For Each obj As Object In CheckedListBox1.CheckedItems
+            With DirectCast(obj, chromatogram)
+                list += New NamedCollection(Of ChromatogramTick)(.ToString, .Ticks)
+            End With
+        Next
+
+        Call MyApplication.host.mzkitTool.TIC(list.ToArray)
+    End Sub
+
+    Private Sub frmSRMIonsExplorer_Load(sender As Object, e As EventArgs) Handles Me.Load
+        TabText = "MRM Ions"
     End Sub
 End Class
