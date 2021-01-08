@@ -70,7 +70,7 @@ Namespace MarkupData.mzML
             If id = "TIC" Then
                 Return id
             Else
-                Return $"Ion [{precursor.isolationWindow.cvParams.KeyItem("isolation window target m/z").value}/{product.isolationWindow.cvParams.KeyItem("isolation window target m/z")}]"
+                Return $"Ion [{precursor.isolationWindow.cvParams.KeyItem("isolation window target m/z").value}/{product.isolationWindow.cvParams.KeyItem("isolation window target m/z").value}]"
             End If
         End Function
 
