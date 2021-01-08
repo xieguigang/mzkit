@@ -24,17 +24,34 @@ Partial Class frmSRMIonsExplorer
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.CheckedListBox1 = New System.Windows.Forms.CheckedListBox()
+        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.ShowTICOverlapToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'CheckedListBox1
         '
+        Me.CheckedListBox1.ContextMenuStrip = Me.ContextMenuStrip1
         Me.CheckedListBox1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.CheckedListBox1.FormattingEnabled = True
         Me.CheckedListBox1.Location = New System.Drawing.Point(0, 0)
         Me.CheckedListBox1.Name = "CheckedListBox1"
         Me.CheckedListBox1.Size = New System.Drawing.Size(387, 472)
         Me.CheckedListBox1.TabIndex = 0
+        '
+        'ContextMenuStrip1
+        '
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowTICOverlapToolStripMenuItem})
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(168, 26)
+        '
+        'ShowTICOverlapToolStripMenuItem
+        '
+        Me.ShowTICOverlapToolStripMenuItem.Name = "ShowTICOverlapToolStripMenuItem"
+        Me.ShowTICOverlapToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ShowTICOverlapToolStripMenuItem.Text = "Show TIC Overlap"
         '
         'frmSRMIonsExplorer
         '
@@ -44,9 +61,12 @@ Partial Class frmSRMIonsExplorer
         Me.Controls.Add(Me.CheckedListBox1)
         Me.Name = "frmSRMIonsExplorer"
         Me.Text = "Form1"
+        Me.ContextMenuStrip1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
 
     Friend WithEvents CheckedListBox1 As CheckedListBox
+    Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
+    Friend WithEvents ShowTICOverlapToolStripMenuItem As ToolStripMenuItem
 End Class

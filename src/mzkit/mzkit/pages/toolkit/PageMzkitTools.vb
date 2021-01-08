@@ -330,7 +330,25 @@ Public Class PageMzkitTools
                     size:=$"{args.width},{args.height}",
                     margin:=args.GetPadding.ToString
                 ).AsGDIImage
-            End Sub, width:=1600, height:=100, padding:=g.DefaultPadding)
+            End Sub, width:=1600, height:=1000, padding:=g.DefaultPadding)
+
+        MyApplication.host.ShowPage(Me)
+    End Sub
+
+    Public Sub ShowMRMTIC(name As String, ticks As ChromatogramTick())
+        Dim data As New NamedCollection(Of ChromatogramTick)(name, ticks)
+
+        showMatrix(ticks, name)
+        MyApplication.RegisterPlot(
+            Sub(args)
+                PictureBox1.BackgroundImage = ChromatogramPlot.TICplot(
+                    ionData:={data},
+                    colorsSchema:=Globals.GetColors,
+                    fillCurve:=Globals.Settings.viewer.fill,
+                    size:=$"{args.width},{args.height}",
+                    margin:=args.GetPadding.ToString
+                ).AsGDIImage
+            End Sub, width:=1600, height:=1000, padding:=g.DefaultPadding)
 
         MyApplication.host.ShowPage(Me)
     End Sub
