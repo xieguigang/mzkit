@@ -106,6 +106,11 @@ Public Class frmMain
         panelMain.Show(dockPanel)
     End Sub
 
+    Public Sub ShowMRMIons(file As String)
+        MRMIons.DockState = DockState.DockLeft
+        MRMIons.LoadMRM(file)
+    End Sub
+
     Public Sub OpenFile()
         Using file As New OpenFileDialog With {.Filter = "Raw Data|*.mzXML;*.mzML|Image mzML(*.imzML)|*.imzML|R# Script(*.R)|*.R"}
             If file.ShowDialog = DialogResult.OK Then
@@ -115,7 +120,7 @@ Public Class frmMain
                 ElseIf file.FileName.ExtensionSuffix("imzML") Then
                     Call showMsImaging(file.FileName)
                 ElseIf file.FileName.ExtensionSuffix("mzml") AndAlso RawScanParser.IsMRMData(file.FileName) Then
-
+                    Call ShowMRMIons(file.FileName)
                 Else
                     Call fileExplorer.ImportsRaw(file.FileName)
                 End If
@@ -767,6 +772,7 @@ Public Class frmMain
     Friend plotParams As New frmTweaks
     Friend msImageParameters As New frmMsImagingTweaks
     Friend msDemo As New frmDemo
+    Friend MRMIons As New frmSRMIonsExplorer
 
     Public Sub ShowPropertyWindow()
         propertyWin.DockState = DockState.DockRight
@@ -817,6 +823,9 @@ Public Class frmMain
 
         settingsPage.Show(dockPanel)
         settingsPage.DockState = DockState.Hidden
+
+        MRMIons.Show(dockPanel)
+        MRMIons.DockState = DockState.Hidden
 
         RtermPage.Show(dockPanel)
         RtermPage.DockState = DockState.Hidden
