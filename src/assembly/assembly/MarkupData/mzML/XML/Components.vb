@@ -96,8 +96,6 @@
 #End Region
 
 Imports System.Xml.Serialization
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Language.Default
@@ -134,6 +132,13 @@ Namespace MarkupData.mzML
 
         Public Property cvList As cvList
         Public Property run As run
+        Public Property fileDescription As fileDescription
+
+    End Class
+
+    Public Class fileDescription
+
+        Public Property fileContent As Params
 
     End Class
 
