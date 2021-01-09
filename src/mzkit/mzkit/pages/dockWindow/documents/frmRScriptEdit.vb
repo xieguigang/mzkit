@@ -100,7 +100,7 @@ Public Class frmRScriptEdit
         Me.ShowIcon = True
     End Sub
 
-    Private Sub Editor1_GotFocus(sender As Object, e As EventArgs) Handles Editor1.GotFocus
+    Private Sub Editor1_OnFocus() Handles Editor1.OnFocus
         MyApplication.host.ribbonItems.TabGroupRscriptTools.ContextAvailable = ContextAvailability.Active
     End Sub
 
