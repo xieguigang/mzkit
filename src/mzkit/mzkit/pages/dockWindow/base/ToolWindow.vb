@@ -50,10 +50,20 @@ Namespace DockSample
     Public Partial Class ToolWindow
         Inherits DockContent
 
+        Friend WithEvents VS2015LightTheme1 As New VS2015LightTheme
+        Friend WithEvents VisualStudioToolStripExtender1 As VisualStudioToolStripExtender
+
         Public Sub New()
             InitializeComponent()
             AutoScaleMode = AutoScaleMode.Dpi
             DoubleBuffered = True
+            VisualStudioToolStripExtender1 = New VisualStudioToolStripExtender(components)
+        End Sub
+
+        Protected Sub ApplyVsTheme(ParamArray items As ToolStrip())
+            For Each item In items
+                Call VisualStudioToolStripExtender1.SetStyle(item, VisualStudioToolStripExtender.VsVersion.Vs2015, VS2015LightTheme1)
+            Next
         End Sub
 
         ''' <summary>

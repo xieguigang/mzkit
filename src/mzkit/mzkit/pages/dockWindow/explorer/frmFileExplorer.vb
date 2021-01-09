@@ -11,8 +11,6 @@ Imports Vip.Notification
 ''' </summary>
 Public Class frmFileExplorer
 
-    Friend WithEvents treeView1 As New Win7StyleTreeView
-
     Sub New()
 
         ' This call is required by the designer.
@@ -97,13 +95,6 @@ Public Class frmFileExplorer
     Private Sub frmFileExplorer_Load(sender As Object, e As EventArgs) Handles Me.Load
         Controls.Add(treeView1)
 
-        ContextMenuStrip1.RenderMode = ToolStripRenderMode.System
-
-        treeView1.Location = New Point(1, TextBox2.Height + 5)
-        treeView1.Size = New Size(Width - 2, Me.Height - TextBox2.Height - 25)
-        treeView1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         treeView1.HotTracking = True
         treeView1.BringToFront()
         treeView1.CheckBoxes = True
@@ -114,11 +105,14 @@ Public Class frmFileExplorer
         treeView1.Dock = DockStyle.Fill
         treeView1.ImageList = ImageList2
 
+        ToolStrip1.Stretch = True
+
         '   ExportToolStripMenuItem.Text = "Export XIC Ions"
 
         Me.TabText = "File Explorer"
 
         Call InitializeFileTree()
+        Call ApplyVsTheme(ContextMenuStrip1, ToolStrip1)
     End Sub
 
     Public Sub ImportsRaw(fileName As String)
@@ -380,14 +374,14 @@ Public Class frmFileExplorer
         Call MyApplication.ExecuteRScript(scriptFile, isFile:=True)
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
         Dim raws As New List(Of Raw)
 
         For Each node As TreeNode In treeView1.Nodes(0).Nodes
             raws.Add(node.Tag)
         Next
 
-        Call FeatureSearchHandler.SearchByMz(TextBox2.Text, raws)
+        Call FeatureSearchHandler.SearchByMz(ToolStripTextBox1.Text, raws)
     End Sub
 
     Private Sub ImportsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImportsToolStripMenuItem.Click
