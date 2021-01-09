@@ -11,6 +11,8 @@ Public Class frmUVScans
 
     Private Sub frmUVScans_Load(sender As Object, e As EventArgs) Handles Me.Load
         Me.TabText = "UV Scans"
+
+        Call ApplyVsTheme(ContextMenuStrip1)
     End Sub
 
     Public Sub Clear()

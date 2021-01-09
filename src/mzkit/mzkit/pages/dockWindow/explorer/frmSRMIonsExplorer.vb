@@ -37,5 +37,7 @@ Public Class frmSRMIonsExplorer
 
     Private Sub frmSRMIonsExplorer_Load(sender As Object, e As EventArgs) Handles Me.Load
         TabText = "MRM Ions"
+
+        Call ApplyVsTheme(ContextMenuStrip1)
     End Sub
 End Class
