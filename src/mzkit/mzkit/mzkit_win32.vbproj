@@ -219,9 +219,6 @@
     <Reference Include="Microsoft.VisualBasic.Windows.Forms.Console">
       <HintPath>..\dist\Microsoft.VisualBasic.Windows.Forms.Console.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.VisualStudio.TextEdit">
-      <HintPath>..\dist\Microsoft.VisualStudio.TextEdit.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.VisualStudio.Windows.Form">
       <HintPath>..\dist\Microsoft.VisualStudio.Windows.Form.dll</HintPath>
     </Reference>
@@ -825,6 +822,10 @@
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\text%25html\MIME-htmls.vbproj">
       <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
       <Name>MIME-htmls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\mini-R\RDev\RDev.vbproj">
+      <Project>{319618d7-3f65-4e16-a46a-88c8f11361e7}</Project>
+      <Name>RDev</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Rscript\Library\mzkit\mzkit.vbproj">
       <Project>{7a42d5a0-8058-459c-a139-195b6022a710}</Project>
