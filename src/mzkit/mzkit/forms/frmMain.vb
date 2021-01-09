@@ -893,8 +893,8 @@ Public Class frmMain
     Private Sub frmMain_ResizeEnd(sender As Object, e As EventArgs) Handles Me.ResizeEnd
         Ribbon1.Refresh()
 
-        ' Me.ResumeLayout(performLayout:=False)
-        ' Me.PerformLayout()
+        startPage.ResumeLayout(performLayout:=False)
+        startPage.PerformLayout()
     End Sub
 
     Dim mzkitApp As Process = Process.GetCurrentProcess()
@@ -909,7 +909,7 @@ Public Class frmMain
     End Sub
 
     Private Sub frmMain_ResizeBegin(sender As Object, e As EventArgs) Handles Me.ResizeBegin
-        ' Me.SuspendLayout()
+        startPage.SuspendLayout()
     End Sub
 
     Private Sub frmMain_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
@@ -925,6 +925,11 @@ Public Class frmMain
     ''' <param name="e"></param>
     Private Sub frmMain_Closed(sender As Object, e As EventArgs) Handles Me.Closed
         End
+    End Sub
+
+    Private Sub frmMain_Resize(sender As Object, e As EventArgs) Handles Me.Resize
+        Ribbon1.Update()
+        Ribbon1.Refresh()
     End Sub
 
 

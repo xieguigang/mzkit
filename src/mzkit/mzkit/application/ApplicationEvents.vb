@@ -122,7 +122,7 @@ Namespace My
         Public Shared Sub RegisterPlot(plot As Action(Of PlotProperty),
                                        Optional width% = 2048,
                                        Optional height% = 1600,
-                                       Optional padding$ = g.DefaultPadding,
+                                       Optional padding$ = g.DefaultUltraLargePadding,
                                        Optional bg$ = "white",
                                        Optional title$ = "mzkit data plot",
                                        Optional showLegend As Boolean = True,
