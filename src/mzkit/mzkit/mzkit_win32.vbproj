@@ -337,7 +337,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="pages\dockWindow\documents\FeatureSearchHandler.vb" />
-    <Compile Include="pages\dockWindow\explorer\Class1.vb" />
     <Compile Include="pages\dockWindow\explorer\frmCDFExplorer.Designer.vb">
       <DependentUpon>frmCDFExplorer.vb</DependentUpon>
     </Compile>
