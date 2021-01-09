@@ -306,12 +306,6 @@
     <Compile Include="pages\contextMenu\ToggleSlider.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="pages\dockWindow\documents\frmGCMSViewer.Designer.vb">
-      <DependentUpon>frmGCMSViewer.vb</DependentUpon>
-    </Compile>
-    <Compile Include="pages\dockWindow\documents\frmGCMSViewer.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="pages\dockWindow\documents\frmMsImagingViewer.Designer.vb">
       <DependentUpon>frmMsImagingViewer.vb</DependentUpon>
     </Compile>
@@ -337,10 +331,10 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="pages\dockWindow\documents\FeatureSearchHandler.vb" />
-    <Compile Include="pages\dockWindow\explorer\frmCDFExplorer.Designer.vb">
-      <DependentUpon>frmCDFExplorer.vb</DependentUpon>
+    <Compile Include="pages\dockWindow\documents\frmGCMS_CDFExplorer.Designer.vb">
+      <DependentUpon>frmGCMS_CDFExplorer.vb</DependentUpon>
     </Compile>
-    <Compile Include="pages\dockWindow\explorer\frmCDFExplorer.vb">
+    <Compile Include="pages\dockWindow\documents\frmGCMS_CDFExplorer.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="pages\dockWindow\explorer\frmSRMIonsExplorer.Designer.vb">
@@ -360,6 +354,12 @@
     </Compile>
     <Compile Include="pages\dockWindow\explorer\frmTreeExplorer.vb">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="pages\dockWindow\documents\RtRangeSelector.Designer.vb">
+      <DependentUpon>RtRangeSelector.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\dockWindow\documents\RtRangeSelector.vb">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="pages\dockWindow\frmDemo.Designer.vb">
       <DependentUpon>frmDemo.vb</DependentUpon>
@@ -596,9 +596,6 @@
     <EmbeddedResource Include="pages\dockWindow\documents\frmFeatureSearch.resx">
       <DependentUpon>frmFeatureSearch.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="pages\dockWindow\documents\frmGCMSViewer.resx">
-      <DependentUpon>frmGCMSViewer.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\documents\frmMsImagingViewer.resx">
       <DependentUpon>frmMsImagingViewer.vb</DependentUpon>
     </EmbeddedResource>
@@ -608,8 +605,8 @@
     <EmbeddedResource Include="pages\dockWindow\documents\frmPlotViewer.resx">
       <DependentUpon>frmPlotViewer.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="pages\dockWindow\explorer\frmCDFExplorer.resx">
-      <DependentUpon>frmCDFExplorer.vb</DependentUpon>
+    <EmbeddedResource Include="pages\dockWindow\documents\frmGCMS_CDFExplorer.resx">
+      <DependentUpon>frmGCMS_CDFExplorer.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\explorer\frmFileExplorer.resx">
       <DependentUpon>frmFileExplorer.vb</DependentUpon>
@@ -625,6 +622,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\explorer\frmUVScans.resx">
       <DependentUpon>frmUVScans.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pages\dockWindow\documents\RtRangeSelector.resx">
+      <DependentUpon>RtRangeSelector.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\frmSettings.resx">
       <DependentUpon>frmSettings.vb</DependentUpon>

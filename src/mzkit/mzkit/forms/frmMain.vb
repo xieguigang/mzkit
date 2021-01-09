@@ -778,7 +778,7 @@ Public Class frmMain
     Friend msImageParameters As New frmMsImagingTweaks
     Friend msDemo As New frmDemo
     Friend MRMIons As New frmSRMIonsExplorer
-    Friend CDFExplorer As New frmCDFExplorer
+    Friend CDFExplorer As New frmGCMS_CDFExplorer
 
     Public Sub ShowPropertyWindow()
         propertyWin.DockState = DockState.DockRight
