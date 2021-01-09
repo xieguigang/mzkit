@@ -12,7 +12,10 @@ Public Class RtRangeSelector
 
     Dim start As Integer
     Dim endPox As Integer
+    Dim lastX As Integer
+
     Dim onSelect As Boolean
+    Dim onMoveRange As Boolean
     Dim TIC As ChromatogramTick()
     Dim RtRange As Double
 
@@ -26,32 +29,50 @@ Public Class RtRangeSelector
     End Sub
 
     Private Sub RtRangeSelector_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
-        start = e.X
-        onSelect = True
+        If e.X > start AndAlso e.X < endPox Then
+            onMoveRange = True
+            lastX = e.X
+        Else
+            start = e.X
+            onSelect = True
+        End If
     End Sub
 
     Private Sub RtRangeSelector_MouseUp(sender As Object, e As MouseEventArgs) Handles Me.MouseUp
         endPox = e.X
         onSelect = False
+        onMoveRange = False
 
         Dim length As Double = Width
-        Dim min As Double = {start, endPox}.Min / length
-        Dim max As Double = {start, endPox}.Max / length
 
-        min = TIC(Scan0).Time + min * RtRange
-        max = TIC(Scan0).Time + max * RtRange
+        With {start, endPox}
+            Dim min As Double = .Min / length
+            Dim max As Double = .Max / length
 
-        RaiseEvent RangeSelect(min, max)
+            min = TIC(Scan0).Time + min * RtRange
+            max = TIC(Scan0).Time + max * RtRange
+
+            RaiseEvent RangeSelect(min, max)
+
+            start = .Min
+            endPox = .Max
+        End With
     End Sub
 
     Private Sub RtRangeSelector_MouseMove(sender As Object, e As MouseEventArgs) Handles Me.MouseMove
         If onSelect Then
             endPox = e.X
+        ElseIf onMoveRange Then
+            Dim dx = e.X - lastX
+
+            lastX = e.X
+            start += dx
+            endPox += dx
         End If
     End Sub
 
     Private Sub RtRangeSelector_Load(sender As Object, e As EventArgs) Handles Me.Load
-        Timer1.Interval = 1
+        Timer1.Interval = 30
         Timer1.Enabled = True
         Timer1.Start()
 
@@ -59,6 +80,10 @@ Public Class RtRangeSelector
     End Sub
 
     Private Sub DrawTIC(g As Graphics)
+        If TIC.IsNullOrEmpty Then
+            Return
+        End If
+
         Using TICcurve As New GraphicsPath
             Dim height As Double = Me.Height
             Dim width As Double = Me.Width
@@ -76,7 +101,7 @@ Public Class RtRangeSelector
     End Sub
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
-        If onSelect Then
+        If onSelect OrElse onMoveRange Then
             Dim left = {start, endPox}.Min
             Dim right = {start, endPox}.Max
 
@@ -86,5 +111,11 @@ Public Class RtRangeSelector
                 Call g.FillRectangle(New SolidBrush(SelectedColor.Alpha(125)), New RectangleF(left, 0, right - left, Height))
             End Using
         End If
+    End Sub
+
+    Private Sub RtRangeSelector_Resize(sender As Object, e As EventArgs) Handles Me.Resize
+        Using g = Me.CreateGraphics
+            Call DrawTIC(g)
+        End Using
     End Sub
 End Class
