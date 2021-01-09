@@ -131,19 +131,32 @@ Public Class PageMoleculeNetworking
             Sub()
                 Thread.Sleep(500)
                 progress.ShowProgressTitle("Run network layouts...")
-                graph = graph _
-                    .doRandomLayout _
-                    .doForceLayout(
-                        parameters:=Globals.Settings.network.layout,
-                        progressCallback:=AddressOf progress.ShowProgressDetails,
-                        cancel:=cancel
-                    )
+                'graph = graph _
+                '    .doRandomLayout _
+                '    .doForceLayout(
+                '        parameters:=Globals.Settings.network.layout,
+                '        progressCallback:=AddressOf progress.ShowProgressDetails,
+                '        cancel:=cancel
+                '    )
 
-                ' Dim layouts = Planner.Plan(graph, Globals.Settings.network.layout.Iterations, Sub(msg) progress.Invoke(Sub() progress.ShowProgressDetails ( msg))
+                Dim layouts = New GroupPlanner(graph)
+                Dim iterations = Globals.Settings.network.layout.Iterations
+                Dim msg$
 
-                'For Each node In graph.vertex
-                '    node.data.initialPostion = New FDGVector2(layouts(node))
-                'Next
+                For i As Integer = 0 To iterations
+                    Call layouts.Collide()
+
+                    If (100 * i / iterations) Mod 5 = 0 Then
+                        msg = $"- Completed {i + 1} of {iterations} [{CInt(100 * i / iterations)}%]"
+
+                        Call MyApplication.LogText(msg)
+                        Call progress.Invoke(Sub() progress.ShowProgressDetails(msg))
+
+                        If cancel.Value Then
+                            Exit For
+                        End If
+                    End If
+                Next
 
                 progress.ShowProgressDetails("do network render plot...")
 
