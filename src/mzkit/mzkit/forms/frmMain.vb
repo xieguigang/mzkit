@@ -124,7 +124,9 @@ Public Class frmMain
                 ElseIf file.FileName.ExtensionSuffix("mzml") AndAlso RawScanParser.IsMRMData(file.FileName) Then
                     Call ShowMRMIons(file.FileName)
                 ElseIf file.FileName.ExtensionSuffix("cdf") OrElse file.FileName.ExtensionSuffix("netcdf") Then
-                    CDFExplorer.DockState = DockState.DockLeft
+                    Dim CDFExplorer As New frmGCMS_CDFExplorer
+
+                    CDFExplorer.DockState = DockState.Document
                     CDFExplorer.loadCDF(file.FileName)
                 Else
                     Call fileExplorer.ImportsRaw(file.FileName)
@@ -778,7 +780,6 @@ Public Class frmMain
     Friend msImageParameters As New frmMsImagingTweaks
     Friend msDemo As New frmDemo
     Friend MRMIons As New frmSRMIonsExplorer
-    Friend CDFExplorer As New frmGCMS_CDFExplorer
 
     Public Sub ShowPropertyWindow()
         propertyWin.DockState = DockState.DockRight
@@ -823,9 +824,6 @@ Public Class frmMain
 
         startPage.Show(dockPanel)
         startPage.DockState = DockState.Document
-
-        CDFExplorer.Show(dockPanel)
-        CDFExplorer.DockState = DockState.Hidden
 
         panelMain.Show(dockPanel)
         panelMain.DockState = DockState.Document
