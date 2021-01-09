@@ -80,6 +80,7 @@ Namespace GCMS
         ''' </summary>
         ''' <returns></returns>
         Public Property ms As ms1_scan()()
+        Public Property fileName As String
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetTIC() As NamedCollection(Of ChromatogramTick)
