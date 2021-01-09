@@ -31,9 +31,9 @@ Partial Class frmMsImagingTweaks
         Me.CheckedListBox1 = New System.Windows.Forms.CheckedListBox()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.RenderingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ClearSelectionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.ClearSelectionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ContextMenuStrip1.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
@@ -44,6 +44,7 @@ Partial Class frmMsImagingTweaks
         'PropertyGrid1
         '
         Me.PropertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.PropertyGrid1.LineColor = System.Drawing.SystemColors.ScrollBar
         Me.PropertyGrid1.Location = New System.Drawing.Point(0, 0)
         Me.PropertyGrid1.Name = "PropertyGrid1"
         Me.PropertyGrid1.Size = New System.Drawing.Size(377, 262)
@@ -66,14 +67,21 @@ Partial Class frmMsImagingTweaks
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RenderingToolStripMenuItem, Me.ClearSelectionToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
         Me.ContextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 70)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(153, 48)
         '
         'RenderingToolStripMenuItem
         '
         Me.RenderingToolStripMenuItem.Image = CType(resources.GetObject("RenderingToolStripMenuItem.Image"), System.Drawing.Image)
         Me.RenderingToolStripMenuItem.Name = "RenderingToolStripMenuItem"
-        Me.RenderingToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.RenderingToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.RenderingToolStripMenuItem.Text = "Rendering"
+        '
+        'ClearSelectionToolStripMenuItem
+        '
+        Me.ClearSelectionToolStripMenuItem.Image = CType(resources.GetObject("ClearSelectionToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.ClearSelectionToolStripMenuItem.Name = "ClearSelectionToolStripMenuItem"
+        Me.ClearSelectionToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.ClearSelectionToolStripMenuItem.Text = "Clear Selection"
         '
         'SplitContainer1
         '
@@ -97,23 +105,16 @@ Partial Class frmMsImagingTweaks
         '
         Me.Label1.AutoSize = True
         Me.Label1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Label1.Font = New System.Drawing.Font("微软雅黑", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.Label1.Location = New System.Drawing.Point(0, 0)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(78, 22)
         Me.Label1.TabIndex = 3
         Me.Label1.Text = "Ions List"
         '
-        'ClearSelectionToolStripMenuItem
-        '
-        Me.ClearSelectionToolStripMenuItem.Image = CType(resources.GetObject("ClearSelectionToolStripMenuItem.Image"), System.Drawing.Image)
-        Me.ClearSelectionToolStripMenuItem.Name = "ClearSelectionToolStripMenuItem"
-        Me.ClearSelectionToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.ClearSelectionToolStripMenuItem.Text = "Clear Selection"
-        '
         'frmMsImagingTweaks
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(377, 554)

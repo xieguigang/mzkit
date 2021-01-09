@@ -31,6 +31,7 @@ Partial Class frmTweaks
         'PropertyGrid1
         '
         Me.PropertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.PropertyGrid1.LineColor = System.Drawing.SystemColors.ScrollBar
         Me.PropertyGrid1.Location = New System.Drawing.Point(0, 0)
         Me.PropertyGrid1.Name = "PropertyGrid1"
         Me.PropertyGrid1.Size = New System.Drawing.Size(406, 467)
@@ -43,7 +44,6 @@ Partial Class frmTweaks
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(406, 467)
         Me.Controls.Add(Me.PropertyGrid1)
-        Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Microsoft YaHei UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Margin = New System.Windows.Forms.Padding(4)

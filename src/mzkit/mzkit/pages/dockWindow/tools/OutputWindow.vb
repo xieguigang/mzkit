@@ -79,15 +79,15 @@ Namespace DockSample
 
             Me.textBox2.WordWrap = True
 
-            Me.comboBox.SelectedIndex = 0
+            Me.ToolStripComboBox1.SelectedIndex = 0
         End Sub
 
         Public Sub AppendMessage(msg As String)
             Invoke(Sub() textBox1.AppendText(msg & vbCrLf))
         End Sub
 
-        Private Sub comboBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles comboBox.SelectedIndexChanged
-            If comboBox.SelectedIndex = 0 Then
+        Private Sub comboBox_SelectedIndexChanged(sender As Object, e As EventArgs)
+            If ToolStripComboBox1.SelectedIndex = 0 Then
                 textBox1.Show()
                 textBox2.Hide()
             Else
@@ -99,6 +99,10 @@ Namespace DockSample
         Private Sub DummyOutputWindow_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
             e.Cancel = True
             Call Me.Hide()
+        End Sub
+
+        Private Sub OutputWindow_Load(sender As Object, e As EventArgs) Handles Me.Load
+            Call ApplyVsTheme(ToolStrip1)
         End Sub
     End Class
 End Namespace

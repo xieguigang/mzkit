@@ -626,6 +626,9 @@
     <EmbeddedResource Include="pages\dockWindow\frmSettings.resx">
       <DependentUpon>frmSettings.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="pages\dockWindow\tools\OutputWindow.resx">
+      <DependentUpon>OutputWindow.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\tools\PropertyWindow.resx">
       <DependentUpon>PropertyWindow.vb</DependentUpon>
     </EmbeddedResource>
