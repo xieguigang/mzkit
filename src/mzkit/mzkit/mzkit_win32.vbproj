@@ -306,6 +306,12 @@
     <Compile Include="pages\contextMenu\ToggleSlider.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="pages\dockWindow\documents\frmGCMSViewer.Designer.vb">
+      <DependentUpon>frmGCMSViewer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\dockWindow\documents\frmGCMSViewer.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="pages\dockWindow\documents\frmMsImagingViewer.Designer.vb">
       <DependentUpon>frmMsImagingViewer.vb</DependentUpon>
     </Compile>
@@ -331,6 +337,13 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="pages\dockWindow\documents\FeatureSearchHandler.vb" />
+    <Compile Include="pages\dockWindow\explorer\Class1.vb" />
+    <Compile Include="pages\dockWindow\explorer\frmCDFExplorer.Designer.vb">
+      <DependentUpon>frmCDFExplorer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\dockWindow\explorer\frmCDFExplorer.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="pages\dockWindow\explorer\frmSRMIonsExplorer.Designer.vb">
       <DependentUpon>frmSRMIonsExplorer.vb</DependentUpon>
     </Compile>
@@ -584,6 +597,9 @@
     <EmbeddedResource Include="pages\dockWindow\documents\frmFeatureSearch.resx">
       <DependentUpon>frmFeatureSearch.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="pages\dockWindow\documents\frmGCMSViewer.resx">
+      <DependentUpon>frmGCMSViewer.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\documents\frmMsImagingViewer.resx">
       <DependentUpon>frmMsImagingViewer.vb</DependentUpon>
     </EmbeddedResource>
@@ -592,6 +608,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\documents\frmPlotViewer.resx">
       <DependentUpon>frmPlotViewer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pages\dockWindow\explorer\frmCDFExplorer.resx">
+      <DependentUpon>frmCDFExplorer.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\explorer\frmFileExplorer.resx">
       <DependentUpon>frmFileExplorer.vb</DependentUpon>

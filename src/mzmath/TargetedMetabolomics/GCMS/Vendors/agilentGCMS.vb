@@ -46,6 +46,7 @@
 Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 Imports Microsoft.VisualBasic.Language
+Imports any = Microsoft.VisualBasic.Scripting
 
 Namespace GCMS.Vendors
 
@@ -58,6 +59,11 @@ Namespace GCMS.Vendors
             Dim massValues = cdf.getDataVariable("mass_values").tiny_num
             Dim intensityValues = cdf.getDataVariable("intensity_values").tiny_num
             Dim scan_times = cdf.getDataVariable("time_values").tiny_num
+            Dim attrs As New Dictionary(Of String, String)
+
+            For Each attr As attribute In cdf.globalAttributes
+                attrs(attr.name) = attr.value
+            Next
 
             Dim ms As ms1_scan()() = New ms1_scan(pointCount.Length - 1)() {}
             Dim index As i32 = Scan0
@@ -80,7 +86,8 @@ Namespace GCMS.Vendors
                 .times = time.numerics,
                 .tic = tic.numerics,
                 .ms = ms,
-                .title = Scripting.ToString(cdf.getAttribute("experiment_title"))
+                .title = any.ToString(cdf.getAttribute("experiment_title")),
+                .attributes = attrs
             }
         End Function
     End Module

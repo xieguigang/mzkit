@@ -112,7 +112,9 @@ Public Class frmMain
     End Sub
 
     Public Sub OpenFile()
-        Using file As New OpenFileDialog With {.Filter = "Raw Data|*.mzXML;*.mzML|Image mzML(*.imzML)|*.imzML|R# Script(*.R)|*.R"}
+        Using file As New OpenFileDialog With {
+            .Filter = "Raw Data|*.mzXML;*.mzML|Image mzML(*.imzML)|*.imzML|GC-MS Targeted(*.cdf)|*.cdf;*.netcdf|R# Script(*.R)|*.R"
+        }
             If file.ShowDialog = DialogResult.OK Then
                 If file.FileName.ExtensionSuffix("R") Then
                     Call fileExplorer.AddScript(file.FileName.GetFullPath)
@@ -121,6 +123,9 @@ Public Class frmMain
                     Call showMsImaging(file.FileName)
                 ElseIf file.FileName.ExtensionSuffix("mzml") AndAlso RawScanParser.IsMRMData(file.FileName) Then
                     Call ShowMRMIons(file.FileName)
+                ElseIf file.FileName.ExtensionSuffix("cdf") OrElse file.FileName.ExtensionSuffix("netcdf") Then
+                    CDFExplorer.DockState = DockState.DockLeft
+                    CDFExplorer.loadCDF(file.FileName)
                 Else
                     Call fileExplorer.ImportsRaw(file.FileName)
                 End If
@@ -773,6 +778,7 @@ Public Class frmMain
     Friend msImageParameters As New frmMsImagingTweaks
     Friend msDemo As New frmDemo
     Friend MRMIons As New frmSRMIonsExplorer
+    Friend CDFExplorer As New frmCDFExplorer
 
     Public Sub ShowPropertyWindow()
         propertyWin.DockState = DockState.DockRight
@@ -817,6 +823,9 @@ Public Class frmMain
 
         startPage.Show(dockPanel)
         startPage.DockState = DockState.Document
+
+        CDFExplorer.Show(dockPanel)
+        CDFExplorer.DockState = DockState.Hidden
 
         panelMain.Show(dockPanel)
         panelMain.DockState = DockState.Document

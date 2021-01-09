@@ -60,6 +60,7 @@ Namespace GCMS
     Public Class Raw
 
         Public Property title As String
+        Public Property attributes As Dictionary(Of String, String)
 
 #Region "Gas Chromatography"
         ''' <summary>
