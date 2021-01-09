@@ -126,6 +126,7 @@ Public Class frmMain
                 ElseIf file.FileName.ExtensionSuffix("cdf") OrElse file.FileName.ExtensionSuffix("netcdf") Then
                     Dim CDFExplorer As New frmGCMS_CDFExplorer
 
+                    CDFExplorer.Show(dockPanel)
                     CDFExplorer.DockState = DockState.Document
                     CDFExplorer.loadCDF(file.FileName)
                 Else

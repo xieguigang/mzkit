@@ -7,5 +7,6 @@ Public Class frmGCMS_CDFExplorer
 
     Public Sub loadCDF(file As String)
         gcms = netCDFReader.Open(file).ReadData()
+        RtRangeSelector1.SetTIC(gcms.GetTIC.value)
     End Sub
 End Class
