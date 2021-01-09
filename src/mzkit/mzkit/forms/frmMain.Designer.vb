@@ -45,8 +45,10 @@ Partial Class frmMain
         'StatusStrip
         '
         Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1, Me.ToolStripDropDownButton1, Me.ToolStripStatusLabel2, Me.ToolStripStatusLabel3})
+        Me.StatusStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow
         Me.StatusStrip.Location = New System.Drawing.Point(0, 502)
         Me.StatusStrip.Name = "StatusStrip"
+        Me.StatusStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
         Me.StatusStrip.Size = New System.Drawing.Size(1084, 22)
         Me.StatusStrip.TabIndex = 7
         Me.StatusStrip.Text = "StatusStrip"

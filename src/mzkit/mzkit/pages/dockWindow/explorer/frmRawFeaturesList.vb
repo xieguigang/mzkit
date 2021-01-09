@@ -8,23 +8,18 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.Text.Xml.Models
-Imports mzkit.Kesoft.Windows.Forms.Win7StyleTreeView
 Imports mzkit.My
 Imports RibbonLib.Interop
 Imports Task
 Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class frmRawFeaturesList
-
-    Friend WithEvents treeView1 As New Win7StyleTreeView
 
     Public ReadOnly Property CurrentRawFile As Raw
 
@@ -51,11 +46,6 @@ Public Class frmRawFeaturesList
 
         ContextMenuStrip1.RenderMode = ToolStripRenderMode.System
 
-        treeView1.Location = New Point(1, TextBox2.Height + 5)
-        treeView1.Size = New Size(Width - 2, Me.Height - TextBox2.Height - 25)
-        treeView1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         treeView1.HotTracking = True
         treeView1.CheckBoxes = True
         treeView1.BringToFront()
@@ -65,6 +55,8 @@ Public Class frmRawFeaturesList
         treeView1.Dock = DockStyle.Fill
 
         Me.TabText = "Features Explorer"
+
+        Call ApplyVsTheme(ContextMenuStrip1, ToolStrip1)
     End Sub
 
     Public Sub LoadRaw(raw As Raw)
@@ -235,7 +227,7 @@ Public Class frmRawFeaturesList
         End If
     End Sub
 
-    Private Sub TextBox2_Click(sender As Object, e As EventArgs) Handles TextBox2.Click
+    Private Sub TextBox2_Click(sender As Object, e As EventArgs)
         MyApplication.host.showStatusMessage("Input a number for m/z search, or input formula text for precursor ion match!")
     End Sub
 
@@ -407,8 +399,8 @@ Public Class frmRawFeaturesList
         Call FeatureSearchHandler.SearchByMz(DirectCast(currentScan, ScanEntry).mz, {CurrentRawFile})
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        Call FeatureSearchHandler.SearchByMz(Strings.Trim(TextBox2.Text), {CurrentRawFile})
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
+        Call FeatureSearchHandler.SearchByMz(Strings.Trim(ToolStripSpringTextBox1.Text), {CurrentRawFile})
     End Sub
 
     Private Sub SpectrumSearchToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SpectrumSearchToolStripMenuItem.Click
