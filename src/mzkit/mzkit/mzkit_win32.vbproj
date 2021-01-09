@@ -87,7 +87,7 @@
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
+    <Prefer32Bit>false</Prefer32Bit>
     <WarningsAsErrors>
     </WarningsAsErrors>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
@@ -216,9 +216,6 @@
     <DocumentationFile>mzkit_win32.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.VisualBasic.Windows.Forms.Console">
-      <HintPath>..\dist\Microsoft.VisualBasic.Windows.Forms.Console.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.VisualStudio.Windows.Form">
       <HintPath>..\dist\Microsoft.VisualStudio.Windows.Form.dll</HintPath>
     </Reference>
@@ -711,6 +708,10 @@
     <EmbeddedResource Include="RibbonMarkup.ribbon" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\console\console\console.vbproj">
+      <Project>{b17ef2af-f2de-4036-9e2a-5fa10f8116c7}</Project>
+      <Name>console</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\Library\R.base\R.base.vbproj">
       <Project>{6ec3d3f5-f19d-4899-af88-161f6238e6e8}</Project>
       <Name>R.base</Name>

@@ -145,8 +145,7 @@ Public Class frmMain
 
         newScript.Show(dockPanel)
         newScript.DockState = DockState.Document
-        newScript.Text = fileName.FileName
-        newScript.LoadScript(fileName.ReadAllText)
+        newScript.LoadScript(fileName)
     End Sub
 
     ''' <summary>
@@ -294,7 +293,7 @@ Public Class frmMain
 
         If Not active Is Nothing AndAlso TypeOf CObj(active) Is frmRScriptEdit Then
             Dim editor = DirectCast(CObj(active), frmRScriptEdit)
-            Dim script As String = editor.FastColoredTextBox1.Text
+            Dim script As String = editor.ScriptText
 
             If Not editor.scriptFile.StringEmpty Then
                 script.SaveTo(editor.scriptFile)
