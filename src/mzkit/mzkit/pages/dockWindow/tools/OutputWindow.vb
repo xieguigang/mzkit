@@ -56,29 +56,6 @@ Namespace DockSample
 
             DoubleBuffered = True
 
-            Me.textBox1.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.textBox1.Location = New System.Drawing.Point(0, 23)
-            Me.textBox1.Multiline = True
-            Me.textBox1.Name = "textBox1"
-            Me.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both
-            Me.textBox1.Size = New System.Drawing.Size(653, 349)
-            Me.textBox1.TabIndex = 2
-            Me.textBox1.ReadOnly = True
-
-            Me.textBox1.WordWrap = True
-
-
-            Me.textBox2.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.textBox2.Location = New System.Drawing.Point(0, 23)
-            Me.textBox2.Multiline = True
-            Me.textBox2.Name = "textBox1"
-            Me.textBox2.ScrollBars = System.Windows.Forms.ScrollBars.Both
-            Me.textBox2.Size = New System.Drawing.Size(653, 349)
-            Me.textBox2.TabIndex = 2
-            Me.textBox2.ReadOnly = True
-
-            Me.textBox2.WordWrap = True
-
             Me.ToolStripComboBox1.SelectedIndex = 0
         End Sub
 

@@ -28,23 +28,29 @@
             Me.textBox2 = New System.Windows.Forms.TextBox()
             Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
             Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
-            Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
             Me.ToolStripComboBox1 = New System.Windows.Forms.ToolStripComboBox()
+            Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
             Me.ToolStrip1.SuspendLayout()
             Me.SuspendLayout()
             '
             'textBox1
             '
-            Me.textBox1.Location = New System.Drawing.Point(76, 188)
+            Me.textBox1.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.textBox1.Location = New System.Drawing.Point(0, 27)
+            Me.textBox1.Multiline = True
             Me.textBox1.Name = "textBox1"
-            Me.textBox1.Size = New System.Drawing.Size(100, 20)
+            Me.textBox1.ReadOnly = True
+            Me.textBox1.Size = New System.Drawing.Size(653, 345)
             Me.textBox1.TabIndex = 0
             '
             'textBox2
             '
-            Me.textBox2.Location = New System.Drawing.Point(345, 226)
+            Me.textBox2.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.textBox2.Location = New System.Drawing.Point(0, 27)
+            Me.textBox2.Multiline = True
             Me.textBox2.Name = "textBox2"
-            Me.textBox2.Size = New System.Drawing.Size(100, 20)
+            Me.textBox2.ReadOnly = True
+            Me.textBox2.Size = New System.Drawing.Size(653, 345)
             Me.textBox2.TabIndex = 1
             '
             'ToolStrip1
@@ -62,6 +68,12 @@
             Me.ToolStripLabel1.Size = New System.Drawing.Size(111, 22)
             Me.ToolStripLabel1.Text = "Show Output From:"
             '
+            'ToolStripComboBox1
+            '
+            Me.ToolStripComboBox1.Items.AddRange(New Object() {"Mzkit", "R#"})
+            Me.ToolStripComboBox1.Name = "ToolStripComboBox1"
+            Me.ToolStripComboBox1.Size = New System.Drawing.Size(121, 25)
+            '
             'ToolStripButton1
             '
             Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
@@ -71,19 +83,13 @@
             Me.ToolStripButton1.Size = New System.Drawing.Size(23, 22)
             Me.ToolStripButton1.Text = "Clear All"
             '
-            'ToolStripComboBox1
-            '
-            Me.ToolStripComboBox1.Items.AddRange(New Object() {"Mzkit", "R#"})
-            Me.ToolStripComboBox1.Name = "ToolStripComboBox1"
-            Me.ToolStripComboBox1.Size = New System.Drawing.Size(121, 25)
-            '
             'OutputWindow
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
             Me.ClientSize = New System.Drawing.Size(653, 374)
-            Me.Controls.Add(Me.ToolStrip1)
             Me.Controls.Add(Me.textBox1)
             Me.Controls.Add(Me.textBox2)
+            Me.Controls.Add(Me.ToolStrip1)
             Me.HideOnClose = True
             Me.Name = "OutputWindow"
             Me.Padding = New System.Windows.Forms.Padding(0, 2, 0, 2)
