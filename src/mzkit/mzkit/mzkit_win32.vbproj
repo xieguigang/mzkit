@@ -331,6 +331,9 @@
     <Compile Include="pages\dockWindow\documents\frmGCMS_CDFExplorer.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="pages\dockWindow\explorer\ToolStripSpringTextBox.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="pages\dockWindow\explorer\frmSRMIonsExplorer.Designer.vb">
       <DependentUpon>frmSRMIonsExplorer.vb</DependentUpon>
     </Compile>

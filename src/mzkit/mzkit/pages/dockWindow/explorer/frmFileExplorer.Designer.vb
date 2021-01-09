@@ -40,8 +40,8 @@ Partial Class frmFileExplorer
         Me.treeView1 = New mzkit.Kesoft.Windows.Forms.Win7StyleTreeView.Win7StyleTreeView(Me.components)
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
-        Me.ToolStripTextBox1 = New System.Windows.Forms.ToolStripTextBox()
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSpringTextBox1 = New mzkit.ToolStripSpringTextBox()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
         Me.SuspendLayout()
@@ -127,10 +127,12 @@ Partial Class frmFileExplorer
         '
         'ToolStrip1
         '
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel1, Me.ToolStripTextBox1, Me.ToolStripButton1})
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel1, Me.ToolStripSpringTextBox1, Me.ToolStripButton1})
+        Me.ToolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow
         Me.ToolStrip1.Location = New System.Drawing.Point(0, 0)
         Me.ToolStrip1.Name = "ToolStrip1"
         Me.ToolStrip1.Size = New System.Drawing.Size(800, 25)
+        Me.ToolStrip1.Stretch = True
         Me.ToolStrip1.TabIndex = 3
         Me.ToolStrip1.Text = "ToolStrip1"
         '
@@ -140,12 +142,6 @@ Partial Class frmFileExplorer
         Me.ToolStripLabel1.Size = New System.Drawing.Size(45, 22)
         Me.ToolStripLabel1.Text = "Search:"
         '
-        'ToolStripTextBox1
-        '
-        Me.ToolStripTextBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.ToolStripTextBox1.Name = "ToolStripTextBox1"
-        Me.ToolStripTextBox1.Size = New System.Drawing.Size(150, 25)
-        '
         'ToolStripButton1
         '
         Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
@@ -154,6 +150,12 @@ Partial Class frmFileExplorer
         Me.ToolStripButton1.Name = "ToolStripButton1"
         Me.ToolStripButton1.Size = New System.Drawing.Size(23, 22)
         Me.ToolStripButton1.Text = "ToolStripButton1"
+        '
+        'ToolStripSpringTextBox1
+        '
+        Me.ToolStripSpringTextBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.ToolStripSpringTextBox1.Name = "ToolStripSpringTextBox1"
+        Me.ToolStripSpringTextBox1.Size = New System.Drawing.Size(689, 25)
         '
         'frmFileExplorer
         '
@@ -184,6 +186,6 @@ Partial Class frmFileExplorer
     Friend WithEvents treeView1 As Kesoft.Windows.Forms.Win7StyleTreeView.Win7StyleTreeView
     Friend WithEvents ToolStrip1 As ToolStrip
     Friend WithEvents ToolStripLabel1 As ToolStripLabel
-    Friend WithEvents ToolStripTextBox1 As ToolStripTextBox
     Friend WithEvents ToolStripButton1 As ToolStripButton
+    Friend WithEvents ToolStripSpringTextBox1 As ToolStripSpringTextBox
 End Class
