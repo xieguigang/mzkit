@@ -53,7 +53,6 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 ''' <summary>
 ''' The linear model of the targeted metabolism model data.(标准曲线模型)

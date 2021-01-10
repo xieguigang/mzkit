@@ -470,6 +470,8 @@
     <Compile Include="MRM\Data\Extensions.vb" />
     <Compile Include="MRM\Data\TargetQuantification.vb" />
     <Compile Include="MRM\QuantitativeAnalysis\MRMPeak.vb" />
+    <Compile Include="QuantitativeAnalysis\IonTPA.vb" />
+    <Compile Include="QuantitativeAnalysis\PeakAreaMethods.vb" />
     <Compile Include="QuantitativeAnalysis\StandardCurve.vb" />
     <Compile Include="QuantitativeAnalysis\ContentResult.vb" />
     <Compile Include="QuantitativeAnalysis\NamespaceDoc.vb" />

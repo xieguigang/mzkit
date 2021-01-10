@@ -24,6 +24,7 @@ Public Class RtRangeSelector
         RtRange = data.Last.Time - data.First.Time
 
         Using g = Me.CreateGraphics
+            Call g.FillRectangle(New SolidBrush(BackColor), New RectangleF(0, 0, Width, Height))
             Call DrawTIC(g)
         End Using
     End Sub
@@ -115,6 +116,7 @@ Public Class RtRangeSelector
 
     Private Sub RtRangeSelector_Resize(sender As Object, e As EventArgs) Handles Me.Resize
         Using g = Me.CreateGraphics
+            Call g.FillRectangle(New SolidBrush(BackColor), New RectangleF(0, 0, Width, Height))
             Call DrawTIC(g)
         End Using
     End Sub
