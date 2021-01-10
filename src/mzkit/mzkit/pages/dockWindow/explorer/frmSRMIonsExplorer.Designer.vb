@@ -38,6 +38,7 @@ Partial Class frmSRMIonsExplorer
         Me.CheckedListBox1.FormattingEnabled = True
         Me.CheckedListBox1.Location = New System.Drawing.Point(0, 0)
         Me.CheckedListBox1.Name = "CheckedListBox1"
+        Me.CheckedListBox1.ScrollAlwaysVisible = True
         Me.CheckedListBox1.Size = New System.Drawing.Size(387, 472)
         Me.CheckedListBox1.TabIndex = 0
         '
@@ -50,7 +51,7 @@ Partial Class frmSRMIonsExplorer
         'ShowTICOverlapToolStripMenuItem
         '
         Me.ShowTICOverlapToolStripMenuItem.Name = "ShowTICOverlapToolStripMenuItem"
-        Me.ShowTICOverlapToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ShowTICOverlapToolStripMenuItem.Size = New System.Drawing.Size(167, 22)
         Me.ShowTICOverlapToolStripMenuItem.Text = "Show TIC Overlap"
         '
         'frmSRMIonsExplorer

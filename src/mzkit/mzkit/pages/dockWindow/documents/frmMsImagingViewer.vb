@@ -64,7 +64,10 @@ Public Class frmMsImagingViewer
     End Sub
 
     Private Sub checks_Click(sender As Object, e As EventArgs) Handles checks.Click
-        Dim mz As Double() = MyApplication.host.msImageParameters.GetSelectedIons.ToArray
+        Dim mz As Double() = MyApplication.host.msImageParameters _
+            .GetSelectedIons _
+            .Distinct _
+            .ToArray
 
         If mz.Length = 0 Then
             Call MyApplication.host.showStatusMessage("No ions selected for rendering!", My.Resources.StatusAnnotations_Warning_32xLG_color)

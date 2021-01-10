@@ -274,6 +274,7 @@ Partial Class frmRawFeaturesList
         '
         Me.treeView1.ContextMenuStrip = Me.ContextMenuStrip1
         Me.treeView1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.treeView1.Font = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.treeView1.FullRowSelect = True
         Me.treeView1.HotTracking = True
         Me.treeView1.ImageIndex = 0
@@ -281,6 +282,7 @@ Partial Class frmRawFeaturesList
         Me.treeView1.Location = New System.Drawing.Point(0, 25)
         Me.treeView1.Name = "treeView1"
         Me.treeView1.SelectedImageIndex = 0
+        Me.treeView1.ShowLines = False
         Me.treeView1.Size = New System.Drawing.Size(445, 425)
         Me.treeView1.TabIndex = 2
         '

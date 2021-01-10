@@ -27,7 +27,7 @@
     End Sub
 
     Private Sub ClearSelectionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ClearSelectionToolStripMenuItem.Click
-        For Each item In checkedMz
+        For Each item In checkedMz.ToArray
             item.Checked = False
         Next
 
