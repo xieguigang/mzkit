@@ -2,6 +2,7 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Math.Distributions.BinBox
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports mzkit.Kesoft.Windows.Forms.Win7StyleTreeView
@@ -46,33 +47,16 @@ Public Class frmMsImagingViewer
         MyApplication.host.msImageParameters.Win7StyleTreeView1.Nodes.Clear()
 
         Dim allIons As Double() = render.LoadMzArray(20)
-        Dim mzGroups As New List(Of NamedCollection(Of Double))
-        Dim min As Double = 0
-        Dim tmp As New List(Of Double)
-
-        For Each mz As Double In allIons
-            If mz >= min AndAlso mz < min + 100 Then
-                tmp.Add(mz)
-            ElseIf mz >= (min + 100) Then
-                If tmp.Count > 0 Then
-                    mzGroups.Add(New NamedCollection(Of Double)(min, value:=tmp.ToArray))
-                    tmp.Clear()
-                End If
-            End If
-
-            Call Application.DoEvents()
-        Next
-
-        If tmp.Count > 0 Then
-            mzGroups.Add(New NamedCollection(Of Double)(min, value:=tmp.ToArray))
-            tmp.Clear()
-        End If
+        Dim mzGroups = CutBins.FixedWidthBins(allIons, 24, Function(x) x).ToArray
 
         For Each group In mzGroups
-            Dim mzNode As TreeNode = checks.Nodes.Add($"m/z {group.name.ParseDouble.ToString("F4")}")
+            Dim rawMz As Double() = group.Raw.OrderBy(Function(x) x).ToArray
+            Dim mzNode As TreeNode = checks.Nodes.Add($"m/z {rawMz.First.ToString("F3")} ~ {rawMz.Last.ToString("F3")}")
 
-            For Each mz In group
-                Call mzNode.Nodes.Add(New TreeNode With {.Text = mz, .Tag = mz})
+            mzNode.ImageIndex = 0
+
+            For Each mz In group.Raw
+                Call mzNode.Nodes.Add(New TreeNode With {.Text = mz, .Tag = mz, .ImageIndex = 1})
             Next
 
             Call Application.DoEvents()
