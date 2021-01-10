@@ -37,6 +37,11 @@ Public Class Drawer : Implements IDisposable
         }
     End Sub
 
+    ''' <summary>
+    ''' load all ions m/z in the raw data file
+    ''' </summary>
+    ''' <param name="ppm"></param>
+    ''' <returns></returns>
     Public Function LoadMzArray(ppm As Double) As Double()
         Dim mzlist = pixels _
             .Select(Function(p) Application.DoEvents(Function() ibd.ReadArray(p.MzPtr))) _
@@ -46,6 +51,7 @@ Public Class Drawer : Implements IDisposable
         Dim groups = mzlist _
             .GroupBy(Function(mz) mz, Tolerance.PPM(ppm)) _
             .Select(Function(mz) Val(mz.name)) _
+            .OrderBy(Function(mzi) mzi) _
             .ToArray
 
         Return groups

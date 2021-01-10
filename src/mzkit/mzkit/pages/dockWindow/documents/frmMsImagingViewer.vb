@@ -1,8 +1,10 @@
 ﻿Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports mzkit.Kesoft.Windows.Forms.Win7StyleTreeView
 Imports mzkit.My
 Imports Task
 Imports WeifenLuo.WinFormsUI.Docking
@@ -33,7 +35,7 @@ Public Class frmMsImagingViewer
     End Sub
 
     Public Sub LoadRender(render As Drawer)
-        Dim checks As CheckedListBox = MyApplication.host.msImageParameters.CheckedListBox1
+        Dim checks As Win7StyleTreeView = MyApplication.host.msImageParameters.Win7StyleTreeView1
 
         Me.checks = MyApplication.host.msImageParameters.RenderingToolStripMenuItem
         Me.render = render
@@ -41,20 +43,44 @@ Public Class frmMsImagingViewer
         Me.tweaks = MyApplication.host.msImageParameters.PropertyGrid1
 
         MyApplication.host.msImageParameters.PropertyGrid1.SelectedObject = params
-        MyApplication.host.msImageParameters.CheckedListBox1.Items.Clear()
+        MyApplication.host.msImageParameters.Win7StyleTreeView1.Nodes.Clear()
 
-        For Each mz As Double In render.LoadMzArray(20)
-            Call checks.Items.Add(mz.ToString("F4"))
+        Dim allIons As Double() = render.LoadMzArray(20)
+        Dim mzGroups As New List(Of NamedCollection(Of Double))
+        Dim min As Double = 0
+        Dim tmp As New List(Of Double)
+
+        For Each mz As Double In allIons
+            If mz >= min AndAlso mz < min + 100 Then
+                tmp.Add(mz)
+            ElseIf mz >= (min + 100) Then
+                If tmp.Count > 0 Then
+                    mzGroups.Add(New NamedCollection(Of Double)(min, value:=tmp.ToArray))
+                    tmp.Clear()
+                End If
+            End If
+
+            Call Application.DoEvents()
+        Next
+
+        If tmp.Count > 0 Then
+            mzGroups.Add(New NamedCollection(Of Double)(min, value:=tmp.ToArray))
+            tmp.Clear()
+        End If
+
+        For Each group In mzGroups
+            Dim mzNode As TreeNode = checks.Nodes.Add($"m/z {group.name.ParseDouble.ToString("F4")}")
+
+            For Each mz In group
+                Call mzNode.Nodes.Add(New TreeNode With {.Text = mz, .Tag = mz})
+            Next
+
             Call Application.DoEvents()
         Next
     End Sub
 
     Private Sub checks_Click(sender As Object, e As EventArgs) Handles checks.Click
-        Dim mz As Object() = (From item In MyApplication.host.msImageParameters.CheckedListBox1.CheckedItems).ToArray
-
-        If mz.Length = 0 Then
-            mz = (From item In MyApplication.host.msImageParameters.CheckedListBox1.SelectedItems).ToArray
-        End If
+        Dim mz As Double() = MyApplication.host.msImageParameters.GetSelectedIons.ToArray
 
         If mz.Length = 0 Then
             Call MyApplication.host.showStatusMessage("No ions selected for rendering!", My.Resources.StatusAnnotations_Warning_32xLG_color)
