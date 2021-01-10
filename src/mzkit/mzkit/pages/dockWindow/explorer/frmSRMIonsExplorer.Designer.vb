@@ -25,49 +25,94 @@ Partial Class frmSRMIonsExplorer
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Me.CheckedListBox1 = New System.Windows.Forms.CheckedListBox()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmSRMIonsExplorer))
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ShowTICOverlapToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.Win7StyleTreeView1 = New mzkit.Kesoft.Windows.Forms.Win7StyleTreeView.Win7StyleTreeView(Me.components)
+        Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
+        Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
+        Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
+        Me.ShowSpectrumToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ContextMenuStrip1.SuspendLayout()
+        Me.ToolStrip1.SuspendLayout()
         Me.SuspendLayout()
-        '
-        'CheckedListBox1
-        '
-        Me.CheckedListBox1.ContextMenuStrip = Me.ContextMenuStrip1
-        Me.CheckedListBox1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CheckedListBox1.FormattingEnabled = True
-        Me.CheckedListBox1.Location = New System.Drawing.Point(0, 0)
-        Me.CheckedListBox1.Name = "CheckedListBox1"
-        Me.CheckedListBox1.ScrollAlwaysVisible = True
-        Me.CheckedListBox1.Size = New System.Drawing.Size(387, 472)
-        Me.CheckedListBox1.TabIndex = 0
         '
         'ContextMenuStrip1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowTICOverlapToolStripMenuItem})
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowTICOverlapToolStripMenuItem, Me.ShowSpectrumToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(168, 26)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(168, 48)
         '
         'ShowTICOverlapToolStripMenuItem
         '
         Me.ShowTICOverlapToolStripMenuItem.Name = "ShowTICOverlapToolStripMenuItem"
-        Me.ShowTICOverlapToolStripMenuItem.Size = New System.Drawing.Size(167, 22)
+        Me.ShowTICOverlapToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ShowTICOverlapToolStripMenuItem.Text = "Show TIC Overlap"
+        '
+        'Win7StyleTreeView1
+        '
+        Me.Win7StyleTreeView1.CheckBoxes = True
+        Me.Win7StyleTreeView1.ContextMenuStrip = Me.ContextMenuStrip1
+        Me.Win7StyleTreeView1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Win7StyleTreeView1.FullRowSelect = True
+        Me.Win7StyleTreeView1.HotTracking = True
+        Me.Win7StyleTreeView1.ImageIndex = 0
+        Me.Win7StyleTreeView1.ImageList = Me.ImageList1
+        Me.Win7StyleTreeView1.Location = New System.Drawing.Point(0, 25)
+        Me.Win7StyleTreeView1.Name = "Win7StyleTreeView1"
+        Me.Win7StyleTreeView1.SelectedImageIndex = 0
+        Me.Win7StyleTreeView1.Size = New System.Drawing.Size(387, 447)
+        Me.Win7StyleTreeView1.TabIndex = 1
+        '
+        'ImageList1
+        '
+        Me.ImageList1.ImageStream = CType(resources.GetObject("ImageList1.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.ImageList1.TransparentColor = System.Drawing.Color.Transparent
+        Me.ImageList1.Images.SetKeyName(0, "pix.png")
+        Me.ImageList1.Images.SetKeyName(1, "application-x-object.png")
+        '
+        'ToolStrip1
+        '
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel1})
+        Me.ToolStrip1.Location = New System.Drawing.Point(0, 0)
+        Me.ToolStrip1.Name = "ToolStrip1"
+        Me.ToolStrip1.Size = New System.Drawing.Size(387, 25)
+        Me.ToolStrip1.TabIndex = 2
+        Me.ToolStrip1.Text = "ToolStrip1"
+        '
+        'ToolStripLabel1
+        '
+        Me.ToolStripLabel1.Name = "ToolStripLabel1"
+        Me.ToolStripLabel1.Size = New System.Drawing.Size(64, 22)
+        Me.ToolStripLabel1.Text = "MRM Ions:"
+        '
+        'ShowSpectrumToolStripMenuItem
+        '
+        Me.ShowSpectrumToolStripMenuItem.Name = "ShowSpectrumToolStripMenuItem"
+        Me.ShowSpectrumToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ShowSpectrumToolStripMenuItem.Text = "Show Spectrum"
         '
         'frmSRMIonsExplorer
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(387, 472)
-        Me.Controls.Add(Me.CheckedListBox1)
+        Me.Controls.Add(Me.Win7StyleTreeView1)
+        Me.Controls.Add(Me.ToolStrip1)
         Me.Name = "frmSRMIonsExplorer"
         Me.Text = "Form1"
         Me.ContextMenuStrip1.ResumeLayout(False)
+        Me.ToolStrip1.ResumeLayout(False)
+        Me.ToolStrip1.PerformLayout()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
-
-    Friend WithEvents CheckedListBox1 As CheckedListBox
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents ShowTICOverlapToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents Win7StyleTreeView1 As Kesoft.Windows.Forms.Win7StyleTreeView.Win7StyleTreeView
+    Friend WithEvents ImageList1 As ImageList
+    Friend WithEvents ToolStrip1 As ToolStrip
+    Friend WithEvents ToolStripLabel1 As ToolStripLabel
+    Friend WithEvents ShowSpectrumToolStripMenuItem As ToolStripMenuItem
 End Class

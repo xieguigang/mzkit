@@ -194,26 +194,6 @@ Public Class PageMzkitTools
                 title2 = scanData.name
             End If
 
-            Call MyApplication.RegisterPlot(
-                Sub(args)
-                    PictureBox1.BackgroundImage = scanData _
-                        .MirrorPlot(
-                            titles:={title1, title2},
-                            margin:=args.GetPadding.ToString,
-                            drawLegend:=args.show_legend,
-                            bg:=args.background.ToHtmlColor,
-                            plotTitle:=args.title,
-                            size:=$"{args.width},{args.height}"
-                        ) _
-                        .AsGDIImage
-                End Sub,
-                width:=1200,
-                height:=800,
-                padding:="padding: 100px 30px 50px 100px;",
-                bg:="white",
-                title:="BioDeep™ MS/MS alignment Viewer"
-            )
-
             Dim propertyWin = MyApplication.host.propertyWin
 
             ' PropertyGrid1.SelectedObject = prop
@@ -221,12 +201,35 @@ Public Class PageMzkitTools
             propertyWin.propertyGrid.SelectedObject = prop
             propertyWin.propertyGrid.Refresh()
 
-            ShowTabPage(TabPage5)
-
+            PlotMatrx(title1, title2, scanData)
             MyApplication.host.ShowPropertyWindow()
         Else
             ' Call missingCacheFile(raw)
         End If
+    End Sub
+
+    Public Sub PlotMatrx(title1$, title2$, scanData As LibraryMatrix)
+        Call MyApplication.RegisterPlot(
+            Sub(args)
+                PictureBox1.BackgroundImage = scanData _
+                    .MirrorPlot(
+                        titles:={title1, title2},
+                        margin:=args.GetPadding.ToString,
+                        drawLegend:=args.show_legend,
+                        bg:=args.background.ToHtmlColor,
+                        plotTitle:=args.title,
+                        size:=$"{args.width},{args.height}"
+                    ) _
+                    .AsGDIImage
+            End Sub,
+            width:=1200,
+            height:=800,
+            padding:="padding: 100px 30px 50px 100px;",
+            bg:="white",
+            title:="BioDeep™ MS/MS alignment Viewer"
+        )
+
+        ShowTabPage(TabPage5)
     End Sub
 
     Friend Sub showUVscans(scans As IEnumerable(Of GeneralSignal), title$, xlable$)
