@@ -101,6 +101,12 @@ Public Class RtRangeSelector
         End Using
     End Sub
 
+    Public Sub SetRange(left As Double, right As Double)
+        start = (left - TIC(Scan0).Time) / RtRange
+        endPox = (right - TIC.Last.Time) / RtRange
+        onMoveRange = True
+    End Sub
+
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         If onSelect OrElse onMoveRange Then
             Dim left = {start, endPox}.Min

@@ -44,6 +44,7 @@ Public Class frmGCMSPeaks
 
             Call explorer.RtRangeSelector1_RangeSelect(rtRange.Min, rtRange.Max)
             Call explorer.Show(MyApplication.host.dockPanel)
+            Call explorer.SetRange(rtRange.Min, rtRange.Max)
         Else
             Dim TIC As NamedCollection(Of ChromatogramTick) = e.Node.Tag
 

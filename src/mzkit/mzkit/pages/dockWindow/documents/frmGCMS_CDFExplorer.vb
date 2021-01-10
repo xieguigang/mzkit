@@ -43,6 +43,10 @@ Public Class frmGCMS_CDFExplorer
         PictureBox1.BackgroundImage = scanData.MirrorPlot(titles:={title1, title2}).AsGDIImage
     End Sub
 
+    Public Sub SetRange(left As Double, right As Double)
+        Call RtRangeSelector1.SetRange(left, right)
+    End Sub
+
     Private Sub frmGCMS_CDFExplorer_Load(sender As Object, e As EventArgs) Handles Me.Load
         PictureBox1.BackgroundImageLayout = ImageLayout.Zoom
         RtRangeSelector1.BackColor = Color.LightBlue
