@@ -43,10 +43,15 @@ Public Class frmGCMSPeaks
             Dim rtRange As DoubleRange = DirectCast(e.Node.Tag, ROI).time
 
             Call explorer.RtRangeSelector1_RangeSelect(rtRange.Min, rtRange.Max)
+            Call explorer.Show(MyApplication.host.dockPanel)
         Else
             Dim TIC As NamedCollection(Of ChromatogramTick) = e.Node.Tag
 
             Call MyApplication.host.mzkitTool.ShowMRMTIC(TIC.name, TIC.value)
         End If
+    End Sub
+
+    Private Sub Win7StyleTreeView1_AfterCheck(sender As Object, e As TreeViewEventArgs) Handles Win7StyleTreeView1.AfterCheck
+
     End Sub
 End Class

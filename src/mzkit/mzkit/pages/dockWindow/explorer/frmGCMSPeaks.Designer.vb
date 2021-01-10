@@ -38,7 +38,7 @@ Partial Class frmGCMSPeaks
         Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel1})
         Me.ToolStrip1.Location = New System.Drawing.Point(0, 0)
         Me.ToolStrip1.Name = "ToolStrip1"
-        Me.ToolStrip1.Size = New System.Drawing.Size(463, 25)
+        Me.ToolStrip1.Size = New System.Drawing.Size(363, 25)
         Me.ToolStrip1.TabIndex = 0
         Me.ToolStrip1.Text = "ToolStrip1"
         '
@@ -51,7 +51,7 @@ Partial Class frmGCMSPeaks
         'Win7StyleTreeView1
         '
         Me.Win7StyleTreeView1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Win7StyleTreeView1.Font = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Win7StyleTreeView1.Font = New System.Drawing.Font("Microsoft YaHei UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Win7StyleTreeView1.FullRowSelect = True
         Me.Win7StyleTreeView1.HotTracking = True
         Me.Win7StyleTreeView1.ImageIndex = 0
@@ -60,7 +60,7 @@ Partial Class frmGCMSPeaks
         Me.Win7StyleTreeView1.Name = "Win7StyleTreeView1"
         Me.Win7StyleTreeView1.SelectedImageIndex = 0
         Me.Win7StyleTreeView1.ShowLines = False
-        Me.Win7StyleTreeView1.Size = New System.Drawing.Size(463, 702)
+        Me.Win7StyleTreeView1.Size = New System.Drawing.Size(363, 508)
         Me.Win7StyleTreeView1.TabIndex = 1
         '
         'ImageList1
@@ -74,7 +74,7 @@ Partial Class frmGCMSPeaks
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(463, 727)
+        Me.ClientSize = New System.Drawing.Size(363, 533)
         Me.Controls.Add(Me.Win7StyleTreeView1)
         Me.Controls.Add(Me.ToolStrip1)
         Me.Name = "frmGCMSPeaks"
