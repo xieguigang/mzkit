@@ -2,6 +2,7 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.GCMS
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports mzkit.My
 
@@ -34,7 +35,12 @@ Public Class frmGCMSPeaks
             .ToArray
 
         For Each peak As ROI In ROIlist
-            TICRoot.Nodes.Add(New TreeNode With {.Text = peak.rt, .Tag = peak, .ImageIndex = 1, .SelectedImageIndex = 1})
+            Call New TreeNode With {
+                .Text = $"{CInt(peak.time.Min)} ~ {CInt(peak.time.Max)} [{peak.integration.ToString("F3")}]",
+                .Tag = peak,
+                .ImageIndex = 1,
+                .SelectedImageIndex = 1
+            }.DoCall(AddressOf TICRoot.Nodes.Add)
         Next
     End Sub
 

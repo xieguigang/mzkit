@@ -104,19 +104,24 @@ Public Class RtRangeSelector
     Public Sub SetRange(left As Double, right As Double)
         start = (left - TIC(Scan0).Time) / RtRange
         endPox = (right - TIC.Last.Time) / RtRange
-        onMoveRange = True
+
+        Call RefreshSelector()
+    End Sub
+
+    Public Sub RefreshSelector()
+        Dim left = {start, endPox}.Min
+        Dim right = {start, endPox}.Max
+
+        Using g = Me.CreateGraphics
+            Call g.FillRectangle(New SolidBrush(BackColor), New RectangleF(0, 0, Width, Height))
+            Call DrawTIC(g)
+            Call g.FillRectangle(New SolidBrush(SelectedColor.Alpha(125)), New RectangleF(left, 0, right - left, Height))
+        End Using
     End Sub
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         If onSelect OrElse onMoveRange Then
-            Dim left = {start, endPox}.Min
-            Dim right = {start, endPox}.Max
-
-            Using g = Me.CreateGraphics
-                Call g.FillRectangle(New SolidBrush(BackColor), New RectangleF(0, 0, Width, Height))
-                Call DrawTIC(g)
-                Call g.FillRectangle(New SolidBrush(SelectedColor.Alpha(125)), New RectangleF(left, 0, right - left, Height))
-            End Using
+            Call RefreshSelector()
         End If
     End Sub
 
