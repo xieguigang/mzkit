@@ -301,9 +301,7 @@ Public Class frmMain
             End If
 
             Call MyApplication.ExecuteRScript(script, isFile:=Not editor.scriptFile.StringEmpty)
-
-            RtermPage.Show(dockPanel)
-            RtermPage.DockState = DockState.Document
+            Call VisualStudio.Dock(output, DockState.DockBottom)
         End If
     End Sub
 

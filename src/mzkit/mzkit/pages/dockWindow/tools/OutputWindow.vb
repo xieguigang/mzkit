@@ -63,7 +63,11 @@ Namespace DockSample
             Invoke(Sub() textBox1.AppendText(msg & vbCrLf))
         End Sub
 
-        Private Sub comboBox_SelectedIndexChanged(sender As Object, e As EventArgs)
+        Public Sub AppendRoutput(msg As String)
+            Invoke(Sub() textBox2.AppendText(msg & vbCrLf))
+        End Sub
+
+        Private Sub comboBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ToolStripComboBox1.SelectedIndexChanged
             If ToolStripComboBox1.SelectedIndex = 0 Then
                 textBox1.Show()
                 textBox2.Hide()
@@ -73,13 +77,13 @@ Namespace DockSample
             End If
         End Sub
 
-        Private Sub DummyOutputWindow_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-            e.Cancel = True
-            Call Me.Hide()
-        End Sub
-
         Private Sub OutputWindow_Load(sender As Object, e As EventArgs) Handles Me.Load
             Call ApplyVsTheme(ToolStrip1)
+        End Sub
+
+        Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
+            textBox1.Clear()
+            textBox2.Clear()
         End Sub
     End Class
 End Namespace
