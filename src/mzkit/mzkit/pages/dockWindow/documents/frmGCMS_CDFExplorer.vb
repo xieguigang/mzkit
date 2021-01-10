@@ -8,7 +8,7 @@ Imports Microsoft.VisualBasic.Imaging
 
 Public Class frmGCMS_CDFExplorer
 
-    Dim gcms As Raw
+    Friend gcms As Raw
 
     Public Sub loadCDF(file As String)
         gcms = netCDFReader.Open(file).ReadData()
@@ -19,7 +19,7 @@ Public Class frmGCMS_CDFExplorer
         RtRangeSelector1.SetTIC(gcms.GetTIC.value)
     End Sub
 
-    Private Sub RtRangeSelector1_RangeSelect(min As Double, max As Double) Handles RtRangeSelector1.RangeSelect
+    Friend Sub RtRangeSelector1_RangeSelect(min As Double, max As Double) Handles RtRangeSelector1.RangeSelect
         Dim scan As ms1_scan() = gcms.GetMsScan(min, max)
 
         If scan.Length = 0 OrElse scan.All(Function(x) x.intensity = 0.0) Then

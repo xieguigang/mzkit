@@ -129,6 +129,9 @@ Public Class frmMain
                     CDFExplorer.Show(dockPanel)
                     CDFExplorer.DockState = DockState.Document
                     CDFExplorer.loadCDF(file.FileName)
+
+                    GCMSPeaks.LoadExplorer(CDFExplorer)
+                    VisualStudio.Dock(GCMSPeaks, DockState.DockLeft)
                 Else
                     Call fileExplorer.ImportsRaw(file.FileName)
                 End If
@@ -778,6 +781,7 @@ Public Class frmMain
     Friend msImageParameters As New frmMsImagingTweaks
     Friend msDemo As New frmDemo
     Friend MRMIons As New frmSRMIonsExplorer
+    Friend GCMSPeaks As New frmGCMSPeaks
 
     Public Sub ShowPropertyWindow()
         VisualStudio.Dock(propertyWin, DockState.DockRight)
@@ -828,6 +832,9 @@ Public Class frmMain
 
         settingsPage.Show(dockPanel)
         settingsPage.DockState = DockState.Hidden
+
+        GCMSPeaks.Show(dockPanel)
+        GCMSPeaks.DockState = DockState.Hidden
 
         MRMIons.Show(dockPanel)
         MRMIons.DockState = DockState.Hidden

@@ -25,6 +25,7 @@ Partial Class frmGCMSPeaks
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmGCMSPeaks))
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
         Me.Win7StyleTreeView1 = New mzkit.Kesoft.Windows.Forms.Win7StyleTreeView.Win7StyleTreeView(Me.components)
@@ -50,6 +51,7 @@ Partial Class frmGCMSPeaks
         'Win7StyleTreeView1
         '
         Me.Win7StyleTreeView1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Win7StyleTreeView1.Font = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Win7StyleTreeView1.FullRowSelect = True
         Me.Win7StyleTreeView1.HotTracking = True
         Me.Win7StyleTreeView1.ImageIndex = 0
@@ -57,14 +59,16 @@ Partial Class frmGCMSPeaks
         Me.Win7StyleTreeView1.Location = New System.Drawing.Point(0, 25)
         Me.Win7StyleTreeView1.Name = "Win7StyleTreeView1"
         Me.Win7StyleTreeView1.SelectedImageIndex = 0
+        Me.Win7StyleTreeView1.ShowLines = False
         Me.Win7StyleTreeView1.Size = New System.Drawing.Size(463, 702)
         Me.Win7StyleTreeView1.TabIndex = 1
         '
         'ImageList1
         '
-        Me.ImageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit
-        Me.ImageList1.ImageSize = New System.Drawing.Size(16, 16)
+        Me.ImageList1.ImageStream = CType(resources.GetObject("ImageList1.ImageStream"), System.Windows.Forms.ImageListStreamer)
         Me.ImageList1.TransparentColor = System.Drawing.Color.Transparent
+        Me.ImageList1.Images.SetKeyName(0, "folder-pictures.png")
+        Me.ImageList1.Images.SetKeyName(1, "application-x-object.png")
         '
         'frmGCMSPeaks
         '
