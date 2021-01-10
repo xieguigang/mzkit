@@ -371,7 +371,7 @@ Public Class frmFileExplorer
         Dim scriptFile As String = DirectCast(treeView1.SelectedNode.Tag, String)
 
         Call MyApplication.RtermPage.ShowPage()
-        Call MyApplication.ExecuteRScript(scriptFile, isFile:=True)
+        Call MyApplication.ExecuteRScript(scriptFile, isFile:=True, AddressOf MyApplication.host.output.AppendRoutput)
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click

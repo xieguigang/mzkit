@@ -300,7 +300,7 @@ Public Class frmMain
                 script = editor.scriptFile
             End If
 
-            Call MyApplication.ExecuteRScript(script, isFile:=Not editor.scriptFile.StringEmpty)
+            Call MyApplication.ExecuteRScript(script, isFile:=Not editor.scriptFile.StringEmpty, AddressOf MyApplication.host.output.AppendRoutput)
             Call VisualStudio.Dock(output, DockState.DockBottom)
         End If
     End Sub
@@ -780,7 +780,7 @@ Public Class frmMain
     Friend MRMIons As New frmSRMIonsExplorer
 
     Public Sub ShowPropertyWindow()
-        propertyWin.DockState = DockState.DockRight
+        VisualStudio.Dock(propertyWin, DockState.DockRight)
     End Sub
 
     Private Sub initializeVSPanel()

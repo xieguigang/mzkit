@@ -177,7 +177,7 @@ Namespace My
             Return Nothing
         End Function
 
-        Public Shared Sub ExecuteRScript(scriptText As String, isFile As Boolean)
+        Public Shared Sub ExecuteRScript(scriptText As String, isFile As Boolean, writeLine As Action(Of String))
             Dim result As Object
 
             Using buffer As New MemoryStream
@@ -193,30 +193,30 @@ Namespace My
                     Call REngine.Print(RInterpreter.lastVariableName)
 
                     writer.Flush()
-                    console.WriteLine(Encoding.UTF8.GetString(buffer.ToArray))
+                    writeLine(Encoding.UTF8.GetString(buffer.ToArray))
                 End Using
             End Using
 
-            Call handleResult(result)
+            Call handleResult(result, writeLine)
         End Sub
 
-        Private Shared Sub handleResult(result As Object)
+        Private Shared Sub handleResult(result As Object, writeLine As Action(Of String))
             If TypeOf result Is Message AndAlso DirectCast(result, Message).level = MSG_TYPES.ERR Then
                 Dim err As Message = result
 
-                console.WriteLine(err.ToString & vbCrLf)
+                writeLine(err.ToString & vbCrLf)
 
                 For i As Integer = 0 To err.message.Length - 1
-                    console.WriteLine((i + 1) & ". " & err.message(i))
+                    writeLine((i + 1) & ". " & err.message(i))
                 Next
 
-                console.WriteLine(vbCrLf)
+                writeLine(vbCrLf)
 
                 For Each stack In err.environmentStack
-                    console.WriteLine(stack.ToString)
+                    writeLine(stack.ToString)
                 Next
 
-                console.WriteLine(vbCrLf)
+                writeLine(vbCrLf)
             End If
         End Sub
 
@@ -282,7 +282,7 @@ Type 'q()' to quit R.
         End Sub
 
         Private Shared Sub doRunScript(script As String)
-            Call ExecuteRScript(script, isFile:=False)
+            Call ExecuteRScript(script, isFile:=False, AddressOf console.WriteLine)
             Call cancel.Set()
         End Sub
 
