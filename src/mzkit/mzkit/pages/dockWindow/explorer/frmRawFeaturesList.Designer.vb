@@ -68,7 +68,8 @@ Partial Class frmRawFeaturesList
         '
         Me.ImageList2.ImageStream = CType(resources.GetObject("ImageList2.ImageStream"), System.Windows.Forms.ImageListStreamer)
         Me.ImageList2.TransparentColor = System.Drawing.Color.Transparent
-        Me.ImageList2.Images.SetKeyName(0, "edit-find.png")
+        Me.ImageList2.Images.SetKeyName(0, "folder-pictures.png")
+        Me.ImageList2.Images.SetKeyName(1, "application-x-object.png")
         '
         'ContextMenuStrip1
         '
@@ -273,10 +274,13 @@ Partial Class frmRawFeaturesList
         '
         Me.treeView1.ContextMenuStrip = Me.ContextMenuStrip1
         Me.treeView1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.treeView1.FullRowSelect = True
         Me.treeView1.HotTracking = True
+        Me.treeView1.ImageIndex = 0
+        Me.treeView1.ImageList = Me.ImageList2
         Me.treeView1.Location = New System.Drawing.Point(0, 25)
         Me.treeView1.Name = "treeView1"
-        Me.treeView1.ShowLines = False
+        Me.treeView1.SelectedImageIndex = 0
         Me.treeView1.Size = New System.Drawing.Size(445, 425)
         Me.treeView1.TabIndex = 2
         '

@@ -225,13 +225,17 @@ Module Globals
 
         For Each scan As Ms1ScanEntry In raw.scans
             Dim scanNode As New TreeNode(scan.id) With {
-                .Tag = scan
+                .Tag = scan,
+                .ImageIndex = 0
             }
 
             rawFileNode.Nodes.Add(scanNode)
 
             For Each ms2 As ScanEntry In scan.products.SafeQuery
-                Dim productNode As New TreeNode(ms2.id) With {.Tag = ms2}
+                Dim productNode As New TreeNode(ms2.id) With {
+                    .Tag = ms2,
+                    .ImageIndex = 1
+                }
 
                 scanNode.Nodes.Add(productNode)
             Next
