@@ -247,6 +247,8 @@ Type 'q()' to quit R.
             _REngine.LoadLibrary("grDevices")
             _REngine.LoadLibrary("stats")
 
+            _REngine.Evaluate("imports 'gtk' from 'Rstudio';")
+
             _REngine.LoadLibrary(GetType(MyApplication))
 
             AddHandler console.CancelKeyPress,

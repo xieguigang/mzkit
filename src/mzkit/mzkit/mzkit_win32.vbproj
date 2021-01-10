@@ -743,6 +743,10 @@
       <Project>{3a35ac34-f313-4f72-89e9-eacca217bc8d}</Project>
       <Name>R-cmd</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\studio\Rstudio\Rstudio.vbproj">
+      <Project>{f78107e5-2d25-4504-bfb4-fadd4de01dbb}</Project>
+      <Name>Rstudio</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\BinaryData.vbproj">
       <Project>{487D7C92-D05A-4908-BF81-E6BABA0BF592}</Project>
       <Name>BinaryData</Name>
