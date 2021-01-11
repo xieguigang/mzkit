@@ -249,7 +249,7 @@ Module Globals
 
             hasUVscans = True
 
-            For Each scan As DataBinBox(Of UVScan) In CutBins.FixedWidthBins(raw.UVscans, 24, Function(x) x.scan_time)
+            For Each scan As DataBinBox(Of UVScan) In CutBins.FixedWidthBins(raw.UVscans, 99, Function(x) x.scan_time)
                 Dim scan_time = scan.Sample
                 Dim spanNode As New TreeNode With {
                     .Text = $"scan_time: {CInt(scan_time.min)} ~ {CInt(scan_time.max)} sec"
