@@ -301,6 +301,7 @@
     <Compile Include="pages\contextMenu\ToggleSlider.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="pages\dockWindow\DemoItem.vb" />
     <Compile Include="pages\dockWindow\documents\frmMsImagingViewer.Designer.vb">
       <DependentUpon>frmMsImagingViewer.vb</DependentUpon>
     </Compile>

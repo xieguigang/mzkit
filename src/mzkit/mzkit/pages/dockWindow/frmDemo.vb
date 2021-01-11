@@ -26,6 +26,7 @@ Public Class frmDemo
         End If
 
         Dim i As Integer = ListView1.SelectedIndices.Item(0)
+        Dim info As New DemoItem
 
         Select Case i
             Case 0 : Call Process.Start("https://ms-imaging.org/wp/imzml/example-files-test/")
@@ -51,5 +52,8 @@ Public Class frmDemo
             Case 3
 
         End Select
+
+        PropertyGrid1.SelectedObject = info
+        PropertyGrid1.Refresh()
     End Sub
 End Class
