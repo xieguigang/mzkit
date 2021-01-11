@@ -51,6 +51,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Distributions.BinBox
 Imports mzkit.Configuration
 Imports mzkit.My
 Imports Task
@@ -243,13 +244,27 @@ Module Globals
 
         If Not raw.UVscans.IsNullOrEmpty Then
             MyApplication.host.UVScansList.DockState = DockState.DockLeftAutoHide
-            MyApplication.host.UVScansList.CheckedListBox1.Items.Clear()
+            MyApplication.host.UVScansList.Win7StyleTreeView1.Nodes.Clear()
             MyApplication.host.UVScansList.Clear()
 
             hasUVscans = True
 
-            For Each scan In raw.UVscans
-                MyApplication.host.UVScansList.CheckedListBox1.Items.Add(scan)
+            For Each scan As DataBinBox(Of UVScan) In CutBins.FixedWidthBins(raw.UVscans, 24, Function(x) x.scan_time)
+                Dim scan_time = scan.Sample
+                Dim spanNode As New TreeNode With {
+                    .Text = $"scan_time: {CInt(scan_time.min)} ~ {CInt(scan_time.max)} sec"
+                }
+
+                For Each spectrum In scan.Raw
+                    Call New TreeNode With {
+                        .Text = spectrum.ToString,
+                        .ImageIndex = 1,
+                        .SelectedImageIndex = 1,
+                        .Tag = spectrum
+                    }.DoCall(AddressOf spanNode.Nodes.Add)
+                Next
+
+                Call MyApplication.host.UVScansList.Win7StyleTreeView1.Nodes.Add(spanNode)
             Next
         Else
             hasUVscans = False
