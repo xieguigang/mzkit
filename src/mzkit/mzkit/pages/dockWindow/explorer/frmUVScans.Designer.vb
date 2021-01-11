@@ -30,11 +30,11 @@ Partial Class frmUVScans
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ShowPDAToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ShowUVOverlapToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ClearToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Win7StyleTreeView1 = New mzkit.Kesoft.Windows.Forms.Win7StyleTreeView.Win7StyleTreeView(Me.components)
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
-        Me.ClearToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
         Me.SuspendLayout()
@@ -44,21 +44,27 @@ Partial Class frmUVScans
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowPDAToolStripMenuItem, Me.ShowUVOverlapToolStripMenuItem, Me.ClearToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
         Me.ContextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 92)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(166, 70)
         '
         'ShowPDAToolStripMenuItem
         '
         Me.ShowPDAToolStripMenuItem.Image = CType(resources.GetObject("ShowPDAToolStripMenuItem.Image"), System.Drawing.Image)
         Me.ShowPDAToolStripMenuItem.Name = "ShowPDAToolStripMenuItem"
-        Me.ShowPDAToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ShowPDAToolStripMenuItem.Size = New System.Drawing.Size(165, 22)
         Me.ShowPDAToolStripMenuItem.Text = "Show PDA"
         '
         'ShowUVOverlapToolStripMenuItem
         '
         Me.ShowUVOverlapToolStripMenuItem.Image = CType(resources.GetObject("ShowUVOverlapToolStripMenuItem.Image"), System.Drawing.Image)
         Me.ShowUVOverlapToolStripMenuItem.Name = "ShowUVOverlapToolStripMenuItem"
-        Me.ShowUVOverlapToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ShowUVOverlapToolStripMenuItem.Size = New System.Drawing.Size(165, 22)
         Me.ShowUVOverlapToolStripMenuItem.Text = "Show UV Overlap"
+        '
+        'ClearToolStripMenuItem
+        '
+        Me.ClearToolStripMenuItem.Name = "ClearToolStripMenuItem"
+        Me.ClearToolStripMenuItem.Size = New System.Drawing.Size(165, 22)
+        Me.ClearToolStripMenuItem.Text = "Clear"
         '
         'Win7StyleTreeView1
         '
@@ -68,8 +74,11 @@ Partial Class frmUVScans
         Me.Win7StyleTreeView1.Font = New System.Drawing.Font("Microsoft YaHei UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Win7StyleTreeView1.FullRowSelect = True
         Me.Win7StyleTreeView1.HotTracking = True
+        Me.Win7StyleTreeView1.ImageIndex = 0
+        Me.Win7StyleTreeView1.ImageList = Me.ImageList1
         Me.Win7StyleTreeView1.Location = New System.Drawing.Point(0, 25)
         Me.Win7StyleTreeView1.Name = "Win7StyleTreeView1"
+        Me.Win7StyleTreeView1.SelectedImageIndex = 0
         Me.Win7StyleTreeView1.ShowLines = False
         Me.Win7StyleTreeView1.Size = New System.Drawing.Size(474, 635)
         Me.Win7StyleTreeView1.TabIndex = 1
@@ -95,12 +104,6 @@ Partial Class frmUVScans
         Me.ImageList1.TransparentColor = System.Drawing.Color.Transparent
         Me.ImageList1.Images.SetKeyName(0, "folder-pictures.png")
         Me.ImageList1.Images.SetKeyName(1, "application-x-object.png")
-        '
-        'ClearToolStripMenuItem
-        '
-        Me.ClearToolStripMenuItem.Name = "ClearToolStripMenuItem"
-        Me.ClearToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.ClearToolStripMenuItem.Text = "Clear"
         '
         'frmUVScans
         '
