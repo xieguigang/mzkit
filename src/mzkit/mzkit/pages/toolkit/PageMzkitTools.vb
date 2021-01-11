@@ -91,24 +91,22 @@ Public Class PageMzkitTools
         _ribbonExportDataContextMenuStrip = New ExportData(ribbon, RibbonItems.cmdContextMap)
     End Sub
 
-    'Private Function missingCacheFile(raw As Raw) As DialogResult
-    '    Dim options As DialogResult = MessageBox.Show($"The specific raw data cache is missing, run imports again?{vbCrLf}{raw.source.GetFullPath}", $"[{raw.source.FileName}] Cache Not Found!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning)
+    Private Function missingCacheFile(raw As Raw) As DialogResult
+        Dim options As DialogResult = MessageBox.Show($"The specific raw data cache is missing, run imports again?{vbCrLf}{raw.source.GetFullPath}", $"[{raw.source.FileName}] Cache Not Found!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning)
 
-    '    If options = DialogResult.OK Then
-    '        Dim newRaw = getRawCache(raw.source)
+        If options = DialogResult.OK Then
+            Dim newRaw = MyApplication.fileExplorer.getRawCache(raw.source)
 
-    '        For i As Integer = 0 To TreeView1.Nodes.Count - 1
-    '            If TreeView1.Nodes(i).Tag Is raw Then
-    '                TreeView1.Nodes(i).Tag = newRaw
-    '            End If
-    '        Next
+            raw.ms1_cache = newRaw.ms1_cache
+            raw.ms2_cache = newRaw.ms2_cache
+            raw.scatter = newRaw.scatter
 
-    '        MyApplication.host.showStatusMessage("Ready!")
-    '        MyApplication.host.ToolStripStatusLabel2.Text = TreeView1.GetTotalCacheSize
-    '    End If
+            MyApplication.host.showStatusMessage("Ready!")
+            MyApplication.host.ToolStripStatusLabel2.Text = MyApplication.host.fileExplorer.treeView1.Nodes(Scan0).GetTotalCacheSize
+        End If
 
-    '    Return options
-    'End Function
+        Return options
+    End Function
 
     Public Sub ShowPage()
         MyApplication.host.ShowPage(Me)
@@ -194,17 +192,11 @@ Public Class PageMzkitTools
                 title2 = scanData.name
             End If
 
-            Dim propertyWin = MyApplication.host.propertyWin
-
-            ' PropertyGrid1.SelectedObject = prop
-            'PropertyGrid1.Refresh()
-            propertyWin.propertyGrid.SelectedObject = prop
-            propertyWin.propertyGrid.Refresh()
-
-            PlotMatrx(title1, title2, scanData)
-            MyApplication.host.ShowPropertyWindow()
+            Call VisualStudio.ShowProperties(prop)
+            Call PlotMatrx(title1, title2, scanData)
+            Call MyApplication.host.ShowPropertyWindow()
         Else
-            ' Call missingCacheFile(raw)
+            Call missingCacheFile(raw)
         End If
     End Sub
 
@@ -266,7 +258,6 @@ Public Class PageMzkitTools
 
         Dim alignment = result.GetAlignmentMirror
         Dim prop As New AlignmentProperty(result)
-        Dim propertyWin = MyApplication.host.propertyWin
         Dim alignName As String = $"{result.query.id}_vs_{result.reference.id}"
 
         MyApplication.host.ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
@@ -283,8 +274,7 @@ Public Class PageMzkitTools
                 ).AsGDIImage
             End Sub, width:=1200, height:=800, padding:="padding: 100px 30px 50px 100px;", title:=alignName)
 
-        propertyWin.propertyGrid.SelectedObject = prop
-        propertyWin.propertyGrid.Refresh()
+        Call VisualStudio.ShowProperties(prop)
 
         ShowTabPage(TabPage5)
 

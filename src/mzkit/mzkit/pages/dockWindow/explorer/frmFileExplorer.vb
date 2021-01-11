@@ -196,10 +196,7 @@ Public Class frmFileExplorer
         Call MyApplication.host.rawFeaturesList.LoadRaw(raw)
         Call MyApplication.host.mzkitTool.showScatter(raw)
 
-        Dim propertyWin = MyApplication.host.propertyWin
-
-        propertyWin.propertyGrid.SelectedObject = New RawFileProperty(raw)
-        propertyWin.propertyGrid.Refresh()
+        Call VisualStudio.ShowProperties(New RawFileProperty(raw))
 
         MyApplication.host.ShowPropertyWindow()
         MyApplication.host.Text = $"BioNovoGene Mzkit [{raw.source.GetFullPath}]"

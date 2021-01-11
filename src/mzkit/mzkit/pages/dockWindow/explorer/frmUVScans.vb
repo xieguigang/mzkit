@@ -104,6 +104,7 @@ Public Class frmUVScans
         Dim signals = {scan.GetSignalModel}
         Dim title = $"UV scan at {scan.scan_time.ToString("F2")} sec"
 
+        Call VisualStudio.ShowProperties(New UVScanProperty(scan))
         Call MyApplication.host.mzkitTool.showUVscans(signals, title, "wavelength (nm)")
     End Sub
 End Class

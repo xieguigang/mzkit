@@ -25,4 +25,11 @@ Public Class VisualStudio
                 win.DockState = DockState.DockTop
         End Select
     End Sub
+
+    Public Shared Sub ShowProperties(item As Object)
+        Dim propertyWin = MyApplication.host.propertyWin
+
+        propertyWin.propertyGrid.SelectedObject = item
+        propertyWin.propertyGrid.Refresh()
+    End Sub
 End Class
