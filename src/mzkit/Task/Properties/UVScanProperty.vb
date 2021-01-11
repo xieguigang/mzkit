@@ -12,9 +12,9 @@ Public Class UVScanProperty
     Public Property total_ion_current As Double
     Public Property scan_time As Double
 
-    Public Property peak1 As Double
-    Public Property peak2 As Double
-    Public Property peak3 As Double
+    <Category("UV Spectrums")> Public Property peak1 As Double
+    <Category("UV Spectrums")> Public Property peak2 As Double
+    <Category("UV Spectrums")> Public Property peak3 As Double
 
     Sub New(scan As UVScan)
         waveMin = scan.wavelength.Min
