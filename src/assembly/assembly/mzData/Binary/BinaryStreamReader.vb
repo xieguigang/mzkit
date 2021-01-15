@@ -28,12 +28,15 @@ Namespace mzData.mzWebCache
             End Get
         End Property
 
+        Public ReadOnly Property filepath As String
+
         Sub New(file As String)
             Me.file = New BinaryDataReader(
                 input:=file.Open(IO.FileMode.OpenOrCreate, doClear:=False, [readOnly]:=True),
                 encoding:=Encodings.ASCII
             )
             Me.file.ByteOrder = ByteOrder.LittleEndian
+            Me.filepath = file
 
             If Not Me.VerifyMagicSignature(Me.file) Then
                 Throw New InvalidProgramException("invalid magic header!")
