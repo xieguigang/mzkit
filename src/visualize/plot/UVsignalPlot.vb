@@ -69,7 +69,8 @@ Public Module UVsignalPlot
                          Optional xlabel$ = "time (sec)",
                          Optional ylabel$ = "intensity",
                          Optional showLegend As Boolean = True,
-                         Optional showGrid As Boolean = True) As GraphicsData
+                         Optional showGrid As Boolean = True,
+                         Optional gridFill$ = "rgb(245,245,245)") As GraphicsData
 
         Dim colors As LoopArray(Of Color) = Designer.GetColors(colorSet)
         Dim data As SerialData() = signals _
@@ -127,7 +128,8 @@ Public Module UVsignalPlot
             ablines:=ablines,
             titleFontCSS:=CSSFont.Win7LargeBold,
             showLegend:=showLegend,
-            showGrid:=showGrid
+            showGrid:=showGrid,
+            gridFill:=gridFill
         )
     End Function
 End Module

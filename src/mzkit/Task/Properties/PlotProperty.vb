@@ -1,5 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports System.Drawing
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Public Class PlotProperty
@@ -20,6 +21,7 @@ Public Class PlotProperty
     <Category("Styles")> Public Property show_grid As Boolean = True
     <Category("Styles")> Public Property line_width As Single = 5
     <Category("Styles")> Public Property point_size As Single = 10
+    <Category("Styles")> Public Property gridFill As Color = "rgb(245,245,245)".TranslateColor
 
     Public Function GetPadding() As Padding
         Return New Padding(padding_left, padding_top, padding_right, padding_bottom)

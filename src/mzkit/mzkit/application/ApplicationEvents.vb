@@ -127,6 +127,7 @@ Namespace My
                                        Optional title$ = "mzkit data plot",
                                        Optional showLegend As Boolean = True,
                                        Optional showGrid As Boolean = True,
+                                       Optional gridFill$ = "white",
                                        Optional xlab$ = "X",
                                        Optional ylab$ = "Y")
 
@@ -139,6 +140,7 @@ Namespace My
                 .title = title
                 .xlabel = xlab
                 .ylabel = ylab
+                .gridFill = gridFill.TranslateColor
 
                 .padding_top = margin.Top
                 .padding_right = margin.Right

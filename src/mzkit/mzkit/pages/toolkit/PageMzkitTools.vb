@@ -277,14 +277,16 @@ Public Class PageMzkitTools
                     xlabel:=args.xlabel,
                     ylabel:=args.ylabel,
                     showLegend:=args.show_legend,
-                    showGrid:=args.show_grid
+                    showGrid:=args.show_grid,
+                    gridFill:=args.gridFill.ToHtmlColor
                 ).AsGDIImage
             End Sub, width:=2560, height:=1440,
                      padding:="padding:125px 50px 150px 200px;",
                      bg:="white",
                      title:=title,
                      xlab:=xlable,
-                     ylab:="intensity")
+                     ylab:="intensity",
+                     gridFill:="white")
 
         ShowTabPage(TabPage5)
     End Sub
@@ -366,7 +368,8 @@ Public Class PageMzkitTools
                     colorsSchema:=Globals.GetColors,
                     fillCurve:=Globals.Settings.viewer.fill,
                     size:=$"{args.width},{args.height}",
-                    margin:=args.GetPadding.ToString
+                    margin:=args.GetPadding.ToString,
+                    gridFill:=args.gridFill.ToHtmlColor
                 ).AsGDIImage
             End Sub, width:=1600, height:=1000, padding:=g.DefaultPadding)
 
@@ -384,7 +387,8 @@ Public Class PageMzkitTools
                     colorsSchema:=Globals.GetColors,
                     fillCurve:=Globals.Settings.viewer.fill,
                     size:=$"{args.width},{args.height}",
-                    margin:=args.GetPadding.ToString
+                    margin:=args.GetPadding.ToString,
+                    gridFill:=args.gridFill.ToHtmlColor
                 ).AsGDIImage
             End Sub, width:=1600, height:=1000, padding:=g.DefaultPadding)
 
