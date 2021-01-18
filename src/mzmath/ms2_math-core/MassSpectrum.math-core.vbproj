@@ -554,6 +554,8 @@
     <Compile Include="Spectra\SpectrumTree\Comparison.vb" />
     <Compile Include="Spectra\SpectrumTree\SpectrumCluster.vb" />
     <Compile Include="Spectra\SpectrumTree\SpectrumTree.vb" />
+    <Compile Include="UV\UVScanPoint.vb" />
+    <Compile Include="UV\PDAPoint.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

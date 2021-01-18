@@ -198,7 +198,7 @@ Public Class frmFileExplorer
 
         Call VisualStudio.ShowProperties(New RawFileProperty(raw))
 
-        MyApplication.host.ShowPropertyWindow()
+        ' MyApplication.host.ShowPropertyWindow()
         MyApplication.host.Text = $"BioNovoGene Mzkit [{raw.source.GetFullPath}]"
     End Sub
 

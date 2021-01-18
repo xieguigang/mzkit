@@ -55,11 +55,13 @@
 Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.MoleculeNetworking
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.UV
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
@@ -82,7 +84,7 @@ Imports stdNum = System.Math
 Public Class PageMzkitTools
 
     Dim RibbonItems As RibbonItems
-    Dim matrix As [Variant](Of ms2(), ChromatogramTick(), SSM2MatrixFragment())
+    Dim matrix As Array
     Dim matrixName As String
 
     Friend _ribbonExportDataContextMenuStrip As ExportData
@@ -194,7 +196,7 @@ Public Class PageMzkitTools
 
             Call VisualStudio.ShowProperties(prop)
             Call PlotMatrx(title1, title2, scanData)
-            Call MyApplication.host.ShowPropertyWindow()
+            ' Call MyApplication.host.ShowPropertyWindow()
         Else
             Call missingCacheFile(raw)
         End If
@@ -222,6 +224,42 @@ Public Class PageMzkitTools
         )
 
         ShowTabPage(TabPage5)
+    End Sub
+
+    Friend Sub ShowMatrix(PDA As PDAPoint(), name As String)
+        Me.matrix = PDA
+        matrixName = name
+
+        DataGridView1.Rows.Clear()
+        DataGridView1.Columns.Clear()
+
+        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .HeaderText = "scan_time"})
+        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .HeaderText = "total_ion"})
+        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .HeaderText = "relative"})
+
+        Dim max As Double = PDA.Select(Function(a) a.total_ion).Max
+
+        For Each tick As PDAPoint In PDA
+            DataGridView1.Rows.Add({tick.scan_time, tick.total_ion, tick.total_ion / max * 100})
+        Next
+    End Sub
+
+    Friend Sub ShowMatrix(UVscan As UVScanPoint(), name As String)
+        Me.matrix = UVscan
+        matrixName = name
+
+        DataGridView1.Rows.Clear()
+        DataGridView1.Columns.Clear()
+
+        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .HeaderText = "wavelength(nm)"})
+        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .HeaderText = "intensity"})
+        DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .HeaderText = "relative"})
+
+        Dim max As Double = UVscan.Select(Function(a) a.intensity).Max
+
+        For Each tick As UVScanPoint In UVscan
+            DataGridView1.Rows.Add({tick.wavelength, tick.intensity, tick.intensity / max * 100})
+        Next
     End Sub
 
     Friend Sub showUVscans(scans As IEnumerable(Of GeneralSignal), title$, xlable$)
@@ -278,7 +316,7 @@ Public Class PageMzkitTools
 
         ShowTabPage(TabPage5)
 
-        MyApplication.host.ShowPropertyWindow()
+        ' MyApplication.host.ShowPropertyWindow()
     End Sub
 
     Private Function rawTIC(raw As Raw, isBPC As Boolean) As NamedCollection(Of ChromatogramTick)

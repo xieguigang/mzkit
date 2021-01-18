@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.UV
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.SignalProcessing
@@ -33,6 +34,7 @@ Public Class frmUVScans
         }
 
         Call MyApplication.host.mzkitTool.showUVscans({PDA}, $"UV scan PDA plot", "scan_time (seconds)")
+        Call MyApplication.host.mzkitTool.ShowMatrix(PDAPoint.FromSignal(PDA).ToArray, $"PDAplot")
     End Sub
 
     Private Sub ShowUVOverlapToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowUVOverlapToolStripMenuItem.Click
@@ -42,6 +44,7 @@ Public Class frmUVScans
             Dim title As String = $"UV scan at scan_time range [{rtRange.Min.ToString("F2")}, {rtRange.Max.ToString("F2")}]"
 
             Call MyApplication.host.mzkitTool.showUVscans(selects, title, "wavelength (nm)")
+            Call MyApplication.host.mzkitTool.ShowMatrix(selects.Select(AddressOf UVScanPoint.FromSignal).IteratesALL.OrderBy(Function(a) a.wavelength).ToArray, "UVOverlaps")
         End If
     End Sub
 
@@ -106,5 +109,6 @@ Public Class frmUVScans
 
         Call VisualStudio.ShowProperties(New UVScanProperty(scan))
         Call MyApplication.host.mzkitTool.showUVscans(signals, title, "wavelength (nm)")
+        Call MyApplication.host.mzkitTool.ShowMatrix(UVScanPoint.FromSignal(signals(Scan0)).ToArray, title.Replace(" ", "_"))
     End Sub
 End Class

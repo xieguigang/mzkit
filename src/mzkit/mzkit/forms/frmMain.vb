@@ -192,6 +192,7 @@ Public Class frmMain
         AddHandler ribbonItems.ButtonNew.ExecuteEvent, AddressOf CreateNewScript
 
         AddHandler ribbonItems.TweaksImage.ExecuteEvent, AddressOf mzkitTool.ShowPlotTweaks
+        AddHandler ribbonItems.ShowProperty.ExecuteEvent, AddressOf ShowProperties
 
         AddHandler ribbonItems.ButtonMzCalculator.ExecuteEvent, Sub(sender, e) Call ShowPage(mzkitCalculator)
         AddHandler ribbonItems.ButtonSettings.ExecuteEvent, AddressOf ShowSettings
