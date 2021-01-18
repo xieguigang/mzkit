@@ -348,5 +348,12 @@
 #define cmdGroupExport_TooltipDescription_RESID 60004
 #define cmdGroupExport_SmallImages_192__RESID 60005
 #define cmdGroupExport_LargeImages_192__RESID 60006
-#define InternalCmd2_LabelTitle_RESID 60007
-#define InternalCmd4_LabelTitle_RESID 60008
+#define cmdShowProperty 3 
+#define cmdShowProperty_LabelTitle_RESID 60007
+#define cmdShowProperty_LabelDescription_RESID 60008
+#define cmdShowProperty_TooltipTitle_RESID 60009
+#define cmdShowProperty_TooltipDescription_RESID 60010
+#define cmdShowProperty_SmallImages_192__RESID 60011
+#define cmdShowProperty_LargeImages_192__RESID 60012
+#define InternalCmd2_LabelTitle_RESID 60013
+#define InternalCmd4_LabelTitle_RESID 60014

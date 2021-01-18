@@ -13,7 +13,6 @@ using RibbonLib;
 using RibbonLib.Controls;
 using RibbonLib.Interop;
 
-
     partial class RibbonItems
     {
         private static class Cmd
@@ -102,6 +101,7 @@ using RibbonLib.Interop;
             public const uint cmdFontControl = 1165;
             public const uint cmdLegendCheckBox = 1166;
             public const uint cmdTweaksImage = 93;
+            public const uint cmdShowProperty = 3;
             public const uint cmdGroupExport = 2;
             public const uint cmdButtonExportImage = 1104;
             public const uint cmdButtonExportMatrix = 1105;
@@ -197,6 +197,7 @@ using RibbonLib.Interop;
         public RibbonFontControl FontControl { get; private set; }
         public RibbonCheckBox LegendCheckBox { get; private set; }
         public RibbonButton TweaksImage { get; private set; }
+        public RibbonButton ShowProperty { get; private set; }
         public RibbonDropDownButton GroupExport { get; private set; }
         public RibbonButton ButtonExportImage { get; private set; }
         public RibbonButton ButtonExportMatrix { get; private set; }
@@ -290,6 +291,7 @@ using RibbonLib.Interop;
             FontControl = new RibbonFontControl(ribbon, Cmd.cmdFontControl);
             LegendCheckBox = new RibbonCheckBox(ribbon, Cmd.cmdLegendCheckBox);
             TweaksImage = new RibbonButton(ribbon, Cmd.cmdTweaksImage);
+            ShowProperty = new RibbonButton(ribbon, Cmd.cmdShowProperty);
             GroupExport = new RibbonDropDownButton(ribbon, Cmd.cmdGroupExport);
             ButtonExportImage = new RibbonButton(ribbon, Cmd.cmdButtonExportImage);
             ButtonExportMatrix = new RibbonButton(ribbon, Cmd.cmdButtonExportMatrix);

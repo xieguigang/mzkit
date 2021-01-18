@@ -919,6 +919,14 @@
         <Image MinDPI="192">Res/application-x-object.bmp</Image>
       </Command.LargeImages>
     </Command>
+    <Command Name="cmdShowProperty" Id="3" LabelTitle="Show Property" LabelDescription="Show Plot Data Properties" TooltipTitle="Show Property" TooltipDescription="Show Plot Data Properties">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/applications-utilities.bmp</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Res/applications-utilities.bmp</Image>
+      </Command.LargeImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -936,6 +944,7 @@
         <ContextMenu Name="ContextMenu">
           <MenuGroup>
             <Button CommandName="cmdTweaksImage" />
+            <Button CommandName="cmdShowProperty" />
             <DropDownButton CommandName="cmdGroupExport">
               <Button CommandName="cmdButtonExportImage" />
               <Button CommandName="cmdButtonExportMatrix" />
