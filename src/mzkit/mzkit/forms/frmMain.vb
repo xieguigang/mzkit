@@ -191,6 +191,8 @@ Public Class frmMain
         AddHandler ribbonItems.ButtonPageNavBack.ExecuteEvent, AddressOf NavBack_Click
         AddHandler ribbonItems.ButtonNew.ExecuteEvent, AddressOf CreateNewScript
 
+        AddHandler ribbonItems.TweaksImage.ExecuteEvent, AddressOf mzkitTool.ShowPlotTweaks
+
         AddHandler ribbonItems.ButtonMzCalculator.ExecuteEvent, Sub(sender, e) Call ShowPage(mzkitCalculator)
         AddHandler ribbonItems.ButtonSettings.ExecuteEvent, AddressOf ShowSettings
         AddHandler ribbonItems.ButtonMzSearch.ExecuteEvent, Sub(sender, e) Call ShowPage(mzkitSearch)

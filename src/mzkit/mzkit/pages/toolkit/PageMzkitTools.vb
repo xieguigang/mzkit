@@ -742,7 +742,7 @@ Public Class PageMzkitTools
         tabpage.Visible = True
     End Sub
 
-    Private Sub PictureBox1_Click(sender As Object, e As EventArgs) Handles PictureBox1.Click
+    Public Sub ShowPlotTweaks()
         RibbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
         VisualStudio.Dock(MyApplication.host.plotParams, DockState.DockRight)
     End Sub
