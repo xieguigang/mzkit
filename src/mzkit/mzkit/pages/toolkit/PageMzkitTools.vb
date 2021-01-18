@@ -423,24 +423,21 @@ Public Class PageMzkitTools
     Public Sub SaveMatrixToolStripMenuItem_Click()
         If matrix Is Nothing Then
             MyApplication.host.showStatusMessage("No matrix data for save, please select one spectrum to start!", My.Resources.StatusAnnotations_Warning_32xLG_color)
-            Return
-        End If
-        If matrix Like GetType(ms2()) Then
+        Else
             Using file As New SaveFileDialog() With {.Filter = "Excel Table(*.xls)|*.xls", .FileName = matrixName.NormalizePathString(False)}
                 If file.ShowDialog = DialogResult.OK Then
-                    Call matrix.TryCast(Of ms2()).SaveTo(file.FileName)
-                End If
-            End Using
-        ElseIf matrix Like GetType(ChromatogramTick()) Then
-            Using file As New SaveFileDialog() With {.Filter = "Excel Table(*.xls)|*.xls", .FileName = matrixName.NormalizePathString(False)}
-                If file.ShowDialog = DialogResult.OK Then
-                    Call matrix.TryCast(Of ChromatogramTick()).SaveTo(file.FileName)
-                End If
-            End Using
-        ElseIf matrix Like GetType(SSM2MatrixFragment()) Then
-            Using file As New SaveFileDialog() With {.Filter = "Excel Table(*.xls)|*.xls", .FileName = matrixName.NormalizePathString(False)}
-                If file.ShowDialog = DialogResult.OK Then
-                    Call matrix.TryCast(Of SSM2MatrixFragment()).SaveTo(file.FileName)
+
+                    Select Case matrix.GetType
+                        Case GetType(ms2()) : Call DirectCast(matrix, ms2()).SaveTo(file.FileName)
+                        Case GetType(ChromatogramTick()) : Call DirectCast(matrix, ChromatogramTick()).SaveTo(file.FileName)
+                        Case GetType(SSM2MatrixFragment()) : Call DirectCast(matrix, SSM2MatrixFragment()).SaveTo(file.FileName)
+                        Case GetType(PDAPoint()) : Call DirectCast(matrix, PDAPoint()).SaveTo(file.FileName)
+                        Case GetType(UVScanPoint()) : Call DirectCast(matrix, UVScanPoint()).SaveTo(file.FileName)
+
+                        Case Else
+                            Throw New NotImplementedException
+                    End Select
+
                 End If
             End Using
         End If
