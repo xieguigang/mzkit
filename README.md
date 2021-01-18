@@ -6,6 +6,8 @@
 
 ``Mzkit`` is an open source raw data file toolkit for mass spectrometry data analysis, provides by the ``BioNovoGene`` corporation. The features of mzkit inlcudes: raw data file content viewer(XIC/TIC/Mass spectrum plot/MS-Imaging), build molecule network, formula de-novo search and de-novo annotation.
 
+[View User Manual PowerPoint](https://view.officeapps.live.com/op/view.aspx?src=https://mzkit.org/src/mzkit/man.pptx)
+
 ```
 MIT License
 
