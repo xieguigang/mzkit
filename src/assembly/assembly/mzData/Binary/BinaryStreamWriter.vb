@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Data.IO
+﻿Imports System.IO
+Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Text
 
 Namespace mzData.mzWebCache
@@ -72,6 +73,14 @@ Namespace mzData.mzWebCache
                 mzmax = scan.parentMz
             End If
 
+            Call WriteBuffer(scan, file)
+        End Sub
+
+        Public Shared Sub WriteBuffer(scan As ScanMS2, buffer As Stream)
+            Call WriteBuffer(scan, New BinaryDataWriter(buffer))
+        End Sub
+
+        Private Shared Sub WriteBuffer(scan As ScanMS2, file As BinaryDataWriter)
             Call file.Write(scan.scan_id, BinaryStringFormat.ZeroTerminated)
             Call file.Write(scan.parentMz)
             Call file.Write(scan.rt)
