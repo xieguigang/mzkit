@@ -369,30 +369,18 @@ Public Class PageMzkitTools
                     fillCurve:=Globals.Settings.viewer.fill,
                     size:=$"{args.width},{args.height}",
                     margin:=args.GetPadding.ToString,
-                    gridFill:=args.gridFill.ToHtmlColor
+                    gridFill:=args.gridFill.ToHtmlColor,
+                    bg:=args.background.ToHtmlColor,
+                    showGrid:=args.show_grid,
+                    showLegends:=args.show_legend
                 ).AsGDIImage
-            End Sub, width:=1600, height:=1000, padding:=g.DefaultPadding)
+            End Sub, width:=1600, height:=1200, showGrid:=False, padding:="padding:100px 100px 150px 200px;")
 
         MyApplication.host.ShowPage(Me)
     End Sub
 
     Public Sub ShowMRMTIC(name As String, ticks As ChromatogramTick())
-        Dim data As New NamedCollection(Of ChromatogramTick)(name, ticks)
-
-        showMatrix(ticks, name)
-        MyApplication.RegisterPlot(
-            Sub(args)
-                PictureBox1.BackgroundImage = ChromatogramPlot.TICplot(
-                    ionData:={data},
-                    colorsSchema:=Globals.GetColors,
-                    fillCurve:=Globals.Settings.viewer.fill,
-                    size:=$"{args.width},{args.height}",
-                    margin:=args.GetPadding.ToString,
-                    gridFill:=args.gridFill.ToHtmlColor
-                ).AsGDIImage
-            End Sub, width:=1600, height:=1000, padding:=g.DefaultPadding)
-
-        MyApplication.host.ShowPage(Me)
+        Call TIC({New NamedCollection(Of ChromatogramTick)(name, ticks)})
     End Sub
 
     Public Sub TIC(isBPC As Boolean)
@@ -625,7 +613,7 @@ Public Class PageMzkitTools
                     Call MyApplication.host.showStatusMessage("No XIC ions data for generate plot!", My.Resources.StatusAnnotations_Warning_32xLG_color)
                 Else
                     plotImage = XICPlot.ToArray.TICplot(
-                        intensityMax:=maxY,
+                        intensityMax:=If(relative, 0, maxY),
                         isXIC:=True,
                         colorsSchema:=Globals.GetColors,
                         fillCurve:=Globals.Settings.viewer.fill
@@ -675,7 +663,7 @@ Public Class PageMzkitTools
     End Function
 
     Private Function relativeInto() As Boolean
-        Return False ' MyApplication.host.ribbonItems.CheckBoxXICRelative.BooleanValue
+        Return MyApplication.host.ribbonItems.CheckBoxXICRelative.BooleanValue
     End Function
 
     Friend Function getXICMatrix(raw As Raw, scanId As String, ppm As Double, relativeInto As Boolean) As NamedCollection(Of ChromatogramTick)

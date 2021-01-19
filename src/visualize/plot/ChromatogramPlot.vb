@@ -194,6 +194,7 @@ Public Module ChromatogramPlot
                             Optional labelLayoutTicks% = 1000,
                             Optional labelColor$ = "black",
                             Optional showLabels As Boolean = True,
+                            Optional showGrid As Boolean = False,
                             Optional fillCurve As Boolean = True,
                             Optional axisLabelFont$ = CSSFont.Win7Large,
                             Optional axisTickFont$ = CSSFont.Win10NormalLarger,
@@ -280,7 +281,7 @@ Public Module ChromatogramPlot
                 }
 
                 Call g.DrawAxis(
-                    region, scaler, showGrid:=False,
+                    region, scaler, showGrid:=showGrid,
                     xlabel:="Time (s)",
                     ylabel:="Intensity",
                     htmlLabel:=False,

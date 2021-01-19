@@ -13,6 +13,7 @@ using RibbonLib;
 using RibbonLib.Controls;
 using RibbonLib.Interop;
 
+
     partial class RibbonItems
     {
         private static class Cmd
@@ -57,6 +58,8 @@ using RibbonLib.Interop;
             public const uint cmdButtonBPC = 1143;
             public const uint cmdButtonTIC = 1144;
             public const uint cmdButtonXIC = 1145;
+            public const uint cmdPlotOptions = 97;
+            public const uint cmdCheckBoxXICRelative = 96;
             public const uint cmdTabGroupCalculatorTools = 1061;
             public const uint cmdTabCalculator = 1062;
             public const uint cmdGroupCalculator = 1063;
@@ -153,6 +156,8 @@ using RibbonLib.Interop;
         public RibbonButton ButtonBPC { get; private set; }
         public RibbonButton ButtonTIC { get; private set; }
         public RibbonButton ButtonXIC { get; private set; }
+        public RibbonGroup PlotOptions { get; private set; }
+        public RibbonCheckBox CheckBoxXICRelative { get; private set; }
         public RibbonTabGroup TabGroupCalculatorTools { get; private set; }
         public RibbonTab TabCalculator { get; private set; }
         public RibbonGroup GroupCalculator { get; private set; }
@@ -247,6 +252,8 @@ using RibbonLib.Interop;
             ButtonBPC = new RibbonButton(ribbon, Cmd.cmdButtonBPC);
             ButtonTIC = new RibbonButton(ribbon, Cmd.cmdButtonTIC);
             ButtonXIC = new RibbonButton(ribbon, Cmd.cmdButtonXIC);
+            PlotOptions = new RibbonGroup(ribbon, Cmd.cmdPlotOptions);
+            CheckBoxXICRelative = new RibbonCheckBox(ribbon, Cmd.cmdCheckBoxXICRelative);
             TabGroupCalculatorTools = new RibbonTabGroup(ribbon, Cmd.cmdTabGroupCalculatorTools);
             TabCalculator = new RibbonTab(ribbon, Cmd.cmdTabCalculator);
             GroupCalculator = new RibbonGroup(ribbon, Cmd.cmdGroupCalculator);
