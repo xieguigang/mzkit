@@ -124,7 +124,7 @@ Public Class frmMain
 
     Public Sub OpenFile()
         Using file As New OpenFileDialog With {
-            .Filter = "Raw Data|*.mzXML;*.mzML|Image mzML(*.imzML)|*.imzML|GC-MS Targeted(*.cdf)|*.cdf;*.netcdf|R# Script(*.R)|*.R"
+            .Filter = "Raw Data|*.mzXML;*.mzML|Image mzML(*.imzML)|*.imzML|GC-MS Targeted(*.cdf)|*.cdf;*.netcdf|LC-MS/MS Targeted(*.mzML)|*.mzML|R# Script(*.R)|*.R"
         }
             If file.ShowDialog = DialogResult.OK Then
                 If file.FileName.ExtensionSuffix("R") Then
