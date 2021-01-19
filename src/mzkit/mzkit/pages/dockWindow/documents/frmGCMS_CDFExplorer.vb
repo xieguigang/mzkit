@@ -1,10 +1,13 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math
+﻿Imports System.ComponentModel
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.GCMS
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Imaging
+Imports mzkit.My
+Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class frmGCMS_CDFExplorer
 
@@ -59,5 +62,9 @@ Public Class frmGCMS_CDFExplorer
         RtRangeSelector1.SelectedColor = Color.Black
 
         TabText = "Targetted GCMS Viewer"
+    End Sub
+
+    Private Sub frmGCMS_CDFExplorer_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        MyApplication.host.GCMSPeaks.DockState = DockState.Hidden
     End Sub
 End Class

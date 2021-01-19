@@ -20,6 +20,9 @@ Public Class frmGCMSPeaks
 
     Public Sub LoadExplorer(viewer As frmGCMS_CDFExplorer)
         Dim TIC = viewer.gcms.GetTIC
+
+        Win7StyleTreeView1.Nodes.Clear()
+
         Dim TICRoot = Win7StyleTreeView1.Nodes.Add("TIC")
 
         gcmsRaw = viewer.gcms
