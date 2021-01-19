@@ -371,7 +371,7 @@ Public Class PageMzkitTools
                     margin:=args.GetPadding.ToString,
                     gridFill:=args.gridFill.ToHtmlColor
                 ).AsGDIImage
-            End Sub, width:=1600, height:=1000, padding:=g.DefaultPadding)
+            End Sub, width:=1600, height:=1200, showGrid:=False)
 
         MyApplication.host.ShowPage(Me)
     End Sub
@@ -388,9 +388,11 @@ Public Class PageMzkitTools
                     fillCurve:=Globals.Settings.viewer.fill,
                     size:=$"{args.width},{args.height}",
                     margin:=args.GetPadding.ToString,
-                    gridFill:=args.gridFill.ToHtmlColor
+                    gridFill:=args.gridFill.ToHtmlColor,
+                    showLegends:=args.show_legend,
+                    showGrid:=args.show_grid
                 ).AsGDIImage
-            End Sub, width:=1600, height:=1000, padding:=g.DefaultPadding)
+            End Sub, width:=1600, height:=1200, showGrid:=False)
 
         MyApplication.host.ShowPage(Me)
     End Sub
