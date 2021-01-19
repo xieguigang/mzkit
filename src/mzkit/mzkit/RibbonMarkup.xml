@@ -927,6 +927,8 @@
         <Image MinDPI="192">Res/applications-utilities.bmp</Image>
       </Command.LargeImages>
     </Command>
+    <Command Name="cmdCheckBoxXICRelative" Id="96" LabelTitle="Relative Height" LabelDescription="Relative Height" TooltipTitle="Relative Height" TooltipDescription="Relative Height" />
+    <Command Name="cmdPlotOptions" Id="97" LabelTitle="Plot Options" LabelDescription="Plot Options" TooltipTitle="Plot Options" TooltipDescription="Plot Options" />
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -1029,6 +1031,9 @@
               <Button CommandName="cmdButtonBPC" />
               <Button CommandName="cmdButtonTIC" />
               <Button CommandName="cmdButtonXIC" />
+            </Group>
+            <Group CommandName="cmdPlotOptions">
+              <CheckBox CommandName="cmdCheckBoxXICRelative" />
             </Group>
           </Tab>
         </TabGroup>

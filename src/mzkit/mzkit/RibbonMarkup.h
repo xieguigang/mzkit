@@ -355,5 +355,15 @@
 #define cmdShowProperty_TooltipDescription_RESID 60010
 #define cmdShowProperty_SmallImages_192__RESID 60011
 #define cmdShowProperty_LargeImages_192__RESID 60012
-#define InternalCmd2_LabelTitle_RESID 60013
-#define InternalCmd4_LabelTitle_RESID 60014
+#define cmdCheckBoxXICRelative 96 
+#define cmdCheckBoxXICRelative_LabelTitle_RESID 60013
+#define cmdCheckBoxXICRelative_LabelDescription_RESID 60014
+#define cmdCheckBoxXICRelative_TooltipTitle_RESID 60015
+#define cmdCheckBoxXICRelative_TooltipDescription_RESID 60016
+#define cmdPlotOptions 97 
+#define cmdPlotOptions_LabelTitle_RESID 60017
+#define cmdPlotOptions_LabelDescription_RESID 60018
+#define cmdPlotOptions_TooltipTitle_RESID 60019
+#define cmdPlotOptions_TooltipDescription_RESID 60020
+#define InternalCmd2_LabelTitle_RESID 60021
+#define InternalCmd4_LabelTitle_RESID 60022

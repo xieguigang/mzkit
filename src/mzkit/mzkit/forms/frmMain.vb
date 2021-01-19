@@ -513,6 +513,7 @@ Public Class frmMain
         ShowPage(mzkitTool)
 
         mzkitTool.Ribbon_Load(Ribbon1)
+        ribbonItems.CheckBoxXICRelative.BooleanValue = True
 
         splashScreen.UpdateInformation("Load configurations...")
 

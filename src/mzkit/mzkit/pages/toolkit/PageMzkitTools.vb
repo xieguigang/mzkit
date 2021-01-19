@@ -613,7 +613,7 @@ Public Class PageMzkitTools
                     Call MyApplication.host.showStatusMessage("No XIC ions data for generate plot!", My.Resources.StatusAnnotations_Warning_32xLG_color)
                 Else
                     plotImage = XICPlot.ToArray.TICplot(
-                        intensityMax:=maxY,
+                        intensityMax:=If(relative, 0, maxY),
                         isXIC:=True,
                         colorsSchema:=Globals.GetColors,
                         fillCurve:=Globals.Settings.viewer.fill
@@ -663,7 +663,7 @@ Public Class PageMzkitTools
     End Function
 
     Private Function relativeInto() As Boolean
-        Return False ' MyApplication.host.ribbonItems.CheckBoxXICRelative.BooleanValue
+        Return MyApplication.host.ribbonItems.CheckBoxXICRelative.BooleanValue
     End Function
 
     Friend Function getXICMatrix(raw As Raw, scanId As String, ppm As Double, relativeInto As Boolean) As NamedCollection(Of ChromatogramTick)
