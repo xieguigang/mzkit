@@ -5,6 +5,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports mzkit.My
+Imports Task
 
 Public Class frmSRMIonsExplorer
 
@@ -53,8 +54,10 @@ Public Class frmSRMIonsExplorer
     Private Sub Win7StyleTreeView1_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles Win7StyleTreeView1.AfterSelect
         Dim chr As chromatogram = e.Node.Tag
         Dim ticks As ChromatogramTick() = chr.Ticks
+        Dim proper As New MRMROIProperty(chr)
 
         Call MyApplication.host.mzkitTool.ShowMRMTIC(e.Node.Text, ticks)
+        Call VisualStudio.ShowProperties(proper)
     End Sub
 
     Private Sub ShowSpectrumToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowSpectrumToolStripMenuItem.Click

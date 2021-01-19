@@ -147,6 +147,7 @@
     <Compile Include="Imports\ImportsTask.vb" />
     <Compile Include="ParentMatch.vb" />
     <Compile Include="Properties\AlignmentProperty.vb" />
+    <Compile Include="Properties\MRMROIProperty.vb" />
     <Compile Include="Properties\ROIProperty.vb" />
     <Compile Include="Properties\UVScanProperty.vb" />
     <Compile Include="Properties\ToleranceMethod.vb" />
