@@ -9,6 +9,7 @@ Public Class frmDemo
 
         Me.ShowIcon = True
         Me.TabText = "MS Demo Data"
+        ' Me.ListView1.View = View.Tile
     End Sub
 
     Public Sub ShowPage()
