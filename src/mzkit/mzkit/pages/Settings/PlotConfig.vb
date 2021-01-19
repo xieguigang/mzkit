@@ -62,7 +62,7 @@ Public Class PlotConfig : Implements ISaveSettings, IPageSettings
 
     Public Sub LoadSettings() Implements ISaveSettings.LoadSettings
         If Globals.Settings.viewer Is Nothing Then
-            Globals.Settings.viewer = New RawFileViewerSettings
+            Globals.Settings.viewer = New RawFileViewerSettings With {.fill = True}
         End If
         If Globals.Settings.viewer.colorSet.IsNullOrEmpty Then
             Globals.Settings.viewer.colorSet = Designer.GetColors("scibasic.category31()").Select(Function(a) a.ToHtmlColor).ToArray

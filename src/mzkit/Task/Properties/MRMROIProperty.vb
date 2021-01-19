@@ -16,8 +16,10 @@ Public Class MRMROIProperty
     Sub New(chr As chromatogram)
         Dim TIC = chr.Ticks
 
-        precursor = chr.precursor.MRMTargetMz
-        product = chr.product.MRMTargetMz
+        If chr.precursor IsNot Nothing AndAlso chr.product IsNot Nothing Then
+            precursor = chr.precursor.MRMTargetMz
+            product = chr.product.MRMTargetMz
+        End If
 
         Dim ROI = TIC.Shadows _
             .PopulateROI(
