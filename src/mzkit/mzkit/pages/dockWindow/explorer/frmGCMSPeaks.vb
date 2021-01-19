@@ -1,10 +1,11 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.GCMS
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports mzkit.My
+Imports Task
+Imports Raw = BioNovoGene.Analytical.MassSpectrometry.Math.GCMS.Raw
 
 Public Class frmGCMSPeaks
 
@@ -47,10 +48,13 @@ Public Class frmGCMSPeaks
     Private Sub Win7StyleTreeView1_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles Win7StyleTreeView1.AfterSelect
         If TypeOf e.Node.Tag Is ROI Then
             Dim rtRange As DoubleRange = DirectCast(e.Node.Tag, ROI).time
+            Dim proper As New ROIProperty(e.Node.Tag)
 
             Call explorer.RtRangeSelector1_RangeSelect(rtRange.Min, rtRange.Max)
             Call explorer.Show(MyApplication.host.dockPanel)
             Call explorer.SetRange(rtRange.Min, rtRange.Max)
+
+            Call VisualStudio.ShowProperties(proper)
         Else
             Dim TIC As NamedCollection(Of ChromatogramTick) = e.Node.Tag
 

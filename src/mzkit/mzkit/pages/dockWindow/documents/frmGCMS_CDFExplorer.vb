@@ -35,7 +35,12 @@ Public Class frmGCMS_CDFExplorer
                         }
                     End Function) _
             .ToArray
-        Dim scanData As New LibraryMatrix With {.ms2 = spectrum.Centroid(Tolerance.ParseScript("da:0.3"), LowAbundanceTrimming.Default), .name = "SIM ions"}
+        Dim scanData As New LibraryMatrix With {
+            .ms2 = spectrum _
+                .Centroid(Tolerance.ParseScript("da:0.3"), LowAbundanceTrimming.Default) _
+                .ToArray,
+            .name = "SIM ions"
+        }
         Dim q = scanData.OrderByDescending(Function(x) x.intensity).First
         Dim title1$ = $"Scan Time [{min.ToString("F3")},{max.ToString("F3")}] sec"
         Dim title2$ = $"Quantitative [{q.mz.ToString("F4")}:{q.intensity.ToString("G3")}]"
