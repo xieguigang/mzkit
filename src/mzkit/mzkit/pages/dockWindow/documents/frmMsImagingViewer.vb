@@ -1,4 +1,5 @@
-﻿Imports System.Threading
+﻿Imports System.ComponentModel
+Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -124,5 +125,13 @@ Public Class frmMsImagingViewer
 
     Private Sub tweaks_PropertyValueChanged(s As Object, e As PropertyValueChangedEventArgs) Handles tweaks.PropertyValueChanged
         Call rendering()
+    End Sub
+
+    Private Sub frmMsImagingViewer_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        If MessageBox.Show("Going to close current MS-imaging viewer?", FilePath.FileName, MessageBoxButtons.OKCancel, MessageBoxIcon.Question) = DialogResult.Cancel Then
+            e.Cancel = True
+        Else
+            MyApplication.host.msImageParameters.DockState = DockState.Hidden
+        End If
     End Sub
 End Class
