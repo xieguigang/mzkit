@@ -266,7 +266,7 @@ Public Class frmMain
             Sub()
                 Dim canvas As New Drawer(imzML)
 
-                Call viewer.Invoke(Sub() viewer.LoadRender(canvas))
+                Call viewer.Invoke(Sub() viewer.LoadRender(canvas, imzML))
                 Call viewer.Invoke(Sub() viewer.DockState = DockState.Document)
 
                 Call progress.Invoke(Sub() progress.Close())

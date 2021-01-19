@@ -36,13 +36,14 @@ Public Class frmMsImagingViewer
         PictureBox1.BackgroundImageLayout = ImageLayout.Zoom
     End Sub
 
-    Public Sub LoadRender(render As Drawer)
+    Public Sub LoadRender(render As Drawer, filePath As String)
         Dim checks As Win7StyleTreeView = MyApplication.host.msImageParameters.Win7StyleTreeView1
 
         Me.checks = MyApplication.host.msImageParameters.RenderingToolStripMenuItem
         Me.render = render
         Me.params = New MsImageProperty(render)
         Me.tweaks = MyApplication.host.msImageParameters.PropertyGrid1
+        Me.FilePath = filePath
 
         MyApplication.host.msImageParameters.PropertyGrid1.SelectedObject = params
         MyApplication.host.msImageParameters.Win7StyleTreeView1.Nodes.Clear()
@@ -128,10 +129,12 @@ Public Class frmMsImagingViewer
     End Sub
 
     Private Sub frmMsImagingViewer_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        e.Cancel = True
+
         If MessageBox.Show("Going to close current MS-imaging viewer?", FilePath.FileName, MessageBoxButtons.OKCancel, MessageBoxIcon.Question) = DialogResult.Cancel Then
-            e.Cancel = True
         Else
             MyApplication.host.msImageParameters.DockState = DockState.Hidden
+            Me.DockState = DockState.Hidden
         End If
     End Sub
 End Class
