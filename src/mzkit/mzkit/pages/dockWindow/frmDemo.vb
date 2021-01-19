@@ -49,7 +49,17 @@ Public Class frmDemo
                 MyApplication.host.ShowMzkitToolkit()
 
             Case 2
+
+
+                ' LC-MSMS
+                Dim demoPath As String = $"{App.HOME}/demo/MRM-Data20190222-QCH.mzML"
+                MyApplication.host.ShowMRMIons(demoPath)
+
             Case 3
+
+                ' GC-MS
+                Dim demoPath As String = $"{App.HOME}/demo/5ppm.CDF"
+                MyApplication.host.ShowGCMSSIM(demoPath)
 
         End Select
 

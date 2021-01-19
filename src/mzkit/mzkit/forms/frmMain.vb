@@ -111,6 +111,17 @@ Public Class frmMain
         MRMIons.LoadMRM(file)
     End Sub
 
+    Public Sub ShowGCMSSIM(file As String)
+        Dim CDFExplorer As New frmGCMS_CDFExplorer
+
+        CDFExplorer.Show(dockPanel)
+        CDFExplorer.DockState = DockState.Document
+        CDFExplorer.loadCDF(file)
+
+        GCMSPeaks.LoadExplorer(CDFExplorer)
+        VisualStudio.Dock(GCMSPeaks, DockState.DockLeft)
+    End Sub
+
     Public Sub OpenFile()
         Using file As New OpenFileDialog With {
             .Filter = "Raw Data|*.mzXML;*.mzML|Image mzML(*.imzML)|*.imzML|GC-MS Targeted(*.cdf)|*.cdf;*.netcdf|R# Script(*.R)|*.R"
@@ -124,14 +135,7 @@ Public Class frmMain
                 ElseIf file.FileName.ExtensionSuffix("mzml") AndAlso RawScanParser.IsMRMData(file.FileName) Then
                     Call ShowMRMIons(file.FileName)
                 ElseIf file.FileName.ExtensionSuffix("cdf") OrElse file.FileName.ExtensionSuffix("netcdf") Then
-                    Dim CDFExplorer As New frmGCMS_CDFExplorer
-
-                    CDFExplorer.Show(dockPanel)
-                    CDFExplorer.DockState = DockState.Document
-                    CDFExplorer.loadCDF(file.FileName)
-
-                    GCMSPeaks.LoadExplorer(CDFExplorer)
-                    VisualStudio.Dock(GCMSPeaks, DockState.DockLeft)
+                    Call ShowGCMSSIM(file.FileName)
                 Else
                     Call fileExplorer.ImportsRaw(file.FileName)
                 End If
