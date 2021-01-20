@@ -262,6 +262,7 @@ Public Class frmMain
         Dim progress As New frmProgressSpinner
 
         Call viewer.Show(dockPanel)
+        Call msImageParameters.Show(dockPanel)
         Call New Thread(
             Sub()
                 Dim canvas As New Drawer(imzML)
@@ -273,6 +274,8 @@ Public Class frmMain
 
                 Invoke(Sub() Text = $"BioNovoGene Mzkit [{viewer.Text} {imzML.FileName}]")
             End Sub).Start()
+
+        msImageParameters.DockState = DockState.DockLeft
 
         Call progress.ShowDialog()
     End Sub
