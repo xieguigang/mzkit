@@ -8,5 +8,5 @@ print(unique(kegg$registryIdentifier));
 
 
 for (cid in unique(kegg$CID)) {
-
+pugView(cid);
 }

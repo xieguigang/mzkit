@@ -51,6 +51,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
@@ -149,8 +150,19 @@ Module PubChemToolKit
     End Function
 
     <ExportAPI("pugView")>
-    Public Function pugView(cid As String) As PugViewRecord
+    Public Function pugView(<RRawVectorArgument> cid As Object,
+                            Optional cacheFolder$ = "./pubchem_cache",
+                            Optional offline As Boolean = False,
+                            Optional env As Environment = Nothing) As Object
 
+        Dim api As WebQuery = $"{cacheFolder}/pugViews/".GetQueryHandler(Of WebQuery)(offline)
+        Dim result = env.EvaluateFramework(Of String, PugViewRecord)(
+            x:=cid,
+            eval:=Function(id)
+                      Return api.Query(Of PugViewRecord)(id)
+                  End Function)
+
+        Return result
     End Function
 
     <ExportAPI("SID_map")>

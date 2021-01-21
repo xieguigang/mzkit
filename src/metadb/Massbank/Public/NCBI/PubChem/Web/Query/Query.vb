@@ -61,7 +61,7 @@ Namespace NCBI.PubChem
         ''' <param name="handle"></param>
         ''' <returns></returns>
         <Extension>
-        Private Function getQueryHandler(Of T)(handle As String, offline As Boolean) As T
+        Public Function GetQueryHandler(Of T)(handle As String, offline As Boolean) As T
             If GetType(T) Is GetType(CIDQuery) Then
                 If Not cache.ContainsKey(handle) Then
                     cache(handle) = New CIDQuery(cache:=handle, offline:=offline)
@@ -85,7 +85,7 @@ Namespace NCBI.PubChem
         ''' <param name="cacheFolder$"></param>
         ''' <returns></returns>
         Public Function QueryCID(name As String, Optional cacheFolder$ = "./pubchem_cache", Optional offlineMode As Boolean = False, Optional ByRef hitCache As Boolean = False) As String()
-            Dim cidQuery As CIDQuery = $"{cacheFolder}/cid/".getQueryHandler(Of CIDQuery)(offline:=offlineMode)
+            Dim cidQuery As CIDQuery = $"{cacheFolder}/cid/".GetQueryHandler(Of CIDQuery)(offline:=offlineMode)
             Dim list As IdentifierList = cidQuery.Query(Of IdentifierList)(name, ".json", hitCache:=hitCache)
             Dim CID As String() = Nothing
 
@@ -113,7 +113,7 @@ Namespace NCBI.PubChem
             Dim hitCache As Boolean = False
             Dim CID As String() = Query.QueryCID(name, cacheFolder, offlineMode:=offline, hitCache:=hitCache)
             Dim table As New Dictionary(Of String, PugViewRecord)
-            Dim api As WebQuery = $"{cacheFolder}/pugViews/".getQueryHandler(Of WebQuery)(offline)
+            Dim api As WebQuery = $"{cacheFolder}/pugViews/".GetQueryHandler(Of WebQuery)(offline)
             Dim cache = $"{cacheFolder}/{name.NormalizePathString(False)}.Xml"
 
             If CID.IsNullOrEmpty Then
@@ -140,7 +140,7 @@ Namespace NCBI.PubChem
         End Function
 
         Public Function FetchPugViewByCID(cid As String, Optional cacheFolder$ = "./pubchem_cache", Optional offline As Boolean = False) As PugViewRecord
-            Return $"{cacheFolder}/pugViews/".getQueryHandler(Of WebQuery)(offline).Query(Of PugViewRecord)(cid)
+            Return $"{cacheFolder}/pugViews/".GetQueryHandler(Of WebQuery)(offline).Query(Of PugViewRecord)(cid)
         End Function
     End Module
 End Namespace
