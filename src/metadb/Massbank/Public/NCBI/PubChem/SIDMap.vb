@@ -75,16 +75,23 @@ Namespace NCBI.PubChem
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="path">SID-Map.txt file path.</param>
+        ''' <param name="handle">SID-Map.txt file path or its file content.</param>
         ''' <param name="skipNoCID">
         ''' By default is skip all of the record rows that without CID assigned.
         ''' </param>
         ''' <returns></returns>
-        Public Shared Iterator Function GetMaps(path$, Optional skipNoCID As Boolean = True) As IEnumerable(Of SIDMap)
+        Public Shared Iterator Function GetMaps(handle$, Optional skipNoCID As Boolean = True) As IEnumerable(Of SIDMap)
             Dim t As String()
             Dim CID As Integer
+            Dim lineSource As IEnumerable(Of String)
 
-            For Each line As String In path.IterateAllLines
+            If handle.FileExists Then
+                lineSource = handle.IterateAllLines
+            Else
+                lineSource = handle.LineTokens
+            End If
+
+            For Each line As String In lineSource
                 t = line.Split(ASCII.TAB)
 
                 If t.Length > 3 Then
