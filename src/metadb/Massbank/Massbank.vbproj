@@ -428,6 +428,8 @@
     <Compile Include="MetaLib\Models\MetaInfo.vb" />
     <Compile Include="Public\lipidMAPS\MetaTable.vb" />
     <Compile Include="Public\NCBI\PubChemDescriptorRepo.vb" />
+    <Compile Include="Public\NCBI\PubChem\Web\Query\WebResponse.vb" />
+    <Compile Include="Public\NCBI\PubChem\Web\Query\CIDExport.vb" />
     <Compile Include="SDFExtensions.vb" />
     <Compile Include="MetaLib\Match\ComparesIdXrefInteger.vb" />
     <Compile Include="MetaLib\Match\SynonymIndex.vb" />

@@ -148,6 +148,11 @@ Module PubChemToolKit
         Return result
     End Function
 
+    <ExportAPI("pugView")>
+    Public Function pugView(cid As String) As PugViewRecord
+
+    End Function
+
     <ExportAPI("SID_map")>
     Public Function ReadSIDMap(sidMapText As String, Optional skipNoCID As Boolean = True, Optional dbfilter$ = Nothing) As SIDMap()
         Dim ls As SIDMap() = SIDMap.GetMaps(handle:=sidMapText, skipNoCID:=skipNoCID).ToArray

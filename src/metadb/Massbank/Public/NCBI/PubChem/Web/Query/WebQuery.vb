@@ -87,93 +87,11 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data.csv
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace NCBI.PubChem
-
-    ' {"download":"*","collection":"compound","where":{"ands":[{"*":"66-84-2"}]},"order":["relevancescore,desc"],"start":1,"limit":1000000}
-    ' {"collection":"compound","download":"*","limit":10,"order":["relevancescore,desc"],"start":1,"where":{"ands":{"*":"650818-62-1"}}}
-    Public Class JsonQuery
-
-        Public Property download As String = "*"
-        Public Property collection As String = "compound"
-        Public Property [where] As QueryWhere
-        Public Property order As String() = {"relevancescore,desc"}
-        Public Property start As Integer = 1
-        Public Property limit As Integer = 10
-
-    End Class
-
-    Public Class [QueryWhere]
-        Public Property ands As Dictionary(Of String, String)()
-    End Class
-
-    ''' <summary>
-    ''' Table export result of <see cref="JsonQuery"/>
-    ''' </summary>
-    Public Class QueryTableExport
-        Public Property cid As String
-        Public Property cmpdname As String
-        <Collection("cmpdsynonym", "|")>
-        Public Property cmpdsynonym As String()
-        Public Property mw As Double
-        Public Property mf As String
-        Public Property polararea As Double
-        Public Property complexity As Double
-        Public Property xlogp As String
-        Public Property heavycnt As Double
-        Public Property hbonddonor As Double
-        Public Property hbondacc As Double
-        Public Property rotbonds As Double
-        Public Property inchikey As String
-        Public Property iupacname As String
-        Public Property meshheadings As String
-        Public Property annothits As Double
-        Public Property annothitcnt As Double
-        <Collection("aids", ",")>
-        Public Property aids As String()
-        Public Property cidcdate As String
-        <Collection("dois", "|")>
-        Public Property dois As String()
-    End Class
-
-    Public Class CIDExport : Inherits WebQuery(Of String)
-
-        Const queryCAS_Api As String = "https://pubchem.ncbi.nlm.nih.gov/sdq/sdqagent.cgi?infmt=json&outfmt=jsonp"
-
-        Public Sub New(<CallerMemberName> Optional cache As String = Nothing, Optional interval As Integer = -1)
-            MyBase.New(AddressOf queryApi, AddressOf normalizeFileName, AddressOf parseExportTable, , cache, interval)
-        End Sub
-
-        Private Shared Function parseExportTable(text As String, schema As Type) As Object
-            Return text _
-                .LineTokens _
-                .AsDataSource(Of QueryTableExport) _
-                .ToArray
-        End Function
-
-        Private Shared Function queryApi(CAS As String) As String
-            Dim query As New JsonQuery With {
-                .where = New QueryWhere With {
-                    .ands = {New Dictionary(Of String, String) From {
-                        {"*", CAS}
-                    }}
-                }
-            }
-            Dim json$ = query.GetJson.UrlEncode
-            Dim url$ = $"{queryCAS_Api}&query={json}"
-
-            Return url
-        End Function
-
-        Private Shared Function normalizeFileName(text As String) As String
-            Return text.NormalizePathString(False)
-        End Function
-    End Class
 
     Public Class CIDQuery : Inherits WebQuery(Of String)
 
@@ -222,7 +140,7 @@ Namespace NCBI.PubChem
 
     Public Class WebQuery : Inherits WebQuery(Of String)
 
-        Const fetchPugView As String = "https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/data/compound/%s/XML/"
+        Const fetchPugView As String = "https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/data/compound/%s/XML/?response_type=save&response_basename=compound_CID_%s"
 
         Public Sub New(<CallerMemberName>
                        Optional cache As String = Nothing,
@@ -249,7 +167,7 @@ Namespace NCBI.PubChem
         End Function
 
         Private Shared Function pugViewApi(cid As String) As String
-            Return CLangStringFormatProvider.sprintf(fetchPugView, cid)
+            Return fetchPugView.Replace("%s", cid)
         End Function
     End Class
 
