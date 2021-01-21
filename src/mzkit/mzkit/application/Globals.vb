@@ -52,6 +52,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions.BinBox
+Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports mzkit.Configuration
 Imports mzkit.My
 Imports Task
@@ -105,7 +106,20 @@ Module Globals
             Next
         End If
 
-        Call currentWorkspace.SaveAs(files, scripts).Save(defaultWorkspace)
+        Dim opened As New List(Of String)
+        Dim unsaved As New List(Of NamedValue)
+
+        For Each doc As IDockContent In MyApplication.host.dockPanel.Documents
+            If TypeOf doc Is frmRScriptEdit Then
+                opened.Add(DirectCast(doc, frmRScriptEdit).scriptFile)
+
+                If DirectCast(doc, frmRScriptEdit).IsUnsaved Then
+                    unsaved.Add(New NamedValue With {.name = DirectCast(doc, frmRScriptEdit).scriptFile, .text = DirectCast(doc, frmRScriptEdit).ScriptText})
+                End If
+            End If
+        Next
+
+        Call currentWorkspace.SaveAs(files, scripts, opened, unsaved).Save(defaultWorkspace)
     End Sub
 
     <Extension>

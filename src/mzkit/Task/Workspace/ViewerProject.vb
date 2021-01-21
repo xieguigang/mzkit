@@ -8,30 +8,23 @@ Imports Microsoft.VisualBasic.MIME.application.json.BSON
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.Text.Xml.Models
 
 ''' <summary>
 ''' the mzkit workspace file
 ''' </summary>
 Public Class ViewerProject : Implements ISaveHandle, IFileReference
 
-    ''' <summary>
-    ''' 原始数据文件的缓存对象列表
-    ''' </summary>
-    Dim cacheFiles As New Dictionary(Of String, Raw())
-
-    ''' <summary>
-    ''' 自动化脚本的文件路径列表
-    ''' </summary>
-    Dim scriptFiles As String() = {}
+    Public Property work As WorkspaceFile
 
     Public Property FilePath As String Implements IFileReference.FilePath
 
     Public ReadOnly Property Count As Integer
         Get
-            If cacheFiles Is Nothing Then
+            If work.cacheFiles Is Nothing Then
                 Return 0
             Else
-                Return cacheFiles.Values.Select(Function(a) a.Length).Sum
+                Return work.cacheFiles.Values.Select(Function(a) a.Length).Sum
             End If
         End Get
     End Property
@@ -43,19 +36,19 @@ Public Class ViewerProject : Implements ISaveHandle, IFileReference
     End Property
 
     Public Function GetRawDataFiles() As IEnumerable(Of Raw)
-        If cacheFiles Is Nothing Then
+        If work.cacheFiles Is Nothing Then
             Return {}
         Else
-            Return cacheFiles.Values.IteratesALL
+            Return work.cacheFiles.Values.IteratesALL
         End If
     End Function
 
     Public Sub Add(raw As Raw)
-        If Not cacheFiles.ContainsKey(raw.source.FileName) Then
-            cacheFiles.Add(raw.source.FileName, {})
+        If Not work.cacheFiles.ContainsKey(raw.source.FileName) Then
+            work.cacheFiles.Add(raw.source.FileName, {})
         End If
 
-        cacheFiles(raw.source.FileName) = cacheFiles(raw.source.FileName).JoinIterates(raw).ToArray
+        work.cacheFiles(raw.source.FileName) = work.cacheFiles(raw.source.FileName).JoinIterates(raw).ToArray
     End Sub
 
     Public Function FindRawFile(path As String) As Raw
@@ -63,31 +56,38 @@ Public Class ViewerProject : Implements ISaveHandle, IFileReference
     End Function
 
     Public Function GetAutomationScripts() As IEnumerable(Of String)
-        Return scriptFiles.AsEnumerable
+        Return work.scriptFiles.AsEnumerable
     End Function
 
-    Public Function SaveAs(cache As IEnumerable(Of Raw), scripts As IEnumerable(Of String)) As ViewerProject
-        Return New ViewerProject With {
+    Public Function SaveAs(cache As IEnumerable(Of Raw), scripts As IEnumerable(Of String), opened As IEnumerable(Of String), unsaved As IEnumerable(Of NamedValue)) As ViewerProject
+        Dim workspace As New WorkspaceFile With {
             .cacheFiles = cache _
                 .GroupBy(Function(a) a.source.FileName) _
                 .ToDictionary(Function(a) a.Key,
-                              Function(a) a.ToArray),
-            .FilePath = FilePath,
-            .scriptFiles = scripts.ToArray
+                              Function(a)
+                                  Return a.ToArray
+                              End Function),
+            .scriptFiles = scripts.ToArray,
+            .openedScripts = opened.ToArray,
+            .unsavedScripts = unsaved.ToArray
+        }
+
+        Return New ViewerProject With {
+            .work = workspace,
+            .FilePath = FilePath
         }
     End Function
 
     Public Shared Function LoadWorkspace(cacheList As String, progress As Action(Of String)) As ViewerProject
-        Dim viewer As New ViewerProject With {
-            .FilePath = cacheList
-        }
         Dim rawBuffer As Byte() = cacheList.ReadBinary
         Dim workspace As WorkspaceFile
 
         If rawBuffer.IsNullOrEmpty Then
             workspace = New WorkspaceFile With {
                 .cacheFiles = New Dictionary(Of String, Raw()),
-                .scriptFiles = {}
+                .scriptFiles = {},
+                .openedScripts = {},
+                .unsavedScripts = {}
             }
         Else
             Call progress("Load raw file list...")
@@ -103,25 +103,25 @@ Public Class ViewerProject : Implements ISaveHandle, IFileReference
 
                 workspace = New WorkspaceFile With {
                     .cacheFiles = New Dictionary(Of String, Raw()),
-                    .scriptFiles = {}
+                    .scriptFiles = {},
+                    .unsavedScripts = {},
+                    .openedScripts = {}
                 }
             End Try
         End If
 
         Call progress("File reading success!")
 
-        viewer.cacheFiles = workspace.cacheFiles
-        viewer.scriptFiles = workspace.scriptFiles
+        Dim viewer As New ViewerProject With {
+            .FilePath = cacheList,
+            .work = workspace
+        }
 
         Return viewer
     End Function
 
     Public Function Save(path As String, encoding As Encoding) As Boolean Implements ISaveHandle.Save
-        Dim works As New WorkspaceFile With {
-            .cacheFiles = cacheFiles,
-            .scriptFiles = scriptFiles
-        }
-        Dim model As JsonElement = GetType(WorkspaceFile).GetJsonElement(works, New JSONSerializerOptions)
+        Dim model As JsonElement = GetType(WorkspaceFile).GetJsonElement(work, New JSONSerializerOptions)
 
         Using buffer As FileStream = path.Open(doClear:=True)
             Call DirectCast(model, JsonObject).WriteBuffer(buffer)
