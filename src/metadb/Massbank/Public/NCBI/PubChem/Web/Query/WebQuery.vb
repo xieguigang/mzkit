@@ -140,7 +140,7 @@ Namespace NCBI.PubChem
 
     Public Class WebQuery : Inherits WebQuery(Of String)
 
-        Const fetchPugView As String = "https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/data/compound/%s/XML/"
+        Const fetchPugView As String = "https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/data/compound/%s/XML/?response_type=display"
 
         Public Sub New(<CallerMemberName>
                        Optional cache As String = Nothing,
