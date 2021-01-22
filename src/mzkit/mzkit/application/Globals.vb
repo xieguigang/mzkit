@@ -249,7 +249,8 @@ Module Globals
             For Each ms2 As ScanEntry In scan.products.SafeQuery
                 Dim productNode As New TreeNode(ms2.id) With {
                     .Tag = ms2,
-                    .ImageIndex = 1
+                    .ImageIndex = 1,
+                    .SelectedImageIndex = 1
                 }
 
                 scanNode.Nodes.Add(productNode)
