@@ -63,7 +63,7 @@ Public Class frmDemo
         PropertyGrid1.Refresh()
     End Sub
 
-    Private Sub ListView1_DoubleClick(sender As Object, e As EventArgs) Handles ListView1.DoubleClick
+    Private Sub ListView1_DoubleClick() Handles ListView1.DoubleClick, OpenToolStripMenuItem.Click
         If ListView1.SelectedItems.Count = 0 Then
             Return
         End If
@@ -109,11 +109,27 @@ Public Class frmDemo
         End Select
     End Sub
 
-    Private Sub OpenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenToolStripMenuItem.Click
-
-    End Sub
-
     Private Sub ShowInExplorerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowInExplorerToolStripMenuItem.Click
+        If ListView1.SelectedItems.Count = 0 Then
+            Return
+        End If
 
+        Dim i As Integer = ListView1.SelectedIndices.Item(0)
+
+        Select Case i
+            Case 0
+
+                Call Process.Start("https://ms-imaging.org/wp/imzml/example-files-test/")
+
+            Case Else
+
+                Dim demoPath As String = $"{App.HOME}/demo/"
+
+                If demoPath.DirectoryExists Then
+                    Call Process.Start(demoPath)
+                Else
+                    Call MyApplication.host.showStatusMessage("missing demo data directory...", My.Resources.StatusAnnotations_Warning_32xLG_color)
+                End If
+        End Select
     End Sub
 End Class
