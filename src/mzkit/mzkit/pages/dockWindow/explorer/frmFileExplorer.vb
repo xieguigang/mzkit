@@ -147,7 +147,7 @@ Public Class frmFileExplorer
 
     Public Sub addFileNode(newRaw As Raw)
         Me.Invoke(Sub()
-                      treeView1.Nodes(0).Nodes.Add(New TreeNode(newRaw.source.FileName) With {.Tag = newRaw})
+                      treeView1.Nodes(0).Nodes.Add(New TreeNode(newRaw.source.FileName) With {.Tag = newRaw, .ImageIndex = 1, .SelectedImageIndex = 1})
                   End Sub)
 
         Globals.workspace.Add(newRaw)

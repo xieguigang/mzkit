@@ -15,7 +15,7 @@ Imports Microsoft.VisualBasic.Text.Xml.Models
 ''' </summary>
 Public Class ViewerProject : Implements ISaveHandle, IFileReference
 
-    Public Property work As WorkspaceFile
+    Public Property work As New WorkspaceFile
 
     Public Property FilePath As String Implements IFileReference.FilePath
 
