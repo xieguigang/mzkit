@@ -72,7 +72,7 @@ SOFTWARE.
 		* 2.2.4. [step4 network visualization](#step4networkvisualization)
 		* 2.2.5. [Export Network Data](#ExportNetworkData)
 		* 2.2.6. [Save Network Visual](#SaveNetworkVisual)
-		
+
 * 3. [Appendix](#Appendix)
 	* 3.1. [Switch Between Toolkit](#SwitchBetweenToolkit)
 	* 3.2. [Install Mzkit](#InstallMzkit)
@@ -233,8 +233,6 @@ You can search for the formula of one feature in your raw data file with mzkit f
 Once the mzkit have been done of formula search, then all of the matched formula will be shown on the result page. there are some information about the each formula search result is listed in the result table, includes: formula result, its corresponding exact mass value, mass error of the searched m/z and the m/z calculated from the exact mass, ion charge value from your raw file, precursor type information, etc.
 
 ![](docs/manual/de-novo-formulas.png)
-
-<div style="page-break-after:always;"></div>
 
 You also can search of the formula by input any ``m/z`` value in the input box of the search result page. Click on the formula then you could submit the candidate formula into the biodeep database for search of the metabolite information.
 
