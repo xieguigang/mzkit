@@ -108,4 +108,12 @@ Public Class frmDemo
 
         End Select
     End Sub
+
+    Private Sub OpenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenToolStripMenuItem.Click
+
+    End Sub
+
+    Private Sub ShowInExplorerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowInExplorerToolStripMenuItem.Click
+
+    End Sub
 End Class
