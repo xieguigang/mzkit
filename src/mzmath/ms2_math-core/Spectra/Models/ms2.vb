@@ -1,4 +1,5 @@
-﻿Imports System.Xml.Serialization
+﻿Imports System.Runtime.CompilerServices
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 
 Namespace Spectra
@@ -41,6 +42,11 @@ Namespace Spectra
                 Return $"{mz} ({Fix(intensity)}%)"
             End If
         End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator -(x As ms2, y As ms2) As Double
+            Return x.mz - y.mz
+        End Operator
 
         ''' <summary>
         ''' 以质谱峰中最强峰作为100％，称为基峰（该离子的丰度最大、最稳定），然后用各种峰的离子流强度除以基峰的离子流强度，所得的百分数就是相对强度。 

@@ -4,39 +4,23 @@ Imports stdNum = System.Math
 
 Public Class PeakAnnotation
 
-    ReadOnly searchTypes As Dictionary(Of String, String())
-    ReadOnly profile As SearchOption
+    Public Function RunAnnotation(products As ms2()) As Annotation
+        Dim isotope As ms2() = MeasureIsotopePeaks(products)
 
-    Sub New()
-        searchTypes = New Dictionary(Of String, String()) From {
-            {"+", {"M", "M+H"}},
-            {"-", {"M", "M-H"}}
-        }
-        profile = SearchOption.SmallMolecule(DNPOrWileyType.DNP, common:=True).AdjustPpm(30)
-    End Sub
-
-    Public Iterator Function RunAnnotations(parent#, products As IEnumerable(Of ms2), charge#) As IEnumerable(Of Annotation)
-        Dim precursor_types As String() = If(charge > 0, searchTypes("+"), searchTypes("-"))
-        Dim formulas = New PrecursorIonSearch(profile) _
-            .AddPrecursorTypeRanges(precursor_types) _
-            .SearchByPrecursorMz(
-                mz:=parent,
-                charge:=charge,
-                ionMode:=stdNum.Sign(charge)
-            ) _
-            .Where(Function(a) a.GetAtomCount("C") > 0) _
-            .ToArray
-        Dim raw As ms2() = products.ToArray
-
-        For Each candidate As PrecursorIonComposition In formulas
-            Yield DoCandidateAnnotation(candidate, raw, precursor_types)
-        Next
     End Function
 
-    Private Function DoCandidateAnnotation(formula As PrecursorIonComposition, products As ms2(), precursor_types$()) As Annotation
-        Dim anno As New Annotation(formula, products)
+    Private Shared Function MeasureIsotopePeaks(products As ms2()) As ms2()
+        Dim desc = products.OrderByDescending(Function(mz) mz.mz).ToArray
+        Dim isotope As Integer() = New Integer(desc.Length - 1) {}
+        Dim max As ms2 = desc(0)
 
-        Return anno
+        For i As Integer = 1 To desc.Length - 1
+            If desc(i) - max <= 0.0001 Then
+                isotope(i - 1) += 1
+            End If
+        Next
+
+        Call Array.Reverse(isotope)
     End Function
 End Class
 
