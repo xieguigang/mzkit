@@ -1,4 +1,5 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.GCMS
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Linq
@@ -62,6 +63,7 @@ Public Class frmGCMSPeaks
             Dim TIC As NamedCollection(Of ChromatogramTick) = e.Node.Tag
 
             Call MyApplication.host.mzkitTool.ShowMRMTIC(TIC.name, TIC.value)
+            Call VisualStudio.ShowProperties(New agilentGCMSMeta(gcmsRaw.attributes))
         End If
     End Sub
 

@@ -60,6 +60,10 @@ Namespace GCMS
     Public Class Raw
 
         Public Property title As String
+        ''' <summary>
+        ''' the global attribute in netcdf file
+        ''' </summary>
+        ''' <returns></returns>
         Public Property attributes As Dictionary(Of String, String)
 
 #Region "Gas Chromatography"

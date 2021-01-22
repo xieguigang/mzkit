@@ -255,6 +255,10 @@
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
       <Name>MassSpectrum.math-core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\mzmath\TargetedMetabolomics\TargetedMetabolomics.vbproj">
+      <Project>{a8a71b32-dac6-4fa7-a5c1-0f5e5d5c9eb7}</Project>
+      <Name>TargetedMetabolomics</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\visualize\MsImaging\MsImaging.vbproj">
       <Project>{37a4ced9-2ce6-468e-b781-3b0a05e3beee}</Project>
       <Name>MsImaging</Name>

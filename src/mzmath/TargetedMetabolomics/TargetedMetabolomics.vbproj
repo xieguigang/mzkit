@@ -441,6 +441,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GCMS\agilentGCMSMeta.vb" />
     <Compile Include="MRM\IsomerismIonPairs.vb" />
     <Compile Include="MRM\Data\NamespaceDoc.vb" />
     <Compile Include="MRM\Data\MRMStandards.vb" />
