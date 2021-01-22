@@ -107,19 +107,27 @@ Public Class frmMain
     End Sub
 
     Public Sub ShowMRMIons(file As String)
-        MRMIons.DockState = DockState.DockLeft
-        MRMIons.LoadMRM(file)
+        If Not file.FileExists Then
+            Call showStatusMessage($"missing raw data file '{file.GetFullPath}'!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+        Else
+            MRMIons.DockState = DockState.DockLeft
+            MRMIons.LoadMRM(file)
+        End If
     End Sub
 
     Public Sub ShowGCMSSIM(file As String)
-        Dim CDFExplorer As New frmGCMS_CDFExplorer
+        If Not file.FileExists Then
+            Call showStatusMessage($"missing raw data file '{file.GetFullPath}'!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+        Else
+            Dim CDFExplorer As New frmGCMS_CDFExplorer
 
-        CDFExplorer.Show(dockPanel)
-        CDFExplorer.DockState = DockState.Document
-        CDFExplorer.loadCDF(file)
+            CDFExplorer.Show(dockPanel)
+            CDFExplorer.DockState = DockState.Document
+            CDFExplorer.loadCDF(file)
 
-        GCMSPeaks.LoadExplorer(CDFExplorer)
-        VisualStudio.Dock(GCMSPeaks, DockState.DockLeft)
+            GCMSPeaks.LoadExplorer(CDFExplorer)
+            VisualStudio.Dock(GCMSPeaks, DockState.DockLeft)
+        End If
     End Sub
 
     Public Sub OpenFile()
