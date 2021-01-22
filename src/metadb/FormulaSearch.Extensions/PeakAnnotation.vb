@@ -4,23 +4,30 @@ Imports stdNum = System.Math
 
 Public Class PeakAnnotation
 
-    Public Function RunAnnotation(products As ms2()) As Annotation
-        Dim isotope As ms2() = MeasureIsotopePeaks(products)
+    Public Function RunAnnotation(parentMz#, products As ms2()) As Annotation
+        Dim isotope As ms2() = MeasureIsotopePeaks(parentMz, products)
 
     End Function
 
-    Private Shared Function MeasureIsotopePeaks(products As ms2()) As ms2()
-        Dim desc = products.OrderByDescending(Function(mz) mz.mz).ToArray
-        Dim isotope As Integer() = New Integer(desc.Length - 1) {}
-        Dim max As ms2 = desc(0)
+    Private Shared Function MeasureIsotopePeaks(parentMz#, products As ms2()) As ms2()
+        Dim delta As Double
 
-        For i As Integer = 1 To desc.Length - 1
-            If desc(i) - max <= 0.0001 Then
-                isotope(i - 1) += 1
+        For i As Integer = 0 To products.Length - 1
+            delta = stdNum.Abs(products(i).mz - parentMz) / Element.H
+
+            If delta <= 0.00001 Then
+                products(i).Annotation = "M"
+            Else
+                For isotope As Integer = 0 To 3
+                    If stdNum.Abs(isotope - delta) <= 0.00001 Then
+                        products(i).Annotation = $"[M+{isotope}]isotope"
+                        Exit For
+                    End If
+                Next
             End If
         Next
 
-        Call Array.Reverse(isotope)
+        Return products
     End Function
 End Class
 
