@@ -18,10 +18,6 @@ Public Class frmDemo
     End Sub
 
     Private Sub ListView1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListView1.SelectedIndexChanged
-
-    End Sub
-
-    Private Sub ListView1_DoubleClick(sender As Object, e As EventArgs) Handles ListView1.DoubleClick
         If ListView1.SelectedItems.Count = 0 Then
             Return
         End If
@@ -30,7 +26,55 @@ Public Class frmDemo
         Dim info As New DemoItem
 
         Select Case i
-            Case 0 : Call Process.Start("https://ms-imaging.org/wp/imzml/example-files-test/")
+            Case 0
+
+                info.Title = "MS-Imaging demo data"
+                info.Url = "https://ms-imaging.org/wp/imzml/example-files-test/"
+                info.Information = "imzML dataset available as ‘open data’ in public data repository PRIDE by the European Bioinformatics Institute"
+                info.Application = "Mzkit MS-Imaging Viewer"
+
+            Case 1
+
+                info.Title = "LC-MS raw data file demo"
+                info.Url = $"{App.HOME}/demo/003_Ex2_Orbitrap_CID.mzXML".GetFullPath
+                info.Information = ""
+                info.Application = "Mzkit Raw Data Viewer"
+
+            Case 2
+
+
+                ' LC-MSMS
+                info.Title = "LC-MS/MS targeted data demo"
+                info.Url = $"{App.HOME}/demo/MRM-Data20190222-QCH.mzML".GetFullPath
+                info.Information = ""
+                info.Application = "Mzkit LC-MS/MS Viewer"
+
+            Case 3
+
+                ' GC-MS
+                info.Title = "GC-MS targeted data demo"
+                info.Url = $"{App.HOME}/demo/5ppm.CDF".GetFullPath
+                info.Information = ""
+                info.Application = "Mzkit GC-MS Targeted Viewer"
+
+        End Select
+
+        PropertyGrid1.SelectedObject = info
+        PropertyGrid1.Refresh()
+    End Sub
+
+    Private Sub ListView1_DoubleClick(sender As Object, e As EventArgs) Handles ListView1.DoubleClick
+        If ListView1.SelectedItems.Count = 0 Then
+            Return
+        End If
+
+        Dim i As Integer = ListView1.SelectedIndices.Item(0)
+
+        Select Case i
+            Case 0
+
+                Call Process.Start("https://ms-imaging.org/wp/imzml/example-files-test/")
+
             Case 1
 
                 Dim findRaw = MyApplication.fileExplorer.findRawFileNode("003_Ex2_Orbitrap_CID.mzXML")
@@ -63,8 +107,5 @@ Public Class frmDemo
                 MyApplication.host.ShowGCMSSIM(demoPath)
 
         End Select
-
-        PropertyGrid1.SelectedObject = info
-        PropertyGrid1.Refresh()
     End Sub
 End Class
