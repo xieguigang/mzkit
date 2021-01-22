@@ -7,6 +7,8 @@ Public Class PeakAnnotation
     Public Function RunAnnotation(parentMz#, products As ms2()) As Annotation
         Dim isotope As ms2() = MeasureIsotopePeaks(parentMz, products)
 
+        isotope = MatchElementGroups(isotope)
+
     End Function
 
     Private Shared Function MeasureIsotopePeaks(parentMz#, products As ms2()) As ms2()
@@ -29,6 +31,22 @@ Public Class PeakAnnotation
                         Exit For
                     End If
                 Next
+            End If
+        Next
+
+        Return products
+    End Function
+
+    Private Shared Function MatchElementGroups(products As ms2()) As ms2()
+        For Each element As ms2 In products
+            Dim group = Alkyl.GetByMass(element.mz)
+
+            If Not group.IsEmpty Then
+                If element.Annotation.StringEmpty Then
+                    element.Annotation = $"[{group.Value.EmpiricalFormula}]{group.Name}"
+                Else
+                    element.Annotation = $"{element.Annotation} ([{group.Value.EmpiricalFormula}]{group.Name})"
+                End If
             End If
         Next
 

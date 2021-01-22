@@ -143,6 +143,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AtomGroups\Alkyl.vb" />
     <Compile Include="PeakAnnotation.vb" />
     <Compile Include="PrecursorIonComposition.vb" />
     <Compile Include="PrecursorIonSearch.vb" />
