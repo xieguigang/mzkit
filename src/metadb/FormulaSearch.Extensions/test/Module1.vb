@@ -11,6 +11,7 @@ Module Module1
         New ms2 With {.mz = 101},
         New ms2 With {.mz = 59.1},
         New ms2 With {.mz = 25},
+        New ms2 With {.mz = 29.0027396},
         New ms2 With {.mz = 13.222},
         New ms2 With {.mz = 25 + Element.H},
         New ms2 With {.mz = 43.0547722}
@@ -26,6 +27,8 @@ Module Module1
         Call Console.WriteLine(FormulaScanner.ScanFormula("CH3CH2(CH3)CH").DebugView)
         Call Console.WriteLine(FormulaScanner.ScanFormula("C5H11").DebugView)
         Call Console.WriteLine(FormulaScanner.ScanFormula("CH3(CH2)4CH2").DebugView)
+
+        Call Console.WriteLine(FormulaScanner.ScanFormula("COH").DebugView)
 
 
         Dim anno As New PeakAnnotation

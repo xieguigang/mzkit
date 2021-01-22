@@ -1,5 +1,6 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports stdNum = System.Math
 
 Public Class PeakAnnotation
@@ -38,8 +39,10 @@ Public Class PeakAnnotation
     End Function
 
     Private Shared Function MatchElementGroups(products As ms2()) As ms2()
+        Dim group As NamedValue(Of Formula)
+
         For Each element As ms2 In products
-            Dim group = Alkyl.GetByMass(element.mz)
+            group = AtomGroupHandler.GetByMass(element.mz)
 
             If Not group.IsEmpty Then
                 If element.Annotation.StringEmpty Then

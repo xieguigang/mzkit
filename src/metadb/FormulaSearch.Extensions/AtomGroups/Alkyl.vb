@@ -1,7 +1,4 @@
-﻿Imports System.Reflection
-Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports stdnum = System.Math
+﻿Imports BioNovoGene.BioDeep.Chemoinformatics.Formula
 
 ''' <summary>
 ''' 烷基（alkyl），即饱和烃基，是烷烃分子中少掉一个氢原子而成的烃基，常用-R表示。烷基是一类仅含有碳、氢两种原子的链状有机基团。
@@ -59,24 +56,4 @@ Public Class Alkyl
     ''' <returns></returns>
     Public Shared ReadOnly Property hexyl_group As Formula = FormulaScanner.ScanFormula("CH3(CH2)4CH2")
 
-    Public Shared Function GetByMass(mass As Double) As NamedValue(Of Formula)
-        Static groups As Dictionary(Of String, Formula) = DataFramework _
-            .Schema(Of Alkyl)(
-                flag:=PropertyAccess.Readable,
-                nonIndex:=True,
-                binds:=BindingFlags.Static Or BindingFlags.Public
-            ) _
-            .ToDictionary(Function(p) p.Key,
-                          Function(p)
-                              Return DirectCast(p.Value.GetValue(Nothing, Nothing), Formula)
-                          End Function)
-
-        For Each group In groups
-            If stdnum.Abs(group.Value.ExactMass - mass) <= 0.00001 Then
-                Return New NamedValue(Of Formula)(group.Key, group.Value)
-            End If
-        Next
-
-        Return Nothing
-    End Function
 End Class
