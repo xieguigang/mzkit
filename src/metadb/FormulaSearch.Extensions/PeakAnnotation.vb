@@ -6,9 +6,13 @@ Imports stdNum = System.Math
 Public Class PeakAnnotation
 
     Public Function RunAnnotation(parentMz#, products As ms2()) As Annotation
-        Dim isotope As ms2() = MeasureIsotopePeaks(parentMz, products)
+        products = MeasureIsotopePeaks(parentMz, products)
+        products = MatchElementGroups(products)
 
-        isotope = MatchElementGroups(isotope)
+        Return New Annotation(MeasureFormula(products), products)
+    End Function
+
+    Private Shared Function MeasureFormula(products As ms2()) As FormulaComposition
 
     End Function
 

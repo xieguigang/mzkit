@@ -10,5 +10,15 @@ Public Class Ketones
     Public Shared ReadOnly Property ketone As Formula = FormulaScanner.ScanFormula("CO")
     Public Shared ReadOnly Property carboxylic_acid As Formula = FormulaScanner.ScanFormula("COOH")
     Public Shared ReadOnly Property carboxylic_ester As Formula = FormulaScanner.ScanFormula("COO")
+    Public Shared ReadOnly Property acid_anhydride As Formula = FormulaScanner.ScanFormula("COOCO")
+    Public Shared ReadOnly Property acyl_peroxide As Formula = FormulaScanner.ScanFormula("COOOCO")
+    Public Shared ReadOnly Property acid_amides As Formula = FormulaScanner.ScanFormula("CONH2")
+    Public Shared ReadOnly Property ketenes As Formula = FormulaScanner.ScanFormula("CHCO")
+    Public Shared ReadOnly Property isocyanate As Formula = FormulaScanner.ScanFormula("NCO")
+
+    Public Shared ReadOnly Property acyl_halideF As Formula = FormulaScanner.ScanFormula("COF")
+    Public Shared ReadOnly Property acyl_halideCl As Formula = FormulaScanner.ScanFormula("COCl")
+    Public Shared ReadOnly Property acyl_halideBr As Formula = FormulaScanner.ScanFormula("COBr")
+    Public Shared ReadOnly Property acyl_halideI As Formula = FormulaScanner.ScanFormula("COI")
 
 End Class
