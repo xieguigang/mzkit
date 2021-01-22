@@ -1,4 +1,5 @@
-﻿Imports mzkit.My
+﻿Imports System.ComponentModel
+Imports mzkit.My
 Imports Task
 Imports WeifenLuo.WinFormsUI.Docking
 
@@ -131,5 +132,10 @@ Public Class frmDemo
                     Call MyApplication.host.showStatusMessage("missing demo data directory...", My.Resources.StatusAnnotations_Warning_32xLG_color)
                 End If
         End Select
+    End Sub
+
+    Private Sub frmDemo_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        e.Cancel = True
+        Me.DockState = DockState.Hidden
     End Sub
 End Class
