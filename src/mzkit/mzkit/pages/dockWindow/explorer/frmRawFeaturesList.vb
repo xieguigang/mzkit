@@ -421,4 +421,18 @@ Public Class frmRawFeaturesList
             searchPage.page.runSearch()
         End Using
     End Sub
+
+    Private Sub ShowPropertiesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowPropertiesToolStripMenuItem.Click
+        MyApplication.host.ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
+
+        If treeView1.SelectedNode Is Nothing Then
+            Call MyApplication.host.showStatusMessage("No ion feature was selected...", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            Return
+        End If
+
+        Call MyApplication.host.ShowPropertyWindow()
+        Call MyApplication.host.mzkitTool.ShowPage()
+
+        MyApplication.host.Text = $"BioNovoGene Mzkit [{CurrentRawFile.source.GetFullPath}]"
+    End Sub
 End Class
