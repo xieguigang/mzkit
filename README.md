@@ -58,6 +58,7 @@ SOFTWARE.
 
 		* 1.7.1. [Export XIC](#ExportXIC)
 
+	* 1.8. [Ms-Imaging](#Ms-Imaging)
 * 2. [Data Annotations](#DataAnnotations)
 	* 2.1. [Formula search](#Formulasearch)
 
@@ -71,9 +72,8 @@ SOFTWARE.
 		* 2.2.4. [step4 network visualization](#step4networkvisualization)
 		* 2.2.5. [Export Network Data](#ExportNetworkData)
 		* 2.2.6. [Save Network Visual](#SaveNetworkVisual)
-
+		
 * 3. [Appendix](#Appendix)
-
 	* 3.1. [Switch Between Toolkit](#SwitchBetweenToolkit)
 	* 3.2. [Install Mzkit](#InstallMzkit)
 	* 3.3. [Uninstall Mzkit](#UninstallMzkit)
@@ -185,7 +185,7 @@ Export the XIC data to a specific file is also keeps simple, just mouse right cl
 
 <div style="page-break-after:always;"></div>
 
-### Ms-Imaging
+###  1.8. <a name='Ms-Imaging'></a>Ms-Imaging
 
 mzkit software is also supports the ``imzML`` file format for run ms-imaging rendering, here is how to view the imzML raw data file in mzkit application:
 
@@ -200,6 +200,8 @@ b. then you will see a pop out dialog for select raw data file, select the ``imz
 c. after the imzML raw data file has been imported into mzkit, then a raw data view for ms-imaging will be open, it looks like:
 
 ![](docs/manual/ms-imaging-viewer.PNG)
+
+<div style="page-break-after:always;"></div>
 
 two components for view ms-imaging contains:
 
