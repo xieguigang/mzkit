@@ -6,12 +6,15 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports mzkit.My
 Imports Task
+Imports WeifenLuo.WinFormsUI.Docking
 Imports Raw = BioNovoGene.Analytical.MassSpectrometry.Math.GCMS.Raw
 
 Public Class frmGCMSPeaks
 
-    Dim gcmsRaw As Raw
-    Dim explorer As frmGCMS_CDFExplorer
+    ''' <summary>
+    ''' [filename -> viewer]
+    ''' </summary>
+    Dim gcmsRaw As New Dictionary(Of String, frmGCMS_CDFExplorer)
 
     Private Sub frmGCMSPeaks_Load(sender As Object, e As EventArgs) Handles Me.Load
         TabText = "GCMS Feature Peaks"
@@ -19,16 +22,22 @@ Public Class frmGCMSPeaks
         ApplyVsTheme(ToolStrip1)
     End Sub
 
-    Public Sub LoadExplorer(viewer As frmGCMS_CDFExplorer)
-        Dim TIC = viewer.gcms.GetTIC
+    Public Function ContainsRaw(filepath As String) As Boolean
+        Return gcmsRaw.ContainsKey(filepath.GetFullPath)
+    End Function
 
-        Win7StyleTreeView1.Nodes.Clear()
+    Public Sub LoadRawExplorer(gcmsRaw As Raw)
+        Dim TICRoot = Win7StyleTreeView1.Nodes.Add(gcmsRaw.fileName.FileName)
+        Dim CDFExplorer As New frmGCMS_CDFExplorer
+        Dim TIC = gcmsRaw.GetTIC
 
-        Dim TICRoot = Win7StyleTreeView1.Nodes.Add("TIC")
+        TICRoot.Tag = gcmsRaw
 
-        gcmsRaw = viewer.gcms
-        explorer = viewer
-        TICRoot.Tag = TIC
+        CDFExplorer.Show(DockPanel)
+        CDFExplorer.DockState = DockState.Document
+        CDFExplorer.loadCDF(gcmsRaw)
+
+        Me.gcmsRaw(gcmsRaw.fileName.GetFullPath) = CDFExplorer
 
         Dim ROIlist As ROI() = TIC.Shadows _
             .PopulateROI(
@@ -53,18 +62,28 @@ Public Class frmGCMSPeaks
         If TypeOf e.Node.Tag Is ROI Then
             Dim rtRange As DoubleRange = DirectCast(e.Node.Tag, ROI).time
             Dim proper As New ROIProperty(e.Node.Tag)
+            Dim parent = e.Node.Parent
+            Dim explorer = Me.gcmsRaw(DirectCast(parent.Tag, Raw).fileName.GetFullPath)
 
             Call explorer.RtRangeSelector1_RangeSelect(rtRange.Min, rtRange.Max)
             Call explorer.Show(MyApplication.host.dockPanel)
             Call explorer.SetRange(rtRange.Min, rtRange.Max)
 
             Call VisualStudio.ShowProperties(proper)
-        Else
-            Dim TIC As NamedCollection(Of ChromatogramTick) = e.Node.Tag
-
-            Call MyApplication.host.mzkitTool.ShowMRMTIC(TIC.name, TIC.value)
-            Call VisualStudio.ShowProperties(New agilentGCMSMeta(gcmsRaw.attributes))
+        ElseIf TypeOf e.Node.Tag Is Raw Then
+            Call ShowRaw(DirectCast(e.Node.Tag, Raw).fileName)
         End If
+    End Sub
+
+    Public Sub ShowRaw(file As String)
+        Dim gcmsRaw As frmGCMS_CDFExplorer = Me.gcmsRaw(file.GetFullPath)
+        Dim TIC As NamedCollection(Of ChromatogramTick) = gcmsRaw.gcms.GetTIC
+
+        Call MyApplication.host.mzkitTool.ShowMRMTIC(TIC.name, TIC.value)
+        Call VisualStudio.ShowProperties(New agilentGCMSMeta(gcmsRaw.gcms.attributes))
+
+        gcmsRaw.Show(DockPanel)
+        gcmsRaw.DockState = DockState.Document
     End Sub
 
     Private Sub Win7StyleTreeView1_AfterCheck(sender As Object, e As TreeViewEventArgs) Handles Win7StyleTreeView1.AfterCheck

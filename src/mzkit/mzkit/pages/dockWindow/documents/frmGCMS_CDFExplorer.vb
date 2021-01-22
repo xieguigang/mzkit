@@ -13,11 +13,15 @@ Public Class frmGCMS_CDFExplorer
 
     Friend gcms As Raw
 
-    Public Sub loadCDF(file As String)
-        gcms = netCDFReader.Open(file).ReadData()
-        gcms.fileName = file.FileName
+    Public Shared Function loadCDF(file As String) As Raw
+        Dim gcms As Raw = netCDFReader.Open(file).ReadData()
+        gcms.fileName = file.GetFullPath
+        Return gcms
+    End Function
 
-        TabText = gcms.fileName
+    Public Sub loadCDF(gcms As Raw)
+        Me.TabText = gcms.fileName.FileName
+        Me.gcms = gcms
 
         RtRangeSelector1.SetTIC(gcms.GetTIC.value)
     End Sub
@@ -58,13 +62,14 @@ Public Class frmGCMS_CDFExplorer
     Private Sub frmGCMS_CDFExplorer_Load(sender As Object, e As EventArgs) Handles Me.Load
         PictureBox1.BackgroundImageLayout = ImageLayout.Zoom
         RtRangeSelector1.BackColor = Color.LightBlue
-        RtRangeSelector1.FillColor = Color.Green
+        RtRangeSelector1.FillColor = Color.DarkBlue
         RtRangeSelector1.SelectedColor = Color.Black
 
         TabText = "Targetted GCMS Viewer"
     End Sub
 
     Private Sub frmGCMS_CDFExplorer_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-        MyApplication.host.GCMSPeaks.DockState = DockState.Hidden
+        e.Cancel = True
+        Me.DockState = DockState.Hidden
     End Sub
 End Class
