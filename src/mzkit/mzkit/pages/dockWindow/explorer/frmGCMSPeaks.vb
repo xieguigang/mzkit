@@ -79,11 +79,11 @@ Public Class frmGCMSPeaks
         Dim gcmsRaw As frmGCMS_CDFExplorer = Me.gcmsRaw(file.GetFullPath)
         Dim TIC As NamedCollection(Of ChromatogramTick) = gcmsRaw.gcms.GetTIC
 
-        Call MyApplication.host.mzkitTool.ShowMRMTIC(TIC.name, TIC.value)
-        Call VisualStudio.ShowProperties(New agilentGCMSMeta(gcmsRaw.gcms.attributes))
-
         gcmsRaw.Show(DockPanel)
         gcmsRaw.DockState = DockState.Document
+
+        Call MyApplication.host.mzkitTool.ShowMRMTIC(TIC.name, TIC.value)
+        Call VisualStudio.ShowProperties(New agilentGCMSMeta(gcmsRaw.gcms.attributes))
     End Sub
 
     Private Sub Win7StyleTreeView1_AfterCheck(sender As Object, e As TreeViewEventArgs) Handles Win7StyleTreeView1.AfterCheck
