@@ -103,6 +103,12 @@ Namespace Spectra
             End Get
         End Property
 
+        Public ReadOnly Property totalIon As Double
+            Get
+                Return intensity.Sum
+            End Get
+        End Property
+
         <DebuggerStepThrough>
         Sub New()
             Call MyBase.New({})
