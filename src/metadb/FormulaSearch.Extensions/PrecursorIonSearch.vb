@@ -115,7 +115,6 @@ Public Class PrecursorIonSearch : Inherits FormulaSearch
                 Yield New PrecursorIonComposition(formula.CountsByElement, formula.EmpiricalFormula) With {
                     .adducts = type.adducts,
                     .charge = charge,
-                    .exact_mass = formula.exact_mass,
                     .M = type.M,
                     .ppm = formula.ppm,
                     .precursor_type = type.ToString

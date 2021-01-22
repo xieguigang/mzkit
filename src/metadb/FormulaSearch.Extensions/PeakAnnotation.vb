@@ -13,14 +13,19 @@ Public Class PeakAnnotation
         Dim delta As Double
 
         For i As Integer = 0 To products.Length - 1
-            delta = stdNum.Abs(products(i).mz - parentMz) / Element.H
+            delta = (products(i).mz - parentMz) / Element.H
 
-            If delta <= 0.00001 Then
+            If stdNum.Abs(delta) <= 0.00001 Then
                 products(i).Annotation = "M"
             Else
-                For isotope As Integer = 0 To 3
+                For isotope As Integer = -3 To 3
                     If stdNum.Abs(isotope - delta) <= 0.00001 Then
-                        products(i).Annotation = $"[M+{isotope}]isotope"
+                        If isotope < 0 Then
+                            products(i).Annotation = $"[M{isotope}]"
+                        Else
+                            products(i).Annotation = $"[M+{isotope}]isotope"
+                        End If
+
                         Exit For
                     End If
                 Next

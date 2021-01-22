@@ -157,7 +157,7 @@ Namespace Formula
 
             For n As Integer = current.MinCount To current.MaxCount
                 Dim formula As FormulaComposition = parent.AppendElement(current.Element, n)
-                Dim ppm As Double = FormulaSearch.PPM(formula.exact_mass, exact_mass)
+                Dim ppm As Double = FormulaSearch.PPM(formula.ExactMass, exact_mass)
 
                 If Not formula.HeteroatomRatioCheck Then
                     Continue For
@@ -171,7 +171,7 @@ Namespace Formula
                     formula.ppm = ppm
                     ' populate current formula that match exact mass ppm condition
                     Yield formula
-                ElseIf formula.exact_mass < exact_mass Then
+                ElseIf formula.ExactMass < exact_mass Then
                     If candidates.Count > 0 Then
                         ' 还可以再增加分子质量
                         ' stack必须要在这里进行重新初始化

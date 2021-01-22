@@ -16,8 +16,17 @@ Module Module1
     }
 
     Sub Main()
+        Call Console.WriteLine(FormulaScanner.ScanFormula("CH3").DebugView)
+        Call Console.WriteLine(FormulaScanner.ScanFormula("CH3CH2").DebugView)
+        Call Console.WriteLine(FormulaScanner.ScanFormula("CH3CH2CH2").DebugView)
+        Call Console.WriteLine(FormulaScanner.ScanFormula("(CH3)2CH").DebugView)
+        Call Console.WriteLine(FormulaScanner.ScanFormula("CH3CH2CH2CH2").DebugView)
+        Call Console.WriteLine(FormulaScanner.ScanFormula("(CH3)2CHCH2").DebugView)
+        Call Console.WriteLine(FormulaScanner.ScanFormula("CH3CH2(CH3)CH").DebugView)
+        Call Console.WriteLine(FormulaScanner.ScanFormula("(CH3)3C").DebugView)
+
         Dim anno As New PeakAnnotation
-        Dim result = anno.RunAnnotation(101, istoTest)
+        Dim result = anno.RunAnnotation(101 + Element.H, istoTest)
 
         Pause()
     End Sub

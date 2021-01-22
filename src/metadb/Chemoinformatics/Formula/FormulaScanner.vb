@@ -132,6 +132,7 @@ Namespace Formula
                     ' 遇到了一个堆栈
                     ' 对这个分子基团进行函数递归
                     Dim group As Formula = New FormulaScanner(n).ScanFormula(scaner)
+                    Dim skipNextNumber As Boolean = False
 
                     Call push(c)
                     ' 后面必定会跟着数字
@@ -142,18 +143,21 @@ Namespace Formula
                     ElseIf c = "n"c Then
                         digits += Me.n
                     Else
-                        Throw New SyntaxErrorException(scaner.RawBuffer.CharString)
+                        digits += "1"c
+                        skipNextNumber = True
                     End If
 
-                    Do While Not scaner.EndRead
-                        c = ++scaner
+                    If Not skipNextNumber Then
+                        Do While Not scaner.EndRead
+                            c = ++scaner
 
-                        If Char.IsDigit(c) Then
-                            digits += c
-                        Else
-                            Exit Do
-                        End If
-                    Loop
+                            If Char.IsDigit(c) Then
+                                digits += c
+                            Else
+                                Exit Do
+                            End If
+                        Loop
+                    End If
 
                     c = --scaner
                     group *= digits.DoCall(AddressOf Val)
