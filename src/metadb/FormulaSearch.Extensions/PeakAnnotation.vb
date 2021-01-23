@@ -9,11 +9,13 @@ Public Class PeakAnnotation
         products = MeasureIsotopePeaks(parentMz, products)
         products = MatchElementGroups(products)
 
-        Return New Annotation(MeasureFormula(products), products)
+        Return New Annotation(MeasureFormula(parentMz, products), products)
     End Function
 
-    Private Shared Function MeasureFormula(products As ms2()) As FormulaComposition
+    Private Function MeasureFormula(parentMz#, products As ms2()) As FormulaComposition
+        Dim counts As New Dictionary(Of String, Integer)
 
+        Return New FormulaComposition(counts)
     End Function
 
     Private Shared Function MeasureIsotopePeaks(parentMz#, products As ms2()) As ms2()

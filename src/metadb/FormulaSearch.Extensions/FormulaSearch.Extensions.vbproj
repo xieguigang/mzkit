@@ -145,6 +145,7 @@
   <ItemGroup>
     <Compile Include="AtomGroups\Alkyl.vb" />
     <Compile Include="AtomGroups\AtomGroupHandler.vb" />
+    <Compile Include="AtomGroups\Amines.vb" />
     <Compile Include="AtomGroups\Ketones.vb" />
     <Compile Include="PeakAnnotation.vb" />
     <Compile Include="PrecursorIonComposition.vb" />

@@ -6,13 +6,9 @@ Imports stdnum = System.Math
 
 Public Class AtomGroupHandler
 
-    Shared ReadOnly alkyl As Dictionary(Of String, Formula)
-    Shared ReadOnly ketones As Dictionary(Of String, Formula)
-
-    Shared Sub New()
-        alkyl = loadGroup(Of Alkyl)()
-        ketones = loadGroup(Of Ketones)()
-    End Sub
+    Shared ReadOnly alkyl As Dictionary(Of String, Formula) = loadGroup(Of Alkyl)()
+    Shared ReadOnly ketones As Dictionary(Of String, Formula) = loadGroup(Of Ketones)()
+    Shared ReadOnly amines As Dictionary(Of String, Formula) = loadGroup(Of Amines)()
 
     Private Shared Function loadGroup(Of T As Class)() As Dictionary(Of String, Formula)
         Return DataFramework.Schema(Of T)(
@@ -27,7 +23,7 @@ Public Class AtomGroupHandler
     End Function
 
     Public Shared Function GetByMass(mass As Double) As NamedValue(Of Formula)
-        Static all_groups As List(Of KeyValuePair(Of String, Formula)) = New List(Of KeyValuePair(Of String, Formula)) + alkyl + ketones
+        Static all_groups As List(Of KeyValuePair(Of String, Formula)) = New List(Of KeyValuePair(Of String, Formula)) + alkyl + ketones + amines
 
         For Each group In all_groups
             If stdnum.Abs(group.Value.ExactMass - mass) <= 0.00001 Then
