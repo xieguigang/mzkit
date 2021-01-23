@@ -215,7 +215,7 @@ Public Class PageMzSearch
         For Each result As PrecursorIonComposition In lstResults
             DataGridView1.Rows.Add(
                 result.EmpiricalFormula,
-                result.exact_mass,
+                result.ExactMass,
                 result.ppm,
                 result.charge,
                 result.adducts,
@@ -237,7 +237,7 @@ Public Class PageMzSearch
         DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells, .ValueType = GetType(String), .HeaderText = "m/z"})
 
         For Each result As FormulaComposition In lstResults
-            DataGridView1.Rows.Add(result.EmpiricalFormula, result.exact_mass, result.ppm, result.charge, stdNum.Abs(result.exact_mass / result.charge))
+            DataGridView1.Rows.Add(result.EmpiricalFormula, result.ExactMass, result.ppm, result.charge, stdNum.Abs(result.ExactMass / result.charge))
         Next
     End Sub
 
