@@ -63,12 +63,14 @@ Public Class TaskUI
     End Sub
 
     Public Sub Finish()
+        Dim message As String = $"{taskTitle} Job Done!{vbCrLf}{taskContent}"
+
         window.Invoke(Sub()
                           status.Text = "Finished"
                           progress.Text = ""
                           status.BackColor = Color.SkyBlue
                       End Sub)
 
-        Call Alert.ShowSucess($"{taskTitle} Job Done!{vbCrLf}{taskContent}")
+        Call Alert.ShowSucess(message)
     End Sub
 End Class
