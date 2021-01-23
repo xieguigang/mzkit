@@ -24,11 +24,11 @@ Public Class PeakAnnotation
         For i As Integer = 0 To products.Length - 1
             delta = (products(i).mz - parentMz) / Element.H
 
-            If stdNum.Abs(delta) <= 0.00001 Then
+            If stdNum.Abs(delta) <= 0.01 Then
                 products(i).Annotation = "M"
             Else
                 For isotope As Integer = -3 To 3
-                    If stdNum.Abs(isotope - delta) <= 0.00001 Then
+                    If stdNum.Abs(isotope - delta) <= 0.01 Then
                         If isotope < 0 Then
                             products(i).Annotation = $"[M{isotope}]"
                         Else
