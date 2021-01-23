@@ -24,7 +24,7 @@ Public Class PeakAnnotation
         For i As Integer = 0 To products.Length - 1
             delta = (products(i).mz - parentMz) / Element.H
 
-            If stdNum.Abs(delta) <= 0.01 Then
+            If FormulaSearch.PPM(products(i).mz, parentMz) <= 20 Then
                 products(i).Annotation = "M"
             Else
                 For isotope As Integer = -3 To 3
@@ -74,7 +74,9 @@ Public Class Annotation
             .Select(Function(a)
                         Return New ms2 With {
                             .mz = a.mz,
-                            .intensity = a.intensity
+                            .intensity = a.intensity,
+                            .Annotation = a.Annotation,
+                            .quantity = a.quantity
                         }
                     End Function) _
             .ToArray

@@ -112,7 +112,10 @@ Public Module MoleculeNetworking
         Dim pa As New PeakAnnotation
 
         properties = New SpectrumProperty(scanId, raw.source.FileName, attrs)
-        scanData.ms2 = pa.RunAnnotation(properties.precursorMz, scanData.ms2).products
+
+        If properties.precursorMz > 0 Then
+            scanData.ms2 = pa.RunAnnotation(properties.precursorMz, scanData.ms2).products
+        End If
 
         Return scanData
     End Function
