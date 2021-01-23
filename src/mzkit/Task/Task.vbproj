@@ -264,6 +264,10 @@
       <Project>{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}</Project>
       <Name>Chemoinformatics</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\metadb\FormulaSearch.Extensions\FormulaSearch.Extensions.vbproj">
+      <Project>{7acfed27-3bc8-47e1-a1a2-226c82c6dc1f}</Project>
+      <Name>FormulaSearch.Extensions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\mzmath\ms2_math-core\MassSpectrum.math-core.vbproj">
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
       <Name>MassSpectrum.math-core</Name>

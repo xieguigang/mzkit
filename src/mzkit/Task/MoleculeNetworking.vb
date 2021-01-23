@@ -44,6 +44,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
@@ -108,8 +109,10 @@ Public Module MoleculeNetworking
             .centroid = False,
             .ms2 = rawData.Centroid(Tolerance.DeltaMass(0.1), cutoff).ToArray
         }
+        Dim pa As New PeakAnnotation
 
         properties = New SpectrumProperty(scanId, raw.source.FileName, attrs)
+        scanData.ms2 = pa.RunAnnotation(properties.precursorMz, scanData.ms2).products
 
         Return scanData
     End Function
