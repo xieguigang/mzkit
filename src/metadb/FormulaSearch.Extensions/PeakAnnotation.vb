@@ -7,7 +7,7 @@ Public Class PeakAnnotation
 
     Public Function RunAnnotation(parentMz#, products As ms2()) As Annotation
         products = MeasureIsotopePeaks(parentMz, products)
-        products = MatchElementGroups(products)
+        products = MatchElementGroups(parentMz, products)
 
         Return New Annotation(MeasureFormula(parentMz, products), products)
     End Function
@@ -44,8 +44,9 @@ Public Class PeakAnnotation
         Return products
     End Function
 
-    Private Shared Function MatchElementGroups(products As ms2()) As ms2()
+    Private Shared Function MatchElementGroups(parentMz#, products As ms2()) As ms2()
         Dim group As NamedValue(Of Formula)
+        Dim delta As Integer = 0
 
         For Each element As ms2 In products
             group = AtomGroupHandler.GetByMass(element.mz)
@@ -55,6 +56,24 @@ Public Class PeakAnnotation
                     element.Annotation = $"[{group.Value.EmpiricalFormula}]{group.Name}"
                 Else
                     element.Annotation = $"{element.Annotation} ([{group.Value.EmpiricalFormula}]{group.Name})"
+                End If
+            Else
+                group = AtomGroupHandler.FindDelta(parentMz, element.mz, delta)
+
+                If Not group.IsEmpty Then
+                    Dim deltaStr As String
+
+                    If delta = 1 Then
+                        deltaStr = $"[M+{group.Name}]"
+                    Else
+                        deltaStr = $"[M-{group.Name}]"
+                    End If
+
+                    If element.Annotation.StringEmpty Then
+                        element.Annotation = deltaStr
+                    Else
+                        element.Annotation = $"{element.Annotation} ({deltaStr})"
+                    End If
                 End If
             End If
         Next
@@ -75,7 +94,7 @@ Public Class Annotation
                         Return New ms2 With {
                             .mz = a.mz,
                             .intensity = a.intensity,
-                            .Annotation = a.Annotation,
+                            .Annotation = If(a.Annotation.IsInteger, "", a.Annotation),
                             .quantity = a.quantity
                         }
                     End Function) _

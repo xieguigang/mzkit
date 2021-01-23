@@ -147,6 +147,7 @@
     <Compile Include="AtomGroups\AtomGroupHandler.vb" />
     <Compile Include="AtomGroups\Amines.vb" />
     <Compile Include="AtomGroups\Alkenyl.vb" />
+    <Compile Include="AtomGroups\Others.vb" />
     <Compile Include="AtomGroups\Ketones.vb" />
     <Compile Include="PeakAnnotation.vb" />
     <Compile Include="PrecursorIonComposition.vb" />
