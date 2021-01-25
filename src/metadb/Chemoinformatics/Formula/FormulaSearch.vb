@@ -45,6 +45,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports stdNum = System.Math
 
 Namespace Formula
@@ -54,20 +55,54 @@ Namespace Formula
         ReadOnly opts As SearchOption
         ReadOnly elements As Dictionary(Of String, Element)
         ReadOnly progressReport As Action(Of String)
+        ReadOnly candidateElements As ElementSearchCandiate()
+        ReadOnly enableHCRatioCheck As Boolean = True
 
         Sub New(opts As SearchOption, Optional progress As Action(Of String) = Nothing)
             Me.opts = opts
             Me.progressReport = progress
             Me.elements = Element.MemoryLoadElements
+            Me.candidateElements = reorderCandidateElements(enableHCRatioCheck)
         End Sub
 
+        ''' <summary>
+        ''' 为了方便计算HC比例以及加速计算，在这里总是将C放在第一位，H放在第二位
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function reorderCandidateElements(ByRef enableHCRatioCheck As Boolean) As ElementSearchCandiate()
+            Dim list As ElementSearchCandiate() = opts.candidateElements.ToArray
+            Dim C As Integer = Which(list.Select(Function(e) e.Element = "C")).DefaultFirst(-1)
+            Dim H As Integer = Which(list.Select(Function(e) e.Element = "H")).DefaultFirst(-1)
+            Dim reorders As New List(Of ElementSearchCandiate)
+
+            If C > -1 Then
+                reorders.Add(list(C))
+            End If
+            If H > -1 Then
+                reorders.Add(list(H))
+            End If
+
+            enableHCRatioCheck = (C > -1) And (H > -1)
+
+            For i As Integer = 0 To list.Length - 1
+                If i <> C AndAlso i <> H Then
+                    reorders.Add(list(i))
+                End If
+            Next
+
+            Return reorders.ToArray
+        End Function
+
         Public Iterator Function SearchByExactMass(exact_mass As Double, Optional doVerify As Boolean = True, Optional cancel As Value(Of Boolean) = Nothing) As IEnumerable(Of FormulaComposition)
-            Dim elements As New Stack(Of ElementSearchCandiate)(opts.candidateElements.AsEnumerable.Reverse)
+            Dim elements As New Stack(Of ElementSearchCandiate)(candidateElements.AsEnumerable.Reverse)
             Dim seed As New FormulaComposition(New Dictionary(Of String, Integer), "")
 
             If cancel Is Nothing Then
                 cancel = False
             End If
+
+            Dim chargeMin As Double = opts.chargeRange.Min
+            Dim chargeMax As Double = opts.chargeRange.Max
 
             For Each formula As FormulaComposition In SearchByExactMass(exact_mass, seed, elements, cancel)
                 If doVerify Then
@@ -77,7 +112,7 @@ Namespace Formula
                     If ConstructAndVerifyCompoundWork(counts) Then
                         ' formula.charge = FormalCharge.CorrectChargeEmpirical(formula.charge, counts)
 
-                        If formula.charge >= opts.chargeRange.Min AndAlso formula.charge <= opts.chargeRange.Max Then
+                        If formula.charge >= chargeMin AndAlso formula.charge <= chargeMax Then
                             checked = True
                         End If
                     End If
@@ -99,9 +134,12 @@ Namespace Formula
             Dim maxH As Integer = 0
 
             ' Compute maximum number of hydrogens
-            If elementNum.Si = 0 AndAlso elementNum.C = 0 AndAlso elementNum.N = 0 AndAlso
-           elementNum.P = 0 AndAlso elementNum.Other = 0 AndAlso
-           (elementNum.O > 0 OrElse elementNum.S > 0) Then
+            If elementNum.Si = 0 AndAlso
+                elementNum.C = 0 AndAlso
+                elementNum.N = 0 AndAlso
+                elementNum.P = 0 AndAlso
+                elementNum.Other = 0 AndAlso
+                (elementNum.O > 0 OrElse elementNum.S > 0) Then
                 ' Only O and S
                 maxH = 3
             Else
@@ -127,18 +165,27 @@ Namespace Formula
                     maxH = maxH - 3
                 End If
 
-                If elementNum.Other > 0 Then maxH += elementNum.Other * 4 + 3
-
+                If elementNum.Other > 0 Then
+                    maxH += elementNum.Other * 4 + 3
+                End If
             End If
 
             ' correct for if H only
-            If maxH < 3 Then maxH = 3
+            If maxH < 3 Then
+                maxH = 3
+            End If
 
             ' correct for halogens
-            maxH = maxH - elementNum.F - elementNum.Cl - elementNum.Br - elementNum.I
+            maxH = maxH -
+                elementNum.F -
+                elementNum.Cl -
+                elementNum.Br -
+                elementNum.I
 
             ' correct for negative udtElementNum.H
-            If maxH < 0 Then maxH = 0
+            If maxH < 0 Then
+                maxH = 0
+            End If
 
             ' Verify H's
             Dim blnHOK = (elementNum.H <= maxH)
@@ -160,6 +207,8 @@ Namespace Formula
                 Dim ppm As Double = FormulaSearch.PPM(formula.ExactMass, exact_mass)
 
                 If Not formula.HeteroatomRatioCheck Then
+                    Continue For
+                ElseIf enableHCRatioCheck AndAlso Not parent.HydrogenCarbonElementRatioCheck Then
                     Continue For
                 End If
 

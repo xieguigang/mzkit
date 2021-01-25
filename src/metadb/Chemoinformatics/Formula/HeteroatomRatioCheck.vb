@@ -70,5 +70,33 @@ Namespace Formula
 
             Return True
         End Function
+
+        ''' <summary>
+        ''' Rule #4 – Hydrogen/Carbon element ratio check
+        ''' 
+        ''' + In most cases the hydrogen/carbon ratio does not exceed ``H/C`` > 3 with rare exception such as in methylhydrazine (CH6N2).
+        ''' + Conversely, the ``H/C`` ratio Is usually smaller than 2, And should Not be less than 0.125 Like in the case of tetracyanopyrrole (C8HN5).
+        ''' + Most typical ratios are found between ``2.0 > H/C > 0.5``
+        ''' + More than 99.7% Of all formulas were included With H/C ratios between ``0.2–3.1``. Consequently, we Call this range the 'common range'.
+        ''' + However, a number of chemical classes fall out of this range, And we have hence enabled the user to select 'extended ranges' covering 99.99% of all formulas in this development database (H/C 0.1–6).
+        ''' </summary>
+        ''' <param name="formula"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function HydrogenCarbonElementRatioCheck(formula As FormulaComposition) As Boolean
+            Dim HCRatio As Double = formula.HCRatio
+
+            If HCRatio >= 3 Then
+                With formula
+                    Return !C = 1 AndAlso !H = 6 AndAlso !N = 2
+                End With
+            ElseIf HCRatio <= 0.125 Then
+                With formula
+                    Return !C = 8 AndAlso !H = 1 AndAlso !N = 5
+                End With
+            Else
+                Return HCRatio >= 0.2 AndAlso HCRatio <= 3.1
+            End If
+        End Function
     End Module
 End Namespace
