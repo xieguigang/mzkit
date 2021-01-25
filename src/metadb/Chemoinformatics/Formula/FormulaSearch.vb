@@ -197,6 +197,8 @@ Namespace Formula
         Private Iterator Function SearchByExactMass(exact_mass As Double, parent As FormulaComposition, candidates As Stack(Of ElementSearchCandiate), cancel As Value(Of Boolean)) As IEnumerable(Of FormulaComposition)
             If candidates.Count = 0 Then
                 Return
+            ElseIf Not parent.ElementProbabilityCheck Then
+                Return
             End If
 
             Dim current As ElementSearchCandiate = candidates.Pop

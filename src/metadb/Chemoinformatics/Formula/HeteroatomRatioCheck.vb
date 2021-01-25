@@ -98,5 +98,37 @@ Namespace Formula
                 Return HCRatio >= 0.2 AndAlso HCRatio <= 3.1
             End If
         End Function
+
+        ''' <summary>
+        ''' Rule #6 – element probability check
+        ''' 
+        ''' Multiple element count restriction for compounds &lt; 2000 Da, 
+        ''' based on the examination of the Beilstein database and the 
+        ''' Dictionary of Natural Products
+        ''' </summary>
+        ''' <param name="formula"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function ElementProbabilityCheck(formula As Formula) As Boolean
+            With formula
+                If !N > 1 AndAlso !O > 1 AndAlso !P > 1 AndAlso !S > 1 Then
+                    Return !N < 10 AndAlso !O < 20 AndAlso !P < 4 AndAlso !S < 3
+                End If
+                If !N > 3 AndAlso !O > 3 AndAlso !P > 3 Then
+                    Return !N < 11 AndAlso !O < 22 AndAlso !P < 6
+                End If
+                If !O > 1 AndAlso !P > 1 AndAlso !S > 1 Then
+                    Return !O < 14 AndAlso !P < 3 AndAlso !S < 3
+                End If
+                If !N > 1 AndAlso !P > 1 AndAlso !S > 1 Then
+                    Return !N < 4 AndAlso !P < 3 AndAlso !S < 3
+                End If
+                If !N > 6 AndAlso !O > 6 AndAlso !S > 6 Then
+                    Return !N < 19 AndAlso !O < 14 AndAlso !S < 8
+                End If
+            End With
+
+            Return True
+        End Function
     End Module
 End Namespace
