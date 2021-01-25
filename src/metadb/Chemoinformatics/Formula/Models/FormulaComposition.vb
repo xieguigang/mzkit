@@ -6,13 +6,19 @@ Namespace Formula
         Public Property charge As Double
         Public Property ppm As Double
 
+        ''' <summary>
+        ''' Hydrogen/Carbon element ratio
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property HCRatio As Double
             Get
-                If CountsByElement.ContainsKey("C") AndAlso CountsByElement.ContainsKey("H") Then
-                    Return CountsByElement!C / CountsByElement!H
-                Else
-                    Return -1
-                End If
+                With CountsByElement
+                    If .ContainsKey("C") AndAlso .ContainsKey("H") Then
+                        Return !H / !C
+                    Else
+                        Return -1
+                    End If
+                End With
             End Get
         End Property
 
