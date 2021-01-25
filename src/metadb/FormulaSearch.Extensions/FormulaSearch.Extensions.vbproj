@@ -168,6 +168,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Scores\IsotopicAbundanceRatio.vb" />
     <Compile Include="Scores\NitrogenRule.vb" />
     <Compile Include="Scores\MoleculeIonStable.vb" />
   </ItemGroup>
