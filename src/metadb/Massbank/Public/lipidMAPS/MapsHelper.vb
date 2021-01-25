@@ -82,10 +82,10 @@ Namespace LipidMaps
                 .Select(Function(t)
                             Return t.Split(":"c) _
                                 .Select(Function(x)
-                                            If x.IsPattern("d\d+") Then
-                                                Return CInt(Val(x.Replace("d", "")))
-                                            Else
+                                            If x.IsPattern("\d+") Then
                                                 Return CInt(Val(x))
+                                            Else
+                                                Return -1000000
                                             End If
                                         End Function) _
                                 .ToArray
