@@ -411,10 +411,11 @@
     <Compile Include="Formula\AbbrevStatsType.vb" />
     <Compile Include="Formula\FormalCharge.vb" />
     <Compile Include="Formula\HeteroatomRatioCheck.vb" />
+    <Compile Include="Formula\Models\FormulaComposition.vb" />
     <Compile Include="Formula\SearchOption.vb" />
     <Compile Include="Formula\FormulaSearch.vb" />
     <Compile Include="Formula\ElementSearchCandiate.vb" />
-    <Compile Include="Formula\Formula.vb" />
+    <Compile Include="Formula\Models\Formula.vb" />
     <Compile Include="Formula\FormulaScanner.vb" />
     <Compile Include="Formula\Element.vb" />
     <Compile Include="InChI\Components.vb" />
