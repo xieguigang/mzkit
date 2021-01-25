@@ -184,9 +184,4 @@ Namespace Formula
             End If
         End Function
     End Class
-
-    Public Enum DNPOrWileyType
-        DNP
-        Wiley
-    End Enum
 End Namespace

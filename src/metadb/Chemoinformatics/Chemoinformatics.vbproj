@@ -409,6 +409,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Formula\AbbrevStatsType.vb" />
+    <Compile Include="Formula\DNPOrWileyType.vb" />
+    <Compile Include="Formula\ElementNumType.vb" />
     <Compile Include="Formula\FormalCharge.vb" />
     <Compile Include="Formula\HeteroatomRatioCheck.vb" />
     <Compile Include="Formula\Models\FormulaComposition.vb" />
