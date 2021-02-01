@@ -86,6 +86,10 @@ using RibbonLib.Interop;
             public const uint cmdTabFormulaSearch = 1092;
             public const uint cmdGroupFormulaSearch = 1093;
             public const uint cmdButtonFormulaSearchExport = 1094;
+            public const uint cmdTargetedContex = 101;
+            public const uint cmdTabTargeted = 102;
+            public const uint cmdTabGroupTargeted = 98;
+            public const uint cmdImportsLinear = 100;
             public const uint cmdTabMain = 1011;
             public const uint cmdGroupFileActions = 1045;
             public const uint cmdTabGroupWindowTools = 1023;
@@ -97,7 +101,6 @@ using RibbonLib.Interop;
             public const uint cmdButtonMzCalculator = 1013;
             public const uint cmdButtonMzSearch = 1052;
             public const uint cmdButtonShowSpectrumSearchPage = 1102;
-            public const uint cmdTabGroupTargeted = 98;
             public const uint cmdTargeted = 99;
             public const uint cmdTabAbout = 1020;
             public const uint cmdGroupAboutActions = 1047;
@@ -186,6 +189,10 @@ using RibbonLib.Interop;
         public RibbonTab TabFormulaSearch { get; private set; }
         public RibbonGroup GroupFormulaSearch { get; private set; }
         public RibbonButton ButtonFormulaSearchExport { get; private set; }
+        public RibbonTabGroup TargetedContex { get; private set; }
+        public RibbonTab TabTargeted { get; private set; }
+        public RibbonGroup TabGroupTargeted { get; private set; }
+        public RibbonButton ImportsLinear { get; private set; }
         public RibbonTab TabMain { get; private set; }
         public RibbonGroup GroupFileActions { get; private set; }
         public RibbonGroup TabGroupWindowTools { get; private set; }
@@ -197,7 +204,6 @@ using RibbonLib.Interop;
         public RibbonButton ButtonMzCalculator { get; private set; }
         public RibbonButton ButtonMzSearch { get; private set; }
         public RibbonButton ButtonShowSpectrumSearchPage { get; private set; }
-        public RibbonGroup TabGroupTargeted { get; private set; }
         public RibbonButton Targeted { get; private set; }
         public RibbonTab TabAbout { get; private set; }
         public RibbonGroup GroupAboutActions { get; private set; }
@@ -284,6 +290,10 @@ using RibbonLib.Interop;
             TabFormulaSearch = new RibbonTab(ribbon, Cmd.cmdTabFormulaSearch);
             GroupFormulaSearch = new RibbonGroup(ribbon, Cmd.cmdGroupFormulaSearch);
             ButtonFormulaSearchExport = new RibbonButton(ribbon, Cmd.cmdButtonFormulaSearchExport);
+            TargetedContex = new RibbonTabGroup(ribbon, Cmd.cmdTargetedContex);
+            TabTargeted = new RibbonTab(ribbon, Cmd.cmdTabTargeted);
+            TabGroupTargeted = new RibbonGroup(ribbon, Cmd.cmdTabGroupTargeted);
+            ImportsLinear = new RibbonButton(ribbon, Cmd.cmdImportsLinear);
             TabMain = new RibbonTab(ribbon, Cmd.cmdTabMain);
             GroupFileActions = new RibbonGroup(ribbon, Cmd.cmdGroupFileActions);
             TabGroupWindowTools = new RibbonGroup(ribbon, Cmd.cmdTabGroupWindowTools);
@@ -295,7 +305,6 @@ using RibbonLib.Interop;
             ButtonMzCalculator = new RibbonButton(ribbon, Cmd.cmdButtonMzCalculator);
             ButtonMzSearch = new RibbonButton(ribbon, Cmd.cmdButtonMzSearch);
             ButtonShowSpectrumSearchPage = new RibbonButton(ribbon, Cmd.cmdButtonShowSpectrumSearchPage);
-            TabGroupTargeted = new RibbonGroup(ribbon, Cmd.cmdTabGroupTargeted);
             Targeted = new RibbonButton(ribbon, Cmd.cmdTargeted);
             TabAbout = new RibbonTab(ribbon, Cmd.cmdTabAbout);
             GroupAboutActions = new RibbonGroup(ribbon, Cmd.cmdGroupAboutActions);

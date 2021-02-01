@@ -78,6 +78,8 @@ Namespace My
         Public Shared ReadOnly Property LogForm As OutputWindow
         Public Shared ReadOnly Property REngine As RInterpreter
 
+        Public Shared ReadOnly Property ribbon As RibbonItems
+
         Shared WithEvents console As Console
         Shared Rtask As Thread
         Shared cancel As New ManualResetEvent(initialState:=False)
@@ -296,6 +298,7 @@ Type 'q()' to quit R.
 
         Public Shared Sub RegisterHost(host As frmMain)
             MyApplication._host = host
+            MyApplication._ribbon = host.ribbonItems
         End Sub
 
         Private Sub MyApplication_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs) Handles Me.UnhandledException

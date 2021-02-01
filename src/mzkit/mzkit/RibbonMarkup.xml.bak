@@ -938,6 +938,16 @@
         <Image MinDPI="192">Res/office_chart_area_256px_540041_easyicon.net.bmp</Image>
       </Command.LargeImages>
     </Command>
+    <Command Name="cmdImportsLinear" Id="100" LabelTitle="Imports Linear" LabelDescription="Open a file imports dialog and then imports a list of linear reference files." TooltipTitle="Imports Linear" TooltipDescription="Open a file imports dialog and then imports a list of linear reference files.">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/folder-documents.bmp</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Res/folder-documents.bmp</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdTargetedContex" Id="101" LabelTitle="Targeted Quantification" />
+    <Command Name="cmdTabTargeted" Id="102" />
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -1090,6 +1100,13 @@
             </Group>
           </Tab>
         </TabGroup>
+        <TabGroup CommandName="cmdTargetedContex">
+          <Tab CommandName="cmdTabTargeted">
+            <Group CommandName="cmdTabGroupTargeted" SizeDefinition="OneButton">
+              <Button CommandName="cmdImportsLinear" />
+            </Group>
+          </Tab>
+        </TabGroup>
       </Ribbon.ContextualTabs>
       <Ribbon.Tabs>
         <Tab CommandName="cmdTabMain">
@@ -1127,7 +1144,7 @@
             <Button CommandName="cmdButtonMzSearch" />
             <Button CommandName="cmdButtonShowSpectrumSearchPage" />
           </Group>
-          <Group CommandName="cmdTabGroupTargeted" SizeDefinition="OneButton"> 
+          <Group CommandName="cmdTabGroupTargeted" SizeDefinition="OneButton">
             <Button CommandName="cmdTargeted" />
           </Group>
         </Tab>
