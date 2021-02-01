@@ -947,7 +947,15 @@
       </Command.LargeImages>
     </Command>
     <Command Name="cmdTargetedContex" Id="101" LabelTitle="Targeted Quantification" />
-    <Command Name="cmdTabTargeted" Id="102" />
+    <Command Name="cmdTabTargeted" Id="102" LabelTitle="Data Analysis" />
+    <Command Name="cmdSaveLinears" Id="103" LabelTitle="Save Linear Table" LabelDescription="Save Linear Table" TooltipTitle="Save Linear Table" TooltipDescription="Save Linear Table">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/excel-icon.bmp</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Res/excel-icon.bmp</Image>
+      </Command.LargeImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <ContextPopup>

@@ -388,5 +388,12 @@
 #define cmdTargetedContex_LabelTitle_RESID 60037
 #define cmdTabTargeted 102 
 #define cmdTabTargeted_LabelTitle_RESID 60038
-#define InternalCmd2_LabelTitle_RESID 60039
-#define InternalCmd4_LabelTitle_RESID 60040
+#define cmdSaveLinears 103 
+#define cmdSaveLinears_LabelTitle_RESID 60039
+#define cmdSaveLinears_LabelDescription_RESID 60040
+#define cmdSaveLinears_TooltipTitle_RESID 60041
+#define cmdSaveLinears_TooltipDescription_RESID 60042
+#define cmdSaveLinears_SmallImages_192__RESID 60043
+#define cmdSaveLinears_LargeImages_192__RESID 60044
+#define InternalCmd2_LabelTitle_RESID 60045
+#define InternalCmd4_LabelTitle_RESID 60046

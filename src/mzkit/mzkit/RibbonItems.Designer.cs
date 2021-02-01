@@ -90,6 +90,7 @@ using RibbonLib.Interop;
             public const uint cmdTabTargeted = 102;
             public const uint cmdTabGroupTargeted = 98;
             public const uint cmdImportsLinear = 100;
+            public const uint cmdSaveLinears = 103;
             public const uint cmdTabMain = 1011;
             public const uint cmdGroupFileActions = 1045;
             public const uint cmdTabGroupWindowTools = 1023;
@@ -193,6 +194,7 @@ using RibbonLib.Interop;
         public RibbonTab TabTargeted { get; private set; }
         public RibbonGroup TabGroupTargeted { get; private set; }
         public RibbonButton ImportsLinear { get; private set; }
+        public RibbonButton SaveLinears { get; private set; }
         public RibbonTab TabMain { get; private set; }
         public RibbonGroup GroupFileActions { get; private set; }
         public RibbonGroup TabGroupWindowTools { get; private set; }
@@ -294,6 +296,7 @@ using RibbonLib.Interop;
             TabTargeted = new RibbonTab(ribbon, Cmd.cmdTabTargeted);
             TabGroupTargeted = new RibbonGroup(ribbon, Cmd.cmdTabGroupTargeted);
             ImportsLinear = new RibbonButton(ribbon, Cmd.cmdImportsLinear);
+            SaveLinears = new RibbonButton(ribbon, Cmd.cmdSaveLinears);
             TabMain = new RibbonTab(ribbon, Cmd.cmdTabMain);
             GroupFileActions = new RibbonGroup(ribbon, Cmd.cmdGroupFileActions);
             TabGroupWindowTools = new RibbonGroup(ribbon, Cmd.cmdTabGroupWindowTools);
@@ -320,3 +323,4 @@ using RibbonLib.Interop;
         }
 
     }
+
