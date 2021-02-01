@@ -147,11 +147,11 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\BinaryData.vbproj">
+    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\BinaryData.vbproj">
       <Project>{487d7c92-d05a-4908-bf81-e6baba0bf592}</Project>
       <Name>BinaryData</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFittings\DataFittings.vbproj">
+    <ProjectReference Include="..\..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFittings\DataFittings.vbproj">
       <Project>{fc125b0d-1942-496f-b502-9c0eb80e35b6}</Project>
       <Name>DataFittings</Name>
     </ProjectReference>
