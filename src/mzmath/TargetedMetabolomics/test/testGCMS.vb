@@ -55,6 +55,8 @@ Module testGCMS
 
     Sub GCMS2()
         Dim raw = mzMLReader.LoadFile("F:\sssssssssssssssssssssss\1ppm.mzML")
+
+        Pause()
     End Sub
 
     Sub Main()

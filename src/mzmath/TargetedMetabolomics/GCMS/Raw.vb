@@ -83,6 +83,9 @@ Namespace GCMS
         ''' 质谱扫描的结果数据
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' 以扫描的时间为主线的
+        ''' </remarks>
         Public Property ms As ms1_scan()()
         Public Property fileName As String
 
@@ -100,6 +103,12 @@ Namespace GCMS
 
         Dim index As New Lazy(Of IndexSelector)(Function() IndexSelector.FromSortSequence(times))
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="min">the min value of the rt range</param>
+        ''' <param name="max">the max value of the rt range</param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetScanIndex(min#, max#) As IEnumerable(Of Integer)
             Return index.Value.SelectByRange(min, max)
