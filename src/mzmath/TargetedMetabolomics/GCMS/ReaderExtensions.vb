@@ -58,6 +58,7 @@ Imports Microsoft.VisualBasic.Text
 
 Namespace GCMS
 
+    <HideModuleName>
     Public Module ReaderExtensions
 
         <Extension>
@@ -71,7 +72,7 @@ Namespace GCMS
         End Function
 
         <Extension>
-        Public Function XIC(raw As Raw) As IEnumerable(Of NamedCollection(Of ms1_scan))
+        Public Function XIC(raw As Raw, Optional minPoints As Integer = 3) As IEnumerable(Of NamedCollection(Of ms1_scan))
             Dim allScans As New List(Of ms1_scan)
             Dim times As Double() = raw.times
 
@@ -87,7 +88,9 @@ Namespace GCMS
 
             Return allScans _
                 .GroupBy(Function(tick) tick.mz, offsets:=0.01) _
-                .Where(Function(mz) mz.Length > 1)
+                .Where(Function(mz)
+                           Return mz.Length >= minPoints
+                       End Function)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
