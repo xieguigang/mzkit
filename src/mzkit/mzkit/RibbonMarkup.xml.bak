@@ -929,6 +929,15 @@
     </Command>
     <Command Name="cmdCheckBoxXICRelative" Id="96" LabelTitle="Relative Height" LabelDescription="Relative Height" TooltipTitle="Relative Height" TooltipDescription="Relative Height" />
     <Command Name="cmdPlotOptions" Id="97" LabelTitle="Plot Options" LabelDescription="Plot Options" TooltipTitle="Plot Options" TooltipDescription="Plot Options" />
+    <Command Name="cmdTabGroupTargeted" Id="98" LabelTitle="Targeted Quantification" LabelDescription="Targeted Quantification" TooltipTitle="Targeted Quantification" TooltipDescription="Targeted Quantification" />
+    <Command Name="cmdTargeted" Id="99" LabelTitle="Targeted Quantification" LabelDescription="GC-MS or LC-MS/MS Targeted Quantification" TooltipTitle="Targeted Quantification" TooltipDescription="Run GC-MS or LC-MS/MS Targeted Quantification Calculation">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/office_chart_area_256px_540041_easyicon.net.bmp</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Res/office_chart_area_256px_540041_easyicon.net.bmp</Image>
+      </Command.LargeImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -1117,6 +1126,9 @@
             <Button CommandName="cmdButtonMzCalculator" />
             <Button CommandName="cmdButtonMzSearch" />
             <Button CommandName="cmdButtonShowSpectrumSearchPage" />
+          </Group>
+          <Group CommandName="cmdTabGroupTargeted" SizeDefinition="OneButton"> 
+            <Button CommandName="cmdTargeted" />
           </Group>
         </Tab>
         <Tab CommandName="cmdTabAbout">

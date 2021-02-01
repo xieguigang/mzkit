@@ -97,6 +97,8 @@ using RibbonLib.Interop;
             public const uint cmdButtonMzCalculator = 1013;
             public const uint cmdButtonMzSearch = 1052;
             public const uint cmdButtonShowSpectrumSearchPage = 1102;
+            public const uint cmdTabGroupTargeted = 98;
+            public const uint cmdTargeted = 99;
             public const uint cmdTabAbout = 1020;
             public const uint cmdGroupAboutActions = 1047;
             public const uint cmdGroupDemoActions = 1048;
@@ -195,6 +197,8 @@ using RibbonLib.Interop;
         public RibbonButton ButtonMzCalculator { get; private set; }
         public RibbonButton ButtonMzSearch { get; private set; }
         public RibbonButton ButtonShowSpectrumSearchPage { get; private set; }
+        public RibbonGroup TabGroupTargeted { get; private set; }
+        public RibbonButton Targeted { get; private set; }
         public RibbonTab TabAbout { get; private set; }
         public RibbonGroup GroupAboutActions { get; private set; }
         public RibbonGroup GroupDemoActions { get; private set; }
@@ -291,6 +295,8 @@ using RibbonLib.Interop;
             ButtonMzCalculator = new RibbonButton(ribbon, Cmd.cmdButtonMzCalculator);
             ButtonMzSearch = new RibbonButton(ribbon, Cmd.cmdButtonMzSearch);
             ButtonShowSpectrumSearchPage = new RibbonButton(ribbon, Cmd.cmdButtonShowSpectrumSearchPage);
+            TabGroupTargeted = new RibbonGroup(ribbon, Cmd.cmdTabGroupTargeted);
+            Targeted = new RibbonButton(ribbon, Cmd.cmdTargeted);
             TabAbout = new RibbonTab(ribbon, Cmd.cmdTabAbout);
             GroupAboutActions = new RibbonGroup(ribbon, Cmd.cmdGroupAboutActions);
             GroupDemoActions = new RibbonGroup(ribbon, Cmd.cmdGroupDemoActions);
