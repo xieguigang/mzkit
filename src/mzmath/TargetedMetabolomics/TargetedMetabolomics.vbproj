@@ -441,7 +441,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GCMS\agilentGCMSMeta.vb" />
+    <Compile Include="GCMS\CDFReader\agilentGCMSMeta.vb" />
+    <Compile Include="GCMS\mzMLReader\Module1.vb" />
     <Compile Include="MRM\IsomerismIonPairs.vb" />
     <Compile Include="MRM\Data\NamespaceDoc.vb" />
     <Compile Include="MRM\Data\MRMStandards.vb" />
@@ -458,12 +459,12 @@
     <Compile Include="GCMS\ReaderExtensions.vb" />
     <Compile Include="GCMS\Raw.vb" />
     <Compile Include="GCMS\QuantifyAnalysis\ScanMode.vb" />
-    <Compile Include="GCMS\Vendors\agilentGCMS.vb" />
-    <Compile Include="GCMS\Vendors\agilentHPLC.vb" />
-    <Compile Include="GCMS\Vendors\aiaTemplate.vb" />
-    <Compile Include="GCMS\Vendors\brukerGCMS.vb" />
-    <Compile Include="GCMS\Vendors\finniganGCMS.vb" />
-    <Compile Include="GCMS\Vendors\shimadzuGCMS.vb" />
+    <Compile Include="GCMS\CDFReader\Vendors\agilentGCMS.vb" />
+    <Compile Include="GCMS\CDFReader\Vendors\agilentHPLC.vb" />
+    <Compile Include="GCMS\CDFReader\Vendors\aiaTemplate.vb" />
+    <Compile Include="GCMS\CDFReader\Vendors\brukerGCMS.vb" />
+    <Compile Include="GCMS\CDFReader\Vendors\finniganGCMS.vb" />
+    <Compile Include="GCMS\CDFReader\Vendors\shimadzuGCMS.vb" />
     <Compile Include="MRM\QuantitativeAnalysis\WiffRaw.vb" />
     <Compile Include="MRM\QuantitativeAnalysis\ScanOfTPA.vb" />
     <Compile Include="MRM\RawFile.vb" />
