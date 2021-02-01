@@ -14,7 +14,14 @@ Public Class frmGCMS_CDFExplorer
     Friend gcms As Raw
 
     Public Shared Function loadCDF(file As String) As Raw
-        Dim gcms As Raw = netCDFReader.Open(file).ReadData()
+        Dim gcms As Raw
+
+        If file.ExtensionSuffix("cdf") Then
+            gcms = netCDFReader.Open(file).ReadData()
+        Else
+            gcms = mzMLReader.LoadFile(file)
+        End If
+
         gcms.fileName = file.GetFullPath
         Return gcms
     End Function

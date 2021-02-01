@@ -139,7 +139,7 @@ Public Class frmMain
                 ElseIf file.FileName.ExtensionSuffix("mzml") AndAlso RawScanParser.IsMRMData(file.FileName) Then
                     Call ShowMRMIons(file.FileName)
                 ElseIf file.FileName.ExtensionSuffix("mzml") AndAlso RawScanParser.IsSIMData(file.FileName) Then
-                    Throw New NotImplementedException
+                    Call ShowGCMSSIM(file.FileName)
                 ElseIf file.FileName.ExtensionSuffix("cdf") OrElse file.FileName.ExtensionSuffix("netcdf") Then
                     Call ShowGCMSSIM(file.FileName)
                 Else
