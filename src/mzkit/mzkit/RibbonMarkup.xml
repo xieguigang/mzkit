@@ -956,6 +956,16 @@
         <Image MinDPI="192">Res/excel-icon.bmp</Image>
       </Command.LargeImages>
     </Command>
+    <Command Name="cmdTabBioDeep" Id="104" LabelTitle="BioDeep" LabelDescription="BioDeep" TooltipTitle="BioDeep" TooltipDescription="BioDeep" />
+    <Command Name="cmdTabGroupBioDeep" Id="105" LabelTitle="BioDeep" LabelDescription="BioDeep" TooltipTitle="BioDeep" TooltipDescription="BioDeep" />
+    <Command Name="cmdLogInBioDeep" Id="106" LabelTitle="Login BioDeep" LabelDescription="Login BioDeep" TooltipTitle="Login BioDeep" TooltipDescription="Login BioDeep">
+      <Command.SmallImages>
+        <Image MinDPI="192">Resources/img_568656.bmp</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Resources/img_568656.bmp</Image>
+      </Command.LargeImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -1137,6 +1147,9 @@
             <Button CommandName="cmdButtonShowStartPage" />
             <Button CommandName="cmdButtonShowLogWindow" />
             <Button CommandName="cmdButtonResetLayout" />
+          </Group>
+          <Group CommandName="cmdTabGroupBioDeep">
+            <Button CommandName="cmdLogInBioDeep" />
           </Group>
         </Tab>
         <Tab CommandName="cmdTabTools">

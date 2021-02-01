@@ -13,7 +13,6 @@ using RibbonLib;
 using RibbonLib.Controls;
 using RibbonLib.Interop;
 
-
     partial class RibbonItems
     {
         private static class Cmd
@@ -97,6 +96,8 @@ using RibbonLib.Interop;
             public const uint cmdButtonShowStartPage = 1108;
             public const uint cmdButtonShowLogWindow = 1109;
             public const uint cmdButtonResetLayout = 1019;
+            public const uint cmdTabGroupBioDeep = 105;
+            public const uint cmdLogInBioDeep = 106;
             public const uint cmdTabTools = 1012;
             public const uint cmdGroupToolsActions = 1046;
             public const uint cmdButtonMzCalculator = 1013;
@@ -201,6 +202,8 @@ using RibbonLib.Interop;
         public RibbonButton ButtonShowStartPage { get; private set; }
         public RibbonButton ButtonShowLogWindow { get; private set; }
         public RibbonButton ButtonResetLayout { get; private set; }
+        public RibbonGroup TabGroupBioDeep { get; private set; }
+        public RibbonButton LogInBioDeep { get; private set; }
         public RibbonTab TabTools { get; private set; }
         public RibbonGroup GroupToolsActions { get; private set; }
         public RibbonButton ButtonMzCalculator { get; private set; }
@@ -303,6 +306,8 @@ using RibbonLib.Interop;
             ButtonShowStartPage = new RibbonButton(ribbon, Cmd.cmdButtonShowStartPage);
             ButtonShowLogWindow = new RibbonButton(ribbon, Cmd.cmdButtonShowLogWindow);
             ButtonResetLayout = new RibbonButton(ribbon, Cmd.cmdButtonResetLayout);
+            TabGroupBioDeep = new RibbonGroup(ribbon, Cmd.cmdTabGroupBioDeep);
+            LogInBioDeep = new RibbonButton(ribbon, Cmd.cmdLogInBioDeep);
             TabTools = new RibbonTab(ribbon, Cmd.cmdTabTools);
             GroupToolsActions = new RibbonGroup(ribbon, Cmd.cmdGroupToolsActions);
             ButtonMzCalculator = new RibbonButton(ribbon, Cmd.cmdButtonMzCalculator);
@@ -323,4 +328,3 @@ using RibbonLib.Interop;
         }
 
     }
-
