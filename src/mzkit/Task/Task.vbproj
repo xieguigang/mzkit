@@ -150,6 +150,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BioDeep\BioDeepSession.vb" />
     <Compile Include="Studio\WorkStudio.vb" />
     <Compile Include="Studio\Notification.vb" />
     <Compile Include="Imports\ImportsMgf.vb" />

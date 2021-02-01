@@ -1,5 +1,9 @@
 ﻿Imports System.Collections.Specialized
+Imports Microsoft.VisualBasic.MIME.application.json
+Imports Microsoft.VisualBasic.MIME.application.json.Javascript
+Imports Microsoft.VisualBasic.My
 Imports Microsoft.VisualBasic.Net.Http
+Imports Task
 
 Public Class frmLogin
 
@@ -21,10 +25,23 @@ Public Class frmLogin
         Dim password As String = TextBox2.Text.MD5
         Dim post As New NameValueCollection
 
-        Call post.Add("", account)
-        Call post.Add("", password)
+        Call post.Add("account", account)
+        Call post.Add("password", password)
 
         Dim result As WebResponseResult = $"http://passport.biodeep.cn/passport/verify.vbs".POST(params:=post)
+        Dim json As JsonObject = New JsonParser().OpenJSON(result.html)
 
+        If json!code.AsString <> 0 Then
+            Call MessageBox.Show("Account not found or incorrect password...", "BioDeep Login", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Else
+            ' session_id
+            ' cookie_name
+            json = json!debug
+
+            SingletonHolder(Of BioDeepSession).Instance.cookieName = json!cookie_name.AsString
+            SingletonHolder(Of BioDeepSession).Instance.ssid = json!session_id.AsString
+
+            Call Close()
+        End If
     End Sub
 End Class
