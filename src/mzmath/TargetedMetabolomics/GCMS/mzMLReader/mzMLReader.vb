@@ -3,7 +3,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
-Imports stdNum = System.Math
 
 Namespace GCMS
 
@@ -37,30 +36,10 @@ Namespace GCMS
         <Extension>
         Private Function TimelineTranspose(mzScans As ms1_scan()(), times As Double()) As ms1_scan()()
             Dim time_scans As New List(Of ms1_scan())
-            Dim mz_scanList = mzScans.Select(Function(mz) mz.ToList).ToArray
-            Dim mzList As Double() = mzScans.Select(Function(mzi) mzi(Scan0).mz).ToArray
-            Dim checkScan = Iterator Function(time As Double) As IEnumerable(Of ms1_scan)
-                                For i As Integer = 0 To mz_scanList.Length - 1
-                                    Dim list = mz_scanList(i)
-                                    Dim tick As ms1_scan = list _
-                                        .Where(Function(t) stdNum.Abs(t.scan_time - time) <= 0.5) _
-                                        .FirstOrDefault
-
-                                    If tick Is Nothing Then
-                                        Yield New ms1_scan With {
-                                            .intensity = 0,
-                                            .mz = mzList(i),
-                                            .scan_time = time
-                                        }
-                                    Else
-                                        list.Remove(tick)
-                                        Yield tick
-                                    End If
-                                Next
-                            End Function
+            Dim checkScan As TimeScanMatrix = TimeScanMatrix.CreateMatrixHelper(mzScans)
 
             For Each time As Double In times
-                time_scans.Add(checkScan(time).ToArray)
+                Call time_scans.Add(checkScan.TimeScan(time).ToArray)
             Next
 
             Return time_scans.ToArray
