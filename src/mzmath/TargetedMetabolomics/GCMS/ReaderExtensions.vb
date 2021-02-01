@@ -55,7 +55,6 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Text
-Imports stdNum = System.Math
 
 Namespace GCMS
 
@@ -72,20 +71,23 @@ Namespace GCMS
         End Function
 
         <Extension>
-        Public Iterator Function XIC(raw As Raw) As IEnumerable(Of NamedCollection(Of ms1_scan))
-            Dim allScans As ms1_scan() = raw.ms.IteratesALL.ToArray
+        Public Function XIC(raw As Raw) As IEnumerable(Of NamedCollection(Of ms1_scan))
+            Dim allScans As New List(Of ms1_scan)
+            Dim times As Double() = raw.times
 
-            For Each mz As Double In raw.mz
-                Yield New NamedCollection(Of ms1_scan) With {
-                    .name = mz,
-                    .value = allScans _
-                        .Where(Function(pt)
-                                   Return stdNum.Abs(pt.mz - mz) <= 0.1
-                               End Function) _
-                        .OrderBy(Function(a) a.scan_time) _
-                        .ToArray
-                }
+            For i As Integer = 0 To raw.ms.Length - 1
+                Dim time As Double = times(i)
+
+                For Each tick As ms1_scan In raw.ms(i)
+                    tick.scan_time = time
+                Next
+
+                allScans.AddRange(raw.ms(i))
             Next
+
+            Return allScans _
+                .GroupBy(Function(tick) tick.mz, offsets:=0.01) _
+                .Where(Function(mz) mz.Length > 1)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

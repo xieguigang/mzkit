@@ -69,7 +69,9 @@ Public Class frmGCMSPeaks
         For Each XIC As NamedCollection(Of ms1_scan) In gcmsRaw.XIC
             Call New TreeNode With {
                 .Text = $"m/z {Val(XIC.name).ToString("F4")}",
-                .Tag = XIC.ToArray
+                .Tag = XIC.ToArray,
+                .ImageIndex = 1,
+                .SelectedImageIndex = 1
             }.DoCall(AddressOf XICNode.Nodes.Add)
         Next
     End Sub
