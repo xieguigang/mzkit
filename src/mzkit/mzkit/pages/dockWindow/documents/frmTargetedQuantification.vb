@@ -1,4 +1,6 @@
-﻿Imports mzkit.My
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
+Imports mzkit.My
 Imports RibbonLib.Controls.Events
 Imports RibbonLib.Interop
 
@@ -38,7 +40,9 @@ Public Class frmTargetedQuantification
                     DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.HeaderText = file})
                 Next
 
-
+                For Each ion As IonPair In files.GetAllFeatures
+                    DataGridView1.Rows.Add($"{ion.precursor}/{ion.product}")
+                Next
             End If
         End Using
     End Sub
