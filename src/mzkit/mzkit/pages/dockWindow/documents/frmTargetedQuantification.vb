@@ -1,5 +1,7 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Text
 Imports mzkit.My
 Imports RibbonLib.Controls.Events
 Imports RibbonLib.Interop
@@ -25,25 +27,62 @@ Public Class frmTargetedQuantification
         }
 
             If importsFile.ShowDialog = DialogResult.OK Then
-                Dim files = importsFile.FileNames _
-                    .OrderBy(Function(path)
-                                 Return path.BaseName.Match("\d+").ParseInteger
-                             End Function) _
-                    .ToArray
+                Dim files = StripMaxCommonNames(importsFile.FileNames)
 
                 DataGridView1.Rows.Clear()
                 DataGridView1.Columns.Clear()
 
                 DataGridView1.Columns.Add(New DataGridViewLinkColumn With {.HeaderText = "Features"})
 
-                For Each file As String In files.Select(AddressOf BaseName)
-                    DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.HeaderText = file})
+                For Each file As NamedValue(Of String) In files
+                    Call DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.HeaderText = file.Name})
                 Next
 
-                For Each ion As IonPair In files.GetAllFeatures
-                    DataGridView1.Rows.Add($"{ion.precursor}/{ion.product}")
+                For Each ion As IonPair In files _
+                    .Select(Function(file) file.Value) _
+                    .GetAllFeatures
+
+                    Call DataGridView1.Rows.Add($"{ion.precursor}/{ion.product}")
                 Next
             End If
         End Using
     End Sub
+
+    Private Shared Function StripMaxCommonNames(files As String()) As NamedValue(Of String)()
+        Dim names As String() = files.Select(AddressOf BaseName).ToArray
+        Dim minName As String = names.MinLengthString
+        Dim index As Integer
+
+        For i As Integer = 0 To minName.Length - 1
+            index = i
+
+            If names.Select(Function(str) str(index)).Distinct.Count > 1 Then
+                names = names _
+                    .Select(Function(str)
+                                Return str.Substring(index).Trim(" "c, ASCII.TAB, "-"c, "_"c)
+                            End Function) _
+                    .ToArray
+
+                Exit For
+            End If
+        Next
+
+        If names.All(Function(str) Char.IsDigit(str.First)) Then
+            names = names _
+                .Select(Function(str) $"L{str}") _
+                .ToArray
+        End If
+
+        Return names _
+            .Select(Function(nameStr, i)
+                        Return New NamedValue(Of String) With {
+                            .Name = nameStr,
+                            .Value = files(i)
+                        }
+                    End Function) _
+            .OrderBy(Function(file)
+                         Return file.Name.Match("\d+").ParseInteger
+                     End Function) _
+            .ToArray
+    End Function
 End Class
