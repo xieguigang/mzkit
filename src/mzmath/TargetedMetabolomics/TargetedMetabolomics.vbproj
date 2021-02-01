@@ -442,7 +442,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GCMS\CDFReader\agilentGCMSMeta.vb" />
-    <Compile Include="GCMS\mzMLReader\Module1.vb" />
+    <Compile Include="GCMS\mzMLReader\mzMLReader.vb" />
     <Compile Include="MRM\IsomerismIonPairs.vb" />
     <Compile Include="MRM\Data\NamespaceDoc.vb" />
     <Compile Include="MRM\Data\MRMStandards.vb" />
