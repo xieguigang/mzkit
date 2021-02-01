@@ -1,4 +1,5 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.GCMS
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
@@ -48,13 +49,28 @@ Public Class frmGCMSPeaks
             ) _
             .ToArray
 
+        Dim peakNode As TreeNode = TICRoot.Nodes.Add("Peaks ROI")
+
+        peakNode.Tag = gcmsRaw
+
         For Each peak As ROI In ROIlist
             Call New TreeNode With {
                 .Text = $"{CInt(peak.time.Min)} ~ {CInt(peak.time.Max)} [{peak.integration.ToString("F3")}]",
                 .Tag = peak,
                 .ImageIndex = 1,
                 .SelectedImageIndex = 1
-            }.DoCall(AddressOf TICRoot.Nodes.Add)
+            }.DoCall(AddressOf peakNode.Nodes.Add)
+        Next
+
+        Dim XICNode As TreeNode = TICRoot.Nodes.Add("XIC")
+
+        XICNode.Tag = gcmsRaw
+
+        For Each XIC As NamedCollection(Of ms1_scan) In gcmsRaw.XIC
+            Call New TreeNode With {
+                .Text = $"m/z {Val(XIC.name).ToString("F4")}",
+                .Tag = XIC.ToArray
+            }.DoCall(AddressOf XICNode.Nodes.Add)
         Next
     End Sub
 
@@ -72,6 +88,21 @@ Public Class frmGCMSPeaks
             Call VisualStudio.ShowProperties(proper)
         ElseIf TypeOf e.Node.Tag Is Raw Then
             Call ShowRaw(DirectCast(e.Node.Tag, Raw).fileName)
+        ElseIf TypeOf e.Node.Tag Is ms1_scan() Then
+            Dim XIC As New NamedCollection(Of ChromatogramTick) With {
+                .name = e.Node.Text,
+                .value = DirectCast(e.Node.Tag, ms1_scan()) _
+                    .Select(Function(t)
+                                Return New ChromatogramTick With {
+                                    .Time = t.scan_time,
+                                    .Intensity = t.intensity
+                                }
+                            End Function) _
+                    .ToArray
+            }
+
+            Call MyApplication.host.mzkitTool.ShowMRMTIC(XIC.name, XIC.value)
+            Call VisualStudio.ShowProperties(New agilentGCMSMeta(DirectCast(e.Node.Parent.Tag, Raw).attributes))
         End If
     End Sub
 
