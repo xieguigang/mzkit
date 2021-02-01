@@ -264,7 +264,13 @@ Public Class frmMain
     End Sub
 
     Private Sub showTargetedQuantification()
-        Dim targeted As New frmTargetedQuantification
+        Dim targeted As frmTargetedQuantification = dockPanel.Documents _
+            .Where(Function(doc) TypeOf doc Is frmTargetedQuantification) _
+            .FirstOrDefault
+
+        If targeted Is Nothing Then
+            targeted = New frmTargetedQuantification
+        End If
 
         VisualStudio.Dock(targetedFeatures, DockState.DockLeft)
 
