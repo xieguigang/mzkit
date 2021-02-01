@@ -51,7 +51,7 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Linq
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Text.Xml.Linq
 
 Namespace MarkupData.mzML
@@ -59,11 +59,17 @@ Namespace MarkupData.mzML
     Public Class RawScanParser
 
         Public Const SRMSignature As String = "selected reaction monitoring chromatogram"
+        Public Const SIMSignature As String = "selected ion monitoring chromatogram"
 
-        Public Shared Function IsMRMData(mzml As String) As Boolean
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function IsSIMData(mzml As String) As Boolean
+            Return hasFileContent(mzml, SIMSignature)
+        End Function
+
+        Public Shared Function hasFileContent(mzml As String, contentSig As String) As Boolean
             For Each content As fileDescription In mzml.LoadXmlDataSet(Of fileDescription)(, xmlns:=Xmlns)
                 If content.fileContent IsNot Nothing AndAlso Not content.fileContent.cvParams.IsNullOrEmpty Then
-                    If content.fileContent.cvParams.Any(Function(a) a.name = SRMSignature) Then
+                    If content.fileContent.cvParams.Any(Function(a) a.name = contentSig) Then
                         Return True
                     Else
                         Return False
@@ -72,6 +78,11 @@ Namespace MarkupData.mzML
             Next
 
             Return False
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function IsMRMData(mzml As String) As Boolean
+            Return hasFileContent(mzml, SRMSignature)
         End Function
     End Class
 End Namespace

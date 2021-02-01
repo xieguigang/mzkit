@@ -128,7 +128,7 @@ Public Class frmMain
 
     Public Sub OpenFile()
         Using file As New OpenFileDialog With {
-            .Filter = "Raw Data|*.mzXML;*.mzML|Image mzML(*.imzML)|*.imzML|GC-MS Targeted(*.cdf)|*.cdf;*.netcdf|LC-MS/MS Targeted(*.mzML)|*.mzML|R# Script(*.R)|*.R"
+            .Filter = "Raw Data|*.mzXML;*.mzML|Image mzML(*.imzML)|*.imzML|GC-MS Targeted(*.cdf)|*.cdf;*.netcdf|GC-MS / LC-MS/MS Targeted(*.mzML)|*.mzML|R# Script(*.R)|*.R"
         }
             If file.ShowDialog = DialogResult.OK Then
                 If file.FileName.ExtensionSuffix("R") Then
@@ -138,6 +138,8 @@ Public Class frmMain
                     Call showMsImaging(file.FileName)
                 ElseIf file.FileName.ExtensionSuffix("mzml") AndAlso RawScanParser.IsMRMData(file.FileName) Then
                     Call ShowMRMIons(file.FileName)
+                ElseIf file.FileName.ExtensionSuffix("mzml") AndAlso RawScanParser.IsSIMData(file.FileName) Then
+                    Throw New NotImplementedException
                 ElseIf file.FileName.ExtensionSuffix("cdf") OrElse file.FileName.ExtensionSuffix("netcdf") Then
                     Call ShowGCMSSIM(file.FileName)
                 Else
