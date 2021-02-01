@@ -87,7 +87,8 @@ Namespace GCMS.Vendors
                 .tic = tic.numerics,
                 .ms = ms,
                 .title = any.ToString(cdf.getAttribute("experiment_title")),
-                .attributes = attrs
+                .attributes = attrs,
+                .mz = ms.MzList
             }
         End Function
     End Module

@@ -59,6 +59,16 @@ Namespace GCMS
 
     Public Module ReaderExtensions
 
+        <Extension>
+        Public Function MzList(raw As ms1_scan()()) As Double()
+            Return raw _
+                .IteratesALL _
+                .Select(Function(scan) scan.mz) _
+                .GroupBy(offsets:=0.01) _
+                .Select(Function(c) Val(c.name)) _
+                .ToArray
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function ExportROI(gcms As Raw, angle#, peakwidth As DoubleRange, Optional sn_threshold As Double = 3) As ROI()

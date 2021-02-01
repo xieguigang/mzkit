@@ -20,16 +20,17 @@ Namespace GCMS
                 .ToArray
 
             Return New Raw With {
-                .FileName = path,
+                .fileName = path,
                 .title = path.BaseName,
                 .attributes = New Dictionary(Of String, String),
-                .TIC = TIC.Select(Function(tick) tick.Intensity).ToArray,
+                .tic = TIC.Select(Function(tick) tick.Intensity).ToArray,
                 .times = TIC.Select(Function(tick) tick.Time).ToArray,
-                .MS = chromatogramList _
+                .ms = chromatogramList _
                     .Where(Function(c) c.id <> "TIC") _
                     .Select(AddressOf readMs) _
                     .ToArray _
-                    .TimelineTranspose(.times)
+                    .TimelineTranspose(.times),
+                .mz = .ms.MzList
             }
         End Function
 

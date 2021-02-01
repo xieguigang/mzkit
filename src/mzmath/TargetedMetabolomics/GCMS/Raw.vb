@@ -87,6 +87,8 @@ Namespace GCMS
         ''' 以扫描的时间为主线的
         ''' </remarks>
         Public Property ms As ms1_scan()()
+        Public Property mz As Double()
+
         Public Property fileName As String
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
