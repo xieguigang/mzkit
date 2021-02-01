@@ -256,10 +256,20 @@ Public Class frmMain
         AddHandler ribbonItems.RecentItems.ExecuteEvent, AddressOf _recentItems_ExecuteEvent
         ' AddHandler ribbonItems.ButtonMsImaging.ExecuteEvent, AddressOf showMsImaging
         AddHandler ribbonItems.ButtonMsDemo.ExecuteEvent, Sub() msDemo.ShowPage()
+        AddHandler ribbonItems.Targeted.ExecuteEvent, AddressOf showTargetedQuantification
 
         _uiCollectionChangedEvent = New UICollectionChangedEvent()
 
         MyApplication.RegisterHost(Me)
+    End Sub
+
+    Private Sub showTargetedQuantification()
+        Dim targeted As New frmTargetedQuantification
+
+        VisualStudio.Dock(targetedFeatures, DockState.DockLeft)
+
+        targeted.Show(dockPanel)
+        targeted.DockState = DockState.Document
     End Sub
 
     Dim viewer As New frmMsImagingViewer
@@ -799,6 +809,7 @@ Public Class frmMain
     Friend msDemo As New frmDemo
     Friend MRMIons As New frmSRMIonsExplorer
     Friend GCMSPeaks As New frmGCMSPeaks
+    Friend targetedFeatures As New frmTargetedFeatureExplorer
 
     Public Sub ShowPropertyWindow()
         VisualStudio.Dock(propertyWin, DockState.DockRight)
@@ -867,6 +878,9 @@ Public Class frmMain
 
         msDemo.Show(dockPanel)
         msDemo.DockState = DockState.Hidden
+
+        targetedFeatures.Show(dockPanel)
+        targetedFeatures.DockState = DockState.Hidden
 
         If Globals.Settings.ui.rememberLayouts Then
             fileExplorer.DockState = Globals.Settings.ui.fileExplorerDock

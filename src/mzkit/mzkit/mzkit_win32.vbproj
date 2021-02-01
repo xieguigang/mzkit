@@ -343,7 +343,9 @@
     <Compile Include="pages\dockWindow\explorer\frmTargetedFeatureExplorer.Designer.vb">
       <DependentUpon>frmTargetedFeatureExplorer.vb</DependentUpon>
     </Compile>
-    <Compile Include="pages\dockWindow\explorer\frmTargetedFeatureExplorer.vb" />
+    <Compile Include="pages\dockWindow\explorer\frmTargetedFeatureExplorer.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="pages\dockWindow\explorer\frmGCMSPeaks.Designer.vb">
       <DependentUpon>frmGCMSPeaks.vb</DependentUpon>
     </Compile>
