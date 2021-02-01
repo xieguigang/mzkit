@@ -1,55 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::7e8fd5980b68634bd1b00caa190c5b0e, Rscript\Library\mzkit.quantify\MRM\MRMkit.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module MRMkit
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: asIonPair, CreateMRMDataSet, ExtractIonData, ExtractPeakROI, GetLinearPoints
-    '               GetPeakROIList, GetQuantifyResult, GetRawX, GetRTAlignments, IsomerismIonPairs
-    '               Linears, MRMarguments, printIonPairs, printIS, printLineModel
-    '               printStandards, readCompoundReference, readIonPairs, readIS, ROISummary
-    '               RTShiftSummary, SampleQuantify, ScanPeakTable, ScanWiffRaw, StandardCurveDataSet
-    '               WiffRawFile, writeMRMpeaktable, writeStandardCurve
-    '     Class MRMDataSet
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Module MRMkit
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: asIonPair, CreateMRMDataSet, ExtractIonData, ExtractPeakROI, GetLinearPoints
+'               GetPeakROIList, GetQuantifyResult, GetRawX, GetRTAlignments, IsomerismIonPairs
+'               Linears, MRMarguments, printIonPairs, printIS, printLineModel
+'               printStandards, readCompoundReference, readIonPairs, readIS, ROISummary
+'               RTShiftSummary, SampleQuantify, ScanPeakTable, ScanWiffRaw, StandardCurveDataSet
+'               WiffRawFile, writeMRMpeaktable, writeStandardCurve
+'     Class MRMDataSet
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -66,6 +66,7 @@ Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Linq
@@ -242,7 +243,7 @@ Module MRMkit
             baselineQuantile:=baselineQuantile,
             integratorTicks:=integratorTicks,
             peakAreaMethod:=peakAreaMethod,
-            peakwidth:=_peakwidth,
+            peakwidth:=_peakwidth.TryCast(Of DoubleRange),
             sn_threshold:=sn_threshold
         )
     End Function
