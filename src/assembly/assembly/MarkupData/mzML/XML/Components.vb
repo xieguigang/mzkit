@@ -206,6 +206,14 @@ Namespace MarkupData.mzML
 
         Shared ReadOnly Unknown As [Default](Of String) = NameOf(Unknown)
 
+        ''' <summary>
+        ''' returns <see cref="value"/> as <see cref="Double"/>
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function GetDouble() As Double
+            Return Val(value)
+        End Function
+
         Public Overrides Function ToString() As String
             Return $"[{accession}] Dim {name} As <{unitName Or Unknown}> = {value}"
         End Function

@@ -32,7 +32,25 @@ Namespace GCMS
         End Function
 
         Private Function readMs(chromatogram As MarkupData.mzML.chromatogram) As ms1_scan()
+            Dim mz As Double = chromatogram _
+                .precursor _
+                .isolationWindow _
+                .cvParams _
+                .Where(Function(par) par.name = "isolation window target m/z") _
+                .First _
+                .GetDouble
+            Dim ticks As ChromatogramTick() = chromatogram.Ticks
+            Dim ms1 As ms1_scan() = ticks _
+                .Select(Function(tick)
+                            Return New ms1_scan With {
+                                .intensity = tick.Intensity,
+                                .mz = mz,
+                                .scan_time = tick.Time
+                            }
+                        End Function) _
+                .ToArray
 
+            Return ms1
         End Function
     End Module
 End Namespace
