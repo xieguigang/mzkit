@@ -54,7 +54,7 @@ Imports Microsoft.VisualBasic.Text
 Module testGCMS
 
     Sub GCMS2()
-
+        Dim raw = mzMLReader.LoadFile("F:\sssssssssssssssssssssss\1ppm.mzML")
     End Sub
 
     Sub Main()
