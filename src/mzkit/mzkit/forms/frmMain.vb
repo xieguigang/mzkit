@@ -258,6 +258,8 @@ Public Class frmMain
         AddHandler ribbonItems.ButtonMsDemo.ExecuteEvent, Sub() msDemo.ShowPage()
         AddHandler ribbonItems.Targeted.ExecuteEvent, AddressOf showTargetedQuantification
 
+        AddHandler ribbonItems.LogInBioDeep.ExecuteEvent, Sub() Call New frmLogin().ShowDialog()
+
         _uiCollectionChangedEvent = New UICollectionChangedEvent()
 
         MyApplication.RegisterHost(Me)
