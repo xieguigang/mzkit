@@ -55,7 +55,7 @@ Namespace LinearQuantitative.Linear
     Module QuantificationWorker
 
         Private Function LevelFactorName(levelFactors As String()) As Func(Of Integer, String)
-            If levelFactors.IsNullOrEmpty Then
+            If Not levelFactors.IsNullOrEmpty Then
                 Return Function(i) levelFactors(i)
             Else
                 Return Function(i) "L" & (i + 1)
