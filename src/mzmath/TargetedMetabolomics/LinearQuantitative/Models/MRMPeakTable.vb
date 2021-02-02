@@ -50,7 +50,7 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 
-Namespace MRM.Data
+Namespace LinearQuantitative
 
     Public Class MRMPeakTable : Implements IROI
 
