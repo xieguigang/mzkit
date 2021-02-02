@@ -53,7 +53,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSL
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -70,6 +70,7 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports mzXMLAssembly = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports REnv = SMRUCC.Rsharp.Runtime
+Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
 
 ''' <summary>
 ''' The mass spectrum assembly file read/write library module.
@@ -89,7 +90,7 @@ Module Assembly
     ''' <param name="args"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
-    Private Function summaryIons(x As Ions(), args As list, env As Environment) As dataframe
+    Private Function summaryIons(x As Ions(), args As Rlist, env As Environment) As dataframe
         Dim title As MetaData() = x.Select(Function(a) New MetaData(a.Meta)).ToArray
         Dim rt As Array = x.Select(Function(a) CInt(a.RtInSeconds)).ToArray
         Dim mz As Array = x.Select(Function(a) Val(a.PepMass.name).ToString("F3")).ToArray
@@ -274,7 +275,7 @@ Module Assembly
                 header = xml.ReadLine
 
                 If InStr(header, "<indexedmzML ") > 0 Then
-                    Return GetType(mzML.Xml)
+                    Return GetType(indexedmzML)
                 ElseIf InStr(header, "<mzXML ") > 0 Then
                     Return GetType(mzXMLAssembly.XML)
                 End If
@@ -311,7 +312,7 @@ Module Assembly
 
         If type Is Nothing Then
             Return Internal.debug.stop({"the given file is not exists or file format not supported!", "file: " & file}, env)
-        ElseIf type Is GetType(mzML.Xml) Then
+        ElseIf type Is GetType(indexedmzML) Then
             raw = file.mzMLScanLoader(relativeInto, onlyMs2)
         Else
             raw = file.mzXMLScanLoader(relativeInto, onlyMs2)
@@ -331,14 +332,14 @@ Module Assembly
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("raw.scans")>
-    <RApiReturn(GetType(mzML.spectrum), GetType(scan))>
+    <RApiReturn(GetType(spectrum), GetType(mzXML.scan))>
     Public Function rawScans(file As String, Optional env As Environment = Nothing) As Object
         Dim type As Type = GetFileType(file)
 
         If type Is Nothing Then
             Return Internal.debug.stop({"the given file is not exists or file format not supported!", "file: " & file}, env)
-        ElseIf type Is GetType(mzML.Xml) Then
-            Return mzML.Xml.LoadScans(file).DoCall(AddressOf pipeline.CreateFromPopulator)
+        ElseIf type Is GetType(indexedmzML) Then
+            Return indexedmzML.LoadScans(file).DoCall(AddressOf pipeline.CreateFromPopulator)
         Else
             Return mzXMLAssembly.XML.LoadScans(file).DoCall(AddressOf pipeline.CreateFromPopulator)
         End If
@@ -361,10 +362,10 @@ Module Assembly
             For Each scanVal As mzXML.scan In scans.populates(Of mzXML.scan)(env).Where(Function(s) reader.GetMsLevel(s) = 2)
                 Call polar.Add(PrecursorType.ParseIonMode(reader.GetPolarity(scanVal)))
             Next
-        ElseIf scans.elementType Like GetType(mzML.spectrum) Then
-            Dim reader As mzMLScan = MsDataReader(Of mzML.spectrum).ScanProvider()
+        ElseIf scans.elementType Like GetType(spectrum) Then
+            Dim reader As mzMLScan = MsDataReader(Of spectrum).ScanProvider()
 
-            For Each scanVal As mzML.spectrum In scans.populates(Of mzML.spectrum)(env).Where(Function(s) reader.GetMsLevel(s) = 2)
+            For Each scanVal As spectrum In scans.populates(Of spectrum)(env).Where(Function(s) reader.GetMsLevel(s) = 2)
                 Call polar.Add(PrecursorType.ParseIonMode(reader.GetPolarity(scanVal)))
             Next
         Else
@@ -378,7 +379,7 @@ Module Assembly
     Private Iterator Function mzMLScanLoader(path As String, relativeInto As Boolean, onlyMs2 As Boolean) As IEnumerable(Of PeakMs2)
         Dim basename$ = path.BaseName
 
-        For Each msscan As mzML.spectrum In mzML.Xml _
+        For Each msscan As spectrum In indexedmzML _
             .LoadScans(path) _
             .Where(Function(s)
                        If Not onlyMs2 Then
@@ -407,7 +408,7 @@ Module Assembly
     Private Iterator Function mzXMLScanLoader(mzXML$, relativeInto As Boolean, onlyMs2 As Boolean) As IEnumerable(Of PeakMs2)
         Dim basename$ = mzXML.FileName
 
-        For Each ms2Scan As scan In mzXMLAssembly.XML _
+        For Each ms2Scan As mzXML.scan In mzXMLAssembly.XML _
             .LoadScans(mzXML) _
             .Where(Function(s)
                        If Not onlyMs2 Then
@@ -472,7 +473,7 @@ Module Assembly
         Dim peakScans As ms2()
         Dim rt_sec As Double
 
-        For Each scan As scan In mzXML.XML _
+        For Each scan As mzXML.scan In mzXML.XML _
             .LoadScans(file) _
             .Where(Function(s)
                        Return s.msLevel = 1
@@ -503,7 +504,7 @@ Module Assembly
         Dim peakScans As ms2()
         Dim rt_sec As Double
 
-        For Each scan As mzML.spectrum In mzML.Xml _
+        For Each scan As spectrum In indexedmzML _
             .LoadScans(file) _
             .Where(Function(s)
                        Return reader.GetMsLevel(s) = 1
