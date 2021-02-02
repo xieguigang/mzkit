@@ -52,7 +52,7 @@ Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 
 Namespace LinearQuantitative
 
-    Public Class MRMPeakTable : Implements IROI
+    Public Class IonPeakTableRow : Implements IROI
 
         ''' <summary>
         ''' 标志物物质编号

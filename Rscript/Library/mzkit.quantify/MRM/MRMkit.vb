@@ -720,7 +720,7 @@ Module MRMkit
     ''' <param name="file">The output csv file path</param>
     ''' <returns></returns>
     <ExportAPI("write.MRMpeaks")>
-    Public Function writeMRMpeaktable(MRMPeaks As MRMPeakTable(), file$) As Boolean
+    Public Function writeMRMpeaktable(MRMPeaks As IonPeakTableRow(), file$) As Boolean
         Return MRMPeaks.SaveTo(file, silent:=True)
     End Function
 

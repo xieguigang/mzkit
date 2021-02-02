@@ -88,7 +88,7 @@ Namespace MRM
                                              raw$,
                                              ions As IonPair(),
                                              rtshifts As Dictionary(Of String, Double),
-                                             args As MRMArguments) As IEnumerable(Of ContentResult(Of MRMPeakTable))
+                                             args As MRMArguments) As IEnumerable(Of ContentResult(Of IonPeakTableRow))
 
             Dim TPA As Dictionary(Of String, IonTPA) = raw _
                 .ScanTPA(ionpairs:=ions,
@@ -106,7 +106,7 @@ Namespace MRM
                         End Function) _
                 .Where(Function(m) TPA.ContainsKey(m.name)) _
                 .ToArray
-            Dim quantify As New Value(Of ContentResult(Of MRMPeakTable))
+            Dim quantify As New Value(Of ContentResult(Of IonPeakTableRow))
 
             raw = raw.FileName
 
@@ -122,7 +122,7 @@ Namespace MRM
         Private Function doLinearQuantify(TPA As Dictionary(Of String, IonTPA),
                                           metabolite As (fx As Func(Of Double, Double), model As StandardCurve, name$),
                                           names As Dictionary(Of String, IonPair),
-                                          raw$) As ContentResult(Of MRMPeakTable)
+                                          raw$) As ContentResult(Of IonPeakTableRow)
             Dim AIS As New IonTPA
             Dim X#
             ' 得到样品之中的峰面积
@@ -165,7 +165,7 @@ Namespace MRM
             ' C = Val(info!cIS) / C
 
             Dim [IS] As IonPair = names.TryGetValue(model.IS.ID)
-            Dim peaktable As New MRMPeakTable With {
+            Dim peaktable As New IonPeakTableRow With {
                 .content = C,
                 .ID = metabolite.name,
                 .raw = raw,
@@ -180,7 +180,7 @@ Namespace MRM
                 .maxinto_IS = AIS.maxPeakHeight
             }
 
-            Return New ContentResult(Of MRMPeakTable) With {
+            Return New ContentResult(Of IonPeakTableRow) With {
                 .Name = metabolite.name,
                 .Content = C,
                 .X = X,

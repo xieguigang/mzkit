@@ -453,7 +453,7 @@
     <Compile Include="LinearQuantitative\Linear\InternalStandardMethod.vb" />
     <Compile Include="LinearQuantitative\Linear\WorkCurve.vb" />
     <Compile Include="LinearQuantitative\Linear\Points\ROIPeak.vb" />
-    <Compile Include="LinearQuantitative\Models\MRMPeakTable.vb" />
+    <Compile Include="LinearQuantitative\Models\IonPeakTableRow.vb" />
     <Compile Include="MRM\MRMIonExtract.vb" />
     <Compile Include="MRM\IsomerismIonPairs.vb" />
     <Compile Include="MRM\Data\NamespaceDoc.vb" />

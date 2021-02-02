@@ -148,7 +148,7 @@ Namespace MRM
                                              <Out> Optional ByRef model As StandardCurve() = Nothing,
                                              <Out> Optional ByRef standardPoints As NamedValue(Of ReferencePoint())() = Nothing,
                                              <Out> Optional ByRef X As List(Of DataSet) = Nothing,
-                                             <Out> Optional ByRef peaktable As MRMPeakTable() = Nothing,
+                                             <Out> Optional ByRef peaktable As IonPeakTableRow() = Nothing,
                                              Optional calibrationNamedPattern$ = ".+[-]L\d+",
                                              Optional levelPattern$ = "[-]L\d+",
                                              Optional externalStandardsWiff$ = Nothing,
@@ -181,7 +181,7 @@ Namespace MRM
 
             Dim nameIndex As Index(Of String) = standardNames.Indexing
             Dim out As New List(Of DataSet)
-            Dim mrmPeaktable As New List(Of MRMPeakTable)
+            Dim mrmPeaktable As New List(Of IonPeakTableRow)
             Dim allSamples As List(Of String) = (ls - l - r - "*.mzML" <= wiff.ParentPath).AsList
             Dim scan As QuantifyScan
 
@@ -220,7 +220,7 @@ Namespace MRM
 
             ' 使用离子对信息扫面当前的这个原始数据文件
             ' 得到峰面积等定量计算所需要的结果信息
-            Dim result As ContentResult(Of MRMPeakTable)() = model _
+            Dim result As ContentResult(Of IonPeakTableRow)() = model _
                 .ScanContent(
                     raw:=file,
                     ions:=ions,
@@ -228,9 +228,9 @@ Namespace MRM
                     rtshifts:=rtshifts
                 ) _
                 .ToArray
-            Dim MRMPeakTable As New List(Of MRMPeakTable)
+            Dim MRMPeakTable As New List(Of IonPeakTableRow)
 
-            For Each metabolite As ContentResult(Of MRMPeakTable) In result
+            For Each metabolite As ContentResult(Of IonPeakTableRow) In result
                 MRMPeakTable += metabolite.Peaktable
             Next
 
@@ -270,7 +270,7 @@ Namespace MRM
 
     Public Class QuantifyScan
 
-        Public Property MRMPeaks As MRMPeakTable()
+        Public Property MRMPeaks As IonPeakTableRow()
         ''' <summary>
         ''' 定量结果
         ''' </summary>
