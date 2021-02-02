@@ -63,8 +63,19 @@ Namespace LinearQuantitative.Linear
         ''' the feature name
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' the metabolite unique id
+        ''' </remarks>
         Public Property Name As String Implements INamedValue.Key
+        ''' <summary>
+        ''' the sample name
+        ''' </summary>
+        ''' <returns></returns>
         Public Property SampleName As String
+        ''' <summary>
+        ''' the peak location in time line
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Peak As ROIPeak
         Public Property ChromatogramSummary As Quantile()
 
