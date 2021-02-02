@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::53ac6d9f0e33f5647b7802089fc700e2, Rscript\Library\mzkit.interop\interop_arguments.vb"
+﻿#Region "Microsoft.VisualBasic::53ac6d9f0e33f5647b7802089fc700e2, Library\mzkit.interop\interop_arguments.vb"
 
     ' Author:
     ' 

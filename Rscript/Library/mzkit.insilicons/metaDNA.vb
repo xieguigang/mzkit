@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50c1e0115ae5e7dad814123d048dc5e3, Rscript\Library\mzkit.insilicons\metaDNA.vb"
+﻿#Region "Microsoft.VisualBasic::50c1e0115ae5e7dad814123d048dc5e3, Library\mzkit.insilicons\metaDNA.vb"
 
     ' Author:
     ' 

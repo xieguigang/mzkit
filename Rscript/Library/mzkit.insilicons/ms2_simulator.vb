@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b08ab440f6205908ca96adc24270c810, Rscript\Library\mzkit.insilicons\ms2_simulator.vb"
+﻿#Region "Microsoft.VisualBasic::b08ab440f6205908ca96adc24270c810, Library\mzkit.insilicons\ms2_simulator.vb"
 
     ' Author:
     ' 
