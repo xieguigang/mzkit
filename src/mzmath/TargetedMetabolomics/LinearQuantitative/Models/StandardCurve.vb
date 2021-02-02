@@ -71,7 +71,7 @@ Namespace LinearQuantitative
         ''' </summary>
         ''' <returns></returns>
         Public Property linear As IFitted
-        Public Property points As MRMStandards()
+        Public Property points As ReferencePoint()
 
         Public Property blankControls As Double()
 

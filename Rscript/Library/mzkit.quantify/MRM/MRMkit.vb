@@ -714,7 +714,7 @@ Module MRMkit
     ''' <param name="name">The metabolite id</param>
     ''' <returns></returns>
     <ExportAPI("points")>
-    Public Function GetLinearPoints(linears As StandardCurve(), name$) As MRMStandards()
+    Public Function GetLinearPoints(linears As StandardCurve(), name$) As ReferencePoint()
         Dim line As StandardCurve = linears _
             .Where(Function(l)
                        Return l.name = name
@@ -807,7 +807,7 @@ Module MRMkit
     End Function
 
     <ExportAPI("write.points")>
-    Public Function writeStandardCurve(points As MRMStandards(), file$) As Boolean
+    Public Function writeStandardCurve(points As ReferencePoint(), file$) As Boolean
         Return points.SaveTo(file, silent:=True)
     End Function
 

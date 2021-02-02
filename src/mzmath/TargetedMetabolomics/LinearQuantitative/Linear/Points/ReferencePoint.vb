@@ -56,7 +56,7 @@ Namespace LinearQuantitative.Linear
     ''' <summary>
     ''' 表示标准曲线上面的一个实验数据点
     ''' </summary>
-    Public Class MRMStandards
+    Public Class ReferencePoint
 
         Public Property ID As String
         Public Property Name As String

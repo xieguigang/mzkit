@@ -454,7 +454,7 @@
     <Compile Include="MRM\MRMIonExtract.vb" />
     <Compile Include="MRM\IsomerismIonPairs.vb" />
     <Compile Include="MRM\Data\NamespaceDoc.vb" />
-    <Compile Include="LinearQuantitative\Linear\Points\MRMStandards.vb" />
+    <Compile Include="LinearQuantitative\Linear\Points\ReferencePoint.vb" />
     <Compile Include="MRM\IonPair.vb" />
     <Compile Include="MRM\QuantitativeAnalysis\RTAlignment.vb" />
     <Compile Include="MRM\QuantitativeAnalysis\MRMArguments.vb" />

@@ -132,7 +132,7 @@ Namespace MRM
                 Dim ISA = ionTPA.getIS(ion)                                       ' 得到内标的实验数据，如果是空值的话，说明不需要内标进行校正
                 Dim IsIon As [IS] = [IS].TryGetValue(ion.IS, [default]:=New [IS]) ' 尝试得到内标的数据
                 Dim CIS# = CDbl(IsIon?.CIS)                                       ' 内标的浓度，是不变的，所以就只有一个值
-                Dim points As New List(Of MRMStandards)
+                Dim points As New List(Of ReferencePoint)
                 Dim blankPoints = blanks.TryGetValue(ion.ID).getBlankControls
                 Dim blankISPoints = blanks.TryGetValue(ion.IS).getBlankControls
 
@@ -193,7 +193,7 @@ Namespace MRM
                     Continue For
                 Else
                     ' get points that removed from linear modelling
-                    For Each ptRef As MRMStandards In points
+                    For Each ptRef As ReferencePoint In points
                         For Each invalid In invalids
                             If stdNum.Abs(invalid.X - ptRef.Cti) <= 0.0001 AndAlso stdNum.Abs(invalid.Y - ptRef.Px) <= 0.0001 Then
                                 ptRef.valid = False
@@ -212,7 +212,7 @@ Namespace MRM
                 Dim fy As Func(Of Double, Double) = out.reverseModel
                 Dim ptY#
 
-                For Each pt As MRMStandards In out.points
+                For Each pt As ReferencePoint In out.points
                     If pt.AIS > 0 Then
                         ptY = pt.Ati / pt.AIS
                     Else
@@ -282,11 +282,11 @@ Namespace MRM
                                                    Optional CIS# = 0,
                                                    Optional id$ = Nothing,
                                                    Optional name$ = Nothing,
-                                                   Optional points As List(Of MRMStandards) = Nothing) As IEnumerable(Of PointF)
+                                                   Optional points As List(Of ReferencePoint) = Nothing) As IEnumerable(Of PointF)
             Dim AIS#
 
             If points Is Nothing Then
-                points = New List(Of MRMStandards)
+                points = New List(Of ReferencePoint)
             Else
                 points *= 0
             End If
@@ -320,7 +320,7 @@ Namespace MRM
                 ' C = f(A/AIS) = a * X + b
                 ' 在进行计算的时候，直接将 样本的峰面积除以内标的峰面积 作为X
                 ' 然后代入标准曲线公式即可得到Y，即样本的浓度
-                points += New MRMStandards With {
+                points += New ReferencePoint With {
                     .AIS = AIS,
                     .Ati = At_i,
                     .cIS = CIS,

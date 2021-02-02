@@ -146,7 +146,7 @@ Namespace MRM
         ''' <returns>经过定量计算得到的浓度数据</returns>
         Public Function QuantitativeAnalysis(wiff$, ions As IonPair(), calibrates As Standards(), [IS] As [IS](), args As MRMArguments,
                                              <Out> Optional ByRef model As StandardCurve() = Nothing,
-                                             <Out> Optional ByRef standardPoints As NamedValue(Of MRMStandards())() = Nothing,
+                                             <Out> Optional ByRef standardPoints As NamedValue(Of ReferencePoint())() = Nothing,
                                              <Out> Optional ByRef X As List(Of DataSet) = Nothing,
                                              <Out> Optional ByRef peaktable As MRMPeakTable() = Nothing,
                                              Optional calibrationNamedPattern$ = ".+[-]L\d+",
@@ -175,7 +175,7 @@ Namespace MRM
             isBlank = isBlank Or defaultBlankNames
             standardPoints = model _
                 .Select(Function(i)
-                            Return New NamedValue(Of MRMStandards())(i.name, i.points)
+                            Return New NamedValue(Of ReferencePoint())(i.name, i.points)
                         End Function) _
                 .ToArray
 
