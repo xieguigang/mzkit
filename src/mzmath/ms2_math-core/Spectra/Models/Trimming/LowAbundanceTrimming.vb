@@ -89,6 +89,10 @@ Namespace Spectra
         Public Shared ReadOnly Property intoCutff As New RelativeIntensityCutoff(0.05)
         Public Shared ReadOnly Property quantCutoff As New QuantileIntensityCutoff(0.65)
 
+        ''' <summary>
+        ''' intocutoff = 0.05
+        ''' </summary>
+        ''' <returns></returns>
         Public Shared ReadOnly Property [Default] As New [Default](Of LowAbundanceTrimming)(intoCutff)
 
         Public Function Trim(spectrum As IEnumerable(Of ms2)) As ms2()

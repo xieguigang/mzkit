@@ -445,6 +445,8 @@
     <Compile Include="GCMS\CDFReader\agilentGCMSMeta.vb" />
     <Compile Include="GCMS\mzMLReader\TimeScanMatrix.vb" />
     <Compile Include="GCMS\mzMLReader\mzMLReader.vb" />
+    <Compile Include="GCMS\QuantifyIon.vb" />
+    <Compile Include="GCMS\QuantifyAnalysis\SIMIonExtract.vb" />
     <Compile Include="LinearQuantitative\Linear\InternalStandardMethod.vb" />
     <Compile Include="LinearQuantitative\Linear\WorkCurve.vb" />
     <Compile Include="LinearQuantitative\Linear\Points\ROIPeak.vb" />
@@ -476,7 +478,7 @@
     <Compile Include="RawFile.vb" />
     <Compile Include="MRM\Data\MRMPeakTable.vb" />
     <Compile Include="MRM\Data\Extensions.vb" />
-    <Compile Include="LinearQuantitative\Linear\Points\TargetQuantification.vb" />
+    <Compile Include="LinearQuantitative\Linear\Points\TargetPeakPoint.vb" />
     <Compile Include="MRM\QuantitativeAnalysis\MRMPeak.vb" />
     <Compile Include="LinearQuantitative\Models\IonTPA.vb" />
     <Compile Include="LinearQuantitative\PeakAreaMethods.vb" />
