@@ -6,17 +6,19 @@ Namespace Content
     Public Class SampleContentLevels
 
         ReadOnly levels As Dictionary(Of String, Double)
+        ReadOnly directMap As Boolean
 
         Default Public ReadOnly Property Content(sampleLevel As String) As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return levels(levelKey(sampleLevel))
+                Return levels(If(directMap, sampleLevel, levelKey(sampleLevel)))
             End Get
         End Property
 
-        Sub New(levels As Dictionary(Of String, Double))
-            levels = levels _
-                .ToDictionary(Function(L) levelKey(L.Key),
+        Sub New(levels As Dictionary(Of String, Double), Optional directMap As Boolean = False)
+            Me.directMap = directMap
+            Me.levels = levels _
+                .ToDictionary(Function(L) If(directMap, L.Key, levelKey(L.Key)),
                               Function(L)
                                   Return L.Value
                               End Function)
