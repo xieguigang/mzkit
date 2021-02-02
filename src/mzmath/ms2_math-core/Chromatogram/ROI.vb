@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5517c48b17a54cc6584391228c9f1f10, ms2_math-core\Chromatogram\ROI.vb"
+﻿#Region "Microsoft.VisualBasic::9f85e36ffee8f7994ab1d896ab11c5c0, ms2_math-core\Chromatogram\ROI.vb"
 
     ' Author:
     ' 
@@ -34,10 +34,6 @@
 
     ' Summaries:
 
-    '     Interface IROI
-    ' 
-    '         Properties: rtmax, rtmin
-    ' 
     '     Class ROI
     ' 
     '         Properties: baseline, integration, maxInto, noise, peakWidth

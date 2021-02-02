@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3578a93c4508646b9b02f86564664ddf, SpectrumTree\Reader.vb"
+﻿#Region "Microsoft.VisualBasic::133460564e7859efafc19743891b6154, SpectrumTree\Reader.vb"
 
     ' Author:
     ' 
@@ -177,4 +177,3 @@ Public Class Reader : Implements IDisposable
         GC.SuppressFinalize(Me)
     End Sub
 End Class
-

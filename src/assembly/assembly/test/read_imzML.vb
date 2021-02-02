@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::406d0b53f2d4a92cd7083b3db7be36f6, assembly\test\read_imzML.vb"
+﻿#Region "Microsoft.VisualBasic::3c8259c264b36aae5179d125a459731f, assembly\test\read_imzML.vb"
 
     ' Author:
     ' 
@@ -70,4 +70,3 @@ Module read_imzML
         Pause()
     End Sub
 End Module
-

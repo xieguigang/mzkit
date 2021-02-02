@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e70c5865383e4a72c07fe2d72558f4f, TargetedMetabolomics\Peaks\FeatureExtract.vb"
+﻿#Region "Microsoft.VisualBasic::6ec1df3bb1793bc4d9597b6a5aae8942, TargetedMetabolomics\Peaks\FeatureExtract.vb"
 
     ' Author:
     ' 
@@ -63,4 +63,3 @@ Public MustInherit Class FeatureExtract(Of Sample)
     End Function
 
 End Class
-

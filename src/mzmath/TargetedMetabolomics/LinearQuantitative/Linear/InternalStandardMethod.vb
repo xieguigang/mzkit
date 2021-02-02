@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::87254562cc5ffb044a591aeee3275046, TargetedMetabolomics\LinearQuantitative\Linear\InternalStandardMethod.vb"
+﻿#Region "Microsoft.VisualBasic::0318135c335c63932b1999d6b822bcc5, TargetedMetabolomics\LinearQuantitative\Linear\InternalStandardMethod.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Drawing
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Content

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::52a994233b95e2e49c4fabeb2fd1451f, SpectrumTree\Writer.vb"
+﻿#Region "Microsoft.VisualBasic::15de0852ef95ce38a7a5d49149c8ea13, SpectrumTree\Writer.vb"
 
     ' Author:
     ' 
@@ -176,4 +176,3 @@ Public Class Writer : Implements IDisposable
         GC.SuppressFinalize(Me)
     End Sub
 End Class
-

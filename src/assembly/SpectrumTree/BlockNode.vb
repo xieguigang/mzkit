@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bd2a33a99210a0fed9c442793c4e2965, SpectrumTree\BlockNode.vb"
+﻿#Region "Microsoft.VisualBasic::b5f0aba52a5a2110af929e7a022cebe1, SpectrumTree\BlockNode.vb"
 
     ' Author:
     ' 
@@ -70,4 +70,3 @@ Public Class BlockNode
     End Function
 
 End Class
-

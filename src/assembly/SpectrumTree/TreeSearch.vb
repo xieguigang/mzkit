@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::787d87a6eb9ceb44791bade381257fa0, SpectrumTree\TreeSearch.vb"
+﻿#Region "Microsoft.VisualBasic::dc91f4ede7b8ce554b0c6dcc783b119c, SpectrumTree\TreeSearch.vb"
 
     ' Author:
     ' 
@@ -102,4 +102,3 @@ Public Class TreeSearch : Implements IDisposable
         GC.SuppressFinalize(Me)
     End Sub
 End Class
-

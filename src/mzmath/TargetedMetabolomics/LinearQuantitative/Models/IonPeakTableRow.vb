@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::42623d5c36e36bf1bffe386196b381f1, TargetedMetabolomics\MRM\Data\MRMPeakTable.vb"
+﻿#Region "Microsoft.VisualBasic::b2427d688ed759d87487080fc2ec1976, TargetedMetabolomics\LinearQuantitative\Models\IonPeakTableRow.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
 
     ' Summaries:
 
-    '     Class MRMPeakTable
+    '     Class IonPeakTableRow
     ' 
     '         Properties: [IS], base, content, ID, maxinto
     '                     maxinto_IS, Name, raw, rtmax, rtmin

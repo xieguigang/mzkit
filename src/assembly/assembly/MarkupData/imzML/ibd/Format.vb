@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::259fde1ad300c80131ea748af9c6efc0, assembly\MarkupData\imzML\ibd\Format.vb"
+﻿#Region "Microsoft.VisualBasic::20f9b4cd47456daa830848e30677bcdd, assembly\MarkupData\imzML\ibd\Format.vb"
 
     ' Author:
     ' 
@@ -46,7 +46,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace MarkupData.imzML
 

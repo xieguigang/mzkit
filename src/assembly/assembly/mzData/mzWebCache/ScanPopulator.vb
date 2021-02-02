@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c4b14687cf41a310053ce9c5259a0cd1, assembly\mzData\mzWebCache\ScanPopulator.vb"
+﻿#Region "Microsoft.VisualBasic::1d05f4c11750f44f05c840dcf247fc66, assembly\mzData\mzWebCache\ScanPopulator.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader

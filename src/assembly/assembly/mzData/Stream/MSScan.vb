@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3f003e3eb751700c8c4191289072f6f, assembly\mzData\Stream\MSScan.vb"
+﻿#Region "Microsoft.VisualBasic::d45668529edaf533a3732f1ea2c9a117, assembly\mzData\Stream\MSScan.vb"
 
     ' Author:
     ' 
@@ -71,6 +71,3 @@ Namespace mzData.mzWebCache
         End Function
     End Class
 End Namespace
-
-
-

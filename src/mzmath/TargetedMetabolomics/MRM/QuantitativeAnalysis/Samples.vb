@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c14bbcf08416d1674ff70eef37c1e3b3, TargetedMetabolomics\MRM\QuantitativeAnalysis\Samples.vb"
+﻿#Region "Microsoft.VisualBasic::634542774f79e6f645781c7c4148bfb8, TargetedMetabolomics\MRM\QuantitativeAnalysis\Samples.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,9 @@
 
     ' Summaries:
 
-    '     Structure IonChromatogram
-    ' 
-    '         Properties: chromatogram, description, ion, name
-    ' 
-    '         Function: ToString
-    ' 
     '     Module MRMSamples
     ' 
     '         Function: ExtractIonData, QuantitativeAnalysis, SampleQuantify
-    ' 
-    '     Class QuantifyScan
-    ' 
-    '         Properties: MRMPeaks, quantify, rawX
     ' 
     ' 
     ' /********************************************************************************/

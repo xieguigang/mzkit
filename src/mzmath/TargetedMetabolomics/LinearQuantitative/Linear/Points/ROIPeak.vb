@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32cee6de14c35fb3af27bceab7d6ff15, TargetedMetabolomics\LinearQuantitative\Linear\Points\ROIPeak.vb"
+﻿#Region "Microsoft.VisualBasic::0908a1abf1250420c3bcc4812eb578c1, TargetedMetabolomics\LinearQuantitative\Linear\Points\ROIPeak.vb"
 
     ' Author:
     ' 
@@ -44,7 +44,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
