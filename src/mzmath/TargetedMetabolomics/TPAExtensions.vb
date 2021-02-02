@@ -307,15 +307,22 @@ Public Module TPAExtensions
     ''' <returns></returns>
     ''' 
     <Extension>
-    Public Function TPAIntegrator(vector As IVector(Of ChromatogramTick), peak As DoubleRange,
-                                  baselineQuantile#,
+    Public Function TPAIntegrator(vector As IVector(Of ChromatogramTick),
+                                  peak As DoubleRange,
+                                  baselineQuantile As Double,
                                   Optional peakAreaMethod As PeakAreaMethods = PeakAreaMethods.Integrator,
                                   Optional resolution% = 5000,
                                   Optional bsplineDensity% = 100,
                                   Optional bsplineDegree% = 2,
                                   Optional TPAFactor# = 1) As (area#, baseline#, maxPeakHeight#)
-        Dim area#
-        Dim baseline# = vector.Baseline(quantile:=baselineQuantile)
+        Dim area#, baseline#
+
+        If vector.Length = 1 Then
+            ' GCMS quantification by ion max intensity
+            Return (vector(Scan0).Intensity, 0, vector(Scan0).Intensity)
+        Else
+            baseline = vector.Baseline(quantile:=baselineQuantile)
+        End If
 
         Select Case peakAreaMethod
             Case PeakAreaMethods.NetPeakSum
