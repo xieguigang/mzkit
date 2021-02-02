@@ -13,13 +13,16 @@ Namespace GCMS.QuantifyAnalysis
         ReadOnly ms1ppm As Tolerance
         ReadOnly dadot3 As Tolerance = Tolerance.DeltaMass(0.3)
 
-        Public Sub New(ions As IEnumerable(Of QuantifyIon), centroid As Tolerance)
-            Me.ions = ions.ToArray
+        Public Sub New(ions As IEnumerable(Of QuantifyIon), peakwidth As DoubleRange, centroid As Tolerance)
+            Call MyBase.New(peakwidth)
+
             Me.ms1ppm = centroid
+            Me.ions = ions.ToArray
         End Sub
 
-        Protected Overrides Iterator Function GetSamplePeaks(sample As Raw) As IEnumerable(Of TargetPeakPoint)
+        Public Overrides Iterator Function GetSamplePeaks(sample As Raw) As IEnumerable(Of TargetPeakPoint)
             Dim sampleName As String = sample.fileName.BaseName
+            Dim ROI As ROI() = GetTICPeaks(sample.GetTIC).ToArray
 
             For Each ion As QuantifyIon In ions
                 Dim ms_scan As ms1_scan() = sample.GetMsScan(ion.rt)
