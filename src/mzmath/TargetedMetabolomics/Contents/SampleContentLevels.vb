@@ -1,4 +1,7 @@
-﻿Namespace Content
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Serialization.JSON
+
+Namespace Content
 
     Public Class SampleContentLevels
 
@@ -21,6 +24,10 @@
 
         Private Function levelKey(sampleLevel As String) As String
             Return "L" & sampleLevel.Match("\d+").ParseInteger
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return levels.GetJson
         End Function
 
     End Class

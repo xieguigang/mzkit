@@ -25,5 +25,16 @@ Namespace Content
                 .Value = Val(text)
             }
         End Function
+
+        <Extension>
+        Public Function ContentVector(fileNames As IEnumerable(Of String)) As Dictionary(Of String, Double)
+            Dim cv As New Dictionary(Of String, Double)
+
+            For Each file As String In fileNames.Select(AddressOf BaseName)
+                cv(file) = ParseContent(file).ScaleTo(ContentUnits.ppb)
+            Next
+
+            Return cv
+        End Function
     End Module
 End Namespace
