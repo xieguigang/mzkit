@@ -97,14 +97,6 @@ Namespace MRM
         End Function
 
         ''' <summary>
-        ''' 默认将``-KB``和``-BLK``结尾的文件都判断为实验空白
-        ''' </summary>
-        ReadOnly defaultBlankNames As New [Default](Of Func(Of String, Boolean))(
-            Function(basename)
-                Return InStr(basename, "-KB") > 0 OrElse InStr(basename, "-BLK") > 0
-            End Function)
-
-        ''' <summary>
         ''' 通过标准曲线对样品进行定量结果数据的获取
         ''' 
         ''' 这个函数对参考标曲的大小写不敏感,只需要名称的pattern正确就可以正常工作
@@ -202,7 +194,6 @@ Namespace MRM
         ''' <returns></returns>
         <Extension>
         Public Function SampleQuantify(model As StandardCurve(), file$, ions As IonPair(), rtshifts As Dictionary(Of String, Double), args As MRMArguments) As QuantifyScan
-
             ' 使用离子对信息扫面当前的这个原始数据文件
             ' 得到峰面积等定量计算所需要的结果信息
             Dim result As ContentResult(Of IonPeakTableRow)() = model _
@@ -213,42 +204,9 @@ Namespace MRM
                     rtshifts:=rtshifts
                 ) _
                 .ToArray
-            Dim MRMPeakTable As New List(Of IonPeakTableRow)
+            Dim scanOut As QuantifyScan = result.SampleQuantifyScan(file)
 
-            For Each metabolite As ContentResult(Of IonPeakTableRow) In result
-                MRMPeakTable += metabolite.Peaktable
-            Next
-
-            If result.Length = 0 Then
-                Call $"[NO_DATA] {file.ToFileURL} found nothing!".Warning
-                Return Nothing
-            End If
-
-            ' 这个是浓度结果数据
-            Dim quantify As New DataSet With {
-                .ID = file.BaseName,
-                .Properties = result _
-                    .ToDictionary(Function(i) i.Name,
-                                    Function(i)
-                                        Return i.Content
-                                    End Function)
-            }
-
-            ' 这个是峰面积比 AIS/At 数据
-            Dim X As New DataSet With {
-                .ID = file.BaseName,
-                .Properties = result _
-                    .ToDictionary(Function(i) i.Name,
-                                    Function(i)
-                                        Return i.X
-                                    End Function)
-            }
-
-            Return New QuantifyScan With {
-                .ionPeaks = MRMPeakTable,
-                .quantify = quantify,
-                .rawX = X
-            }
+            Return scanOut
         End Function
 
     End Module
