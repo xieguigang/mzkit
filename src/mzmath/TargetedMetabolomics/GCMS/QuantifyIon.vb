@@ -19,6 +19,10 @@ Namespace GCMS
         Public Property ri As Double
         Public Property ms As ms2()
 
+        Public Overrides Function ToString() As String
+            Return $"Dim {id} As [{rt.Min}, {rt.Max}]"
+        End Function
+
         Public Shared Function FromIons(ions As IEnumerable(Of MSLIon), rtwin As Double) As IEnumerable(Of QuantifyIon)
             Return ions _
                 .Select(Function(ion)

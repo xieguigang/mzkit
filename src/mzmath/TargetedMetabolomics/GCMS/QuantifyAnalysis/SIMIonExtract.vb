@@ -27,10 +27,11 @@ Namespace GCMS.QuantifyAnalysis
             Dim rtmin As Vector = ROI.Select(Function(r) r.time.Min).ToArray
             Dim rtmax As Vector = ROI.Select(Function(r) r.time.Max).ToArray
             Dim ms As ms2()() = ROI.Select(Function(r) GetMsScan(sample, r.time)).ToArray
+            Dim feature As ROI
 
             For Each ion As QuantifyIon In ions
-                Dim rtminScore As Vector = (ion.rt.Min / rtmin).Log(2).Abs
-                Dim rtmaxScore As Vector = (ion.rt.Max / rtmax).Log(2).Abs
+                Dim rtminScore As Vector = (ion.rt.Min - rtmin).Abs
+                Dim rtmaxScore As Vector = (ion.rt.Max - rtmax).Abs
                 Dim cos As Vector = ms _
                     .Select(Function(spectra)
                                 With GlobalAlignment.TwoDirectionSSM(ion.ms, spectra, dadot3)
@@ -38,8 +39,17 @@ Namespace GCMS.QuantifyAnalysis
                                 End With
                             End Function) _
                     .ToArray
-                Dim scores As Vector = (2 ^ rtminScore) + (2 ^ rtmaxScore) + cos
-                Dim feature As ROI = ROI(Which.Max(scores))
+
+                rtminScore = rtminScore.Max / rtminScore - 1
+                rtmaxScore = rtmaxScore.Max / rtmaxScore - 1
+
+                Dim scores As Vector = (rtminScore + rtmaxScore) * cos
+
+                If scores.All(Function(xi) xi = 0.0) Then
+                    Continue For
+                Else
+                    feature = ROI(Which.Max(scores))
+                End If
 
                 Yield GetPeak(ion.id, feature.time, sample)
             Next
