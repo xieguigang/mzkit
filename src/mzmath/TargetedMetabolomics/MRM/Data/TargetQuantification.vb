@@ -50,7 +50,7 @@
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 
 Namespace MRM.Data
 

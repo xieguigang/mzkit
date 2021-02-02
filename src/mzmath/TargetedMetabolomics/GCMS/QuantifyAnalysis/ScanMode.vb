@@ -1,50 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::b5d0a0401782ebf77757ae9d425745f4, src\mzmath\TargetedMetabolomics\GCMS\QuantifyAnalysis\ScanMode.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module ScanModeWorker
-    ' 
-    '         Function: ConvertAsTabular, FitContent, ScanContents, ScanIons
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module ScanModeWorker
+' 
+'         Function: ConvertAsTabular, FitContent, ScanContents, ScanIons
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
@@ -163,7 +164,7 @@ Namespace GCMS.QuantifyAnalysis
         ''' <returns></returns>
         <Extension>
         Public Function ConvertAsTabular(ROI As ROI, raw As Raw, ri#, title$) As ROITable
-            Dim spectra = raw.GetMsScan(ROI.Time).GroupByMz
+            Dim spectra = raw.GetMsScan(ROI.time).GroupByMz
             Dim base64 As String = spectra _
                 .Select(Function(mz) $"{mz.mz} {mz.intensity}") _
                 .JoinBy(ASCII.TAB) _
@@ -171,14 +172,14 @@ Namespace GCMS.QuantifyAnalysis
 
             Return New ROITable With {
                 .sn = ROI.snRatio,
-                .baseline = ROI.Baseline,
+                .baseline = ROI.baseline,
                 .ID = title,
-                .integration = ROI.Integration,
-                .maxInto = ROI.MaxInto,
+                .integration = ROI.integration,
+                .maxInto = ROI.maxInto,
                 .ri = ri,
                 .rt = ROI.rt,
-                .rtmax = ROI.Time.Max,
-                .rtmin = ROI.Time.Min,
+                .rtmax = ROI.time.Max,
+                .rtmin = ROI.time.Min,
                 .mass_spectra = base64
             }
         End Function
@@ -219,13 +220,15 @@ Namespace GCMS.QuantifyAnalysis
         End Function
 
         <Extension>
-        Public Iterator Function FitContent(Of T As ROITable)(ROIlist As IEnumerable(Of (fileName$, data As T)), standardCurves As Dictionary(Of String, Math.StandardCurve)) As IEnumerable(Of ChromatographyPeaktable)
+        Public Iterator Function FitContent(Of T As ROITable)(ROIlist As IEnumerable(Of (fileName$, data As T)), standardCurves As Dictionary(Of String, LinearQuantitative.StandardCurve)) As IEnumerable(Of ChromatographyPeaktable)
             Dim fileTable = ROIlist.SafeQuery _
                 .GroupBy(Function(file) file.fileName) _
                 .ToDictionary(Function(file) file.Key,
                               Function(g)
                                   Return g.ToDictionary(Function(c) c.data.ID,
-                                                        Function(c) c.data)
+                                                        Function(c)
+                                                            Return c.data
+                                                        End Function)
                               End Function)
 
             For Each targetVal As KeyValuePair(Of String, Dictionary(Of String, T)) In fileTable
@@ -239,7 +242,7 @@ Namespace GCMS.QuantifyAnalysis
                            End Function)
 
                     Dim TPA#
-                    Dim standardCurve As Math.StandardCurve = standardCurves(target.ID)
+                    Dim standardCurve As LinearQuantitative.StandardCurve = standardCurves(target.ID)
 
                     If Not standardCurve.IS Is Nothing Then
                         ' 需要做内标校正

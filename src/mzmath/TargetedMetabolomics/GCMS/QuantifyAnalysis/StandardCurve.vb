@@ -1,50 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::a5e27274bcaeea3ca21cea7d4e71dcd8, src\mzmath\TargetedMetabolomics\GCMS\QuantifyAnalysis\StandardCurve.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module StandardCurve
-    ' 
-    '         Function: LinearRegression, LoadStandardCurve
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module StandardCurve
+' 
+'         Function: LinearRegression, LoadStandardCurve
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Language
@@ -69,7 +70,7 @@ Namespace GCMS.QuantifyAnalysis
                             Return New PointF(CSng(p.data.TPACalibration), CSng(p.content))
                         End Function) _
                 .ToArray
-            Dim model As IFitted = Math.StandardCurve.CreateLinearRegression(line, maxDeletions, New List(Of PointF))
+            Dim model As IFitted = LinearQuantitative.StandardCurve.CreateLinearRegression(line, maxDeletions, New List(Of PointF))
             Return model
         End Function
 
@@ -91,7 +92,7 @@ Namespace GCMS.QuantifyAnalysis
         Public Function LoadStandardCurve(dir$, standards As ROITable(), [IS] As [IS](),
                                           Optional scale As ContentUnits = ContentUnits.ppb,
                                           Optional angleThreshold# = 5,
-                                          Optional snThreshold As Double = 1) As (peaktable As ChromatographyPeaktable(), Math.StandardCurve())
+                                          Optional snThreshold As Double = 1) As (peaktable As ChromatographyPeaktable(), LinearQuantitative.StandardCurve())
 
             ' 默认这个dir文件夹之中所有的cdf文件都是标准品参考曲线的结果文件
             Dim contentFiles As Dictionary(Of String, UnitValue(Of ContentUnits)) =
@@ -161,14 +162,14 @@ Namespace GCMS.QuantifyAnalysis
 
             ' 将峰面积和浓度数据之间建立线型关系
             Dim standardsTable = standards.ToDictionary(Function(s) s.ID)
-            Dim lines As Math.StandardCurve() = TPA _
+            Dim lines As LinearQuantitative.StandardCurve() = TPA _
                 .Where(Function(ion) Not ISTable.ContainsKey(ion.Key)) _
                 .Select(Function(target)
                             Dim name$ = target.Key
                             Dim curve = target.Value.ToArray.LinearRegression
                             Dim ISName$ = standardsTable(name).IS
 
-                            Return New Math.StandardCurve With {
+                            Return New LinearQuantitative.StandardCurve With {
                                 .name = name,
                                 .linear = curve,
                                 .[IS] = ISTable.TryGetValue(ISName)
