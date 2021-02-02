@@ -1,4 +1,5 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSL
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 
@@ -17,6 +18,17 @@ Namespace GCMS
         ''' <returns></returns>
         Public Property ri As Double
         Public Property ms As ms2()
+
+        Public Shared Function FromIons(ions As IEnumerable(Of MSLIon), rtwin As Double) As IEnumerable(Of QuantifyIon)
+            Return ions _
+                .Select(Function(ion)
+                            Return New QuantifyIon With {
+                                .id = ion.Name,
+                                .ms = ion.Peaks,
+                                .rt = New DoubleRange(ion.RT - rtwin, ion.RT + rtwin)
+                            }
+                        End Function)
+        End Function
 
     End Class
 End Namespace

@@ -45,6 +45,8 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSL
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Content
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.GCMS
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.GCMS.QuantifyAnalysis
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
@@ -53,9 +55,35 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports REnv = SMRUCC.Rsharp.Runtime
 Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
+Imports SMRUCC.Rsharp
 
 <Package("GCMS")>
 Module GCMSLinear
+
+    <ExportAPI("as.quantify.ion")>
+    Public Function quantifyIons(ions As MSLIon(), Optional rtwin As Double = 1) As QuantifyIon()
+        Return QuantifyIon.FromIons(ions, rtwin).ToArray
+    End Function
+
+    <ExportAPI("SIMIonExtractor")>
+    <RApiReturn(GetType(SIMIonExtract))>
+    Public Function createSIMIonExtract(ions As QuantifyIon(),
+                                        <RRawVectorArgument(GetType(Double))>
+                                        Optional peakwidth As Object = "3,5",
+                                        Optional centroid As Object = "da:0.3",
+                                        Optional env As Environment = Nothing) As Object
+
+        Dim peakwin = GetDoubleRange(peakwidth, env)
+        Dim ms1ppm = Math.getTolerance(centroid, env)
+
+        If peakwin Like GetType(Message) Then
+            Return peakwin.TryCast(Of Message)
+        ElseIf ms1ppm Like GetType(Message) Then
+            Return ms1ppm.TryCast(Of Message)
+        End If
+
+
+    End Function
 
     <ExportAPI("parseContents")>
     Public Function FileNames2Contents(<RRawVectorArgument> files As Object) As Rlist
