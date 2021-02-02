@@ -141,7 +141,7 @@ Namespace LinearQuantitative.Linear
                 .points = points.PopAll,
                 .[IS] = contents.GetIS(define.ISTD)
             }
-            Dim fy As Func(Of Double, Double) = out.reverseModel
+            Dim fy As Func(Of Double, Double) = out.ReverseModelFunction
             Dim ptY#
 
             For Each pt As ReferencePoint In out.points

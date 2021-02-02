@@ -209,7 +209,7 @@ Namespace MRM
                     .points = points.PopAll,
                     .[IS] = IsIon
                 }
-                Dim fy As Func(Of Double, Double) = out.reverseModel
+                Dim fy As Func(Of Double, Double) = out.ReverseModelFunction
                 Dim ptY#
 
                 For Each pt As ReferencePoint In out.points

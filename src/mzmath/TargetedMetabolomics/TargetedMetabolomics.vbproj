@@ -451,6 +451,7 @@
     <Compile Include="GCMS\QuantifyIon.vb" />
     <Compile Include="GCMS\QuantifyAnalysis\SIMIonExtract.vb" />
     <Compile Include="LinearQuantitative\Linear\InternalStandardMethod.vb" />
+    <Compile Include="LinearQuantitative\Linear\QuantificationWorker.vb" />
     <Compile Include="LinearQuantitative\Linear\WorkCurve.vb" />
     <Compile Include="LinearQuantitative\Linear\Points\ROIPeak.vb" />
     <Compile Include="LinearQuantitative\Models\IonPeakTableRow.vb" />
