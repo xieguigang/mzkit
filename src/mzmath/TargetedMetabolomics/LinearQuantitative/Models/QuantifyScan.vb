@@ -4,7 +4,7 @@ Namespace LinearQuantitative
 
     Public Class QuantifyScan
 
-        Public Property MRMPeaks As IonPeakTableRow()
+        Public Property ionPeaks As IonPeakTableRow()
 
         ''' <summary>
         ''' 定量结果

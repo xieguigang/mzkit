@@ -205,7 +205,7 @@ Namespace MRM
                     rtshifts:=New Dictionary(Of String, Double),
                     args:=args
                 )
-                mrmPeaktable += scan.MRMPeaks
+                mrmPeaktable += scan.ionPeaks
                 X += scan.rawX
                 out += scan.quantify
             Next
@@ -260,7 +260,7 @@ Namespace MRM
             }
 
             Return New QuantifyScan With {
-                .MRMPeaks = MRMPeakTable,
+                .ionPeaks = MRMPeakTable,
                 .quantify = quantify,
                 .rawX = X
             }
