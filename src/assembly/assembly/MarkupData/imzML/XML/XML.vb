@@ -4,7 +4,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 
 Namespace MarkupData.imzML
 
-    <XmlType("indexedmzML", [Namespace]:=mzML.Xml.xmlns)>
+    <XmlType("indexedmzML", [Namespace]:=mzML.indexedmzML.xmlns)>
     Public Class XML
 
         <XmlAttribute>
@@ -12,7 +12,7 @@ Namespace MarkupData.imzML
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function LoadScans(file As String) As IEnumerable(Of ScanData)
-            Return mzML.Xml.LoadScans(file).Select(Function(scan) New ScanData(scan))
+            Return mzML.indexedmzML.LoadScans(file).Select(Function(scan) New ScanData(scan))
         End Function
 
         Public Shared Iterator Function LoadScanData(imzML As String) As IEnumerable(Of ScanReader)

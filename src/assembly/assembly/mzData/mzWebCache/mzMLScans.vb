@@ -12,7 +12,7 @@ Namespace mzData.mzWebCache
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Protected Overrides Function loadScans(rawfile As String) As IEnumerable(Of mzML.spectrum)
-            Return mzML.Xml.LoadScans(rawfile)
+            Return mzML.indexedmzML.LoadScans(rawfile)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

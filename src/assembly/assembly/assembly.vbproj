@@ -555,7 +555,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="MarkupData\mzML\Extensions.vb" />
-    <Compile Include="MarkupData\mzML\XML\XML.vb" />
+    <Compile Include="MarkupData\mzML\XML\indexedmzML.vb" />
     <Compile Include="MarkupData\mzXML\Extensions.vb" />
     <Compile Include="MarkupData\mzXML\Info.vb" />
     <Compile Include="MarkupData\mzXML\MSData.vb" />
