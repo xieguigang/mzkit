@@ -157,19 +157,31 @@ Module GCMSLinear
         Return GCMS.OpenRawAuto(file)
     End Function
 
+    ''' <summary>
+    ''' read raw peaks data
+    ''' </summary>
+    ''' <param name="extract"></param>
+    ''' <param name="sample"></param>
+    ''' <returns></returns>
     <ExportAPI("peakRaw")>
     Public Function extractSampleRaw(extract As SIMIonExtract, sample As Raw) As TargetPeakPoint()
         Return extract.GetSamplePeaks(sample).ToArray
     End Function
 
     <ExportAPI("linear_algorithm")>
-    Public Function algorithm(contents As ContentTable, Optional baselineQuantile As Double = 0.65, Optional maxDeletions As Integer = 1) As InternalStandardMethod
+    Public Function algorithm(contents As ContentTable,
+                              Optional baselineQuantile As Double = 0.65,
+                              Optional maxDeletions As Integer = 1) As InternalStandardMethod
+
         Return New InternalStandardMethod(contents, baselineQuantile, maxDeletions)
     End Function
 
     <ExportAPI("linears")>
     <RApiReturn(GetType(StandardCurve))>
-    Public Function InternalStandardMethod(method As InternalStandardMethod, <RRawVectorArgument> reference As Object, Optional env As Environment = Nothing) As Object
+    Public Function InternalStandardMethod(method As InternalStandardMethod,
+                                           <RRawVectorArgument> reference As Object,
+                                           Optional env As Environment = Nothing) As Object
+
         Dim points As pipeline = pipeline.TryCreatePipeline(Of TargetPeakPoint)(reference, env)
 
         If points.isError Then
@@ -177,9 +189,5 @@ Module GCMSLinear
         End If
 
         Return method.ToLinears(points.populates(Of TargetPeakPoint)(env)).ToArray
-    End Function
-
-    Public Function Quantify()
-
     End Function
 End Module
