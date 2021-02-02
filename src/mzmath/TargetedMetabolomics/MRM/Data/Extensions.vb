@@ -65,7 +65,7 @@ Namespace MRM.Data
             Dim ions As IonPair() = files _
                 .Select(AddressOf mzML.LoadChromatogramList) _
                 .IteratesALL _
-                .Where(Function(chr) chr.id <> "TIC" AndAlso chr.id <> "BPC") _
+                .Where(Function(chr) Not chr.id Like NotMRMSelectors) _
                 .Select(Function(chr)
                             Return New IonPair With {
                                 .precursor = chr.precursor.MRMTargetMz,
