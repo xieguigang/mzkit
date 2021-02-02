@@ -127,6 +127,19 @@ Namespace GCMS
         End Function
 
         ''' <summary>
+        ''' 自动识别读取CDF或者mzML文件
+        ''' </summary>
+        ''' <param name="file"></param>
+        ''' <returns></returns>
+        Public Function OpenRawAuto(file As String) As Raw
+            If file.ExtensionSuffix("cdf") Then
+                Return ReadData(file)
+            Else
+                Return mzMLReader.LoadFile(file)
+            End If
+        End Function
+
+        ''' <summary>
         ''' 读取CDF文件然后读取原始数据
         ''' </summary>
         ''' <param name="cdfPath"></param>

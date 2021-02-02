@@ -92,10 +92,11 @@ Namespace GCMS.QuantifyAnalysis
         ''' 第一个出峰的物质和最后一个出峰的物质作为保留指数的参考，在这里假设第一个出峰的物质的保留指数为零，
         ''' 最后一个出峰的物质的保留指数为1000，则可以根据这个区间和rt之间的线性关系计算出保留指数
         ''' </remarks>
-        <Extension> Public Function ExportReferenceROITable(regions As ROI(), raw As Raw,
-                                                            Optional sn# = 5,
-                                                            Optional names$() = Nothing,
-                                                            Optional RImax# = 1000) As ROITable()
+        <Extension>
+        Public Function ExportReferenceROITable(regions As ROI(), raw As Raw,
+                                                Optional sn# = 5,
+                                                Optional names$() = Nothing,
+                                                Optional RImax# = 1000) As ROITable()
 
             With regions.Where(Function(ROI) ROI.snRatio >= sn).ToArray
                 Dim refA = .First, refB = .Last

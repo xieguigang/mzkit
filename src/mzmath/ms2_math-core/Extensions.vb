@@ -111,6 +111,7 @@ Imports stdNum = System.Math
         Dim rtScale = (rt.rt - A.rt) / (B.rt - A.rt)
         Dim riScale = (B.ri - A.ri) * rtScale
         Dim ri = A.ri + riScale
+
         Return ri
     End Function
 
