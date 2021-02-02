@@ -25,6 +25,11 @@ Public Class frmLogin
         Dim password As String = TextBox2.Text.MD5
         Dim post As New NameValueCollection
 
+        If TextBox1.Text.StringEmpty OrElse TextBox2.Text.StringEmpty Then
+            Call MessageBox.Show("Account or password could not be empty!", "BioDeep Login", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return
+        End If
+
         Call post.Add("account", account)
         Call post.Add("password", password)
 

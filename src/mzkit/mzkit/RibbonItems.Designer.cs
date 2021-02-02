@@ -13,6 +13,7 @@ using RibbonLib;
 using RibbonLib.Controls;
 using RibbonLib.Interop;
 
+
     partial class RibbonItems
     {
         private static class Cmd
@@ -90,6 +91,9 @@ using RibbonLib.Interop;
             public const uint cmdTabGroupTargeted = 98;
             public const uint cmdImportsLinear = 100;
             public const uint cmdSaveLinears = 103;
+            public const uint cmdTabGroupTargetedLibrary = 107;
+            public const uint cmdMRMLibrary = 108;
+            public const uint cmdQuantifyIons = 109;
             public const uint cmdTabMain = 1011;
             public const uint cmdGroupFileActions = 1045;
             public const uint cmdTabGroupWindowTools = 1023;
@@ -196,6 +200,9 @@ using RibbonLib.Interop;
         public RibbonGroup TabGroupTargeted { get; private set; }
         public RibbonButton ImportsLinear { get; private set; }
         public RibbonButton SaveLinears { get; private set; }
+        public RibbonGroup TabGroupTargetedLibrary { get; private set; }
+        public RibbonButton MRMLibrary { get; private set; }
+        public RibbonButton QuantifyIons { get; private set; }
         public RibbonTab TabMain { get; private set; }
         public RibbonGroup GroupFileActions { get; private set; }
         public RibbonGroup TabGroupWindowTools { get; private set; }
@@ -300,6 +307,9 @@ using RibbonLib.Interop;
             TabGroupTargeted = new RibbonGroup(ribbon, Cmd.cmdTabGroupTargeted);
             ImportsLinear = new RibbonButton(ribbon, Cmd.cmdImportsLinear);
             SaveLinears = new RibbonButton(ribbon, Cmd.cmdSaveLinears);
+            TabGroupTargetedLibrary = new RibbonGroup(ribbon, Cmd.cmdTabGroupTargetedLibrary);
+            MRMLibrary = new RibbonButton(ribbon, Cmd.cmdMRMLibrary);
+            QuantifyIons = new RibbonButton(ribbon, Cmd.cmdQuantifyIons);
             TabMain = new RibbonTab(ribbon, Cmd.cmdTabMain);
             GroupFileActions = new RibbonGroup(ribbon, Cmd.cmdGroupFileActions);
             TabGroupWindowTools = new RibbonGroup(ribbon, Cmd.cmdTabGroupWindowTools);
