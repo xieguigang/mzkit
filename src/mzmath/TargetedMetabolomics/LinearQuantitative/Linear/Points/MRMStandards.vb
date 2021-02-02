@@ -51,7 +51,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports stdNum = System.Math
 
-Namespace MRM.Data
+Namespace LinearQuantitative.Linear
 
     ''' <summary>
     ''' 表示标准曲线上面的一个实验数据点
