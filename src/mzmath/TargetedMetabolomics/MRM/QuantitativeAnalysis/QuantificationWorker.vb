@@ -46,11 +46,9 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace MRM
 
@@ -80,7 +78,12 @@ Namespace MRM
                 ) _
                 .ToDictionary(Function(ion) ion.name)
 
-            Dim names As Dictionary(Of String, IonPair) = ions.ToDictionary(Function(i) i.accession)
+            Dim names As Dictionary(Of String, String) = ions _
+                .ToDictionary(Function(i) i.accession,
+                              Function(i)
+                                  Return i.name
+                              End Function)
+
             ' model -> y = ax + b
             ' in_calculation -> x = (y-b)/a
             Dim quantifyLinears = linearModels _
