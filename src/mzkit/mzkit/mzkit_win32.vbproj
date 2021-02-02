@@ -629,8 +629,14 @@
     <EmbeddedResource Include="pages\dockWindow\documents\frmFeatureSearch.resx">
       <DependentUpon>frmFeatureSearch.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="pages\dockWindow\documents\frmMRMLibrary.resx">
+      <DependentUpon>frmMRMLibrary.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\documents\frmMsImagingViewer.resx">
       <DependentUpon>frmMsImagingViewer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pages\dockWindow\documents\frmQuantifyIons.resx">
+      <DependentUpon>frmQuantifyIons.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\documents\frmRScriptEdit.resx">
       <DependentUpon>frmRScriptEdit.vb</DependentUpon>

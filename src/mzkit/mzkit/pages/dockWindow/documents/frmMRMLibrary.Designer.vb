@@ -24,9 +24,61 @@ Partial Class frmMRMLibrary
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        components = New System.ComponentModel.Container
+        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.Column1 = New System.Windows.Forms.DataGridViewLinkColumn()
+        Me.Column2 = New System.Windows.Forms.DataGridViewLinkColumn()
+        Me.Column3 = New System.Windows.Forms.DataGridViewLinkColumn()
+        Me.Column4 = New System.Windows.Forms.DataGridViewLinkColumn()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuspendLayout()
+        '
+        'DataGridView1
+        '
+        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2, Me.Column3, Me.Column4})
+        Me.DataGridView1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DataGridView1.Location = New System.Drawing.Point(0, 0)
+        Me.DataGridView1.Name = "DataGridView1"
+        Me.DataGridView1.RowTemplate.Height = 23
+        Me.DataGridView1.Size = New System.Drawing.Size(792, 564)
+        Me.DataGridView1.TabIndex = 0
+        '
+        'Column1
+        '
+        Me.Column1.HeaderText = "CAS Number"
+        Me.Column1.Name = "Column1"
+        '
+        'Column2
+        '
+        Me.Column2.HeaderText = "Common Name"
+        Me.Column2.Name = "Column2"
+        '
+        'Column3
+        '
+        Me.Column3.HeaderText = "Precursor"
+        Me.Column3.Name = "Column3"
+        '
+        'Column4
+        '
+        Me.Column4.HeaderText = "Product"
+        Me.Column4.Name = "Column4"
+        '
+        'frmMRMLibrary
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(800, 450)
+        Me.ClientSize = New System.Drawing.Size(792, 564)
+        Me.Controls.Add(Me.DataGridView1)
+        Me.Name = "frmMRMLibrary"
         Me.Text = "Form1"
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ResumeLayout(False)
+
     End Sub
+
+    Friend WithEvents DataGridView1 As DataGridView
+    Friend WithEvents Column1 As DataGridViewLinkColumn
+    Friend WithEvents Column2 As DataGridViewLinkColumn
+    Friend WithEvents Column3 As DataGridViewLinkColumn
+    Friend WithEvents Column4 As DataGridViewLinkColumn
 End Class
