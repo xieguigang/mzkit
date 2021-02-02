@@ -1,54 +1,139 @@
 ﻿#Region "Microsoft.VisualBasic::7f21c3a1f9fdb5e0d813e17e1c937a0f, TargetedMetabolomics\LinearQuantitative\Linear\QuantificationWorker.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module QuantificationWorker
-    ' 
-    '         Function: DoLinearQuantify, ReverseModelFunction
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module QuantificationWorker
+' 
+'         Function: DoLinearQuantify, ReverseModelFunction
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports stdNum = System.Math
 
 Namespace LinearQuantitative.Linear
 
     Module QuantificationWorker
+
+        Private Function LevelFactorName(levelFactors As String()) As Func(Of Integer, String)
+            If levelFactors.IsNullOrEmpty Then
+                Return Function(i) levelFactors(i)
+            Else
+                Return Function(i) "L" & (i + 1)
+            End If
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="points">如果这个参数为空值, 说明不需要返回测试数据</param>
+        ''' <returns></returns>
+        <Extension>
+        Public Iterator Function CreateModelPoints(C#(), A#(),
+                                                   Optional ISA#() = Nothing,
+                                                   Optional CIS# = 0,
+                                                   Optional id$ = Nothing,
+                                                   Optional name$ = Nothing,
+                                                   Optional levelFactors As String() = Nothing,
+                                                   Optional points As List(Of ReferencePoint) = Nothing) As IEnumerable(Of PointF)
+            Dim AIS#
+            Dim factorName = LevelFactorName(levelFactors)
+
+            If points Is Nothing Then
+                points = New List(Of ReferencePoint)
+            Else
+                points *= 0
+            End If
+
+            If ISA.IsNullOrEmpty Then
+                ISA = Nothing
+            End If
+
+            For i As Integer = 0 To C.Length - 1
+                Dim Ct_i = C(i)
+                Dim At_i = stdNum.Round(A(i))
+
+                ' X 为峰面积，这样子在后面计算的时候就可以直接将离子对的峰面积带入方程计算出浓度结果了
+                Dim pX#
+                ' 20181106
+                ' 因为CIS是假设恒定不变的，所以在这里就直接使用标准曲线的点的浓度来作为Y轴的值了
+                Dim pY# = Ct_i ' / CIS   
+
+                ' 获取内标的峰面积以及进行内标矫正
+                If ISA Is Nothing Then
+                    ' 不需要进行内标校正的情况
+                    ' 直接使用样本的峰面积作为X轴数据
+                    AIS = 0
+                    pX = At_i
+                Else
+                    ' 需要做内标校正的情况
+                    AIS = ISA(i)
+                    pX = At_i / AIS
+                End If
+
+                ' C = f(A/AIS) = a * X + b
+                ' 在进行计算的时候，直接将 样本的峰面积除以内标的峰面积 作为X
+                ' 然后代入标准曲线公式即可得到Y，即样本的浓度
+                points += New ReferencePoint With {
+                    .AIS = AIS,
+                    .Ati = At_i,
+                    .cIS = CIS,
+                    .Cti = Ct_i,
+                    .ID = id,
+                    .Name = name,
+                    .level = factorName(i),
+                    .valid = True
+                }
+
+                ' 得到标准曲线之中的一个点
+
+                ' 20200103
+                '
+                ' it's wired that axis X should be the content and 
+                ' Y Is the peak area ratio in targeted quantify 
+                ' analysis
+                Yield New PointF(CSng(pY), CSng(pX))
+            Next
+        End Function
 
         <Extension>
         Friend Function ReverseModelFunction(model As StandardCurve) As Func(Of Double, Double)

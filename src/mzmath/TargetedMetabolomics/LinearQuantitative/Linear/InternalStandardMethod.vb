@@ -119,8 +119,8 @@ Namespace LinearQuantitative.Linear
             Dim C As Double() = linearSamples.Select(Function(level) contents(level, ionKey)).ToArray
             Dim CIS As Double = 1
             Dim invalids As New List(Of PointF)
-            Dim line As PointF() = StandardCurveWorker _
-                .CreateModelPoints(C, A, ISTPA, CIS, ionKey, define.Name, points) _
+            Dim line As PointF() = QuantificationWorker _
+                .CreateModelPoints(C, A, ISTPA, CIS, ionKey, define.Name, linearSamples, points) _
                 .ToArray
             Dim fit As IFitted = StandardCurve.CreateLinearRegression(line, maxDeletions, removed:=invalids)
 

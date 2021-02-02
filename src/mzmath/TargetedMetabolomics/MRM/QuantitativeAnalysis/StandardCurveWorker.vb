@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::d953c5137df1e4798936e0b1c8a843e8, TargetedMetabolomics\MRM\QuantitativeAnalysis\StandardCurveWorker.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module StandardCurveWorker
-    ' 
-    '         Function: CreateModelPoints, getBlankControls, getByLevel, getIS, Regression
-    '                   (+2 Overloads) Scan
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module StandardCurveWorker
+' 
+'         Function: CreateModelPoints, getBlankControls, getByLevel, getIS, Regression
+'                   (+2 Overloads) Scan
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -58,6 +58,7 @@ Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Quantile
+Imports LinearQuantificationWorker = BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear.QuantificationWorker
 Imports regexp = System.Text.RegularExpressions.Regex
 Imports stdNum = System.Math
 
@@ -177,14 +178,14 @@ Namespace MRM
                             .ToArray
                     End If
 
-                    line = StandardCurveWorker _
-                       .CreateModelPoints(C, nA, ISTPA, CIS, ion.ID, ion.Name, points) _
-                       .ToArray
+                    line = LinearQuantificationWorker _
+                        .CreateModelPoints(C, nA, ISTPA, CIS, ion.ID, ion.Name,, points) _
+                        .ToArray
                     fit = StandardCurve.CreateLinearRegression(line, maxDeletions, removed:=invalids)
                 Else
-                    line = StandardCurveWorker _
-                       .CreateModelPoints(C, A, ISTPA, CIS, ion.ID, ion.Name, points) _
-                       .ToArray
+                    line = LinearQuantificationWorker _
+                        .CreateModelPoints(C, A, ISTPA, CIS, ion.ID, ion.Name,, points) _
+                        .ToArray
                     fit = StandardCurve.CreateLinearRegression(line, maxDeletions, removed:=invalids)
                 End If
 
@@ -269,77 +270,6 @@ Namespace MRM
                            Return At_i
                        End If
                    End Function
-        End Function
-
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="points">如果这个参数为空值, 说明不需要返回测试数据</param>
-        ''' <returns></returns>
-        <Extension>
-        Public Iterator Function CreateModelPoints(C#(), A#(),
-                                                   Optional ISA#() = Nothing,
-                                                   Optional CIS# = 0,
-                                                   Optional id$ = Nothing,
-                                                   Optional name$ = Nothing,
-                                                   Optional points As List(Of ReferencePoint) = Nothing) As IEnumerable(Of PointF)
-            Dim AIS#
-
-            If points Is Nothing Then
-                points = New List(Of ReferencePoint)
-            Else
-                points *= 0
-            End If
-
-            If ISA.IsNullOrEmpty Then
-                ISA = Nothing
-            End If
-
-            For i As Integer = 0 To C.Length - 1
-                Dim Ct_i = C(i)
-                Dim At_i = stdNum.Round(A(i))
-
-                ' X 为峰面积，这样子在后面计算的时候就可以直接将离子对的峰面积带入方程计算出浓度结果了
-                Dim pX#
-                ' 20181106
-                ' 因为CIS是假设恒定不变的，所以在这里就直接使用标准曲线的点的浓度来作为Y轴的值了
-                Dim pY# = Ct_i ' / CIS   
-
-                ' 获取内标的峰面积以及进行内标矫正
-                If ISA Is Nothing Then
-                    ' 不需要进行内标校正的情况
-                    ' 直接使用样本的峰面积作为X轴数据
-                    AIS = 0
-                    pX = At_i
-                Else
-                    ' 需要做内标校正的情况
-                    AIS = ISA(i)
-                    pX = At_i / AIS
-                End If
-
-                ' C = f(A/AIS) = a * X + b
-                ' 在进行计算的时候，直接将 样本的峰面积除以内标的峰面积 作为X
-                ' 然后代入标准曲线公式即可得到Y，即样本的浓度
-                points += New ReferencePoint With {
-                    .AIS = AIS,
-                    .Ati = At_i,
-                    .cIS = CIS,
-                    .Cti = Ct_i,
-                    .ID = id,
-                    .Name = name,
-                    .level = "L" & (i + 1),
-                    .valid = True
-                }
-
-                ' 得到标准曲线之中的一个点
-
-                ' 20200103
-                '
-                ' it's wired that axis X should be the content and 
-                ' Y Is the peak area ratio in targeted quantify 
-                ' analysis
-                Yield New PointF(CSng(pY), CSng(pX))
-            Next
         End Function
 
         ''' <summary>
