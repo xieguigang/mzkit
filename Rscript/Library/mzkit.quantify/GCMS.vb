@@ -54,7 +54,7 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Imports REnv = SMRUCC.Rsharp.Runtime
 Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
 
-<Package("mzkit.gcms")>
+<Package("GCMS")>
 Module GCMSLinear
 
     <ExportAPI("parseContents")>
@@ -76,17 +76,39 @@ Module GCMSLinear
     <RApiReturn(GetType(ContentTable))>
     Public Function ContentTable(<RRawVectorArgument> ions As Object,
                                  <RRawVectorArgument> contentVector As Object,
+                                 <RRawVectorArgument> Optional [IS] As Object = Nothing,
                                  Optional env As Environment = Nothing) As Object
 
         Dim MSL As pipeline = pipeline.TryCreatePipeline(Of MSLIon)(ions, env)
+        Dim ISMap As Dictionary(Of String, String)
 
         If MSL.isError Then
             Return MSL.getError
         End If
 
+        Dim MSLIons As MSLIon() = MSL.populates(Of MSLIon)(env).ToArray
+
+        If TypeOf [IS] Is list Then
+            ISMap = DirectCast([IS], list).AsGeneric(Of String)(env)
+        ElseIf TypeOf [IS] Is String() OrElse TypeOf [IS] Is vector OrElse TypeOf [IS] Is String Then
+            Dim ISnames As String() = REnv.asVector(Of String)([IS])
+
+            If ISnames.Length = 1 AndAlso ISnames(Scan0) = "IS" Then
+                ISMap = New Dictionary(Of String, String)
+
+                For Each ion As MSLIon In MSLIons
+                    ISMap(ion.Name) = "IS"
+                Next
+            Else
+                Return Internal.debug.stop(New NotImplementedException, env)
+            End If
+        Else
+            Return Internal.debug.stop(New NotImplementedException, env)
+        End If
+
         If TypeOf contentVector Is Rlist Then
             Dim vec As Dictionary(Of String, Double) = DirectCast(contentVector, Rlist).AsGeneric(Of Double)(env)
-            Dim table As ContentTable = GCMS.ContentTable(MSL.populates(Of MSLIon)(env), vec)
+            Dim table As ContentTable = GCMS.ContentTable(MSLIons, vec, ISMap)
 
             Return table
         Else

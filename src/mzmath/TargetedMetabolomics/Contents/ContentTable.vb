@@ -22,6 +22,12 @@ Namespace Content
             End Get
         End Property
 
+        Sub New(matrix As Dictionary(Of String, SampleContentLevels), standards As Dictionary(Of String, Standards), [IS] As Dictionary(Of String, [IS]))
+            Me.matrix = matrix
+            Me.standards = standards
+            Me.IS = [IS]
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function hasDefined(ion As String) As Boolean
             Return standards.ContainsKey(ion)
@@ -29,7 +35,11 @@ Namespace Content
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetIS(ion As String) As [IS]
-            Return [IS].TryGetValue(ion, [default]:=New [IS])
+            If [IS] Is Nothing Then
+                Return New [IS]
+            Else
+                Return [IS].TryGetValue(ion, [default]:=New [IS])
+            End If
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
