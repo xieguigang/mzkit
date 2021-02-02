@@ -1,4 +1,5 @@
 ﻿
+Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
@@ -28,6 +29,11 @@ Namespace LinearQuantitative.Linear
         ''' <returns></returns>
         <XmlArray("ticks")>
         Public Property ticks As ChromatogramTick()
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Narrowing Operator CType(ROI As ROIPeak) As DoubleRange
+            Return ROI.window
+        End Operator
 
     End Class
 End Namespace
