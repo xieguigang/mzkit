@@ -61,6 +61,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports REnv = SMRUCC.Rsharp.Runtime
 Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
@@ -178,6 +179,28 @@ Module Linears
     End Function
 
     ''' <summary>
+    ''' get ions peaks
+    ''' </summary>
+    ''' <param name="samples"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("ionPeaks")>
+    <RApiReturn(GetType(IonPeakTableRow))>
+    Public Function getIonPeakTable(<RRawVectorArgument> samples As Object, Optional env As Environment = Nothing) As Object
+        Dim peaks As pipeline = pipeline.TryCreatePipeline(Of QuantifyScan)(samples, env)
+
+        If peaks.isError Then
+            Return peaks.getError
+        End If
+
+        Return peaks _
+            .populates(Of QuantifyScan)(env) _
+            .Select(Function(sample) sample.ionPeaks) _
+            .IteratesALL _
+            .ToArray
+    End Function
+
+    ''' <summary>
     ''' 
     ''' </summary>
     ''' <param name="models"></param>
@@ -194,7 +217,7 @@ Module Linears
         Dim nameIndex As Dictionary(Of String, String)
 
         If names Is Nothing Then
-            nameIndex = models.ToDictionary(Function(ion) ion.name, Function(ion) ion.name)
+            nameIndex = ions.ToDictionary(Function(ion) ion.Name, Function(ion) ion.Name)
         Else
             nameIndex = names.AsGeneric(Of String)(env)
         End If

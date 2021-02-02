@@ -92,7 +92,7 @@ Namespace LinearQuantitative.Linear
 
             For Each line As StandardCurve In models
                 If TPA.ContainsKey(line.name) Then
-                    result += TPA.DoLinearQuantify(line, names, fileName)
+                    result += TPA.DoLinearQuantify(line, names, fileName.BaseName)
                 End If
             Next
 

@@ -43,3 +43,5 @@ for(ion in ions) {
 		write.points(points(linears, ion), file = `F:/rawdata/mzML/linears/${as.object(ion)$id}.csv`);
 	}	
 }
+
+ionPeaks(quantify) :> write.ionPeaks(file = "F:\rawdata\mzML\targets-scfa.ionPeaks.csv");
