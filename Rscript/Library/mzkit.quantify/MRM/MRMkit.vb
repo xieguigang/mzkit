@@ -56,6 +56,7 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSL
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
@@ -495,13 +496,18 @@ Module MRMkit
         Dim dataType As Type = convertDir.GetType
 
         If dataType Is GetType(String) Then
-            Return New RawFile(convertDir, patternOfRef, patternOfBlank)
+            Return RawFile.ScanDir(convertDir, patternOfRef, patternOfBlank)
         ElseIf dataType Is GetType(String()) Then
             With DirectCast(convertDir, String())
                 If .Length = 1 Then
-                    Return New RawFile(.GetValue(Scan0), patternOfRef, patternOfBlank)
+                    Return RawFile.ScanDir(.GetValue(Scan0), patternOfRef, patternOfBlank)
                 Else
-                    Return New RawFile(.GetValue(0), .GetValue(1), patternOfRef, patternOfBlank)
+                    Return RawFile.ScanDir(
+                        sampleDir:= .GetValue(0),
+                        referenceDir:= .GetValue(1),
+                        patternOfRefer:=patternOfRef,
+                        patternOfBlanks:=patternOfBlank
+                    )
                 End If
             End With
         ElseIf dataType Is GetType(Rlist) Then
@@ -510,7 +516,12 @@ Module MRMkit
                 Dim samples As String = RRuntime.getFirst(!samples)
                 Dim reference As String = RRuntime.getFirst(!reference)
 
-                Return New RawFile(samples, reference, patternOfRef, patternOfBlank)
+                Return RawFile.ScanDir(
+                    sampleDir:=samples,
+                    referenceDir:=reference,
+                    patternOfRefer:=patternOfRef,
+                    patternOfBlanks:=patternOfBlank
+                )
             End With
         Else
             Return Message.InCompatibleType(GetType(String()), dataType, env)
