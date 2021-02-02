@@ -301,7 +301,7 @@ Public Class ImportsRawData
             Dim j As i32 = 1
             Dim UVdetecor As String = GetPhotodiodeArrayDetectorInstrumentConfigurationId(source)
 
-            For Each scan As spectrum In mzML.Xml.LoadScans(source)
+            For Each scan As spectrum In indexedmzML.LoadScans(source)
                 Dim parent As (mz As Double, into As Double) = Nothing
 
                 If Not scan.cvParams.KeyItem(UVScanType) Is Nothing Then
