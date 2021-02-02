@@ -25,14 +25,13 @@ Namespace LinearQuantitative.Linear
 
         <Extension>
         Public Function DoLinearQuantify(TPA As Dictionary(Of String, IonTPA),
-                                         metabolite As (fx As Func(Of Double, Double), model As StandardCurve, name$),
+                                         model As StandardCurve,
                                          names As Dictionary(Of String, String),
                                          raw$) As ContentResult(Of IonPeakTableRow)
             Dim AIS As New IonTPA
             Dim X#
             ' 得到样品之中的峰面积
-            Dim A = TPA(metabolite.name)
-            Dim model As StandardCurve = metabolite.model
+            Dim A = TPA(model.name)
             Dim C#
 
             If Not model.requireISCalibration Then
@@ -42,7 +41,7 @@ Namespace LinearQuantitative.Linear
             Else
                 ' 数据存在丢失
                 If Not TPA.ContainsKey(model.IS.ID) Then
-                    Call $"Missing internal standard for {metabolite.name}!".Warning
+                    Call $"Missing internal standard for {model.name}!".Warning
                     Return Nothing
                 Else
                     ' 得到与样品混在一起的内标的峰面积
@@ -53,7 +52,7 @@ Namespace LinearQuantitative.Linear
             End If
 
             If model.linear Is Nothing Then
-                Call $"Missing metabolite {metabolite.name} in raw file!".Warning
+                Call $"Missing metabolite {model.name} in raw file!".Warning
                 Return Nothing
             Else
                 ' 利用峰面积比计算出浓度结果数据
@@ -62,7 +61,7 @@ Namespace LinearQuantitative.Linear
                     ' ND
                     C = 0
                 Else
-                    C# = metabolite.fx(X)
+                    C# = model.ReverseModelFunction(X)
                 End If
             End If
 
@@ -72,11 +71,11 @@ Namespace LinearQuantitative.Linear
             Dim [IS] As String = names.TryGetValue(model.IS.ID)
             Dim peaktable As New IonPeakTableRow With {
                 .content = C,
-                .ID = metabolite.name,
+                .ID = model.name,
                 .raw = raw,
                 .rtmax = A.peakROI.Max,
                 .rtmin = A.peakROI.Min,
-                .Name = names(metabolite.name),
+                .Name = names(model.name),
                 .TPA = A.area,
                 .TPA_IS = AIS.area,
                 .base = A.baseline,
@@ -86,7 +85,7 @@ Namespace LinearQuantitative.Linear
             }
 
             Return New ContentResult(Of IonPeakTableRow) With {
-                .Name = metabolite.name,
+                .Name = model.name,
                 .Content = C,
                 .X = X,
                 .Peaktable = peaktable

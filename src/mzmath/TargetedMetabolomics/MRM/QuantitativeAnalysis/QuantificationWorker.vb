@@ -76,7 +76,9 @@ Namespace MRM
                          rtshifts:=rtshifts,
                          args:=args
                 ) _
-                .ToDictionary(Function(ion) ion.name)
+                .ToDictionary(Function(ion)
+                                  Return ion.name
+                              End Function)
 
             Dim names As Dictionary(Of String, String) = ions _
                 .ToDictionary(Function(i) i.accession,
@@ -86,10 +88,7 @@ Namespace MRM
 
             ' model -> y = ax + b
             ' in_calculation -> x = (y-b)/a
-            Dim quantifyLinears = linearModels _
-                .Select(Function(line)
-                            Return (fx:=line.ReverseModelFunction, linearModels:=line, name:=line.name)
-                        End Function) _
+            Dim quantifyLinears As StandardCurve() = linearModels _
                 .Where(Function(m) TPA.ContainsKey(m.name)) _
                 .ToArray
             Dim quantify As New Value(Of ContentResult(Of IonPeakTableRow))
