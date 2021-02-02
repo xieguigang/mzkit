@@ -39,5 +39,7 @@ scans.X(quantify) :> write.csv(file = "F:\rawdata\mzML\targets-scfa.rawX.csv");
 lines.table(linears) :> write.csv(file = "F:\rawdata\mzML\targets-scfa.linears.csv");
 
 for(ion in ions) {
-	points(linears, ion) :> write.points(file = `F:\rawdata\mzML\linears/${as.object(ion)$Name}.csv`);
+	if (as.object(ion)$id != "IS") {
+		write.points(points(linears, ion), file = `F:/rawdata/mzML/linears/${as.object(ion)$id}.csv`);
+	}	
 }

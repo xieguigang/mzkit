@@ -50,6 +50,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.GCMS
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -157,6 +158,7 @@ Module Linears
             .FirstOrDefault
 
         If line Is Nothing Then
+            Call env.AddMessage({$"linear data of '{name}' is not found...", $"nameref: {name}"}, MSG_TYPES.WRN)
             Return Nothing
         Else
             Return line.points
