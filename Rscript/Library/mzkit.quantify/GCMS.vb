@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::96e5334e7b15a7393c0941a7cf921575, Library\mzkit.quantify\GCMS.vb"
+﻿#Region "Microsoft.VisualBasic::c28566cd851d8c1d46fb7f300665bebf, Library\mzkit.quantify\GCMS.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     ' 
     '     Constructor: (+1 Overloads) Sub New
     '     Function: algorithm, ContentTable, createSIMIonExtract, extractSampleRaw, FileNames2Contents
-    '               InternalStandardMethod, Quantify, quantifyIons, readRaw
+    '               InternalStandardMethod, quantifyIons, readRaw
     ' 
     ' /********************************************************************************/
 
