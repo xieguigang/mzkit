@@ -136,5 +136,17 @@ Module Linears
             Return line.points
         End If
     End Function
+
+    ''' <summary>
+    ''' Write peak data which is extract from the raw file with 
+    ''' the given ion pairs or quantify ion data
+    ''' </summary>
+    ''' <param name="ionPeaks"></param>
+    ''' <param name="file">The output csv file path</param>
+    ''' <returns></returns>
+    <ExportAPI("write.ionPeaks")>
+    Public Function writeMRMpeaktable(ionPeaks As IonPeakTableRow(), file$) As Boolean
+        Return ionPeaks.SaveTo(file, silent:=True)
+    End Function
 End Module
 

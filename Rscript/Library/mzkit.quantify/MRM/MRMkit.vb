@@ -714,17 +714,6 @@ Module MRMkit
     End Function
 
     ''' <summary>
-    ''' Write peak data which is extract from the raw file with given ion pairs data
-    ''' </summary>
-    ''' <param name="MRMPeaks"></param>
-    ''' <param name="file">The output csv file path</param>
-    ''' <returns></returns>
-    <ExportAPI("write.MRMpeaks")>
-    Public Function writeMRMpeaktable(MRMPeaks As IonPeakTableRow(), file$) As Boolean
-        Return MRMPeaks.SaveTo(file, silent:=True)
-    End Function
-
-    ''' <summary>
     ''' Get quantify result
     ''' </summary>
     ''' <param name="fileScans"></param>
@@ -754,7 +743,10 @@ Module MRMkit
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("mrm.dataset")>
-    Public Function CreateMRMDataSet(standardCurve As StandardCurve(), samples As QuantifyScan(), Optional QC_dataset$ = Nothing, Optional ionsRaw As Rlist = Nothing) As Object
+    Public Function CreateMRMDataSet(standardCurve As StandardCurve(), samples As QuantifyScan(),
+                                     Optional QC_dataset$ = Nothing,
+                                     Optional ionsRaw As Rlist = Nothing) As Object
+
         If Not QC_dataset.StringEmpty Then
             Return New QCData With {
                 .model = standardCurve,
