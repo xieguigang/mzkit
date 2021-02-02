@@ -22,3 +22,11 @@ const linears = linear_algorithm(table) :> linears(unlist(cal));
 for (line in linears) {
 	print(line);
 }
+
+const quantify = sapply(list.files("F:\rawdata\mzML\data", pattern = "*.mzML"), function(file) {
+	linears :> quantify( sim :> peakRaw(read.raw(file)), fileName = file);
+
+});
+
+result(quantify) :> write.csv(file = "F:\rawdata\mzML\targets-scfa.quantify.csv");
+scans.X(quantify) :> write.csv(file = "F:\rawdata\mzML\targets-scfa.rawX.csv");
