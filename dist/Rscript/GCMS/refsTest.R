@@ -17,4 +17,8 @@ const cal = lapply(list.files("F:\rawdata\mzML\cal", pattern = "*.mzML"), functi
 
 print(names(cal));
 
-const linears = 
+const linears = linear_algorithm(table) :> linears(unlist(cal));
+
+for (line in linears) {
+	print(line);
+}

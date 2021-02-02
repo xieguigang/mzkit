@@ -65,7 +65,7 @@ Namespace LinearQuantitative.Linear
             Dim points As New List(Of ReferencePoint)
             Dim A As Double() = TPA(linearSamples, rawPoints)
             Dim ISTPA As Double() = TPA(linearSamples, isPoints)
-            Dim C As Double() = linearSamples.Select(Function(level) define.C(level)).ToArray
+            Dim C As Double() = linearSamples.Select(Function(level) contents(level, ionKey)).ToArray
             Dim CIS As Double = 1
             Dim invalids As New List(Of PointF)
             Dim line As PointF() = StandardCurveWorker _
@@ -112,12 +112,16 @@ Namespace LinearQuantitative.Linear
             Dim target As TargetPeakPoint
 
             For Each sampleLevel As String In linearSamples
-                target = getByLevels(sampleLevel)
-                deconv = target.Peak.ticks _
-                    .Shadows _
-                    .TPAIntegrator(target.Peak, baselineQuantile)
+                If Not getByLevels.ContainsKey(sampleLevel) Then
+                    vec.Add(0)
+                Else
+                    target = getByLevels(sampleLevel)
+                    deconv = target.Peak.ticks _
+                        .Shadows _
+                        .TPAIntegrator(target.Peak, baselineQuantile)
 
-                vec.Add(deconv.area)
+                    vec.Add(deconv.area)
+                End If
             Next
 
             Return vec.ToArray

@@ -47,6 +47,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Content
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.GCMS
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.GCMS.QuantifyAnalysis
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -157,5 +158,22 @@ Module GCMSLinear
     <ExportAPI("peakRaw")>
     Public Function extractSampleRaw(extract As SIMIonExtract, sample As Raw) As TargetPeakPoint()
         Return extract.GetSamplePeaks(sample).ToArray
+    End Function
+
+    <ExportAPI("linear_algorithm")>
+    Public Function algorithm(contents As ContentTable, Optional baselineQuantile As Double = 0.65, Optional maxDeletions As Integer = 1) As InternalStandardMethod
+        Return New InternalStandardMethod(contents, baselineQuantile, maxDeletions)
+    End Function
+
+    <ExportAPI("linears")>
+    <RApiReturn(GetType(StandardCurve))>
+    Public Function InternalStandardMethod(method As InternalStandardMethod, <RRawVectorArgument> reference As Object, Optional env As Environment = Nothing) As Object
+        Dim points As pipeline = pipeline.TryCreatePipeline(Of TargetPeakPoint)(reference, env)
+
+        If points.isError Then
+            Return points.getError
+        End If
+
+        Return method.ToLinears(points.populates(Of TargetPeakPoint)(env)).ToArray
     End Function
 End Module

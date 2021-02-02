@@ -27,7 +27,17 @@ Namespace GCMS
                 ionLevels(ion.Name) = New SampleContentLevels(contents, directMap:=True)
             Next
 
-            Return New ContentTable(ionLevels, ref, Nothing)
+            Dim ISlist As Dictionary(Of String, [IS]) = ISnames.Objects _
+                .ToDictionary(Function(id) id,
+                              Function(id)
+                                  Return New [IS] With {
+                                      .CIS = 1,
+                                      .ID = id,
+                                      .name = id
+                                  }
+                              End Function)
+
+            Return New ContentTable(ionLevels, ref, ISlist)
         End Function
     End Module
 End Namespace

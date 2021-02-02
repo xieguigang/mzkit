@@ -53,7 +53,7 @@ Imports Microsoft.VisualBasic.Language
 
 Namespace GCMS.QuantifyAnalysis
 
-    Public Module StandardCurve
+    Public Module StandardCurveLinear
 
         ''' <summary>
         ''' 选取所传递进来的峰面积作为X轴，tuple第一项目的浓度值作为Y轴结果构建线性回归模型
