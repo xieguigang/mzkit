@@ -441,6 +441,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contents\SampleContentLevels.vb" />
     <Compile Include="Contents\ContentTable.vb" />
     <Compile Include="Contents\UnitExtensions.vb" />
     <Compile Include="GCMS\CDFReader\agilentGCMSMeta.vb" />

@@ -32,16 +32,4 @@ Namespace Content
             Return standards(ion)
         End Function
     End Class
-
-    Public Class SampleContentLevels
-
-        ReadOnly levels As Dictionary(Of String, Double)
-
-        Default Public ReadOnly Property Content(sampleLevel As String) As Double
-            Get
-                Return levels(sampleLevel)
-            End Get
-        End Property
-
-    End Class
 End Namespace
