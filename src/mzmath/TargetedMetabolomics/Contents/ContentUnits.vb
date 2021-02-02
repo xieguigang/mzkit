@@ -49,7 +49,7 @@
 
 #End Region
 
-Namespace LinearQuantitative
+Namespace Content
 
     Public Enum ContentUnits As Integer
         ppm = ppb * 1000

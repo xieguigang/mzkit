@@ -3,7 +3,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports r = System.Text.RegularExpressions.Regex
 
-Namespace LinearQuantitative
+Namespace Content
 
     <HideModuleName>
     Public Module UnitExtensions
@@ -19,11 +19,11 @@ Namespace LinearQuantitative
             text = LCase(r.Match(text, contentPattern, RegexICSng).Value)
 
             Return New UnitValue(Of ContentUnits) With {
-            .Unit = r _
-                .Match(text, "pp(m|b|t)", RegexICSng) _
-                .TryParse(Of ContentUnits),
-            .Value = Val(text)
-        }
+                .Unit = r _
+                    .Match(text, "pp(m|b|t)", RegexICSng) _
+                    .TryParse(Of ContentUnits),
+                .Value = Val(text)
+            }
         End Function
     End Module
 End Namespace
