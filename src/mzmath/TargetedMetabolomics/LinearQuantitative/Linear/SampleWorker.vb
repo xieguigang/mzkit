@@ -1,19 +1,9 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports System.Runtime.CompilerServices
-Imports System.Runtime.InteropServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
-Imports Microsoft.VisualBasic.Language.UnixBash
-Imports Microsoft.VisualBasic.Linq
 
 Namespace LinearQuantitative.Linear
 
@@ -30,12 +20,36 @@ Namespace LinearQuantitative.Linear
         ''' <summary>
         ''' 对单个原始数据文件做定量计算
         ''' </summary>
-        ''' <param name="model"></param>
+        ''' <param name="models"></param>
         ''' <param name="ions"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function SampleQuantify(model As StandardCurve(), ions As TargetPeakPoint(), fileName As String) As QuantifyScan
+        Public Function SampleQuantify(models As StandardCurve(),
+                                       ions As TargetPeakPoint(),
+                                       Optional names As Dictionary(Of String, String) = Nothing,
+                                       Optional baselineQuantile As Double = 0.6,
+                                       Optional fileName As String = "NA") As QuantifyScan
 
+            Dim TPA As Dictionary(Of String, IonTPA) = ions _
+                .ToDictionary(Function(ion) ion.Name,
+                              Function(ion)
+                                  Return ion.GetIonTPA(baselineQuantile)
+                              End Function)
+            Dim result As New List(Of ContentResult(Of IonPeakTableRow))
+
+            If names Is Nothing Then
+                names = models _
+                    .ToDictionary(Function(line) line.name,
+                                  Function(line)
+                                      Return line.name
+                                  End Function)
+            End If
+
+            For Each line As StandardCurve In models
+                result += TPA.DoLinearQuantify(line, names, fileName)
+            Next
+
+            Return result.ToArray.SampleQuantifyScan(fileName)
         End Function
 
         ''' <summary>
