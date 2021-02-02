@@ -23,6 +23,18 @@ Namespace LinearQuantitative.Linear
                    End Function
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="TPA">file data peak area contents</param>
+        ''' <param name="model"></param>
+        ''' <param name="names">
+        ''' [id -> common name]
+        ''' </param>
+        ''' <param name="raw">
+        ''' the raw file name, which file that current <paramref name="TPA"/> data comes from?
+        ''' </param>
+        ''' <returns></returns>
         <Extension>
         Public Function DoLinearQuantify(TPA As Dictionary(Of String, IonTPA),
                                          model As StandardCurve,
