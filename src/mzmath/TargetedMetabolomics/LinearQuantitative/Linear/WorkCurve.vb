@@ -1,4 +1,4 @@
-﻿Namespace LinearQuantitative
+﻿Namespace LinearQuantitative.Linear
 
     ''' <summary>
     ''' 工作标曲计算算法模块

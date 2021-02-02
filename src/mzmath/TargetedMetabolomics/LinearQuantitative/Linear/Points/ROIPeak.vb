@@ -3,7 +3,7 @@ Imports System.Xml.Serialization
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 
-Namespace LinearQuantitative
+Namespace LinearQuantitative.Linear
 
     ''' <summary>
     ''' 可以通过这个对象计算出峰面积积分

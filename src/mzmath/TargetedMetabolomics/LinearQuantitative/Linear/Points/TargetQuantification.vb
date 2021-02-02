@@ -50,15 +50,16 @@
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
-Namespace LinearQuantitative
+Namespace LinearQuantitative.Linear
 
     ''' <summary>
     ''' Dump MRM target quantification result in XML format.
     ''' </summary>
-    Public Class TargetQuantification
+    Public Class TargetQuantification : Implements INamedValue
 
-        Public Property Name As String
+        Public Property Name As String Implements INamedValue.Key
         Public Property [IS] As [IS]
         Public Property Standards As Standards
         Public Property MRMPeak As ROIPeak
