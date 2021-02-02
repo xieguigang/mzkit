@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58e92da0be06a02ff032d0dd21eaaa7d, Library\mzkit.quantify\MRM\MRMkit.vb"
+﻿#Region "Microsoft.VisualBasic::4505816adc0914e07f9494c600d6fadc, Library\mzkit.quantify\MRM\MRMkit.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '               GetQuantifyResult, GetRawX, GetRTAlignments, IsomerismIonPairs, Linears
     '               MRMarguments, printIonPairs, readCompoundReference, readIonPairs, readIS
     '               ROISummary, RTShiftSummary, SampleQuantify, ScanPeakTable, ScanWiffRaw
-    '               WiffRawFile, writeMRMpeaktable
+    '               WiffRawFile
     ' 
     ' /********************************************************************************/
 

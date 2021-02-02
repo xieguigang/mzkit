@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::05c9d34ade80083e8a832c489c286e7f, Library\mzkit\zzz.vb"
+﻿#Region "Microsoft.VisualBasic::60c089a38f55c6c69c337924fc9308da, Library\mzkit\zzz.vb"
 
     ' Author:
     ' 
@@ -48,4 +48,3 @@ Public Class zzz
 
     End Sub
 End Class
-

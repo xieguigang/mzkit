@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dcd48a46dcd0c22d2917046ec15c95b3, Library\mzkit.plot\zzz.vb"
+﻿#Region "Microsoft.VisualBasic::f13e65746fd055d18e828b7c787a9515, Library\mzkit.plot\zzz.vb"
 
     ' Author:
     ' 
@@ -48,4 +48,3 @@ Public Class zzz
         Call Visual.Main()
     End Sub
 End Class
-

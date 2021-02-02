@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::508a4b3fdb6cf912c6f530f64a9c94f4, Library\mzkit.quantify\Linears.vb"
+﻿#Region "Microsoft.VisualBasic::c45967316f2cb5466570addb030eb7e1, Library\mzkit.quantify\Linears.vb"
 
     ' Author:
     ' 
@@ -37,14 +37,13 @@
     ' Module Linears
     ' 
     '     Function: GetLinearPoints, printIS, printLineModel, printStandards, StandardCurveDataSet
-    '               writeStandardCurve
+    '               writeMRMpeaktable, writeStandardCurve
     ' 
     '     Sub: Main
     ' 
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
@@ -149,4 +148,3 @@ Module Linears
         Return ionPeaks.SaveTo(file, silent:=True)
     End Function
 End Module
-

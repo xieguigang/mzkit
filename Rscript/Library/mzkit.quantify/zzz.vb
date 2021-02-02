@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a8d0c6b28162f77044d3207405913930, Library\mzkit.quantify\zzz.vb"
+﻿#Region "Microsoft.VisualBasic::b2fcd7f4af7413033bd19a0cccb1b13a, Library\mzkit.quantify\zzz.vb"
 
     ' Author:
     ' 
@@ -48,4 +48,3 @@ Public Class zzz
         Call Linears.Main()
     End Sub
 End Class
-

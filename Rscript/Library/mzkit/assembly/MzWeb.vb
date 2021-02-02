@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd5ddf8b39465f365631166d42814d69, Library\mzkit\assembly\MzWeb.vb"
+﻿#Region "Microsoft.VisualBasic::d75fe7f9ad8d80a501bc8b95e476ca40, Library\mzkit\assembly\MzWeb.vb"
 
     ' Author:
     ' 
@@ -102,4 +102,3 @@ Module MzWeb
         Return True
     End Function
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ddeb583e8b22a0e5475156e4f9a16972, Library\mzkit.plot\MsImaging.vb"
+﻿#Region "Microsoft.VisualBasic::8c035a4594c14f6a830bcaa00e41768c, Library\mzkit.plot\MsImaging.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
@@ -172,4 +171,3 @@ Module MsImaging
         End Using
     End Function
 End Module
-

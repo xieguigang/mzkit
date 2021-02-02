@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7c5d81b683e4e2b4b84ea80f63e51c4, Library\mzkit.plot\ChromatogramOverlap.vb"
+﻿#Region "Microsoft.VisualBasic::7e7fc6e61965d4016c786359c02ac673, Library\mzkit.plot\ChromatogramOverlap.vb"
 
     ' Author:
     ' 
@@ -49,4 +49,3 @@ Public Class ChromatogramOverlap
     Public overlaps As New Dictionary(Of String, Chromatogram)
 
 End Class
-

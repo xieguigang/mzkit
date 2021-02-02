@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::712b9225b2b58ef492afc33564f21592, Library\mzkit\assembly\data.vb"
+﻿#Region "Microsoft.VisualBasic::4bdf42e4575754fc1e2ee320e9b86c52, Library\mzkit\assembly\data.vb"
 
     ' Author:
     ' 
@@ -144,4 +144,3 @@ Module data
             .DoCall(AddressOf vector.asVector)
     End Function
 End Module
-
