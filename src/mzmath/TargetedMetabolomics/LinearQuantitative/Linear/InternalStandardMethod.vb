@@ -44,7 +44,13 @@ Namespace LinearQuantitative.Linear
                 .ToArray
 
             For Each featureId As String In ionGroups.Keys
-                Yield ToFeatureLinear(ionGroups, featureId, linearSamples)
+                If contents.hasDefined(featureId) Then
+                    Yield ToFeatureLinear(ionGroups, featureId, linearSamples)
+                ElseIf contents.hasISDefined(featureId) Then
+                    ' 跳过内标
+                Else
+                    Throw New MissingPrimaryKeyException($"missing linear information of the metabolite: {featureId}!")
+                End If
             Next
         End Function
 

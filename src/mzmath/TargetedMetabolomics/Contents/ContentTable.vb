@@ -34,6 +34,11 @@ Namespace Content
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function hasISDefined([is] As String) As Boolean
+            Return Me.IS.ContainsKey([is])
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetIS(ion As String) As [IS]
             If [IS] Is Nothing Then
                 Return New [IS]
