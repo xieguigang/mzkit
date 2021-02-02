@@ -82,7 +82,7 @@ Module GCMSLinear
             Return ms1ppm.TryCast(Of Message)
         End If
 
-
+        Return New SIMIonExtract(ions, peakwin, ms1ppm)
     End Function
 
     <ExportAPI("parseContents")>
