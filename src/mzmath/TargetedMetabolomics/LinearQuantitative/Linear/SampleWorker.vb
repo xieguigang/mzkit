@@ -46,7 +46,9 @@ Namespace LinearQuantitative.Linear
             End If
 
             For Each line As StandardCurve In models
-                result += TPA.DoLinearQuantify(line, names, fileName)
+                If TPA.ContainsKey(line.name) Then
+                    result += TPA.DoLinearQuantify(line, names, fileName)
+                End If
             Next
 
             Return result.ToArray.SampleQuantifyScan(fileName)

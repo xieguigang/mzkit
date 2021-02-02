@@ -45,8 +45,10 @@
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSL
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -56,6 +58,8 @@ Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Interop
 Imports REnv = SMRUCC.Rsharp.Runtime
 Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
 Imports stdNum = System.Math
@@ -121,10 +125,28 @@ Module Linears
     ''' Get reference input points
     ''' </summary>
     ''' <param name="linears"></param>
-    ''' <param name="name">The metabolite id</param>
+    ''' <param name="nameRef">The metabolite id</param>
     ''' <returns></returns>
     <ExportAPI("points")>
-    Public Function GetLinearPoints(linears As StandardCurve(), name$) As ReferencePoint()
+    <RApiReturn(GetType(ReferencePoint))>
+    Public Function GetLinearPoints(linears As StandardCurve(), nameRef As Object, Optional env As Environment = Nothing) As Object
+        Dim name As String
+
+        If nameRef Is Nothing Then
+            Return Internal.debug.stop({
+                $"the required feature name reference can not be nothing!",
+                $"parameter: {nameRef}"
+            }, env)
+        ElseIf TypeOf nameRef Is String Then
+            name = nameRef
+        ElseIf TypeOf nameRef Is MSLIon Then
+            name = DirectCast(nameRef, MSLIon).Name
+        ElseIf TypeOf nameRef Is IonPair Then
+            name = DirectCast(nameRef, IonPair).accession
+        Else
+            Return Message.InCompatibleType(GetType(String), nameRef.GetType, env)
+        End If
+
         Dim line As StandardCurve = linears _
             .Where(Function(l)
                        Return l.name = name
