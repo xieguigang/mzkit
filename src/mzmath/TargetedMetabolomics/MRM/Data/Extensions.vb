@@ -92,10 +92,10 @@ Namespace MRM.Data
                             Dim peak = vector.MRMPeak(baselineQuantile:=baselineQuantile)
                             Dim peakTicks = vector.PickArea(range:=peak)
                             Dim mrm As New ROIPeak With {
-                                .Window = peak,
-                                .Base = vector.Baseline(baselineQuantile),
-                                .Ticks = peakTicks,
-                                .PeakHeight = Aggregate t In .Ticks Into Max(t.Intensity)
+                                .window = peak,
+                                .base = vector.Baseline(baselineQuantile),
+                                .ticks = peakTicks,
+                                .peakHeight = Aggregate t In .ticks Into Max(t.Intensity)
                             }
 
                             Return (ion.ion, mrm)

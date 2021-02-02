@@ -472,6 +472,7 @@
     <Compile Include="GCMS\CDFReader\Vendors\shimadzuGCMS.vb" />
     <Compile Include="MRM\QuantitativeAnalysis\WiffRaw.vb" />
     <Compile Include="MRM\QuantitativeAnalysis\ScanOfTPA.vb" />
+    <Compile Include="Peaks\FeatureExtract.vb" />
     <Compile Include="RawFile.vb" />
     <Compile Include="MRM\Data\MRMPeakTable.vb" />
     <Compile Include="MRM\Data\Extensions.vb" />

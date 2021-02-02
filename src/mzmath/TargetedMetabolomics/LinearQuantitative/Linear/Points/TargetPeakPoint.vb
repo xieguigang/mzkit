@@ -57,12 +57,15 @@ Namespace LinearQuantitative.Linear
     ''' <summary>
     ''' Dump MRM target quantification result in XML format.
     ''' </summary>
-    Public Class TargetQuantification : Implements INamedValue
+    Public Class TargetPeakPoint : Implements INamedValue
 
+        ''' <summary>
+        ''' the feature name
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Name As String Implements INamedValue.Key
-        Public Property [IS] As [IS]
-        Public Property Standards As Standards
-        Public Property MRMPeak As ROIPeak
+        Public Property SampleName As String
+        Public Property Peak As ROIPeak
         Public Property ChromatogramSummary As Quantile()
 
         Public Overrides Function ToString() As String

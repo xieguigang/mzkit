@@ -14,18 +14,20 @@ Namespace LinearQuantitative.Linear
         ''' Time range or peak width
         ''' </summary>
         ''' <returns></returns>
-        Public Property Window As DoubleRange
+        Public Property window As DoubleRange
+
         <XmlAttribute("height")>
-        Public Property PeakHeight As Double
+        Public Property peakHeight As Double
+
         <XmlAttribute("baseline")>
-        Public Property Base As Double
+        Public Property base As Double
 
         ''' <summary>
-        ''' 在<see cref="Window"/>范围内的色谱信号数据
+        ''' 在<see cref="window"/>范围内的色谱信号数据
         ''' </summary>
         ''' <returns></returns>
         <XmlArray("ticks")>
-        Public Property Ticks As ChromatogramTick()
+        Public Property ticks As ChromatogramTick()
 
     End Class
 End Namespace
