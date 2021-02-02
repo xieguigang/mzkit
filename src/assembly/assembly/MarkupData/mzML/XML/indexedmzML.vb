@@ -47,17 +47,27 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text.Xml.Linq
 
 Namespace MarkupData.mzML
 
     <XmlType("indexedmzML", [Namespace]:=indexedmzML.xmlns)>
-    Public Class indexedmzML
+    Public Class indexedmzML : Implements IFileReference
 
         Public Property mzML As mzML
         Public Property indexList As indexList
         Public Property indexListOffset As Long
         Public Property fileChecksum As String
+
+        Private Property FilePath As String Implements IFileReference.FilePath
+
+        Private ReadOnly Property MimeType As ContentType() Implements IFileReference.MimeType
+            Get
+                Return {New ContentType With {.MIMEType = MIME.Xml, .FileExt = ".xml"}}
+            End Get
+        End Property
 
         Public Const xmlns As String = "http://psi.hupo.org/ms/mzml"
 
