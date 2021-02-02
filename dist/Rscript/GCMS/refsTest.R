@@ -15,4 +15,6 @@ const cal = lapply(list.files("F:\rawdata\mzML\cal", pattern = "*.mzML"), functi
 	peakRaw(sim, read.raw(path));
 }, names = basename);
 
-str(cal);
+print(names(cal));
+
+const linears = 

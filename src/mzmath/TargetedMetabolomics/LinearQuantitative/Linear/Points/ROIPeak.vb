@@ -30,6 +30,10 @@ Namespace LinearQuantitative.Linear
         <XmlArray("ticks")>
         Public Property ticks As ChromatogramTick()
 
+        Public Overrides Function ToString() As String
+            Return $"{ticks.Sum(Function(t) t.Intensity)} @ [{window.Min}, {window.Max}]"
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(ROI As ROIPeak) As DoubleRange
             Return ROI.window

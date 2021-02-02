@@ -61,6 +61,10 @@ Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
 <Package("GCMS")>
 Module GCMSLinear
 
+    Sub New()
+        Call Internal.ConsolePrinter.AttachConsoleFormatter(Of TargetPeakPoint)(Function(pt) pt.ToString)
+    End Sub
+
     <ExportAPI("as.quantify.ion")>
     Public Function quantifyIons(ions As MSLIon(), Optional rtwin As Double = 1) As QuantifyIon()
         Return QuantifyIon.FromIons(ions, rtwin).ToArray

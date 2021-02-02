@@ -80,7 +80,7 @@ Namespace LinearQuantitative.Linear
         Public Property ChromatogramSummary As Quantile()
 
         Public Overrides Function ToString() As String
-            Return Name
+            Return $"[{SampleName}: {Name}] = {Peak}"
         End Function
     End Class
 End Namespace
