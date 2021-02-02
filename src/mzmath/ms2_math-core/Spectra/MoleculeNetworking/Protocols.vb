@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0c307a197bc05964598b11d9ba93fa3, src\mzmath\ms2_math-core\Spectra\MoleculeNetworking\Protocols.vb"
+﻿#Region "Microsoft.VisualBasic::67a65686ce34dbf8dca677f5adf88329, ms2_math-core\Spectra\MoleculeNetworking\Protocols.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Summaries:
 
-    ' Class Protocols
+    '     Class Protocols
     ' 
-    '     Properties: Cluster
+    '         Properties: Cluster
     ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: BinaryTree, centroid, centroidlized, Networking, ProduceNodes
-    '               RunProtocol
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: BinaryTree, centroid, centroidlized, Networking, ProduceNodes
+    '                   RunProtocol
     ' 
     ' 
     ' /********************************************************************************/
@@ -191,4 +191,3 @@ Namespace Spectra.MoleculeNetworking
         End Function
     End Class
 End Namespace
-

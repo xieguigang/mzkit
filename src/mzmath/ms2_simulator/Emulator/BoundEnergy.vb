@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::872137fc774456423e107a4de107584e, src\mzmath\ms2_simulator\Emulator\BoundEnergy.vb"
+﻿#Region "Microsoft.VisualBasic::872137fc774456423e107a4de107584e, ms2_simulator\Emulator\BoundEnergy.vb"
 
     ' Author:
     ' 

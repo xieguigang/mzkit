@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::14234afad38c1784e99777e6aa32b049, src\mzmath\ms2_math-core\Ms1\Tolerance\DeltaMass.vb"
+﻿#Region "Microsoft.VisualBasic::14234afad38c1784e99777e6aa32b049, ms2_math-core\Ms1\Tolerance\DeltaMass.vb"
 
     ' Author:
     ' 

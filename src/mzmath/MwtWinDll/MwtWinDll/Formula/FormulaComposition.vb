@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::363a80ff6889b4f85ff59daee0359205, src\mzmath\MwtWinDll\MwtWinDll\Formula\FormulaComposition.vb"
+﻿#Region "Microsoft.VisualBasic::363a80ff6889b4f85ff59daee0359205, MwtWinDll\MwtWinDll\Formula\FormulaComposition.vb"
 
     ' Author:
     ' 

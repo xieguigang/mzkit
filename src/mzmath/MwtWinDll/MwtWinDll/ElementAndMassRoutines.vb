@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8a55bb631ba794adfaf3c944cb59afa0, src\mzmath\MwtWinDll\MwtWinDll\ElementAndMassRoutines.vb"
+﻿#Region "Microsoft.VisualBasic::8a55bb631ba794adfaf3c944cb59afa0, MwtWinDll\MwtWinDll\ElementAndMassRoutines.vb"
 
     ' Author:
     ' 

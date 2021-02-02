@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b6bce69c9e20dbefe917591de37e632e, src\mzmath\TargetedMetabolomics\MRM\Data\MRMStandards.vb"
+﻿#Region "Microsoft.VisualBasic::e2f804200a6586a26243dc9826b05339, TargetedMetabolomics\LinearQuantitative\Linear\Points\ReferencePoint.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
 
     ' Summaries:
 
-    '     Class MRMStandards
+    '     Class ReferencePoint
     ' 
     '         Properties: [error], [variant], AIS, Ati, cIS
     '                     Cti, ID, level, Name, Px

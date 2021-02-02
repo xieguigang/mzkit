@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7fe785eeb2330f73898eae0261a27f1, src\mzmath\TargetedMetabolomics\GCMS\Vendors\finniganGCMS.vb"
+﻿#Region "Microsoft.VisualBasic::c7fe785eeb2330f73898eae0261a27f1, TargetedMetabolomics\GCMS\CDFReader\Vendors\finniganGCMS.vb"
 
     ' Author:
     ' 

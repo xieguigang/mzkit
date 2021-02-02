@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::78d18cb857ae89e4d417183d7e7efb9d, src\mzmath\ms2_math-core\Spectra\MoleculeNetworking\NetworkingNode.vb"
+﻿#Region "Microsoft.VisualBasic::39777ad5bde4943a1afb20f8a262799e, ms2_math-core\Spectra\MoleculeNetworking\NetworkingNode.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,12 @@
 
     ' Summaries:
 
-    ' Class NetworkingNode
+    '     Class NetworkingNode
     ' 
-    '     Properties: members, mz, referenceId, representation
+    '         Properties: members, mz, referenceId, representation
     ' 
-    '     Function: Create, GetXIC, ToString, unionRepresentative
+    '         Function: Create, GetXIC, ToString, unionRepresentative
+    ' 
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::551cd450cde81c6e6b3ce7ade828937b, src\mzmath\TargetedMetabolomics\MRM\IonPair.vb"
+﻿#Region "Microsoft.VisualBasic::57097e5f7f32229aa1797c202c4e63b7, TargetedMetabolomics\MRM\IonPair.vb"
 
     ' Author:
     ' 
@@ -39,12 +39,6 @@
     '         Properties: accession, name, precursor, product, rt
     ' 
     '         Function: Assert, GetIsomerism, populateGroupElement, ToString
-    ' 
-    '     Class IsomerismIonPairs
-    ' 
-    '         Properties: hasIsomerism, index, ions, target
-    ' 
-    '         Function: GetEnumerator, groupKey, IEnumerable_GetEnumerator, ToString
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::816c26597c2f6cc5875536e933282511, src\mzmath\MwtWinDll\MwtWinDll\PeptideClass.vb"
+﻿#Region "Microsoft.VisualBasic::816c26597c2f6cc5875536e933282511, MwtWinDll\MwtWinDll\PeptideClass.vb"
 
     ' Author:
     ' 

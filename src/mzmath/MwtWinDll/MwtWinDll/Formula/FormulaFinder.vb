@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::20822c1c0dd5e41393fcf4f8262d381c, src\mzmath\MwtWinDll\MwtWinDll\Formula\FormulaFinder.vb"
+﻿#Region "Microsoft.VisualBasic::20822c1c0dd5e41393fcf4f8262d381c, MwtWinDll\MwtWinDll\Formula\FormulaFinder.vb"
 
     ' Author:
     ' 

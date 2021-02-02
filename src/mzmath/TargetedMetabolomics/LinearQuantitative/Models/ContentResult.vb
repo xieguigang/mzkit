@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50e61c39021f5bff057de8faf3402c2c, src\mzmath\TargetedMetabolomics\QuantitativeAnalysis\ContentResult.vb"
+﻿#Region "Microsoft.VisualBasic::dd97c246cb530967145b2f59e3ff2674, TargetedMetabolomics\LinearQuantitative\Models\ContentResult.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,12 @@
 
     ' Summaries:
 
-    ' Class ContentResult
+    '     Class ContentResult
     ' 
-    '     Properties: Content, Name, Peaktable, X
+    '         Properties: Content, Name, Peaktable, X
     ' 
-    '     Function: ToString
+    '         Function: ToString
+    ' 
     ' 
     ' /********************************************************************************/
 

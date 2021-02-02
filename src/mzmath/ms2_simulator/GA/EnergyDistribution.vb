@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84b833f549a7616bffd701175985bfda, src\mzmath\ms2_simulator\GA\EnergyDistribution.vb"
+﻿#Region "Microsoft.VisualBasic::84b833f549a7616bffd701175985bfda, ms2_simulator\GA\EnergyDistribution.vb"
 
     ' Author:
     ' 

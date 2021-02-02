@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e15d375950f181c154d67378a991392, src\mzmath\ms2_simulator\PeakAnnotation.vb"
+﻿#Region "Microsoft.VisualBasic::6e15d375950f181c154d67378a991392, ms2_simulator\PeakAnnotation.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90103f06c84820142fc03d3f4b6521a5, src\mzmath\TargetedMetabolomics\QuantitativeAnalysis\PeakArea.vb"
+﻿#Region "Microsoft.VisualBasic::c71caf5674aada4d43316b39148e3aa4, TargetedMetabolomics\LinearQuantitative\PeakArea.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,11 @@
 
     ' Summaries:
 
-    ' Enum PeakAreaMethods
+    '     Module PeakArea
     ' 
-    '     MaxPeakHeight, SumAll
+    '         Function: MaxPeakHeight, PeakArea, PeakAreaIntegrator, PickArea, Simpson
+    '                   SumAll
     ' 
-    '  
-    ' 
-    ' 
-    ' 
-    ' Module PeakArea
-    ' 
-    '     Function: MaxPeakHeight, PeakArea, PeakAreaIntegrator, PickArea, Simpson
-    '               SumAll
     ' 
     ' /********************************************************************************/
 

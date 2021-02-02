@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e71af8ee872a94158f2b461e8d2ac14, src\mzmath\MwtWinDll\MwtWinDll\Formula\eSearchMode.vb"
+﻿#Region "Microsoft.VisualBasic::5e71af8ee872a94158f2b461e8d2ac14, MwtWinDll\MwtWinDll\Formula\eSearchMode.vb"
 
     ' Author:
     ' 

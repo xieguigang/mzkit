@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de12f05dd1a5f81d95be3059638ef5d4, src\mzmath\TargetedMetabolomics\GCMS\ChromatographyPeaktable.vb"
+﻿#Region "Microsoft.VisualBasic::de12f05dd1a5f81d95be3059638ef5d4, TargetedMetabolomics\GCMS\ChromatographyPeaktable.vb"
 
     ' Author:
     ' 

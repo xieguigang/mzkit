@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::171c1224018392aaa3264e7a49d7cd2c, src\mzmath\MwtWinDll\MwtWin\frmTextbrowser.vb"
+﻿#Region "Microsoft.VisualBasic::171c1224018392aaa3264e7a49d7cd2c, MwtWinDll\MwtWin\frmTextbrowser.vb"
 
     ' Author:
     ' 

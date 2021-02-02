@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d4b992b8543f00c89e9d368e6ca2651d, src\mzmath\ms2_math-core\Ms1\PrecursorType\Formula\Negative.vb"
+﻿#Region "Microsoft.VisualBasic::d4b992b8543f00c89e9d368e6ca2651d, ms2_math-core\Ms1\PrecursorType\Formula\Negative.vb"
 
     ' Author:
     ' 

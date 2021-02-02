@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e26d8145c0aa9b712c3f5c6f28abdf97, src\mzmath\MwtWinDll\MwtWin\modMwtWinDllTest.vb"
+﻿#Region "Microsoft.VisualBasic::e26d8145c0aa9b712c3f5c6f28abdf97, MwtWinDll\MwtWin\modMwtWinDllTest.vb"
 
     ' Author:
     ' 

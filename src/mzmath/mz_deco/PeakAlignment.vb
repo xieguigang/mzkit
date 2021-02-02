@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3182c3618af7650e03f9aa81e19e78fc, src\mzmath\mz_deco\PeakAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::3182c3618af7650e03f9aa81e19e78fc, mz_deco\PeakAlignment.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::480d26635b44b3204b062240c3584339, src\mzmath\mz_deco\Deconvolution.vb"
+﻿#Region "Microsoft.VisualBasic::480d26635b44b3204b062240c3584339, mz_deco\Deconvolution.vb"
 
     ' Author:
     ' 

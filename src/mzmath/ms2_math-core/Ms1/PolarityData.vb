@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f93a8ed12ae3c7febbafe5a60e69ee6, src\mzmath\ms2_math-core\Ms1\PolarityData.vb"
+﻿#Region "Microsoft.VisualBasic::9f93a8ed12ae3c7febbafe5a60e69ee6, ms2_math-core\Ms1\PolarityData.vb"
 
     ' Author:
     ' 
