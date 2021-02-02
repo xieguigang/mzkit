@@ -52,7 +52,7 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 
-Namespace MRM.Data
+Namespace LinearQuantitative
 
     ''' <summary>
     ''' Dump MRM target quantification result in XML format.
@@ -62,7 +62,7 @@ Namespace MRM.Data
         Public Property Name As String
         Public Property [IS] As [IS]
         Public Property Standards As Standards
-        Public Property MRMPeak As MRMPeak
+        Public Property MRMPeak As ROIPeak
         Public Property ChromatogramSummary As Quantile()
 
         Public Overrides Function ToString() As String

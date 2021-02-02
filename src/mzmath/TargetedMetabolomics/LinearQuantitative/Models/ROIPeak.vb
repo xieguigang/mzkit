@@ -3,12 +3,12 @@ Imports System.Xml.Serialization
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 
-Namespace MRM.Data
+Namespace LinearQuantitative
 
     ''' <summary>
     ''' 可以通过这个对象计算出峰面积积分
     ''' </summary>
-    Public Class MRMPeak
+    Public Class ROIPeak
 
         ''' <summary>
         ''' Time range or peak width
