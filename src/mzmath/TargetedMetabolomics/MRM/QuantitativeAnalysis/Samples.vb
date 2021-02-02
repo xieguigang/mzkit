@@ -56,7 +56,6 @@
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
@@ -71,19 +70,6 @@ Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
 
 Namespace MRM
-
-    Public Structure IonChromatogram
-
-        Public Property name As String
-        Public Property description As String
-        Public Property chromatogram As ChromatogramTick()
-        Public Property ion As IsomerismIonPairs
-
-        Public Overrides Function ToString() As String
-            Return name
-        End Function
-
-    End Structure
 
     Public Module MRMSamples
 
@@ -112,8 +98,8 @@ Namespace MRM
 
                             Return New IonChromatogram With {
                                 .name = assignName(ion),
-                                .description = note,
-                                .chromatogram = ionData.chromatogram.Ticks,
+                                .Description = note,
+                                .Chromatogram = ionData.chromatogram.Ticks,
                                 .ion = ionData.ion
                             }
                         End Function) _
@@ -215,6 +201,15 @@ Namespace MRM
             Return out
         End Function
 
+        ''' <summary>
+        ''' 对单个原始数据文件做定量计算
+        ''' </summary>
+        ''' <param name="model"></param>
+        ''' <param name="file$"></param>
+        ''' <param name="ions"></param>
+        ''' <param name="rtshifts"></param>
+        ''' <param name="args"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function SampleQuantify(model As StandardCurve(), file$, ions As IonPair(), rtshifts As Dictionary(Of String, Double), args As MRMArguments) As QuantifyScan
 
