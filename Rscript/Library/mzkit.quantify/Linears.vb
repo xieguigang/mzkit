@@ -174,4 +174,24 @@ Module Linears
 
         Return models.SampleQuantify(ions, nameIndex, baselineQuantile, fileName)
     End Function
+
+    ''' <summary>
+    ''' Get quantify result
+    ''' </summary>
+    ''' <param name="fileScans"></param>
+    ''' <returns></returns>
+    <ExportAPI("result")>
+    Public Function GetQuantifyResult(fileScans As QuantifyScan()) As DataSet()
+        Return fileScans.Select(Function(file) file.quantify).ToArray
+    End Function
+
+    ''' <summary>
+    ''' Get result of ``AIS/At``
+    ''' </summary>
+    ''' <param name="fileScans"></param>
+    ''' <returns></returns>
+    <ExportAPI("scans.X")>
+    Public Function GetRawX(fileScans As QuantifyScan()) As DataSet()
+        Return fileScans.Select(Function(file) file.rawX).ToArray
+    End Function
 End Module

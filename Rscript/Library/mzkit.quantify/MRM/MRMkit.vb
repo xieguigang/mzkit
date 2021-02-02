@@ -52,7 +52,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
@@ -711,26 +710,6 @@ Module MRMkit
             ),
             rtshifts:=New Dictionary(Of String, Double)
         )
-    End Function
-
-    ''' <summary>
-    ''' Get quantify result
-    ''' </summary>
-    ''' <param name="fileScans"></param>
-    ''' <returns></returns>
-    <ExportAPI("result")>
-    Public Function GetQuantifyResult(fileScans As QuantifyScan()) As DataSet()
-        Return fileScans.Select(Function(file) file.quantify).ToArray
-    End Function
-
-    ''' <summary>
-    ''' Get result of ``AIS/At``
-    ''' </summary>
-    ''' <param name="fileScans"></param>
-    ''' <returns></returns>
-    <ExportAPI("scans.X")>
-    Public Function GetRawX(fileScans As QuantifyScan()) As DataSet()
-        Return fileScans.Select(Function(file) file.rawX).ToArray
     End Function
 
     ''' <summary>
