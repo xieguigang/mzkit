@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::89c675c0607e4d4a0522f5b5b484e0bf, src\assembly\mz\TIC.vb"
+﻿#Region "Microsoft.VisualBasic::89c675c0607e4d4a0522f5b5b484e0bf, mz\TIC.vb"
 
     ' Author:
     ' 

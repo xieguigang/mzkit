@@ -1,97 +1,103 @@
-﻿#Region "Microsoft.VisualBasic::b24c4e6039dc876d93a58bc108b76465, src\assembly\assembly\MarkupData\mzML\XML\Components.vb"
+﻿#Region "Microsoft.VisualBasic::61b0f659bf9ead27eca1332a3bdbf982, assembly\MarkupData\mzML\XML\Components.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class indexList
-' 
-'         Properties: index
-' 
-'     Class index
-' 
-'         Properties: name, offsets
-' 
-'     Class offset
-' 
-'         Properties: idRef, value
-' 
-'         Function: ToString
-' 
-'     Class mzML
-' 
-'         Properties: cvList, run
-' 
-'     Class cvList
-' 
-'         Properties: list
-' 
-'     Class List
-' 
-'         Properties: count
-' 
-'     Class DataList
-' 
-'         Properties: defaultDataProcessingRef
-' 
-'     Structure cv
-' 
-'         Properties: fullName, id, URI, version
-' 
-'     Class Params
-' 
-'         Properties: cvParams, userParams
-' 
-'     Class userParam
-' 
-'         Properties: name, type, value
-' 
-'         Function: ToString
-' 
-'     Class cvParam
-' 
-'         Properties: accession, cvRef, name, unitAccession, unitCvRef
-'                     unitName, value
-' 
-'         Function: ToString
-' 
-'     Class run
-' 
-'         Properties: chromatogramList, defaultInstrumentConfigurationRef, defaultSourceFileRef, id, spectrumList
-'                     startTimeStamp
-' 
-' 
-' /********************************************************************************/
+    '     Class indexList
+    ' 
+    '         Properties: index
+    ' 
+    '     Class index
+    ' 
+    '         Properties: name, offsets
+    ' 
+    '     Class offset
+    ' 
+    '         Properties: idRef, value
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class mzML
+    ' 
+    '         Properties: cvList, fileDescription, run
+    ' 
+    '         Function: LoadChromatogramList
+    ' 
+    '     Class fileDescription
+    ' 
+    '         Properties: fileContent
+    ' 
+    '     Class cvList
+    ' 
+    '         Properties: list
+    ' 
+    '     Class List
+    ' 
+    '         Properties: count
+    ' 
+    '     Class DataList
+    ' 
+    '         Properties: defaultDataProcessingRef
+    ' 
+    '     Structure cv
+    ' 
+    '         Properties: fullName, id, URI, version
+    ' 
+    '     Class Params
+    ' 
+    '         Properties: cvParams, userParams
+    ' 
+    '     Class userParam
+    ' 
+    '         Properties: name, type, value
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class cvParam
+    ' 
+    '         Properties: accession, cvRef, name, unitAccession, unitCvRef
+    '                     unitName, value
+    ' 
+    '         Function: GetDouble, ToString
+    ' 
+    '     Class run
+    ' 
+    '         Properties: chromatogramList, defaultInstrumentConfigurationRef, defaultSourceFileRef, id, spectrumList
+    '                     startTimeStamp
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

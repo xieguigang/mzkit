@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::322cf13346c13d51826fb7b4c3ad6432, src\assembly\assembly\MarkupData\mzML\XML\Ions.vb"
+﻿#Region "Microsoft.VisualBasic::322cf13346c13d51826fb7b4c3ad6432, assembly\MarkupData\mzML\XML\Ions.vb"
 
     ' Author:
     ' 

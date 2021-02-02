@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8422cb1730d878597139491ed49bf429, src\assembly\ProteoWizard.Interop\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::8422cb1730d878597139491ed49bf429, ProteoWizard.Interop\Extensions.vb"
 
     ' Author:
     ' 

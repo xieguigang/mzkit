@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8acd45f9178da9f31ecdea9de3a19bc9, src\assembly\ProteoWizard.d\ServerHelper.vb"
+﻿#Region "Microsoft.VisualBasic::8acd45f9178da9f31ecdea9de3a19bc9, ProteoWizard.d\ServerHelper.vb"
 
     ' Author:
     ' 

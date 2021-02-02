@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d90c8bebce605cb8b22fe735110afe0d, src\assembly\MSFileReader\Test_ThermoRawFileReader\modMain.vb"
+﻿#Region "Microsoft.VisualBasic::d90c8bebce605cb8b22fe735110afe0d, MSFileReader\Test_ThermoRawFileReader\modMain.vb"
 
     ' Author:
     ' 

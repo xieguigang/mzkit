@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca48b9eb49e9e984616afb002c43f32b, src\assembly\mz\Pipeline\mz.vb"
+﻿#Region "Microsoft.VisualBasic::ca48b9eb49e9e984616afb002c43f32b, mz\Pipeline\mz.vb"
 
     ' Author:
     ' 

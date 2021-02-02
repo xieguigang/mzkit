@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::becf1fc5cb16625757350add2b2573a1, src\assembly\MSFileReader.Interop\Raw.vb"
+﻿#Region "Microsoft.VisualBasic::becf1fc5cb16625757350add2b2573a1, MSFileReader.Interop\Raw.vb"
 
     ' Author:
     ' 

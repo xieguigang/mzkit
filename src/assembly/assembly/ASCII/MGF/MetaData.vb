@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6559aa50121b6151c390bc86465593e1, src\assembly\assembly\ASCII\MGF\MetaData.vb"
+﻿#Region "Microsoft.VisualBasic::6559aa50121b6151c390bc86465593e1, assembly\ASCII\MGF\MetaData.vb"
 
     ' Author:
     ' 

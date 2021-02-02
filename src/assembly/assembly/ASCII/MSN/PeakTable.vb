@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b6b48b099f1ede469dffd02c524f1eef, src\assembly\assembly\ASCII\MSN\PeakTable.vb"
+﻿#Region "Microsoft.VisualBasic::b6b48b099f1ede469dffd02c524f1eef, assembly\ASCII\MSN\PeakTable.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be5b99d23495b7186c7645938b3a6741, src\assembly\MSFileReader.Interop\Includes.vb"
+﻿#Region "Microsoft.VisualBasic::be5b99d23495b7186c7645938b3a6741, MSFileReader.Interop\Includes.vb"
 
     ' Author:
     ' 
