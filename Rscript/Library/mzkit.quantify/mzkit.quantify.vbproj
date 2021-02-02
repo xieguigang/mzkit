@@ -194,6 +194,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GCMS.vb" />
+    <Compile Include="Linears.vb" />
+    <Compile Include="MRM\MRMDataSet.vb" />
+    <Compile Include="zzz.vb" />
     <Compile Include="MRM\MRMQCReport.vb" />
     <Compile Include="MRM\MRMLinearReport.vb" />
     <Compile Include="Visual.vb" />

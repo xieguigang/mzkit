@@ -57,7 +57,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSL
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
@@ -89,22 +88,11 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
 ''' <summary>
 ''' MRM Targeted Metabolomics
 ''' </summary>
-<Package("mzkit.mrm", Category:=APICategories.ResearchTools, Publisher:="BioNovoGene")>
+<Package("MRMLinear", Category:=APICategories.ResearchTools, Publisher:="BioNovoGene")>
 Module MRMkit
 
-    Public Class MRMDataSet
-
-        Public StandardCurve As StandardCurve()
-        Public Samples As QuantifyScan()
-        Public IonsRaw As list
-
-    End Class
-
     Sub New()
-        REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of StandardCurve)(AddressOf printLineModel)
         REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of IonPair())(AddressOf printIonPairs)
-        REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of Standards())(AddressOf printStandards)
-        REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of [IS]())(AddressOf printIS)
         REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of IsomerismIonPairs)(
             Function(ion As IsomerismIonPairs)
                 If ion.hasIsomerism Then
@@ -186,35 +174,11 @@ Module MRMkit
         }
     End Function
 
-    Private Function printStandards(obj As Object) As String
-        Dim csv = DirectCast(obj, Standards()).ToCsvDoc.ToMatrix.RowIterator.ToArray
-        Dim printContent = csv.Print(addBorder:=False)
-
-        Return printContent
-    End Function
-
-    Private Function printIS(obj As Object) As String
-        Dim csv = DirectCast(obj, [IS]()).ToCsvDoc.ToMatrix.RowIterator.ToArray
-        Dim printContent = csv.Print(addBorder:=False)
-
-        Return printContent
-    End Function
-
     Private Function printIonPairs(obj As Object) As String
         Dim csv = DirectCast(obj, IonPair()).ToCsvDoc.ToMatrix.RowIterator.ToArray
         Dim printContent = csv.Print(addBorder:=False)
 
         Return printContent
-    End Function
-
-    Private Function printLineModel(line As Object) As String
-        If line Is Nothing Then
-            Return "NULL"
-        Else
-            With DirectCast(line, StandardCurve)
-                Return $"{ .name}: { .linear.ToString}"
-            End With
-        End If
     End Function
 
     <ExportAPI("MRM.arguments")>
@@ -708,27 +672,6 @@ Module MRMkit
     End Function
 
     ''' <summary>
-    ''' Get reference input points
-    ''' </summary>
-    ''' <param name="linears"></param>
-    ''' <param name="name">The metabolite id</param>
-    ''' <returns></returns>
-    <ExportAPI("points")>
-    Public Function GetLinearPoints(linears As StandardCurve(), name$) As ReferencePoint()
-        Dim line As StandardCurve = linears _
-            .Where(Function(l)
-                       Return l.name = name
-                   End Function) _
-            .FirstOrDefault
-
-        If line Is Nothing Then
-            Return Nothing
-        Else
-            Return line.points
-        End If
-    End Function
-
-    ''' <summary>
     ''' Do sample quantify
     ''' </summary>
     ''' <param name="model"></param>
@@ -785,30 +728,6 @@ Module MRMkit
     <ExportAPI("write.MRMpeaks")>
     Public Function writeMRMpeaktable(MRMPeaks As MRMPeakTable(), file$) As Boolean
         Return MRMPeaks.SaveTo(file, silent:=True)
-    End Function
-
-    <ExportAPI("lines.table")>
-    Public Function StandardCurveDataSet(lines As StandardCurve()) As EntityObject()
-        Return lines _
-            .Select(Function(line)
-                        Return New EntityObject With {
-                            .ID = line.name,
-                            .Properties = New Dictionary(Of String, String) From {
-                                {"name", line.points(Scan0).Name},
-                                {"equation", "f(x)=" & line.linear.Polynomial.ToString("G5", False)},
-                                {"R2", stdNum.Sqrt(line.linear.R2)},
-                                {"is.weighted", line.isWeighted},
-                                {"IS.calibration", line.requireISCalibration},
-                                {"IS", line.IS.name}
-                            }
-                        }
-                    End Function) _
-            .ToArray
-    End Function
-
-    <ExportAPI("write.points")>
-    Public Function writeStandardCurve(points As ReferencePoint(), file$) As Boolean
-        Return points.SaveTo(file, silent:=True)
     End Function
 
     ''' <summary>
