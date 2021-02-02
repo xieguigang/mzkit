@@ -51,7 +51,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace MRM.Models
+Namespace LinearQuantitative
 
     ''' <summary>
     ''' The standard curve

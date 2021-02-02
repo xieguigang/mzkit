@@ -479,9 +479,9 @@
     <Compile Include="QuantitativeAnalysis\StandardCurve.vb" />
     <Compile Include="QuantitativeAnalysis\ContentResult.vb" />
     <Compile Include="QuantitativeAnalysis\NamespaceDoc.vb" />
-    <Compile Include="QuantitativeAnalysis\TPAExtensions.vb" />
+    <Compile Include="TPAExtensions.vb" />
     <Compile Include="QuantitativeAnalysis\PeakArea.vb" />
-    <Compile Include="MRM\Standards.vb" />
+    <Compile Include="QuantitativeAnalysis\Standards.vb" />
     <Compile Include="QuantitativeAnalysis\IS.vb" />
     <Compile Include="MRM\QuantitativeAnalysis\Samples.vb" />
     <Compile Include="MRM\QuantitativeAnalysis\StandardCurveWorker.vb" />
