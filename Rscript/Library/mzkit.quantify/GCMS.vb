@@ -178,4 +178,8 @@ Module GCMSLinear
 
         Return method.ToLinears(points.populates(Of TargetPeakPoint)(env)).ToArray
     End Function
+
+    Public Function Quantify()
+
+    End Function
 End Module
