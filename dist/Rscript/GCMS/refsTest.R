@@ -9,5 +9,5 @@ const table = contentTable(read.msl("F:\rawdata\mzML\targets-scfa.MSL", "Minute"
 
 const ions = as.quantify.ion(read.msl("F:\rawdata\mzML\targets-scfa.MSL", "Minute"));
 
-const sim = SIMIonExtractor(as.quantify.ion(ions), peakwidth = [3,6]);
+const sim = SIMIonExtractor(ions, peakwidth = [3,6]);
 
