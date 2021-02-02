@@ -32,4 +32,22 @@ Public Class VisualStudio
         propertyWin.propertyGrid.SelectedObject = item
         propertyWin.propertyGrid.Refresh()
     End Sub
+
+    Public Shared Sub ShowSingleDocument(Of T As {New, DockContent})(showExplorer As Action)
+        Dim DockPanel As DockPanel = MyApplication.host.dockPanel
+        Dim targeted As T = DockPanel.Documents _
+            .Where(Function(doc) TypeOf doc Is T) _
+            .FirstOrDefault
+
+        If targeted Is Nothing Then
+            targeted = New T
+        End If
+
+        If Not showExplorer Is Nothing Then
+            Call showExplorer()
+        End If
+
+        targeted.Show(DockPanel)
+        targeted.DockState = DockState.Document
+    End Sub
 End Class
