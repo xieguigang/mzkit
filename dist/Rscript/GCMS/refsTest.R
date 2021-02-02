@@ -11,3 +11,8 @@ const ions = as.quantify.ion(read.msl("F:\rawdata\mzML\targets-scfa.MSL", "Minut
 
 const sim = SIMIonExtractor(ions, peakwidth = [3,6]);
 
+const cal = lapply(list.files("F:\rawdata\mzML\cal", pattern = "*.mzML"), function(path) {
+	peakRaw(read.raw(path));
+}, names = basename);
+
+str(cal);

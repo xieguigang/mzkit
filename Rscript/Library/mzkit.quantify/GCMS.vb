@@ -47,15 +47,16 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Content
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.GCMS
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.GCMS.QuantifyAnalysis
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports REnv = SMRUCC.Rsharp.Runtime
 Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
-Imports SMRUCC.Rsharp
 
 <Package("GCMS")>
 Module GCMSLinear
@@ -142,5 +143,15 @@ Module GCMSLinear
         Else
             Return Message.InCompatibleType(GetType(Rlist), contentVector.GetType, env)
         End If
+    End Function
+
+    <ExportAPI("read.raw")>
+    Public Function readRaw(file As String) As Raw
+        Return GCMS.OpenRawAuto(file)
+    End Function
+
+    <ExportAPI("peakRaw")>
+    Public Function extractSampleRaw(extract As SIMIonExtract, sample As Raw) As TargetPeakPoint()
+        Return extract.GetSamplePeaks(sample).ToArray
     End Function
 End Module
