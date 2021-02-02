@@ -47,6 +47,7 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -82,7 +83,7 @@ Namespace MRM.Data
         End Function
 
         <Extension>
-        Public Function PopulatePeaks(ionPairs As IonPair(), raw$, tolerance As Tolerance, Optional baselineQuantile# = 0.65) As (ion As IsomerismIonPairs, peak As MRMPeak)()
+        Public Function PopulatePeaks(ionPairs As IonPair(), raw$, tolerance As Tolerance, Optional baselineQuantile# = 0.65) As (ion As IsomerismIonPairs, peak As ROIPeak)()
             Dim ionData = LoadChromatogramList(path:=raw) _
                 .MRMSelector(IonPair.GetIsomerism(ionPairs, tolerance), tolerance) _
                 .Where(Function(ion) Not ion.chromatogram Is Nothing) _
@@ -90,7 +91,7 @@ Namespace MRM.Data
                             Dim vector As IVector(Of ChromatogramTick) = ion.chromatogram.Ticks.Shadows
                             Dim peak = vector.MRMPeak(baselineQuantile:=baselineQuantile)
                             Dim peakTicks = vector.PickArea(range:=peak)
-                            Dim mrm As New MRMPeak With {
+                            Dim mrm As New ROIPeak With {
                                 .Window = peak,
                                 .Base = vector.Baseline(baselineQuantile),
                                 .Ticks = peakTicks,
