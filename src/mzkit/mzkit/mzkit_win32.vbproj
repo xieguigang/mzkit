@@ -309,6 +309,18 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="pages\dockWindow\DemoItem.vb" />
+    <Compile Include="pages\dockWindow\documents\frmMRMLibrary.Designer.vb">
+      <DependentUpon>frmMRMLibrary.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\dockWindow\documents\frmMRMLibrary.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="pages\dockWindow\documents\frmQuantifyIons.Designer.vb">
+      <DependentUpon>frmQuantifyIons.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\dockWindow\documents\frmQuantifyIons.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="pages\dockWindow\documents\frmTargetedQuantification.Designer.vb">
       <DependentUpon>frmTargetedQuantification.vb</DependentUpon>
     </Compile>
