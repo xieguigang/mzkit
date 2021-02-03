@@ -448,6 +448,8 @@
     <Compile Include="GCMS\Extensions.vb" />
     <Compile Include="GCMS\mzMLReader\TimeScanMatrix.vb" />
     <Compile Include="GCMS\mzMLReader\mzMLReader.vb" />
+    <Compile Include="GCMS\QuantifyAnalysis\Class1.vb" />
+    <Compile Include="GCMS\QuantifyAnalysis\QuantifyIonExtract.vb" />
     <Compile Include="GCMS\QuantifyIon.vb" />
     <Compile Include="GCMS\QuantifyAnalysis\SIMIonExtract.vb" />
     <Compile Include="LinearQuantitative\Linear\InternalStandardMethod.vb" />

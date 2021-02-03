@@ -55,17 +55,10 @@ Imports stdNum = System.Math
 
 Namespace GCMS.QuantifyAnalysis
 
-    Public Class SIMIonExtract : Inherits FeatureExtract(Of Raw)
-
-        ReadOnly ions As QuantifyIon()
-        ReadOnly ms1ppm As Tolerance
-        ReadOnly dadot3 As Tolerance = Tolerance.DeltaMass(0.3)
+    Public Class SIMIonExtract : Inherits QuantifyIonExtract
 
         Public Sub New(ions As IEnumerable(Of QuantifyIon), peakwidth As DoubleRange, centroid As Tolerance)
-            Call MyBase.New(peakwidth)
-
-            Me.ms1ppm = centroid
-            Me.ions = ions.ToArray
+            Call MyBase.New(ions, peakwidth, centroid)
         End Sub
 
         Public Overrides Iterator Function GetSamplePeaks(sample As Raw) As IEnumerable(Of TargetPeakPoint)
@@ -99,23 +92,6 @@ Namespace GCMS.QuantifyAnalysis
 
                 Yield GetPeak(ion.id, feature.time, sample)
             Next
-        End Function
-
-        Private Function GetMsScan(sample As Raw, rt As DoubleRange) As ms2()
-            Dim ms_scan As ms1_scan() = sample.GetMsScan(rt)
-            Dim spectra As ms2() = ms_scan _
-                .Select(Function(scan)
-                            Return New ms2 With {
-                                .mz = scan.mz,
-                                .quantity = scan.intensity,
-                                .intensity = .quantity
-                            }
-                        End Function) _
-                .ToArray _
-                .Centroid(ms1ppm, LowAbundanceTrimming.Default) _
-                .ToArray
-
-            Return spectra
         End Function
 
         Private Function GetPeak(ion_id As String, rt As DoubleRange, sample As Raw) As TargetPeakPoint
