@@ -1,4 +1,5 @@
 imports ["GCMS", "Linears"] from "mzkit.quantify";
+imports "visualPlots" from "mzkit.quantify";
 imports "assembly" from "mzkit";
 
 const calFolder as string  = ?"--cal"  || stop("you must provides a reference samples for linear fitting!");
@@ -26,6 +27,8 @@ cat("\n");
 
 for (line in linears) {
 	print(line);
+	
+	standard_curve(line, gridFill = "white") :> bitmap(file = `${output_dir}/linears/${as.object(line)$name}.png`);
 }
 
 cat("\n");

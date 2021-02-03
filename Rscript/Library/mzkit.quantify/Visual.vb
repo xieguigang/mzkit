@@ -1,47 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::8fb4088b69293babc67104b6587dce90, Library\mzkit.quantify\Visual.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Visual
-    ' 
-    '     Function: asChromatogram, chromatogramPlot, DrawStandardCurve, MRMchromatogramPeakPlot
-    ' 
-    ' /********************************************************************************/
+' Module Visual
+' 
+'     Function: asChromatogram, chromatogramPlot, DrawStandardCurve, MRMchromatogramPeakPlot
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Drawing
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
@@ -58,7 +59,10 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Imports Rdataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports REnv = SMRUCC.Rsharp.Runtime
 
-<Package("mzkit.quantify.visual")>
+''' <summary>
+''' Visual plot of the quantification data
+''' </summary>
+<Package("visualPlots")>
 Module Visual
 
     <ExportAPI("as.chromatogram")>
@@ -107,7 +111,8 @@ Module Visual
                                       Optional margin$ = "padding: 200px 100px 150px 150px",
                                       Optional factorFormat$ = "G4",
                                       Optional sampleLabelFont$ = CSSFont.Win10NormalLarger,
-                                      Optional labelerIterations% = 1000) As GraphicsData
+                                      Optional labelerIterations% = 1000,
+                                      Optional gridFill$ = NameOf(Color.LightGray)) As GraphicsData
 
         Return StandardCurvesPlot.StandardCurves(
             model:=model,
@@ -117,7 +122,8 @@ Module Visual
             margin:=margin,
             factorFormat:=factorFormat,
             sampleLabelFont:=sampleLabelFont,
-            labelerIterations:=labelerIterations
+            labelerIterations:=labelerIterations,
+            gridFill:=gridFill
         )
     End Function
 
