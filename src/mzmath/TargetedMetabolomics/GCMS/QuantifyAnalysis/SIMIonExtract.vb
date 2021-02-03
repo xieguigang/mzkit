@@ -54,8 +54,8 @@ Namespace GCMS.QuantifyAnalysis
 
     Public Class SIMIonExtract : Inherits QuantifyIonExtract
 
-        Public Sub New(ions As IEnumerable(Of QuantifyIon), peakwidth As DoubleRange, centroid As Tolerance)
-            Call MyBase.New(ions, peakwidth, centroid)
+        Public Sub New(ions As IEnumerable(Of QuantifyIon), peakwidth As DoubleRange, centroid As Tolerance, rtshift As Double, baselineQuantile As Double)
+            Call MyBase.New(ions, peakwidth, centroid, rtshift, baselineQuantile)
         End Sub
 
         Protected Overrides Function GetPeak(ion_id As String, rt As DoubleRange, sample As Raw) As TargetPeakPoint

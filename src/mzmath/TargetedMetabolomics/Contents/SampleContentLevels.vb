@@ -64,6 +64,7 @@ Namespace Content
         Sub New(levels As Dictionary(Of String, Double), Optional directMap As Boolean = False)
             Me.directMap = directMap
             Me.levels = levels _
+                .OrderBy(Function(L) L.Value) _
                 .ToDictionary(Function(L) If(directMap, L.Key, levelKey(L.Key)),
                               Function(L)
                                   Return L.Value

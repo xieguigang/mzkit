@@ -130,7 +130,7 @@ Module LinearReport
     <Extension>
     Private Function singleLinear(line As StandardCurve, ionsRaw As list) As XElement
         Dim title$ = line.points(Scan0).Name
-        Dim image As Image = Visual.DrawStandardCurve(line, title).AsGDIImage
+        Dim image As Image = Visual.DrawStandardCurve(line, title, gridFill:="white").AsGDIImage
         Dim R2# = line.linear.R2
         Dim isWeighted As Boolean = line.isWeighted
         Dim range As DoubleRange = line.points _

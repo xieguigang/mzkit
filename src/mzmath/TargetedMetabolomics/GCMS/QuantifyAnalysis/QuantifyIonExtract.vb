@@ -17,24 +17,27 @@ Namespace GCMS.QuantifyAnalysis
         ''' </summary>
         Protected Friend ReadOnly ms1ppm As Tolerance
         Protected Friend ReadOnly dadot3 As Tolerance = Tolerance.DeltaMass(0.3)
+        Protected Friend ReadOnly rtshift As Double
+        Protected Friend ReadOnly baselineQuantile As Double
 
-        Protected Sub New(ions As IEnumerable(Of QuantifyIon), peakwidth As DoubleRange, centroid As Tolerance)
+        Protected Sub New(ions As IEnumerable(Of QuantifyIon), peakwidth As DoubleRange, centroid As Tolerance, rtshift As Double, baselineQuantile As Double)
             Call MyBase.New(peakwidth)
 
             Me.ms1ppm = centroid
             Me.ions = ions.ToArray
+            Me.rtshift = rtshift
         End Sub
 
         Public Overrides Iterator Function GetSamplePeaks(sample As Raw) As IEnumerable(Of TargetPeakPoint)
-            Dim ROI As ROI() = GetTICPeaks(sample.GetTIC, sn:=5).ToArray
+            Dim ROI As ROI() = GetTICPeaks(sample.GetTIC, sn:=5, baselineQuantile:=baselineQuantile).ToArray
             Dim rtmin As Vector = ROI.Select(Function(r) r.time.Min).ToArray
             Dim rtmax As Vector = ROI.Select(Function(r) r.time.Max).ToArray
             Dim ms As ms2()() = ROI.Select(Function(r) GetMsScan(sample, r.time)).ToArray
             Dim feature As ROI
 
             For Each ion As QuantifyIon In ions
-                Dim rtminScore As Vector = (ion.rt.Min - rtmin).Select(Function(dt) If(dt >= 60, 99999999, dt)).AsVector.Abs
-                Dim rtmaxScore As Vector = (ion.rt.Max - rtmax).Select(Function(dt) If(dt >= 60, 99999999, dt)).AsVector.Abs
+                Dim rtminScore As Vector = (ion.rt.Min - rtmin).Abs.Select(Function(dt) If(dt >= rtshift, 99999999, dt)).AsVector
+                Dim rtmaxScore As Vector = (ion.rt.Max - rtmax).Abs.Select(Function(dt) If(dt >= rtshift, 99999999, dt)).AsVector
                 Dim cos As Vector = ms _
                     .Select(Function(spectra)
                                 With GlobalAlignment.TwoDirectionSSM(ion.ms, spectra, dadot3)

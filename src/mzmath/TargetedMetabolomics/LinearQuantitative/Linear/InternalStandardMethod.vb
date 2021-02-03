@@ -138,7 +138,9 @@ Namespace LinearQuantitative.Linear
             Dim out As New StandardCurve With {
                 .name = ionKey,
                 .linear = fit,
-                .points = points.PopAll,
+                .points = points _
+                    .OrderBy(Function(p) contents(p.level, ionKey)) _
+                    .ToArray,
                 .[IS] = contents.GetIS(define.ISTD)
             }
             Dim fy As Func(Of Double, Double) = out.ReverseModelFunction

@@ -81,6 +81,8 @@ Module GCMSLinear
                                         <RRawVectorArgument(GetType(Double))>
                                         Optional peakwidth As Object = "3,5",
                                         Optional centroid As Object = "da:0.3",
+                                        Optional rtshift As Double = 30,
+                                        Optional baselineQuantile As Double = 0.3,
                                         Optional env As Environment = Nothing) As Object
 
         Dim peakwin = GetDoubleRange(peakwidth, env)
@@ -92,7 +94,7 @@ Module GCMSLinear
             Return ms1ppm.TryCast(Of Message)
         End If
 
-        Return New SIMIonExtract(ions, peakwin, ms1ppm)
+        Return New SIMIonExtract(ions, peakwin, ms1ppm, rtshift, baselineQuantile)
     End Function
 
     <ExportAPI("ScanIonExtractor")>
@@ -101,6 +103,8 @@ Module GCMSLinear
                                         <RRawVectorArgument(GetType(Double))>
                                         Optional peakwidth As Object = "3,5",
                                         Optional centroid As Object = "da:0.3",
+                                        Optional rtshift As Double = 30,
+                                        Optional baselineQuantile As Double = 0.3,
                                         Optional env As Environment = Nothing) As Object
 
         Dim peakwin = GetDoubleRange(peakwidth, env)
@@ -112,7 +116,7 @@ Module GCMSLinear
             Return ms1ppm.TryCast(Of Message)
         End If
 
-        Return New ScanIonExtract(ions, peakwin, ms1ppm)
+        Return New ScanIonExtract(ions, peakwin, ms1ppm, rtshift, baselineQuantile)
     End Function
 
     <ExportAPI("parseContents")>

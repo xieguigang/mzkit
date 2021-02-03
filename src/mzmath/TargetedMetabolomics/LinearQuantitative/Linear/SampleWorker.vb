@@ -97,7 +97,7 @@ Namespace LinearQuantitative.Linear
                 End If
             Next
 
-            Return result.ToArray.SampleQuantifyScan(fileName)
+            Return result.Where(Function(a) Not a Is Nothing).ToArray.SampleQuantifyScan(fileName)
         End Function
 
         ''' <summary>
