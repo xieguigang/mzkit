@@ -95,6 +95,26 @@ Module GCMSLinear
         Return New SIMIonExtract(ions, peakwin, ms1ppm)
     End Function
 
+    <ExportAPI("ScanIonExtractor")>
+    <RApiReturn(GetType(ScanIonExtract))>
+    Public Function createScanIonExtract(ions As QuantifyIon(),
+                                        <RRawVectorArgument(GetType(Double))>
+                                        Optional peakwidth As Object = "3,5",
+                                        Optional centroid As Object = "da:0.3",
+                                        Optional env As Environment = Nothing) As Object
+
+        Dim peakwin = GetDoubleRange(peakwidth, env)
+        Dim ms1ppm = Math.getTolerance(centroid, env)
+
+        If peakwin Like GetType(Message) Then
+            Return peakwin.TryCast(Of Message)
+        ElseIf ms1ppm Like GetType(Message) Then
+            Return ms1ppm.TryCast(Of Message)
+        End If
+
+        Return New ScanIonExtract(ions, peakwin, ms1ppm)
+    End Function
+
     <ExportAPI("parseContents")>
     Public Function FileNames2Contents(<RRawVectorArgument> files As Object) As Rlist
         Dim names As String() = REnv.asVector(Of String)(files)
@@ -167,7 +187,7 @@ Module GCMSLinear
     ''' <returns></returns>
     <ExportAPI("peakRaw")>
     <RApiReturn(GetType(TargetPeakPoint), GetType(ChromatogramTick))>
-    Public Function extractSampleRaw(extract As SIMIonExtract, sample As Raw, Optional chromatogramPlot As Boolean = False) As Object
+    Public Function extractSampleRaw(extract As QuantifyIonExtract, sample As Raw, Optional chromatogramPlot As Boolean = False) As Object
         If chromatogramPlot Then
             Dim rtmin As Double = sample.times.Min
             Dim rtmax As Double = sample.times.Max

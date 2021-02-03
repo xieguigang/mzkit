@@ -83,7 +83,7 @@ Namespace LinearQuantitative.Linear
         Public Function GetIonTPA(baselineQuantile As Double) As IonTPA
             Dim deconv = Peak.ticks _
                 .Shadows _
-                .TPAIntegrator(Peak, baselineQuantile)
+                .TPAIntegrator(Peak, baselineQuantile, peakAreaMethod:=PeakAreaMethods.NetPeakSum)
             Dim maxinto As ChromatogramTick = Peak.ticks _
                 .OrderByDescending(Function(t) t.Intensity) _
                 .First

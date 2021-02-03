@@ -169,7 +169,11 @@ Namespace LinearQuantitative.Linear
                     target = getByLevels(sampleLevel)
                     deconv = target.Peak.ticks _
                         .Shadows _
-                        .TPAIntegrator(target.Peak, baselineQuantile)
+                        .TPAIntegrator(
+                            peak:=target.Peak,
+                            baselineQuantile:=baselineQuantile,
+                            peakAreaMethod:=PeakAreaMethods.NetPeakSum
+                        )
 
                     vec.Add(deconv.area)
                 End If

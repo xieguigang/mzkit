@@ -17,7 +17,7 @@ str(contents);
 
 const table = contentTable(read.msl(MSLIons, "Minute"), contents, IS = "IS");
 const ions  = as.quantify.ion(read.msl(MSLIons, "Minute"));
-const sim   = SIMIonExtractor(ions, peakwidth = [3,6]);
+const sim   = ScanIonExtractor(ions, peakwidth = [3,6]);
 
 print("read ions raw data and run linear fitting:");
 
