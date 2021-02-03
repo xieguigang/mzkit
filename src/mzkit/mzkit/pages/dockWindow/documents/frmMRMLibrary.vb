@@ -40,9 +40,15 @@ Public Class frmMRMLibrary
         Dim j As Integer = DataGridView1.SelectedCells.Item(Scan0).ColumnIndex
 
         If text.Contains(vbCr) OrElse text.Contains(vbLf) Then
-            Dim colCells
+            Dim colCells As String() = text.LineTokens
+
+            For ii As Integer = 0 To colCells.Length - 1
+                DataGridView1.Rows(ii + i).Cells(j).Value = colCells(ii)
+            Next
         Else
             Dim rowCells As String() = text.Split(ASCII.TAB)
+
+
         End If
     End Sub
 
