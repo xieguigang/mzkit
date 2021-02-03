@@ -74,6 +74,10 @@ Module Linears
         REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of StandardCurve)(AddressOf printLineModel)
         REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of Standards())(AddressOf printStandards)
         REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of [IS]())(AddressOf printIS)
+
+        ' create linear regression report
+        REnv.Internal.htmlPrinter.AttachHtmlFormatter(Of StandardCurve())(AddressOf LinearReport.CreateHtml)
+        REnv.Internal.htmlPrinter.AttachHtmlFormatter(Of LinearDataSet)(AddressOf LinearReport.CreateHtml)
     End Sub
 
     Private Function printLineModel(line As Object) As String
@@ -243,5 +247,48 @@ Module Linears
     <ExportAPI("scans.X")>
     Public Function GetRawX(fileScans As QuantifyScan()) As DataSet()
         Return fileScans.Select(Function(file) file.rawX).ToArray
+    End Function
+
+    ''' <summary>
+    ''' Create targeted linear dataset object for do linear quantification data report.
+    ''' </summary>
+    ''' <param name="standardCurve"></param>
+    ''' <param name="samples"></param>
+    ''' <param name="QC_dataset">
+    ''' Regular expression pattern string for match QC sample files
+    ''' </param>
+    ''' <param name="ionsRaw">
+    ''' A list of ions ChromatogramTick data for run ion data plots.
+    ''' the list data structure in format looks like:
+    ''' 
+    ''' ```
+    ''' { 
+    '''    ion_id1 {
+    '''        sample1: ChromatogramTick[],
+    '''        sample2: ChromatogramTick[],
+    '''        ...
+    '''    }
+    ''' }
+    ''' ```
+    ''' </param>
+    ''' <returns></returns>
+    <ExportAPI("report.dataset")>
+    Public Function CreateMRMDataSet(standardCurve As StandardCurve(), samples As QuantifyScan(),
+                                     Optional QC_dataset$ = Nothing,
+                                     Optional ionsRaw As Rlist = Nothing) As Object
+
+        If Not QC_dataset.StringEmpty Then
+            Return New QCData With {
+                .model = standardCurve,
+                .result = samples,
+                .matchQC = QC_dataset
+            }
+        Else
+            Return New LinearDataSet With {
+                .StandardCurve = standardCurve,
+                .Samples = samples,
+                .IonsRaw = ionsRaw
+            }
+        End If
     End Function
 End Module
