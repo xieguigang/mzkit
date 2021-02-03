@@ -2,6 +2,7 @@ imports ["GCMS", "Linears"] from "mzkit.quantify";
 imports "visualPlots" from "mzkit.quantify";
 imports "assembly" from "mzkit";
 
+# get accepted command line arguments:
 const calFolder as string  = ?"--cal"  || stop("you must provides a reference samples for linear fitting!");
 const MSLIons as string    = ?"--ions" || stop("the ions data in MSL data format must be provided!");
 const sampleData as string = ?"--data" || stop("no samples data!");
@@ -17,7 +18,7 @@ str(contents);
 
 const table = contentTable(read.msl(MSLIons, "Minute"), contents, IS = "IS");
 const ions  = as.quantify.ion(read.msl(MSLIons, "Minute"));
-const sim   = ScanIonExtractor(ions, peakwidth = [3,6]);
+const sim   = ScanIonExtractor(ions, peakwidth = [8, 16]);
 
 print("read ions raw data and run linear fitting:");
 
@@ -29,8 +30,13 @@ cat("\n");
 
 for (line in linears) {
 	print(line);
+
+	const linear_bitmap as string = `${output_dir}/linears/${as.object(line)$name}.png`;
 	
-	standard_curve(line, gridFill = "white") :> bitmap(file = `${output_dir}/linears/${as.object(line)$name}.png`);
+	line 
+	:> visualPlots::standard_curve(gridFill = "white") 
+	:> bitmap(file = linear_bitmap)
+	;
 }
 
 cat("\n");
@@ -42,7 +48,12 @@ const quantify = sampleData
 	print("Run quantification of sample data file:");
 	print(file);
 	
-	linears :> quantify(sim :> peakRaw(read.raw(file)), integrator = "SumAll", fileName = file, baselineQuantile = 0);
+	linears :> quantify(
+		ions             = sim :> peakRaw(read.raw(file)), 
+		integrator       = "SumAll", 
+		fileName         = file, 
+		baselineQuantile = 0
+	);
 });
 
 print("job done!");
@@ -54,9 +65,11 @@ lines.table(linears) :> write.csv(file = `${output_dir}/linears.csv`);
 ionPeaks(quantify)   :> write.ionPeaks(file = `${output_dir}/ionPeaks.csv`);
 
 for(ion in ions) {
+	const linear_tableoutput = `${output_dir}/linears/${as.object(ion)$id}.csv`;
+
 	if (as.object(ion)$id != "IS") {
 		points(linears, ion) 
-		:> write.points(file = `${output_dir}/linears/${as.object(ion)$id}.csv`)
+		:> write.points(file = linear_tableoutput)
 		;
 	}	
 }
