@@ -1,57 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::c28566cd851d8c1d46fb7f300665bebf, Library\mzkit.quantify\GCMS.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module GCMSLinear
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: algorithm, ContentTable, createSIMIonExtract, extractSampleRaw, FileNames2Contents
-    '               InternalStandardMethod, quantifyIons, readRaw
-    ' 
-    ' /********************************************************************************/
+' Module GCMSLinear
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: algorithm, ContentTable, createSIMIonExtract, extractSampleRaw, FileNames2Contents
+'               InternalStandardMethod, quantifyIons, readRaw
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSL
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Content
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.GCMS
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.GCMS.QuantifyAnalysis
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
@@ -164,8 +166,27 @@ Module GCMSLinear
     ''' <param name="sample"></param>
     ''' <returns></returns>
     <ExportAPI("peakRaw")>
-    Public Function extractSampleRaw(extract As SIMIonExtract, sample As Raw) As TargetPeakPoint()
-        Return extract.GetSamplePeaks(sample).ToArray
+    <RApiReturn(GetType(TargetPeakPoint), GetType(ChromatogramTick))>
+    Public Function extractSampleRaw(extract As SIMIonExtract, sample As Raw, Optional chromatogramPlot As Boolean = False) As Object
+        If chromatogramPlot Then
+            Dim rtmin As Double = sample.times.Min
+            Dim rtmax As Double = sample.times.Max
+
+            Return extract _
+                .GetSamplePeaks(sample) _
+                .ToDictionary(Function(ion) ion.Name,
+                              Function(ion)
+                                  Return CObj({
+                                      New ChromatogramTick With {.Time = rtmin},
+                                      New ChromatogramTick With {.Time = rtmax}
+                                  }.JoinIterates(ion.Peak.ticks))
+                              End Function) _
+                .DoCall(Function(plot)
+                            Return New Rlist With {.slots = plot}
+                        End Function)
+        Else
+            Return extract.GetSamplePeaks(sample).ToArray
+        End If
     End Function
 
     <ExportAPI("linear_algorithm")>

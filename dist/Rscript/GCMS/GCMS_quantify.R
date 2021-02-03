@@ -7,6 +7,8 @@ const MSLIons as string    = ?"--ions" || stop("the ions data in MSL data format
 const sampleData as string = ?"--data" || stop("no samples data!");
 const output_dir as string = ?"--out"  || `${dirname(sampleData)}/quantify/`;
 
+sink(file = `${output_dir}/run.log`);
+
 const calfiles = list.files(calFolder, pattern = "*.mzML");
 const contents = parseContents(calfiles);
 
@@ -61,4 +63,22 @@ for(ion in ions) {
 
 print("create linear report:");
 
-html()
+const plotRaw  = lapply(calfiles, function(path) peakRaw(sim, read.raw(path), chromatogramPlot = TRUE), names = basename);
+const plotIons = lapply(ions, function(ion) {
+	const ion_id as string = as.object(ion)$id;
+	const filesData = lapply(plotRaw, file -> file[[ion_id]]);
+	
+	filesData;
+}, names = ion -> as.object(ion)$id)
+;
+
+print("output html report...");
+
+report.dataset(linears, quantify, ionsRaw = plotIons)
+:> html()
+:> writeLines(con = `${output_dir}/index.html`)
+;
+
+print("all job done!");
+
+sink();

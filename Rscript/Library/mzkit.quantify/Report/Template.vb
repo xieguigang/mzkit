@@ -3,7 +3,6 @@ Imports Microsoft.VisualBasic.Scripting.SymbolBuilder
 
 Module Template
 
-
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Friend Function getBlankReport(title As String) As ScriptBuilder
         Return New ScriptBuilder(
