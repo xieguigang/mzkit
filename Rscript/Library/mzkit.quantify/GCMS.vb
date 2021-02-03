@@ -191,15 +191,13 @@ Module GCMSLinear
         If chromatogramPlot Then
             Dim rtmin As Double = sample.times.Min
             Dim rtmax As Double = sample.times.Max
+            Dim scan As New ScanIonExtract(base:=extract)
 
-            Return extract _
+            Return scan _
                 .GetSamplePeaks(sample) _
                 .ToDictionary(Function(ion) ion.Name,
                               Function(ion)
-                                  Return CObj({
-                                      New ChromatogramTick With {.Time = rtmin},
-                                      New ChromatogramTick With {.Time = rtmax}
-                                  }.JoinIterates(ion.Peak.ticks))
+                                  Return CObj(ion.Peak.ticks)
                               End Function) _
                 .DoCall(Function(plot)
                             Return New Rlist With {.slots = plot}

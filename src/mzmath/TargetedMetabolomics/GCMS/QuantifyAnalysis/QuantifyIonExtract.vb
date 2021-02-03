@@ -11,9 +11,12 @@ Namespace GCMS.QuantifyAnalysis
 
     Public MustInherit Class QuantifyIonExtract : Inherits FeatureExtract(Of Raw)
 
-        Protected ReadOnly ions As QuantifyIon()
-        Protected ReadOnly ms1ppm As Tolerance
-        Protected ReadOnly dadot3 As Tolerance = Tolerance.DeltaMass(0.3)
+        Protected Friend ReadOnly ions As QuantifyIon()
+        ''' <summary>
+        ''' apply for convert to centroid data
+        ''' </summary>
+        Protected Friend ReadOnly ms1ppm As Tolerance
+        Protected Friend ReadOnly dadot3 As Tolerance = Tolerance.DeltaMass(0.3)
 
         Protected Sub New(ions As IEnumerable(Of QuantifyIon), peakwidth As DoubleRange, centroid As Tolerance)
             Call MyBase.New(peakwidth)

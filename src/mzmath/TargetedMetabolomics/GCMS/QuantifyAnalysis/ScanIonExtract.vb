@@ -9,7 +9,11 @@ Namespace GCMS.QuantifyAnalysis
     Public Class ScanIonExtract : Inherits QuantifyIonExtract
 
         Public Sub New(ions As IEnumerable(Of QuantifyIon), peakwidth As DoubleRange, centroid As Tolerance)
-            MyBase.New(ions, peakwidth, centroid)
+            Call MyBase.New(ions, peakwidth, centroid)
+        End Sub
+
+        Sub New(base As QuantifyIonExtract)
+            Call MyBase.New(base.ions, base.peakwidth, base.ms1ppm)
         End Sub
 
         Protected Overrides Function GetPeak(ion_id As String, rt As DoubleRange, sample As Raw) As TargetPeakPoint

@@ -50,7 +50,7 @@ Imports Microsoft.VisualBasic.Math
 
 Public MustInherit Class FeatureExtract(Of Sample)
 
-    ReadOnly peakwidth As DoubleRange
+    Friend ReadOnly peakwidth As DoubleRange
 
     Sub New(peakwidth As DoubleRange)
         Me.peakwidth = peakwidth
