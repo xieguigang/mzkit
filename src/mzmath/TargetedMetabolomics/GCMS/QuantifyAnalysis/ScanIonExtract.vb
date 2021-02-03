@@ -1,5 +1,7 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 
 Namespace GCMS.QuantifyAnalysis
@@ -10,8 +12,31 @@ Namespace GCMS.QuantifyAnalysis
             MyBase.New(ions, peakwidth, centroid)
         End Sub
 
-        Public Overrides Function GetSamplePeaks(sample As Raw) As IEnumerable(Of TargetPeakPoint)
-            Throw New NotImplementedException()
+        Protected Overrides Function GetPeak(ion_id As String, rt As DoubleRange, sample As Raw) As TargetPeakPoint
+            Dim sampleName As String = sample.fileName.BaseName
+            Dim spectra As ms1_scan() = sample.GetMsScan(rt)
+            Dim tick As ChromatogramTick() = spectra _
+                .Select(Function(mzi)
+                            Return New ChromatogramTick With {
+                                .Time = mzi.scan_time,
+                                .Intensity = mzi.intensity
+                            }
+                        End Function) _
+                .ToArray
+            Dim q As Quantile() = tick.Summary.ToArray
+            Dim maxInto As Double = spectra.Select(Function(mz) mz.intensity).Max
+
+            Return New TargetPeakPoint With {
+                .Name = ion_id,
+                .SampleName = sampleName,
+                .Peak = New ROIPeak With {
+                    .base = 0,
+                    .peakHeight = maxInto,
+                    .ticks = tick,
+                    .window = New DoubleRange(rt)
+                },
+                .ChromatogramSummary = q
+            }
         End Function
     End Class
 End Namespace
