@@ -22,7 +22,7 @@ const sim   = ScanIonExtractor(ions, peakwidth = [3,6]);
 print("read ions raw data and run linear fitting:");
 
 const cal     = lapply(calfiles, function(path) peakRaw(sim, read.raw(path)), names = basename);
-const linears = linear_algorithm(table) :> linears(unlist(cal));
+const linears = linear_algorithm(table, maxDeletions = 2) :> linears(unlist(cal));
 
 print("Linear modeeling result of your ions data in reference samples:");
 cat("\n");
@@ -42,7 +42,7 @@ const quantify = sampleData
 	print("Run quantification of sample data file:");
 	print(file);
 	
-	linears :> quantify(sim :> peakRaw(read.raw(file)), fileName = file);
+	linears :> quantify(sim :> peakRaw(read.raw(file)), integrator = "SumAll", fileName = file, baselineQuantile = 0);
 });
 
 print("job done!");

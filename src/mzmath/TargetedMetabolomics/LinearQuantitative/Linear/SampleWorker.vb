@@ -71,6 +71,7 @@ Namespace LinearQuantitative.Linear
         <Extension>
         Public Function SampleQuantify(models As StandardCurve(),
                                        ions As TargetPeakPoint(),
+                                       integrator As PeakAreaMethods,
                                        Optional names As Dictionary(Of String, String) = Nothing,
                                        Optional baselineQuantile As Double = 0.6,
                                        Optional fileName As String = "NA") As QuantifyScan
@@ -78,7 +79,7 @@ Namespace LinearQuantitative.Linear
             Dim TPA As Dictionary(Of String, IonTPA) = ions _
                 .ToDictionary(Function(ion) ion.Name,
                               Function(ion)
-                                  Return ion.GetIonTPA(baselineQuantile)
+                                  Return ion.GetIonTPA(baselineQuantile, integrator)
                               End Function)
             Dim result As New List(Of ContentResult(Of IonPeakTableRow))
 

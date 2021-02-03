@@ -80,10 +80,10 @@ Namespace LinearQuantitative.Linear
             Return $"[{SampleName}: {Name}] = {Peak}"
         End Function
 
-        Public Function GetIonTPA(baselineQuantile As Double) As IonTPA
+        Public Function GetIonTPA(baselineQuantile As Double, integrator As PeakAreaMethods) As IonTPA
             Dim deconv = Peak.ticks _
                 .Shadows _
-                .TPAIntegrator(Peak, baselineQuantile, peakAreaMethod:=PeakAreaMethods.NetPeakSum)
+                .TPAIntegrator(Peak, baselineQuantile, peakAreaMethod:=integrator)
             Dim maxinto As ChromatogramTick = Peak.ticks _
                 .OrderByDescending(Function(t) t.Intensity) _
                 .First

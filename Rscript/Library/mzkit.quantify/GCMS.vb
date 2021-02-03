@@ -213,11 +213,8 @@ Module GCMSLinear
     End Function
 
     <ExportAPI("linear_algorithm")>
-    Public Function algorithm(contents As ContentTable,
-                              Optional baselineQuantile As Double = 0.65,
-                              Optional maxDeletions As Integer = 1) As InternalStandardMethod
-
-        Return New InternalStandardMethod(contents, baselineQuantile, maxDeletions)
+    Public Function algorithm(contents As ContentTable, Optional maxDeletions As Integer = 1) As InternalStandardMethod
+        Return New InternalStandardMethod(contents, PeakAreaMethods.SumAll, baselineQuantile:=0, maxDeletions:=maxDeletions)
     End Function
 
     <ExportAPI("linears")>

@@ -38,7 +38,7 @@ Namespace GCMS.QuantifyAnalysis
                 .Name = ion_id,
                 .SampleName = sampleName,
                 .Peak = New ROIPeak With {
-                    .base = tick.Baseline,
+                    .base = 0,
                     .peakHeight = maxInto,
                     .ticks = tick,
                     .window = New DoubleRange(rt)

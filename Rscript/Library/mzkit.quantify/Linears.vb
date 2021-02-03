@@ -213,6 +213,7 @@ Module Linears
     <ExportAPI("quantify")>
     Public Function SampleQuantify(models As StandardCurve(),
                                    ions As TargetPeakPoint(),
+                                   Optional integrator As PeakAreaMethods = PeakAreaMethods.SumAll,
                                    Optional names As Rlist = Nothing,
                                    Optional baselineQuantile As Double = 0.6,
                                    Optional fileName As String = "NA",
@@ -226,7 +227,7 @@ Module Linears
             nameIndex = names.AsGeneric(Of String)(env)
         End If
 
-        Return models.SampleQuantify(ions, nameIndex, baselineQuantile, fileName)
+        Return models.SampleQuantify(ions, integrator, nameIndex, baselineQuantile, fileName)
     End Function
 
     ''' <summary>
