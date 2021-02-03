@@ -197,7 +197,12 @@ Module GCMSLinear
                 .GetSamplePeaks(sample) _
                 .ToDictionary(Function(ion) ion.Name,
                               Function(ion)
-                                  Return CObj(ion.Peak.ticks)
+                                  Return CObj({
+                                      New ChromatogramTick With {.Time = rtmin},
+                                      New ChromatogramTick With {.Time = rtmax},
+                                      New ChromatogramTick With {.Time = ion.Peak.window.Min},
+                                      New ChromatogramTick With {.Time = ion.Peak.window.Max}
+                                  }.JoinIterates(ion.Peak.ticks))
                               End Function) _
                 .DoCall(Function(plot)
                             Return New Rlist With {.slots = plot}

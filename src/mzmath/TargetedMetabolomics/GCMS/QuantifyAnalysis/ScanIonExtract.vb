@@ -3,6 +3,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports stdNum = System.Math
 
 Namespace GCMS.QuantifyAnalysis
 
@@ -19,7 +20,9 @@ Namespace GCMS.QuantifyAnalysis
         Protected Overrides Function GetPeak(ion_id As String, rt As DoubleRange, sample As Raw) As TargetPeakPoint
             Dim sampleName As String = sample.fileName.BaseName
             Dim spectra As ms1_scan() = sample.GetMsScan(rt)
+            Dim maxMz As Double = Me.ions.Where(Function(i) i.id = ion_id).First.ms.OrderByDescending(Function(mz) mz.intensity).First.mz
             Dim tick As ChromatogramTick() = spectra _
+                .Where(Function(scan) stdNum.Abs(scan.mz - maxMz) <= 0.1) _
                 .Select(Function(mzi)
                             Return New ChromatogramTick With {
                                 .Time = mzi.scan_time,
