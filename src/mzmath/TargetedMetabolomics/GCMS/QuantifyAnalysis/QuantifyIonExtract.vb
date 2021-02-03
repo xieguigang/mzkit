@@ -26,15 +26,15 @@ Namespace GCMS.QuantifyAnalysis
         End Sub
 
         Public Overrides Iterator Function GetSamplePeaks(sample As Raw) As IEnumerable(Of TargetPeakPoint)
-            Dim ROI As ROI() = GetTICPeaks(sample.GetTIC).ToArray
+            Dim ROI As ROI() = GetTICPeaks(sample.GetTIC, sn:=5).ToArray
             Dim rtmin As Vector = ROI.Select(Function(r) r.time.Min).ToArray
             Dim rtmax As Vector = ROI.Select(Function(r) r.time.Max).ToArray
             Dim ms As ms2()() = ROI.Select(Function(r) GetMsScan(sample, r.time)).ToArray
             Dim feature As ROI
 
             For Each ion As QuantifyIon In ions
-                Dim rtminScore As Vector = (ion.rt.Min - rtmin).Abs
-                Dim rtmaxScore As Vector = (ion.rt.Max - rtmax).Abs
+                Dim rtminScore As Vector = (ion.rt.Min - rtmin).Select(Function(dt) If(dt >= 60, 99999999, dt)).AsVector.Abs
+                Dim rtmaxScore As Vector = (ion.rt.Max - rtmax).Select(Function(dt) If(dt >= 60, 99999999, dt)).AsVector.Abs
                 Dim cos As Vector = ms _
                     .Select(Function(spectra)
                                 With GlobalAlignment.TwoDirectionSSM(ion.ms, spectra, dadot3)
