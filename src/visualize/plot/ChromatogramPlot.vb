@@ -307,6 +307,11 @@ Public Module ChromatogramPlot
                     Dim line = ionData(i)
                     Dim chromatogram = line.value
 
+                    If chromatogram.IsNullOrEmpty Then
+                        Call $"ion not found in raw file: '{line.name}'".Warning
+                        Continue For
+                    End If
+
                     legends += New LegendObject With {
                         .title = line.name,
                         .color = curvePen.Color.ToHtmlColor,
