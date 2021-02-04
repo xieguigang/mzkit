@@ -94,9 +94,6 @@ Module MRMkit
                 End If
             End Function)
 
-        ' create linear regression report
-        REnv.Internal.htmlPrinter.AttachHtmlFormatter(Of StandardCurve())(AddressOf MRMLinearReport.CreateHtml)
-        REnv.Internal.htmlPrinter.AttachHtmlFormatter(Of MRMDataSet)(AddressOf MRMLinearReport.CreateHtml)
         REnv.Internal.htmlPrinter.AttachHtmlFormatter(Of QCData)(AddressOf MRMQCReport.CreateHtml)
 
         REnv.Internal.Object.Converts.makeDataframe.addHandler(GetType(RTAlignment()), AddressOf RTShiftSummary)
@@ -709,34 +706,5 @@ Module MRMkit
             ),
             rtshifts:=New Dictionary(Of String, Double)
         )
-    End Function
-
-    ''' <summary>
-    ''' Create MRM dataset object for do MRM quantification data report.
-    ''' </summary>
-    ''' <param name="standardCurve"></param>
-    ''' <param name="samples"></param>
-    ''' <param name="QC_dataset">
-    ''' Regular expression pattern string for match QC sample files
-    ''' </param>
-    ''' <returns></returns>
-    <ExportAPI("mrm.dataset")>
-    Public Function CreateMRMDataSet(standardCurve As StandardCurve(), samples As QuantifyScan(),
-                                     Optional QC_dataset$ = Nothing,
-                                     Optional ionsRaw As Rlist = Nothing) As Object
-
-        If Not QC_dataset.StringEmpty Then
-            Return New QCData With {
-                .model = standardCurve,
-                .result = samples,
-                .matchQC = QC_dataset
-            }
-        Else
-            Return New MRMDataSet With {
-                .StandardCurve = standardCurve,
-                .Samples = samples,
-                .IonsRaw = ionsRaw
-            }
-        End If
     End Function
 End Module

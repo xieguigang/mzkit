@@ -47,7 +47,6 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
@@ -62,11 +61,11 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports REnv = SMRUCC.Rsharp.Runtime
 Imports stdNum = System.Math
 
-Module MRMLinearReport
+Module LinearReport
 
     Private Function getStandardCurve(obj As Object) As StandardCurve()
-        If obj.GetType Is GetType(MRMDataSet) Then
-            Return DirectCast(obj, MRMDataSet).StandardCurve
+        If obj.GetType Is GetType(LinearDataSet) Then
+            Return DirectCast(obj, LinearDataSet).StandardCurve
         Else
             Return DirectCast(obj, StandardCurve())
         End If
@@ -74,69 +73,18 @@ Module MRMLinearReport
 
     Public Function CreateHtml(obj As Object) As String
         Dim standardCurves As StandardCurve() = getStandardCurve(obj)
-        Dim report As ScriptBuilder = getBlankReport(title:="MRM Quantification Linear Models")
+        Dim report As ScriptBuilder = getBlankReport(title:="Targeted Quantification Linear Models")
         Dim samples As QuantifyScan() = Nothing
         Dim ionsRaw As list = Nothing
 
-        If obj.GetType Is GetType(MRMDataSet) Then
-            samples = DirectCast(obj, MRMDataSet).Samples
-            ionsRaw = DirectCast(obj, MRMDataSet).IonsRaw
+        If obj.GetType Is GetType(LinearDataSet) Then
+            samples = DirectCast(obj, LinearDataSet).Samples
+            ionsRaw = DirectCast(obj, LinearDataSet).IonsRaw
         End If
 
         Return report.doReport(standardCurves, samples, ionsRaw)
     End Function
 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Friend Function getBlankReport(title As String) As ScriptBuilder
-        Return New ScriptBuilder(
-            <html lang="zh-CN">
-                <head>
-                    <meta charset="utf-8"/>
-                    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-
-                    <title><%= title %> | BioNovoGene</title>
-
-                    <!-- Bootstrap CSS -->
-                    <link rel="stylesheet" href="https://cdn.biodeep.cn/styles/bootstrap-4.3.1-dist/css/bootstrap.min.css" crossorigin="anonymous"/>
-
-                    <style type="text/css">
-                        .even td{/*必须加td，代表的是一行进行*/
-	                      background-color: #f5f5f5;
-                        }
-
-                        .critical td {
-                          background-color: #ffd1e1;
-                        }
-
-                        .warning td {
-                          background-color: #fbffd1;
-                        }
-                    </style>
-                </head>
-                <body class="container">
-                    <h1><%= title %></h1>
-                    <p><%= Now.ToString %></p>
-                    <hr/>
-                    <h2>Table Of Content</h2>
-                    <br/>
-
-                    <div>
-                        {$TOC}
-                    </div>
-
-                    <hr/>
-                    <div style="page-break-after: always;"></div>
-
-                    {$linears}
-                </body>
-
-                <!-- Optional JavaScript -->
-                <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-                <script src="https://cdn.biodeep.cn/vendor/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
-                <script src="https://cdn.biodeep.cn/vendor/popper.min.js" crossorigin="anonymous"></script>
-                <script src="https://cdn.biodeep.cn/styles/bootstrap-4.3.1-dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
-            </html>)
-    End Function
 
     <Extension>
     Private Function doReport(report As ScriptBuilder, standardCurves As StandardCurve(), samples As QuantifyScan(), ionsRaw As list) As String
@@ -182,7 +130,7 @@ Module MRMLinearReport
     <Extension>
     Private Function singleLinear(line As StandardCurve, ionsRaw As list) As XElement
         Dim title$ = line.points(Scan0).Name
-        Dim image As Image = Visual.DrawStandardCurve(line, title).AsGDIImage
+        Dim image As Image = Visual.DrawStandardCurve(line, title, gridFill:="white").AsGDIImage
         Dim R2# = line.linear.R2
         Dim isWeighted As Boolean = line.isWeighted
         Dim range As DoubleRange = line.points _

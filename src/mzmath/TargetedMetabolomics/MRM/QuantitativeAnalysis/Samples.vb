@@ -209,7 +209,10 @@ Namespace MRM
                     rtshifts:=rtshifts
                 ) _
                 .ToArray
-            Dim scanOut As QuantifyScan = result.SampleQuantifyScan(file)
+            Dim scanOut As QuantifyScan = result _
+                .Where(Function(a) Not a Is Nothing) _
+                .ToArray _
+                .SampleQuantifyScan(file)
 
             Return scanOut
         End Function

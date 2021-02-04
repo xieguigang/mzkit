@@ -50,7 +50,7 @@ Imports Microsoft.VisualBasic.Math
 
 Public MustInherit Class FeatureExtract(Of Sample)
 
-    ReadOnly peakwidth As DoubleRange
+    Friend ReadOnly peakwidth As DoubleRange
 
     Sub New(peakwidth As DoubleRange)
         Me.peakwidth = peakwidth
@@ -58,8 +58,8 @@ Public MustInherit Class FeatureExtract(Of Sample)
 
     Public MustOverride Function GetSamplePeaks(sample As Sample) As IEnumerable(Of TargetPeakPoint)
 
-    Protected Function GetTICPeaks(TIC As IEnumerable(Of ChromatogramTick)) As IEnumerable(Of ROI)
-        Return TIC.Shadows.PopulateROI(peakwidth)
+    Protected Function GetTICPeaks(TIC As IEnumerable(Of ChromatogramTick), sn As Double, baselineQuantile As Double) As IEnumerable(Of ROI)
+        Return TIC.Shadows.PopulateROI(peakwidth, baselineQuantile:=baselineQuantile, snThreshold:=sn)
     End Function
 
 End Class

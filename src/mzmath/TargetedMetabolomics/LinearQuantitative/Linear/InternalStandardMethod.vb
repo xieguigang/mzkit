@@ -46,7 +46,6 @@
 
 Imports System.Drawing
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Content
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -63,11 +62,13 @@ Namespace LinearQuantitative.Linear
         ReadOnly contents As ContentTable
         ReadOnly baselineQuantile As Double = 0.65
         ReadOnly maxDeletions As Integer = 1
+        ReadOnly integrator As PeakAreaMethods
 
-        Sub New(contents As ContentTable, Optional baselineQuantile As Double = 0.65, Optional maxDeletions As Integer = 1)
+        Sub New(contents As ContentTable, integrator As PeakAreaMethods, Optional baselineQuantile As Double = 0.65, Optional maxDeletions As Integer = 1)
             Me.maxDeletions = maxDeletions
             Me.contents = contents
             Me.baselineQuantile = baselineQuantile
+            Me.integrator = integrator
         End Sub
 
         ''' <summary>
@@ -137,7 +138,9 @@ Namespace LinearQuantitative.Linear
             Dim out As New StandardCurve With {
                 .name = ionKey,
                 .linear = fit,
-                .points = points.PopAll,
+                .points = points _
+                    .OrderBy(Function(p) contents(p.level, ionKey)) _
+                    .ToArray,
                 .[IS] = contents.GetIS(define.ISTD)
             }
             Dim fy As Func(Of Double, Double) = out.ReverseModelFunction
@@ -169,7 +172,11 @@ Namespace LinearQuantitative.Linear
                     target = getByLevels(sampleLevel)
                     deconv = target.Peak.ticks _
                         .Shadows _
-                        .TPAIntegrator(target.Peak, baselineQuantile)
+                        .TPAIntegrator(
+                            peak:=target.Peak,
+                            baselineQuantile:=baselineQuantile,
+                            peakAreaMethod:=integrator
+                        )
 
                     vec.Add(deconv.area)
                 End If

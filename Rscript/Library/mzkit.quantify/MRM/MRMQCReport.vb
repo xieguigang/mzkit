@@ -68,7 +68,7 @@ Module MRMQCReport
     Public Function CreateHtml(obj As Object) As String
         Dim data As QCData = DirectCast(obj, QCData)
         Dim ref As Dictionary(Of String, StandardCurve) = data.model.ToDictionary(Function(r) r.name)
-        Dim html As String = MRMLinearReport _
+        Dim html As String = Template _
             .getBlankReport(title:="MRM QC Report") _
             .doReport(
                 ref:=ref,

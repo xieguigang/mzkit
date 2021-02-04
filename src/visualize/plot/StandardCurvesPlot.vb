@@ -42,6 +42,7 @@
 
 #End Region
 
+Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -60,7 +61,8 @@ Public Module StandardCurvesPlot
                                    Optional margin$ = "padding: 100px 100px 100px 200px",
                                    Optional factorFormat$ = "G4",
                                    Optional sampleLabelFont$ = CSSFont.Win10Normal,
-                                   Optional labelerIterations% = 1000) As GraphicsData
+                                   Optional labelerIterations% = 1000,
+                                   Optional gridFill$ = NameOf(Color.LightGray)) As GraphicsData
 
         If model.requireISCalibration Then
             ' 如果进行内标校正的话，则应该是[峰面积比, 浓度比]之间的线性关系
@@ -77,7 +79,8 @@ Public Module StandardCurvesPlot
                       margin:=margin,
                       factorFormat:=factorFormat,
                       pointLabelFontCSS:=sampleLabelFont,
-                      labelerIterations:=labelerIterations
+                      labelerIterations:=labelerIterations,
+                      gridFill:=gridFill
                 )
         Else
             ' 如果不做内标校正的话，则是直接[峰面积, 浓度]之间的线性关系了
@@ -94,7 +97,8 @@ Public Module StandardCurvesPlot
                       margin:=margin,
                       factorFormat:=factorFormat,
                       pointLabelFontCSS:=sampleLabelFont,
-                      labelerIterations:=labelerIterations
+                      labelerIterations:=labelerIterations,
+                      gridFill:=gridFill
                 )
         End If
     End Function

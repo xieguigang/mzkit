@@ -63,5 +63,8 @@ Namespace LinearQuantitative
         ''' <returns></returns>
         Public Property rawX As DataSet
 
+        Public Overrides Function ToString() As String
+            Return $"[{quantify.ID}] {ionPeaks.Length} ions detected"
+        End Function
     End Class
 End Namespace
