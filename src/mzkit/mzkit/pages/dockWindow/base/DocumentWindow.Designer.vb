@@ -26,7 +26,7 @@ Partial Class DocumentWindow
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(DocumentWindow))
-        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.DockContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.SaveDocumentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CloseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CloseAllDocumentsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -36,14 +36,14 @@ Partial Class DocumentWindow
         Me.OpenContainingFolderToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripSeparator()
         Me.FloatToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ContextMenuStrip1.SuspendLayout()
+        Me.DockContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'ContextMenuStrip1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveDocumentToolStripMenuItem, Me.CloseToolStripMenuItem, Me.CloseAllDocumentsToolStripMenuItem, Me.CloseAllButThisToolStripMenuItem, Me.ToolStripMenuItem1, Me.CopyFullPathToolStripMenuItem, Me.OpenContainingFolderToolStripMenuItem, Me.ToolStripMenuItem2, Me.FloatToolStripMenuItem})
-        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(202, 192)
+        Me.DockContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveDocumentToolStripMenuItem, Me.CloseToolStripMenuItem, Me.CloseAllDocumentsToolStripMenuItem, Me.CloseAllButThisToolStripMenuItem, Me.ToolStripMenuItem1, Me.CopyFullPathToolStripMenuItem, Me.OpenContainingFolderToolStripMenuItem, Me.ToolStripMenuItem2, Me.FloatToolStripMenuItem})
+        Me.DockContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.DockContextMenuStrip1.Size = New System.Drawing.Size(202, 192)
         '
         'SaveDocumentToolStripMenuItem
         '
@@ -108,12 +108,12 @@ Partial Class DocumentWindow
         Me.ClientSize = New System.Drawing.Size(650, 502)
         Me.Name = "DocumentWindow"
         Me.Text = "Form1"
-        Me.ContextMenuStrip1.ResumeLayout(False)
+        Me.DockContextMenuStrip1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
 
-    Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
+    Friend WithEvents DockContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents SaveDocumentToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents CloseToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents CloseAllDocumentsToolStripMenuItem As ToolStripMenuItem
