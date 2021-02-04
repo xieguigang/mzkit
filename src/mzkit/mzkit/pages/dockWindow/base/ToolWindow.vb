@@ -91,6 +91,8 @@ Public Class ToolWindow
         AutoScaleMode = AutoScaleMode.Dpi
         DoubleBuffered = True
         VisualStudioToolStripExtender1 = New VisualStudioToolStripExtender(components)
+
+        Call ApplyVsTheme(DockContextMenuStrip1)
     End Sub
 
 End Class
