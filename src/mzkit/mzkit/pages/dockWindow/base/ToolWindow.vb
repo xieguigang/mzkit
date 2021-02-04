@@ -86,7 +86,7 @@ Public Class ToolWindow
     End Sub
 
     Private Sub ToolWindow_Load(sender As Object, e As EventArgs) Handles Me.Load
-        TabPageContextMenuStrip = ContextMenuStrip1
+        TabPageContextMenuStrip = DockContextMenuStrip1
 
         AutoScaleMode = AutoScaleMode.Dpi
         DoubleBuffered = True

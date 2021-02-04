@@ -308,6 +308,12 @@
     <Compile Include="pages\contextMenu\ToggleSlider.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="pages\dockWindow\base\DocumentWindow.Designer.vb">
+      <DependentUpon>DocumentWindow.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\dockWindow\base\DocumentWindow.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="pages\dockWindow\base\ToolWindow.Designer.vb">
       <DependentUpon>ToolWindow.vb</DependentUpon>
     </Compile>

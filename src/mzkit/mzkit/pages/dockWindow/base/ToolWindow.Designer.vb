@@ -26,20 +26,20 @@ Partial Class ToolWindow
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ToolWindow))
-        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.DockContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.FloatToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AutoHideToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DockToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CloseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
-        Me.ContextMenuStrip1.SuspendLayout()
+        Me.DockContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'ContextMenuStrip1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FloatToolStripMenuItem, Me.DockToolStripMenuItem, Me.AutoHideToolStripMenuItem, Me.ToolStripMenuItem1, Me.CloseToolStripMenuItem})
-        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 120)
+        Me.DockContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FloatToolStripMenuItem, Me.DockToolStripMenuItem, Me.AutoHideToolStripMenuItem, Me.ToolStripMenuItem1, Me.CloseToolStripMenuItem})
+        Me.DockContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.DockContextMenuStrip1.Size = New System.Drawing.Size(181, 120)
         '
         'FloatToolStripMenuItem
         '
@@ -80,12 +80,12 @@ Partial Class ToolWindow
         Me.ClientSize = New System.Drawing.Size(530, 675)
         Me.Name = "Form1"
         Me.Text = "Form1"
-        Me.ContextMenuStrip1.ResumeLayout(False)
+        Me.DockContextMenuStrip1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
 
-    Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
+    Friend WithEvents DockContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents FloatToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents DockToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents AutoHideToolStripMenuItem As ToolStripMenuItem
