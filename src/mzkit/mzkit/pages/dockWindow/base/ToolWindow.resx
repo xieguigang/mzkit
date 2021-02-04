@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -121,14 +121,6 @@
     <value>17, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="DockToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAABSSURBVFhH7dehEcBADANB1+b+e0lCTJUGPPPoZYMDR4SW
-        KiSN1o7Ooqo02R5AZloDAGAv4H2+qwEAAAAAAAAAjgBX+wBTzQO6v+asHZ21oy/FD2+xhdWVPl3HAAAA
-        AElFTkSuQmCC
-</value>
-  </data>
   <data name="FloatToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccqhmAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
@@ -696,6 +688,14 @@
         YhSjGMUoRjGKUYxiFKMYxShGMYpRjGIUoxjFKEYxilGMYhSjGMUoRjGKUYxiFKMYxShGMYpRjGIUoxjF
         KEYxilGMYhSjGMUoRjGKUYxiFKMYxShGMYpRjGIUoxjFKEYxilGMYhSjGMUoRjFKK5d/9+/+fy+hQY3V
         BV37AAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="DockToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAABSSURBVFhH7dehEcBADANB1+b+e0lCTJUGPPPoZYMDR4SW
+        KiSN1o7Ooqo02R5AZloDAGAv4H2+qwEAAAAAAAAAjgBX+wBTzQO6v+asHZ21oy/FD2+xhdWVPl3HAAAA
+        AElFTkSuQmCC
 </value>
   </data>
   <data name="CloseToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
