@@ -634,6 +634,9 @@
     <EmbeddedResource Include="pages\contextMenu\ToggleSlider.resx">
       <DependentUpon>ToggleSlider.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="pages\dockWindow\base\DocumentWindow.resx">
+      <DependentUpon>DocumentWindow.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\base\ToolWindow.resx">
       <DependentUpon>ToolWindow.vb</DependentUpon>
     </EmbeddedResource>
