@@ -52,14 +52,14 @@ Namespace DockSample
         Inherits DockContent
 
         Friend WithEvents VS2015LightTheme1 As New VS2015LightTheme
+        Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
+        Private components As IContainer
+        Friend WithEvents DockToolStripMenuItem As ToolStripMenuItem
+        Friend WithEvents AutoHideToolStripMenuItem As ToolStripMenuItem
+        Friend WithEvents FloatToolStripMenuItem As ToolStripMenuItem
+        Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
+        Friend WithEvents CloseToolStripMenuItem As ToolStripMenuItem
         Friend WithEvents VisualStudioToolStripExtender1 As VisualStudioToolStripExtender
-
-        Public Sub New()
-            InitializeComponent()
-            AutoScaleMode = AutoScaleMode.Dpi
-            DoubleBuffered = True
-            VisualStudioToolStripExtender1 = New VisualStudioToolStripExtender(components)
-        End Sub
 
         Protected Sub ApplyVsTheme(ParamArray items As ToolStrip())
             For Each item In items
@@ -138,6 +138,71 @@ Namespace DockSample
         Private Sub ToolWindow_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
             DockState = DockState.Hidden
             e.Cancel = True
+        End Sub
+
+        Private Sub ToolWindow_Load(sender As Object, e As EventArgs) Handles Me.Load
+            AutoScaleMode = AutoScaleMode.Dpi
+            DoubleBuffered = True
+            VisualStudioToolStripExtender1 = New VisualStudioToolStripExtender(components)
+        End Sub
+
+        Private Sub InitializeComponent()
+            Me.components = New System.ComponentModel.Container()
+            Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ToolWindow))
+            Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+            Me.CloseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.DockToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.FloatToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.AutoHideToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
+            Me.ContextMenuStrip1.SuspendLayout()
+            Me.SuspendLayout()
+            '
+            'ContextMenuStrip1
+            '
+            Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DockToolStripMenuItem, Me.AutoHideToolStripMenuItem, Me.FloatToolStripMenuItem, Me.ToolStripMenuItem1, Me.CloseToolStripMenuItem})
+            Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+            Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 120)
+            '
+            'CloseToolStripMenuItem
+            '
+            Me.CloseToolStripMenuItem.Image = CType(resources.GetObject("CloseToolStripMenuItem.Image"), System.Drawing.Image)
+            Me.CloseToolStripMenuItem.Name = "CloseToolStripMenuItem"
+            Me.CloseToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+            Me.CloseToolStripMenuItem.Text = "Close"
+            '
+            'DockToolStripMenuItem
+            '
+            Me.DockToolStripMenuItem.Image = CType(resources.GetObject("DockToolStripMenuItem.Image"), System.Drawing.Image)
+            Me.DockToolStripMenuItem.Name = "DockToolStripMenuItem"
+            Me.DockToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+            Me.DockToolStripMenuItem.Text = "Dock"
+            '
+            'FloatToolStripMenuItem
+            '
+            Me.FloatToolStripMenuItem.Image = CType(resources.GetObject("FloatToolStripMenuItem.Image"), System.Drawing.Image)
+            Me.FloatToolStripMenuItem.Name = "FloatToolStripMenuItem"
+            Me.FloatToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+            Me.FloatToolStripMenuItem.Text = "Float"
+            '
+            'AutoHideToolStripMenuItem
+            '
+            Me.AutoHideToolStripMenuItem.Name = "AutoHideToolStripMenuItem"
+            Me.AutoHideToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+            Me.AutoHideToolStripMenuItem.Text = "Auto Hide"
+            '
+            'ToolStripMenuItem1
+            '
+            Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+            Me.ToolStripMenuItem1.Size = New System.Drawing.Size(177, 6)
+            '
+            'ToolWindow
+            '
+            Me.ClientSize = New System.Drawing.Size(413, 581)
+            Me.Name = "ToolWindow"
+            Me.ContextMenuStrip1.ResumeLayout(False)
+            Me.ResumeLayout(False)
+
         End Sub
     End Class
 End Namespace
