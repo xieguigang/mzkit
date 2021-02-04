@@ -1,8 +1,10 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Language
 Imports mzkit.My
 Imports Task
@@ -20,8 +22,22 @@ Public Class frmSRMIonsExplorer
         TICRoot.Tag = TIC
         TICRoot.ImageIndex = 0
 
+        If Not Globals.Settings.MRMLibfile.FileExists Then
+            Globals.Settings.MRMLibfile = New Configuration.Settings().MRMLibfile
+        End If
+
+        Dim ionsLib As New IonLibrary(Globals.Settings.MRMLibfile.LoadCsv(Of IonPair))
+        Dim display As String
+
         For Each chr As chromatogram In list.Where(Function(i) Not i.id.TextEquals("TIC"))
-            With TICRoot.Nodes.Add(chr.ToString)
+            Dim ionRef As New IonPair With {
+                .precursor = chr.precursor.MRMTargetMz,
+                .product = chr.product.MRMTargetMz
+            }
+
+            display = ionsLib.GetDisplay(ionRef)
+
+            With TICRoot.Nodes.Add(display)
                 .Tag = chr
                 .ImageIndex = 1
                 .SelectedImageIndex = 1

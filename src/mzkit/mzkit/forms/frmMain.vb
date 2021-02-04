@@ -813,6 +813,7 @@ Public Class frmMain
 
     Private Sub initializeVSPanel()
         PanelBase.Controls.Add(Me.dockPanel)
+        dockPanel.ShowDocumentIcon = True
 
         Me.dockPanel.Dock = DockStyle.Fill
         Me.dockPanel.DockBackColor = System.Drawing.Color.FromArgb(CType(CType(41, Byte), Integer), CType(CType(57, Byte), Integer), CType(CType(85, Byte), Integer))

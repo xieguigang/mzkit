@@ -85,6 +85,10 @@ Namespace MRM.Models
             End If
         End Function
 
+        Public Function EqualsTo(other As IonPair, tolerance As Tolerance) As Boolean
+            Return tolerance(other.precursor, precursor) AndAlso tolerance(other.product, product)
+        End Function
+
         ''' <summary>
         ''' 
         ''' </summary>
