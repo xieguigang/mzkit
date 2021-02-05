@@ -74,9 +74,22 @@ Module data
         Return table
     End Function
 
+    ''' <summary>
+    ''' get chromatogram data for a specific metabolite with given m/z from the ms1 scans data.
+    ''' </summary>
+    ''' <param name="ms1">a sequence data of ms1 scans</param>
+    ''' <param name="mz">target mz value</param>
+    ''' <param name="ppm">
+    ''' tolerance value in unit ppm for extract mz data from the given ms1 ion scans.
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("XIC")>
     <RApiReturn(GetType(ms1_scan))>
-    Public Function XIC(<RRawVectorArgument> ms1 As Object, mz#, Optional ppm# = 20, Optional env As Environment = Nothing) As Object
+    Public Function XIC(<RRawVectorArgument> ms1 As Object, mz#,
+                        Optional ppm# = 20,
+                        Optional env As Environment = Nothing) As Object
+
         Dim ms1_scans As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ms1, env)
 
         If ms1_scans.isError Then
@@ -92,9 +105,21 @@ Module data
         Return xicFilter
     End Function
 
+    ''' <summary>
+    ''' slice a region of ms1 scan data by a given rt window.
+    ''' </summary>
+    ''' <param name="ms1">a sequence of ms1 scan data.</param>
+    ''' <param name="rtmin"></param>
+    ''' <param name="rtmax"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("rt_slice")>
     <RApiReturn(GetType(ms1_scan))>
-    Public Function RtSlice(<RRawVectorArgument> ms1 As Object, rtmin#, rtmax#, Optional env As Environment = Nothing) As Object
+    Public Function RtSlice(<RRawVectorArgument>
+                            ms1 As Object,
+                            rtmin#, rtmax#,
+                            Optional env As Environment = Nothing) As Object
+
         Dim ms1_scans As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ms1, env)
 
         If ms1_scans.isError Then
@@ -118,7 +143,10 @@ Module data
     ''' <returns></returns>
     <ExportAPI("intensity")>
     <RApiReturn(GetType(Double))>
-    Public Function getIntensity(<RRawVectorArgument> ticks As Object, Optional env As Environment = Nothing) As Object
+    Public Function getIntensity(<RRawVectorArgument>
+                                 ticks As Object,
+                                 Optional env As Environment = Nothing) As Object
+
         Dim scans As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ticks, env)
 
         If scans.isError Then
@@ -130,9 +158,18 @@ Module data
             .DoCall(AddressOf vector.asVector)
     End Function
 
+    ''' <summary>
+    ''' get scan time value from the ion scan points
+    ''' </summary>
+    ''' <param name="ticks"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("scan_time")>
     <RApiReturn(GetType(Double))>
-    Public Function getScantime(<RRawVectorArgument> ticks As Object, Optional env As Environment = Nothing) As Object
+    Public Function getScantime(<RRawVectorArgument>
+                                ticks As Object,
+                                Optional env As Environment = Nothing) As Object
+
         Dim scans As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ticks, env)
 
         If scans.isError Then

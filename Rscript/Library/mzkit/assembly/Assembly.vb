@@ -439,7 +439,11 @@ Module Assembly
     ''' <returns></returns>
     <ExportAPI("ms1.scans")>
     <RApiReturn(GetType(ms1_scan))>
-    Public Function getMs1Scans(<RRawVectorArgument> raw As Object, Optional centroid As Object = Nothing, Optional env As Environment = Nothing) As Object
+    Public Function getMs1Scans(<RRawVectorArgument>
+                                raw As Object,
+                                Optional centroid As Object = Nothing,
+                                Optional env As Environment = Nothing) As Object
+
         Dim files As String() = REnv.asVector(Of String)(raw)
         Dim ms1 As New List(Of ms1_scan)
         Dim tolerance As Tolerance = Nothing

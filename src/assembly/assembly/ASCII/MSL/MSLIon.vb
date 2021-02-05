@@ -65,6 +65,11 @@ Namespace ASCII.MSL
         <Column(Name:="CASNO")> Public Property CASNO As String
         <Column(Name:="NIST")> Public Property Nist As String
         <Column(Name:="RI")> Public Property RI As String
+        ''' <summary>
+        ''' the <see cref="Name"/> of the internal standard metabolite.
+        ''' </summary>
+        ''' <returns></returns>
+        <Column(Name:="IS")> Public Property [IS] As String
         <Column(Name:="COMMENT")> Public Property Comment As String
         <Column(Name:="SOURCE")> Public Property Source As String
         <Column(Name:="MW")> Public Property MW As Double
