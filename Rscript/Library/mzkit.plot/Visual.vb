@@ -131,8 +131,19 @@ Module Visual
         Return SpectrumPlot(spectrum)
     End Function
 
+    ''' <summary>
+    ''' plot raw scatter matrix based on a given sequence of ms1 scans data
+    ''' </summary>
+    ''' <param name="ms1_scans">
+    ''' a sequence of ms1 scan data.
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("raw_scatter")>
-    Public Function PlotRawScatter(<RRawVectorArgument> ms1_scans As Object, Optional env As Environment = Nothing) As Object
+    Public Function PlotRawScatter(<RRawVectorArgument>
+                                   ms1_scans As Object,
+                                   Optional env As Environment = Nothing) As Object
+
         Dim points As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ms1_scans, env)
 
         If points.isError Then
