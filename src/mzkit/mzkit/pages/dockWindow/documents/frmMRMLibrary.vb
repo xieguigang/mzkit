@@ -93,4 +93,12 @@ Public Class frmMRMLibrary
     Public Function Save(path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
         Return Save(path, encoding.CodePage)
     End Function
+
+    Private Sub DeleteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeleteToolStripMenuItem.Click
+        If DataGridView1.SelectedRows.Count > 0 Then
+            For Each row As DataGridViewRow In DataGridView1.SelectedRows
+                DataGridView1.Rows.RemoveAt(row.Index)
+            Next
+        End If
+    End Sub
 End Class

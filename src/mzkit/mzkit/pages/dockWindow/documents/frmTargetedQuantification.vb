@@ -1,10 +1,13 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Text
 Imports mzkit.My
 Imports RibbonLib.Controls.Events
 Imports RibbonLib.Interop
+Imports Task
 
 Public Class frmTargetedQuantification
 
@@ -32,17 +35,28 @@ Public Class frmTargetedQuantification
                 DataGridView1.Rows.Clear()
                 DataGridView1.Columns.Clear()
 
+                CheckedListBox1.Items.Clear()
+
                 DataGridView1.Columns.Add(New DataGridViewLinkColumn With {.HeaderText = "Features"})
 
                 For Each file As NamedValue(Of String) In files
                     Call DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.HeaderText = file.Name})
                 Next
 
+                If Not Globals.Settings.MRMLibfile.FileExists Then
+                    Globals.Settings.MRMLibfile = New Configuration.Settings().MRMLibfile
+                End If
+
+                Dim ionsLib As New IonLibrary(Globals.Settings.MRMLibfile.LoadCsv(Of IonPair))
+
                 For Each ion As IonPair In files _
                     .Select(Function(file) file.Value) _
                     .GetAllFeatures
 
-                    Call DataGridView1.Rows.Add($"{ion.precursor}/{ion.product}")
+                    Dim refId As String = ionsLib.GetDisplay(ion)
+
+                    Call DataGridView1.Rows.Add(refId)
+                    Call CheckedListBox1.Items.Add(refId)
                 Next
             End If
         End Using
