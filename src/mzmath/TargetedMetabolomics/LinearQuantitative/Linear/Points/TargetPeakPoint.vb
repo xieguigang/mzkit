@@ -81,18 +81,20 @@ Namespace LinearQuantitative.Linear
         End Function
 
         Public Function GetIonTPA(baselineQuantile As Double, integrator As PeakAreaMethods) As IonTPA
-            Dim deconv = Peak.ticks _
+            Dim deconv As (area#, baseline#, maxinto#) = Peak.ticks _
                 .Shadows _
                 .TPAIntegrator(Peak, baselineQuantile, peakAreaMethod:=integrator)
             Dim maxinto As ChromatogramTick = Peak.ticks _
-                .OrderByDescending(Function(t) t.Intensity) _
+                .OrderByDescending(Function(t)
+                                       Return t.Intensity
+                                   End Function) _
                 .First
 
             Return New IonTPA With {
                 .name = Name,
                 .area = deconv.area,
                 .baseline = deconv.baseline,
-                .maxPeakHeight = deconv.maxPeakHeight,
+                .maxPeakHeight = deconv.maxinto,
                 .peakROI = Peak.window,
                 .rt = maxinto.Time
             }
