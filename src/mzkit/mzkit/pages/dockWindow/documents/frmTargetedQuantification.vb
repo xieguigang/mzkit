@@ -1,12 +1,15 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Content
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
 Imports mzkit.My
@@ -130,19 +133,21 @@ Public Class frmTargetedQuantification
 
     End Sub
 
+    Private Iterator Function GetTableLevelKeys() As IEnumerable(Of String)
+        For i As Integer = 2 To DataGridView1.Columns.Count - 1
+            Yield DataGridView1.Columns(i).HeaderText
+        Next
+    End Function
+
     Private Sub SaveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveToolStripMenuItem.Click, ToolStripButton1.Click
         Dim ref As New List(Of Standards)
-        Dim levelKeys As New List(Of String)
+        Dim levelKeys As String() = GetTableLevelKeys.ToArray
         Dim profileName As String = ToolStripComboBox1.Text
 
         If profileName.StringEmpty Then
             Call MessageBox.Show("Empty profile name!", "Targeted Quantification Linear", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Return
         End If
-
-        For i As Integer = 2 To DataGridView1.Columns.Count - 1
-            levelKeys.Add(DataGridView1.Columns(i).HeaderText)
-        Next
 
         Dim ionLib As IonLibrary = Globals.LoadIonLibrary
 
@@ -260,8 +265,22 @@ Public Class frmTargetedQuantification
         Call reloadProfileNames()
     End Sub
 
+    Private Function GetContentTable(row As DataGridViewRow) As ContentTable
+        Dim ionId As String = any.ToString(row.Cells(0).Value)
+        Dim isId As String = any.ToString(row.Cells(1).Value)
+        Dim contentLevel As New Dictionary(Of String, Double)
+
+        For Each id As SeqValue(Of String) In GetTableLevelKeys().SeqIterator
+            contentLevel(id.value) = any.ToString(row.Cells(id + 2).Value).ParseDouble
+        Next
+
+        Dim contentSampleLevel As New SampleContentLevels(contentLevel)
+        Dim ref As New Standards With {.C = New Dictionary(Of String, Double), .ID = ionId, .[IS] = isId, .ISTD = isId, .Name = ionId}
+
+        Return New ContentTable(New Dictionary(Of String, SampleContentLevels) From {{ionId, contentSampleLevel}}, New Dictionary(Of String, Standards) From {{ionId, ref}}, New Dictionary(Of String, [IS]) From {{isId, New [IS] With {.ID = isId, .name = isId}}})
+    End Function
+
     Private Sub DataGridView1_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellDoubleClick
-        Dim ref As New Standards With {.C = New Dictionary(Of String, Double)}
         Dim ionLib As IonLibrary = Globals.LoadIonLibrary
 
         If e.ColumnIndex <> 0 Then
@@ -269,18 +288,38 @@ Public Class frmTargetedQuantification
         End If
 
         Dim id As String = any.ToString(DataGridView1.Rows(e.RowIndex).Cells(0).Value)
+        Dim isid As String = any.ToString(DataGridView1.Rows(e.RowIndex).Cells(1).Value)
         Dim ion As IonPair = ionLib.GetIonByKey(id)
+        Dim isIon As IonPair = ionLib.GetIonByKey(isid)
         Dim da3 As Tolerance = Tolerance.DeltaMass(0.3)
-        Dim chr = linearFiles _
+        Dim chr As New List(Of TargetPeakPoint)
+
+        Call linearFiles _
             .Select(Function(file)
                         Dim ionLine As chromatogram = indexedmzML.LoadFile(file.Value).mzML.run.chromatogramList.list _
                             .Where(Function(c) ion.Assert(c, da3)) _
                             .FirstOrDefault
 
-                        Return New NamedValue(Of TargetPeakPoint)(file.Name, MRMIonExtract.GetTargetPeak(ion, ionLine))
+                        Return MRMIonExtract.GetTargetPeak(ion, ionLine)
                     End Function) _
-            .ToArray
+            .DoCall(AddressOf chr.AddRange)
 
+        If Not isid.StringEmpty Then
+            Call linearFiles _
+                .Select(Function(file)
+                            Dim ionLine As chromatogram = indexedmzML.LoadFile(file.Value).mzML.run.chromatogramList.list _
+                                .Where(Function(c) isIon.Assert(c, da3)) _
+                                .FirstOrDefault
 
+                            Return MRMIonExtract.GetTargetPeak(isIon, ionLine)
+                        End Function) _
+                .DoCall(AddressOf chr.AddRange)
+        End If
+
+        Dim algorithm As New InternalStandardMethod(GetContentTable(DataGridView1.Rows(e.RowIndex)), PeakAreaMethods.NetPeakSum)
+        Dim standardCurve As StandardCurve = algorithm.ToLinears(chr).First
+        Dim plot = standardCurve.StandardCurves.AsGDIImage
+
+        PictureBox1.BackgroundImage = plot
     End Sub
 End Class
