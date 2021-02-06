@@ -1,5 +1,7 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
@@ -275,7 +277,7 @@ Public Class frmTargetedQuantification
                             .Where(Function(c) ion.Assert(c, da3)) _
                             .FirstOrDefault
 
-                        Return New NamedValue(Of chromatogram)(file.Name, ionLine)
+                        Return New NamedValue(Of TargetPeakPoint)(file.Name, MRMIonExtract.GetTargetPeak(ion, ionLine))
                     End Function) _
             .ToArray
 

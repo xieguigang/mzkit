@@ -44,6 +44,7 @@
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
@@ -71,32 +72,39 @@ Namespace MRM
                 .ToArray
         End Sub
 
+        Public Shared Function GetTargetPeak(ion As IonPair, chr As MarkupData.mzML.chromatogram) As TargetPeakPoint
+            Dim ticks As ChromatogramTick() = chr.Ticks
+            Dim peakWin As DoubleRange = ticks.Shadows.MRMPeak(baselineQuantile:=0.65)
+
+            ticks = ticks.Shadows.PickArea(peakWin).ToArray
+
+            Dim peak As New ROIPeak With {
+                .window = peakWin,
+                .base = ticks.Baseline(0.65),
+                .peakHeight = ticks _
+                    .Select(Function(t) t.Intensity) _
+                    .Max,
+                .ticks = ticks
+            }
+
+            Return New TargetPeakPoint With {
+                .Name = ion.accession,
+                .Peak = peak,
+                .ChromatogramSummary = peak.ticks _
+                    .Summary _
+                    .ToArray
+            }
+        End Function
+
         Public Overrides Iterator Function GetSamplePeaks(sample As indexedmzML) As IEnumerable(Of TargetPeakPoint)
             Dim sampleName As String = DirectCast(sample, IFileReference).FilePath.BaseName
+            Dim point As TargetPeakPoint
 
             For Each ionData In sample.mzML.run.chromatogramList.list.MRMSelector(ionpairs, ms1ppm)
-                Dim ticks As ChromatogramTick() = ionData.chromatogram.Ticks
-                Dim peakWin As DoubleRange = ticks.Shadows.MRMPeak(baselineQuantile:=0.65)
+                point = GetTargetPeak(ionData.ion.target, ionData.chromatogram)
+                point.SampleName = sampleName
 
-                ticks = ticks.Shadows.PickArea(peakWin).ToArray
-
-                Dim peak As New ROIPeak With {
-                    .window = peakWin,
-                    .base = ticks.Baseline(0.65),
-                    .peakHeight = ticks _
-                        .Select(Function(t) t.Intensity) _
-                        .Max,
-                    .ticks = ticks
-                }
-
-                Yield New TargetPeakPoint With {
-                    .Name = ionData.ion.target.accession,
-                    .SampleName = sampleName,
-                    .Peak = peak,
-                    .ChromatogramSummary = peak.ticks _
-                        .Summary _
-                        .ToArray
-                }
+                Yield point
             Next
         End Function
     End Class
