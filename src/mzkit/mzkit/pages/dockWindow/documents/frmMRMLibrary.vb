@@ -25,33 +25,9 @@ Public Class frmMRMLibrary
 
     Private Sub TabPage1_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown, DataGridView1.KeyDown
         If e.KeyCode = Keys.V AndAlso e.Control AndAlso Clipboard.ContainsText Then
-            Call pasteData()
+            Call DataGridView1.PasteTextData()
         End If
     End Sub
-
-    Private Sub pasteData()
-        Dim text As String = Clipboard.GetText
-
-        If DataGridView1.SelectedCells.Count = 0 Then
-            Return
-        End If
-
-        Dim i As Integer = DataGridView1.SelectedCells.Item(Scan0).RowIndex
-        Dim j As Integer = DataGridView1.SelectedCells.Item(Scan0).ColumnIndex
-
-        If text.Contains(vbCr) OrElse text.Contains(vbLf) Then
-            Dim colCells As String() = text.LineTokens
-
-            For ii As Integer = 0 To colCells.Length - 1
-                DataGridView1.Rows(ii + i).Cells(j).Value = colCells(ii)
-            Next
-        Else
-            Dim rowCells As String() = text.Split(ASCII.TAB)
-
-
-        End If
-    End Sub
-
 
     Private Sub frmMRMLibrary_Load(sender As Object, e As EventArgs) Handles Me.Load
         TabText = "MRM ions Library"
