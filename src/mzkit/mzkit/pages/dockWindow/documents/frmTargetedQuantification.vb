@@ -1,4 +1,5 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
@@ -19,6 +20,16 @@ Public Class frmTargetedQuantification
         AddHandler MyApplication.ribbon.ImportsLinear.ExecuteEvent, AddressOf loadLinearRaw
 
         TabText = "Targeted Quantification"
+
+        Call reloadProfileNames()
+    End Sub
+
+    Private Sub reloadProfileNames()
+        ToolStripComboBox1.Items.Clear()
+
+        For Each key As String In linearProfileNames()
+            ToolStripComboBox1.Items.Add(key)
+        Next
     End Sub
 
     Private Sub frmTargetedQuantification_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
@@ -67,6 +78,8 @@ Public Class frmTargetedQuantification
             .ToArray
     End Function
 
+    Dim linearFiles As NamedValue(Of String)()
+
     Private Sub ImportsLinearReferenceToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImportsLinearReferenceToolStripMenuItem.Click
         Using importsFile As New OpenFileDialog With {
             .Filter = "LC-MSMS / GC-MS Targeted(*.mzML)|*.mzML|GC-MS Targeted(*.cdf)|*.cdf",
@@ -89,14 +102,12 @@ Public Class frmTargetedQuantification
                     Call DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.HeaderText = file.Name})
                 Next
 
-                If Not Globals.Settings.MRMLibfile.FileExists Then
-                    Globals.Settings.MRMLibfile = New Configuration.Settings().MRMLibfile
-                End If
-
-                Dim ionsLib As New IonLibrary(Globals.Settings.MRMLibfile.LoadCsv(Of IonPair))
+                Dim ionsLib As IonLibrary = Globals.LoadIonLibrary
                 Dim allFeatures As IonPair() = files _
                     .Select(Function(file) file.Value) _
                     .GetAllFeatures
+
+                linearFiles = files
 
                 For Each ion As IonPair In allFeatures
                     Dim refId As String = ionsLib.GetDisplay(ion)
@@ -117,18 +128,47 @@ Public Class frmTargetedQuantification
 
     End Sub
 
-    Private Sub SaveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveToolStripMenuItem.Click
+    Private Sub SaveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveToolStripMenuItem.Click, ToolStripButton1.Click
         Dim ref As New List(Of Standards)
         Dim levelKeys As New List(Of String)
+        Dim profileName As String = ToolStripComboBox1.Text
+
+        If profileName.StringEmpty Then
+            Call MessageBox.Show("Empty profile name!", "Targeted Quantification Linear", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return
+        End If
 
         For i As Integer = 2 To DataGridView1.Columns.Count - 1
             levelKeys.Add(DataGridView1.Columns(i).HeaderText)
         Next
 
+        Dim ionLib As IonLibrary = Globals.LoadIonLibrary
+
         For Each row As DataGridViewRow In DataGridView1.Rows
             Dim rid As String = any.ToString(row.Cells(0).Value)
             Dim IS_id As String = any.ToString(row.Cells(1).Value)
             Dim levels As New Dictionary(Of String, Double)
+            Dim ion As IonPair
+
+            If rid.StringEmpty AndAlso IS_id.StringEmpty Then
+                Continue For
+            End If
+
+            ion = ionLib.GetIonByKey(rid)
+
+            If Not ion Is Nothing Then
+                rid = $"{ion.precursor}/{ion.product}"
+            ElseIf rid.IsPattern("Ion \[.+?\]") Then
+                rid = rid.GetStackValue("[", "]")
+            End If
+
+            ion = ionLib.GetIonByKey(IS_id)
+
+            If Not ion Is Nothing Then
+                IS_id = $"{ion.precursor}/{ion.product}"
+            ElseIf IS_id.IsPattern("Ion \[.+?\]") Then
+                IS_id = IS_id.GetStackValue("[", "]")
+            End If
 
             For i As Integer = 2 To DataGridView1.Columns.Count - 1
                 levels(levelKeys(i - 2)) = any.ToString(row.Cells(i).Value).ParseDouble
@@ -144,14 +184,101 @@ Public Class frmTargetedQuantification
             }.DoCall(AddressOf ref.Add)
         Next
 
-        Dim file As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) & "/mzkit/standards.csv"
+        Dim file As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) & $"/mzkit/linears/{profileName}.csv"
 
         Call ref.SaveTo(file)
+        Call reloadProfileNames()
     End Sub
+
+    Private Function linearProfileNames() As String()
+        Return (Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) & $"/mzkit/linears/").ListFiles("*.csv").Select(AddressOf BaseName).ToArray
+    End Function
 
     Private Sub DataGridView1_KeyDown(sender As Object, e As KeyEventArgs) Handles DataGridView1.KeyDown
         If e.KeyCode = Keys.V AndAlso e.Control AndAlso Clipboard.ContainsText Then
             Call DataGridView1.PasteTextData()
         End If
+    End Sub
+
+    Private Sub ToolStripComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ToolStripComboBox1.SelectedIndexChanged
+        Dim profileName As String = any.ToString(ToolStripComboBox1.Items(ToolStripComboBox1.SelectedIndex))
+        Dim file As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) & $"/mzkit/linears/{profileName}.csv"
+        Dim ionLib As IonLibrary = Globals.LoadIonLibrary
+        Dim ref As Standards() = file.LoadCsv(Of Standards)
+
+        DataGridView1.Rows.Clear()
+        DataGridView1.Columns.Clear()
+
+        DataGridView1.Columns.Add(New DataGridViewLinkColumn With {.HeaderText = "Features"})
+        DataGridView1.Columns.Add(New DataGridViewComboBoxColumn With {.HeaderText = "IS"})
+
+        Dim levelKeys As String() = ref(Scan0).C.Keys.ToArray
+
+        For Each level As String In levelKeys
+            DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.HeaderText = level})
+        Next
+
+        Dim islist As New List(Of String)
+
+        For Each ion As Standards In ref
+            Dim ionpairtext = ion.ID.Split("/"c)
+            Dim ionpair As New IonPair With {.precursor = ionpairtext(0), .product = ionpairtext(1)}
+
+            islist.Add(ionLib.GetDisplay(ionpair))
+        Next
+
+        For Each ion As Standards In ref
+            Dim ionpairtext = ion.ID.Split("/"c)
+            Dim ionpair As New IonPair With {.precursor = ionpairtext(0), .product = ionpairtext(1)}
+
+            ion.ID = ionLib.GetDisplay(ionpair)
+
+            If Not ion.IS.StringEmpty Then
+                ionpairtext = ion.IS.Split("/"c)
+                ionpair = New IonPair With {.precursor = ionpairtext(0), .product = ionpairtext(1)}
+                ion.IS = ionLib.GetDisplay(ionpair)
+            End If
+
+            Dim i As Integer = DataGridView1.Rows.Add(ion.ID)
+            Dim IScandidate As DataGridViewComboBoxCell = DataGridView1.Rows(i).Cells(1)
+
+            For Each id As String In islist
+                IScandidate.Items.Add(id)
+            Next
+
+            IScandidate.Value = ion.IS
+
+            For j As Integer = 0 To levelKeys.Length - 1
+                DataGridView1.Rows(i).Cells(j + 2).Value = CStr(ion.C(levelKeys(j)))
+            Next
+        Next
+    End Sub
+
+    Private Sub ToolStripButton3_Click(sender As Object, e As EventArgs) Handles ToolStripButton3.Click
+        Call reloadProfileNames()
+    End Sub
+
+    Private Sub DataGridView1_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellDoubleClick
+        Dim ref As New Standards With {.C = New Dictionary(Of String, Double)}
+        Dim ionLib As IonLibrary = Globals.LoadIonLibrary
+
+        If e.ColumnIndex <> 0 Then
+            Return
+        End If
+
+        Dim id As String = any.ToString(DataGridView1.Rows(e.RowIndex).Cells(0).Value)
+        Dim ion As IonPair = ionLib.GetIonByKey(id)
+        Dim da3 As Tolerance = Tolerance.DeltaMass(0.3)
+        Dim chr = linearFiles _
+            .Select(Function(file)
+                        Dim ionLine As chromatogram = indexedmzML.LoadFile(file.Value).mzML.run.chromatogramList.list _
+                            .Where(Function(c) ion.Assert(c, da3)) _
+                            .FirstOrDefault
+
+                        Return New NamedValue(Of chromatogram)(file.Name, ionLine)
+                    End Function) _
+            .ToArray
+
+
     End Sub
 End Class

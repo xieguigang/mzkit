@@ -84,7 +84,7 @@ Module DataControlHandler
 
     <Extension>
     Public Sub PasteTextData(table As DataGridView)
-        Dim text As String = Clipboard.GetText
+        Dim text As String = Strings.Trim(Clipboard.GetText).Trim(ASCII.CR, ASCII.LF, ASCII.TAB)
 
         If table.SelectedCells.Count = 0 Then
             Return

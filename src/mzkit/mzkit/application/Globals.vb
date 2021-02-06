@@ -49,7 +49,9 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions.BinBox
 Imports Microsoft.VisualBasic.Text.Xml.Models
@@ -326,5 +328,15 @@ Module Globals
         Else
             Return XIC.Max
         End If
+    End Function
+
+    Public Function LoadIonLibrary() As IonLibrary
+        If Not Globals.Settings.MRMLibfile.FileExists Then
+            Globals.Settings.MRMLibfile = New Configuration.Settings().MRMLibfile
+        End If
+
+        Dim ionsLib As New IonLibrary(Globals.Settings.MRMLibfile.LoadCsv(Of IonPair))
+
+        Return ionsLib
     End Function
 End Module

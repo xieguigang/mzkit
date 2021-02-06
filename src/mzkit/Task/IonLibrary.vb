@@ -23,4 +23,16 @@ Public Class IonLibrary
         Return refId
     End Function
 
+    Public Function GetIonByKey(key As String) As IonPair
+        If key.StringEmpty Then
+            Return Nothing
+        Else
+            Return ions _
+                .Where(Function(i)
+                           Return i.accession = key OrElse i.name = key
+                       End Function) _
+                .FirstOrDefault
+        End If
+    End Function
+
 End Class
