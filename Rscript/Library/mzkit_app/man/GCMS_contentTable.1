@@ -1,4 +1,4 @@
-﻿.TH GCMS_CONTENTTABLE 1 2021-02-07 "" "GCMS_contentTable"
+﻿.TH GCMS_CONTENTTABLE 1 2021-02-07 "" "Create content levels table"
 .SH NAME
 GCMS_contentTable \- GCMS_contentTable(mslIons, calfiles)
 .SH SYNOPSIS
@@ -10,9 +10,13 @@ GCMS_contentTable \- GCMS_contentTable(mslIons, calfiles)
 .PP
 \fBcalfiles\fB \fR\- 
 .PP
+.SH DETAILS
+.PP
+the file names of the linear reference samples should be the content value like: ``100ppm``, ``50ppb``, etc. This method will parse the contents value from the ``calfiles`` file name.
+.PP
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.GCMS_contentTable at GCMS_SIM.R:line 24
+SMRUCC/R#.declare_function.GCMS_contentTable at GCMS_SIM.R:line 42
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang, MIT Licensed 2021
