@@ -325,7 +325,13 @@ Public Class frmTargetedQuantification
 
         Dim algorithm As New InternalStandardMethod(GetContentTable(DataGridView1.Rows(e.RowIndex)), PeakAreaMethods.NetPeakSum)
         Dim standardCurve As StandardCurve = algorithm.ToLinears(chr).First
-        Dim plot = standardCurve.StandardCurves.AsGDIImage
+        Dim plot As Image = standardCurve _
+            .StandardCurves(
+                name:=$"Linear of {id}",
+                margin:="padding: 100px 100px 200px 200px;",
+                gridFill:="white"
+            ) _
+            .AsGDIImage
 
         PictureBox1.BackgroundImage = plot
     End Sub
