@@ -54,7 +54,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Scripting
-Imports mzchromatogram = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.chromatogram
+Imports chromatogramTicks = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.chromatogram
 
 Namespace MRM.Data
 
@@ -117,7 +117,10 @@ Namespace MRM.Data
         ''' <param name="ionPairs"></param>
         ''' <returns>Nothing for ion not found</returns>
         <Extension>
-        Public Function MRMSelector(chromatograms As IEnumerable(Of mzchromatogram), ionPairs As IEnumerable(Of IsomerismIonPairs), tolerance As Tolerance) As IEnumerable(Of (ion As IsomerismIonPairs, chromatogram As mzchromatogram))
+        Public Function MRMSelector(chromatograms As IEnumerable(Of chromatogramTicks),
+                                    ionPairs As IEnumerable(Of IsomerismIonPairs),
+                                    tolerance As Tolerance) As IEnumerable(Of (ion As IsomerismIonPairs, chromatogram As chromatogramTicks))
+
             With chromatograms.ToArray
                 Return ionPairs _
                     .Select(Function(ion)

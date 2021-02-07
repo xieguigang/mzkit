@@ -57,8 +57,6 @@ Namespace MarkupData.mzML
     <HideModuleName>
     Public Module Extensions
 
-        Public Const Xmlns$ = "http://psi.hupo.org/ms/mzml"
-
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function GetAllMs1(spectrums As IEnumerable(Of spectrum)) As IEnumerable(Of spectrum)
@@ -81,7 +79,7 @@ Namespace MarkupData.mzML
         <Extension>
         Public Function PopulateMS1(filePath As String) As IEnumerable(Of (scan_time#, mz#, intensity#))
             Return filePath _
-                .LoadXmlDataSet(Of spectrum)(, xmlns:=mzML.Xmlns) _
+                .LoadXmlDataSet(Of spectrum)(, xmlns:=indexedmzML.xmlns) _
                 .GetAllMs1 _
                 .Select(Function(ms1)
                             Dim time# = ms1.scan_time
@@ -101,7 +99,7 @@ Namespace MarkupData.mzML
         <Extension>
         Public Function PopulateMS2(filePath As String) As IEnumerable(Of LibraryMatrix)
             Return filePath _
-                .LoadUltraLargeXMLDataSet(Of spectrum)(, xmlns:=mzML.Xmlns) _
+                .LoadUltraLargeXMLDataSet(Of spectrum)(, xmlns:=indexedmzML.xmlns) _
                 .GetAllMs2 _
                 .Select(Function(ms2)
                             Return New LibraryMatrix With {
@@ -120,7 +118,7 @@ Namespace MarkupData.mzML
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function LoadChromatogramList(path As String) As IEnumerable(Of chromatogram)
-            Return path.LoadXmlDataSet(Of chromatogram)(, xmlns:=mzML.Xmlns)
+            Return path.LoadXmlDataSet(Of chromatogram)(, xmlns:=indexedmzML.xmlns)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

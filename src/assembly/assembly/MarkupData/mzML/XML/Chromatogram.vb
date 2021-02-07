@@ -72,7 +72,10 @@ Namespace MarkupData.mzML
             If id = "TIC" Then
                 Return id
             Else
-                Return $"Ion [{precursor.isolationWindow.cvParams.KeyItem("isolation window target m/z").value}/{product.isolationWindow.cvParams.KeyItem("isolation window target m/z").value}]"
+                Dim parent As String = Me.precursor.isolationWindow.cvParams.KeyItem("isolation window target m/z").value
+                Dim product As String = Me.product.isolationWindow.cvParams.KeyItem("isolation window target m/z").value
+
+                Return $"Ion [{parent}/{product}]"
             End If
         End Function
 

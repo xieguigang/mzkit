@@ -296,7 +296,8 @@ Public Class frmTargetedQuantification
 
         Call linearFiles _
             .Select(Function(file)
-                        Dim ionLine As chromatogram = indexedmzML.LoadFile(file.Value).mzML.run.chromatogramList.list _
+                        Dim rawfile As indexedmzML = indexedmzML.LoadFile(file.Value)
+                        Dim ionLine As chromatogram = rawfile.mzML.run.chromatogramList.list _
                             .Where(Function(c) ion.Assert(c, da3)) _
                             .FirstOrDefault
 

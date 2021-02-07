@@ -132,10 +132,8 @@ Namespace MarkupData.mzML
         End Function
     End Class
 
-    <XmlType(NameOf(mzML), [Namespace]:=mzML.Xmlns)>
+    <XmlType(NameOf(mzML), [Namespace]:=indexedmzML.xmlns)>
     Public Class mzML
-
-        Public Const Xmlns$ = Extensions.Xmlns
 
         <XmlAttribute> Public Property id As String
         <XmlAttribute> Public Property version As String
