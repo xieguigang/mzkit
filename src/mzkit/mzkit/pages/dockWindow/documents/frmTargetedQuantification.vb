@@ -330,6 +330,7 @@ Public Class frmTargetedQuantification
         standardCurve = algorithm.ToLinears(chr).First
         PictureBox1.BackgroundImage = standardCurve _
             .StandardCurves(
+                size:="1920,1200",
                 name:=$"Linear of {id}",
                 margin:="padding: 100px 100px 200px 200px;",
                 gridFill:="white"

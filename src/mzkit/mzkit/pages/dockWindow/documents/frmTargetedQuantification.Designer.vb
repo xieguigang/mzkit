@@ -96,7 +96,7 @@ Partial Class frmTargetedQuantification
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
         Me.TabControl1.ShowToolTips = True
-        Me.TabControl1.Size = New System.Drawing.Size(1311, 596)
+        Me.TabControl1.Size = New System.Drawing.Size(1208, 622)
         Me.TabControl1.TabIndex = 0
         '
         'TabPage1
@@ -105,7 +105,7 @@ Partial Class frmTargetedQuantification
         Me.TabPage1.Location = New System.Drawing.Point(4, 25)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(1303, 567)
+        Me.TabPage1.Size = New System.Drawing.Size(1200, 593)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Linear Reference"
         Me.TabPage1.UseVisualStyleBackColor = True
@@ -126,8 +126,8 @@ Partial Class frmTargetedQuantification
         '
         Me.SplitContainer1.Panel2.Controls.Add(Me.DataGridView1)
         Me.SplitContainer1.Panel2.Controls.Add(Me.ToolStrip1)
-        Me.SplitContainer1.Size = New System.Drawing.Size(1297, 561)
-        Me.SplitContainer1.SplitterDistance = 357
+        Me.SplitContainer1.Size = New System.Drawing.Size(1194, 587)
+        Me.SplitContainer1.SplitterDistance = 373
         Me.SplitContainer1.TabIndex = 0
         '
         'PictureBox1
@@ -137,7 +137,7 @@ Partial Class frmTargetedQuantification
         Me.PictureBox1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PictureBox1.Location = New System.Drawing.Point(0, 0)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(244, 355)
+        Me.PictureBox1.Size = New System.Drawing.Size(557, 371)
         Me.PictureBox1.TabIndex = 0
         Me.PictureBox1.TabStop = False
         '
@@ -151,7 +151,7 @@ Partial Class frmTargetedQuantification
         Me.DataGridView1.Location = New System.Drawing.Point(0, 25)
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.RowTemplate.Height = 23
-        Me.DataGridView1.Size = New System.Drawing.Size(1295, 173)
+        Me.DataGridView1.Size = New System.Drawing.Size(1192, 183)
         Me.DataGridView1.TabIndex = 0
         '
         'Column1
@@ -202,7 +202,7 @@ Partial Class frmTargetedQuantification
         Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel1, Me.ToolStripComboBox1, Me.ToolStripButton1, Me.ToolStripButton3, Me.ToolStripSeparator1, Me.ToolStripButton2})
         Me.ToolStrip1.Location = New System.Drawing.Point(0, 0)
         Me.ToolStrip1.Name = "ToolStrip1"
-        Me.ToolStrip1.Size = New System.Drawing.Size(1295, 25)
+        Me.ToolStrip1.Size = New System.Drawing.Size(1192, 25)
         Me.ToolStrip1.TabIndex = 1
         Me.ToolStrip1.Text = "ToolStrip1"
         '
@@ -291,7 +291,7 @@ Partial Class frmTargetedQuantification
         '
         Me.ContextMenuStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ExportImageToolStripMenuItem, Me.ExportLinearTableToolStripMenuItem})
         Me.ContextMenuStrip2.Name = "ContextMenuStrip2"
-        Me.ContextMenuStrip2.Size = New System.Drawing.Size(190, 70)
+        Me.ContextMenuStrip2.Size = New System.Drawing.Size(190, 48)
         '
         'ExportImageToolStripMenuItem
         '
@@ -320,8 +320,8 @@ Partial Class frmTargetedQuantification
         'SplitContainer2.Panel2
         '
         Me.SplitContainer2.Panel2.Controls.Add(Me.DataGridView2)
-        Me.SplitContainer2.Size = New System.Drawing.Size(1295, 355)
-        Me.SplitContainer2.SplitterDistance = 244
+        Me.SplitContainer2.Size = New System.Drawing.Size(1192, 371)
+        Me.SplitContainer2.SplitterDistance = 557
         Me.SplitContainer2.TabIndex = 1
         '
         'DataGridView2
@@ -333,7 +333,7 @@ Partial Class frmTargetedQuantification
         Me.DataGridView2.Location = New System.Drawing.Point(0, 0)
         Me.DataGridView2.Name = "DataGridView2"
         Me.DataGridView2.RowTemplate.Height = 23
-        Me.DataGridView2.Size = New System.Drawing.Size(1047, 355)
+        Me.DataGridView2.Size = New System.Drawing.Size(631, 371)
         Me.DataGridView2.TabIndex = 0
         '
         'Column3
@@ -341,78 +341,90 @@ Partial Class frmTargetedQuantification
         Me.Column3.HeaderText = "ID"
         Me.Column3.Name = "Column3"
         Me.Column3.ReadOnly = True
+        Me.Column3.Width = 50
         '
         'Column4
         '
         Me.Column4.HeaderText = "Name"
         Me.Column4.Name = "Column4"
         Me.Column4.ReadOnly = True
+        Me.Column4.Width = 50
         '
         'Column5
         '
         Me.Column5.HeaderText = "AIS"
         Me.Column5.Name = "Column5"
         Me.Column5.ReadOnly = True
+        Me.Column5.Width = 50
         '
         'Column6
         '
         Me.Column6.HeaderText = "Ati"
         Me.Column6.Name = "Column6"
         Me.Column6.ReadOnly = True
+        Me.Column6.Width = 50
         '
         'Column7
         '
         Me.Column7.HeaderText = "cIS"
         Me.Column7.Name = "Column7"
         Me.Column7.ReadOnly = True
+        Me.Column7.Width = 50
         '
         'Column8
         '
         Me.Column8.HeaderText = "Cti"
         Me.Column8.Name = "Column8"
         Me.Column8.ReadOnly = True
+        Me.Column8.Width = 50
         '
         'Column9
         '
         Me.Column9.HeaderText = "Px"
         Me.Column9.Name = "Column9"
         Me.Column9.ReadOnly = True
+        Me.Column9.Width = 50
         '
         'Column10
         '
         Me.Column10.HeaderText = "yfit"
         Me.Column10.Name = "Column10"
         Me.Column10.ReadOnly = True
+        Me.Column10.Width = 50
         '
         'Column11
         '
         Me.Column11.HeaderText = "error"
         Me.Column11.Name = "Column11"
         Me.Column11.ReadOnly = True
+        Me.Column11.Width = 50
         '
         'Column12
         '
         Me.Column12.HeaderText = "variant"
         Me.Column12.Name = "Column12"
         Me.Column12.ReadOnly = True
+        Me.Column12.Width = 50
         '
         'Column13
         '
         Me.Column13.HeaderText = "valid"
         Me.Column13.Name = "Column13"
         Me.Column13.ReadOnly = True
+        Me.Column13.Width = 50
         '
         'Column14
         '
         Me.Column14.HeaderText = "level"
         Me.Column14.Name = "Column14"
         Me.Column14.ReadOnly = True
+        Me.Column14.Width = 50
         '
         'frmTargetedQuantification
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1311, 596)
+        Me.ClientSize = New System.Drawing.Size(1208, 622)
         Me.Controls.Add(Me.TabControl1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmTargetedQuantification"
