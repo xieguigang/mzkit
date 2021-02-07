@@ -239,10 +239,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\Library\R.graphics\R.graphics.vbproj">
-      <Project>{c5c3428c-d64c-4e79-b239-77adc66b1156}</Project>
-      <Name>R.graphics</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\R#\R.vbproj">
       <Project>{0c2eb77c-39f2-460d-a3f8-ce905f867637}</Project>
       <Name>R</Name>
