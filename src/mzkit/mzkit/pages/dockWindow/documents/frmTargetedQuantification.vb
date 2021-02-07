@@ -280,6 +280,8 @@ Public Class frmTargetedQuantification
         Return New ContentTable(New Dictionary(Of String, SampleContentLevels) From {{ionId, contentSampleLevel}}, New Dictionary(Of String, Standards) From {{ionId, ref}}, New Dictionary(Of String, [IS]) From {{isId, New [IS] With {.ID = isId, .name = isId}}})
     End Function
 
+    Dim standardCurve As StandardCurve
+
     Private Sub DataGridView1_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellDoubleClick
         Dim ionLib As IonLibrary = Globals.LoadIonLibrary
 
@@ -324,8 +326,9 @@ Public Class frmTargetedQuantification
         End If
 
         Dim algorithm As New InternalStandardMethod(GetContentTable(DataGridView1.Rows(e.RowIndex)), PeakAreaMethods.NetPeakSum)
-        Dim standardCurve As StandardCurve = algorithm.ToLinears(chr).First
-        Dim plot As Image = standardCurve _
+
+        standardCurve = algorithm.ToLinears(chr).First
+        PictureBox1.BackgroundImage = standardCurve _
             .StandardCurves(
                 name:=$"Linear of {id}",
                 margin:="padding: 100px 100px 200px 200px;",
@@ -333,6 +336,32 @@ Public Class frmTargetedQuantification
             ) _
             .AsGDIImage
 
-        PictureBox1.BackgroundImage = plot
+        Call DataGridView2.Rows.Clear()
+
+        For Each point As ReferencePoint In standardCurve.points
+            Call DataGridView2.Rows.Add(point.ID, point.Name, point.AIS, point.Ati, point.cIS, point.Cti, point.Px, point.yfit, point.error, point.variant, point.valid, point.level)
+        Next
+    End Sub
+
+    Private Sub ExportImageToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportImageToolStripMenuItem.Click
+        Using file As New SaveFileDialog With {
+            .Title = "Export Standard Curve Image",
+            .Filter = "Plot Image(*.png)|*.png"
+        }
+            If file.ShowDialog = DialogResult.OK Then
+                Call PictureBox1.BackgroundImage.SaveAs(file.FileName)
+            End If
+        End Using
+    End Sub
+
+    Private Sub ExportLinearTableToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportLinearTableToolStripMenuItem.Click
+        Using file As New SaveFileDialog With {
+            .Title = "Export Reference Points",
+            .Filter = "Reference Point Table(*.csv)|*.csv"
+        }
+            If file.ShowDialog = DialogResult.OK Then
+                Call standardCurve.points.SaveTo(file.FileName)
+            End If
+        End Using
     End Sub
 End Class
