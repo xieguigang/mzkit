@@ -301,7 +301,7 @@ Public Class frmTargetedQuantification
                             .Where(Function(c) ion.Assert(c, da3)) _
                             .FirstOrDefault
 
-                        Return MRMIonExtract.GetTargetPeak(ion, ionLine)
+                        Return MRMIonExtract.GetTargetPeak(ion, ionLine, preferName:=True)
                     End Function) _
             .DoCall(AddressOf chr.AddRange)
 
@@ -312,7 +312,7 @@ Public Class frmTargetedQuantification
                                 .Where(Function(c) isIon.Assert(c, da3)) _
                                 .FirstOrDefault
 
-                            Return MRMIonExtract.GetTargetPeak(isIon, ionLine)
+                            Return MRMIonExtract.GetTargetPeak(isIon, ionLine, preferName:=True)
                         End Function) _
                 .DoCall(AddressOf chr.AddRange)
         End If
