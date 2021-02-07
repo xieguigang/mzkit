@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::2376bde9ee42e81867e374309bc5db4a, TargetedMetabolomics\LinearQuantitative\Models\StandardCurve.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class StandardCurve
-    ' 
-    '         Properties: [IS], blankControls, isValid, isWeighted, linear
-    '                     name, points, requireISCalibration
-    ' 
-    '         Function: CreateLinearRegression, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class StandardCurve
+' 
+'         Properties: [IS], blankControls, isValid, isWeighted, linear
+'                     name, points, requireISCalibration
+' 
+'         Function: CreateLinearRegression, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -54,6 +54,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace LinearQuantitative
 
@@ -122,7 +123,22 @@ Namespace LinearQuantitative
                 removesZeroY:=True
             )
 
-            If fit.R2 < 0.95 Then
+            If fit Is Nothing Then
+
+                ' 完全没有线性
+                Return New FitResult With {
+                    .ErrorTest = rawPoints _
+                        .Select(Function(p)
+                                    Return DirectCast(New TestPoint With {.X = p.X, .Y = p.Y, .Yfit = 99999999}, IFitError)
+                                End Function) _
+                        .ToArray,
+                    .RMSE = 9999999,
+                    .SSE = 9999999,
+                    .SSR = 9999999,
+                    .Polynomial = New Polynomial With {.Factors = New Double() {0, 0}}
+                }
+
+            ElseIf fit.R2 < 0.95 Then
                 deletes = New List(Of PointF)(removed.SafeQuery)
                 fit = rawPoints.AutoPointDeletion(
                     weighted:=Function(X) 1 / (X ^ 2),
