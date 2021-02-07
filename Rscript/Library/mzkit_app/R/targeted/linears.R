@@ -23,6 +23,19 @@ let plotLinears as function(linears, mslIons = NULL, output_dir = "./linears") {
     }
 }
 
+#' Output result data table
+#' 
+#' @details this function will output 4 tables in the target ``output_dir`` folder.
+#'    the 4 tables that saved in target folder contains:
+#'    
+#'    + ``quantify.csv`` the linear quantify content result table
+#'    + ``rawX.csv`` the raw peak area data table, if the metabolite has ``IS`` calibration, 
+#'                   then the value of this table will be the peak area to IS peak area ratio 
+#'                   values.
+#'    + ``linears.csv`` the linear equation table.
+#'    + ``ionPeaks.csv`` all ions peak ROI in all samples files, data in this table contains 
+#'                       ``rt`` range and peak area, etc.
+#' 
 let output_datatables as function(quantify, linears, output_dir = "./") {
     print("dumping sample quantification result data:");
 
