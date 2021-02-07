@@ -137,6 +137,9 @@ Namespace MarkupData.mzML
 
         Public Const Xmlns$ = Extensions.Xmlns
 
+        <XmlAttribute> Public Property id As String
+        <XmlAttribute> Public Property version As String
+
         Public Property cvList As cvList
         Public Property run As run
         Public Property fileDescription As fileDescription
@@ -146,11 +149,19 @@ Namespace MarkupData.mzML
             Return MarkupData.mzML.LoadChromatogramList(path)
         End Function
 
+        Public Overrides Function ToString() As String
+            Return id
+        End Function
+
     End Class
 
     Public Class fileDescription
 
         Public Property fileContent As Params
+
+        Public Overrides Function ToString() As String
+            Return fileContent.cvParams.Select(Function(a) a.name).JoinBy("; ")
+        End Function
 
     End Class
 

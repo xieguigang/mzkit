@@ -54,6 +54,7 @@ Imports Microsoft.VisualBasic.Text.Xml.Linq
 
 Namespace MarkupData.mzML
 
+    <XmlRoot("indexedmzML", [Namespace]:=indexedmzML.xmlns)>
     <XmlType("indexedmzML", [Namespace]:=indexedmzML.xmlns)>
     Public Class indexedmzML : Implements IFileReference
 
