@@ -63,7 +63,7 @@ Namespace LinearQuantitative.Linear
         End Function
 
         ''' <summary>
-        ''' 
+        ''' 这个函数已经自动处理了存在内标或者不存在内标的情况了
         ''' </summary>
         ''' <param name="points">如果这个参数为空值, 说明不需要返回测试数据</param>
         ''' <returns></returns>

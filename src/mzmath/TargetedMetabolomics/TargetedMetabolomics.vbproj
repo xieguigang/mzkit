@@ -464,7 +464,7 @@
     <Compile Include="LinearQuantitative\Models\IonPeakTableRow.vb" />
     <Compile Include="LinearQuantitative\Models\QuantifyScan.vb" />
     <Compile Include="MRM\Data\IonChromatogram.vb" />
-    <Compile Include="MRM\Data\Module1.vb" />
+    <Compile Include="MRM\Data\RTAlignmentProcessor.vb" />
     <Compile Include="MRM\MRMIonExtract.vb" />
     <Compile Include="MRM\IsomerismIonPairs.vb" />
     <Compile Include="MRM\Data\NamespaceDoc.vb" />

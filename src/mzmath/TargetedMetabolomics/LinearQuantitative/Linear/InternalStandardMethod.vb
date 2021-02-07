@@ -113,10 +113,16 @@ Namespace LinearQuantitative.Linear
 
             Dim define As Standards = contents.GetStandards(ionKey)
             Dim rawPoints As TargetPeakPoint() = ionGroups(ionKey)
-            Dim isPoints As TargetPeakPoint() = ionGroups(define.ISTD)
             Dim points As New List(Of ReferencePoint)
             Dim A As Double() = TPA(linearSamples, rawPoints)
-            Dim ISTPA As Double() = TPA(linearSamples, isPoints)
+            Dim ISTPA As Double()
+
+            If Not define.ISTD.StringEmpty Then
+                ISTPA = TPA(linearSamples, ionGroups(define.ISTD))
+            Else
+                ISTPA = Nothing
+            End If
+
             Dim C As Double() = linearSamples.Select(Function(level) contents(level, ionKey)).ToArray
             Dim CIS As Double = 1
             Dim invalids As New List(Of PointF)
