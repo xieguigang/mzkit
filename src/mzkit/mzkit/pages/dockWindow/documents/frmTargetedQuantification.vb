@@ -300,8 +300,11 @@ Public Class frmTargetedQuantification
                         Dim ionLine As chromatogram = rawfile.mzML.run.chromatogramList.list _
                             .Where(Function(c) ion.Assert(c, da3)) _
                             .FirstOrDefault
+                        Dim peakTicks = MRMIonExtract.GetTargetPeak(ion, ionLine, preferName:=True)
 
-                        Return MRMIonExtract.GetTargetPeak(ion, ionLine, preferName:=True)
+                        peakTicks.SampleName = file.Name
+
+                        Return peakTicks
                     End Function) _
             .DoCall(AddressOf chr.AddRange)
 
@@ -311,8 +314,11 @@ Public Class frmTargetedQuantification
                             Dim ionLine As chromatogram = indexedmzML.LoadFile(file.Value).mzML.run.chromatogramList.list _
                                 .Where(Function(c) isIon.Assert(c, da3)) _
                                 .FirstOrDefault
+                            Dim peakTicks = MRMIonExtract.GetTargetPeak(isIon, ionLine, preferName:=True)
 
-                            Return MRMIonExtract.GetTargetPeak(isIon, ionLine, preferName:=True)
+                            peakTicks.SampleName = file.Name
+
+                            Return peakTicks
                         End Function) _
                 .DoCall(AddressOf chr.AddRange)
         End If
