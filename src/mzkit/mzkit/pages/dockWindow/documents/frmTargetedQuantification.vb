@@ -98,7 +98,7 @@ Public Class frmTargetedQuantification
                 DataGridView1.Rows.Clear()
                 DataGridView1.Columns.Clear()
 
-                CheckedListBox1.Items.Clear()
+
 
                 DataGridView1.Columns.Add(New DataGridViewLinkColumn With {.HeaderText = "Features"})
                 DataGridView1.Columns.Add(New DataGridViewComboBoxColumn With {.HeaderText = "IS"})
@@ -119,7 +119,7 @@ Public Class frmTargetedQuantification
                     Dim i As Integer = DataGridView1.Rows.Add(refId)
                     Dim comboxBox As DataGridViewComboBoxCell = DataGridView1.Rows(i).Cells(1)
 
-                    Call CheckedListBox1.Items.Add(refId)
+
 
                     For Each IS_candidate As IonPair In allFeatures
                         comboxBox.Items.Add(ionsLib.GetDisplay(IS_candidate))
