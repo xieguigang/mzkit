@@ -96,6 +96,14 @@ Module DataControlHandler
         If text.Contains(vbCr) OrElse text.Contains(vbLf) Then
             Dim colCells As String() = text.LineTokens
 
+            If i + colCells.Length >= table.Rows.Count Then
+                Dim n As Integer = table.Rows.Count
+
+                For rid As Integer = 0 To (colCells.Length + i) - n
+                    table.Rows.Add()
+                Next
+            End If
+
             For ii As Integer = 0 To colCells.Length - 1
                 table.Rows(ii + i).Cells(j).Value = colCells(ii)
             Next

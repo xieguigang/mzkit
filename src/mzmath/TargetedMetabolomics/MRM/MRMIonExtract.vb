@@ -55,6 +55,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Math
+Imports chromatogramTicks = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.chromatogram
 
 Namespace MRM
 
@@ -72,7 +73,10 @@ Namespace MRM
                 .ToArray
         End Sub
 
-        Public Shared Function GetTargetPeak(ion As IonPair, chr As MarkupData.mzML.chromatogram) As TargetPeakPoint
+        Public Shared Function GetTargetPeak(ion As IonPair,
+                                             chr As chromatogramTicks,
+                                             Optional preferName As Boolean = False) As TargetPeakPoint
+
             Dim ticks As ChromatogramTick() = chr.Ticks
             Dim peakWin As DoubleRange = ticks.Shadows.MRMPeak(baselineQuantile:=0.65)
 
@@ -88,7 +92,7 @@ Namespace MRM
             }
 
             Return New TargetPeakPoint With {
-                .Name = ion.accession,
+                .Name = If(preferName, ion.name, ion.accession),
                 .Peak = peak,
                 .ChromatogramSummary = peak.ticks _
                     .Summary _

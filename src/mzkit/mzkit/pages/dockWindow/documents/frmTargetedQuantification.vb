@@ -280,6 +280,8 @@ Public Class frmTargetedQuantification
         Return New ContentTable(New Dictionary(Of String, SampleContentLevels) From {{ionId, contentSampleLevel}}, New Dictionary(Of String, Standards) From {{ionId, ref}}, New Dictionary(Of String, [IS]) From {{isId, New [IS] With {.ID = isId, .name = isId}}})
     End Function
 
+    Dim standardCurve As StandardCurve
+
     Private Sub DataGridView1_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellDoubleClick
         Dim ionLib As IonLibrary = Globals.LoadIonLibrary
 
@@ -296,11 +298,15 @@ Public Class frmTargetedQuantification
 
         Call linearFiles _
             .Select(Function(file)
-                        Dim ionLine As chromatogram = indexedmzML.LoadFile(file.Value).mzML.run.chromatogramList.list _
+                        Dim rawfile As indexedmzML = indexedmzML.LoadFile(file.Value)
+                        Dim ionLine As chromatogram = rawfile.mzML.run.chromatogramList.list _
                             .Where(Function(c) ion.Assert(c, da3)) _
                             .FirstOrDefault
+                        Dim peakTicks = MRMIonExtract.GetTargetPeak(ion, ionLine, preferName:=True)
 
-                        Return MRMIonExtract.GetTargetPeak(ion, ionLine)
+                        peakTicks.SampleName = file.Name
+
+                        Return peakTicks
                     End Function) _
             .DoCall(AddressOf chr.AddRange)
 
@@ -310,16 +316,53 @@ Public Class frmTargetedQuantification
                             Dim ionLine As chromatogram = indexedmzML.LoadFile(file.Value).mzML.run.chromatogramList.list _
                                 .Where(Function(c) isIon.Assert(c, da3)) _
                                 .FirstOrDefault
+                            Dim peakTicks = MRMIonExtract.GetTargetPeak(isIon, ionLine, preferName:=True)
 
-                            Return MRMIonExtract.GetTargetPeak(isIon, ionLine)
+                            peakTicks.SampleName = file.Name
+
+                            Return peakTicks
                         End Function) _
                 .DoCall(AddressOf chr.AddRange)
         End If
 
         Dim algorithm As New InternalStandardMethod(GetContentTable(DataGridView1.Rows(e.RowIndex)), PeakAreaMethods.NetPeakSum)
-        Dim standardCurve As StandardCurve = algorithm.ToLinears(chr).First
-        Dim plot = standardCurve.StandardCurves.AsGDIImage
 
-        PictureBox1.BackgroundImage = plot
+        standardCurve = algorithm.ToLinears(chr).First
+        PictureBox1.BackgroundImage = standardCurve _
+            .StandardCurves(
+                size:="1920,1200",
+                name:=$"Linear of {id}",
+                margin:="padding: 100px 100px 200px 200px;",
+                gridFill:="white"
+            ) _
+            .AsGDIImage
+
+        Call DataGridView2.Rows.Clear()
+
+        For Each point As ReferencePoint In standardCurve.points
+            Call DataGridView2.Rows.Add(point.ID, point.Name, point.AIS, point.Ati, point.cIS, point.Cti, point.Px, point.yfit, point.error, point.variant, point.valid, point.level)
+        Next
+    End Sub
+
+    Private Sub ExportImageToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportImageToolStripMenuItem.Click
+        Using file As New SaveFileDialog With {
+            .Title = "Export Standard Curve Image",
+            .Filter = "Plot Image(*.png)|*.png"
+        }
+            If file.ShowDialog = DialogResult.OK Then
+                Call PictureBox1.BackgroundImage.SaveAs(file.FileName)
+            End If
+        End Using
+    End Sub
+
+    Private Sub ExportLinearTableToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportLinearTableToolStripMenuItem.Click
+        Using file As New SaveFileDialog With {
+            .Title = "Export Reference Points",
+            .Filter = "Reference Point Table(*.csv)|*.csv"
+        }
+            If file.ShowDialog = DialogResult.OK Then
+                Call standardCurve.points.SaveTo(file.FileName)
+            End If
+        End Using
     End Sub
 End Class

@@ -52,7 +52,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports mzchromatogram = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.chromatogram
+Imports chromatogramTicks = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.chromatogram
 
 Namespace MRM.Models
 
@@ -95,14 +95,18 @@ Namespace MRM.Models
         ''' <param name="chromatogram"></param>
         ''' <param name="tolerance">less than 0.3da or 20ppm??</param>
         ''' <returns></returns>
-        Public Function Assert(chromatogram As mzchromatogram, tolerance As Tolerance) As Boolean
-            Dim pre = chromatogram.precursor.MRMTargetMz
-            Dim pro = chromatogram.product.MRMTargetMz
-
-            If tolerance.Equals(Val(pre), precursor) AndAlso tolerance.Equals(Val(pro), product) Then
-                Return True
-            Else
+        Public Function Assert(chromatogram As chromatogramTicks, tolerance As Tolerance) As Boolean
+            If chromatogram.id = "TIC" OrElse chromatogram.id = "BPC" Then
                 Return False
+            Else
+                Dim pre As Double = chromatogram.precursor.MRMTargetMz
+                Dim pro As Double = chromatogram.product.MRMTargetMz
+
+                If tolerance.Equals(Val(pre), precursor) AndAlso tolerance.Equals(Val(pro), product) Then
+                    Return True
+                Else
+                    Return False
+                End If
             End If
         End Function
 

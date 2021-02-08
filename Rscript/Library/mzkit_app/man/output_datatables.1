@@ -1,0 +1,25 @@
+﻿.TH OUTPUT_DATATABLES 1 2021-02-07 "" "Output result data table"
+.SH NAME
+output_datatables \- output_datatables(quantify, linears, output_dir = ./)
+.SH SYNOPSIS
+\fIoutput_datatables(quantify, linears, output_dir = ./)\fR
+.SH OPTIONS
+.PP
+\fBquantify\fB \fR\- 
+.PP
+.PP
+\fBlinears\fB \fR\- 
+.PP
+.PP
+\fBoutput_dir\fB \fR\- ./
+.PP
+.SH DETAILS
+.PP
+this function will output 4 tables in the target ``output_dir`` folder. the 4 tables that saved in target folder contains: + ``quantify.csv`` the linear quantify content result table + ``rawX.csv`` the raw peak area data table, if the metabolite has ``IS`` calibration, then the value of this table will be the peak area to IS peak area ratio values. + ``linears.csv`` the linear equation table. + ``ionPeaks.csv`` all ions peak ROI in all samples files, data in this table contains ``rt`` range and peak area, etc.
+.PP
+.SH FILES
+.PP
+SMRUCC/R#.declare_function.output_datatables at linears.R:line 39
+.PP
+.SH COPYRIGHT
+Copyright © xieguigang, MIT Licensed 2021

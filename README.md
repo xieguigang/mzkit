@@ -96,6 +96,7 @@ SOFTWARE.
 <div style="font-size: 2em;">Product Screenshots</div>
 
 ![](docs/manual/main.png)
+![](docs/manual/Targeted.PNG)
 ![](docs/manual/BPC_overlay.PNG)
 ![](docs/manual/ms-imaging1.PNG)
 

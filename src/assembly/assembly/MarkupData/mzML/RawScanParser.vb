@@ -59,7 +59,7 @@ Namespace MarkupData.mzML
         End Function
 
         Public Shared Function hasFileContent(mzml As String, contentSig As String) As Boolean
-            For Each content As fileDescription In mzml.LoadXmlDataSet(Of fileDescription)(, xmlns:=Xmlns)
+            For Each content As fileDescription In mzml.LoadXmlDataSet(Of fileDescription)(, xmlns:=indexedmzML.xmlns)
                 If content.fileContent IsNot Nothing AndAlso Not content.fileContent.cvParams.IsNullOrEmpty Then
                     If content.fileContent.cvParams.Any(Function(a) a.name = contentSig) Then
                         Return True
