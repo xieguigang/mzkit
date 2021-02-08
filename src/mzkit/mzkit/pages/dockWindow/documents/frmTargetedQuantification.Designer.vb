@@ -46,9 +46,7 @@ Partial Class frmTargetedQuantification
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
-        Me.TabPage3 = New System.Windows.Forms.TabPage()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.CheckedListBox1 = New System.Windows.Forms.CheckedListBox()
+
         Me.ContextMenuStrip2 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ExportImageToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExportLinearTableToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -76,7 +74,7 @@ Partial Class frmTargetedQuantification
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
-        Me.TabPage3.SuspendLayout()
+
         Me.ContextMenuStrip2.SuspendLayout()
         CType(Me.SplitContainer2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer2.Panel1.SuspendLayout()
@@ -259,32 +257,7 @@ Partial Class frmTargetedQuantification
         Me.TabPage2.UseVisualStyleBackColor = True
         '
         'TabPage3
-        '
-        Me.TabPage3.Controls.Add(Me.Label1)
-        Me.TabPage3.Controls.Add(Me.CheckedListBox1)
-        Me.TabPage3.Location = New System.Drawing.Point(4, 25)
-        Me.TabPage3.Name = "TabPage3"
-        Me.TabPage3.Size = New System.Drawing.Size(936, 567)
-        Me.TabPage3.TabIndex = 2
-        Me.TabPage3.Text = "Settings"
-        Me.TabPage3.UseVisualStyleBackColor = True
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(34, 38)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(139, 16)
-        Me.Label1.TabIndex = 1
-        Me.Label1.Text = "Set Internal Standards"
-        '
-        'CheckedListBox1
-        '
-        Me.CheckedListBox1.FormattingEnabled = True
-        Me.CheckedListBox1.Location = New System.Drawing.Point(37, 87)
-        Me.CheckedListBox1.Name = "CheckedListBox1"
-        Me.CheckedListBox1.Size = New System.Drawing.Size(337, 429)
-        Me.CheckedListBox1.TabIndex = 0
+
         '
         'ContextMenuStrip2
         '
@@ -440,8 +413,7 @@ Partial Class frmTargetedQuantification
         Me.ContextMenuStrip1.ResumeLayout(False)
         Me.ToolStrip1.ResumeLayout(False)
         Me.ToolStrip1.PerformLayout()
-        Me.TabPage3.ResumeLayout(False)
-        Me.TabPage3.PerformLayout()
+
         Me.ContextMenuStrip2.ResumeLayout(False)
         Me.SplitContainer2.Panel1.ResumeLayout(False)
         Me.SplitContainer2.Panel2.ResumeLayout(False)
