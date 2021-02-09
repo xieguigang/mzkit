@@ -433,27 +433,31 @@ Public Class frmTargetedQuantification
                     Next
                 End With
 
-                DataGridView3.Rows.Clear()
-                DataGridView3.Columns.Clear()
-
-                Dim quantify = scans.Select(Function(q) q.quantify).ToArray
-                Dim metaboliteNames = quantify.PropertyNames
-
-                DataGridView3.Columns.Add(New DataGridViewTextBoxColumn() With {.HeaderText = "Sample Name"})
-
-                For Each col As String In metaboliteNames
-                    DataGridView3.Columns.Add(New DataGridViewTextBoxColumn() With {.HeaderText = col})
-                Next
-
-                For Each sample In quantify
-                    Dim vec As Object() = New Object() {sample.ID} _
-                        .JoinIterates(metaboliteNames.Select(Function(name) CObj(sample(name)))) _
-                        .ToArray
-
-                    DataGridView3.Rows.Add(vec)
-                Next
+                Call showQuanifyTable()
             End If
         End Using
+    End Sub
+
+    Private Sub showQuanifyTable()
+        DataGridView3.Rows.Clear()
+        DataGridView3.Columns.Clear()
+
+        Dim quantify = scans.Select(Function(q) q.quantify).ToArray
+        Dim metaboliteNames = quantify.PropertyNames
+
+        DataGridView3.Columns.Add(New DataGridViewTextBoxColumn() With {.HeaderText = "Sample Name"})
+
+        For Each col As String In metaboliteNames
+            DataGridView3.Columns.Add(New DataGridViewTextBoxColumn() With {.HeaderText = col})
+        Next
+
+        For Each sample In quantify
+            Dim vec As Object() = New Object() {sample.ID} _
+                .JoinIterates(metaboliteNames.Select(Function(name) CObj(sample(name)))) _
+                .ToArray
+
+            DataGridView3.Rows.Add(vec)
+        Next
     End Sub
 
     Private Sub ExportTableToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportTableToolStripMenuItem.Click
