@@ -27,6 +27,7 @@ Public Class frmTargetedQuantification
         TabText = "Targeted Quantification"
 
         Call reloadProfileNames()
+        Call ApplyVsTheme(ToolStrip1, ToolStrip2, ContextMenuStrip1, ContextMenuStrip2, ContextMenuStrip3)
     End Sub
 
     Private Sub reloadProfileNames()
@@ -364,5 +365,13 @@ Public Class frmTargetedQuantification
                 Call standardCurve.points.SaveTo(file.FileName)
             End If
         End Using
+    End Sub
+
+    Private Sub LoadSamplesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LoadSamplesToolStripMenuItem.Click
+
+    End Sub
+
+    Private Sub ExportTableToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportTableToolStripMenuItem.Click
+
     End Sub
 End Class

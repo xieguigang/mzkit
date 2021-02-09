@@ -258,6 +258,14 @@
       <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
       <Name>MIME-htmls</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\workbench\markdown2pdf\PdfConvert\WkHtmlToPdf.vbproj">
+      <Project>{cd7790f5-e348-4a82-b966-90c7ccd07cbc}</Project>
+      <Name>WkHtmlToPdf</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\workbench\markdown2pdf\ReportBuilder\ReportBuilder.vbproj">
+      <Project>{eeb2bb03-20b0-4381-8a9e-e2210eb568a5}</Project>
+      <Name>ReportBuilder</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\assembly\assembly\assembly.vbproj">
       <Project>{95f7d65e-9db1-4605-9fd3-25433277af88}</Project>
       <Name>assembly</Name>
