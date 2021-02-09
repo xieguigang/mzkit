@@ -9,7 +9,9 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
 Imports mzkit.My
@@ -129,6 +131,16 @@ Public Class frmTargetedQuantification
             End If
         End Using
     End Sub
+
+    Private Function isValidLinearRow(r As DataGridViewRow) As Boolean
+        For i As Integer = 2 To linearFiles.Length - 1 + 2
+            If (Not any.ToString(r.Cells(i).Value).IsNumeric) OrElse (any.ToString(r.Cells(i).Value) = "0") Then
+                Return False
+            End If
+        Next
+
+        Return True
+    End Function
 
     Private Sub DeleteIonFeatureToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeleteIonFeatureToolStripMenuItem.Click
 
@@ -284,55 +296,15 @@ Public Class frmTargetedQuantification
     Dim standardCurve As StandardCurve
 
     Private Sub DataGridView1_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellDoubleClick
-        Dim ionLib As IonLibrary = Globals.LoadIonLibrary
-
         If e.ColumnIndex <> 0 Then
             Return
         End If
 
-        Dim id As String = any.ToString(DataGridView1.Rows(e.RowIndex).Cells(0).Value)
-        Dim isid As String = any.ToString(DataGridView1.Rows(e.RowIndex).Cells(1).Value)
-        Dim ion As IonPair = ionLib.GetIonByKey(id)
-        Dim isIon As IonPair = ionLib.GetIonByKey(isid)
-        Dim da3 As Tolerance = Tolerance.DeltaMass(0.3)
-        Dim chr As New List(Of TargetPeakPoint)
-
-        Call linearFiles _
-            .Select(Function(file)
-                        Dim rawfile As indexedmzML = indexedmzML.LoadFile(file.Value)
-                        Dim ionLine As chromatogram = rawfile.mzML.run.chromatogramList.list _
-                            .Where(Function(c) ion.Assert(c, da3)) _
-                            .FirstOrDefault
-                        Dim peakTicks = MRMIonExtract.GetTargetPeak(ion, ionLine, preferName:=True)
-
-                        peakTicks.SampleName = file.Name
-
-                        Return peakTicks
-                    End Function) _
-            .DoCall(AddressOf chr.AddRange)
-
-        If Not isid.StringEmpty Then
-            Call linearFiles _
-                .Select(Function(file)
-                            Dim ionLine As chromatogram = indexedmzML.LoadFile(file.Value).mzML.run.chromatogramList.list _
-                                .Where(Function(c) isIon.Assert(c, da3)) _
-                                .FirstOrDefault
-                            Dim peakTicks = MRMIonExtract.GetTargetPeak(isIon, ionLine, preferName:=True)
-
-                            peakTicks.SampleName = file.Name
-
-                            Return peakTicks
-                        End Function) _
-                .DoCall(AddressOf chr.AddRange)
-        End If
-
-        Dim algorithm As New InternalStandardMethod(GetContentTable(DataGridView1.Rows(e.RowIndex)), PeakAreaMethods.NetPeakSum)
-
-        standardCurve = algorithm.ToLinears(chr).First
+        standardCurve = createLinear(DataGridView1.Rows(e.RowIndex))
         PictureBox1.BackgroundImage = standardCurve _
             .StandardCurves(
                 size:="1920,1200",
-                name:=$"Linear of {id}",
+                name:=$"Linear of {standardCurve.name}",
                 margin:="padding: 100px 100px 200px 200px;",
                 gridFill:="white"
             ) _
@@ -344,6 +316,48 @@ Public Class frmTargetedQuantification
             Call DataGridView2.Rows.Add(point.ID, point.Name, point.AIS, point.Ati, point.cIS, point.Cti, point.Px, point.yfit, point.error, point.variant, point.valid, point.level)
         Next
     End Sub
+
+    Private Function createLinear(refRow As DataGridViewRow,
+                                  Optional ByRef ion As IonPair = Nothing,
+                                  Optional ByRef isIon As IonPair = Nothing) As StandardCurve
+
+        Dim ionLib As IonLibrary = Globals.LoadIonLibrary
+        Dim id As String = any.ToString(refRow.Cells(0).Value)
+        Dim isid As String = any.ToString(refRow.Cells(1).Value)
+        Dim chr As New List(Of TargetPeakPoint)
+
+        ion = ionLib.GetIonByKey(id)
+        isIon = ionLib.GetIonByKey(isid)
+
+        Dim quantifyIon = ion
+        Dim quantifyIS = isIon
+
+        Call loadSamples(linearFiles, quantifyIon).DoCall(AddressOf chr.AddRange)
+
+        If Not isid.StringEmpty Then
+            Call loadSamples(linearFiles, quantifyIS).DoCall(AddressOf chr.AddRange)
+        End If
+
+        Dim algorithm As New InternalStandardMethod(GetContentTable(refRow), PeakAreaMethods.NetPeakSum)
+
+        Return algorithm.ToLinears(chr).First
+    End Function
+
+    Private Function loadSamples(files As IEnumerable(Of NamedValue(Of String)), quantifyIon As IonPair) As IEnumerable(Of TargetPeakPoint)
+        Dim da3 As Tolerance = Tolerance.DeltaMass(0.3)
+
+        Return files _
+            .Select(Function(file)
+                        Dim ionLine As chromatogram = indexedmzML.LoadFile(file).mzML.run.chromatogramList.list _
+                            .Where(Function(c) quantifyIon.Assert(c, da3)) _
+                            .FirstOrDefault
+                        Dim peakTicks = MRMIonExtract.GetTargetPeak(quantifyIon, ionLine, preferName:=True)
+
+                        peakTicks.SampleName = file.Name
+
+                        Return peakTicks
+                    End Function)
+    End Function
 
     Private Sub ExportImageToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportImageToolStripMenuItem.Click
         Using file As New SaveFileDialog With {
@@ -367,6 +381,8 @@ Public Class frmTargetedQuantification
         End Using
     End Sub
 
+    Dim scans As New List(Of QuantifyScan)
+
     Private Sub LoadSamplesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LoadSamplesToolStripMenuItem.Click
         Using importsFile As New OpenFileDialog With {
             .Filter = "LC-MSMS / GC-MS Targeted(*.mzML)|*.mzML|GC-MS Targeted(*.cdf)|*.cdf",
@@ -374,7 +390,59 @@ Public Class frmTargetedQuantification
             .Title = "Select linears"
         }
             If importsFile.ShowDialog = DialogResult.OK Then
+                Dim files As NamedValue(Of String)() = importsFile.FileNames _
+                    .Select(Function(file)
+                                Return New NamedValue(Of String) With {
+                                    .Name = file.BaseName,
+                                    .Value = file
+                                }
+                            End Function) _
+                    .ToArray
 
+                Call scans.Clear()
+
+                Dim points As New List(Of TargetPeakPoint)
+                Dim linears As New List(Of StandardCurve)
+
+                For Each row As DataGridViewRow In DataGridView1.Rows
+                    If isValidLinearRow(row) Then
+                        Dim ion As IonPair = Nothing
+                        Dim ISion As IonPair = Nothing
+
+                        linears.Add(createLinear(row, ion, ISion))
+                        points.AddRange(loadSamples(files, ion))
+
+                        If Not ISion Is Nothing Then
+                            points.AddRange(loadSamples(files, ISion))
+                        End If
+                    End If
+                Next
+
+                With linears.ToArray
+                    For Each file In points.GroupBy(Function(p) p.SampleName)
+                        scans.Add(.SampleQuantify(file.ToArray, PeakAreaMethods.SumAll, fileName:=file.Key))
+                    Next
+                End With
+
+                DataGridView3.Rows.Clear()
+                DataGridView3.Columns.Clear()
+
+                Dim quantify = scans.Select(Function(q) q.quantify).ToArray
+                Dim metaboliteNames = quantify.PropertyNames
+
+                DataGridView3.Columns.Add(New DataGridViewTextBoxColumn() With {.HeaderText = "Sample Name"})
+
+                For Each col As String In metaboliteNames
+                    DataGridView3.Columns.Add(New DataGridViewTextBoxColumn() With {.HeaderText = col})
+                Next
+
+                For Each sample In quantify
+                    Dim vec As Object() = New Object() {sample.ID} _
+                        .JoinIterates(metaboliteNames.Select(Function(name) CObj(sample(name)))) _
+                        .ToArray
+
+                    DataGridView3.Rows.Add(vec)
+                Next
             End If
         End Using
     End Sub

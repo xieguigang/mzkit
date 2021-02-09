@@ -64,13 +64,13 @@ Partial Class frmTargetedQuantification
         Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.DataGridView3 = New System.Windows.Forms.DataGridView()
+        Me.ContextMenuStrip3 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.LoadSamplesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ExportTableToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStrip2 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripLabel2 = New System.Windows.Forms.ToolStripLabel()
         Me.ToolStripComboBox2 = New System.Windows.Forms.ToolStripComboBox()
         Me.ToolStripButton4 = New System.Windows.Forms.ToolStripButton()
-        Me.ContextMenuStrip3 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.LoadSamplesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ExportTableToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -89,8 +89,8 @@ Partial Class frmTargetedQuantification
         Me.ToolStrip1.SuspendLayout()
         Me.TabPage2.SuspendLayout()
         CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.ToolStrip2.SuspendLayout()
         Me.ContextMenuStrip3.SuspendLayout()
+        Me.ToolStrip2.SuspendLayout()
         Me.SuspendLayout()
         '
         'TabControl1
@@ -190,6 +190,7 @@ Partial Class frmTargetedQuantification
         Me.DataGridView2.BackgroundColor = System.Drawing.Color.White
         Me.DataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView2.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column3, Me.Column4, Me.Column5, Me.Column6, Me.Column7, Me.Column8, Me.Column9, Me.Column10, Me.Column11, Me.Column12, Me.Column13, Me.Column14})
+        Me.DataGridView2.ContextMenuStrip = Me.ContextMenuStrip2
         Me.DataGridView2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DataGridView2.Location = New System.Drawing.Point(0, 0)
         Me.DataGridView2.Name = "DataGridView2"
@@ -411,6 +412,24 @@ Partial Class frmTargetedQuantification
         Me.DataGridView3.Size = New System.Drawing.Size(1194, 614)
         Me.DataGridView3.TabIndex = 1
         '
+        'ContextMenuStrip3
+        '
+        Me.ContextMenuStrip3.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LoadSamplesToolStripMenuItem, Me.ExportTableToolStripMenuItem})
+        Me.ContextMenuStrip3.Name = "ContextMenuStrip3"
+        Me.ContextMenuStrip3.Size = New System.Drawing.Size(148, 48)
+        '
+        'LoadSamplesToolStripMenuItem
+        '
+        Me.LoadSamplesToolStripMenuItem.Name = "LoadSamplesToolStripMenuItem"
+        Me.LoadSamplesToolStripMenuItem.Size = New System.Drawing.Size(147, 22)
+        Me.LoadSamplesToolStripMenuItem.Text = "Load Samples"
+        '
+        'ExportTableToolStripMenuItem
+        '
+        Me.ExportTableToolStripMenuItem.Name = "ExportTableToolStripMenuItem"
+        Me.ExportTableToolStripMenuItem.Size = New System.Drawing.Size(147, 22)
+        Me.ExportTableToolStripMenuItem.Text = "Export Table"
+        '
         'ToolStrip2
         '
         Me.ToolStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel2, Me.ToolStripComboBox2, Me.ToolStripButton4})
@@ -440,24 +459,6 @@ Partial Class frmTargetedQuantification
         Me.ToolStripButton4.Name = "ToolStripButton4"
         Me.ToolStripButton4.Size = New System.Drawing.Size(23, 22)
         Me.ToolStripButton4.Text = "ToolStripButton4"
-        '
-        'ContextMenuStrip3
-        '
-        Me.ContextMenuStrip3.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LoadSamplesToolStripMenuItem, Me.ExportTableToolStripMenuItem})
-        Me.ContextMenuStrip3.Name = "ContextMenuStrip3"
-        Me.ContextMenuStrip3.Size = New System.Drawing.Size(148, 48)
-        '
-        'LoadSamplesToolStripMenuItem
-        '
-        Me.LoadSamplesToolStripMenuItem.Name = "LoadSamplesToolStripMenuItem"
-        Me.LoadSamplesToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.LoadSamplesToolStripMenuItem.Text = "Load Samples"
-        '
-        'ExportTableToolStripMenuItem
-        '
-        Me.ExportTableToolStripMenuItem.Name = "ExportTableToolStripMenuItem"
-        Me.ExportTableToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.ExportTableToolStripMenuItem.Text = "Export Table"
         '
         'frmTargetedQuantification
         '
@@ -489,9 +490,9 @@ Partial Class frmTargetedQuantification
         Me.TabPage2.ResumeLayout(False)
         Me.TabPage2.PerformLayout()
         CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ContextMenuStrip3.ResumeLayout(False)
         Me.ToolStrip2.ResumeLayout(False)
         Me.ToolStrip2.PerformLayout()
-        Me.ContextMenuStrip3.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
