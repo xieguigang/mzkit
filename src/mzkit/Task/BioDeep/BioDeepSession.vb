@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 
 Public Class BioDeepSession
 
@@ -17,6 +18,20 @@ Public Class BioDeepSession
             .success
 
         Return result
+    End Function
+
+    Public Function Request(api As String, Optional headers As Dictionary(Of String, String) = Nothing) As JsonObject
+        Dim sessionHeader As Dictionary(Of String, String) = headerProvider()
+
+        If Not headers.IsNullOrEmpty Then
+            For Each item In headers
+                sessionHeader(item.Key) = item.Value
+            Next
+        End If
+
+        Return api _
+            .GET(headers:=sessionHeader) _
+            .DoCall(AddressOf MessageParser.ParseMessage)
     End Function
 
 End Class
