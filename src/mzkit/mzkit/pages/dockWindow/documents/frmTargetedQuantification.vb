@@ -368,7 +368,15 @@ Public Class frmTargetedQuantification
     End Sub
 
     Private Sub LoadSamplesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LoadSamplesToolStripMenuItem.Click
+        Using importsFile As New OpenFileDialog With {
+            .Filter = "LC-MSMS / GC-MS Targeted(*.mzML)|*.mzML|GC-MS Targeted(*.cdf)|*.cdf",
+            .Multiselect = True,
+            .Title = "Select linears"
+        }
+            If importsFile.ShowDialog = DialogResult.OK Then
 
+            End If
+        End Using
     End Sub
 
     Private Sub ExportTableToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportTableToolStripMenuItem.Click
