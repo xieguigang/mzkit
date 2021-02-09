@@ -288,9 +288,18 @@ Public Class frmTargetedQuantification
         Next
 
         Dim contentSampleLevel As New SampleContentLevels(contentLevel)
-        Dim ref As New Standards With {.C = New Dictionary(Of String, Double), .ID = ionId, .[IS] = isId, .ISTD = isId, .Name = ionId}
+        Dim ref As New Standards With {
+            .C = New Dictionary(Of String, Double),
+            .ID = ionId,
+            .[IS] = isId,
+            .ISTD = isId,
+            .Name = ionId
+        }
+        Dim levels As New Dictionary(Of String, SampleContentLevels) From {{ionId, contentSampleLevel}}
+        Dim refs As New Dictionary(Of String, Standards) From {{ionId, ref}}
+        Dim ISlist As New Dictionary(Of String, [IS]) From {{isId, New [IS] With {.ID = isId, .name = isId, .CIS = 5}}}
 
-        Return New ContentTable(New Dictionary(Of String, SampleContentLevels) From {{ionId, contentSampleLevel}}, New Dictionary(Of String, Standards) From {{ionId, ref}}, New Dictionary(Of String, [IS]) From {{isId, New [IS] With {.ID = isId, .name = isId}}})
+        Return New ContentTable(levels, refs, ISlist)
     End Function
 
     Dim standardCurve As StandardCurve
