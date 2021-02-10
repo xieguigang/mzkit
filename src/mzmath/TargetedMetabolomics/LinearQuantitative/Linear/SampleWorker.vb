@@ -82,6 +82,7 @@ Namespace LinearQuantitative.Linear
                                   Return ion.GetIonTPA(baselineQuantile, integrator)
                               End Function)
             Dim result As New List(Of ContentResult(Of IonPeakTableRow))
+            Dim sampleName As String = fileName.BaseName
 
             If names Is Nothing Then
                 names = models _
@@ -93,7 +94,7 @@ Namespace LinearQuantitative.Linear
 
             For Each line As StandardCurve In models
                 If TPA.ContainsKey(line.name) Then
-                    result += TPA.DoLinearQuantify(line, names, fileName.BaseName)
+                    result += TPA.DoLinearQuantify(line, names, sampleName)
                 End If
             Next
 
