@@ -13,6 +13,8 @@ Module Template
 
                     <title><%= title %> | BioNovoGene</title>
 
+                    <link rel="icon" href="https://cdn.biodeep.cn/favicon.ico" type="image/x-icon"/>
+
                     <!-- Bootstrap CSS -->
                     <link rel="stylesheet" href="https://cdn.biodeep.cn/styles/bootstrap-4.3.1-dist/css/bootstrap.min.css" crossorigin="anonymous"/>
 

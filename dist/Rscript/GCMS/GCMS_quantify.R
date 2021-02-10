@@ -10,7 +10,12 @@ const output_dir as string = ?"--out"  || `${dirname(sampleData)}/quantify/`;
 
 sink(file = `${output_dir}/run.log`);
 
-const calfiles = list.files(calFolder, pattern = "*.mzML");
+print("reference linear folder:");
+print(calFolder);
+print("samples data folder:");
+print(sampleData);
+
+const calfiles = list.files(calFolder, pattern = "*.mzML", recursive = TRUE);
 const contents = parseContents(calfiles);
 
 print("contents of reference samples in ppb unit:");
@@ -42,7 +47,7 @@ for (line in linears) {
 cat("\n");
 
 const quantify = sampleData 
-:> list.files(pattern = "*.mzML") 
+:> list.files(pattern = "*.mzML", recursive = TRUE) 
 :> append(calfiles) 
 :> sapply(function(file) {
 	print("Run quantification of sample data file:");
