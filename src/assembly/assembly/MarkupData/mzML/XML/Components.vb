@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::61b0f659bf9ead27eca1332a3bdbf982, assembly\MarkupData\mzML\XML\Components.vb"
+﻿#Region "Microsoft.VisualBasic::69b4a0751d347b7b1cb5c837010e78c3, assembly\MarkupData\mzML\XML\Components.vb"
 
     ' Author:
     ' 
@@ -50,13 +50,15 @@
     ' 
     '     Class mzML
     ' 
-    '         Properties: cvList, fileDescription, run
+    '         Properties: cvList, fileDescription, id, run, version
     ' 
-    '         Function: LoadChromatogramList
+    '         Function: LoadChromatogramList, ToString
     ' 
     '     Class fileDescription
     ' 
     '         Properties: fileContent
+    ' 
+    '         Function: ToString
     ' 
     '     Class cvList
     ' 

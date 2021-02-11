@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6639a2592155cdeba4801764ed499ed2, assembly\ASCII\MSL\MSLIon.vb"
+﻿#Region "Microsoft.VisualBasic::93963e33c0f76c0314effc9c9fee6c5b, assembly\ASCII\MSL\MSLIon.vb"
 
     ' Author:
     ' 
@@ -36,9 +36,9 @@
 
     '     Class MSLIon
     ' 
-    '         Properties: CASNO, Comment, Contributor, Formula, MW
-    '                     Name, Nist, Peaks, RI, RT
-    '                     Source
+    '         Properties: [IS], CASNO, Comment, Contributor, Formula
+    '                     MW, Name, Nist, Peaks, RI
+    '                     RT, Source
     ' 
     '         Function: ToString
     ' 
