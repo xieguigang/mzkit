@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be765077e96a093ac338bdaf31f023ca, TargetedMetabolomics\GCMS\QuantifyAnalysis\SIMIonExtract.vb"
+﻿#Region "Microsoft.VisualBasic::6c0e21c80c28b1ee6f2ae7fc903f141c, TargetedMetabolomics\GCMS\QuantifyAnalysis\SIMIonExtract.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     '     Class SIMIonExtract
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: GetMsScan, GetPeak, GetSamplePeaks
+    '         Function: GetPeak
     ' 
     ' 
     ' /********************************************************************************/

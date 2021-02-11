@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3402970dbffa7e16aebb9afa6d637342, TargetedMetabolomics\LinearQuantitative\Models\QuantifyScan.vb"
+﻿#Region "Microsoft.VisualBasic::8e923a8f5b43461fa59f96fe0ac35a63, TargetedMetabolomics\LinearQuantitative\Models\QuantifyScan.vb"
 
     ' Author:
     ' 
@@ -37,6 +37,8 @@
     '     Class QuantifyScan
     ' 
     '         Properties: ionPeaks, quantify, rawX
+    ' 
+    '         Function: ToString
     ' 
     ' 
     ' /********************************************************************************/

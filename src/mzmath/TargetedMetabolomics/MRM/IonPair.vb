@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::57097e5f7f32229aa1797c202c4e63b7, TargetedMetabolomics\MRM\IonPair.vb"
+﻿#Region "Microsoft.VisualBasic::e0349c107cabc3ac5e3810dff7ea8e51, TargetedMetabolomics\MRM\IonPair.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     ' 
     '         Properties: accession, name, precursor, product, rt
     ' 
-    '         Function: Assert, GetIsomerism, populateGroupElement, ToString
+    '         Function: Assert, EqualsTo, GetIsomerism, populateGroupElement, ToString
     ' 
     ' 
     ' /********************************************************************************/

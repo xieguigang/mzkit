@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0318135c335c63932b1999d6b822bcc5, TargetedMetabolomics\LinearQuantitative\Linear\InternalStandardMethod.vb"
+﻿#Region "Microsoft.VisualBasic::74aa4d62ebbfb68b391f69eefb7aaef9, TargetedMetabolomics\LinearQuantitative\Linear\InternalStandardMethod.vb"
 
     ' Author:
     ' 

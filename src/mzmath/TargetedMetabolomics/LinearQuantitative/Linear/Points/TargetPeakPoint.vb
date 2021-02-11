@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56b510756a6c8638e939451ba074adee, TargetedMetabolomics\LinearQuantitative\Linear\Points\TargetPeakPoint.vb"
+﻿#Region "Microsoft.VisualBasic::d2ab798a00f6a76737093987c99cb027, TargetedMetabolomics\LinearQuantitative\Linear\Points\TargetPeakPoint.vb"
 
     ' Author:
     ' 
