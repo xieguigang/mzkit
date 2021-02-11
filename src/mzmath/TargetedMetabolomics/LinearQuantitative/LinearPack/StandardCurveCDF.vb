@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.IO
@@ -29,14 +30,32 @@ Namespace LinearQuantitative.Data
             Dim R2 As New attribute With {.name = "R2", .type = CDFDataTypes.DOUBLE, .value = linear.linear.R2}
             Dim outliers As New attribute With {.name = "outliers", .type = CDFDataTypes.INT, .value = linear.points.Where(Function(p) Not p.valid).Count}
             Dim weighted As New attribute With {.name = "is_weighted", .type = CDFDataTypes.BOOLEAN, .value = TypeOf linear.linear Is WeightedFit}
+            Dim points As New attribute With {.name = "ref_size", .type = CDFDataTypes.INT, .value = linear.points.Length}
 
-            cdf.GlobalAttributes(name, [IS], IS_name, cIS, R2, outliers, weighted)
+            cdf.GlobalAttributes(name, [IS], IS_name, cIS, R2, outliers, weighted, points)
 
             If TypeOf linear.linear Is WeightedFit Then
                 Call DirectCast(linear.linear, WeightedFit).fitLinear(cdf)
             Else
                 Call DirectCast(linear.linear, FitResult).fitLinear(cdf)
             End If
+
+            Dim blankSize As New Dimension With {
+                .name = "blank_size",
+                .size = linear.blankControls.Length
+            }
+
+            cdf.AddVariable("blanks", linear.blankControls.SafeQuery.ToArray, blankSize)
+
+            Dim width As New Dimension With {.name = "width", .size = 5 + 3}
+
+            For Each p As ReferencePoint In linear.points
+                cdf.AddVariable(p.level, New Double() {p.AIS, p.Ati, p.cIS, p.Cti, p.Px, p.yfit, p.error, p.variant}, width, {
+                    New attribute With {.name = "valid", .type = CDFDataTypes.BOOLEAN, .value = p.valid},
+                    New attribute With {.name = "ID", .type = CDFDataTypes.CHAR, .value = p.ID},
+                    New attribute With {.name = "name", .type = CDFDataTypes.CHAR, .value = p.Name}
+                })
+            Next
         End Sub
 
         <Extension>
