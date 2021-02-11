@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::afcc88d300be4bd22c63e24c2e0cecfb, Library\mzkit.quantify\MRM\MRMLinearReport.vb"
+﻿#Region "Microsoft.VisualBasic::5f28af0760bb46764012b4370c33d246, Library\mzkit.quantify\Report\LinearReport.vb"
 
     ' Author:
     ' 
@@ -34,10 +34,10 @@
 
     ' Summaries:
 
-    ' Module MRMLinearReport
+    ' Module LinearReport
     ' 
-    '     Function: asset, CreateHtml, doReport, getBlankReport, getStandardCurve
-    '               singleLinear, TOC
+    '     Function: asset, CreateHtml, doReport, getStandardCurve, singleLinear
+    '               TOC
     ' 
     ' /********************************************************************************/
 

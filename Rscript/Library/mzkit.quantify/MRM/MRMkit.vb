@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::986e106c070ce8741bdde85c9f4550b9, Library\mzkit.quantify\MRM\MRMkit.vb"
+﻿#Region "Microsoft.VisualBasic::bb93c7e6a85c418228e76f776513082b, Library\mzkit.quantify\MRM\MRMkit.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
     ' Module MRMkit
     ' 
     '     Constructor: (+1 Overloads) Sub New
-    '     Function: asIonPair, CreateMRMDataSet, ExtractIonData, ExtractPeakROI, GetPeakROIList
-    '               GetRTAlignments, IsomerismIonPairs, Linears, MRMarguments, printIonPairs
-    '               readCompoundReference, readIonPairs, readIS, ROISummary, RTShiftSummary
-    '               SampleQuantify, ScanPeakTable, ScanWiffRaw, WiffRawFile
+    '     Function: asIonPair, ExtractIonData, ExtractPeakROI, GetPeakROIList, GetRTAlignments
+    '               IsomerismIonPairs, Linears, MRMarguments, printIonPairs, readCompoundReference
+    '               readIonPairs, readIS, ROISummary, RTShiftSummary, SampleQuantify
+    '               ScanPeakTable, ScanWiffRaw, WiffRawFile
     ' 
     ' /********************************************************************************/
 

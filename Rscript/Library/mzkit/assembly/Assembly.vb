@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eedfd3923dbc5449c71e3401762edd7e, Library\mzkit\assembly\Assembly.vb"
+﻿#Region "Microsoft.VisualBasic::69199f6588f3be419d903fc0c7165b2f, Library\mzkit\assembly\Assembly.vb"
 
     ' Author:
     ' 
