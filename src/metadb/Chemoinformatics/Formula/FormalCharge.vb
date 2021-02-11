@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30a177b8faf961ec308a83a38687f128, src\metadb\Chemoinformatics\Formula\FormalCharge.vb"
+﻿#Region "Microsoft.VisualBasic::e9d9a5cdde0b8f22ce4f036573f5ebe6, Chemoinformatics\Formula\FormalCharge.vb"
 
     ' Author:
     ' 
@@ -34,10 +34,6 @@
 
     ' Summaries:
 
-    '     Structure ElementNumType
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
     '     Module FormalCharge
     ' 
     '         Function: CorrectChargeEmpirical

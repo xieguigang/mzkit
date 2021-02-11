@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::606fbe2dc29aeafe456ff8651c2d96ec, src\metadb\Massbank\Public\TMIC\HMDB\Assembly\disease.vb"
+﻿#Region "Microsoft.VisualBasic::606fbe2dc29aeafe456ff8651c2d96ec, Massbank\Public\TMIC\HMDB\Assembly\disease.vb"
 
     ' Author:
     ' 

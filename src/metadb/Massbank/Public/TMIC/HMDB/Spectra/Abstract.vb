@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::13168afaf814aa0624854d8d15828ea6, src\metadb\Massbank\Public\TMIC\HMDB\Spectra\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::13168afaf814aa0624854d8d15828ea6, Massbank\Public\TMIC\HMDB\Spectra\Abstract.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3557bf5483260775412fdc6081d1eeb9, src\metadb\Massbank\test\nameTest.vb"
+﻿#Region "Microsoft.VisualBasic::3557bf5483260775412fdc6081d1eeb9, Massbank\test\nameTest.vb"
 
     ' Author:
     ' 

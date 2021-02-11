@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95d3e0e41db9f24619e03920fcab0e38, src\metadb\FooDB\FooDB\mysql\contents.vb"
+﻿#Region "Microsoft.VisualBasic::95d3e0e41db9f24619e03920fcab0e38, FooDB\FooDB\mysql\contents.vb"
 
     ' Author:
     ' 

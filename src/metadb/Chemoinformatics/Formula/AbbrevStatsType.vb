@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9e03bb073bc46798b79f5a4ad75c297, src\metadb\Chemoinformatics\Formula\AbbrevStatsType.vb"
+﻿#Region "Microsoft.VisualBasic::f9e03bb073bc46798b79f5a4ad75c297, Chemoinformatics\Formula\AbbrevStatsType.vb"
 
     ' Author:
     ' 

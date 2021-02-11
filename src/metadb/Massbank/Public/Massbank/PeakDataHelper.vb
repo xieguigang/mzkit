@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6090b4399058fd9badf1f8af8b4162fd, src\metadb\Massbank\Public\Massbank\PeakDataHelper.vb"
+﻿#Region "Microsoft.VisualBasic::6090b4399058fd9badf1f8af8b4162fd, Massbank\Public\Massbank\PeakDataHelper.vb"
 
     ' Author:
     ' 

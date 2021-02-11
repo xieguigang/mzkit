@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::512edcc1b20ecbb90baa4dc116b47df1, src\metadb\FooDB\FooDB\mysql\compounds_pathways.vb"
+﻿#Region "Microsoft.VisualBasic::512edcc1b20ecbb90baa4dc116b47df1, FooDB\FooDB\mysql\compounds_pathways.vb"
 
     ' Author:
     ' 

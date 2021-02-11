@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e453a29f7cf604eacaa69f476e25a48, src\metadb\Massbank\MetaLib\NaturalLanguageTerm.vb"
+﻿#Region "Microsoft.VisualBasic::6e453a29f7cf604eacaa69f476e25a48, Massbank\MetaLib\NaturalLanguageTerm.vb"
 
     ' Author:
     ' 

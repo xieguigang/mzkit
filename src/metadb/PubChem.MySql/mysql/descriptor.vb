@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2458670319ed6ba61fa94f8e7a7de09d, src\metadb\PubChem.MySql\mysql\descriptor.vb"
+﻿#Region "Microsoft.VisualBasic::2458670319ed6ba61fa94f8e7a7de09d, PubChem.MySql\mysql\descriptor.vb"
 
     ' Author:
     ' 

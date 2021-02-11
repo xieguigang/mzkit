@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d3deddb5b64d8b9c54e5ff997c378f6e, src\metadb\MetabolomeXchange\Provider.vb"
+﻿#Region "Microsoft.VisualBasic::d3deddb5b64d8b9c54e5ff997c378f6e, MetabolomeXchange\Provider.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::07110222891c895eb24cbfbe6369f9a3, src\metadb\Massbank\Public\NCBI\PubChem\Web\Query\WebQuery.vb"
+﻿#Region "Microsoft.VisualBasic::33c562a24c9924cc926e41e03a08f2cf, Massbank\Public\NCBI\PubChem\Web\Query\WebQuery.vb"
 
     ' Author:
     ' 
@@ -34,27 +34,6 @@
 
     ' Summaries:
 
-    '     Class JsonQuery
-    ' 
-    '         Properties: [where], collection, download, limit, order
-    '                     start
-    ' 
-    '     Class [QueryWhere]
-    ' 
-    '         Properties: ands
-    ' 
-    '     Class QueryTableExport
-    ' 
-    '         Properties: aids, annothitcnt, annothits, cid, cidcdate
-    '                     cmpdname, cmpdsynonym, complexity, dois, hbondacc
-    '                     hbonddonor, heavycnt, inchikey, iupacname, meshheadings
-    '                     mf, mw, polararea, rotbonds, xlogp
-    ' 
-    '     Class CIDExport
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: normalizeFileName, parseExportTable, queryApi
-    ' 
     '     Class CIDQuery
     ' 
     '         Constructor: (+1 Overloads) Sub New

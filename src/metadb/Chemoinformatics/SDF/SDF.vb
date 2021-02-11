@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea631801fb8923f02000f546fc54247d, src\metadb\Chemoinformatics\SDF\SDF.vb"
+﻿#Region "Microsoft.VisualBasic::2fc0e6f2732dc88983096014da953323, Chemoinformatics\SDF\SDF.vb"
 
     ' Author:
     ' 

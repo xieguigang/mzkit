@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::014171f8d99980ad7e5d3d4fbdf7433c, src\metadb\Massbank\MetaLib\Match\ComparesIdXrefInteger.vb"
+﻿#Region "Microsoft.VisualBasic::014171f8d99980ad7e5d3d4fbdf7433c, Massbank\MetaLib\Match\ComparesIdXrefInteger.vb"
 
     ' Author:
     ' 

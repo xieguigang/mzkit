@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0dabec85da3edfd6cbed0d967e2623b, src\metadb\XrefEngine\ClassyfireInfoTable.vb"
+﻿#Region "Microsoft.VisualBasic::b0dabec85da3edfd6cbed0d967e2623b, XrefEngine\ClassyfireInfoTable.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c34bed20cb1a5e2d7d8e8020d4f765ba, src\metadb\PubChem.MySql\mysql\synonym.vb"
+﻿#Region "Microsoft.VisualBasic::c34bed20cb1a5e2d7d8e8020d4f765ba, PubChem.MySql\mysql\synonym.vb"
 
     ' Author:
     ' 

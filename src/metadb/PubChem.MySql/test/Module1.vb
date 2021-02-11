@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0395ebc4bdc21eb4c3be40839a70f6e5, src\metadb\PubChem.MySql\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::0395ebc4bdc21eb4c3be40839a70f6e5, PubChem.MySql\test\Module1.vb"
 
     ' Author:
     ' 

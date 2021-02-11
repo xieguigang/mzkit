@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4ef6afc89710a6b57c3edfe242277045, src\metadb\Chemoinformatics\Formula\SearchOption.vb"
+﻿#Region "Microsoft.VisualBasic::7c5d6a383eb3b149e3a55dabd2400869, Chemoinformatics\Formula\SearchOption.vb"
 
     ' Author:
     ' 
@@ -41,14 +41,6 @@
     '         Constructor: (+1 Overloads) Sub New
     '         Function: AddElement, AdjustPpm, DefaultMetaboliteProfile, GeneralFlavone, NaturalProduct
     '                   SmallMolecule, ToString
-    ' 
-    '     Enum DNPOrWileyType
-    ' 
-    '         DNP, Wiley
-    ' 
-    '  
-    ' 
-    ' 
     ' 
     ' 
     ' /********************************************************************************/

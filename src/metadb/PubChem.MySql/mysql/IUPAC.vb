@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad65c7094ef6a8998a4fb2818ee582b3, src\metadb\PubChem.MySql\mysql\IUPAC.vb"
+﻿#Region "Microsoft.VisualBasic::ad65c7094ef6a8998a4fb2818ee582b3, PubChem.MySql\mysql\IUPAC.vb"
 
     ' Author:
     ' 

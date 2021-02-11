@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::021c1099d00b3d88d67545c573498540, src\metadb\pubchem\CLI\WebApi.vb"
+﻿#Region "Microsoft.VisualBasic::021c1099d00b3d88d67545c573498540, pubchem\CLI\WebApi.vb"
 
     ' Author:
     ' 

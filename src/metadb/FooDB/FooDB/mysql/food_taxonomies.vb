@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a00f24a5841efd2e06860159fa04dfbd, src\metadb\FooDB\FooDB\mysql\food_taxonomies.vb"
+﻿#Region "Microsoft.VisualBasic::a00f24a5841efd2e06860159fa04dfbd, FooDB\FooDB\mysql\food_taxonomies.vb"
 
     ' Author:
     ' 

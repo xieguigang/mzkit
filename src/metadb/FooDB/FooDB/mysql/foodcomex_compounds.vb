@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93116417cc5d6a04ec2f56be22f2e5ff, src\metadb\FooDB\FooDB\mysql\foodcomex_compounds.vb"
+﻿#Region "Microsoft.VisualBasic::93116417cc5d6a04ec2f56be22f2e5ff, FooDB\FooDB\mysql\foodcomex_compounds.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b952797062c171d332197f7fdb70597, src\metadb\Chemoinformatics\SDF\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::7b952797062c171d332197f7fdb70597, Chemoinformatics\SDF\NamespaceDoc.vb"
 
     ' Author:
     ' 

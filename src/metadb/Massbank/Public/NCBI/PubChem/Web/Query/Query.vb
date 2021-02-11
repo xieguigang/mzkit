@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e64a898492f4da23848ca21514503802, src\metadb\Massbank\Public\NCBI\PubChem\Web\Query\Query.vb"
+﻿#Region "Microsoft.VisualBasic::620190b3ee1ef9ca613f0d74b278ad4d, Massbank\Public\NCBI\PubChem\Web\Query\Query.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
 
     '     Module Query
     ' 
-    '         Function: FetchPugViewByCID, getQueryHandler, QueryCID, QueryPugViews
+    '         Function: FetchPugViewByCID, GetQueryHandler, QueryCID, QueryPugViews
     ' 
     ' 
     ' /********************************************************************************/

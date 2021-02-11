@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::48f955585ff0e8a5954df76b34684970, src\metadb\PubChem.MySql\mysql\compound.vb"
+﻿#Region "Microsoft.VisualBasic::48f955585ff0e8a5954df76b34684970, PubChem.MySql\mysql\compound.vb"
 
     ' Author:
     ' 

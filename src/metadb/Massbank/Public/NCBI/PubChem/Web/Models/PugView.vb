@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f472762b59fad264b71aba83a3024dc, src\metadb\Massbank\Public\NCBI\PubChem\Web\Models\PugView.vb"
+﻿#Region "Microsoft.VisualBasic::5f472762b59fad264b71aba83a3024dc, Massbank\Public\NCBI\PubChem\Web\Models\PugView.vb"
 
     ' Author:
     ' 

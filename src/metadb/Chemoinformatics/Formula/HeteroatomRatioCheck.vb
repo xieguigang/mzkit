@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::669da9f698064d603a7aaa94b1b1c43f, src\metadb\Chemoinformatics\Formula\HeteroatomRatioCheck.vb"
+﻿#Region "Microsoft.VisualBasic::eca7986c133dbfcdcc37611c11bc46d1, Chemoinformatics\Formula\HeteroatomRatioCheck.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
 
     '     Module HeteroatomRatioCheck
     ' 
-    '         Function: HeteroatomRatioCheck
+    '         Function: ElementProbabilityCheck, HeteroatomRatioCheck, HydrogenCarbonElementRatioCheck
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f1a608990e6f19a8d6aa61a2296525da, src\metadb\Massbank\Public\NCBI\PubChemDescriptorRepo.vb"
+﻿#Region "Microsoft.VisualBasic::f1a608990e6f19a8d6aa61a2296525da, Massbank\Public\NCBI\PubChemDescriptorRepo.vb"
 
     ' Author:
     ' 

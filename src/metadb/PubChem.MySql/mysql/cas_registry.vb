@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::040cbe579d2a287d14bf9c6fdd678506, src\metadb\PubChem.MySql\mysql\cas_registry.vb"
+﻿#Region "Microsoft.VisualBasic::040cbe579d2a287d14bf9c6fdd678506, PubChem.MySql\mysql\cas_registry.vb"
 
     ' Author:
     ' 

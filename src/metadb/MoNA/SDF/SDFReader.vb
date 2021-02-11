@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91a7bbf4f00d2f9ade373c51d8e16d26, src\metadb\MoNA\SDF\SDFReader.vb"
+﻿#Region "Microsoft.VisualBasic::91a7bbf4f00d2f9ade373c51d8e16d26, MoNA\SDF\SDFReader.vb"
 
     ' Author:
     ' 
