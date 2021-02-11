@@ -456,6 +456,9 @@
     <Compile Include="GCMS\QuantifyAnalysis\QuantifyIonExtract.vb" />
     <Compile Include="GCMS\QuantifyIon.vb" />
     <Compile Include="GCMS\QuantifyAnalysis\SIMIonExtract.vb" />
+    <Compile Include="LinearQuantitative\LinearPack\LinearPack.vb" />
+    <Compile Include="LinearQuantitative\LinearPack\CDFWriter.vb" />
+    <Compile Include="LinearQuantitative\LinearPack\CDFReader.vb" />
     <Compile Include="LinearQuantitative\Linear\InternalStandardMethod.vb" />
     <Compile Include="LinearQuantitative\Linear\SampleWorker.vb" />
     <Compile Include="LinearQuantitative\Linear\QuantificationWorker.vb" />
