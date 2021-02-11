@@ -51,8 +51,8 @@ Namespace Content
 
     Public Class SampleContentLevels
 
-        ReadOnly levels As Dictionary(Of String, Double)
-        ReadOnly directMap As Boolean
+        Friend ReadOnly levels As IReadOnlyDictionary(Of String, Double)
+        Friend ReadOnly directMap As Boolean
 
         Default Public ReadOnly Property Content(sampleLevel As String) As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -76,7 +76,7 @@ Namespace Content
         End Function
 
         Public Overrides Function ToString() As String
-            Return levels.GetJson
+            Return DirectCast(levels, Dictionary(Of String, Double)).GetJson
         End Function
 
     End Class

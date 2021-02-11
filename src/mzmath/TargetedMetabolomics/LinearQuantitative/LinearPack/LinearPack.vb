@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Content
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
 
 Namespace LinearQuantitative.Data
@@ -12,6 +13,7 @@ Namespace LinearQuantitative.Data
         Public Property peakSamples As TargetPeakPoint()
         Public Property title As String
         Public Property time As Date
+        Public Property reference As Dictionary(Of String, SampleContentLevels)
 
         Public Overrides Function ToString() As String
             Return title
