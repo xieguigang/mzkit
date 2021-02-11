@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Content
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Data.IO.netCDF
@@ -27,7 +28,50 @@ Namespace LinearQuantitative.Data
             Call pack.writeLinears(file)
             Call pack.writePeakNames(file)
             Call pack.writePeakSamples(file)
+            Call pack.writeSampleLevels(file)
         End Sub
+
+        <Extension>
+        Private Sub writeSampleLevels(pack As LinearPack, file As netCDF.CDFWriter)
+            Dim allSampleNames As String() = pack.writeSampleNames(file)
+            Dim size As New Dimension With {.name = "samplePoints", .size = allSampleNames.Length}
+
+            For Each level In pack.reference
+                Call level.Value.writeSampleLevel(level.Key, allSampleNames, size, file)
+            Next
+        End Sub
+
+        <Extension>
+        Private Sub writeSampleLevel(levels As SampleContentLevels,
+                                     ionName As String,
+                                     allSampleNames As String(),
+                                     size As Dimension,
+                                     file As netCDF.CDFWriter)
+
+            Dim data As CDFData = allSampleNames.Select(Function(lv) levels(lv)).ToArray
+            Dim attrs As attribute() = {
+                New attribute With {.name = "directMap", .type = CDFDataTypes.BOOLEAN, .value = levels.directMap}
+            }
+
+            file.AddVariable($"levels\{ionName}", data, size, attrs)
+        End Sub
+
+        <Extension>
+        Private Function writeSampleNames(pack As LinearPack, file As netCDF.CDFWriter) As String()
+            Dim allSampleNames As String() = pack.peakSamples _
+                .Select(Function(p) p.SampleName) _
+                .Distinct _
+                .ToArray
+            Dim data As New CDFData With {.chars = allSampleNames.GetJson}
+            Dim size As New Dimension With {.name = "sizeofSamples", .size = data.Length}
+            Dim attrs As attribute() = {
+                New attribute With {.name = "size", .type = CDFDataTypes.INT, .value = allSampleNames.Length}
+            }
+
+            file.AddVariable("sampleNames", data, size, attrs)
+
+            Return allSampleNames
+        End Function
 
         <Extension>
         Private Sub writePeakSamples(pack As LinearPack, file As netCDF.CDFWriter)
