@@ -46,20 +46,22 @@ Namespace LinearQuantitative.Data
 
         <Extension>
         Private Sub writeLinear(linear As StandardCurve, file As netCDF.CDFWriter)
-            Dim formula As Formula = linear.linear.Polynomial
             Dim attrs As attribute() = {
-                New attribute With {.name = "IS", .type = CDFDataTypes.CHAR, .value = linear.IS.ID},
-                New attribute With {.name = "IS_name", .type = CDFDataTypes.CHAR, .value = linear.IS.name},
-                New attribute With {.name = "CIS", .type = CDFDataTypes.DOUBLE, .value = linear.IS.CIS},
                 New attribute With {.name = "name", .type = CDFDataTypes.CHAR, .value = linear.name},
                 New attribute With {.name = "points", .type = CDFDataTypes.INT, .value = linear.points.Length},
-                New attribute With {.name = "R2", .type = CDFDataTypes.CHAR, .value = linear.linear.R2},
-                New attribute With {.name = "a", .type = CDFDataTypes.CHAR, .value = linear.IS.ID},
-                New attribute With {.name = "b", .type = CDFDataTypes.CHAR, .value = linear.IS.ID}
+                New attribute With {.name = "R2", .type = CDFDataTypes.CHAR, .value = linear.linear.R2}
             }
 
 
         End Sub
+
+        Private Function internalCDF() As MemoryStream
+            Using ms As New MemoryStream, cdf As New netCDF.CDFWriter(ms)
+
+
+                Return ms
+            End Using
+        End Function
 
         <Extension>
         Private Sub writeGlobals(pack As LinearPack, file As netCDF.CDFWriter)
