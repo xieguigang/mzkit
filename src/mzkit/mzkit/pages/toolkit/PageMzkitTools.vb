@@ -409,7 +409,7 @@ Public Class PageMzkitTools
     End Sub
 
     Public Sub ExportExactMassSearchTable()
-        Call DataGridView1.SaveDataGrid
+        Call DataGridView1.SaveDataGrid($"Exact mass search result table export to [%s] successfully!")
     End Sub
 
     Public Sub SaveMatrixToolStripMenuItem_Click()

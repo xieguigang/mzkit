@@ -609,4 +609,8 @@ Public Class frmTargetedQuantification
 
         End Select
     End Sub
+
+    Private Sub ExportTableToolStripMenuItem_Click() Handles ExportTableToolStripMenuItem.Click, ToolStripButton4.Click
+        Call DataGridView3.SaveDataGrid("Export sample result table [%s] success!")
+    End Sub
 End Class

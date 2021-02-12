@@ -53,8 +53,11 @@ Module DataControlHandler
     ''' save data grid as excel table file
     ''' </summary>
     ''' <param name="table"></param>
+    ''' <param name="title">
+    ''' ``%s`` is the place holder for file name
+    ''' </param>
     <Extension>
-    Public Sub SaveDataGrid(table As DataGridView)
+    Public Sub SaveDataGrid(table As DataGridView, title$)
         Using file As New SaveFileDialog With {.Filter = "Excel Table(*.xls)|*.xls"}
             If file.ShowDialog = DialogResult.OK Then
                 Using writeTsv As StreamWriter = file.FileName.OpenWriter
@@ -77,7 +80,7 @@ Module DataControlHandler
                     Next
                 End Using
 
-                MessageBox.Show($"Exact Mass Search Result table export to [{file.FileName}] successfully!", "Export Table", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                MessageBox.Show(title.Replace("%s", file.FileName), "Export Table", MessageBoxButtons.OK, MessageBoxIcon.Information)
             End If
         End Using
     End Sub

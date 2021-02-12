@@ -252,7 +252,7 @@ Public Class PageMzSearch
     End Sub
 
     Public Sub SaveSearchResultTable()
-        Call DataGridView1.SaveDataGrid
+        Call DataGridView1.SaveDataGrid($"Search result table is saved at location:{vbCrLf}%s")
     End Sub
 
     Private Sub PageMzSearch_Load(sender As Object, e As EventArgs) Handles MyBase.Load

@@ -420,14 +420,16 @@ Partial Class frmTargetedQuantification
         '
         'LoadSamplesToolStripMenuItem
         '
+        Me.LoadSamplesToolStripMenuItem.Image = CType(resources.GetObject("LoadSamplesToolStripMenuItem.Image"), System.Drawing.Image)
         Me.LoadSamplesToolStripMenuItem.Name = "LoadSamplesToolStripMenuItem"
         Me.LoadSamplesToolStripMenuItem.Size = New System.Drawing.Size(147, 22)
         Me.LoadSamplesToolStripMenuItem.Text = "Load Samples"
         '
         'ExportTableToolStripMenuItem
         '
+        Me.ExportTableToolStripMenuItem.Image = CType(resources.GetObject("ExportTableToolStripMenuItem.Image"), System.Drawing.Image)
         Me.ExportTableToolStripMenuItem.Name = "ExportTableToolStripMenuItem"
-        Me.ExportTableToolStripMenuItem.Size = New System.Drawing.Size(147, 22)
+        Me.ExportTableToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ExportTableToolStripMenuItem.Text = "Export Table"
         '
         'ToolStrip2
@@ -459,7 +461,7 @@ Partial Class frmTargetedQuantification
         Me.ToolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ToolStripButton4.Name = "ToolStripButton4"
         Me.ToolStripButton4.Size = New System.Drawing.Size(23, 22)
-        Me.ToolStripButton4.Text = "ToolStripButton4"
+        Me.ToolStripButton4.Text = "Save Table Data"
         '
         'frmTargetedQuantification
         '
