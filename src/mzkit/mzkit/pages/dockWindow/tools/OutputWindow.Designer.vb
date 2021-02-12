@@ -23,6 +23,7 @@
         ''' the contents of this method with the code editor.
         ''' </summary>
         Private Sub InitializeComponent()
+            Me.components = New System.ComponentModel.Container()
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(OutputWindow))
             Me.textBox1 = New System.Windows.Forms.TextBox()
             Me.textBox2 = New System.Windows.Forms.TextBox()
@@ -90,6 +91,7 @@
             Me.Controls.Add(Me.textBox1)
             Me.Controls.Add(Me.textBox2)
             Me.Controls.Add(Me.ToolStrip1)
+            Me.DoubleBuffered = True
             Me.HideOnClose = True
             Me.Name = "OutputWindow"
             Me.Padding = New System.Windows.Forms.Padding(0, 2, 0, 2)

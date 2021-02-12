@@ -69,11 +69,13 @@ Namespace DockSample
 
         Private Sub comboBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ToolStripComboBox1.SelectedIndexChanged
             If ToolStripComboBox1.SelectedIndex = 0 Then
-                textBox1.Show()
                 textBox2.Hide()
+                textBox1.Show()
+                textBox1.Dock = DockStyle.Fill
             Else
                 textBox1.Hide()
                 textBox2.Show()
+                textBox2.Dock = DockStyle.Fill
             End If
         End Sub
 
