@@ -156,8 +156,8 @@ Namespace LinearQuantitative.Data
                                 End Function) _
                         .JoinBy("|")
                 },
-                New attribute With {.name = "rtmin", .type = CDFDataTypes.CHAR, .value = peak.Peak.window.Max},
-                New attribute With {.name = "rtmax", .type = CDFDataTypes.CHAR, .value = peak.Peak.window.Min},
+                New attribute With {.name = "rtmin", .type = CDFDataTypes.CHAR, .value = peak.Peak.window.Min},
+                New attribute With {.name = "rtmax", .type = CDFDataTypes.CHAR, .value = peak.Peak.window.Max},
                 New attribute With {.name = "maxinto", .type = CDFDataTypes.CHAR, .value = peak.Peak.peakHeight},
                 New attribute With {.name = "base", .type = CDFDataTypes.CHAR, .value = peak.Peak.base}
             }
