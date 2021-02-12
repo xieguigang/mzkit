@@ -82,7 +82,7 @@ Namespace LinearQuantitative.Data
         <Extension>
         Private Function parseIS(cdf As netCDFReader) As [IS]()
             Dim ISbstr As String = cdf.getDataVariable("IS").chars
-            Dim list As BElement() = BencodeDecoder.Decode(ISbstr)
+            Dim list As BElement() = DirectCast(BencodeDecoder.Decode(ISbstr)(Scan0), BList).ToArray
 
             Return list _
                 .Select(Function(b) DirectCast(b, BDictionary)) _
