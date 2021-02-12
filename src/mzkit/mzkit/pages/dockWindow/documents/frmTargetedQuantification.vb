@@ -91,7 +91,9 @@ Public Class frmTargetedQuantification
     End Sub
 
     Private Function isValidLinearRow(r As DataGridViewRow) As Boolean
-        For i As Integer = 2 To linearFiles.Length - 1 + 2
+        Dim allKeys = linearPack.GetLevelKeys
+
+        For i As Integer = 2 To allKeys.Length - 1 + 2
             If (Not any.ToString(r.Cells(i).Value).IsNumeric) OrElse (any.ToString(r.Cells(i).Value) = "0") Then
                 Return False
             End If
@@ -187,12 +189,8 @@ Public Class frmTargetedQuantification
         End If
     End Sub
 
-    Private Sub loadLinears(sender As Object, e As EventArgs) Handles ToolStripComboBox1.SelectedIndexChanged
-        Dim profileName As String = any.ToString(ToolStripComboBox1.Items(ToolStripComboBox1.SelectedIndex))
-        Dim file As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) & $"/mzkit/linears/{profileName}.linearPack"
+    Private Sub loadLinears()
         Dim ionLib As IonLibrary = Globals.LoadIonLibrary
-
-        linearPack = LinearPack.OpenFile(file)
 
         DataGridView1.Rows.Clear()
         DataGridView1.Columns.Clear()
@@ -240,6 +238,14 @@ Public Class frmTargetedQuantification
                 DataGridView1.Rows(i).Cells(j + 2).Value = CStr(linear.Value(levelKeys(j)))
             Next
         Next
+    End Sub
+
+    Private Sub loadLinears(sender As Object, e As EventArgs) Handles ToolStripComboBox1.SelectedIndexChanged
+        Dim profileName As String = any.ToString(ToolStripComboBox1.Items(ToolStripComboBox1.SelectedIndex))
+        Dim file As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) & $"/mzkit/linears/{profileName}.linearPack"
+
+        linearPack = LinearPack.OpenFile(file)
+        loadLinears()
     End Sub
 
     Private Sub ToolStripButton3_Click(sender As Object, e As EventArgs) Handles ToolStripButton3.Click
