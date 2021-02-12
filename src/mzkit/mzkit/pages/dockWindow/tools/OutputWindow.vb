@@ -67,7 +67,7 @@ Namespace DockSample
             Invoke(Sub() textBox2.AppendText(msg & vbCrLf))
         End Sub
 
-        Private Sub comboBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ToolStripComboBox1.SelectedIndexChanged
+        Private Sub comboBox_SelectedIndexChanged() Handles ToolStripComboBox1.SelectedIndexChanged
             If ToolStripComboBox1.SelectedIndex = 0 Then
                 textBox2.Hide()
                 textBox1.Show()
@@ -81,6 +81,7 @@ Namespace DockSample
 
         Private Sub OutputWindow_Load(sender As Object, e As EventArgs) Handles Me.Load
             Call ApplyVsTheme(ToolStrip1)
+            Call comboBox_SelectedIndexChanged()
         End Sub
 
         Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click

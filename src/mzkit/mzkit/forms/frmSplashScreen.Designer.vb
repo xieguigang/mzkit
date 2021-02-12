@@ -62,7 +62,7 @@ Partial Class frmSplashScreen
         '
         Me.PictureBox2.BackgroundImage = Global.mzkit.My.Resources.Resources._42082
         Me.PictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox2.Location = New System.Drawing.Point(-9, -1)
+        Me.PictureBox2.Location = New System.Drawing.Point(1, 1)
         Me.PictureBox2.Name = "PictureBox2"
         Me.PictureBox2.Size = New System.Drawing.Size(223, 200)
         Me.PictureBox2.TabIndex = 4
