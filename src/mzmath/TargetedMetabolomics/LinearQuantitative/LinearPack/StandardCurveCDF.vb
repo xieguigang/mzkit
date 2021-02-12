@@ -134,13 +134,18 @@ Namespace LinearQuantitative.Data
                 New attribute With {.name = "R2", .type = CDFDataTypes.DOUBLE, .value = fit.CorrelationCoefficient},
                 New attribute With {.name = "SDV", .type = CDFDataTypes.DOUBLE, .value = fit.StandardDeviation}
             }
-            Dim vars As Double() = fit.VarianceMatrix.RowIterator.IteratesALL.ToArray
+            Dim matrix As Double()() = fit.VarianceMatrix.RowIterator.ToArray
+            Dim vars As Double() = matrix.IteratesALL.ToArray
             Dim sizeofVar As New Dimension With {.name = "var_size", .size = vars.Length}
+            Dim matrixDim As attribute() = {
+                New attribute With {.name = "dim1", .type = CDFDataTypes.INT, .value = matrix.Length},
+                New attribute With {.name = "dim2", .type = CDFDataTypes.INT, .value = matrix(Scan0).Length}
+            }
 
             cdf.AddVariable("polynomial", formula.Factors, size, attrs)
             cdf.AddVariable("DY", fit.Residuals, sizeofDY)
             cdf.AddVariable("SEC", fit.CoefficientsStandardError, sizeofSEC)
-            cdf.AddVariable("COVAR", vars, sizeofSEC)
+            cdf.AddVariable("COVAR", vars, sizeofVar, matrixDim)
         End Sub
 
         <Extension>

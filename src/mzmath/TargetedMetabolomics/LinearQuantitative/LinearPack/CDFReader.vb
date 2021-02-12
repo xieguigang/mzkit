@@ -48,12 +48,14 @@ Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Content
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports any = Microsoft.VisualBasic.Scripting
 
@@ -131,12 +133,37 @@ Namespace LinearQuantitative.Data
 
         <Extension>
         Private Function parseLinearFit(cdf As netCDFReader) As IFitted
+            Dim polynomial As variable = cdf.getDataVariableEntry("polynomial")
 
+            Return New FitResult With {
+                .RMSE = polynomial.FindAttribute("RMSE").getObjectValue,
+                .SSE = polynomial.FindAttribute("SSE").getObjectValue,
+                .SSR = polynomial.FindAttribute("SSR").getObjectValue,
+                .Polynomial = New Polynomial With {
+                    .Factors = cdf.getDataVariable(polynomial).numerics
+                }
+            }
         End Function
 
         <Extension>
         Private Function parseWeightedFit(cdf As netCDFReader) As IFitted
+            Dim polynomial As variable = cdf.getDataVariableEntry("polynomial")
+            Dim rows As Double() = cdf.getDataVariable("COVAR").numerics
+            Dim dim1 As Integer = cdf.getDataVariableEntry("COVAR").FindAttribute("dim1").getObjectValue
+            Dim dim2 As Integer = cdf.getDataVariableEntry("COVAR").FindAttribute("dim2").getObjectValue
+            Dim matrix As Double(,) = rows.Split(dim2).ToMatrix
 
+            Return New WeightedFit With {
+                .CoefficientsStandardError = cdf.getDataVariable("SEC").numerics,
+                .Residuals = cdf.getDataVariable("DY").numerics,
+                .CorrelationCoefficient = polynomial.FindAttribute("R2").getObjectValue,
+                .FisherF = polynomial.FindAttribute("fisher").getObjectValue,
+                .StandardDeviation = polynomial.FindAttribute("SDV").getObjectValue,
+                .Polynomial = New Polynomial With {
+                    .Factors = cdf.getDataVariable(polynomial).numerics
+                },
+                .VarianceMatrix = matrix
+            }
         End Function
 
         <Extension>
