@@ -325,7 +325,7 @@ Type 'q()' to quit R.
             End If
 
             If file.FileExists Then
-                Call REngine.Invoke("install.packages", file)
+                Call REngine.Invoke("install.packages", {file}, REngine.globalEnvir)
             Else
                 host.showStatusMessage("missing R# package release file: mzkit.zip!", My.Resources.StatusAnnotations_Warning_32xLG_color)
             End If
