@@ -89,7 +89,7 @@ Namespace LinearQuantitative.Data
 
             Dim blankSize As New Dimension With {
                 .name = "blank_size",
-                .size = linear.blankControls.Length
+                .size = linear.blankControls.SafeQuery.Count
             }
 
             cdf.AddVariable("blanks", linear.blankControls.SafeQuery.ToArray, blankSize)

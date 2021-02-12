@@ -144,6 +144,10 @@ Public Class frmTargetedQuantification
                 levels(levelKeys(i - 2)) = any.ToString(row.Cells(i).Value).ParseDouble
             Next
 
+            If levels.Values.All(Function(x) x = 0.0) Then
+                Continue For
+            End If
+
             Yield New Standards() With {
                 .ID = rid,
                 .Name = rid,
@@ -289,10 +293,12 @@ Public Class frmTargetedQuantification
     Private Sub saveLinearPack(title As String, file As String)
         Dim ref As Standards() = getStandards.ToArray
         Dim linears As New List(Of StandardCurve)
-        Dim ions As New List(Of IonPair)
         Dim points As TargetPeakPoint() = Nothing
         Dim refPoints As New List(Of TargetPeakPoint)
         Dim refLevels As New Dictionary(Of String, SampleContentLevels)
+        Dim ionLib As IonLibrary = Globals.LoadIonLibrary
+        Dim id As String
+        Dim ion As IonPair
 
         For Each i As Standards In ref
             refLevels(i.ID) = New SampleContentLevels(i.C, directMap:=False)
@@ -300,13 +306,24 @@ Public Class frmTargetedQuantification
 
         For Each row As DataGridViewRow In DataGridView1.Rows
             If isValidLinearRow(row) Then
-                Dim ion As IonPair = Nothing
-                Dim ISion As IonPair = Nothing
-
-                linears.Add(createLinear(row, ion, ISion, points))
-                ions.Add(ion)
-                ions.Add(ISion)
+                linears.Add(createLinear(row, Nothing, Nothing, points))
                 refPoints.AddRange(points)
+            End If
+        Next
+
+        For Each point As TargetPeakPoint In refPoints
+            ion = ionLib.GetIonByKey(point.Name)
+            point.Name = $"{ion.precursor}/{ion.product}"
+        Next
+
+        For Each line As StandardCurve In linears
+            ion = ionLib.GetIonByKey(line.name)
+            line.name = $"{ion.precursor}/{ion.product}"
+
+            If Not line.IS Is Nothing AndAlso Not line.IS.ID.StringEmpty Then
+                ion = ionLib.GetIonByKey(line.IS.ID)
+                line.IS.ID = $"{ion.precursor}/{ion.product}"
+                line.IS.name = line.IS.ID
             End If
         Next
 
