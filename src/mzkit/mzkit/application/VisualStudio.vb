@@ -50,4 +50,13 @@ Public Class VisualStudio
         targeted.Show(DockPanel)
         targeted.DockState = DockState.Document
     End Sub
+
+    Public Shared Function ShowDocument(Of T As {New, DocumentWindow})() As T
+        Dim newDoc As New T()
+
+        newDoc.Show(MyApplication.host.dockPanel)
+        newDoc.DockState = DockState.Document
+
+        Return newDoc
+    End Function
 End Class

@@ -643,4 +643,8 @@ Public Class frmTargetedQuantification
     Private Sub DataGridView1_DragOver(sender As Object, e As DragEventArgs) Handles DataGridView1.DragOver
         e.Effect = DragDropEffects.Copy
     End Sub
+
+    Private Sub ViewLinearReportToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ViewLinearReportToolStripMenuItem.Click
+        Dim html = VisualStudio.ShowDocument(Of frmHtmlViewer)()
+    End Sub
 End Class

@@ -72,6 +72,8 @@ Partial Class frmTargetedQuantification
         Me.ToolStripLabel2 = New System.Windows.Forms.ToolStripLabel()
         Me.ToolStripComboBox2 = New System.Windows.Forms.ToolStripComboBox()
         Me.ToolStripButton4 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ViewLinearReportToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -312,9 +314,9 @@ Partial Class frmTargetedQuantification
         '
         'ContextMenuStrip1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ImportsLinearReferenceToolStripMenuItem, Me.ToolStripMenuItem1, Me.DeleteIonFeatureToolStripMenuItem, Me.SaveToolStripMenuItem, Me.SaveAsToolStripMenuItem})
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ImportsLinearReferenceToolStripMenuItem, Me.ToolStripMenuItem1, Me.DeleteIonFeatureToolStripMenuItem, Me.SaveToolStripMenuItem, Me.SaveAsToolStripMenuItem, Me.ToolStripMenuItem2, Me.ViewLinearReportToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(206, 98)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(206, 148)
         '
         'ImportsLinearReferenceToolStripMenuItem
         '
@@ -473,6 +475,18 @@ Partial Class frmTargetedQuantification
         Me.ToolStripButton4.Size = New System.Drawing.Size(23, 22)
         Me.ToolStripButton4.Text = "Save Table Data"
         '
+        'ToolStripMenuItem2
+        '
+        Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(202, 6)
+        '
+        'ViewLinearReportToolStripMenuItem
+        '
+        Me.ViewLinearReportToolStripMenuItem.Image = CType(resources.GetObject("ViewLinearReportToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.ViewLinearReportToolStripMenuItem.Name = "ViewLinearReportToolStripMenuItem"
+        Me.ViewLinearReportToolStripMenuItem.Size = New System.Drawing.Size(205, 22)
+        Me.ViewLinearReportToolStripMenuItem.Text = "View Linear Report"
+        '
         'frmTargetedQuantification
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -556,4 +570,6 @@ Partial Class frmTargetedQuantification
     Friend WithEvents ToolStripButton4 As ToolStripButton
     Friend WithEvents DataGridView3 As DataGridView
     Friend WithEvents SaveAsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem2 As ToolStripSeparator
+    Friend WithEvents ViewLinearReportToolStripMenuItem As ToolStripMenuItem
 End Class

@@ -321,6 +321,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="pages\dockWindow\DemoItem.vb" />
+    <Compile Include="pages\dockWindow\documents\frmHtmlViewer.Designer.vb">
+      <DependentUpon>frmHtmlViewer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\dockWindow\documents\frmHtmlViewer.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="pages\dockWindow\documents\frmMRMLibrary.Designer.vb">
       <DependentUpon>frmMRMLibrary.vb</DependentUpon>
     </Compile>
@@ -643,6 +649,9 @@
     <EmbeddedResource Include="pages\dockWindow\documents\frmFeatureSearch.resx">
       <DependentUpon>frmFeatureSearch.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="pages\dockWindow\documents\frmHtmlViewer.resx">
+      <DependentUpon>frmHtmlViewer.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\documents\frmMRMLibrary.resx">
       <DependentUpon>frmMRMLibrary.vb</DependentUpon>
     </EmbeddedResource>
@@ -897,6 +906,10 @@
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\text%25html\MIME-htmls.vbproj">
       <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
       <Name>MIME-htmls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\workbench\markdown2pdf\PdfConvert\WkHtmlToPdf.vbproj">
+      <Project>{cd7790f5-e348-4a82-b966-90c7ccd07cbc}</Project>
+      <Name>WkHtmlToPdf</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\mini-R\RDev\RDev.vbproj">
       <Project>{319618d7-3f65-4e16-a46a-88c8f11361e7}</Project>
