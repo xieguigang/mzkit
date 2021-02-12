@@ -55,6 +55,7 @@ Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace LinearQuantitative.Data
 
@@ -100,6 +101,16 @@ Namespace LinearQuantitative.Data
             }
 
             cdf.AddVariable("blanks", linear.blankControls.SafeQuery.ToArray, blankSize)
+
+            Dim levelNames As New CDFData With {
+                .chars = linear.points _
+                    .Select(Function(p) p.level) _
+                    .Distinct _
+                    .GetJson
+            }
+            Dim levelNameSize As New Dimension With {.name = "levelNames", .size = levelNames.Length}
+
+            cdf.AddVariable("levelNames", levelNames, levelNameSize)
 
             Dim width As New Dimension With {.name = "width", .size = 5 + 3}
 
