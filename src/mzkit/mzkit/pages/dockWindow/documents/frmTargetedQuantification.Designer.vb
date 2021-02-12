@@ -353,9 +353,9 @@ Partial Class frmTargetedQuantification
         Me.ToolStripLabel1.Size = New System.Drawing.Size(117, 22)
         Me.ToolStripLabel1.Text = "Select Library Profile:"
         '
-        'ToolStripComboBox1
+        'cbProfileNameSelector
         '
-        Me.cbProfileNameSelector.Name = "ToolStripComboBox1"
+        Me.cbProfileNameSelector.Name = "cbProfileNameSelector"
         Me.cbProfileNameSelector.Size = New System.Drawing.Size(121, 25)
         '
         'ToolStripButton1
@@ -448,6 +448,7 @@ Partial Class frmTargetedQuantification
         'ToolStripComboBox2
         '
         Me.ToolStripComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ToolStripComboBox2.Items.AddRange(New Object() {"Ion Peaks", "Quantify Result", "Raw X"})
         Me.ToolStripComboBox2.Name = "ToolStripComboBox2"
         Me.ToolStripComboBox2.Size = New System.Drawing.Size(300, 25)
         '

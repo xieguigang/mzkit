@@ -265,8 +265,9 @@ Public Class frmTargetedQuantification
         loadLinears()
     End Sub
 
-    Private Sub ToolStripButton3_Click(sender As Object, e As EventArgs) Handles ToolStripButton3.Click
+    Private Sub reload(sender As Object, e As EventArgs) Handles ToolStripButton3.Click
         Call reloadProfileNames()
+        Call loadLinears(Nothing, Nothing)
     End Sub
 
     Private Function GetContentTable(row As DataGridViewRow) As ContentTable
@@ -504,6 +505,8 @@ Public Class frmTargetedQuantification
                     Next
                 End With
 
+                ToolStripComboBox2.SelectedIndex = 1
+
                 Call showQuanifyTable()
             End If
         End Using
@@ -531,11 +534,79 @@ Public Class frmTargetedQuantification
         Next
     End Sub
 
-    Private Sub ExportTableToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportTableToolStripMenuItem.Click
+    Private Sub showRawXTable()
+        DataGridView3.Rows.Clear()
+        DataGridView3.Columns.Clear()
 
+        Dim quantify = scans.Select(Function(q) q.rawX).ToArray
+        Dim metaboliteNames = quantify.PropertyNames
+
+        DataGridView3.Columns.Add(New DataGridViewTextBoxColumn() With {.HeaderText = "Sample Name"})
+
+        For Each col As String In metaboliteNames
+            DataGridView3.Columns.Add(New DataGridViewTextBoxColumn() With {.HeaderText = col})
+        Next
+
+        For Each sample In quantify
+            Dim vec As Object() = New Object() {sample.ID} _
+                .JoinIterates(metaboliteNames.Select(Function(name) CObj(sample(name)))) _
+                .ToArray
+
+            DataGridView3.Rows.Add(vec)
+        Next
     End Sub
 
-    Private Sub ToolStripComboBox1_Click(sender As Object, e As EventArgs) Handles cbProfileNameSelector.Click
+    Private Sub showIonPeaksTable()
+        DataGridView3.Rows.Clear()
+        DataGridView3.Columns.Clear()
 
+        Dim quantify As EntityObject() = scans.Select(Function(q) q.ionPeaks).IteratesALL.DataFrame.ToArray
+        Dim metaboliteNames = quantify.PropertyNames
+
+        DataGridView3.Columns.Add(New DataGridViewTextBoxColumn() With {.HeaderText = "Sample Name"})
+
+        For Each col As String In metaboliteNames
+            DataGridView3.Columns.Add(New DataGridViewTextBoxColumn() With {.HeaderText = col})
+        Next
+
+        For Each sample In quantify
+            Dim vec As Object() = New Object() {sample.ID} _
+                .JoinIterates(metaboliteNames.Select(Function(name) CObj(sample(name)))) _
+                .ToArray
+
+            DataGridView3.Rows.Add(vec)
+        Next
+    End Sub
+
+    Private Sub DataGridView1_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellEndEdit
+        Me.linearEdit = True
+    End Sub
+
+    Private Sub deleteProfiles(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
+        Dim profileName As String = cbProfileNameSelector.Text
+
+        If MessageBox.Show($"Going to delete current linear profile '{cbProfileNameSelector.Text}'?", "Delete current profiles", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.No Then
+            Return
+        Else
+            Call (Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) & $"/mzkit/linears/{profileName}.linearPack").DeleteFile
+        End If
+
+        linearEdit = False
+        linearFiles = Nothing
+        linearPack = Nothing
+
+        DataGridView1.Rows.Clear()
+        DataGridView1.Columns.Clear()
+
+        Call reloadProfileNames()
+    End Sub
+
+    Private Sub ToolStripComboBox2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ToolStripComboBox2.SelectedIndexChanged
+        Select Case ToolStripComboBox2.SelectedIndex
+            Case 0 : Call showIonPeaksTable()
+            Case 1 : Call showQuanifyTable()
+            Case 2 : Call showRawXTable()
+
+        End Select
     End Sub
 End Class
