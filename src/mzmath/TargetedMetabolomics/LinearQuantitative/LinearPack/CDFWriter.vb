@@ -137,7 +137,15 @@ Namespace LinearQuantitative.Data
             Dim attrs As attribute() = {
                 New attribute With {.name = "name", .type = CDFDataTypes.CHAR, .value = peak.Name},
                 New attribute With {.name = "sample_name", .type = CDFDataTypes.CHAR, .value = peak.SampleName},
-                New attribute With {.name = "summary", .type = CDFDataTypes.CHAR, .value = peak.ChromatogramSummary.GetJson},
+                New attribute With {
+                    .name = "summary",
+                    .type = CDFDataTypes.CHAR,
+                    .value = peak.ChromatogramSummary _
+                        .Select(Function(q)
+                                    Return $"{q.Percentage}:{q.Quantile}"
+                                End Function) _
+                        .JoinBy("|")
+                },
                 New attribute With {.name = "rtmin", .type = CDFDataTypes.CHAR, .value = peak.Peak.window.Max},
                 New attribute With {.name = "rtmax", .type = CDFDataTypes.CHAR, .value = peak.Peak.window.Min},
                 New attribute With {.name = "maxinto", .type = CDFDataTypes.CHAR, .value = peak.Peak.peakHeight},

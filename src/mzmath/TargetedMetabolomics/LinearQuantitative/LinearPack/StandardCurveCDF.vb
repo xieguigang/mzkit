@@ -63,10 +63,11 @@ Namespace LinearQuantitative.Data
         <Extension>
         Public Function WriteCDF(linear As StandardCurve) As MemoryStream
             Using ms As New MemoryStream
-                Using cdf As New netCDF.CDFWriter(ms)
-                    Call linear.WriteCDF(cdf)
-                End Using
+                Dim cdf As New netCDF.CDFWriter(ms)
 
+                Call linear.WriteCDF(cdf)
+                Call cdf.Save()
+                Call cdf.Flush()
                 Call ms.Flush()
                 Call ms.Seek(Scan0, SeekOrigin.Begin)
 
