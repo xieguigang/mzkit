@@ -1,6 +1,7 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Content
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Data
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
@@ -47,10 +48,6 @@ Public Class frmTargetedQuantification
         Call ImportsLinearReferenceToolStripMenuItem_Click(Nothing, Nothing)
     End Sub
 
-    Private Sub saveLinearPack()
-
-    End Sub
-
     Dim linearFiles As NamedValue(Of String)()
 
     Private Sub ImportsLinearReferenceToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImportsLinearReferenceToolStripMenuItem.Click
@@ -84,8 +81,6 @@ Public Class frmTargetedQuantification
                     Dim refId As String = ionsLib.GetDisplay(ion)
                     Dim i As Integer = DataGridView1.Rows.Add(refId)
                     Dim comboxBox As DataGridViewComboBoxCell = DataGridView1.Rows(i).Cells(1)
-
-
 
                     For Each IS_candidate As IonPair In allFeatures
                         comboxBox.Items.Add(ionsLib.GetDisplay(IS_candidate))
@@ -161,7 +156,7 @@ Public Class frmTargetedQuantification
     End Function
 
     Private Sub SaveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveToolStripMenuItem.Click, ToolStripButton1.Click
-        Dim ref As New List(Of Standards)(getStandards)
+        ' Dim ref As New List(Of Standards)(getStandards)
         Dim profileName As String = ToolStripComboBox1.Text
 
         If profileName.StringEmpty Then
@@ -169,9 +164,9 @@ Public Class frmTargetedQuantification
             Return
         End If
 
-        Dim file As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) & $"/mzkit/linears/{profileName}.csv"
+        Dim file As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) & $"/mzkit/linears/{profileName}.linearPack"
 
-        Call ref.SaveTo(file)
+        Call saveLinearPack(profileName, file)
         Call reloadProfileNames()
     End Sub
 
@@ -291,9 +286,45 @@ Public Class frmTargetedQuantification
         Next
     End Sub
 
+    Private Sub saveLinearPack(title As String, file As String)
+        Dim ref As Standards() = getStandards.ToArray
+        Dim linears As New List(Of StandardCurve)
+        Dim ions As New List(Of IonPair)
+        Dim points As TargetPeakPoint() = Nothing
+        Dim refPoints As New List(Of TargetPeakPoint)
+        Dim refLevels As New Dictionary(Of String, SampleContentLevels)
+
+        For Each i As Standards In ref
+            refLevels(i.ID) = New SampleContentLevels(i.C, directMap:=False)
+        Next
+
+        For Each row As DataGridViewRow In DataGridView1.Rows
+            If isValidLinearRow(row) Then
+                Dim ion As IonPair = Nothing
+                Dim ISion As IonPair = Nothing
+
+                linears.Add(createLinear(row, ion, ISion, points))
+                ions.Add(ion)
+                ions.Add(ISion)
+                refPoints.AddRange(points)
+            End If
+        Next
+
+        Dim linearPack As New LinearPack With {
+            .linears = linears.ToArray,
+            .peakSamples = refPoints.ToArray,
+            .time = Now,
+            .title = title,
+            .reference = refLevels
+        }
+
+        Call linearPack.Write(file)
+    End Sub
+
     Private Function createLinear(refRow As DataGridViewRow,
                                   Optional ByRef ion As IonPair = Nothing,
-                                  Optional ByRef isIon As IonPair = Nothing) As StandardCurve
+                                  Optional ByRef isIon As IonPair = Nothing,
+                                  Optional ByRef refPoints As TargetPeakPoint() = Nothing) As StandardCurve
 
         Dim ionLib As IonLibrary = Globals.LoadIonLibrary
         Dim id As String = any.ToString(refRow.Cells(0).Value)
@@ -313,6 +344,8 @@ Public Class frmTargetedQuantification
         End If
 
         Dim algorithm As New InternalStandardMethod(GetContentTable(refRow), PeakAreaMethods.NetPeakSum)
+
+        refPoints = chr.ToArray
 
         Return algorithm.ToLinears(chr).First
     End Function
