@@ -41,19 +41,19 @@ Partial Class frmHtmlViewer
         Me.WebBrowser1.ScriptErrorsSuppressed = True
         Me.WebBrowser1.Size = New System.Drawing.Size(916, 587)
         Me.WebBrowser1.TabIndex = 0
-        Me.WebBrowser1.Url = New System.Uri("http://www.biodeep.cn/", System.UriKind.Absolute)
+        Me.WebBrowser1.Url = New System.Uri("https://mzkit.org/", System.UriKind.Absolute)
         '
         'ContextMenuStrip1
         '
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SavePDFToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 48)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(123, 26)
         '
         'SavePDFToolStripMenuItem
         '
         Me.SavePDFToolStripMenuItem.Image = CType(resources.GetObject("SavePDFToolStripMenuItem.Image"), System.Drawing.Image)
         Me.SavePDFToolStripMenuItem.Name = "SavePDFToolStripMenuItem"
-        Me.SavePDFToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.SavePDFToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
         Me.SavePDFToolStripMenuItem.Text = "Save PDF"
         '
         'frmHtmlViewer

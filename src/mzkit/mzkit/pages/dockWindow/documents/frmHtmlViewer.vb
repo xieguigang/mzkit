@@ -21,5 +21,11 @@
 
     Private Sub frmHtmlViewer_Load(sender As Object, e As EventArgs) Handles Me.Load
         Call ApplyVsTheme(ContextMenuStrip1)
+
+        TabText = "Document Viewer"
+    End Sub
+
+    Private Sub WebBrowser1_DocumentCompleted(sender As Object, e As WebBrowserDocumentCompletedEventArgs) Handles WebBrowser1.DocumentCompleted
+        TabText = WebBrowser1.DocumentTitle
     End Sub
 End Class

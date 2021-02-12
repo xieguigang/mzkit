@@ -645,6 +645,12 @@ Public Class frmTargetedQuantification
     End Sub
 
     Private Sub ViewLinearReportToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ViewLinearReportToolStripMenuItem.Click
-        Dim html = VisualStudio.ShowDocument(Of frmHtmlViewer)()
+        Dim tempfile As String = App.GetAppSysTempFile(".html", sessionID:=App.PID.ToHexString, "linear_report")
+
+        Call MyApplication.REngine.Evaluate("imports 'Linears' from 'mzkit.quantify';")
+        Call MyApplication.REngine.Set("$temp_report", MyApplication.REngine.Invoke("report.dataset", linearPack.linears, Nothing, Nothing, Nothing))
+        Call MyApplication.REngine.Invoke("html", MyApplication.REngine("$temp_report"), MyApplication.REngine.globalEnvir).ToString.SaveTo(tempfile)
+
+        Call VisualStudio.ShowDocument(Of frmHtmlViewer)().LoadHtml(tempfile)
     End Sub
 End Class
