@@ -431,5 +431,10 @@
 #define cmdQuantifyIons_TooltipDescription_RESID 415
 #define cmdQuantifyIons_SmallImages_192__RESID 416
 #define cmdQuantifyIons_LargeImages_144__RESID 417
-#define InternalCmd2_LabelTitle_RESID 60001
-#define InternalCmd4_LabelTitle_RESID 60002
+#define cmdTabDemo 110 
+#define cmdTabDemo_LabelTitle_RESID 60001
+#define cmdTabDemo_LabelDescription_RESID 60002
+#define cmdTabDemo_TooltipTitle_RESID 60003
+#define cmdTabDemo_TooltipDescription_RESID 60004
+#define InternalCmd2_LabelTitle_RESID 60005
+#define InternalCmd4_LabelTitle_RESID 60006

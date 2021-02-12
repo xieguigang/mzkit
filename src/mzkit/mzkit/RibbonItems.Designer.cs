@@ -13,7 +13,8 @@ using RibbonLib;
 using RibbonLib.Controls;
 using RibbonLib.Interop;
 
-
+namespace RibbonLib.Controls
+{
     partial class RibbonItems
     {
         private static class Cmd
@@ -110,7 +111,7 @@ using RibbonLib.Interop;
             public const uint cmdTargeted = 99;
             public const uint cmdTabAbout = 1020;
             public const uint cmdGroupAboutActions = 1047;
-            public const uint cmdGroupDemoActions = 1048;
+            public const uint cmdTabDemo = 110;
             public const uint cmdButtonMsDemo = 1168;
             public const uint cmdFontControl = 1165;
             public const uint cmdLegendCheckBox = 1166;
@@ -219,7 +220,7 @@ using RibbonLib.Interop;
         public RibbonButton Targeted { get; private set; }
         public RibbonTab TabAbout { get; private set; }
         public RibbonGroup GroupAboutActions { get; private set; }
-        public RibbonGroup GroupDemoActions { get; private set; }
+        public RibbonGroup TabDemo { get; private set; }
         public RibbonButton ButtonMsDemo { get; private set; }
         public RibbonFontControl FontControl { get; private set; }
         public RibbonCheckBox LegendCheckBox { get; private set; }
@@ -326,7 +327,7 @@ using RibbonLib.Interop;
             Targeted = new RibbonButton(ribbon, Cmd.cmdTargeted);
             TabAbout = new RibbonTab(ribbon, Cmd.cmdTabAbout);
             GroupAboutActions = new RibbonGroup(ribbon, Cmd.cmdGroupAboutActions);
-            GroupDemoActions = new RibbonGroup(ribbon, Cmd.cmdGroupDemoActions);
+            TabDemo = new RibbonGroup(ribbon, Cmd.cmdTabDemo);
             ButtonMsDemo = new RibbonButton(ribbon, Cmd.cmdButtonMsDemo);
             FontControl = new RibbonFontControl(ribbon, Cmd.cmdFontControl);
             LegendCheckBox = new RibbonCheckBox(ribbon, Cmd.cmdLegendCheckBox);
@@ -338,3 +339,4 @@ using RibbonLib.Interop;
         }
 
     }
+}

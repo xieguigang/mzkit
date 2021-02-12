@@ -1165,6 +1165,7 @@
         <Image Id="417" MinDPI="144">Res/application-vnd.oasis.opendocument.database.bmp</Image>
       </Command.LargeImages>
     </Command>
+    <Command Name="cmdTabDemo" Id="110" LabelTitle="Demo" LabelDescription="Demo" TooltipTitle="Demo" TooltipDescription="Mzkit demo data files" />
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -1386,7 +1387,7 @@
             <Button CommandName="cmdButtonAbout" />
             <Button CommandName="cmdButtonBioDeep" />
           </Group>
-          <Group CommandName="cmdGroupDemoActions" SizeDefinition="OneButton">
+          <Group CommandName="cmdTabDemo" SizeDefinition="OneButton">
             <Button CommandName="cmdButtonMsDemo" />
           </Group>
         </Tab>
