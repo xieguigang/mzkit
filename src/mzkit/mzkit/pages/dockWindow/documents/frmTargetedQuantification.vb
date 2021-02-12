@@ -13,7 +13,6 @@ Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Text
 Imports mzkit.My
 Imports RibbonLib.Controls.Events
 Imports RibbonLib.Interop
@@ -48,43 +47,9 @@ Public Class frmTargetedQuantification
         Call ImportsLinearReferenceToolStripMenuItem_Click(Nothing, Nothing)
     End Sub
 
-    Private Shared Function StripMaxCommonNames(files As String()) As NamedValue(Of String)()
-        Dim names As String() = files.Select(AddressOf BaseName).ToArray
-        Dim minName As String = names.MinLengthString
-        Dim index As Integer
+    Private Sub saveLinearPack()
 
-        For i As Integer = 0 To minName.Length - 1
-            index = i
-
-            If names.Select(Function(str) str(index)).Distinct.Count > 1 Then
-                names = names _
-                    .Select(Function(str)
-                                Return str.Substring(index).Trim(" "c, ASCII.TAB, "-"c, "_"c)
-                            End Function) _
-                    .ToArray
-
-                Exit For
-            End If
-        Next
-
-        If names.All(Function(str) Char.IsDigit(str.First)) Then
-            names = names _
-                .Select(Function(str) $"L{str}") _
-                .ToArray
-        End If
-
-        Return names _
-            .Select(Function(nameStr, i)
-                        Return New NamedValue(Of String) With {
-                            .Name = nameStr,
-                            .Value = files(i)
-                        }
-                    End Function) _
-            .OrderBy(Function(file)
-                         Return file.Name.Match("\d+").ParseInteger
-                     End Function) _
-            .ToArray
-    End Function
+    End Sub
 
     Dim linearFiles As NamedValue(Of String)()
 
@@ -96,12 +61,10 @@ Public Class frmTargetedQuantification
         }
 
             If importsFile.ShowDialog = DialogResult.OK Then
-                Dim files = StripMaxCommonNames(importsFile.FileNames)
+                Dim files As NamedValue(Of String)() = ContentTable.StripMaxCommonNames(importsFile.FileNames)
 
                 DataGridView1.Rows.Clear()
                 DataGridView1.Columns.Clear()
-
-
 
                 DataGridView1.Columns.Add(New DataGridViewLinkColumn With {.HeaderText = "Features"})
                 DataGridView1.Columns.Add(New DataGridViewComboBoxColumn With {.HeaderText = "IS"})
@@ -152,16 +115,8 @@ Public Class frmTargetedQuantification
         Next
     End Function
 
-    Private Sub SaveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveToolStripMenuItem.Click, ToolStripButton1.Click
-        Dim ref As New List(Of Standards)
+    Private Iterator Function getStandards() As IEnumerable(Of Standards)
         Dim levelKeys As String() = GetTableLevelKeys.ToArray
-        Dim profileName As String = ToolStripComboBox1.Text
-
-        If profileName.StringEmpty Then
-            Call MessageBox.Show("Empty profile name!", "Targeted Quantification Linear", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            Return
-        End If
-
         Dim ionLib As IonLibrary = Globals.LoadIonLibrary
 
         For Each row As DataGridViewRow In DataGridView1.Rows
@@ -194,15 +149,25 @@ Public Class frmTargetedQuantification
                 levels(levelKeys(i - 2)) = any.ToString(row.Cells(i).Value).ParseDouble
             Next
 
-            Call New Standards() With {
+            Yield New Standards() With {
                 .ID = rid,
                 .Name = rid,
                 .[IS] = IS_id,
                 .ISTD = IS_id,
                 .Factor = 1,
                 .C = levels
-            }.DoCall(AddressOf ref.Add)
+            }
         Next
+    End Function
+
+    Private Sub SaveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveToolStripMenuItem.Click, ToolStripButton1.Click
+        Dim ref As New List(Of Standards)(getStandards)
+        Dim profileName As String = ToolStripComboBox1.Text
+
+        If profileName.StringEmpty Then
+            Call MessageBox.Show("Empty profile name!", "Targeted Quantification Linear", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return
+        End If
 
         Dim file As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) & $"/mzkit/linears/{profileName}.csv"
 
