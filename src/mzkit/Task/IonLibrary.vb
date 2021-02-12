@@ -11,7 +11,11 @@ Public Class IonLibrary
     End Sub
 
     Public Function GetDisplay(ion As IonPair) As String
-        Dim namedIon As IonPair = ions.Where(Function(i) i.EqualsTo(ion, dadot3)).FirstOrDefault
+        Dim namedIon As IonPair = ions _
+            .Where(Function(i)
+                       Return i.EqualsTo(ion, dadot3)
+                   End Function) _
+            .FirstOrDefault
         Dim refId As String
 
         If namedIon Is Nothing Then
@@ -23,9 +27,32 @@ Public Class IonLibrary
         Return refId
     End Function
 
+    Public Function GetIon(precursor As Double, product As Double) As IonPair
+        Return ions _
+            .Where(Function(i)
+                       Return dadot3(precursor, i.precursor) AndAlso
+                              dadot3(product, i.product)
+                   End Function) _
+            .FirstOrDefault
+    End Function
+
     Public Function GetIonByKey(key As String) As IonPair
         If key.StringEmpty Then
             Return Nothing
+        ElseIf key.IsPattern("Ion \[.+[/].+\]") Then
+            Dim tuples = key.GetStackValue("[", "]").Split("/"c).Select(AddressOf Val).ToArray
+            Dim ion As IonPair = GetIon(tuples(0), tuples(1))
+
+            If ion Is Nothing Then
+                Return New IonPair With {
+                    .accession = key,
+                    .name = key,
+                    .precursor = tuples(0),
+                    .product = tuples(1)
+                }
+            Else
+                Return ion
+            End If
         Else
             Return ions _
                 .Where(Function(i)

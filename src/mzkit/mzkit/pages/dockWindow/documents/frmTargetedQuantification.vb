@@ -61,6 +61,7 @@ Public Class frmTargetedQuantification
 
             If importsFile.ShowDialog = DialogResult.OK Then
                 Dim files As NamedValue(Of String)() = ContentTable.StripMaxCommonNames(importsFile.FileNames)
+                Dim fakeLevels = files.ToDictionary(Function(file) file.Name, Function() 0.0)
 
                 DataGridView1.Rows.Clear()
                 DataGridView1.Columns.Clear()
@@ -79,6 +80,11 @@ Public Class frmTargetedQuantification
 
                 Me.linearFiles = files
                 Me.allFeatures = allFeatures.Select(AddressOf ionsLib.GetDisplay).ToArray
+                Me.linearPack = New LinearPack With {
+                    .reference = New Dictionary(Of String, SampleContentLevels) From {
+                        {"n/a", New SampleContentLevels(fakeLevels)}
+                    }
+                }
 
                 For Each ion As IonPair In allFeatures
                     Dim refId As String = ionsLib.GetDisplay(ion)
