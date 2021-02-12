@@ -316,5 +316,19 @@ Type 'q()' to quit R.
 
             End
         End Sub
+
+        Public Shared Sub InstallPackageRelease()
+            Dim file As String = $"{App.HOME}/Rstudio/mzkit.zip"
+
+            If Not file.FileExists Then
+                file = $"{App.HOME}/../../src/mzkit/setup/mzkit.zip"
+            End If
+
+            If file.FileExists Then
+                Call REngine.Invoke("install.packages", file)
+            Else
+                host.showStatusMessage("missing R# package release file: mzkit.zip!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            End If
+        End Sub
     End Class
 End Namespace

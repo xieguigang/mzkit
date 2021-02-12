@@ -263,6 +263,8 @@ Public Class frmMain
 
         AddHandler ribbonItems.LogInBioDeep.ExecuteEvent, Sub() Call New frmLogin().ShowDialog()
 
+        AddHandler ribbonItems.ButtonInstallMzkitPackage.ExecuteEvent, AddressOf MyApplication.InstallPackageRelease
+
         _uiCollectionChangedEvent = New UICollectionChangedEvent()
 
         MyApplication.RegisterHost(Me)
