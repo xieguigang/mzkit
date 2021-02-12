@@ -49,6 +49,7 @@ Public Class frmTargetedQuantification
     End Sub
 
     Dim linearPack As LinearPack
+    Dim linearFiles As NamedValue(Of String)()
 
     Private Sub ImportsLinearReferenceToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImportsLinearReferenceToolStripMenuItem.Click
         Using importsFile As New OpenFileDialog With {
@@ -307,7 +308,6 @@ Public Class frmTargetedQuantification
         Dim refPoints As New List(Of TargetPeakPoint)
         Dim refLevels As New Dictionary(Of String, SampleContentLevels)
         Dim ionLib As IonLibrary = Globals.LoadIonLibrary
-        Dim id As String
         Dim ion As IonPair
 
         For Each i As Standards In ref
