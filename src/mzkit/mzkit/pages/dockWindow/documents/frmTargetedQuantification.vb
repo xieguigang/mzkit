@@ -222,6 +222,8 @@ Public Class frmTargetedQuantification
                     End Function) _
             .ToArray
 
+        allFeatures = islist
+
         For Each linear As KeyValuePair(Of String, SampleContentLevels) In linearPack.reference
             Dim ionpairtext = linear.Key.Split("/"c)
             Dim ionpair As New IonPair With {.precursor = ionpairtext(0), .product = ionpairtext(1)}
@@ -334,6 +336,11 @@ Public Class frmTargetedQuantification
                 refPoints.AddRange(points)
             End If
         Next
+
+        refPoints = refPoints _
+            .GroupBy(Function(p) $"{p.SampleName}\{p.Name}") _
+            .Select(Function(pg) pg.First) _
+            .AsList
 
         For Each point As TargetPeakPoint In refPoints
             ion = ionLib.GetIonByKey(point.Name)
