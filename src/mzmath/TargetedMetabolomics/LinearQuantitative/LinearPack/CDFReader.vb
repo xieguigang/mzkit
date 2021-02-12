@@ -56,6 +56,7 @@ Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Serialization.Bencoding
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports any = Microsoft.VisualBasic.Scripting
 
@@ -72,9 +73,27 @@ Namespace LinearQuantitative.Data
                 pack.reference = cdf.parseReference
                 pack.peakSamples = cdf.parsePeaks.ToArray
                 pack.linears = cdf.parseLinears.ToArray
+                pack.IS = cdf.parseIS
             End Using
 
             Return pack
+        End Function
+
+        <Extension>
+        Private Function parseIS(cdf As netCDFReader) As [IS]()
+            Dim ISbstr As String = cdf.getDataVariable("IS").chars
+            Dim list As BElement() = BencodeDecoder.Decode(ISbstr)
+
+            Return list _
+                .Select(Function(b) DirectCast(b, BDictionary)) _
+                .Select(Function(b)
+                            Return New [IS] With {
+                                .CIS = Val(DirectCast(b!CIS, BString).Value),
+                                .ID = DirectCast(b!ID, BString).Value,
+                                .name = DirectCast(b!name, BString).Value
+                            }
+                        End Function) _
+                .ToArray
         End Function
 
         <Extension>
