@@ -71,6 +71,7 @@ Partial Class frmTargetedQuantification
         Me.ToolStripLabel2 = New System.Windows.Forms.ToolStripLabel()
         Me.ToolStripComboBox2 = New System.Windows.Forms.ToolStripComboBox()
         Me.ToolStripButton4 = New System.Windows.Forms.ToolStripButton()
+        Me.SaveAsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -309,9 +310,9 @@ Partial Class frmTargetedQuantification
         '
         'ContextMenuStrip1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ImportsLinearReferenceToolStripMenuItem, Me.ToolStripMenuItem1, Me.DeleteIonFeatureToolStripMenuItem, Me.SaveToolStripMenuItem})
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ImportsLinearReferenceToolStripMenuItem, Me.ToolStripMenuItem1, Me.DeleteIonFeatureToolStripMenuItem, Me.SaveToolStripMenuItem, Me.SaveAsToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(206, 76)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(206, 120)
         '
         'ImportsLinearReferenceToolStripMenuItem
         '
@@ -429,7 +430,7 @@ Partial Class frmTargetedQuantification
         '
         Me.ExportTableToolStripMenuItem.Image = CType(resources.GetObject("ExportTableToolStripMenuItem.Image"), System.Drawing.Image)
         Me.ExportTableToolStripMenuItem.Name = "ExportTableToolStripMenuItem"
-        Me.ExportTableToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ExportTableToolStripMenuItem.Size = New System.Drawing.Size(147, 22)
         Me.ExportTableToolStripMenuItem.Text = "Export Table"
         '
         'ToolStrip2
@@ -462,6 +463,13 @@ Partial Class frmTargetedQuantification
         Me.ToolStripButton4.Name = "ToolStripButton4"
         Me.ToolStripButton4.Size = New System.Drawing.Size(23, 22)
         Me.ToolStripButton4.Text = "Save Table Data"
+        '
+        'SaveAsToolStripMenuItem
+        '
+        Me.SaveAsToolStripMenuItem.Image = CType(resources.GetObject("SaveAsToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.SaveAsToolStripMenuItem.Name = "SaveAsToolStripMenuItem"
+        Me.SaveAsToolStripMenuItem.Size = New System.Drawing.Size(205, 22)
+        Me.SaveAsToolStripMenuItem.Text = "Save As"
         '
         'frmTargetedQuantification
         '
@@ -545,4 +553,5 @@ Partial Class frmTargetedQuantification
     Friend WithEvents ToolStripComboBox2 As ToolStripComboBox
     Friend WithEvents ToolStripButton4 As ToolStripButton
     Friend WithEvents DataGridView3 As DataGridView
+    Friend WithEvents SaveAsToolStripMenuItem As ToolStripMenuItem
 End Class

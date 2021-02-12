@@ -185,6 +185,14 @@ Public Class frmTargetedQuantification
         Call reloadProfileNames()
     End Sub
 
+    Private Sub SaveAsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveAsToolStripMenuItem.Click
+        Using savefile As New SaveFileDialog With {.Title = "Select location for save linear pack data.", .Filter = "Mzkit Linear Models(*.linearPack)|*.linearPack"}
+            If savefile.ShowDialog = DialogResult.OK Then
+                Call saveLinearPack(savefile.FileName.BaseName, savefile.FileName)
+            End If
+        End Using
+    End Sub
+
     Private Function linearProfileNames() As String()
         Return (Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) & $"/mzkit/linears/") _
             .ListFiles("*.linearPack") _
