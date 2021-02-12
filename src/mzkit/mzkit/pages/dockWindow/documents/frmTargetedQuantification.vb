@@ -33,10 +33,10 @@ Public Class frmTargetedQuantification
     End Sub
 
     Private Sub reloadProfileNames()
-        ToolStripComboBox1.Items.Clear()
+        cbProfileNameSelector.Items.Clear()
 
         For Each key As String In linearProfileNames()
-            ToolStripComboBox1.Items.Add(key)
+            cbProfileNameSelector.Items.Add(key)
         Next
     End Sub
 
@@ -50,6 +50,7 @@ Public Class frmTargetedQuantification
 
     Dim linearPack As LinearPack
     Dim linearFiles As NamedValue(Of String)()
+    Dim allFeatures As String()
 
     Private Sub ImportsLinearReferenceToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImportsLinearReferenceToolStripMenuItem.Click
         Using importsFile As New OpenFileDialog With {
@@ -76,7 +77,8 @@ Public Class frmTargetedQuantification
                     .Select(Function(file) file.Value) _
                     .GetAllFeatures
 
-                linearFiles = files
+                Me.linearFiles = files
+                Me.allFeatures = allFeatures.Select(AddressOf ionsLib.GetDisplay).ToArray
 
                 For Each ion As IonPair In allFeatures
                     Dim refId As String = ionsLib.GetDisplay(ion)
@@ -164,7 +166,7 @@ Public Class frmTargetedQuantification
 
     Private Sub SaveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveToolStripMenuItem.Click, ToolStripButton1.Click
         ' Dim ref As New List(Of Standards)(getStandards)
-        Dim profileName As String = ToolStripComboBox1.Text
+        Dim profileName As String = cbProfileNameSelector.Text
 
         If profileName.StringEmpty Then
             Call MessageBox.Show("Empty profile name!", "Targeted Quantification Linear", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -241,8 +243,14 @@ Public Class frmTargetedQuantification
         Next
     End Sub
 
-    Private Sub loadLinears(sender As Object, e As EventArgs) Handles ToolStripComboBox1.SelectedIndexChanged
-        Dim profileName As String = any.ToString(ToolStripComboBox1.Items(ToolStripComboBox1.SelectedIndex))
+    Dim linearEdit As Boolean = False
+
+    Private Sub loadLinears(sender As Object, e As EventArgs) Handles cbProfileNameSelector.SelectedIndexChanged
+        If linearEdit AndAlso MessageBox.Show("Current linear profiles has been edited, do you want continute to load new linear profiles data?", "Linear Profile Unsaved", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) = DialogResult.Cancel Then
+            Return
+        End If
+
+        Dim profileName As String = any.ToString(cbProfileNameSelector.Items(cbProfileNameSelector.SelectedIndex))
         Dim file As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) & $"/mzkit/linears/{profileName}.linearPack"
 
         linearPack = LinearPack.OpenFile(file)
@@ -342,7 +350,20 @@ Public Class frmTargetedQuantification
             .peakSamples = refPoints.ToArray,
             .time = Now,
             .title = title,
-            .reference = refLevels
+            .reference = refLevels,
+            .[IS] = allFeatures _
+                .Select(Function(name)
+                            Dim nameIon = ionLib.GetIonByKey(name)
+
+                            name = $"{nameIon.precursor}/{nameIon.product}"
+
+                            Return New [IS] With {
+                                .ID = name,
+                                .name = name,
+                                .CIS = 5
+                            }
+                        End Function) _
+                .ToArray
         }
 
         Call linearPack.Write(file)
@@ -486,6 +507,10 @@ Public Class frmTargetedQuantification
     End Sub
 
     Private Sub ExportTableToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportTableToolStripMenuItem.Click
+
+    End Sub
+
+    Private Sub ToolStripComboBox1_Click(sender As Object, e As EventArgs) Handles cbProfileNameSelector.Click
 
     End Sub
 End Class

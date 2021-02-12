@@ -57,7 +57,7 @@ Partial Class frmTargetedQuantification
         Me.SaveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
-        Me.ToolStripComboBox1 = New System.Windows.Forms.ToolStripComboBox()
+        Me.cbProfileNameSelector = New System.Windows.Forms.ToolStripComboBox()
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton3 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
@@ -340,7 +340,7 @@ Partial Class frmTargetedQuantification
         '
         'ToolStrip1
         '
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel1, Me.ToolStripComboBox1, Me.ToolStripButton1, Me.ToolStripButton3, Me.ToolStripSeparator1, Me.ToolStripButton2})
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel1, Me.cbProfileNameSelector, Me.ToolStripButton1, Me.ToolStripButton3, Me.ToolStripSeparator1, Me.ToolStripButton2})
         Me.ToolStrip1.Location = New System.Drawing.Point(0, 0)
         Me.ToolStrip1.Name = "ToolStrip1"
         Me.ToolStrip1.Size = New System.Drawing.Size(1192, 25)
@@ -355,8 +355,8 @@ Partial Class frmTargetedQuantification
         '
         'ToolStripComboBox1
         '
-        Me.ToolStripComboBox1.Name = "ToolStripComboBox1"
-        Me.ToolStripComboBox1.Size = New System.Drawing.Size(121, 25)
+        Me.cbProfileNameSelector.Name = "ToolStripComboBox1"
+        Me.cbProfileNameSelector.Size = New System.Drawing.Size(121, 25)
         '
         'ToolStripButton1
         '
@@ -511,7 +511,7 @@ Partial Class frmTargetedQuantification
     Friend WithEvents SaveToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStrip1 As ToolStrip
     Friend WithEvents ToolStripLabel1 As ToolStripLabel
-    Friend WithEvents ToolStripComboBox1 As ToolStripComboBox
+    Friend WithEvents cbProfileNameSelector As ToolStripComboBox
     Friend WithEvents ToolStripButton1 As ToolStripButton
     Friend WithEvents ToolStripButton3 As ToolStripButton
     Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
