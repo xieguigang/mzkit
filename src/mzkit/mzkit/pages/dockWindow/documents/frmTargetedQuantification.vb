@@ -48,7 +48,7 @@ Public Class frmTargetedQuantification
         Call ImportsLinearReferenceToolStripMenuItem_Click(Nothing, Nothing)
     End Sub
 
-    Dim linearFiles As NamedValue(Of String)()
+    Dim linearPack As LinearPack
 
     Private Sub ImportsLinearReferenceToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImportsLinearReferenceToolStripMenuItem.Click
         Using importsFile As New OpenFileDialog With {
@@ -175,7 +175,10 @@ Public Class frmTargetedQuantification
     End Sub
 
     Private Function linearProfileNames() As String()
-        Return (Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) & $"/mzkit/linears/").ListFiles("*.csv").Select(AddressOf BaseName).ToArray
+        Return (Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) & $"/mzkit/linears/") _
+            .ListFiles("*.linearPack") _
+            .Select(AddressOf BaseName) _
+            .ToArray
     End Function
 
     Private Sub DataGridView1_KeyDown(sender As Object, e As KeyEventArgs) Handles DataGridView1.KeyDown
@@ -184,11 +187,12 @@ Public Class frmTargetedQuantification
         End If
     End Sub
 
-    Private Sub ToolStripComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ToolStripComboBox1.SelectedIndexChanged
+    Private Sub loadLinears(sender As Object, e As EventArgs) Handles ToolStripComboBox1.SelectedIndexChanged
         Dim profileName As String = any.ToString(ToolStripComboBox1.Items(ToolStripComboBox1.SelectedIndex))
-        Dim file As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) & $"/mzkit/linears/{profileName}.csv"
+        Dim file As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) & $"/mzkit/linears/{profileName}.linearPack"
         Dim ionLib As IonLibrary = Globals.LoadIonLibrary
-        Dim ref As Standards() = file.LoadCsv(Of Standards)
+
+        linearPack = LinearPack.OpenFile(file)
 
         DataGridView1.Rows.Clear()
         DataGridView1.Columns.Clear()
@@ -196,44 +200,44 @@ Public Class frmTargetedQuantification
         DataGridView1.Columns.Add(New DataGridViewLinkColumn With {.HeaderText = "Features"})
         DataGridView1.Columns.Add(New DataGridViewComboBoxColumn With {.HeaderText = "IS"})
 
-        Dim levelKeys As String() = ref(Scan0).C.Keys.ToArray
+        Dim levelKeys As String() = linearPack.GetLevelKeys
 
         For Each level As String In levelKeys
             DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.HeaderText = level})
         Next
 
-        Dim islist As New List(Of String)
+        Dim islist As String() = linearPack.IS _
+            .Select(Function(i)
+                        Dim ionpairtext = i.ID.Split("/"c)
+                        Dim ionpair As New IonPair With {.precursor = ionpairtext(0), .product = ionpairtext(1)}
 
-        For Each ion As Standards In ref
-            Dim ionpairtext = ion.ID.Split("/"c)
+                        Return ionLib.GetDisplay(ionpair)
+                    End Function) _
+            .ToArray
+
+        For Each linear As KeyValuePair(Of String, SampleContentLevels) In linearPack.reference
+            Dim ionpairtext = linear.Key.Split("/"c)
             Dim ionpair As New IonPair With {.precursor = ionpairtext(0), .product = ionpairtext(1)}
+            Dim ionID As String = ionLib.GetDisplay(ionpair)
+            Dim [is] As [IS] = linearPack.GetLinear(linear.Key).IS
 
-            islist.Add(ionLib.GetDisplay(ionpair))
-        Next
-
-        For Each ion As Standards In ref
-            Dim ionpairtext = ion.ID.Split("/"c)
-            Dim ionpair As New IonPair With {.precursor = ionpairtext(0), .product = ionpairtext(1)}
-
-            ion.ID = ionLib.GetDisplay(ionpair)
-
-            If Not ion.IS.StringEmpty Then
-                ionpairtext = ion.IS.Split("/"c)
+            If Not [is].ID.StringEmpty Then
+                ionpairtext = [is].ID.Split("/"c)
                 ionpair = New IonPair With {.precursor = ionpairtext(0), .product = ionpairtext(1)}
-                ion.IS = ionLib.GetDisplay(ionpair)
+                [is].name = ionLib.GetDisplay(ionpair)
             End If
 
-            Dim i As Integer = DataGridView1.Rows.Add(ion.ID)
+            Dim i As Integer = DataGridView1.Rows.Add(ionID)
             Dim IScandidate As DataGridViewComboBoxCell = DataGridView1.Rows(i).Cells(1)
 
             For Each id As String In islist
                 IScandidate.Items.Add(id)
             Next
 
-            IScandidate.Value = ion.IS
+            IScandidate.Value = [is].name
 
             For j As Integer = 0 To levelKeys.Length - 1
-                DataGridView1.Rows(i).Cells(j + 2).Value = CStr(ion.C(levelKeys(j)))
+                DataGridView1.Rows(i).Cells(j + 2).Value = CStr(linear.Value(levelKeys(j)))
             Next
         Next
     End Sub
