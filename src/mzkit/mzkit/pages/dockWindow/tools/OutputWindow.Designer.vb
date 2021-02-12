@@ -71,9 +71,10 @@
             '
             'ToolStripComboBox1
             '
+            Me.ToolStripComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
             Me.ToolStripComboBox1.Items.AddRange(New Object() {"Mzkit", "R#"})
             Me.ToolStripComboBox1.Name = "ToolStripComboBox1"
-            Me.ToolStripComboBox1.Size = New System.Drawing.Size(121, 25)
+            Me.ToolStripComboBox1.Size = New System.Drawing.Size(300, 25)
             '
             'ToolStripButton1
             '
