@@ -391,10 +391,10 @@ Public Class frmTargetedQuantification
         Dim quantifyIon = ion
         Dim quantifyIS = isIon
 
-        Call loadSamples(linearFiles, quantifyIon).DoCall(AddressOf chr.AddRange)
+        Call MRMIonExtract.LoadSamples(linearFiles, quantifyIon).DoCall(AddressOf chr.AddRange)
 
         If Not isid.StringEmpty Then
-            Call loadSamples(linearFiles, quantifyIS).DoCall(AddressOf chr.AddRange)
+            Call MRMIonExtract.LoadSamples(linearFiles, quantifyIS).DoCall(AddressOf chr.AddRange)
         End If
 
         Dim algorithm As New InternalStandardMethod(GetContentTable(refRow), PeakAreaMethods.NetPeakSum)
@@ -402,22 +402,6 @@ Public Class frmTargetedQuantification
         refPoints = chr.ToArray
 
         Return algorithm.ToLinears(chr).First
-    End Function
-
-    Private Function loadSamples(files As IEnumerable(Of NamedValue(Of String)), quantifyIon As IonPair) As IEnumerable(Of TargetPeakPoint)
-        Dim da3 As Tolerance = Tolerance.DeltaMass(0.3)
-
-        Return files _
-            .Select(Function(file)
-                        Dim ionLine As chromatogram = indexedmzML.LoadFile(file).mzML.run.chromatogramList.list _
-                            .Where(Function(c) quantifyIon.Assert(c, da3)) _
-                            .FirstOrDefault
-                        Dim peakTicks = MRMIonExtract.GetTargetPeak(quantifyIon, ionLine, preferName:=True)
-
-                        peakTicks.SampleName = file.Name
-
-                        Return peakTicks
-                    End Function)
     End Function
 
     Private Sub ExportImageToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportImageToolStripMenuItem.Click
@@ -471,10 +455,10 @@ Public Class frmTargetedQuantification
                         Dim ISion As IonPair = Nothing
 
                         linears.Add(createLinear(row, ion, ISion))
-                        points.AddRange(loadSamples(files, ion))
+                        points.AddRange(MRMIonExtract.LoadSamples(files, ion))
 
                         If Not ISion Is Nothing Then
-                            points.AddRange(loadSamples(files, ISion))
+                            points.AddRange(MRMIonExtract.LoadSamples(files, ISion))
                         End If
                     End If
                 Next
