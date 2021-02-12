@@ -69,6 +69,8 @@ using RibbonLib.Interop;
             public const uint cmdGroupRscript = 1132;
             public const uint cmdButtonSaveScript = 1134;
             public const uint cmdButtonRunScript = 1133;
+            public const uint cmdTabRStudio = 111;
+            public const uint cmdButtonInstallMzkitPackage = 112;
             public const uint cmdTabGroupExactMassSearchTools = 1071;
             public const uint cmdTabExactMassSearch = 1072;
             public const uint cmdGroupExactMassSearch = 1073;
@@ -178,6 +180,8 @@ using RibbonLib.Interop;
         public RibbonGroup GroupRscript { get; private set; }
         public RibbonButton ButtonSaveScript { get; private set; }
         public RibbonButton ButtonRunScript { get; private set; }
+        public RibbonGroup TabRStudio { get; private set; }
+        public RibbonButton ButtonInstallMzkitPackage { get; private set; }
         public RibbonTabGroup TabGroupExactMassSearchTools { get; private set; }
         public RibbonTab TabExactMassSearch { get; private set; }
         public RibbonGroup GroupExactMassSearch { get; private set; }
@@ -285,6 +289,8 @@ using RibbonLib.Interop;
             GroupRscript = new RibbonGroup(ribbon, Cmd.cmdGroupRscript);
             ButtonSaveScript = new RibbonButton(ribbon, Cmd.cmdButtonSaveScript);
             ButtonRunScript = new RibbonButton(ribbon, Cmd.cmdButtonRunScript);
+            TabRStudio = new RibbonGroup(ribbon, Cmd.cmdTabRStudio);
+            ButtonInstallMzkitPackage = new RibbonButton(ribbon, Cmd.cmdButtonInstallMzkitPackage);
             TabGroupExactMassSearchTools = new RibbonTabGroup(ribbon, Cmd.cmdTabGroupExactMassSearchTools);
             TabExactMassSearch = new RibbonTab(ribbon, Cmd.cmdTabExactMassSearch);
             GroupExactMassSearch = new RibbonGroup(ribbon, Cmd.cmdGroupExactMassSearch);

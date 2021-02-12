@@ -1166,6 +1166,15 @@
       </Command.LargeImages>
     </Command>
     <Command Name="cmdTabDemo" Id="110" LabelTitle="Demo" LabelDescription="Demo" TooltipTitle="Demo" TooltipDescription="Mzkit demo data files" />
+    <Command Name="cmdTabRStudio" Id="111" LabelTitle="R# Studio" LabelDescription="R# Studio" TooltipTitle="R# Studio" TooltipDescription="R# Studio" />
+    <Command Name="cmdButtonInstallMzkitPackage" Id="112" LabelTitle="Install Mzkit" LabelDescription="Install Mzkit R# Package" TooltipTitle="Install Mzkit R# Package" TooltipDescription="Install Mzkit R# Package">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/applications-utilities.bmp</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Res/applications-utilities.bmp</Image>
+      </Command.LargeImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -1286,6 +1295,9 @@
             <Group CommandName="cmdGroupRscript" SizeDefinition="TwoButtons">
               <Button CommandName="cmdButtonSaveScript" />
               <Button CommandName="cmdButtonRunScript" />
+            </Group>
+            <Group CommandName="cmdTabRStudio" SizeDefinition="OneButton">
+              <Button CommandName="cmdButtonInstallMzkitPackage" />
             </Group>
           </Tab>
         </TabGroup>
