@@ -64,14 +64,15 @@ Namespace LinearQuantitative.Data
     Module CDFReader
 
         Public Function Load(file As Stream) As LinearPack
-            Dim cdf As New netCDFReader(file)
             Dim pack As New LinearPack
 
-            pack.title = cdf!title
-            pack.time = any.ToString(cdf!time).DoCall(AddressOf Date.Parse)
-            pack.reference = cdf.parseReference
-            pack.peakSamples = cdf.parsePeaks.ToArray
-            pack.linears = cdf.parseLinears.ToArray
+            Using cdf As New netCDFReader(file)
+                pack.title = cdf!title
+                pack.time = any.ToString(cdf!time).DoCall(AddressOf Date.Parse)
+                pack.reference = cdf.parseReference
+                pack.peakSamples = cdf.parsePeaks.ToArray
+                pack.linears = cdf.parseLinears.ToArray
+            End Using
 
             Return pack
         End Function

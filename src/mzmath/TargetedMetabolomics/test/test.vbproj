@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{0B0FFA68-2708-4A3A-BC46-A110345BD325}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>test.testGCMS</StartupObject>
+    <StartupObject>test.testLinearPack</StartupObject>
     <RootNamespace>test</RootNamespace>
     <AssemblyName>test</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -93,6 +93,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="testLinearPack.vb" />
     <Compile Include="testGCMS.vb" />
     <Compile Include="test.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
