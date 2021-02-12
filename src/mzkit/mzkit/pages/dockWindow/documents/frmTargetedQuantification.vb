@@ -621,4 +621,26 @@ Public Class frmTargetedQuantification
     Private Sub ExportTableToolStripMenuItem_Click() Handles ExportTableToolStripMenuItem.Click, ToolStripButton4.Click
         Call DataGridView3.SaveDataGrid("Export sample result table [%s] success!")
     End Sub
+
+    Private Sub DataGridView1_DragDrop(sender As Object, e As DragEventArgs) Handles DataGridView1.DragDrop
+        Dim path As String = CType(e.Data.GetData(DataFormats.FileDrop), String())(Scan0)
+
+        If Not path.ExtensionSuffix("linearpack") Then
+            MessageBox.Show($"[{path}] is not a mzkit linear model file...", "Not a linearPack file", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return
+        Else
+            cbProfileNameSelector.Text = path.BaseName
+            linearPack = LinearPack.OpenFile(path)
+
+            Call loadLinears()
+        End If
+    End Sub
+
+    Private Sub DataGridView1_DragEnter(sender As Object, e As DragEventArgs) Handles DataGridView1.DragEnter
+        e.Effect = DragDropEffects.Copy
+    End Sub
+
+    Private Sub DataGridView1_DragOver(sender As Object, e As DragEventArgs) Handles DataGridView1.DragOver
+        e.Effect = DragDropEffects.Copy
+    End Sub
 End Class
