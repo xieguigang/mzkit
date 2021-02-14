@@ -15,7 +15,7 @@ Public Class frmSRMIonsExplorer
         Dim list = file.LoadChromatogramList.ToArray
         Dim TIC = list.Where(Function(i) i.id.TextEquals("TIC")).First
 
-        Call Win7StyleTreeView1.Nodes.Clear()
+        ' Call Win7StyleTreeView1.Nodes.Clear()
 
         Dim TICRoot = Win7StyleTreeView1.Nodes.Add(TIC.id)
 
