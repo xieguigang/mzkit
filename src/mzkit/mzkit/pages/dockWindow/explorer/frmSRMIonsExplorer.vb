@@ -17,16 +17,12 @@ Public Class frmSRMIonsExplorer
 
         ' Call Win7StyleTreeView1.Nodes.Clear()
 
-        Dim TICRoot = Win7StyleTreeView1.Nodes.Add(file.FileName)
+        Dim TICRoot As TreeNode = Win7StyleTreeView1.Nodes.Add(file.FileName)
 
         TICRoot.Tag = TIC
         TICRoot.ImageIndex = 0
 
-        If Not Globals.Settings.MRMLibfile.FileExists Then
-            Globals.Settings.MRMLibfile = New Configuration.Settings().MRMLibfile
-        End If
-
-        Dim ionsLib As New IonLibrary(Globals.Settings.MRMLibfile.LoadCsv(Of IonPair))
+        Dim ionsLib As IonLibrary = Globals.LoadIonLibrary
         Dim display As String
 
         For Each chr As chromatogram In list.Where(Function(i) Not i.id.TextEquals("TIC"))

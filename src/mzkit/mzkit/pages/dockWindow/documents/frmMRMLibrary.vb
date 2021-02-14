@@ -3,6 +3,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
 Imports any = Microsoft.VisualBasic.Scripting
@@ -30,15 +31,10 @@ Public Class frmMRMLibrary
     End Sub
 
     Private Sub frmMRMLibrary_Load(sender As Object, e As EventArgs) Handles Me.Load
-        TabText = "MRM ions Library"
-
-        If Not Globals.Settings.MRMLibfile.FileExists Then
-            Globals.Settings.MRMLibfile = New Configuration.Settings().MRMLibfile
-        End If
-
-        Dim ions As IonPair() = Globals.Settings.MRMLibfile.LoadCsv(Of IonPair)
+        Dim ions As IonPair() = Globals.LoadIonLibrary.AsEnumerable.ToArray
 
         FilePath = Globals.Settings.MRMLibfile
+        TabText = "MRM ions Library"
 
         For Each ion As IonPair In ions
             DataGridView1.Rows.Add(ion.accession, ion.name, ion.rt, ion.precursor, ion.product)

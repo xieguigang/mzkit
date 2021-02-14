@@ -1,7 +1,8 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports Microsoft.VisualBasic.Linq
 
-Public Class IonLibrary
+Public Class IonLibrary : Implements Enumeration(Of IonPair)
 
     Dim dadot3 As Tolerance = Tolerance.DeltaMass(0.3)
     Dim ions As IonPair()
@@ -62,4 +63,17 @@ Public Class IonLibrary
         End If
     End Function
 
+    Public Overrides Function ToString() As String
+        Return $"'{ions.Length}' ions in library"
+    End Function
+
+    Public Iterator Function GenericEnumerator() As IEnumerator(Of IonPair) Implements Enumeration(Of IonPair).GenericEnumerator
+        For Each ion As IonPair In ions
+            Yield ion
+        Next
+    End Function
+
+    Public Iterator Function GetEnumerator() As IEnumerator Implements Enumeration(Of IonPair).GetEnumerator
+        Yield GenericEnumerator()
+    End Function
 End Class
