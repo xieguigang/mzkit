@@ -376,12 +376,6 @@
     <Compile Include="pages\dockWindow\documents\frmGCMS_CDFExplorer.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="pages\dockWindow\explorer\frmTargetedFeatureExplorer.Designer.vb">
-      <DependentUpon>frmTargetedFeatureExplorer.vb</DependentUpon>
-    </Compile>
-    <Compile Include="pages\dockWindow\explorer\frmTargetedFeatureExplorer.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="pages\dockWindow\explorer\frmGCMSPeaks.Designer.vb">
       <DependentUpon>frmGCMSPeaks.vb</DependentUpon>
     </Compile>
@@ -684,9 +678,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\explorer\frmSRMIonsExplorer.resx">
       <DependentUpon>frmSRMIonsExplorer.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="pages\dockWindow\explorer\frmTargetedFeatureExplorer.resx">
-      <DependentUpon>frmTargetedFeatureExplorer.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\explorer\frmTreeExplorer.resx">
       <DependentUpon>frmTreeExplorer.vb</DependentUpon>

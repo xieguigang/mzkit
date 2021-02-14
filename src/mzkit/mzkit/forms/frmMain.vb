@@ -807,7 +807,6 @@ Public Class frmMain
     Friend msDemo As New frmDemo
     Friend MRMIons As New frmSRMIonsExplorer
     Friend GCMSPeaks As New frmGCMSPeaks
-    Friend targetedFeatures As New frmTargetedFeatureExplorer
 
     Public Sub ShowPropertyWindow()
         VisualStudio.Dock(propertyWin, DockState.DockRight)
