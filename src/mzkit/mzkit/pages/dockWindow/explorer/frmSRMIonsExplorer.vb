@@ -49,13 +49,15 @@ Public Class frmSRMIonsExplorer
         Dim list As New List(Of NamedCollection(Of ChromatogramTick))
 
         For Each rawfile As TreeNode In Win7StyleTreeView1.Nodes
+            Dim fileName As String = rawfile.Text.BaseName
+
             For Each obj As TreeNode In rawfile.Nodes
                 If Not obj.Checked Then
                     Continue For
                 End If
 
                 With DirectCast(obj.Tag, chromatogram)
-                    list += New NamedCollection(Of ChromatogramTick)(obj.Text, .Ticks)
+                    list += New NamedCollection(Of ChromatogramTick)($"[{fileName}] {obj.Text}", .Ticks)
                 End With
             Next
         Next
