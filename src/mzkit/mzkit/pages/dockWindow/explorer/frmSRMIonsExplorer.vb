@@ -17,7 +17,7 @@ Public Class frmSRMIonsExplorer
 
         ' Call Win7StyleTreeView1.Nodes.Clear()
 
-        Dim TICRoot = Win7StyleTreeView1.Nodes.Add(TIC.id)
+        Dim TICRoot = Win7StyleTreeView1.Nodes.Add(file.FileName)
 
         TICRoot.Tag = TIC
         TICRoot.ImageIndex = 0
