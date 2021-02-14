@@ -256,7 +256,7 @@ Public Class frmMain
         AddHandler ribbonItems.RecentItems.ExecuteEvent, AddressOf _recentItems_ExecuteEvent
         ' AddHandler ribbonItems.ButtonMsImaging.ExecuteEvent, AddressOf showMsImaging
         AddHandler ribbonItems.ButtonMsDemo.ExecuteEvent, Sub() msDemo.ShowPage()
-        AddHandler ribbonItems.Targeted.ExecuteEvent, Sub() Call VisualStudio.ShowSingleDocument(Of frmTargetedQuantification)(Sub() VisualStudio.Dock(targetedFeatures, DockState.DockLeft))
+        AddHandler ribbonItems.Targeted.ExecuteEvent, Sub() Call VisualStudio.ShowSingleDocument(Of frmTargetedQuantification)()
 
         AddHandler ribbonItems.MRMLibrary.ExecuteEvent, Sub() Call VisualStudio.ShowSingleDocument(Of frmMRMLibrary)(Nothing)
         AddHandler ribbonItems.QuantifyIons.ExecuteEvent, Sub() Call VisualStudio.ShowSingleDocument(Of frmQuantifyIons)(Nothing)
@@ -876,9 +876,6 @@ Public Class frmMain
 
         msDemo.Show(dockPanel)
         msDemo.DockState = DockState.Hidden
-
-        targetedFeatures.Show(dockPanel)
-        targetedFeatures.DockState = DockState.Hidden
 
         If Globals.Settings.ui.rememberLayouts Then
             fileExplorer.DockState = Globals.Settings.ui.fileExplorerDock

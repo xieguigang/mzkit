@@ -33,7 +33,7 @@ Public Class VisualStudio
         propertyWin.propertyGrid.Refresh()
     End Sub
 
-    Public Shared Sub ShowSingleDocument(Of T As {New, DockContent})(showExplorer As Action)
+    Public Shared Sub ShowSingleDocument(Of T As {New, DockContent})(Optional showExplorer As Action = Nothing)
         Dim DockPanel As DockPanel = MyApplication.host.dockPanel
         Dim targeted As T = DockPanel.Documents _
             .Where(Function(doc) TypeOf doc Is T) _
