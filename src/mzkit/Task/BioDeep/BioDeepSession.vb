@@ -20,6 +20,16 @@ Public Class BioDeepSession
         Return result
     End Function
 
+    Public Function GetSessionInfo() As SessionInfo
+        Dim result As JsonObject = Request(api:="http://my.biodeep.cn/services/session_info.vbs")
+
+        If result.success Then
+            Return result.CreateObject(Of SessionInfo)
+        Else
+            Return Nothing
+        End If
+    End Function
+
     Public Function Request(api As String, Optional headers As Dictionary(Of String, String) = Nothing) As JsonObject
         Dim sessionHeader As Dictionary(Of String, String) = headerProvider()
 
@@ -35,3 +45,4 @@ Public Class BioDeepSession
     End Function
 
 End Class
+
