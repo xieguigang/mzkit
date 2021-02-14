@@ -48,14 +48,16 @@ Public Class frmSRMIonsExplorer
     Private Sub ShowTICOverlapToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowTICOverlapToolStripMenuItem.Click
         Dim list As New List(Of NamedCollection(Of ChromatogramTick))
 
-        For Each obj As TreeNode In Win7StyleTreeView1.Nodes(0).Nodes
-            If Not obj.Checked Then
-                Continue For
-            End If
+        For Each rawfile As TreeNode In Win7StyleTreeView1.Nodes
+            For Each obj As TreeNode In rawfile.Nodes
+                If Not obj.Checked Then
+                    Continue For
+                End If
 
-            With DirectCast(obj.Tag, chromatogram)
-                list += New NamedCollection(Of ChromatogramTick)(obj.Text, .Ticks)
-            End With
+                With DirectCast(obj.Tag, chromatogram)
+                    list += New NamedCollection(Of ChromatogramTick)(obj.Text, .Ticks)
+                End With
+            Next
         Next
 
         Call MyApplication.host.mzkitTool.TIC(list.ToArray)
