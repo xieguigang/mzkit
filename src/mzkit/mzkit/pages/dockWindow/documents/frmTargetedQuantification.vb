@@ -23,7 +23,9 @@ Public Class frmTargetedQuantification
 
     Private Sub frmTargetedQuantification_Load(sender As Object, e As EventArgs) Handles Me.Load
         MyApplication.ribbon.TargetedContex.ContextAvailable = ContextAvailability.Active
+
         AddHandler MyApplication.ribbon.ImportsLinear.ExecuteEvent, AddressOf loadLinearRaw
+        AddHandler MyApplication.ribbon.SaveLinears.ExecuteEvent, AddressOf saveLinearsTable
 
         TabText = "Targeted Quantification"
 
@@ -41,6 +43,7 @@ Public Class frmTargetedQuantification
 
     Private Sub frmTargetedQuantification_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         RemoveHandler MyApplication.ribbon.ImportsLinear.ExecuteEvent, AddressOf loadLinearRaw
+        RemoveHandler MyApplication.ribbon.SaveLinears.ExecuteEvent, AddressOf saveLinearsTable
     End Sub
 
     Sub loadLinearRaw(sender As Object, e As ExecuteEventArgs)
@@ -50,6 +53,14 @@ Public Class frmTargetedQuantification
     Dim linearPack As LinearPack
     Dim linearFiles As NamedValue(Of String)()
     Dim allFeatures As String()
+
+    Sub saveLinearsTable(sender As Object, e As ExecuteEventArgs)
+        If linearPack.linears.IsNullOrEmpty Then
+            Call MyApplication.host.showStatusMessage("No linears for save!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+        Else
+
+        End If
+    End Sub
 
     Private Sub ImportsLinearReferenceToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImportsLinearReferenceToolStripMenuItem.Click
         Using importsFile As New OpenFileDialog With {
