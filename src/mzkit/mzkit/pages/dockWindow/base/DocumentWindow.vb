@@ -34,4 +34,24 @@ Public Class DocumentWindow
 
         Call Me.Close()
     End Sub
+
+    Private Sub CloseAllButThisToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CloseAllButThisToolStripMenuItem.Click
+
+    End Sub
+
+    Private Sub CloseAllDocumentsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CloseAllDocumentsToolStripMenuItem.Click
+
+    End Sub
+
+    Protected Overridable Sub CopyFullPath() Handles CopyFullPathToolStripMenuItem.Click
+
+    End Sub
+
+    Protected Overridable Sub OpenContainingFolder() Handles OpenContainingFolderToolStripMenuItem.Click
+
+    End Sub
+
+    Protected Overridable Sub SaveDocument() Handles SaveDocumentToolStripMenuItem.Click
+
+    End Sub
 End Class

@@ -2,8 +2,7 @@
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmMsImagingViewer
-    Inherits DockContent
-    ' Inherits Form
+    Inherits DocumentWindow
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()> _

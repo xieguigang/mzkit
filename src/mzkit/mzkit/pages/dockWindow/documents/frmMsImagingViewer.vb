@@ -3,6 +3,7 @@ Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.MsImaging
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Math.Distributions.BinBox
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Scripting.Runtime
@@ -122,6 +123,22 @@ Public Class frmMsImagingViewer
 
         Call progress.ShowDialog()
         Call MyApplication.host.showStatusMessage("Rendering Complete!", My.Resources.preferences_system_notifications)
+    End Sub
+
+    Protected Overrides Sub OpenContainingFolder()
+        Call Process.Start(FilePath.ParentPath)
+    End Sub
+
+    Protected Overrides Sub CopyFullPath()
+        Call Clipboard.SetText(FilePath)
+    End Sub
+
+    Protected Overrides Sub SaveDocument()
+        Using file As New SaveFileDialog With {.Filter = "PNG image(*.png)|*.png", .Title = "Save MS-Imaging Plot"}
+            If file.ShowDialog = DialogResult.OK Then
+                Call PictureBox1.BackgroundImage.SaveAs(file.FileName)
+            End If
+        End Using
     End Sub
 
     Private Sub tweaks_PropertyValueChanged(s As Object, e As PropertyValueChangedEventArgs) Handles tweaks.PropertyValueChanged
