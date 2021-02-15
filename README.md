@@ -1,6 +1,6 @@
 <link rel="manifest" href="/manifest.json">
 
-# <span style="font-size: 3em;">Mzkit</span> [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4091067.svg)](https://doi.org/10.5281/zenodo.4091067)
+# <span style="font-size: 3em;">Mzkit</span> [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4456618.svg)](https://doi.org/10.5281/zenodo.4456618)
 
 ![](docs/manual/splash.PNG)
 
@@ -305,6 +305,18 @@ You also can save the network image via ``Save`` command in the ``Main`` menu ta
 Now you can use the saved network image for your publications:
 
 ![](docs/manual/network_visualze.png)
+
+<div style="page-break-after:always;"></div>
+
+## Targeted Data Quantification
+
+### Introduce Ions Library
+
+### Use the Quantify Analysis Tools
+
+#### Linear Modelling
+
+#### Sample Quantify
 
 <div style="page-break-after:always;"></div>
 
