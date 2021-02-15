@@ -55,7 +55,7 @@ Public Class frmTargetedQuantification
     Dim allFeatures As String()
 
     Sub saveLinearsTable(sender As Object, e As ExecuteEventArgs)
-        If linearPack.linears.IsNullOrEmpty Then
+        If linearPack Is Nothing OrElse linearPack.linears.IsNullOrEmpty Then
             Call MyApplication.host.showStatusMessage("No linears for save!", My.Resources.StatusAnnotations_Warning_32xLG_color)
         Else
 
