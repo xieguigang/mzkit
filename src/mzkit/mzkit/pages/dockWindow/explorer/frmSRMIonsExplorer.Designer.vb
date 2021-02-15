@@ -28,32 +28,28 @@ Partial Class frmSRMIonsExplorer
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmSRMIonsExplorer))
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ShowTICOverlapToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ShowSpectrumToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Win7StyleTreeView1 = New mzkit.Kesoft.Windows.Forms.Win7StyleTreeView.Win7StyleTreeView(Me.components)
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ClearFilesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'ContextMenuStrip1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowTICOverlapToolStripMenuItem, Me.ShowSpectrumToolStripMenuItem})
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowTICOverlapToolStripMenuItem, Me.ToolStripMenuItem1, Me.ClearFilesToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(168, 48)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(168, 54)
         '
         'ShowTICOverlapToolStripMenuItem
         '
+        Me.ShowTICOverlapToolStripMenuItem.Image = CType(resources.GetObject("ShowTICOverlapToolStripMenuItem.Image"), System.Drawing.Image)
         Me.ShowTICOverlapToolStripMenuItem.Name = "ShowTICOverlapToolStripMenuItem"
         Me.ShowTICOverlapToolStripMenuItem.Size = New System.Drawing.Size(167, 22)
         Me.ShowTICOverlapToolStripMenuItem.Text = "Show TIC Overlap"
-        '
-        'ShowSpectrumToolStripMenuItem
-        '
-        Me.ShowSpectrumToolStripMenuItem.Name = "ShowSpectrumToolStripMenuItem"
-        Me.ShowSpectrumToolStripMenuItem.Size = New System.Drawing.Size(167, 22)
-        Me.ShowSpectrumToolStripMenuItem.Text = "Show Spectrum"
         '
         'Win7StyleTreeView1
         '
@@ -76,8 +72,8 @@ Partial Class frmSRMIonsExplorer
         '
         Me.ImageList1.ImageStream = CType(resources.GetObject("ImageList1.ImageStream"), System.Windows.Forms.ImageListStreamer)
         Me.ImageList1.TransparentColor = System.Drawing.Color.Transparent
-        Me.ImageList1.Images.SetKeyName(0, "office_chart_area_256px_540041_easyicon.net.png")
-        Me.ImageList1.Images.SetKeyName(1, "application-x-object.png")
+        Me.ImageList1.Images.SetKeyName(0, "folder-pictures.png")
+        Me.ImageList1.Images.SetKeyName(1, "office_chart_area_256px_540041_easyicon.net.png")
         '
         'ToolStrip1
         '
@@ -93,6 +89,18 @@ Partial Class frmSRMIonsExplorer
         Me.ToolStripLabel1.Name = "ToolStripLabel1"
         Me.ToolStripLabel1.Size = New System.Drawing.Size(64, 22)
         Me.ToolStripLabel1.Text = "MRM Ions:"
+        '
+        'ToolStripMenuItem1
+        '
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(177, 6)
+        '
+        'ClearFilesToolStripMenuItem
+        '
+        Me.ClearFilesToolStripMenuItem.Image = CType(resources.GetObject("ClearFilesToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.ClearFilesToolStripMenuItem.Name = "ClearFilesToolStripMenuItem"
+        Me.ClearFilesToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ClearFilesToolStripMenuItem.Text = "Clear Files"
         '
         'frmSRMIonsExplorer
         '
@@ -116,5 +124,6 @@ Partial Class frmSRMIonsExplorer
     Friend WithEvents ImageList1 As ImageList
     Friend WithEvents ToolStrip1 As ToolStrip
     Friend WithEvents ToolStripLabel1 As ToolStripLabel
-    Friend WithEvents ShowSpectrumToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
+    Friend WithEvents ClearFilesToolStripMenuItem As ToolStripMenuItem
 End Class

@@ -76,7 +76,7 @@ Public Class frmSRMIonsExplorer
         Call VisualStudio.ShowProperties(proper)
     End Sub
 
-    Private Sub ShowSpectrumToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowSpectrumToolStripMenuItem.Click
+    Private Sub ShowSpectrumToolStripMenuItem_Click(sender As Object, e As EventArgs)
         If Win7StyleTreeView1.SelectedNode Is Nothing OrElse DirectCast(Win7StyleTreeView1.SelectedNode.Tag, chromatogram).id = "TIC" Then
             Return
         End If
