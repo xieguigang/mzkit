@@ -956,6 +956,7 @@
     <None Include="Resources\settings.ico" />
     <None Include="Resources\toolkit.ico" />
     <None Include="Res\preferences-system-sharing.png" />
+    <None Include="Res\IE.ico" />
     <Content Include="RibbonMarkup.h" />
     <Content Include="RibbonMarkup.xml" />
     <None Include="Resources\header-foreground-image.png" />

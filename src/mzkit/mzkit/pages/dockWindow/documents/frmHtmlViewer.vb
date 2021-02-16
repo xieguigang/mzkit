@@ -1,7 +1,16 @@
-﻿Public Class frmHtmlViewer
+﻿Imports WkHtmlToPdf.Arguments
+
+Public Class frmHtmlViewer
 
     Public Sub PDF(filepath As String)
-        Call WkHtmlToPdf.PdfConvert.ConvertHtmlToPdf(url:=WebBrowser1.Url.OriginalString, filepath)
+        Dim env As New PdfConvertEnvironment With {
+            .Debug = False,
+            .TempFolderPath = App.GetAppSysTempFile,
+            .Timeout = 60000,
+            .WkHtmlToPdfPath = $"{App.HOME}/wkhtmltopdf.exe"
+        }
+
+        Call WkHtmlToPdf.PdfConvert.ConvertHtmlToPdf(url:=WebBrowser1.Url.OriginalString, filepath, env)
     End Sub
 
     Public Sub LoadHtml(url As String)
@@ -23,6 +32,7 @@
         Call ApplyVsTheme(ContextMenuStrip1)
 
         TabText = "Document Viewer"
+        Icon = My.Resources.IE
     End Sub
 
     Private Sub WebBrowser1_DocumentCompleted(sender As Object, e As WebBrowserDocumentCompletedEventArgs) Handles WebBrowser1.DocumentCompleted
