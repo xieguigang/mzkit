@@ -8,6 +8,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
@@ -656,6 +657,10 @@ Public Class frmTargetedQuantification
         e.Effect = DragDropEffects.Copy
     End Sub
 
+    Private Iterator Function GetScans() As IEnumerable(Of QuantifyScan)
+
+    End Function
+
     Private Sub ViewLinearReportToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ViewLinearReportToolStripMenuItem.Click
         If linearPack Is Nothing OrElse linearPack.linears.IsNullOrEmpty Then
             Call MyApplication.host.showStatusMessage("no linear model was loaded!", My.Resources.StatusAnnotations_Warning_32xLG_color)
@@ -663,7 +668,7 @@ Public Class frmTargetedQuantification
         End If
 
         Dim tempfile As String = App.GetAppSysTempFile(".html", sessionID:=App.PID.ToHexString, "linear_report")
-        Dim samples As QuantifyScan()
+        Dim samples As QuantifyScan() = {}
         Dim ionsRaw As New Rlist With {
             .slots = linearPack.peakSamples _
                 .GroupBy(Function(sample) sample.Name) _
@@ -680,6 +685,14 @@ Public Class frmTargetedQuantification
                                   Return CObj(innerList)
                               End Function)
         }
+
+        For Each line In linearPack.linears
+            line.linear.ErrorTest = line.points _
+                .Select(Function(p)
+                            Return CType(New TestPoint With {.X = p.Px, .Y = p.Cti, .Yfit = p.yfit}, IFitError)
+                        End Function) _
+                .ToArray
+        Next
 
         Call MyApplication.REngine.LoadLibrary("mzkit")
         Call MyApplication.REngine.Evaluate("imports 'Linears' from 'mzkit.quantify';")
