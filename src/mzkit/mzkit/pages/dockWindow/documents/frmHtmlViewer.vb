@@ -24,6 +24,7 @@ Public Class frmHtmlViewer
         }
             If file.ShowDialog = DialogResult.OK Then
                 Call PDF(file.FileName)
+                Call Process.Start(file.FileName)
             End If
         End Using
     End Sub
