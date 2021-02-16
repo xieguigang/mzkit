@@ -18,6 +18,7 @@ Imports RibbonLib.Controls.Events
 Imports RibbonLib.Interop
 Imports Task
 Imports any = Microsoft.VisualBasic.Scripting
+Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
 
 Public Class frmTargetedQuantification
 
@@ -656,10 +657,33 @@ Public Class frmTargetedQuantification
     End Sub
 
     Private Sub ViewLinearReportToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ViewLinearReportToolStripMenuItem.Click
-        Dim tempfile As String = App.GetAppSysTempFile(".html", sessionID:=App.PID.ToHexString, "linear_report")
+        If linearPack Is Nothing OrElse linearPack.linears.IsNullOrEmpty Then
+            Call MyApplication.host.showStatusMessage("no linear model was loaded!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            Return
+        End If
 
+        Dim tempfile As String = App.GetAppSysTempFile(".html", sessionID:=App.PID.ToHexString, "linear_report")
+        Dim samples As QuantifyScan()
+        Dim ionsRaw As New Rlist With {
+            .slots = linearPack.peakSamples _
+                .GroupBy(Function(sample) sample.Name) _
+                .ToDictionary(Function(ion) ion.Key,
+                              Function(ionGroup)
+                                  Dim innerList As New Rlist With {
+                                      .slots = ionGroup _
+                                          .ToDictionary(Function(ion) ion.SampleName,
+                                                        Function(ion)
+                                                            Return CObj(ion.Peak.ticks)
+                                                        End Function)
+                                  }
+
+                                  Return CObj(innerList)
+                              End Function)
+        }
+
+        Call MyApplication.REngine.LoadLibrary("mzkit")
         Call MyApplication.REngine.Evaluate("imports 'Linears' from 'mzkit.quantify';")
-        Call MyApplication.REngine.Set("$temp_report", MyApplication.REngine.Invoke("report.dataset", linearPack.linears, Nothing, Nothing, Nothing))
+        Call MyApplication.REngine.Set("$temp_report", MyApplication.REngine.Invoke("report.dataset", linearPack.linears, samples, Nothing, ionsRaw))
         Call MyApplication.REngine.Invoke("html", MyApplication.REngine("$temp_report"), MyApplication.REngine.globalEnvir).ToString.SaveTo(tempfile)
 
         Call VisualStudio.ShowDocument(Of frmHtmlViewer)().LoadHtml(tempfile)
