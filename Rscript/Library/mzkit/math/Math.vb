@@ -342,7 +342,13 @@ Module MzMath
     '''   + height of the bar Is area of the profile peak.
     '''   
     ''' </summary>
-    ''' <param name="ions"></param>
+    ''' <param name="ions">
+    ''' value of this parameter could be 
+    ''' 
+    ''' + a collection of peakMs2 data 
+    ''' + a library matrix data 
+    ''' + or a dataframe object which should contains at least ``mz`` and ``intensity`` columns.
+    ''' </param>
     ''' <returns>
     ''' Peaks data in centroid mode.
     ''' </returns>
@@ -396,6 +402,42 @@ Module MzMath
             End If
 
             Return ms2
+        ElseIf inputType Is GetType(dataframe) Then
+            Dim mz As Double()
+            Dim into As Double()
+            Dim data As dataframe = DirectCast(ions, dataframe)
+
+            If data.hasName("mz") Then
+                mz = REnv.asVector(Of Double)(data!mz)
+            ElseIf data.hasName("m/z") Then
+                mz = REnv.asVector(Of Double)(data("m/z"))
+            Else
+                Return Internal.debug.stop("mz column in dataframe should be 'mz' or 'm/z'!", env)
+            End If
+
+            If data.hasName("into") Then
+                into = REnv.asVector(Of Double)(data!into)
+            ElseIf data.hasName("intensity") Then
+                into = REnv.asVector(Of Double)(data!intensity)
+            Else
+                Return Internal.debug.stop("intensity column in dataframe should be 'into' or 'intensity'!", env)
+            End If
+
+            Dim ms2 As New LibraryMatrix With {
+                .centroid = False,
+                .name = "MS-matrix from dataframe",
+                .ms2 = mz _
+                    .Select(Function(mzi, i)
+                                Return New ms2 With {
+                                    .mz = mzi,
+                                    .intensity = into(i),
+                                    .quantity = .intensity
+                                }
+                            End Function) _
+                    .ToArray
+            }
+
+            Return ms2.CentroidMode(errors, threshold)
         Else
             Return Internal.debug.stop(New InvalidCastException(inputType.FullName), env)
         End If
