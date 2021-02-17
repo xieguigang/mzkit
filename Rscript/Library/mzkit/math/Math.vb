@@ -1,51 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::a2665978047d4d7726121b408fdef676, Library\mzkit\math\Math.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module MzMath
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: centroid, createTolerance, exact_mass, GetClusters, ms1Scans
-    '               mz, mz_deco, mz_groups, MzUnique, peaktable
-    '               ppm, printMzTable, sequenceOrder, SpectrumTreeCluster, SSMCompares
-    '               XICTable
-    ' 
-    ' /********************************************************************************/
+' Module MzMath
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: centroid, createTolerance, exact_mass, GetClusters, ms1Scans
+'               mz, mz_deco, mz_groups, MzUnique, peaktable
+'               ppm, printMzTable, sequenceOrder, SpectrumTreeCluster, SSMCompares
+'               XICTable
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
@@ -76,10 +77,24 @@ Module MzMath
 
     Sub New()
         Call REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of PrecursorInfo())(AddressOf printMzTable)
+        Call REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of LibraryMatrix)(AddressOf printLib)
 
         Call REnv.Internal.Object.Converts.addHandler(GetType(PeakFeature()), AddressOf peaktable)
         Call REnv.Internal.Object.Converts.addHandler(GetType(MzGroup), AddressOf XICTable)
     End Sub
+
+    Private Function printLib([lib] As LibraryMatrix) As String
+        Dim sb As New StringBuilder
+
+        Call sb.AppendLine([lib].name)
+        Call sb.AppendLine(New String("-"c, 48))
+        Call sb.AppendLine($"centroid: {[lib].centroid.ToString.ToLower}")
+        Call sb.AppendLine($"length: {[lib].Length}")
+        Call sb.AppendLine($"totalIon: {[lib].totalIon}")
+        Call sb.AppendLine($"basePeak: {[lib].Max}")
+
+        Return sb.ToString
+    End Function
 
     Private Function peaktable(x As PeakFeature(), args As list, env As Environment) As dataframe
         Dim dataset = x.ToCsvDoc

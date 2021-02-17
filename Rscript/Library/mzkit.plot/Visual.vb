@@ -72,6 +72,7 @@ Module Visual
         Call Internal.generic.add("plot", GetType(GeneralSignal), AddressOf plotSignal)
         Call Internal.generic.add("plot", GetType(GeneralSignal()), AddressOf plotSignal2)
         Call Internal.generic.add("plot", GetType(MGF.Ions), AddressOf plotMS)
+        Call Internal.generic.add("plot", GetType(LibraryMatrix), AddressOf plotMS)
         Call Internal.generic.add("plot", GetType(Chromatogram), AddressOf plotChromatogram)
         Call Internal.generic.add("plot", GetType(ChromatogramOverlap), AddressOf plotChromatogram2)
     End Sub
@@ -198,7 +199,7 @@ Module Visual
             Case GetType(ms2())
                 Return New LibraryMatrix With {.ms2 = data, .name = "Mass Spectrum"}
             Case GetType(LibraryMatrix)
-                Return data
+                Return DirectCast(data, LibraryMatrix)
             Case GetType(MGF.Ions)
                 Return DirectCast(data, MGF.Ions).GetLibrary
             Case GetType(dataframe)
