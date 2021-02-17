@@ -361,7 +361,7 @@ Module MzMath
                              Optional env As Environment = Nothing) As Object
 
         Dim inputType As Type = ions.GetType
-        Dim errors = getTolerance(tolerance, env)
+        Dim errors As [Variant](Of Tolerance, Message) = getTolerance(tolerance, env)
 
         If errors Like GetType(Message) Then
             Return errors.TryCast(Of Message)
