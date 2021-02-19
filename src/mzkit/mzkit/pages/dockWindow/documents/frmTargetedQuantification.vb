@@ -196,6 +196,8 @@ Public Class frmTargetedQuantification
 
         Call saveLinearPack(profileName, file)
         Call reloadProfileNames()
+
+        Call MyApplication.host.showStatusMessage($"linear model profile '{profileName}' saved!")
     End Sub
 
     Private Sub SaveAsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveAsToolStripMenuItem.Click
@@ -276,6 +278,10 @@ Public Class frmTargetedQuantification
 
     Private Sub loadLinears(sender As Object, e As EventArgs) Handles cbProfileNameSelector.SelectedIndexChanged
         If linearEdit AndAlso MessageBox.Show("Current linear profiles has been edited, do you want continute to load new linear profiles data?", "Linear Profile Unsaved", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) = DialogResult.Cancel Then
+            Return
+        End If
+
+        If cbProfileNameSelector.SelectedIndex = -1 Then
             Return
         End If
 

@@ -31,13 +31,13 @@ Partial Class ToolWindow
         Me.AutoHideToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DockToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CloseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.seperatorLine = New System.Windows.Forms.ToolStripSeparator()
         Me.DockContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'ContextMenuStrip1
         '
-        Me.DockContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FloatToolStripMenuItem, Me.DockToolStripMenuItem, Me.AutoHideToolStripMenuItem, Me.ToolStripMenuItem1, Me.CloseToolStripMenuItem})
+        Me.DockContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FloatToolStripMenuItem, Me.DockToolStripMenuItem, Me.AutoHideToolStripMenuItem, Me.seperatorLine, Me.CloseToolStripMenuItem})
         Me.DockContextMenuStrip1.Name = "ContextMenuStrip1"
         Me.DockContextMenuStrip1.Size = New System.Drawing.Size(181, 120)
         '
@@ -70,8 +70,8 @@ Partial Class ToolWindow
         '
         'ToolStripMenuItem1
         '
-        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(177, 6)
+        Me.seperatorLine.Name = "ToolStripMenuItem1"
+        Me.seperatorLine.Size = New System.Drawing.Size(177, 6)
         '
         'Form1
         '
@@ -89,6 +89,6 @@ Partial Class ToolWindow
     Friend WithEvents FloatToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents DockToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents AutoHideToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
+    Friend WithEvents seperatorLine As ToolStripSeparator
     Friend WithEvents CloseToolStripMenuItem As ToolStripMenuItem
 End Class
