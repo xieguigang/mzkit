@@ -9,8 +9,10 @@ Public Class frmHtmlViewer
             .Timeout = 60000,
             .WkHtmlToPdfPath = $"{App.HOME}/wkhtmltopdf.exe"
         }
+        Dim content As New PdfDocument With {.Url = {WebBrowser1.Url.OriginalString}}
+        Dim pdfFile As New PdfOutput With {.OutputFilePath = filepath}
 
-        Call WkHtmlToPdf.PdfConvert.ConvertHtmlToPdf(url:=WebBrowser1.Url.OriginalString, filepath, env)
+        Call WkHtmlToPdf.PdfConvert.ConvertHtmlToPdf(content, pdfFile, env)
     End Sub
 
     Public Sub LoadHtml(url As String)
