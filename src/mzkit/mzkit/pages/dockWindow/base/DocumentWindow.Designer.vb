@@ -31,17 +31,17 @@ Partial Class DocumentWindow
         Me.CloseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CloseAllDocumentsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CloseAllButThisToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.seperatorLine1 = New System.Windows.Forms.ToolStripSeparator()
         Me.CopyFullPathToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OpenContainingFolderToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripSeparator()
+        Me.seperatorLine2 = New System.Windows.Forms.ToolStripSeparator()
         Me.FloatToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DockContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'ContextMenuStrip1
         '
-        Me.DockContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveDocumentToolStripMenuItem, Me.CloseToolStripMenuItem, Me.CloseAllDocumentsToolStripMenuItem, Me.CloseAllButThisToolStripMenuItem, Me.ToolStripMenuItem1, Me.CopyFullPathToolStripMenuItem, Me.OpenContainingFolderToolStripMenuItem, Me.ToolStripMenuItem2, Me.FloatToolStripMenuItem})
+        Me.DockContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveDocumentToolStripMenuItem, Me.CloseToolStripMenuItem, Me.CloseAllDocumentsToolStripMenuItem, Me.CloseAllButThisToolStripMenuItem, Me.seperatorLine1, Me.CopyFullPathToolStripMenuItem, Me.OpenContainingFolderToolStripMenuItem, Me.seperatorLine2, Me.FloatToolStripMenuItem})
         Me.DockContextMenuStrip1.Name = "ContextMenuStrip1"
         Me.DockContextMenuStrip1.Size = New System.Drawing.Size(202, 192)
         '
@@ -73,8 +73,8 @@ Partial Class DocumentWindow
         '
         'ToolStripMenuItem1
         '
-        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(198, 6)
+        Me.seperatorLine1.Name = "ToolStripMenuItem1"
+        Me.seperatorLine1.Size = New System.Drawing.Size(198, 6)
         '
         'CopyFullPathToolStripMenuItem
         '
@@ -91,8 +91,8 @@ Partial Class DocumentWindow
         '
         'ToolStripMenuItem2
         '
-        Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(198, 6)
+        Me.seperatorLine2.Name = "ToolStripMenuItem2"
+        Me.seperatorLine2.Size = New System.Drawing.Size(198, 6)
         '
         'FloatToolStripMenuItem
         '
@@ -118,9 +118,9 @@ Partial Class DocumentWindow
     Friend WithEvents CloseToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents CloseAllDocumentsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents CloseAllButThisToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
+    Friend WithEvents seperatorLine1 As ToolStripSeparator
     Friend WithEvents CopyFullPathToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents OpenContainingFolderToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ToolStripMenuItem2 As ToolStripSeparator
+    Friend WithEvents seperatorLine2 As ToolStripSeparator
     Friend WithEvents FloatToolStripMenuItem As ToolStripMenuItem
 End Class
