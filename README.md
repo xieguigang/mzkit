@@ -310,11 +310,21 @@ Now you can use the saved network image for your publications:
 
 ## Targeted Data Quantification
 
+
+
 ### Introduce Ions Library
+
+
 
 ### Use the Quantify Analysis Tools
 
 #### Linear Modelling
+
+For evaluate the quantify content result of the target compounds in your samples. You must create the linear models for the target compounds at first. The targeted quantification tools in mzkit contains the function for create linear models of LCMSMS MRM data and the GCMS SIM data.
+
+> NOTE about sample names in linear reference:
+> 1. It is recommended name your linear reference samples in patterns like ``L-<level>``, examples as: ``L-1``, ``L-2``, ``L-3``, ``...``.
+> 2. and using the content value like ``100ppm``, ``50ppb`` as the sample file name is also recommended. 
 
 #### Sample Quantify
 
