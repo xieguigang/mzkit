@@ -131,24 +131,28 @@ Public Class frmMain
             .Filter = "Raw Data|*.mzXML;*.mzML|Image mzML(*.imzML)|*.imzML|GC-MS Targeted(*.cdf)|*.cdf;*.netcdf|GC-MS / LC-MS/MS Targeted(*.mzML)|*.mzML|R# Script(*.R)|*.R"
         }
             If file.ShowDialog = DialogResult.OK Then
-                If file.FileName.ExtensionSuffix("R") Then
-                    Call fileExplorer.AddScript(file.FileName.GetFullPath)
-                    Call openRscript(file.FileName)
-                ElseIf file.FileName.ExtensionSuffix("imzML") Then
-                    Call showMsImaging(file.FileName)
-                ElseIf file.FileName.ExtensionSuffix("mzml") AndAlso RawScanParser.IsMRMData(file.FileName) Then
-                    Call ShowMRMIons(file.FileName)
-                ElseIf file.FileName.ExtensionSuffix("mzml") AndAlso RawScanParser.IsSIMData(file.FileName) Then
-                    Call ShowGCMSSIM(file.FileName)
-                ElseIf file.FileName.ExtensionSuffix("cdf", "netcdf") Then
-                    Call ShowGCMSSIM(file.FileName)
-                Else
-                    Call fileExplorer.ImportsRaw(file.FileName)
-                End If
-
-                Globals.AddRecentFileHistory(file.FileName)
+                Call OpenFile(file.FileName)
             End If
         End Using
+    End Sub
+
+    Public Sub OpenFile(fileName As String)
+        If fileName.ExtensionSuffix("R") Then
+            Call fileExplorer.AddScript(fileName.GetFullPath)
+            Call openRscript(fileName)
+        ElseIf fileName.ExtensionSuffix("imzML") Then
+            Call showMsImaging(fileName)
+        ElseIf fileName.ExtensionSuffix("mzml") AndAlso RawScanParser.IsMRMData(fileName) Then
+            Call ShowMRMIons(fileName)
+        ElseIf fileName.ExtensionSuffix("mzml") AndAlso RawScanParser.IsSIMData(fileName) Then
+            Call ShowGCMSSIM(fileName)
+        ElseIf fileName.ExtensionSuffix("cdf", "netcdf") Then
+            Call ShowGCMSSIM(fileName)
+        Else
+            Call fileExplorer.ImportsRaw(fileName)
+        End If
+
+        Globals.AddRecentFileHistory(fileName)
     End Sub
 
     Public Sub openRscript(fileName As String)

@@ -80,6 +80,8 @@ Public Class frmGCMS_CDFExplorer
         RtRangeSelector1.FillColor = Color.DarkBlue
         RtRangeSelector1.SelectedColor = Color.Black
 
+        SaveDocumentToolStripMenuItem.Enabled = False
+
         TabText = "Targetted GCMS Viewer"
     End Sub
 

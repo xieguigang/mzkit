@@ -507,30 +507,38 @@ Public Class frmTargetedQuantification
                             End Function) _
                     .ToArray
 
-                Call scans.Clear()
-
-                Dim points As New List(Of TargetPeakPoint)
-                Dim linears As New List(Of StandardCurve)
-
-                For Each row As DataGridViewRow In DataGridView1.Rows
-                    If isValidLinearRow(row) Then
-                        Dim ion As IonPair = Nothing
-                        Dim ISion As IonPair = Nothing
-
-                        linears.Add(createLinear(row, ion, ISion))
-                        points.AddRange(MRMIonExtract.LoadSamples(files, ion))
-
-                        If Not ISion Is Nothing Then
-                            points.AddRange(MRMIonExtract.LoadSamples(files, ISion))
-                        End If
-                    End If
+                ' add files to viewer
+                For Each file As NamedValue(Of String) In files
+                    Call MyApplication.host.OpenFile(file.Value)
                 Next
 
-                With linears.ToArray
-                    For Each file In points.GroupBy(Function(p) p.SampleName)
-                        scans.Add(.SampleQuantify(file.ToArray, PeakAreaMethods.SumAll, fileName:=file.Key))
+                ' and then do quantify if the linear is exists
+                If Not linearPack Is Nothing Then
+                    Call scans.Clear()
+
+                    Dim points As New List(Of TargetPeakPoint)
+                    Dim linears As New List(Of StandardCurve)
+
+                    For Each row As DataGridViewRow In DataGridView1.Rows
+                        If isValidLinearRow(row) Then
+                            Dim ion As IonPair = Nothing
+                            Dim ISion As IonPair = Nothing
+
+                            linears.Add(createLinear(row, ion, ISion))
+                            points.AddRange(MRMIonExtract.LoadSamples(files, ion))
+
+                            If Not ISion Is Nothing Then
+                                points.AddRange(MRMIonExtract.LoadSamples(files, ISion))
+                            End If
+                        End If
                     Next
-                End With
+
+                    With linears.ToArray
+                        For Each file In points.GroupBy(Function(p) p.SampleName)
+                            scans.Add(.SampleQuantify(file.ToArray, PeakAreaMethods.SumAll, fileName:=file.Key))
+                        Next
+                    End With
+                End If
 
                 ToolStripComboBox2.SelectedIndex = 1
 
