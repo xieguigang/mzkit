@@ -509,7 +509,9 @@ Public Class frmTargetedQuantification
 
                 ' add files to viewer
                 For Each file As NamedValue(Of String) In files
+                    Call MyApplication.host.showStatusMessage($"open raw data file '{file.Value}'...")
                     Call MyApplication.host.OpenFile(file.Value)
+                    Call Application.DoEvents()
                 Next
 
                 ' and then do quantify if the linear is exists
@@ -538,6 +540,8 @@ Public Class frmTargetedQuantification
                             scans.Add(.SampleQuantify(file.ToArray, PeakAreaMethods.SumAll, fileName:=file.Key))
                         Next
                     End With
+                Else
+                    Call MyApplication.host.showStatusMessage("no linear model for run quantification, just open raw files viewer...", My.Resources.StatusAnnotations_Warning_32xLG_color)
                 End If
 
                 ToolStripComboBox2.SelectedIndex = 1
