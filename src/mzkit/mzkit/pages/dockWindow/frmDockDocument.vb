@@ -73,5 +73,6 @@ Public Class frmDockDocument
         OpenContainingFolderToolStripMenuItem.Enabled = False
         SaveDocumentToolStripMenuItem.Enabled = False
         CopyFullPathToolStripMenuItem.Enabled = False
+        CloseToolStripMenuItem.Enabled = False
     End Sub
 End Class

@@ -1,55 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::74aa4d62ebbfb68b391f69eefb7aaef9, TargetedMetabolomics\LinearQuantitative\Linear\InternalStandardMethod.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class InternalStandardMethod
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: ToFeatureLinear, ToLinears, TPA
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class InternalStandardMethod
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: ToFeatureLinear, ToLinears, TPA
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Content
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.SignalProcessing
+Imports Microsoft.VisualBasic.Math.SignalProcessing.PeakFinding
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports stdNum = System.Math
 
 Namespace LinearQuantitative.Linear
@@ -63,12 +67,18 @@ Namespace LinearQuantitative.Linear
         ReadOnly baselineQuantile As Double = 0.65
         ReadOnly maxDeletions As Integer = 1
         ReadOnly integrator As PeakAreaMethods
+        ReadOnly fixLowerContent As Boolean = False
 
-        Sub New(contents As ContentTable, integrator As PeakAreaMethods, Optional baselineQuantile As Double = 0.65, Optional maxDeletions As Integer = 1)
+        Sub New(contents As ContentTable, integrator As PeakAreaMethods,
+                Optional baselineQuantile As Double = 0.65,
+                Optional maxDeletions As Integer = 1,
+                Optional fixLowerContent As Boolean = False)
+
             Me.maxDeletions = maxDeletions
             Me.contents = contents
             Me.baselineQuantile = baselineQuantile
             Me.integrator = integrator
+            Me.fixLowerContent = fixLowerContent
         End Sub
 
         ''' <summary>
@@ -165,18 +175,39 @@ Namespace LinearQuantitative.Linear
             Return out
         End Function
 
+        ''' <summary>
+        ''' 计算峰面积
+        ''' </summary>
+        ''' <param name="linearSamples"></param>
+        ''' <param name="points"></param>
+        ''' <returns></returns>
         Private Function TPA(linearSamples As String(), points As IEnumerable(Of TargetPeakPoint)) As Double()
-            Dim getByLevels = points.ToDictionary(Function(p) p.SampleName)
+            Dim getByLevels As Dictionary(Of String, TargetPeakPoint) = points.ToDictionary(Function(p) p.SampleName)
             Dim vec As New List(Of Double)
             Dim deconv As (area#, baseline#, maxPeakHeight#)
             Dim target As TargetPeakPoint
+            Dim maxPeak As SignalPeak
+            Dim dataPeak As ChromatogramTick()
 
             For Each sampleLevel As String In linearSamples
                 If Not getByLevels.ContainsKey(sampleLevel) Then
                     vec.Add(0)
                 Else
                     target = getByLevels(sampleLevel)
-                    deconv = target.Peak.ticks _
+                    dataPeak = target.Peak.ticks
+
+                    If fixLowerContent Then
+                        maxPeak = New ElevationAlgorithm(3, baselineQuantile) _
+                            .FindAllSignalPeaks(dataPeak.As(Of ITimeSignal)) _
+                            .OrderByDescending(Function(p) p.signalMax) _
+                            .FirstOrDefault
+
+                        If Not maxPeak.isEmpty Then
+                            dataPeak = maxPeak.region.As(Of ChromatogramTick).ToArray
+                        End If
+                    End If
+
+                    deconv = dataPeak _
                         .Shadows _
                         .TPAIntegrator(
                             peak:=target.Peak,

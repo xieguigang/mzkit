@@ -1,4 +1,5 @@
 ﻿Imports System.ComponentModel
+Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.Math.SignalProcessing.PeakFinding
 
 Public Class UVScanProperty
@@ -22,8 +23,13 @@ Public Class UVScanProperty
         total_ion_current = scan.total_ion_current
         scan_time = scan.scan_time
 
-        Dim signal = scan.GetSignalModel
-        Dim peaks = New ElevationAlgorithm(5, 0.65).FindAllSignalPeaks(signal.GetTimeSignals).OrderByDescending(Function(a) a.integration).ToArray
+        Dim signal As GeneralSignal = scan.GetSignalModel
+        Dim peaks = New ElevationAlgorithm(5, 0.65) _
+            .FindAllSignalPeaks(signal.GetTimeSignals) _
+            .OrderByDescending(Function(a)
+                                   Return a.integration
+                               End Function) _
+            .ToArray
 
         If peaks.Length >= 1 Then
             peak1 = peaks(0).rtmax
