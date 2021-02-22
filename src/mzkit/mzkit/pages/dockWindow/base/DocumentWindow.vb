@@ -36,11 +36,21 @@ Public Class DocumentWindow
     End Sub
 
     Private Sub CloseAllButThisToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CloseAllButThisToolStripMenuItem.Click
-
+        For Each tab As IDockContent In MyApplication.host.dockPanel.Documents
+            If Not TypeOf tab Is ToolWindow Then
+                If Not tab Is Me Then
+                    Call DirectCast(tab, Form).Close()
+                End If
+            End If
+        Next
     End Sub
 
     Private Sub CloseAllDocumentsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CloseAllDocumentsToolStripMenuItem.Click
-
+        For Each tab As IDockContent In MyApplication.host.dockPanel.Documents
+            If Not TypeOf tab Is ToolWindow Then
+                Call DirectCast(tab, Form).Close()
+            End If
+        Next
     End Sub
 
     Protected Overridable Sub CopyFullPath() Handles CopyFullPathToolStripMenuItem.Click

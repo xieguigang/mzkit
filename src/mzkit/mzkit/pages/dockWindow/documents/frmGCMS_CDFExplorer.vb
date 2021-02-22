@@ -26,6 +26,14 @@ Public Class frmGCMS_CDFExplorer
         Return gcms
     End Function
 
+    Protected Overrides Sub CopyFullPath()
+        Clipboard.SetText(gcms.fileName)
+    End Sub
+
+    Protected Overrides Sub OpenContainingFolder()
+        Process.Start(gcms.fileName.ParentPath)
+    End Sub
+
     Public Sub loadCDF(gcms As Raw)
         Me.TabText = gcms.fileName.FileName
         Me.gcms = gcms

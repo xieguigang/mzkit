@@ -3,7 +3,7 @@ Imports WeifenLuo.WinFormsUI.Docking
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmGCMS_CDFExplorer
-    Inherits DockContent
+    Inherits DocumentWindow
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()> _
