@@ -81,6 +81,9 @@ Public Class frmSettings
         Me.Text = "Application Settings"
         Me.Icon = My.Resources.settings
 
+        CopyFullPathToolStripMenuItem.Enabled = False
+        OpenContainingFolderToolStripMenuItem.Enabled = False
+
         Me.ShowIcon = True
     End Sub
 

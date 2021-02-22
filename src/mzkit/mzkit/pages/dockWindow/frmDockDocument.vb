@@ -69,5 +69,9 @@ Public Class frmDockDocument
         Me.Icon = My.Resources.toolkit
         Me.ShowIcon = True
         '  Me.ShowInTaskbar = True
+
+        OpenContainingFolderToolStripMenuItem.Enabled = False
+        SaveDocumentToolStripMenuItem.Enabled = False
+        CopyFullPathToolStripMenuItem.Enabled = False
     End Sub
 End Class

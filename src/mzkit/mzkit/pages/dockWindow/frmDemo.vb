@@ -11,6 +11,13 @@ Public Class frmDemo
         Me.ShowIcon = True
         Me.TabText = "MS Demo Data"
         ' Me.ListView1.View = View.Tile
+
+        SaveDocumentToolStripMenuItem.Enabled = False
+        CopyFullPathToolStripMenuItem.Enabled = False
+    End Sub
+
+    Protected Overrides Sub OpenContainingFolder()
+        Call Process.Start($"{App.HOME}/demo")
     End Sub
 
     Public Sub ShowPage()

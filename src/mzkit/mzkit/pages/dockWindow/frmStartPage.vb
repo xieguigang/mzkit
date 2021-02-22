@@ -53,5 +53,9 @@ Public Class frmStartPage
 
         Me.ShowIcon = True
         '    Me.ShowInTaskbar = True
+
+        SaveDocumentToolStripMenuItem.Enabled = False
+        CopyFullPathToolStripMenuItem.Enabled = False
+        OpenContainingFolderToolStripMenuItem.Enabled = False
     End Sub
 End Class
