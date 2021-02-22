@@ -245,6 +245,9 @@ Module GCMSLinear
             Return points.getError
         End If
 
-        Return method.ToLinears(points.populates(Of TargetPeakPoint)(env)).ToArray
+        Return points _
+            .populates(Of TargetPeakPoint)(env) _
+            .DoCall(AddressOf method.ToLinears) _
+            .ToArray
     End Function
 End Module
