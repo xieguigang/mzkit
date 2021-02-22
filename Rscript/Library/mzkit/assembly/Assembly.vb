@@ -192,6 +192,18 @@ Module Assembly
             .DoCall(AddressOf pipeline.CreateFromPopulator)
     End Function
 
+    <ExportAPI("open.xml_seek")>
+    Public Function openXmlSeeks(file As String, Optional env As Environment = Nothing) As Object
+        If Not file.FileExists Then
+            Return Internal.debug.stop({
+                $"the given file '{file}' is not found on your file system!",
+                $"file: {file}"
+            }, env)
+        Else
+            Return New XmlSeek(file)
+        End If
+    End Function
+
     ''' <summary>
     ''' write spectra data in mgf file format.
     ''' </summary>
