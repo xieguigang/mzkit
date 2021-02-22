@@ -216,9 +216,21 @@ Module GCMSLinear
         End If
     End Function
 
+    ''' <summary>
+    ''' create linear model handler
+    ''' </summary>
+    ''' <param name="contents"></param>
+    ''' <param name="maxDeletions"></param>
+    ''' <returns></returns>
     <ExportAPI("linear_algorithm")>
     Public Function algorithm(contents As ContentTable, Optional maxDeletions As Integer = 1) As InternalStandardMethod
-        Return New InternalStandardMethod(contents, PeakAreaMethods.SumAll, baselineQuantile:=0, maxDeletions:=maxDeletions)
+        Return New InternalStandardMethod(
+            contents:=contents,
+            integrator:=PeakAreaMethods.SumAll,
+            baselineQuantile:=0,
+            maxDeletions:=maxDeletions,
+            fixLowerContent:=True
+        )
     End Function
 
     <ExportAPI("linears")>
