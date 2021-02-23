@@ -56,6 +56,7 @@
 #End Region
 
 Imports System.Xml.Serialization
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.ControlVocabulary
 
 Namespace MarkupData.mzML
 
