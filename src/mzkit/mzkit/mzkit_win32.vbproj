@@ -219,6 +219,9 @@
     <Reference Include="Microsoft.VisualStudio.Windows.Form">
       <HintPath>..\dist\Microsoft.VisualStudio.Windows.Form.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Windows.FeatureAPI">
+      <HintPath>..\dist\Microsoft.Windows.FeatureAPI.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Windows.Ribbon">
       <HintPath>..\dist\Microsoft.Windows.Ribbon.dll</HintPath>
     </Reference>
