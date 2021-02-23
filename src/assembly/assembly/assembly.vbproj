@@ -514,6 +514,9 @@
     <Compile Include="MarkupData\imzML\XML\ScanData.vb" />
     <Compile Include="MarkupData\imzML\XML\XML.vb" />
     <Compile Include="MarkupData\CompressionMode.vb" />
+    <Compile Include="MarkupData\mzML\XML\index.vb" />
+    <Compile Include="MarkupData\mzML\XML\ControlVocabulary.vb" />
+    <Compile Include="MarkupData\mzML\XML\mzML.vb" />
     <Compile Include="MarkupData\mzXML\index.vb" />
     <Compile Include="MarkupData\mzXML\MsData\MSScan.vb" />
     <Compile Include="MarkupData\mzXML\MsData\peaks.vb" />
