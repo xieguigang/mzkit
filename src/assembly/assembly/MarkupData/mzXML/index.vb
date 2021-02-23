@@ -81,7 +81,7 @@ Namespace MarkupData.mzXML
                         End Function)
         End Function
 
-        Friend Iterator Function ParseIndexList(bin As BinaryDataReader, offset As Long) As IEnumerable(Of index)
+        Friend Shared Iterator Function ParseIndexList(bin As BinaryDataReader, offset As Long) As IEnumerable(Of index)
 
         End Function
     End Class

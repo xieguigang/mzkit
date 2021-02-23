@@ -70,8 +70,8 @@ Namespace MarkupData.mzML
         <XmlElement(NameOf(index))>
         Public Property index As index()
 
-        Friend Function ParseIndexList(bin As BinaryDataReader, offset As Long) As indexList
-
+        Friend Shared Function ParseIndexList(bin As BinaryDataReader, offset As Long) As indexList
+            Throw New NotImplementedException
         End Function
 
         Public Iterator Function GetOffsets() As IEnumerable(Of NamedValue(Of Long))
