@@ -1,54 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::7087c2147a11370d9497bf9d38792dc7, assembly\UnifyReader\MsDataReader.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class MsDataReader
-    ' 
-    '         Function: ScanProvider
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class MsDataReader
+' 
+'         Function: ScanProvider
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 
 Namespace DataReader
 
-    Public MustInherit Class MsDataReader(Of Scan)
+    Public MustInherit Class MsDataReader(Of Scan) : Implements IDataReader
 
         Public MustOverride Function GetScanTime(scan As Scan) As Double
         Public MustOverride Function GetScanId(scan As Scan) As String
@@ -82,5 +83,52 @@ Namespace DataReader
             End Select
         End Function
 
+#Region "IDataReader"
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function GetScanTime(scan As Object) As Double Implements IDataReader.GetScanTime
+            Return GetScanTime(DirectCast(scan, Scan))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function GetScanId(scan As Object) As String Implements IDataReader.GetScanId
+            Return GetScanId(DirectCast(scan, Scan))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function IsEmpty(scan As Object) As Boolean Implements IDataReader.IsEmpty
+            Throw New NotImplementedException()
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function GetMsMs(scan As Object) As ms2() Implements IDataReader.GetMsMs
+            Return GetMsMs(DirectCast(scan, Scan))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function GetMsLevel(scan As Object) As Integer Implements IDataReader.GetMsLevel
+            Return GetMsLevel(DirectCast(scan, Scan))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function GetBPC(scan As Object) As Double Implements IDataReader.GetBPC
+            Return GetBPC(DirectCast(scan, Scan))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function GetTIC(scan As Object) As Double Implements IDataReader.GetTIC
+            Return GetTIC(DirectCast(scan, Scan))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function GetParentMz(scan As Object) As Double Implements IDataReader.GetParentMz
+            Return GetParentMz(DirectCast(scan, Scan))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function GetPolarity(scan As Object) As String Implements IDataReader.GetPolarity
+            Return GetPolarity(DirectCast(scan, Scan))
+        End Function
+#End Region
     End Class
 End Namespace

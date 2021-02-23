@@ -527,10 +527,11 @@
     <Compile Include="mzPack\Binary\NamespaceDoc.vb" />
     <Compile Include="mzPack\Stream\MSScan.vb" />
     <Compile Include="UnifyReader\Chromatogram.vb" />
-    <Compile Include="UnifyReader\imzMLScan.vb" />
+    <Compile Include="UnifyReader\FileFormats\imzMLScan.vb" />
+    <Compile Include="UnifyReader\IDataReader.vb" />
     <Compile Include="UnifyReader\Provider.vb" />
-    <Compile Include="UnifyReader\mzMLScan.vb" />
-    <Compile Include="UnifyReader\mzXMLScan.vb" />
+    <Compile Include="UnifyReader\FileFormats\mzMLScan.vb" />
+    <Compile Include="UnifyReader\FileFormats\mzXMLScan.vb" />
     <Compile Include="UnifyReader\MsDataReader.vb" />
     <Compile Include="mzPack\mzWebCache\Cache.vb" />
     <Compile Include="mzPack\mzWebCache\mzMLScans.vb" />
