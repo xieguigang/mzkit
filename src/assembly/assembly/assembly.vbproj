@@ -516,6 +516,8 @@
     <Compile Include="MarkupData\CompressionMode.vb" />
     <Compile Include="MarkupData\mzML\XML\index.vb" />
     <Compile Include="MarkupData\mzML\XML\ControlVocabulary.vb" />
+    <Compile Include="MarkupData\mzML\XML\IonTargeted\precursor.vb" />
+    <Compile Include="MarkupData\mzML\XML\IonTargeted\product.vb" />
     <Compile Include="MarkupData\mzML\XML\mzML.vb" />
     <Compile Include="MarkupData\mzXML\index.vb" />
     <Compile Include="MarkupData\mzXML\MsData\MSScan.vb" />
@@ -526,7 +528,7 @@
     <Compile Include="MarkupData\mzML\RawScanParser.vb" />
     <Compile Include="MarkupData\mzML\ExtractUVData.vb" />
     <Compile Include="MarkupData\mzML\XML\BinaryData.vb" />
-    <Compile Include="MarkupData\mzML\XML\Ions.vb" />
+    <Compile Include="MarkupData\mzML\XML\IonTargeted\selectedIonList.vb" />
     <Compile Include="MarkupData\mzML\XML\Components.vb" />
     <Compile Include="MarkupData\mzML\XML\Configurations.vb" />
     <Compile Include="mzPack\Binary\BinaryStreamWriter.vb" />
