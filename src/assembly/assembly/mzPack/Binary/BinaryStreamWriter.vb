@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0ce9b45d5a21783aca2efbff5cba4a0c, assembly\mzData\Binary\BinaryStreamWriter.vb"
+﻿#Region "Microsoft.VisualBasic::0ce9b45d5a21783aca2efbff5cba4a0c, assembly\mzPack\Binary\BinaryStreamWriter.vb"
 
     ' Author:
     ' 

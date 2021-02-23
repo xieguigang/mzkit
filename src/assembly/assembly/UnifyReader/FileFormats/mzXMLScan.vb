@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::444e586ffebcf55a91e9b16eea2768c7, assembly\UnifyReader\mzXMLScan.vb"
+﻿#Region "Microsoft.VisualBasic::444e586ffebcf55a91e9b16eea2768c7, assembly\UnifyReader\FileFormats\mzXMLScan.vb"
 
     ' Author:
     ' 

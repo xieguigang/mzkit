@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc074580b5c61c76836b2ec36924906e, assembly\mzData\Binary\BinaryStreamReader.vb"
+﻿#Region "Microsoft.VisualBasic::cc074580b5c61c76836b2ec36924906e, assembly\mzPack\Binary\BinaryStreamReader.vb"
 
     ' Author:
     ' 

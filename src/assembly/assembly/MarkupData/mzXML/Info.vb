@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0008c6c4a07578f59bfa2ad3c67bdbb, assembly\MarkupData\mzXML\Info.vb"
+﻿#Region "Microsoft.VisualBasic::f7f11a0d25622d24eb9c745ec79b3f0c, assembly\MarkupData\mzXML\Info.vb"
 
     ' Author:
     ' 
@@ -59,16 +59,6 @@
     '     Structure parentFile
     ' 
     '         Properties: fileName, fileShal, fileType
-    ' 
-    '         Function: ToString
-    ' 
-    '     Class index
-    ' 
-    '         Properties: name, offsets
-    ' 
-    '     Structure offset
-    ' 
-    '         Properties: id, value
     ' 
     '         Function: ToString
     ' 

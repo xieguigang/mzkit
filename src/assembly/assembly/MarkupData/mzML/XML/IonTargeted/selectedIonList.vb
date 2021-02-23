@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::322cf13346c13d51826fb7b4c3ad6432, assembly\MarkupData\mzML\XML\Ions.vb"
+﻿#Region "Microsoft.VisualBasic::35f8d49f1b3e0038c67fd77b479895c3, assembly\MarkupData\mzML\XML\IonTargeted\selectedIonList.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,11 @@
 
     ' Summaries:
 
-    '     Class precursor
-    ' 
-    '         Properties: activation, isolationWindow, selectedIonList
-    ' 
-    '         Function: GetActivationMethod, GetCollisionEnergy
-    ' 
     '     Class selectedIonList
     ' 
     '         Properties: selectedIon
     ' 
     '         Function: GetIonIntensity, GetIonMz
-    ' 
-    '     Class product
-    ' 
-    '         Properties: activation, isolationWindow
     ' 
     ' 
     ' /********************************************************************************/

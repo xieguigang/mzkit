@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73e8f648c7806db763038c78d0a17a86, assembly\MarkupData\mzML\XML\BinaryData.vb"
+﻿#Region "Microsoft.VisualBasic::c4e48306f930085e9ff024bfbdbafc52, assembly\MarkupData\mzML\XML\Decoder\BinaryData.vb"
 
     ' Author:
     ' 
@@ -38,16 +38,6 @@
     ' 
     '         Properties: binaryDataArrayList, dataProcessingRef, defaultArrayLength, id, index
     '                     sourceFileRef
-    ' 
-    '     Class binaryDataArrayList
-    ' 
-    '         Properties: list
-    ' 
-    '     Class binaryDataArray
-    ' 
-    '         Properties: binary, cvParams, encodedLength
-    ' 
-    '         Function: GetCompressionType, GetPrecision, ToString
     ' 
     ' 
     ' /********************************************************************************/

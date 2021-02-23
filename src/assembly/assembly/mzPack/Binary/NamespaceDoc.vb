@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e85dd02a7fc1105ec4ebe21c4721df1, assembly\mzData\Binary\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::6e85dd02a7fc1105ec4ebe21c4721df1, assembly\mzPack\Binary\NamespaceDoc.vb"
 
     ' Author:
     ' 

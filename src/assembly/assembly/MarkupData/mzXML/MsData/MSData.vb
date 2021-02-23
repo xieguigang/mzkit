@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad37261cdf45b540473ed86e691e9486, assembly\MarkupData\mzXML\MSData.vb"
+﻿#Region "Microsoft.VisualBasic::210565aa034a4f531af861f1ce5cf44e, assembly\MarkupData\mzXML\MsData\MSData.vb"
 
     ' Author:
     ' 
@@ -39,28 +39,7 @@
     '         Properties: dataProcessing, endTime, msInstrument, parentFile, scanCount
     '                     scans, startTime
     ' 
-    '     Class scan
-    ' 
-    '         Properties: basePeakIntensity, basePeakMz, centroided, collisionEnergy, highMz
-    '                     lowMz, msInstrumentID, msLevel, num, peaks
-    '                     peaksCount, polarity, precursorMz, retentionTime, scanType
-    '                     totIonCurrent
-    ' 
-    '         Function: ScanData, ToString
-    ' 
-    '     Class peaks
-    ' 
-    '         Properties: byteOrder, compressedLen, compressionType, contentType, precision
-    '                     value
-    ' 
-    '         Function: GetCompressionType, GetPrecision, ToString
-    ' 
-    '     Structure precursorMz
-    ' 
-    '         Properties: activationMethod, precursorCharge, precursorIntensity, precursorScanNum, value
-    '                     windowWideness
-    ' 
-    '         Function: CompareTo, ToString
+    '         Function: ToString
     ' 
     ' 
     ' /********************************************************************************/
