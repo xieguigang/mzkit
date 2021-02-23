@@ -1,4 +1,5 @@
 ﻿Imports System.ComponentModel
+Imports Microsoft.Windows.Taskbar
 Imports mzkit.My
 Imports WeifenLuo.WinFormsUI.Docking
 
@@ -15,6 +16,8 @@ Public Class DocumentWindow
         Next
     End Sub
 
+    Friend preview As TabbedThumbnail
+
     Private Sub ToolWindow_Load(sender As Object, e As EventArgs) Handles Me.Load
         TabPageContextMenuStrip = DockContextMenuStrip1
 
@@ -23,6 +26,21 @@ Public Class DocumentWindow
         VisualStudioToolStripExtender1 = New VisualStudioToolStripExtender(components)
 
         Call ApplyVsTheme(DockContextMenuStrip1)
+
+        ' Add a new preview
+        preview = New TabbedThumbnail(ParentForm.Handle, Me.Handle) With {
+            .ClippingRectangle = New Rectangle(New Point, Size)
+        }
+
+        TaskbarManager.Instance.TabbedThumbnail.AddThumbnailPreview(preview)
+
+        ' Event handlers for this preview
+        AddHandler preview.TabbedThumbnailActivated, AddressOf preview_TabbedThumbnailActivated
+        AddHandler preview.TabbedThumbnailClosed, AddressOf preview_TabbedThumbnailClosed
+        AddHandler preview.TabbedThumbnailMaximized, AddressOf preview_TabbedThumbnailMaximized
+        AddHandler preview.TabbedThumbnailMinimized, AddressOf preview_TabbedThumbnailMinimized
+
+        TaskBarWindow.UpdatePreviewBitmap(Me)
     End Sub
 
     Private Sub FloatToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FloatToolStripMenuItem.Click
