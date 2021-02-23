@@ -516,8 +516,10 @@
     <Compile Include="MarkupData\CompressionMode.vb" />
     <Compile Include="MarkupData\mzML\XML\index.vb" />
     <Compile Include="MarkupData\mzML\XML\ControlVocabulary.vb" />
+    <Compile Include="MarkupData\mzML\XML\IonTargeted\IMRMSelector.vb" />
     <Compile Include="MarkupData\mzML\XML\IonTargeted\precursor.vb" />
     <Compile Include="MarkupData\mzML\XML\IonTargeted\product.vb" />
+    <Compile Include="MarkupData\mzML\XML\MsData\scanList.vb" />
     <Compile Include="MarkupData\mzML\XML\mzML.vb" />
     <Compile Include="MarkupData\mzXML\index.vb" />
     <Compile Include="MarkupData\mzXML\MsData\MSScan.vb" />
@@ -551,7 +553,7 @@
     <Compile Include="SpectrumTree.vb" />
     <Compile Include="MarkupData\IBase64Container.vb" />
     <Compile Include="MarkupData\MS1.vb" />
-    <Compile Include="MarkupData\mzML\XML\Spectrum.vb" />
+    <Compile Include="MarkupData\mzML\XML\MsData\spectrum.vb" />
     <Compile Include="MarkupData\mzML\XML\Chromatogram.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

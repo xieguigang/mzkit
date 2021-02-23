@@ -61,8 +61,10 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Namespace MarkupData.mzML
 
     Public Class chromatogramList : Inherits DataList
+
         <XmlElement(NameOf(chromatogram))>
         Public Property list As chromatogram()
+
     End Class
 
     Public Class chromatogram : Inherits BinaryData
@@ -74,16 +76,11 @@ Namespace MarkupData.mzML
             If id = "TIC" Then
                 Return id
             Else
-                Dim parent As String = Me.precursor.isolationWindow.cvParams.KeyItem("isolation window target m/z").value
-                Dim product As String = Me.product.isolationWindow.cvParams.KeyItem("isolation window target m/z").value
+                Dim parent As String = Me.precursor.GetMz
+                Dim product As String = Me.product.GetMz
 
                 Return $"Ion [{parent}/{product}]"
             End If
         End Function
-
     End Class
-
-    Public Interface IMRMSelector
-        Property isolationWindow As Params
-    End Interface
 End Namespace
