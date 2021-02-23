@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7087c2147a11370d9497bf9d38792dc7, assembly\UnifyReader\MsDataReader.vb"
+﻿#Region "Microsoft.VisualBasic::6fef514d00165fee5b8994e6ffae1ffc, assembly\UnifyReader\MsDataReader.vb"
 
     ' Author:
     ' 
@@ -36,19 +36,21 @@
 
     '     Class MsDataReader
     ' 
-    '         Function: ScanProvider
+    '         Function: GetBPC, GetMsLevel, GetMsMs, GetParentMz, GetPolarity
+    '                   GetScanId, GetScanTime, GetTIC, IsEmpty, ScanProvider
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 
 Namespace DataReader
 
-    Public MustInherit Class MsDataReader(Of Scan)
+    Public MustInherit Class MsDataReader(Of Scan) : Implements IDataReader
 
         Public MustOverride Function GetScanTime(scan As Scan) As Double
         Public MustOverride Function GetScanId(scan As Scan) As String
@@ -81,6 +83,54 @@ Namespace DataReader
                     Throw New NotImplementedException(GetType(Scan).ToString)
             End Select
         End Function
+
+#Region "IDataReader"
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function GetScanTime(scan As Object) As Double Implements IDataReader.GetScanTime
+            Return GetScanTime(DirectCast(scan, Scan))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function GetScanId(scan As Object) As String Implements IDataReader.GetScanId
+            Return GetScanId(DirectCast(scan, Scan))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function IsEmpty(scan As Object) As Boolean Implements IDataReader.IsEmpty
+            Throw New NotImplementedException()
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function GetMsMs(scan As Object) As ms2() Implements IDataReader.GetMsMs
+            Return GetMsMs(DirectCast(scan, Scan))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function GetMsLevel(scan As Object) As Integer Implements IDataReader.GetMsLevel
+            Return GetMsLevel(DirectCast(scan, Scan))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function GetBPC(scan As Object) As Double Implements IDataReader.GetBPC
+            Return GetBPC(DirectCast(scan, Scan))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function GetTIC(scan As Object) As Double Implements IDataReader.GetTIC
+            Return GetTIC(DirectCast(scan, Scan))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function GetParentMz(scan As Object) As Double Implements IDataReader.GetParentMz
+            Return GetParentMz(DirectCast(scan, Scan))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function GetPolarity(scan As Object) As String Implements IDataReader.GetPolarity
+            Return GetPolarity(DirectCast(scan, Scan))
+        End Function
+#End Region
 
     End Class
 End Namespace

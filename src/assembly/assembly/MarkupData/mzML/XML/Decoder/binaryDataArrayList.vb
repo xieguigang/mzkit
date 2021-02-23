@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4194642d0f01e4bf8c0380f344715115, assembly\mzPack\mzWebCache\mzXMLScans.vb"
+﻿#Region "Microsoft.VisualBasic::952f643e581acb6bce5956d0b9d9392e, assembly\MarkupData\mzML\XML\Decoder\binaryDataArrayList.vb"
 
     ' Author:
     ' 
@@ -34,10 +34,9 @@
 
     ' Summaries:
 
-    '     Class mzXMLScans
+    '     Class binaryDataArrayList
     ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: dataReader, loadScans
+    '         Properties: list
     ' 
     ' 
     ' /********************************************************************************/
@@ -45,25 +44,23 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
+Imports System.Xml.Serialization
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.ControlVocabulary
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 
-Namespace mzData.mzWebCache
+Namespace MarkupData.mzML
 
-    Public Class mzXMLScans : Inherits ScanPopulator(Of scan)
+    Public Class binaryDataArrayList : Inherits List
 
-        Public Sub New(Optional mzErr$ = "da:0.1")
-            MyBase.New(mzErr)
-        End Sub
+        <XmlElement(NameOf(binaryDataArray))>
+        Public Property list As binaryDataArray()
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Protected Overrides Function loadScans(rawfile As String) As IEnumerable(Of scan)
-            Return XML.LoadScans(rawfile)
-        End Function
+        Default Public ReadOnly Property Item(i As Integer) As binaryDataArray
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return _list(i)
+            End Get
+        End Property
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Protected Overrides Function dataReader() As MsDataReader(Of scan)
-            Return New mzXMLScan()
-        End Function
     End Class
 End Namespace

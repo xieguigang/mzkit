@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad37261cdf45b540473ed86e691e9486, assembly\MarkupData\mzXML\MSData.vb"
+﻿#Region "Microsoft.VisualBasic::6d323a8e06fb28a7808857b1e5e8a6a5, assembly\MarkupData\mzXML\MsData\MSScan.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,6 @@
 
     ' Summaries:
 
-    '     Class MSData
-    ' 
-    '         Properties: dataProcessing, endTime, msInstrument, parentFile, scanCount
-    '                     scans, startTime
-    ' 
     '     Class scan
     ' 
     '         Properties: basePeakIntensity, basePeakMz, centroided, collisionEnergy, highMz
@@ -47,20 +42,6 @@
     '                     totIonCurrent
     ' 
     '         Function: ScanData, ToString
-    ' 
-    '     Class peaks
-    ' 
-    '         Properties: byteOrder, compressedLen, compressionType, contentType, precision
-    '                     value
-    ' 
-    '         Function: GetCompressionType, GetPrecision, ToString
-    ' 
-    '     Structure precursorMz
-    ' 
-    '         Properties: activationMethod, precursorCharge, precursorIntensity, precursorScanNum, value
-    '                     windowWideness
-    ' 
-    '         Function: CompareTo, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -75,21 +56,6 @@ Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace MarkupData.mzXML
-
-    <XmlType("msRun")> Public Class MSData
-
-        <XmlAttribute> Public Property scanCount As Integer
-        <XmlAttribute> Public Property startTime As String
-        <XmlAttribute> Public Property endTime As String
-
-        Public Property parentFile As parentFile
-        Public Property msInstrument As msInstrument
-        Public Property dataProcessing As dataProcessing
-
-        <XmlElement("scan")>
-        Public Property scans As scan()
-
-    End Class
 
     ''' <summary>
     ''' 一个一级或者二级的扫描结果数据的模型
@@ -134,6 +100,7 @@ Namespace MarkupData.mzXML
         Public Property precursorMz As precursorMz
         Public Property peaks As peaks
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return Me.GetJson
         End Function
@@ -192,70 +159,4 @@ Namespace MarkupData.mzXML
             }
         End Function
     End Class
-
-    Public Class peaks : Implements IBase64Container
-
-        ''' <summary>
-        ''' 1. zlib
-        ''' 2. gzip
-        ''' 3. none
-        ''' </summary>
-        ''' <returns></returns>
-        <XmlAttribute> Public Property compressionType As String
-        <XmlAttribute> Public Property compressedLen As Integer
-        <XmlAttribute> Public Property precision As Double
-        <XmlAttribute> Public Property byteOrder As String
-        <XmlAttribute> Public Property contentType As String
-
-        <XmlText>
-        Public Property value As String Implements IBase64Container.BinaryArray
-
-        Public Overrides Function ToString() As String
-            Return Me.GetJson
-        End Function
-
-        Public Function GetPrecision() As Integer Implements IBase64Container.GetPrecision
-            Return precision
-        End Function
-
-        Public Function GetCompressionType() As CompressionMode Implements IBase64Container.GetCompressionType
-            If charToModes.ContainsKey(compressionType) Then
-                Return charToModes(compressionType)
-            Else
-                Throw New NotImplementedException(compressionType)
-            End If
-        End Function
-    End Class
-
-    ''' <summary>
-    ''' 这个类型模型的隐式转换的数据来源为<see cref="precursorMz.value"/>属性值
-    ''' </summary>
-    Public Structure precursorMz : Implements IComparable(Of precursorMz)
-
-        <XmlAttribute> Public Property windowWideness As String
-        <XmlAttribute> Public Property precursorCharge As Double
-        ''' <summary>
-        ''' 母离子可以从这个属性指向的ms1 scan获取，这个属性对应着<see cref="scan.num"/>属性
-        ''' </summary>
-        ''' <returns></returns>
-        <XmlAttribute> Public Property precursorScanNum As String
-        <XmlAttribute> Public Property precursorIntensity As Double
-        <XmlAttribute> Public Property activationMethod As String
-        <XmlText>
-        Public Property value As Double
-
-        Public Overrides Function ToString() As String
-            Return Me.GetJson
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function CompareTo(other As precursorMz) As Integer Implements IComparable(Of precursorMz).CompareTo
-            Return Me.value.CompareTo(other.value)
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Narrowing Operator CType(mz As precursorMz) As Double
-            Return mz.value
-        End Operator
-    End Structure
 End Namespace

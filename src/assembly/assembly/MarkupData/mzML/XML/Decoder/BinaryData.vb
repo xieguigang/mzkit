@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73e8f648c7806db763038c78d0a17a86, assembly\MarkupData\mzML\XML\BinaryData.vb"
+﻿#Region "Microsoft.VisualBasic::c4e48306f930085e9ff024bfbdbafc52, assembly\MarkupData\mzML\XML\Decoder\BinaryData.vb"
 
     ' Author:
     ' 
@@ -39,16 +39,6 @@
     '         Properties: binaryDataArrayList, dataProcessingRef, defaultArrayLength, id, index
     '                     sourceFileRef
     ' 
-    '     Class binaryDataArrayList
-    ' 
-    '         Properties: list
-    ' 
-    '     Class binaryDataArray
-    ' 
-    '         Properties: binary, cvParams, encodedLength
-    ' 
-    '         Function: GetCompressionType, GetPrecision, ToString
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -56,6 +46,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.ControlVocabulary
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Namespace MarkupData.mzML
@@ -70,54 +61,5 @@ Namespace MarkupData.mzML
 
         Public Property binaryDataArrayList As binaryDataArrayList
 
-    End Class
-
-    Public Class binaryDataArrayList : Inherits List
-
-        <XmlElement(NameOf(binaryDataArray))>
-        Public Property list As binaryDataArray()
-
-        Default Public ReadOnly Property Item(i As Integer) As binaryDataArray
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return _list(i)
-            End Get
-        End Property
-
-    End Class
-
-    Public Class binaryDataArray : Implements IBase64Container
-
-        Public Property encodedLength As Integer
-
-        <XmlElement(NameOf(cvParam))>
-        Public Property cvParams As cvParam()
-        Public Property binary As String Implements IBase64Container.BinaryArray
-
-        Public Overrides Function ToString() As String
-            Return binary
-        End Function
-
-        Public Function GetPrecision() As Integer Implements IBase64Container.GetPrecision
-            If Not cvParams.KeyItem("64-bit float") Is Nothing Then
-                Return 64
-            ElseIf Not cvParams.KeyItem("32-bit float") Is Nothing Then
-                Return 32
-            Else
-                Throw New NotImplementedException
-            End If
-        End Function
-
-        Public Function GetCompressionType() As CompressionMode Implements IBase64Container.GetCompressionType
-            If Not cvParams.KeyItem("zlib compression") Is Nothing Then
-                Return CompressionMode.zlib
-            ElseIf Not cvParams.KeyItem("no compression") Is Nothing Then
-                Return CompressionMode.none
-            ElseIf Not cvParams.KeyItem("gzip compression") Is Nothing Then
-                Return CompressionMode.gzip
-            Else
-                Throw New NotImplementedException
-            End If
-        End Function
     End Class
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::03f6f6b8bc38a3f61b99a956e7efb39e, assembly\mzData\Stream\Scan.vb"
+﻿#Region "Microsoft.VisualBasic::03f6f6b8bc38a3f61b99a956e7efb39e, assembly\mzPack\Stream\Scan.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4194642d0f01e4bf8c0380f344715115, assembly\mzPack\mzWebCache\mzXMLScans.vb"
+﻿#Region "Microsoft.VisualBasic::35f8d49f1b3e0038c67fd77b479895c3, assembly\MarkupData\mzML\XML\IonTargeted\selectedIonList.vb"
 
     ' Author:
     ' 
@@ -34,36 +34,43 @@
 
     ' Summaries:
 
-    '     Class mzXMLScans
+    '     Class selectedIonList
     ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: dataReader, loadScans
+    '         Properties: selectedIon
+    ' 
+    '         Function: GetIonIntensity, GetIonMz
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
+Imports System.Xml.Serialization
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.ControlVocabulary
 
-Namespace mzData.mzWebCache
+Namespace MarkupData.mzML.IonTargeted
 
-    Public Class mzXMLScans : Inherits ScanPopulator(Of scan)
+    Public Class selectedIonList : Inherits List
 
-        Public Sub New(Optional mzErr$ = "da:0.1")
-            MyBase.New(mzErr)
-        End Sub
+        <XmlElement>
+        Public Property selectedIon As Params()
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Protected Overrides Function loadScans(rawfile As String) As IEnumerable(Of scan)
-            Return XML.LoadScans(rawfile)
+        Public Function GetIonMz() As Double()
+            Return selectedIon _
+                .Select(Function(ion)
+                            Return ion.cvParams.FirstOrDefault(Function(a) a.name = "selected ion m/z")?.value
+                        End Function) _
+                .Select(AddressOf Val) _
+                .ToArray
         End Function
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Protected Overrides Function dataReader() As MsDataReader(Of scan)
-            Return New mzXMLScan()
+        Public Function GetIonIntensity() As Double()
+            Return selectedIon _
+                .Select(Function(ion)
+                            Return ion.cvParams.FirstOrDefault(Function(a) a.name = "peak intensity")?.value
+                        End Function) _
+                .Select(AddressOf Val) _
+                .ToArray
         End Function
     End Class
 End Namespace

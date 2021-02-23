@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69b4a0751d347b7b1cb5c837010e78c3, assembly\MarkupData\mzML\XML\Components.vb"
+﻿#Region "Microsoft.VisualBasic::b0bae0153ebe46044202bec92c07c2f5, assembly\MarkupData\mzML\XML\Components.vb"
 
     ' Author:
     ' 
@@ -34,35 +34,11 @@
 
     ' Summaries:
 
-    '     Class indexList
-    ' 
-    '         Properties: index
-    ' 
-    '     Class index
-    ' 
-    '         Properties: name, offsets
-    ' 
-    '     Class offset
-    ' 
-    '         Properties: idRef, value
-    ' 
-    '         Function: ToString
-    ' 
-    '     Class mzML
-    ' 
-    '         Properties: cvList, fileDescription, id, run, version
-    ' 
-    '         Function: LoadChromatogramList, ToString
-    ' 
     '     Class fileDescription
     ' 
     '         Properties: fileContent
     ' 
     '         Function: ToString
-    ' 
-    '     Class cvList
-    ' 
-    '         Properties: list
     ' 
     '     Class List
     ' 
@@ -71,27 +47,6 @@
     '     Class DataList
     ' 
     '         Properties: defaultDataProcessingRef
-    ' 
-    '     Structure cv
-    ' 
-    '         Properties: fullName, id, URI, version
-    ' 
-    '     Class Params
-    ' 
-    '         Properties: cvParams, userParams
-    ' 
-    '     Class userParam
-    ' 
-    '         Properties: name, type, value
-    ' 
-    '         Function: ToString
-    ' 
-    '     Class cvParam
-    ' 
-    '         Properties: accession, cvRef, name, unitAccession, unitCvRef
-    '                     unitName, value
-    ' 
-    '         Function: GetDouble, ToString
     ' 
     '     Class run
     ' 
@@ -105,70 +60,19 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
-Imports Microsoft.VisualBasic.Language.Default
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.ControlVocabulary
 
 Namespace MarkupData.mzML
-
-    Public Class indexList : Inherits List
-        <XmlElement(NameOf(index))>
-        Public Property index As index()
-    End Class
-
-    Public Class index
-        <XmlAttribute>
-        Public Property name As String
-        <XmlElement(NameOf(offset))>
-        Public Property offsets As offset()
-    End Class
-
-    Public Class offset
-        <XmlAttribute>
-        Public Property idRef As String
-        <XmlText>
-        Public Property value As Long
-
-        Public Overrides Function ToString() As String
-            Return $"{idRef}: {value}"
-        End Function
-    End Class
-
-    <XmlType(NameOf(mzML), [Namespace]:=indexedmzML.xmlns)>
-    Public Class mzML
-
-        <XmlAttribute> Public Property id As String
-        <XmlAttribute> Public Property version As String
-
-        Public Property cvList As cvList
-        Public Property run As run
-        Public Property fileDescription As fileDescription
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function LoadChromatogramList(path As String) As IEnumerable(Of chromatogram)
-            Return MarkupData.mzML.LoadChromatogramList(path)
-        End Function
-
-        Public Overrides Function ToString() As String
-            Return id
-        End Function
-
-    End Class
 
     Public Class fileDescription
 
         Public Property fileContent As Params
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return fileContent.cvParams.Select(Function(a) a.name).JoinBy("; ")
         End Function
 
-    End Class
-
-    Public Class cvList : Inherits List
-
-        <XmlElement(NameOf(cv))>
-        Public Property list As cv()
     End Class
 
     Public Class List
@@ -178,62 +82,6 @@ Namespace MarkupData.mzML
     Public Class DataList : Inherits List
         <XmlAttribute>
         Public Property defaultDataProcessingRef As String
-    End Class
-
-    Public Structure cv
-        <XmlAttribute> Public Property id As String
-        <XmlAttribute> Public Property fullName As String
-        <XmlAttribute> Public Property version As String
-        <XmlAttribute> Public Property URI As String
-    End Structure
-
-    Public Class Params
-
-        <XmlElement(NameOf(cvParam))>
-        Public Property cvParams As cvParam()
-
-        <XmlElement(NameOf(userParam))>
-        Public Property userParams As userParam()
-
-    End Class
-
-    Public Class userParam : Implements INamedValue
-
-        <XmlAttribute> Public Property name As String Implements IKeyedEntity(Of String).Key
-        <XmlAttribute> Public Property value As String
-        <XmlAttribute> Public Property type As String
-
-        Public Overrides Function ToString() As String
-            Return $"Dim {name} As {type} = {value}"
-        End Function
-    End Class
-
-    ''' <summary>
-    ''' [<see cref="cvParam.name"/> => <see cref="cvParam"/>]
-    ''' </summary>
-    Public Class cvParam : Implements INamedValue
-
-        <XmlAttribute> Public Property cvRef As String
-        <XmlAttribute> Public Property accession As String
-        <XmlAttribute> Public Property name As String Implements IKeyedEntity(Of String).Key
-        <XmlAttribute> Public Property value As String
-        <XmlAttribute> Public Property unitName As String
-        <XmlAttribute> Public Property unitCvRef As String
-        <XmlAttribute> Public Property unitAccession As String
-
-        Shared ReadOnly Unknown As [Default](Of String) = NameOf(Unknown)
-
-        ''' <summary>
-        ''' returns <see cref="value"/> as <see cref="Double"/>
-        ''' </summary>
-        ''' <returns></returns>
-        Public Function GetDouble() As Double
-            Return Val(value)
-        End Function
-
-        Public Overrides Function ToString() As String
-            Return $"[{accession}] Dim {name} As <{unitName Or Unknown}> = {value}"
-        End Function
     End Class
 
     Public Class run

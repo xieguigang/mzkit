@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bcf585ee6e2353ec4f3a49c52c5581b5, assembly\MarkupData\mzML\XML\Spectrum.vb"
+﻿#Region "Microsoft.VisualBasic::b41dd2f1bd1a6ac01f4b9707b8213605, assembly\MarkupData\mzML\XML\MsData\spectrum.vb"
 
     ' Author:
     ' 
@@ -34,38 +34,12 @@
 
     ' Summaries:
 
-    '     Class spectrumList
-    ' 
-    '         Properties: spectrums
-    ' 
-    '         Function: GetAllMs1
-    ' 
-    '     Class precursorList
-    ' 
-    '         Properties: precursor
-    ' 
     '     Class spectrum
     ' 
     '         Properties: controllerNumber, controllerType, ms_level, precursorList, profile
     '                     scan, scan_time, scanList, selectedIon
     ' 
     '         Function: GetRawMatrix, ScanData, ToString
-    ' 
-    '     Class scanList
-    ' 
-    '         Properties: cvParams, scans
-    ' 
-    '     Class scan
-    ' 
-    '         Properties: instrumentConfigurationRef
-    ' 
-    '     Class scanWindowList
-    ' 
-    '         Properties: scanWindows
-    ' 
-    '     Class scanWindow
-    ' 
-    ' 
     ' 
     ' 
     ' /********************************************************************************/
@@ -74,7 +48,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
-Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -84,24 +57,6 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace MarkupData.mzML
-
-    Public Class spectrumList : Inherits DataList
-
-        <XmlElement("spectrum")>
-        Public Property spectrums As spectrum()
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetAllMs1() As IEnumerable(Of spectrum)
-            Return spectrums.GetAllMs1
-        End Function
-    End Class
-
-    Public Class precursorList : Inherits List
-
-        <XmlElement>
-        Public Property precursor As precursor()
-
-    End Class
 
     Public Class spectrum : Inherits BinaryData
 
@@ -254,26 +209,4 @@ Namespace MarkupData.mzML
         End Function
     End Class
 
-    Public Class scanList : Inherits List
-
-        <XmlElement("cvParam")>
-        Public Property cvParams As cvParam()
-        <XmlElement("scan")>
-        Public Property scans As scan()
-
-    End Class
-
-    Public Class scan : Inherits Params
-
-        <XmlAttribute>
-        Public Property instrumentConfigurationRef As String
-    End Class
-
-    Public Class scanWindowList : Inherits List
-        <XmlElement(NameOf(scanWindow))>
-        Public Property scanWindows As scanWindow()
-    End Class
-
-    Public Class scanWindow : Inherits Params
-    End Class
 End Namespace

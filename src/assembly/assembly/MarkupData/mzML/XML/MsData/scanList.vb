@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2f7887e1a7a81f3673bac7419e3c973, assembly\MarkupData\mzML\XML\Configurations.vb"
+﻿#Region "Microsoft.VisualBasic::4d204b7390a0f4496a2fefc67e594219, assembly\MarkupData\mzML\XML\MsData\scanList.vb"
 
     ' Author:
     ' 
@@ -34,50 +34,86 @@
 
     ' Summaries:
 
-    '     Class instrumentConfiguration
+    '     Class spectrumList
     ' 
-    '         Properties: componentList, id
+    '         Properties: spectrums
     ' 
-    '     Class componentList
+    '         Function: GetAllMs1
     ' 
-    '         Properties: analyzer, detector, source
+    '     Class precursorList
     ' 
-    '     Class component
+    '         Properties: precursor
     ' 
-    '         Properties: order
+    '     Class scanList
+    ' 
+    '         Properties: cvParams, scans
+    ' 
+    '     Class scan
+    ' 
+    '         Properties: instrumentConfigurationRef
+    ' 
+    '     Class scanWindowList
+    ' 
+    '         Properties: scanWindows
+    ' 
+    '     Class scanWindow
+    ' 
+    ' 
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.ControlVocabulary
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.IonTargeted
 
 Namespace MarkupData.mzML
 
-    Public Class instrumentConfiguration
+    Public Class spectrumList : Inherits DataList
 
-        <XmlAttribute> Public Property id As String
+        <XmlElement("spectrum")>
+        Public Property spectrums As spectrum()
 
-        Public Property componentList As componentList
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetAllMs1() As IEnumerable(Of spectrum)
+            Return spectrums.GetAllMs1
+        End Function
+    End Class
+
+    Public Class precursorList : Inherits List
+
+        <XmlElement>
+        Public Property precursor As precursor()
 
     End Class
 
-    Public Class componentList : Inherits List
+    Public Class scanList : Inherits List
 
-        Public Property source As component
-
-        <XmlElement>
-        Public Property analyzer As component()
-        <XmlElement>
-        Public Property detector As component()
+        <XmlElement("cvParam")>
+        Public Property cvParams As cvParam()
+        <XmlElement("scan")>
+        Public Property scans As scan()
 
     End Class
 
-    Public Class component : Inherits Params
+    Public Class scan : Inherits Params
 
-        <XmlAttribute> Public Property order As Integer
+        <XmlAttribute>
+        Public Property instrumentConfigurationRef As String
+
+    End Class
+
+    Public Class scanWindowList : Inherits List
+
+        <XmlElement(NameOf(scanWindow))>
+        Public Property scanWindows As scanWindow()
+
+    End Class
+
+    Public Class scanWindow : Inherits Params
 
     End Class
 End Namespace

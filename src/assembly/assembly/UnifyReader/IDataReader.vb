@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4194642d0f01e4bf8c0380f344715115, assembly\mzPack\mzWebCache\mzXMLScans.vb"
+﻿#Region "Microsoft.VisualBasic::6439e049f15fcd4b329967f42a04c9f5, assembly\UnifyReader\IDataReader.vb"
 
     ' Author:
     ' 
@@ -34,36 +34,32 @@
 
     ' Summaries:
 
-    '     Class mzXMLScans
+    '     Interface IDataReader
     ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: dataReader, loadScans
+    '         Function: GetBPC, GetMsLevel, GetMsMs, GetParentMz, GetPolarity
+    '                   GetScanId, GetScanTime, GetTIC, IsEmpty
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 
-Namespace mzData.mzWebCache
+Namespace DataReader
 
-    Public Class mzXMLScans : Inherits ScanPopulator(Of scan)
+    Public Interface IDataReader
 
-        Public Sub New(Optional mzErr$ = "da:0.1")
-            MyBase.New(mzErr)
-        End Sub
+        Function GetScanTime(scan As Object) As Double
+        Function GetScanId(scan As Object) As String
+        Function IsEmpty(scan As Object) As Boolean
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Protected Overrides Function loadScans(rawfile As String) As IEnumerable(Of scan)
-            Return XML.LoadScans(rawfile)
-        End Function
+        Function GetMsMs(scan As Object) As ms2()
+        Function GetMsLevel(scan As Object) As Integer
+        Function GetBPC(scan As Object) As Double
+        Function GetTIC(scan As Object) As Double
+        Function GetParentMz(scan As Object) As Double
+        Function GetPolarity(scan As Object) As String
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Protected Overrides Function dataReader() As MsDataReader(Of scan)
-            Return New mzXMLScan()
-        End Function
-    End Class
+    End Interface
 End Namespace

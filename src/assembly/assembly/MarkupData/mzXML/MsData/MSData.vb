@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4194642d0f01e4bf8c0380f344715115, assembly\mzPack\mzWebCache\mzXMLScans.vb"
+﻿#Region "Microsoft.VisualBasic::210565aa034a4f531af861f1ce5cf44e, assembly\MarkupData\mzXML\MsData\MSData.vb"
 
     ' Author:
     ' 
@@ -34,10 +34,12 @@
 
     ' Summaries:
 
-    '     Class mzXMLScans
+    '     Class MSData
     ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: dataReader, loadScans
+    '         Properties: dataProcessing, endTime, msInstrument, parentFile, scanCount
+    '                     scans, startTime
+    ' 
+    '         Function: ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -45,25 +47,31 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
+Imports System.Xml.Serialization
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace mzData.mzWebCache
+Namespace MarkupData.mzXML
 
-    Public Class mzXMLScans : Inherits ScanPopulator(Of scan)
+    <XmlType("msRun")> Public Class MSData
 
-        Public Sub New(Optional mzErr$ = "da:0.1")
-            MyBase.New(mzErr)
-        End Sub
+        <XmlAttribute> Public Property scanCount As Integer
+        <XmlAttribute> Public Property startTime As String
+        <XmlAttribute> Public Property endTime As String
+
+        Public Property parentFile As parentFile
+        Public Property msInstrument As msInstrument
+        Public Property dataProcessing As dataProcessing
+
+        <XmlElement("scan")>
+        Public Property scans As scan()
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Protected Overrides Function loadScans(rawfile As String) As IEnumerable(Of scan)
-            Return XML.LoadScans(rawfile)
+        Public Overrides Function ToString() As String
+            Return parentFile.ToString
         End Function
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Protected Overrides Function dataReader() As MsDataReader(Of scan)
-            Return New mzXMLScan()
-        End Function
     End Class
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5e0caad364687187e005789cfd49e91, assembly\MarkupData\mzML\XML\Chromatogram.vb"
+﻿#Region "Microsoft.VisualBasic::6cbaa5de1f4309e583d51f8616aeb645, assembly\MarkupData\mzML\XML\Chromatogram.vb"
 
     ' Author:
     ' 
@@ -44,23 +44,23 @@
     ' 
     '         Function: ToString
     ' 
-    '     Interface IMRMSelector
-    ' 
-    '         Properties: isolationWindow
-    ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
 Imports System.Xml.Serialization
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.ControlVocabulary
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.IonTargeted
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Namespace MarkupData.mzML
 
     Public Class chromatogramList : Inherits DataList
+
         <XmlElement(NameOf(chromatogram))>
         Public Property list As chromatogram()
+
     End Class
 
     Public Class chromatogram : Inherits BinaryData
@@ -72,16 +72,11 @@ Namespace MarkupData.mzML
             If id = "TIC" Then
                 Return id
             Else
-                Dim parent As String = Me.precursor.isolationWindow.cvParams.KeyItem("isolation window target m/z").value
-                Dim product As String = Me.product.isolationWindow.cvParams.KeyItem("isolation window target m/z").value
+                Dim parent As String = Me.precursor.GetMz
+                Dim product As String = Me.product.GetMz
 
                 Return $"Ion [{parent}/{product}]"
             End If
         End Function
-
     End Class
-
-    Public Interface IMRMSelector
-        Property isolationWindow As Params
-    End Interface
 End Namespace

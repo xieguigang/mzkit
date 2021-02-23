@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4194642d0f01e4bf8c0380f344715115, assembly\mzPack\mzWebCache\mzXMLScans.vb"
+﻿#Region "Microsoft.VisualBasic::03661671e65e891e5faa00823974e020, assembly\MarkupData\mzXML\MsData\peaks.vb"
 
     ' Author:
     ' 
@@ -34,36 +34,54 @@
 
     ' Summaries:
 
-    '     Class mzXMLScans
+    '     Class peaks
     ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: dataReader, loadScans
+    '         Properties: byteOrder, compressedLen, compressionType, contentType, precision
+    '                     value
+    ' 
+    '         Function: GetCompressionType, GetPrecision, ToString
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
+Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace mzData.mzWebCache
+Namespace MarkupData.mzXML
 
-    Public Class mzXMLScans : Inherits ScanPopulator(Of scan)
+    Public Class peaks : Implements IBase64Container
 
-        Public Sub New(Optional mzErr$ = "da:0.1")
-            MyBase.New(mzErr)
-        End Sub
+        ''' <summary>
+        ''' 1. zlib
+        ''' 2. gzip
+        ''' 3. none
+        ''' </summary>
+        ''' <returns></returns>
+        <XmlAttribute> Public Property compressionType As String
+        <XmlAttribute> Public Property compressedLen As Integer
+        <XmlAttribute> Public Property precision As Double
+        <XmlAttribute> Public Property byteOrder As String
+        <XmlAttribute> Public Property contentType As String
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Protected Overrides Function loadScans(rawfile As String) As IEnumerable(Of scan)
-            Return XML.LoadScans(rawfile)
+        <XmlText>
+        Public Property value As String Implements IBase64Container.BinaryArray
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
         End Function
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Protected Overrides Function dataReader() As MsDataReader(Of scan)
-            Return New mzXMLScan()
+        Public Function GetPrecision() As Integer Implements IBase64Container.GetPrecision
+            Return precision
+        End Function
+
+        Public Function GetCompressionType() As CompressionMode Implements IBase64Container.GetCompressionType
+            If charToModes.ContainsKey(compressionType) Then
+                Return charToModes(compressionType)
+            Else
+                Throw New NotImplementedException(compressionType)
+            End If
         End Function
     End Class
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::322cf13346c13d51826fb7b4c3ad6432, assembly\MarkupData\mzML\XML\Ions.vb"
+﻿#Region "Microsoft.VisualBasic::e1430e065b2a9af61d0ebe88312a7fa7, assembly\MarkupData\mzML\XML\IonTargeted\precursor.vb"
 
     ' Author:
     ' 
@@ -38,17 +38,7 @@
     ' 
     '         Properties: activation, isolationWindow, selectedIonList
     ' 
-    '         Function: GetActivationMethod, GetCollisionEnergy
-    ' 
-    '     Class selectedIonList
-    ' 
-    '         Properties: selectedIon
-    ' 
-    '         Function: GetIonIntensity, GetIonMz
-    ' 
-    '     Class product
-    ' 
-    '         Properties: activation, isolationWindow
+    '         Function: GetActivationMethod, GetCollisionEnergy, GetMz
     ' 
     ' 
     ' /********************************************************************************/
@@ -56,8 +46,10 @@
 #End Region
 
 Imports System.Xml.Serialization
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.ControlVocabulary
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 
-Namespace MarkupData.mzML
+Namespace MarkupData.mzML.IonTargeted
 
     Public Class precursor : Implements IMRMSelector
 
@@ -84,37 +76,8 @@ Namespace MarkupData.mzML
             Return Val(energy)
         End Function
 
-    End Class
-
-    Public Class selectedIonList : Inherits List
-
-        <XmlElement>
-        Public Property selectedIon As Params()
-
-        Public Function GetIonMz() As Double()
-            Return selectedIon _
-                .Select(Function(ion)
-                            Return ion.cvParams.FirstOrDefault(Function(a) a.name = "selected ion m/z")?.value
-                        End Function) _
-                .Select(AddressOf Val) _
-                .ToArray
+        Public Function GetMz() As Double
+            Return isolationWindow.cvParams.KeyItem("isolation window target m/z").value
         End Function
-
-        Public Function GetIonIntensity() As Double()
-            Return selectedIon _
-                .Select(Function(ion)
-                            Return ion.cvParams.FirstOrDefault(Function(a) a.name = "peak intensity")?.value
-                        End Function) _
-                .Select(AddressOf Val) _
-                .ToArray
-        End Function
-
-    End Class
-
-    Public Class product : Implements IMRMSelector
-
-        Public Property isolationWindow As Params Implements IMRMSelector.isolationWindow
-        Public Property activation As Params
-
     End Class
 End Namespace

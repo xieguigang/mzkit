@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2f7887e1a7a81f3673bac7419e3c973, assembly\MarkupData\mzML\XML\Configurations.vb"
+﻿#Region "Microsoft.VisualBasic::fd0086a995215db3cb581e37938bec1b, assembly\MarkupData\mzML\XML\Decoder\binaryDataArray.vb"
 
     ' Author:
     ' 
@@ -34,50 +34,56 @@
 
     ' Summaries:
 
-    '     Class instrumentConfiguration
+    '     Class binaryDataArray
     ' 
-    '         Properties: componentList, id
+    '         Properties: binary, cvParams, encodedLength
     ' 
-    '     Class componentList
-    ' 
-    '         Properties: analyzer, detector, source
-    ' 
-    '     Class component
-    ' 
-    '         Properties: order
+    '         Function: GetCompressionType, GetPrecision, ToString
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.ControlVocabulary
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Namespace MarkupData.mzML
 
-    Public Class instrumentConfiguration
+    Public Class binaryDataArray : Implements IBase64Container
 
-        <XmlAttribute> Public Property id As String
+        Public Property encodedLength As Integer
 
-        Public Property componentList As componentList
+        <XmlElement(NameOf(cvParam))>
+        Public Property cvParams As cvParam()
+        Public Property binary As String Implements IBase64Container.BinaryArray
 
-    End Class
+        Public Overrides Function ToString() As String
+            Return binary
+        End Function
 
-    Public Class componentList : Inherits List
+        Public Function GetPrecision() As Integer Implements IBase64Container.GetPrecision
+            If Not cvParams.KeyItem("64-bit float") Is Nothing Then
+                Return 64
+            ElseIf Not cvParams.KeyItem("32-bit float") Is Nothing Then
+                Return 32
+            Else
+                Throw New NotImplementedException
+            End If
+        End Function
 
-        Public Property source As component
-
-        <XmlElement>
-        Public Property analyzer As component()
-        <XmlElement>
-        Public Property detector As component()
-
-    End Class
-
-    Public Class component : Inherits Params
-
-        <XmlAttribute> Public Property order As Integer
-
+        Public Function GetCompressionType() As CompressionMode Implements IBase64Container.GetCompressionType
+            If Not cvParams.KeyItem("zlib compression") Is Nothing Then
+                Return CompressionMode.zlib
+            ElseIf Not cvParams.KeyItem("no compression") Is Nothing Then
+                Return CompressionMode.none
+            ElseIf Not cvParams.KeyItem("gzip compression") Is Nothing Then
+                Return CompressionMode.gzip
+            Else
+                Throw New NotImplementedException
+            End If
+        End Function
     End Class
 End Namespace

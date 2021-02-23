@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4194642d0f01e4bf8c0380f344715115, assembly\mzPack\mzWebCache\mzXMLScans.vb"
+﻿#Region "Microsoft.VisualBasic::5848ae459081a512ae49e6e1a9671599, assembly\MarkupData\mzML\XML\IonTargeted\product.vb"
 
     ' Author:
     ' 
@@ -34,36 +34,31 @@
 
     ' Summaries:
 
-    '     Class mzXMLScans
+    '     Class product
     ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: dataReader, loadScans
+    '         Properties: activation, isolationWindow
+    ' 
+    '         Function: GetMz
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
+Imports System.Xml.Serialization
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.ControlVocabulary
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 
-Namespace mzData.mzWebCache
+Namespace MarkupData.mzML.IonTargeted
 
-    Public Class mzXMLScans : Inherits ScanPopulator(Of scan)
+    Public Class product : Implements IMRMSelector
 
-        Public Sub New(Optional mzErr$ = "da:0.1")
-            MyBase.New(mzErr)
-        End Sub
+        Public Property isolationWindow As Params Implements IMRMSelector.isolationWindow
+        Public Property activation As Params
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Protected Overrides Function loadScans(rawfile As String) As IEnumerable(Of scan)
-            Return XML.LoadScans(rawfile)
+        Public Function GetMz() As Double
+            Return isolationWindow.cvParams.KeyItem("isolation window target m/z").value
         End Function
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Protected Overrides Function dataReader() As MsDataReader(Of scan)
-            Return New mzXMLScan()
-        End Function
     End Class
 End Namespace

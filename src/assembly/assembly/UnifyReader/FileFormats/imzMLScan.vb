@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::444e586ffebcf55a91e9b16eea2768c7, assembly\UnifyReader\mzXMLScan.vb"
+﻿#Region "Microsoft.VisualBasic::7ac20d6ff32f85e79b12c90dfa1b44d8, assembly\UnifyReader\FileFormats\imzMLScan.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
 
     ' Summaries:
 
-    '     Class mzXMLScan
+    '     Class imzMLScan
     ' 
     '         Function: GetBPC, GetMsLevel, GetMsMs, GetParentMz, GetPolarity
     '                   GetScanId, GetScanTime, GetTIC, IsEmpty
@@ -44,59 +44,47 @@
 
 #End Region
 
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 
 Namespace DataReader
 
-    Public Class mzXMLScan : Inherits MsDataReader(Of scan)
+    Public Class imzMLScan : Inherits MsDataReader(Of ScanReader)
 
-        Public Overrides Function GetScanTime(scan As scan) As Double
-            Return PeakMs2.RtInSecond(scan.retentionTime)
+        Public Overrides Function GetScanTime(scan As ScanReader) As Double
+            Return 0
         End Function
 
-        Public Overrides Function GetScanId(scan As scan) As String
-            Return scan.getName
+        Public Overrides Function GetScanId(scan As ScanReader) As String
+            Return $"[{scan.x},{scan.y}]"
         End Function
 
-        Public Overrides Function IsEmpty(scan As scan) As Boolean
-            Return scan.peaks Is Nothing OrElse
-                scan.peaks.compressedLen = 0 OrElse
-                scan.peaks.value.StringEmpty
+        Public Overrides Function IsEmpty(scan As ScanReader) As Boolean
+            Return scan.MzPtr Is Nothing OrElse scan.IntPtr Is Nothing
         End Function
 
-        Public Overrides Function GetMsMs(scan As scan) As ms2()
-            Return scan.peaks _
-                .ExtractMzI _
-                .Where(Function(p) p.intensity > 0) _
-                .Select(Function(p)
-                            Return New ms2 With {
-                                .mz = p.mz,
-                                .quantity = p.intensity,
-                                .intensity = p.intensity
-                            }
-                        End Function) _
-                .ToArray
+        Public Overrides Function GetMsMs(scan As ScanReader) As ms2()
+            Return scan.LoadMsData
         End Function
 
-        Public Overrides Function GetMsLevel(scan As scan) As Integer
-            Return scan.msLevel
+        Public Overrides Function GetMsLevel(scan As ScanReader) As Integer
+            Return 1
         End Function
 
-        Public Overrides Function GetBPC(scan As scan) As Double
-            Return scan.basePeakIntensity
+        Public Overrides Function GetBPC(scan As ScanReader) As Double
+            Return 0
         End Function
 
-        Public Overrides Function GetTIC(scan As scan) As Double
-            Return scan.totIonCurrent
+        Public Overrides Function GetTIC(scan As ScanReader) As Double
+            Return scan.totalIon
         End Function
 
-        Public Overrides Function GetParentMz(scan As scan) As Double
-            Return scan.precursorMz.value
+        Public Overrides Function GetParentMz(scan As ScanReader) As Double
+            Return 0
         End Function
 
-        Public Overrides Function GetPolarity(scan As scan) As String
-            Return scan.polarity
+        Public Overrides Function GetPolarity(scan As ScanReader) As String
+            Return "+"
         End Function
     End Class
 End Namespace

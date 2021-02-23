@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4194642d0f01e4bf8c0380f344715115, assembly\mzPack\mzWebCache\mzXMLScans.vb"
+﻿#Region "Microsoft.VisualBasic::5f6271966ba9c642477c10ecb7c3dd67, assembly\MarkupData\mzXML\MsData\precursorMz.vb"
 
     ' Author:
     ' 
@@ -34,10 +34,12 @@
 
     ' Summaries:
 
-    '     Class mzXMLScans
+    '     Structure precursorMz
     ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: dataReader, loadScans
+    '         Properties: activationMethod, precursorCharge, precursorIntensity, precursorScanNum, value
+    '                     windowWideness
+    ' 
+    '         Function: CompareTo, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -45,25 +47,40 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
+Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace mzData.mzWebCache
+Namespace MarkupData.mzXML
 
-    Public Class mzXMLScans : Inherits ScanPopulator(Of scan)
+    ''' <summary>
+    ''' 这个类型模型的隐式转换的数据来源为<see cref="precursorMz.value"/>属性值
+    ''' </summary>
+    Public Structure precursorMz : Implements IComparable(Of precursorMz)
 
-        Public Sub New(Optional mzErr$ = "da:0.1")
-            MyBase.New(mzErr)
-        End Sub
+        <XmlAttribute> Public Property windowWideness As String
+        <XmlAttribute> Public Property precursorCharge As Double
+        ''' <summary>
+        ''' 母离子可以从这个属性指向的ms1 scan获取，这个属性对应着<see cref="scan.num"/>属性
+        ''' </summary>
+        ''' <returns></returns>
+        <XmlAttribute> Public Property precursorScanNum As String
+        <XmlAttribute> Public Property precursorIntensity As Double
+        <XmlAttribute> Public Property activationMethod As String
+        <XmlText>
+        Public Property value As Double
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Protected Overrides Function loadScans(rawfile As String) As IEnumerable(Of scan)
-            Return XML.LoadScans(rawfile)
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Protected Overrides Function dataReader() As MsDataReader(Of scan)
-            Return New mzXMLScan()
+        Public Function CompareTo(other As precursorMz) As Integer Implements IComparable(Of precursorMz).CompareTo
+            Return Me.value.CompareTo(other.value)
         End Function
-    End Class
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Narrowing Operator CType(mz As precursorMz) As Double
+            Return mz.value
+        End Operator
+    End Structure
 End Namespace

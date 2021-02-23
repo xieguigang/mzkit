@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0008c6c4a07578f59bfa2ad3c67bdbb, assembly\MarkupData\mzXML\Info.vb"
+﻿#Region "Microsoft.VisualBasic::f7f11a0d25622d24eb9c745ec79b3f0c, assembly\MarkupData\mzXML\Info.vb"
 
     ' Author:
     ' 
@@ -59,16 +59,6 @@
     '     Structure parentFile
     ' 
     '         Properties: fileName, fileShal, fileType
-    ' 
-    '         Function: ToString
-    ' 
-    '     Class index
-    ' 
-    '         Properties: name, offsets
-    ' 
-    '     Structure offset
-    ' 
-    '         Properties: id, value
     ' 
     '         Function: ToString
     ' 
@@ -135,27 +125,6 @@ Namespace MarkupData.mzXML
             Return Me.GetJson
         End Function
 
-    End Structure
-
-    Public Class index
-
-        <XmlAttribute>
-        Public Property name As String
-        <XmlElement("offset")>
-        Public Property offsets As offset()
-
-    End Class
-
-    Public Structure offset
-
-        <XmlAttribute>
-        Public Property id As Integer
-        <XmlText>
-        Public Property value As String
-
-        Public Overrides Function ToString() As String
-            Return Me.GetJson
-        End Function
     End Structure
 
 End Namespace

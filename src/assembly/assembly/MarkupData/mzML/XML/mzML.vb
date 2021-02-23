@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ac20d6ff32f85e79b12c90dfa1b44d8, assembly\UnifyReader\imzMLScan.vb"
+﻿#Region "Microsoft.VisualBasic::75a4e0207708d985ae588165706e7511, assembly\MarkupData\mzML\XML\mzML.vb"
 
     ' Author:
     ' 
@@ -34,57 +34,41 @@
 
     ' Summaries:
 
-    '     Class imzMLScan
+    '     Class mzML
     ' 
-    '         Function: GetBPC, GetMsLevel, GetMsMs, GetParentMz, GetPolarity
-    '                   GetScanId, GetScanTime, GetTIC, IsEmpty
+    '         Properties: cvList, fileDescription, id, run, version
+    ' 
+    '         Function: LoadChromatogramList, ToString
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.imzML
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports System.Runtime.CompilerServices
+Imports System.Xml.Serialization
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.ControlVocabulary
 
-Namespace DataReader
+Namespace MarkupData.mzML
 
-    Public Class imzMLScan : Inherits MsDataReader(Of ScanReader)
+    <XmlType(NameOf(mzML), [Namespace]:=indexedmzML.xmlns)>
+    Public Class mzML
 
-        Public Overrides Function GetScanTime(scan As ScanReader) As Double
-            Return 0
+        <XmlAttribute> Public Property id As String
+        <XmlAttribute> Public Property version As String
+
+        Public Property cvList As cvList
+        Public Property run As run
+        Public Property fileDescription As fileDescription
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function LoadChromatogramList(path As String) As IEnumerable(Of chromatogram)
+            Return MarkupData.mzML.LoadChromatogramList(path)
         End Function
 
-        Public Overrides Function GetScanId(scan As ScanReader) As String
-            Return $"[{scan.x},{scan.y}]"
+        Public Overrides Function ToString() As String
+            Return id
         End Function
 
-        Public Overrides Function IsEmpty(scan As ScanReader) As Boolean
-            Return scan.MzPtr Is Nothing OrElse scan.IntPtr Is Nothing
-        End Function
-
-        Public Overrides Function GetMsMs(scan As ScanReader) As ms2()
-            Return scan.LoadMsData
-        End Function
-
-        Public Overrides Function GetMsLevel(scan As ScanReader) As Integer
-            Return 1
-        End Function
-
-        Public Overrides Function GetBPC(scan As ScanReader) As Double
-            Return 0
-        End Function
-
-        Public Overrides Function GetTIC(scan As ScanReader) As Double
-            Return scan.totalIon
-        End Function
-
-        Public Overrides Function GetParentMz(scan As ScanReader) As Double
-            Return 0
-        End Function
-
-        Public Overrides Function GetPolarity(scan As ScanReader) As String
-            Return "+"
-        End Function
     End Class
 End Namespace
