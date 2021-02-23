@@ -514,6 +514,7 @@
     <Compile Include="MarkupData\imzML\XML\ScanData.vb" />
     <Compile Include="MarkupData\imzML\XML\XML.vb" />
     <Compile Include="MarkupData\CompressionMode.vb" />
+    <Compile Include="MarkupData\mzXML\index.vb" />
     <Compile Include="MarkupData\XmlFileTypes.vb" />
     <Compile Include="MarkupData\XmlSeek.vb" />
     <Compile Include="MarkupData\mzML\RawScanParser.vb" />
@@ -563,7 +564,7 @@
     <Compile Include="MarkupData\mzML\XML\indexedmzML.vb" />
     <Compile Include="MarkupData\mzXML\Extensions.vb" />
     <Compile Include="MarkupData\mzXML\Info.vb" />
-    <Compile Include="MarkupData\mzXML\MSData.vb" />
+    <Compile Include="MarkupData\mzXML\MsData\MSData.vb" />
     <Compile Include="MarkupData\mzXML\XML.vb" />
   </ItemGroup>
   <ItemGroup>

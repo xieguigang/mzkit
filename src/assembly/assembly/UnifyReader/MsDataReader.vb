@@ -130,5 +130,6 @@ Namespace DataReader
             Return GetPolarity(DirectCast(scan, Scan))
         End Function
 #End Region
+
     End Class
 End Namespace

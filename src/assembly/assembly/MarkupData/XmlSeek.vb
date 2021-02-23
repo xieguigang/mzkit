@@ -1,4 +1,6 @@
 ﻿Imports System.IO
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
@@ -12,9 +14,11 @@ Namespace MarkupData
 
         ReadOnly bin As BinaryDataReader
         ReadOnly type As XmlFileTypes = XmlFileTypes.mzXML
+        ReadOnly reader As IDataReader
         ReadOnly indexOffset As Long
         ReadOnly sha1 As String
 
+        Dim index As NamedValue(Of Long)()
         Dim disposedValue As Boolean
 
         Sub New(file As String)
@@ -26,8 +30,23 @@ Namespace MarkupData
                 indexOffset = .indexOffset
             End With
 
+            Select Case type
+                Case XmlFileTypes.imzML
+                    reader = New imzMLScan
+                Case XmlFileTypes.mzML
+                    reader = New mzMLScan
+                Case XmlFileTypes.mzXML
+                    reader = New mzXMLScan
+                Case Else
+                    Throw New NotImplementedException(type.Description)
+            End Select
+
             bin.Seek(indexOffset, SeekOrigin.Begin)
         End Sub
+
+        Public Function LoadIndex() As XmlSeek
+
+        End Function
 
         Private Function parseIndex() As (indexOffset As Long, sha1 As String)
             Dim tails As String = bin.BaseStream.Tails(128, encoding:=bin.Encoding)
