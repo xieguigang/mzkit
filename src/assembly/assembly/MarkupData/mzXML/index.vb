@@ -56,6 +56,7 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text.Xml.Linq
 
 Namespace MarkupData.mzXML
 
@@ -82,10 +83,16 @@ Namespace MarkupData.mzXML
                         End Function)
         End Function
 
-        Friend Shared Iterator Function ParseIndexList(bin As BinaryDataReader, offset As Long) As IEnumerable(Of index)
-            Call bin.Seek(offset, SeekOrigin.Begin)
+        Friend Shared Function ParseIndexList(bin As BinaryDataReader, offset As Long) As IEnumerable(Of index)
+            Dim text As New StreamReader(bin.BaseStream)
+            Dim source As IEnumerable(Of String)
+            Dim indexList As IEnumerable(Of index)
 
+            bin.Seek(offset, SeekOrigin.Begin)
+            source = text.IterateArrayNodes("index")
+            indexList = source.NodeStream(Of index)()
 
+            Return indexList
         End Function
     End Class
 
