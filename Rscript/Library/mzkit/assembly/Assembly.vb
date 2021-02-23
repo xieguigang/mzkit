@@ -200,7 +200,7 @@ Module Assembly
                 $"file: {file}"
             }, env)
         Else
-            Return New XmlSeek(file)
+            Return New XmlSeek(file).LoadIndex
         End If
     End Function
 

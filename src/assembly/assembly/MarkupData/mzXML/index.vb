@@ -51,6 +51,7 @@
 
 #End Region
 
+Imports System.IO
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.IO
@@ -82,6 +83,8 @@ Namespace MarkupData.mzXML
         End Function
 
         Friend Shared Iterator Function ParseIndexList(bin As BinaryDataReader, offset As Long) As IEnumerable(Of index)
+            Call bin.Seek(offset, SeekOrigin.Begin)
+
 
         End Function
     End Class

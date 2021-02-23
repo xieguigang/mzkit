@@ -1,6 +1,7 @@
 imports "assembly" from "mzkit";
 
+const xmlfile as string = "D:\lxy-CID30.mzXML";
 
-using raw as open.xml_seek("D:\biodeep\biodeepDB\lxy-CID30.mzML") {
+using raw as open.xml_seek(xmlfile) {
 
 }
