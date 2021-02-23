@@ -71,6 +71,7 @@ Namespace MarkupData
         ReadOnly sha1 As String
 
         Dim index As NamedValue(Of Long)()
+        Dim indexgroup As Dictionary(Of String, NamedValue(Of Long)())
         Dim disposedValue As Boolean
 
         Sub New(file As String)
@@ -108,6 +109,13 @@ Namespace MarkupData
             Else
                 Throw New NotImplementedException(type.Description)
             End If
+
+            indexgroup = index _
+                .GroupBy(Function(idx) idx.Description) _
+                .ToDictionary(Function(g) g.Key,
+                              Function(g)
+                                  Return g.ToArray
+                              End Function)
 
             Return Me
         End Function
