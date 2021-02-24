@@ -26,7 +26,10 @@ Public Class DocumentWindow
         VisualStudioToolStripExtender1 = New VisualStudioToolStripExtender(components)
 
         Call ApplyVsTheme(DockContextMenuStrip1)
+        ' Call HandleTaskbar()
+    End Sub
 
+    Private Sub HandleTaskbar()
         ' Add a new preview
         preview = New TabbedThumbnail(ParentForm.Handle, Me.Handle) With {
             .ClippingRectangle = New Rectangle(New Point, Size)
