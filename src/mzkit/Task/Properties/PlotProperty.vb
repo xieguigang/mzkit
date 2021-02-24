@@ -19,6 +19,7 @@ Public Class PlotProperty
 
     <Category("Styles")> Public Property show_legend As Boolean = True
     <Category("Styles")> Public Property show_grid As Boolean = True
+    <Category("Styles")> Public Property show_tag As Boolean = True
     <Category("Styles")> Public Property line_width As Single = 5
     <Category("Styles")> Public Property point_size As Single = 10
     <Category("Styles")> Public Property gridFill As Color = "rgb(245,245,245)".TranslateColor

@@ -55,7 +55,6 @@
 Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
-Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -68,7 +67,6 @@ Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
@@ -372,7 +370,8 @@ Public Class PageMzkitTools
                     gridFill:=args.gridFill.ToHtmlColor,
                     bg:=args.background.ToHtmlColor,
                     showGrid:=args.show_grid,
-                    showLegends:=args.show_legend
+                    showLegends:=args.show_legend,
+                    showLabels:=args.show_tag
                 ).AsGDIImage
             End Sub, width:=1600, height:=1200, showGrid:=False, padding:="padding:100px 100px 150px 200px;")
 
