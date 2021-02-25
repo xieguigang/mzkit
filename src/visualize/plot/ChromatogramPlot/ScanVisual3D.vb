@@ -82,6 +82,8 @@ Public Class ScanVisual3D : Inherits Plot
     ReadOnly scans As (mz#, scan As ms1_scan())()
     ReadOnly height As Double = 0.45
     ReadOnly angle As Double = 60
+    ReadOnly fillCurve As Boolean
+    ReadOnly fillAlpha As Integer
 
     Public Sub New(points As IEnumerable(Of ms1_scan), tolerance As Tolerance, theme As Theme)
         MyBase.New(theme)
@@ -124,7 +126,18 @@ Public Class ScanVisual3D : Inherits Plot
                     .ToArray
             }
 
-            Call New TICplot(theme).Plot(g, canvas.PlotRegion)
+            Call New TICplot(
+                ionData:={TIC},
+                timeRange:=Nothing,
+                intensityMax:=0,
+                isXIC:=False,
+                parallel:=False,
+                fillCurve:=fillCurve,
+                fillAlpha:=fillAlpha,
+                labelLayoutTicks:=-1,
+                deln:=10,
+                theme:=theme
+            ).Plot(g, canvas.PlotRegion)
         Next
     End Sub
 End Class

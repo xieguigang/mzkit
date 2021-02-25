@@ -42,7 +42,6 @@
 
 #End Region
 
-Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
@@ -52,22 +51,11 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.ComponentModel.DataStructures
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
-Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.d3js
-Imports Microsoft.VisualBasic.Imaging.d3js.Layout
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
-Imports Microsoft.VisualBasic.Imaging.Math2D
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
-Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Public Module ChromatogramPlot
 
@@ -209,8 +197,34 @@ Public Module ChromatogramPlot
                             Optional parallel As Boolean = False,
                             Optional intensityMax As Double = 0) As GraphicsData
 
-        Dim theme As New Theme
-        Dim TIC As New TICplot(theme)
+        Dim theme As New Theme With {
+            .lineStroke = penStyle,
+            .padding = margin,
+            .background = bg,
+            .legendLabelCSS = legendFontCSS,
+            .drawLegend = showLegends,
+            .axisLabelCSS = axisLabelFont,
+            .axisTickCSS = axisTickFont,
+            .tagCSS = labelFontStyle,
+            .tagLinkStroke = labelConnectorStroke,
+            .colorSet = colorsSchema,
+            .drawGrid = showGrid,
+            .gridFill = gridFill,
+            .drawLabels = showLabels,
+            .tagColor = labelColor
+        }
+        Dim TIC As New TICplot(
+            ionData:=ionData,
+            timeRange:=timeRange,
+            intensityMax:=intensityMax,
+            isXIC:=isXIC,
+            parallel:=parallel,
+            fillCurve:=fillCurve,
+            fillAlpha:=fillAlpha,
+            labelLayoutTicks:=labelLayoutTicks,
+            theme:=theme,
+            deln:=deln
+        )
 
         Return TIC.Plot(size)
     End Function

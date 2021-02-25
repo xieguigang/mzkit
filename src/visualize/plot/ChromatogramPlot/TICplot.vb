@@ -1,75 +1,89 @@
-﻿Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
-Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.Drawing2D
-Imports System.Drawing
-Imports System.Runtime.CompilerServices
-Imports BioNovoGene.Analytical.MassSpectrometry.Math
+﻿Imports System.Drawing
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Data
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.d3js
 Imports Microsoft.VisualBasic.Imaging.d3js.Layout
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
-Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
-Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Public Class TICplot : Inherits Plot
 
-    Public Sub New(theme As Theme)
+    ReadOnly parallel As Boolean = False
+    ReadOnly ionData As NamedCollection(Of ChromatogramTick)()
+    ReadOnly timeRange As Double() = Nothing
+    ReadOnly intensityMax As Double = 0
+    ReadOnly isXIC As Boolean
+    ReadOnly fillCurve As Boolean
+    ReadOnly fillAlpha As Integer
+    ReadOnly labelLayoutTicks As Integer = 100
+    ReadOnly deln As Integer = 10
+
+    Public Sub New(ionData As NamedCollection(Of ChromatogramTick)(),
+                   timeRange As Double(),
+                   intensityMax As Double,
+                   isXIC As Boolean,
+                   parallel As Boolean,
+                   fillCurve As Boolean,
+                   fillAlpha As Integer,
+                   labelLayoutTicks As Integer,
+                   deln As Integer,
+                   theme As Theme)
+
         MyBase.New(theme)
+
+        Me.isXIC = isXIC
+        Me.intensityMax = intensityMax
+        Me.ionData = ionData
+        Me.parallel = parallel
+        Me.fillCurve = fillCurve
+        Me.fillAlpha = fillAlpha
+        Me.labelLayoutTicks = labelLayoutTicks
+        Me.deln = deln
+
+        If timeRange Is Nothing Then
+            Me.timeRange = {}
+        Else
+            Me.timeRange = timeRange
+        End If
     End Sub
 
-    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
-        Dim labelFont As Font = CSSFont.TryParse(labelFontStyle)
-        Dim labelConnector As Pen = Stroke.TryParse(labelConnectorStroke)
+    Private Function newPen(c As Color) As Pen
+        Dim style As Stroke = Stroke.TryParse(theme.lineStroke)
+        style.fill = c.ARGBExpression
+        Return style.GDIObject
+    End Function
 
-        'For Each ion As NamedCollection(Of ChromatogramTick) In ionData
-        '    Dim base = ion.value.Baseline(quantile:=0.65)
-        '    Dim max# = ion.value.Shadows!Intensity.Max
-
-        '    Call $"{ion.name}: {base}/{max} = {(100 * base / max).ToString("F2")}%".__DEBUG_ECHO
-        'Next
-
-        Dim colors As LoopArray(Of Pen)
-        Dim newPen As Func(Of Color, Pen) =
-            Function(c As Color) As Pen
-                Dim style As Stroke = Stroke.TryParse(penStyle)
-                style.fill = c.ARGBExpression
-                Return style.GDIObject
-            End Function
-
+    Private Function colorProvider() As LoopArray(Of Pen)
         If ionData.Length = 1 Then
-            colors = {
-                newPen(colorsSchema.TranslateColor(False) Or Color.DeepSkyBlue.AsDefault)
-            }
+            Return {newPen(theme.colorSet.TranslateColor(False) Or Color.DeepSkyBlue.AsDefault)}
         Else
-            colors = Designer _
-                .GetColors(colorsSchema) _
-                .Select(newPen) _
+            Return Designer _
+                .GetColors(theme.colorSet) _
+                .Select(AddressOf newPen) _
                 .ToArray
         End If
+    End Function
 
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
+        Dim colors As LoopArray(Of Pen) = colorProvider()
         Dim XTicks As Double() = ionData _
             .Select(Function(ion)
                         Return ion.value.TimeArray
                     End Function) _
             .IteratesALL _
-            .JoinIterates(TimeRange) _
+            .JoinIterates(timeRange) _
             .AsVector _
             .Range _
             .CreateAxisTicks  ' time
@@ -86,7 +100,7 @@ Public Class TICplot : Inherits Plot
 
         Dim ZTicks As Double()
 
-        If Parallel Then
+        If parallel Then
             ZTicks = ionData _
                 .Sequence _
                 .Select(Function(i) CDbl(i)) _
@@ -95,7 +109,7 @@ Public Class TICplot : Inherits Plot
                 .CreateAxisTicks
         End If
 
-        Dim rect As Rectangle = Region.PlotRegion
+        Dim rect As Rectangle = canvas.PlotRegion
         Dim X = d3js.scale.linear.domain(XTicks).range(integers:={rect.Left, rect.Right})
         Dim Y = d3js.scale.linear.domain(YTicks).range(integers:={rect.Top, rect.Bottom})
         Dim scaler As New DataScaler With {
@@ -106,18 +120,18 @@ Public Class TICplot : Inherits Plot
         }
 
         Call g.DrawAxis(
-            Region, scaler, showGrid:=showGrid,
+            canvas, scaler, showGrid:=theme.drawGrid,
             xlabel:="Time (s)",
             ylabel:="Intensity",
             htmlLabel:=False,
             XtickFormat:=If(isXIC, "F2", "F0"),
             YtickFormat:="G2",
-            labelFont:=axisLabelFont,
-            tickFontStyle:=axisTickFont,
-            gridFill:=gridFill
+            labelFont:=theme.axisLabelCSS,
+            tickFontStyle:=theme.axisTickCSS,
+            gridFill:=theme.gridFill
         )
 
-        If Parallel Then
+        If parallel Then
             ' draw Z axis
 
         End If
@@ -140,7 +154,7 @@ Public Class TICplot : Inherits Plot
             legends += New LegendObject With {
                 .title = line.name,
                 .color = curvePen.Color.ToHtmlColor,
-                .fontstyle = legendFontCSS,
+                .fontstyle = theme.legendLabelCSS,
                 .style = LegendStyles.Rectangle
             }
             peakTimes += New NamedValue(Of ChromatogramTick) With {
@@ -151,7 +165,7 @@ Public Class TICplot : Inherits Plot
             Dim A, B As PointF
             Dim polygon As New List(Of PointF)
 
-            If Parallel Then
+            If parallel Then
                 ' add [x,y] offset for current data
                 parallelOffset = New PointF With {
                     .X = parallelOffset.X + rect.Height / (ionData.Length + 2),
@@ -177,7 +191,7 @@ Public Class TICplot : Inherits Plot
                 polygon.Add(B)
             Next
 
-            Dim bottom% = Region.Bottom - 6
+            Dim bottom% = canvas.Bottom - 6
 
             polygon.Insert(0, New PointF(polygon(0).X, bottom))
             polygon.Add(New PointF(polygon.Last.X, bottom))
@@ -188,69 +202,75 @@ Public Class TICplot : Inherits Plot
             End If
         Next
 
-        If showLabels Then
-            ' labeling 
-            Dim canvas = g
-            Dim labels As Label() = peakTimes _
-                .Select(Function(ion)
-                            Dim labelSize As SizeF = canvas.MeasureString(ion.Name, labelFont)
-                            Dim location As PointF = scaler.Translate(ion.Value)
+        If theme.drawLabels Then Call DrawLabels(g, rect, scaler, peakTimes)
+        If theme.drawLegend Then Call DrawTICLegends(g, canvas, legends)
+    End Sub
 
-                            Return New Label With {
-                                .height = labelSize.Height,
-                                .width = labelSize.Width,
-                                .text = ion.Name,
-                                .X = location.X,
-                                .Y = location.Y
-                            }
-                        End Function) _
-                .ToArray
-            Dim anchors As Anchor() = labels.GetLabelAnchors(r:=3)
+    Private Sub DrawLabels(g As IGraphics, rect As Rectangle,
+                           scaler As DataScaler,
+                           peakTimes As IEnumerable(Of NamedValue(Of ChromatogramTick)))
 
-            Call d3js.labeler(maxAngle:=5, maxMove:=300, w_lab2:=100, w_lab_anc:=100) _
-                .Labels(labels) _
-                .Anchors(anchors) _
-                .Width(rect.Width) _
-                .Height(rect.Height) _
-                .Start(showProgress:=False, nsweeps:=labelLayoutTicks)
+        Dim labelFont As Font = CSSFont.TryParse(theme.tagCSS)
+        Dim labelConnector As Pen = Stroke.TryParse(theme.tagLinkStroke)
+        ' labeling 
+        Dim labels As Label() = peakTimes _
+            .Select(Function(ion)
+                        Dim labelSize As SizeF = g.MeasureString(ion.Name, labelFont)
+                        Dim location As PointF = scaler.Translate(ion.Value)
 
-            Dim labelBrush As Brush = labelColor.GetBrush
+                        Return New Label With {
+                            .height = labelSize.Height,
+                            .width = labelSize.Width,
+                            .text = ion.Name,
+                            .X = location.X,
+                            .Y = location.Y
+                        }
+                    End Function) _
+            .ToArray
+        Dim anchors As Anchor() = labels.GetLabelAnchors(r:=3)
 
-            For Each i As SeqValue(Of Label) In labels.SeqIterator
-                Call g.DrawLine(labelConnector, i.value.GetTextAnchor(anchors(i)), anchors(i))
-                Call g.DrawString(i.value.text, labelFont, labelBrush, i.value)
-            Next
+        Call d3js.labeler(maxAngle:=5, maxMove:=300, w_lab2:=100, w_lab_anc:=100) _
+            .Labels(labels) _
+            .Anchors(anchors) _
+            .Width(rect.Width) _
+            .Height(rect.Height) _
+            .Start(showProgress:=False, nsweeps:=labelLayoutTicks)
+
+        Dim labelBrush As Brush = theme.tagColor.GetBrush
+
+        For Each i As SeqValue(Of Label) In labels.SeqIterator
+            Call g.DrawLine(labelConnector, i.value.GetTextAnchor(anchors(i)), anchors(i))
+            Call g.DrawString(i.value.text, labelFont, labelBrush, i.value)
+        Next
+    End Sub
+
+    Private Sub DrawTICLegends(g As IGraphics, canvas As GraphicsRegion, legends As List(Of LegendObject))
+        ' 如果离子数量非常多的话,则会显示不完
+        ' 这时候每20个换一列
+        Dim cols = legends.Count / deln
+
+        If cols > Fix(cols) Then
+            ' 有余数,说明还有剩下的,增加一列
+            cols += 1
         End If
 
-        If showLegends Then
+        ' 计算在右上角的位置
+        Dim maxSize As SizeF = legends.MaxLegendSize(g)
+        Dim top = canvas.PlotRegion.Top + maxSize.Height + 5
+        Dim maxLen = maxSize.Width
+        Dim legendShapeWidth% = 70
+        Dim left As Double = canvas.PlotRegion.Right - (maxLen + legendShapeWidth) * cols
+        Dim position As New Point With {
+            .X = left,
+            .Y = top
+        }
 
-            ' 如果离子数量非常多的话,则会显示不完
-            ' 这时候每20个换一列
-            Dim cols = legends.Count / deln
-
-            If cols > Fix(cols) Then
-                ' 有余数,说明还有剩下的,增加一列
-                cols += 1
-            End If
-
-            ' 计算在右上角的位置
-            Dim maxSize As SizeF = legends.MaxLegendSize(g)
-            Dim top = Region.PlotRegion.Top + maxSize.Height + 5
-            Dim maxLen = maxSize.Width
-            Dim legendShapeWidth% = 70
-            Dim left As Double = Region.PlotRegion.Right - (maxLen + legendShapeWidth) * cols
-            Dim position As New Point With {
-                .X = left,
-                .Y = top
+        For Each block As LegendObject() In legends.Split(deln)
+            g.DrawLegends(position, block, $"{legendShapeWidth},10", d:=0)
+            position = New Point With {
+                .X = position.X + maxLen + legendShapeWidth,
+                .Y = position.Y
             }
-
-            For Each block As LegendObject() In legends.Split(deln)
-                g.DrawLegends(position, block, $"{legendShapeWidth},10", d:=0)
-                position = New Point With {
-                    .X = position.X + maxLen + legendShapeWidth,
-                    .Y = position.Y
-                }
-            Next
-        End If
+        Next
     End Sub
 End Class
