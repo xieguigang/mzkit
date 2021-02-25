@@ -124,7 +124,7 @@ Public Class ScanVisual3D : Inherits Plot
                     .ToArray
             }
 
-            Call {TIC}.TICplot
+            Call New TICplot(theme).Plot(g, canvas.PlotRegion)
         Next
     End Sub
 End Class

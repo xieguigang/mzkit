@@ -466,6 +466,7 @@
   <ItemGroup>
     <Compile Include="ChromatogramPlot\ChromatogramPeakPlot.vb" />
     <Compile Include="ChromatogramPlot\ChromatogramPlot.vb" />
+    <Compile Include="ChromatogramPlot\TICplot.vb" />
     <Compile Include="ChromatogramPlot\ScanVisual3D.vb" />
     <Compile Include="MassSpectraMirrorPlot.vb" />
     <Compile Include="UVsignalPlot.vb" />
