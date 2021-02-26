@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithm.vb" />
+    <Compile Include="KEGGHandler.vb" />
     <Compile Include="Models\AnnotatedSeed.vb" />
     <Compile Include="Models\UnknownSet.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

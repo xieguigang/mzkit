@@ -47,5 +47,7 @@
 ''' </summary>
 Public Class Algorithm
 
+
+
 End Class
 
