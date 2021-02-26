@@ -79,23 +79,44 @@ Imports stdNum = System.Math
 
 Public Class ScanVisual3D : Inherits Plot
 
-    ReadOnly scans As (mz#, scan As ms1_scan())()
+    ReadOnly scans As NamedCollection(Of ChromatogramTick)()
     ReadOnly height As Double = 0.45
     ReadOnly angle As Double = 60
     ReadOnly fillCurve As Boolean
     ReadOnly fillAlpha As Integer
 
-    Public Sub New(points As IEnumerable(Of ms1_scan), tolerance As Tolerance, theme As Theme)
+    Public Sub New(scans As IEnumerable(Of ms1_scan), tolerance As Tolerance, angle As Double, theme As Theme)
+        Call Me.New(GetScanCollection(scans, tolerance), angle, theme)
+    End Sub
+
+    Public Sub New(scans As IEnumerable(Of NamedCollection(Of ChromatogramTick)), angle As Double, theme As Theme)
         MyBase.New(theme)
 
-        scans = points _
-            .GroupBy(Function(p) p.mz, tolerance) _
-            .Select(Function(mz)
-                        Return (Val(mz.name), mz.OrderBy(Function(t) t.scan_time).ToArray)
-                    End Function) _
-            .OrderBy(Function(mz) mz.Item1) _
-            .ToArray
+        Me.angle = angle
+        Me.scans = scans.ToArray
     End Sub
+
+    Private Shared Iterator Function GetScanCollection(points As IEnumerable(Of ms1_scan), tolerance As Tolerance) As IEnumerable(Of NamedCollection(Of ChromatogramTick))
+        For Each scan In points _
+             .GroupBy(Function(p) p.mz, tolerance) _
+             .Select(Function(mz)
+                         Return (Val(mz.name), mz.OrderBy(Function(t) t.scan_time).ToArray)
+                     End Function) _
+             .OrderBy(Function(mz) mz.Item1)
+
+            Yield New NamedCollection(Of ChromatogramTick) With {
+                .name = scan.Item1.ToString("F4"),
+                .value = scan.Item2 _
+                    .Select(Function(t)
+                                Return New ChromatogramTick With {
+                                    .Intensity = t.intensity,
+                                    .Time = t.scan_time
+                                }
+                            End Function) _
+                    .ToArray
+            }
+        Next
+    End Function
 
     Private Function evalDx() As Double
 
@@ -110,24 +131,12 @@ Public Class ScanVisual3D : Inherits Plot
         Dim height As Double = Me.height * rect.Height
         Dim dx As Double = evalDx()
         Dim dy As Double = evalDy()
-        Dim TIC As NamedCollection(Of ChromatogramTick)
 
         For i As Integer = 0 To scans.Length - 1
             canvas = canvas.Offset2D(dx * i, dy * i)
-            TIC = New NamedCollection(Of ChromatogramTick) With {
-                .name = scans(i).mz,
-                .value = scans(i).scan _
-                    .Select(Function(t)
-                                Return New ChromatogramTick With {
-                                    .Time = t.scan_time,
-                                    .Intensity = t.intensity
-                                }
-                            End Function) _
-                    .ToArray
-            }
 
             Call New TICplot(
-                ionData:={TIC},
+                ionData:={scans(i)},
                 timeRange:=Nothing,
                 intensityMax:=0,
                 isXIC:=False,

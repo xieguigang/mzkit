@@ -41,26 +41,6 @@ Public Class frmSRMIonsExplorer
         Next
     End Sub
 
-    Private Sub ShowTICOverlapToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowTICOverlapToolStripMenuItem.Click
-        Dim list As New List(Of NamedCollection(Of ChromatogramTick))
-
-        For Each rawfile As TreeNode In Win7StyleTreeView1.Nodes
-            Dim fileName As String = rawfile.Text.BaseName
-
-            For Each obj As TreeNode In rawfile.Nodes
-                If Not obj.Checked Then
-                    Continue For
-                End If
-
-                With DirectCast(obj.Tag, chromatogram)
-                    list += New NamedCollection(Of ChromatogramTick)($"[{fileName}] {obj.Text}", .Ticks)
-                End With
-            Next
-        Next
-
-        Call MyApplication.host.mzkitTool.TIC(list.ToArray)
-    End Sub
-
     Private Sub frmSRMIonsExplorer_Load(sender As Object, e As EventArgs) Handles Me.Load
         TabText = "MRM Ions"
 
@@ -93,5 +73,29 @@ Public Class frmSRMIonsExplorer
 
         Call MyApplication.host.mzkitTool.showMatrix(spectrum, $"SRM ion pair [{spectrum(0).mz.ToString("F4")}:{spectrum(1).intensity.ToString("G3")}]")
         Call MyApplication.host.mzkitTool.PlotMatrx(title1, title2, scanData)
+    End Sub
+
+    Private Sub ShowTICOverlapToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowTICOverlapToolStripMenuItem.Click
+        Call MyApplication.host.mzkitTool.TIC(GetIonTICOverlaps.ToArray)
+    End Sub
+
+    Private Iterator Function GetIonTICOverlaps() As IEnumerable(Of NamedCollection(Of ChromatogramTick))
+        For Each rawfile As TreeNode In Win7StyleTreeView1.Nodes
+            Dim fileName As String = rawfile.Text.BaseName
+
+            For Each obj As TreeNode In rawfile.Nodes
+                If Not obj.Checked Then
+                    Continue For
+                End If
+
+                With DirectCast(obj.Tag, chromatogram)
+                    Yield New NamedCollection(Of ChromatogramTick)($"[{fileName}] {obj.Text}", .Ticks)
+                End With
+            Next
+        Next
+    End Function
+
+    Private Sub ShowTICOverlap3DToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowTICOverlap3DToolStripMenuItem.Click
+        Call MyApplication.host.mzkitTool.TIC(GetIonTICOverlaps.ToArray, d3:=True)
     End Sub
 End Class

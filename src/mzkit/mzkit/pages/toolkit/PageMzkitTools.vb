@@ -63,6 +63,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.UV
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.DataMining.KMeans
@@ -349,7 +350,7 @@ Public Class PageMzkitTools
         Call TIC(TICList.ToArray)
     End Sub
 
-    Public Sub TIC(TICList As NamedCollection(Of ChromatogramTick)())
+    Public Sub TIC(TICList As NamedCollection(Of ChromatogramTick)(), Optional d3 As Boolean = False)
         If TICList.IsNullOrEmpty Then
             MyApplication.host.showStatusMessage("no chromatogram data!", My.Resources.StatusAnnotations_Warning_32xLG_color)
             Return
@@ -361,18 +362,30 @@ Public Class PageMzkitTools
         showMatrix(TICList(Scan0).value, TICList(Scan0).name)
         MyApplication.RegisterPlot(
             Sub(args)
-                PictureBox1.BackgroundImage = ChromatogramPlot.TICplot(
-                    ionData:=TICList.ToArray,
-                    colorsSchema:=Globals.GetColors,
-                    fillCurve:=Globals.Settings.viewer.fill,
-                    size:=$"{args.width},{args.height}",
-                    margin:=args.GetPadding.ToString,
-                    gridFill:=args.gridFill.ToHtmlColor,
-                    bg:=args.background.ToHtmlColor,
-                    showGrid:=args.show_grid,
-                    showLegends:=args.show_legend,
-                    showLabels:=args.show_tag
-                ).AsGDIImage
+                If d3 Then
+                    PictureBox1.BackgroundImage = New ScanVisual3D(TICList, 60, New Theme With {
+                        .colorSet = Globals.GetColors,
+                        .gridFill = args.gridFill.ToHtmlColor,
+                        .padding = args.GetPadding.ToString,
+                        .drawLegend = args.show_legend,
+                        .drawLabels = args.show_tag,
+                        .drawGrid = args.show_grid
+                    }).Plot($"{args.width},{args.height}") _
+                      .AsGDIImage
+                Else
+                    PictureBox1.BackgroundImage = ChromatogramPlot.TICplot(
+                        ionData:=TICList.ToArray,
+                        colorsSchema:=Globals.GetColors,
+                        fillCurve:=Globals.Settings.viewer.fill,
+                        size:=$"{args.width},{args.height}",
+                        margin:=args.GetPadding.ToString,
+                        gridFill:=args.gridFill.ToHtmlColor,
+                        bg:=args.background.ToHtmlColor,
+                        showGrid:=args.show_grid,
+                        showLegends:=args.show_legend,
+                        showLabels:=args.show_tag
+                    ).AsGDIImage
+                End If
             End Sub, width:=1600, height:=1200, showGrid:=False, padding:="padding:100px 100px 150px 200px;")
 
         MyApplication.host.ShowPage(Me)
