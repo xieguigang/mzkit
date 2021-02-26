@@ -134,6 +134,9 @@ Public Interface IMs1Scan : Inherits IMs1
 
 End Interface
 
+''' <summary>
+''' [mz, rt, intensity]
+''' </summary>
 Public Class ms1_scan : Implements IMs1, IMs1Scan
 
     <XmlAttribute> Public Property mz As Double Implements IMs1.mz
