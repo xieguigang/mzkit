@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d444d3ff9268e0f8aacfa93ee33990a, ms2_math-core\Ms1\ms1Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::b2e3927560c9810873163e57bfbc5f5d, ms2_math-core\Ms1\ms1Abstract.vb"
 
     ' Author:
     ' 
@@ -50,7 +50,6 @@
 
 #End Region
 
-
 Public Interface IMs1 : Inherits IRetentionTime
 
     Property mz As Double
@@ -75,4 +74,3 @@ Public Interface IMs1Scan : Inherits IMs1
     Property intensity As Double
 
 End Interface
-

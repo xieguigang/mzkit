@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::133f10ee03dedb911bbf8495df72d418, ms2_math-core\Ms1\ms1_scan.vb"
+﻿#Region "Microsoft.VisualBasic::9b26db43514a1eff0e046f4739b03f7b, ms2_math-core\Ms1\ms1_scan.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 #If netcore5 = 0 Then
 #Else
