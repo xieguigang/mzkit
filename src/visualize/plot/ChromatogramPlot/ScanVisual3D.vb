@@ -48,6 +48,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.d3js.Layout
@@ -191,15 +192,21 @@ Public Class ScanVisual3D : Inherits Plot
             If i = 0 Then
                 theme.drawGrid = True
                 theme.gridFill = Me.theme.gridFill
+                theme.drawAxis = True
+                theme.yAxisLayout = YAxisLayoutStyles.None
+                theme.xAxisLayout = XAxisLayoutStyles.None
             Else
                 theme.gridFill = "transparent"
                 theme.drawGrid = False
-            End If
-
-            If i = scans.Length - 1 Then
-                theme.drawAxis = True
-            Else
                 theme.drawAxis = False
+
+                If i = scans.Length - 1 Then
+                    theme.drawAxis = True
+                    theme.yAxisLayout = YAxisLayoutStyles.Left
+                    theme.xAxisLayout = XAxisLayoutStyles.Bottom
+                Else
+                    theme.drawAxis = False
+                End If
             End If
 
             Call New TICplot(
