@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b30ce0a2624589e0bb7b6ef58656dfe2, src\mzkit\mzkit\pages\Settings\ISaveSettings.vb"
+﻿#Region "Microsoft.VisualBasic::b30ce0a2624589e0bb7b6ef58656dfe2, pages\Settings\ISaveSettings.vb"
 
     ' Author:
     ' 

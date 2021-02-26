@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a910d01b2b02d0d8f01e88298a8eaa1, src\mzkit\mzkit\settings\PrecursorSearchSettings.vb"
+﻿#Region "Microsoft.VisualBasic::640250dd29a6a603d29e00b4710da145, application\settings\PrecursorSearchSettings.vb"
 
     ' Author:
     ' 
@@ -34,33 +34,34 @@
 
     ' Summaries:
 
-    ' Class PrecursorSearchSettings
+    '     Class PrecursorSearchSettings
     ' 
-    '     Properties: ppm, precursor_types
+    '         Properties: ppm, precursor_types
     ' 
-    ' Enum FormulaSearchProfiles
+    '     Enum FormulaSearchProfiles
     ' 
-    '     GeneralFlavone
+    '         GeneralFlavone
     ' 
     '  
     ' 
     ' 
     ' 
-    ' Class FormulaSearchProfile
+    '     Class FormulaSearchProfile
     ' 
-    '     Properties: elements, naturalProductProfile, smallMoleculeProfile
+    '         Properties: elements, naturalProductProfile, smallMoleculeProfile
     ' 
-    '     Function: CreateOptions
+    '         Function: CreateOptions
     ' 
-    ' Class PresetProfileSettings
+    '     Class PresetProfileSettings
     ' 
-    '     Properties: isCommon, type
+    '         Properties: isCommon, type
     ' 
-    ' Class ElementRange
+    '     Class ElementRange
     ' 
-    '     Properties: max, min
+    '         Properties: max, min
     ' 
-    '     Function: AsDoubleRange
+    '         Function: AsDoubleRange
+    ' 
     ' 
     ' /********************************************************************************/
 

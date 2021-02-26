@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::47cdf57ff79cb2a002641b2c2488d3f1, src\mzkit\mzkit\pages\pageStart\NewsFeedDisplay.vb"
+﻿#Region "Microsoft.VisualBasic::7f2bb34185590721aca4ef094cf9e6ec, pages\pageStart\NewsFeedDisplay.vb"
 
     ' Author:
     ' 
@@ -60,4 +60,3 @@ Public Class NewsFeedDisplay
         Process.Start(news.url)
     End Sub
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::516b295df58c9d2a7499761f59e0462d, src\mzkit\mzkit\pages\pageStart\PageStart.vb"
+﻿#Region "Microsoft.VisualBasic::29a1974cc7044c43711834c591e0ae34, pages\pageStart\PageStart.vb"
 
     ' Author:
     ' 
@@ -113,4 +113,3 @@ Public Class PageStart
         MyApplication.host.CreateNewScript(Nothing, Nothing)
     End Sub
 End Class
-
