@@ -43,6 +43,8 @@
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
+Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 
 ''' <summary>
 ''' implements of the metadna algorithm in VisualBasic language
@@ -52,6 +54,8 @@ Public Class Algorithm
     ReadOnly tolerance As Tolerance
     ReadOnly unknowns As UnknownSet
     ReadOnly kegg As KEGGHandler
+    ReadOnly network As KEGGNetwork
+    ReadOnly precursorTypes As MzCalculator()
 
     ''' <summary>
     ''' Create infer network
@@ -59,7 +63,27 @@ Public Class Algorithm
     ''' <param name="seeds"></param>
     ''' <returns></returns>
     Public Iterator Function RunIteration(seeds As IEnumerable(Of AnnotatedSeed)) As IEnumerable(Of InferLink)
+        For Each annotated As AnnotatedSeed In seeds
 
+        Next
+    End Function
+
+    Private Iterator Function RunInfer(seed As AnnotatedSeed) As IEnumerable(Of InferLink)
+        Dim hits As KEGGQuery() = kegg.QueryByMz(seed.parent.mz).ToArray
+
+        For Each query As KEGGQuery In hits
+            Dim partners As String() = network.FindPartners(query.kegg_id).ToArray
+
+            For Each kegg_id As String In partners
+                Dim compound As Compound = kegg.GetCompound(kegg_id)
+
+                If compound Is Nothing Then
+                    Continue For
+                End If
+
+
+            Next
+        Next
     End Function
 
 End Class

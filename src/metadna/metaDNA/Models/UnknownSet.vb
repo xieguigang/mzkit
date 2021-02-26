@@ -51,7 +51,9 @@ Public Class UnknownSet
 
     Dim features As PeakMs2()
 
+    Public Function QueryByParentMz()
 
+    End Function
 
 End Class
 

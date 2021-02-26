@@ -9,12 +9,17 @@ Public Class KEGGHandler
     ReadOnly precursorTypes As MzCalculator()
     ReadOnly tolerance As Tolerance
     ReadOnly massIndex As AVLTree(Of MassIndexKey, Compound)
+    ReadOnly keggIndex As Dictionary(Of String, Compound)
 
     Sub New(tree As AVLTree(Of MassIndexKey, Compound), tolerance As Tolerance, precursorTypes As MzCalculator())
         Me.tolerance = tolerance
         Me.massIndex = tree
         Me.precursorTypes = precursorTypes
     End Sub
+
+    Public Function GetCompound(kegg_id As String) As Compound
+        Return keggIndex.TryGetValue(kegg_id)
+    End Function
 
     ''' <summary>
     ''' 
