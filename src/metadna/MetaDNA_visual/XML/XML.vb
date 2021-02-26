@@ -65,7 +65,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -91,57 +90,3 @@ Imports Microsoft.VisualBasic.Serialization.JSON
     End Function
 End Class
 
-Public Class compound : Implements INamedValue
-
-    <XmlAttribute>
-    Public Property kegg As String Implements INamedValue.Key
-    <XmlAttribute("candidates")>
-    Public Property size As Integer
-
-    <XmlElement("unknown")>
-    Public Property candidates As unknown()
-
-    Public Overrides Function ToString() As String
-        Return $"{kegg} have {candidates.Length} candidates: {candidates.Select(Function(c) c.name).GetJson}"
-    End Function
-
-End Class
-
-Public Class unknown
-
-    <XmlAttribute> Public Property name As String
-    <XmlAttribute> Public Property Msn As String
-    <XmlAttribute> Public Property length As Integer
-    <XmlAttribute> Public Property intensity As Double
-    <XmlAttribute> Public Property scores As Double()
-
-    ''' <summary>
-    ''' 请注意，第一个推断节点肯定是metaDNA的最初的通过标准品库所鉴定出来的seed数据
-    ''' 所以这个seed的ms1名称肯定是在unknown之中找不到的
-    ''' </summary>
-    ''' <returns></returns>
-    <XmlElement("node")>
-    Public Property edges As node()
-
-    Public Overrides Function ToString() As String
-        Return $"{name}: {edges.Select(Function(n) n.kegg).JoinBy(" -> ")}"
-    End Function
-End Class
-
-Public Class node
-
-    <XmlAttribute> Public Property kegg As String
-    <XmlAttribute> Public Property ms1 As String
-
-    ''' <summary>
-    ''' The ms2 index
-    ''' </summary>
-    ''' <returns></returns>
-    <XmlText>
-    Public Property ms2 As String
-
-    Public Overrides Function ToString() As String
-        Return $"Dim {kegg} = ""{ms1}|{ms2}"""
-    End Function
-
-End Class
