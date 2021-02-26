@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34ce4d82c7b47b7b70d8432bef8d2b2b, FormulaSearch.Extensions\AtomGroups\Alkyl.vb"
+﻿#Region "Microsoft.VisualBasic::d0eacf595e882edfff0476cc64e4b70c, FormulaSearch.Extensions\AtomGroups\Alkyl.vb"
 
     ' Author:
     ' 
@@ -102,4 +102,3 @@ Public Class Alkyl
     Public Shared ReadOnly Property hexyl_group As Formula = FormulaScanner.ScanFormula("CH3(CH2)4CH2")
 
 End Class
-

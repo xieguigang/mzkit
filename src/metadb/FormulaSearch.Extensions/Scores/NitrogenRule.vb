@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::270d243955ecb5a8f3019dc6f0f9aa61, FormulaSearch.Extensions\Scores\NitrogenRule.vb"
+﻿#Region "Microsoft.VisualBasic::7b2c5afbf5d06fcffe60c037a3b3324d, FormulaSearch.Extensions\Scores\NitrogenRule.vb"
 
     ' Author:
     ' 
@@ -64,4 +64,3 @@ Public Class NitrogenRule
         End If
     End Function
 End Class
-

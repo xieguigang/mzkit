@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a1f629a86178030a2e78ef6bc37f53a5, FormulaSearch.Extensions\Scores\IsotopicAbundanceRatio.vb"
+﻿#Region "Microsoft.VisualBasic::f98ef6dbf960a0dfb66613062d7a82e9, FormulaSearch.Extensions\Scores\IsotopicAbundanceRatio.vb"
 
     ' Author:
     ' 
@@ -45,4 +45,3 @@
 Public Class IsotopicAbundanceRatio
 
 End Class
-

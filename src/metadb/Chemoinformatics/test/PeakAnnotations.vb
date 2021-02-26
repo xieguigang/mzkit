@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::889de4b49e63e93b2e8866d4df9e653f, Chemoinformatics\test\PeakAnnotations.vb"
+﻿#Region "Microsoft.VisualBasic::996f36f1e42c405a56a48eef6c3e8f11, Chemoinformatics\test\PeakAnnotations.vb"
 
     ' Author:
     ' 
@@ -79,4 +79,3 @@ mz,quantity,intensity,Annotation
         Pause()
     End Sub
 End Module
-

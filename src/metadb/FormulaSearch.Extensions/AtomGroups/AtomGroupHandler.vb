@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c5018a585caede4d9ba8b38ee4d5e66b, FormulaSearch.Extensions\AtomGroups\AtomGroupHandler.vb"
+﻿#Region "Microsoft.VisualBasic::1a41fc7555e46d9c23125b3321d23d41, FormulaSearch.Extensions\AtomGroups\AtomGroupHandler.vb"
 
     ' Author:
     ' 
@@ -95,4 +95,3 @@ Public Class AtomGroupHandler
         Return group
     End Function
 End Class
-
