@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0dd9e67c9ddcbbeea1f65c5f87036794, src\metadna\MetaDNA_visual\ReactionClass.vb"
+﻿#Region "Microsoft.VisualBasic::0dd9e67c9ddcbbeea1f65c5f87036794, MetaDNA_visual\ReactionClass.vb"
 
     ' Author:
     ' 
