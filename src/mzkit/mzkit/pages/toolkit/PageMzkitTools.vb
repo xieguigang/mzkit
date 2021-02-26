@@ -370,7 +370,7 @@ Public Class PageMzkitTools
                         .drawLegend = args.show_legend,
                         .drawLabels = args.show_tag,
                         .drawGrid = args.show_grid
-                    }).Plot($"{args.width},{args.height}") _
+                    }).Plot($"{args.width},{args.height}", ppi:=100) _
                       .AsGDIImage
                 Else
                     PictureBox1.BackgroundImage = ChromatogramPlot.TICplot(

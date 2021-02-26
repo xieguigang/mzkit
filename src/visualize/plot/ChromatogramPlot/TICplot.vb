@@ -20,7 +20,6 @@ Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Public Class TICplot : Inherits Plot
 
-    ReadOnly parallel As Boolean = False
     ReadOnly ionData As NamedCollection(Of ChromatogramTick)()
     ReadOnly timeRange As Double() = Nothing
     ReadOnly intensityMax As Double = 0
@@ -46,7 +45,6 @@ Public Class TICplot : Inherits Plot
         Me.isXIC = isXIC
         Me.intensityMax = intensityMax
         Me.ionData = ionData
-        Me.parallel = parallel
         Me.fillCurve = fillCurve
         Me.fillAlpha = fillAlpha
         Me.labelLayoutTicks = labelLayoutTicks
@@ -98,17 +96,6 @@ Public Class TICplot : Inherits Plot
             .Range _
             .CreateAxisTicks ' intensity
 
-        Dim ZTicks As Double()
-
-        If parallel Then
-            ZTicks = ionData _
-                .Sequence _
-                .Select(Function(i) CDbl(i)) _
-                .AsVector _
-                .Range _
-                .CreateAxisTicks
-        End If
-
         Dim rect As Rectangle = canvas.PlotRegion
         Dim X = d3js.scale.linear.domain(XTicks).range(integers:={rect.Left, rect.Right})
         Dim Y = d3js.scale.linear.domain(YTicks).range(integers:={rect.Top, rect.Bottom})
@@ -119,27 +106,23 @@ Public Class TICplot : Inherits Plot
             .Y = Y
         }
 
-        Call g.DrawAxis(
-            canvas, scaler, showGrid:=theme.drawGrid,
-            xlabel:="Time (s)",
-            ylabel:="Intensity",
-            htmlLabel:=False,
-            XtickFormat:=If(isXIC, "F2", "F0"),
-            YtickFormat:="G2",
-            labelFont:=theme.axisLabelCSS,
-            tickFontStyle:=theme.axisTickCSS,
-            gridFill:=theme.gridFill
-        )
-
-        If parallel Then
-            ' draw Z axis
-
+        If theme.drawAxis Then
+            Call g.DrawAxis(
+                canvas, scaler, showGrid:=theme.drawGrid,
+                xlabel:="Time (s)",
+                ylabel:="Intensity",
+                htmlLabel:=False,
+                XtickFormat:=If(isXIC, "F2", "F0"),
+                YtickFormat:="G2",
+                labelFont:=theme.axisLabelCSS,
+                tickFontStyle:=theme.axisTickCSS,
+                gridFill:=theme.gridFill
+            )
         End If
 
         Dim legends As New List(Of LegendObject)
         Dim peakTimes As New List(Of NamedValue(Of ChromatogramTick))
         Dim fillColor As Brush
-        Dim parallelOffset As New PointF
 
         For i As Integer = 0 To ionData.Length - 1
             Dim curvePen As Pen = colors.Next
@@ -165,22 +148,14 @@ Public Class TICplot : Inherits Plot
             Dim A, B As PointF
             Dim polygon As New List(Of PointF)
 
-            If parallel Then
-                ' add [x,y] offset for current data
-                parallelOffset = New PointF With {
-                    .X = parallelOffset.X + rect.Height / (ionData.Length + 2),
-                    .Y = parallelOffset.Y - rect.Height / (ionData.Length + 2)
-                }
-            End If
-
             For Each signal As SlideWindow(Of PointF) In chromatogram _
                 .Select(Function(c)
                             Return New PointF(c.Time, c.Intensity)
                         End Function) _
                 .SlideWindows(winSize:=2)
 
-                A = scaler.Translate(signal.First).OffSet2D(parallelOffset)
-                B = scaler.Translate(signal.Last).OffSet2D(parallelOffset)
+                A = scaler.Translate(signal.First)
+                B = scaler.Translate(signal.Last)
 
                 Call g.DrawLine(curvePen, A, B)
 

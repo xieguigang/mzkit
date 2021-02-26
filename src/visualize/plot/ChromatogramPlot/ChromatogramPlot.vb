@@ -195,7 +195,8 @@ Public Module ChromatogramPlot
                             Optional gridFill As String = "rgb(245,245,245)",
                             Optional timeRange As Double() = Nothing,
                             Optional parallel As Boolean = False,
-                            Optional intensityMax As Double = 0) As GraphicsData
+                            Optional intensityMax As Double = 0,
+                            Optional ppi As Double = 100) As GraphicsData
 
         Dim theme As New Theme With {
             .lineStroke = penStyle,
@@ -226,6 +227,6 @@ Public Module ChromatogramPlot
             deln:=deln
         )
 
-        Return TIC.Plot(size)
+        Return TIC.Plot(size, ppi)
     End Function
 End Module

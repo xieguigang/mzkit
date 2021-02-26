@@ -85,6 +85,7 @@ Public Class ScanVisual3D : Inherits Plot
     ReadOnly fillCurve As Boolean
     ReadOnly fillAlpha As Integer
 
+#Region "constructor"
     Public Sub New(scans As IEnumerable(Of ms1_scan), tolerance As Tolerance, angle As Double, theme As Theme)
         Call Me.New(GetScanCollection(scans, tolerance), angle, theme)
     End Sub
@@ -95,6 +96,7 @@ Public Class ScanVisual3D : Inherits Plot
         Me.angle = angle
         Me.scans = scans.ToArray
     End Sub
+#End Region
 
     Private Shared Iterator Function GetScanCollection(points As IEnumerable(Of ms1_scan), tolerance As Tolerance) As IEnumerable(Of NamedCollection(Of ChromatogramTick))
         For Each scan In points _
@@ -118,22 +120,72 @@ Public Class ScanVisual3D : Inherits Plot
         Next
     End Function
 
-    Private Function evalDx() As Double
+    Private Function evalDx(canvas As GraphicsRegion) As Double
+        ' cos(a) = dx / dc
+        ' dx = cos(a) * dc
+        Dim dc As Double = evalDc(canvas)
+        Dim dx As Double = stdNum.Cos(d:=angle.ToRadians) * dc
 
+        Return dx
     End Function
 
-    Private Function evalDy() As Double
+    Private Function evalDc(canvas As GraphicsRegion) As Double
+        Dim rect As Rectangle = canvas.PlotRegion
+        Dim height As Double = Me.height * rect.Height
+        Dim y1 As Double = rect.Bottom - height
+        Dim y2 As Double = rect.Top
+        Dim dh As Double = y1 - y2
 
+        ' tan(a) = dh / dw
+        ' dw = dh / tan(a)
+
+        Dim dw As Double = dh / stdNum.Tan(a:=angle.ToRadians)
+
+        ' c/|
+        ' /a|
+        ' ---
+        ' dw
+
+        ' cos(a) = dw / c
+        ' c = dw / cos(a)
+
+        Dim c As Double = dw / stdNum.Cos(d:=angle.ToRadians)
+        Dim dc As Double = c / (scans.Length + 1)
+
+        Return dc
+    End Function
+
+    Private Function evalDy(canvas As GraphicsRegion) As Double
+        ' sin(a) = dy / dc
+        ' dy = sin(a) * dc
+        Dim dc As Double = evalDc(canvas)
+        Dim dy As Double = stdNum.Sin(a:=angle.ToRadians) * dc
+
+        Return dy
     End Function
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
-        Dim rect As Rectangle = canvas.PlotRegion
-        Dim height As Double = Me.height * rect.Height
-        Dim dx As Double = evalDx()
-        Dim dy As Double = evalDy()
+        Dim dx As Double = evalDx(canvas)
+        Dim dy As Double = evalDy(canvas)
+        Dim theme As Theme = Me.theme.Clone
+        Dim parallelCanvas As New GraphicsRegion With {
+            .Size = canvas.Size,
+            .Padding = New Padding With {
+                .Top = canvas.Padding.Top,
+                .Left = canvas.Padding.Left * 2,
+                .Right = canvas.Padding.Right,
+                .Bottom = canvas.Padding.Bottom + Me.height * canvas.PlotRegion.Height
+            }
+        }
+
+        theme.background = "transparent"
+        theme.gridFill = "transparent"
+        theme.drawGrid = False
+        theme.drawLegend = False
+        theme.drawAxis = False
 
         For i As Integer = 0 To scans.Length - 1
-            canvas = canvas.Offset2D(dx * i, dy * i)
+            parallelCanvas = parallelCanvas.Offset2D(-dx, dy)
 
             Call New TICplot(
                 ionData:={scans(i)},
@@ -146,7 +198,7 @@ Public Class ScanVisual3D : Inherits Plot
                 labelLayoutTicks:=-1,
                 deln:=10,
                 theme:=theme
-            ).Plot(g, canvas.PlotRegion)
+            ).Plot(g, parallelCanvas.PlotRegion)
         Next
     End Sub
 End Class
