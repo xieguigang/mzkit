@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -73,7 +74,12 @@ Public Class TICplot : Inherits Plot
         End If
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
+        Call RunPlot(g, canvas, Nothing)
+    End Sub
+
+    Friend Sub RunPlot(ByRef g As IGraphics, canvas As GraphicsRegion, ByRef labels As Label())
         Dim colors As LoopArray(Of Pen) = colorProvider()
         Dim XTicks As Double() = ionData _
             .Select(Function(ion)
@@ -176,31 +182,32 @@ Public Class TICplot : Inherits Plot
             End If
         Next
 
-        If theme.drawLabels Then Call DrawLabels(g, rect, scaler, peakTimes)
+        labels = GetLabels(g, scaler, peakTimes).ToArray
+
+        If theme.drawLabels Then Call DrawLabels(g, rect, labels, theme, labelLayoutTicks)
         If theme.drawLegend Then Call DrawTICLegends(g, canvas, legends)
     End Sub
 
-    Private Sub DrawLabels(g As IGraphics, rect As Rectangle,
-                           scaler As DataScaler,
-                           peakTimes As IEnumerable(Of NamedValue(Of ChromatogramTick)))
+    Private Iterator Function GetLabels(g As IGraphics, scaler As DataScaler, peakTimes As IEnumerable(Of NamedValue(Of ChromatogramTick))) As IEnumerable(Of Label)
+        Dim labelFont As Font = CSSFont.TryParse(theme.tagCSS)
 
+        For Each ion As NamedValue(Of ChromatogramTick) In peakTimes
+            Dim labelSize As SizeF = g.MeasureString(ion.Name, labelFont)
+            Dim location As PointF = scaler.Translate(ion.Value)
+
+            Yield New Label With {
+                .height = labelSize.Height,
+                .width = labelSize.Width,
+                .text = ion.Name,
+                .X = location.X,
+                .Y = location.Y
+            }
+        Next
+    End Function
+
+    Friend Shared Sub DrawLabels(g As IGraphics, rect As Rectangle, labels As Label(), theme As Theme, labelLayoutTicks As Integer)
         Dim labelFont As Font = CSSFont.TryParse(theme.tagCSS)
         Dim labelConnector As Pen = Stroke.TryParse(theme.tagLinkStroke)
-        ' labeling 
-        Dim labels As Label() = peakTimes _
-            .Select(Function(ion)
-                        Dim labelSize As SizeF = g.MeasureString(ion.Name, labelFont)
-                        Dim location As PointF = scaler.Translate(ion.Value)
-
-                        Return New Label With {
-                            .height = labelSize.Height,
-                            .width = labelSize.Width,
-                            .text = ion.Name,
-                            .X = location.X,
-                            .Y = location.Y
-                        }
-                    End Function) _
-            .ToArray
         Dim anchors As Anchor() = labels.GetLabelAnchors(r:=3)
 
         Call d3js.labeler(maxAngle:=5, maxMove:=300, w_lab2:=100, w_lab_anc:=100) _

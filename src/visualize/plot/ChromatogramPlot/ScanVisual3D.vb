@@ -43,31 +43,20 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.GCMS
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
-Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D.Device
-Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D.Model
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.d3js.Layout
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
-Imports Microsoft.VisualBasic.Imaging.Drawing3D
-Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models
-Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models.Isometric
-Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
-Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports stdNum = System.Math
 
 ' intensity
@@ -172,7 +161,7 @@ Public Class ScanVisual3D : Inherits Plot
         Dim dy As Double = evalDy(canvas)
         Dim theme As Theme = Me.theme.Clone
         Dim colors As String() = Designer _
-            .GetColors(theme.colorSet) _
+            .GetColors(theme.colorSet, scans.Length) _
             .Select(AddressOf ToHtmlColor) _
             .ToArray
         Dim parallelCanvas As New GraphicsRegion With {
@@ -184,14 +173,18 @@ Public Class ScanVisual3D : Inherits Plot
                 .Bottom = canvas.Padding.Bottom + Me.height * canvas.PlotRegion.Height
             }
         }
+        Dim labelList As New List(Of Label)
 
         theme.background = "transparent"
         theme.gridFill = "transparent"
         theme.drawGrid = False
         theme.drawLegend = False
         theme.drawAxis = False
+        theme.drawLabels = False
 
         For i As Integer = 0 To scans.Length - 1
+            Dim labels As Label() = Nothing
+
             parallelCanvas = parallelCanvas.Offset2D(-dx, dy)
             theme.colorSet = colors(i)
 
@@ -219,7 +212,13 @@ Public Class ScanVisual3D : Inherits Plot
                 labelLayoutTicks:=-1,
                 deln:=10,
                 theme:=theme
-            ).Plot(g, parallelCanvas.PlotRegion)
+            ).RunPlot(g, parallelCanvas, labels)
+
+            Call labelList.AddRange(labels)
         Next
+
+        If Me.theme.drawLabels Then
+            Call TICplot.DrawLabels(g, canvas.PlotRegion, labelList.ToArray, theme, 500)
+        End If
     End Sub
 End Class
