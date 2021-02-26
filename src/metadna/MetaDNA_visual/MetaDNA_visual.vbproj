@@ -152,7 +152,7 @@
     <Compile Include="ReactionClass.vb" />
     <Compile Include="Extensions.vb" />
     <Compile Include="viz.vb" />
-    <Compile Include="XML.vb" />
+    <Compile Include="XML\XML.vb" />
     <Compile Include="Algorithm.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
