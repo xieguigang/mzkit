@@ -44,7 +44,9 @@
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
+Imports stdnum = System.Math
 
 ''' <summary>
 ''' implements of the metadna algorithm in VisualBasic language
@@ -56,6 +58,8 @@ Public Class Algorithm
     ReadOnly kegg As KEGGHandler
     ReadOnly network As KEGGNetwork
     ReadOnly precursorTypes As MzCalculator()
+    ReadOnly dotcutoff As Double
+    ReadOnly MSalignment As AlignmentProvider
 
     ''' <summary>
     ''' Create infer network
@@ -81,8 +85,39 @@ Public Class Algorithm
                     Continue For
                 End If
 
+                For Each type As MzCalculator In precursorTypes
+                    Dim mz As Double = type.CalcMZ(compound.exactMass)
+                    Dim candidates As PeakMs2() = unknowns.QueryByParentMz(mz)
 
+                    If candidates.IsNullOrEmpty Then
+                        Continue For
+                    End If
+
+                    For Each hit As PeakMs2 In candidates
+                        Dim alignment As InferLink = GetBestQuery(hit, seed)
+
+                        If stdnum.Min(alignment.forward, alignment.reverse) < dotcutoff Then
+                            alignment.alignments = Nothing
+                            alignment.level = InferLevel.Ms1
+                            alignment.forward = 0
+                            alignment.reverse = 0
+                        Else
+                            alignment.level = InferLevel.Ms2
+                        End If
+
+                        Yield alignment
+                    Next
+                Next
             Next
+        Next
+    End Function
+
+    Private Function GetBestQuery(hit As PeakMs2, seed As AnnotatedSeed) As InferLink
+        Dim max
+        Dim align
+
+        For Each ref In seed.products
+            align = MSalignment.CreateAlignment(hit, ref.Value)
         Next
     End Function
 

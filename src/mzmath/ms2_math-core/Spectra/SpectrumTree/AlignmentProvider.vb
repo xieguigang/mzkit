@@ -81,6 +81,10 @@ Namespace Spectra
 
         Public MustOverride Function CreateAlignment(a As PeakMs2, b As PeakMs2) As AlignmentOutput
 
+        Public Function CreateAlignment(a As ms2(), b As ms2()) As AlignmentOutput
+
+        End Function
+
     End Class
 
     Public Enum ScoreAggregates
