@@ -57,6 +57,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D.Device
 Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D.Model
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models.Isometric
@@ -86,13 +87,15 @@ Public Class ScanVisual3D : Inherits Plot
     ReadOnly fillAlpha As Integer
 
 #Region "constructor"
-    Public Sub New(scans As IEnumerable(Of ms1_scan), tolerance As Tolerance, angle As Double, theme As Theme)
-        Call Me.New(GetScanCollection(scans, tolerance), angle, theme)
+    Public Sub New(scans As IEnumerable(Of ms1_scan), tolerance As Tolerance, angle As Double, fillCurve As Boolean, fillAlpha As Integer, theme As Theme)
+        Call Me.New(GetScanCollection(scans, tolerance), angle, fillCurve, fillAlpha, theme)
     End Sub
 
-    Public Sub New(scans As IEnumerable(Of NamedCollection(Of ChromatogramTick)), angle As Double, theme As Theme)
+    Public Sub New(scans As IEnumerable(Of NamedCollection(Of ChromatogramTick)), angle As Double, fillCurve As Boolean, fillAlpha As Integer, theme As Theme)
         MyBase.New(theme)
 
+        Me.fillCurve = fillCurve
+        Me.fillAlpha = fillAlpha
         Me.angle = angle
         Me.scans = scans.ToArray
     End Sub
@@ -168,6 +171,10 @@ Public Class ScanVisual3D : Inherits Plot
         Dim dx As Double = evalDx(canvas)
         Dim dy As Double = evalDy(canvas)
         Dim theme As Theme = Me.theme.Clone
+        Dim colors As String() = Designer _
+            .GetColors(theme.colorSet) _
+            .Select(AddressOf ToHtmlColor) _
+            .ToArray
         Dim parallelCanvas As New GraphicsRegion With {
             .Size = canvas.Size,
             .Padding = New Padding With {
@@ -186,13 +193,27 @@ Public Class ScanVisual3D : Inherits Plot
 
         For i As Integer = 0 To scans.Length - 1
             parallelCanvas = parallelCanvas.Offset2D(-dx, dy)
+            theme.colorSet = colors(i)
+
+            If i = 0 Then
+                theme.drawGrid = True
+                theme.gridFill = Me.theme.gridFill
+            Else
+                theme.gridFill = "transparent"
+                theme.drawGrid = False
+            End If
+
+            If i = scans.Length - 1 Then
+                theme.drawAxis = True
+            Else
+                theme.drawAxis = False
+            End If
 
             Call New TICplot(
                 ionData:={scans(i)},
                 timeRange:=Nothing,
                 intensityMax:=0,
                 isXIC:=False,
-                parallel:=False,
                 fillCurve:=fillCurve,
                 fillAlpha:=fillAlpha,
                 labelLayoutTicks:=-1,

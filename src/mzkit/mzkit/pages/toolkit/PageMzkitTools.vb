@@ -363,7 +363,7 @@ Public Class PageMzkitTools
         MyApplication.RegisterPlot(
             Sub(args)
                 If d3 Then
-                    PictureBox1.BackgroundImage = New ScanVisual3D(TICList, 60, New Theme With {
+                    PictureBox1.BackgroundImage = New ScanVisual3D(scans:=TICList, angle:=60, fillCurve:=True, fillAlpha:=180, theme:=New Theme With {
                         .colorSet = Globals.GetColors,
                         .gridFill = args.gridFill.ToHtmlColor,
                         .padding = args.GetPadding.ToString,

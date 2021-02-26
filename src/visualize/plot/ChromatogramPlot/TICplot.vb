@@ -33,7 +33,6 @@ Public Class TICplot : Inherits Plot
                    timeRange As Double(),
                    intensityMax As Double,
                    isXIC As Boolean,
-                   parallel As Boolean,
                    fillCurve As Boolean,
                    fillAlpha As Integer,
                    labelLayoutTicks As Integer,

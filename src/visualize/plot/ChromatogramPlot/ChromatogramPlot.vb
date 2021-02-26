@@ -51,6 +51,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
@@ -214,18 +215,23 @@ Public Module ChromatogramPlot
             .drawLabels = showLabels,
             .tagColor = labelColor
         }
-        Dim TIC As New TICplot(
-            ionData:=ionData,
-            timeRange:=timeRange,
-            intensityMax:=intensityMax,
-            isXIC:=isXIC,
-            parallel:=parallel,
-            fillCurve:=fillCurve,
-            fillAlpha:=fillAlpha,
-            labelLayoutTicks:=labelLayoutTicks,
-            theme:=theme,
-            deln:=deln
-        )
+        Dim TIC As Plot
+
+        If parallel Then
+            TIC = New ScanVisual3D(ionData, 60, fillCurve:=fillCurve, fillAlpha:=fillAlpha, theme:=theme)
+        Else
+            TIC = New TICplot(
+                ionData:=ionData,
+                timeRange:=timeRange,
+                intensityMax:=intensityMax,
+                isXIC:=isXIC,
+                fillCurve:=fillCurve,
+                fillAlpha:=fillAlpha,
+                labelLayoutTicks:=labelLayoutTicks,
+                theme:=theme,
+                deln:=deln
+            )
+        End If
 
         Return TIC.Plot(size, ppi)
     End Function
