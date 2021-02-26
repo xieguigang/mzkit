@@ -392,7 +392,7 @@ Public Class PageMzkitTools
                         ylabel:=args.ylabel
                     ).AsGDIImage
                 End If
-            End Sub, width:=1600, height:=1200, showGrid:=False, padding:="padding:100px 100px 150px 200px;", showLegend:=Not d3, xlab:="Time (s)", ylab:="Intensity")
+            End Sub, width:=1600, height:=1200, showGrid:=True, padding:="padding:100px 100px 150px 200px;", showLegend:=Not d3, xlab:="Time (s)", ylab:="Intensity")
 
         MyApplication.host.ShowPage(Me)
     End Sub
