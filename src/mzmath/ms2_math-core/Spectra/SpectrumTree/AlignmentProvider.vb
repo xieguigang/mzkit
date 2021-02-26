@@ -78,11 +78,36 @@ Namespace Spectra
         End Sub
 
         Public MustOverride Function GetScore(a As ms2(), b As ms2()) As Double
+        Public MustOverride Function GetScore(alignment As SSM2MatrixFragment()) As (forward#, reverse#)
 
-        Public MustOverride Function CreateAlignment(a As PeakMs2, b As PeakMs2) As AlignmentOutput
+        Public Function CreateAlignment(a As PeakMs2, b As PeakMs2) As AlignmentOutput
+            Dim align As AlignmentOutput = CreateAlignment(a.mzInto, b.mzInto)
+
+            align.query = GetMeta(a)
+            align.reference = GetMeta(b)
+
+            Return align
+        End Function
+
+        Private Shared Function GetMeta(peak As PeakMs2) As Meta
+            Return New Meta With {
+                .id = peak.lib_guid,
+                .mz = peak.mz,
+                .rt = peak.rt
+            }
+        End Function
 
         Public Function CreateAlignment(a As ms2(), b As ms2()) As AlignmentOutput
+            Dim align As SSM2MatrixFragment() = GlobalAlignment _
+                .CreateAlignment(a, b, mzwidth) _
+                .ToArray
+            Dim scores As (forward#, reverse#) = GetScore(align)
 
+            Return New AlignmentOutput With {
+                .alignments = align,
+                .forward = scores.forward,
+                .reverse = scores.reverse
+            }
         End Function
 
     End Class
@@ -120,10 +145,6 @@ Namespace Spectra
 
             Return min
         End Function
-
-        Public Overrides Function CreateAlignment(a As PeakMs2, b As PeakMs2) As AlignmentOutput
-            Throw New NotImplementedException()
-        End Function
     End Class
 
     Public Class JaccardAlignment : Inherits AlignmentProvider
@@ -138,10 +159,6 @@ Namespace Spectra
 
         Public Overrides Function GetScore(a As ms2(), b As ms2()) As Double
             Return GlobalAlignment.JaccardIndex(a, b, mzwidth, topSet)
-        End Function
-
-        Public Overrides Function CreateAlignment(a As PeakMs2, b As PeakMs2) As AlignmentOutput
-            Throw New NotImplementedException()
         End Function
     End Class
 End Namespace
