@@ -76,10 +76,10 @@ Public Class TICplot : Inherits Plot
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
-        Call RunPlot(g, canvas, Nothing)
+        Call RunPlot(g, canvas, Nothing, Nothing)
     End Sub
 
-    Friend Sub RunPlot(ByRef g As IGraphics, canvas As GraphicsRegion, ByRef labels As Label())
+    Friend Sub RunPlot(ByRef g As IGraphics, canvas As GraphicsRegion, ByRef labels As Label(), ByRef legends As LegendObject())
         Dim colors As LoopArray(Of Pen) = colorProvider()
         Dim XTicks As Double() = ionData _
             .Select(Function(ion)
@@ -121,13 +121,16 @@ Public Class TICplot : Inherits Plot
                 YtickFormat:="G2",
                 labelFont:=theme.axisLabelCSS,
                 tickFontStyle:=theme.axisTickCSS,
-                gridFill:=theme.gridFill
+                gridFill:=theme.gridFill,
+                xlayout:=theme.xAxisLayout,
+                ylayout:=theme.yAxisLayout
             )
         End If
 
-        Dim legends As New List(Of LegendObject)
         Dim peakTimes As New List(Of NamedValue(Of ChromatogramTick))
         Dim fillColor As Brush
+
+        legends = New LegendObject(ionData.Length - 1) {}
 
         For i As Integer = 0 To ionData.Length - 1
             Dim curvePen As Pen = colors.Next
@@ -139,7 +142,7 @@ Public Class TICplot : Inherits Plot
                 Continue For
             End If
 
-            legends += New LegendObject With {
+            legends(i) = New LegendObject With {
                 .title = line.name,
                 .color = curvePen.Color.ToHtmlColor,
                 .fontstyle = theme.legendLabelCSS,
@@ -185,7 +188,7 @@ Public Class TICplot : Inherits Plot
         labels = GetLabels(g, scaler, peakTimes).ToArray
 
         If theme.drawLabels Then Call DrawLabels(g, rect, labels, theme, labelLayoutTicks)
-        If theme.drawLegend Then Call DrawTICLegends(g, canvas, legends)
+        If theme.drawLegend Then Call DrawTICLegends(g, canvas, legends, deln)
     End Sub
 
     Private Iterator Function GetLabels(g As IGraphics, scaler As DataScaler, peakTimes As IEnumerable(Of NamedValue(Of ChromatogramTick))) As IEnumerable(Of Label)
@@ -225,10 +228,10 @@ Public Class TICplot : Inherits Plot
         Next
     End Sub
 
-    Private Sub DrawTICLegends(g As IGraphics, canvas As GraphicsRegion, legends As List(Of LegendObject))
+    Friend Shared Sub DrawTICLegends(g As IGraphics, canvas As GraphicsRegion, legends As LegendObject(), deln As Integer)
         ' 如果离子数量非常多的话,则会显示不完
         ' 这时候每20个换一列
-        Dim cols = legends.Count / deln
+        Dim cols = legends.Length / deln
 
         If cols > Fix(cols) Then
             ' 有余数,说明还有剩下的,增加一列

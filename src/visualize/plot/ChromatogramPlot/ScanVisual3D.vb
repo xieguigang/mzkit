@@ -50,6 +50,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.d3js.Layout
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
@@ -119,7 +120,7 @@ Public Class ScanVisual3D : Inherits Plot
         Dim dc As Double = evalDc(canvas)
         Dim dx As Double = stdNum.Cos(d:=angle.ToRadians) * dc
 
-        Return dx
+        Return dx / (scans.Length + 1)
     End Function
 
     Private Function evalDc(canvas As GraphicsRegion) As Double
@@ -143,9 +144,8 @@ Public Class ScanVisual3D : Inherits Plot
         ' c = dw / cos(a)
 
         Dim c As Double = dw / stdNum.Cos(d:=angle.ToRadians)
-        Dim dc As Double = c / (scans.Length + 1)
 
-        Return dc
+        Return c
     End Function
 
     Private Function evalDy(canvas As GraphicsRegion) As Double
@@ -154,7 +154,7 @@ Public Class ScanVisual3D : Inherits Plot
         Dim dc As Double = evalDc(canvas)
         Dim dy As Double = stdNum.Sin(a:=angle.ToRadians) * dc
 
-        Return dy
+        Return dy / (scans.Length + 1)
     End Function
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
@@ -169,12 +169,13 @@ Public Class ScanVisual3D : Inherits Plot
             .Size = canvas.Size,
             .Padding = New Padding With {
                 .Top = canvas.Padding.Top,
-                .Left = canvas.Padding.Left * 2,
+                .Left = canvas.Padding.Left + dx * scans.Length,
                 .Right = canvas.Padding.Right,
                 .Bottom = canvas.Padding.Bottom + Me.height * canvas.PlotRegion.Height
             }
         }
         Dim labelList As New List(Of Label)
+        Dim legendList As New List(Of LegendObject)
 
         theme.background = "transparent"
         theme.gridFill = "transparent"
@@ -183,8 +184,14 @@ Public Class ScanVisual3D : Inherits Plot
         theme.drawAxis = False
         theme.drawLabels = False
 
+        parallelCanvas = parallelCanvas.Offset2D(dx, -dy)
+
+        Dim firstFrame As GraphicsRegion
+        Dim lastFrame As GraphicsRegion
+
         For i As Integer = 0 To scans.Length - 1
             Dim labels As Label() = Nothing
+            Dim legends As LegendObject() = Nothing
 
             parallelCanvas = parallelCanvas.Offset2D(-dx, dy)
             theme.colorSet = colors(i)
@@ -195,6 +202,8 @@ Public Class ScanVisual3D : Inherits Plot
                 theme.drawAxis = True
                 theme.yAxisLayout = YAxisLayoutStyles.None
                 theme.xAxisLayout = XAxisLayoutStyles.None
+
+                firstFrame = parallelCanvas
             Else
                 theme.gridFill = "transparent"
                 theme.drawGrid = False
@@ -204,6 +213,8 @@ Public Class ScanVisual3D : Inherits Plot
                     theme.drawAxis = True
                     theme.yAxisLayout = YAxisLayoutStyles.Left
                     theme.xAxisLayout = XAxisLayoutStyles.Bottom
+
+                    lastFrame = parallelCanvas
                 Else
                     theme.drawAxis = False
                 End If
@@ -219,13 +230,32 @@ Public Class ScanVisual3D : Inherits Plot
                 labelLayoutTicks:=-1,
                 deln:=10,
                 theme:=theme
-            ).RunPlot(g, parallelCanvas, labels)
+            ).RunPlot(g, parallelCanvas, labels, legends)
 
             Call labelList.AddRange(labels)
+            Call legendList.AddRange(legends)
         Next
 
-        If Me.theme.drawLabels Then
-            Call TICplot.DrawLabels(g, canvas.PlotRegion, labelList.ToArray, theme, 500)
-        End If
+        '     a
+        '    /|
+        '   / |
+        ' d | |
+        '   | / b
+        '   |/
+        '   c
+
+        Dim a As New PointF(firstFrame.Padding.Left, firstFrame.Padding.Top)
+        Dim b As New PointF(firstFrame.Padding.Left, canvas.Height - firstFrame.Padding.Bottom)
+        Dim c As New PointF(lastFrame.Padding.Left, canvas.Height - lastFrame.Padding.Bottom)
+        Dim d As New PointF(lastFrame.Padding.Left, lastFrame.Padding.Top)
+
+        Dim axisPen As Pen = Stroke.TryParse(theme.axisStroke)
+
+        Call g.DrawLine(axisPen, a, d)
+        Call g.DrawLine(axisPen, a, b)
+        Call g.DrawLine(axisPen, c, b)
+
+        If Me.theme.drawLabels Then Call TICplot.DrawLabels(g, canvas.PlotRegion, labelList.ToArray, theme, 1500)
+        If Me.theme.drawLegend Then Call TICplot.DrawTICLegends(g, canvas, legendList.ToArray, 100)
     End Sub
 End Class
