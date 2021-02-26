@@ -520,6 +520,9 @@
     <Compile Include="Ms1\Tolerance\PPM.vb" />
     <Compile Include="Ms1\Tolerance\DeltaMass.vb" />
     <Compile Include="Ms1\Tolerance\Tolerance.vb" />
+    <Compile Include="Spectra\Alignment\Class1.vb" />
+    <Compile Include="Spectra\Alignment\Class2.vb" />
+    <Compile Include="Spectra\Alignment\Class3.vb" />
     <Compile Include="Spectra\Models\ms2.vb" />
     <Compile Include="Spectra\Models\Trimming\QuantileIntensityCutoff.vb" />
     <Compile Include="Spectra\Models\Trimming\RelativeIntensityCutoff.vb" />
@@ -555,7 +558,7 @@
     </Compile>
     <Compile Include="Ms1\Peaktable.vb" />
     <Compile Include="Ms1\PrecursorType\PrecursorType.vb" />
-    <Compile Include="Spectra\SpectrumTree\AlignmentProvider.vb" />
+    <Compile Include="Spectra\Alignment\AlignmentProvider.vb" />
     <Compile Include="Spectra\SpectrumTree\Comparison.vb" />
     <Compile Include="Spectra\SpectrumTree\SpectrumCluster.vb" />
     <Compile Include="Spectra\SpectrumTree\SpectrumTree.vb" />
