@@ -67,6 +67,7 @@
     <Compile Include="Algorithm.vb" />
     <Compile Include="KEGGHandler.vb" />
     <Compile Include="Models\AnnotatedSeed.vb" />
+    <Compile Include="Models\KEGGQuery.vb" />
     <Compile Include="Models\MassIndexKey.vb" />
     <Compile Include="Models\UnknownSet.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
