@@ -28,28 +28,41 @@ Partial Class frmSRMIonsExplorer
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmSRMIonsExplorer))
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ShowTICOverlapToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ClearFilesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Win7StyleTreeView1 = New mzkit.Kesoft.Windows.Forms.Win7StyleTreeView.Win7StyleTreeView(Me.components)
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
-        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
-        Me.ClearFilesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ShowTICOverlap3DToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'ContextMenuStrip1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowTICOverlapToolStripMenuItem, Me.ToolStripMenuItem1, Me.ClearFilesToolStripMenuItem})
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowTICOverlapToolStripMenuItem, Me.ShowTICOverlap3DToolStripMenuItem, Me.ToolStripMenuItem1, Me.ClearFilesToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(168, 54)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(201, 98)
         '
         'ShowTICOverlapToolStripMenuItem
         '
         Me.ShowTICOverlapToolStripMenuItem.Image = CType(resources.GetObject("ShowTICOverlapToolStripMenuItem.Image"), System.Drawing.Image)
         Me.ShowTICOverlapToolStripMenuItem.Name = "ShowTICOverlapToolStripMenuItem"
-        Me.ShowTICOverlapToolStripMenuItem.Size = New System.Drawing.Size(167, 22)
+        Me.ShowTICOverlapToolStripMenuItem.Size = New System.Drawing.Size(200, 22)
         Me.ShowTICOverlapToolStripMenuItem.Text = "Show TIC Overlap"
+        '
+        'ToolStripMenuItem1
+        '
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(197, 6)
+        '
+        'ClearFilesToolStripMenuItem
+        '
+        Me.ClearFilesToolStripMenuItem.Image = CType(resources.GetObject("ClearFilesToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.ClearFilesToolStripMenuItem.Name = "ClearFilesToolStripMenuItem"
+        Me.ClearFilesToolStripMenuItem.Size = New System.Drawing.Size(200, 22)
+        Me.ClearFilesToolStripMenuItem.Text = "Clear Files"
         '
         'Win7StyleTreeView1
         '
@@ -87,24 +100,19 @@ Partial Class frmSRMIonsExplorer
         'ToolStripLabel1
         '
         Me.ToolStripLabel1.Name = "ToolStripLabel1"
-        Me.ToolStripLabel1.Size = New System.Drawing.Size(64, 22)
+        Me.ToolStripLabel1.Size = New System.Drawing.Size(72, 22)
         Me.ToolStripLabel1.Text = "MRM Ions:"
         '
-        'ToolStripMenuItem1
+        'ShowTICOverlap3DToolStripMenuItem
         '
-        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(177, 6)
-        '
-        'ClearFilesToolStripMenuItem
-        '
-        Me.ClearFilesToolStripMenuItem.Image = CType(resources.GetObject("ClearFilesToolStripMenuItem.Image"), System.Drawing.Image)
-        Me.ClearFilesToolStripMenuItem.Name = "ClearFilesToolStripMenuItem"
-        Me.ClearFilesToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.ClearFilesToolStripMenuItem.Text = "Clear Files"
+        Me.ShowTICOverlap3DToolStripMenuItem.Image = CType(resources.GetObject("ShowTICOverlap3DToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.ShowTICOverlap3DToolStripMenuItem.Name = "ShowTICOverlap3DToolStripMenuItem"
+        Me.ShowTICOverlap3DToolStripMenuItem.Size = New System.Drawing.Size(200, 22)
+        Me.ShowTICOverlap3DToolStripMenuItem.Text = "Show TIC Overlap 3D"
         '
         'frmSRMIonsExplorer
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(387, 472)
         Me.Controls.Add(Me.Win7StyleTreeView1)
@@ -126,4 +134,5 @@ Partial Class frmSRMIonsExplorer
     Friend WithEvents ToolStripLabel1 As ToolStripLabel
     Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
     Friend WithEvents ClearFilesToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ShowTICOverlap3DToolStripMenuItem As ToolStripMenuItem
 End Class

@@ -464,9 +464,10 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChromatogramPeakPlot.vb" />
-    <Compile Include="ChromatogramPlot.vb" />
-    <Compile Include="ScanVisual3D.vb" />
+    <Compile Include="ChromatogramPlot\ChromatogramPeakPlot.vb" />
+    <Compile Include="ChromatogramPlot\ChromatogramPlot.vb" />
+    <Compile Include="ChromatogramPlot\TICplot.vb" />
+    <Compile Include="ChromatogramPlot\ScanVisual3D.vb" />
     <Compile Include="MassSpectraMirrorPlot.vb" />
     <Compile Include="UVsignalPlot.vb" />
     <Compile Include="RawScatterPlot.vb" />
