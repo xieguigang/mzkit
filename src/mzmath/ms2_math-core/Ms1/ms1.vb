@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a42ab8e967f0b6ba566f3bbb6fd438d, ms2_math-core\Ms1\ms1.vb"
+﻿#Region "Microsoft.VisualBasic::a4dc14dede28a67fccaabd6e8c567cbd, ms2_math-core\Ms1\ms1.vb"
 
     ' Author:
     ' 
@@ -40,27 +40,9 @@
     ' 
     '     Function: ToString
     ' 
-    ' Interface IMs1
-    ' 
-    '     Properties: mz
-    ' 
-    ' Interface IRetentionTime
-    ' 
-    '     Properties: rt
-    ' 
     ' Class MetaInfo
     ' 
     '     Properties: name, xref
-    ' 
-    ' Interface IMs1Scan
-    ' 
-    '     Properties: intensity
-    ' 
-    ' Class ms1_scan
-    ' 
-    '     Properties: intensity, mz, scan_time
-    ' 
-    '     Function: GroupByMz, ToString
     ' 
     ' /********************************************************************************/
 
@@ -104,5 +86,3 @@ Public Class MetaInfo : Inherits Ms1Feature
     Public Property xref As Dictionary(Of String, String)
 
 End Class
-
-
