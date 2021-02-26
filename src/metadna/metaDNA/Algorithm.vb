@@ -45,6 +45,8 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
+Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports stdnum = System.Math
 
@@ -66,10 +68,11 @@ Public Class Algorithm
     ''' </summary>
     ''' <param name="seeds"></param>
     ''' <returns></returns>
-    Public Iterator Function RunIteration(seeds As IEnumerable(Of AnnotatedSeed)) As IEnumerable(Of InferLink)
-        For Each annotated As AnnotatedSeed In seeds
-
-        Next
+    Public Function RunIteration(seeds As IEnumerable(Of AnnotatedSeed)) As IEnumerable(Of InferLink)
+        Return seeds _
+            .AsParallel _
+            .Select(AddressOf RunInfer) _
+            .IteratesALL
     End Function
 
     Private Iterator Function RunInfer(seed As AnnotatedSeed) As IEnumerable(Of InferLink)
@@ -85,40 +88,58 @@ Public Class Algorithm
                     Continue For
                 End If
 
-                For Each type As MzCalculator In precursorTypes
-                    Dim mz As Double = type.CalcMZ(compound.exactMass)
-                    Dim candidates As PeakMs2() = unknowns.QueryByParentMz(mz)
-
-                    If candidates.IsNullOrEmpty Then
-                        Continue For
-                    End If
-
-                    For Each hit As PeakMs2 In candidates
-                        Dim alignment As InferLink = GetBestQuery(hit, seed)
-
-                        If stdnum.Min(alignment.forward, alignment.reverse) < dotcutoff Then
-                            alignment.alignments = Nothing
-                            alignment.level = InferLevel.Ms1
-                            alignment.forward = 0
-                            alignment.reverse = 0
-                        Else
-                            alignment.level = InferLevel.Ms2
-                        End If
-
-                        Yield alignment
-                    Next
+                For Each hit As InferLink In alignKeggCompound(seed, compound)
+                    Yield hit
                 Next
             Next
         Next
     End Function
 
+    Private Iterator Function alignKeggCompound(seed As AnnotatedSeed, compound As Compound) As IEnumerable(Of InferLink)
+        For Each type As MzCalculator In precursorTypes
+            Dim mz As Double = type.CalcMZ(compound.exactMass)
+            Dim candidates As PeakMs2() = unknowns.QueryByParentMz(mz)
+
+            If candidates.IsNullOrEmpty Then
+                Continue For
+            End If
+
+            For Each hit As PeakMs2 In candidates
+                Dim alignment As InferLink = GetBestQuery(hit, seed)
+
+                If stdnum.Min(alignment.forward, alignment.reverse) < dotcutoff Then
+                    alignment.alignments = Nothing
+                    alignment.level = InferLevel.Ms1
+                    alignment.forward = 0
+                    alignment.reverse = 0
+                Else
+                    alignment.level = InferLevel.Ms2
+                End If
+
+                Yield alignment
+            Next
+        Next
+    End Function
+
     Private Function GetBestQuery(hit As PeakMs2, seed As AnnotatedSeed) As InferLink
-        Dim max
-        Dim align
+        Dim max As InferLink = Nothing
+        Dim align As AlignmentOutput
+        Dim score As (forward#, reverse#)
 
         For Each ref In seed.products
-            align = MSalignment.CreateAlignment(hit, ref.Value)
+            align = MSalignment.CreateAlignment(hit.mzInto, ref.Value.ms2)
+            score = MSalignment.GetScore(align.alignments)
+
+            If max Is Nothing OrElse stdnum.Min(score.forward, score.reverse) > stdnum.Min(max.forward, max.reverse) Then
+                max = New InferLink With {
+                    .reverse = score.reverse,
+                    .forward = score.forward,
+                    .alignments = align.alignments
+                }
+            End If
         Next
+
+        Return max
     End Function
 
 End Class
