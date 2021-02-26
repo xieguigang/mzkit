@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e8a1e8b5ed459c5eca82376fe35b282f, Library\mzkit.plot\Visual.vb"
+﻿#Region "Microsoft.VisualBasic::31e4946c91456505885032ecbb6de299, Library\mzkit.plot\Visual.vb"
 
     ' Author:
     ' 

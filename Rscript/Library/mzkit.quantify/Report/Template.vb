@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::78c33a5cf8a84c8ae4b0fe2bea7dcc20, Library\mzkit.quantify\Report\Template.vb"
+﻿#Region "Microsoft.VisualBasic::a8f73cf5b9e4a8fb38bc680d380689b0, Library\mzkit.quantify\Report\Template.vb"
 
     ' Author:
     ' 
@@ -101,4 +101,3 @@ Module Template
             </html>)
     End Function
 End Module
-
