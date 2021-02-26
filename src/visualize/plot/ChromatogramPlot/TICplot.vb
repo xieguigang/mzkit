@@ -114,8 +114,8 @@ Public Class TICplot : Inherits Plot
         If theme.drawAxis Then
             Call g.DrawAxis(
                 canvas, scaler, showGrid:=theme.drawGrid,
-                xlabel:="Time (s)",
-                ylabel:="Intensity",
+                xlabel:=Me.xlabel,
+                ylabel:=Me.ylabel,
                 htmlLabel:=False,
                 XtickFormat:=If(isXIC, "F2", "F0"),
                 YtickFormat:="G2",

@@ -230,7 +230,11 @@ Public Class ScanVisual3D : Inherits Plot
                 labelLayoutTicks:=-1,
                 deln:=10,
                 theme:=theme
-            ).RunPlot(g, parallelCanvas, labels, legends)
+            ) With {
+                .xlabel = xlabel,
+                .ylabel = ylabel,
+                .main = main
+            }.RunPlot(g, parallelCanvas, labels, legends)
 
             Call labelList.AddRange(labels)
             Call legendList.AddRange(legends)

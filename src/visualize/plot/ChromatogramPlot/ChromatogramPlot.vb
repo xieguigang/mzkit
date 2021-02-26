@@ -188,6 +188,8 @@ Public Module ChromatogramPlot
                             Optional fillCurve As Boolean = True,
                             Optional axisLabelFont$ = CSSFont.Win7Large,
                             Optional axisTickFont$ = CSSFont.Win10NormalLarger,
+                            Optional xlabel$ = "Time (s)",
+                            Optional ylabel$ = "Intensity",
                             Optional showLegends As Boolean = True,
                             Optional legendFontCSS$ = CSSFont.Win10Normal,
                             Optional deln% = 10,
@@ -218,7 +220,10 @@ Public Module ChromatogramPlot
         Dim TIC As Plot
 
         If parallel Then
-            TIC = New ScanVisual3D(ionData, 60, fillCurve:=fillCurve, fillAlpha:=fillAlpha, theme:=theme)
+            TIC = New ScanVisual3D(ionData, 60, fillCurve:=fillCurve, fillAlpha:=fillAlpha, theme:=theme) With {
+                .xlabel = xlabel,
+                .ylabel = ylabel
+            }
         Else
             TIC = New TICplot(
                 ionData:=ionData,
@@ -230,7 +235,10 @@ Public Module ChromatogramPlot
                 labelLayoutTicks:=labelLayoutTicks,
                 theme:=theme,
                 deln:=deln
-            )
+            ) With {
+                .xlabel = xlabel,
+                .ylabel = ylabel
+            }
         End If
 
         Return TIC.Plot(size, ppi)

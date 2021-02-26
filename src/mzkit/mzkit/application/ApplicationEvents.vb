@@ -144,6 +144,9 @@ Namespace My
                 .ylabel = ylab
                 .gridFill = gridFill.TranslateColor
 
+                .show_legend = showLegend
+                .show_grid = showGrid
+
                 .padding_top = margin.Top
                 .padding_right = margin.Right
                 .padding_left = margin.Left

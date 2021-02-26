@@ -370,7 +370,11 @@ Public Class PageMzkitTools
                         .drawLegend = args.show_legend,
                         .drawLabels = args.show_tag,
                         .drawGrid = args.show_grid
-                    }).Plot($"{args.width},{args.height}", ppi:=100) _
+                    }) With {
+                        .xlabel = args.xlabel,
+                        .ylabel = args.ylabel,
+                        .main = args.title
+                    }.Plot($"{args.width},{args.height}", ppi:=100) _
                       .AsGDIImage
                 Else
                     PictureBox1.BackgroundImage = ChromatogramPlot.TICplot(
@@ -383,10 +387,12 @@ Public Class PageMzkitTools
                         bg:=args.background.ToHtmlColor,
                         showGrid:=args.show_grid,
                         showLegends:=args.show_legend,
-                        showLabels:=args.show_tag
+                        showLabels:=args.show_tag,
+                        xlabel:=args.xlabel,
+                        ylabel:=args.ylabel
                     ).AsGDIImage
                 End If
-            End Sub, width:=1600, height:=1200, showGrid:=False, padding:="padding:100px 100px 150px 200px;")
+            End Sub, width:=1600, height:=1200, showGrid:=False, padding:="padding:100px 100px 150px 200px;", showLegend:=Not d3, xlab:="Time (s)", ylab:="Intensity")
 
         MyApplication.host.ShowPage(Me)
     End Sub
