@@ -51,6 +51,16 @@ Public Class Algorithm
 
     ReadOnly tolerance As Tolerance
     ReadOnly unknowns As UnknownSet
+    ReadOnly kegg As KEGGHandler
+
+    ''' <summary>
+    ''' Create infer network
+    ''' </summary>
+    ''' <param name="seeds"></param>
+    ''' <returns></returns>
+    Public Iterator Function RunIteration(seeds As IEnumerable(Of AnnotatedSeed)) As IEnumerable(Of InferLink)
+
+    End Function
 
 End Class
 

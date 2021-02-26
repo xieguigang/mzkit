@@ -51,6 +51,9 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 ''' <summary>
 ''' 已经成功进行注释的代谢物信息(作为MetaDNA推断的种子)
 ''' </summary>
+''' <remarks>
+''' 
+''' </remarks>
 Public Class AnnotatedSeed : Implements INamedValue
 
     Public Property kegg_id As String
