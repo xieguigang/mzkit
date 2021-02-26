@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c93dab6fcd5118d49206df4744afe59e, MetaDNA_visual\XML.vb"
+﻿#Region "Microsoft.VisualBasic::e7d0e9dba3a980ce8ee6bd3ce974ff6e, MetaDNA_visual\XML\XML.vb"
 
     ' Author:
     ' 
@@ -40,25 +40,6 @@
     ' 
     '     Function: LoadDocument, ToString
     ' 
-    ' Class compound
-    ' 
-    '     Properties: candidates, kegg, size
-    ' 
-    '     Function: ToString
-    ' 
-    ' Class unknown
-    ' 
-    '     Properties: edges, intensity, length, Msn, name
-    '                 scores
-    ' 
-    '     Function: ToString
-    ' 
-    ' Class node
-    ' 
-    '     Properties: kegg, ms1, ms2
-    ' 
-    '     Function: ToString
-    ' 
     ' /********************************************************************************/
 
 #End Region
@@ -89,4 +70,3 @@ Imports Microsoft.VisualBasic.Serialization.JSON
         Return file.SolveStream.LoadFromXml(Of XML)
     End Function
 End Class
-

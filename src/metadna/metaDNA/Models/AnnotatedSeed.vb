@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::52745bd8bee0fcf8a67ca82cbfa3653e, metaDNA\Models\AnnotatedSeed.vb"
+﻿#Region "Microsoft.VisualBasic::68bc59312061b1645f116e9cdfcfda77, metaDNA\Models\AnnotatedSeed.vb"
 
     ' Author:
     ' 
@@ -66,4 +66,3 @@ Public Class AnnotatedSeed : Implements INamedValue
     End Function
 
 End Class
-
