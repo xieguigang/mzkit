@@ -5,6 +5,7 @@ Public Class MetaDNAResult
     Public Property id As String
     Public Property mz As Double
     Public Property rt As Double
+    Public Property intensity As Double
     Public Property KEGGId As String
     Public Property exactMass As Double
     Public Property formula As String

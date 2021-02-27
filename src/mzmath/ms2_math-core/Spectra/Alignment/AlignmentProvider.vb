@@ -75,7 +75,8 @@ Namespace Spectra
             Return New Meta With {
                 .id = peak.lib_guid,
                 .mz = peak.mz,
-                .rt = peak.rt
+                .scan_time = peak.rt,
+                .intensity = peak.intensity
             }
         End Function
 

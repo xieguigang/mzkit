@@ -170,8 +170,8 @@ Namespace Infer
                     .kegg_id = compound.kegg_id,
                     .parent = New ms1_scan With {
                         .mz = best.infer.query.mz,
-                        .scan_time = best.infer.query.rt,
-                        .intensity = 0
+                        .scan_time = best.infer.query.scan_time,
+                        .intensity = best.infer.query.intensity
                     },
                     .products = products
                 }

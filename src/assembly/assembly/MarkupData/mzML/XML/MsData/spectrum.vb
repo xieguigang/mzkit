@@ -201,6 +201,7 @@ Namespace MarkupData.mzML
             Return New PeakMs2 With {
                 .mz = precursor.mz,
                 .rt = scan_time,
+                .intensity = precursor.into,
                 .scan = index,
                 .file = basename,
                 .mzInto = mzInto.Array,

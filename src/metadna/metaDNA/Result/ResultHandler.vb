@@ -25,7 +25,8 @@ Public Module ResultHandler
                     .partnerKEGGId = type.infer.reference.id,
                     .seed = type.infer.reference.id,
                     .mz = type.infer.query.mz,
-                    .rt = type.infer.query.rt
+                    .rt = type.infer.query.scan_time,
+                    .intensity = type.infer.query.intensity
                 }
             Next
         Next
