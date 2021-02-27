@@ -48,6 +48,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.BioDeep.MetaDNA.Infer
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports stdnum = System.Math
@@ -195,6 +196,7 @@ Public Class Algorithm
             kegg:=kegg
         )
         Dim candidates As CandidateInfer()
+        Dim i As i32 = 1
 
         Do
             result = RunIteration(seeds).ToArray
@@ -207,6 +209,8 @@ Public Class Algorithm
             For Each infer As CandidateInfer In candidates
                 Yield infer
             Next
+
+            Call Console.WriteLine($"[loop_{++i}] find {seeds.Count} seeds...")
         Loop While result.Length > 0
     End Function
 
