@@ -60,10 +60,36 @@ Namespace Infer
 
             For Each type As MzCalculator In precursorTypes
                 Dim mz As Double = type.CalcMZ(kegg.exactMass)
-                Dim group As InferLink() = candidates.Where(Function(q) da3(q.query.mz, mz)).ToArray
+                Dim typeName As String = type.ToString
+                Dim group As Candidate() = candidates _
+                    .Where(Function(q) da3(q.query.mz, mz)) _
+                    .Select(Function(q) Score(q, typeName, mz)) _
+                    .OrderBy(Function(q) q.pvalue) _
+                    .ToArray
 
-                Yield New Candidate With {.precursorType = type.ToString, .}
+                Yield group(Scan0)
             Next
+        End Function
+
+        Private Function Score(infer As InferLink, type As String, mz As Double) As Candidate
+            Dim scoreVal As Double
+            Dim pvalue As Double
+
+            If infer.level = 1 Then
+                scoreVal = 0.1
+                pvalue = 0.5
+            Else
+                scoreVal = stdnum.Min(infer.forward, infer.reverse)
+                pvalue =
+            End If
+
+            Return New Candidate With {
+                .infer = infer,
+                .precursorType = type,
+                .ppm = PPMmethod.PPM(mz, infer.query.mz),
+                .score = scoreVal,
+                .pvalue = pvalue
+            }
         End Function
 
         Public Iterator Function Seeding(infers As IEnumerable(Of CandidateInfer)) As IEnumerable(Of AnnotatedSeed)
@@ -91,10 +117,6 @@ Namespace Infer
                     .products = products
                 }
             Next
-        End Function
-
-        Public Function Score(infer As InferLink) As Double
-            Return stdnum.Min(infer.forward, infer.reverse)
         End Function
     End Class
 End Namespace
