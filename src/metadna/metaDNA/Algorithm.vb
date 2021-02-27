@@ -76,21 +76,15 @@ Public Class Algorithm
     End Function
 
     Private Iterator Function RunInfer(seed As AnnotatedSeed) As IEnumerable(Of InferLink)
-        Dim hits As KEGGQuery() = kegg.QueryByMz(seed.parent.mz).ToArray
+        For Each kegg_id As String In network.FindPartners(seed.kegg_id)
+            Dim compound As Compound = kegg.GetCompound(kegg_id)
 
-        For Each query As KEGGQuery In hits
-            Dim partners As String() = network.FindPartners(query.kegg_id).ToArray
+            If compound Is Nothing Then
+                Continue For
+            End If
 
-            For Each kegg_id As String In partners
-                Dim compound As Compound = kegg.GetCompound(kegg_id)
-
-                If compound Is Nothing Then
-                    Continue For
-                End If
-
-                For Each hit As InferLink In alignKeggCompound(seed, compound)
-                    Yield hit
-                Next
+            For Each hit As InferLink In alignKeggCompound(seed, compound)
+                Yield hit
             Next
         Next
     End Function
@@ -134,7 +128,9 @@ Public Class Algorithm
                 max = New InferLink With {
                     .reverse = score.reverse,
                     .forward = score.forward,
-                    .alignments = align.alignments
+                    .alignments = align.alignments,
+                    .query = New Meta With {.id = hit.lib_guid, .mz = hit.mz, .rt = hit.rt},
+                    .reference = New Meta With {.id = seed.ToString, .mz = seed.parent.mz, .rt = seed.parent.scan_time}
                 }
             End If
         Next
