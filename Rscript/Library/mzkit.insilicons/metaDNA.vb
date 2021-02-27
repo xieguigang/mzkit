@@ -55,7 +55,7 @@ Imports kegReactionClass = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.Reacti
 Imports ReactionClassTbl = MetaDNA.visual.ReactionClass
 Imports REnv = SMRUCC.Rsharp.Runtime.Internal
 
-<Package("mzkit.metadna")>
+<Package("metadna")>
 Module metaDNA
 
     ''' <summary>
