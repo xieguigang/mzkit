@@ -83,6 +83,10 @@ Public Class UnknownSet
         Dim tree As New AVLTree(Of Double, PeakMs2)(MassQuery(tolerance), Function(mz) mz.ToString("F4"))
 
         For Each product As PeakMs2 In raw
+            If product.lib_guid Is Nothing Then
+                product.lib_guid = product.ToString
+            End If
+
             Call tree.Add(product.mz, product, valueReplace:=False)
         Next
 
