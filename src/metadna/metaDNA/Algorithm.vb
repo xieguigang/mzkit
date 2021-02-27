@@ -183,7 +183,11 @@ Public Class Algorithm
                     .forward = score.forward,
                     .alignments = align.alignments,
                     .query = New Meta With {.id = hit.lib_guid, .mz = hit.mz, .rt = hit.rt},
-                    .reference = New Meta With {.id = seed.ToString, .mz = seed.parent.mz, .rt = seed.parent.scan_time}
+                    .reference = New Meta With {
+                        .id = seed.ToString,
+                        .mz = seed.parent.mz,
+                        .rt = seed.parent.scan_time
+                    }
                 }
             End If
         Next
