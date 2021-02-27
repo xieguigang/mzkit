@@ -100,6 +100,14 @@ Public Class Algorithm
 
             For Each hit As PeakMs2 In candidates
                 Dim alignment As InferLink = GetBestQuery(hit, seed)
+                Dim kegg As New KEGGQuery With {
+                    .mz = mz,
+                    .kegg_id = compound.entry,
+                    .precursorType = type.ToString,
+                    .ppm = PPMmethod.PPM(mz, hit.mz)
+                }
+
+                alignment.kegg = kegg
 
                 If stdnum.Min(alignment.forward, alignment.reverse) < dotcutoff Then
                     alignment.alignments = Nothing
