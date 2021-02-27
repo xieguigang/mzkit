@@ -59,9 +59,3 @@ Public Class InferLink : Inherits AlignmentOutput
 
 End Class
 
-Public Enum InferLevel
-
-    Ms1
-    Ms2
-
-End Enum
