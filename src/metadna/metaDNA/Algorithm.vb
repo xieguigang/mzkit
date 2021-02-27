@@ -241,6 +241,7 @@ Public Class Algorithm
         )
         Dim candidates As CandidateInfer()
         Dim i As i32 = 1
+        Dim n As Integer = 0
 
         Do
             result = RunIteration(seeds).ToArray
@@ -254,7 +255,9 @@ Public Class Algorithm
                 Yield infer
             Next
 
-            Call Console.WriteLine($"[loop_{++i}] find {seeds.Count} seeds...")
+            n += candidates.Length
+
+            Call Console.WriteLine($"[iteration {++i}] infers {result.Length}, find {seeds.Count} seeds, {n} current candidates ...")
         Loop While result.Length > 0
     End Function
 
