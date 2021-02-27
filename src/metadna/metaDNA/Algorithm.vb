@@ -152,6 +152,10 @@ Public Class Algorithm
                     .ppm = PPMmethod.PPM(mz, hit.mz)
                 }
 
+                If alignment Is Nothing Then
+                    Continue For
+                End If
+
                 alignment.kegg = kegg
 
                 If stdnum.Min(alignment.forward, alignment.reverse) < dotcutoff Then
