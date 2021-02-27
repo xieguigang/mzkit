@@ -58,7 +58,8 @@ Namespace MarkupData.mzML.IonTargeted
         Public Property selectedIonList As selectedIonList
 
         Shared ReadOnly methods As New Dictionary(Of String, String) From {
-            {"beam-type collision-induced dissociation", "CID"}
+            {"beam-type collision-induced dissociation", "HCD"},
+            {"collision-induced dissociation", "CID"}
         }
 
         Public Function GetActivationMethod() As String
