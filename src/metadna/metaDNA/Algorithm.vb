@@ -189,7 +189,11 @@ Public Class Algorithm
 
     Public Iterator Function DIASearch(seeds As IEnumerable(Of AnnotatedSeed)) As IEnumerable(Of CandidateInfer)
         Dim result As InferLink()
-        Dim seeding As New SeedsProvider(unknowns)
+        Dim seeding As New SeedsProvider(
+            unknowns:=unknowns,
+            ranges:=precursorTypes,
+            kegg:=kegg
+        )
         Dim candidates As CandidateInfer()
 
         Do
