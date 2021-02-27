@@ -25,6 +25,7 @@ Module ResultHandler
                     .id = type.infer.query.id,
                     .forward = type.infer.forward,
                     .reverse = type.infer.reverse,
+                    .jaccard = type.infer.jaccard,
                     .inferLevel = type.infer.level,
                     .KEGGId = infer.kegg_id,
                     .name = If(compound.commonNames.FirstOrDefault, compound.formula),

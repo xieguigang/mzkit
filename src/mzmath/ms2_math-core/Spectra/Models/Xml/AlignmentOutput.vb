@@ -57,6 +57,7 @@ Namespace Spectra.Xml
 
         Public Property forward As Double
         Public Property reverse As Double
+        Public Property jaccard As Double
         Public Property query As Meta
         Public Property reference As Meta
         Public Property alignments As SSM2MatrixFragment()

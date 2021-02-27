@@ -85,11 +85,13 @@ Namespace Spectra
                 .CreateAlignment(a, b, mzwidth) _
                 .ToArray
             Dim scores As (forward#, reverse#) = GetScore(align)
+            Dim jIdx As Double = GlobalAlignment.JaccardIndex(a, b, mzwidth)
 
             Return New AlignmentOutput With {
                 .alignments = align,
                 .forward = scores.forward,
-                .reverse = scores.reverse
+                .reverse = scores.reverse,
+                .jaccard = jIdx
             }
         End Function
 

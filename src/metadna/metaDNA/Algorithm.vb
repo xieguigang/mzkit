@@ -67,6 +67,8 @@ Public Class Algorithm
     ReadOnly ms1ppm As Tolerance
     ReadOnly dotcutoff As Double
     ReadOnly MSalignment As AlignmentProvider
+    ReadOnly mzwidth As Tolerance
+    ReadOnly allowMs1 As Boolean = False
 
     Dim precursorTypes As MzCalculator()
 
@@ -80,6 +82,7 @@ Public Class Algorithm
         Me.ms1ppm = ms1ppm
         Me.dotcutoff = dotcutoff
         Me.MSalignment = New CosAlignment(mzwidth, LowAbundanceTrimming.Default)
+        Me.mzwidth = mzwidth
     End Sub
 
     Public Function SetSearchRange(ParamArray precursorTypes As String()) As Algorithm
@@ -159,10 +162,16 @@ Public Class Algorithm
                 alignment.kegg = kegg
 
                 If stdnum.Min(alignment.forward, alignment.reverse) < dotcutoff Then
-                    alignment.alignments = Nothing
-                    alignment.level = InferLevel.Ms1
-                    alignment.forward = 0
-                    alignment.reverse = 0
+                    If alignment.jaccard >= 0.5 Then
+                        alignment.level = InferLevel.Ms2
+                    ElseIf allowMs1 Then
+                        alignment.alignments = Nothing
+                        alignment.level = InferLevel.Ms1
+                        alignment.forward = 0
+                        alignment.reverse = 0
+                    Else
+                        Continue For
+                    End If
                 Else
                     alignment.level = InferLevel.Ms2
                 End If
@@ -185,6 +194,7 @@ Public Class Algorithm
                 max = New InferLink With {
                     .reverse = score.reverse,
                     .forward = score.forward,
+                    .jaccard = GlobalAlignment.JaccardIndex(hit.mzInto, ref.Value.ms2, mzwidth),
                     .alignments = align.alignments,
                     .query = New Meta With {
                         .id = hit.lib_guid,
