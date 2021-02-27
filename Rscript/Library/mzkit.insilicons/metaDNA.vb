@@ -45,6 +45,7 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.MetaDNA
+Imports BioNovoGene.BioDeep.MetaDNA.Infer
 Imports MetaDNA.visual
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.csv
@@ -186,6 +187,7 @@ Module metaDNAInfer
     End Function
 
     <ExportAPI("DIA.infer")>
+    <RApiReturn(GetType(CandidateInfer))>
     Public Function DIAInfer(metaDNA As MetaDNAAlgorithm, <RRawVectorArgument> sample As Object, Optional env As Environment = Nothing) As Object
         Dim raw As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(sample, env)
 
@@ -193,7 +195,7 @@ Module metaDNAInfer
             Return raw.getError
         End If
 
-        Dim infer As InferLink() = metaDNA _
+        Dim infer As CandidateInfer() = metaDNA _
             .SetSamples(raw.populates(Of PeakMs2)(env)) _
             .DIASearch _
             .ToArray

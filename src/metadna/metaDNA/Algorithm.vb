@@ -214,7 +214,7 @@ Public Class Algorithm
     ''' <remarks>
     ''' 算法模块测试用
     ''' </remarks>
-    Public Function DIASearch() As IEnumerable(Of InferLink)
+    Public Function DIASearch() As IEnumerable(Of CandidateInfer)
         Return DIASearch(GetCandidateSeeds)
     End Function
 
