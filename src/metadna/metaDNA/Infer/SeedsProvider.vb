@@ -51,7 +51,7 @@ Namespace Infer
                 .ToArray _
                 .DoCall(AddressOf tree.doCluster)
 
-            Dim best As SpectrumCluster = tree.Best(Function(c) c.Length)
+            Dim best As SpectrumCluster = tree.Best(Function(c) c.GetClusterVector(da3).Sum)
 
             candidates = best.cluster _
                 .Select(Function(peak) all(peak.lib_guid)) _
@@ -62,7 +62,7 @@ Namespace Infer
                 Dim mz As Double = type.CalcMZ(kegg.exactMass)
                 Dim group As InferLink() = candidates.Where(Function(q) da3(q.query.mz, mz)).ToArray
 
-
+                Yield New Candidate With {.precursorType = type.ToString, .}
             Next
         End Function
 
