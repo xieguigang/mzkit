@@ -201,6 +201,9 @@ Public Class Algorithm
             candidates = seeding.CandidateInfers(infer:=result).ToArray
             seeds = seeding.Seeding(infers:=candidates).ToArray
 
+            For Each seed As AnnotatedSeed In seeds
+                Call unknowns.AddTrace(seed.products.Keys)
+            Next
             For Each infer As CandidateInfer In candidates
                 Yield infer
             Next
