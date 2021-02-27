@@ -50,6 +50,11 @@ Namespace Infer
     Public Class InferLink : Inherits AlignmentOutput
 
         Public Property level As InferLevel
+
+        ''' <summary>
+        ''' 当前的Feature被推断为的目标KEGG代谢物编号
+        ''' </summary>
+        ''' <returns></returns>
         Public Property kegg As KEGGQuery
 
     End Class

@@ -18,5 +18,6 @@ Public Class MetaDNAResult
     Public Property pvalue As Double
     Public Property seed As String
     Public Property partnerKEGGId As String
+    Public Property KEGG_reaction As String
 
 End Class

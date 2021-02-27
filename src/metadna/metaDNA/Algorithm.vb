@@ -203,7 +203,7 @@ Public Class Algorithm
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function ExportTable(result As IEnumerable(Of CandidateInfer), Optional unique As Boolean = False) As IEnumerable(Of MetaDNAResult)
-        Dim data = result.ExportTable(kegg)
+        Dim data = result.ExportTable(kegg, keggNetwork:=network)
 
         If unique Then
             data = data.GetUniques

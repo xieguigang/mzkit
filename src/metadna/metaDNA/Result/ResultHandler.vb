@@ -7,11 +7,16 @@ Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Module ResultHandler
 
     <Extension>
-    Public Iterator Function ExportTable(candidates As IEnumerable(Of CandidateInfer), kegg As KEGGHandler) As IEnumerable(Of MetaDNAResult)
+    Public Iterator Function ExportTable(candidates As IEnumerable(Of CandidateInfer),
+                                         kegg As KEGGHandler,
+                                         keggNetwork As KEGGNetwork) As IEnumerable(Of MetaDNAResult)
+
         For Each infer As CandidateInfer In candidates
             Dim compound As Compound = kegg.GetCompound(infer.kegg_id)
 
             For Each type As Candidate In infer.infers
+                Dim partner As String = type.infer.reference.id.Split(":"c).Last.Trim
+
                 Yield New MetaDNAResult With {
                     .exactMass = compound.exactMass,
                     .formula = compound.formula,
@@ -24,11 +29,12 @@ Module ResultHandler
                     .ppm = CInt(type.ppm),
                     .precursorType = type.precursorType,
                     .pvalue = type.pvalue,
-                    .partnerKEGGId = type.infer.reference.id,
+                    .partnerKEGGId = partner,
                     .seed = type.infer.reference.id,
                     .mz = type.infer.query.mz,
                     .rt = type.infer.query.scan_time,
-                    .intensity = type.infer.query.intensity
+                    .intensity = type.infer.query.intensity,
+                    .KEGG_reaction =
                 }
             Next
         Next
