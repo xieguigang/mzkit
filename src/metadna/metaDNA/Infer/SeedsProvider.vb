@@ -140,8 +140,8 @@ Namespace Infer
 
                 scoreVal = stdnum.Min(infer.forward, infer.reverse)
                 vec = {infer.forward, infer.reverse, 1 - (ppmVal / 20)}
-                pvalue = vec.Average
-                vec = {pvalue, pvalue, pvalue + 0.01}
+                ' pvalue = vec.Average
+                ' vec = {pvalue, pvalue, pvalue + 0.01}
                 pvalue = vec.DoCall(AddressOf t.Test).Pvalue
             End If
 

@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports BioNovoGene.BioDeep.MetaDNA.Infer
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
@@ -16,6 +17,7 @@ Module ResultHandler
 
             For Each type As Candidate In infer.infers
                 Dim partner As String = type.infer.reference.id.Split(":"c).Last.Trim
+                Dim links As NamedValue(Of String)() = keggNetwork.FindReactions(partner, compound.entry)
 
                 Yield New MetaDNAResult With {
                     .exactMass = compound.exactMass,
@@ -34,7 +36,8 @@ Module ResultHandler
                     .mz = type.infer.query.mz,
                     .rt = type.infer.query.scan_time,
                     .intensity = type.infer.query.intensity,
-                    .KEGG_reaction =
+                    .KEGG_reaction = links(Scan0).Name,
+                    .reaction = links(Scan0).Value
                 }
             Next
         Next
