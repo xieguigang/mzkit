@@ -14,7 +14,7 @@ const metadna = metadna(
 # )
 ;
 
-const rawSample as string = "E:\D065.mzML";
+const rawSample as string = "E:\biodeep\biodeepDB\lxy-CID30.mzML";
 const infer = metadna :> DIA.infer(
 	sample = rawSample
 		:> assembly::mzxml.mgf 
@@ -31,4 +31,12 @@ metadna
 metadna
 :> as.table(infer, unique = TRUE)
 :> write.csv(file = `${dirname(@script)}/${basename(rawSample)}.csv`)
+;
+
+require(igraph);
+
+metadna
+:> as.table(infer, unique = TRUE)
+:> as.graph
+:> save.network(file = `${dirname(@script)}/${basename(rawSample)}_infers/`)
 ;

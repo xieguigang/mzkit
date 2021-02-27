@@ -234,6 +234,18 @@ Module metaDNAInfer
             .ToArray
     End Function
 
+    <ExportAPI("as.graph")>
+    <RApiReturn(GetType(NetworkGraph))>
+    Public Function ExportNetwork(<RRawVectorArgument> result As Object, Optional env As Environment = Nothing) As Object
+        Dim data As pipeline = pipeline.TryCreatePipeline(Of MetaDNAResult)(result, env)
+
+        If data.isError Then
+            Return data.getError
+        End If
+
+        Return data.populates(Of MetaDNAResult)(env).ExportNetwork
+    End Function
+
 #End Region
 
 #Region "kegg"
