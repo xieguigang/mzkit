@@ -102,6 +102,7 @@
   <ItemGroup>
     <Compile Include="Algorithm.vb" />
     <Compile Include="Infer\CandidateInfer.vb" />
+    <Compile Include="Infer\Candidate.vb" />
     <Compile Include="Infer\InferLevel.vb" />
     <Compile Include="Infer\SeedsProvider.vb" />
     <Compile Include="KEGGNetwork.vb" />
