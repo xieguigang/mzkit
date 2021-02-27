@@ -51,6 +51,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 Imports BioNovoGene.BioDeep.MetaDNA.Infer
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
@@ -71,6 +72,7 @@ Public Class Algorithm
     ReadOnly allowMs1 As Boolean = False
 
     Dim precursorTypes As MzCalculator()
+    Dim typeOrders As Index(Of String)
 
     Dim unknowns As UnknownSet
     Dim kegg As KEGGHandler
@@ -91,6 +93,7 @@ Public Class Algorithm
                         Return Parser.ParseMzCalculator(name, name.Last)
                     End Function) _
             .ToArray
+        Me.typeOrders = precursorTypes
 
         Return Me
     End Function
@@ -220,7 +223,7 @@ Public Class Algorithm
         Dim data = result.ExportTable(kegg, keggNetwork:=network)
 
         If unique Then
-            data = data.GetUniques
+            data = data.GetUniques(typeOrders)
         End If
 
         Return data

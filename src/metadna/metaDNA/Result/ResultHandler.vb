@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports BioNovoGene.BioDeep.MetaDNA.Infer
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
@@ -45,12 +46,26 @@ Module ResultHandler
     End Function
 
     <Extension>
-    Public Iterator Function GetUniques(result As IEnumerable(Of MetaDNAResult)) As IEnumerable(Of MetaDNAResult)
-        For Each kegg_id In result.GroupBy(Function(c) c.KEGGId)
+    Public Iterator Function GetUniques(result As IEnumerable(Of MetaDNAResult), typeOrders As Index(Of String)) As IEnumerable(Of MetaDNAResult)
+        For Each kegg_id In result.FeatureUniques(typeOrders).GroupBy(Function(c) c.KEGGId)
             Dim data As MetaDNAResult() = kegg_id.ToArray
             Dim pvalue As Vector = -data.Select(Function(c) c.pvalue).AsVector.Log(base:=10)
             Dim intensity As Vector = data.Select(Function(c) c.intensity).AsVector.Log(base:=10)
-            Dim scores As Vector = pvalue * intensity
+            Dim orders As Vector = data.Select(Function(c) typeOrders.Count - typeOrders.IndexOf(c.precursorType)).AsVector
+            Dim scores As Vector = pvalue * intensity * (orders + 1)
+            Dim max As MetaDNAResult = data(Which.Max(scores))
+
+            Yield max
+        Next
+    End Function
+
+    <Extension>
+    Private Iterator Function FeatureUniques(result As IEnumerable(Of MetaDNAResult), typeOrders As Index(Of String)) As IEnumerable(Of MetaDNAResult)
+        For Each feature In result.GroupBy(Function(c) c.id)
+            Dim data As MetaDNAResult() = feature.ToArray
+            Dim pvalue As Vector = -data.Select(Function(c) c.pvalue).AsVector.Log(base:=10)
+            Dim orders As Vector = data.Select(Function(c) typeOrders.Count - typeOrders.IndexOf(c.precursorType)).AsVector
+            Dim scores As Vector = pvalue * (orders + 1)
             Dim max As MetaDNAResult = data(Which.Max(scores))
 
             Yield max
