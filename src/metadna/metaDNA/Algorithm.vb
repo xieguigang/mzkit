@@ -47,6 +47,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
+Imports BioNovoGene.BioDeep.MetaDNA.Infer
 Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports stdnum = System.Math
@@ -186,15 +187,17 @@ Public Class Algorithm
         Return max
     End Function
 
-    Public Iterator Function DIASearch(seeds As IEnumerable(Of AnnotatedSeed)) As IEnumerable(Of InferLink)
+    Public Iterator Function DIASearch(seeds As IEnumerable(Of AnnotatedSeed)) As IEnumerable(Of CandidateInfer)
         Dim result As InferLink()
         Dim seeding As New SeedsProvider(unknowns)
+        Dim candidates As CandidateInfer()
 
         Do
             result = RunIteration(seeds).ToArray
-            seeds = seeding.Seeding(infers:=result).ToArray
+            candidates = seeding.CandidateInfers(infer:=result).ToArray
+            seeds = seeding.Seeding(infers:=candidates).ToArray
 
-            For Each infer As InferLink In result
+            For Each infer As CandidateInfer In candidates
                 Yield infer
             Next
         Loop While result.Length > 0
