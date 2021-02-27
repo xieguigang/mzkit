@@ -59,6 +59,11 @@ Public Class AnnotatedSeed : Implements INamedValue
     Public Property kegg_id As String
     Public Property id As String Implements INamedValue.Key
     Public Property parent As ms1_scan
+
+    ''' <summary>
+    ''' ``[lib_guid => spectrum]``
+    ''' </summary>
+    ''' <returns></returns>
     Public Property products As Dictionary(Of String, LibraryMatrix)
 
     Public Overrides Function ToString() As String

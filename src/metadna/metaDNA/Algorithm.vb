@@ -173,7 +173,7 @@ Public Class Algorithm
         Dim align As AlignmentOutput
         Dim score As (forward#, reverse#)
 
-        For Each ref In seed.products
+        For Each ref In seed.products.Where(Function(sd) sd.Key <> hit.lib_guid)
             align = MSalignment.CreateAlignment(hit.mzInto, ref.Value.ms2)
             score = MSalignment.GetScore(align.alignments)
 
