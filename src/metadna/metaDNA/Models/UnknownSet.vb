@@ -73,6 +73,12 @@ Public Class UnknownSet
                End Function
     End Function
 
+    ''' <summary>
+    ''' create tree by precursor m/z
+    ''' </summary>
+    ''' <param name="raw"></param>
+    ''' <param name="tolerance"></param>
+    ''' <returns></returns>
     Public Shared Function CreateTree(raw As IEnumerable(Of PeakMs2), tolerance As Tolerance) As UnknownSet
         Dim tree As New AVLTree(Of Double, PeakMs2)(MassQuery(tolerance), Function(mz) mz.ToString("F4"))
 

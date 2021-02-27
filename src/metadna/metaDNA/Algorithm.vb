@@ -56,13 +56,49 @@ Imports stdnum = System.Math
 ''' </summary>
 Public Class Algorithm
 
-    ReadOnly tolerance As Tolerance
-    ReadOnly unknowns As UnknownSet
-    ReadOnly kegg As KEGGHandler
-    ReadOnly network As KEGGNetwork
-    ReadOnly precursorTypes As MzCalculator()
+    ''' <summary>
+    ''' tolerance error between two ms1 m/z in ppm
+    ''' </summary>
+    ReadOnly ms1ppm As Tolerance
     ReadOnly dotcutoff As Double
     ReadOnly MSalignment As AlignmentProvider
+
+    Dim precursorTypes As MzCalculator()
+
+    Dim unknowns As UnknownSet
+    Dim kegg As KEGGHandler
+    Dim network As KEGGNetwork
+
+    Sub New(ms1ppm As Tolerance, dotcutoff As Double, mzwidth As Tolerance)
+        Me.ms1ppm = ms1ppm
+        Me.dotcutoff = dotcutoff
+        Me.MSalignment = New CosAlignment(mzwidth, LowAbundanceTrimming.Default)
+    End Sub
+
+    Public Function SetSearchRange(ParamArray precursorTypes As String()) As Algorithm
+        Me.precursorTypes = precursorTypes _
+            .Select(Function(name)
+                        Return Parser.ParseMzCalculator(name, name.Last)
+                    End Function) _
+            .ToArray
+
+        Return Me
+    End Function
+
+    Public Function SetSamples(sample As IEnumerable(Of PeakMs2)) As Algorithm
+        unknowns = UnknownSet.CreateTree(sample, ms1ppm)
+        Return Me
+    End Function
+
+    Public Function SetKeggLibrary(library As IEnumerable(Of Compound)) As Algorithm
+        kegg = KEGGHandler.CreateIndex(library, precursorTypes, ms1ppm)
+        Return Me
+    End Function
+
+    Public Function SetNetwork(classLinks As IEnumerable(Of ReactionClass)) As Algorithm
+        network = KEGGNetwork.CreateNetwork(classLinks)
+        Return Me
+    End Function
 
     ''' <summary>
     ''' Create infer network
