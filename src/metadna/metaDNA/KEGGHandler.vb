@@ -98,16 +98,17 @@ Public Class KEGGHandler
 
     Public Shared Function CreateIndex(compounds As IEnumerable(Of Compound), types As MzCalculator(), tolerance As Tolerance) As KEGGHandler
         Dim tree As New AVLTree(Of MassIndexKey, Compound)(MassIndexKey.ComparesMass(tolerance), AddressOf any.ToString)
+        Dim typesCache = types.Select(Function(t) (name:=t.ToString, type:=t)).ToArray
 
-        For Each compound As Compound In compounds
+        For Each compound As Compound In compounds.GroupBy(Function(cpd) cpd.entry).Select(Function(cgroup) cgroup.First)
             If compound.exactMass <= 0 Then
                 Continue For
             End If
 
-            For Each type As MzCalculator In types
+            For Each type As (name$, calc As MzCalculator) In typesCache
                 Dim index As New MassIndexKey With {
-                    .precursorType = type.ToString,
-                    .mz = type.CalcMZ(compound.exactMass)
+                    .precursorType = type.name,
+                    .mz = type.calc.CalcMZ(compound.exactMass)
                 }
 
                 tree.Add(index, compound, valueReplace:=False)
