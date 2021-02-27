@@ -189,6 +189,7 @@ Global
 		..\..\GCModeller\src\R-sharp\Library\R_graphic.interop\R_graphic.interop.projitems*{dd4b546d-f6ec-4c97-9683-d0dc0e9f569e}*SharedItemsImports = 4
 		Library\mzkit.interopArguments\mzkit.interopArguments.projitems*{dd4b546d-f6ec-4c97-9683-d0dc0e9f569e}*SharedItemsImports = 4
 		Library\mzkit.interop\mzkit.interop.projitems*{dd4b546d-f6ec-4c97-9683-d0dc0e9f569e}*SharedItemsImports = 4
+		Library\mzkit.interopArguments\mzkit.interopArguments.projitems*{f95500cd-0c6a-448e-a049-699a4e6c35a7}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		BioDeep_database|Any CPU = BioDeep_database|Any CPU

@@ -42,16 +42,19 @@
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.MetaDNA
 Imports MetaDNA.visual
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.Data
 Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports KeggCompound = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.Compound
@@ -121,6 +124,25 @@ Module metaDNAInfer
     End Function
 
 #Region "metadna algorithm"
+
+    <ExportAPI("metadna")>
+    <RApiReturn(GetType(MetaDNAAlgorithm))>
+    Public Function MetaDNAAlgorithm(Optional ms1ppm As Object = "ppm:20",
+                                     Optional mzwidth As Object = "da:0.3",
+                                     Optional dotcutoff As Double = 0.5,
+                                     Optional env As Environment = Nothing) As Object
+
+        Dim ms1Err As [Variant](Of Tolerance, Message) = Math.getTolerance(ms1ppm, env)
+        Dim mz2Err As [Variant](Of Tolerance, Message) = Math.getTolerance(mzwidth, env)
+
+        If ms1Err Like GetType(Message) Then
+            Return ms1Err.TryCast(Of Message)
+        ElseIf mz2Err Like GetType(Message) Then
+            Return mz2Err.TryCast(Of Message)
+        End If
+
+        Return New MetaDNAAlgorithm(ms1Err, dotcutoff, mz2Err)
+    End Function
 
     <ExportAPI("range")>
     Public Function SetSearchRange(metadna As MetaDNAAlgorithm, precursorTypes As String()) As MetaDNAAlgorithm
