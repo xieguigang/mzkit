@@ -1,5 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports BioNovoGene.BioDeep.MetaDNA.Infer
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 
 Module ResultHandler
@@ -19,7 +21,7 @@ Module ResultHandler
                     .inferLevel = type.infer.level,
                     .KEGGId = infer.kegg_id,
                     .name = If(compound.commonNames.FirstOrDefault, compound.formula),
-                    .ppm = type.ppm,
+                    .ppm = CInt(type.ppm),
                     .precursorType = type.precursorType,
                     .pvalue = type.pvalue,
                     .partnerKEGGId = type.infer.reference.id,
@@ -33,7 +35,15 @@ Module ResultHandler
     End Function
 
     <Extension>
-    Public Function GetUniques(result As IEnumerable(Of MetaDNAResult)) As IEnumerable(Of MetaDNAResult)
+    Public Iterator Function GetUniques(result As IEnumerable(Of MetaDNAResult)) As IEnumerable(Of MetaDNAResult)
+        For Each kegg_id In result.GroupBy(Function(c) c.KEGGId)
+            Dim data As MetaDNAResult() = kegg_id.ToArray
+            Dim pvalue As Vector = -data.Select(Function(c) c.pvalue).AsVector.Log(base:=10)
+            Dim intensity As Vector = data.Select(Function(c) c.intensity).AsVector.Log(base:=10)
+            Dim scores As Vector = pvalue * intensity
+            Dim max As MetaDNAResult = data(Which.Max(scores))
 
+            Yield max
+        Next
     End Function
 End Module

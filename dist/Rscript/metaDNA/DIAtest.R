@@ -25,6 +25,10 @@ const infer = metadna :> DIA.infer(
 
 metadna 
 :> as.table(infer) 
-:> write.csv(file = `${dirname(@script)}/lxy-CID30.csv`)
+:> write.csv(file = `${dirname(@script)}/lxy-CID30_raw.csv`)
 ;
 
+metadna
+:> as.table(infer, unique = TRUE)
+:> write.csv(file = `${dirname(@script)}/lxy-CID30.csv`)
+;
