@@ -69,6 +69,8 @@ Public Class Algorithm
     Dim kegg As KEGGHandler
     Dim network As KEGGNetwork
 
+#Region "algorithm initialization"
+
     Sub New(ms1ppm As Tolerance, dotcutoff As Double, mzwidth As Tolerance)
         Me.ms1ppm = ms1ppm
         Me.dotcutoff = dotcutoff
@@ -99,6 +101,7 @@ Public Class Algorithm
         network = KEGGNetwork.CreateNetwork(classLinks)
         Return Me
     End Function
+#End Region
 
     ''' <summary>
     ''' Create infer network
