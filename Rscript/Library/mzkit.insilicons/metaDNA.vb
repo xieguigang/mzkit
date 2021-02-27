@@ -50,12 +50,14 @@ Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.genomics.Data
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports KeggCompound = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.Compound
 Imports kegReactionClass = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.ReactionClass
 Imports MetaDNAAlgorithm = BioNovoGene.BioDeep.MetaDNA.Algorithm
+Imports ReactionClass = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.ReactionClass
 Imports ReactionClassTbl = MetaDNA.visual.ReactionClass
 Imports REnv = SMRUCC.Rsharp.Runtime.Internal
 
@@ -175,6 +177,22 @@ Module metaDNAInfer
             .ToArray
 
         Return infer
+    End Function
+
+#End Region
+
+#Region "kegg"
+
+    <ExportAPI("kegg.library")>
+    <RApiReturn(GetType(KeggCompound))>
+    Public Function loadCompoundLibrary(repo As String) As Object
+        Return CompoundRepository.ScanRepository(repo, ignoreGlycan:=False).DoCall(AddressOf pipeline.CreateFromPopulator)
+    End Function
+
+    <ExportAPI("kegg.network")>
+    <RApiReturn(GetType(ReactionClass))>
+    Public Function loadKeggNetwork(repo As String) As Object
+        Return ReactionClass.ScanRepository(repo).DoCall(AddressOf pipeline.CreateFromPopulator)
     End Function
 
 #End Region
