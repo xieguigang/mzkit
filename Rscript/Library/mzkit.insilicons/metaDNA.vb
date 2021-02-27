@@ -44,6 +44,7 @@
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.BioDeep.MetaDNA
 Imports BioNovoGene.BioDeep.MetaDNA.Infer
 Imports MetaDNA.visual
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -151,7 +152,10 @@ Module metaDNAInfer
 
     <ExportAPI("load.kegg")>
     <RApiReturn(GetType(MetaDNAAlgorithm))>
-    Public Function SetKeggLibrary(metadna As MetaDNAAlgorithm, <RRawVectorArgument> kegg As Object, Optional env As Environment = Nothing) As Object
+    Public Function SetKeggLibrary(metadna As MetaDNAAlgorithm,
+                                   <RRawVectorArgument> kegg As Object,
+                                   Optional env As Environment = Nothing) As Object
+
         Dim library As pipeline = pipeline.TryCreatePipeline(Of KeggCompound)(kegg, env)
 
         If library.isError Then
@@ -163,7 +167,10 @@ Module metaDNAInfer
 
     <ExportAPI("load.kegg_network")>
     <RApiReturn(GetType(MetaDNAAlgorithm))>
-    Public Function SetInferNetwork(metadna As MetaDNAAlgorithm, <RRawVectorArgument> links As Object, Optional env As Environment = Nothing) As Object
+    Public Function SetInferNetwork(metadna As MetaDNAAlgorithm,
+                                    <RRawVectorArgument> links As Object,
+                                    Optional env As Environment = Nothing) As Object
+
         Dim network As pipeline = pipeline.TryCreatePipeline(Of ReactionClass)(links, env)
 
         If network.isError Then
@@ -175,7 +182,10 @@ Module metaDNAInfer
 
     <ExportAPI("load.raw")>
     <RApiReturn(GetType(MetaDNAAlgorithm))>
-    Public Function handleSample(metadna As MetaDNAAlgorithm, <RRawVectorArgument> sample As Object, Optional env As Environment = Nothing) As Object
+    Public Function handleSample(metadna As MetaDNAAlgorithm,
+                                 <RRawVectorArgument> sample As Object,
+                                 Optional env As Environment = Nothing) As Object
+
         Dim raw As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(sample, env)
 
         If raw.isError Then
@@ -187,7 +197,10 @@ Module metaDNAInfer
 
     <ExportAPI("DIA.infer")>
     <RApiReturn(GetType(CandidateInfer))>
-    Public Function DIAInfer(metaDNA As MetaDNAAlgorithm, <RRawVectorArgument> sample As Object, Optional env As Environment = Nothing) As Object
+    Public Function DIAInfer(metaDNA As MetaDNAAlgorithm,
+                             <RRawVectorArgument> sample As Object,
+                             Optional env As Environment = Nothing) As Object
+
         Dim raw As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(sample, env)
 
         If raw.isError Then
@@ -200,6 +213,24 @@ Module metaDNAInfer
             .ToArray
 
         Return infer
+    End Function
+
+    <ExportAPI("as.table")>
+    <RApiReturn(GetType(MetaDNAResult))>
+    Public Function ResultTable(metaDNA As MetaDNAAlgorithm,
+                                <RRawVectorArgument>
+                                result As Object,
+                                Optional env As Environment = Nothing) As Object
+
+        Dim data As pipeline = pipeline.TryCreatePipeline(Of CandidateInfer)(result, env)
+
+        If data.isError Then
+            Return data.getError
+        End If
+
+        Return metaDNA _
+            .ExportTable(data.populates(Of CandidateInfer)(env)) _
+            .ToArray
     End Function
 
 #End Region

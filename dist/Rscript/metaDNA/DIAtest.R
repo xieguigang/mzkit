@@ -1,7 +1,7 @@
 imports "metadna" from "mzkit.insilicons";
 imports ["assembly", "math"] from "mzkit";
 
-metadna(
+const metadna = metadna(
 	ms1ppm    = tolerance(20, "ppm"),
 	dotcutoff = 0.5,
 	mzwidth   = tolerance(0.3, "da")
@@ -12,7 +12,15 @@ metadna(
 # :> load.raw(
 	# sample = assembly::mzxml.mgf("E:\biodeep\biodeepDB\lxy-CID30.mzML")
 # )
-:> DIA.infer(
+;
+
+const infer = metadna :> DIA.infer(
 	sample = assembly::mzxml.mgf("E:\biodeep\biodeepDB\lxy-CID30.mzML")
 )
 ;
+
+metadna 
+:> as.table(infer) 
+:> write.csv(file = `${dirname(@script)}/lxy-CID30.csv`)
+;
+
