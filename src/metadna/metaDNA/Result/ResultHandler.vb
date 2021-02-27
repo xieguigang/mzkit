@@ -39,7 +39,8 @@ Module ResultHandler
                     .rt = type.infer.query.scan_time,
                     .intensity = type.infer.query.intensity,
                     .KEGG_reaction = links(Scan0).Name,
-                    .reaction = links(Scan0).Value
+                    .reaction = links(Scan0).Value,
+                    .parentTrace = type.infer.parentTrace
                 }
             Next
         Next
@@ -52,7 +53,8 @@ Module ResultHandler
             Dim pvalue As Vector = -data.Select(Function(c) c.pvalue).AsVector.Log(base:=10)
             Dim intensity As Vector = data.Select(Function(c) c.intensity).AsVector.Log(base:=10)
             Dim orders As Vector = data.Select(Function(c) typeOrders.Count - typeOrders.IndexOf(c.precursorType)).AsVector
-            Dim scores As Vector = pvalue * intensity * (orders + 1)
+            Dim parent As Vector = data.Select(Function(c) c.parentTrace).AsVector
+            Dim scores As Vector = pvalue * intensity * (orders + 1) + parent
             Dim max As MetaDNAResult = data(Which.Max(scores))
 
             Yield max
@@ -65,7 +67,8 @@ Module ResultHandler
             Dim data As MetaDNAResult() = feature.ToArray
             Dim pvalue As Vector = -data.Select(Function(c) c.pvalue).AsVector.Log(base:=10)
             Dim orders As Vector = data.Select(Function(c) typeOrders.Count - typeOrders.IndexOf(c.precursorType)).AsVector
-            Dim scores As Vector = pvalue * (orders + 1)
+            Dim parent As Vector = data.Select(Function(c) c.parentTrace).AsVector
+            Dim scores As Vector = pvalue * (orders + 1) + parent
             Dim max As MetaDNAResult = data(Which.Max(scores))
 
             Yield max

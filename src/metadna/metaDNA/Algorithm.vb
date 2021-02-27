@@ -167,14 +167,17 @@ Public Class Algorithm
                 If stdnum.Min(alignment.forward, alignment.reverse) < dotcutoff Then
                     If alignment.jaccard >= 0.5 Then
                         alignment.level = InferLevel.Ms2
+                        alignment.parentTrace *= 0.5
                     ElseIf allowMs1 Then
                         alignment.alignments = Nothing
                         alignment.level = InferLevel.Ms1
+                        alignment.parentTrace *= 0.3
                     Else
                         Continue For
                     End If
                 Else
                     alignment.level = InferLevel.Ms2
+                    alignment.parentTrace *= stdnum.Min(alignment.forward, alignment.reverse)
                 End If
 
                 Yield alignment
@@ -208,7 +211,8 @@ Public Class Algorithm
                         .mz = seed.parent.mz,
                         .scan_time = seed.parent.scan_time,
                         .intensity = seed.parent.intensity
-                    }
+                    },
+                    .parentTrace = seed.parentTrace
                 }
             End If
         Next
@@ -282,7 +286,8 @@ Public Class Algorithm
                     },
                     .products = New Dictionary(Of String, LibraryMatrix) From {
                         {unknown.lib_guid, seedRef}
-                    }
+                    },
+                    .parentTrace = 100
                 }
             Next
         Next

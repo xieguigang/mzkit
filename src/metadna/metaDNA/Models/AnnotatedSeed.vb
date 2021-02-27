@@ -59,6 +59,7 @@ Public Class AnnotatedSeed : Implements INamedValue
     Public Property kegg_id As String
     Public Property id As String Implements INamedValue.Key
     Public Property parent As ms1_scan
+    Public Property parentTrace As Double
 
     ''' <summary>
     ''' ``[lib_guid => spectrum]``

@@ -16,6 +16,7 @@ Public Class MetaDNAResult
     Public Property forward As Double
     Public Property reverse As Double
     Public Property jaccard As Double
+    Public Property parentTrace As Double
     Public Property pvalue As Double
     Public Property seed As String
     Public Property partnerKEGGId As String

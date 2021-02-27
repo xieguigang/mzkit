@@ -171,7 +171,10 @@ Namespace Infer
                         .scan_time = best.infer.query.scan_time,
                         .intensity = best.infer.query.intensity
                     },
-                    .products = products
+                    .products = products,
+                    .parentTrace = Aggregate x As Candidate
+                                   In compound.infers
+                                   Into Max(x.infer.parentTrace)
                 }
             Next
         End Function

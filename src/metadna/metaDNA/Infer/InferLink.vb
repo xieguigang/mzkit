@@ -56,6 +56,7 @@ Namespace Infer
         ''' </summary>
         ''' <returns></returns>
         Public Property kegg As KEGGQuery
+        Public Property parentTrace As Double
 
     End Class
 End Namespace
