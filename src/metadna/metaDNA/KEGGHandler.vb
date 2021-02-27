@@ -100,6 +100,10 @@ Public Class KEGGHandler
         Dim tree As New AVLTree(Of MassIndexKey, Compound)(MassIndexKey.ComparesMass(tolerance), AddressOf any.ToString)
 
         For Each compound As Compound In compounds
+            If compound.exactMass <= 0 Then
+                Continue For
+            End If
+
             For Each type As MzCalculator In types
                 Dim index As New MassIndexKey With {
                     .precursorType = type.ToString,
