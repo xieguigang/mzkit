@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::4c4b4dd6dfe5f7007b7d03f84cf82ffc, metaDNA\Infer\SeedsProvider.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class SeedsProvider
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: CandidateInfers, MzGroupCandidates, Score, Seeding
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class SeedsProvider
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: CandidateInfers, MzGroupCandidates, Score, Seeding
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -128,22 +128,15 @@ Namespace Infer
         End Function
 
         Private Function Score(infer As InferLink, type As String, mz As Double) As Candidate
-            Dim scoreVal As Double
             Dim pvalue As Double
             Dim ppmVal As Double = PPMmethod.PPM(mz, infer.query.mz)
+            Dim vec As Double()
+            Dim scoreVal As Double = stdnum.Min(infer.forward, infer.reverse)
 
-            If infer.level = InferLevel.Ms1 Then
-                scoreVal = 0.1
-                pvalue = 0.5
-            Else
-                Dim vec As Double()
-
-                scoreVal = stdnum.Min(infer.forward, infer.reverse)
-                vec = {infer.forward, infer.reverse, 1 - (ppmVal / 20), infer.jaccard}
-                pvalue = vec.Average
-                vec = {pvalue, pvalue, pvalue, pvalue + 0.0001}
-                pvalue = vec.DoCall(AddressOf t.Test).Pvalue
-            End If
+            vec = {infer.forward, infer.reverse, 1 - (ppmVal / 20), infer.jaccard}
+            pvalue = vec.Average
+            vec = {pvalue, pvalue, pvalue, pvalue + 0.0001}
+            pvalue = vec.DoCall(AddressOf t.Test).Pvalue
 
             Return New Candidate With {
                 .infer = infer,

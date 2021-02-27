@@ -69,7 +69,7 @@ Public Class Algorithm
     ReadOnly dotcutoff As Double
     ReadOnly MSalignment As AlignmentProvider
     ReadOnly mzwidth As Tolerance
-    ReadOnly allowMs1 As Boolean = False
+    ReadOnly allowMs1 As Boolean = True
 
     Dim precursorTypes As MzCalculator()
     Dim typeOrders As Index(Of String)
@@ -170,8 +170,6 @@ Public Class Algorithm
                     ElseIf allowMs1 Then
                         alignment.alignments = Nothing
                         alignment.level = InferLevel.Ms1
-                        alignment.forward = 0
-                        alignment.reverse = 0
                     Else
                         Continue For
                     End If
