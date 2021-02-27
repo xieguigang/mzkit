@@ -44,7 +44,6 @@
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
-Imports BioNovoGene.BioDeep.MetaDNA
 Imports BioNovoGene.BioDeep.MetaDNA.Infer
 Imports MetaDNA.visual
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -210,13 +209,17 @@ Module metaDNAInfer
     <ExportAPI("kegg.library")>
     <RApiReturn(GetType(KeggCompound))>
     Public Function loadCompoundLibrary(repo As String) As Object
-        Return CompoundRepository.ScanRepository(repo, ignoreGlycan:=False).DoCall(AddressOf pipeline.CreateFromPopulator)
+        Return CompoundRepository _
+            .ScanRepository(repo, ignoreGlycan:=False) _
+            .DoCall(AddressOf pipeline.CreateFromPopulator)
     End Function
 
     <ExportAPI("kegg.network")>
     <RApiReturn(GetType(ReactionClass))>
     Public Function loadKeggNetwork(repo As String) As Object
-        Return ReactionClass.ScanRepository(repo).DoCall(AddressOf pipeline.CreateFromPopulator)
+        Return ReactionClass _
+            .ScanRepository(repo) _
+            .DoCall(AddressOf pipeline.CreateFromPopulator)
     End Function
 
 #End Region

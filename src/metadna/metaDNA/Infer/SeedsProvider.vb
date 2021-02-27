@@ -19,6 +19,7 @@ Namespace Infer
         Sub New(unknowns As UnknownSet, ranges As MzCalculator(), kegg As KEGGHandler)
             Me.unknowns = unknowns
             Me.precursorTypes = ranges
+            Me.kegg = kegg
         End Sub
 
         Public Iterator Function CandidateInfers(infer As IEnumerable(Of InferLink)) As IEnumerable(Of CandidateInfer)
