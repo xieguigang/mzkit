@@ -163,6 +163,9 @@ Namespace Infer
                     }
                 Next
 
+                Dim parent As Double = Aggregate x As Candidate In compound.infers Into Max(x.infer.parentTrace)
+                Dim length As Integer = Aggregate x As Candidate In compound.infers Into Max(x.infer.inferSize)
+
                 Yield New AnnotatedSeed With {
                     .id = best.infer.query.id,
                     .kegg_id = compound.kegg_id,
@@ -172,9 +175,8 @@ Namespace Infer
                         .intensity = best.infer.query.intensity
                     },
                     .products = products,
-                    .parentTrace = Aggregate x As Candidate
-                                   In compound.infers
-                                   Into Max(x.infer.parentTrace)
+                    .parentTrace = parent,
+                    .inferSize = length
                 }
             Next
         End Function

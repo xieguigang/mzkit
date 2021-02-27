@@ -40,7 +40,8 @@ Module ResultHandler
                     .intensity = type.infer.query.intensity,
                     .KEGG_reaction = links(Scan0).Name,
                     .reaction = links(Scan0).Value,
-                    .parentTrace = type.infer.parentTrace / 100
+                    .parentTrace = type.infer.parentTrace / 100,
+                    .inferSize = type.infer.inferSize
                 }
             Next
         Next
@@ -54,8 +55,12 @@ Module ResultHandler
             Dim intensity As Vector = data.Select(Function(c) c.intensity).AsVector.Log(base:=10)
             Dim orders As Vector = data.Select(Function(c) typeOrders.Count - typeOrders.IndexOf(c.precursorType)).AsVector
             Dim parent As Vector = data.Select(Function(c) c.parentTrace).AsVector
-            Dim scores As Vector = pvalue * intensity * (orders + 1) * parent
-            Dim max As MetaDNAResult = data(Which.Max(scores))
+            Dim length As Vector = data.Select(Function(c) c.inferSize).AsVector
+            Dim scores As Double() = pvalue * intensity * (orders + 1) * parent * length
+            Dim i As Integer = Which.Max(scores)
+            Dim max As MetaDNAResult = data(i)
+
+            max.score2 = scores(i)
 
             Yield max
         Next
@@ -68,8 +73,12 @@ Module ResultHandler
             Dim pvalue As Vector = -data.Select(Function(c) c.pvalue).AsVector.Log(base:=10)
             Dim orders As Vector = data.Select(Function(c) typeOrders.Count - typeOrders.IndexOf(c.precursorType)).AsVector
             Dim parent As Vector = data.Select(Function(c) c.parentTrace).AsVector
-            Dim scores As Vector = pvalue * (orders + 1) * parent
-            Dim max As MetaDNAResult = data(Which.Max(scores))
+            Dim length As Vector = data.Select(Function(c) c.inferSize).AsVector
+            Dim scores As Double() = pvalue * (orders + 1) * parent * length
+            Dim i As Integer = Which.Max(scores)
+            Dim max As MetaDNAResult = data(i)
+
+            max.score1 = scores(i)
 
             Yield max
         Next

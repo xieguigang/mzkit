@@ -60,6 +60,7 @@ Public Class AnnotatedSeed : Implements INamedValue
     Public Property id As String Implements INamedValue.Key
     Public Property parent As ms1_scan
     Public Property parentTrace As Double
+    Public Property inferSize As Integer
 
     ''' <summary>
     ''' ``[lib_guid => spectrum]``

@@ -212,7 +212,8 @@ Public Class Algorithm
                         .scan_time = seed.parent.scan_time,
                         .intensity = seed.parent.intensity
                     },
-                    .parentTrace = seed.parentTrace
+                    .parentTrace = seed.parentTrace,
+                    .inferSize = seed.inferSize + 1
                 }
             End If
         Next
@@ -287,7 +288,8 @@ Public Class Algorithm
                     .products = New Dictionary(Of String, LibraryMatrix) From {
                         {unknown.lib_guid, seedRef}
                     },
-                    .parentTrace = 100
+                    .parentTrace = 100,
+                    .inferSize = 1
                 }
             Next
         Next

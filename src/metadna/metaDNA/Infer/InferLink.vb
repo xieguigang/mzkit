@@ -56,7 +56,16 @@ Namespace Infer
         ''' </summary>
         ''' <returns></returns>
         Public Property kegg As KEGGQuery
+        ''' <summary>
+        ''' 起始值为100
+        ''' </summary>
+        ''' <returns></returns>
         Public Property parentTrace As Double
+        ''' <summary>
+        ''' 推断链的长度
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property inferSize As Integer
 
     End Class
 End Namespace
