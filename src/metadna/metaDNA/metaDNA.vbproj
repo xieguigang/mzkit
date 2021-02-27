@@ -101,12 +101,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithm.vb" />
-    <Compile Include="Models\CandidateInfer.vb" />
-    <Compile Include="SeedsProvider.vb" />
+    <Compile Include="Infer\CandidateInfer.vb" />
+    <Compile Include="Infer\SeedsProvider.vb" />
     <Compile Include="KEGGNetwork.vb" />
     <Compile Include="KEGGHandler.vb" />
     <Compile Include="Models\AnnotatedSeed.vb" />
-    <Compile Include="Models\InferLink.vb" />
+    <Compile Include="Infer\InferLink.vb" />
     <Compile Include="Models\KEGGQuery.vb" />
     <Compile Include="Models\MassIndexKey.vb" />
     <Compile Include="Models\UnknownSet.vb" />
