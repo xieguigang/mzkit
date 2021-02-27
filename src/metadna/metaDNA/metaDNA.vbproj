@@ -101,6 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithm.vb" />
+    <Compile Include="SeedsProvider.vb" />
     <Compile Include="KEGGNetwork.vb" />
     <Compile Include="KEGGHandler.vb" />
     <Compile Include="Models\AnnotatedSeed.vb" />

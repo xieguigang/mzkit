@@ -186,6 +186,20 @@ Public Class Algorithm
         Return max
     End Function
 
+    Public Iterator Function DIASearch(seeds As IEnumerable(Of AnnotatedSeed)) As IEnumerable(Of InferLink)
+        Dim result As InferLink()
+        Dim seeding As New SeedsProvider(unknowns)
+
+        Do
+            result = RunIteration(seeds).ToArray
+            seeds = seeding.Seeding(infer:=result).ToArray
+
+            For Each infer As InferLink In result
+                Yield infer
+            Next
+        Loop While result.Length > 0
+    End Function
+
     ''' <summary>
     ''' 单纯的进行推断，没有种子做基础
     ''' </summary>
@@ -194,7 +208,7 @@ Public Class Algorithm
     ''' 算法模块测试用
     ''' </remarks>
     Public Function DIASearch() As IEnumerable(Of InferLink)
-        Return RunIteration(GetCandidateSeeds)
+        Return DIASearch(GetCandidateSeeds)
     End Function
 
     Private Iterator Function GetCandidateSeeds() As IEnumerable(Of AnnotatedSeed)
