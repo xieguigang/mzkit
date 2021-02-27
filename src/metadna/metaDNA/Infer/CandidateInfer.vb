@@ -6,7 +6,7 @@
         Public Property infers As Candidate()
 
         Public Overrides Function ToString() As String
-            Return kegg_id
+            Return $"{kegg_id}: {infers.Select(Function(c) c.pvalue).Min}"
         End Function
 
     End Class
@@ -19,6 +19,10 @@
         Public Property pvalue As Double
 
         Public Property infer As InferLink
+
+        Public Overrides Function ToString() As String
+            Return pvalue
+        End Function
 
     End Class
 End Namespace

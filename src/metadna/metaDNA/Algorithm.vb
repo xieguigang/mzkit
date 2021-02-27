@@ -133,7 +133,7 @@ Public Class Algorithm
     Private Iterator Function alignKeggCompound(seed As AnnotatedSeed, compound As Compound) As IEnumerable(Of InferLink)
         For Each type As MzCalculator In precursorTypes
             Dim mz As Double = type.CalcMZ(compound.exactMass)
-            Dim candidates As PeakMs2() = unknowns.QueryByParentMz(mz)
+            Dim candidates As PeakMs2() = unknowns.QueryByParentMz(mz).ToArray
 
             If candidates.IsNullOrEmpty Then
                 Continue For

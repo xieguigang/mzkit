@@ -25,14 +25,19 @@ Namespace Infer
 
         Public Iterator Function CandidateInfers(infer As IEnumerable(Of InferLink)) As IEnumerable(Of CandidateInfer)
             Dim kegg = infer.GroupBy(Function(i) i.kegg.kegg_id).ToArray
+            Dim candidate As CandidateInfer
 
             For Each compound As IGrouping(Of String, InferLink) In kegg
-                Yield New CandidateInfer With {
+                candidate = New CandidateInfer With {
                     .kegg_id = compound.Key,
                     .infers = compound _
                         .DoCall(AddressOf MzGroupCandidates) _
                         .ToArray
                 }
+
+                If candidate.infers.Length > 0 Then
+                    Yield candidate
+                End If
             Next
         End Function
 

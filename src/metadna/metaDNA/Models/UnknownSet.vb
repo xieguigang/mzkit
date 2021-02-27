@@ -46,6 +46,7 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 ''' <summary>
 ''' 未知Feature列表
@@ -54,6 +55,7 @@ Public Class UnknownSet
 
     Dim features As AVLTree(Of Double, PeakMs2)
     Dim spectrumIndex As Dictionary(Of String, PeakMs2)
+    Dim nodeVisted As New Index(Of String)
 
     Private Sub New()
     End Sub
@@ -62,8 +64,28 @@ Public Class UnknownSet
         Return spectrumIndex.TryGetValue(key)
     End Function
 
-    Public Function QueryByParentMz(mz As Double) As PeakMs2()
-        Return features.Find(mz)?.Members
+    Public Sub AddTrace(libguids As IEnumerable(Of String))
+        For Each uid As String In libguids
+            Call nodeVisted.Add(uid)
+        Next
+    End Sub
+
+    ''' <summary>
+    ''' query all unvisited unknown features by given m/z
+    ''' </summary>
+    ''' <param name="mz"></param>
+    ''' <returns></returns>
+    Public Iterator Function QueryByParentMz(mz As Double) As IEnumerable(Of PeakMs2)
+        Dim members As PeakMs2() = features.Find(mz)?.Members
+
+        If Not members Is Nothing Then
+            For Each item As PeakMs2 In members
+                ' broke the vist loop at here
+                If Not item.lib_guid Like nodeVisted Then
+                    Yield item
+                End If
+            Next
+        End If
     End Function
 
     Private Shared Function MassQuery(tolerance As Tolerance) As Comparison(Of Double)
