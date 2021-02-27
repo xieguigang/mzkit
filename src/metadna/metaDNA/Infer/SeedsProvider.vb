@@ -135,7 +135,7 @@ Namespace Infer
 
             vec = {infer.forward, infer.reverse, 1 - (ppmVal / 20), infer.jaccard}
             pvalue = vec.Average
-            vec = {pvalue, pvalue, pvalue, pvalue + 0.0001}
+            vec = {pvalue, pvalue, pvalue + 0.05}
             pvalue = vec.DoCall(AddressOf t.Test).Pvalue
 
             Return New Candidate With {
