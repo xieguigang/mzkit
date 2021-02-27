@@ -192,7 +192,7 @@ Public Class Algorithm
 
         Do
             result = RunIteration(seeds).ToArray
-            seeds = seeding.Seeding(infer:=result).ToArray
+            seeds = seeding.Seeding(infers:=result).ToArray
 
             For Each infer As InferLink In result
                 Yield infer

@@ -10,7 +10,7 @@ Public Class SeedsProvider
         Me.unknowns = unknowns
     End Sub
 
-    Public Iterator Function Seeding(infer As IEnumerable(Of InferLink)) As IEnumerable(Of AnnotatedSeed)
+    Public Iterator Function CandidateInfers(infer As IEnumerable(Of InferLink)) As IEnumerable(Of CandidateInfer)
         Dim kegg = infer.GroupBy(Function(i) i.kegg.kegg_id).ToArray
 
         For Each compound As IGrouping(Of String, InferLink) In kegg
@@ -20,11 +20,14 @@ Public Class SeedsProvider
                         End Function) _
                 .OrderByDescending(Function(i) i.score) _
                 .ToArray
-            Dim best = bestOrder.First
-            Dim bestLib As New LibraryMatrix With {
-                .ms2 = unknowns.QueryByKey(best.Item2.query.id).mzInto,
-                .name = best.Item2.query.id
-            }
+
+            Yield New CandidateInfer
+        Next
+    End Function
+
+    Public Iterator Function Seeding(infers As IEnumerable(Of CandidateInfer)) As IEnumerable(Of AnnotatedSeed)
+        For Each compound As CandidateInfer In infers
+            Dim products As New Dictionary(Of String, LibraryMatrix)
 
             Yield New AnnotatedSeed With {
                 .id = best.Item2.query.id,
