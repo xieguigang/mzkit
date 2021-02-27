@@ -117,6 +117,7 @@ C00729,,1,0,0,Tropine
 C00739,,1,0,0,D-Lysine
 C00740,,1,0,0,D-Serine
 C00741,,1,0,0,Diacetyl
+C00761,,1,0,0,C00761
 C00763,,1,0,0,D-Proline
 C00764,,1,0,0,C00764
 C00772,,1,0,0,Mevaldate
@@ -875,7 +876,6 @@ C21476,,1,0,0,Phenazine
 C21514,,1,0,0,D-Proline betaine
 C21524,,1,0,0,D-Altritol
 C21584,,1,0,0,7'-O-Dmethylcephaeline
-C21601,,1,0,0,C21601
 C21602,,1,0,0,(1H-Indol-3-yl)-N-methylmethanamine
 C21604,,1,0,0,(3S)-6-Acetamido-3-aminohexanoate
 C21612,,1,0,0,3-Dehydro-L-erythronate
