@@ -132,12 +132,17 @@ Namespace Infer
             Dim pvalue As Double
             Dim ppmVal As Double = PPMmethod.PPM(mz, infer.query.mz)
 
-            If infer.level = 1 Then
+            If infer.level = InferLevel.Ms1 Then
                 scoreVal = 0.1
                 pvalue = 0.5
             Else
+                Dim vec As Double()
+
                 scoreVal = stdnum.Min(infer.forward, infer.reverse)
-                pvalue = t.Test({infer.forward, infer.reverse, 1 - (ppmVal / 20)}, alternative:=Hypothesis.Greater).Pvalue
+                vec = {infer.forward, infer.reverse, 1 - (ppmVal / 20)}
+                pvalue = vec.Average
+                vec = {pvalue, pvalue, pvalue + 0.01}
+                pvalue = vec.DoCall(AddressOf t.Test).Pvalue
             End If
 
             Return New Candidate With {
