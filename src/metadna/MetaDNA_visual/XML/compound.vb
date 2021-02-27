@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3de0be2af79e5e890caa9a64ac100eb2, MetaDNA_visual\XML\compound.vb"
+﻿#Region "Microsoft.VisualBasic::00d7043bb21e165d782c422c7a503a3d, MetaDNA_visual\XML\compound.vb"
 
     ' Author:
     ' 
@@ -63,4 +63,3 @@ Public Class compound : Implements INamedValue
     End Function
 
 End Class
-

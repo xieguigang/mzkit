@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f02f7be9f12d6da88262757f19723db, MetaDNA_visual\XML\unknown.vb"
+﻿#Region "Microsoft.VisualBasic::953affaa096f119a750301f80ae0e602, MetaDNA_visual\XML\unknown.vb"
 
     ' Author:
     ' 
@@ -67,4 +67,3 @@ Public Class unknown
         Return $"{name}: {edges.Select(Function(n) n.kegg).JoinBy(" -> ")}"
     End Function
 End Class
-

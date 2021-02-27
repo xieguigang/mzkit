@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::38e14fd607040a91f6f6c63aa1058c11, metaDNA\Models\KEGGQuery.vb"
+﻿#Region "Microsoft.VisualBasic::d7a693277d969645536a7d538275a201, metaDNA\Models\KEGGQuery.vb"
 
     ' Author:
     ' 
@@ -36,12 +36,11 @@
 
     ' Structure KEGGQuery
     ' 
-    ' 
+    '     Function: ToString
     ' 
     ' /********************************************************************************/
 
 #End Region
-
 
 Public Structure KEGGQuery
 

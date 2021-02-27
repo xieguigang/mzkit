@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec0a25c67482ea5b66689e8168f30254, MetaDNA_visual\XML\node.vb"
+﻿#Region "Microsoft.VisualBasic::7702bf4929afb37892268aa42c2bfafb, MetaDNA_visual\XML\node.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Xml.Serialization
 

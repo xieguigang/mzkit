@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::909448fd0e267db42e4dc6dc5f784940, metaDNA\KEGGNetwork.vb"
+﻿#Region "Microsoft.VisualBasic::55eeb12ee50b7df4c3591c1cd49e9fff, metaDNA\KEGGNetwork.vb"
 
     ' Author:
     ' 
@@ -87,4 +87,3 @@ Public Class KEGGNetwork
     End Function
 
 End Class
-

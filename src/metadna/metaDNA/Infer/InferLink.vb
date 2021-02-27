@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::991e0d09480d6057ba424f7799839a86, metaDNA\Models\InferLink.vb"
+﻿#Region "Microsoft.VisualBasic::06e943caaafa081fbcba4f01fb4ad198, metaDNA\Infer\InferLink.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,9 @@
 
     ' Summaries:
 
-    ' Class InferLink
+    '     Class InferLink
     ' 
-    '     Properties: level
-    ' 
-    ' Enum InferLevel
-    ' 
-    '     Ms1, Ms2
-    ' 
-    '  
-    ' 
+    '         Properties: kegg, level
     ' 
     ' 
     ' /********************************************************************************/
