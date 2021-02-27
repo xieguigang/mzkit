@@ -4,6 +4,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports stdnum = System.Math
 
@@ -74,19 +75,20 @@ Namespace Infer
         Private Function Score(infer As InferLink, type As String, mz As Double) As Candidate
             Dim scoreVal As Double
             Dim pvalue As Double
+            Dim ppmVal As Double = PPMmethod.PPM(mz, infer.query.mz)
 
             If infer.level = 1 Then
                 scoreVal = 0.1
                 pvalue = 0.5
             Else
                 scoreVal = stdnum.Min(infer.forward, infer.reverse)
-                pvalue =
+                pvalue = t.Test({infer.forward, infer.reverse, 1 - (ppmVal / 20)}, alternative:=Hypothesis.Greater).Pvalue
             End If
 
             Return New Candidate With {
                 .infer = infer,
                 .precursorType = type,
-                .ppm = PPMmethod.PPM(mz, infer.query.mz),
+                .ppm = ppmVal,
                 .score = scoreVal,
                 .pvalue = pvalue
             }
@@ -96,7 +98,9 @@ Namespace Infer
             For Each compound As CandidateInfer In infers
                 Dim products As New Dictionary(Of String, LibraryMatrix)
                 Dim pid As String
-                Dim best As Candidate = compound.infers.OrderByDescending(Function(a) a.score).First
+                Dim best As Candidate = compound.infers _
+                    .OrderByDescending(Function(a) a.score) _
+                    .First
 
                 For Each candidate As Candidate In compound.infers
                     pid = candidate.infer.query.id
