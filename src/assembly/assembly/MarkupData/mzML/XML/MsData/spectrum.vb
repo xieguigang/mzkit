@@ -124,8 +124,13 @@ Namespace MarkupData.mzML
         ''' </summary>
         ''' <returns></returns>
         Public Function GetRawMatrix() As ms2()
-            Dim mz = Me.ByteArray("m/z array").Base64Decode
+            Dim mz As Double() = Me.ByteArray("m/z array").Base64Decode
             Dim intensity = Me.ByteArray("intensity array").Base64Decode.AsVector
+
+            If mz.Length = 0 Then
+                Return {}
+            End If
+
             Dim relInto As Vector = intensity / intensity.Max
             Dim matrix As ms2() = CInt(defaultArrayLength) _
                 .Sequence _
