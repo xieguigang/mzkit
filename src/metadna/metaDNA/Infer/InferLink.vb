@@ -52,10 +52,12 @@
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
 
-Public Class InferLink : Inherits AlignmentOutput
+Namespace Infer
 
-    Public Property level As InferLevel
-    Public Property kegg As KEGGQuery
+    Public Class InferLink : Inherits AlignmentOutput
 
-End Class
+        Public Property level As InferLevel
+        Public Property kegg As KEGGQuery
 
+    End Class
+End Namespace

@@ -1,7 +1,10 @@
-﻿Public Class CandidateInfer
+﻿Namespace Infer
 
-    Public Property kegg_id As String
-    Public Property infers As InferLink()
-    Public Property scores As Double()
+    Public Class CandidateInfer
 
-End Class
+        Public Property kegg_id As String
+        Public Property infers As InferLink()
+        Public Property scores As Double()
+
+    End Class
+End Namespace
