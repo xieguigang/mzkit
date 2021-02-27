@@ -193,7 +193,15 @@ Module data
         End If
 
         Dim allData As PeakMs2() = dataList.populates(Of PeakMs2)(env).ToArray
-        Dim allId As String() = allData.Select(Function(p) $"M{p.mz}T{p.rt}").ToArray
+        Dim allId As String() = allData _
+            .Select(Function(p)
+                        If CInt(p.rt) = 0 Then
+                            Return $"M{CInt(p.mz)}"
+                        Else
+                            Return $"M{CInt(p.mz)}T{CInt(p.rt)}"
+                        End If
+                    End Function) _
+            .ToArray
         Dim uniques As String() = base.makeNames(allId, unique:=True, allow_:=True)
 
         For i As Integer = 0 To allData.Length - 1
