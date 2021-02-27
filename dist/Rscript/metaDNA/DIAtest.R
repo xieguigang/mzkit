@@ -1,5 +1,5 @@
 imports "metadna" from "mzkit.insilicons";
-imports ["assembly", "math"] from "mzkit";
+imports ["assembly", "data", "math"] from "mzkit";
 
 const metadna = metadna(
 	ms1ppm    = tolerance(20, "ppm"),
@@ -14,8 +14,12 @@ const metadna = metadna(
 # )
 ;
 
+const rawSample as string = "E:\biodeep\biodeepDB\lxy-CID30.mzML";
 const infer = metadna :> DIA.infer(
-	sample = assembly::mzxml.mgf("E:\biodeep\biodeepDB\lxy-CID30.mzML")
+	sample = rawSample
+		:> assembly::mzxml.mgf 
+		:> centroid 
+		:> make.ROI_names
 )
 ;
 

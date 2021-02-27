@@ -185,7 +185,11 @@ Namespace MarkupData.mzML
                 collisionEnergy = precursorList.precursor(Scan0).GetCollisionEnergy
 
                 ' unsure for the scans that missing charge values
-                charge = precursorList.precursor(Scan0).selectedIonList.selectedIon(Scan0).cvParams.KeyItem("charge state")?.value Or "-1".AsDefault
+                charge = precursorList.precursor(Scan0) _
+                    .selectedIonList _
+                    .selectedIon(Scan0) _
+                    .cvParams _
+                    .KeyItem("charge state")?.value Or "-1".AsDefault
             Else
                 activationMethod = ms1
             End If
