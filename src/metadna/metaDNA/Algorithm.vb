@@ -1,47 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::4664998e1b599f8590c005186575182c, metaDNA\Algorithm.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class Algorithm
-    ' 
-    '     Function: alignKeggCompound, GetBestQuery, RunInfer, RunIteration
-    ' 
-    ' /********************************************************************************/
+' Class Algorithm
+' 
+'     Function: alignKeggCompound, GetBestQuery, RunInfer, RunIteration
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -144,6 +145,41 @@ Public Class Algorithm
         Next
 
         Return max
+    End Function
+
+    ''' <summary>
+    ''' 单纯的进行推断，没有种子做基础
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' 算法模块测试用
+    ''' </remarks>
+    Public Function DIASearch() As IEnumerable(Of InferLink)
+        Return RunIteration(GetCandidateSeeds)
+    End Function
+
+    Private Iterator Function GetCandidateSeeds() As IEnumerable(Of AnnotatedSeed)
+        For Each unknown As PeakMs2 In unknowns.EnumerateAllUnknownFeatures
+            Dim seedRef As New LibraryMatrix With {
+                .ms2 = unknown.mzInto,
+                .name = unknown.ToString
+            }
+
+            For Each DIAseed As KEGGQuery In kegg.QueryByMz(unknown.mz)
+                Yield New AnnotatedSeed With {
+                    .id = unknown.lib_guid,
+                    .kegg_id = DIAseed.kegg_id,
+                    .parent = New ms1_scan With {
+                        .mz = unknown.mz,
+                        .scan_time = unknown.rt,
+                        .intensity = unknown.Ms2Intensity
+                    },
+                    .products = New Dictionary(Of String, LibraryMatrix) From {
+                        {unknown.lib_guid, seedRef}
+                    }
+                }
+            Next
+        Next
     End Function
 
 End Class
