@@ -27,7 +27,7 @@ Module ResultHandler
                     .forward = type.infer.forward,
                     .reverse = type.infer.reverse,
                     .jaccard = type.infer.jaccard,
-                    .inferLevel = type.infer.level,
+                    .inferLevel = type.infer.level.Description,
                     .KEGGId = infer.kegg_id,
                     .name = If(compound.commonNames.FirstOrDefault, compound.formula),
                     .ppm = CInt(type.ppm),
@@ -40,7 +40,7 @@ Module ResultHandler
                     .intensity = type.infer.query.intensity,
                     .KEGG_reaction = links(Scan0).Name,
                     .reaction = links(Scan0).Value,
-                    .parentTrace = type.infer.parentTrace
+                    .parentTrace = type.infer.parentTrace / 100
                 }
             Next
         Next
@@ -54,7 +54,7 @@ Module ResultHandler
             Dim intensity As Vector = data.Select(Function(c) c.intensity).AsVector.Log(base:=10)
             Dim orders As Vector = data.Select(Function(c) typeOrders.Count - typeOrders.IndexOf(c.precursorType)).AsVector
             Dim parent As Vector = data.Select(Function(c) c.parentTrace).AsVector
-            Dim scores As Vector = pvalue * intensity * (orders + 1) + parent
+            Dim scores As Vector = pvalue * intensity * (orders + 1) * parent
             Dim max As MetaDNAResult = data(Which.Max(scores))
 
             Yield max
@@ -68,7 +68,7 @@ Module ResultHandler
             Dim pvalue As Vector = -data.Select(Function(c) c.pvalue).AsVector.Log(base:=10)
             Dim orders As Vector = data.Select(Function(c) typeOrders.Count - typeOrders.IndexOf(c.precursorType)).AsVector
             Dim parent As Vector = data.Select(Function(c) c.parentTrace).AsVector
-            Dim scores As Vector = pvalue * (orders + 1) + parent
+            Dim scores As Vector = pvalue * (orders + 1) * parent
             Dim max As MetaDNAResult = data(Which.Max(scores))
 
             Yield max

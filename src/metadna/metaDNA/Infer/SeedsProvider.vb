@@ -133,7 +133,7 @@ Namespace Infer
             Dim vec As Double()
             Dim scoreVal As Double = stdnum.Min(infer.forward, infer.reverse)
 
-            vec = {infer.forward, infer.reverse, 1 - (ppmVal / 20), infer.jaccard}
+            vec = {infer.forward, infer.reverse, 1 - (ppmVal / 20), infer.jaccard, infer.parentTrace / 100}
             pvalue = vec.Average
             vec = {pvalue, pvalue, pvalue + 0.05}
             pvalue = vec.DoCall(AddressOf t.Test).Pvalue

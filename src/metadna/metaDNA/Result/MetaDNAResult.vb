@@ -12,7 +12,7 @@ Public Class MetaDNAResult
     Public Property name As String
     Public Property precursorType As String
     Public Property ppm As Double
-    Public Property inferLevel As InferLevel
+    Public Property inferLevel As String
     Public Property forward As Double
     Public Property reverse As Double
     Public Property jaccard As Double
