@@ -36,7 +36,7 @@ metadna
 require(igraph);
 
 metadna
-:> as.table(infer, unique = TRUE)
+:> as.table(infer)
 :> as.graph
 :> save.network(file = `${dirname(@script)}/${basename(rawSample)}_infers/`)
 ;

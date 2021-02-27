@@ -229,7 +229,7 @@ Public Class Algorithm
             data = data.GetUniques(typeOrders)
         End If
 
-        Return data
+        Return data.OrderBy(Function(r) r.rt)
     End Function
 
     Public Iterator Function DIASearch(seeds As IEnumerable(Of AnnotatedSeed)) As IEnumerable(Of CandidateInfer)
