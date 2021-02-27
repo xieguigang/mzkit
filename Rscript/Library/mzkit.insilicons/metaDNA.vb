@@ -220,6 +220,7 @@ Module metaDNAInfer
     Public Function ResultTable(metaDNA As MetaDNAAlgorithm,
                                 <RRawVectorArgument>
                                 result As Object,
+                                Optional unique As Boolean = False,
                                 Optional env As Environment = Nothing) As Object
 
         Dim data As pipeline = pipeline.TryCreatePipeline(Of CandidateInfer)(result, env)
@@ -229,7 +230,7 @@ Module metaDNAInfer
         End If
 
         Return metaDNA _
-            .ExportTable(data.populates(Of CandidateInfer)(env)) _
+            .ExportTable(data.populates(Of CandidateInfer)(env), unique) _
             .ToArray
     End Function
 

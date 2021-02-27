@@ -2,7 +2,7 @@
 Imports BioNovoGene.BioDeep.MetaDNA.Infer
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 
-Public Module ResultHandler
+Module ResultHandler
 
     <Extension>
     Public Iterator Function ExportTable(candidates As IEnumerable(Of CandidateInfer), kegg As KEGGHandler) As IEnumerable(Of MetaDNAResult)
@@ -30,5 +30,10 @@ Public Module ResultHandler
                 }
             Next
         Next
+    End Function
+
+    <Extension>
+    Public Function GetUniques(result As IEnumerable(Of MetaDNAResult)) As IEnumerable(Of MetaDNAResult)
+
     End Function
 End Module

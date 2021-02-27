@@ -202,8 +202,14 @@ Public Class Algorithm
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function ExportTable(result As IEnumerable(Of CandidateInfer)) As IEnumerable(Of MetaDNAResult)
-        Return result.ExportTable(kegg)
+    Public Function ExportTable(result As IEnumerable(Of CandidateInfer), Optional unique As Boolean = False) As IEnumerable(Of MetaDNAResult)
+        Dim data = result.ExportTable(kegg)
+
+        If unique Then
+            data = data.GetUniques
+        End If
+
+        Return data
     End Function
 
     Public Iterator Function DIASearch(seeds As IEnumerable(Of AnnotatedSeed)) As IEnumerable(Of CandidateInfer)
