@@ -131,9 +131,20 @@ Namespace Infer
             Dim pvalue As Double
             Dim ppmVal As Double = PPMmethod.PPM(mz, infer.query.mz)
             Dim vec As Double()
-            Dim scoreVal As Double = stdnum.Min(infer.forward, infer.reverse)
+            Dim tx = infer.query.scan_time / unknowns.rtmax
+            Dim ty = infer.reference.scan_time / unknowns.rtmax
+            Dim t1 = 1 - (ppmVal / 20)
+            Dim t2 = infer.parentTrace / 100
+            ' 结构相似，保留时间应该是相近的？
+            Dim t3 = 1 - stdnum.Abs(tx - ty)
 
-            vec = {infer.forward, infer.reverse, 1 - (ppmVal / 20), infer.jaccard, infer.parentTrace / 100}
+            If t3 >= 0.8 Then
+                t3 = 1
+            End If
+
+            Dim scoreVal As Double = stdnum.Min(infer.forward, infer.reverse) + t1 + infer.jaccard + t2 + t3
+
+            vec = {infer.forward, infer.reverse, t1, infer.jaccard, t2, t3}
             pvalue = vec.Average
             vec = {pvalue, pvalue, pvalue + 0.05}
             pvalue = vec.DoCall(AddressOf t.Test).Pvalue

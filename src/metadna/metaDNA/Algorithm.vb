@@ -167,11 +167,11 @@ Public Class Algorithm
                 If stdnum.Min(alignment.forward, alignment.reverse) < dotcutoff Then
                     If alignment.jaccard >= 0.5 Then
                         alignment.level = InferLevel.Ms2
-                        alignment.parentTrace *= 0.5
+                        alignment.parentTrace *= (0.95 * dotcutoff)
                     ElseIf allowMs1 Then
                         alignment.alignments = Nothing
                         alignment.level = InferLevel.Ms1
-                        alignment.parentTrace *= 0.3
+                        alignment.parentTrace *= (0.5 * dotcutoff)
                     Else
                         Continue For
                     End If

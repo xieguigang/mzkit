@@ -60,7 +60,10 @@ Public Class UnknownSet
     Dim spectrumIndex As Dictionary(Of String, PeakMs2)
     Dim nodeVisted As New Index(Of String)
 
-    Private Sub New()
+    Friend ReadOnly rtmax As Double
+
+    Private Sub New(rtmax As Double)
+        Me.rtmax = rtmax
     End Sub
 
     Public Function QueryByKey(key As String) As PeakMs2
@@ -122,7 +125,9 @@ Public Class UnknownSet
             Call tree.Add(product.mz, product, valueReplace:=False)
         Next
 
-        Return New UnknownSet With {
+        Dim rtmax As Double = Aggregate peak As PeakMs2 In index.Values Into Max(peak.rt)
+
+        Return New UnknownSet(rtmax) With {
             .features = tree,
             .spectrumIndex = index
         }
