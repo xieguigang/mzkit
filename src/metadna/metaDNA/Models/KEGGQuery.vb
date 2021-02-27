@@ -50,4 +50,8 @@ Public Structure KEGGQuery
     Dim precursorType As String
     Dim kegg_id As String
 
+    Public Overrides Function ToString() As String
+        Return $"{kegg_id} {precursorType}, m/z {mz.ToString("F4")}"
+    End Function
+
 End Structure

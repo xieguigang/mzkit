@@ -70,13 +70,9 @@ Namespace Spectra.Xml
             End With
         End Function
 
-    End Class
-
-    Public Class Meta
-
-        Public Property id As String
-        Public Property mz As Double
-        Public Property rt As Double
+        Public Overrides Function ToString() As String
+            Return $"{query} vs {reference}"
+        End Function
 
     End Class
 End Namespace

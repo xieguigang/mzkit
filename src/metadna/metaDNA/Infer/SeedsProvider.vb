@@ -44,7 +44,7 @@ Namespace Infer
                               End Function)
             Dim kegg_id As String = all.Values.First()(Scan0).kegg.kegg_id
             Dim kegg As Compound = Me.kegg.GetCompound(kegg_id)
-            Dim tree As New SpectrumTreeCluster
+            Dim tree As New SpectrumTreeCluster(showReport:=False)
 
             Call all _
                 .Select(Function(i) unknowns.QueryByKey(i.Key)) _
