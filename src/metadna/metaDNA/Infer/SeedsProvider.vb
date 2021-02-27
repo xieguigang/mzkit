@@ -68,7 +68,9 @@ Namespace Infer
                     .OrderBy(Function(q) q.pvalue) _
                     .ToArray
 
-                Yield group(Scan0)
+                If group.Length > 0 Then
+                    Yield group(Scan0)
+                End If
             Next
         End Function
 
