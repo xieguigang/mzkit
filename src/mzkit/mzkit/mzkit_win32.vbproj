@@ -924,6 +924,10 @@
       <Project>{7acfed27-3bc8-47e1-a1a2-226c82c6dc1f}</Project>
       <Name>FormulaSearch.Extensions</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\metadna\metaDNA\metaDNA.vbproj">
+      <Project>{d7354d23-db6d-4ba0-a10f-0486ef9add7e}</Project>
+      <Name>metaDNA</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\mzmath\ms2_math-core\MassSpectrum.math-core.vbproj">
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
       <Name>MassSpectrum.math-core</Name>
