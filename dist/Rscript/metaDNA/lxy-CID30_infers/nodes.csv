@@ -117,7 +117,6 @@ C00729,,1,0,0,Tropine
 C00739,,1,0,0,D-Lysine
 C00740,,1,0,0,D-Serine
 C00741,,1,0,0,Diacetyl
-C00761,,1,0,0,C00761
 C00763,,1,0,0,D-Proline
 C00764,,1,0,0,C00764
 C00772,,1,0,0,Mevaldate
@@ -158,7 +157,6 @@ C01044,,1,0,0,N-Formyl-L-aspartate
 C01047,,1,0,0,N5-Ethyl-L-glutamine
 C01053,,1,0,0,(R)-4-Dehydropantoate
 C01066,,1,0,0,C01066
-C01088,,1,0,0,C01088
 C01089,,1,0,0,(R)-3-Hydroxybutanoate
 C01111,,1,0,0,"7,8-Dihydroxykynurenate"
 C01133,,1,0,0,N-Acetyl-D-glucosaminate
@@ -814,6 +812,7 @@ C20634,,1,0,0,O-Methyl anthranilate
 C20635,,1,0,0,Methyl (indol-3-yl)acetate
 C20646,,1,0,0,(3S)-2-Oxo-3-phenylbutanoate
 C20653,,1,0,0,2-Benzylmalic acid
+C20654,,1,0,0,C20654
 C20656,,1,0,0,(L-Prolyl)adenylate
 C20668,,1,0,0,3-Dehydro-D-glucose 6-phosphate
 C20692,,1,0,0,9-cis-10'-Apo-beta-carotenal
@@ -876,6 +875,7 @@ C21476,,1,0,0,Phenazine
 C21514,,1,0,0,D-Proline betaine
 C21524,,1,0,0,D-Altritol
 C21584,,1,0,0,7'-O-Dmethylcephaeline
+C21601,,1,0,0,C21601
 C21602,,1,0,0,(1H-Indol-3-yl)-N-methylmethanamine
 C21604,,1,0,0,(3S)-6-Acetamido-3-aminohexanoate
 C21612,,1,0,0,3-Dehydro-L-erythronate
