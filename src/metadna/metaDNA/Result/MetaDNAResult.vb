@@ -11,6 +11,11 @@ Public Class MetaDNAResult
     Public Property formula As String
     Public Property name As String
     Public Property precursorType As String
+    ''' <summary>
+    ''' calculated m/z value based on <see cref="mz"/> and <see cref="precursorType"/>
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property mzCalc As Double
     Public Property ppm As Double
     Public Property inferLevel As String
     Public Property forward As Double
@@ -25,5 +30,7 @@ Public Class MetaDNAResult
     Public Property partnerKEGGId As String
     Public Property KEGG_reaction As String
     Public Property reaction As String
+    Public Property fileName As String
+    Public Property scanId As Integer
 
 End Class
