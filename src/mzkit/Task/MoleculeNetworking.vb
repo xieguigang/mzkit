@@ -164,8 +164,8 @@ Public Module MoleculeNetworking
                                 .ToArray,
                             .forward = scores.forward,
                             .reverse = scores.reverse,
-                            .query = New Meta With {.id = spectrum.name, .mz = Double.NaN, .rt = Double.NaN},
-                            .reference = New Meta With {.id = scanId, .mz = subject.mz, .rt = subject.rt}
+                            .query = New Meta With {.id = spectrum.name, .mz = Double.NaN, .scan_time = Double.NaN},
+                            .reference = New Meta With {.id = scanId, .mz = subject.mz, .scan_time = subject.rt}
                         }
                     End If
                 Next

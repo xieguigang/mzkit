@@ -188,7 +188,7 @@ Public Class PageSpectrumSearch
                         alignRow.SubItems.Add(result.forward)
                         alignRow.SubItems.Add(result.reverse)
                         alignRow.SubItems.Add(result.reference.mz)
-                        alignRow.SubItems.Add(result.reference.rt)
+                        alignRow.SubItems.Add(result.reference.scan_time)
 
                         fileRow.Items.Add(alignRow)
                     Next
