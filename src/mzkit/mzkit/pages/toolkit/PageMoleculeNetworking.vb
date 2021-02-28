@@ -408,6 +408,7 @@ Public Class PageMoleculeNetworking
             Dim nodeA = nodeInfo.Cluster(a)
             Dim nodeB = nodeInfo.Cluster(b)
             Dim matrix As SSM2MatrixFragment() = GlobalAlignment.CreateAlignment(nodeA.representation.ms2, nodeB.representation.ms2, Tolerance.DeltaMass(0.3)).ToArray
+            Dim alignment As New AlignmentOutput With {.alignments = matrix}
 
             host.mzkitTool.showMatrix(matrix, $"{row.Cells(0).Value}_vs_{row.Cells(1).Value}")
 

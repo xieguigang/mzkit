@@ -289,11 +289,16 @@ Public Class PageMzkitTools
     Public Sub showAlignment(result As AlignmentOutput)
         If result Is Nothing Then
             Return
+        Else
+            With result.GetAlignmentMirror
+                Call showAlignment(.query, .ref, result)
+            End With
         End If
+    End Sub
 
-        Dim alignment = result.GetAlignmentMirror
+    Public Sub showAlignment(query As LibraryMatrix, ref As LibraryMatrix, result As AlignmentOutput)
         Dim prop As New AlignmentProperty(result)
-        Dim alignName As String = $"{result.query.id}_vs_{result.reference.id}"
+        Dim alignName As String = $"{query.name}_vs_{ref.name}"
 
         MyApplication.host.ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
 
@@ -301,19 +306,26 @@ Public Class PageMzkitTools
         Call MyApplication.RegisterPlot(
             Sub(args)
                 PictureBox1.BackgroundImage = MassSpectra.AlignMirrorPlot(
-                    query:=alignment.query,
-                    ref:=alignment.ref,
+                    query:=query,
+                    ref:=ref,
                     size:=$"{args.width},{args.height}",
                     title:=args.title,
-                    drawLegend:=args.show_legend
+                    drawLegend:=args.show_legend,
+                    xlab:=args.xlabel,
+                    ylab:=args.ylabel
                 ).AsGDIImage
-            End Sub, width:=1200, height:=800, padding:="padding: 100px 30px 50px 100px;", title:=alignName)
+            End Sub,
+            width:=1200,
+            height:=800,
+            padding:="padding: 100px 30px 50px 100px;",
+            title:=alignName,
+            xlab:="M/Z ratio",
+            ylab:="Relative Intensity(%)"
+        )
 
         Call VisualStudio.ShowProperties(prop)
 
         ShowTabPage(TabPage5)
-
-        ' MyApplication.host.ShowPropertyWindow()
     End Sub
 
     Private Function rawTIC(raw As Raw, isBPC As Boolean) As NamedCollection(Of ChromatogramTick)

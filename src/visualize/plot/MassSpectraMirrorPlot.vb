@@ -72,7 +72,9 @@ Public Module MassSpectra
                                Optional titles$() = Nothing,
                                Optional plotTitle$ = "BioDeep™ MS/MS alignment Viewer",
                                Optional labelDisplayIntensity# = 0.3,
-                               Optional drawLegend As Boolean = True) As GraphicsData
+                               Optional drawLegend As Boolean = True,
+                               Optional xlab$ = "M/Z ratio",
+                               Optional ylab$ = "Relative Intensity(%)") As GraphicsData
 
         Dim a As New LibraryMatrix With {.ms2 = library.ms2, .name = titles.ElementAtOrDefault(0, library.name)}
         Dim b As New LibraryMatrix With {.ms2 = library.ms2, .name = titles.ElementAtOrDefault(1, library.name)}
@@ -85,7 +87,9 @@ Public Module MassSpectra
             title:=plotTitle,
             labelDisplayIntensity:=labelDisplayIntensity,
             drawLegend:=drawLegend,
-            bg:=bg
+            bg:=bg,
+            xlab:=xlab,
+            ylab:=ylab
         )
     End Function
 
@@ -96,7 +100,10 @@ Public Module MassSpectra
                                     Optional intoCutoff# = 0.05,
                                     Optional title$ = "BioDeep™ MS/MS alignment Viewer",
                                     Optional labelDisplayIntensity# = 0.3,
-                                    Optional drawLegend As Boolean = True) As GraphicsData
+                                    Optional drawLegend As Boolean = True,
+                                    Optional xlab$ = "M/Z ratio",
+                                    Optional ylab$ = "Relative Intensity(%)") As GraphicsData
+
         Dim mz As Double() = query _
             .Trim(intoCutoff) _
             .Join(ref.Trim(intoCutoff)) _
@@ -118,8 +125,8 @@ Public Module MassSpectra
             xrange:=$"{mzRange.Min},{mzRange.Max}",
             yrange:="0,100",
             size:=size, padding:=margin,
-            xlab:="M/Z ratio",
-            ylab:="Relative Intensity(%)",
+            xlab:=xlab,
+            ylab:=ylab,
             title:=title,
             titleCSS:=CSSFont.Win7Large,
             format:="F0",
