@@ -48,6 +48,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra.Xml
+Imports BioNovoGene.BioDeep.MetaDNA
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.IO.netCDF
@@ -164,8 +165,8 @@ Public Module MoleculeNetworking
                                 .ToArray,
                             .forward = scores.forward,
                             .reverse = scores.reverse,
-                            .query = New Meta With {.id = spectrum.name, .mz = Double.NaN, .rt = Double.NaN},
-                            .reference = New Meta With {.id = scanId, .mz = subject.mz, .rt = subject.rt}
+                            .query = New Meta With {.id = spectrum.name, .mz = Double.NaN, .scan_time = Double.NaN},
+                            .reference = New Meta With {.id = scanId, .mz = subject.mz, .scan_time = subject.rt}
                         }
                     End If
                 Next
@@ -173,5 +174,10 @@ Public Module MoleculeNetworking
         End Using
 
         Return New NamedCollection(Of AlignmentOutput)(file.source.FileName, alignments, file.source)
+    End Function
+
+    <Extension>
+    Public Iterator Function RunMetaDNA(raw As IEnumerable(Of PeakMs2)) As IEnumerable(Of MetaDNAResult)
+
     End Function
 End Module

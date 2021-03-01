@@ -155,7 +155,8 @@ Namespace MarkupData.mzXML
                 .file = basename,
                 .mzInto = mzInto.Array,
                 .activation = precursorMz.activationMethod Or ms1,
-                .collisionEnergy = Val(collisionEnergy)
+                .collisionEnergy = Val(collisionEnergy),
+                .intensity = precursorMz.precursorIntensity
             }
         End Function
     End Class

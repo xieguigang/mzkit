@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d04897dc5a1ed2d605791d99b7b8f64, src\mzkit\mzkit\pages\dockWindow\DummyOutputWindow.vb"
+﻿#Region "Microsoft.VisualBasic::22f004fc2ae99fa10d3254ce6a91f6d7, pages\dockWindow\tools\OutputWindow.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,15 @@
 
     ' Summaries:
 
-    '     Class DummyOutputWindow
+    '     Class OutputWindow
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Sub: AppendMessage, comboBox_SelectedIndexChanged, DummyOutputWindow_Closing
+    '         Sub: AppendMessage, AppendRoutput, comboBox_SelectedIndexChanged, OutputWindow_Load, ToolStripButton1_Click
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.ComponentModel
 
@@ -90,4 +89,3 @@ Namespace DockSample
         End Sub
     End Class
 End Namespace
-

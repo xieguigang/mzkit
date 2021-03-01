@@ -506,6 +506,8 @@
     <Compile Include="Chromatogram\Quantile.vb" />
     <Compile Include="Chromatogram\ROI.vb" />
     <Compile Include="Extensions.vb" />
+    <Compile Include="Ms1\ms1Abstract.vb" />
+    <Compile Include="Ms1\ms1_scan.vb" />
     <Compile Include="Ms1\Ms1FeatureExtensions.vb" />
     <Compile Include="Ms1\PolarityData.vb" />
     <Compile Include="Ms1\PrecursorType\TypeMatch.vb" />
@@ -518,12 +520,16 @@
     <Compile Include="Ms1\Tolerance\PPM.vb" />
     <Compile Include="Ms1\Tolerance\DeltaMass.vb" />
     <Compile Include="Ms1\Tolerance\Tolerance.vb" />
+    <Compile Include="Spectra\Alignment\JaccardAlignment.vb" />
+    <Compile Include="Spectra\Alignment\CosAlignment.vb" />
+    <Compile Include="Spectra\Alignment\ScoreAggregates.vb" />
     <Compile Include="Spectra\Models\ms2.vb" />
     <Compile Include="Spectra\Models\Trimming\QuantileIntensityCutoff.vb" />
     <Compile Include="Spectra\Models\Trimming\RelativeIntensityCutoff.vb" />
     <Compile Include="Spectra\Models\Trimming\LowAbundanceTrimming.vb" />
     <Compile Include="Spectra\Models\Fragments.vb" />
     <Compile Include="Spectra\Models\Xml\AlignmentOutput.vb" />
+    <Compile Include="Spectra\Models\Xml\Meta.vb" />
     <Compile Include="Spectra\Models\Xml\Ms2AlignMatrix.vb" />
     <Compile Include="Spectra\MzGrouping.vb" />
     <Compile Include="Spectra\MoleculeNetworking\ProtocolPipeline.vb" />
@@ -553,7 +559,7 @@
     </Compile>
     <Compile Include="Ms1\Peaktable.vb" />
     <Compile Include="Ms1\PrecursorType\PrecursorType.vb" />
-    <Compile Include="Spectra\SpectrumTree\AlignmentProvider.vb" />
+    <Compile Include="Spectra\Alignment\AlignmentProvider.vb" />
     <Compile Include="Spectra\SpectrumTree\Comparison.vb" />
     <Compile Include="Spectra\SpectrumTree\SpectrumCluster.vb" />
     <Compile Include="Spectra\SpectrumTree\SpectrumTree.vb" />

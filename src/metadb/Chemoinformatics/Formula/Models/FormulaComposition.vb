@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ad151c8f6b71f2e184a20797318dfb6, Chemoinformatics\Formula\Models\FormulaComposition.vb"
+﻿#Region "Microsoft.VisualBasic::75935dd1ce2552c07becfa18ea5694bc, Chemoinformatics\Formula\Models\FormulaComposition.vb"
 
     ' Author:
     ' 
@@ -45,7 +45,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace Formula
 

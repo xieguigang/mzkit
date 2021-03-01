@@ -56,17 +56,23 @@ Namespace Spectra
     ''' <summary>
     ''' 将mzXML文件之中的每一个ms2 scan转换而来
     ''' </summary>
-    Public Class PeakMs2
+    Public Class PeakMs2 : Implements IMs1, IMs1Scan
 
         ''' <summary>
         ''' The precursor ``m/z`` value.
         ''' (一级母离子的``m/z``)
         ''' </summary>
-        Public Property mz As Double
+        Public Property mz As Double Implements IMs1.mz
         ''' <summary>
         ''' 一级母离子的出峰时间
         ''' </summary>
-        Public Property rt As Double
+        Public Property rt As Double Implements IMs1.rt
+        ''' <summary>
+        ''' 一级母离子的响应强度
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property intensity As Double Implements IMs1Scan.intensity
+
         ''' <summary>
         ''' 原始数据文件名
         ''' </summary>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e15d089178a592d410816896a6606dc2, FormulaSearch.Extensions\AtomGroups\Amines.vb"
+﻿#Region "Microsoft.VisualBasic::b1c1061e1743cddda6134c3c0fefdd98, FormulaSearch.Extensions\AtomGroups\Amines.vb"
 
     ' Author:
     ' 
@@ -49,4 +49,3 @@ Public Class Amines
     Public Shared ReadOnly Property methylamine As Formula = FormulaScanner.ScanFormula("NH2CH2")
 
 End Class
-

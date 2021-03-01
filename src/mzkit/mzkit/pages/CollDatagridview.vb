@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4dc886635754380139dafee67269cda0, src\mzkit\mzkit\pages\CollDatagridview.vb"
+﻿#Region "Microsoft.VisualBasic::cbb45fcf396a046d99829275606ef15b, pages\CollDatagridview.vb"
 
     ' Author:
     ' 
@@ -139,4 +139,3 @@ Namespace cooldatagridview
         End Sub
     End Module
 End Namespace
-

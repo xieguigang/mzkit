@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95e18d9be1b0d2a004107d1fc19a8f21, assembly\MarkupData\mzML\XML\ControlVocabulary.vb"
+﻿#Region "Microsoft.VisualBasic::d79e26582dfdff4a71b2eb91f9ede62c, assembly\MarkupData\mzML\XML\ControlVocabulary.vb"
 
     ' Author:
     ' 
@@ -146,4 +146,3 @@ Namespace MarkupData.mzML.ControlVocabulary
         End Function
     End Class
 End Namespace
-

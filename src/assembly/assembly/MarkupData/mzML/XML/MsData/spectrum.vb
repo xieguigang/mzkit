@@ -124,8 +124,13 @@ Namespace MarkupData.mzML
         ''' </summary>
         ''' <returns></returns>
         Public Function GetRawMatrix() As ms2()
-            Dim mz = Me.ByteArray("m/z array").Base64Decode
+            Dim mz As Double() = Me.ByteArray("m/z array").Base64Decode
             Dim intensity = Me.ByteArray("intensity array").Base64Decode.AsVector
+
+            If mz.Length = 0 Then
+                Return {}
+            End If
+
             Dim relInto As Vector = intensity / intensity.Max
             Dim matrix As ms2() = CInt(defaultArrayLength) _
                 .Sequence _
@@ -180,7 +185,11 @@ Namespace MarkupData.mzML
                 collisionEnergy = precursorList.precursor(Scan0).GetCollisionEnergy
 
                 ' unsure for the scans that missing charge values
-                charge = precursorList.precursor(Scan0).selectedIonList.selectedIon(Scan0).cvParams.KeyItem("charge state")?.value Or "-1".AsDefault
+                charge = precursorList.precursor(Scan0) _
+                    .selectedIonList _
+                    .selectedIon(Scan0) _
+                    .cvParams _
+                    .KeyItem("charge state")?.value Or "-1".AsDefault
             Else
                 activationMethod = ms1
             End If
@@ -192,6 +201,7 @@ Namespace MarkupData.mzML
             Return New PeakMs2 With {
                 .mz = precursor.mz,
                 .rt = scan_time,
+                .intensity = precursor.into,
                 .scan = index,
                 .file = basename,
                 .mzInto = mzInto.Array,

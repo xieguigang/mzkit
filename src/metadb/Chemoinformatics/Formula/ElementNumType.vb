@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b51c7731bc28b06b1ed1c51416fd279, Chemoinformatics\Formula\ElementNumType.vb"
+﻿#Region "Microsoft.VisualBasic::8cad86751bcc452b861ffa1e4c16eff2, Chemoinformatics\Formula\ElementNumType.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace Formula
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0249413909871cce7e8cb7e74bbc4de2, src\mzkit\mzkit\pages\dockWindow\PropertyWindow.vb"
+﻿#Region "Microsoft.VisualBasic::7913866723877e3351a41f5cb3eb34bd, pages\dockWindow\tools\PropertyWindow.vb"
 
     ' Author:
     ' 
@@ -34,9 +34,12 @@
 
     ' Summaries:
 
-    '     Class DummyPropertyWindow
+    '     Class PropertyWindow
     ' 
     '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: getPropertyObject
+    ' 
     '         Sub: DummyPropertyWindow_Closing
     ' 
     ' 
@@ -69,4 +72,3 @@ Namespace DockSample
         End Function
     End Class
 End Namespace
-

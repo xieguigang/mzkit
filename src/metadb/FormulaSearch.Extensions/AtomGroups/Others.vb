@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::03b2bd891c79a55f2581790db8f2c0b6, FormulaSearch.Extensions\AtomGroups\Others.vb"
+﻿#Region "Microsoft.VisualBasic::61e0147fa38169752ac130c10d9b9558, FormulaSearch.Extensions\AtomGroups\Others.vb"
 
     ' Author:
     ' 
@@ -49,4 +49,3 @@ Public Class Others
     Public Shared ReadOnly Property nitro_group As Formula = FormulaScanner.ScanFormula("NO2")
 
 End Class
-

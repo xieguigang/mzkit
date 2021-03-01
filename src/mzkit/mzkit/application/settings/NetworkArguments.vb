@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::38bea1ef2d1521cf16b88211b96fe305, src\mzkit\mzkit\settings\NetworkArguments.vb"
+﻿#Region "Microsoft.VisualBasic::6ddcb236c4ac0a89c5ca5d06e6873f6f, application\settings\NetworkArguments.vb"
 
     ' Author:
     ' 
@@ -34,9 +34,11 @@
 
     ' Summaries:
 
-    ' Class NetworkArguments
+    '     Class NetworkArguments
     ' 
-    '     Properties: layout, linkWidth, nodeRadius
+    '         Properties: defaultFilter, layout, linkWidth, nodeRadius, treeNodeIdentical
+    '                     treeNodeSimilar
+    ' 
     ' 
     ' /********************************************************************************/
 

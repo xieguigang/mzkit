@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{D7354D23-DB6D-4BA0-A10F-0486EF9ADD7E}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>metaDNA</RootNamespace>
-    <AssemblyName>metaDNA</AssemblyName>
+    <RootNamespace>BioNovoGene.BioDeep.MetaDNA</RootNamespace>
+    <AssemblyName>BioNovoGene.BioDeep.MetaDNA</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -19,8 +19,10 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>metaDNA.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -28,8 +30,24 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>metaDNA.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'mzkit|x64' ">
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+    <PlatformTarget>x64</PlatformTarget>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup>
     <OptionExplicit>On</OptionExplicit>
@@ -42,6 +60,25 @@
   </PropertyGroup>
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|AnyCPU'">
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DocumentationFile>BioNovoGene.BioDeep.MetaDNA.xml</DocumentationFile>
+    <OutputPath>bin\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -65,10 +102,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithm.vb" />
+    <Compile Include="Infer\CandidateInfer.vb" />
+    <Compile Include="Infer\Candidate.vb" />
+    <Compile Include="Infer\InferLevel.vb" />
+    <Compile Include="Infer\SeedsProvider.vb" />
+    <Compile Include="KEGGNetwork.vb" />
+    <Compile Include="KEGGHandler.vb" />
+    <Compile Include="Models\AnnotatedSeed.vb" />
+    <Compile Include="Infer\InferLink.vb" />
+    <Compile Include="Models\KEGGQuery.vb" />
+    <Compile Include="Models\MassIndexKey.vb" />
+    <Compile Include="Models\UnknownSet.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -80,6 +129,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Result\MetaDNAResult.vb" />
+    <Compile Include="Result\NetworkHandler.vb" />
+    <Compile Include="Result\ResultHandler.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -99,6 +151,60 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\core\Bio.Assembly\Bio.Assembly.vbproj">
+      <Project>{c699d311-9923-4c19-bf70-5048d0e2cf5d}</Project>
+      <Name>Bio.Assembly</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\BinaryData.vbproj">
+      <Project>{487d7c92-d05a-4908-bf81-e6baba0bf592}</Project>
+      <Name>BinaryData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\msgpack\MessagePack.vbproj">
+      <Project>{c473d2d3-65b3-0220-32a8-1e0687d9ae6b}</Project>
+      <Name>MessagePack</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj">
+      <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
+      <Name>47_dotnet_ms-vb_data.framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Graph\GraphTheory.vbproj">
+      <Project>{203bc68f-a0cd-443a-ab62-4af4110f752f}</Project>
+      <Name>GraphTheory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\Math.Statistics.vbproj">
+      <Project>{3e195df1-9feb-44d5-904b-15626bbe74d7}</Project>
+      <Name>Math.Statistics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\math-core.vbproj">
+      <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
+      <Name>math-core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\SignalProcessing.vbproj">
+      <Project>{83975074-cbe1-4abc-ba91-91d63da156c8}</Project>
+      <Name>SignalProcessing</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Datavisualization.Network\Network.GraphTheory.vbproj">
+      <Project>{076315ee-b598-40dc-9280-c71cdf9b6a48}</Project>
+      <Name>Network.GraphTheory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Network.IO.Extensions\Network.IO.Extensions.vbproj">
+      <Project>{78cb32e6-2904-41e7-acca-f1e2757bfa8e}</Project>
+      <Name>Network.IO.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\gr\physics\physics.vbproj">
+      <Project>{3291389c-ea87-4b33-a9a5-65a2d60ba3e2}</Project>
+      <Name>physics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
+      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
+      <Name>47-dotnet_Microsoft.VisualBasic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\mzmath\ms2_math-core\MassSpectrum.math-core.vbproj">
+      <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
+      <Name>MassSpectrum.math-core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

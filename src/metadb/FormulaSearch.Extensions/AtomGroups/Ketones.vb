@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c9a94c7c47c8623740902862f6df0845, FormulaSearch.Extensions\AtomGroups\Ketones.vb"
+﻿#Region "Microsoft.VisualBasic::18fe4ff418ef6a38bb838f77d17fa990, FormulaSearch.Extensions\AtomGroups\Ketones.vb"
 
     ' Author:
     ' 
@@ -68,4 +68,3 @@ Public Class Ketones
     Public Shared ReadOnly Property acyl_halideI As Formula = FormulaScanner.ScanFormula("COI")
 
 End Class
-

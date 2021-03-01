@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2dd2f661579631572860fb6c657b613e, src\mzkit\mzkit\pages\dockWindow\explorer\frmFileTree.vb"
+﻿#Region "Microsoft.VisualBasic::5d116cc6b3dd306ad05be5d7a3e2786f, pages\dockWindow\explorer\frmFileTree.vb"
 
     ' Author:
     ' 
@@ -40,9 +40,9 @@
     ' 
     '     Function: GetSelectedNodes
     ' 
-    '     Sub: Clear, ClearSelectionsToolStripMenuItem_Click, DeleteFileToolStripMenuItem_Click, frmFileTree_Activated, frmFileTree_Closing
-    '          frmFileTree_Load, SelectAllToolStripMenuItem_Click, TreeView1_AfterCheck, treeView1_AfterSelect, treeView1_BeforeCollapse
-    '          treeView1_BeforeExpand
+    '     Sub: Clear, ClearSelectionsToolStripMenuItem_Click, CollapseToolStripMenuItem_Click, DeleteFileToolStripMenuItem_Click, frmFileTree_Activated
+    '          frmFileTree_Closing, frmFileTree_Load, SelectAllToolStripMenuItem_Click, TextBox2_Click, TreeView1_AfterCheck
+    '          treeView1_AfterSelect, treeView1_BeforeCollapse, treeView1_BeforeExpand
     ' 
     ' /********************************************************************************/
 

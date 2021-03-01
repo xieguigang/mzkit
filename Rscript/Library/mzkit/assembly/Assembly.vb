@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69199f6588f3be419d903fc0c7165b2f, Library\mzkit\assembly\Assembly.vb"
+﻿#Region "Microsoft.VisualBasic::9aa72430c721aead63ba309c1c349bc2, Library\mzkit\assembly\Assembly.vb"
 
     ' Author:
     ' 
@@ -37,8 +37,9 @@
     ' Module Assembly
     ' 
     '     Function: GetFileType, getMs1Scans, ionMode, IonPeaks, mzMLMs1
-    '               mzMLScanLoader, mzXML2Mgf, mzXMLMs1, mzXMLScanLoader, PeakMs2FileIndex
-    '               rawScans, ReadMgfIons, ReadMslIons, summaryIons, writeMgfIons
+    '               mzMLScanLoader, mzXML2Mgf, mzXMLMs1, mzXMLScanLoader, openXmlSeeks
+    '               PeakMs2FileIndex, rawScans, ReadMgfIons, ReadMslIons, summaryIons
+    '               writeMgfIons
     ' 
     '     Sub: Main
     ' 

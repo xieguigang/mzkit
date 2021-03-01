@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d9b1635bee0913f06968dee4192badf2, FormulaSearch.Extensions\Scores\MoleculeIonStable.vb"
+﻿#Region "Microsoft.VisualBasic::f66aa211a87313b2da1397c81f412ef7, FormulaSearch.Extensions\Scores\MoleculeIonStable.vb"
 
     ' Author:
     ' 
@@ -45,4 +45,3 @@
 Public Class MoleculeIonStable
 
 End Class
-

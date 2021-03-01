@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ad2bde81170342944c371394dc09ec6, FormulaSearch.Extensions\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::c33400512e42a200459f0ab147b6ea51, FormulaSearch.Extensions\test\Module1.vb"
 
     ' Author:
     ' 
@@ -82,4 +82,3 @@ Module Module1
     End Sub
 
 End Module
-
