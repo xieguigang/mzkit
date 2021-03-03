@@ -72,6 +72,10 @@ Public Class VisualStudio
         End Select
     End Sub
 
+    Public Shared Sub ShowPropertyWindow()
+        Call Dock(MyApplication.host.propertyWin, DockState.DockRight)
+    End Sub
+
     Public Shared Sub ShowProperties(item As Object)
         Dim propertyWin = MyApplication.host.propertyWin
 

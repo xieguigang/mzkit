@@ -60,11 +60,11 @@ Public Class frmGCMS_CDFExplorer
 
     Friend gcms As Raw
 
-    Public Shared Function loadCDF(file As String) As Raw
+    Public Shared Function loadCDF(file As String, isBackground As Boolean) As Raw
         Dim gcms As Raw
 
         If file.ExtensionSuffix("cdf") Then
-            If file.FileLength > 1024 * 512 Then
+            If file.FileLength > 1024 * 512 AndAlso Not isBackground Then
                 gcms = frmTaskProgress.LoadData(Function() netCDFReader.Open(file).ReadData(showSummary:=False), info:=file.GetFullPath)
             Else
                 gcms = netCDFReader.Open(file).ReadData(showSummary:=False)

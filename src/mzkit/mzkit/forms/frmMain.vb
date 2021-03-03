@@ -121,11 +121,11 @@ Public Class frmMain
         End If
     End Sub
 
-    Public Sub ShowGCMSSIM(file As String)
+    Public Sub ShowGCMSSIM(file As String, isBackground As Boolean)
         If Not file.FileExists Then
             Call showStatusMessage($"missing raw data file '{file.GetFullPath}'!", My.Resources.StatusAnnotations_Warning_32xLG_color)
         ElseIf Not GCMSPeaks.ContainsRaw(file) Then
-            GCMSPeaks.LoadRawExplorer(frmGCMS_CDFExplorer.loadCDF(file))
+            GCMSPeaks.LoadRawExplorer(frmGCMS_CDFExplorer.loadCDF(file, isBackground))
             VisualStudio.Dock(GCMSPeaks, DockState.DockLeft)
         Else
             GCMSPeaks.ShowRaw(file)
@@ -151,9 +151,9 @@ Public Class frmMain
         ElseIf fileName.ExtensionSuffix("mzml") AndAlso RawScanParser.IsMRMData(fileName) Then
             Call ShowMRMIons(fileName)
         ElseIf fileName.ExtensionSuffix("mzml") AndAlso RawScanParser.IsSIMData(fileName) Then
-            Call ShowGCMSSIM(fileName)
+            Call ShowGCMSSIM(fileName, isBackground:=False)
         ElseIf fileName.ExtensionSuffix("cdf", "netcdf") Then
-            Call ShowGCMSSIM(fileName)
+            Call ShowGCMSSIM(fileName, isBackground:=False)
         Else
             Call fileExplorer.ImportsRaw(fileName)
         End If
@@ -274,6 +274,7 @@ Public Class frmMain
         AddHandler ribbonItems.LogInBioDeep.ExecuteEvent, Sub() Call New frmLogin().ShowDialog()
 
         AddHandler ribbonItems.ButtonInstallMzkitPackage.ExecuteEvent, AddressOf MyApplication.InstallPackageRelease
+        AddHandler ribbonItems.ShowGCMSExplorer.ExecuteEvent, Sub() Call VisualStudio.Dock(GCMSPeaks, DockState.DockLeft)
 
         _uiCollectionChangedEvent = New UICollectionChangedEvent()
 

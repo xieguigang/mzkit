@@ -47,7 +47,9 @@ using RibbonLib.Interop;
             public const uint cmdButtonShowPlotViewer = 1111;
             public const uint cmdButtonShowMatrixViewer = 1112;
             public const uint cmdGroupShowDockWindows = 1120;
+            public const uint cmdExplorers = 114;
             public const uint cmdButtonShowExplorer = 1121;
+            public const uint cmdShowGCMSExplorer = 113;
             public const uint cmdButtonShowSearchList = 1122;
             public const uint cmdButtonShowProperties = 1123;
             public const uint cmdTabLayout = 1035;
@@ -158,7 +160,9 @@ using RibbonLib.Interop;
         public RibbonButton ButtonShowPlotViewer { get; private set; }
         public RibbonButton ButtonShowMatrixViewer { get; private set; }
         public RibbonGroup GroupShowDockWindows { get; private set; }
+        public RibbonSplitButtonGallery Explorers { get; private set; }
         public RibbonButton ButtonShowExplorer { get; private set; }
+        public RibbonButton ShowGCMSExplorer { get; private set; }
         public RibbonButton ButtonShowSearchList { get; private set; }
         public RibbonButton ButtonShowProperties { get; private set; }
         public RibbonTab TabLayout { get; private set; }
@@ -267,7 +271,9 @@ using RibbonLib.Interop;
             ButtonShowPlotViewer = new RibbonButton(ribbon, Cmd.cmdButtonShowPlotViewer);
             ButtonShowMatrixViewer = new RibbonButton(ribbon, Cmd.cmdButtonShowMatrixViewer);
             GroupShowDockWindows = new RibbonGroup(ribbon, Cmd.cmdGroupShowDockWindows);
+            Explorers = new RibbonSplitButtonGallery(ribbon, Cmd.cmdExplorers);
             ButtonShowExplorer = new RibbonButton(ribbon, Cmd.cmdButtonShowExplorer);
+            ShowGCMSExplorer = new RibbonButton(ribbon, Cmd.cmdShowGCMSExplorer);
             ButtonShowSearchList = new RibbonButton(ribbon, Cmd.cmdButtonShowSearchList);
             ButtonShowProperties = new RibbonButton(ribbon, Cmd.cmdButtonShowProperties);
             TabLayout = new RibbonTab(ribbon, Cmd.cmdTabLayout);

@@ -30,7 +30,12 @@ Partial Class frmGCMSPeaks
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
         Me.Win7StyleTreeView1 = New mzkit.Kesoft.Windows.Forms.Win7StyleTreeView.Win7StyleTreeView(Me.components)
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
+        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.ImportsFilesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ShowPropertiesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
         Me.ToolStrip1.SuspendLayout()
+        Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'ToolStrip1
@@ -45,11 +50,12 @@ Partial Class frmGCMSPeaks
         'ToolStripLabel1
         '
         Me.ToolStripLabel1.Name = "ToolStripLabel1"
-        Me.ToolStripLabel1.Size = New System.Drawing.Size(82, 22)
+        Me.ToolStripLabel1.Size = New System.Drawing.Size(92, 22)
         Me.ToolStripLabel1.Text = "Feature Peaks:"
         '
         'Win7StyleTreeView1
         '
+        Me.Win7StyleTreeView1.ContextMenuStrip = Me.ContextMenuStrip1
         Me.Win7StyleTreeView1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Win7StyleTreeView1.Font = New System.Drawing.Font("Microsoft YaHei UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Win7StyleTreeView1.FullRowSelect = True
@@ -70,17 +76,43 @@ Partial Class frmGCMSPeaks
         Me.ImageList1.Images.SetKeyName(0, "folder-pictures.png")
         Me.ImageList1.Images.SetKeyName(1, "application-x-object.png")
         '
+        'ContextMenuStrip1
+        '
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ImportsFilesToolStripMenuItem, Me.ToolStripMenuItem1, Me.ShowPropertiesToolStripMenuItem})
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 76)
+        '
+        'ImportsFilesToolStripMenuItem
+        '
+        Me.ImportsFilesToolStripMenuItem.Image = CType(resources.GetObject("ImportsFilesToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.ImportsFilesToolStripMenuItem.Name = "ImportsFilesToolStripMenuItem"
+        Me.ImportsFilesToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ImportsFilesToolStripMenuItem.Text = "Imports Files"
+        '
+        'ShowPropertiesToolStripMenuItem
+        '
+        Me.ShowPropertiesToolStripMenuItem.Image = CType(resources.GetObject("ShowPropertiesToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.ShowPropertiesToolStripMenuItem.Name = "ShowPropertiesToolStripMenuItem"
+        Me.ShowPropertiesToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ShowPropertiesToolStripMenuItem.Text = "Show Properties"
+        '
+        'ToolStripMenuItem1
+        '
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(177, 6)
+        '
         'frmGCMSPeaks
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(363, 533)
         Me.Controls.Add(Me.Win7StyleTreeView1)
         Me.Controls.Add(Me.ToolStrip1)
+        Me.DoubleBuffered = True
         Me.Name = "frmGCMSPeaks"
-        Me.Text = "Form1"
         Me.ToolStrip1.ResumeLayout(False)
         Me.ToolStrip1.PerformLayout()
+        Me.ContextMenuStrip1.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -90,4 +122,8 @@ Partial Class frmGCMSPeaks
     Friend WithEvents ToolStripLabel1 As ToolStripLabel
     Friend WithEvents Win7StyleTreeView1 As Kesoft.Windows.Forms.Win7StyleTreeView.Win7StyleTreeView
     Friend WithEvents ImageList1 As ImageList
+    Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
+    Friend WithEvents ImportsFilesToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ShowPropertiesToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
 End Class

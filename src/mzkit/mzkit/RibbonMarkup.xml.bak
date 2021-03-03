@@ -1175,6 +1175,22 @@
         <Image MinDPI="192">Res/applications-utilities.bmp</Image>
       </Command.LargeImages>
     </Command>
+    <Command Name="cmdShowGCMSExplorer" Id="113" LabelTitle="GCMS Explorer" LabelDescription="Show GCMS ROI Peaks Explorer" TooltipTitle="GCMS Explorer" TooltipDescription="Show GCMS ROI Peaks Explorer">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/folder-documents.bmp</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Res/folder-documents.bmp</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdExplorers" Id="114" LabelTitle="Explorers" LabelDescription="Explorers" TooltipTitle="Explorers" TooltipDescription="Explorers">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/folder-documents.bmp</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Res/folder-documents.bmp</Image>
+      </Command.LargeImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -1263,7 +1279,13 @@
               <Button CommandName="cmdButtonShowMatrixViewer" />
             </Group>
             <Group CommandName="cmdGroupShowDockWindows" SizeDefinition="ThreeButtons">
-              <Button CommandName="cmdButtonShowExplorer" />
+              <SplitButtonGallery CommandName="cmdExplorers" Type="Commands" TextPosition="Overlap">
+                <SplitButtonGallery.MenuLayout>
+                  <FlowMenuLayout />
+                </SplitButtonGallery.MenuLayout>
+                <Button CommandName="cmdButtonShowExplorer" />
+                <Button CommandName="cmdShowGCMSExplorer" />
+              </SplitButtonGallery>
               <Button CommandName="cmdButtonShowSearchList" />
               <Button CommandName="cmdButtonShowProperties" />
             </Group>

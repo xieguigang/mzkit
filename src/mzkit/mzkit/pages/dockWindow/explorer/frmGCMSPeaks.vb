@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::aea2f194b3e2ac3082d810490f7b5269, pages\dockWindow\explorer\frmGCMSPeaks.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class frmGCMSPeaks
-    ' 
-    '     Function: ContainsRaw
-    ' 
-    '     Sub: frmGCMSPeaks_Load, LoadRawExplorer, ShowRaw, Win7StyleTreeView1_AfterCheck, Win7StyleTreeView1_AfterSelect
-    ' 
-    ' /********************************************************************************/
+' Class frmGCMSPeaks
+' 
+'     Function: ContainsRaw
+' 
+'     Sub: frmGCMSPeaks_Load, LoadRawExplorer, ShowRaw, Win7StyleTreeView1_AfterCheck, Win7StyleTreeView1_AfterSelect
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -53,6 +53,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports mzkit.My
 Imports Task
+Imports Vip.Notification
 Imports WeifenLuo.WinFormsUI.Docking
 Imports Raw = BioNovoGene.Analytical.MassSpectrometry.Math.GCMS.Raw
 
@@ -66,7 +67,7 @@ Public Class frmGCMSPeaks
     Private Sub frmGCMSPeaks_Load(sender As Object, e As EventArgs) Handles Me.Load
         TabText = "GCMS Feature Peaks"
 
-        ApplyVsTheme(ToolStrip1)
+        ApplyVsTheme(ToolStrip1, ContextMenuStrip1)
     End Sub
 
     Public Function ContainsRaw(filepath As String) As Boolean
@@ -167,5 +168,34 @@ Public Class frmGCMSPeaks
 
     Private Sub Win7StyleTreeView1_AfterCheck(sender As Object, e As TreeViewEventArgs) Handles Win7StyleTreeView1.AfterCheck
 
+    End Sub
+
+    Private Sub ImportsFilesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImportsFilesToolStripMenuItem.Click
+        Using file As New OpenFileDialog With {.Filter = "All GCMS raw data files(*.cdf;*.mzML)|*.cdf;*.mzML", .Multiselect = True}
+            If file.ShowDialog = DialogResult.OK Then
+                For Each path As String In file.FileNames
+                    If gcmsRaw.Count = 0 Then
+                        Call MyApplication.host.ShowGCMSSIM(path, isBackground:=False)
+                    Else
+                        ' work in background
+                        Dim taskList As TaskListWindow = MyApplication.host.taskWin
+                        Dim task As TaskUI = taskList.Add("Imports Raw Data", path)
+
+                        Call taskList.Show(MyApplication.host.dockPanel)
+                        Call Alert.ShowSucess($"Imports raw data files in background,{vbCrLf}you can open [Task List] panel for view task progress.")
+                        Call MyApplication.TaskQueue.AddToQueue(
+                            Sub()
+                                Call task.Running()
+                                Call MyApplication.host.ShowGCMSSIM(path, isBackground:=True)
+                                Call task.Finish()
+                            End Sub)
+                    End If
+                Next
+            End If
+        End Using
+    End Sub
+
+    Private Sub ShowPropertiesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowPropertiesToolStripMenuItem.Click
+        Call VisualStudio.ShowPropertyWindow()
     End Sub
 End Class
