@@ -111,6 +111,8 @@ Public Class frmTaskProgress
                             Call progress.ShowProgressDetails(info)
 
                             tmp = streamLoad()
+
+                            Call progress.Invoke(Sub() progress.Close())
                         End Sub) _
              .Start()
 
