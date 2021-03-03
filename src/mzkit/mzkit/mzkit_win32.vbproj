@@ -295,10 +295,10 @@
     <Compile Include="forms\frmTweaks\frmTweaks.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="forms\frmProgressSpinner.Designer.vb">
+    <Compile Include="forms\Task\frmProgressSpinner.Designer.vb">
       <DependentUpon>frmProgressSpinner.vb</DependentUpon>
     </Compile>
-    <Compile Include="forms\frmProgressSpinner.vb">
+    <Compile Include="forms\Task\frmProgressSpinner.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="forms\frmLicense.Designer.vb">
@@ -421,6 +421,7 @@
     <Compile Include="pages\dockWindow\frmDemo.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="pages\dockWindow\tools\TaskUI.vb" />
     <Compile Include="pages\dockWindow\tools\TaskListWindow.Designer.vb">
       <DependentUpon>TaskListWindow.vb</DependentUpon>
     </Compile>
@@ -564,10 +565,10 @@
     <Compile Include="forms\frmMain.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="forms\frmTaskProgress.Designer.vb">
+    <Compile Include="forms\Task\frmTaskProgress.Designer.vb">
       <DependentUpon>frmTaskProgress.vb</DependentUpon>
     </Compile>
-    <Compile Include="forms\frmTaskProgress.vb">
+    <Compile Include="forms\Task\frmTaskProgress.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="forms\frmSplashScreen.vb">
@@ -628,7 +629,7 @@
     <EmbeddedResource Include="forms\frmLicense.resx">
       <DependentUpon>frmLicense.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="forms\frmProgressSpinner.resx">
+    <EmbeddedResource Include="forms\Task\frmProgressSpinner.resx">
       <DependentUpon>frmProgressSpinner.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="forms\frmTweaks\frmMsImagingTweaks.resx">
@@ -727,7 +728,7 @@
     <EmbeddedResource Include="pages\toolkit\PageMzSearch.resx">
       <DependentUpon>PageMzSearch.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="forms\frmTaskProgress.resx">
+    <EmbeddedResource Include="forms\Task\frmTaskProgress.resx">
       <DependentUpon>frmTaskProgress.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="forms\frmSplashScreen.resx">
