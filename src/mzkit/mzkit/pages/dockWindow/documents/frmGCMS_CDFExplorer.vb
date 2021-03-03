@@ -64,7 +64,11 @@ Public Class frmGCMS_CDFExplorer
         Dim gcms As Raw
 
         If file.ExtensionSuffix("cdf") Then
-            gcms = netCDFReader.Open(file).ReadData()
+            If file.FileLength > 1024 * 512 Then
+                gcms = frmTaskProgress.LoadData(Function() netCDFReader.Open(file).ReadData(showSummary:=False), info:=file.GetFullPath)
+            Else
+                gcms = netCDFReader.Open(file).ReadData(showSummary:=False)
+            End If
         Else
             gcms = mzMLReader.LoadFile(file)
         End If

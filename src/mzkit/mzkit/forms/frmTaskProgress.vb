@@ -99,4 +99,23 @@ Public Class frmTaskProgress
     Private Sub frmTaskProgress_Load(sender As Object, e As EventArgs) Handles Me.Load
         DoubleBuffered = True
     End Sub
+
+    Public Shared Function LoadData(Of T)(streamLoad As Func(Of T), Optional title$ = "Loading data...", Optional info$ = "Open a large raw data file...") As T
+        Dim tmp As T
+        Dim progress As New frmTaskProgress
+
+        Call New Thread(Sub()
+                            Call Thread.Sleep(100)
+
+                            Call progress.ShowProgressTitle(title)
+                            Call progress.ShowProgressDetails(info)
+
+                            tmp = streamLoad()
+                        End Sub) _
+             .Start()
+
+        Call progress.ShowDialog()
+
+        Return tmp
+    End Function
 End Class
