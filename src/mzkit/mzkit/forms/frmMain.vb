@@ -125,8 +125,10 @@ Public Class frmMain
         If Not file.FileExists Then
             Call showStatusMessage($"missing raw data file '{file.GetFullPath}'!", My.Resources.StatusAnnotations_Warning_32xLG_color)
         ElseIf Not GCMSPeaks.ContainsRaw(file) Then
-            GCMSPeaks.LoadRawExplorer(frmGCMS_CDFExplorer.loadCDF(file, isBackground))
-            VisualStudio.Dock(GCMSPeaks, DockState.DockLeft)
+            Dim raw = frmGCMS_CDFExplorer.loadCDF(file, isBackground)
+
+            Call GCMSPeaks.Invoke(Sub() GCMSPeaks.LoadRawExplorer(raw))
+            Call VisualStudio.Dock(GCMSPeaks, DockState.DockLeft)
         Else
             GCMSPeaks.ShowRaw(file)
         End If
