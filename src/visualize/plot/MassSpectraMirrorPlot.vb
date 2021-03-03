@@ -74,7 +74,9 @@ Public Module MassSpectra
                                Optional labelDisplayIntensity# = 0.3,
                                Optional drawLegend As Boolean = True,
                                Optional xlab$ = "M/Z ratio",
-                               Optional ylab$ = "Relative Intensity(%)") As GraphicsData
+                               Optional ylab$ = "Relative Intensity(%)",
+                               Optional drawGrid As Boolean = True,
+                               Optional tagXFormat$ = "F2") As GraphicsData
 
         Dim a As New LibraryMatrix With {.ms2 = library.ms2, .name = titles.ElementAtOrDefault(0, library.name)}
         Dim b As New LibraryMatrix With {.ms2 = library.ms2, .name = titles.ElementAtOrDefault(1, library.name)}
@@ -89,7 +91,9 @@ Public Module MassSpectra
             drawLegend:=drawLegend,
             bg:=bg,
             xlab:=xlab,
-            ylab:=ylab
+            ylab:=ylab,
+            drawGrid:=drawGrid,
+            tagXFormat:=tagXFormat
         )
     End Function
 
@@ -102,7 +106,9 @@ Public Module MassSpectra
                                     Optional labelDisplayIntensity# = 0.3,
                                     Optional drawLegend As Boolean = True,
                                     Optional xlab$ = "M/Z ratio",
-                                    Optional ylab$ = "Relative Intensity(%)") As GraphicsData
+                                    Optional ylab$ = "Relative Intensity(%)",
+                                    Optional tagXFormat$ = "F2",
+                                    Optional drawGrid As Boolean = True) As GraphicsData
 
         Dim mz As Double() = query _
             .Trim(intoCutoff) _
@@ -133,7 +139,9 @@ Public Module MassSpectra
             yAxislabelPosition:=YlabelPosition.LeftCenter,
             labelPlotStrength:=labelDisplayIntensity,
             drawLegend:=drawLegend,
-            bg:=bg
+            bg:=bg,
+            drawGrid:=drawGrid,
+            tagXFormat:=tagXFormat
         )
     End Function
 End Module

@@ -171,6 +171,10 @@ Module Visual
     Public Function SpectrumPlot(spectrum As Object,
                                  Optional alignment As Object = Nothing,
                                  Optional title$ = "Mass Spectrum Plot",
+                                 Optional showLegend As Boolean = True,
+                                 Optional showGrid As Boolean = True,
+                                 Optional tagXFormat$ = "F2",
+                                 Optional intoCutoff# = 0.3,
                                  Optional env As Environment = Nothing) As Object
 
         Dim ms As [Variant](Of Message, LibraryMatrix) = getSpectrum(spectrum, env)
@@ -180,7 +184,14 @@ Module Visual
         End If
 
         If alignment Is Nothing Then
-            Return MassSpectra.MirrorPlot(ms, plotTitle:=title)
+            Return ms _
+                .TryCast(Of LibraryMatrix) _
+                .MirrorPlot(
+                    plotTitle:=title,
+                    drawGrid:=showGrid,
+                    tagXFormat:=tagXFormat,
+                    labelDisplayIntensity:=intoCutoff
+                )
         Else
             Dim ref As [Variant](Of Message, LibraryMatrix) = getSpectrum(alignment, env)
 
@@ -191,7 +202,11 @@ Module Visual
             Return MassSpectra.AlignMirrorPlot(
                 query:=ms,
                 ref:=ref,
-                title:=title
+                title:=title,
+                drawLegend:=showLegend,
+                drawGrid:=showGrid,
+                tagXFormat:=tagXFormat,
+                labelDisplayIntensity:=intoCutoff
             )
         End If
     End Function
