@@ -578,6 +578,8 @@ Public Class frmMain
 
         Timer1.Enabled = True
         Timer1.Start()
+        ToolStripProgressBar1.Value = 0
+        ToolStripProgressBar1.Maximum = 0
 
         Dim text As New StringBuilder
 

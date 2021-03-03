@@ -52,14 +52,18 @@ Public Class TaskUI
                       End Sub)
         TaskListWindow.pending -= 1
 
-        Call Alert.ShowSucess(message)
         Call main.Invoke(Sub()
                              main.ToolStripProgressBar1.Value += 1
 
                              If main.ToolStripProgressBar1.Value = main.ToolStripProgressBar1.Maximum Then
                                  main.ToolStripStatusLabel4.Image = My.Resources._1200px_Checked_svg
                                  main.ToolStripStatusLabel4.Text = "Job Done!"
+
+                                 main.ToolStripProgressBar1.Value = 0
+                                 main.ToolStripProgressBar1.Maximum = 0
                              End If
                          End Sub)
+
+        ' Call Alert.ShowSucess(message)
     End Sub
 End Class
