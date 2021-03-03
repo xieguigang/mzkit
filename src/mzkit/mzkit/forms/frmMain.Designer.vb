@@ -122,6 +122,7 @@ Partial Class frmMain
         'ToolStripStatusLabel4
         '
         Me.ToolStripStatusLabel4.Image = CType(resources.GetObject("ToolStripStatusLabel4.Image"), System.Drawing.Image)
+        Me.ToolStripStatusLabel4.IsLink = True
         Me.ToolStripStatusLabel4.Name = "ToolStripStatusLabel4"
         Me.ToolStripStatusLabel4.Size = New System.Drawing.Size(43, 18)
         Me.ToolStripStatusLabel4.Text = "0/0"

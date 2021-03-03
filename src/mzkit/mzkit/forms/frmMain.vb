@@ -977,10 +977,8 @@ Public Class frmMain
     End Sub
 
     Private Sub ToolStripStatusLabel4_Click(sender As Object, e As EventArgs) Handles ToolStripStatusLabel4.Click
-
+        Call VisualStudio.Dock(taskWin, DockState.DockBottom)
     End Sub
-
-
 #End Region
 
 End Class
