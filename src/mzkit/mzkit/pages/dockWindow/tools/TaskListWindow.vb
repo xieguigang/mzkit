@@ -1,60 +1,64 @@
 ﻿#Region "Microsoft.VisualBasic::4ec6828d664a510fb5b58583437a8b8e, pages\dockWindow\tools\TaskListWindow.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class TaskListWindow
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: Add
-    ' 
-    '     Sub: TaskListWindow_Closing
-    ' 
-    ' Class TaskUI
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: Finish, ProgressMessage, Running
-    ' 
-    ' /********************************************************************************/
+' Class TaskListWindow
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: Add
+' 
+'     Sub: TaskListWindow_Closing
+' 
+' Class TaskUI
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Sub: Finish, ProgressMessage, Running
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.ComponentModel
+Imports mzkit.My
 Imports Vip.Notification
 
 Public Class TaskListWindow
+
+    Friend Shared n As Integer
+    Friend Shared pending As Integer
 
     Sub New()
 
@@ -72,6 +76,12 @@ Public Class TaskListWindow
     End Sub
 
     Public Function Add(task As String, content$) As TaskUI
+        MyApplication.host.ToolStripStatusLabel4.Image = My.Resources.img_561134
+        MyApplication.host.ToolStripStatusLabel4.Text = $"Running Background Task {pending}/{n}"
+        MyApplication.host.ToolStripProgressBar1.Maximum += 1
+
+        n += 1
+        pending += 1
         Return New TaskUI(task, content, Me)
     End Function
 End Class
@@ -117,13 +127,23 @@ Public Class TaskUI
 
     Public Sub Finish()
         Dim message As String = $"{taskTitle} Job Done!{vbCrLf}{taskContent}"
+        Dim main = MyApplication.host
 
         window.Invoke(Sub()
                           status.Text = "Finished"
                           progress.Text = ""
                           status.BackColor = Color.SkyBlue
                       End Sub)
+        TaskListWindow.pending -= 1
 
         Call Alert.ShowSucess(message)
+        Call main.Invoke(Sub()
+                             main.ToolStripProgressBar1.Value += 1
+
+                             If main.ToolStripProgressBar1.Value = main.ToolStripProgressBar1.Maximum Then
+                                 main.ToolStripStatusLabel4.Image = My.Resources._1200px_Checked_svg
+                                 main.ToolStripStatusLabel4.Text = "Job Done!"
+                             End If
+                         End Sub)
     End Sub
 End Class

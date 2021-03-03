@@ -35,6 +35,8 @@ Partial Class frmMain
         Me.RawFileViewerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripStatusLabel3 = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.ToolStripProgressBar1 = New System.Windows.Forms.ToolStripProgressBar()
+        Me.ToolStripStatusLabel4 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.Ribbon1 = New RibbonLib.Ribbon()
         Me.PanelBase = New System.Windows.Forms.Panel()
@@ -44,19 +46,19 @@ Partial Class frmMain
         '
         'StatusStrip
         '
-        Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1, Me.ToolStripDropDownButton1, Me.ToolStripStatusLabel2, Me.ToolStripStatusLabel3})
+        Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1, Me.ToolStripDropDownButton1, Me.ToolStripStatusLabel2, Me.ToolStripStatusLabel3, Me.ToolStripProgressBar1, Me.ToolStripStatusLabel4})
         Me.StatusStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow
-        Me.StatusStrip.Location = New System.Drawing.Point(0, 502)
+        Me.StatusStrip.Location = New System.Drawing.Point(0, 501)
         Me.StatusStrip.Name = "StatusStrip"
         Me.StatusStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
-        Me.StatusStrip.Size = New System.Drawing.Size(1084, 22)
+        Me.StatusStrip.Size = New System.Drawing.Size(1084, 23)
         Me.StatusStrip.TabIndex = 7
         Me.StatusStrip.Text = "StatusStrip"
         '
         'ToolStripStatusLabel1
         '
         Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
-        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(119, 17)
+        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(134, 18)
         Me.ToolStripStatusLabel1.Text = "ToolStripStatusLabel1"
         '
         'ToolStripDropDownButton1
@@ -66,50 +68,63 @@ Partial Class frmMain
         Me.ToolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ToolStripDropDownButton1.Name = "ToolStripDropDownButton1"
         Me.ToolStripDropDownButton1.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ToolStripDropDownButton1.Size = New System.Drawing.Size(149, 20)
+        Me.ToolStripDropDownButton1.Size = New System.Drawing.Size(166, 21)
         Me.ToolStripDropDownButton1.Text = "Use m/z Data Toolkits"
         '
         'MoleculeNetworkingToolStripMenuItem
         '
         Me.MoleculeNetworkingToolStripMenuItem.Image = CType(resources.GetObject("MoleculeNetworkingToolStripMenuItem.Image"), System.Drawing.Image)
         Me.MoleculeNetworkingToolStripMenuItem.Name = "MoleculeNetworkingToolStripMenuItem"
-        Me.MoleculeNetworkingToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
+        Me.MoleculeNetworkingToolStripMenuItem.Size = New System.Drawing.Size(201, 22)
         Me.MoleculeNetworkingToolStripMenuItem.Text = "Molecule Networking"
         '
         'FormulaSearchToolToolStripMenuItem
         '
         Me.FormulaSearchToolToolStripMenuItem.Image = CType(resources.GetObject("FormulaSearchToolToolStripMenuItem.Image"), System.Drawing.Image)
         Me.FormulaSearchToolToolStripMenuItem.Name = "FormulaSearchToolToolStripMenuItem"
-        Me.FormulaSearchToolToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
+        Me.FormulaSearchToolToolStripMenuItem.Size = New System.Drawing.Size(201, 22)
         Me.FormulaSearchToolToolStripMenuItem.Text = "Formula Search Tool"
         '
         'MzCalculatorToolStripMenuItem
         '
         Me.MzCalculatorToolStripMenuItem.Image = CType(resources.GetObject("MzCalculatorToolStripMenuItem.Image"), System.Drawing.Image)
         Me.MzCalculatorToolStripMenuItem.Name = "MzCalculatorToolStripMenuItem"
-        Me.MzCalculatorToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
+        Me.MzCalculatorToolStripMenuItem.Size = New System.Drawing.Size(201, 22)
         Me.MzCalculatorToolStripMenuItem.Text = "M/z Calculator"
         '
         'RawFileViewerToolStripMenuItem
         '
         Me.RawFileViewerToolStripMenuItem.Image = CType(resources.GetObject("RawFileViewerToolStripMenuItem.Image"), System.Drawing.Image)
         Me.RawFileViewerToolStripMenuItem.Name = "RawFileViewerToolStripMenuItem"
-        Me.RawFileViewerToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
+        Me.RawFileViewerToolStripMenuItem.Size = New System.Drawing.Size(201, 22)
         Me.RawFileViewerToolStripMenuItem.Text = "Raw File Viewer"
         '
         'ToolStripStatusLabel2
         '
         Me.ToolStripStatusLabel2.Image = CType(resources.GetObject("ToolStripStatusLabel2.Image"), System.Drawing.Image)
         Me.ToolStripStatusLabel2.Name = "ToolStripStatusLabel2"
-        Me.ToolStripStatusLabel2.Size = New System.Drawing.Size(135, 17)
+        Me.ToolStripStatusLabel2.Size = New System.Drawing.Size(150, 18)
         Me.ToolStripStatusLabel2.Text = "ToolStripStatusLabel2"
         '
         'ToolStripStatusLabel3
         '
         Me.ToolStripStatusLabel3.Image = CType(resources.GetObject("ToolStripStatusLabel3.Image"), System.Drawing.Image)
         Me.ToolStripStatusLabel3.Name = "ToolStripStatusLabel3"
-        Me.ToolStripStatusLabel3.Size = New System.Drawing.Size(135, 17)
+        Me.ToolStripStatusLabel3.Size = New System.Drawing.Size(150, 18)
         Me.ToolStripStatusLabel3.Text = "ToolStripStatusLabel3"
+        '
+        'ToolStripProgressBar1
+        '
+        Me.ToolStripProgressBar1.Name = "ToolStripProgressBar1"
+        Me.ToolStripProgressBar1.Size = New System.Drawing.Size(100, 17)
+        Me.ToolStripProgressBar1.Value = 100
+        '
+        'ToolStripStatusLabel4
+        '
+        Me.ToolStripStatusLabel4.Image = CType(resources.GetObject("ToolStripStatusLabel4.Image"), System.Drawing.Image)
+        Me.ToolStripStatusLabel4.Name = "ToolStripStatusLabel4"
+        Me.ToolStripStatusLabel4.Size = New System.Drawing.Size(43, 18)
+        Me.ToolStripStatusLabel4.Text = "0/0"
         '
         'Ribbon1
         '
@@ -126,7 +141,7 @@ Partial Class frmMain
         Me.PanelBase.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PanelBase.Location = New System.Drawing.Point(0, 166)
         Me.PanelBase.Name = "PanelBase"
-        Me.PanelBase.Size = New System.Drawing.Size(1084, 336)
+        Me.PanelBase.Size = New System.Drawing.Size(1084, 335)
         Me.PanelBase.TabIndex = 10
         '
         'Timer1
@@ -164,4 +179,6 @@ Partial Class frmMain
     Friend WithEvents PanelBase As Panel
     Friend WithEvents ToolStripStatusLabel3 As ToolStripStatusLabel
     Friend WithEvents Timer1 As Timer
+    Friend WithEvents ToolStripProgressBar1 As ToolStripProgressBar
+    Friend WithEvents ToolStripStatusLabel4 As ToolStripStatusLabel
 End Class

@@ -976,6 +976,10 @@ Public Class frmMain
         Ribbon1.Refresh()
     End Sub
 
+    Private Sub ToolStripStatusLabel4_Click(sender As Object, e As EventArgs) Handles ToolStripStatusLabel4.Click
+
+    End Sub
+
 
 #End Region
 
