@@ -173,7 +173,7 @@ Module Visual
                                  Optional title$ = "Mass Spectrum Plot",
                                  Optional env As Environment = Nothing) As Object
 
-        Dim ms = getSpectrum(spectrum, env)
+        Dim ms As [Variant](Of Message, LibraryMatrix) = getSpectrum(spectrum, env)
 
         If ms Like GetType(Message) Then
             Return ms.TryCast(Of Message)
@@ -182,7 +182,11 @@ Module Visual
         If alignment Is Nothing Then
             Return MassSpectra.MirrorPlot(ms, plotTitle:=title)
         Else
-            Dim ref = getSpectrum(alignment, env)
+            Dim ref As [Variant](Of Message, LibraryMatrix) = getSpectrum(alignment, env)
+
+            If ref Like GetType(Message) Then
+                Return ref.TryCast(Of Message)
+            End If
 
             Return MassSpectra.AlignMirrorPlot(
                 query:=ms,
@@ -192,6 +196,18 @@ Module Visual
         End If
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="data">
+    ''' <see cref="ms2"/>[], <see cref="LibraryMatrix"/>, <see cref="MGF.Ions"/>, <see cref="PeakMs2"/> and <see cref="dataframe"/>
+    ''' 
+    ''' <see cref="dataframe"/> object should contains 
+    ''' ``mz`` and ``into`` these two column data at 
+    ''' least.
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     Private Function getSpectrum(data As Object, env As Environment) As [Variant](Of Message, LibraryMatrix)
         Dim type As Type = data.GetType
 
@@ -204,6 +220,13 @@ Module Visual
                 Return DirectCast(data, MGF.Ions).GetLibrary
             Case GetType(dataframe)
                 Dim matrix As dataframe = DirectCast(data, dataframe)
+
+                If Not matrix.hasName("mz") Then
+                    Return Message.SymbolNotFound(env, "mz", TypeCodes.double)
+                ElseIf Not matrix.hasName("into") Then
+                    Return Message.SymbolNotFound(env, "into", TypeCodes.double)
+                End If
+
                 Dim mz As Double() = REnv.asVector(Of Double)(matrix.getColumnVector("mz"))
                 Dim into As Double() = REnv.asVector(Of Double)(matrix.getColumnVector("into"))
                 Dim ms2 As ms2() = mz _
