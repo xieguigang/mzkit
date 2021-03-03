@@ -75,9 +75,12 @@ Public Class TaskListWindow
         Me.Hide()
     End Sub
 
+    Public Sub UpdateProgress()
+        Call MyApplication.host.Invoke(Sub() MyApplication.host.ToolStripStatusLabel4.Text = $"Running Background Task {n - pending}/{n}")
+    End Sub
+
     Public Function Add(task As String, content$) As TaskUI
         MyApplication.host.ToolStripStatusLabel4.Image = My.Resources.img_561134
-        MyApplication.host.ToolStripStatusLabel4.Text = $"Running Background Task {n - pending}/{n}"
         MyApplication.host.ToolStripProgressBar1.Maximum += 1
 
         n += 1

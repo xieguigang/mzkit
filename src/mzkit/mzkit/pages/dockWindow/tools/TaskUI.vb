@@ -54,6 +54,7 @@ Public Class TaskUI
 
         Call main.Invoke(Sub()
                              main.ToolStripProgressBar1.Value += 1
+                             main.taskWin.UpdateProgress()
 
                              If main.ToolStripProgressBar1.Value = main.ToolStripProgressBar1.Maximum Then
                                  main.ToolStripStatusLabel4.Image = My.Resources._1200px_Checked_svg
