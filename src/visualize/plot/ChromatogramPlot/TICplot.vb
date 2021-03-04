@@ -129,8 +129,7 @@ Public Class TICplot : Inherits Plot
 
         Dim peakTimes As New List(Of NamedValue(Of ChromatogramTick))
         Dim fillColor As Brush
-
-        legends = New LegendObject(ionData.Length - 1) {}
+        Dim legendList As New List(Of LegendObject)
 
         For i As Integer = 0 To ionData.Length - 1
             Dim curvePen As Pen = colors.Next
@@ -142,7 +141,7 @@ Public Class TICplot : Inherits Plot
                 Continue For
             End If
 
-            legends(i) = New LegendObject With {
+            legendList += New LegendObject With {
                 .title = line.name,
                 .color = curvePen.Color.ToHtmlColor,
                 .fontstyle = theme.legendLabelCSS,
@@ -185,6 +184,7 @@ Public Class TICplot : Inherits Plot
             End If
         Next
 
+        legends = legendList
         labels = GetLabels(g, scaler, peakTimes).ToArray
 
         If theme.drawLabels Then Call DrawLabels(g, rect, labels, theme, labelLayoutTicks)
