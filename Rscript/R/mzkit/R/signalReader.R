@@ -1,5 +1,13 @@
-# a helper module for read sciBASIC.NET general signal netcdf4 data file.
-
+#' Read of general signal pack
+#'
+#' @description a helper module for read sciBASIC.NET 
+#'    general signal netcdf4 data file.
+#'
+#' @param cdf the file path of the netCDF data file.
+#'
+#' @details then general signal data format can be found at source file module
+#'    https://github.com/xieguigang/sciBASIC/blob/master/Data_science/Mathematica/SignalProcessing/Signal.IO/cdfSignalsWriter.vb
+#'
 readAllSignals = function(cdf, verbose = TRUE) {
 	library(ncdf4);
 	library(rjson);
