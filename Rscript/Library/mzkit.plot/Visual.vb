@@ -83,6 +83,13 @@ Module Visual
         Return overlaps
     End Function
 
+    ''' <summary>
+    ''' plot TIC overlaps
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="args"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     Private Function plotChromatogram2(x As ChromatogramOverlap, args As list, env As Environment) As Object
         Dim isBPC As Boolean = args.getValue("bpc", env, [default]:=False)
         Dim alpha As Integer = args.getValue("opacity", env, [default]:=100)
@@ -109,6 +116,13 @@ Module Visual
             )
     End Function
 
+    ''' <summary>
+    ''' plot single TIC
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="args"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     Private Function plotChromatogram(x As Chromatogram, args As list, env As Environment) As Object
         Dim isBPC As Boolean = args.getValue("bpc", env, [default]:=False)
         Dim name As String = args.getValue("name", env, [default]:="unknown")

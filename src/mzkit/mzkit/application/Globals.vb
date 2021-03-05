@@ -221,8 +221,55 @@ Module Globals
             Next
         End If
 
+        Call loadRStudioScripts(explorer)
+
         Return i
     End Function
+
+    Private Sub loadRStudioScripts(explorer As TreeView)
+        Dim scripts As New TreeNode("R# Studio") With {
+            .ImageIndex = 1,
+            .SelectedImageIndex = 1,
+            .StateImageIndex = 1
+        }
+
+        Dim folder As String = $"{App.HOME}/Rstudio/R"
+
+        If Not folder.DirectoryExists Then
+            ' development test
+            folder = $"{App.HOME}/../../src/mzkit/setup/demo_script/"
+        End If
+
+        Call explorer.Nodes.Add(scripts)
+        Call AddScript(scripts, dir:=folder)
+    End Sub
+
+    Private Sub AddScript(folder As TreeNode, dir As String)
+        For Each subfolder As String In dir.ListDirectory
+            Dim fileNode As New TreeNode(subfolder.DirectoryName) With {
+                .Checked = False,
+                .Tag = Nothing,
+                .ImageIndex = 1,
+                .StateImageIndex = 1,
+                .SelectedImageIndex = 1
+            }
+
+            folder.Nodes.Add(fileNode)
+            AddScript(fileNode, subfolder)
+        Next
+
+        For Each script As String In dir.EnumerateFiles("*.R")
+            Dim fileNode As New TreeNode(script.FileName) With {
+                .Checked = False,
+                .Tag = script,
+                .ImageIndex = 3,
+                .StateImageIndex = 3,
+                .SelectedImageIndex = 3
+            }
+
+            folder.Nodes.Add(fileNode)
+        Next
+    End Sub
 
     ''' <summary>
     ''' 加载原始数据文件之中的ms1和ms2 scan树
