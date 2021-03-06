@@ -52,8 +52,21 @@ weighted_MScos = function(query, ref) {
 #' Align \code{x} by using \code{y} as base matrix
 #'
 globalAlign = function(x, y, tolerance = mzkit::tolerance(0.3, "da")) {
-    ref = y[, 1];
+    tolerance = tolerance$assert;
+    ref   = y[, 1];
+    query = x[, 1];
+    ints  = x[, 2];
+    into  = sapply(ref, function(mz) {
+        i = which(tolerance(mz, query));
 
+        if (length(i) == 0) {
+            0;
+        } else {
+            max(ints[i]);
+        }       
+    });
+
+    data.frame(mz = ref, into = into);
 }
 
 #' Jaccard index between two MS matrix
