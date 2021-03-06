@@ -44,7 +44,7 @@ weighted_MScos = function(query, ref) {
     n     = length(qmz) - (1:length(qmz)) + 1;
     # assign m/z mass weight
     query = query[, 2] * n;
-    ref   = ref[, 2] * n;
+    ref   =   ref[, 2] * n;
 
     MScos(query, ref);
 } 
@@ -55,11 +55,13 @@ globalAlign = function(x, y, tolerance = mzkit::tolerance(0.3, "da")) {
 
 }
 
-#'
+#' Jaccard index between two MS matrix
+#' 
 #' @details the MS matrix of \code{query} and \code{ref} should 
 #'     have been both pre-processed.
 #'
 #' @param query the MS matrix should be processed by \code{centroid}
+#' @param ref the MS matrix should be processed by \code{centroid}
 #' 
 MSjaccard = function(query, ref, tolerance = mzkit::tolerance(0.3, "da"), topn = 5) {
     # we have two m/z vector
