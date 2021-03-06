@@ -30,13 +30,13 @@ centroid.2 <- function(profile, peakwidth = 0.1, intocutoff = 0.05) {
   into = as.numeric(as.vector(profile[, "into"]));
 
   # reorder in asc order
-  i    <- order(mz);
-  mz   <- mz[i];
-  into <- into[i];
+  i    = order(mz);
+  mz   = mz[i];
+  into = into[i];
 
-  i    <- (into / max(into)) >= intocutoff;
-  mz   <- mz[i];
-  into <- into[i];
+  i    = (into / max(into)) >= intocutoff;
+  mz   = mz[i];
+  into = into[i];
 
   mzgroups = numeric.group(mz, assert = function(x, y) abs(x - y) <= peakwidth);
   cmz      = NULL;

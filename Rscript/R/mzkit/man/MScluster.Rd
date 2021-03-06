@@ -4,7 +4,12 @@
 \alias{MScluster}
 \title{Run molecule networking}
 \usage{
-MScluster(peak_ms2, tolerance = mzkit::tolerance(0.3, "da"))
+MScluster(
+  peak_ms2,
+  identical = 0.85,
+  greaterThan = 0.6,
+  tolerance = mzkit::tolerance(0.3, "da")
+)
 }
 \arguments{
 \item{peak_ms2}{a small bundle of MS matrix. MS matrix items
