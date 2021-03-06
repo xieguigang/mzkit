@@ -1,13 +1,13 @@
 # global alignment of two MS spectrum
 
 #' SSM score in one direction
-#' 
-#' @details the MS matrix of \code{query} and \code{ref} should 
+#'
+#' @details the MS matrix of \code{query} and \code{ref} should
 #'     have been both pre-processed.
 #'
 #' @param query the MS matrix should be processed by \code{centroid}
 #'     and \code{globalAlign}
-#' 
+#'
 MScos = function(query, ref) {
     query = query[, "into"];
     ref   = ref[, "into"];
@@ -47,27 +47,27 @@ weighted_MScos = function(query, ref) {
     ref   =   ref[, 2] * n;
 
     MScos(query, ref);
-} 
+}
 
 #' Align \code{x} by using \code{y} as base matrix
-#' 
+#'
 globalAlign = function(x, y, tolerance = mzkit::tolerance(0.3, "da")) {
 
 }
 
 #' Jaccard index between two MS matrix
-#' 
-#' @details the MS matrix of \code{query} and \code{ref} should 
+#'
+#' @details the MS matrix of \code{query} and \code{ref} should
 #'     have been both pre-processed.
 #'
 #' @param query the MS matrix should be processed by \code{centroid}
 #' @param ref the MS matrix should be processed by \code{centroid}
-#' 
+#'
 MSjaccard = function(query, ref, tolerance = mzkit::tolerance(0.3, "da"), topn = 5) {
     # we have two m/z vector
     query     = MStop(query, topn);
     ref       = MStop(ref, topn);
-    union     = length(numeric.group(append(query, ref), assert = tolerance$assert);
+    union     = length(numeric.group(append(query, ref), assert = tolerance$assert));
     intersect = sapply(query, function(mz) {
         sum(tolerance(mz, ref)) > 0;
     });
@@ -76,9 +76,9 @@ MSjaccard = function(query, ref, tolerance = mzkit::tolerance(0.3, "da"), topn =
 }
 
 #' Take \code{m/z} by top n intensity
-#' 
+#'
 #' @param x a MS matrix, and it should be pre-processed by \code{centroid}.
-#' 
+#'
 MStop = function(x, topn = 5) {
     x = x[order(x[, 2], decreasing = TRUE), ];
     x = x[, 1];
