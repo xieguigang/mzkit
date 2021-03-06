@@ -4,8 +4,11 @@
 #' in this collection should be pre-processed by \code{centroid}
 #' 
 MScluster = function(peak_ms2, tolerance = mzkit::tolerance(0.3, "da")) {
-    cos = lapply(peak_ms2, function(ref) alignVector(ref, peak_ms2, tolerance));
-    
+    cos = lapply(peak_ms2, function(ref) {
+        # get distance
+        1 - alignVector(ref, peak_ms2, tolerance);
+    });
+    cos = t(as.data.frame(cos));
 }
 
 alignVector = function(ref, peak_ms2, tolerance = mzkit::tolerance(0.3, "da")) {
