@@ -8,7 +8,14 @@ MScluster = function(peak_ms2, tolerance = mzkit::tolerance(0.3, "da")) {
         # get distance
         1 - alignVector(ref, peak_ms2, tolerance);
     });
-    cos = t(as.data.frame(cos));
+    cos  = t(as.data.frame(cos));
+    d    = dist(cos);
+    tree = hclust(d, method = 'average');
+
+    # plot(tree, hang = -1, cex=.8, main = 'average linkage clustering');
+
+    # returns MS tree clusters
+    cutree(tree, k = 3 + floor(length(peak_ms2) / 9));
 }
 
 alignVector = function(ref, peak_ms2, tolerance = mzkit::tolerance(0.3, "da")) {
