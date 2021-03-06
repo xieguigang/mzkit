@@ -52,6 +52,7 @@ weighted_MScos = function(query, ref) {
 #' Align \code{x} by using \code{y} as base matrix
 #'
 globalAlign = function(x, y, tolerance = mzkit::tolerance(0.3, "da")) {
+    ref = y[, 1];
 
 }
 
@@ -67,7 +68,8 @@ MSjaccard = function(query, ref, tolerance = mzkit::tolerance(0.3, "da"), topn =
     # we have two m/z vector
     query     = MStop(query, topn);
     ref       = MStop(ref, topn);
-    union     = length(numeric.group(append(query, ref), assert = tolerance$assert));
+    tolerance = tolerance$assert;
+    union     = length(numeric.group(append(query, ref), assert = tolerance));
     intersect = sapply(query, function(mz) {
         sum(tolerance(mz, ref)) > 0;
     });
