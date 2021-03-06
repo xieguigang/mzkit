@@ -35,9 +35,8 @@ MScos = function(query, ref) {
 #'
 weighted_MScos = function(query, ref) {
     # reorder the matrix row by m/z mass
-    qmz = query[, 1] %=>% as.vector;
-    smz =   ref[, 1] %=>% as.vector;
-
+    qmz   = query[, 1] %=>% as.vector;
+    smz   =   ref[, 1] %=>% as.vector;
     # small m/z first
     query = rbind(query[order(qmz), ], NULL);
     ref   = rbind(ref[order(smz), ], NULL);
@@ -62,6 +61,26 @@ globalAlign = function(x, y, tolerance = mzkit::tolerance(0.3, "da")) {
 #'
 #' @param query the MS matrix should be processed by \code{centroid}
 #' 
-MSjaccard = function(query, ref, tolerance = mzkit::tolerance(0.3, "da")) {
+MSjaccard = function(query, ref, tolerance = mzkit::tolerance(0.3, "da"), topn = 5) {
+    # we have two m/z vector
+    query = MStop(query, topn);
+    ref   = MStop(ref, topn);
 
+    union     = 0;
+    intersect = 0;
+
+
+
+    intersect / union;
+}
+
+#' Take \code{m/z} by top n intensity
+#' 
+#' @param x a MS matrix, and it should be pre-processed by \code{centroid}.
+#' 
+MStop = function(x, topn = 5) {
+    x = x[order(x[, 2], decreasing = TRUE), ];
+    x = x[, 1];
+
+    x[min(length(x), topn)];
 }
