@@ -1,10 +1,8 @@
-#Region "Microsoft.ROpen::554e3043130cd51dffe2c8ebffda289a, centroid.R"
+#Region "Microsoft.ROpen::46b8f7145b3fffcc63e247555d9b0b19, R\centroid.R"
 
-# Summaries:
+    # Summaries:
 
-# centroid.2 <- function(profile, peakwidth = 0.3, angle.threshold = 0.5) {if (!(c("mz", "into") %in% colnames(profile))) {...
-# angle <- function(p1, p2) {...
-# peak.accumulateLine <- function(into) {...
+    # centroid.2 <- function(profile, peakwidth = 0.1, intocutoff = 0.05) {if (!all(c("mz", "into") %in% colnames(profile))) {...
 
 #End Region
 

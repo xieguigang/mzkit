@@ -1,3 +1,10 @@
+#Region "Microsoft.ROpen::ff7c41157d59876a96d4859198aa5d8e, R\globalAlignment.R"
+
+    # Summaries:
+
+
+#End Region
+
 # global alignment of two MS spectrum
 
 #' SSM score in one direction

@@ -1,9 +1,9 @@
-#Region "Microsoft.ROpen::4ea95147fba083fda00d6166551f1af6, providers.R"
+#Region "Microsoft.ROpen::4c627ef12bb601ea1b12323af549df75, R\providers.R"
 
-# Summaries:
+    # Summaries:
 
-# positive <- function() {...
-# negative <- function() {...
+    # positive <- function() {...
+    # negative <- function() {...
 
 #End Region
 

@@ -1,3 +1,12 @@
+#Region "Microsoft.ROpen::601acd34f7346ce56eb5ea91ee50432d, R\readMgf.R"
+
+    # Summaries:
+
+    # read.mgf <- function(fileName) {...
+    # parse.mgf <- function(buffer) {...
+    # parse.mgf.title_meta <- function(title) {...
+
+#End Region
 
 #' Read a given mgf file
 #'

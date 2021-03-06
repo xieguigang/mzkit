@@ -1,3 +1,10 @@
+#Region "Microsoft.ROpen::36db142dfe978ae9a98aec366571e0ce, R\signalReader.R"
+
+    # Summaries:
+
+
+#End Region
+
 #' Read of general signal pack
 #'
 #' @description a helper module for read sciBASIC.NET
