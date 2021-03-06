@@ -63,15 +63,14 @@ globalAlign = function(x, y, tolerance = mzkit::tolerance(0.3, "da")) {
 #' 
 MSjaccard = function(query, ref, tolerance = mzkit::tolerance(0.3, "da"), topn = 5) {
     # we have two m/z vector
-    query = MStop(query, topn);
-    ref   = MStop(ref, topn);
+    query     = MStop(query, topn);
+    ref       = MStop(ref, topn);
+    union     = length(numeric.group(append(query, ref), assert = tolerance$assert);
+    intersect = sapply(query, function(mz) {
+        sum(tolerance(mz, ref)) > 0;
+    });
 
-    union     = 0;
-    intersect = 0;
-
-
-
-    intersect / union;
+    sum(intersect) / union;
 }
 
 #' Take \code{m/z} by top n intensity
