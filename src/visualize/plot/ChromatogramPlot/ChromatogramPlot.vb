@@ -136,11 +136,14 @@ Public Module ChromatogramPlot
                             Optional labelLayoutTicks% = 500,
                             Optional showLabels As Boolean = True,
                             Optional fillCurve As Boolean = True,
+                            Optional fillAlpha As Integer = 180,
                             Optional axisLabelFont$ = CSSFont.Win7Large,
                             Optional axisTickFont$ = CSSFont.Win10NormalLarger,
                             Optional showLegends As Boolean = True,
                             Optional legendFontCSS$ = CSSFont.Win10Normal,
-                            Optional intensityMax As Double = 0) As GraphicsData
+                            Optional intensityMax As Double = 0,
+                            Optional gridFill As String = "rgb(245,245,245)",
+                            Optional showGird As Boolean = False) As GraphicsData
 
         Return {ionData}.TICplot(
             size:=size,
@@ -157,7 +160,10 @@ Public Module ChromatogramPlot
             showLegends:=showLegends,
             fillCurve:=fillCurve,
             legendFontCSS:=legendFontCSS,
-            intensityMax:=intensityMax
+            intensityMax:=intensityMax,
+            gridFill:=gridFill,
+            fillAlpha:=fillAlpha,
+            showGrid:=showGird
         )
     End Function
 
