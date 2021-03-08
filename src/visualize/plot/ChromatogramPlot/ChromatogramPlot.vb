@@ -142,7 +142,8 @@ Public Module ChromatogramPlot
                             Optional showLegends As Boolean = True,
                             Optional legendFontCSS$ = CSSFont.Win10Normal,
                             Optional intensityMax As Double = 0,
-                            Optional gridFill As String = "rgb(245,245,245)") As GraphicsData
+                            Optional gridFill As String = "rgb(245,245,245)",
+                            Optional showGird As Boolean = False) As GraphicsData
 
         Return {ionData}.TICplot(
             size:=size,
@@ -161,7 +162,8 @@ Public Module ChromatogramPlot
             legendFontCSS:=legendFontCSS,
             intensityMax:=intensityMax,
             gridFill:=gridFill,
-            fillAlpha:=fillAlpha
+            fillAlpha:=fillAlpha,
+            showGrid:=showGird
         )
     End Function
 

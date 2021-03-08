@@ -154,7 +154,8 @@ Module Visual
             .TICplot(
                 fillAlpha:=alpha,
                 colorsSchema:=colorSet,
-                gridFill:=gridFill
+                gridFill:=gridFill,
+                showGrid:=True
             )
     End Function
 
@@ -179,7 +180,8 @@ Module Visual
         Return data.TICplot(
             colorsSchema:=color,
             gridFill:=gridFill,
-            fillAlpha:=alpha
+            fillAlpha:=alpha,
+            showGird:=True
         )
     End Function
 
