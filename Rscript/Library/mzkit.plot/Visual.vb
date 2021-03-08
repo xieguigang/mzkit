@@ -134,6 +134,7 @@ Module Visual
         Dim isBPC As Boolean = args.getValue("bpc", env, [default]:=False)
         Dim alpha As Integer = args.getValue("opacity", env, [default]:=100)
         Dim colorSet As String = args.getValue("colors", env, [default]:="Paired:c12")
+        Dim gridFill As String = args.getValue("grid.fill", env, [default]:="white")
         Dim overlaps As New List(Of NamedCollection(Of ChromatogramTick))
         Dim data As NamedCollection(Of ChromatogramTick)
 
@@ -152,7 +153,8 @@ Module Visual
             .ToArray _
             .TICplot(
                 fillAlpha:=alpha,
-                colorsSchema:=colorSet
+                colorsSchema:=colorSet,
+                gridFill:=gridFill
             )
     End Function
 
@@ -166,12 +168,19 @@ Module Visual
     Private Function plotChromatogram(x As Chromatogram, args As list, env As Environment) As Object
         Dim isBPC As Boolean = args.getValue("bpc", env, [default]:=False)
         Dim name As String = args.getValue("name", env, [default]:="unknown")
+        Dim color As String = args.getValue("color", env, [default]:="skyblue")
+        Dim gridFill As String = args.getValue("grid.fill", env, [default]:="white")
+        Dim alpha As Integer = args.getValue("opacity", env, [default]:=100)
         Dim data As New NamedCollection(Of ChromatogramTick) With {
             .name = name,
             .value = x.GetTicks(isBPC).ToArray
         }
 
-        Return data.TICplot
+        Return data.TICplot(
+            colorsSchema:=color,
+            gridFill:=gridFill,
+            fillAlpha:=alpha
+        )
     End Function
 
     Private Function plotSignal(x As GeneralSignal, args As list, env As Environment) As Object
