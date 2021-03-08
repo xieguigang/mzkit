@@ -45,6 +45,9 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
 Imports Microsoft.VisualBasic.Serialization.JSON
 
+''' <summary>
+''' a collection of <see cref="Chromatogram"/>
+''' </summary>
 Public Class ChromatogramOverlap
 
     Public Property overlaps As New Dictionary(Of String, Chromatogram)
