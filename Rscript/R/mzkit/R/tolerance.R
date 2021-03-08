@@ -1,4 +1,4 @@
-#Region "Microsoft.ROpen::6fae11bed7a2c40ddf79d286e61fbcb1, tolerance.R"
+#Region "Microsoft.ROpen::cf4ec31163d03520fa60a737cbcac7a4, R\tolerance.R"
 
     # Summaries:
 
@@ -14,11 +14,11 @@
 #' PPM value between two mass value
 #'
 PPM <- function(measured, actualValue) {
-	# 2018-7-8 without abs function for entir value, this may cause bugs in metaDNA
-	# for unknown query when actualValue is negative
+  # 2018-7-8 without abs function for entir value, this may cause bugs in metaDNA
+  # for unknown query when actualValue is negative
 
-    # |(measure - reference)| / measure * 1000000
-    abs(((measured - actualValue) / actualValue) * 1000000);
+  # |(measure - reference)| / measure * 1000000
+  abs(((measured - actualValue) / actualValue) * 1000000);
 }
 
 #' Tolerance in Mass delta mode
@@ -31,18 +31,18 @@ PPM <- function(measured, actualValue) {
 #'         tolerance predication.
 #'
 tolerance.deltaMass <- function(da = 0.3) {
-    describ <- sprintf("%s(da)", da);
+  describ <- sprintf("%s(da)", da);
 
-    function(a, b) {
-        err  <- abs(a - b);
-        test <- err <= da;
+  function(a, b) {
+    err  <- abs(a - b);
+    test <- err <= da;
 
-        list(error     = err,
-             valid     = test,
-             describ   = describ,
-             threshold = da
-        );
-    }
+    list(error     = err,
+         valid     = test,
+         describ   = describ,
+         threshold = da
+    );
+  }
 }
 
 #' Tolerance in PPM mode
@@ -55,26 +55,26 @@ tolerance.deltaMass <- function(da = 0.3) {
 #'         tolerance predication.
 #'
 tolerance.ppm <- function(ppm = 20) {
-    describ <- sprintf("%s(ppm)", ppm);
+  describ <- sprintf("%s(ppm)", ppm);
 
-    function(a, b) {
-        err  <- PPM(a, b);
-        test <- err <= ppm;
+  function(a, b) {
+    err  <- PPM(a, b);
+    test <- err <= ppm;
 
-        list(error     = err,
-             valid     = test,
-             describ   = describ,
-             threshold = ppm
-        );
-    }
+    list(error     = err,
+         valid     = test,
+         describ   = describ,
+         threshold = ppm
+    );
+  }
 }
 
 assert.deltaMass <- function(da = 0.3) {
-    function(a, b) abs(a-b) <= da;
+  function(a, b) abs(a-b) <= da;
 }
 
 assert.ppm <- function(ppm = 20) {
-    function(a, b) PPM(a, b) <= ppm;
+  function(a, b) PPM(a, b) <= ppm;
 }
 
 #' \code{m/z} tolerance helper
@@ -91,30 +91,30 @@ assert.ppm <- function(ppm = 20) {
 #'    }
 #'
 tolerance <- function(threshold = 0.3, method = c("da", "ppm")) {
-    if (method[1] == "da") {
-        assert = assert.deltaMass(threshold);
-        is.low.resolution = TRUE;
-		massErr = function(a,b) abs(a-b);
-    } else if (method[1] == "ppm") {
-        assert = assert.ppm(threshold);
-        is.low.resolution = FALSE;
-		massErr = function(a,b) PPM(a,b);
-    } else {
-        stop(sprintf("Unknown tolerance method: '%s'.", method[1]));
-    }
+  if (method[1] == "da") {
+    assert = assert.deltaMass(threshold);
+    is.low.resolution = TRUE;
+    massErr = function(a,b) abs(a-b);
+  } else if (method[1] == "ppm") {
+    assert = assert.ppm(threshold);
+    is.low.resolution = FALSE;
+    massErr = function(a,b) PPM(a,b);
+  } else {
+    stop(sprintf("Unknown tolerance method: '%s'.", method[1]));
+  }
 
-    resolution <- if (is.low.resolution) {
-        "Low resolution";
-    } else {
-        "High resolution";
-    }
+  resolution <- if (is.low.resolution) {
+    "Low resolution";
+  } else {
+    "High resolution";
+  }
 
-    list(
-        threshold         = threshold,
-        method            = method[1],
-        assert            = assert,
-		massErr           = massErr,
-        is.low.resolution = is.low.resolution,
-        toString          = sprintf("%s m/z tolerance with threshold %s(%s).", resolution, threshold, method[1])
-    );
+  list(
+    threshold         = threshold,
+    method            = method[1],
+    assert            = assert,
+    massErr           = massErr,
+    is.low.resolution = is.low.resolution,
+    toString          = sprintf("%s m/z tolerance with threshold %s(%s).", resolution, threshold, method[1])
+  );
 }

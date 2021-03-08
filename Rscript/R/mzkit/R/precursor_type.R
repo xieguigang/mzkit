@@ -1,4 +1,4 @@
-#Region "Microsoft.ROpen::509597d5709d95fc2e55ca627b699a8c, precursor_type.R"
+#Region "Microsoft.ROpen::9d6946b34200dec0b29bee369766ffa4, R\precursor_type.R"
 
     # Summaries:
 
@@ -24,74 +24,74 @@
 #'
 PrecursorType <- function() {
 
-    #' Evaluate adducts text to molecular weight.
-    .eval <- Eval(MolWeight)$Eval;
+  #' Evaluate adducts text to molecular weight.
+  .eval <- Eval(MolWeight)$Eval;
 
-	#' Calculate m/z
-	#'
-	#' @param mass Molecule weight
-	#' @param adduct adduct mass
-	#' @param charge precursor charge value
-	#'
-	#' @return Returns the m/z value of the precursor ion
-	adduct.mz <- function(mass, adduct, charge) {
-		(mass + adduct) / abs(charge);
-	}
-	adduct.mz.general <- function(mass, adduct, charge) {
-	    # Evaluate the formula expression to weights
-	    if (!is.numeric(adducts)) {
-	        adducts <- .eval(adducts);
-	    }
+  #' Calculate m/z
+  #'
+  #' @param mass Molecule weight
+  #' @param adduct adduct mass
+  #' @param charge precursor charge value
+  #'
+  #' @return Returns the m/z value of the precursor ion
+  adduct.mz <- function(mass, adduct, charge) {
+    (mass + adduct) / abs(charge);
+  }
+  adduct.mz.general <- function(mass, adduct, charge) {
+    # Evaluate the formula expression to weights
+    if (!is.numeric(adducts)) {
+      adducts <- .eval(adducts);
+    }
 
-	    adduct.mz(mass, adduct, charge);
-	}
+    adduct.mz(mass, adduct, charge);
+  }
 
-	#' Calculate mass from m/z
-	#'
-	#' @description Calculate the molecule mass from precursor adduct ion m/z
-	#'
-	#' @param precursorMZ MS/MS precursor adduct ion m/z
-	#' @param charge Net charge of the ion
-	#' @param adduct Adduct mass
-	#' @param M The number of the molecule for formula a precursor adduct ion.
-	#'
-	#' @return The molecule mass.
-	reverse.mass <- function(precursorMZ, M, charge, adduct) {
-		(precursorMZ * abs(charge) - adduct) / M;
-	}
-	reverse.mass.general <- function(precursorMZ, M, charge, adduct) {
-	    # Evaluate the formula expression to weights
-	    if (!is.numeric(adducts)) {
-	        adducts <- .eval(adducts);
-	    }
+  #' Calculate mass from m/z
+  #'
+  #' @description Calculate the molecule mass from precursor adduct ion m/z
+  #'
+  #' @param precursorMZ MS/MS precursor adduct ion m/z
+  #' @param charge Net charge of the ion
+  #' @param adduct Adduct mass
+  #' @param M The number of the molecule for formula a precursor adduct ion.
+  #'
+  #' @return The molecule mass.
+  reverse.mass <- function(precursorMZ, M, charge, adduct) {
+    (precursorMZ * abs(charge) - adduct) / M;
+  }
+  reverse.mass.general <- function(precursorMZ, M, charge, adduct) {
+    # Evaluate the formula expression to weights
+    if (!is.numeric(adducts)) {
+      adducts <- .eval(adducts);
+    }
 
-	    reverse.mass(precursorMZ, M, charge, adduct);
-	}
+    reverse.mass(precursorMZ, M, charge, adduct);
+  }
 
-	#' Construct a \code{precursor_type} model
-	#'
-	#' @param charge The ion charge value, no sign required.
-	#' @param type Full name of the precursor type
-	#' @param M The number of the target molecule
-	#' @param adducts The precursor adducts formula expression
-	#'
-	.addKey <- function(type, charge, M, adducts) {
-		# Evaluate the formula expression to weights
-		if (!is.numeric(adducts)) {
-			adducts <- .eval(adducts);
-		}
+  #' Construct a \code{precursor_type} model
+  #'
+  #' @param charge The ion charge value, no sign required.
+  #' @param type Full name of the precursor type
+  #' @param M The number of the target molecule
+  #' @param adducts The precursor adducts formula expression
+  #'
+  .addKey <- function(type, charge, M, adducts) {
+    # Evaluate the formula expression to weights
+    if (!is.numeric(adducts)) {
+      adducts <- .eval(adducts);
+    }
 
-		list(Name   = type,
-			 calc   = function(precursorMZ) reverse.mass(precursorMZ, M, charge, adducts),
-			 charge = charge,
-			 M      = M,
-			 adduct = adducts,
-			 cal.mz = function(mass) adduct.mz(mass * M, adducts, charge)
-		);
-	}
+    list(Name   = type,
+         calc   = function(precursorMZ) reverse.mass(precursorMZ, M, charge, adducts),
+         charge = charge,
+         M      = M,
+         adduct = adducts,
+         cal.mz = function(mass) adduct.mz(mass * M, adducts, charge)
+    );
+  }
 
-	list(mz   = adduct.mz.general,
-		 mass = reverse.mass.general,
-		 new  = .addKey
-	);
+  list(mz   = adduct.mz.general,
+       mass = reverse.mass.general,
+       new  = .addKey
+  );
 }

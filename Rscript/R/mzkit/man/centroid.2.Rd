@@ -4,7 +4,7 @@
 \alias{centroid.2}
 \title{Convert profile data to centroid}
 \usage{
-centroid.2(profile, peakwidth = 0.3, angle.threshold = 0.5)
+centroid.2(profile, peakwidth = 0.1, intocutoff = 0.05)
 }
 \arguments{
 \item{profile}{A 2D spectra data matrix in profile mode}
