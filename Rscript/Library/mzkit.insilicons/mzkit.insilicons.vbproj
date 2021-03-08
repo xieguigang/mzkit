@@ -222,6 +222,10 @@
       <Project>{0C2EB77C-39F2-460D-A3F8-CE905F867637}</Project>
       <Name>R</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\repository\Bio.Repository\Bio.Repository.vbproj">
+      <Project>{216acc2d-c7a5-4c27-9dc9-bdfa4dbb6a37}</Project>
+      <Name>Bio.Repository</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj">
       <Project>{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}</Project>
       <Name>47_dotnet_ms-vb_data.framework</Name>
