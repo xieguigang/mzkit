@@ -42,6 +42,7 @@
 
 #End Region
 
+Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.MetaDNA
@@ -54,6 +55,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.Data
+Imports SMRUCC.genomics.Data.KEGG.Metabolism
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
@@ -253,17 +255,29 @@ Module metaDNAInfer
     <ExportAPI("kegg.library")>
     <RApiReturn(GetType(KeggCompound))>
     Public Function loadCompoundLibrary(repo As String) As Object
-        Return CompoundRepository _
-            .ScanRepository(repo, ignoreGlycan:=False) _
-            .DoCall(AddressOf pipeline.CreateFromPopulator)
+        If repo.FileExists Then
+            Using file As Stream = repo.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                Return KEGGCompoundPack.ReadKeggDb(file)
+            End Using
+        Else
+            Return CompoundRepository _
+                .ScanRepository(repo, ignoreGlycan:=False) _
+                .DoCall(AddressOf pipeline.CreateFromPopulator)
+        End If
     End Function
 
     <ExportAPI("kegg.network")>
     <RApiReturn(GetType(ReactionClass))>
     Public Function loadKeggNetwork(repo As String) As Object
-        Return ReactionClass _
-            .ScanRepository(repo) _
-            .DoCall(AddressOf pipeline.CreateFromPopulator)
+        If repo.FileExists Then
+            Using file As Stream = repo.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                Return ReactionClassPack.ReadKeggDb(file)
+            End Using
+        Else
+            Return ReactionClass _
+                .ScanRepository(repo) _
+                .DoCall(AddressOf pipeline.CreateFromPopulator)
+        End If
     End Function
 
 #End Region
