@@ -403,58 +403,6 @@ Module Assembly
         Return polar.ToArray
     End Function
 
-    <Extension>
-    Private Iterator Function mzMLScanLoader(path As String, relativeInto As Boolean, onlyMs2 As Boolean) As IEnumerable(Of PeakMs2)
-        Dim basename$ = path.BaseName
-
-        For Each msscan As spectrum In indexedmzML _
-            .LoadScans(path) _
-            .Where(Function(s)
-                       If Not onlyMs2 Then
-                           Return True
-                       Else
-                           Return s.ms_level = "2"
-                       End If
-                   End Function)
-
-            Dim msLevel As Integer = msscan.ms_level.DoCall(AddressOf ParseInteger)
-
-            Select Case msLevel
-                Case 1
-                    Yield msscan.ScanData(basename, centroid:=False, raw:=True)
-                Case 0
-                    ' skip UV data?
-                    ' Yield msscan.ScanData(basename, centroid:=False, raw:=True)
-                Case Else
-                    ' msn
-                    Yield msscan.ScanData(basename, centroid:=False, raw:=True)
-            End Select
-        Next
-    End Function
-
-    <Extension>
-    Private Iterator Function mzXMLScanLoader(mzXML$, relativeInto As Boolean, onlyMs2 As Boolean) As IEnumerable(Of PeakMs2)
-        Dim basename$ = mzXML.FileName
-
-        For Each ms2Scan As mzXML.scan In mzXMLAssembly.XML _
-            .LoadScans(mzXML) _
-            .Where(Function(s)
-                       If Not onlyMs2 Then
-                           Return True
-                       Else
-                           Return s.msLevel = 2
-                       End If
-                   End Function)
-
-            If ms2Scan.msLevel = 1 Then
-                ' ms1的数据总是使用raw intensity值
-                Yield ms2Scan.ScanData(basename, raw:=True)
-            Else
-                Yield ms2Scan.ScanData(basename, raw:=Not relativeInto)
-            End If
-        Next
-    End Function
-
     ''' <summary>
     ''' get all ms1 raw scans from the raw files
     ''' </summary>
