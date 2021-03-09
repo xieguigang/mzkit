@@ -105,7 +105,7 @@ Module data
             Return mzErr.TryCast(Of Message)
         End If
 
-        Dim xicFilter As IMs1() = ms1_scans _
+        Dim xicFilter As Array = ms1_scans _
             .populates(Of IMs1)(env) _
             .Where(Function(pt) mzErr.VA(pt.mz, mz)) _
             .OrderBy(Function(a) a.rt) _
