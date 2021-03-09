@@ -109,6 +109,7 @@ Module data
             .populates(Of IMs1)(env) _
             .Where(Function(pt) mzErr.VA(pt.mz, mz)) _
             .OrderBy(Function(a) a.rt) _
+            .Select(Function(a) CObj(a)) _
             .ToArray
 
         Return REnv.TryCastGenericArray(xicFilter, env)
