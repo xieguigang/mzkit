@@ -109,7 +109,6 @@ Namespace Spectra
                 .Select(Function(d)
                             Return New ms2 With {
                                 .mz = d.x,
-                                .quantity = d.y,
                                 .intensity = d.y
                             }
                         End Function) _

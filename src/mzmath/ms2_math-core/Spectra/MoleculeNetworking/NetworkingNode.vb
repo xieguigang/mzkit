@@ -96,7 +96,7 @@ Namespace Spectra.MoleculeNetworking
                             Dim maxInto = a.mzInto.Select(Function(x) x.intensity).Max
 
                             For i As Integer = 0 To a.mzInto.Length - 1
-                                a.mzInto(i).quantity = a.mzInto(i).intensity / maxInto
+                                a.mzInto(i).intensity = a.mzInto(i).intensity / maxInto
                             Next
 
                             Return a
@@ -123,8 +123,7 @@ Namespace Spectra.MoleculeNetworking
                 .Select(Function(a)
                             Return New ms2 With {
                                 .mz = Val(a.name),
-                                .intensity = a.Select(Function(x) x.quantity).Max,
-                                .quantity = .intensity
+                                .intensity = a.Select(Function(x) x.intensity).Max
                             }
                         End Function) _
                 .ToArray _
