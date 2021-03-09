@@ -130,19 +130,20 @@ Module data
                             rtmin#, rtmax#,
                             Optional env As Environment = Nothing) As Object
 
-        Dim ms1_scans As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ms1, env)
+        Dim ms1_scans As pipeline = pipeline.TryCreatePipeline(Of IMs1)(ms1, env)
 
         If ms1_scans.isError Then
             Return ms1_scans.getError
         End If
 
-        Dim xicFilter As ms1_scan() = ms1_scans _
-            .populates(Of ms1_scan)(env) _
-            .Where(Function(pt) pt.scan_time >= rtmin AndAlso pt.scan_time <= rtmax) _
-            .OrderBy(Function(a) a.scan_time) _
+        Dim xicFilter As Array = ms1_scans _
+            .populates(Of IMs1)(env) _
+            .Where(Function(pt) pt.rt >= rtmin AndAlso pt.rt <= rtmax) _
+            .OrderBy(Function(a) a.rt) _
+            .Select(Function(a) CObj(a)) _
             .ToArray
 
-        Return xicFilter
+        Return REnv.TryCastGenericArray(xicFilter, env)
     End Function
 
     ''' <summary>
