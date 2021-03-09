@@ -94,9 +94,9 @@ Module Assembly
             .ToArray
         Dim top6Str As String = top6 _
             .Select(Function(d) d.ToString("F4")) _
-            .JoinBy(", ")
+            .JoinBy(vbTab)
 
-        Return $"[{xcms_id}] {peak.activation}-{peak.collisionEnergy}eV, {peak.fragments} fragments: {top6Str}..."
+        Return $"[{xcms_id}] {peak.activation}-{peak.collisionEnergy}eV,{vbTab}{peak.fragments} fragments: {top6Str}..."
     End Function
 
     ''' <summary>
