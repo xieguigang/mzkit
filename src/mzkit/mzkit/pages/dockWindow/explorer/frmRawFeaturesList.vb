@@ -264,8 +264,7 @@ Public Class frmRawFeaturesList
         End If
 
         Call MyApplication.host.mzkitTool.ShowPage()
-
-        MyApplication.host.Text = $"BioNovoGene Mzkit [{CurrentRawFile.source.GetFullPath}]"
+        Call MyApplication.host.fileExplorer.UpdateMainTitle(CurrentRawFile.source)
     End Sub
 
     Private Sub CollapseToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CollapseToolStripMenuItem.Click
@@ -488,6 +487,6 @@ Public Class frmRawFeaturesList
         Call MyApplication.host.ShowPropertyWindow()
         Call MyApplication.host.mzkitTool.ShowPage()
 
-        MyApplication.host.Text = $"BioNovoGene Mzkit [{CurrentRawFile.source.GetFullPath}]"
+        MyApplication.host.fileExplorer.UpdateMainTitle(CurrentRawFile.source)
     End Sub
 End Class
