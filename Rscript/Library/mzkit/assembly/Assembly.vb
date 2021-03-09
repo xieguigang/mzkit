@@ -82,7 +82,22 @@ Module Assembly
     <RInitialize>
     Sub Main()
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(Ions()), AddressOf summaryIons)
+        Call Internal.ConsolePrinter.AttachConsoleFormatter(Of PeakMs2)(AddressOf printPeak)
     End Sub
+
+    Private Function printPeak(peak As PeakMs2) As String
+        Dim xcms_id As String = $"M{CInt(peak.mz)}T{CInt(peak.rt) + 1}"
+        Dim top6 As Double() = peak.mzInto _
+            .OrderByDescending(Function(m) m.intensity) _
+            .Take(6) _
+            .Select(Function(m) m.mz) _
+            .ToArray
+        Dim top6Str As String = top6 _
+            .Select(Function(d) d.ToString("F4")) _
+            .JoinBy(", ")
+
+        Return $"[{xcms_id}] {peak.activation}-{peak.collisionEnergy}eV, {peak.fragments} fragments: {top6Str}..."
+    End Function
 
     ''' <summary>
     ''' summary of the mgf ions
