@@ -320,8 +320,7 @@ Module Visual
                     .Select(Function(m, i)
                                 Return New ms2 With {
                                     .mz = m,
-                                    .intensity = into(i),
-                                    .quantity = into(i)
+                                    .intensity = into(i)
                                 }
                             End Function) _
                     .ToArray
