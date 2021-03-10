@@ -145,8 +145,7 @@ Public Class Annotation
                         Return New ms2 With {
                             .mz = a.mz,
                             .intensity = a.intensity,
-                            .Annotation = If(a.Annotation.IsInteger, "", a.Annotation),
-                            .quantity = a.quantity
+                            .Annotation = If(a.Annotation.IsInteger, "", a.Annotation)
                         }
                     End Function) _
             .ToArray
