@@ -1,7 +1,7 @@
 imports ["assembly", "mzweb", "chromatogram"] from "mzkit";
 
 const rawfiles as string = ?"--data" || stop("no input data!");
-const save as string     = ?"--save" || `${dirname(rawfiles)}/chromatogram.CDF`;
+const save as string     = ?"--save" || `${rawfiles}/chromatogram.CDF`;
 
 let load_overlaps as function(files as string) {
 	print("Loading raw data files");
