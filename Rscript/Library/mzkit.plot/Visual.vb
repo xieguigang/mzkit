@@ -162,6 +162,7 @@ Module Visual
         Dim alpha As Integer = args.getValue("opacity", env, [default]:=100)
         Dim colorSet As String = args.getValue("colors", env, [default]:="Paired:c12")
         Dim gridFill As String = args.getValue("grid.fill", env, [default]:="white")
+        Dim fill As Boolean = args.getValue("fill", env, [default]:=True)
         Dim showLabels As Boolean = args.getValue("show.labels", env, [default]:=True)
         Dim parallel As Boolean = args.getValue("parallel", env, [default]:=False)
         Dim axisStroke As String = args.getValue("axis.stroke", env, [default]:="stroke: black; stroke-width: 3px; stroke-dash: solid;")
@@ -188,7 +189,8 @@ Module Visual
                 showGrid:=True,
                 showLabels:=showLabels,
                 parallel:=parallel,
-                axisStroke:=axisStroke
+                axisStroke:=axisStroke,
+                fillCurve:=fill
             )
     End Function
 

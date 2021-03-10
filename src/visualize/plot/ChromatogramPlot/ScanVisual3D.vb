@@ -188,6 +188,7 @@ Public Class ScanVisual3D : Inherits Plot
 
         Dim firstFrame As GraphicsRegion
         Dim lastFrame As GraphicsRegion
+        Dim parallelXAxisPen As Pen = Stroke.TryParse(theme.gridStrokeX)
 
         For i As Integer = 0 To scans.Length - 1
             Dim labels As Label() = Nothing
@@ -219,6 +220,11 @@ Public Class ScanVisual3D : Inherits Plot
                     theme.drawAxis = False
                 End If
             End If
+
+            Dim t0 As New PointF(parallelCanvas.Padding.Left, canvas.Height - parallelCanvas.Padding.Bottom)
+            Dim t1 As New PointF(canvas.Width - parallelCanvas.Padding.Right, canvas.Height - parallelCanvas.Padding.Bottom)
+
+            Call g.DrawLine(parallelXAxisPen, t0, t1)
 
             Call New TICplot(
                 ionData:={scans(i)},
