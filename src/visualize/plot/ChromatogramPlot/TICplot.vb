@@ -123,7 +123,8 @@ Public Class TICplot : Inherits Plot
                 tickFontStyle:=theme.axisTickCSS,
                 gridFill:=theme.gridFill,
                 xlayout:=theme.xAxisLayout,
-                ylayout:=theme.yAxisLayout
+                ylayout:=theme.yAxisLayout,
+                axisStroke:=theme.axisStroke
             )
         End If
 

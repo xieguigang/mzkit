@@ -77,7 +77,7 @@ Module Visual
         Call Internal.generic.add("plot", GetType(PeakMs2), AddressOf plotMS)
         Call Internal.generic.add("plot", GetType(LibraryMatrix), AddressOf plotMS)
         Call Internal.generic.add("plot", GetType(Chromatogram), AddressOf plotChromatogram)
-        Call Internal.generic.add("plot", GetType(ChromatogramOverlap), AddressOf plotChromatogram2)
+        Call Internal.generic.add("plot", GetType(ChromatogramOverlap), AddressOf plotOverlaps)
 
         Call Internal.ConsolePrinter.AttachConsoleFormatter(Of ChromatogramOverlap)(AddressOf overlapsSummary)
     End Sub
@@ -157,12 +157,14 @@ Module Visual
     ''' <param name="args"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
-    Private Function plotChromatogram2(x As ChromatogramOverlap, args As list, env As Environment) As Object
+    Private Function plotOverlaps(x As ChromatogramOverlap, args As list, env As Environment) As Object
         Dim isBPC As Boolean = args.getValue("bpc", env, [default]:=False)
         Dim alpha As Integer = args.getValue("opacity", env, [default]:=100)
         Dim colorSet As String = args.getValue("colors", env, [default]:="Paired:c12")
         Dim gridFill As String = args.getValue("grid.fill", env, [default]:="white")
         Dim showLabels As Boolean = args.getValue("show.labels", env, [default]:=True)
+        Dim parallel As Boolean = args.getValue("parallel", env, [default]:=False)
+        Dim axisStroke As String = args.getValue("axis.stroke", env, [default]:="stroke: black; stroke-width: 3px; stroke-dash: solid;")
         Dim overlaps As New List(Of NamedCollection(Of ChromatogramTick))
         Dim data As NamedCollection(Of ChromatogramTick)
 
@@ -184,7 +186,9 @@ Module Visual
                 colorsSchema:=colorSet,
                 gridFill:=gridFill,
                 showGrid:=True,
-                showLabels:=showLabels
+                showLabels:=showLabels,
+                parallel:=parallel,
+                axisStroke:=axisStroke
             )
     End Function
 

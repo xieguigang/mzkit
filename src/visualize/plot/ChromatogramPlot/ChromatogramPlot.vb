@@ -194,6 +194,7 @@ Public Module ChromatogramPlot
                             Optional fillCurve As Boolean = True,
                             Optional axisLabelFont$ = CSSFont.Win7Large,
                             Optional axisTickFont$ = CSSFont.Win10NormalLarger,
+                            Optional axisStroke$ = Stroke.AxisStroke,
                             Optional xlabel$ = "Time (s)",
                             Optional ylabel$ = "Intensity",
                             Optional showLegends As Boolean = True,
@@ -221,7 +222,8 @@ Public Module ChromatogramPlot
             .drawGrid = showGrid,
             .gridFill = gridFill,
             .drawLabels = showLabels,
-            .tagColor = labelColor
+            .tagColor = labelColor,
+            .axisStroke = axisStroke
         }
         Dim TIC As Plot
 

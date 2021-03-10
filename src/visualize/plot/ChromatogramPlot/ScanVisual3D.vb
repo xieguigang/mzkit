@@ -244,20 +244,24 @@ Public Class ScanVisual3D : Inherits Plot
         '    /|
         '   / |
         ' d | |
-        '   | / b
-        '   |/
-        '   c
+        '   | / b --------/ e
+        '   |/           /
+        '   c ----------/
+        '               f
 
         Dim a As New PointF(firstFrame.Padding.Left, firstFrame.Padding.Top)
         Dim b As New PointF(firstFrame.Padding.Left, canvas.Height - firstFrame.Padding.Bottom)
         Dim c As New PointF(lastFrame.Padding.Left, canvas.Height - lastFrame.Padding.Bottom)
         Dim d As New PointF(lastFrame.Padding.Left, lastFrame.Padding.Top)
+        Dim e As New PointF(canvas.Width - firstFrame.Padding.Right, canvas.Height - firstFrame.Padding.Bottom)
+        Dim f As New PointF(canvas.Width - lastFrame.Padding.Right, canvas.Height - lastFrame.Padding.Bottom)
 
         Dim axisPen As Pen = Stroke.TryParse(theme.axisStroke)
 
         Call g.DrawLine(axisPen, a, d)
         Call g.DrawLine(axisPen, a, b)
         Call g.DrawLine(axisPen, c, b)
+        Call g.DrawLine(axisPen, e, f)
 
         If Me.theme.drawLabels Then Call TICplot.DrawLabels(g, canvas.PlotRegion, labelList.ToArray, theme, 1500)
         If Me.theme.drawLegend Then Call TICplot.DrawTICLegends(g, canvas, legendList.ToArray, 100)
