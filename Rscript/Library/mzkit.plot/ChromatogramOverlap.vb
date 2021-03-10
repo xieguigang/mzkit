@@ -87,7 +87,16 @@ Public Class ChromatogramOverlap : Implements RNames, RNameIndex
     End Function
 
     Public Function setNames(names() As String, envir As Environment) As Object Implements RNames.setNames
-        Throw New NotImplementedException()
+        Dim renames As New Dictionary(Of String, Chromatogram)
+        Dim oldNames As String() = overlaps.Keys.ToArray
+
+        For i As Integer = 0 To names.Length - 1
+            renames(names(i)) = _overlaps(oldNames(i))
+        Next
+
+        overlaps = renames
+
+        Return Me
     End Function
 
     Public Function hasName(name As String) As Boolean Implements RNames.hasName

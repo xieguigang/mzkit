@@ -155,7 +155,6 @@ Public Module Emulator
 
                             Return New ms2 With {
                                 .mz = mz,
-                                .quantity = frag.Value,
                                 .intensity = frag.Value
                             }
                         End Function) _

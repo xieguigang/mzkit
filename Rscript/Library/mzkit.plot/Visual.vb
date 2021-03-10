@@ -105,6 +105,12 @@ Module Visual
         Return overlaps(names)
     End Function
 
+    <ExportAPI("labels")>
+    Public Function setLabels(overlaps As ChromatogramOverlap, names As String(), Optional env As Environment = Nothing) As ChromatogramOverlap
+        overlaps.setNames(names, env)
+        Return overlaps
+    End Function
+
     <ExportAPI("overlaps")>
     <RApiReturn(GetType(ChromatogramOverlap))>
     Public Function overlaps(<RRawVectorArgument> Optional TIC As Object = Nothing, Optional env As Environment = Nothing) As Object
@@ -156,6 +162,7 @@ Module Visual
         Dim alpha As Integer = args.getValue("opacity", env, [default]:=100)
         Dim colorSet As String = args.getValue("colors", env, [default]:="Paired:c12")
         Dim gridFill As String = args.getValue("grid.fill", env, [default]:="white")
+        Dim showLabels As Boolean = args.getValue("show.labels", env, [default]:=True)
         Dim overlaps As New List(Of NamedCollection(Of ChromatogramTick))
         Dim data As NamedCollection(Of ChromatogramTick)
 
@@ -176,7 +183,8 @@ Module Visual
                 fillAlpha:=alpha,
                 colorsSchema:=colorSet,
                 gridFill:=gridFill,
-                showGrid:=True
+                showGrid:=True,
+                showLabels:=showLabels
             )
     End Function
 
