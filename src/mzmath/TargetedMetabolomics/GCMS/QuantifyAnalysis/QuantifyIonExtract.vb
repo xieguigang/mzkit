@@ -113,8 +113,7 @@ Namespace GCMS.QuantifyAnalysis
                 .Select(Function(scan)
                             Return New ms2 With {
                                 .mz = scan.mz,
-                                .quantity = scan.intensity,
-                                .intensity = .quantity
+                                .intensity = scan.intensity
                             }
                         End Function) _
                 .ToArray _

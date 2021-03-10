@@ -445,8 +445,7 @@ Module MzMath
                     .Select(Function(mzi, i)
                                 Return New ms2 With {
                                     .mz = mzi,
-                                    .intensity = into(i),
-                                    .quantity = .intensity
+                                    .intensity = into(i)
                                 }
                             End Function) _
                     .ToArray

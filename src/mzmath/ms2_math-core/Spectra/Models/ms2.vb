@@ -64,12 +64,6 @@ Namespace Spectra
         <DataFrameColumn(NameOf(mz))>
         <XmlAttribute> Public Property mz As Double
         ''' <summary>
-        ''' quantity
-        ''' </summary>
-        ''' <returns></returns>
-        <DataFrameColumn(NameOf(quantity))>
-        <XmlAttribute> Public Property quantity As Double
-        ''' <summary>
         ''' Relative intensity.(percentage) 
         ''' </summary>
         ''' <returns></returns>
@@ -108,8 +102,7 @@ Namespace Spectra
                             Return New ms2 With {
                                 .mz = mz.mz,
                                 .Annotation = mz.Annotation,
-                                .intensity = mz.intensity,
-                                .quantity = mz.intensity / basePeak
+                                .intensity = mz.intensity / basePeak
                             }
                         End Function) _
                 .ToArray
@@ -129,8 +122,7 @@ Namespace Spectra
                             Return New ms2 With {
                                 .mz = mz.mz,
                                 .Annotation = mz.Annotation,
-                                .intensity = mz.intensity,
-                                .quantity = mz.intensity / totalIon
+                                .intensity = mz.intensity / totalIon
                             }
                         End Function) _
                 .ToArray

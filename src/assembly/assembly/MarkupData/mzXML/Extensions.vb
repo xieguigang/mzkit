@@ -78,8 +78,7 @@ Namespace MarkupData.mzXML
                             Return New ms2 With {
                                 .Annotation = i + 1S,
                                 .intensity = buffer(Scan0), ' 信号强度, 归一化为 0-100 之间的数值
-                                .mz = buffer(1),            ' m/z质核比数据
-                                .quantity = .intensity
+                                .mz = buffer(1)             ' m/z质核比数据                        
                             }
                         End Function)
         End Function

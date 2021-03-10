@@ -58,14 +58,14 @@ Namespace Spectra
     Public Module LibraryMatrixExtensions
 
         ''' <summary>
-        ''' MAX(<see cref="ms2.quantity"/>)
+        ''' MAX(<see cref="ms2.intensity"/>)
         ''' </summary>
         ''' <param name="matrix"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Max(matrix As LibraryMatrix) As Double
-            Return matrix.ms2.Max(Function(r) r.quantity)
+            Return matrix.ms2.Max(Function(r) r.intensity)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -75,7 +75,6 @@ Namespace Spectra
                 .Select(Function(l)
                             Return New ms2 With {
                                 .mz = l.ProductMz,
-                                .quantity = l.LibraryIntensity,
                                 .intensity = l.LibraryIntensity
                             }
                         End Function) _

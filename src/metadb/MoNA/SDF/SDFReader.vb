@@ -160,8 +160,7 @@ Public Module SDFReader
                 .Select(Function(line)
                             Return New ms2 With {
                                 .mz = line(0),
-                                .intensity = line(1),
-                                .quantity = line(1)
+                                .intensity = line(1)
                             }
                         End Function) _
                 .ToArray

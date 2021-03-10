@@ -82,8 +82,7 @@ Namespace DataReader
                 .Select(Function(mzi, i)
                             Return New ms2 With {
                                 .mz = mzi,
-                                .intensity = intensity(i),
-                                .quantity = .intensity
+                                .intensity = intensity(i)
                             }
                         End Function) _
                 .ToArray

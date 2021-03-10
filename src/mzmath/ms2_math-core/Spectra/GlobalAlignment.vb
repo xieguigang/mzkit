@@ -109,7 +109,7 @@ Namespace Spectra
         <Extension>
         Public Function TopPeaks(spectra As LibraryMatrix, top%) As IEnumerable(Of ms2)
             Return spectra _
-                .OrderByDescending(Function(mz) mz.quantity) _
+                .OrderByDescending(Function(mz) mz.intensity) _
                 .Take(top)
         End Function
 
@@ -243,8 +243,7 @@ Namespace Spectra
                 ' With single intensity ZERO
                 Return New ms2 With {
                     .mz = mz.mz,
-                    .intensity = 0,
-                    .quantity = 0
+                    .intensity = 0.0
                 }
             Else
                 Dim subject As IVector(Of ms2) = match.Shadows

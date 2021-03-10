@@ -84,18 +84,17 @@ Namespace ASCII.MGF
             If precursor Is Nothing Then
                 precursor = New ms2 With {
                     .mz = matrix.ms2.Max(Function(m) m.mz),
-                    .intensity = 1,
-                    .quantity = 1
+                    .intensity = 1
                 }
             End If
 
             Return New Ions With {
                 .Peaks = matrix.ms2,
-                .Title = matrix.Name,
+                .Title = matrix.name,
                 .Charge = 1,
                 .PepMass = New NamedValue With {
                     .name = precursor.mz,
-                    .text = precursor.quantity
+                    .text = precursor.intensity
                 }
             }
         End Function
@@ -157,7 +156,7 @@ Namespace ASCII.MGF
                     .Peaks = peaks.ToArray
                 }
             Else
-                getInto = Function(m) m.quantity
+                getInto = Function(m) m.intensity
             End If
 
             For Each fragment As ms2 In ion.Peaks

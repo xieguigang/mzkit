@@ -83,8 +83,7 @@ Namespace Spectra.Xml
                     .Select(Function(a)
                                 Return New ms2 With {
                                     .mz = a.mz,
-                                    .intensity = a.query,
-                                    .quantity = a.query
+                                    .intensity = a.query
                                 }
                             End Function) _
                     .ToArray
@@ -99,8 +98,7 @@ Namespace Spectra.Xml
                     .Select(Function(a)
                                 Return New ms2 With {
                                     .mz = a.mz,
-                                    .intensity = a.ref,
-                                    .quantity = a.ref
+                                    .intensity = a.ref
                                 }
                             End Function) _
                     .ToArray

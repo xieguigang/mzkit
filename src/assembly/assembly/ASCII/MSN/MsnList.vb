@@ -92,8 +92,7 @@ Namespace ASCII.MSN
                                 .ToArray
                             Dim fragment As New ms2 With {
                                 .mz = mzInto(Scan0),
-                                .intensity = mzInto(1),
-                                .quantity = .intensity
+                                .intensity = mzInto(1)
                             }
 
                             Return fragment

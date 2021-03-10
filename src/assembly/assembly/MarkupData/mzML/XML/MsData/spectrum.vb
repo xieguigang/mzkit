@@ -137,8 +137,7 @@ Namespace MarkupData.mzML
                 .Select(Function(i)
                             Return New ms2 With {
                                 .mz = mz(i),
-                                .quantity = intensity(i),
-                                .intensity = relInto(i)
+                                .intensity = intensity(i)
                             }
                         End Function) _
                 .ToArray

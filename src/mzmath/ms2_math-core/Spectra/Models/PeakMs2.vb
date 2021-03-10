@@ -109,7 +109,7 @@ Namespace Spectra
             Get
                 Return Aggregate mz As ms2
                        In mzInto
-                       Into Sum(mz.quantity)
+                       Into Sum(mz.intensity)
             End Get
         End Property
 
