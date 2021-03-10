@@ -1,52 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::9894fe382d50eb5a740e0d2c23f393ac, pages\dockWindow\documents\frmTargetedQuantification.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class frmTargetedQuantification
-    ' 
-    '     Function: createLinear, GetContentTable, GetScans, getStandards, GetTableLevelKeys
-    '               isValidLinearRow, linearProfileNames
-    ' 
-    '     Sub: DataGridView1_CellDoubleClick, DataGridView1_CellEndEdit, DataGridView1_DragDrop, DataGridView1_DragEnter, DataGridView1_DragOver
-    '          DataGridView1_KeyDown, DeleteIonFeatureToolStripMenuItem_Click, deleteProfiles, ExportImageToolStripMenuItem_Click, ExportLinearTableToolStripMenuItem_Click
-    '          ExportTableToolStripMenuItem_Click, frmTargetedQuantification_FormClosing, frmTargetedQuantification_Load, ImportsLinearReferenceToolStripMenuItem_Click, loadLinearRaw
-    '          (+2 Overloads) loadLinears, LoadSamplesToolStripMenuItem_Click, reload, reloadProfileNames, SaveAsToolStripMenuItem_Click
-    '          saveLinearPack, saveLinearsTable, SaveToolStripMenuItem_Click, showIonPeaksTable, showQuanifyTable
-    '          showRawXTable, ToolStripComboBox2_SelectedIndexChanged, ViewLinearReportToolStripMenuItem_Click
-    ' 
-    ' /********************************************************************************/
+' Class frmTargetedQuantification
+' 
+'     Function: createLinear, GetContentTable, GetScans, getStandards, GetTableLevelKeys
+'               isValidLinearRow, linearProfileNames
+' 
+'     Sub: DataGridView1_CellDoubleClick, DataGridView1_CellEndEdit, DataGridView1_DragDrop, DataGridView1_DragEnter, DataGridView1_DragOver
+'          DataGridView1_KeyDown, DeleteIonFeatureToolStripMenuItem_Click, deleteProfiles, ExportImageToolStripMenuItem_Click, ExportLinearTableToolStripMenuItem_Click
+'          ExportTableToolStripMenuItem_Click, frmTargetedQuantification_FormClosing, frmTargetedQuantification_Load, ImportsLinearReferenceToolStripMenuItem_Click, loadLinearRaw
+'          (+2 Overloads) loadLinears, LoadSamplesToolStripMenuItem_Click, reload, reloadProfileNames, SaveAsToolStripMenuItem_Click
+'          saveLinearPack, saveLinearsTable, SaveToolStripMenuItem_Click, showIonPeaksTable, showQuanifyTable
+'          showRawXTable, ToolStripComboBox2_SelectedIndexChanged, ViewLinearReportToolStripMenuItem_Click
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -125,7 +125,34 @@ Public Class frmTargetedQuantification
 
             If importsFile.ShowDialog = DialogResult.OK Then
                 Dim files As NamedValue(Of String)() = ContentTable.StripMaxCommonNames(importsFile.FileNames)
-                Dim fakeLevels = files.ToDictionary(Function(file) file.Name, Function() 0.0)
+                Dim fakeLevels As Dictionary(Of String, Double)
+
+                If files.All(Function(name) name.Value.BaseName.IsContentPattern) Then
+                    files = files _
+                        .Select(Function(file)
+                                    Return New NamedValue(Of String) With {
+                                        .Name = file.Value.BaseName,
+                                        .Value = file.Value,
+                                        .Description = file.Description
+                                    }
+                                End Function) _
+                        .ToArray
+                    fakeLevels = files _
+                        .ToDictionary(Function(file) file.Value.BaseName,
+                                      Function(file)
+                                          Return file.Value _
+                                              .BaseName _
+                                              .ParseContent _
+                                              .ScaleTo(ContentUnits.ppb) _
+                                              .Value
+                                      End Function)
+                Else
+                    fakeLevels = files _
+                        .ToDictionary(Function(file) file.Name,
+                                      Function()
+                                          Return 0.0
+                                      End Function)
+                End If
 
                 DataGridView1.Rows.Clear()
                 DataGridView1.Columns.Clear()
