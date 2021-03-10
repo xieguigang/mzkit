@@ -7,11 +7,24 @@ Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Math
 
 ''' <summary>
 ''' 主要是为了减少对原始数据文件的频繁读取操作而创建的色谱数据缓存模块
 ''' </summary>
 Public Module PackCDF
+
+    <Extension>
+    Private Function UnionTimeSeq(overlaps As ChromatogramOverlap) As Double()
+        Dim union As Double() = overlaps.overlaps _
+            .Values _
+            .Select(Function(sig) sig.scan_time) _
+            .IteratesALL _
+            .OrderBy(Function(x) x) _
+            .ToArray
+
+        Return seq(union.Min, union.Max, 0.1).ToArray
+    End Function
 
     ''' <summary>
     ''' write cache
@@ -23,12 +36,7 @@ Public Module PackCDF
     ''' </remarks>
     <Extension>
     Public Sub SavePackData(overlaps As ChromatogramOverlap, file As Stream)
-        Dim scan_time As Double() = overlaps.overlaps _
-            .Values _
-            .Select(Function(sig) sig.scan_time) _
-            .IteratesALL _
-            .OrderBy(Function(x) x) _
-            .ToArray
+        Dim scan_time As Double() = overlaps.UnionTimeSeq
         Dim line As New CDFData With {.numerics = scan_time}
         Dim length As New Dimension With {.name = "scan_length", .size = scan_time.Length}
         Dim dataLen As New Dimension With {.name = "data_length", .size = scan_time.Length * 2}

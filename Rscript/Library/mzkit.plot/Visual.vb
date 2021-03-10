@@ -95,6 +95,7 @@ Module Visual
         Dim showLabels As Boolean = args.getValue("show.labels", env, [default]:=True)
         Dim parallel As Boolean = args.getValue("parallel", env, [default]:=False)
         Dim axisStroke As String = args.getValue("axis.stroke", env, [default]:="stroke: black; stroke-width: 3px; stroke-dash: solid;")
+        Dim padding As String = args.getValue("padding", env, "padding:100px 100px 150px 150px;")
         Dim overlaps As New List(Of NamedCollection(Of ChromatogramTick))
         Dim data As NamedCollection(Of ChromatogramTick)
 
