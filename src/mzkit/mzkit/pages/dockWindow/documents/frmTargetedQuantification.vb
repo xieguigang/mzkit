@@ -161,40 +161,55 @@ Public Class frmTargetedQuantification
                 DataGridView1.Columns.Add(New DataGridViewLinkColumn With {.HeaderText = "Features"})
                 DataGridView1.Columns.Add(New DataGridViewComboBoxColumn With {.HeaderText = "IS"})
 
+                Dim isGCMS As Boolean = False
+
                 For Each file As NamedValue(Of String) In files
                     Call DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.HeaderText = file.Name})
 
                     If file.Value.ExtensionSuffix("CDF") OrElse RawScanParser.IsSIMData(file.Value) Then
+                        isGCMS = True
                         Call MyApplication.host.ShowGCMSSIM(file.Value, isBackground:=True)
                     Else
                         Call MyApplication.host.ShowMRMIons(file.Value)
                     End If
                 Next
 
-                Dim ionsLib As IonLibrary = Globals.LoadIonLibrary
-                Dim allFeatures As IonPair() = files _
-                    .Select(Function(file) file.Value) _
-                    .GetAllFeatures
-
-                Me.linearFiles = files
-                Me.allFeatures = allFeatures.Select(AddressOf ionsLib.GetDisplay).ToArray
-                Me.linearPack = New LinearPack With {
-                    .reference = New Dictionary(Of String, SampleContentLevels) From {
-                        {"n/a", New SampleContentLevels(fakeLevels)}
-                    }
-                }
-
-                For Each ion As IonPair In allFeatures
-                    Dim refId As String = ionsLib.GetDisplay(ion)
-                    Dim i As Integer = DataGridView1.Rows.Add(refId)
-                    Dim comboxBox As DataGridViewComboBoxCell = DataGridView1.Rows(i).Cells(1)
-
-                    For Each IS_candidate As IonPair In allFeatures
-                        comboxBox.Items.Add(ionsLib.GetDisplay(IS_candidate))
-                    Next
-                Next
+                If isGCMS Then
+                    Call loadGCMSReference(files, fakeLevels)
+                Else
+                    Call loadMRMReference(files, fakeLevels)
+                End If
             End If
         End Using
+    End Sub
+
+    Private Sub loadGCMSReference(files As NamedValue(Of String)(), fakeLevels As Dictionary(Of String, Double))
+
+    End Sub
+
+    Private Sub loadMRMReference(files As NamedValue(Of String)(), fakeLevels As Dictionary(Of String, Double))
+        Dim ionsLib As IonLibrary = Globals.LoadIonLibrary
+        Dim allFeatures As IonPair() = files _
+            .Select(Function(file) file.Value) _
+            .GetAllFeatures
+
+        Me.linearFiles = files
+        Me.allFeatures = allFeatures.Select(AddressOf ionsLib.GetDisplay).ToArray
+        Me.linearPack = New LinearPack With {
+            .reference = New Dictionary(Of String, SampleContentLevels) From {
+                {"n/a", New SampleContentLevels(fakeLevels)}
+            }
+        }
+
+        For Each ion As IonPair In allFeatures
+            Dim refId As String = ionsLib.GetDisplay(ion)
+            Dim i As Integer = DataGridView1.Rows.Add(refId)
+            Dim comboxBox As DataGridViewComboBoxCell = DataGridView1.Rows(i).Cells(1)
+
+            For Each IS_candidate As IonPair In allFeatures
+                comboxBox.Items.Add(ionsLib.GetDisplay(IS_candidate))
+            Next
+        Next
     End Sub
 
     Private Function isValidLinearRow(r As DataGridViewRow) As Boolean
