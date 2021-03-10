@@ -107,7 +107,8 @@ SOFTWARE.
 
 ![](docs/manual/plots/TIC_overlaps.png)
 ![](docs/manual/plots/Linear_fitting.png)
-![]()
+![](docs/manual/plots/RawScatter_2D.png)
+![](docs/manual/plots/MS_alignment.png)
 
 <div style="page-break-after:always;"></div>
 
