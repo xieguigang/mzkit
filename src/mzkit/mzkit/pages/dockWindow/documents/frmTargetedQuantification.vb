@@ -50,6 +50,7 @@
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Content
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Data
@@ -162,7 +163,12 @@ Public Class frmTargetedQuantification
 
                 For Each file As NamedValue(Of String) In files
                     Call DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.HeaderText = file.Name})
-                    Call MyApplication.host.ShowMRMIons(file.Value)
+
+                    If file.Value.ExtensionSuffix("CDF") OrElse RawScanParser.IsSIMData(file.Value) Then
+                        Call MyApplication.host.ShowGCMSSIM(file.Value, isBackground:=True)
+                    Else
+                        Call MyApplication.host.ShowMRMIons(file.Value)
+                    End If
                 Next
 
                 Dim ionsLib As IonLibrary = Globals.LoadIonLibrary
