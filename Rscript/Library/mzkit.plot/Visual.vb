@@ -120,7 +120,8 @@ Module Visual
                 showLabels:=showLabels,
                 parallel:=parallel,
                 axisStroke:=axisStroke,
-                fillCurve:=fill
+                fillCurve:=fill,
+                margin:=padding
             )
     End Function
 
