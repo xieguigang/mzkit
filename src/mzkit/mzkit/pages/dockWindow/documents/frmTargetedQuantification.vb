@@ -174,32 +174,33 @@ Public Class frmTargetedQuantification
                     End If
                 Next
 
+                Me.linearFiles = files
+                Me.linearPack = New LinearPack With {
+                    .reference = New Dictionary(Of String, SampleContentLevels) From {
+                        {"n/a", New SampleContentLevels(fakeLevels)}
+                    }
+                }
+
                 If isGCMS Then
-                    Call loadGCMSReference(files, fakeLevels)
+                    Call loadGCMSReference(files)
                 Else
-                    Call loadMRMReference(files, fakeLevels)
+                    Call loadMRMReference(files)
                 End If
             End If
         End Using
     End Sub
 
-    Private Sub loadGCMSReference(files As NamedValue(Of String)(), fakeLevels As Dictionary(Of String, Double))
+    Private Sub loadGCMSReference(files As NamedValue(Of String)())
 
     End Sub
 
-    Private Sub loadMRMReference(files As NamedValue(Of String)(), fakeLevels As Dictionary(Of String, Double))
+    Private Sub loadMRMReference(files As NamedValue(Of String)())
         Dim ionsLib As IonLibrary = Globals.LoadIonLibrary
         Dim allFeatures As IonPair() = files _
             .Select(Function(file) file.Value) _
             .GetAllFeatures
 
-        Me.linearFiles = files
         Me.allFeatures = allFeatures.Select(AddressOf ionsLib.GetDisplay).ToArray
-        Me.linearPack = New LinearPack With {
-            .reference = New Dictionary(Of String, SampleContentLevels) From {
-                {"n/a", New SampleContentLevels(fakeLevels)}
-            }
-        }
 
         For Each ion As IonPair In allFeatures
             Dim refId As String = ionsLib.GetDisplay(ion)
