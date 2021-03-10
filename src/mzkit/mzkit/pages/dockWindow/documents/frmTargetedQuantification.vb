@@ -168,7 +168,7 @@ Public Class frmTargetedQuantification
 
                     If file.Value.ExtensionSuffix("CDF") OrElse RawScanParser.IsSIMData(file.Value) Then
                         isGCMS = True
-                        Call MyApplication.host.ShowGCMSSIM(file.Value, isBackground:=True)
+                        Call MyApplication.host.ShowGCMSSIM(file.Value, isBackground:=False)
                     Else
                         Call MyApplication.host.ShowMRMIons(file.Value)
                     End If

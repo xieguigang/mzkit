@@ -53,7 +53,6 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports mzkit.My
 Imports Task
-Imports Vip.Notification
 Imports WeifenLuo.WinFormsUI.Docking
 Imports Raw = BioNovoGene.Analytical.MassSpectrometry.Math.GCMS.Raw
 
@@ -72,6 +71,10 @@ Public Class frmGCMSPeaks
 
     Public Function ContainsRaw(filepath As String) As Boolean
         Return gcmsRaw.ContainsKey(filepath.GetFullPath)
+    End Function
+
+    Public Function GetRaw(filepath As String) As Raw
+        Return Me.gcmsRaw.TryGetValue(filepath.GetFullPath)?.gcms
     End Function
 
     Public Sub LoadRawExplorer(gcmsRaw As Raw)
