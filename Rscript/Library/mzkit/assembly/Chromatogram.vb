@@ -5,6 +5,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -47,6 +48,37 @@ Module ChromatogramTools
     Public Function setLabels(overlaps As ChromatogramOverlap, names As String(), Optional env As Environment = Nothing) As ChromatogramOverlap
         overlaps.setNames(names, env)
         Return overlaps
+    End Function
+
+    <ExportAPI("scale_time")>
+    Public Function scaleScanTime(overlaps As ChromatogramOverlap, Optional unit As String = "minute") As ChromatogramOverlap
+        If LCase(unit) = "minute" Then
+            Return New ChromatogramOverlap With {
+                .overlaps = overlaps.overlaps _
+                    .ToDictionary(Function(a) a.Key,
+                                  Function(a)
+                                      Return New Chromatogram With {
+                                        .BPC = a.Value.BPC,
+                                        .TIC = a.Value.TIC,
+                                        .scan_time = a.Value.scan_time.AsVector / 60
+                                      }
+                                  End Function)
+            }
+        ElseIf LCase(unit) = "hour" Then
+            Return New ChromatogramOverlap With {
+                .overlaps = overlaps.overlaps _
+                    .ToDictionary(Function(a) a.Key,
+                                  Function(a)
+                                      Return New Chromatogram With {
+                                        .BPC = a.Value.BPC,
+                                        .TIC = a.Value.TIC,
+                                        .scan_time = a.Value.scan_time.AsVector / 60 / 60
+                                      }
+                                  End Function)
+            }
+        Else
+            Return overlaps
+        End If
     End Function
 
     <ExportAPI("overlaps")>

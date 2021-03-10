@@ -32,7 +32,8 @@ let TIC_overlaps as function(overlaps, key = "") {
 			bpc         = FALSE, 
 			opacity     = 30, 
 			colors      = colorSet,
-			show.labels = FALSE
+			show.labels = FALSE,
+			xlab        = "Scan Time(minutes)"
 		)
 		;
 	}
@@ -41,7 +42,8 @@ let TIC_overlaps as function(overlaps, key = "") {
 			bpc         = TRUE, 
 			opacity     = 30, 
 			colors      = colorSet,
-			show.labels = FALSE
+			show.labels = FALSE,
+			xlab        = "Scan Time(minutes)"
 		)
 		;
 	}
@@ -54,7 +56,14 @@ let TIC_overlaps as function(overlaps, key = "") {
 			colors      = colorSet,
 			show.labels = FALSE,
 			parallel    = TRUE,
-			fill        = FALSE
+			fill        = FALSE,
+			padding     = "padding:100px 500px 150px 250px;",
+			size        = "3600,2000",
+			line.stroke = "stroke: black; stroke-width: 6px; stroke-dash: solid;",
+			axis.cex    = "font-style: normal; font-size: 36; font-family: Bookman Old Style;",
+			legend.cex  = "font-style: normal; font-size: 28; font-family: Bookman Old Style;",
+			xlab        = "Scan Time(minutes)",
+			tick.cex    = "font-style: normal; font-size: 24; font-family: Bookman Old Style;"
 		)
 		;
 	}
@@ -65,7 +74,14 @@ let TIC_overlaps as function(overlaps, key = "") {
 			colors      = colorSet,
 			show.labels = FALSE,
 			parallel    = TRUE,
-			fill        = FALSE
+			fill        = FALSE,
+			padding     = "padding:100px 500px 150px 250px;",
+			size        = "3600,2000",
+			line.stroke = "stroke: black; stroke-width: 6px; stroke-dash: solid;",
+			axis.cex    = "font-style: normal; font-size: 36; font-family: Bookman Old Style;",
+			legend.cex  = "font-style: normal; font-size: 28; font-family: Bookman Old Style;",
+			xlab        = "Scan Time(minutes)",
+			tick.cex    = "font-style: normal; font-size: 24; font-family: Bookman Old Style;"
 		)
 		;
 	}
@@ -84,7 +100,7 @@ let loadAuto as function() {
 	}
 }
 
-const overlaps = loadAuto();
+const overlaps = loadAuto() :> scale_time("minute");
 
 print(overlaps);
 

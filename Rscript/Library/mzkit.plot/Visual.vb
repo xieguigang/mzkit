@@ -95,7 +95,14 @@ Module Visual
         Dim showLabels As Boolean = args.getValue("show.labels", env, [default]:=True)
         Dim parallel As Boolean = args.getValue("parallel", env, [default]:=False)
         Dim axisStroke As String = args.getValue("axis.stroke", env, [default]:="stroke: black; stroke-width: 3px; stroke-dash: solid;")
+        Dim lineStroke As String = args.getValue("line.stroke", env, [default]:="stroke: black; stroke-width: 2px; stroke-dash: solid;")
         Dim padding As String = args.getValue("padding", env, "padding:100px 100px 150px 150px;")
+        Dim axisLabel As String = args.getValue("axis.cex", env, "font-style: normal; font-size: 24; font-family: Bookman Old Style;")
+        Dim axisTickCex As String = args.getValue("tick.cex", env, "font-style: normal; font-size: 16; font-family: Bookman Old Style;")
+        Dim legendLabel As String = args.getValue("legend.cex", env, "font-style: normal; font-size: 12; font-family: Bookman Old Style;")
+        Dim size As String = args.getValue("size", env, "1600,1000")
+        Dim xlab As String = args.getValue("xlab", env, "Time (s)")
+        Dim ylab As String = args.getValue("ylab", env, "Intensity")
         Dim overlaps As New List(Of NamedCollection(Of ChromatogramTick))
         Dim data As NamedCollection(Of ChromatogramTick)
 
@@ -121,7 +128,14 @@ Module Visual
                 parallel:=parallel,
                 axisStroke:=axisStroke,
                 fillCurve:=fill,
-                margin:=padding
+                margin:=padding,
+                size:=size,
+                penStyle:=lineStroke,
+                axisLabelFont:=axisLabel,
+                legendFontCSS:=legendLabel,
+                xlabel:=xlab,
+                ylabel:=ylab,
+                axisTickFont:=axisTickCex
             )
     End Function
 
@@ -138,6 +152,8 @@ Module Visual
         Dim color As String = args.getValue("color", env, [default]:="skyblue")
         Dim gridFill As String = args.getValue("grid.fill", env, [default]:="white")
         Dim alpha As Integer = args.getValue("opacity", env, [default]:=100)
+        Dim xlab As String = args.getValue("xlab", env, "Time (s)")
+        Dim ylab As String = args.getValue("ylab", env, "Intensity")
         Dim data As New NamedCollection(Of ChromatogramTick) With {
             .name = name,
             .value = x.GetTicks(isBPC).ToArray
@@ -147,7 +163,9 @@ Module Visual
             colorsSchema:=color,
             gridFill:=gridFill,
             fillAlpha:=alpha,
-            showGird:=True
+            showGird:=True,
+            xlabel:=xlab,
+            ylabel:=ylab
         )
     End Function
 
