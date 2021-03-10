@@ -466,6 +466,10 @@
       <Project>{95f7d65e-9db1-4605-9fd3-25433277af88}</Project>
       <Name>assembly</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\src\assembly\mzPack\mzPack.vbproj">
+      <Project>{a1cb72f1-e918-4146-82a4-f409f31700b6}</Project>
+      <Name>mzPack</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\src\assembly\ProteoWizard.Interop\ProteoWizard.Interop.vbproj">
       <Project>{ca3ec2d0-bf06-4005-95b7-b73fe39bf336}</Project>
       <Name>ProteoWizard.Interop</Name>
