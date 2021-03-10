@@ -82,7 +82,22 @@ Module Assembly
     <RInitialize>
     Sub Main()
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(Ions()), AddressOf summaryIons)
+        Call Internal.ConsolePrinter.AttachConsoleFormatter(Of PeakMs2)(AddressOf printPeak)
     End Sub
+
+    Private Function printPeak(peak As PeakMs2) As String
+        Dim xcms_id As String = $"M{CInt(peak.mz)}T{CInt(peak.rt) + 1}"
+        Dim top6 As Double() = peak.mzInto _
+            .OrderByDescending(Function(m) m.intensity) _
+            .Take(6) _
+            .Select(Function(m) m.mz) _
+            .ToArray
+        Dim top6Str As String = top6 _
+            .Select(Function(d) d.ToString("F4")) _
+            .JoinBy(vbTab)
+
+        Return $"[{xcms_id}] {peak.activation}-{peak.collisionEnergy}eV,{vbTab}{peak.fragments} fragments: {top6Str}..."
+    End Function
 
     ''' <summary>
     ''' summary of the mgf ions
@@ -386,58 +401,6 @@ Module Assembly
         End If
 
         Return polar.ToArray
-    End Function
-
-    <Extension>
-    Private Iterator Function mzMLScanLoader(path As String, relativeInto As Boolean, onlyMs2 As Boolean) As IEnumerable(Of PeakMs2)
-        Dim basename$ = path.BaseName
-
-        For Each msscan As spectrum In indexedmzML _
-            .LoadScans(path) _
-            .Where(Function(s)
-                       If Not onlyMs2 Then
-                           Return True
-                       Else
-                           Return s.ms_level = "2"
-                       End If
-                   End Function)
-
-            Dim msLevel As Integer = msscan.ms_level.DoCall(AddressOf ParseInteger)
-
-            Select Case msLevel
-                Case 1
-                    Yield msscan.ScanData(basename, centroid:=False, raw:=True)
-                Case 0
-                    ' skip UV data?
-                    ' Yield msscan.ScanData(basename, centroid:=False, raw:=True)
-                Case Else
-                    ' msn
-                    Yield msscan.ScanData(basename, centroid:=False, raw:=True)
-            End Select
-        Next
-    End Function
-
-    <Extension>
-    Private Iterator Function mzXMLScanLoader(mzXML$, relativeInto As Boolean, onlyMs2 As Boolean) As IEnumerable(Of PeakMs2)
-        Dim basename$ = mzXML.FileName
-
-        For Each ms2Scan As mzXML.scan In mzXMLAssembly.XML _
-            .LoadScans(mzXML) _
-            .Where(Function(s)
-                       If Not onlyMs2 Then
-                           Return True
-                       Else
-                           Return s.msLevel = 2
-                       End If
-                   End Function)
-
-            If ms2Scan.msLevel = 1 Then
-                ' ms1的数据总是使用raw intensity值
-                Yield ms2Scan.ScanData(basename, raw:=True)
-            Else
-                Yield ms2Scan.ScanData(basename, raw:=Not relativeInto)
-            End If
-        Next
     End Function
 
     ''' <summary>

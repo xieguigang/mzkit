@@ -188,6 +188,7 @@ Public Class ScanVisual3D : Inherits Plot
 
         Dim firstFrame As GraphicsRegion
         Dim lastFrame As GraphicsRegion
+        Dim parallelXAxisPen As Pen = Stroke.TryParse(theme.gridStrokeX)
 
         For i As Integer = 0 To scans.Length - 1
             Dim labels As Label() = Nothing
@@ -220,6 +221,11 @@ Public Class ScanVisual3D : Inherits Plot
                 End If
             End If
 
+            Dim t0 As New PointF(parallelCanvas.Padding.Left, canvas.Height - parallelCanvas.Padding.Bottom)
+            Dim t1 As New PointF(canvas.Width - parallelCanvas.Padding.Right, canvas.Height - parallelCanvas.Padding.Bottom)
+
+            Call g.DrawLine(parallelXAxisPen, t0, t1)
+
             Call New TICplot(
                 ionData:={scans(i)},
                 timeRange:=Nothing,
@@ -244,22 +250,26 @@ Public Class ScanVisual3D : Inherits Plot
         '    /|
         '   / |
         ' d | |
-        '   | / b
-        '   |/
-        '   c
+        '   | / b --------/ e
+        '   |/           /
+        '   c ----------/
+        '               f
 
         Dim a As New PointF(firstFrame.Padding.Left, firstFrame.Padding.Top)
         Dim b As New PointF(firstFrame.Padding.Left, canvas.Height - firstFrame.Padding.Bottom)
         Dim c As New PointF(lastFrame.Padding.Left, canvas.Height - lastFrame.Padding.Bottom)
         Dim d As New PointF(lastFrame.Padding.Left, lastFrame.Padding.Top)
+        Dim e As New PointF(canvas.Width - firstFrame.Padding.Right, canvas.Height - firstFrame.Padding.Bottom)
+        Dim f As New PointF(canvas.Width - lastFrame.Padding.Right, canvas.Height - lastFrame.Padding.Bottom)
 
         Dim axisPen As Pen = Stroke.TryParse(theme.axisStroke)
 
         Call g.DrawLine(axisPen, a, d)
         Call g.DrawLine(axisPen, a, b)
         Call g.DrawLine(axisPen, c, b)
+        Call g.DrawLine(axisPen, e, f)
 
         If Me.theme.drawLabels Then Call TICplot.DrawLabels(g, canvas.PlotRegion, labelList.ToArray, theme, 1500)
-        If Me.theme.drawLegend Then Call TICplot.DrawTICLegends(g, canvas, legendList.ToArray, 100)
+        If Me.theme.drawLegend Then Call TICplot.DrawTICLegends(g, canvas, legendList.ToArray, 100, outside:=True)
     End Sub
 End Class

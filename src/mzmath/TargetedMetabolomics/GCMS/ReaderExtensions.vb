@@ -120,8 +120,7 @@ Namespace GCMS
                 .Select(Function(t)
                             Return New ms2 With {
                                 .mz = t(0),
-                                .intensity = t(1),
-                                .quantity = .intensity
+                                .intensity = t(1)
                             }
                         End Function) _
                 .ToArray

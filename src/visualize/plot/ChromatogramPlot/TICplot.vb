@@ -123,7 +123,8 @@ Public Class TICplot : Inherits Plot
                 tickFontStyle:=theme.axisTickCSS,
                 gridFill:=theme.gridFill,
                 xlayout:=theme.xAxisLayout,
-                ylayout:=theme.yAxisLayout
+                ylayout:=theme.yAxisLayout,
+                axisStroke:=theme.axisStroke
             )
         End If
 
@@ -188,7 +189,7 @@ Public Class TICplot : Inherits Plot
         labels = GetLabels(g, scaler, peakTimes).ToArray
 
         If theme.drawLabels Then Call DrawLabels(g, rect, labels, theme, labelLayoutTicks)
-        If theme.drawLegend Then Call DrawTICLegends(g, canvas, legends, deln)
+        If theme.drawLegend Then Call DrawTICLegends(g, canvas, legends, deln, outside:=False)
     End Sub
 
     Private Iterator Function GetLabels(g As IGraphics, scaler As DataScaler, peakTimes As IEnumerable(Of NamedValue(Of ChromatogramTick))) As IEnumerable(Of Label)
@@ -228,7 +229,7 @@ Public Class TICplot : Inherits Plot
         Next
     End Sub
 
-    Friend Shared Sub DrawTICLegends(g As IGraphics, canvas As GraphicsRegion, legends As LegendObject(), deln As Integer)
+    Friend Shared Sub DrawTICLegends(g As IGraphics, canvas As GraphicsRegion, legends As LegendObject(), deln As Integer, outside As Boolean)
         ' 如果离子数量非常多的话,则会显示不完
         ' 这时候每20个换一列
         Dim cols = legends.Length / deln
@@ -243,7 +244,14 @@ Public Class TICplot : Inherits Plot
         Dim top = canvas.PlotRegion.Top + maxSize.Height + 5
         Dim maxLen = maxSize.Width
         Dim legendShapeWidth% = 70
-        Dim left As Double = canvas.PlotRegion.Right - (maxLen + legendShapeWidth) * cols
+        Dim left As Double
+
+        If outside Then
+            left = canvas.PlotRegion.Right + g.MeasureString("A", legends(Scan0).GetFont).Width
+        Else
+            left = canvas.PlotRegion.Right - (maxLen + legendShapeWidth) * cols
+        End If
+
         Dim position As New Point With {
             .X = left,
             .Y = top

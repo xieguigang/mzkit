@@ -141,8 +141,7 @@ Imports stdNum = System.Math
             .Select(Function(scan)
                         Return New ms2 With {
                             .mz = scan.mz,
-                            .intensity = scan.intensity,
-                            .quantity = scan.intensity
+                            .intensity = scan.intensity
                         }
                     End Function) _
             .ToArray

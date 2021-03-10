@@ -120,7 +120,10 @@ Public Class frmFeatureSearch
             cluster = TreeListView1.SelectedItems(0)
         End If
 
-        If cluster.ChildrenCount > 0 Then
+        ' 当没有feature搜索结果的时候， children count也是零
+        ' 但是raw文件的parent是空的
+        ' 所以还需要加上parent是否为空的判断来避免无结果产生的冲突
+        If cluster.ChildrenCount > 0 OrElse cluster.Parent Is Nothing Then
             ' 选择的是一个文件节点
             Dim filePath As String = cluster.ToolTipText
             Dim raw As Raw = Globals.workspace.FindRawFile(filePath)

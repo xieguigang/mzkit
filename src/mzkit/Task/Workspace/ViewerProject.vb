@@ -52,7 +52,23 @@ Public Class ViewerProject : Implements ISaveHandle, IFileReference
     End Sub
 
     Public Function FindRawFile(path As String) As Raw
-        Return GetRawDataFiles.Where(Function(a) a.source.GetFullPath = path.GetFullPath).FirstOrDefault
+        Dim fullName As String = path
+
+        If Not path.Any(Function(c) c = ASCII.NUL) Then
+            fullName = path.GetFullPath
+        End If
+
+        Return GetRawDataFiles _
+            .Where(Function(a)
+                       Dim name As String = a.source
+
+                       If Not name.Any(Function(c) c = ASCII.NUL) Then
+                           name = name.GetFullPath
+                       End If
+
+                       Return name = fullName
+                   End Function) _
+            .FirstOrDefault
     End Function
 
     Public Function GetAutomationScripts() As IEnumerable(Of String)

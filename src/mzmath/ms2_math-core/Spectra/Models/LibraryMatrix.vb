@@ -132,10 +132,10 @@ Namespace Spectra
         ''' <returns></returns>
         Public Shared Operator /(matrix As LibraryMatrix, x#) As LibraryMatrix
             For Each ms2 As ms2 In matrix.ms2
-                If ms2.quantity = 0 Then
+                If ms2.intensity = 0 Then
                     ms2.intensity = 0
                 Else
-                    ms2.intensity = ms2.quantity / x
+                    ms2.intensity = ms2.intensity / x
                 End If
             Next
 
@@ -191,8 +191,7 @@ Namespace Spectra
                     .Select(Function(mz)
                                 Return New ms2 With {
                                     .mz = mz,
-                                    .intensity = 1,
-                                    .quantity = 1
+                                    .intensity = 1
                                 }
                             End Function) _
                     .ToArray

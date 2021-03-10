@@ -51,9 +51,11 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports REnv = SMRUCC.Rsharp.Runtime
 
 ''' <summary>
 ''' m/z data operator module
@@ -81,30 +83,36 @@ Module data
     ''' </summary>
     ''' <param name="ms1">a sequence data of ms1 scans</param>
     ''' <param name="mz">target mz value</param>
-    ''' <param name="ppm">
-    ''' tolerance value in unit ppm for extract mz data from the given ms1 ion scans.
+    ''' <param name="tolerance">
+    ''' tolerance value in unit ``ppm`` or ``da`` for 
+    ''' extract ``m/z`` data from the given ms1 ion 
+    ''' scans.
     ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("XIC")>
     <RApiReturn(GetType(ms1_scan))>
     Public Function XIC(<RRawVectorArgument> ms1 As Object, mz#,
-                        Optional ppm# = 20,
+                        Optional tolerance As Object = "ppm:20",
                         Optional env As Environment = Nothing) As Object
 
-        Dim ms1_scans As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ms1, env)
+        Dim ms1_scans As pipeline = pipeline.TryCreatePipeline(Of IMs1)(ms1, env)
+        Dim mzErr = Math.getTolerance(tolerance, env)
 
         If ms1_scans.isError Then
             Return ms1_scans.getError
+        ElseIf mzErr Like GetType(Message) Then
+            Return mzErr.TryCast(Of Message)
         End If
 
-        Dim xicFilter As ms1_scan() = ms1_scans _
-            .populates(Of ms1_scan)(env) _
-            .Where(Function(pt) PPMmethod.PPM(pt.mz, mz) <= ppm) _
-            .OrderBy(Function(a) a.scan_time) _
+        Dim xicFilter As Array = ms1_scans _
+            .populates(Of IMs1)(env) _
+            .Where(Function(pt) mzErr.VA(pt.mz, mz)) _
+            .OrderBy(Function(a) a.rt) _
+            .Select(Function(a) CObj(a)) _
             .ToArray
 
-        Return xicFilter
+        Return REnv.TryCastGenericArray(xicFilter, env)
     End Function
 
     ''' <summary>
@@ -122,19 +130,20 @@ Module data
                             rtmin#, rtmax#,
                             Optional env As Environment = Nothing) As Object
 
-        Dim ms1_scans As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ms1, env)
+        Dim ms1_scans As pipeline = pipeline.TryCreatePipeline(Of IMs1)(ms1, env)
 
         If ms1_scans.isError Then
             Return ms1_scans.getError
         End If
 
-        Dim xicFilter As ms1_scan() = ms1_scans _
-            .populates(Of ms1_scan)(env) _
-            .Where(Function(pt) pt.scan_time >= rtmin AndAlso pt.scan_time <= rtmax) _
-            .OrderBy(Function(a) a.scan_time) _
+        Dim xicFilter As Array = ms1_scans _
+            .populates(Of IMs1)(env) _
+            .Where(Function(pt) pt.rt >= rtmin AndAlso pt.rt <= rtmax) _
+            .OrderBy(Function(a) a.rt) _
+            .Select(Function(a) CObj(a)) _
             .ToArray
 
-        Return xicFilter
+        Return REnv.TryCastGenericArray(xicFilter, env)
     End Function
 
     ''' <summary>

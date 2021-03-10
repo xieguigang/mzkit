@@ -45,6 +45,7 @@
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
@@ -66,62 +67,17 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Imports REnv = SMRUCC.Rsharp.Runtime
 
 <Package("visual")>
-<RTypeExport("overlaps", GetType(ChromatogramOverlap))>
 Module Visual
 
     Sub Main()
         Call Internal.generic.add("plot", GetType(GeneralSignal), AddressOf plotSignal)
         Call Internal.generic.add("plot", GetType(GeneralSignal()), AddressOf plotSignal2)
         Call Internal.generic.add("plot", GetType(MGF.Ions), AddressOf plotMS)
+        Call Internal.generic.add("plot", GetType(PeakMs2), AddressOf plotMS)
         Call Internal.generic.add("plot", GetType(LibraryMatrix), AddressOf plotMS)
         Call Internal.generic.add("plot", GetType(Chromatogram), AddressOf plotChromatogram)
-        Call Internal.generic.add("plot", GetType(ChromatogramOverlap), AddressOf plotChromatogram2)
+        Call Internal.generic.add("plot", GetType(ChromatogramOverlap), AddressOf plotOverlaps)
     End Sub
-
-    <ExportAPI("add")>
-    Public Function addOverlaps(overlaps As ChromatogramOverlap, name$, data As Chromatogram) As ChromatogramOverlap
-        Call overlaps.overlaps.Add(name, data)
-        Return overlaps
-    End Function
-
-    <ExportAPI("overlaps")>
-    <RApiReturn(GetType(ChromatogramOverlap))>
-    Public Function overlaps(<RRawVectorArgument> Optional TIC As Object = Nothing, Optional env As Environment = Nothing) As Object
-        If TIC Is Nothing Then
-            Return New ChromatogramOverlap
-        End If
-
-        If TypeOf TIC Is ChromatogramOverlap Then
-            Return TIC
-        End If
-
-        If TypeOf TIC Is list Then
-            Dim result As New ChromatogramOverlap
-
-            For Each item In DirectCast(TIC, list).namedValues
-                If Not TypeOf item.Value Is Chromatogram Then
-                    Return Message.InCompatibleType(GetType(Chromatogram), item.Value.GetType, env, $"item '{item.Name}' is not a chromatogram value.")
-                Else
-                    result(item.Name) = item.Value
-                End If
-            Next
-
-            Return result
-        Else
-            Dim overlapsData As pipeline = pipeline.TryCreatePipeline(Of Chromatogram)(TIC, env)
-            Dim result As New ChromatogramOverlap
-
-            If overlapsData.isError Then
-                Return overlapsData.getError
-            Else
-                For Each item As SeqValue(Of Chromatogram) In overlapsData.populates(Of Chromatogram)(env).SeqIterator
-                    result(item.i) = item
-                Next
-            End If
-
-            Return result
-        End If
-    End Function
 
     ''' <summary>
     ''' plot TIC overlaps
@@ -130,11 +86,23 @@ Module Visual
     ''' <param name="args"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
-    Private Function plotChromatogram2(x As ChromatogramOverlap, args As list, env As Environment) As Object
+    Private Function plotOverlaps(x As ChromatogramOverlap, args As list, env As Environment) As Object
         Dim isBPC As Boolean = args.getValue("bpc", env, [default]:=False)
         Dim alpha As Integer = args.getValue("opacity", env, [default]:=100)
         Dim colorSet As String = args.getValue("colors", env, [default]:="Paired:c12")
         Dim gridFill As String = args.getValue("grid.fill", env, [default]:="white")
+        Dim fill As Boolean = args.getValue("fill", env, [default]:=True)
+        Dim showLabels As Boolean = args.getValue("show.labels", env, [default]:=True)
+        Dim parallel As Boolean = args.getValue("parallel", env, [default]:=False)
+        Dim axisStroke As String = args.getValue("axis.stroke", env, [default]:="stroke: black; stroke-width: 3px; stroke-dash: solid;")
+        Dim lineStroke As String = args.getValue("line.stroke", env, [default]:="stroke: black; stroke-width: 2px; stroke-dash: solid;")
+        Dim padding As String = args.getValue("padding", env, "padding:100px 100px 150px 150px;")
+        Dim axisLabel As String = args.getValue("axis.cex", env, "font-style: normal; font-size: 24; font-family: Bookman Old Style;")
+        Dim axisTickCex As String = args.getValue("tick.cex", env, "font-style: normal; font-size: 16; font-family: Bookman Old Style;")
+        Dim legendLabel As String = args.getValue("legend.cex", env, "font-style: normal; font-size: 12; font-family: Bookman Old Style;")
+        Dim size As String = args.getValue("size", env, "1600,1000")
+        Dim xlab As String = args.getValue("xlab", env, "Time (s)")
+        Dim ylab As String = args.getValue("ylab", env, "Intensity")
         Dim overlaps As New List(Of NamedCollection(Of ChromatogramTick))
         Dim data As NamedCollection(Of ChromatogramTick)
 
@@ -155,7 +123,19 @@ Module Visual
                 fillAlpha:=alpha,
                 colorsSchema:=colorSet,
                 gridFill:=gridFill,
-                showGrid:=True
+                showGrid:=True,
+                showLabels:=showLabels,
+                parallel:=parallel,
+                axisStroke:=axisStroke,
+                fillCurve:=fill,
+                margin:=padding,
+                size:=size,
+                penStyle:=lineStroke,
+                axisLabelFont:=axisLabel,
+                legendFontCSS:=legendLabel,
+                xlabel:=xlab,
+                ylabel:=ylab,
+                axisTickFont:=axisTickCex
             )
     End Function
 
@@ -172,6 +152,8 @@ Module Visual
         Dim color As String = args.getValue("color", env, [default]:="skyblue")
         Dim gridFill As String = args.getValue("grid.fill", env, [default]:="white")
         Dim alpha As Integer = args.getValue("opacity", env, [default]:=100)
+        Dim xlab As String = args.getValue("xlab", env, "Time (s)")
+        Dim ylab As String = args.getValue("ylab", env, "Intensity")
         Dim data As New NamedCollection(Of ChromatogramTick) With {
             .name = name,
             .value = x.GetTicks(isBPC).ToArray
@@ -181,7 +163,9 @@ Module Visual
             colorsSchema:=color,
             gridFill:=gridFill,
             fillAlpha:=alpha,
-            showGird:=True
+            showGird:=True,
+            xlabel:=xlab,
+            ylabel:=ylab
         )
     End Function
 
@@ -194,7 +178,9 @@ Module Visual
     End Function
 
     Private Function plotMS(spectrum As Object, args As list, env As Environment) As Object
-        Return SpectrumPlot(spectrum)
+        Dim title As String = args.getValue("title", env, "Mass Spectrum Plot")
+
+        Return SpectrumPlot(spectrum, title:=title)
     End Function
 
     ''' <summary>
@@ -255,7 +241,11 @@ Module Visual
                     plotTitle:=title,
                     drawGrid:=showGrid,
                     tagXFormat:=tagXFormat,
-                    labelDisplayIntensity:=intoCutoff
+                    labelDisplayIntensity:=intoCutoff,
+                    titles:={
+                        ms.TryCast(Of LibraryMatrix).name,
+                        spectrum.ToString
+                    }
                 )
         Else
             Dim ref As [Variant](Of Message, LibraryMatrix) = getSpectrum(alignment, env)
@@ -313,17 +303,22 @@ Module Visual
                     .Select(Function(m, i)
                                 Return New ms2 With {
                                     .mz = m,
-                                    .intensity = into(i),
-                                    .quantity = into(i)
+                                    .intensity = into(i)
                                 }
                             End Function) _
                     .ToArray
 
                 Return New LibraryMatrix With {.ms2 = ms2, .name = "Mass Spectrum"}
             Case GetType(PeakMs2)
+                Dim name As String = DirectCast(data, PeakMs2).lib_guid
+
+                If name.StringEmpty Then
+                    name = $"M{CInt(DirectCast(data, PeakMs2).mz)}T{CInt(DirectCast(data, PeakMs2).rt) + 1}"
+                End If
+
                 Return New LibraryMatrix With {
                     .ms2 = DirectCast(data, PeakMs2).mzInto,
-                    .name = DirectCast(data, PeakMs2).lib_guid
+                    .name = name
                 }
             Case Else
                 Return Internal.debug.stop(New NotImplementedException(type.FullName), env)

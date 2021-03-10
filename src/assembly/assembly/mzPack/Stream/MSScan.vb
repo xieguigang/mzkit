@@ -64,8 +64,7 @@ Namespace mzData.mzWebCache
             For i As Integer = 0 To mz.Length - 1
                 Yield New ms2 With {
                     .mz = mz(i),
-                    .intensity = into(i),
-                    .quantity = .intensity
+                    .intensity = into(i)
                 }
             Next
         End Function

@@ -103,6 +103,15 @@ SOFTWARE.
 
 <div style="page-break-after:always;"></div>
 
+<div style="font-size: 2em;">Demo Data Plots</div>
+
+![](docs/manual/plots/TIC_overlaps.png)
+![](docs/manual/plots/Linear_fitting.png)
+![](docs/manual/plots/RawScatter_2D.png)
+![](docs/manual/plots/MS_alignment.png)
+
+<div style="page-break-after:always;"></div>
+
 ##  1. <a name='RawDataViewerInstruction'></a>Raw Data Viewer Instruction
 
 **Important Note: this application only supports the open source ``mzXML/mzML/imzML`` raw data file formats. For view the data in the vendor format file like the ``Thermo *.Raw`` required convert to the mzXML file format at first. It is recommended that convert the vendor format file to mzXML via [ProteoWizard](https://github.com/ProteoWizard/pwiz).**

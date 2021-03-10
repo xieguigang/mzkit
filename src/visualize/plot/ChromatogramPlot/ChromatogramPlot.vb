@@ -143,7 +143,9 @@ Public Module ChromatogramPlot
                             Optional legendFontCSS$ = CSSFont.Win10Normal,
                             Optional intensityMax As Double = 0,
                             Optional gridFill As String = "rgb(245,245,245)",
-                            Optional showGird As Boolean = False) As GraphicsData
+                            Optional showGird As Boolean = False,
+                            Optional xlabel$ = "Time (s)",
+                            Optional ylabel$ = "Intensity") As GraphicsData
 
         Return {ionData}.TICplot(
             size:=size,
@@ -163,7 +165,9 @@ Public Module ChromatogramPlot
             intensityMax:=intensityMax,
             gridFill:=gridFill,
             fillAlpha:=fillAlpha,
-            showGrid:=showGird
+            showGrid:=showGird,
+            xlabel:=xlabel,
+            ylabel:=ylabel
         )
     End Function
 
@@ -194,6 +198,7 @@ Public Module ChromatogramPlot
                             Optional fillCurve As Boolean = True,
                             Optional axisLabelFont$ = CSSFont.Win7Large,
                             Optional axisTickFont$ = CSSFont.Win10NormalLarger,
+                            Optional axisStroke$ = Stroke.AxisStroke,
                             Optional xlabel$ = "Time (s)",
                             Optional ylabel$ = "Intensity",
                             Optional showLegends As Boolean = True,
@@ -221,7 +226,8 @@ Public Module ChromatogramPlot
             .drawGrid = showGrid,
             .gridFill = gridFill,
             .drawLabels = showLabels,
-            .tagColor = labelColor
+            .tagColor = labelColor,
+            .axisStroke = axisStroke
         }
         Dim TIC As Plot
 

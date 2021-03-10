@@ -72,7 +72,6 @@ Namespace DataReader
                 .Select(Function(p)
                             Return New ms2 With {
                                 .mz = p.mz,
-                                .quantity = p.intensity,
                                 .intensity = p.intensity
                             }
                         End Function) _

@@ -172,7 +172,6 @@ Namespace ASCII.MSL
 
                             Return New ms2 With {
                                 .intensity = Val(p(1)),
-                                .quantity = .intensity,
                                 .mz = Val(p(0))
                             }
                         End Function) _
