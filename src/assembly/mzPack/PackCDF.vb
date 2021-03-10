@@ -34,13 +34,27 @@ Public Module PackCDF
         Dim dataLen As New Dimension With {.name = "data_length", .size = scan_time.Length * 2}
 
         Using cdf As New CDFWriter(file)
-            Dim allNames As New CDFData With {.chars = overlaps.overlaps.Keys.GetJson}
+            Dim allNames As New CDFData With {
+                .chars = overlaps.overlaps _
+                    .Keys _
+                    .ToArray _
+                    .GetJson
+            }
+            Dim strSize As New Dimension With {
+                .name = "name_data",
+                .size = allNames.chars.Length
+            }
+            Dim formatAttr As New attribute With {
+                .name = "format",
+                .type = CDFDataTypes.CHAR,
+                .value = "JSON"
+            }
 
             ' add X axis
             Call cdf _
                 .Dimensions(length, dataLen) _
                 .AddVariable("scan_time", line, length.name)
-            Call cdf.AddVariable("signalNames", allNames, New Dimension With {.name = "name_data", .size = allNames.chars.Length}, {New attribute With {.name = "format", .type = CDFDataTypes.CHAR, .value = "JSON"}})
+            Call cdf.AddVariable("signalNames", allNames, strSize, {formatAttr})
 
             For Each chr As NamedValue(Of Chromatogram) In overlaps.EnumerateSignals
                 Dim TIC As GeneralSignal = chr.Value.GetSignal(isbpc:=False)
@@ -66,7 +80,8 @@ Public Module PackCDF
     <Extension>
     Public Function ReadPackData(file As Stream) As ChromatogramOverlap
         Using cdf As New netCDFReader(file)
-            Dim names As String() = cdf.getDataVariable("signalNames").chars.LoadJSON(Of String())
+            Dim nameStr As String = cdf.getDataVariable("signalNames").chars
+            Dim names As String() = nameStr.LoadJSON(Of String())
             Dim scan_time As Double() = cdf.getDataVariable("scan_time").numerics
             Dim overlaps As New ChromatogramOverlap With {
                 .overlaps = New Dictionary(Of String, Chromatogram)
