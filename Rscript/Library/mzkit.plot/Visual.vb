@@ -45,6 +45,7 @@
 
 #End Region
 
+Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
@@ -77,12 +78,31 @@ Module Visual
         Call Internal.generic.add("plot", GetType(LibraryMatrix), AddressOf plotMS)
         Call Internal.generic.add("plot", GetType(Chromatogram), AddressOf plotChromatogram)
         Call Internal.generic.add("plot", GetType(ChromatogramOverlap), AddressOf plotChromatogram2)
+
+        Call Internal.ConsolePrinter.AttachConsoleFormatter(Of ChromatogramOverlap)(AddressOf overlapsSummary)
     End Sub
+
+    Private Function overlapsSummary(data As ChromatogramOverlap) As String
+        Dim text As New StringBuilder
+
+        Call text.AppendLine($"Chromatogram Overlaps Of {data.length} files:")
+
+        For Each file As String In data.overlaps.Keys
+            Call text.AppendLine($"  {file} {data(file).scan_time.Length} scans")
+        Next
+
+        Return text.ToString
+    End Function
 
     <ExportAPI("add")>
     Public Function addOverlaps(overlaps As ChromatogramOverlap, name$, data As Chromatogram) As ChromatogramOverlap
         Call overlaps.overlaps.Add(name, data)
         Return overlaps
+    End Function
+
+    <ExportAPI("subset")>
+    Public Function subset(overlaps As ChromatogramOverlap, names As String()) As ChromatogramOverlap
+        Return overlaps(names)
     End Function
 
     <ExportAPI("overlaps")>
