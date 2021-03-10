@@ -62,13 +62,37 @@ Public Class frmQuantifyIons
     Public ReadOnly Property MimeType As ContentType() Implements IFileReference.MimeType
         Get
             Return {
-                New ContentType With {.Details = "GCMS Quantify Ions", .FileExt = ".ionPack", .MIMEType = "application/msl", .Name = "GCMS Quantify Ions"}
+                New ContentType With {
+                    .Details = "GCMS Quantify Ions",
+                    .FileExt = ".ionPack",
+                    .MIMEType = "application/msl",
+                    .Name = "GCMS Quantify Ions"
+                }
             }
         End Get
     End Property
 
     Private Sub frmQuantifyIons_Load(sender As Object, e As EventArgs) Handles Me.Load
         TabText = "GC-MS Quantify Ions Library"
+        FilePath = Globals.Settings.QuantifyIonLibfile
+
+        If FilePath.FileLength > 0 Then
+            Try
+                Using file As Stream = FilePath.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                    For Each ion As QuantifyIon In MsgPackSerializer.Deserialize(Of QuantifyIon())(file)
+                        DataGridView1.Rows.Add(ion.id, ion.name, ion.rt.Min, ion.rt.Max, ion.ms(Scan0).mz, ion.ms.ElementAtOrDefault(1)?.mz)
+                    Next
+                End Using
+            Catch ex As Exception
+
+            End Try
+        End If
+    End Sub
+
+    Private Sub DataGridView1_KeyDown(sender As Object, e As KeyEventArgs) Handles DataGridView1.KeyDown, Me.KeyDown
+        If e.KeyCode = Keys.V AndAlso e.Control AndAlso Clipboard.ContainsText Then
+            Call DataGridView1.PasteTextData()
+        End If
     End Sub
 
     Public Function Save(path As String, encoding As Encoding) As Boolean Implements ISaveHandle.Save

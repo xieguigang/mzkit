@@ -50,8 +50,10 @@
 
 #End Region
 
+Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Content
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.GCMS
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Data
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
@@ -64,6 +66,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.IO.MessagePack
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -191,7 +194,17 @@ Public Class frmTargetedQuantification
     End Sub
 
     Private Sub loadGCMSReference(files As NamedValue(Of String)())
+        Dim ions As QuantifyIon()
+        Dim filePath = Globals.Settings.QuantifyIonLibfile
 
+        If filePath.FileLength > 0 Then
+            Try
+                Using file As Stream = filePath.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                    ions = MsgPackSerializer.Deserialize(Of QuantifyIon())(file)
+                End Using
+            Catch ex As Exception
+            End Try
+        End If
     End Sub
 
     Private Sub loadMRMReference(files As NamedValue(Of String)())
