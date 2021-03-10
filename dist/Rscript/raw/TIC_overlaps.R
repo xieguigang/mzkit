@@ -52,11 +52,11 @@ let TIC_overlaps as function(overlaps, key = "") {
 	bitmap(file = `${savedir}/${basename(savefileTIC)}_parallel.png`) {	
 		overlaps :> plot(
 			bpc         = FALSE, 
-			opacity     = 100, 
+			opacity     = 185, 
 			colors      = colorSet,
 			show.labels = FALSE,
 			parallel    = TRUE,
-			fill        = FALSE,
+			fill        = TRUE,
 			padding     = "padding:100px 500px 150px 250px;",
 			size        = "3600,2000",
 			line.stroke = "stroke: black; stroke-width: 6px; stroke-dash: solid;",
