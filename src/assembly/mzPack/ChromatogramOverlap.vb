@@ -43,6 +43,7 @@
 #End Region
 
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components.Interface
@@ -84,6 +85,15 @@ Public Class ChromatogramOverlap : Implements RNames, RNameIndex
 
     Public Overrides Function ToString() As String
         Return overlaps.Keys.GetJson
+    End Function
+
+    Public Iterator Function EnumerateSignals() As IEnumerable(Of NamedValue(Of Chromatogram))
+        For Each item In overlaps
+            Yield New NamedValue(Of Chromatogram) With {
+                .Name = item.Key,
+                .Value = item.Value
+            }
+        Next
     End Function
 
     Public Function setNames(names() As String, envir As Environment) As Object Implements RNames.setNames
