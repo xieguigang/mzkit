@@ -270,6 +270,6 @@ Public Class ScanVisual3D : Inherits Plot
         Call g.DrawLine(axisPen, e, f)
 
         If Me.theme.drawLabels Then Call TICplot.DrawLabels(g, canvas.PlotRegion, labelList.ToArray, theme, 1500)
-        If Me.theme.drawLegend Then Call TICplot.DrawTICLegends(g, canvas, legendList.ToArray, 100)
+        If Me.theme.drawLegend Then Call TICplot.DrawTICLegends(g, canvas, legendList.ToArray, 100, outside:=True)
     End Sub
 End Class
