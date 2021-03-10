@@ -63,12 +63,12 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Module MzWeb
 
     <ExportAPI("load.chromatogram")>
-    <RApiReturn(GetType(BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader.Chromatogram))>
+    <RApiReturn(GetType(Chromatogram))>
     Public Function GetChromatogram(scans As pipeline, Optional env As Environment = Nothing) As Object
         If scans.elementType Like GetType(mzXML.scan) Then
-            Return BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader.Chromatogram.GetChromatogram(scans.populates(Of scan)(env))
+            Return Chromatogram.GetChromatogram(scans.populates(Of scan)(env))
         ElseIf scans.elementType Like GetType(mzML.spectrum) Then
-            Return BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader.Chromatogram.GetChromatogram(scans.populates(Of mzML.spectrum)(env))
+            Return Chromatogram.GetChromatogram(scans.populates(Of mzML.spectrum)(env))
         Else
             Return Message.InCompatibleType(GetType(mzXML.scan), scans.elementType, env)
         End If
