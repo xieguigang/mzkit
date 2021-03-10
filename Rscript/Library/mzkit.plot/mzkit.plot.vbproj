@@ -190,7 +190,6 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChromatogramOverlap.vb" />
     <Compile Include="MsImaging.vb" />
     <Compile Include="zzz.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
