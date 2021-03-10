@@ -1,4 +1,5 @@
 ﻿
+Imports System.IO
 Imports System.Text
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
@@ -85,5 +86,19 @@ Module ChromatogramTools
 
             Return result
         End If
+    End Function
+
+    <ExportAPI("write.pack")>
+    Public Sub PackData(overlaps As ChromatogramOverlap, cdf As String)
+        Using file As Stream = cdf.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
+            Call overlaps.SavePackData(file)
+        End Using
+    End Sub
+
+    <ExportAPI("read.pack")>
+    Public Function ReadData(cdf As String) As ChromatogramOverlap
+        Using file As Stream = cdf.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+            Return file.ReadPackData
+        End Using
     End Function
 End Module
