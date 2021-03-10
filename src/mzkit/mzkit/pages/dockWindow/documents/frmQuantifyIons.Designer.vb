@@ -30,13 +30,15 @@ Partial Class frmQuantifyIons
         Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'DataGridView1
         '
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2, Me.Column3, Me.Column4})
+        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2, Me.Column3, Me.Column4, Me.Column5, Me.Column6})
         Me.DataGridView1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DataGridView1.Location = New System.Drawing.Point(0, 0)
         Me.DataGridView1.Name = "DataGridView1"
@@ -72,6 +74,16 @@ Partial Class frmQuantifyIons
         Me.Column4.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Column4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
+        'Column5
+        '
+        Me.Column5.HeaderText = "Ion1"
+        Me.Column5.Name = "Column5"
+        '
+        'Column6
+        '
+        Me.Column6.HeaderText = "Ion2"
+        Me.Column6.Name = "Column6"
+        '
         'frmQuantifyIons
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -91,4 +103,6 @@ Partial Class frmQuantifyIons
     Friend WithEvents Column2 As DataGridViewTextBoxColumn
     Friend WithEvents Column3 As DataGridViewTextBoxColumn
     Friend WithEvents Column4 As DataGridViewTextBoxColumn
+    Friend WithEvents Column5 As DataGridViewTextBoxColumn
+    Friend WithEvents Column6 As DataGridViewTextBoxColumn
 End Class

@@ -42,10 +42,16 @@
 
 #End Region
 
+Imports System.IO
 Imports System.Text
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.GCMS
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Data.IO.MessagePack
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
+Imports any = Microsoft.VisualBasic.Scripting
 
 Public Class frmQuantifyIons
     Implements ISaveHandle
@@ -56,7 +62,7 @@ Public Class frmQuantifyIons
     Public ReadOnly Property MimeType As ContentType() Implements IFileReference.MimeType
         Get
             Return {
-                New ContentType With {.Details = "GCMS Quantify Ions", .FileExt = ".csv", .MIMEType = "application/csv", .Name = "GCMS Quantify Ions"}
+                New ContentType With {.Details = "GCMS Quantify Ions", .FileExt = ".ionPack", .MIMEType = "application/msl", .Name = "GCMS Quantify Ions"}
             }
         End Get
     End Property
@@ -66,7 +72,33 @@ Public Class frmQuantifyIons
     End Sub
 
     Public Function Save(path As String, encoding As Encoding) As Boolean Implements ISaveHandle.Save
+        Dim ions As New List(Of QuantifyIon)
+        Dim row As DataGridViewRow
+        Dim ion1, ion2 As ms2
 
+        For i As Integer = 0 To DataGridView1.Rows.Count - 1
+            row = DataGridView1.Rows.Item(i)
+            ion1 = New ms2 With {.mz = any.ToString(row.Cells(4).Value).ParseDouble, .intensity = 1}
+            ion2 = New ms2 With {.mz = any.ToString(row.Cells(5).Value).ParseDouble, .intensity = 0.65}
+            ions += New QuantifyIon With {
+                .id = any.ToString(row.Cells(0).Value),
+                .name = any.ToString(row.Cells(1).Value),
+                .rt = {
+                    any.ToString(row.Cells(2).Value).ParseDouble,
+                    any.ToString(row.Cells(3).Value).ParseDouble
+                },
+                .ms = {ion1, ion2}
+            }
+        Next
+
+        FilePath = path
+        Globals.Settings.QuantifyIonLibfile = path.GetFullPath
+
+        Using file As Stream = path.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
+            Call MsgPackSerializer.SerializeObject(ions.ToArray, file)
+        End Using
+
+        Return True
     End Function
 
     Public Function Save(path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save

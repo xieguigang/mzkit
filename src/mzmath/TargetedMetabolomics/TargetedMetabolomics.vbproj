@@ -555,6 +555,10 @@
       <Project>{3c79ae03-a766-4b61-bdc4-824d78481b53}</Project>
       <Name>DataStorage</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\msgpack\MessagePack.vbproj">
+      <Project>{c473d2d3-65b3-0220-32a8-1e0687d9ae6b}</Project>
+      <Name>MessagePack</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj">
       <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
       <Name>47_dotnet_ms-vb_data.framework</Name>
