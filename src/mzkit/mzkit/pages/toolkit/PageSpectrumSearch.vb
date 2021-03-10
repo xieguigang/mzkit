@@ -70,8 +70,7 @@ Public Class PageSpectrumSearch
         For i As Integer = 0 To DataGridView1.Rows.Count - 1
             ms2 += New ms2 With {
                 .mz = Val(DataGridView1.Rows(i).Cells(0).Value),
-                .intensity = Val(DataGridView1.Rows(i).Cells(1).Value),
-                .quantity = .intensity
+                .intensity = Val(DataGridView1.Rows(i).Cells(1).Value)
             }
         Next
 
