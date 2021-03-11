@@ -117,6 +117,13 @@ Public Class ChromatogramOverlap : Implements RNames, RNameIndex
         Return overlaps.Keys.ToArray
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="name"></param>
+    ''' <returns>
+    ''' <see cref="Chromatogram"/>
+    ''' </returns>
     Public Function getByName(name As String) As Object Implements RNameIndex.getByName
         Return overlaps.TryGetValue(name)
     End Function

@@ -33,6 +33,7 @@ Partial Class frmRawFeaturesList
         Me.ShowBPCToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ShowTICToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ShowXICToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ShowPropertiesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
         Me.MolecularNetworkingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SpectrumSearchToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -60,7 +61,7 @@ Partial Class frmRawFeaturesList
         Me.ToolStripSpringTextBox1 = New mzkit.ToolStripSpringTextBox()
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
         Me.treeView1 = New mzkit.Kesoft.Windows.Forms.Win7StyleTreeView.Win7StyleTreeView(Me.components)
-        Me.ShowPropertiesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.IonTableToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
         Me.SuspendLayout()
@@ -89,13 +90,13 @@ Partial Class frmRawFeaturesList
         'ShowBPCToolStripMenuItem
         '
         Me.ShowBPCToolStripMenuItem.Name = "ShowBPCToolStripMenuItem"
-        Me.ShowBPCToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ShowBPCToolStripMenuItem.Size = New System.Drawing.Size(134, 22)
         Me.ShowBPCToolStripMenuItem.Text = "Show BPC"
         '
         'ShowTICToolStripMenuItem
         '
         Me.ShowTICToolStripMenuItem.Name = "ShowTICToolStripMenuItem"
-        Me.ShowTICToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ShowTICToolStripMenuItem.Size = New System.Drawing.Size(134, 22)
         Me.ShowTICToolStripMenuItem.Text = "Show TIC"
         '
         'ShowXICToolStripMenuItem
@@ -103,6 +104,12 @@ Partial Class frmRawFeaturesList
         Me.ShowXICToolStripMenuItem.Name = "ShowXICToolStripMenuItem"
         Me.ShowXICToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
         Me.ShowXICToolStripMenuItem.Text = "Show XIC"
+        '
+        'ShowPropertiesToolStripMenuItem
+        '
+        Me.ShowPropertiesToolStripMenuItem.Name = "ShowPropertiesToolStripMenuItem"
+        Me.ShowPropertiesToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
+        Me.ShowPropertiesToolStripMenuItem.Text = "Show Properties"
         '
         'ToolStripMenuItem1
         '
@@ -186,7 +193,7 @@ Partial Class frmRawFeaturesList
         '
         'ExportIonsToolStripMenuItem
         '
-        Me.ExportIonsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.XICToolStripMenuItem, Me.IonScansToolStripMenuItem})
+        Me.ExportIonsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.XICToolStripMenuItem, Me.IonScansToolStripMenuItem, Me.IonTableToolStripMenuItem})
         Me.ExportIonsToolStripMenuItem.Image = CType(resources.GetObject("ExportIonsToolStripMenuItem.Image"), System.Drawing.Image)
         Me.ExportIonsToolStripMenuItem.Name = "ExportIonsToolStripMenuItem"
         Me.ExportIonsToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
@@ -195,13 +202,13 @@ Partial Class frmRawFeaturesList
         'XICToolStripMenuItem
         '
         Me.XICToolStripMenuItem.Name = "XICToolStripMenuItem"
-        Me.XICToolStripMenuItem.Size = New System.Drawing.Size(132, 22)
+        Me.XICToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.XICToolStripMenuItem.Text = "XIC"
         '
         'IonScansToolStripMenuItem
         '
         Me.IonScansToolStripMenuItem.Name = "IonScansToolStripMenuItem"
-        Me.IonScansToolStripMenuItem.Size = New System.Drawing.Size(132, 22)
+        Me.IonScansToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.IonScansToolStripMenuItem.Text = "Ion Scans"
         '
         'CollapseToolStripMenuItem
@@ -287,11 +294,11 @@ Partial Class frmRawFeaturesList
         Me.treeView1.Size = New System.Drawing.Size(445, 425)
         Me.treeView1.TabIndex = 2
         '
-        'ShowPropertiesToolStripMenuItem
+        'IonTableToolStripMenuItem
         '
-        Me.ShowPropertiesToolStripMenuItem.Name = "ShowPropertiesToolStripMenuItem"
-        Me.ShowPropertiesToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
-        Me.ShowPropertiesToolStripMenuItem.Text = "Show Properties"
+        Me.IonTableToolStripMenuItem.Name = "IonTableToolStripMenuItem"
+        Me.IonTableToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.IonTableToolStripMenuItem.Text = "Ion Table"
         '
         'frmRawFeaturesList
         '
@@ -300,8 +307,8 @@ Partial Class frmRawFeaturesList
         Me.ClientSize = New System.Drawing.Size(445, 450)
         Me.Controls.Add(Me.treeView1)
         Me.Controls.Add(Me.ToolStrip1)
+        Me.DoubleBuffered = True
         Me.Name = "frmRawFeaturesList"
-        Me.Text = "Form1"
         Me.ContextMenuStrip1.ResumeLayout(False)
         Me.ToolStrip1.ResumeLayout(False)
         Me.ToolStrip1.PerformLayout()
@@ -343,4 +350,5 @@ Partial Class frmRawFeaturesList
     Friend WithEvents ToolStripButton1 As ToolStripButton
     Friend WithEvents treeView1 As Kesoft.Windows.Forms.Win7StyleTreeView.Win7StyleTreeView
     Friend WithEvents ShowPropertiesToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents IonTableToolStripMenuItem As ToolStripMenuItem
 End Class
