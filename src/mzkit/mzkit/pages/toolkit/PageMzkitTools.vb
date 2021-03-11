@@ -582,9 +582,8 @@ Public Class PageMzkitTools
 
         Dim max As Double = matrix.Select(Function(a) a.intensity).Max
 
-        For Each tick In matrix
-            tick.quantity = CInt(tick.intensity / max * 100)
-            DataGridView1.Rows.Add({tick.mz, tick.intensity, tick.quantity, tick.Annotation})
+        For Each tick As ms2 In matrix
+            DataGridView1.Rows.Add({tick.mz, tick.intensity, CInt(tick.intensity / max * 100), tick.Annotation})
         Next
     End Sub
 

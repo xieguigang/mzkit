@@ -110,8 +110,8 @@ Public Class frmSRMIonsExplorer
 
         Dim chr As chromatogram = Win7StyleTreeView1.SelectedNode.Tag
         Dim spectrum As ms2() = {
-            New ms2 With {.mz = chr.precursor.MRMTargetMz, .intensity = 1, .quantity = 1},
-            New ms2 With {.mz = chr.product.MRMTargetMz, .intensity = 0.6, .quantity = 0.6}
+            New ms2 With {.mz = chr.precursor.MRMTargetMz, .intensity = 1},
+            New ms2 With {.mz = chr.product.MRMTargetMz, .intensity = 0.6}
         }
         Dim scanData As New LibraryMatrix With {.ms2 = spectrum, .name = "SRM ions"}
         Dim q = scanData.OrderByDescending(Function(x) x.intensity).First

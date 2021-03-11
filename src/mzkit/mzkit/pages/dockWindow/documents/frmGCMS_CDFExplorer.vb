@@ -103,8 +103,7 @@ Public Class frmGCMS_CDFExplorer
             .Select(Function(x)
                         Return New ms2 With {
                             .mz = x.mz,
-                            .intensity = x.intensity,
-                            .quantity = x.intensity
+                            .intensity = x.intensity
                         }
                     End Function) _
             .ToArray

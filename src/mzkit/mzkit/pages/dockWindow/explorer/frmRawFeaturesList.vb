@@ -403,8 +403,7 @@ Public Class frmRawFeaturesList
                                 .Select(Function(a)
                                             Return New ms2 With {
                                                 .mz = a.Time,
-                                                .intensity = a.Intensity,
-                                                .quantity = a.Intensity
+                                                .intensity = a.Intensity
                                             }
                                         End Function) _
                                 .ToArray,
