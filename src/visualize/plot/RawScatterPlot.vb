@@ -46,8 +46,10 @@ Imports System.Drawing
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
+Imports Microsoft.VisualBasic.Data.ChartPlots.Plots
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
@@ -58,45 +60,40 @@ Imports stdNum = System.Math
 ''' <summary>
 ''' 横坐标为rt，纵坐标为m/z的散点图绘制
 ''' </summary>
-Public Module RawScatterPlot
+Public Class RawScatterPlot : Inherits Plot
 
-    ''' <summary>
-    ''' The scatter plots of the samples ``m/z`` and ``rt``.
-    ''' </summary>
-    ''' <param name="samples"></param>
-    ''' <param name="size$"></param>
-    ''' <param name="bg$"></param>
-    ''' <param name="margin$"></param>
-    ''' <param name="ptSize!"></param>
-    ''' <returns></returns>
-    Public Function Plot(samples As IEnumerable(Of ms1_scan),
-                         Optional size$ = "5000,4000",
-                         Optional bg$ = "white",
-                         Optional margin$ = Resolution2K.PaddingWithTopTitleAndRightLegend,
-                         Optional rawfile$ = "n/a",
-                         Optional ptSize! = 24,
-                         Optional sampleColors$ = "darkblue,blue,skyblue,green,orange,red,darkred",
-                         Optional mapLevels As Integer = 25,
-                         Optional legendTitleCSS$ = CSSFont.PlotSubTitle,
-                         Optional tickCSS$ = CSSFont.Win7Large,
-                         Optional axisStroke$ = Stroke.AxisStroke,
-                         Optional labelFontStyle$ = CSSFont.Win7VeryLarge) As GraphicsData
+    ReadOnly samples As ms1_scan()
+    ReadOnly mapLevels As Integer
+    ReadOnly rawfile$
 
+    Public Sub New(samples As IEnumerable(Of ms1_scan), mapLevels As Integer, rawfile$, theme As Theme)
+        MyBase.New(theme)
+
+        Me.samples = samples.ToArray
+        Me.rawfile = rawfile
+        Me.mapLevels = mapLevels
+    End Sub
+
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, region As GraphicsRegion)
         ' 先转换为散点图的数据系列
-        Dim colors As String() = Designer.GetColors(sampleColors, mapLevels).Select(Function(c) c.ToHtmlColor).ToArray
-        Dim points As PointData() = samples _
-            .Where(Function(a) a.intensity > 0) _
-            .Select(Function(compound)
-                        Return New PointData() With {
-                            .pt = New PointF(compound.scan_time, compound.mz),
-                            .value = stdNum.Log(compound.intensity)
-                        }
-                    End Function) _
+        Dim colors As String() = Designer _
+            .GetColors(theme.colorSet, mapLevels) _
+            .Select(Function(c) c.ToHtmlColor) _
             .ToArray
+
+        Dim points As PointData() = samples _
+           .Where(Function(a) a.intensity > 0) _
+           .Select(Function(compound)
+                       Return New PointData() With {
+                           .pt = New PointF(compound.scan_time, compound.mz),
+                           .value = stdNum.Log(compound.intensity)
+                       }
+                   End Function) _
+           .ToArray
         Dim serials As New SerialData With {
             .title = rawfile,
             .pts = points,
-            .pointSize = ptSize,
+            .pointSize = theme.pointSize,
             .color = Nothing
         }
         Dim intensityRange As New DoubleRange(points.Select(Function(a) a.value).ToArray)
@@ -108,45 +105,65 @@ Public Module RawScatterPlot
 
         Dim brushes = colors.Select(Function(colorStr) New SolidBrush(colorStr.TranslateColor)).ToArray
         Dim ticks = points.Select(Function(a) a.value ^ stdNum.E).CreateAxisTicks
-        Dim tickStyle As Font = CSSFont.TryParse(tickCSS).GDIObject
-        Dim legendTitleStyle As Font = CSSFont.TryParse(legendTitleCSS).GDIObject
-        Dim tickAxisStroke As Pen = Stroke.TryParse(axisStroke).GDIObject
-        Dim chart As GraphicsData = Scatter.Plot(
-            {serials},
-            size:=size, padding:=margin, bg:=bg,
-            showGrid:=True,
-            drawLine:=False,
-            Xlabel:="rt in seconds",
-            Ylabel:="m/z",
-            htmlLabel:=False,
-            gridFill:=Color.White.ToHtmlColor,
-            XaxisAbsoluteScalling:=True,
-            YaxisAbsoluteScalling:=True,
-            showLegend:=False,
-            tickFontStyle:=tickCSS,
-            axisStroke:=axisStroke,
-            scatterReorder:=True,
-            labelFontStyle:=labelFontStyle
-        )
+        Dim tickStyle As Font = CSSFont.TryParse(theme.axisTickCSS).GDIObject
+        Dim legendTitleStyle As Font = CSSFont.TryParse(theme.legendTitleCSS).GDIObject
+        Dim tickAxisStroke As Pen = Stroke.TryParse(theme.axisStroke).GDIObject
+        Dim scatter As New Scatter2D({serials}, theme, scatterReorder:=True, fillPie:=True) With {
+            .xlabel = "scan_time in seconds",
+            .ylabel = "m/z ratio"
+        }
 
         ' 绘制标尺
-        chart = chart.GraphicsPlots(
-            Sub(ByRef g, region)
-                Dim canvas = region.PlotRegion
-                Dim width = canvas.Width * 0.125
-                Dim legendLayout As New Rectangle(region.Width - width - region.Padding.Right / 3, canvas.Top, width, canvas.Height * 0.3)
+        Dim canvas = region.PlotRegion
+        Dim width = canvas.Width * 0.125
+        Dim legendLayout As New Rectangle(region.Width - width - region.Padding.Right / 3, canvas.Top, width, canvas.Height * 0.3)
 
-                Call g.ColorMapLegend(
-                    layout:=legendLayout,
-                    designer:=brushes,
-                    ticks:=ticks,
-                    titleFont:=legendTitleStyle,
-                    title:="Intensity",
-                    tickFont:=tickStyle,
-                    tickAxisStroke:=tickAxisStroke
-                )
-            End Sub)
+        Call scatter.Plot(g, region)
+        Call g.ColorMapLegend(
+            layout:=legendLayout,
+            designer:=brushes,
+            ticks:=ticks,
+            titleFont:=legendTitleStyle,
+            title:="Intensity Scale",
+            tickFont:=tickStyle,
+            tickAxisStroke:=tickAxisStroke
+        )
+    End Sub
 
-        Return chart
+    ''' <summary>
+    ''' The scatter plots of the samples ``m/z`` and ``rt``.
+    ''' </summary>
+    ''' <param name="samples"></param>
+    ''' <param name="size$"></param>
+    ''' <param name="bg$"></param>
+    ''' <param name="margin$"></param>
+    ''' <param name="ptSize!"></param>
+    ''' <returns></returns>
+    Public Overloads Shared Function Plot(samples As IEnumerable(Of ms1_scan),
+                                          Optional size$ = "5000,4000",
+                                          Optional bg$ = "white",
+                                          Optional margin$ = Resolution2K.PaddingWithTopTitleAndRightLegend,
+                                          Optional rawfile$ = "n/a",
+                                          Optional ptSize! = 24,
+                                          Optional sampleColors$ = "darkblue,blue,skyblue,green,orange,red,darkred",
+                                          Optional mapLevels As Integer = 25,
+                                          Optional legendTitleCSS$ = CSSFont.PlotSubTitle,
+                                          Optional tickCSS$ = CSSFont.Win7Large,
+                                          Optional axisStroke$ = Stroke.AxisStroke,
+                                          Optional labelFontStyle$ = CSSFont.Win7VeryLarge) As GraphicsData
+
+        Dim theme As New Theme With {
+            .background = bg,
+            .colorSet = sampleColors,
+            .legendTitleCSS = legendTitleCSS,
+            .axisTickCSS = tickCSS,
+            .axisStroke = axisStroke,
+            .tagCSS = labelFontStyle,
+            .pointSize = ptSize,
+            .padding = margin
+        }
+        Dim app As New RawScatterPlot(samples, mapLevels, rawfile, theme)
+
+        Return app.Plot(size)
     End Function
-End Module
+End Class
