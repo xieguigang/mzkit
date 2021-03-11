@@ -442,6 +442,39 @@ Public Class frmRawFeaturesList
         End If
     End Sub
 
+    Private Sub IonTableToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles IonTableToolStripMenuItem.Click
+        If GetSelectedNodes.Count = 0 Then
+            MessageBox.Show("No chromatogram data for XIC plot, please use XIC -> Add for add data!", "No data save", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        Else
+            Using file As New SaveFileDialog With {.Filter = "Ion Table(*.csv)|*.csv", .FileName = "Ions_scan.csv"}
+                If file.ShowDialog = DialogResult.OK Then
+                    Using OutFile As StreamWriter = file.FileName.OpenWriter()
+                        Dim da03 As Tolerance = DAmethod.DeltaMass(0.3)
+                        Dim intocutoff As LowAbundanceTrimming = LowAbundanceTrimming.intoCutff
+
+                        Call OutFile.WriteLine($"ID,mz,rt,rt(min),intensity,Ion1,Ion2,Ion3,Ion4,Ion5")
+
+                        For Each peak As PeakMs2 In MyApplication.mzkitRawViewer.getSelectedIonSpectrums(Nothing)
+                            Dim id As String = If(CInt(peak.rt) = 0, $"M{CInt(peak.mz)}", $"M{CInt(peak.mz)}T{CInt(peak.rt)}")
+                            Dim mz As String = peak.mz.ToString("F4")
+                            Dim rt As String = peak.rt.ToString("F2")
+                            Dim rtmin As String = (peak.rt / 60).ToString("F1")
+                            Dim into As String = peak.intensity
+                            Dim ions As String() = peak.mzInto _
+                                .Centroid(da03, intocutoff) _
+                                .OrderByDescending(Function(m) m.intensity) _
+                                .Take(5) _
+                                .Select(Function(m) m.mz.ToString("F4")) _
+                                .ToArray
+
+                            Call OutFile.WriteLine({id, mz, rt, rtmin, into}.JoinIterates(ions).JoinBy(","))
+                        Next
+                    End Using
+                End If
+            End Using
+        End If
+    End Sub
+
     Private Sub IonSearchToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles IonSearchToolStripMenuItem.Click
         Dim currentScan = treeView1.SelectedNode?.Tag
 
