@@ -59,6 +59,12 @@ Namespace Content
 
         Const contentPattern$ = NumericPattern & "\s*pp(m|b|t)"
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function IsContentPattern(name As String) As Boolean
+            Return LCase(name).IsPattern(contentPattern)
+        End Function
+
         <Extension>
         Public Function ParseContent(text As String) As UnitValue(Of ContentUnits)
             text = LCase(r.Match(text, contentPattern, RegexICSng).Value)

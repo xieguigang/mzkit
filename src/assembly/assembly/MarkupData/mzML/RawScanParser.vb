@@ -53,6 +53,11 @@ Namespace MarkupData.mzML
         Public Const SRMSignature As String = "selected reaction monitoring chromatogram"
         Public Const SIMSignature As String = "selected ion monitoring chromatogram"
 
+        ''' <summary>
+        ''' GCMS SIM
+        ''' </summary>
+        ''' <param name="mzml"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function IsSIMData(mzml As String) As Boolean
             Return hasFileContent(mzml, SIMSignature)
@@ -72,6 +77,11 @@ Namespace MarkupData.mzML
             Return False
         End Function
 
+        ''' <summary>
+        ''' LCMSMS MRM
+        ''' </summary>
+        ''' <param name="mzml"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function IsMRMData(mzml As String) As Boolean
             Return hasFileContent(mzml, SRMSignature)

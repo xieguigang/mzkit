@@ -1,56 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::9894fe382d50eb5a740e0d2c23f393ac, pages\dockWindow\documents\frmTargetedQuantification.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class frmTargetedQuantification
-    ' 
-    '     Function: createLinear, GetContentTable, GetScans, getStandards, GetTableLevelKeys
-    '               isValidLinearRow, linearProfileNames
-    ' 
-    '     Sub: DataGridView1_CellDoubleClick, DataGridView1_CellEndEdit, DataGridView1_DragDrop, DataGridView1_DragEnter, DataGridView1_DragOver
-    '          DataGridView1_KeyDown, DeleteIonFeatureToolStripMenuItem_Click, deleteProfiles, ExportImageToolStripMenuItem_Click, ExportLinearTableToolStripMenuItem_Click
-    '          ExportTableToolStripMenuItem_Click, frmTargetedQuantification_FormClosing, frmTargetedQuantification_Load, ImportsLinearReferenceToolStripMenuItem_Click, loadLinearRaw
-    '          (+2 Overloads) loadLinears, LoadSamplesToolStripMenuItem_Click, reload, reloadProfileNames, SaveAsToolStripMenuItem_Click
-    '          saveLinearPack, saveLinearsTable, SaveToolStripMenuItem_Click, showIonPeaksTable, showQuanifyTable
-    '          showRawXTable, ToolStripComboBox2_SelectedIndexChanged, ViewLinearReportToolStripMenuItem_Click
-    ' 
-    ' /********************************************************************************/
+' Class frmTargetedQuantification
+' 
+'     Function: createLinear, GetContentTable, GetScans, getStandards, GetTableLevelKeys
+'               isValidLinearRow, linearProfileNames
+' 
+'     Sub: DataGridView1_CellDoubleClick, DataGridView1_CellEndEdit, DataGridView1_DragDrop, DataGridView1_DragEnter, DataGridView1_DragOver
+'          DataGridView1_KeyDown, DeleteIonFeatureToolStripMenuItem_Click, deleteProfiles, ExportImageToolStripMenuItem_Click, ExportLinearTableToolStripMenuItem_Click
+'          ExportTableToolStripMenuItem_Click, frmTargetedQuantification_FormClosing, frmTargetedQuantification_Load, ImportsLinearReferenceToolStripMenuItem_Click, loadLinearRaw
+'          (+2 Overloads) loadLinears, LoadSamplesToolStripMenuItem_Click, reload, reloadProfileNames, SaveAsToolStripMenuItem_Click
+'          saveLinearPack, saveLinearsTable, SaveToolStripMenuItem_Click, showIonPeaksTable, showQuanifyTable
+'          showRawXTable, ToolStripComboBox2_SelectedIndexChanged, ViewLinearReportToolStripMenuItem_Click
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Content
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.GCMS
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Data
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
@@ -63,6 +66,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.IO.MessagePack
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -125,7 +129,34 @@ Public Class frmTargetedQuantification
 
             If importsFile.ShowDialog = DialogResult.OK Then
                 Dim files As NamedValue(Of String)() = ContentTable.StripMaxCommonNames(importsFile.FileNames)
-                Dim fakeLevels = files.ToDictionary(Function(file) file.Name, Function() 0.0)
+                Dim fakeLevels As Dictionary(Of String, Double)
+
+                If files.All(Function(name) name.Value.BaseName.IsContentPattern) Then
+                    files = files _
+                        .Select(Function(file)
+                                    Return New NamedValue(Of String) With {
+                                        .Name = file.Value.BaseName,
+                                        .Value = file.Value,
+                                        .Description = file.Description
+                                    }
+                                End Function) _
+                        .ToArray
+                    fakeLevels = files _
+                        .ToDictionary(Function(file) file.Value.BaseName,
+                                      Function(file)
+                                          Return file.Value _
+                                              .BaseName _
+                                              .ParseContent _
+                                              .ScaleTo(ContentUnits.ppb) _
+                                              .Value
+                                      End Function)
+                Else
+                    fakeLevels = files _
+                        .ToDictionary(Function(file) file.Name,
+                                      Function()
+                                          Return 0.0
+                                      End Function)
+                End If
 
                 DataGridView1.Rows.Clear()
                 DataGridView1.Columns.Clear()
@@ -133,35 +164,66 @@ Public Class frmTargetedQuantification
                 DataGridView1.Columns.Add(New DataGridViewLinkColumn With {.HeaderText = "Features"})
                 DataGridView1.Columns.Add(New DataGridViewComboBoxColumn With {.HeaderText = "IS"})
 
+                Dim isGCMS As Boolean = False
+
                 For Each file As NamedValue(Of String) In files
                     Call DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.HeaderText = file.Name})
-                    Call MyApplication.host.ShowMRMIons(file.Value)
+
+                    If file.Value.ExtensionSuffix("CDF") OrElse RawScanParser.IsSIMData(file.Value) Then
+                        isGCMS = True
+                        Call MyApplication.host.ShowGCMSSIM(file.Value, isBackground:=False)
+                    Else
+                        Call MyApplication.host.ShowMRMIons(file.Value)
+                    End If
                 Next
 
-                Dim ionsLib As IonLibrary = Globals.LoadIonLibrary
-                Dim allFeatures As IonPair() = files _
-                    .Select(Function(file) file.Value) _
-                    .GetAllFeatures
-
                 Me.linearFiles = files
-                Me.allFeatures = allFeatures.Select(AddressOf ionsLib.GetDisplay).ToArray
                 Me.linearPack = New LinearPack With {
                     .reference = New Dictionary(Of String, SampleContentLevels) From {
                         {"n/a", New SampleContentLevels(fakeLevels)}
                     }
                 }
 
-                For Each ion As IonPair In allFeatures
-                    Dim refId As String = ionsLib.GetDisplay(ion)
-                    Dim i As Integer = DataGridView1.Rows.Add(refId)
-                    Dim comboxBox As DataGridViewComboBoxCell = DataGridView1.Rows(i).Cells(1)
-
-                    For Each IS_candidate As IonPair In allFeatures
-                        comboxBox.Items.Add(ionsLib.GetDisplay(IS_candidate))
-                    Next
-                Next
+                If isGCMS Then
+                    Call loadGCMSReference(files)
+                Else
+                    Call loadMRMReference(files)
+                End If
             End If
         End Using
+    End Sub
+
+    Private Sub loadGCMSReference(files As NamedValue(Of String)())
+        Dim ions As QuantifyIon()
+        Dim filePath = Globals.Settings.QuantifyIonLibfile
+
+        If filePath.FileLength > 0 Then
+            Try
+                Using file As Stream = filePath.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                    ions = MsgPackSerializer.Deserialize(Of QuantifyIon())(file)
+                End Using
+            Catch ex As Exception
+            End Try
+        End If
+    End Sub
+
+    Private Sub loadMRMReference(files As NamedValue(Of String)())
+        Dim ionsLib As IonLibrary = Globals.LoadIonLibrary
+        Dim allFeatures As IonPair() = files _
+            .Select(Function(file) file.Value) _
+            .GetAllFeatures
+
+        Me.allFeatures = allFeatures.Select(AddressOf ionsLib.GetDisplay).ToArray
+
+        For Each ion As IonPair In allFeatures
+            Dim refId As String = ionsLib.GetDisplay(ion)
+            Dim i As Integer = DataGridView1.Rows.Add(refId)
+            Dim comboxBox As DataGridViewComboBoxCell = DataGridView1.Rows(i).Cells(1)
+
+            For Each IS_candidate As IonPair In allFeatures
+                comboxBox.Items.Add(ionsLib.GetDisplay(IS_candidate))
+            Next
+        Next
     End Sub
 
     Private Function isValidLinearRow(r As DataGridViewRow) As Boolean
