@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports BioNovoGene.BioDeep.MetaDNA.Infer
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -12,6 +13,8 @@ Module ResultHandler
     Public Iterator Function ExportTable(candidates As IEnumerable(Of CandidateInfer),
                                          kegg As KEGGHandler,
                                          keggNetwork As KEGGNetwork) As IEnumerable(Of MetaDNAResult)
+
+        Dim precursorTypes As Dictionary(Of String, MzCalculator) = kegg.Calculators
 
         For Each infer As CandidateInfer In candidates
             Dim compound As Compound = kegg.GetCompound(infer.kegg_id)
@@ -41,7 +44,9 @@ Module ResultHandler
                     .KEGG_reaction = links(Scan0).Name,
                     .reaction = links(Scan0).Value,
                     .parentTrace = type.infer.parentTrace / 100,
-                    .inferSize = type.infer.inferSize
+                    .inferSize = type.infer.inferSize,
+                    .fileName = type.infer.rawFile,
+                    .mzCalc = precursorTypes(.precursorType).CalcMZ(.exactMass)
                 }
             Next
         Next

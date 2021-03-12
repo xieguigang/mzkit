@@ -31,6 +31,5 @@ Public Class MetaDNAResult
     Public Property KEGG_reaction As String
     Public Property reaction As String
     Public Property fileName As String
-    Public Property scanId As Integer
 
 End Class

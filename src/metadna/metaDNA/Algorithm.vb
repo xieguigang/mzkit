@@ -213,7 +213,8 @@ Public Class Algorithm
                         .intensity = seed.parent.intensity
                     },
                     .parentTrace = seed.parentTrace,
-                    .inferSize = seed.inferSize + 1
+                    .inferSize = seed.inferSize + 1,
+                    .rawFile = hit.file
                 }
             End If
         Next
