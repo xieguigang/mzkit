@@ -59,8 +59,9 @@ Module ResultHandler
             Dim pvalue As Vector = -data.Select(Function(c) c.pvalue).AsVector.Log(base:=10)
             Dim intensity As Vector = data.Select(Function(c) c.intensity).AsVector.Log(base:=10)
             Dim orders As Vector = data.Select(Function(c) typeOrders.Count - typeOrders.IndexOf(c.precursorType)).AsVector
+            Dim level As Vector = data.Select(Function(c) If(c.inferLevel = "Ms1", 0.5, 1.0)).AsVector
             Dim parent As Vector = data.Select(Function(c) c.parentTrace).AsVector
-            Dim scores As Double() = pvalue * intensity * (orders + 1) * parent
+            Dim scores As Double() = pvalue * intensity * (orders + 1) * parent * level
             Dim i As Integer = Which.Max(scores)
             Dim max As MetaDNAResult = data(i)
 
@@ -76,8 +77,9 @@ Module ResultHandler
             Dim data As MetaDNAResult() = feature.ToArray
             Dim pvalue As Vector = -data.Select(Function(c) c.pvalue).AsVector.Log(base:=10)
             Dim orders As Vector = data.Select(Function(c) typeOrders.Count - typeOrders.IndexOf(c.precursorType)).AsVector
+            Dim level As Vector = data.Select(Function(c) If(c.inferLevel = "Ms1", 0.5, 1.0)).AsVector
             Dim parent As Vector = data.Select(Function(c) c.parentTrace).AsVector
-            Dim scores As Double() = pvalue * (orders + 1) * parent
+            Dim scores As Double() = pvalue * (orders + 1) * parent * level
             Dim i As Integer = Which.Max(scores)
             Dim max As MetaDNAResult = data(i)
 
