@@ -102,8 +102,9 @@ MSjaccard = function(query, ref, tolerance = mzkit::tolerance(0.3, "da"), topn =
 #' @param x a MS matrix, and it should be pre-processed by \code{centroid}.
 #'
 MStop = function(x, topn = 5) {
+	x = rbind(NULL, x);
     x = x[order(x[, 2], decreasing = TRUE), ];
     x = x[, 1];
 
-    x[min(length(x), topn)];
+    x[1:min(length(x), topn)];
 }

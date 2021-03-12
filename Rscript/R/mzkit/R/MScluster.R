@@ -32,3 +32,7 @@ MScluster = function(peak_ms2, identical = 0.85, greaterThan = 0.6, tolerance = 
     # returns MS tree clusters
     bclusterTree::bcluster(peak_ms2, compares = cos);
 }
+
+BinId = function(clusterList, peak_ms2) {
+	
+}
