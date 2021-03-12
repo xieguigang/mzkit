@@ -64,13 +64,21 @@ write.mgf <- function(meta, ms2, path, verbose = TRUE) {
 #' \item \code{list} ms2 data is consist with element sequence, each element must have property \code{mz} and \code{into}.
 #' \item \code{data.frame} The data frame object should have \code{mz} and \code{into} column.
 #' }
-mgf.ion <- function(mz, rt, ms2, charge = "1", title = "Unknown name ion", ms1.into = 100) {
+mgf.ion <- function(mz, rt, ms2, 
+	charge   = "1", 
+	title    = "Unknown name ion", 
+	ms1.into = 100, 
+	uniqueId = title, 
+	rawfile  = "NA") {
+	
   lines    <- c();
   lines[1] <- "BEGIN IONS";
   lines[2] <- sprintf("PEPMASS=%s %s", mz, ms1.into);
   lines[3] <- sprintf("TITLE=%s", title);
   lines[4] <- sprintf("RTINSECONDS=%s", rt);
   lines[5] <- sprintf("CHARGE=%s%s", charge, if(charge>0) "+" else "-") ;
+  lines[6] <- sprintf("ACCESSION=%s", uniqueId);
+  lines[7] <- sprintf("RAWFILE=%s", rawfile); 
 
   ms2_type   <- ms2 %=>% GetType;
   type_enums <- primitiveTypes();
