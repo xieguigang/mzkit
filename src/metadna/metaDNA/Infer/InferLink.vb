@@ -67,5 +67,9 @@ Namespace Infer
         ''' <returns></returns>
         Public Property inferSize As Integer
 
+        Public Overrides Function ToString() As String
+            Return $"[{level.Description}] {kegg} {MyBase.ToString}"
+        End Function
+
     End Class
 End Namespace
