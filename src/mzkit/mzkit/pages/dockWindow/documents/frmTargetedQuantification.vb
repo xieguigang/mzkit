@@ -903,7 +903,9 @@ Public Class frmTargetedQuantification
                             Dim uniqueIons = file.GroupBy(Function(p) p.Name).Select(Function(p) p.First).ToArray
                             Dim quantify As QuantifyScan = .SampleQuantify(uniqueIons, PeakAreaMethods.SumAll, fileName:=file.Key)
 
-                            scans.Add(quantify)
+                            If Not quantify Is Nothing Then
+                                scans.Add(quantify)
+                            End If
                         Next
                     End With
                 Else
