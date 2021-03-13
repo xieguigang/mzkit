@@ -425,8 +425,11 @@ Public Class frmTargetedQuantification
         End If
     End Sub
 
-    Private Sub loadMRMLinears()
+    Private Sub unifyLoadLinears()
         Dim ionLib As IonLibrary = Globals.LoadIonLibrary
+        Dim quantifyIons = LoadGCMSIonLibrary.ToDictionary(Function(q) q.name)
+
+        isGCMS = linearPack.targetted = TargettedData.SIM
 
         DataGridView1.Rows.Clear()
         DataGridView1.Columns.Clear()
@@ -443,9 +446,19 @@ Public Class frmTargetedQuantification
         Dim islist As String() = linearPack.IS _
             .Select(Function(i)
                         Dim ionpairtext = i.ID.Split("/"c)
-                        Dim ionpair As New IonPair With {.precursor = ionpairtext(0), .product = ionpairtext(1)}
+                        Dim name As String
 
-                        Return ionLib.GetDisplay(ionpair)
+                        If isGCMS Then
+                            name = quantifyIons.GetIon(i.ID).name
+                        Else
+                            name = New IonPair With {
+                                .precursor = ionpairtext(0),
+                                .product = ionpairtext(1)
+                            } _
+                            .DoCall(AddressOf ionLib.GetDisplay)
+                        End If
+
+                        Return name
                     End Function) _
             .ToArray
 
@@ -453,18 +466,40 @@ Public Class frmTargetedQuantification
 
         For Each linear As KeyValuePair(Of String, SampleContentLevels) In linearPack.reference
             Dim ionpairtext = linear.Key.Split("/"c)
-            Dim ionpair As New IonPair With {.precursor = ionpairtext(0), .product = ionpairtext(1)}
-            Dim ionID As String = ionLib.GetDisplay(ionpair)
-            Dim [is] As [IS] = linearPack.GetLinear(linear.Key).IS
+            Dim ionID As String
+            Dim [is] As [IS] = linearPack.GetLinear(linear.Key)?.IS
+
+            If [is] Is Nothing Then
+                [is] = New [IS]
+            End If
+
+            If isGCMS Then
+                ionID = quantifyIons.GetIon(linear.Key).name
+            Else
+                ionID = New IonPair With {
+                    .precursor = ionpairtext(0),
+                    .product = ionpairtext(1)
+                } _
+                .DoCall(AddressOf ionLib.GetDisplay)
+            End If
 
             If Not [is].ID.StringEmpty Then
-                ionpairtext = [is].ID.Split("/"c)
-                ionpair = New IonPair With {.precursor = ionpairtext(0), .product = ionpairtext(1)}
-                [is].name = ionLib.GetDisplay(ionpair)
+                If isGCMS Then
+                    [is].name = quantifyIons.GetIon([is].ID).name
+                Else
+                    ionpairtext = [is].ID.Split("/"c)
+                    [is].name = New IonPair With {
+                        .precursor = ionpairtext(0),
+                        .product = ionpairtext(1)
+                    } _
+                    .DoCall(AddressOf ionLib.GetDisplay)
+                End If
             End If
 
             Dim i As Integer = DataGridView1.Rows.Add(ionID)
             Dim IScandidate As DataGridViewComboBoxCell = DataGridView1.Rows(i).Cells(1)
+
+            IScandidate.Items.Add("")
 
             For Each id As String In islist
                 IScandidate.Items.Add(id)
@@ -493,7 +528,8 @@ Public Class frmTargetedQuantification
         Dim file As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) & $"/mzkit/linears/{profileName}.linearPack"
 
         linearPack = LinearPack.OpenFile(file)
-        loadMRMLinears()
+
+        Call unifyLoadLinears()
     End Sub
 
     Private Sub reload(sender As Object, e As EventArgs) Handles ToolStripButton3.Click
@@ -759,11 +795,11 @@ Public Class frmTargetedQuantification
 
         refPoints = chr.ToArray
 
-        If chr = 0 Then
+        If chr = 0 OrElse chr.All(Function(p) p.Name <> id) Then
             Call MyApplication.host.showStatusMessage($"No sample data was found of ion '{id}'!", My.Resources.StatusAnnotations_Warning_32xLG_color)
             Return Nothing
         Else
-            Return algorithm.ToLinears(chr).First
+            Return algorithm.ToLinears(chr).FirstOrDefault
         End If
     End Function
 
@@ -963,7 +999,7 @@ Public Class frmTargetedQuantification
             cbProfileNameSelector.Text = path.BaseName
             linearPack = LinearPack.OpenFile(path)
 
-            Call loadMRMLinears()
+            Call unifyLoadLinears()
         End If
     End Sub
 

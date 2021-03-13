@@ -3,6 +3,12 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.GCMS
 
 Public Module GCMSQuantifyIon
 
+    ''' <summary>
+    ''' 这个函数不会返回空值
+    ''' </summary>
+    ''' <param name="ions"></param>
+    ''' <param name="id"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function GetIon(ions As Dictionary(Of String, QuantifyIon), id As String) As QuantifyIon
         Dim ion As QuantifyIon = ions.TryGetValue(id)
