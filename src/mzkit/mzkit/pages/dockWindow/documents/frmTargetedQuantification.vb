@@ -222,7 +222,7 @@ Public Class frmTargetedQuantification
 
     Private Sub loadGCMSReference(files As NamedValue(Of String)(), directMapName As Boolean)
         Dim ions As QuantifyIon() = LoadGCMSIonLibrary()
-        Dim extract As New SIMIonExtract(ions, {5, 15}, Tolerance.DeltaMass(0.3), 10, 0.65)
+        Dim extract As New SIMIonExtract(ions, {5, 15}, Tolerance.DeltaMass(0.3), 30, 0.65)
         Dim allFeatures = files _
             .Select(Function(file) GetGCMSFeatures(file, extract)) _
             .IteratesALL _
@@ -668,7 +668,7 @@ Public Class frmTargetedQuantification
             Dim ionLib = LoadGCMSIonLibrary.ToDictionary(Function(a) a.name)
             Dim quantifyIon = ionLib.TryGetValue(id)
             Dim quantifyIS = ionLib.TryGetValue(isid)
-            Dim SIMIonExtract As New SIMIonExtract(ionLib.Values, {5, 15}, Tolerance.DeltaMass(0.3), 10, 0.65)
+            Dim SIMIonExtract As New SIMIonExtract(ionLib.Values, {5, 15}, Tolerance.DeltaMass(0.3), 30, 0.65)
 
             If linearFiles.IsNullOrEmpty Then
                 Call linearPack.peakSamples _
