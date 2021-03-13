@@ -86,13 +86,23 @@ Namespace GCMS.QuantifyAnalysis
         Public Function FindIon(ROI As ROI) As QuantifyIon
             Dim rtmin As Vector = ions.Select(Function(i) stdNum.Abs(i.rt.Min - ROI.time.Min)).AsVector
             Dim rtmax As Vector = ions.Select(Function(i) stdNum.Abs(i.rt.Max - ROI.time.Max)).AsVector
-            Dim zero As Vector = 0
+            Dim zero As Vector = Integer.MaxValue
+            Dim ion As QuantifyIon
 
             rtmin(rtmin > rtshift) = zero
             rtmax(rtmax > rtshift) = zero
 
-            Dim orders = 1 / rtmin + 1 / rtmax
-            Dim ion As QuantifyIon = ions(Which.Max(orders))
+            If ((rtmin = 0.0) & (rtmax = 0.0)).Sum = ions.Length Then
+                ' 不存在
+                ion = New QuantifyIon With {
+                    .id = $"{ROI.time.Min}/{ROI.time.Max}",
+                    .rt = ROI.time,
+                    .ms = {},
+                    .name = .id
+                }
+            Else
+                ion = ions(Which.Max(1 / rtmin + 1 / rtmax))
+            End If
 
             Return ion
         End Function
