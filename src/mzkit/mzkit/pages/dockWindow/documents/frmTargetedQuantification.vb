@@ -539,6 +539,11 @@ Public Class frmTargetedQuantification
         Next
     End Sub
 
+    ''' <summary>
+    ''' unify save linear pack data
+    ''' </summary>
+    ''' <param name="title"></param>
+    ''' <param name="file"></param>
     Private Sub saveLinearPack(title As String, file As String)
         Dim ref As Standards() = unifyGetStandards.ToArray
         Dim linears As New List(Of StandardCurve)
@@ -546,7 +551,7 @@ Public Class frmTargetedQuantification
         Dim refPoints As New List(Of TargetPeakPoint)
         Dim refLevels As New Dictionary(Of String, SampleContentLevels)
         Dim ionLib As IonLibrary = Globals.LoadIonLibrary
-        Dim ion As IonPair
+        Dim GCMSIons = LoadGCMSIonLibrary.ToDictionary(Function(i) i.name)
 
         For Each i As Standards In ref
             refLevels(i.ID) = New SampleContentLevels(i.C, directMap:=False)
@@ -564,21 +569,53 @@ Public Class frmTargetedQuantification
             .Select(Function(pg) pg.First) _
             .AsList
 
-        For Each point As TargetPeakPoint In refPoints
-            ion = ionLib.GetIonByKey(point.Name)
-            point.Name = $"{ion.precursor}/{ion.product}"
-        Next
+        If isGCMS Then
+            Dim ion As QuantifyIon
 
-        For Each line As StandardCurve In linears
-            ion = ionLib.GetIonByKey(line.name)
-            line.name = $"{ion.precursor}/{ion.product}"
+            For Each point As TargetPeakPoint In refPoints
+                ion = GCMSIons.TryGetValue(point.Name)
 
-            If Not line.IS Is Nothing AndAlso Not line.IS.ID.StringEmpty Then
-                ion = ionLib.GetIonByKey(line.IS.ID)
-                line.IS.ID = $"{ion.precursor}/{ion.product}"
-                line.IS.name = line.IS.ID
-            End If
-        Next
+                If Not ion Is Nothing Then
+                    point.Name = $"{ion.rt.Min}/{ion.rt.Max}"
+                End If
+            Next
+
+            For Each line As StandardCurve In linears
+                ion = GCMSIons.TryGetValue(line.name)
+
+                If Not ion Is Nothing Then
+                    line.name = $"{ion.rt.Min}/{ion.rt.Max}"
+                End If
+
+                If Not line.IS Is Nothing AndAlso Not line.IS.ID.StringEmpty Then
+                    ion = GCMSIons.TryGetValue(line.IS.ID)
+
+                    If Not ion Is Nothing Then
+                        line.IS.ID = $"{ion.rt.Min}/{ion.rt.Max}"
+                    End If
+
+                    line.IS.name = line.IS.ID
+                End If
+            Next
+        Else
+            Dim ion As IonPair
+
+            For Each point As TargetPeakPoint In refPoints
+                ion = ionLib.GetIonByKey(point.Name)
+                point.Name = $"{ion.precursor}/{ion.product}"
+            Next
+
+            For Each line As StandardCurve In linears
+                ion = ionLib.GetIonByKey(line.name)
+                line.name = $"{ion.precursor}/{ion.product}"
+
+                If Not line.IS Is Nothing AndAlso Not line.IS.ID.StringEmpty Then
+                    ion = ionLib.GetIonByKey(line.IS.ID)
+                    line.IS.ID = $"{ion.precursor}/{ion.product}"
+                    line.IS.name = line.IS.ID
+                End If
+            Next
+        End If
 
         Dim linearPack As New LinearPack With {
             .linears = linears.ToArray,
@@ -598,7 +635,8 @@ Public Class frmTargetedQuantification
                                 .CIS = 5
                             }
                         End Function) _
-                .ToArray
+                .ToArray,
+            .targetted = If(isGCMS, TargettedData.SIM, TargettedData.MRM)
         }
 
         Call linearPack.Write(file)
