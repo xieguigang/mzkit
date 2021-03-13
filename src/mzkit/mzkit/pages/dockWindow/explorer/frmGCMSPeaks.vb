@@ -77,7 +77,7 @@ Public Class frmGCMSPeaks
         Return Me.gcmsRaw.TryGetValue(filepath.GetFullPath)?.gcms
     End Function
 
-    Public Sub LoadRawExplorer(gcmsRaw As Raw)
+    Public Sub LoadRawExplorer(gcmsRaw As Raw, showDocument As Boolean)
         Dim TICRoot = Win7StyleTreeView1.Nodes.Add(gcmsRaw.fileName.FileName)
         Dim CDFExplorer As New frmGCMS_CDFExplorer
         Dim TIC = gcmsRaw.GetTIC
@@ -85,7 +85,7 @@ Public Class frmGCMSPeaks
         TICRoot.Tag = gcmsRaw
 
         CDFExplorer.Show(DockPanel)
-        CDFExplorer.DockState = DockState.Document
+        CDFExplorer.DockState = If(showDocument, DockState.Document, DockState.Hidden)
         CDFExplorer.loadCDF(gcmsRaw)
 
         Me.gcmsRaw(gcmsRaw.fileName.GetFullPath) = CDFExplorer
@@ -178,7 +178,7 @@ Public Class frmGCMSPeaks
             If file.ShowDialog = DialogResult.OK Then
                 For Each path As String In file.FileNames
                     If gcmsRaw.Count = 0 Then
-                        Call MyApplication.host.ShowGCMSSIM(path, isBackground:=False)
+                        Call MyApplication.host.ShowGCMSSIM(path, isBackground:=False, showExplorer:=False)
                     Else
                         ' work in background
                         Dim taskList As TaskListWindow = MyApplication.host.taskWin
@@ -189,7 +189,7 @@ Public Class frmGCMSPeaks
                         Call MyApplication.TaskQueue.AddToQueue(
                             Sub()
                                 Call task.Running()
-                                Call MyApplication.host.ShowGCMSSIM(path, isBackground:=True)
+                                Call MyApplication.host.ShowGCMSSIM(path, isBackground:=True, showExplorer:=False)
                                 Call task.Finish()
                             End Sub)
                     End If

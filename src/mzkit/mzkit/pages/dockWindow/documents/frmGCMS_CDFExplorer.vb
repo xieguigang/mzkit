@@ -53,7 +53,6 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Imaging
-Imports mzkit.My
 Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class frmGCMS_CDFExplorer

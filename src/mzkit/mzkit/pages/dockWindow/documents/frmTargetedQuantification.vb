@@ -179,7 +179,7 @@ Public Class frmTargetedQuantification
 
                     If file.Value.ExtensionSuffix("CDF") OrElse RawScanParser.IsSIMData(file.Value) Then
                         isGCMS = True
-                        Call MyApplication.host.ShowGCMSSIM(file.Value, isBackground:=False)
+                        Call MyApplication.host.ShowGCMSSIM(file.Value, isBackground:=False, showExplorer:=False)
                     Else
                         Call MyApplication.host.ShowMRMIons(file.Value)
                     End If
@@ -669,7 +669,7 @@ Public Class frmTargetedQuantification
                 ' add files to viewer
                 For Each file As NamedValue(Of String) In files
                     Call MyApplication.host.showStatusMessage($"open raw data file '{file.Value}'...")
-                    Call MyApplication.host.OpenFile(file.Value)
+                    Call MyApplication.host.OpenFile(file.Value, showDocument:=False)
                     Call Application.DoEvents()
                 Next
 

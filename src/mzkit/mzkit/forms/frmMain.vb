@@ -121,13 +121,13 @@ Public Class frmMain
         End If
     End Sub
 
-    Public Sub ShowGCMSSIM(file As String, isBackground As Boolean)
+    Public Sub ShowGCMSSIM(file As String, isBackground As Boolean, showExplorer As Boolean)
         If Not file.FileExists Then
             Call showStatusMessage($"missing raw data file '{file.GetFullPath}'!", My.Resources.StatusAnnotations_Warning_32xLG_color)
         ElseIf Not GCMSPeaks.ContainsRaw(file) Then
             Dim raw = frmGCMS_CDFExplorer.loadCDF(file, isBackground)
 
-            Call GCMSPeaks.Invoke(Sub() GCMSPeaks.LoadRawExplorer(raw))
+            Call GCMSPeaks.Invoke(Sub() GCMSPeaks.LoadRawExplorer(raw, showDocument:=showExplorer))
             Call VisualStudio.Dock(GCMSPeaks, DockState.DockLeft)
         Else
             GCMSPeaks.ShowRaw(file)
@@ -139,12 +139,12 @@ Public Class frmMain
             .Filter = "Raw Data|*.mzXML;*.mzML|Image mzML(*.imzML)|*.imzML|GC-MS Targeted(*.cdf)|*.cdf;*.netcdf|GC-MS / LC-MS/MS Targeted(*.mzML)|*.mzML|R# Script(*.R)|*.R"
         }
             If file.ShowDialog = DialogResult.OK Then
-                Call OpenFile(file.FileName)
+                Call OpenFile(file.FileName, showDocument:=True)
             End If
         End Using
     End Sub
 
-    Public Sub OpenFile(fileName As String)
+    Public Sub OpenFile(fileName As String, showDocument As Boolean)
         If fileName.ExtensionSuffix("R") Then
             Call fileExplorer.AddScript(fileName.GetFullPath)
             Call openRscript(fileName)
@@ -153,9 +153,9 @@ Public Class frmMain
         ElseIf fileName.ExtensionSuffix("mzml") AndAlso RawScanParser.IsMRMData(fileName) Then
             Call ShowMRMIons(fileName)
         ElseIf fileName.ExtensionSuffix("mzml") AndAlso RawScanParser.IsSIMData(fileName) Then
-            Call ShowGCMSSIM(fileName, isBackground:=False)
+            Call ShowGCMSSIM(fileName, isBackground:=False, showExplorer:=showDocument)
         ElseIf fileName.ExtensionSuffix("cdf", "netcdf") Then
-            Call ShowGCMSSIM(fileName, isBackground:=False)
+            Call ShowGCMSSIM(fileName, isBackground:=False, showExplorer:=showDocument)
         Else
             Call fileExplorer.ImportsRaw(fileName)
         End If
