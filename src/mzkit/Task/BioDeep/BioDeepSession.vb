@@ -20,10 +20,9 @@ Public Class BioDeepSession
     ''' <returns></returns>
     Public Function CheckSession() As Boolean
         Dim url$ = "http://my.biodeep.cn/services/ping.vbs"
-        Dim result As Boolean = url _
-            .GET(headers:=headerProvider) _
-            .DoCall(AddressOf MessageParser.ParseMessage) _
-            .success
+        Dim text As String = url.GET(headers:=headerProvider)
+        Dim json As JsonObject = MessageParser.ParseMessage(text)
+        Dim result As Boolean = json.success
 
         Return result
     End Function
