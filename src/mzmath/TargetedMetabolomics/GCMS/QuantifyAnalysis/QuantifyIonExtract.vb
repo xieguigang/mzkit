@@ -50,6 +50,8 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Data.IO.netCDF
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports stdNum = System.Math
@@ -109,32 +111,39 @@ Namespace GCMS.QuantifyAnalysis
             Dim rtmin As Vector = ROI.Select(Function(r) r.time.Min).ToArray
             Dim rtmax As Vector = ROI.Select(Function(r) r.time.Max).ToArray
             Dim ms As ms2()() = ROI.Select(Function(r) GetMsScan(sample, r.time)).ToArray
-            Dim feature As ROI
+            Dim peak As New Value(Of TargetPeakPoint)
 
             For Each ion As QuantifyIon In ions
-                Dim rtminScore As Vector = (ion.rt.Min - rtmin).Abs.Select(Function(dt) If(dt >= rtshift, 99999999, dt)).AsVector
-                Dim rtmaxScore As Vector = (ion.rt.Max - rtmax).Abs.Select(Function(dt) If(dt >= rtshift, 99999999, dt)).AsVector
-                Dim cos As Vector = ms _
-                    .Select(Function(spectra)
-                                With GlobalAlignment.TwoDirectionSSM(ion.ms, spectra, dadot3)
-                                    Return stdNum.Min(.forward, .reverse)
-                                End With
-                            End Function) _
-                    .ToArray
-
-                rtminScore = rtminScore.Max / rtminScore - 1
-                rtmaxScore = rtmaxScore.Max / rtmaxScore - 1
-
-                Dim scores As Vector = (rtminScore + rtmaxScore) * cos
-
-                If scores.All(Function(xi) xi = 0.0) Then
-                    Continue For
-                Else
-                    feature = ROI(Which.Max(scores))
+                If Not peak = GetTargetPeak(sample, ROI, ms, rtmin, rtmax, ion) Is Nothing Then
+                    Yield CType(peak, TargetPeakPoint)
                 End If
-
-                Yield GetPeak(ion.id, feature.time, sample)
             Next
+        End Function
+
+        Private Function GetTargetPeak(sample As Raw, ROI As ROI(), MS As ms2()(), rtmin As Vector, rtmax As Vector, ion As QuantifyIon) As TargetPeakPoint
+            Dim rtminScore As Vector = (ion.rt.Min - rtmin).Abs.Select(Function(dt) If(dt >= rtshift, 99999999, dt)).AsVector
+            Dim rtmaxScore As Vector = (ion.rt.Max - rtmax).Abs.Select(Function(dt) If(dt >= rtshift, 99999999, dt)).AsVector
+            Dim feature As ROI
+            Dim cos As Vector = MS _
+                .Select(Function(spectra)
+                            With GlobalAlignment.TwoDirectionSSM(ion.ms, spectra, dadot3)
+                                Return stdNum.Min(.forward, .reverse)
+                            End With
+                        End Function) _
+                .ToArray
+
+            rtminScore = rtminScore.Max / rtminScore - 1
+            rtmaxScore = rtmaxScore.Max / rtmaxScore - 1
+
+            Dim scores As Vector = (rtminScore + rtmaxScore) * cos
+
+            If scores.All(Function(xi) xi = 0.0) Then
+                Return Nothing
+            Else
+                feature = ROI(Which.Max(scores))
+            End If
+
+            Return GetPeak(ion.id, feature.time, sample)
         End Function
 
         Protected Function GetMsScan(sample As Raw, rt As DoubleRange) As ms2()
@@ -155,8 +164,27 @@ Namespace GCMS.QuantifyAnalysis
 
         Protected MustOverride Function GetPeak(ion_id As String, rt As DoubleRange, sample As Raw) As TargetPeakPoint
 
-        Public Shared Iterator Function LoadSamples(files As IEnumerable(Of NamedValue(Of String)), qIon As QuantifyIon) As IEnumerable(Of TargetPeakPoint)
+        Public Iterator Function LoadSamples(files As IEnumerable(Of NamedValue(Of String)), qIon As QuantifyIon) As IEnumerable(Of TargetPeakPoint)
+            Dim peakTicks As New Value(Of TargetPeakPoint)
+            Dim raw As Raw
 
+            For Each file As NamedValue(Of String) In files
+                If file.Value.ExtensionSuffix("cdf") Then
+                    raw = netCDFReader.Open(file).ReadData(showSummary:=False)
+                Else
+                    raw = mzMLReader.LoadFile(file)
+                End If
+
+                ' get all features
+                Dim ROI As ROI() = raw.DoCall(AddressOf GetAllFeatures).ToArray
+                Dim rtmin As Vector = ROI.Select(Function(r) r.time.Min).ToArray
+                Dim rtmax As Vector = ROI.Select(Function(r) r.time.Max).ToArray
+                Dim ms As ms2()() = ROI.Select(Function(r) GetMsScan(raw, r.time)).ToArray
+
+                If Not peakTicks = GetTargetPeak(raw, ROI, ms, rtmin, rtmax, qIon) Is Nothing Then
+                    Yield CType(peakTicks, TargetPeakPoint)
+                End If
+            Next
         End Function
     End Class
 End Namespace
