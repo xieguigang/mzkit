@@ -96,6 +96,10 @@ Public Class frmQuantifyIons
         End If
     End Sub
 
+    Protected Overrides Sub SaveDocument()
+        Call Save(FilePath)
+    End Sub
+
     Public Function Save(path As String, encoding As Encoding) As Boolean Implements ISaveHandle.Save
         Dim ions As New List(Of QuantifyIon)
         Dim row As DataGridViewRow

@@ -93,6 +93,9 @@ Public Class frmTargetedQuantification
 
         TabText = "Targeted Quantification"
 
+        CopyFullPathToolStripMenuItem.Enabled = False
+        OpenContainingFolderToolStripMenuItem.Enabled = False
+
         Call reloadProfileNames()
         Call ApplyVsTheme(ToolStrip1, ToolStrip2, ContextMenuStrip1, ContextMenuStrip2, ContextMenuStrip3)
     End Sub
@@ -381,7 +384,7 @@ Public Class frmTargetedQuantification
         Next
     End Function
 
-    Private Sub SaveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveToolStripMenuItem.Click, ToolStripButton1.Click
+    Protected Overrides Sub SaveDocument() Handles SaveToolStripMenuItem.Click, ToolStripButton1.Click
         ' Dim ref As New List(Of Standards)(getStandards)
         Dim profileName As String = cbProfileNameSelector.Text
 

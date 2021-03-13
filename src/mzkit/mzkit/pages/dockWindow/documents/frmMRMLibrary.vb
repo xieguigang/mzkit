@@ -100,6 +100,10 @@ Public Class frmMRMLibrary
         Next
     End Sub
 
+    Protected Overrides Sub SaveDocument()
+        Call Save(FilePath)
+    End Sub
+
     Public Function Save(path As String, encoding As Encoding) As Boolean Implements ISaveHandle.Save
         Dim ions As New List(Of IonPair)
         Dim row As DataGridViewRow
