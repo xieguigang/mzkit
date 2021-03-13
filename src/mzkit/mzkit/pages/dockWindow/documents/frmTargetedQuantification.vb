@@ -193,15 +193,15 @@ Public Class frmTargetedQuantification
                 }
 
                 If isGCMS Then
-                    Call loadGCMSReference(files)
+                    Call loadGCMSReference(files, directMapName)
                 Else
-                    Call loadMRMReference(files)
+                    Call loadMRMReference(files, directMapName)
                 End If
             End If
         End Using
     End Sub
 
-    Private Sub loadGCMSReference(files As NamedValue(Of String)())
+    Private Sub loadGCMSReference(files As NamedValue(Of String)(), directMapName As Boolean)
         Dim ions As QuantifyIon()
         Dim filePath = Globals.Settings.QuantifyIonLibfile
 
@@ -226,6 +226,7 @@ Public Class frmTargetedQuantification
             .IteratesALL _
             .GroupBy(Function(p) p.rt, Function(x, y) stdNum.Abs(x - y) <= 15) _
             .ToArray
+        Dim contentLevels = linearPack.reference("n/a")
 
         Me.allFeatures = allFeatures.Select(Function(p) p.name).ToArray
 
@@ -237,6 +238,14 @@ Public Class frmTargetedQuantification
             For Each IS_candidate In allFeatures
                 comboxBox.Items.Add(extract.FindIon(IS_candidate.First).name)
             Next
+
+            If directMapName Then
+                Dim row As DataGridViewRow = DataGridView1.Rows(i)
+
+                For index As Integer = 2 To DataGridView1.Columns.Count - 1
+                    row.Cells(index).Value = contentLevels.Content(DataGridView1.Columns(index).HeaderText)
+                Next
+            End If
         Next
     End Sub
 
@@ -252,11 +261,12 @@ Public Class frmTargetedQuantification
         Return extract.GetAllFeatures(gcms)
     End Function
 
-    Private Sub loadMRMReference(files As NamedValue(Of String)())
+    Private Sub loadMRMReference(files As NamedValue(Of String)(), directMapName As Boolean)
         Dim ionsLib As IonLibrary = Globals.LoadIonLibrary
         Dim allFeatures As IonPair() = files _
             .Select(Function(file) file.Value) _
             .GetAllFeatures
+        Dim contentLevels = linearPack.reference("n/a")
 
         Me.allFeatures = allFeatures.Select(AddressOf ionsLib.GetDisplay).ToArray
 
@@ -268,6 +278,14 @@ Public Class frmTargetedQuantification
             For Each IS_candidate As IonPair In allFeatures
                 comboxBox.Items.Add(ionsLib.GetDisplay(IS_candidate))
             Next
+
+            If directMapName Then
+                Dim row As DataGridViewRow = DataGridView1.Rows(i)
+
+                For index As Integer = 2 To DataGridView1.Columns.Count - 1
+                    row.Cells(index).Value = contentLevels.Content(DataGridView1.Columns(index).HeaderText)
+                Next
+            End If
         Next
     End Sub
 
