@@ -1090,4 +1090,8 @@ Public Class frmTargetedQuantification
 
         Call VisualStudio.ShowDocument(Of frmHtmlViewer)().LoadHtml(tempfile)
     End Sub
+
+    Private Sub frmTargetedQuantification_Closed(sender As Object, e As EventArgs) Handles Me.Closed
+        MyApplication.ribbon.TargetedContex.ContextAvailable = ContextAvailability.NotAvailable
+    End Sub
 End Class

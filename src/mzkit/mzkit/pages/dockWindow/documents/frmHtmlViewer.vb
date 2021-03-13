@@ -46,6 +46,8 @@ Imports WkHtmlToPdf.Arguments
 
 Public Class frmHtmlViewer
 
+    Dim url As String
+
     Public Sub PDF(filepath As String)
         Dim env As New PdfConvertEnvironment With {
             .Debug = False,
@@ -60,10 +62,25 @@ Public Class frmHtmlViewer
     End Sub
 
     Public Sub LoadHtml(url As String)
-        Call WebBrowser1.Navigate(url)
+        Me.WebBrowser1.Navigate(url)
+        Me.url = url
     End Sub
 
-    Private Sub SavePDFToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SavePDFToolStripMenuItem.Click
+    Protected Overrides Sub CopyFullPath()
+        Call Clipboard.SetText(url)
+    End Sub
+
+    Protected Overrides Sub OpenContainingFolder()
+        Try
+            If url.FileExists Then
+                Call Process.Start(url.ParentPath)
+            End If
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Protected Overrides Sub SaveDocument() Handles SavePDFToolStripMenuItem.Click
         Using file As New SaveFileDialog With {
             .Title = "Export page as pdf file.",
             .Filter = "PDF file(*.pdf)|*.pdf"
