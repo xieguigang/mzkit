@@ -534,6 +534,11 @@ Public Class frmTargetedQuantification
         End If
 
         standardCurve = createLinear(DataGridView1.Rows(e.RowIndex))
+
+        If standardCurve Is Nothing Then
+            Return
+        End If
+
         PictureBox1.BackgroundImage = standardCurve _
             .StandardCurves(
                 size:="1920,1200",
@@ -571,8 +576,12 @@ Public Class frmTargetedQuantification
 
         For Each row As DataGridViewRow In DataGridView1.Rows
             If isValidLinearRow(row) Then
-                linears.Add(createLinear(row, points))
-                refPoints.AddRange(points)
+                Dim line = createLinear(row, points)
+
+                If Not line Is Nothing Then
+                    linears.Add(line)
+                    refPoints.AddRange(points)
+                End If
             End If
         Next
 
@@ -750,7 +759,12 @@ Public Class frmTargetedQuantification
 
         refPoints = chr.ToArray
 
-        Return algorithm.ToLinears(chr).First
+        If chr = 0 Then
+            Call MyApplication.host.showStatusMessage($"No sample data was found of ion '{id}'!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            Return Nothing
+        Else
+            Return algorithm.ToLinears(chr).First
+        End If
     End Function
 
     Private Sub ExportImageToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportImageToolStripMenuItem.Click
@@ -821,7 +835,7 @@ Public Class frmTargetedQuantification
                         End If
                     Next
 
-                    With linears.ToArray
+                    With linears.Where(Function(l) Not l Is Nothing).ToArray
                         For Each file In points.GroupBy(Function(p) p.SampleName)
                             scans.Add(.SampleQuantify(file.ToArray, PeakAreaMethods.SumAll, fileName:=file.Key))
                         Next
