@@ -31,3 +31,19 @@ This open source mass spectrometry data toolkit is developed at the BioDeep R&D 
 + ``new`` View MRM/GCMS SIM data files
 + ``enhancement`` Improvements of the R# scripting editor
 + ``enhancement`` Update R# interpreter engine
+
+## ``1.32.7743.6345`` Mar 14, 2021
+
+>
+
++ ``enhancement`` improvements of the raw data charting plot styles
++ ``new`` add peak annotation result for MS matrix viewer
++ ``new`` targetted quantification linear modelling and sample quantify evaluation (required login BioDeep web services)
++ ``enhancement`` improvements of the GCMS/LC-MSMS targetted file explorer 
++ ``enhancement`` improvements of the GCMS feature ROI explorer
++ ``enhancement`` improvements of the document page model
++ ``fixed`` fixed of R# script editor syntax highlight problem
++ ``update`` update to latest mzkit R# package
++ ``new`` add 3D plot of LC-MSMS MRM ion TIC overlaps plot
++ ``enhancement`` add background task progress display on the status bar
++ ``new`` add demo scripts into the file explorer
