@@ -230,7 +230,7 @@ Public Class frmTargetedQuantification
             .ToArray
         Dim contentLevels = linearPack.reference("n/a")
 
-        Me.allFeatures = allFeatures.Select(Function(p) p.name).ToArray
+        Me.allFeatures = allFeatures.Select(Function(p) $"{p.value.First.time.Min}/{p.value.First.time.Max}").ToArray
 
         For Each group As NamedCollection(Of ROI) In allFeatures
             Dim ion As QuantifyIon = extract.FindIon(group.First)
@@ -388,8 +388,11 @@ Public Class frmTargetedQuantification
 
         Dim file As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) & $"/mzkit/linears/{profileName}.linearPack"
 
-        Call saveLinearPack(profileName, file)
-        Call reloadProfileNames()
+        Call frmTaskProgress.RunAction(
+            Sub()
+                Call Me.Invoke(Sub() Call saveLinearPack(profileName, file))
+                Call Me.Invoke(Sub() Call reloadProfileNames())
+            End Sub, "Save Linear Reference Models", "...")
 
         Call MyApplication.host.showStatusMessage($"linear model profile '{profileName}' saved!")
     End Sub
@@ -397,7 +400,10 @@ Public Class frmTargetedQuantification
     Private Sub SaveAsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveAsToolStripMenuItem.Click
         Using savefile As New SaveFileDialog With {.Title = "Select location for save linear pack data.", .Filter = "Mzkit Linear Models(*.linearPack)|*.linearPack"}
             If savefile.ShowDialog = DialogResult.OK Then
-                Call saveLinearPack(savefile.FileName.BaseName, savefile.FileName)
+                Call frmTaskProgress.RunAction(
+                    Sub()
+                        Call Me.Invoke(Sub() saveLinearPack(savefile.FileName.BaseName, savefile.FileName))
+                    End Sub, "Save Linear Reference Models", "...")
             End If
         End Using
     End Sub
@@ -627,9 +633,12 @@ Public Class frmTargetedQuantification
             .reference = refLevels,
             .[IS] = allFeatures _
                 .Select(Function(name)
-                            Dim nameIon = ionLib.GetIonByKey(name)
-
-                            name = $"{nameIon.precursor}/{nameIon.product}"
+                            If isGCMS Then
+                                ' do nothing
+                            Else
+                                Dim nameIon As IonPair = ionLib.GetIonByKey(name)
+                                name = $"{nameIon.precursor}/{nameIon.product}"
+                            End If
 
                             Return New [IS] With {
                                 .ID = name,

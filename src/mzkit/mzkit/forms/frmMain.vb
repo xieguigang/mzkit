@@ -621,6 +621,11 @@ Public Class frmMain
     '    AddHandler _uiCollectionChangedEvent.ChangedEvent, AddressOf _uiCollectionChangedEvent_ChangedEvent
     'End Sub
 
+    ''' <summary>
+    ''' 线程操作安全的消息提示函数
+    ''' </summary>
+    ''' <param name="message"></param>
+    ''' <param name="icon"></param>
     Sub showStatusMessage(message As String, Optional icon As Image = Nothing)
         MyApplication.host.Invoke(
             Sub()

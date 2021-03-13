@@ -120,4 +120,22 @@ Public Class frmTaskProgress
 
         Return tmp
     End Function
+
+    Public Shared Sub RunAction(run As Action, Optional title$ = "Loading data...", Optional info$ = "Open a large raw data file...")
+        Dim progress As New frmTaskProgress
+
+        Call New Thread(Sub()
+                            Call Thread.Sleep(100)
+
+                            Call progress.ShowProgressTitle(title)
+                            Call progress.ShowProgressDetails(info)
+
+                            Call run()
+
+                            Call progress.Invoke(Sub() progress.Close())
+                        End Sub) _
+             .Start()
+
+        Call progress.ShowDialog()
+    End Sub
 End Class
