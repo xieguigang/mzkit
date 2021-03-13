@@ -218,8 +218,9 @@ Namespace LinearQuantitative.Data
             Dim github As New attribute With {.name = "github", .type = CDFDataTypes.CHAR, .value = "https://github.com/xieguigang/mzkit"}
             Dim linears As New attribute With {.name = "linears", .type = CDFDataTypes.INT, .value = pack.linears.Length}
             Dim peaks As New attribute With {.name = "peaks", .type = CDFDataTypes.INT, .value = pack.peakSamples.Length}
+            Dim type As New attribute With {.name = "targetted", .type = CDFDataTypes.CHAR, .value = pack.targetted.ToString}
 
-            Call file.GlobalAttributes(title, time, github, linears, peaks)
+            Call file.GlobalAttributes(title, time, github, linears, peaks, type)
         End Sub
     End Module
 End Namespace

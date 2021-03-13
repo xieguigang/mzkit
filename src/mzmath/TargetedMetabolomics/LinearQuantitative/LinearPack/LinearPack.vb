@@ -64,6 +64,7 @@ Namespace LinearQuantitative.Data
         Public Property time As Date
         Public Property reference As Dictionary(Of String, SampleContentLevels)
         Public Property [IS] As [IS]()
+        Public Property targetted As TargettedData
 
         Public Function GetLinear(id As String) As StandardCurve
             Return linears.Where(Function(line) line.name = id).FirstOrDefault

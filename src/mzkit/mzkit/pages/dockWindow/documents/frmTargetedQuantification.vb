@@ -117,6 +117,7 @@ Public Class frmTargetedQuantification
     Dim linearPack As LinearPack
     Dim linearFiles As NamedValue(Of String)()
     Dim allFeatures As String()
+    Dim isGCMS As Boolean = False
 
     Sub saveLinearsTable(sender As Object, e As ExecuteEventArgs)
         If linearPack Is Nothing OrElse linearPack.linears.IsNullOrEmpty Then
@@ -172,8 +173,6 @@ Public Class frmTargetedQuantification
                 DataGridView1.Columns.Add(New DataGridViewLinkColumn With {.HeaderText = "Features"})
                 DataGridView1.Columns.Add(New DataGridViewComboBoxColumn With {.HeaderText = "IS"})
 
-                Dim isGCMS As Boolean = False
-
                 For Each file As NamedValue(Of String) In files
                     Call DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.HeaderText = file.Name})
 
@@ -181,6 +180,7 @@ Public Class frmTargetedQuantification
                         isGCMS = True
                         Call MyApplication.host.ShowGCMSSIM(file.Value, isBackground:=False, showExplorer:=False)
                     Else
+                        isGCMS = False
                         Call MyApplication.host.ShowMRMIons(file.Value)
                     End If
                 Next
@@ -398,7 +398,7 @@ Public Class frmTargetedQuantification
         End If
     End Sub
 
-    Private Sub loadLinears()
+    Private Sub loadMRMLinears()
         Dim ionLib As IonLibrary = Globals.LoadIonLibrary
 
         DataGridView1.Rows.Clear()
@@ -466,7 +466,7 @@ Public Class frmTargetedQuantification
         Dim file As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) & $"/mzkit/linears/{profileName}.linearPack"
 
         linearPack = LinearPack.OpenFile(file)
-        loadLinears()
+        loadMRMLinears()
     End Sub
 
     Private Sub reload(sender As Object, e As EventArgs) Handles ToolStripButton3.Click
@@ -840,7 +840,7 @@ Public Class frmTargetedQuantification
             cbProfileNameSelector.Text = path.BaseName
             linearPack = LinearPack.OpenFile(path)
 
-            Call loadLinears()
+            Call loadMRMLinears()
         End If
     End Sub
 
