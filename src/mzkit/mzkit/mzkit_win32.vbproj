@@ -978,6 +978,7 @@
     <None Include="Res\IE.ico" />
     <None Include="Resources\1200px-Checked.svg.png" />
     <None Include="Resources\img_561134.png" />
+    <None Include="Resources\DBFile.ico" />
     <Content Include="RibbonMarkup.h" />
     <Content Include="RibbonMarkup.xml" />
     <None Include="Resources\header-foreground-image.png" />

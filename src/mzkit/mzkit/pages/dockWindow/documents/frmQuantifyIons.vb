@@ -75,6 +75,7 @@ Public Class frmQuantifyIons
     Private Sub frmQuantifyIons_Load(sender As Object, e As EventArgs) Handles Me.Load
         TabText = "GC-MS Quantify Ions Library"
         FilePath = Globals.Settings.QuantifyIonLibfile
+        Icon = My.Resources.DBFile
 
         If FilePath.FileLength > 0 Then
             Try

@@ -93,6 +93,7 @@ Public Class frmMRMLibrary
 
         FilePath = Globals.Settings.MRMLibfile
         TabText = "MRM ions Library"
+        Icon = My.Resources.DBFile
 
         For Each ion As IonPair In ions
             DataGridView1.Rows.Add(ion.accession, ion.name, ion.rt, ion.precursor, ion.product)
