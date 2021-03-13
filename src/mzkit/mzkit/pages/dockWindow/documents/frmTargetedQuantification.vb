@@ -649,44 +649,84 @@ Public Class frmTargetedQuantification
     ''' <param name="refPoints"></param>
     ''' <returns></returns>
     Private Function createLinear(refRow As DataGridViewRow, Optional ByRef refPoints As TargetPeakPoint() = Nothing) As StandardCurve
-        Dim ionLib As IonLibrary = Globals.LoadIonLibrary
         Dim id As String = any.ToString(refRow.Cells(0).Value)
         Dim isid As String = any.ToString(refRow.Cells(1).Value)
         Dim chr As New List(Of TargetPeakPoint)
-        Dim dadot3 As Tolerance = Tolerance.DeltaMass(0.3)
-        Dim quantifyIon = ionLib.GetIonByKey(id)
-        Dim quantifyIS = ionLib.GetIonByKey(isid)
 
-        If linearFiles.IsNullOrEmpty Then
-            Call linearPack.peakSamples _
-                .Select(Function(p)
-                            Dim t = p.Name.Split("/"c).Select(AddressOf Val).ToArray
+        If isGCMS Then
+            Dim ionLib = LoadGCMSIonLibrary.ToDictionary(Function(a) a.name)
+            Dim quantifyIon = ionLib.TryGetValue(id)
+            Dim quantifyIS = ionLib.TryGetValue(isid)
 
-                            If dadot3(t(0), quantifyIon.precursor) AndAlso dadot3(t(1), quantifyIon.product) Then
-                                Return New TargetPeakPoint With {
-                                    .Name = quantifyIon.name,
-                                    .ChromatogramSummary = p.ChromatogramSummary,
-                                    .Peak = p.Peak,
-                                    .SampleName = p.SampleName
-                                }
-                            ElseIf dadot3(t(0), quantifyIS.precursor) AndAlso dadot3(t(1), quantifyIS.product) Then
-                                Return New TargetPeakPoint With {
-                                    .Name = quantifyIS.name,
-                                    .ChromatogramSummary = p.ChromatogramSummary,
-                                    .Peak = p.Peak,
-                                    .SampleName = p.SampleName
-                                }
-                            Else
-                                Return Nothing
-                            End If
-                        End Function) _
-                .Where(Function(p) Not p Is Nothing) _
-                .DoCall(AddressOf chr.AddRange)
+            If linearFiles.IsNullOrEmpty Then
+                Call linearPack.peakSamples _
+                    .Select(Function(p)
+                                Dim t = p.Name.Split("/"c).Select(AddressOf Val).ToArray
+
+                                If stdNum.Abs(t(0) - quantifyIon.rt.Min) <= 10 AndAlso stdNum.Abs(t(1) - quantifyIon.rt.Max) <= 10 Then
+                                    Return New TargetPeakPoint With {
+                                        .Name = quantifyIon.name,
+                                        .ChromatogramSummary = p.ChromatogramSummary,
+                                        .Peak = p.Peak,
+                                        .SampleName = p.SampleName
+                                    }
+                                ElseIf stdNum.Abs(t(0) - quantifyIS.rt.Min) <= 10 AndAlso stdNum.Abs(t(1) - quantifyIS.rt.Max) <= 10 Then
+                                    Return New TargetPeakPoint With {
+                                        .Name = quantifyIS.name,
+                                        .ChromatogramSummary = p.ChromatogramSummary,
+                                        .Peak = p.Peak,
+                                        .SampleName = p.SampleName
+                                    }
+                                Else
+                                    Return Nothing
+                                End If
+                            End Function) _
+                    .Where(Function(p) Not p Is Nothing) _
+                    .DoCall(AddressOf chr.AddRange)
+            Else
+                Call SIMIonExtract.LoadSamples(linearFiles, quantifyIon).DoCall(AddressOf chr.AddRange)
+
+                If Not isid.StringEmpty Then
+                    Call SIMIonExtract.LoadSamples(linearFiles, quantifyIS).DoCall(AddressOf chr.AddRange)
+                End If
+            End If
         Else
-            Call MRMIonExtract.LoadSamples(linearFiles, quantifyIon).DoCall(AddressOf chr.AddRange)
+            Dim ionLib As IonLibrary = Globals.LoadIonLibrary
+            Dim quantifyIon = ionLib.GetIonByKey(id)
+            Dim quantifyIS = ionLib.GetIonByKey(isid)
+            Dim dadot3 As Tolerance = Tolerance.DeltaMass(0.3)
 
-            If Not isid.StringEmpty Then
-                Call MRMIonExtract.LoadSamples(linearFiles, quantifyIS).DoCall(AddressOf chr.AddRange)
+            If linearFiles.IsNullOrEmpty Then
+                Call linearPack.peakSamples _
+                    .Select(Function(p)
+                                Dim t = p.Name.Split("/"c).Select(AddressOf Val).ToArray
+
+                                If dadot3(t(0), quantifyIon.precursor) AndAlso dadot3(t(1), quantifyIon.product) Then
+                                    Return New TargetPeakPoint With {
+                                        .Name = quantifyIon.name,
+                                        .ChromatogramSummary = p.ChromatogramSummary,
+                                        .Peak = p.Peak,
+                                        .SampleName = p.SampleName
+                                    }
+                                ElseIf dadot3(t(0), quantifyIS.precursor) AndAlso dadot3(t(1), quantifyIS.product) Then
+                                    Return New TargetPeakPoint With {
+                                        .Name = quantifyIS.name,
+                                        .ChromatogramSummary = p.ChromatogramSummary,
+                                        .Peak = p.Peak,
+                                        .SampleName = p.SampleName
+                                    }
+                                Else
+                                    Return Nothing
+                                End If
+                            End Function) _
+                    .Where(Function(p) Not p Is Nothing) _
+                    .DoCall(AddressOf chr.AddRange)
+            Else
+                Call MRMIonExtract.LoadSamples(linearFiles, quantifyIon).DoCall(AddressOf chr.AddRange)
+
+                If Not isid.StringEmpty Then
+                    Call MRMIonExtract.LoadSamples(linearFiles, quantifyIS).DoCall(AddressOf chr.AddRange)
+                End If
             End If
         End If
 
