@@ -37,8 +37,6 @@ Partial Class PageStart
         Me.LinkLabel3 = New System.Windows.Forms.LinkLabel()
         Me.PictureBox5 = New System.Windows.Forms.PictureBox()
         Me.LinkLabel4 = New System.Windows.Forms.LinkLabel()
-        Me.LinkLabel5 = New System.Windows.Forms.LinkLabel()
-        Me.FlowLayoutPanel2 = New System.Windows.Forms.FlowLayoutPanel()
         Me.Panel1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -196,42 +194,11 @@ Partial Class PageStart
         Me.LinkLabel4.Text = "Visit BioDeep"
         Me.LinkLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'LinkLabel5
-        '
-        Me.LinkLabel5.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.LinkLabel5.AutoSize = True
-        Me.LinkLabel5.DisabledLinkColor = System.Drawing.Color.Silver
-        Me.LinkLabel5.Font = New System.Drawing.Font("Microsoft YaHei UI", 36.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LinkLabel5.LinkColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(104, Byte), Integer), CType(CType(189, Byte), Integer))
-        Me.LinkLabel5.Location = New System.Drawing.Point(588, 35)
-        Me.LinkLabel5.Name = "LinkLabel5"
-        Me.LinkLabel5.Size = New System.Drawing.Size(351, 62)
-        Me.LinkLabel5.TabIndex = 12
-        Me.LinkLabel5.TabStop = True
-        Me.LinkLabel5.Text = "Videos            "
-        Me.LinkLabel5.VisitedLinkColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(104, Byte), Integer), CType(CType(189, Byte), Integer))
-        '
-        'FlowLayoutPanel2
-        '
-        Me.FlowLayoutPanel2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.FlowLayoutPanel2.AutoScroll = True
-        Me.FlowLayoutPanel2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.FlowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
-        Me.FlowLayoutPanel2.Location = New System.Drawing.Point(589, 119)
-        Me.FlowLayoutPanel2.Margin = New System.Windows.Forms.Padding(0)
-        Me.FlowLayoutPanel2.Name = "FlowLayoutPanel2"
-        Me.FlowLayoutPanel2.Size = New System.Drawing.Size(350, 524)
-        Me.FlowLayoutPanel2.TabIndex = 2
-        Me.FlowLayoutPanel2.WrapContents = False
-        '
         'PageStart
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.Controls.Add(Me.FlowLayoutPanel2)
-        Me.Controls.Add(Me.LinkLabel5)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.PictureBox5)
         Me.Controls.Add(Me.LinkLabel4)
@@ -270,6 +237,4 @@ Partial Class PageStart
     Friend WithEvents LinkLabel3 As LinkLabel
     Friend WithEvents PictureBox5 As PictureBox
     Friend WithEvents LinkLabel4 As LinkLabel
-    Friend WithEvents LinkLabel5 As LinkLabel
-    Friend WithEvents FlowLayoutPanel2 As FlowLayoutPanel
 End Class

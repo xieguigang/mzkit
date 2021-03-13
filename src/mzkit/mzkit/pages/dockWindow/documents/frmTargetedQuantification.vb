@@ -222,7 +222,7 @@ Public Class frmTargetedQuantification
 
     Private Sub loadGCMSReference(files As NamedValue(Of String)(), directMapName As Boolean)
         Dim ions As QuantifyIon() = LoadGCMSIonLibrary()
-        Dim extract As New SIMIonExtract(ions, {5, 15}, Tolerance.DeltaMass(0.3), 30, 0.65)
+        Dim extract As New SIMIonExtract(ions, {5, 15}, Tolerance.DeltaMass(0.3), 20, 0.65)
         Dim allFeatures = files _
             .Select(Function(file) GetGCMSFeatures(file, extract)) _
             .IteratesALL _
@@ -236,6 +236,8 @@ Public Class frmTargetedQuantification
             Dim ion As QuantifyIon = extract.FindIon(group.First)
             Dim i As Integer = DataGridView1.Rows.Add(ion.name)
             Dim comboxBox As DataGridViewComboBoxCell = DataGridView1.Rows(i).Cells(1)
+
+            comboxBox.Items.Add("")
 
             For Each IS_candidate In allFeatures
                 comboxBox.Items.Add(extract.FindIon(IS_candidate.First).name)
@@ -276,6 +278,8 @@ Public Class frmTargetedQuantification
             Dim refId As String = ionsLib.GetDisplay(ion)
             Dim i As Integer = DataGridView1.Rows.Add(refId)
             Dim comboxBox As DataGridViewComboBoxCell = DataGridView1.Rows(i).Cells(1)
+
+            comboxBox.Items.Add("")
 
             For Each IS_candidate As IonPair In allFeatures
                 comboxBox.Items.Add(ionsLib.GetDisplay(IS_candidate))
@@ -328,13 +332,13 @@ Public Class frmTargetedQuantification
             End If
 
             If isGCMS Then
-                Dim ion As QuantifyIon = GCMSIons.TryGetValue(rid)
+                Dim ion As QuantifyIon = GCMSIons.GetIon(rid)
 
                 If Not ion Is Nothing Then
                     rid = $"{ion.rt.Min}/{ion.rt.Max}"
                 End If
 
-                ion = GCMSIons.TryGetValue(IS_id)
+                ion = GCMSIons.GetIon(IS_id)
 
                 If Not ion Is Nothing Then
                     IS_id = $"{ion.rt.Min}/{ion.rt.Max}"
@@ -581,7 +585,7 @@ Public Class frmTargetedQuantification
             Dim ion As QuantifyIon
 
             For Each point As TargetPeakPoint In refPoints
-                ion = GCMSIons.TryGetValue(point.Name)
+                ion = GCMSIons.GetIon(point.Name)
 
                 If Not ion Is Nothing Then
                     point.Name = $"{ion.rt.Min}/{ion.rt.Max}"
@@ -589,14 +593,14 @@ Public Class frmTargetedQuantification
             Next
 
             For Each line As StandardCurve In linears
-                ion = GCMSIons.TryGetValue(line.name)
+                ion = GCMSIons.GetIon(line.name)
 
                 If Not ion Is Nothing Then
                     line.name = $"{ion.rt.Min}/{ion.rt.Max}"
                 End If
 
                 If Not line.IS Is Nothing AndAlso Not line.IS.ID.StringEmpty Then
-                    ion = GCMSIons.TryGetValue(line.IS.ID)
+                    ion = GCMSIons.GetIon(line.IS.ID)
 
                     If Not ion Is Nothing Then
                         line.IS.ID = $"{ion.rt.Min}/{ion.rt.Max}"
@@ -666,9 +670,9 @@ Public Class frmTargetedQuantification
 
         If isGCMS Then
             Dim ionLib = LoadGCMSIonLibrary.ToDictionary(Function(a) a.name)
-            Dim quantifyIon = ionLib.TryGetValue(id)
-            Dim quantifyIS = ionLib.TryGetValue(isid)
-            Dim SIMIonExtract As New SIMIonExtract(ionLib.Values, {5, 15}, Tolerance.DeltaMass(0.3), 30, 0.65)
+            Dim quantifyIon = ionLib.GetIon(id)
+            Dim quantifyIS = ionLib.GetIon(isid)
+            Dim SIMIonExtract As New SIMIonExtract(ionLib.Values, {5, 15}, Tolerance.DeltaMass(0.3), 20, 0.65)
 
             If linearFiles.IsNullOrEmpty Then
                 Call linearPack.peakSamples _
