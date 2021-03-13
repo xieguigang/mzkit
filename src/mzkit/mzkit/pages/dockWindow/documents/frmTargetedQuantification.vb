@@ -553,9 +553,10 @@ Public Class frmTargetedQuantification
         Dim refLevels As New Dictionary(Of String, SampleContentLevels)
         Dim ionLib As IonLibrary = Globals.LoadIonLibrary
         Dim GCMSIons = LoadGCMSIonLibrary.ToDictionary(Function(i) i.name)
+        Dim directMap As Boolean = ref(Scan0).C.Keys.All(Function(name) name.IsContentPattern)
 
         For Each i As Standards In ref
-            refLevels(i.ID) = New SampleContentLevels(i.C, directMap:=False)
+            refLevels(i.ID) = New SampleContentLevels(i.C, directMap:=directMap)
         Next
 
         For Each row As DataGridViewRow In DataGridView1.Rows
