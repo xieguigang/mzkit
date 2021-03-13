@@ -201,25 +201,27 @@ Public Class frmTargetedQuantification
         End Using
     End Sub
 
-    Private Sub loadGCMSReference(files As NamedValue(Of String)(), directMapName As Boolean)
-        Dim ions As QuantifyIon()
+    Private Function LoadGCMSIonLibrary() As QuantifyIon()
         Dim filePath = Globals.Settings.QuantifyIonLibfile
 
         If filePath.FileLength > 0 Then
             Try
                 Using file As Stream = filePath.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-                    ions = MsgPackSerializer.Deserialize(Of QuantifyIon())(file)
+                    Return MsgPackSerializer.Deserialize(Of QuantifyIon())(file)
                 End Using
             Catch ex As Exception
                 Call App.LogException(ex)
                 Call MyApplication.host.showStatusMessage("Error while load GCMS reference: " & ex.Message, My.Resources.StatusAnnotations_Warning_32xLG_color)
 
-                Return
+                Return {}
             End Try
         Else
-            ions = {}
+            Return {}
         End If
+    End Function
 
+    Private Sub loadGCMSReference(files As NamedValue(Of String)(), directMapName As Boolean)
+        Dim ions As QuantifyIon() = LoadGCMSIonLibrary()
         Dim extract As New SIMIonExtract(ions, {5, 15}, Tolerance.DeltaMass(0.3), 10, 0.65)
         Dim allFeatures = files _
             .Select(Function(file) GetGCMSFeatures(file, extract)) _
@@ -311,34 +313,49 @@ Public Class frmTargetedQuantification
         Next
     End Function
 
-    Private Iterator Function getMRMStandards() As IEnumerable(Of Standards)
+    Private Iterator Function unifyGetStandards() As IEnumerable(Of Standards)
         Dim levelKeys As String() = GetTableLevelKeys.ToArray
         Dim ionLib As IonLibrary = Globals.LoadIonLibrary
+        Dim GCMSIons = LoadGCMSIonLibrary.ToDictionary(Function(i) i.name)
 
         For Each row As DataGridViewRow In DataGridView1.Rows
             Dim rid As String = any.ToString(row.Cells(0).Value)
             Dim IS_id As String = any.ToString(row.Cells(1).Value)
             Dim levels As New Dictionary(Of String, Double)
-            Dim ion As IonPair
 
             If rid.StringEmpty AndAlso IS_id.StringEmpty Then
                 Continue For
             End If
 
-            ion = ionLib.GetIonByKey(rid)
+            If isGCMS Then
+                Dim ion As QuantifyIon = GCMSIons.TryGetValue(rid)
 
-            If Not ion Is Nothing Then
-                rid = $"{ion.precursor}/{ion.product}"
-            ElseIf rid.IsPattern("Ion \[.+?\]") Then
-                rid = rid.GetStackValue("[", "]")
-            End If
+                If Not ion Is Nothing Then
+                    rid = $"{ion.rt.Min}/{ion.rt.Max}"
+                End If
 
-            ion = ionLib.GetIonByKey(IS_id)
+                ion = GCMSIons.TryGetValue(IS_id)
 
-            If Not ion Is Nothing Then
-                IS_id = $"{ion.precursor}/{ion.product}"
-            ElseIf IS_id.IsPattern("Ion \[.+?\]") Then
-                IS_id = IS_id.GetStackValue("[", "]")
+                If Not ion Is Nothing Then
+                    IS_id = $"{ion.rt.Min}/{ion.rt.Max}"
+                End If
+
+            Else
+                Dim ion As IonPair = ionLib.GetIonByKey(rid)
+
+                If Not ion Is Nothing Then
+                    rid = $"{ion.precursor}/{ion.product}"
+                ElseIf rid.IsPattern("Ion \[.+?\]") Then
+                    rid = rid.GetStackValue("[", "]")
+                End If
+
+                ion = ionLib.GetIonByKey(IS_id)
+
+                If Not ion Is Nothing Then
+                    IS_id = $"{ion.precursor}/{ion.product}"
+                ElseIf IS_id.IsPattern("Ion \[.+?\]") Then
+                    IS_id = IS_id.GetStackValue("[", "]")
+                End If
             End If
 
             For i As Integer = 2 To DataGridView1.Columns.Count - 1
@@ -523,7 +540,7 @@ Public Class frmTargetedQuantification
     End Sub
 
     Private Sub saveLinearPack(title As String, file As String)
-        Dim ref As Standards() = getMRMStandards.ToArray
+        Dim ref As Standards() = unifyGetStandards.ToArray
         Dim linears As New List(Of StandardCurve)
         Dim points As TargetPeakPoint() = Nothing
         Dim refPoints As New List(Of TargetPeakPoint)
