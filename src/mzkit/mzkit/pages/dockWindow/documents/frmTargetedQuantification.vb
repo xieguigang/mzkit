@@ -222,7 +222,7 @@ Public Class frmTargetedQuantification
 
     Private Sub loadGCMSReference(files As NamedValue(Of String)(), directMapName As Boolean)
         Dim ions As QuantifyIon() = LoadGCMSIonLibrary()
-        Dim extract As New SIMIonExtract(ions, {5, 15}, Tolerance.DeltaMass(0.3), 20, 0.65)
+        Dim extract As SIMIonExtract = GetGCMSFeatureReader(ions)
         Dim allFeatures = files _
             .Select(Function(file) GetGCMSFeatures(file, extract)) _
             .IteratesALL _
@@ -427,7 +427,7 @@ Public Class frmTargetedQuantification
 
     Private Sub unifyLoadLinears()
         Dim ionLib As IonLibrary = Globals.LoadIonLibrary
-        Dim quantifyIons As New SIMIonExtract(LoadGCMSIonLibrary, {0, 0}, Tolerance.DefaultTolerance, 20, 0)
+        Dim quantifyIons As SIMIonExtract = GetGCMSFeatureReader(LoadGCMSIonLibrary)
 
         isGCMS = linearPack.targetted = TargettedData.SIM
 
@@ -710,6 +710,10 @@ Public Class frmTargetedQuantification
         Call linearPack.Write(file)
     End Sub
 
+    Private Function GetGCMSFeatureReader(ionLib As IEnumerable(Of QuantifyIon)) As SIMIonExtract
+        Return New SIMIonExtract(ionLib, {5, 15}, Tolerance.DeltaMass(0.3), 20, 0.65)
+    End Function
+
     ''' <summary>
     ''' unify create linear reference
     ''' </summary>
@@ -725,7 +729,7 @@ Public Class frmTargetedQuantification
             Dim ionLib = LoadGCMSIonLibrary.ToDictionary(Function(a) a.name)
             Dim quantifyIon = ionLib.GetIon(id)
             Dim quantifyIS = ionLib.GetIon(isid)
-            Dim SIMIonExtract As New SIMIonExtract(ionLib.Values, {5, 15}, Tolerance.DeltaMass(0.3), 20, 0.65)
+            Dim SIMIonExtract = GetGCMSFeatureReader(ionLib.Values)
 
             If linearFiles.IsNullOrEmpty Then
                 Call linearPack.peakSamples _
@@ -854,27 +858,42 @@ Public Class frmTargetedQuantification
                 ' add files to viewer
                 For Each file As NamedValue(Of String) In files
                     Call MyApplication.host.showStatusMessage($"open raw data file '{file.Value}'...")
-                    Call MyApplication.host.OpenFile(file.Value, showDocument:=False)
+                    Call MyApplication.host.OpenFile(file.Value, showDocument:=linearPack Is Nothing)
                     Call Application.DoEvents()
                 Next
 
                 ' and then do quantify if the linear is exists
                 If Not linearPack Is Nothing Then
-                    Call scans.Clear()
-
                     Dim points As New List(Of TargetPeakPoint)
                     Dim linears As New List(Of StandardCurve)
+                    Dim ionLib As IonLibrary = Globals.LoadIonLibrary
+                    Dim GCMSIons = LoadGCMSIonLibrary.ToDictionary(Function(a) a.name)
+                    Dim extract = GetGCMSFeatureReader(GCMSIons.Values)
 
-                    For Each row As DataGridViewRow In DataGridView1.Rows
-                        If isValidLinearRow(row) Then
-                            Dim ion As IonPair = Nothing
-                            Dim ISion As IonPair = Nothing
+                    Call scans.Clear()
 
-                            linears.Add(createLinear(row))
-                            points.AddRange(MRMIonExtract.LoadSamples(files, ion))
+                    For Each refRow As DataGridViewRow In DataGridView1.Rows
+                        If isValidLinearRow(refRow) Then
+                            Dim id As String = any.ToString(refRow.Cells(0).Value)
+                            Dim isid As String = any.ToString(refRow.Cells(1).Value)
 
-                            If Not ISion Is Nothing Then
-                                points.AddRange(MRMIonExtract.LoadSamples(files, ISion))
+                            linears.Add(createLinear(refRow))
+
+                            If isGCMS Then
+                                Dim ion As QuantifyIon = GCMSIons.GetIon(id)
+                                Dim ISion As QuantifyIon = GCMSIons.GetIon(isid)
+
+                                points.AddRange(extract.LoadSamples(files, ion, keyByName:=True))
+                                points.AddRange(extract.LoadSamples(files, ion, keyByName:=True))
+                            Else
+                                Dim ion As IonPair = ionLib.GetIonByKey(id)
+                                Dim ISion As IonPair = ionLib.GetIonByKey(isid)
+
+                                points.AddRange(MRMIonExtract.LoadSamples(files, ion))
+
+                                If Not ISion Is Nothing Then
+                                    points.AddRange(MRMIonExtract.LoadSamples(files, ISion))
+                                End If
                             End If
                         End If
                     Next
