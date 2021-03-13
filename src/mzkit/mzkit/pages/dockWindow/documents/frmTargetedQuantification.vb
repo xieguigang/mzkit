@@ -311,7 +311,7 @@ Public Class frmTargetedQuantification
         Next
     End Function
 
-    Private Iterator Function getStandards() As IEnumerable(Of Standards)
+    Private Iterator Function getMRMStandards() As IEnumerable(Of Standards)
         Dim levelKeys As String() = GetTableLevelKeys.ToArray
         Dim ionLib As IonLibrary = Globals.LoadIonLibrary
 
@@ -523,7 +523,7 @@ Public Class frmTargetedQuantification
     End Sub
 
     Private Sub saveLinearPack(title As String, file As String)
-        Dim ref As Standards() = getStandards.ToArray
+        Dim ref As Standards() = getMRMStandards.ToArray
         Dim linears As New List(Of StandardCurve)
         Dim points As TargetPeakPoint() = Nothing
         Dim refPoints As New List(Of TargetPeakPoint)
