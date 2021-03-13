@@ -525,7 +525,7 @@ Public Class frmTargetedQuantification
     Dim standardCurve As StandardCurve
 
     Private Sub DataGridView1_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellDoubleClick
-        If e.ColumnIndex <> 0 Then
+        If e.ColumnIndex <> 0 OrElse e.RowIndex < 0 Then
             Return
         End If
 
