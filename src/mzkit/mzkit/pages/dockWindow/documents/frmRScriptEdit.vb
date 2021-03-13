@@ -127,12 +127,18 @@ Public Class frmRScriptEdit
     End Sub
 
     Protected Overrides Sub CopyFullPath()
-        Call Clipboard.SetText(scriptFile)
+        If Not scriptFile.StringEmpty Then
+            Call Clipboard.SetText(scriptFile)
+        Else
+            Call MyApplication.host.showStatusMessage("please save script file before this operation...", My.Resources.StatusAnnotations_Warning_32xLG_color)
+        End If
     End Sub
 
     Protected Overrides Sub OpenContainingFolder()
         If Not scriptFile.StringEmpty Then
             Call Process.Start(scriptFile.ParentPath)
+        Else
+            Call MyApplication.host.showStatusMessage("please save script file before this operation...", My.Resources.StatusAnnotations_Warning_32xLG_color)
         End If
     End Sub
 
