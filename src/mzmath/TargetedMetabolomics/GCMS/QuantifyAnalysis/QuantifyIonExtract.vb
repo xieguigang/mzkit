@@ -84,21 +84,17 @@ Namespace GCMS.QuantifyAnalysis
         End Sub
 
         Public Function FindIon(ROI As ROI) As QuantifyIon
-            Return ions _
-                .OrderByDescending(Function(i)
-                                       Dim rtmin = stdNum.Abs(i.rt.Min - ROI.time.Min)
-                                       Dim rtmax = stdNum.Abs(i.rt.Max - ROI.time.Max)
+            Dim rtmin As Vector = ions.Select(Function(i) stdNum.Abs(i.rt.Min - ROI.time.Min)).AsVector
+            Dim rtmax As Vector = ions.Select(Function(i) stdNum.Abs(i.rt.Max - ROI.time.Max)).AsVector
+            Dim zero As Vector = 0
 
-                                       If rtmin > rtshift Then
-                                           rtmin = 0
-                                       End If
-                                       If rtmax > rtshift Then
-                                           rtmax = 0
-                                       End If
+            rtmin(rtmin > rtshift) = zero
+            rtmax(rtmax > rtshift) = zero
 
-                                       Return 1 / rtmin + 1 / rtmax
-                                   End Function) _
-                .First
+            Dim orders = 1 / rtmin + 1 / rtmax
+            Dim ion As QuantifyIon = ions(Which.Max(orders))
+
+            Return ion
         End Function
 
         Public Function GetAllFeatures(sample As Raw) As IEnumerable(Of ROI)
