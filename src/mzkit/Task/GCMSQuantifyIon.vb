@@ -8,7 +8,7 @@ Public Module GCMSQuantifyIon
         Dim ion As QuantifyIon = ions.TryGetValue(id)
 
         If ion Is Nothing Then
-            If id.IsPattern("[0-9.][/][0-9.]") Then
+            If id.IsPattern("[0-9.]+[/][0-9.]+") Then
                 ion = New QuantifyIon With {
                     .id = id,
                     .name = id,
