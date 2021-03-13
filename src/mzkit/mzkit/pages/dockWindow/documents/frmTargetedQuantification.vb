@@ -74,12 +74,14 @@ Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports mzkit.My
 Imports RibbonLib.Controls.Events
 Imports RibbonLib.Interop
 Imports Task
 Imports any = Microsoft.VisualBasic.Scripting
 Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
+Imports stdNum = System.Math
 
 Public Class frmTargetedQuantification
 
@@ -134,6 +136,7 @@ Public Class frmTargetedQuantification
             If importsFile.ShowDialog = DialogResult.OK Then
                 Dim files As NamedValue(Of String)() = ContentTable.StripMaxCommonNames(importsFile.FileNames)
                 Dim fakeLevels As Dictionary(Of String, Double)
+                Dim directMapName As Boolean = False
 
                 If files.All(Function(name) name.Value.BaseName.IsContentPattern) Then
                     files = files _
@@ -154,6 +157,7 @@ Public Class frmTargetedQuantification
                                               .ScaleTo(ContentUnits.ppb) _
                                               .Value
                                       End Function)
+                    directMapName = True
                 Else
                     fakeLevels = files _
                         .ToDictionary(Function(file) file.Name,
@@ -184,7 +188,7 @@ Public Class frmTargetedQuantification
                 Me.linearFiles = files
                 Me.linearPack = New LinearPack With {
                     .reference = New Dictionary(Of String, SampleContentLevels) From {
-                        {"n/a", New SampleContentLevels(fakeLevels)}
+                        {"n/a", New SampleContentLevels(fakeLevels, directMapName)}
                     }
                 }
 
@@ -220,9 +224,20 @@ Public Class frmTargetedQuantification
         Dim allFeatures = files _
             .Select(Function(file) GetGCMSFeatures(file, extract)) _
             .IteratesALL _
+            .GroupBy(Function(p) p.rt, Function(x, y) stdNum.Abs(x - y) <= 15) _
             .ToArray
 
+        Me.allFeatures = allFeatures.Select(Function(p) p.name).ToArray
 
+        For Each group As NamedCollection(Of ROI) In allFeatures
+            Dim ion As QuantifyIon = extract.FindIon(group.First)
+            Dim i As Integer = DataGridView1.Rows.Add(ion.name)
+            Dim comboxBox As DataGridViewComboBoxCell = DataGridView1.Rows(i).Cells(1)
+
+            For Each IS_candidate In allFeatures
+                comboxBox.Items.Add(extract.FindIon(IS_candidate.First).name)
+            Next
+        Next
     End Sub
 
     Private Function GetGCMSFeatures(file As String, extract As SIMIonExtract) As IEnumerable(Of ROI)

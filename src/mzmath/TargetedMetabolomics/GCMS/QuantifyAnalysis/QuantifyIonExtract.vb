@@ -80,6 +80,24 @@ Namespace GCMS.QuantifyAnalysis
             Me.baselineQuantile = baselineQuantile
         End Sub
 
+        Public Function FindIon(ROI As ROI) As QuantifyIon
+            Return ions _
+                .OrderByDescending(Function(i)
+                                       Dim rtmin = stdNum.Abs(i.rt.Min - ROI.time.Min)
+                                       Dim rtmax = stdNum.Abs(i.rt.Max - ROI.time.Max)
+
+                                       If rtmin > rtshift Then
+                                           rtmin = 0
+                                       End If
+                                       If rtmax > rtshift Then
+                                           rtmax = 0
+                                       End If
+
+                                       Return 1 / rtmin + 1 / rtmax
+                                   End Function) _
+                .First
+        End Function
+
         Public Function GetAllFeatures(sample As Raw) As IEnumerable(Of ROI)
             Return GetTICPeaks(sample.GetTIC, sn:=5, baselineQuantile:=baselineQuantile)
         End Function
