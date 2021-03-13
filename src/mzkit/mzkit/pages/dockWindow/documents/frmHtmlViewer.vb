@@ -1,47 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::cfb956a25f80777b1be73f0a791b5ad8, pages\dockWindow\documents\frmHtmlViewer.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class frmHtmlViewer
-    ' 
-    '     Sub: frmHtmlViewer_Load, LoadHtml, PDF, SavePDFToolStripMenuItem_Click, WebBrowser1_DocumentCompleted
-    ' 
-    ' /********************************************************************************/
+' Class frmHtmlViewer
+' 
+'     Sub: frmHtmlViewer_Load, LoadHtml, PDF, SavePDFToolStripMenuItem_Click, WebBrowser1_DocumentCompleted
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports mzkit.My
 Imports WkHtmlToPdf.Arguments
 
 Public Class frmHtmlViewer
@@ -49,16 +50,30 @@ Public Class frmHtmlViewer
     Dim url As String
 
     Public Sub PDF(filepath As String)
-        Dim env As New PdfConvertEnvironment With {
-            .Debug = False,
-            .TempFolderPath = App.GetAppSysTempFile,
-            .Timeout = 60000,
-            .WkHtmlToPdfPath = $"{App.HOME}/wkhtmltopdf.exe"
-        }
-        Dim content As New PdfDocument With {.Url = {WebBrowser1.Url.OriginalString}}
-        Dim pdfFile As New PdfOutput With {.OutputFilePath = filepath}
+        Static bin As String = Nothing
 
-        Call WkHtmlToPdf.PdfConvert.ConvertHtmlToPdf(content, pdfFile, env)
+        If bin.StringEmpty Then
+            bin = $"{App.HOME}/tools/wkhtmltopdf.exe"
+
+            If Not bin.FileExists Then
+                bin = $"{App.HOME}/wkhtmltopdf.exe"
+            End If
+        End If
+
+        If bin.FileExists Then
+            Dim env As New PdfConvertEnvironment With {
+                .Debug = False,
+                .TempFolderPath = App.GetAppSysTempFile,
+                .Timeout = 60000,
+                .WkHtmlToPdfPath = bin
+            }
+            Dim content As New PdfDocument With {.Url = {WebBrowser1.Url.OriginalString}}
+            Dim pdfFile As New PdfOutput With {.OutputFilePath = filepath}
+
+            Call WkHtmlToPdf.PdfConvert.ConvertHtmlToPdf(content, pdfFile, env)
+        Else
+            Call MyApplication.host.showStatusMessage("'wkhtmltopdf' tool is missing for generate PDF file...", My.Resources.StatusAnnotations_Warning_32xLG_color)
+        End If
     End Sub
 
     Public Sub LoadHtml(url As String)
