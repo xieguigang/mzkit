@@ -105,6 +105,15 @@ Public Class frmQuantifyIons
             row = DataGridView1.Rows.Item(i)
             ion1 = New ms2 With {.mz = any.ToString(row.Cells(4).Value).ParseDouble, .intensity = 1}
             ion2 = New ms2 With {.mz = any.ToString(row.Cells(5).Value).ParseDouble, .intensity = 0.65}
+
+            If ion1.mz = 0 AndAlso ion2.mz = 0 Then
+                Continue For
+            End If
+
+            If any.ToString(row.Cells(0).Value).StringEmpty AndAlso any.ToString(row.Cells(1).Value).StringEmpty Then
+                Continue For
+            End If
+
             ions += New QuantifyIon With {
                 .id = any.ToString(row.Cells(0).Value),
                 .name = any.ToString(row.Cells(1).Value),

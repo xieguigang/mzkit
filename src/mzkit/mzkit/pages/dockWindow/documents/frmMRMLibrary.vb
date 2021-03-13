@@ -103,16 +103,25 @@ Public Class frmMRMLibrary
     Public Function Save(path As String, encoding As Encoding) As Boolean Implements ISaveHandle.Save
         Dim ions As New List(Of IonPair)
         Dim row As DataGridViewRow
+        Dim ion As IonPair
 
         For i As Integer = 0 To DataGridView1.Rows.Count - 1
             row = DataGridView1.Rows.Item(i)
-            ions += New IonPair With {
+            ion = New IonPair With {
                 .accession = any.ToString(row.Cells(0).Value),
                 .name = any.ToString(row.Cells(1).Value),
                 .rt = any.ToString(row.Cells(2).Value).ParseDouble,
                 .precursor = any.ToString(row.Cells(3).Value).ParseDouble,
                 .product = any.ToString(row.Cells(4).Value).ParseDouble
             }
+
+            If ion.accession.StringEmpty AndAlso ion.name.StringEmpty Then
+                Continue For
+            ElseIf ion.precursor = 0.0 AndAlso ion.product = 0.0 Then
+                Continue For
+            End If
+
+            ions += ion
         Next
 
         FilePath = path
