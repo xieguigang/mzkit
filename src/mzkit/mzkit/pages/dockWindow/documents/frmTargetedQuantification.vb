@@ -657,6 +657,7 @@ Public Class frmTargetedQuantification
             Dim ionLib = LoadGCMSIonLibrary.ToDictionary(Function(a) a.name)
             Dim quantifyIon = ionLib.TryGetValue(id)
             Dim quantifyIS = ionLib.TryGetValue(isid)
+            Dim SIMIonExtract As New SIMIonExtract(ionLib.Values, {5, 15}, Tolerance.DeltaMass(0.3), 10, 0.65)
 
             If linearFiles.IsNullOrEmpty Then
                 Call linearPack.peakSamples _
