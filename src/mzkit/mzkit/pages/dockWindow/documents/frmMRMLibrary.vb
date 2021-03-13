@@ -70,6 +70,16 @@ Public Class frmMRMLibrary
         End Get
     End Property
 
+    Protected Overrides Sub OpenContainingFolder()
+        If Not FilePath.StringEmpty Then
+            Call Process.Start(FilePath.ParentPath)
+        End If
+    End Sub
+
+    Protected Overrides Sub CopyFullPath()
+        Call Clipboard.SetText(FilePath)
+    End Sub
+
     ' HMDB0000097	Choline	103.765	60
 
     Private Sub TabPage1_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown, DataGridView1.KeyDown

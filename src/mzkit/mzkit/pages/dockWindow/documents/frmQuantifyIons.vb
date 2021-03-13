@@ -128,4 +128,14 @@ Public Class frmQuantifyIons
     Public Function Save(path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
         Return Save(path, encoding.CodePage)
     End Function
+
+    Protected Overrides Sub OpenContainingFolder()
+        If Not FilePath.StringEmpty Then
+            Call Process.Start(FilePath.ParentPath)
+        End If
+    End Sub
+
+    Protected Overrides Sub CopyFullPath()
+        Call Clipboard.SetText(FilePath)
+    End Sub
 End Class
