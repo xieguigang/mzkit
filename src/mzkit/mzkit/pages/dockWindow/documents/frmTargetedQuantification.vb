@@ -500,7 +500,8 @@ Public Class frmTargetedQuantification
             contentLevel(id.value) = any.ToString(row.Cells(id + 2).Value).ParseDouble
         Next
 
-        Dim contentSampleLevel As New SampleContentLevels(contentLevel)
+        Dim directMap As Boolean = Me.linearFiles.All(Function(name) name.Value.BaseName.IsContentPattern)
+        Dim contentSampleLevel As New SampleContentLevels(contentLevel, directMap)
         Dim ref As New Standards With {
             .C = New Dictionary(Of String, Double),
             .ID = ionId,
@@ -685,10 +686,10 @@ Public Class frmTargetedQuantification
                     .Where(Function(p) Not p Is Nothing) _
                     .DoCall(AddressOf chr.AddRange)
             Else
-                Call SIMIonExtract.LoadSamples(linearFiles, quantifyIon).DoCall(AddressOf chr.AddRange)
+                Call SIMIonExtract.LoadSamples(linearFiles, quantifyIon, keyByName:=True).DoCall(AddressOf chr.AddRange)
 
                 If Not isid.StringEmpty Then
-                    Call SIMIonExtract.LoadSamples(linearFiles, quantifyIS).DoCall(AddressOf chr.AddRange)
+                    Call SIMIonExtract.LoadSamples(linearFiles, quantifyIS, keyByName:=True).DoCall(AddressOf chr.AddRange)
                 End If
             End If
         Else

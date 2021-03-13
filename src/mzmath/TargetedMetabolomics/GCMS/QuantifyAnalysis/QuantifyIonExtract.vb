@@ -164,7 +164,7 @@ Namespace GCMS.QuantifyAnalysis
 
         Protected MustOverride Function GetPeak(ion_id As String, rt As DoubleRange, sample As Raw) As TargetPeakPoint
 
-        Public Iterator Function LoadSamples(files As IEnumerable(Of NamedValue(Of String)), qIon As QuantifyIon) As IEnumerable(Of TargetPeakPoint)
+        Public Iterator Function LoadSamples(files As IEnumerable(Of NamedValue(Of String)), qIon As QuantifyIon, keyByName As Boolean) As IEnumerable(Of TargetPeakPoint)
             Dim peakTicks As New Value(Of TargetPeakPoint)
             Dim raw As Raw
 
@@ -175,6 +175,8 @@ Namespace GCMS.QuantifyAnalysis
                     raw = mzMLReader.LoadFile(file)
                 End If
 
+                raw.fileName = file.Value
+
                 ' get all features
                 Dim ROI As ROI() = raw.DoCall(AddressOf GetAllFeatures).ToArray
                 Dim rtmin As Vector = ROI.Select(Function(r) r.time.Min).ToArray
@@ -182,6 +184,10 @@ Namespace GCMS.QuantifyAnalysis
                 Dim ms As ms2()() = ROI.Select(Function(r) GetMsScan(raw, r.time)).ToArray
 
                 If Not peakTicks = GetTargetPeak(raw, ROI, ms, rtmin, rtmax, qIon) Is Nothing Then
+                    If keyByName Then
+                        peakTicks.Value.Name = qIon.name
+                    End If
+
                     Yield CType(peakTicks, TargetPeakPoint)
                 End If
             Next
