@@ -559,7 +559,7 @@ Public Class frmTargetedQuantification
 
         For Each row As DataGridViewRow In DataGridView1.Rows
             If isValidLinearRow(row) Then
-                linears.Add(createLinear(row, Nothing, Nothing, points))
+                linears.Add(createLinear(row, points))
                 refPoints.AddRange(points)
             End If
         Next
@@ -642,22 +642,20 @@ Public Class frmTargetedQuantification
         Call linearPack.Write(file)
     End Sub
 
-    Private Function createLinear(refRow As DataGridViewRow,
-                                  Optional ByRef ion As IonPair = Nothing,
-                                  Optional ByRef isIon As IonPair = Nothing,
-                                  Optional ByRef refPoints As TargetPeakPoint() = Nothing) As StandardCurve
-
+    ''' <summary>
+    ''' unify create linear reference
+    ''' </summary>
+    ''' <param name="refRow"></param>
+    ''' <param name="refPoints"></param>
+    ''' <returns></returns>
+    Private Function createLinear(refRow As DataGridViewRow, Optional ByRef refPoints As TargetPeakPoint() = Nothing) As StandardCurve
         Dim ionLib As IonLibrary = Globals.LoadIonLibrary
         Dim id As String = any.ToString(refRow.Cells(0).Value)
         Dim isid As String = any.ToString(refRow.Cells(1).Value)
         Dim chr As New List(Of TargetPeakPoint)
         Dim dadot3 As Tolerance = Tolerance.DeltaMass(0.3)
-
-        ion = ionLib.GetIonByKey(id)
-        isIon = ionLib.GetIonByKey(isid)
-
-        Dim quantifyIon = ion
-        Dim quantifyIS = isIon
+        Dim quantifyIon = ionLib.GetIonByKey(id)
+        Dim quantifyIS = ionLib.GetIonByKey(isid)
 
         If linearFiles.IsNullOrEmpty Then
             Call linearPack.peakSamples _
@@ -758,7 +756,7 @@ Public Class frmTargetedQuantification
                             Dim ion As IonPair = Nothing
                             Dim ISion As IonPair = Nothing
 
-                            linears.Add(createLinear(row, ion, ISion))
+                            linears.Add(createLinear(row))
                             points.AddRange(MRMIonExtract.LoadSamples(files, ion))
 
                             If Not ISion Is Nothing Then
