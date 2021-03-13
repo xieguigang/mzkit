@@ -66,16 +66,27 @@ Namespace GCMS.QuantifyAnalysis
         Protected Friend ReadOnly rtshift As Double
         Protected Friend ReadOnly baselineQuantile As Double
 
-        Protected Sub New(ions As IEnumerable(Of QuantifyIon), peakwidth As DoubleRange, centroid As Tolerance, rtshift As Double, baselineQuantile As Double)
+        Protected Sub New(ions As IEnumerable(Of QuantifyIon),
+                          peakwidth As DoubleRange,
+                          centroid As Tolerance,
+                          rtshift As Double,
+                          baselineQuantile As Double)
+
             Call MyBase.New(peakwidth)
 
             Me.ms1ppm = centroid
             Me.ions = ions.ToArray
             Me.rtshift = rtshift
+            Me.baselineQuantile = baselineQuantile
         End Sub
 
+        Public Function GetAllFeatures(sample As Raw) As IEnumerable(Of ROI)
+            Return GetTICPeaks(sample.GetTIC, sn:=5, baselineQuantile:=baselineQuantile)
+        End Function
+
         Public Overrides Iterator Function GetSamplePeaks(sample As Raw) As IEnumerable(Of TargetPeakPoint)
-            Dim ROI As ROI() = GetTICPeaks(sample.GetTIC, sn:=5, baselineQuantile:=baselineQuantile).ToArray
+            ' get all features
+            Dim ROI As ROI() = sample.DoCall(AddressOf GetAllFeatures).ToArray
             Dim rtmin As Vector = ROI.Select(Function(r) r.time.Min).ToArray
             Dim rtmax As Vector = ROI.Select(Function(r) r.time.Max).ToArray
             Dim ms As ms2()() = ROI.Select(Function(r) GetMsScan(sample, r.time)).ToArray

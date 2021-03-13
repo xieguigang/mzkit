@@ -52,8 +52,11 @@
 
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Content
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.GCMS
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.GCMS.QuantifyAnalysis
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Data
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
@@ -67,6 +70,7 @@ Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.IO.MessagePack
+Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -203,9 +207,35 @@ Public Class frmTargetedQuantification
                     ions = MsgPackSerializer.Deserialize(Of QuantifyIon())(file)
                 End Using
             Catch ex As Exception
+                Call App.LogException(ex)
+                Call MyApplication.host.showStatusMessage("Error while load GCMS reference: " & ex.Message, My.Resources.StatusAnnotations_Warning_32xLG_color)
+
+                Return
             End Try
+        Else
+            ions = {}
         End If
+
+        Dim extract As New SIMIonExtract(ions, {5, 15}, Tolerance.DeltaMass(0.3), 10, 0.65)
+        Dim allFeatures = files _
+            .Select(Function(file) GetGCMSFeatures(file, extract)) _
+            .IteratesALL _
+            .ToArray
+
+
     End Sub
+
+    Private Function GetGCMSFeatures(file As String, extract As SIMIonExtract) As IEnumerable(Of ROI)
+        Dim gcms As GCMS.Raw
+
+        If file.ExtensionSuffix("cdf") Then
+            gcms = netCDFReader.Open(file).ReadData(showSummary:=False)
+        Else
+            gcms = mzMLReader.LoadFile(file)
+        End If
+
+        Return extract.GetAllFeatures(gcms)
+    End Function
 
     Private Sub loadMRMReference(files As NamedValue(Of String)())
         Dim ionsLib As IonLibrary = Globals.LoadIonLibrary
