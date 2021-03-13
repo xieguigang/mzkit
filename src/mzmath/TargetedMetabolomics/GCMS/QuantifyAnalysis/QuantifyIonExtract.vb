@@ -44,6 +44,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
@@ -83,9 +84,9 @@ Namespace GCMS.QuantifyAnalysis
             Me.baselineQuantile = baselineQuantile
         End Sub
 
-        Public Function FindIon(ROI As ROI) As QuantifyIon
-            Dim rtmin As Vector = ions.Select(Function(i) stdNum.Abs(i.rt.Min - ROI.time.Min)).AsVector
-            Dim rtmax As Vector = ions.Select(Function(i) stdNum.Abs(i.rt.Max - ROI.time.Max)).AsVector
+        Public Function FindIon(tmin As Double, tmax As Double, rt As Double) As QuantifyIon
+            Dim rtmin As Vector = ions.Select(Function(i) stdNum.Abs(i.rt.Min - tmin)).AsVector
+            Dim rtmax As Vector = ions.Select(Function(i) stdNum.Abs(i.rt.Max - tmax)).AsVector
             Dim zero As Vector = 0
             Dim ion As QuantifyIon
 
@@ -95,8 +96,8 @@ Namespace GCMS.QuantifyAnalysis
             If ((rtmin = 0.0) & (rtmax = 0.0)).Sum = ions.Length Then
                 ' 不存在
                 ion = New QuantifyIon With {
-                    .id = $"{ROI.time.Min}/{ROI.time.Max}",
-                    .rt = ROI.time,
+                    .id = $"{tmin}/{tmax}",
+                    .rt = rt,
                     .ms = {},
                     .name = .id
                 }
@@ -107,6 +108,12 @@ Namespace GCMS.QuantifyAnalysis
             Return ion
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function FindIon(ROI As ROI) As QuantifyIon
+            Return FindIon(ROI.time.Min, ROI.time.Max, ROI.rt)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetAllFeatures(sample As Raw) As IEnumerable(Of ROI)
             Return GetTICPeaks(sample.GetTIC, sn:=5, baselineQuantile:=baselineQuantile)
         End Function

@@ -427,7 +427,7 @@ Public Class frmTargetedQuantification
 
     Private Sub unifyLoadLinears()
         Dim ionLib As IonLibrary = Globals.LoadIonLibrary
-        Dim quantifyIons = LoadGCMSIonLibrary.ToDictionary(Function(q) q.name)
+        Dim quantifyIons As New SIMIonExtract(LoadGCMSIonLibrary, {0, 0}, Tolerance.DefaultTolerance, 0, 0)
 
         isGCMS = linearPack.targetted = TargettedData.SIM
 
@@ -445,11 +445,11 @@ Public Class frmTargetedQuantification
 
         Dim islist As String() = linearPack.IS _
             .Select(Function(i)
-                        Dim ionpairtext = i.ID.Split("/"c)
+                        Dim ionpairtext = i.ID.Split("/"c).Select(AddressOf Val).ToArray
                         Dim name As String
 
                         If isGCMS Then
-                            name = quantifyIons.GetIon(i.ID).name
+                            name = quantifyIons.FindIon(ionpairtext.Min, ionpairtext.Max, ionpairtext.Average).name
                         Else
                             name = New IonPair With {
                                 .precursor = ionpairtext(0),
@@ -465,7 +465,7 @@ Public Class frmTargetedQuantification
         allFeatures = islist
 
         For Each linear As KeyValuePair(Of String, SampleContentLevels) In linearPack.reference
-            Dim ionpairtext = linear.Key.Split("/"c)
+            Dim ionpairtext = linear.Key.Split("/"c).Select(AddressOf Val).ToArray
             Dim ionID As String
             Dim [is] As [IS] = linearPack.GetLinear(linear.Key)?.IS
 
@@ -474,7 +474,7 @@ Public Class frmTargetedQuantification
             End If
 
             If isGCMS Then
-                ionID = quantifyIons.GetIon(linear.Key).name
+                ionID = quantifyIons.FindIon(ionpairtext.Min, ionpairtext.Max, ionpairtext.Average).name
             Else
                 ionID = New IonPair With {
                     .precursor = ionpairtext(0),
@@ -484,10 +484,11 @@ Public Class frmTargetedQuantification
             End If
 
             If Not [is].ID.StringEmpty Then
+                ionpairtext = [is].ID.Split("/"c).Select(AddressOf Val).ToArray
+
                 If isGCMS Then
-                    [is].name = quantifyIons.GetIon([is].ID).name
+                    [is].name = quantifyIons.FindIon(ionpairtext.Min, ionpairtext.Max, ionpairtext.Average).name
                 Else
-                    ionpairtext = [is].ID.Split("/"c)
                     [is].name = New IonPair With {
                         .precursor = ionpairtext(0),
                         .product = ionpairtext(1)
