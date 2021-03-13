@@ -84,7 +84,7 @@ Namespace GCMS.QuantifyAnalysis
             Me.baselineQuantile = baselineQuantile
         End Sub
 
-        Public Function FindIon(tmin As Double, tmax As Double, rt As Double) As QuantifyIon
+        Public Function FindIon(tmin As Double, tmax As Double) As QuantifyIon
             Dim rtmin As Vector = ions.Select(Function(i) stdNum.Abs(i.rt.Min - tmin)).AsVector
             Dim rtmax As Vector = ions.Select(Function(i) stdNum.Abs(i.rt.Max - tmax)).AsVector
             Dim zero As Vector = 0
@@ -97,7 +97,7 @@ Namespace GCMS.QuantifyAnalysis
                 ' 不存在
                 ion = New QuantifyIon With {
                     .id = $"{tmin}/{tmax}",
-                    .rt = rt,
+                    .rt = {tmin, tmax},
                     .ms = {},
                     .name = .id
                 }
@@ -110,7 +110,7 @@ Namespace GCMS.QuantifyAnalysis
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function FindIon(ROI As ROI) As QuantifyIon
-            Return FindIon(ROI.time.Min, ROI.time.Max, ROI.rt)
+            Return FindIon(ROI.time.Min, ROI.time.Max)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

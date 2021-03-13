@@ -449,7 +449,7 @@ Public Class frmTargetedQuantification
                         Dim name As String
 
                         If isGCMS Then
-                            name = quantifyIons.FindIon(ionpairtext.Min, ionpairtext.Max, ionpairtext.Average).name
+                            name = quantifyIons.FindIon(ionpairtext.Min, ionpairtext.Max).name
                         Else
                             name = New IonPair With {
                                 .precursor = ionpairtext(0),
@@ -474,7 +474,7 @@ Public Class frmTargetedQuantification
             End If
 
             If isGCMS Then
-                ionID = quantifyIons.FindIon(ionpairtext.Min, ionpairtext.Max, ionpairtext.Average).name
+                ionID = quantifyIons.FindIon(ionpairtext.Min, ionpairtext.Max).name
             Else
                 ionID = New IonPair With {
                     .precursor = ionpairtext(0),
@@ -487,7 +487,7 @@ Public Class frmTargetedQuantification
                 ionpairtext = [is].ID.Split("/"c).Select(AddressOf Val).ToArray
 
                 If isGCMS Then
-                    [is].name = quantifyIons.FindIon(ionpairtext.Min, ionpairtext.Max, ionpairtext.Average).name
+                    [is].name = quantifyIons.FindIon(ionpairtext.Min, ionpairtext.Max).name
                 Else
                     [is].name = New IonPair With {
                         .precursor = ionpairtext(0),
