@@ -900,7 +900,10 @@ Public Class frmTargetedQuantification
 
                     With linears.Where(Function(l) Not l Is Nothing).ToArray
                         For Each file In points.GroupBy(Function(p) p.SampleName)
-                            scans.Add(.SampleQuantify(file.ToArray, PeakAreaMethods.SumAll, fileName:=file.Key))
+                            Dim uniqueIons = file.GroupBy(Function(p) p.Name).Select(Function(p) p.First).ToArray
+                            Dim quantify As QuantifyScan = .SampleQuantify(uniqueIons, PeakAreaMethods.SumAll, fileName:=file.Key)
+
+                            scans.Add(quantify)
                         Next
                     End With
                 Else
