@@ -1,5 +1,7 @@
 @echo off
 
-Rscript --build /save ../../../src/mzkit/setup/mzkit.zip
+SET Rscript="../../../dist/bin/Rscript.exe"
+
+%Rscript% --build /save ../../../src/mzkit/setup/mzkit.zip
 
 pause
