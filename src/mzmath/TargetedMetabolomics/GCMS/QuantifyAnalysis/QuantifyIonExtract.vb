@@ -141,7 +141,7 @@ Namespace GCMS.QuantifyAnalysis
             rtminScore = rtminScore.Max / rtminScore - 1
             rtmaxScore = rtmaxScore.Max / rtmaxScore - 1
 
-            Dim scores As Vector = (rtminScore + rtmaxScore) * 0.7 + cos * 0.3
+            Dim scores As Vector = (rtminScore + rtmaxScore) * cos
 
             If scores.All(Function(xi) xi = 0.0) Then
                 Return Nothing
