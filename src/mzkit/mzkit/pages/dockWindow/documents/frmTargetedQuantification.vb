@@ -427,7 +427,7 @@ Public Class frmTargetedQuantification
 
     Private Sub unifyLoadLinears()
         Dim ionLib As IonLibrary = Globals.LoadIonLibrary
-        Dim quantifyIons As New SIMIonExtract(LoadGCMSIonLibrary, {0, 0}, Tolerance.DefaultTolerance, 0, 0)
+        Dim quantifyIons As New SIMIonExtract(LoadGCMSIonLibrary, {0, 0}, Tolerance.DefaultTolerance, 20, 0)
 
         isGCMS = linearPack.targetted = TargettedData.SIM
 
@@ -547,7 +547,14 @@ Public Class frmTargetedQuantification
             contentLevel(id.value) = any.ToString(row.Cells(id + 2).Value).ParseDouble
         Next
 
-        Dim directMap As Boolean = Me.linearFiles.All(Function(name) name.Value.BaseName.IsContentPattern)
+        Dim directMap As Boolean
+
+        If Me.linearFiles Is Nothing Then
+            directMap = Me.linearPack.GetLevelKeys.All(Function(name) name.BaseName.IsContentPattern)
+        Else
+            directMap = Me.linearFiles.All(Function(name) name.Value.BaseName.IsContentPattern)
+        End If
+
         Dim contentSampleLevel As New SampleContentLevels(contentLevel, directMap)
         Dim ref As New Standards With {
             .C = New Dictionary(Of String, Double),

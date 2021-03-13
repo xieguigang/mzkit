@@ -87,13 +87,13 @@ Namespace GCMS.QuantifyAnalysis
         Public Function FindIon(tmin As Double, tmax As Double) As QuantifyIon
             Dim rtmin As Vector = ions.Select(Function(i) stdNum.Abs(i.rt.Min - tmin)).AsVector
             Dim rtmax As Vector = ions.Select(Function(i) stdNum.Abs(i.rt.Max - tmax)).AsVector
-            Dim zero As Vector = 0
+            Dim zero As Vector = Double.MinValue
             Dim ion As QuantifyIon
 
             rtmin(rtmin > rtshift) = zero
             rtmax(rtmax > rtshift) = zero
 
-            If ((rtmin = 0.0) & (rtmax = 0.0)).Sum = ions.Length Then
+            If ((rtmin < 0.0) & (rtmax < 0.0)).Sum = ions.Length Then
                 ' 不存在
                 ion = New QuantifyIon With {
                     .id = $"{tmin}/{tmax}",
