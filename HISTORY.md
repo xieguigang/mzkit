@@ -34,7 +34,7 @@ This open source mass spectrometry data toolkit is developed at the BioDeep R&D 
 
 ## ``1.32.7743.6345`` Mar 14, 2021
 
->
+> 10.5281/zenodo.4603277
 
 + ``enhancement`` improvements of the raw data charting plot styles
 + ``new`` add peak annotation result for MS matrix viewer
