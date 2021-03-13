@@ -1,6 +1,10 @@
 ﻿Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
+Imports Microsoft.VisualBasic.My
 
+''' <summary>
+''' 登录状态信息使用<see cref="SingletonHolder(Of BioDeepSession)"/>进行保存
+''' </summary>
 Public Class BioDeepSession
 
     Public Property cookieName As String
@@ -10,6 +14,10 @@ Public Class BioDeepSession
         Return New Dictionary(Of String, String) From {{"Cookie", $"BIODEEP_USER_SESSION={ssid};"}}
     End Function
 
+    ''' <summary>
+    ''' 检查是否处于登录状态
+    ''' </summary>
+    ''' <returns></returns>
     Public Function CheckSession() As Boolean
         Dim url$ = "http://my.biodeep.cn/services/ping.vbs"
         Dim result As Boolean = url _

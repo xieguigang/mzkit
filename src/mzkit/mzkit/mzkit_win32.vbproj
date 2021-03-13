@@ -308,6 +308,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="forms\ISplashScreenUpdater.vb" />
+    <Compile Include="pages\ConnectToBioDeep.vb" />
     <Compile Include="pages\contextMenu\ToggleSlider.Designer.vb">
       <DependentUpon>ToggleSlider.vb</DependentUpon>
     </Compile>

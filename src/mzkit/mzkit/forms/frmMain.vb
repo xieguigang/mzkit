@@ -268,7 +268,7 @@ Public Class frmMain
         AddHandler ribbonItems.RecentItems.ExecuteEvent, AddressOf _recentItems_ExecuteEvent
         ' AddHandler ribbonItems.ButtonMsImaging.ExecuteEvent, AddressOf showMsImaging
         AddHandler ribbonItems.ButtonMsDemo.ExecuteEvent, Sub() msDemo.ShowPage()
-        AddHandler ribbonItems.Targeted.ExecuteEvent, Sub() Call VisualStudio.ShowSingleDocument(Of frmTargetedQuantification)()
+        AddHandler ribbonItems.Targeted.ExecuteEvent, Sub() Call ConnectToBioDeep.OpenAdvancedFunction(AddressOf VisualStudio.ShowSingleDocument(Of frmTargetedQuantification))
 
         AddHandler ribbonItems.MRMLibrary.ExecuteEvent, Sub() Call VisualStudio.ShowSingleDocument(Of frmMRMLibrary)(Nothing)
         AddHandler ribbonItems.QuantifyIons.ExecuteEvent, Sub() Call VisualStudio.ShowSingleDocument(Of frmQuantifyIons)(Nothing)
