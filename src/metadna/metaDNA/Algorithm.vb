@@ -80,11 +80,12 @@ Public Class Algorithm
 
 #Region "algorithm initialization"
 
-    Sub New(ms1ppm As Tolerance, dotcutoff As Double, mzwidth As Tolerance)
+    Sub New(ms1ppm As Tolerance, dotcutoff As Double, mzwidth As Tolerance, Optional allowMs1 As Boolean = True)
         Me.ms1ppm = ms1ppm
         Me.dotcutoff = dotcutoff
         Me.MSalignment = New CosAlignment(mzwidth, LowAbundanceTrimming.Default)
         Me.mzwidth = mzwidth
+        Me.allowMs1 = allowMs1
     End Sub
 
     Public Function SetSearchRange(ParamArray precursorTypes As String()) As Algorithm
@@ -213,7 +214,8 @@ Public Class Algorithm
                         .intensity = seed.parent.intensity
                     },
                     .parentTrace = seed.parentTrace,
-                    .inferSize = seed.inferSize + 1
+                    .inferSize = seed.inferSize + 1,
+                    .rawFile = hit.file
                 }
             End If
         Next

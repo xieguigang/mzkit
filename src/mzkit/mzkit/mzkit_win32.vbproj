@@ -308,6 +308,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="forms\ISplashScreenUpdater.vb" />
+    <Compile Include="pages\ConnectToBioDeep.vb" />
     <Compile Include="pages\contextMenu\ToggleSlider.Designer.vb">
       <DependentUpon>ToggleSlider.vb</DependentUpon>
     </Compile>
@@ -451,6 +452,12 @@
     </Compile>
     <Compile Include="pages\dockWindow\tools\PropertyWindow.vb">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="pages\pageStart\VideoCards.Designer.vb">
+      <DependentUpon>VideoCards.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\pageStart\VideoCards.vb">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="pages\toolkit\PlotTooltip.vb">
       <SubType>Component</SubType>
@@ -716,6 +723,9 @@
     <EmbeddedResource Include="pages\dockWindow\tools\TaskListWindow.resx">
       <DependentUpon>TaskListWindow.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="pages\pageStart\VideoCards.resx">
+      <DependentUpon>VideoCards.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="pages\toolkit\PageMoleculeNetworking.resx">
       <DependentUpon>PageMoleculeNetworking.vb</DependentUpon>
     </EmbeddedResource>
@@ -978,6 +988,7 @@
     <None Include="Res\IE.ico" />
     <None Include="Resources\1200px-Checked.svg.png" />
     <None Include="Resources\img_561134.png" />
+    <None Include="Resources\DBFile.ico" />
     <Content Include="RibbonMarkup.h" />
     <Content Include="RibbonMarkup.xml" />
     <None Include="Resources\header-foreground-image.png" />

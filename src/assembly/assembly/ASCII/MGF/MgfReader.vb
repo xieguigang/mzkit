@@ -63,27 +63,27 @@ Namespace ASCII.MGF
         ''' <param name="ions"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function IonPeaks(ions As IEnumerable(Of Ions)) As IEnumerable(Of PeakMs2)
-            Return ions _
-                .Select(Function(ion)
-                            Dim meta As New MetaData(ion.Meta)
-                            Dim id As String = ion.Accession Or ion.Title.AsDefault
+        Public Iterator Function IonPeaks(ions As IEnumerable(Of Ions)) As IEnumerable(Of PeakMs2)
+            For Each ion As Ions In ions
+                Dim meta As New MetaData(ion.Meta)
+                Dim id As String = ion.Accession Or ion.Title.AsDefault
 
-                            meta!ion_intensity = ion.PepMass.text
+                meta!ion_intensity = ion.PepMass.text
 
-                            Return New PeakMs2 With {
-                                .activation = meta.activation,
-                                .collisionEnergy = meta.collisionEnergy,
-                                .file = ion.Rawfile,
-                                .mz = Val(ion.PepMass.name),
-                                .mzInto = ion.Peaks,
-                                .rt = ion.RtInSeconds,
-                                .scan = meta.scan,
-                                .lib_guid = id,
-                                .meta = meta,
-                                .precursor_type = meta.precursor_type
-                            }
-                        End Function)
+                Yield New PeakMs2 With {
+                    .activation = meta.activation,
+                    .collisionEnergy = meta.collisionEnergy,
+                    .file = ion.Rawfile,
+                    .mz = Val(ion.PepMass.name),
+                    .mzInto = ion.Peaks,
+                    .rt = ion.RtInSeconds,
+                    .scan = meta.scan,
+                    .lib_guid = id,
+                    .meta = meta,
+                    .precursor_type = meta.precursor_type,
+                    .intensity = Val(ion.PepMass.text)
+                }
+            Next
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

@@ -10,11 +10,19 @@ Public Module MessageParser
 
     <Extension>
     Public Function success(msg As JsonObject) As Boolean
-        Return msg.ContainsKey("code") AndAlso msg!code.AsString = "0"
+        If msg Is Nothing Then
+            Return False
+        Else
+            Return msg.ContainsKey("code") AndAlso msg!code.AsString = "0"
+        End If
     End Function
 
     <Extension>
     Public Function getMsgString(msg As JsonObject) As String
-        Return msg.ContainsKey("info") AndAlso msg!info.AsString
+        If msg.ContainsKey("info") Then
+            Return msg!info.AsString
+        Else
+            Return Nothing
+        End If
     End Function
 End Module

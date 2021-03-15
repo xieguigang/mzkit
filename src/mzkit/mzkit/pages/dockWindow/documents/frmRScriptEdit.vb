@@ -94,6 +94,10 @@ Public Class frmRScriptEdit
 
         If Not e.Cancel Then
             MyApplication.host.scriptFiles.Remove(Me)
+
+            If Not MyApplication.host.dockPanel.Documents.Where(Function(d) TypeOf d Is frmRScriptEdit).Any Then
+                MyApplication.host.ribbonItems.TabGroupRscriptTools.ContextAvailable = ContextAvailability.NotAvailable
+            End If
         End If
     End Sub
 
@@ -108,6 +112,34 @@ Public Class frmRScriptEdit
 
     Private Sub Editor1_EditCode() Handles Editor1.EditCode
         _IsUnsaved = False
+    End Sub
+
+    Protected Overrides Sub SaveDocument()
+        If scriptFile.StringEmpty Then
+            Dim result = MessageBox.Show("Save current script file?", "File Not Saved", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
+
+            If result = DialogResult.Yes Then
+                MyApplication.host.SaveScript(Me)
+            End If
+        Else
+            Call Save(scriptFile)
+        End If
+    End Sub
+
+    Protected Overrides Sub CopyFullPath()
+        If Not scriptFile.StringEmpty Then
+            Call Clipboard.SetText(scriptFile)
+        Else
+            Call MyApplication.host.showStatusMessage("please save script file before this operation...", My.Resources.StatusAnnotations_Warning_32xLG_color)
+        End If
+    End Sub
+
+    Protected Overrides Sub OpenContainingFolder()
+        If Not scriptFile.StringEmpty Then
+            Call Process.Start(scriptFile.ParentPath)
+        Else
+            Call MyApplication.host.showStatusMessage("please save script file before this operation...", My.Resources.StatusAnnotations_Warning_32xLG_color)
+        End If
     End Sub
 
     Public Function Save(path As String, encoding As Encoding) As Boolean Implements ISaveHandle.Save

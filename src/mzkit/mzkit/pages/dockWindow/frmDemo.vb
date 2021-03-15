@@ -157,7 +157,7 @@ Public Class frmDemo
 
                 ' GC-MS
                 Dim demoPath As String = $"{App.HOME}/demo/5ppm.CDF"
-                MyApplication.host.ShowGCMSSIM(demoPath, isBackground:=False)
+                MyApplication.host.ShowGCMSSIM(demoPath, isBackground:=False, showExplorer:=True)
 
         End Select
     End Sub

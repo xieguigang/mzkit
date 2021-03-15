@@ -75,6 +75,12 @@ Namespace LinearQuantitative.Data
                 pack.peakSamples = cdf.parsePeaks.ToArray
                 pack.linears = cdf.parseLinears.ToArray
                 pack.IS = cdf.parseIS
+
+                If cdf("targetted") Is Nothing Then
+                    pack.targetted = TargettedData.MRM
+                Else
+                    pack.targetted = [Enum].Parse(GetType(TargettedData), cdf("targetted"))
+                End If
             End Using
 
             Return pack

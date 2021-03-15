@@ -67,5 +67,15 @@ Namespace Infer
         ''' <returns></returns>
         Public Property inferSize As Integer
 
+        ''' <summary>
+        ''' the source file of where <see cref="query"/> comes from.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property rawFile As String
+
+        Public Overrides Function ToString() As String
+            Return $"[{level.Description}] {kegg} {MyBase.ToString}"
+        End Function
+
     End Class
 End Namespace

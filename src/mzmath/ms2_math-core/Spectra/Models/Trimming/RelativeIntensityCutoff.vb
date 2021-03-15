@@ -61,11 +61,9 @@ Namespace Spectra
                 End If
             Next
 
-            For Each fragment As ms2 In spectrum
-                fragment.intensity = fragment.intensity / maxInto
-            Next
-
-            Return spectrum.Where(Function(a) a.intensity >= m_threshold).ToArray
+            Return spectrum _
+                .Where(Function(a) (a.intensity / maxInto) >= m_threshold) _
+                .ToArray
         End Function
 
         Public Overrides Function ToString() As String

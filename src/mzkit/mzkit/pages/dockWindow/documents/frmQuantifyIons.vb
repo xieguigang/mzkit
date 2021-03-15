@@ -75,6 +75,7 @@ Public Class frmQuantifyIons
     Private Sub frmQuantifyIons_Load(sender As Object, e As EventArgs) Handles Me.Load
         TabText = "GC-MS Quantify Ions Library"
         FilePath = Globals.Settings.QuantifyIonLibfile
+        Icon = My.Resources.DBFile
 
         If FilePath.FileLength > 0 Then
             Try
@@ -95,6 +96,10 @@ Public Class frmQuantifyIons
         End If
     End Sub
 
+    Protected Overrides Sub SaveDocument()
+        Call Save(FilePath)
+    End Sub
+
     Public Function Save(path As String, encoding As Encoding) As Boolean Implements ISaveHandle.Save
         Dim ions As New List(Of QuantifyIon)
         Dim row As DataGridViewRow
@@ -104,6 +109,15 @@ Public Class frmQuantifyIons
             row = DataGridView1.Rows.Item(i)
             ion1 = New ms2 With {.mz = any.ToString(row.Cells(4).Value).ParseDouble, .intensity = 1}
             ion2 = New ms2 With {.mz = any.ToString(row.Cells(5).Value).ParseDouble, .intensity = 0.65}
+
+            If ion1.mz = 0 AndAlso ion2.mz = 0 Then
+                Continue For
+            End If
+
+            If any.ToString(row.Cells(0).Value).StringEmpty AndAlso any.ToString(row.Cells(1).Value).StringEmpty Then
+                Continue For
+            End If
+
             ions += New QuantifyIon With {
                 .id = any.ToString(row.Cells(0).Value),
                 .name = any.ToString(row.Cells(1).Value),
@@ -128,4 +142,14 @@ Public Class frmQuantifyIons
     Public Function Save(path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
         Return Save(path, encoding.CodePage)
     End Function
+
+    Protected Overrides Sub OpenContainingFolder()
+        If Not FilePath.StringEmpty Then
+            Call Process.Start(FilePath.ParentPath)
+        End If
+    End Sub
+
+    Protected Overrides Sub CopyFullPath()
+        Call Clipboard.SetText(FilePath)
+    End Sub
 End Class

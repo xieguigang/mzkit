@@ -57,6 +57,12 @@ Public Class KEGGHandler
     ReadOnly massIndex As AVLTree(Of MassIndexKey, Compound)
     ReadOnly keggIndex As Dictionary(Of String, Compound)
 
+    Public ReadOnly Property Calculators As Dictionary(Of String, MzCalculator)
+        Get
+            Return precursorTypes.ToDictionary(Function(c) c.ToString)
+        End Get
+    End Property
+
     Sub New(tree As AVLTree(Of MassIndexKey, Compound), tolerance As Tolerance, precursorTypes As MzCalculator())
         Me.tolerance = tolerance
         Me.massIndex = tree

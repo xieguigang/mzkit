@@ -54,7 +54,12 @@ Namespace GCMS.QuantifyAnalysis
 
     Public Class SIMIonExtract : Inherits QuantifyIonExtract
 
-        Public Sub New(ions As IEnumerable(Of QuantifyIon), peakwidth As DoubleRange, centroid As Tolerance, rtshift As Double, baselineQuantile As Double)
+        Public Sub New(ions As IEnumerable(Of QuantifyIon),
+                       peakwidth As DoubleRange,
+                       centroid As Tolerance,
+                       rtshift As Double,
+                       baselineQuantile As Double)
+
             Call MyBase.New(ions, peakwidth, centroid, rtshift, baselineQuantile)
         End Sub
 

@@ -52,8 +52,11 @@
 
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Content
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.GCMS
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.GCMS.QuantifyAnalysis
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Data
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
@@ -67,15 +70,18 @@ Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.IO.MessagePack
+Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports mzkit.My
 Imports RibbonLib.Controls.Events
 Imports RibbonLib.Interop
 Imports Task
 Imports any = Microsoft.VisualBasic.Scripting
 Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
+Imports stdNum = System.Math
 
 Public Class frmTargetedQuantification
 
@@ -86,6 +92,9 @@ Public Class frmTargetedQuantification
         AddHandler MyApplication.ribbon.SaveLinears.ExecuteEvent, AddressOf saveLinearsTable
 
         TabText = "Targeted Quantification"
+
+        CopyFullPathToolStripMenuItem.Enabled = False
+        OpenContainingFolderToolStripMenuItem.Enabled = False
 
         Call reloadProfileNames()
         Call ApplyVsTheme(ToolStrip1, ToolStrip2, ContextMenuStrip1, ContextMenuStrip2, ContextMenuStrip3)
@@ -111,6 +120,7 @@ Public Class frmTargetedQuantification
     Dim linearPack As LinearPack
     Dim linearFiles As NamedValue(Of String)()
     Dim allFeatures As String()
+    Dim isGCMS As Boolean = False
 
     Sub saveLinearsTable(sender As Object, e As ExecuteEventArgs)
         If linearPack Is Nothing OrElse linearPack.linears.IsNullOrEmpty Then
@@ -130,6 +140,7 @@ Public Class frmTargetedQuantification
             If importsFile.ShowDialog = DialogResult.OK Then
                 Dim files As NamedValue(Of String)() = ContentTable.StripMaxCommonNames(importsFile.FileNames)
                 Dim fakeLevels As Dictionary(Of String, Double)
+                Dim directMapName As Boolean = False
 
                 If files.All(Function(name) name.Value.BaseName.IsContentPattern) Then
                     files = files _
@@ -150,6 +161,7 @@ Public Class frmTargetedQuantification
                                               .ScaleTo(ContentUnits.ppb) _
                                               .Value
                                       End Function)
+                    directMapName = True
                 Else
                     fakeLevels = files _
                         .ToDictionary(Function(file) file.Name,
@@ -164,15 +176,14 @@ Public Class frmTargetedQuantification
                 DataGridView1.Columns.Add(New DataGridViewLinkColumn With {.HeaderText = "Features"})
                 DataGridView1.Columns.Add(New DataGridViewComboBoxColumn With {.HeaderText = "IS"})
 
-                Dim isGCMS As Boolean = False
-
                 For Each file As NamedValue(Of String) In files
                     Call DataGridView1.Columns.Add(New DataGridViewTextBoxColumn With {.HeaderText = file.Name})
 
                     If file.Value.ExtensionSuffix("CDF") OrElse RawScanParser.IsSIMData(file.Value) Then
                         isGCMS = True
-                        Call MyApplication.host.ShowGCMSSIM(file.Value, isBackground:=False)
+                        Call MyApplication.host.ShowGCMSSIM(file.Value, isBackground:=False, showExplorer:=False)
                     Else
+                        isGCMS = False
                         Call MyApplication.host.ShowMRMIons(file.Value)
                     End If
                 Next
@@ -180,38 +191,89 @@ Public Class frmTargetedQuantification
                 Me.linearFiles = files
                 Me.linearPack = New LinearPack With {
                     .reference = New Dictionary(Of String, SampleContentLevels) From {
-                        {"n/a", New SampleContentLevels(fakeLevels)}
+                        {"n/a", New SampleContentLevels(fakeLevels, directMapName)}
                     }
                 }
 
                 If isGCMS Then
-                    Call loadGCMSReference(files)
+                    Call loadGCMSReference(files, directMapName)
                 Else
-                    Call loadMRMReference(files)
+                    Call loadMRMReference(files, directMapName)
                 End If
             End If
         End Using
     End Sub
 
-    Private Sub loadGCMSReference(files As NamedValue(Of String)())
-        Dim ions As QuantifyIon()
+    Private Function LoadGCMSIonLibrary() As QuantifyIon()
         Dim filePath = Globals.Settings.QuantifyIonLibfile
 
         If filePath.FileLength > 0 Then
             Try
                 Using file As Stream = filePath.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-                    ions = MsgPackSerializer.Deserialize(Of QuantifyIon())(file)
+                    Return MsgPackSerializer.Deserialize(Of QuantifyIon())(file)
                 End Using
             Catch ex As Exception
+                Call App.LogException(ex)
+                Call MyApplication.host.showStatusMessage("Error while load GCMS reference: " & ex.Message, My.Resources.StatusAnnotations_Warning_32xLG_color)
+
+                Return {}
             End Try
+        Else
+            Return {}
         End If
+    End Function
+
+    Private Sub loadGCMSReference(files As NamedValue(Of String)(), directMapName As Boolean)
+        Dim ions As QuantifyIon() = LoadGCMSIonLibrary()
+        Dim extract As SIMIonExtract = GetGCMSFeatureReader(ions)
+        Dim allFeatures = files _
+            .Select(Function(file) GetGCMSFeatures(file, extract)) _
+            .IteratesALL _
+            .GroupBy(Function(p) p.rt, Function(x, y) stdNum.Abs(x - y) <= 15) _
+            .ToArray
+        Dim contentLevels = linearPack.reference("n/a")
+
+        Me.allFeatures = allFeatures.Select(Function(p) $"{p.value.First.time.Min}/{p.value.First.time.Max}").ToArray
+
+        For Each group As NamedCollection(Of ROI) In allFeatures
+            Dim ion As QuantifyIon = extract.FindIon(group.First)
+            Dim i As Integer = DataGridView1.Rows.Add(ion.name)
+            Dim comboxBox As DataGridViewComboBoxCell = DataGridView1.Rows(i).Cells(1)
+
+            comboxBox.Items.Add("")
+
+            For Each IS_candidate In allFeatures
+                comboxBox.Items.Add(extract.FindIon(IS_candidate.First).name)
+            Next
+
+            If directMapName Then
+                Dim row As DataGridViewRow = DataGridView1.Rows(i)
+
+                For index As Integer = 2 To DataGridView1.Columns.Count - 1
+                    row.Cells(index).Value = contentLevels.Content(DataGridView1.Columns(index).HeaderText)
+                Next
+            End If
+        Next
     End Sub
 
-    Private Sub loadMRMReference(files As NamedValue(Of String)())
+    Private Function GetGCMSFeatures(file As String, extract As SIMIonExtract) As IEnumerable(Of ROI)
+        Dim gcms As GCMS.Raw
+
+        If file.ExtensionSuffix("cdf") Then
+            gcms = netCDFReader.Open(file).ReadData(showSummary:=False)
+        Else
+            gcms = mzMLReader.LoadFile(file)
+        End If
+
+        Return extract.GetAllFeatures(gcms)
+    End Function
+
+    Private Sub loadMRMReference(files As NamedValue(Of String)(), directMapName As Boolean)
         Dim ionsLib As IonLibrary = Globals.LoadIonLibrary
         Dim allFeatures As IonPair() = files _
             .Select(Function(file) file.Value) _
             .GetAllFeatures
+        Dim contentLevels = linearPack.reference("n/a")
 
         Me.allFeatures = allFeatures.Select(AddressOf ionsLib.GetDisplay).ToArray
 
@@ -220,9 +282,19 @@ Public Class frmTargetedQuantification
             Dim i As Integer = DataGridView1.Rows.Add(refId)
             Dim comboxBox As DataGridViewComboBoxCell = DataGridView1.Rows(i).Cells(1)
 
+            comboxBox.Items.Add("")
+
             For Each IS_candidate As IonPair In allFeatures
                 comboxBox.Items.Add(ionsLib.GetDisplay(IS_candidate))
             Next
+
+            If directMapName Then
+                Dim row As DataGridViewRow = DataGridView1.Rows(i)
+
+                For index As Integer = 2 To DataGridView1.Columns.Count - 1
+                    row.Cells(index).Value = contentLevels.Content(DataGridView1.Columns(index).HeaderText)
+                Next
+            End If
         Next
     End Sub
 
@@ -248,34 +320,49 @@ Public Class frmTargetedQuantification
         Next
     End Function
 
-    Private Iterator Function getStandards() As IEnumerable(Of Standards)
+    Private Iterator Function unifyGetStandards() As IEnumerable(Of Standards)
         Dim levelKeys As String() = GetTableLevelKeys.ToArray
         Dim ionLib As IonLibrary = Globals.LoadIonLibrary
+        Dim GCMSIons = LoadGCMSIonLibrary.ToDictionary(Function(i) i.name)
 
         For Each row As DataGridViewRow In DataGridView1.Rows
             Dim rid As String = any.ToString(row.Cells(0).Value)
             Dim IS_id As String = any.ToString(row.Cells(1).Value)
             Dim levels As New Dictionary(Of String, Double)
-            Dim ion As IonPair
 
             If rid.StringEmpty AndAlso IS_id.StringEmpty Then
                 Continue For
             End If
 
-            ion = ionLib.GetIonByKey(rid)
+            If isGCMS Then
+                Dim ion As QuantifyIon = GCMSIons.GetIon(rid)
 
-            If Not ion Is Nothing Then
-                rid = $"{ion.precursor}/{ion.product}"
-            ElseIf rid.IsPattern("Ion \[.+?\]") Then
-                rid = rid.GetStackValue("[", "]")
-            End If
+                If Not ion Is Nothing Then
+                    rid = $"{ion.rt.Min}/{ion.rt.Max}"
+                End If
 
-            ion = ionLib.GetIonByKey(IS_id)
+                ion = GCMSIons.GetIon(IS_id)
 
-            If Not ion Is Nothing Then
-                IS_id = $"{ion.precursor}/{ion.product}"
-            ElseIf IS_id.IsPattern("Ion \[.+?\]") Then
-                IS_id = IS_id.GetStackValue("[", "]")
+                If Not ion Is Nothing Then
+                    IS_id = $"{ion.rt.Min}/{ion.rt.Max}"
+                End If
+
+            Else
+                Dim ion As IonPair = ionLib.GetIonByKey(rid)
+
+                If Not ion Is Nothing Then
+                    rid = $"{ion.precursor}/{ion.product}"
+                ElseIf rid.IsPattern("Ion \[.+?\]") Then
+                    rid = rid.GetStackValue("[", "]")
+                End If
+
+                ion = ionLib.GetIonByKey(IS_id)
+
+                If Not ion Is Nothing Then
+                    IS_id = $"{ion.precursor}/{ion.product}"
+                ElseIf IS_id.IsPattern("Ion \[.+?\]") Then
+                    IS_id = IS_id.GetStackValue("[", "]")
+                End If
             End If
 
             For i As Integer = 2 To DataGridView1.Columns.Count - 1
@@ -297,7 +384,7 @@ Public Class frmTargetedQuantification
         Next
     End Function
 
-    Private Sub SaveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveToolStripMenuItem.Click, ToolStripButton1.Click
+    Protected Overrides Sub SaveDocument() Handles SaveToolStripMenuItem.Click, ToolStripButton1.Click
         ' Dim ref As New List(Of Standards)(getStandards)
         Dim profileName As String = cbProfileNameSelector.Text
 
@@ -308,8 +395,11 @@ Public Class frmTargetedQuantification
 
         Dim file As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) & $"/mzkit/linears/{profileName}.linearPack"
 
-        Call saveLinearPack(profileName, file)
-        Call reloadProfileNames()
+        Call frmTaskProgress.RunAction(
+            Sub()
+                Call Me.Invoke(Sub() Call saveLinearPack(profileName, file))
+                Call Me.Invoke(Sub() Call reloadProfileNames())
+            End Sub, "Save Linear Reference Models", "...")
 
         Call MyApplication.host.showStatusMessage($"linear model profile '{profileName}' saved!")
     End Sub
@@ -317,7 +407,10 @@ Public Class frmTargetedQuantification
     Private Sub SaveAsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveAsToolStripMenuItem.Click
         Using savefile As New SaveFileDialog With {.Title = "Select location for save linear pack data.", .Filter = "Mzkit Linear Models(*.linearPack)|*.linearPack"}
             If savefile.ShowDialog = DialogResult.OK Then
-                Call saveLinearPack(savefile.FileName.BaseName, savefile.FileName)
+                Call frmTaskProgress.RunAction(
+                    Sub()
+                        Call Me.Invoke(Sub() saveLinearPack(savefile.FileName.BaseName, savefile.FileName))
+                    End Sub, "Save Linear Reference Models", "...")
             End If
         End Using
     End Sub
@@ -335,8 +428,11 @@ Public Class frmTargetedQuantification
         End If
     End Sub
 
-    Private Sub loadLinears()
+    Private Sub unifyLoadLinears()
         Dim ionLib As IonLibrary = Globals.LoadIonLibrary
+        Dim quantifyIons As SIMIonExtract = GetGCMSFeatureReader(LoadGCMSIonLibrary)
+
+        isGCMS = linearPack.targetted = TargettedData.SIM
 
         DataGridView1.Rows.Clear()
         DataGridView1.Columns.Clear()
@@ -352,29 +448,62 @@ Public Class frmTargetedQuantification
 
         Dim islist As String() = linearPack.IS _
             .Select(Function(i)
-                        Dim ionpairtext = i.ID.Split("/"c)
-                        Dim ionpair As New IonPair With {.precursor = ionpairtext(0), .product = ionpairtext(1)}
+                        Dim ionpairtext = i.ID.Split("/"c).Select(AddressOf Val).ToArray
+                        Dim name As String
 
-                        Return ionLib.GetDisplay(ionpair)
+                        If isGCMS Then
+                            name = quantifyIons.FindIon(ionpairtext.Min, ionpairtext.Max).name
+                        Else
+                            name = New IonPair With {
+                                .precursor = ionpairtext(0),
+                                .product = ionpairtext(1)
+                            } _
+                            .DoCall(AddressOf ionLib.GetDisplay)
+                        End If
+
+                        Return name
                     End Function) _
             .ToArray
 
         allFeatures = islist
 
         For Each linear As KeyValuePair(Of String, SampleContentLevels) In linearPack.reference
-            Dim ionpairtext = linear.Key.Split("/"c)
-            Dim ionpair As New IonPair With {.precursor = ionpairtext(0), .product = ionpairtext(1)}
-            Dim ionID As String = ionLib.GetDisplay(ionpair)
-            Dim [is] As [IS] = linearPack.GetLinear(linear.Key).IS
+            Dim ionpairtext = linear.Key.Split("/"c).Select(AddressOf Val).ToArray
+            Dim ionID As String
+            Dim [is] As [IS] = linearPack.GetLinear(linear.Key)?.IS
+
+            If [is] Is Nothing Then
+                [is] = New [IS]
+            End If
+
+            If isGCMS Then
+                ionID = quantifyIons.FindIon(ionpairtext.Min, ionpairtext.Max).name
+            Else
+                ionID = New IonPair With {
+                    .precursor = ionpairtext(0),
+                    .product = ionpairtext(1)
+                } _
+                .DoCall(AddressOf ionLib.GetDisplay)
+            End If
 
             If Not [is].ID.StringEmpty Then
-                ionpairtext = [is].ID.Split("/"c)
-                ionpair = New IonPair With {.precursor = ionpairtext(0), .product = ionpairtext(1)}
-                [is].name = ionLib.GetDisplay(ionpair)
+                ionpairtext = [is].ID.Split("/"c).Select(AddressOf Val).ToArray
+
+                If isGCMS Then
+                    [is].name = quantifyIons.FindIon(ionpairtext.Min, ionpairtext.Max).name
+                Else
+                    [is].name = New IonPair With {
+                        .precursor = ionpairtext(0),
+                        .product = ionpairtext(1)
+                    } _
+                    .DoCall(AddressOf ionLib.GetDisplay)
+                End If
             End If
 
             Dim i As Integer = DataGridView1.Rows.Add(ionID)
             Dim IScandidate As DataGridViewComboBoxCell = DataGridView1.Rows(i).Cells(1)
+
+            IScandidate.Items.Add("")
 
             For Each id As String In islist
                 IScandidate.Items.Add(id)
@@ -403,7 +532,8 @@ Public Class frmTargetedQuantification
         Dim file As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) & $"/mzkit/linears/{profileName}.linearPack"
 
         linearPack = LinearPack.OpenFile(file)
-        loadLinears()
+
+        Call unifyLoadLinears()
     End Sub
 
     Private Sub reload(sender As Object, e As EventArgs) Handles ToolStripButton3.Click
@@ -420,7 +550,15 @@ Public Class frmTargetedQuantification
             contentLevel(id.value) = any.ToString(row.Cells(id + 2).Value).ParseDouble
         Next
 
-        Dim contentSampleLevel As New SampleContentLevels(contentLevel)
+        Dim directMap As Boolean
+
+        If Me.linearFiles Is Nothing Then
+            directMap = Me.linearPack.GetLevelKeys.All(Function(name) name.BaseName.IsContentPattern)
+        Else
+            directMap = Me.linearFiles.All(Function(name) name.Value.BaseName.IsContentPattern)
+        End If
+
+        Dim contentSampleLevel As New SampleContentLevels(contentLevel, directMap)
         Dim ref As New Standards With {
             .C = New Dictionary(Of String, Double),
             .ID = ionId,
@@ -438,11 +576,16 @@ Public Class frmTargetedQuantification
     Dim standardCurve As StandardCurve
 
     Private Sub DataGridView1_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellDoubleClick
-        If e.ColumnIndex <> 0 Then
+        If e.ColumnIndex <> 0 OrElse e.RowIndex < 0 Then
             Return
         End If
 
         standardCurve = createLinear(DataGridView1.Rows(e.RowIndex))
+
+        If standardCurve Is Nothing Then
+            Return
+        End If
+
         PictureBox1.BackgroundImage = standardCurve _
             .StandardCurves(
                 size:="1920,1200",
@@ -459,23 +602,33 @@ Public Class frmTargetedQuantification
         Next
     End Sub
 
+    ''' <summary>
+    ''' unify save linear pack data
+    ''' </summary>
+    ''' <param name="title"></param>
+    ''' <param name="file"></param>
     Private Sub saveLinearPack(title As String, file As String)
-        Dim ref As Standards() = getStandards.ToArray
+        Dim ref As Standards() = unifyGetStandards.ToArray
         Dim linears As New List(Of StandardCurve)
         Dim points As TargetPeakPoint() = Nothing
         Dim refPoints As New List(Of TargetPeakPoint)
         Dim refLevels As New Dictionary(Of String, SampleContentLevels)
         Dim ionLib As IonLibrary = Globals.LoadIonLibrary
-        Dim ion As IonPair
+        Dim GCMSIons = LoadGCMSIonLibrary.ToDictionary(Function(i) i.name)
+        Dim directMap As Boolean = ref(Scan0).C.Keys.All(Function(name) name.IsContentPattern)
 
         For Each i As Standards In ref
-            refLevels(i.ID) = New SampleContentLevels(i.C, directMap:=False)
+            refLevels(i.ID) = New SampleContentLevels(i.C, directMap:=directMap)
         Next
 
         For Each row As DataGridViewRow In DataGridView1.Rows
             If isValidLinearRow(row) Then
-                linears.Add(createLinear(row, Nothing, Nothing, points))
-                refPoints.AddRange(points)
+                Dim line = createLinear(row, points)
+
+                If Not line Is Nothing Then
+                    linears.Add(line)
+                    refPoints.AddRange(points)
+                End If
             End If
         Next
 
@@ -484,21 +637,53 @@ Public Class frmTargetedQuantification
             .Select(Function(pg) pg.First) _
             .AsList
 
-        For Each point As TargetPeakPoint In refPoints
-            ion = ionLib.GetIonByKey(point.Name)
-            point.Name = $"{ion.precursor}/{ion.product}"
-        Next
+        If isGCMS Then
+            Dim ion As QuantifyIon
 
-        For Each line As StandardCurve In linears
-            ion = ionLib.GetIonByKey(line.name)
-            line.name = $"{ion.precursor}/{ion.product}"
+            For Each point As TargetPeakPoint In refPoints
+                ion = GCMSIons.GetIon(point.Name)
 
-            If Not line.IS Is Nothing AndAlso Not line.IS.ID.StringEmpty Then
-                ion = ionLib.GetIonByKey(line.IS.ID)
-                line.IS.ID = $"{ion.precursor}/{ion.product}"
-                line.IS.name = line.IS.ID
-            End If
-        Next
+                If Not ion Is Nothing Then
+                    point.Name = $"{ion.rt.Min}/{ion.rt.Max}"
+                End If
+            Next
+
+            For Each line As StandardCurve In linears
+                ion = GCMSIons.GetIon(line.name)
+
+                If Not ion Is Nothing Then
+                    line.name = $"{ion.rt.Min}/{ion.rt.Max}"
+                End If
+
+                If Not line.IS Is Nothing AndAlso Not line.IS.ID.StringEmpty Then
+                    ion = GCMSIons.GetIon(line.IS.ID)
+
+                    If Not ion Is Nothing Then
+                        line.IS.ID = $"{ion.rt.Min}/{ion.rt.Max}"
+                    End If
+
+                    line.IS.name = line.IS.ID
+                End If
+            Next
+        Else
+            Dim ion As IonPair
+
+            For Each point As TargetPeakPoint In refPoints
+                ion = ionLib.GetIonByKey(point.Name)
+                point.Name = $"{ion.precursor}/{ion.product}"
+            Next
+
+            For Each line As StandardCurve In linears
+                ion = ionLib.GetIonByKey(line.name)
+                line.name = $"{ion.precursor}/{ion.product}"
+
+                If Not line.IS Is Nothing AndAlso Not line.IS.ID.StringEmpty Then
+                    ion = ionLib.GetIonByKey(line.IS.ID)
+                    line.IS.ID = $"{ion.precursor}/{ion.product}"
+                    line.IS.name = line.IS.ID
+                End If
+            Next
+        End If
 
         Dim linearPack As New LinearPack With {
             .linears = linears.ToArray,
@@ -508,9 +693,12 @@ Public Class frmTargetedQuantification
             .reference = refLevels,
             .[IS] = allFeatures _
                 .Select(Function(name)
-                            Dim nameIon = ionLib.GetIonByKey(name)
-
-                            name = $"{nameIon.precursor}/{nameIon.product}"
+                            If isGCMS Then
+                                ' do nothing
+                            Else
+                                Dim nameIon As IonPair = ionLib.GetIonByKey(name)
+                                name = $"{nameIon.precursor}/{nameIon.product}"
+                            End If
 
                             Return New [IS] With {
                                 .ID = name,
@@ -518,59 +706,103 @@ Public Class frmTargetedQuantification
                                 .CIS = 5
                             }
                         End Function) _
-                .ToArray
+                .ToArray,
+            .targetted = If(isGCMS, TargettedData.SIM, TargettedData.MRM)
         }
 
         Call linearPack.Write(file)
     End Sub
 
-    Private Function createLinear(refRow As DataGridViewRow,
-                                  Optional ByRef ion As IonPair = Nothing,
-                                  Optional ByRef isIon As IonPair = Nothing,
-                                  Optional ByRef refPoints As TargetPeakPoint() = Nothing) As StandardCurve
+    Private Function GetGCMSFeatureReader(ionLib As IEnumerable(Of QuantifyIon)) As SIMIonExtract
+        Return New SIMIonExtract(ionLib, {5, 15}, Tolerance.DeltaMass(0.3), 20, 0.65)
+    End Function
 
-        Dim ionLib As IonLibrary = Globals.LoadIonLibrary
+    ''' <summary>
+    ''' unify create linear reference
+    ''' </summary>
+    ''' <param name="refRow"></param>
+    ''' <param name="refPoints"></param>
+    ''' <returns></returns>
+    Private Function createLinear(refRow As DataGridViewRow, Optional ByRef refPoints As TargetPeakPoint() = Nothing) As StandardCurve
         Dim id As String = any.ToString(refRow.Cells(0).Value)
         Dim isid As String = any.ToString(refRow.Cells(1).Value)
         Dim chr As New List(Of TargetPeakPoint)
-        Dim dadot3 As Tolerance = Tolerance.DeltaMass(0.3)
 
-        ion = ionLib.GetIonByKey(id)
-        isIon = ionLib.GetIonByKey(isid)
+        If isGCMS Then
+            Dim ionLib = LoadGCMSIonLibrary.ToDictionary(Function(a) a.name)
+            Dim quantifyIon = ionLib.GetIon(id)
+            Dim quantifyIS = ionLib.GetIon(isid)
+            Dim SIMIonExtract = GetGCMSFeatureReader(ionLib.Values)
 
-        Dim quantifyIon = ion
-        Dim quantifyIS = isIon
+            If linearFiles.IsNullOrEmpty Then
+                Call linearPack.peakSamples _
+                    .Select(Function(p)
+                                Dim t = p.Name.Split("/"c).Select(AddressOf Val).ToArray
 
-        If linearFiles.IsNullOrEmpty Then
-            Call linearPack.peakSamples _
-                .Select(Function(p)
-                            Dim t = p.Name.Split("/"c).Select(AddressOf Val).ToArray
+                                If stdNum.Abs(t(0) - quantifyIon.rt.Min) <= 10 AndAlso stdNum.Abs(t(1) - quantifyIon.rt.Max) <= 10 Then
+                                    Return New TargetPeakPoint With {
+                                        .Name = quantifyIon.name,
+                                        .ChromatogramSummary = p.ChromatogramSummary,
+                                        .Peak = p.Peak,
+                                        .SampleName = p.SampleName
+                                    }
+                                ElseIf stdNum.Abs(t(0) - quantifyIS.rt.Min) <= 10 AndAlso stdNum.Abs(t(1) - quantifyIS.rt.Max) <= 10 Then
+                                    Return New TargetPeakPoint With {
+                                        .Name = quantifyIS.name,
+                                        .ChromatogramSummary = p.ChromatogramSummary,
+                                        .Peak = p.Peak,
+                                        .SampleName = p.SampleName
+                                    }
+                                Else
+                                    Return Nothing
+                                End If
+                            End Function) _
+                    .Where(Function(p) Not p Is Nothing) _
+                    .DoCall(AddressOf chr.AddRange)
+            Else
+                Call SIMIonExtract.LoadSamples(linearFiles, quantifyIon, keyByName:=True).DoCall(AddressOf chr.AddRange)
 
-                            If dadot3(t(0), quantifyIon.precursor) AndAlso dadot3(t(1), quantifyIon.product) Then
-                                Return New TargetPeakPoint With {
-                                    .Name = quantifyIon.name,
-                                    .ChromatogramSummary = p.ChromatogramSummary,
-                                    .Peak = p.Peak,
-                                    .SampleName = p.SampleName
-                                }
-                            ElseIf dadot3(t(0), quantifyIS.precursor) AndAlso dadot3(t(1), quantifyIS.product) Then
-                                Return New TargetPeakPoint With {
-                                    .Name = quantifyIS.name,
-                                    .ChromatogramSummary = p.ChromatogramSummary,
-                                    .Peak = p.Peak,
-                                    .SampleName = p.SampleName
-                                }
-                            Else
-                                Return Nothing
-                            End If
-                        End Function) _
-                .Where(Function(p) Not p Is Nothing) _
-                .DoCall(AddressOf chr.AddRange)
+                If Not isid.StringEmpty Then
+                    Call SIMIonExtract.LoadSamples(linearFiles, quantifyIS, keyByName:=True).DoCall(AddressOf chr.AddRange)
+                End If
+            End If
         Else
-            Call MRMIonExtract.LoadSamples(linearFiles, quantifyIon).DoCall(AddressOf chr.AddRange)
+            Dim ionLib As IonLibrary = Globals.LoadIonLibrary
+            Dim quantifyIon = ionLib.GetIonByKey(id)
+            Dim quantifyIS = ionLib.GetIonByKey(isid)
+            Dim dadot3 As Tolerance = Tolerance.DeltaMass(0.3)
 
-            If Not isid.StringEmpty Then
-                Call MRMIonExtract.LoadSamples(linearFiles, quantifyIS).DoCall(AddressOf chr.AddRange)
+            If linearFiles.IsNullOrEmpty Then
+                Call linearPack.peakSamples _
+                    .Select(Function(p)
+                                Dim t = p.Name.Split("/"c).Select(AddressOf Val).ToArray
+
+                                If dadot3(t(0), quantifyIon.precursor) AndAlso dadot3(t(1), quantifyIon.product) Then
+                                    Return New TargetPeakPoint With {
+                                        .Name = quantifyIon.name,
+                                        .ChromatogramSummary = p.ChromatogramSummary,
+                                        .Peak = p.Peak,
+                                        .SampleName = p.SampleName
+                                    }
+                                ElseIf dadot3(t(0), quantifyIS.precursor) AndAlso dadot3(t(1), quantifyIS.product) Then
+                                    Return New TargetPeakPoint With {
+                                        .Name = quantifyIS.name,
+                                        .ChromatogramSummary = p.ChromatogramSummary,
+                                        .Peak = p.Peak,
+                                        .SampleName = p.SampleName
+                                    }
+                                Else
+                                    Return Nothing
+                                End If
+                            End Function) _
+                    .Where(Function(p) Not p Is Nothing) _
+                    .DoCall(AddressOf chr.AddRange)
+            Else
+                Call MRMIonExtract.LoadSamples(linearFiles, quantifyIon).DoCall(AddressOf chr.AddRange)
+
+                If Not isid.StringEmpty Then
+                    Call MRMIonExtract.LoadSamples(linearFiles, quantifyIS).DoCall(AddressOf chr.AddRange)
+                End If
             End If
         End If
 
@@ -578,7 +810,12 @@ Public Class frmTargetedQuantification
 
         refPoints = chr.ToArray
 
-        Return algorithm.ToLinears(chr).First
+        If chr = 0 OrElse chr.All(Function(p) p.Name <> id) Then
+            Call MyApplication.host.showStatusMessage($"No sample data was found of ion '{id}'!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            Return Nothing
+        Else
+            Return algorithm.ToLinears(chr).FirstOrDefault
+        End If
     End Function
 
     Private Sub ExportImageToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportImageToolStripMenuItem.Click
@@ -624,34 +861,54 @@ Public Class frmTargetedQuantification
                 ' add files to viewer
                 For Each file As NamedValue(Of String) In files
                     Call MyApplication.host.showStatusMessage($"open raw data file '{file.Value}'...")
-                    Call MyApplication.host.OpenFile(file.Value)
+                    Call MyApplication.host.OpenFile(file.Value, showDocument:=linearPack Is Nothing)
                     Call Application.DoEvents()
                 Next
 
                 ' and then do quantify if the linear is exists
                 If Not linearPack Is Nothing Then
-                    Call scans.Clear()
-
                     Dim points As New List(Of TargetPeakPoint)
                     Dim linears As New List(Of StandardCurve)
+                    Dim ionLib As IonLibrary = Globals.LoadIonLibrary
+                    Dim GCMSIons = LoadGCMSIonLibrary.ToDictionary(Function(a) a.name)
+                    Dim extract = GetGCMSFeatureReader(GCMSIons.Values)
 
-                    For Each row As DataGridViewRow In DataGridView1.Rows
-                        If isValidLinearRow(row) Then
-                            Dim ion As IonPair = Nothing
-                            Dim ISion As IonPair = Nothing
+                    Call scans.Clear()
 
-                            linears.Add(createLinear(row, ion, ISion))
-                            points.AddRange(MRMIonExtract.LoadSamples(files, ion))
+                    For Each refRow As DataGridViewRow In DataGridView1.Rows
+                        If isValidLinearRow(refRow) Then
+                            Dim id As String = any.ToString(refRow.Cells(0).Value)
+                            Dim isid As String = any.ToString(refRow.Cells(1).Value)
 
-                            If Not ISion Is Nothing Then
-                                points.AddRange(MRMIonExtract.LoadSamples(files, ISion))
+                            linears.Add(createLinear(refRow))
+
+                            If isGCMS Then
+                                Dim ion As QuantifyIon = GCMSIons.GetIon(id)
+                                Dim ISion As QuantifyIon = GCMSIons.GetIon(isid)
+
+                                points.AddRange(extract.LoadSamples(files, ion, keyByName:=True))
+                                points.AddRange(extract.LoadSamples(files, ion, keyByName:=True))
+                            Else
+                                Dim ion As IonPair = ionLib.GetIonByKey(id)
+                                Dim ISion As IonPair = ionLib.GetIonByKey(isid)
+
+                                points.AddRange(MRMIonExtract.LoadSamples(files, ion))
+
+                                If Not ISion Is Nothing Then
+                                    points.AddRange(MRMIonExtract.LoadSamples(files, ISion))
+                                End If
                             End If
                         End If
                     Next
 
-                    With linears.ToArray
+                    With linears.Where(Function(l) Not l Is Nothing).ToArray
                         For Each file In points.GroupBy(Function(p) p.SampleName)
-                            scans.Add(.SampleQuantify(file.ToArray, PeakAreaMethods.SumAll, fileName:=file.Key))
+                            Dim uniqueIons = file.GroupBy(Function(p) p.Name).Select(Function(p) p.First).ToArray
+                            Dim quantify As QuantifyScan = .SampleQuantify(uniqueIons, PeakAreaMethods.SumAll, fileName:=file.Key)
+
+                            If Not quantify Is Nothing Then
+                                scans.Add(quantify)
+                            End If
                         Next
                     End With
                 Else
@@ -777,7 +1034,7 @@ Public Class frmTargetedQuantification
             cbProfileNameSelector.Text = path.BaseName
             linearPack = LinearPack.OpenFile(path)
 
-            Call loadLinears()
+            Call unifyLoadLinears()
         End If
     End Sub
 
@@ -832,5 +1089,9 @@ Public Class frmTargetedQuantification
         Call MyApplication.REngine.Invoke("html", MyApplication.REngine("$temp_report"), MyApplication.REngine.globalEnvir).ToString.SaveTo(tempfile)
 
         Call VisualStudio.ShowDocument(Of frmHtmlViewer)().LoadHtml(tempfile)
+    End Sub
+
+    Private Sub frmTargetedQuantification_Closed(sender As Object, e As EventArgs) Handles Me.Closed
+        MyApplication.ribbon.TargetedContex.ContextAvailable = ContextAvailability.NotAvailable
     End Sub
 End Class

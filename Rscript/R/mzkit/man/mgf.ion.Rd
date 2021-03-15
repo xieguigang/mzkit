@@ -4,7 +4,16 @@
 \alias{mgf.ion}
 \title{Generate mgf ion from data.}
 \usage{
-mgf.ion(mz, rt, ms2, charge = "1", title = "Unknown name ion", ms1.into = 100)
+mgf.ion(
+  mz,
+  rt,
+  ms2,
+  charge = "1",
+  title = "Unknown name ion",
+  ms1.into = 100,
+  uniqueId = title,
+  rawfile = "NA"
+)
 }
 \arguments{
 \item{ms2}{This ms2 matrix object can be in two formats:
