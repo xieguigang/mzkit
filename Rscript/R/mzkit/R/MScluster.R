@@ -10,7 +10,12 @@
 #' @param peak_ms2 a small bundle of MS matrix. MS matrix items
 #' in this collection should be pre-processed by \code{centroid}
 #' 
-MScluster = function(peak_ms2, identical = 0.85, greaterThan = 0.6, tolerance = mzkit::tolerance(0.3, "da")) {
+MScluster = function(peak_ms2, 
+					 identical     = 0.85, 
+					 greaterThan   = 0.6, 
+					 tolerance     = mzkit::tolerance(0.3, "da"), 
+					 show_progress = TRUE) {
+					 
     cos = function(query, ref) {
         query2  = globalAlign(query, ref, tolerance);
         forward = MScos(query2, ref);
@@ -30,7 +35,7 @@ MScluster = function(peak_ms2, identical = 0.85, greaterThan = 0.6, tolerance = 
     }
 
     # returns MS tree clusters
-    bclusterTree::bcluster(peak_ms2, compares = cos);
+    bclusterTree::bcluster(peak_ms2, compares = cos, show_progress = show_progress);
 }
 
 BinId = function(clusterList, peak_ms2) {
