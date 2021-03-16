@@ -78,6 +78,7 @@ Imports Microsoft.VisualBasic.Math
 Imports mzkit.My
 Imports RibbonLib.Controls.Events
 Imports RibbonLib.Interop
+Imports SMRUCC.Rsharp.Runtime.Components
 Imports Task
 Imports any = Microsoft.VisualBasic.Scripting
 Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
@@ -1088,7 +1089,11 @@ Public Class frmTargetedQuantification
         Call MyApplication.REngine.Set("$temp_report", MyApplication.REngine.Invoke("report.dataset", linearPack.linears, samples, Nothing, ionsRaw))
         Call MyApplication.REngine.Invoke("html", MyApplication.REngine("$temp_report"), MyApplication.REngine.globalEnvir).ToString.SaveTo(tempfile)
 
-        Call VisualStudio.ShowDocument(Of frmHtmlViewer)().LoadHtml(tempfile)
+        If TypeOf MyApplication.REngine.globalEnvir.last Is Message Then
+            Call MessageBox.Show(MyApplication.REngine.globalEnvir.last.ToString, "View Linear Report", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Else
+            Call VisualStudio.ShowDocument(Of frmHtmlViewer)().LoadHtml(tempfile)
+        End If
     End Sub
 
     Private Sub frmTargetedQuantification_Closed(sender As Object, e As EventArgs) Handles Me.Closed
