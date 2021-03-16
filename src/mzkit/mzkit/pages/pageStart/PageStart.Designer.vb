@@ -82,11 +82,11 @@ Partial Class PageStart
         '
         'PictureBox2
         '
-        Me.PictureBox2.BackgroundImage = CType(resources.GetObject("PictureBox2.BackgroundImage"), System.Drawing.Image)
+        Me.PictureBox2.BackgroundImage = Global.mzkit.My.Resources.Resources.Home_Logo
         Me.PictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox2.Location = New System.Drawing.Point(25, 60)
+        Me.PictureBox2.Location = New System.Drawing.Point(33, 20)
         Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(137, 121)
+        Me.PictureBox2.Size = New System.Drawing.Size(529, 178)
         Me.PictureBox2.TabIndex = 3
         Me.PictureBox2.TabStop = False
         '
@@ -145,6 +145,7 @@ Partial Class PageStart
         Me.Label1.Size = New System.Drawing.Size(307, 124)
         Me.Label1.TabIndex = 7
         Me.Label1.Text = "Mzkit"
+        Me.Label1.Visible = False
         '
         'PictureBox4
         '

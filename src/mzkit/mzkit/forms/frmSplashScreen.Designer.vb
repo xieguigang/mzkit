@@ -23,7 +23,6 @@ Partial Class frmSplashScreen
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmSplashScreen))
-        Me.Label1 = New System.Windows.Forms.Label()
         Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
@@ -35,17 +34,6 @@ Partial Class frmSplashScreen
         Me.Panel1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.BackColor = System.Drawing.Color.Transparent
-        Me.Label1.Font = New System.Drawing.Font("Impact", 56.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(219, 12)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(373, 93)
-        Me.Label1.TabIndex = 2
-        Me.Label1.Text = "M/z Toolkit"
         '
         'LinkLabel1
         '
@@ -61,7 +49,7 @@ Partial Class frmSplashScreen
         '
         'PictureBox2
         '
-        Me.PictureBox2.BackgroundImage = Global.mzkit.My.Resources.Resources._42082
+        Me.PictureBox2.BackgroundImage = Global.mzkit.My.Resources.Resources.Home_Logo
         Me.PictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.PictureBox2.Location = New System.Drawing.Point(1, 1)
         Me.PictureBox2.Name = "PictureBox2"
@@ -137,7 +125,6 @@ Partial Class frmSplashScreen
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.ClientSize = New System.Drawing.Size(604, 342)
         Me.Controls.Add(Me.LinkLabel1)
-        Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.PictureBox2)
         Me.DoubleBuffered = True
@@ -158,7 +145,6 @@ Partial Class frmSplashScreen
 
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents Panel1 As Panel
-    Friend WithEvents Label1 As Label
     Friend WithEvents LinkLabel1 As LinkLabel
     Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents Information As Label
