@@ -16,9 +16,13 @@
 #'     and \code{globalAlign}
 #'
 MScos = function(query, ref) {
-    query = query[, "into"];
-    ref   = ref[, "into"];
+	MScos.score(
+		query = query[, "into"],
+		ref   = ref[, "into"]
+	);
+}
 
+MScos.score = function(query, ref) {
     if (all(query == 0) || all(ref == 0)) {
         0;
     } else {
@@ -32,6 +36,16 @@ MScos = function(query, ref) {
     }
 }
 
+weighted_into = function(MS, weights) {
+	# reorder the matrix row by m/z mass
+    mz = as.vector(MS[, 1]);
+	# small m/z first
+    MS = rbind(MS[order(mz), ], NULL);
+	# assign m/z mass weight
+    MS = MS[, 2] * weights;
+	MS;
+}
+
 #' SSM score with mass weighted
 #'
 #' @description The fragment its m/z value is smaller,
@@ -41,19 +55,12 @@ MScos = function(query, ref) {
 #'    \code{\link{globalAlign}} function at first.
 #'
 weighted_MScos = function(query, ref) {
-    # reorder the matrix row by m/z mass
-    qmz   = query[, 1] %=>% as.vector;
-    smz   =   ref[, 1] %=>% as.vector;
-    # small m/z first
-    query = rbind(query[order(qmz), ], NULL);
-    ref   = rbind(ref[order(smz), ], NULL);
     # smaller the m/z value, greater weight it have
-    n     = length(qmz) - (1:length(qmz)) + 1;
-    # assign m/z mass weight
-    query = query[, 2] * n;
-    ref   =   ref[, 2] * n;
+    weights = nrow(query) - (1:nrow(query)) + 1;
+    x = weighted_into(query, weights);
+	y = weighted_into(ref, weights);
 
-    MScos(query, ref);
+    MScos.score(x, y);
 }
 
 #' Align \code{x} by using \code{y} as base matrix
