@@ -151,7 +151,7 @@
     </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>chemistry.ico</ApplicationIcon>
+    <ApplicationIcon>Flask.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>5A0504B19E601FDE4F714FA46A7A12E938EC25D1</ManifestCertificateThumbprint>
@@ -989,6 +989,7 @@
     <None Include="Resources\1200px-Checked.svg.png" />
     <None Include="Resources\img_561134.png" />
     <None Include="Resources\DBFile.ico" />
+    <Content Include="Flask.ico" />
     <Content Include="RibbonMarkup.h" />
     <Content Include="RibbonMarkup.xml" />
     <None Include="Resources\header-foreground-image.png" />
