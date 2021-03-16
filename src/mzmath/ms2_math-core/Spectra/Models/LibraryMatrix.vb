@@ -124,12 +124,6 @@ Namespace Spectra
             Return ms2.AlignMatrix(data, tolerance)
         End Function
 
-        ''' <summary>
-        ''' ``<see cref="ms2.intensity"/> = <see cref="ms2.quantity"/> / x``
-        ''' </summary>
-        ''' <param name="matrix"></param>
-        ''' <param name="x#"></param>
-        ''' <returns></returns>
         Public Shared Operator /(matrix As LibraryMatrix, x#) As LibraryMatrix
             For Each ms2 As ms2 In matrix.ms2
                 If ms2.intensity = 0 Then
