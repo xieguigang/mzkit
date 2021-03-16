@@ -23,7 +23,6 @@ Partial Class frmSplashScreen
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmSplashScreen))
-        Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Label4 = New System.Windows.Forms.Label()
@@ -35,25 +34,13 @@ Partial Class frmSplashScreen
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
-        'LinkLabel1
-        '
-        Me.LinkLabel1.AutoSize = True
-        Me.LinkLabel1.Font = New System.Drawing.Font("微软雅黑", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.LinkLabel1.LinkColor = System.Drawing.Color.SlateGray
-        Me.LinkLabel1.Location = New System.Drawing.Point(436, 103)
-        Me.LinkLabel1.Name = "LinkLabel1"
-        Me.LinkLabel1.Size = New System.Drawing.Size(139, 21)
-        Me.LinkLabel1.TabIndex = 3
-        Me.LinkLabel1.TabStop = True
-        Me.LinkLabel1.Text = "http://mzkit.org/"
-        '
         'PictureBox2
         '
-        Me.PictureBox2.BackgroundImage = Global.mzkit.My.Resources.Resources.Home_Logo
+        Me.PictureBox2.BackgroundImage = Global.mzkit.My.Resources.Resources.Home_Logo_Link
         Me.PictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox2.Location = New System.Drawing.Point(1, 1)
+        Me.PictureBox2.Location = New System.Drawing.Point(12, 12)
         Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(223, 185)
+        Me.PictureBox2.Size = New System.Drawing.Size(475, 156)
         Me.PictureBox2.TabIndex = 4
         Me.PictureBox2.TabStop = False
         '
@@ -124,7 +111,6 @@ Partial Class frmSplashScreen
         Me.BackColor = System.Drawing.Color.White
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.ClientSize = New System.Drawing.Size(604, 342)
-        Me.Controls.Add(Me.LinkLabel1)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.PictureBox2)
         Me.DoubleBuffered = True
@@ -139,13 +125,11 @@ Partial Class frmSplashScreen
         Me.Panel1.PerformLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
 
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents Panel1 As Panel
-    Friend WithEvents LinkLabel1 As LinkLabel
     Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents Information As Label
     Friend WithEvents Label3 As Label

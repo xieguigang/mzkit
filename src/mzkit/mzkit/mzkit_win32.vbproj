@@ -993,6 +993,7 @@
     <None Include="Resources\Flask.png" />
     <None Include="Resources\Flask_no_bubbles.png" />
     <None Include="Resources\Home_Logo.png" />
+    <None Include="Resources\Home_Logo_Link.png" />
     <Content Include="RibbonMarkup.h" />
     <Content Include="RibbonMarkup.xml" />
     <None Include="Resources\header-foreground-image.png" />
