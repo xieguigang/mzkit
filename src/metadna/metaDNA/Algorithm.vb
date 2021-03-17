@@ -99,6 +99,11 @@ Public Class Algorithm
         Return Me
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function GetUnknownSet() As UnknownSet
+        Return unknowns
+    End Function
+
     ''' <summary>
     ''' create sample data set: <see cref="unknowns"/>
     ''' </summary>
