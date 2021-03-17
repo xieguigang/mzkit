@@ -99,6 +99,11 @@ Public Class Algorithm
         Return Me
     End Function
 
+    ''' <summary>
+    ''' create sample data set: <see cref="unknowns"/>
+    ''' </summary>
+    ''' <param name="sample"></param>
+    ''' <returns></returns>
     Public Function SetSamples(sample As IEnumerable(Of PeakMs2)) As Algorithm
         unknowns = UnknownSet.CreateTree(sample, ms1ppm)
         Return Me
@@ -234,6 +239,11 @@ Public Class Algorithm
         Return data.OrderBy(Function(r) r.rt)
     End Function
 
+    ''' <summary>
+    ''' 基于种子进行推断注释
+    ''' </summary>
+    ''' <param name="seeds"></param>
+    ''' <returns></returns>
     Public Iterator Function DIASearch(seeds As IEnumerable(Of AnnotatedSeed)) As IEnumerable(Of CandidateInfer)
         Dim result As InferLink()
         Dim seeding As New SeedsProvider(

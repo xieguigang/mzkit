@@ -203,18 +203,25 @@ Module metaDNAInfer
     <RApiReturn(GetType(CandidateInfer))>
     Public Function DIAInfer(metaDNA As MetaDNAAlgorithm,
                              <RRawVectorArgument> sample As Object,
+                             <RRawVectorArgument> Optional seeds As Object = Nothing,
                              Optional env As Environment = Nothing) As Object
 
         Dim raw As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(sample, env)
+        Dim infer As CandidateInfer()
 
         If raw.isError Then
             Return raw.getError
         End If
 
-        Dim infer As CandidateInfer() = metaDNA _
-            .SetSamples(raw.populates(Of PeakMs2)(env)) _
-            .DIASearch _
-            .ToArray
+        If seeds Is Nothing Then
+            infer = metaDNA _
+                .SetSamples(raw.populates(Of PeakMs2)(env)) _
+                .DIASearch _
+                .ToArray
+        ElseIf TypeOf seeds Is dataframe Then
+
+
+        End If
 
         Return infer
     End Function
