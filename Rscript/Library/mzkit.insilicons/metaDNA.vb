@@ -219,9 +219,15 @@ Module metaDNAInfer
         Return infer
     End Function
 
+    ''' <summary>
+    ''' create seeds from mgf file data
+    ''' </summary>
+    ''' <param name="seeds"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("as.seeds")>
     <RApiReturn(GetType(AnnotatedSeed))>
-    Public Function asSeeds(<RRawVectorArgument> seeds As Object, Optional env As Environment = Nothing) As Object
+    Public Function MgfSeeds(<RRawVectorArgument> seeds As Object, Optional env As Environment = Nothing) As Object
         Dim seedList As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(seeds, env)
 
         If seedList.isError Then
@@ -230,28 +236,7 @@ Module metaDNAInfer
 
         Return seedList _
             .populates(Of PeakMs2)(env) _
-            .Select(Function(peak)
-                        Dim ms1 As New ms1_scan With {
-                            .mz = peak.mz,
-                            .scan_time = peak.rt,
-                            .intensity = peak.intensity
-                        }
-                        Dim ms2 As New LibraryMatrix With {
-                            .name = peak.lib_guid,
-                            .ms2 = peak.mzInto
-                        }
-
-                        Return New AnnotatedSeed With {
-                            .inferSize = 1,
-                            .kegg_id = peak.meta!KEGG,
-                            .id = peak.lib_guid,
-                            .parent = ms1,
-                            .parentTrace = 100,
-                            .products = New Dictionary(Of String, LibraryMatrix) From {
-                                {peak.lib_guid, ms2}
-                            }
-                        }
-                    End Function) _
+            .MgfSeeds _
             .ToArray
     End Function
 
