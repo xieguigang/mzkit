@@ -119,21 +119,46 @@ Public Class UnknownSet
     Public Shared Function CreateTree(raw As IEnumerable(Of PeakMs2), tolerance As Tolerance) As UnknownSet
         Dim tree As New AVLTree(Of Double, PeakMs2)(MassQuery(tolerance), Function(mz) mz.ToString("F4"))
         Dim index As New Dictionary(Of String, PeakMs2)
+        Dim ROIlist As New Dictionary(Of String, (ms1_scan, List(Of String)))
 
         For Each product As PeakMs2 In raw
+            Dim ROI As String = product.meta.TryGetValue("ROI")
+
             If product.lib_guid Is Nothing Then
                 product.lib_guid = product.ToString
+            End If
+            If Not product.meta.ContainsKey("ROI") Then
+                Throw New InvalidProgramException($"Missing 'ROI' meta data in ion '{product.lib_guid}'!")
             End If
 
             Call index.Add(product.lib_guid, product)
             Call tree.Add(product.mz, product, valueReplace:=False)
+
+            If Not ROIlist.ContainsKey(ROI) Then
+                Dim ms1 As New ms1_scan With {
+                    .mz = product.mz,
+                    .scan_time = product.rt,
+                    .intensity = product.intensity
+                }
+
+                ROIlist(ROI) = (ms1, New List(Of String))
+            End If
+
+            ROIlist(ROI).Item2.Add(product.lib_guid)
         Next
 
-        Dim rtmax As Double = Aggregate peak As PeakMs2 In index.Values Into Max(peak.rt)
+        Dim rtmax As Double = Aggregate peak As PeakMs2
+                              In index.Values
+                              Into Max(peak.rt)
 
         Return New UnknownSet(rtmax) With {
             .features = tree,
-            .spectrumIndex = index
+            .spectrumIndex = index,
+            .peakScans = ROIlist _
+                .ToDictionary(Function(a) a.Key,
+                              Function(a)
+                                  Return (a.Value.Item1, a.Value.Item2.ToArray)
+                              End Function)
         }
     End Function
 
