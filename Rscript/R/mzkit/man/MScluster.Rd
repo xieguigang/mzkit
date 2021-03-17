@@ -8,7 +8,8 @@ MScluster(
   peak_ms2,
   identical = 0.85,
   greaterThan = 0.6,
-  tolerance = mzkit::tolerance(0.3, "da")
+  tolerance = mzkit::tolerance(0.3, "da"),
+  show_progress = TRUE
 )
 }
 \arguments{
