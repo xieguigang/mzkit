@@ -147,7 +147,7 @@ Namespace mzData.mzWebCache
             file.Seek(Magic.Length, SeekOrigin.Begin)
             file.Write({mzmin, mzmax, rtmin, rtmax})
             file.Write(indexPos)
-            file.Seek(indexPos, IO.SeekOrigin.Begin)
+            file.Seek(indexPos, SeekOrigin.Begin)
             file.Write(scanIndex.Count)
 
             For Each entry In scanIndex

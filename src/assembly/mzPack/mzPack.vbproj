@@ -140,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChromatogramOverlap.vb" />
+    <Compile Include="mzPack.vb" />
     <Compile Include="PackCDF.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
