@@ -244,7 +244,7 @@ Module metaDNAInfer
 
             infer = metaDNA _
                 .SetSamples(rawFile) _
-                .DIASearch(rawFile.CreateAnnotatedSeeds(annoSet)) _
+                .DIASearch(rawFile.CreateAnnotatedSeeds(annoSet).ToArray) _
                 .ToArray
         Else
             Throw New NotImplementedException
