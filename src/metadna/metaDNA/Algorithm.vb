@@ -78,6 +78,12 @@ Public Class Algorithm
     Dim kegg As KEGGHandler
     Dim network As KEGGNetwork
 
+    Public ReadOnly Property ms1Err As Tolerance
+        Get
+            Return ms1ppm
+        End Get
+    End Property
+
 #Region "algorithm initialization"
 
     Sub New(ms1ppm As Tolerance, dotcutoff As Double, mzwidth As Tolerance, Optional allowMs1 As Boolean = True)
@@ -111,6 +117,11 @@ Public Class Algorithm
     ''' <returns></returns>
     Public Function SetSamples(sample As IEnumerable(Of PeakMs2)) As Algorithm
         unknowns = UnknownSet.CreateTree(sample, ms1ppm)
+        Return Me
+    End Function
+
+    Public Function SetSamples(sample As UnknownSet) As Algorithm
+        unknowns = sample
         Return Me
     End Function
 

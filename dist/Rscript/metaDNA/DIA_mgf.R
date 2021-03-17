@@ -5,6 +5,15 @@ setwd(dirname(@script));
 
 const input  as string = ?"--mgf"    || stop("A mgf ions file must be provided!");
 const output as string = ?"--output" || dirname(input);
+
+const seeds = (function() {
+	if (file.exists(?"--seeds")) {
+		read.csv(?"--seeds");
+	} else {
+		NULL;
+	}
+})();
+
 const metadna = metadna(
 	ms1ppm    = tolerance(20, "ppm"),
 	dotcutoff = 0.5,
@@ -19,7 +28,11 @@ const metadna = metadna(
 # )
 ;
 
+print("Seeds for the metaDNA infer:");
+print(str(seeds));
+
 const infer = metadna :> DIA.infer(
+	seeds  = seeds,
 	sample = input
 		:> read.mgf
 		:> mgf.ion_peaks

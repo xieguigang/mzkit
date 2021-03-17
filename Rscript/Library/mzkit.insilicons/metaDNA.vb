@@ -50,6 +50,7 @@ Imports BioNovoGene.BioDeep.MetaDNA
 Imports BioNovoGene.BioDeep.MetaDNA.Infer
 Imports MetaDNA.visual
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Language
@@ -219,8 +220,34 @@ Module metaDNAInfer
                 .DIASearch _
                 .ToArray
         ElseIf TypeOf seeds Is dataframe Then
+            Dim id As String() = DirectCast(seeds, dataframe).getColumnVector(1)
+            Dim kegg_id As String() = DirectCast(seeds, dataframe).getColumnVector(2)
+            Dim rawFile As UnknownSet = UnknownSet.CreateTree(raw.populates(Of PeakMs2)(env), metaDNA.ms1Err)
+            Dim annoSet As NamedValue(Of String)() = id _
+                .Select(Function(uid, i) (uid, kegg_id(i))) _
+                .GroupBy(Function(map) map.uid) _
+                .Select(Function(map)
+                            Return map _
+                                .GroupBy(Function(anno) anno.Item2) _
+                                .Select(Function(anno)
+                                            Return New NamedValue(Of String) With {
+                                                .Name = map.Key,
+                                                .Value = anno.Key
+                                            }
+                                        End Function)
+                        End Function) _
+                .IteratesALL _
+                .Where(Function(map)
+                           Return map.Value.IsPattern("C\d+")
+                       End Function) _
+                .ToArray
 
-
+            infer = metaDNA _
+                .SetSamples(rawFile) _
+                .DIASearch(rawFile.CreateAnnotatedSeeds(annoSet)) _
+                .ToArray
+        Else
+            Throw New NotImplementedException
         End If
 
         Return infer
