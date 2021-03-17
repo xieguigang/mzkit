@@ -43,6 +43,7 @@
 #End Region
 
 Imports System.IO
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.MetaDNA
@@ -216,6 +217,27 @@ Module metaDNAInfer
             .ToArray
 
         Return infer
+    End Function
+
+    ''' <summary>
+    ''' create seeds from mgf file data
+    ''' </summary>
+    ''' <param name="seeds"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("as.seeds")>
+    <RApiReturn(GetType(AnnotatedSeed))>
+    Public Function MgfSeeds(<RRawVectorArgument> seeds As Object, Optional env As Environment = Nothing) As Object
+        Dim seedList As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(seeds, env)
+
+        If seedList.isError Then
+            Return seedList.getError
+        End If
+
+        Return seedList _
+            .populates(Of PeakMs2)(env) _
+            .MgfSeeds _
+            .ToArray
     End Function
 
     <ExportAPI("as.table")>
