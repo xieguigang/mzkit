@@ -169,6 +169,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Result\MetaDNARawSet.vb" />
     <Compile Include="Result\MetaDNAResult.vb" />
     <Compile Include="Result\NetworkHandler.vb" />
     <Compile Include="Result\ResultHandler.vb" />
