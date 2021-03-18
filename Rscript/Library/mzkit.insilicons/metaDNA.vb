@@ -43,7 +43,6 @@
 #End Region
 
 Imports System.IO
-Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.MetaDNA
@@ -60,6 +59,7 @@ Imports SMRUCC.genomics.Data
 Imports SMRUCC.genomics.Data.KEGG.Metabolism
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports KeggCompound = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.Compound
@@ -67,7 +67,7 @@ Imports kegReactionClass = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.Reacti
 Imports MetaDNAAlgorithm = BioNovoGene.BioDeep.MetaDNA.Algorithm
 Imports ReactionClass = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.ReactionClass
 Imports ReactionClassTbl = MetaDNA.visual.ReactionClass
-Imports REnv = SMRUCC.Rsharp.Runtime.Internal
+Imports REnv = SMRUCC.Rsharp.Runtime
 
 <Package("metadna")>
 <RTypeExport("metadna", GetType(MetaDNAAlgorithm))>
@@ -89,7 +89,7 @@ Module metaDNAInfer
         End If
 
         If Not TypeOf debugOutput Is Global.MetaDNA.visual.XML Then
-            Return REnv.debug.stop(New InvalidCastException, env)
+            Return REnv.Internal.debug.stop(New InvalidCastException, env)
         End If
 
         Return DirectCast(debugOutput, Global.MetaDNA.visual.XML).CreateGraph
@@ -151,8 +151,19 @@ Module metaDNAInfer
     End Function
 
     <ExportAPI("range")>
-    Public Function SetSearchRange(metadna As MetaDNAAlgorithm, precursorTypes As String()) As MetaDNAAlgorithm
-        Return metadna.SetSearchRange(precursorTypes)
+    <RApiReturn(GetType(MetaDNAAlgorithm))>
+    Public Function SetSearchRange(metadna As MetaDNAAlgorithm,
+                                   <RRawVectorArgument>
+                                   precursorTypes As Object,
+                                   Optional env As Environment = Nothing) As Object
+        Dim types As String() = REnv.asVector(Of String)(precursorTypes)
+
+        If env.globalEnvironment.options.verbose Then
+            Call base.print("Set precursor types:", env)
+            Call base.print(types, env)
+        End If
+
+        Return metadna.SetSearchRange(types)
     End Function
 
     <ExportAPI("load.kegg")>
