@@ -124,6 +124,9 @@ Public Class Algorithm
     ''' <returns></returns>
     Public Function SetSamples(sample As IEnumerable(Of PeakMs2), Optional autoROIid As Boolean = True) As Algorithm
         If autoROIid Then
+            ' 20210318
+            ' toarray is required at here
+            ' or stack overflow error will be happends
             sample = (Iterator Function() As IEnumerable(Of PeakMs2)
                           For Each peak As PeakMs2 In sample
                               If Not peak.meta.ContainsKey("ROI") Then
@@ -136,7 +139,7 @@ Public Class Algorithm
 
                               Yield peak
                           Next
-                      End Function)()
+                      End Function)().ToArray
         End If
 
         unknowns = UnknownSet.CreateTree(sample, ms1ppm)
