@@ -63,7 +63,7 @@ Namespace mzData.mzWebCache
         Public Property polarity As Integer
         Public Property charge As Integer
         Public Property activationMethod As String
-        Public Property collisionEnergy As String
+        Public Property collisionEnergy As Double
         Public Property centroided As Boolean
 
     End Class
