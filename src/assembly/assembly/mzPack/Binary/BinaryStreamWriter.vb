@@ -52,7 +52,8 @@ Namespace mzData.mzWebCache
 
     Public Class BinaryStreamWriter : Implements IDisposable
 
-        Dim file As BinaryDataWriter
+        Protected file As BinaryDataWriter
+
         Dim disposedValue As Boolean
         Dim scanIndex As New Dictionary(Of String, Long)
         Dim mzmin As Double = Integer.MaxValue

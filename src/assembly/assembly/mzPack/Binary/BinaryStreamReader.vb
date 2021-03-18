@@ -97,7 +97,7 @@ Namespace mzData.mzWebCache
             End If
         End Sub
 
-        Private Sub loadIndex()
+        Protected Overridable Sub loadIndex()
             Dim nsize As Integer
             Dim scanPos As Long
             Dim scanId As String
@@ -109,7 +109,7 @@ Namespace mzData.mzWebCache
             _rtmax = range(3)
 
             Using file.TemporarySeek()
-                file.Seek(file.ReadInt64, IO.SeekOrigin.Begin)
+                file.Seek(file.ReadInt64, SeekOrigin.Begin)
                 nsize = file.ReadInt32
 
                 For i As Integer = 0 To nsize - 1
