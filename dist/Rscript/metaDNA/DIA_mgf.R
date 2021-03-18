@@ -1,7 +1,7 @@
 imports "metadna" from "mzkit.insilicons";
 imports ["assembly", "data", "math"] from "mzkit";
 
-setwd(dirname(@script));
+options(verbose = TRUE);
 
 const input  as string = ?"--mgf"    || stop("A mgf ions file must be provided!");
 const output as string = ?"--output" || dirname(input);
@@ -64,4 +64,9 @@ metadna
 :> as.table(infer)
 :> as.graph
 :> save.network(file = `${output}/${basename(input)}.metaDNA_infer/`)
+;
+
+metadna 
+:> as.ticks
+:> write.csv(file = `${output}/metaDNA.ticks.csv`)
 ;

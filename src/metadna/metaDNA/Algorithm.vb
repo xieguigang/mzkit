@@ -263,6 +263,12 @@ Public Class Algorithm
         Return data.OrderBy(Function(r) r.rt)
     End Function
 
+    ReadOnly perfermanceCounter As New List(Of (Integer, TimeSpan, Integer, Integer, Integer))
+
+    Public Function GetPerfermanceCounter() As (iteration As Integer, ticks As TimeSpan, inferLinks As Integer, seeding As Integer, candidates As Integer)()
+        Return perfermanceCounter.ToArray
+    End Function
+
     ''' <summary>
     ''' 基于种子进行推断注释
     ''' </summary>
@@ -278,6 +284,10 @@ Public Class Algorithm
         Dim candidates As CandidateInfer()
         Dim i As i32 = 1
         Dim n As Integer = 0
+        Dim start As Long = App.NanoTime
+        Dim tickTime As TimeSpan
+
+        Call perfermanceCounter.Clear()
 
         Do
             result = RunIteration(seeds).ToArray
@@ -292,8 +302,11 @@ Public Class Algorithm
             Next
 
             n += candidates.Length
+            tickTime = TimeSpan.FromMilliseconds(App.NanoTime - start)
+            start = App.NanoTime
 
-            Call Console.WriteLine($"[iteration {++i}] infers {result.Length}, find {seeds.Count} seeds, {n} current candidates ...")
+            Call perfermanceCounter.Add((CInt(i), tickTime, result.Length, seeds.Count, n))
+            Call Console.WriteLine($"[iteration {++i}, {tickTime.FormatTime}] infers {result.Length}, find {seeds.Count} seeds, {n} current candidates ...")
 
             If i > maxIterations Then
                 Call Console.WriteLine($"Max iteration number {maxIterations} has been reached, exit metaDNA infer loop!")

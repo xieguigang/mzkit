@@ -318,6 +318,26 @@ Module metaDNAInfer
         Return data.populates(Of MetaDNAResult)(env).ExportNetwork
     End Function
 
+    <ExportAPI("as.ticks")>
+    Public Function SaveAlgorithmPerfermance(metaDNA As MetaDNAAlgorithm) As dataframe
+        Dim counter = metaDNA.GetPerfermanceCounter
+        Dim iteration As Integer() = counter.Select(Function(c) c.iteration).ToArray
+        Dim ticks As String() = counter.Select(Function(c) c.ticks.FormatTime).ToArray
+        Dim inferLinks As Integer() = counter.Select(Function(c) c.inferLinks).ToArray
+        Dim seeding As Integer() = counter.Select(Function(c) c.seeding).ToArray
+        Dim candidates As Integer() = counter.Select(Function(c) c.candidates).ToArray
+
+        Return New dataframe With {
+            .columns = New Dictionary(Of String, Array) From {
+                {NameOf(iteration), iteration},
+                {NameOf(ticks), ticks},
+                {NameOf(inferLinks), inferLinks},
+                {NameOf(seeding), seeding},
+                {NameOf(candidates), candidates}
+            }
+        }
+    End Function
+
 #End Region
 
 #Region "kegg"
