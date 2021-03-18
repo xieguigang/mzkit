@@ -161,7 +161,8 @@ Public Class RawScatterPlot : Inherits Plot
             .axisStroke = axisStroke,
             .tagCSS = labelFontStyle,
             .pointSize = ptSize,
-            .padding = margin
+            .padding = margin,
+            .drawLegend = False
         }
         Dim app As New RawScatterPlot(samples, mapLevels, rawfile, theme)
 
