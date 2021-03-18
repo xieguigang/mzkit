@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 
 ''' <summary>
@@ -19,4 +20,12 @@ Public Class mzPack
     ''' <returns></returns>
     Public Property Scanners As Dictionary(Of String, ChromatogramOverlap)
 
+    ''' <summary>
+    ''' 一次性加载所有原始数据
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <returns></returns>
+    Public Shared Function ReadAll(file As Stream) As mzPack
+
+    End Function
 End Class

@@ -141,7 +141,7 @@ Namespace mzData.mzWebCache
             Call file.Write(scan.into)
         End Sub
 
-        Private Sub writeIndex()
+        Protected Overridable Sub writeIndex()
             Dim indexPos As Long
 
             file.Flush()
