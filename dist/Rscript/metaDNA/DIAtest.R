@@ -9,8 +9,8 @@ const metadna = metadna(
 	mzwidth   = tolerance(0.3, "da")
 )
 :> range(["[M]+", "[M+H]+", "[M+H+H2O]+"])
-:> load.kegg(kegg.library(repo = "E:\biodeep\biodeepdb_v3\KEGG\KEGG_cpd.repo"))
-:> load.kegg_network(kegg.network(repo = "E:\biodeep\biodeepdb_v3\KEGG\reaction_class.repo"))
+:> load.kegg(kegg.library(repo = "D:\biodeep\biodeepdb_v3\KEGG\KEGG_cpd.repo"))
+:> load.kegg_network(kegg.network(repo = "D:\biodeep\biodeepdb_v3\KEGG\reaction_class.repo"))
 # :> load.raw(
 	# sample = assembly::mzxml.mgf("E:\biodeep\biodeepDB\lxy-CID30.mzML")
 # )
