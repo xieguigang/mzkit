@@ -63,7 +63,7 @@ Namespace mzData.mzWebCache
         Public Const Magic As String = "BioNovoGene/mzWebStream"
 
         Sub New(file As String)
-            Me.file = New BinaryDataWriter(file.Open(IO.FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False), encoding:=Encodings.ASCII)
+            Me.file = New BinaryDataWriter(file.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False), encoding:=Encodings.ASCII)
             Me.file.Write(Magic, BinaryStringFormat.NoPrefixOrTermination)
             Me.file.Write(New Double() {0, 0, 0, 0})
             Me.file.Write(0&)
@@ -103,7 +103,7 @@ Namespace mzData.mzWebCache
 
             Call file.Flush()
 
-            Using file.TemporarySeek(start, IO.SeekOrigin.Begin)
+            Using file.TemporarySeek(start, SeekOrigin.Begin)
                 ' write data size offset of ms1 
                 Call file.Write(size)
             End Using

@@ -55,9 +55,13 @@ Namespace mzData.mzWebCache
         Implements IMs1
 
         Public Property parentMz As Double Implements IMs1.mz
+        Public Overrides Property rt As Double Implements IRetentionTime.rt
         Public Property intensity As Double
         Public Property polarity As Integer
-        Public Overrides Property rt As Double Implements IRetentionTime.rt
+        Public Property charge As Integer
+        Public Property activationMethod As String
+        Public Property collisionEnergy As String
+        Public Property centroided As Boolean
 
     End Class
 
