@@ -67,5 +67,5 @@ BinId = function(clusterList, peak_ms2) {
 		paste0(vec, collapse=",");
 	});
 	
-	sprintf("BIN-%s", as.vector(names));
+	sprintf("BIN.M/Z-%s", as.vector(names));
 }
