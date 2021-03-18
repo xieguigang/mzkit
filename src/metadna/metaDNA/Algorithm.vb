@@ -77,6 +77,7 @@ Public Class Algorithm
     Dim unknowns As UnknownSet
     Dim kegg As KEGGHandler
     Dim network As KEGGNetwork
+    Dim maxIterations As Integer = 1000
 
     Public ReadOnly Property ms1Err As Tolerance
         Get
@@ -86,12 +87,18 @@ Public Class Algorithm
 
 #Region "algorithm initialization"
 
-    Sub New(ms1ppm As Tolerance, dotcutoff As Double, mzwidth As Tolerance, Optional allowMs1 As Boolean = True)
+    Sub New(ms1ppm As Tolerance,
+            dotcutoff As Double,
+            mzwidth As Tolerance,
+            Optional allowMs1 As Boolean = True,
+            Optional maxIterations As Integer = 1000)
+
         Me.ms1ppm = ms1ppm
         Me.dotcutoff = dotcutoff
         Me.MSalignment = New CosAlignment(mzwidth, LowAbundanceTrimming.Default)
         Me.mzwidth = mzwidth
         Me.allowMs1 = allowMs1
+        Me.maxIterations = maxIterations
     End Sub
 
     Public Function SetSearchRange(ParamArray precursorTypes As String()) As Algorithm
@@ -256,6 +263,12 @@ Public Class Algorithm
         Return data.OrderBy(Function(r) r.rt)
     End Function
 
+    ReadOnly perfermanceCounter As New List(Of (Integer, TimeSpan, Integer, Integer, Integer))
+
+    Public Function GetPerfermanceCounter() As (iteration As Integer, ticks As TimeSpan, inferLinks As Integer, seeding As Integer, candidates As Integer)()
+        Return perfermanceCounter.ToArray
+    End Function
+
     ''' <summary>
     ''' 基于种子进行推断注释
     ''' </summary>
@@ -271,6 +284,10 @@ Public Class Algorithm
         Dim candidates As CandidateInfer()
         Dim i As i32 = 1
         Dim n As Integer = 0
+        Dim start As Long = App.NanoTime
+        Dim tickTime As TimeSpan
+
+        Call perfermanceCounter.Clear()
 
         Do
             result = RunIteration(seeds).ToArray
@@ -285,8 +302,16 @@ Public Class Algorithm
             Next
 
             n += candidates.Length
+            tickTime = TimeSpan.FromTicks(App.NanoTime - start)
+            start = App.NanoTime
 
-            Call Console.WriteLine($"[iteration {++i}] infers {result.Length}, find {seeds.Count} seeds, {n} current candidates ...")
+            Call perfermanceCounter.Add((CInt(i), tickTime, result.Length, seeds.Count, n))
+            Call Console.WriteLine($"[iteration {++i}, {tickTime.FormatTime}] infers {result.Length}, find {seeds.Count} seeds, {n} current candidates ...")
+
+            If i > maxIterations Then
+                Call Console.WriteLine($"Max iteration number {maxIterations} has been reached, exit metaDNA infer loop!")
+                Exit Do
+            End If
         Loop While result.Length > 0
     End Function
 

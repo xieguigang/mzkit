@@ -136,6 +136,7 @@ Module metaDNAInfer
                                      Optional mzwidth As Object = "da:0.3",
                                      Optional dotcutoff As Double = 0.5,
                                      Optional allowMs1 As Boolean = True,
+                                     Optional maxIterations As Integer = 1000,
                                      Optional env As Environment = Nothing) As Object
 
         Dim ms1Err As [Variant](Of Tolerance, Message) = Math.getTolerance(ms1ppm, env)
@@ -147,7 +148,7 @@ Module metaDNAInfer
             Return mz2Err.TryCast(Of Message)
         End If
 
-        Return New MetaDNAAlgorithm(ms1Err, dotcutoff, mz2Err, allowMs1)
+        Return New MetaDNAAlgorithm(ms1Err, dotcutoff, mz2Err, allowMs1, maxIterations)
     End Function
 
     <ExportAPI("range")>
@@ -325,6 +326,26 @@ Module metaDNAInfer
         End If
 
         Return data.populates(Of MetaDNAResult)(env).ExportNetwork
+    End Function
+
+    <ExportAPI("as.ticks")>
+    Public Function SaveAlgorithmPerfermance(metaDNA As MetaDNAAlgorithm) As dataframe
+        Dim counter = metaDNA.GetPerfermanceCounter
+        Dim iteration As Integer() = counter.Select(Function(c) c.iteration).ToArray
+        Dim ticks As String() = counter.Select(Function(c) c.ticks.FormatTime).ToArray
+        Dim inferLinks As Integer() = counter.Select(Function(c) c.inferLinks).ToArray
+        Dim seeding As Integer() = counter.Select(Function(c) c.seeding).ToArray
+        Dim candidates As Integer() = counter.Select(Function(c) c.candidates).ToArray
+
+        Return New dataframe With {
+            .columns = New Dictionary(Of String, Array) From {
+                {NameOf(iteration), iteration},
+                {NameOf(ticks), ticks},
+                {NameOf(inferLinks), inferLinks},
+                {NameOf(seeding), seeding},
+                {NameOf(candidates), candidates}
+            }
+        }
     End Function
 
 #End Region
