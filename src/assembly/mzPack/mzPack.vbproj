@@ -178,7 +178,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChromatogramOverlap.vb" />
-    <Compile Include="BufferRegion.vb" />
     <Compile Include="mzPack.vb" />
     <Compile Include="PackCDF.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
