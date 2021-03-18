@@ -142,7 +142,7 @@ Public Class RawScatterPlot : Inherits Plot
     Public Overloads Shared Function Plot(samples As IEnumerable(Of ms1_scan),
                                           Optional size$ = "6000,4500",
                                           Optional bg$ = "white",
-                                          Optional margin$ = "padding:200px 600px 500px 500px;",
+                                          Optional margin$ = "padding:200px 800px 500px 600px;",
                                           Optional rawfile$ = "n/a",
                                           Optional ptSize! = 24,
                                           Optional sampleColors$ = "darkblue,blue,skyblue,green,orange,red,darkred",
