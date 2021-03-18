@@ -25,7 +25,7 @@ const rawSample as string = # ["F:\111\P201200404.mzXML",
 # "F:\111\P201200402.mzXML",
 # "F:\111\P201200403.mzXML"]; 
 
-"E:\biodeep\biodeepDB\lxy-CID30.mzML";
+"D:\biodeep\biodeepDB\lxy-CID30.mzML";
 const infer = metadna :> DIA.infer(
 	sample = rawSample 
 		:> sapply(assembly::mzxml.mgf) 

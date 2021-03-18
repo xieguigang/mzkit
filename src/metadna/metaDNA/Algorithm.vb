@@ -122,8 +122,23 @@ Public Class Algorithm
     ''' </summary>
     ''' <param name="sample"></param>
     ''' <returns></returns>
-    Public Function SetSamples(sample As IEnumerable(Of PeakMs2)) As Algorithm
+    Public Function SetSamples(sample As IEnumerable(Of PeakMs2), Optional autoROIid As Boolean = True) As Algorithm
+        If autoROIid Then
+            sample = (Iterator Function() As IEnumerable(Of PeakMs2())
+                          For Each peak As PeakMs2 In sample
+                              If Not peak.meta.ContainsKey("ROI") Then
+                                  If CInt(peak.rt) = 0 Then
+                                      peak.meta!ROI = $"M{CInt(peak.mz)}"
+                                  Else
+                                      peak.meta!ROI = $"M{CInt(peak.mz)}T{CInt(peak.rt)}"
+                                  End If
+                              End If
+                          Next
+                      End Function)()
+        End If
+
         unknowns = UnknownSet.CreateTree(sample, ms1ppm)
+
         Return Me
     End Function
 
