@@ -53,6 +53,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' 未知Feature列表
@@ -77,6 +78,10 @@ Public Class UnknownSet
     Private Sub New(rtmax As Double)
         Me.rtmax = rtmax
     End Sub
+
+    Public Function rtAdjust(rt1 As Double, rtKegg As Double) As Double
+        Return stdNum.Abs(rt1 / rtmax - rtKegg)
+    End Function
 
     Public Function QueryByKey(key As String) As PeakMs2
         Return spectrumIndex.TryGetValue(key)
