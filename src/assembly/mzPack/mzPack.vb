@@ -10,7 +10,7 @@ Public Class mzPack
     ''' 一般为二维散点图
     ''' </summary>
     ''' <returns></returns>
-    Public Property thumbnail As Image
+    Public Property Thumbnail As Image
     Public Property MS As ScanMS1()
 
     ''' <summary>

@@ -51,6 +51,9 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math
 
 Namespace mzData.mzWebCache
 
+    ''' <summary>
+    ''' MS/MS scan
+    ''' </summary>
     Public Class ScanMS2 : Inherits MSScan
         Implements IMs1
 
@@ -65,6 +68,9 @@ Namespace mzData.mzWebCache
 
     End Class
 
+    ''' <summary>
+    ''' MS scan
+    ''' </summary>
     Public Class ScanMS1 : Inherits MSScan
 
         Public Property TIC As Double

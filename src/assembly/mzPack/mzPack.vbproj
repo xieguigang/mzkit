@@ -241,6 +241,10 @@
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
       <Name>MassSpectrum.math-core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\visualize\plot\msplots.vbproj">
+      <Project>{f2147043-7c16-48f8-838b-3d2cf14b0a7b}</Project>
+      <Name>msplots</Name>
+    </ProjectReference>
     <ProjectReference Include="..\assembly\assembly.vbproj">
       <Project>{95f7d65e-9db1-4605-9fd3-25433277af88}</Project>
       <Name>assembly</Name>
