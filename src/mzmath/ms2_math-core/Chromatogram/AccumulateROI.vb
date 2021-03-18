@@ -93,7 +93,7 @@ Namespace Chromatogram
                 Dim rtmax# = window.rtmax
                 Dim peak As ChromatogramTick() = window.region.As(Of ChromatogramTick).ToArray
                 Dim max# = peak.Max(Function(a) a.Intensity)
-                Dim rt# = window(Which.Max(window.region.Select(Function(a) a.intensity))).time
+                Dim rt# = window(which.Max(window.region.Select(Function(a) a.intensity))).time
                 Dim ROI As New ROI With {
                     .ticks = peak,
                     .maxInto = max,

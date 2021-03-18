@@ -150,7 +150,7 @@ Public Class TICplot : Inherits Plot
             }
             peakTimes += New NamedValue(Of ChromatogramTick) With {
                 .Name = line.name,
-                .Value = chromatogram(Which.Max(chromatogram.Shadows!Intensity))
+                .Value = chromatogram(which.Max(chromatogram.Shadows!Intensity))
             }
 
             Dim A, B As PointF

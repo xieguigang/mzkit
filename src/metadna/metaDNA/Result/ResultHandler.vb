@@ -63,7 +63,7 @@ Module ResultHandler
             Dim level As Vector = data.Select(Function(c) If(c.inferLevel = "Ms1", 0.5, 1.0)).AsVector
             Dim parent As Vector = data.Select(Function(c) c.parentTrace).AsVector
             Dim scores As Double() = pvalue * intensity * (orders + 1) * parent * level
-            Dim i As Integer = Which.Max(scores)
+            Dim i As Integer = which.Max(scores)
             Dim max As MetaDNAResult = data(i)
 
             max.score2 = scores(i)
@@ -81,7 +81,7 @@ Module ResultHandler
             Dim level As Vector = data.Select(Function(c) If(c.inferLevel = "Ms1", 0.5, 1.0)).AsVector
             Dim parent As Vector = data.Select(Function(c) c.parentTrace).AsVector
             Dim scores As Double() = pvalue * (orders + 1) * parent * level
-            Dim i As Integer = Which.Max(scores)
+            Dim i As Integer = which.Max(scores)
             Dim max As MetaDNAResult = data(i)
 
             max.score1 = scores(i)

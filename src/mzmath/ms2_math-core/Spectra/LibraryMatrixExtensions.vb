@@ -120,7 +120,7 @@ Namespace Spectra
                     .Select(Function(g)
                                 ' 合并在一起的二级碎片的相应强度取最高的为结果
                                 Dim fragments As ms2() = g.ToArray
-                                Dim maxi As Integer = Which.Max(fragments.Select(Function(m) m.intensity))
+                                Dim maxi As Integer = which.Max(fragments.Select(Function(m) m.intensity))
                                 Dim max As ms2 = fragments(maxi)
 
                                 Return max

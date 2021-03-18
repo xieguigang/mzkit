@@ -102,7 +102,7 @@ Namespace GCMS.QuantifyAnalysis
                     .name = .id
                 }
             Else
-                ion = ions(Which.Max(rtmin + rtmax))
+                ion = ions(which.Max(rtmin + rtmax))
             End If
 
             Return ion
@@ -153,7 +153,7 @@ Namespace GCMS.QuantifyAnalysis
             If scores.All(Function(xi) xi = 0.0) Then
                 Return Nothing
             Else
-                feature = ROI(Which.Max(scores))
+                feature = ROI(which.Max(scores))
             End If
 
             Return GetPeak(ion.id, feature.time, sample)
