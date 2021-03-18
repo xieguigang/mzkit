@@ -59,12 +59,12 @@ const infer = metadna :> DIA.infer(
 
 metadna 
 :> as.table(infer) 
-:> write.csv(file = `${output}/${basename(input)}.metaDNA_all.csv`)
+:> write.csv(file = `${output}/metaDNA_all.csv`)
 ;
 
 metadna
 :> as.table(infer, unique = TRUE)
-:> write.csv(file = `${output}/${basename(input)}.metaDNA.csv`)
+:> write.csv(file = `${output}/metaDNA.csv`)
 ;
 
 require(igraph);
@@ -72,7 +72,7 @@ require(igraph);
 metadna
 :> as.table(infer)
 :> as.graph
-:> save.network(file = `${output}/${basename(input)}.metaDNA_infer/`)
+:> save.network(file = `${output}/metaDNA_infer/`)
 ;
 
 metadna 
