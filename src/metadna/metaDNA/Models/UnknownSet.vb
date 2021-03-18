@@ -63,7 +63,15 @@ Public Class UnknownSet
     Dim features As AVLTree(Of Double, PeakMs2)
     Dim spectrumIndex As Dictionary(Of String, PeakMs2)
     Dim nodeVisted As New Index(Of String)
+
+    ''' <summary>
+    ''' ``[Ms1_ROI => [MS1 => MS2_id]]``
+    ''' </summary>
     Dim peakScans As New Dictionary(Of String, (Ms1 As ms1_scan, Ms2 As String()))
+    ''' <summary>
+    ''' unique ms2 map ms1 ROI id
+    ''' </summary>
+    Dim ms2MapROI As Dictionary(Of String, String)
 
     Friend ReadOnly rtmax As Double
 
@@ -77,6 +85,15 @@ Public Class UnknownSet
 
     Public Function QueryByKey(key As String) As PeakMs2
         Return spectrumIndex.TryGetValue(key)
+    End Function
+
+    ''' <summary>
+    ''' get ms1 ROI id by ms2 peak unique id
+    ''' </summary>
+    ''' <param name="key"></param>
+    ''' <returns></returns>
+    Public Function ROIid(key As String) As String
+        Return ms2MapROI(key)
     End Function
 
     Public Sub AddTrace(libguids As IEnumerable(Of String))
@@ -155,6 +172,15 @@ Public Class UnknownSet
         Dim rtmax As Double = Aggregate peak As PeakMs2
                               In index.Values
                               Into Max(peak.rt)
+        Dim ROImaps As Dictionary(Of String, String) = ROIlist _
+            .Select(Function(ROI)
+                        Return ROI.Value.Item2.Select(Function(peakId) (ROI.Key, peakId))
+                    End Function) _
+            .IteratesALL _
+            .ToDictionary(Function(libid) libid.peakId,
+                          Function(libid)
+                              Return libid.Key
+                          End Function)
 
         Return New UnknownSet(rtmax) With {
             .features = tree,
@@ -163,7 +189,8 @@ Public Class UnknownSet
                 .ToDictionary(Function(a) a.Key,
                               Function(a)
                                   Return (a.Value.Item1, a.Value.Item2.ToArray)
-                              End Function)
+                              End Function),
+            .ms2MapROI = ROImaps
         }
     End Function
 

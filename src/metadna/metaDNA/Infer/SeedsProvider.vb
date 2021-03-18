@@ -154,7 +154,8 @@ Namespace Infer
                 .precursorType = type,
                 .ppm = ppmVal,
                 .score = scoreVal,
-                .pvalue = pvalue
+                .pvalue = pvalue,
+                .ROI = unknowns.ROIid(infer.query.id)
             }
         End Function
 
