@@ -180,7 +180,7 @@ Public Class Algorithm
         For Each kegg_id As String In network.FindPartners(seed.kegg_id)
             Dim compound As Compound = kegg.GetCompound(kegg_id)
 
-            If compound Is Nothing Then
+            If compound Is Nothing OrElse compound.exactMass <= 0 Then
                 Continue For
             End If
 
