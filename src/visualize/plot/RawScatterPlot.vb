@@ -140,17 +140,17 @@ Public Class RawScatterPlot : Inherits Plot
     ''' <param name="ptSize!"></param>
     ''' <returns></returns>
     Public Overloads Shared Function Plot(samples As IEnumerable(Of ms1_scan),
-                                          Optional size$ = "5000,4000",
+                                          Optional size$ = "6000,4500",
                                           Optional bg$ = "white",
-                                          Optional margin$ = Resolution2K.PaddingWithTopTitleAndRightLegend,
+                                          Optional margin$ = "padding:200px 600px 500px 500px;",
                                           Optional rawfile$ = "n/a",
                                           Optional ptSize! = 24,
                                           Optional sampleColors$ = "darkblue,blue,skyblue,green,orange,red,darkred",
                                           Optional mapLevels As Integer = 25,
                                           Optional legendTitleCSS$ = CSSFont.PlotSubTitle,
-                                          Optional tickCSS$ = CSSFont.Win7Large,
+                                          Optional tickCSS$ = CSSFont.Win7LittleLarge,
                                           Optional axisStroke$ = Stroke.AxisStroke,
-                                          Optional labelFontStyle$ = CSSFont.Win7VeryLarge,
+                                          Optional axisLabelFont$ = CSSFont.Win7VeryLarge,
                                           Optional ppi As Integer = 300) As GraphicsData
 
         Dim theme As New Theme With {
@@ -159,7 +159,7 @@ Public Class RawScatterPlot : Inherits Plot
             .legendTitleCSS = legendTitleCSS,
             .axisTickCSS = tickCSS,
             .axisStroke = axisStroke,
-            .tagCSS = labelFontStyle,
+            .axisLabelCSS = axisLabelFont,
             .pointSize = ptSize,
             .padding = margin,
             .drawLegend = False
