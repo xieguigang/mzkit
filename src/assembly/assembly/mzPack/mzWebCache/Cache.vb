@@ -79,6 +79,11 @@ Namespace mzData.mzWebCache
             Return New mzXMLScans(mzErr).Load(raw)
         End Function
 
+        ''' <summary>
+        ''' write ASCII text format(for BioDeep javascript data reader)
+        ''' </summary>
+        ''' <param name="scans"></param>
+        ''' <param name="file"></param>
         <Extension>
         Public Sub Write(scans As IEnumerable(Of ScanMS1), file As Stream)
             Using writer As New StreamWriter(file)
