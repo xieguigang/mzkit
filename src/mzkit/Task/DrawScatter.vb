@@ -46,6 +46,6 @@ Public Module DrawScatter
             tickCSS:=CSSFont.Win7VeryLarge,
             legendTitleCSS:=CSSFont.Win7VeryVeryLarge,
             labelFontStyle:=CSSFont.Win7VeryVeryLarge
-).AsGDIImage
+        ).AsGDIImage
     End Function
 End Module

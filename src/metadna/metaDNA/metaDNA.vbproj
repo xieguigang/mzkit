@@ -152,6 +152,7 @@
     <Compile Include="Models\KEGGQuery.vb" />
     <Compile Include="Models\MassIndexKey.vb" />
     <Compile Include="Models\UnknownSet.vb" />
+    <Compile Include="Extensions.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

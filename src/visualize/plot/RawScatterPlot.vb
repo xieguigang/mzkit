@@ -150,7 +150,8 @@ Public Class RawScatterPlot : Inherits Plot
                                           Optional legendTitleCSS$ = CSSFont.PlotSubTitle,
                                           Optional tickCSS$ = CSSFont.Win7Large,
                                           Optional axisStroke$ = Stroke.AxisStroke,
-                                          Optional labelFontStyle$ = CSSFont.Win7VeryLarge) As GraphicsData
+                                          Optional labelFontStyle$ = CSSFont.Win7VeryLarge,
+                                          Optional ppi As Integer = 300) As GraphicsData
 
         Dim theme As New Theme With {
             .background = bg,
@@ -164,6 +165,6 @@ Public Class RawScatterPlot : Inherits Plot
         }
         Dim app As New RawScatterPlot(samples, mapLevels, rawfile, theme)
 
-        Return app.Plot(size)
+        Return app.Plot(size, ppi:=ppi)
     End Function
 End Class

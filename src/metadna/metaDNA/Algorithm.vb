@@ -78,6 +78,12 @@ Public Class Algorithm
     Dim kegg As KEGGHandler
     Dim network As KEGGNetwork
 
+    Public ReadOnly Property ms1Err As Tolerance
+        Get
+            Return ms1ppm
+        End Get
+    End Property
+
 #Region "algorithm initialization"
 
     Sub New(ms1ppm As Tolerance, dotcutoff As Double, mzwidth As Tolerance, Optional allowMs1 As Boolean = True)
@@ -99,8 +105,23 @@ Public Class Algorithm
         Return Me
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function GetUnknownSet() As UnknownSet
+        Return unknowns
+    End Function
+
+    ''' <summary>
+    ''' create sample data set: <see cref="unknowns"/>
+    ''' </summary>
+    ''' <param name="sample"></param>
+    ''' <returns></returns>
     Public Function SetSamples(sample As IEnumerable(Of PeakMs2)) As Algorithm
         unknowns = UnknownSet.CreateTree(sample, ms1ppm)
+        Return Me
+    End Function
+
+    Public Function SetSamples(sample As UnknownSet) As Algorithm
+        unknowns = sample
         Return Me
     End Function
 
@@ -234,6 +255,11 @@ Public Class Algorithm
         Return data.OrderBy(Function(r) r.rt)
     End Function
 
+    ''' <summary>
+    ''' 基于种子进行推断注释
+    ''' </summary>
+    ''' <param name="seeds"></param>
+    ''' <returns></returns>
     Public Iterator Function DIASearch(seeds As IEnumerable(Of AnnotatedSeed)) As IEnumerable(Of CandidateInfer)
         Dim result As InferLink()
         Dim seeding As New SeedsProvider(

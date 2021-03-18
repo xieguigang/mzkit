@@ -43,12 +43,14 @@
 #End Region
 
 Imports System.IO
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.MetaDNA
 Imports BioNovoGene.BioDeep.MetaDNA.Infer
 Imports MetaDNA.visual
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Language
@@ -202,20 +204,74 @@ Module metaDNAInfer
     <RApiReturn(GetType(CandidateInfer))>
     Public Function DIAInfer(metaDNA As MetaDNAAlgorithm,
                              <RRawVectorArgument> sample As Object,
+                             <RRawVectorArgument> Optional seeds As Object = Nothing,
                              Optional env As Environment = Nothing) As Object
 
         Dim raw As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(sample, env)
+        Dim infer As CandidateInfer()
 
         If raw.isError Then
             Return raw.getError
         End If
 
-        Dim infer As CandidateInfer() = metaDNA _
-            .SetSamples(raw.populates(Of PeakMs2)(env)) _
-            .DIASearch _
-            .ToArray
+        If seeds Is Nothing Then
+            infer = metaDNA _
+                .SetSamples(raw.populates(Of PeakMs2)(env)) _
+                .DIASearch _
+                .ToArray
+        ElseIf TypeOf seeds Is dataframe Then
+            Dim id As String() = DirectCast(seeds, dataframe).getColumnVector(1)
+            Dim kegg_id As String() = DirectCast(seeds, dataframe).getColumnVector(2)
+            Dim rawFile As UnknownSet = UnknownSet.CreateTree(raw.populates(Of PeakMs2)(env), metaDNA.ms1Err)
+            Dim annoSet As NamedValue(Of String)() = id _
+                .Select(Function(uid, i) (uid, kegg_id(i))) _
+                .GroupBy(Function(map) map.uid) _
+                .Select(Function(map)
+                            Return map _
+                                .GroupBy(Function(anno) anno.Item2) _
+                                .Select(Function(anno)
+                                            Return New NamedValue(Of String) With {
+                                                .Name = map.Key,
+                                                .Value = anno.Key
+                                            }
+                                        End Function)
+                        End Function) _
+                .IteratesALL _
+                .Where(Function(map)
+                           Return map.Value.IsPattern("C\d+")
+                       End Function) _
+                .ToArray
+
+            infer = metaDNA _
+                .SetSamples(rawFile) _
+                .DIASearch(rawFile.CreateAnnotatedSeeds(annoSet).ToArray) _
+                .ToArray
+        Else
+            Throw New NotImplementedException
+        End If
 
         Return infer
+    End Function
+
+    ''' <summary>
+    ''' create seeds from mgf file data
+    ''' </summary>
+    ''' <param name="seeds"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("as.seeds")>
+    <RApiReturn(GetType(AnnotatedSeed))>
+    Public Function MgfSeeds(<RRawVectorArgument> seeds As Object, Optional env As Environment = Nothing) As Object
+        Dim seedList As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(seeds, env)
+
+        If seedList.isError Then
+            Return seedList.getError
+        End If
+
+        Return seedList _
+            .populates(Of PeakMs2)(env) _
+            .MgfSeeds _
+            .ToArray
     End Function
 
     <ExportAPI("as.table")>
