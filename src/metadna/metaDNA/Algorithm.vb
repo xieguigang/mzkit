@@ -302,7 +302,7 @@ Public Class Algorithm
             Next
 
             n += candidates.Length
-            tickTime = TimeSpan.FromMilliseconds(App.NanoTime - start)
+            tickTime = TimeSpan.FromTicks(App.NanoTime - start)
             start = App.NanoTime
 
             Call perfermanceCounter.Add((CInt(i), tickTime, result.Length, seeds.Count, n))
