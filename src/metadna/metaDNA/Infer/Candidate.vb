@@ -55,6 +55,11 @@ Namespace Infer
         Public Property pvalue As Double
 
         Public Property infer As InferLink
+        ''' <summary>
+        ''' ms1 ROI id
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property ROI As String
 
         Public Overrides Function ToString() As String
             Return pvalue

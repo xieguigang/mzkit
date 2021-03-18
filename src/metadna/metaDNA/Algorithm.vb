@@ -190,48 +190,54 @@ Public Class Algorithm
         Next
     End Function
 
-    Private Iterator Function alignKeggCompound(seed As AnnotatedSeed, compound As Compound) As IEnumerable(Of InferLink)
-        For Each type As MzCalculator In precursorTypes
-            Dim mz As Double = type.CalcMZ(compound.exactMass)
-            Dim candidates As PeakMs2() = unknowns.QueryByParentMz(mz).ToArray
+    Private Function alignKeggCompound(seed As AnnotatedSeed, compound As Compound) As IEnumerable(Of InferLink)
+        Return precursorTypes _
+            .Select(Function(type)
+                        Return alignKeggCompound(type, seed, compound)
+                    End Function) _
+            .IteratesALL
+    End Function
 
-            If candidates.IsNullOrEmpty Then
+    Private Iterator Function alignKeggCompound(type As MzCalculator, seed As AnnotatedSeed, compound As Compound) As IEnumerable(Of InferLink)
+        Dim mz As Double = type.CalcMZ(compound.exactMass)
+        Dim candidates As PeakMs2() = unknowns.QueryByParentMz(mz).ToArray
+
+        If candidates.IsNullOrEmpty Then
+            Return
+        End If
+
+        For Each hit As PeakMs2 In candidates
+            Dim alignment As InferLink = GetBestQuery(hit, seed)
+            Dim kegg As New KEGGQuery With {
+                .mz = mz,
+                .kegg_id = compound.entry,
+                .precursorType = type.ToString,
+                .ppm = PPMmethod.PPM(mz, hit.mz)
+            }
+
+            If alignment Is Nothing Then
                 Continue For
             End If
 
-            For Each hit As PeakMs2 In candidates
-                Dim alignment As InferLink = GetBestQuery(hit, seed)
-                Dim kegg As New KEGGQuery With {
-                    .mz = mz,
-                    .kegg_id = compound.entry,
-                    .precursorType = type.ToString,
-                    .ppm = PPMmethod.PPM(mz, hit.mz)
-                }
+            alignment.kegg = kegg
 
-                If alignment Is Nothing Then
+            If stdnum.Min(alignment.forward, alignment.reverse) < dotcutoff Then
+                If alignment.jaccard >= 0.5 Then
+                    alignment.level = InferLevel.Ms2
+                    alignment.parentTrace *= (0.95 * dotcutoff)
+                ElseIf allowMs1 Then
+                    alignment.alignments = Nothing
+                    alignment.level = InferLevel.Ms1
+                    alignment.parentTrace *= (0.5 * dotcutoff)
+                Else
                     Continue For
                 End If
+            Else
+                alignment.level = InferLevel.Ms2
+                alignment.parentTrace *= stdnum.Min(alignment.forward, alignment.reverse)
+            End If
 
-                alignment.kegg = kegg
-
-                If stdnum.Min(alignment.forward, alignment.reverse) < dotcutoff Then
-                    If alignment.jaccard >= 0.5 Then
-                        alignment.level = InferLevel.Ms2
-                        alignment.parentTrace *= (0.95 * dotcutoff)
-                    ElseIf allowMs1 Then
-                        alignment.alignments = Nothing
-                        alignment.level = InferLevel.Ms1
-                        alignment.parentTrace *= (0.5 * dotcutoff)
-                    Else
-                        Continue For
-                    End If
-                Else
-                    alignment.level = InferLevel.Ms2
-                    alignment.parentTrace *= stdnum.Min(alignment.forward, alignment.reverse)
-                End If
-
-                Yield alignment
-            Next
+            Yield alignment
         Next
     End Function
 
