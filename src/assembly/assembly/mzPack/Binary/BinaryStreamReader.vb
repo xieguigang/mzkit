@@ -60,8 +60,9 @@ Namespace mzData.mzWebCache
         Implements IDisposable
 
         Dim disposedValue As Boolean
-        Dim file As BinaryDataReader
         Dim index As New Dictionary(Of String, Long)
+
+        Protected file As BinaryDataReader
 
         Public ReadOnly Property rtmin As Double
         Public ReadOnly Property rtmax As Double
