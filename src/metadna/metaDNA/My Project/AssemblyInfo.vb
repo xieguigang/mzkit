@@ -8,12 +8,12 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("metaDNA")>
-<Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("")>
+<Assembly: AssemblyTitle("Metabolic Reaction Network-based Recursive Metabolite Annotation for Untargeted Metabolomics")>
+<Assembly: AssemblyDescription("Metabolic Reaction Network-based Recursive Metabolite Annotation for Untargeted Metabolomics")>
+<Assembly: AssemblyCompany("ZhuLab")>
 <Assembly: AssemblyProduct("metaDNA")>
-<Assembly: AssemblyCopyright("Copyright ©  2021")>
-<Assembly: AssemblyTrademark("")>
+<Assembly: AssemblyCopyright("Copyright © BioNovoGene 2021")>
+<Assembly: AssemblyTrademark("BioDeep")>
 
 <Assembly: ComVisible(False)>
 

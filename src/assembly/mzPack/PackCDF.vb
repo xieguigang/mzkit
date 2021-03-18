@@ -33,7 +33,7 @@ Public Module PackCDF
     ''' <summary>
     ''' write cache
     ''' </summary>
-    ''' <param name="overlaps"></param>
+    ''' <param name="overlaps">多个文件或者多个离子通道的色谱图数据集合</param>
     ''' <param name="file"></param>
     ''' <remarks>
     ''' |TIC|BPC|

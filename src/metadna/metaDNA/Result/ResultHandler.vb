@@ -26,7 +26,7 @@ Module ResultHandler
                 Yield New MetaDNAResult With {
                     .exactMass = compound.exactMass,
                     .formula = compound.formula,
-                    .id = type.infer.query.id,
+                    .query_id = type.infer.query.id,
                     .forward = type.infer.forward,
                     .reverse = type.infer.reverse,
                     .jaccard = type.infer.jaccard,
@@ -46,7 +46,8 @@ Module ResultHandler
                     .parentTrace = type.infer.parentTrace / 100,
                     .inferSize = type.infer.inferSize,
                     .fileName = type.infer.rawFile,
-                    .mzCalc = precursorTypes(.precursorType).CalcMZ(.exactMass)
+                    .mzCalc = precursorTypes(.precursorType).CalcMZ(.exactMass),
+                    .ROI_id = type.ROI
                 }
             Next
         Next
@@ -73,7 +74,7 @@ Module ResultHandler
 
     <Extension>
     Private Iterator Function FeatureUniques(result As IEnumerable(Of MetaDNAResult), typeOrders As Index(Of String)) As IEnumerable(Of MetaDNAResult)
-        For Each feature In result.GroupBy(Function(c) c.id)
+        For Each feature In result.GroupBy(Function(c) c.ROI_id)
             Dim data As MetaDNAResult() = feature.ToArray
             Dim pvalue As Vector = -data.Select(Function(c) c.pvalue).AsVector.Log(base:=10)
             Dim orders As Vector = data.Select(Function(c) typeOrders.Count - typeOrders.IndexOf(c.precursorType)).AsVector

@@ -80,7 +80,7 @@ Namespace Spectra
         ''' <summary>
         ''' 数据扫描编号
         ''' </summary>
-        Public Property scan As Integer
+        Public Property scan As String
         Public Property activation As String
         Public Property collisionEnergy As Double
 

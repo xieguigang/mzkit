@@ -58,6 +58,11 @@ Public Class AnnotatedSeed : Implements INamedValue
 
     Public Property kegg_id As String
     Public Property id As String Implements INamedValue.Key
+
+    ''' <summary>
+    ''' current feature Ms1 of <see cref="id"/>
+    ''' </summary>
+    ''' <returns></returns>
     Public Property parent As ms1_scan
     Public Property parentTrace As Double
     Public Property inferSize As Integer

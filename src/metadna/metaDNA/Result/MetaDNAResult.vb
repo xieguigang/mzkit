@@ -2,7 +2,16 @@
 
 Public Class MetaDNAResult
 
-    Public Property id As String
+    ''' <summary>
+    ''' the unique id of ms1 parent ion
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property ROI_id As String
+    ''' <summary>
+    ''' the unique id of ms2 spectrum peaks
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property query_id As String
     Public Property mz As Double
     Public Property rt As Double
     Public Property intensity As Double
@@ -17,6 +26,11 @@ Public Class MetaDNAResult
     ''' <returns></returns>
     Public Property mzCalc As Double
     Public Property ppm As Double
+    ''' <summary>
+    ''' the score match of ms1 <see cref="rt"/> and rt value of the KEGG compound reference
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property rt_adjust As Double
     Public Property inferLevel As String
     Public Property forward As Double
     Public Property reverse As Double

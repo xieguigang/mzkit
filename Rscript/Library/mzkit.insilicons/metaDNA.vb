@@ -43,13 +43,13 @@
 #End Region
 
 Imports System.IO
-Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.BioDeep.MetaDNA
 Imports BioNovoGene.BioDeep.MetaDNA.Infer
 Imports MetaDNA.visual
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Language
@@ -59,6 +59,7 @@ Imports SMRUCC.genomics.Data
 Imports SMRUCC.genomics.Data.KEGG.Metabolism
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal.Invokes
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports KeggCompound = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.Compound
@@ -66,11 +67,20 @@ Imports kegReactionClass = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.Reacti
 Imports MetaDNAAlgorithm = BioNovoGene.BioDeep.MetaDNA.Algorithm
 Imports ReactionClass = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.ReactionClass
 Imports ReactionClassTbl = MetaDNA.visual.ReactionClass
-Imports REnv = SMRUCC.Rsharp.Runtime.Internal
+Imports REnv = SMRUCC.Rsharp.Runtime
 
-<Package("metadna")>
+''' <summary>
+''' Metabolic Reaction Network-based Recursive Metabolite Annotation for Untargeted Metabolomics
+''' </summary>
+<Package("metadna",
+         Category:=APICategories.ResearchTools,
+         Cites:="X. Shen, R. Wang, X. Xiong, Y. Yin, Y. Cai, Z. Ma, N. Liu, and Z.-J. Zhu* (Corresponding Author), Metabolic Reaction Network-based Recursive Metabolite Annotation for Untargeted Metabolomics, Nature Communications, 2019, 10: 1516.")>
 <RTypeExport("metadna", GetType(MetaDNAAlgorithm))>
 Module metaDNAInfer
+
+    Sub New()
+
+    End Sub
 
     ''' <summary>
     ''' Load network graph model from the kegg metaDNA infer network data.
@@ -88,7 +98,7 @@ Module metaDNAInfer
         End If
 
         If Not TypeOf debugOutput Is Global.MetaDNA.visual.XML Then
-            Return REnv.debug.stop(New InvalidCastException, env)
+            Return REnv.Internal.debug.stop(New InvalidCastException, env)
         End If
 
         Return DirectCast(debugOutput, Global.MetaDNA.visual.XML).CreateGraph
@@ -135,6 +145,7 @@ Module metaDNAInfer
                                      Optional mzwidth As Object = "da:0.3",
                                      Optional dotcutoff As Double = 0.5,
                                      Optional allowMs1 As Boolean = True,
+                                     Optional maxIterations As Integer = 1000,
                                      Optional env As Environment = Nothing) As Object
 
         Dim ms1Err As [Variant](Of Tolerance, Message) = Math.getTolerance(ms1ppm, env)
@@ -146,12 +157,23 @@ Module metaDNAInfer
             Return mz2Err.TryCast(Of Message)
         End If
 
-        Return New MetaDNAAlgorithm(ms1Err, dotcutoff, mz2Err, allowMs1)
+        Return New MetaDNAAlgorithm(ms1Err, dotcutoff, mz2Err, allowMs1, maxIterations)
     End Function
 
     <ExportAPI("range")>
-    Public Function SetSearchRange(metadna As MetaDNAAlgorithm, precursorTypes As String()) As MetaDNAAlgorithm
-        Return metadna.SetSearchRange(precursorTypes)
+    <RApiReturn(GetType(MetaDNAAlgorithm))>
+    Public Function SetSearchRange(metadna As MetaDNAAlgorithm,
+                                   <RRawVectorArgument>
+                                   precursorTypes As Object,
+                                   Optional env As Environment = Nothing) As Object
+        Dim types As String() = REnv.asVector(Of String)(precursorTypes)
+
+        If env.globalEnvironment.options.verbose Then
+            Call base.print("Set precursor types:", env)
+            Call base.print(types, env)
+        End If
+
+        Return metadna.SetSearchRange(types)
     End Function
 
     <ExportAPI("load.kegg")>
@@ -203,18 +225,62 @@ Module metaDNAInfer
     <RApiReturn(GetType(CandidateInfer))>
     Public Function DIAInfer(metaDNA As MetaDNAAlgorithm,
                              <RRawVectorArgument> sample As Object,
+                             <RRawVectorArgument> Optional seeds As Object = Nothing,
                              Optional env As Environment = Nothing) As Object
 
         Dim raw As pipeline = pipeline.TryCreatePipeline(Of PeakMs2)(sample, env)
+        Dim infer As CandidateInfer()
 
         If raw.isError Then
             Return raw.getError
         End If
 
-        Dim infer As CandidateInfer() = metaDNA _
-            .SetSamples(raw.populates(Of PeakMs2)(env)) _
-            .DIASearch _
-            .ToArray
+        If seeds Is Nothing Then
+            infer = metaDNA _
+                .SetSamples(raw.populates(Of PeakMs2)(env)) _
+                .DIASearch _
+                .ToArray
+        ElseIf TypeOf seeds Is dataframe Then
+            Dim id As String() = DirectCast(seeds, dataframe).getColumnVector(1)
+            Dim kegg_id As String() = DirectCast(seeds, dataframe).getColumnVector(2)
+            Dim rawFile As UnknownSet = UnknownSet.CreateTree(raw.populates(Of PeakMs2)(env), metaDNA.ms1Err)
+            Dim annoSet As NamedValue(Of String)() = id _
+                .Select(Function(uid, i) (uid, kegg_id(i))) _
+                .GroupBy(Function(map) map.uid) _
+                .Select(Function(map)
+                            Return map _
+                                .GroupBy(Function(anno) anno.Item2) _
+                                .Select(Function(anno)
+                                            Return New NamedValue(Of String) With {
+                                                .Name = map.Key,
+                                                .Value = anno.Key
+                                            }
+                                        End Function)
+                        End Function) _
+                .IteratesALL _
+                .Where(Function(map)
+                           Return map.Value.IsPattern("C\d+")
+                       End Function) _
+                .ToArray
+            Dim seedsRaw As AnnotatedSeed()
+
+            If env.globalEnvironment.options.verbose Then
+                Call base.print("Create seeds by dataframe...", env)
+            End If
+
+            seedsRaw = rawFile.CreateAnnotatedSeeds(annoSet).ToArray
+
+            If env.globalEnvironment.options.verbose Then
+                Call base.print($"We create {seedsRaw.Length} seeds for running metaDNA algorithm!", env)
+            End If
+
+            infer = metaDNA _
+                .SetSamples(rawFile) _
+                .DIASearch(seedsRaw) _
+                .ToArray
+        Else
+            Throw New NotImplementedException
+        End If
 
         Return infer
     End Function
@@ -238,6 +304,14 @@ Module metaDNAInfer
             .populates(Of PeakMs2)(env) _
             .MgfSeeds _
             .ToArray
+    End Function
+
+#End Region
+
+#Region "result output"
+
+    Public Function ResultAlignments() As Object
+
     End Function
 
     <ExportAPI("as.table")>
@@ -271,6 +345,25 @@ Module metaDNAInfer
         Return data.populates(Of MetaDNAResult)(env).ExportNetwork
     End Function
 
+    <ExportAPI("as.ticks")>
+    Public Function SaveAlgorithmPerfermance(metaDNA As MetaDNAAlgorithm) As dataframe
+        Dim counter = metaDNA.GetPerfermanceCounter
+        Dim iteration As Integer() = counter.Select(Function(c) c.iteration).ToArray
+        Dim ticks As String() = counter.Select(Function(c) c.ticks.FormatTime).ToArray
+        Dim inferLinks As Integer() = counter.Select(Function(c) c.inferLinks).ToArray
+        Dim seeding As Integer() = counter.Select(Function(c) c.seeding).ToArray
+        Dim candidates As Integer() = counter.Select(Function(c) c.candidates).ToArray
+
+        Return New dataframe With {
+            .columns = New Dictionary(Of String, Array) From {
+                {NameOf(iteration), iteration},
+                {NameOf(ticks), ticks},
+                {NameOf(inferLinks), inferLinks},
+                {NameOf(seeding), seeding},
+                {NameOf(candidates), candidates}
+            }
+        }
+    End Function
 #End Region
 
 #Region "kegg"

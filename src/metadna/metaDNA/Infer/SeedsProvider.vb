@@ -138,7 +138,7 @@ Namespace Infer
             ' 结构相似，保留时间应该是相近的？
             Dim t3 = 1 - stdnum.Abs(tx - ty)
 
-            If t3 >= 0.8 Then
+            If t3 >= 0.65 Then
                 t3 = 1
             End If
 
@@ -154,7 +154,8 @@ Namespace Infer
                 .precursorType = type,
                 .ppm = ppmVal,
                 .score = scoreVal,
-                .pvalue = pvalue
+                .pvalue = pvalue,
+                .ROI = unknowns.ROIid(infer.query.id)
             }
         End Function
 

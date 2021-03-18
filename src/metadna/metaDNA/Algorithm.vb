@@ -77,15 +77,28 @@ Public Class Algorithm
     Dim unknowns As UnknownSet
     Dim kegg As KEGGHandler
     Dim network As KEGGNetwork
+    Dim maxIterations As Integer = 1000
+
+    Public ReadOnly Property ms1Err As Tolerance
+        Get
+            Return ms1ppm
+        End Get
+    End Property
 
 #Region "algorithm initialization"
 
-    Sub New(ms1ppm As Tolerance, dotcutoff As Double, mzwidth As Tolerance, Optional allowMs1 As Boolean = True)
+    Sub New(ms1ppm As Tolerance,
+            dotcutoff As Double,
+            mzwidth As Tolerance,
+            Optional allowMs1 As Boolean = True,
+            Optional maxIterations As Integer = 1000)
+
         Me.ms1ppm = ms1ppm
         Me.dotcutoff = dotcutoff
         Me.MSalignment = New CosAlignment(mzwidth, LowAbundanceTrimming.Default)
         Me.mzwidth = mzwidth
         Me.allowMs1 = allowMs1
+        Me.maxIterations = maxIterations
     End Sub
 
     Public Function SetSearchRange(ParamArray precursorTypes As String()) As Algorithm
@@ -99,8 +112,43 @@ Public Class Algorithm
         Return Me
     End Function
 
-    Public Function SetSamples(sample As IEnumerable(Of PeakMs2)) As Algorithm
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function GetUnknownSet() As UnknownSet
+        Return unknowns
+    End Function
+
+    ''' <summary>
+    ''' create sample data set: <see cref="unknowns"/>
+    ''' </summary>
+    ''' <param name="sample"></param>
+    ''' <returns></returns>
+    Public Function SetSamples(sample As IEnumerable(Of PeakMs2), Optional autoROIid As Boolean = True) As Algorithm
+        If autoROIid Then
+            ' 20210318
+            ' toarray is required at here
+            ' or stack overflow error will be happends
+            sample = (Iterator Function() As IEnumerable(Of PeakMs2)
+                          For Each peak As PeakMs2 In sample
+                              If Not peak.meta.ContainsKey("ROI") Then
+                                  If CInt(peak.rt) = 0 Then
+                                      peak.meta!ROI = $"M{CInt(peak.mz)}"
+                                  Else
+                                      peak.meta!ROI = $"M{CInt(peak.mz)}T{CInt(peak.rt)}"
+                                  End If
+                              End If
+
+                              Yield peak
+                          Next
+                      End Function)().ToArray
+        End If
+
         unknowns = UnknownSet.CreateTree(sample, ms1ppm)
+
+        Return Me
+    End Function
+
+    Public Function SetSamples(sample As UnknownSet) As Algorithm
+        unknowns = sample
         Return Me
     End Function
 
@@ -122,6 +170,7 @@ Public Class Algorithm
     ''' <returns></returns>
     Public Function RunIteration(seeds As IEnumerable(Of AnnotatedSeed)) As IEnumerable(Of InferLink)
         Return seeds _
+            .ToArray _
             .AsParallel _
             .Select(AddressOf RunInfer) _
             .IteratesALL
@@ -131,7 +180,7 @@ Public Class Algorithm
         For Each kegg_id As String In network.FindPartners(seed.kegg_id)
             Dim compound As Compound = kegg.GetCompound(kegg_id)
 
-            If compound Is Nothing Then
+            If compound Is Nothing OrElse compound.exactMass <= 0 Then
                 Continue For
             End If
 
@@ -141,48 +190,54 @@ Public Class Algorithm
         Next
     End Function
 
-    Private Iterator Function alignKeggCompound(seed As AnnotatedSeed, compound As Compound) As IEnumerable(Of InferLink)
-        For Each type As MzCalculator In precursorTypes
-            Dim mz As Double = type.CalcMZ(compound.exactMass)
-            Dim candidates As PeakMs2() = unknowns.QueryByParentMz(mz).ToArray
+    Private Function alignKeggCompound(seed As AnnotatedSeed, compound As Compound) As IEnumerable(Of InferLink)
+        Return precursorTypes _
+            .Select(Function(type)
+                        Return alignKeggCompound(type, seed, compound)
+                    End Function) _
+            .IteratesALL
+    End Function
 
-            If candidates.IsNullOrEmpty Then
+    Private Iterator Function alignKeggCompound(type As MzCalculator, seed As AnnotatedSeed, compound As Compound) As IEnumerable(Of InferLink)
+        Dim mz As Double = type.CalcMZ(compound.exactMass)
+        Dim candidates As PeakMs2() = unknowns.QueryByParentMz(mz).ToArray
+
+        If candidates.IsNullOrEmpty Then
+            Return
+        End If
+
+        For Each hit As PeakMs2 In candidates
+            Dim alignment As InferLink = GetBestQuery(hit, seed)
+            Dim kegg As New KEGGQuery With {
+                .mz = mz,
+                .kegg_id = compound.entry,
+                .precursorType = type.ToString,
+                .ppm = PPMmethod.PPM(mz, hit.mz)
+            }
+
+            If alignment Is Nothing Then
                 Continue For
             End If
 
-            For Each hit As PeakMs2 In candidates
-                Dim alignment As InferLink = GetBestQuery(hit, seed)
-                Dim kegg As New KEGGQuery With {
-                    .mz = mz,
-                    .kegg_id = compound.entry,
-                    .precursorType = type.ToString,
-                    .ppm = PPMmethod.PPM(mz, hit.mz)
-                }
+            alignment.kegg = kegg
 
-                If alignment Is Nothing Then
+            If stdnum.Min(alignment.forward, alignment.reverse) < dotcutoff Then
+                If alignment.jaccard >= 0.5 Then
+                    alignment.level = InferLevel.Ms2
+                    alignment.parentTrace *= (0.95 * dotcutoff)
+                ElseIf allowMs1 Then
+                    alignment.alignments = Nothing
+                    alignment.level = InferLevel.Ms1
+                    alignment.parentTrace *= (0.5 * dotcutoff)
+                Else
                     Continue For
                 End If
+            Else
+                alignment.level = InferLevel.Ms2
+                alignment.parentTrace *= stdnum.Min(alignment.forward, alignment.reverse)
+            End If
 
-                alignment.kegg = kegg
-
-                If stdnum.Min(alignment.forward, alignment.reverse) < dotcutoff Then
-                    If alignment.jaccard >= 0.5 Then
-                        alignment.level = InferLevel.Ms2
-                        alignment.parentTrace *= (0.95 * dotcutoff)
-                    ElseIf allowMs1 Then
-                        alignment.alignments = Nothing
-                        alignment.level = InferLevel.Ms1
-                        alignment.parentTrace *= (0.5 * dotcutoff)
-                    Else
-                        Continue For
-                    End If
-                Else
-                    alignment.level = InferLevel.Ms2
-                    alignment.parentTrace *= stdnum.Min(alignment.forward, alignment.reverse)
-                End If
-
-                Yield alignment
-            Next
+            Yield alignment
         Next
     End Function
 
@@ -234,6 +289,17 @@ Public Class Algorithm
         Return data.OrderBy(Function(r) r.rt)
     End Function
 
+    ReadOnly perfermanceCounter As New List(Of (Integer, TimeSpan, Integer, Integer, Integer))
+
+    Public Function GetPerfermanceCounter() As (iteration As Integer, ticks As TimeSpan, inferLinks As Integer, seeding As Integer, candidates As Integer)()
+        Return perfermanceCounter.ToArray
+    End Function
+
+    ''' <summary>
+    ''' 基于种子进行推断注释
+    ''' </summary>
+    ''' <param name="seeds"></param>
+    ''' <returns></returns>
     Public Iterator Function DIASearch(seeds As IEnumerable(Of AnnotatedSeed)) As IEnumerable(Of CandidateInfer)
         Dim result As InferLink()
         Dim seeding As New SeedsProvider(
@@ -244,6 +310,10 @@ Public Class Algorithm
         Dim candidates As CandidateInfer()
         Dim i As i32 = 1
         Dim n As Integer = 0
+        Dim start As Long = App.NanoTime
+        Dim tickTime As TimeSpan
+
+        Call perfermanceCounter.Clear()
 
         Do
             result = RunIteration(seeds).ToArray
@@ -258,8 +328,16 @@ Public Class Algorithm
             Next
 
             n += candidates.Length
+            tickTime = TimeSpan.FromTicks(App.NanoTime - start)
+            start = App.NanoTime
 
-            Call Console.WriteLine($"[iteration {++i}] infers {result.Length}, find {seeds.Count} seeds, {n} current candidates ...")
+            Call perfermanceCounter.Add((CInt(i), tickTime, result.Length, seeds.Count, n))
+            Call Console.WriteLine($"[iteration {++i}, {tickTime.FormatTime}] infers {result.Length}, find {seeds.Count} seeds, {n} current candidates ...")
+
+            If i > maxIterations Then
+                Call Console.WriteLine($"Max iteration number {maxIterations} has been reached, exit metaDNA infer loop!")
+                Exit Do
+            End If
         Loop While result.Length > 0
     End Function
 
