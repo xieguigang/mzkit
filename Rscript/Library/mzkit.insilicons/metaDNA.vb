@@ -69,9 +69,18 @@ Imports ReactionClass = SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject.ReactionC
 Imports ReactionClassTbl = MetaDNA.visual.ReactionClass
 Imports REnv = SMRUCC.Rsharp.Runtime
 
-<Package("metadna")>
+''' <summary>
+''' Metabolic Reaction Network-based Recursive Metabolite Annotation for Untargeted Metabolomics
+''' </summary>
+<Package("metadna",
+         Category:=APICategories.ResearchTools,
+         Cites:="X. Shen, R. Wang, X. Xiong, Y. Yin, Y. Cai, Z. Ma, N. Liu, and Z.-J. Zhu* (Corresponding Author), Metabolic Reaction Network-based Recursive Metabolite Annotation for Untargeted Metabolomics, Nature Communications, 2019, 10: 1516.")>
 <RTypeExport("metadna", GetType(MetaDNAAlgorithm))>
 Module metaDNAInfer
+
+    Sub New()
+
+    End Sub
 
     ''' <summary>
     ''' Load network graph model from the kegg metaDNA infer network data.
