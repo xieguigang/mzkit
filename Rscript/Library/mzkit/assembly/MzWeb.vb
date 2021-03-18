@@ -100,6 +100,13 @@ Module MzWeb
         End If
     End Function
 
+    ''' <summary>
+    ''' write ASCII text format of mzweb stream
+    ''' </summary>
+    ''' <param name="scans"></param>
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("write.cache")>
     Public Function writeStream(scans As pipeline,
                                 Optional file As Object = Nothing,
@@ -120,4 +127,24 @@ Module MzWeb
 
         Return True
     End Function
+
+    ''' <summary>
+    ''' write binary format of mzweb stream data
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="cache"></param>
+    <ExportAPI("packBin")>
+    Public Sub WriteCache(file As String, cache As String)
+        Using stream As New BinaryStreamWriter(file:=cache)
+            If file.ExtensionSuffix("mzXML") Then
+                For Each item In New mzXMLScans().Load(file)
+                    Call stream.Write(item)
+                Next
+            Else
+                For Each item In New mzMLScans().Load(file)
+                    Call stream.Write(item)
+                Next
+            End If
+        End Using
+    End Sub
 End Module

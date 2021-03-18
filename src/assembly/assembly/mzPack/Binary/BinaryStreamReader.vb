@@ -84,7 +84,7 @@ Namespace mzData.mzWebCache
 
         Sub New(file As String)
             Me.file = New BinaryDataReader(
-                input:=file.Open(IO.FileMode.OpenOrCreate, doClear:=False, [readOnly]:=True),
+                input:=file.Open(FileMode.OpenOrCreate, doClear:=False, [readOnly]:=True),
                 encoding:=Encodings.ASCII
             )
             Me.file.ByteOrder = ByteOrder.LittleEndian
