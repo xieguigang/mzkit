@@ -77,6 +77,7 @@ Public Class Algorithm
     Dim unknowns As UnknownSet
     Dim kegg As KEGGHandler
     Dim network As KEGGNetwork
+    Dim maxIterations As Integer = 1000
 
     Public ReadOnly Property ms1Err As Tolerance
         Get
@@ -86,12 +87,18 @@ Public Class Algorithm
 
 #Region "algorithm initialization"
 
-    Sub New(ms1ppm As Tolerance, dotcutoff As Double, mzwidth As Tolerance, Optional allowMs1 As Boolean = True)
+    Sub New(ms1ppm As Tolerance,
+            dotcutoff As Double,
+            mzwidth As Tolerance,
+            Optional allowMs1 As Boolean = True,
+            Optional maxIterations As Integer = 1000)
+
         Me.ms1ppm = ms1ppm
         Me.dotcutoff = dotcutoff
         Me.MSalignment = New CosAlignment(mzwidth, LowAbundanceTrimming.Default)
         Me.mzwidth = mzwidth
         Me.allowMs1 = allowMs1
+        Me.maxIterations = maxIterations
     End Sub
 
     Public Function SetSearchRange(ParamArray precursorTypes As String()) As Algorithm
@@ -287,6 +294,11 @@ Public Class Algorithm
             n += candidates.Length
 
             Call Console.WriteLine($"[iteration {++i}] infers {result.Length}, find {seeds.Count} seeds, {n} current candidates ...")
+
+            If i > maxIterations Then
+                Call Console.WriteLine($"Max iteration number {maxIterations} has been reached, exit metaDNA infer loop!")
+                Exit Do
+            End If
         Loop While result.Length > 0
     End Function
 
