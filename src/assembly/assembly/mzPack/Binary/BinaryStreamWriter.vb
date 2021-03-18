@@ -81,7 +81,7 @@ Namespace mzData.mzWebCache
                 rtmax = scan.rt
             End If
 
-            Call scanIndex.Add(scan.scan_id, file.Position)
+            Call scanIndex.Add(scan.scan_id, start&)
 
             Call file.Write(0)
             Call file.Write(scan.scan_id, BinaryStringFormat.ZeroTerminated)
