@@ -26,6 +26,7 @@ Public Class MetaDNAResult
     ''' <returns></returns>
     Public Property mzCalc As Double
     Public Property ppm As Double
+    Public Property rt_adjust As Double
     Public Property inferLevel As String
     Public Property forward As Double
     Public Property reverse As Double
