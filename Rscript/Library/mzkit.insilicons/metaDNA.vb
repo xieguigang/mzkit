@@ -252,10 +252,21 @@ Module metaDNAInfer
                            Return map.Value.IsPattern("C\d+")
                        End Function) _
                 .ToArray
+            Dim seedsRaw As AnnotatedSeed()
+
+            If env.globalEnvironment.options.verbose Then
+                Call base.print("Create seeds by dataframe...", env)
+            End If
+
+            seedsRaw = rawFile.CreateAnnotatedSeeds(annoSet).ToArray
+
+            If env.globalEnvironment.options.verbose Then
+                Call base.print($"We create {seedsRaw.Length} seeds for running metaDNA algorithm!", env)
+            End If
 
             infer = metaDNA _
                 .SetSamples(rawFile) _
-                .DIASearch(rawFile.CreateAnnotatedSeeds(annoSet).ToArray) _
+                .DIASearch(seedsRaw) _
                 .ToArray
         Else
             Throw New NotImplementedException

@@ -7,6 +7,15 @@ const input as string    = ?"--mgf"     || stop("A mgf ions file must be provide
 const output as string   = ?"--output"  || dirname(input);
 const ionMode as integer = ?"--ionMode" || 1;
 
+const KEGGlibbase = "D:\biodeep\biodeepdb_v3\KEGG";
+const KEGGlib = list(
+	KEGG_cpd = `${KEGGlibbase}/KEGG_cpd.repo`,
+	KEGG_rxn = `${KEGGlibbase}/reaction_class.repo`
+);
+
+print("using kegg libraries:");
+str(KEGGlib);
+
 const seeds = (function() {
 	if (file.exists(?"--seeds")) {
 		read.csv(?"--seeds");
@@ -30,8 +39,8 @@ const metadna = metadna(
 	allowMs1  = FALSE
 )
 :> range(getIonRange())
-:> load.kegg(kegg.library(repo = "D:\biodeep\biodeepdb_v3\KEGG\KEGG_cpd.repo"))
-:> load.kegg_network(kegg.network(repo = "D:\biodeep\biodeepdb_v3\KEGG\reaction_class.repo"))
+:> load.kegg(kegg.library(repo = KEGGlib$KEGG_cpd))
+:> load.kegg_network(kegg.network(repo = KEGGlib$KEGG_rxn))
 # :> load.raw(
 	# sample = assembly::mzxml.mgf("E:\biodeep\biodeepDB\lxy-CID30.mzML")
 # )

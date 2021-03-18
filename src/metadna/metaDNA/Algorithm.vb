@@ -143,6 +143,7 @@ Public Class Algorithm
     ''' <returns></returns>
     Public Function RunIteration(seeds As IEnumerable(Of AnnotatedSeed)) As IEnumerable(Of InferLink)
         Return seeds _
+            .ToArray _
             .AsParallel _
             .Select(AddressOf RunInfer) _
             .IteratesALL
