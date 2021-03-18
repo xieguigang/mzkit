@@ -2,7 +2,16 @@
 
 Public Class MetaDNAResult
 
-    Public Property id As String
+    ''' <summary>
+    ''' the unique id of ms1 parent ion
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property ROI_id As String
+    ''' <summary>
+    ''' the unique id of ms2 spectrum peaks
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property query_id As String
     Public Property mz As Double
     Public Property rt As Double
     Public Property intensity As Double
