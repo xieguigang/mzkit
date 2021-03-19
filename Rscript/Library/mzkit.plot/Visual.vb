@@ -229,6 +229,7 @@ Module Visual
     Public Function Snapshot3D(<RRawVectorArgument>
                                ms1_scans As Object,
                                Optional mzwidth As Object = "da:0.3",
+                               Optional noise_cutoff As Double = 0.5,
                                Optional env As Environment = Nothing) As Object
 
         Dim points As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ms1_scans, env)
@@ -249,7 +250,7 @@ Module Visual
         Dim cutoff As Double = rawPoints _
             .Select(Function(a) a.intensity) _
             .GKQuantile _
-            .Query(0.65)
+            .Query(noise_cutoff)
 
         For Each mz As NamedCollection(Of ms1_scan) In rawPoints _
             .GroupBy(Function(p) p.mz, mzErr.TryCast(Of Tolerance)) _
