@@ -39,13 +39,6 @@ Public Module DrawScatter
             Next
         End Using
 
-        Return RawScatterPlot.Plot(
-            samples:=ms1,
-            margin:="padding:200px 600px 300px 300px;",
-            rawfile:=raw.source.FileName,
-            tickCSS:=CSSFont.Win7VeryLarge,
-            legendTitleCSS:=CSSFont.Win7VeryVeryLarge,
-            labelFontStyle:=CSSFont.Win7VeryVeryLarge
-        ).AsGDIImage
+        Return RawScatterPlot.Plot(samples:=ms1, rawfile:=raw.source.FileName).AsGDIImage
     End Function
 End Module
