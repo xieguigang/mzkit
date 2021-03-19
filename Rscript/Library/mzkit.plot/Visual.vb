@@ -244,7 +244,9 @@ Module Visual
                 .TIC = scan.Select(Function(x) x.intensity).ToArray
             }
 
-            XIC.TIC(mz.name) = chr
+            If chr.length > 3 Then
+                XIC.TIC(mz.name) = chr
+            End If
         Next
 
         Dim args As New list With {
