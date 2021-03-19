@@ -108,6 +108,7 @@ Module Visual
         Dim size As String = args.getValue("size", env, "1600,1000")
         Dim xlab As String = args.getValue("xlab", env, "Time (s)")
         Dim ylab As String = args.getValue("ylab", env, "Intensity")
+        Dim reorderOverlaps As Boolean = args.getValue("reorder.overlaps", env, [default]:=False)
         Dim overlaps As New List(Of NamedCollection(Of ChromatogramTick))
         Dim data As NamedCollection(Of ChromatogramTick)
 
@@ -119,11 +120,15 @@ Module Visual
             overlaps.Add(data)
         Next
 
-        Return overlaps _
-            .OrderByDescending(Function(c)
-                                   Return Aggregate tick As ChromatogramTick In c Into Sum(tick.Intensity)
-                               End Function) _
-            .ToArray _
+        If reorderOverlaps Then
+            overlaps = overlaps _
+                .OrderByDescending(Function(c)
+                                       Return Aggregate tick As ChromatogramTick In c Into Sum(tick.Intensity)
+                                   End Function) _
+                .AsList
+        End If
+
+        Return overlaps.ToArray _
             .TICplot(
                 fillAlpha:=alpha,
                 colorsSchema:=colorSet,
