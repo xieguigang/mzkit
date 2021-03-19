@@ -210,6 +210,13 @@ Module Visual
         Return RawScatterPlot.Plot(points.populates(Of ms1_scan)(env))
     End Function
 
+    ''' <summary>
+    ''' plot raw XIC matrix based on a given sequence of ms1 scans data
+    ''' </summary>
+    ''' <param name="ms1_scans">all ms1 scan point data for create XIC overlaps</param>
+    ''' <param name="mzwidth">mz tolerance for create XIC data</param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("raw_snapshot3D")>
     Public Function Snapshot3D(<RRawVectorArgument>
                                ms1_scans As Object,
