@@ -189,6 +189,12 @@ Public Class ScanVisual3D : Inherits Plot
         Dim firstFrame As GraphicsRegion
         Dim lastFrame As GraphicsRegion
         Dim parallelXAxisPen As Pen = Stroke.TryParse(theme.gridStrokeX)
+        Dim maxinto As Double = Aggregate scan As NamedCollection(Of ChromatogramTick)
+                                In scans
+                                Let into As Double = scan _
+                                    .Select(Function(tick) tick.Intensity) _
+                                    .Max
+                                Into Max(into)
 
         For i As Integer = 0 To scans.Length - 1
             Dim labels As Label() = Nothing
@@ -229,7 +235,7 @@ Public Class ScanVisual3D : Inherits Plot
             Call New TICplot(
                 ionData:={scans(i)},
                 timeRange:=Nothing,
-                intensityMax:=0,
+                intensityMax:=maxinto,
                 isXIC:=False,
                 fillCurve:=fillCurve,
                 fillAlpha:=fillAlpha,
