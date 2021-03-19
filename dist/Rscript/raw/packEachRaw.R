@@ -5,6 +5,10 @@ const rawdir as string = ?"--rawdir" || stop("no raw data location was specific!
 for(file in list.files(rawdir, pattern = "*.mz*ML")) {
 	print(file);
 	
-	# run process of current single file
-	mzweb::packBin(file, `${dirname(file)}/${basename(file)}.mzPack`);
+	const packFile = `${dirname(file)}/${basename(file)}.mzPack`;
+	
+	if (!file.exists(packFile)) {
+		# run process of current single file
+		mzweb::packBin(file, packFile);
+	}
 } 
