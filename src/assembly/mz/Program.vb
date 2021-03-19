@@ -72,6 +72,13 @@ Imports stdNum = System.Math
         Return GetType(Program).RunCLI(App.CommandLine)
     End Function
 
+    <ExportAPI("/pack")>
+    <Description("convert the mzXML/mzMl raw data file into the mzpack binary format.")>
+    <Usage("/pack /xml <*.mzXML/mzML> [/mzpack <outfile.mzpack>]")>
+    Public Function MzPack(args As CommandLine) As Integer
+
+    End Function
+
     <ExportAPI("/mz.calculate")>
     <Usage("/mz.calculate /mass <mass> [/mode <+/-, default=+> /out <out.csv/html/txt>]")>
     <Argument("/out", True, CLITypes.File, PipelineTypes.std_out,
@@ -226,8 +233,7 @@ Imports stdNum = System.Math
                 .Select(Function(x)
                             Return New ms2 With {
                                 .mz = x.mz,
-                                .intensity = x.intensity,
-                                .quantity = x.intensity
+                                .intensity = x.intensity
                             }
                         End Function) _
                 .ToArray
@@ -237,7 +243,6 @@ Imports stdNum = System.Math
                 .Select(Function(m)
                             Return New ms2 With {
                                 .mz = m.mz,
-                                .quantity = m.quantity,
                                 .intensity = stdNum.Round(m.intensity * 100)
                             }
                         End Function) _

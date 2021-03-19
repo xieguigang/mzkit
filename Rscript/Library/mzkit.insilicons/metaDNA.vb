@@ -306,6 +306,14 @@ Module metaDNAInfer
             .ToArray
     End Function
 
+#End Region
+
+#Region "result output"
+
+    Public Function ResultAlignments() As Object
+
+    End Function
+
     <ExportAPI("as.table")>
     <RApiReturn(GetType(MetaDNAResult))>
     Public Function ResultTable(metaDNA As MetaDNAAlgorithm,
@@ -356,7 +364,6 @@ Module metaDNAInfer
             }
         }
     End Function
-
 #End Region
 
 #Region "kegg"

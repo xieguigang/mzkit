@@ -52,7 +52,8 @@ Namespace mzData.mzWebCache
 
     Public Class BinaryStreamWriter : Implements IDisposable
 
-        Dim file As BinaryDataWriter
+        Protected file As BinaryDataWriter
+
         Dim disposedValue As Boolean
         Dim scanIndex As New Dictionary(Of String, Long)
         Dim mzmin As Double = Integer.MaxValue
@@ -63,7 +64,11 @@ Namespace mzData.mzWebCache
         Public Const Magic As String = "BioNovoGene/mzWebStream"
 
         Sub New(file As String)
-            Me.file = New BinaryDataWriter(file.Open(IO.FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False), encoding:=Encodings.ASCII)
+            Call Me.New(file.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False))
+        End Sub
+
+        Sub New(file As Stream)
+            Me.file = New BinaryDataWriter(file, encoding:=Encodings.ASCII)
             Me.file.Write(Magic, BinaryStringFormat.NoPrefixOrTermination)
             Me.file.Write(New Double() {0, 0, 0, 0})
             Me.file.Write(0&)
@@ -71,6 +76,10 @@ Namespace mzData.mzWebCache
             Me.file.Flush()
         End Sub
 
+        ''' <summary>
+        ''' write MS scan and MS/MS product scans
+        ''' </summary>
+        ''' <param name="scan"></param>
         Public Sub Write(scan As ScanMS1)
             Dim start As Long = file.Position
 
@@ -81,7 +90,7 @@ Namespace mzData.mzWebCache
                 rtmax = scan.rt
             End If
 
-            Call scanIndex.Add(scan.scan_id, file.Position)
+            Call scanIndex.Add(scan.scan_id, start&)
 
             Call file.Write(0)
             Call file.Write(scan.scan_id, BinaryStringFormat.ZeroTerminated)
@@ -103,7 +112,7 @@ Namespace mzData.mzWebCache
 
             Call file.Flush()
 
-            Using file.TemporarySeek(start, IO.SeekOrigin.Begin)
+            Using file.TemporarySeek(start, SeekOrigin.Begin)
                 ' write data size offset of ms1 
                 Call file.Write(size)
             End Using
@@ -132,12 +141,16 @@ Namespace mzData.mzWebCache
             Call file.Write(scan.rt)
             Call file.Write(scan.intensity)
             Call file.Write(scan.polarity)
+            Call file.Write(scan.charge)
+            Call file.Write(scan.activationMethod)
+            Call file.Write(scan.collisionEnergy)
+            Call file.Write(CByte(If(scan.centroided, 1, 0)))
             Call file.Write(scan.mz.Length)
             Call file.Write(scan.mz)
             Call file.Write(scan.into)
         End Sub
 
-        Private Sub writeIndex()
+        Protected Overridable Sub writeIndex()
             Dim indexPos As Long
 
             file.Flush()
