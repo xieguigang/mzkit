@@ -1,6 +1,8 @@
 ﻿Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.Data.IO
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Net.Http
 
 Public Class mzPackWriter : Inherits BinaryStreamWriter
 
@@ -52,10 +54,19 @@ Public Class mzPackWriter : Inherits BinaryStreamWriter
         Call file.Flush()
     End Sub
 
+    ''' <summary>
+    ''' ``[image_chunk][startOffset]``
+    ''' </summary>
     Private Sub writeThumbnail()
         Dim start As Long = file.Position
 
-        Call file.Write(thumbnail.ReadBinary)
+        Using img As Stream = thumbnail.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+            Call img _
+                .GZipStream _
+                .ToArray _
+                .DoCall(AddressOf file.Write)
+        End Using
+
         Call file.Write(start)
         Call file.Flush()
     End Sub
