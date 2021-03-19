@@ -74,16 +74,20 @@ Public Class mzPackReader : Inherits BinaryStreamReader
     End Sub
 
     Public Function GetThumbnail() As Bitmap
-        Dim offset As Long
-        Dim bytes As Byte()
+        If Not hasThumbnail Then
+            Return Nothing
+        Else
+            Dim offset As Long
+            Dim bytes As Byte()
 
-        file.Seek(file.Length - 8, SeekOrigin.Begin)
-        offset = file.ReadInt64
-        file.Seek(offset, SeekOrigin.Begin)
-        bytes = file.ReadBytes(file.Length - 8 - offset)
+            file.Seek(file.Length - 8, SeekOrigin.Begin)
+            offset = file.ReadInt64
+            file.Seek(offset, SeekOrigin.Begin)
+            bytes = file.ReadBytes(file.Length - 8 - offset)
 
-        Using buffer As New MemoryStream(bytes), img As Stream = buffer.UnGzipStream
-            Return Image.FromStream(img)
-        End Using
+            Using buffer As New MemoryStream(bytes), img As Stream = buffer.UnGzipStream
+                Return Image.FromStream(img)
+            End Using
+        End If
     End Function
 End Class
