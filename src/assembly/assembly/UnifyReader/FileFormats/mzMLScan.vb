@@ -128,11 +128,11 @@ Namespace DataReader
         End Function
 
         Public Overrides Function GetCollisionEnergy(scan As spectrum) As Double
-            Throw New NotImplementedException()
+            Return scan.precursorList.precursor(Scan0).GetCollisionEnergy
         End Function
 
         Public Overrides Function GetCentroided(scan As spectrum) As Boolean
-            Throw New NotImplementedException()
+            Return Not scan.profile
         End Function
     End Class
 End Namespace
