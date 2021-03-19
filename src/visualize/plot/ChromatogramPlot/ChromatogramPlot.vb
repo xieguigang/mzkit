@@ -209,6 +209,7 @@ Public Module ChromatogramPlot
                             Optional gridFill As String = "rgb(245,245,245)",
                             Optional timeRange As Double() = Nothing,
                             Optional parallel As Boolean = False,
+                            Optional drawParallelAxis As Boolean = False,
                             Optional intensityMax As Double = 0,
                             Optional ppi As Double = 100) As GraphicsData
 
@@ -232,7 +233,14 @@ Public Module ChromatogramPlot
         Dim TIC As Plot
 
         If parallel Then
-            TIC = New ScanVisual3D(ionData, 60, fillCurve:=fillCurve, fillAlpha:=fillAlpha, theme:=theme) With {
+            TIC = New ScanVisual3D(
+                scans:=ionData,
+                angle:=60,
+                fillCurve:=fillCurve,
+                fillAlpha:=fillAlpha,
+                drawParallelAxis:=drawParallelAxis,
+                theme:=theme
+            ) With {
                 .xlabel = xlabel,
                 .ylabel = ylabel
             }

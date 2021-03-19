@@ -64,7 +64,11 @@ Namespace mzData.mzWebCache
         Public Const Magic As String = "BioNovoGene/mzWebStream"
 
         Sub New(file As String)
-            Me.file = New BinaryDataWriter(file.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False), encoding:=Encodings.ASCII)
+            Call Me.New(file.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False))
+        End Sub
+
+        Sub New(file As Stream)
+            Me.file = New BinaryDataWriter(file, encoding:=Encodings.ASCII)
             Me.file.Write(Magic, BinaryStringFormat.NoPrefixOrTermination)
             Me.file.Write(New Double() {0, 0, 0, 0})
             Me.file.Write(0&)
@@ -72,6 +76,10 @@ Namespace mzData.mzWebCache
             Me.file.Flush()
         End Sub
 
+        ''' <summary>
+        ''' write MS scan and MS/MS product scans
+        ''' </summary>
+        ''' <param name="scan"></param>
         Public Sub Write(scan As ScanMS1)
             Dim start As Long = file.Position
 

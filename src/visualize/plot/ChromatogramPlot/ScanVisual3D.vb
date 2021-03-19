@@ -47,6 +47,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
@@ -72,23 +73,25 @@ Imports stdNum = System.Math
 Public Class ScanVisual3D : Inherits Plot
 
     ReadOnly scans As NamedCollection(Of ChromatogramTick)()
-    ReadOnly height As Double = 0.45
     ReadOnly angle As Double = 60
+    ReadOnly height As Double = 0.3
     ReadOnly fillCurve As Boolean
     ReadOnly fillAlpha As Integer
+    ReadOnly drawParallelAxis As Boolean
 
 #Region "constructor"
-    Public Sub New(scans As IEnumerable(Of ms1_scan), tolerance As Tolerance, angle As Double, fillCurve As Boolean, fillAlpha As Integer, theme As Theme)
-        Call Me.New(GetScanCollection(scans, tolerance), angle, fillCurve, fillAlpha, theme)
+    Public Sub New(scans As IEnumerable(Of ms1_scan), tolerance As Tolerance, angle As Double, fillCurve As Boolean, fillAlpha As Integer, drawParallelAxis As Boolean, theme As Theme)
+        Call Me.New(GetScanCollection(scans, tolerance), angle, fillCurve, fillAlpha, drawParallelAxis, theme)
     End Sub
 
-    Public Sub New(scans As IEnumerable(Of NamedCollection(Of ChromatogramTick)), angle As Double, fillCurve As Boolean, fillAlpha As Integer, theme As Theme)
+    Public Sub New(scans As IEnumerable(Of NamedCollection(Of ChromatogramTick)), angle As Double, fillCurve As Boolean, fillAlpha As Integer, drawParallelAxis As Boolean, theme As Theme)
         MyBase.New(theme)
 
         Me.fillCurve = fillCurve
         Me.fillAlpha = fillAlpha
         Me.angle = angle
         Me.scans = scans.ToArray
+        Me.drawParallelAxis = drawParallelAxis
     End Sub
 #End Region
 
@@ -118,7 +121,7 @@ Public Class ScanVisual3D : Inherits Plot
         ' cos(a) = dx / dc
         ' dx = cos(a) * dc
         Dim dc As Double = evalDc(canvas)
-        Dim dx As Double = stdNum.Cos(d:=angle.ToRadians) * dc
+        Dim dx As Double = stdNum.Sin(angle.ToRadians) * dc
 
         Return dx / (scans.Length + 1)
     End Function
@@ -152,7 +155,7 @@ Public Class ScanVisual3D : Inherits Plot
         ' sin(a) = dy / dc
         ' dy = sin(a) * dc
         Dim dc As Double = evalDc(canvas)
-        Dim dy As Double = stdNum.Sin(a:=angle.ToRadians) * dc
+        Dim dy As Double = stdNum.Cos(angle.ToRadians) * dc
 
         Return dy / (scans.Length + 1)
     End Function
@@ -189,6 +192,16 @@ Public Class ScanVisual3D : Inherits Plot
         Dim firstFrame As GraphicsRegion
         Dim lastFrame As GraphicsRegion
         Dim parallelXAxisPen As Pen = Stroke.TryParse(theme.gridStrokeX)
+        Dim maxinto As Double = Aggregate scan As NamedCollection(Of ChromatogramTick)
+                                In scans
+                                Let into As Double = scan _
+                                    .Select(Function(tick) tick.Intensity) _
+                                    .Max
+                                Into Max(into)
+        Dim rtAll As (min#, max#) = scans _
+            .Select(Function(chr) chr.Select(Function(t) t.Time)) _
+            .IteratesALL _
+            .Range
 
         For i As Integer = 0 To scans.Length - 1
             Dim labels As Label() = Nothing
@@ -221,15 +234,19 @@ Public Class ScanVisual3D : Inherits Plot
                 End If
             End If
 
-            Dim t0 As New PointF(parallelCanvas.Padding.Left, canvas.Height - parallelCanvas.Padding.Bottom)
-            Dim t1 As New PointF(canvas.Width - parallelCanvas.Padding.Right, canvas.Height - parallelCanvas.Padding.Bottom)
+            If drawParallelAxis Then
+                Dim x0 = parallelCanvas.Padding.Left
+                Dim y0 = canvas.Height - parallelCanvas.Padding.Bottom
+                Dim x1 = canvas.Width - parallelCanvas.Padding.Right
+                Dim y1 = canvas.Height - parallelCanvas.Padding.Bottom
 
-            Call g.DrawLine(parallelXAxisPen, t0, t1)
+                Call g.DrawLine(parallelXAxisPen, x0, y0, x1, y1)
+            End If
 
             Call New TICplot(
                 ionData:={scans(i)},
-                timeRange:=Nothing,
-                intensityMax:=0,
+                timeRange:={rtAll.min, rtAll.max},
+                intensityMax:=maxinto,
                 isXIC:=False,
                 fillCurve:=fillCurve,
                 fillAlpha:=fillAlpha,

@@ -29,6 +29,11 @@ Public Class TICplot : Inherits Plot
     ReadOnly fillAlpha As Integer
     ReadOnly labelLayoutTicks As Integer = 100
     ReadOnly deln As Integer = 10
+    ''' <summary>
+    ''' 当两个滑窗点的时间距离过长的时候，就不进行连接线的绘制操作了
+    ''' （插入两个零值的点）
+    ''' </summary>
+    ReadOnly leapTimeWinSize As Double = 30
 
     Public Sub New(ionData As NamedCollection(Of ChromatogramTick)(),
                    timeRange As Double(),
@@ -150,33 +155,57 @@ Public Class TICplot : Inherits Plot
             }
             peakTimes += New NamedValue(Of ChromatogramTick) With {
                 .Name = line.name,
-                .Value = chromatogram(Which.Max(chromatogram.Shadows!Intensity))
+                .Value = chromatogram(which.Max(chromatogram.Shadows!Intensity))
             }
 
-            Dim A, B As PointF
+            Dim bottom% = canvas.Bottom - 6
+            Dim viz = g
             Dim polygon As New List(Of PointF)
+            Dim draw = Sub(t1 As ChromatogramTick, t2 As ChromatogramTick)
+                           Dim A = scaler.Translate(t1.Time, t1.Intensity)
+                           Dim B = scaler.Translate(t2.Time, t2.Intensity)
 
-            For Each signal As SlideWindow(Of PointF) In chromatogram _
-                .Select(Function(c)
-                            Return New PointF(c.Time, c.Intensity)
-                        End Function) _
-                .SlideWindows(winSize:=2)
+                           Call viz.DrawLine(curvePen, A, B)
 
-                A = scaler.Translate(signal.First)
-                B = scaler.Translate(signal.Last)
+                           If polygon = 0 Then
+                               polygon.Add(New PointF(A.X, bottom))
+                               polygon.Add(A)
+                           End If
 
-                Call g.DrawLine(curvePen, A, B)
+                           polygon.Add(B)
+                       End Sub
 
-                If polygon = 0 Then
-                    polygon.Add(A)
+            For Each signal As SlideWindow(Of ChromatogramTick) In chromatogram.SlideWindows(winSize:=2)
+                Dim dt As Double = signal.Last.Time - signal.First.Time
+
+                If dt > leapTimeWinSize Then
+                    ' add zero point
+                    If dt > leapTimeWinSize Then
+                        dt = leapTimeWinSize / 2
+                    Else
+                        dt = dt / 2
+                    End If
+
+                    Dim i1 As New ChromatogramTick With {.Time = signal.First.Time + dt, .Intensity = 0}
+                    Dim i2 As New ChromatogramTick With {.Time = signal.Last.Time - dt, .Intensity = 0}
+
+                    Call draw(signal.First, i1)
+
+                    polygon.Add(New PointF(polygon.Last.X, bottom))
+
+                    If fillCurve Then
+                        fillColor = New SolidBrush(Color.FromArgb(fillAlpha, curvePen.Color))
+                        g.FillPolygon(fillColor, polygon)
+                    End If
+
+                    polygon.Clear()
+
+                    Call draw(i2, signal.Last)
+                Else
+                    Call draw(signal.First, signal.Last)
                 End If
-
-                polygon.Add(B)
             Next
 
-            Dim bottom% = canvas.Bottom - 6
-
-            polygon.Insert(0, New PointF(polygon(0).X, bottom))
             polygon.Add(New PointF(polygon.Last.X, bottom))
 
             If fillCurve Then

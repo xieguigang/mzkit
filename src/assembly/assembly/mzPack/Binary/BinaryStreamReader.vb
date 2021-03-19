@@ -63,6 +63,7 @@ Namespace mzData.mzWebCache
         Dim index As New Dictionary(Of String, Long)
 
         Protected file As BinaryDataReader
+        Protected MSscannerIndex As BufferRegion
 
         Public ReadOnly Property rtmin As Double
         Public ReadOnly Property rtmax As Double
@@ -75,6 +76,10 @@ Namespace mzData.mzWebCache
             End Get
         End Property
 
+        ''' <summary>
+        ''' get index key of all ms1 scan
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property EnumerateIndex As IEnumerable(Of String)
             Get
                 Return index.Keys
@@ -84,12 +89,19 @@ Namespace mzData.mzWebCache
         Public ReadOnly Property filepath As String
 
         Sub New(file As String)
+            Call Me.New(
+                file:=file.Open(FileMode.OpenOrCreate, doClear:=False, [readOnly]:=True)
+            )
+
+            Me.filepath = file
+        End Sub
+
+        Sub New(file As Stream)
             Me.file = New BinaryDataReader(
-                input:=file.Open(FileMode.OpenOrCreate, doClear:=False, [readOnly]:=True),
+                input:=file,
                 encoding:=Encodings.ASCII
             )
             Me.file.ByteOrder = ByteOrder.LittleEndian
-            Me.filepath = file
 
             If Not Me.VerifyMagicSignature(Me.file) Then
                 Throw New InvalidProgramException("invalid magic header!")
@@ -98,11 +110,15 @@ Namespace mzData.mzWebCache
             End If
         End Sub
 
+        ''' <summary>
+        ''' load MS scanner index
+        ''' </summary>
         Protected Overridable Sub loadIndex()
             Dim nsize As Integer
             Dim scanPos As Long
             Dim scanId As String
             Dim range As Double() = file.ReadDoubles(4)
+            Dim start As Long
 
             _mzmin = range(0)
             _mzmax = range(1)
@@ -110,7 +126,9 @@ Namespace mzData.mzWebCache
             _rtmax = range(3)
 
             Using file.TemporarySeek()
-                file.Seek(file.ReadInt64, SeekOrigin.Begin)
+                start = file.ReadInt64
+                file.Seek(start, SeekOrigin.Begin)
+                ' read count n
                 nsize = file.ReadInt32
 
                 For i As Integer = 0 To nsize - 1
@@ -118,6 +136,11 @@ Namespace mzData.mzWebCache
                     scanId = file.ReadString(BinaryStringFormat.ZeroTerminated)
                     index(scanId) = scanPos
                 Next
+
+                MSscannerIndex = New BufferRegion With {
+                    .position = start,
+                    .size = file.Position - start
+                }
             End Using
         End Sub
 

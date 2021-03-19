@@ -1,6 +1,10 @@
-﻿Imports System.IO
+﻿Imports System.Drawing
+Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.Data.IO
+Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Net.Http
 
 Public Class mzPackWriter : Inherits BinaryStreamWriter
 
@@ -8,14 +12,35 @@ Public Class mzPackWriter : Inherits BinaryStreamWriter
     ''' ``[readkey => tempfile]`` 
     ''' </summary>
     ReadOnly scanners As New Dictionary(Of String, String)
+
     ''' <summary>
     ''' temp file path of the thumbnail image
     ''' </summary>
     Dim thumbnail As String
     Dim scannerIndex As New Dictionary(Of String, Long)
+    Dim worktemp As String = App.GetAppSysTempFile("_mzpackwriter", App.PID.ToHexString, prefix:="other_scanners")
 
     Public Sub New(file As String)
         MyBase.New(file)
+    End Sub
+
+    Sub New(file As Stream)
+        Call MyBase.New(file)
+    End Sub
+
+    Public Sub SetThumbnail(img As Image)
+        thumbnail = $"{worktemp}/thumbnail.png"
+        img.SaveAs(thumbnail)
+    End Sub
+
+    Public Sub AddOtherScanner(key As String, data As ChromatogramOverlap)
+        Dim file As String = $"{worktemp}/{key.NormalizePathString}.cdf"
+
+        Using buffer As Stream = file.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
+            Call data.SavePackData(file:=buffer)
+        End Using
+
+        scanners(key) = file
     End Sub
 
     Private Sub writeScanners()
@@ -52,10 +77,19 @@ Public Class mzPackWriter : Inherits BinaryStreamWriter
         Call file.Flush()
     End Sub
 
+    ''' <summary>
+    ''' ``[image_chunk][startOffset]``
+    ''' </summary>
     Private Sub writeThumbnail()
         Dim start As Long = file.Position
 
-        Call file.Write(thumbnail.ReadBinary)
+        Using img As Stream = thumbnail.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+            Call img _
+                .GZipStream _
+                .ToArray _
+                .DoCall(AddressOf file.Write)
+        End Using
+
         Call file.Write(start)
         Call file.Flush()
     End Sub

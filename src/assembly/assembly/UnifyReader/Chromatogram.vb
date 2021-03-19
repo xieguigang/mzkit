@@ -50,6 +50,9 @@ Imports Microsoft.VisualBasic.Math.SignalProcessing
 
 Namespace DataReader
 
+    ''' <summary>
+    ''' A data union model of TIC/BPC
+    ''' </summary>
     Public Class Chromatogram
 
         Public Property scan_time As Double()
@@ -64,6 +67,12 @@ Namespace DataReader
         ''' </summary>
         ''' <returns></returns>
         Public Property BPC As Double()
+
+        Public ReadOnly Property length As Integer
+            Get
+                Return scan_time.Length
+            End Get
+        End Property
 
         Public Overrides Function ToString() As String
             Return $"Chromatogram between scan_time [{CInt(scan_time.Min)},{CInt(scan_time.Max)}]"

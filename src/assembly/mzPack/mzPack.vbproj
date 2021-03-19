@@ -95,10 +95,12 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\mzkit_UnixDocker\</OutputPath>
     <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.mzPack.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rsharp_app_release|AnyCPU'">
     <DefineTrace>true</DefineTrace>
@@ -178,6 +180,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChromatogramOverlap.vb" />
+    <Compile Include="Converter.vb" />
     <Compile Include="mzPackReader.vb" />
     <Compile Include="mzPackWriter.vb" />
     <Compile Include="mzPack.vb" />
@@ -242,10 +245,6 @@
     <ProjectReference Include="..\..\mzmath\ms2_math-core\MassSpectrum.math-core.vbproj">
       <Project>{a2130297-2b4a-4b02-80b2-5cfa860f6dae}</Project>
       <Name>MassSpectrum.math-core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\visualize\plot\msplots.vbproj">
-      <Project>{f2147043-7c16-48f8-838b-3d2cf14b0a7b}</Project>
-      <Name>msplots</Name>
     </ProjectReference>
     <ProjectReference Include="..\assembly\assembly.vbproj">
       <Project>{95f7d65e-9db1-4605-9fd3-25433277af88}</Project>

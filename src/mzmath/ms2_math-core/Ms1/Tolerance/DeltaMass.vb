@@ -54,6 +54,7 @@ Namespace Ms1
     ''' </summary>
     Public Class DAmethod : Inherits Tolerance
 
+        <DebuggerStepThrough>
         Sub New(Optional da# = 0.3)
             DeltaTolerance = da
         End Sub

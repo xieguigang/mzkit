@@ -45,11 +45,13 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -58,6 +60,8 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
@@ -86,6 +90,8 @@ Module Visual
     ''' <param name="args"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' 
+    <Extension>
     Private Function plotOverlaps(x As ChromatogramOverlap, args As list, env As Environment) As Object
         Dim isBPC As Boolean = args.getValue("bpc", env, [default]:=False)
         Dim alpha As Integer = args.getValue("opacity", env, [default]:=100)
@@ -93,16 +99,18 @@ Module Visual
         Dim gridFill As String = args.getValue("grid.fill", env, [default]:="white")
         Dim fill As Boolean = args.getValue("fill", env, [default]:=True)
         Dim showLabels As Boolean = args.getValue("show.labels", env, [default]:=True)
+        Dim showLegends As Boolean = args.getValue("show.legends", env, [default]:=True)
         Dim parallel As Boolean = args.getValue("parallel", env, [default]:=False)
         Dim axisStroke As String = args.getValue("axis.stroke", env, [default]:="stroke: black; stroke-width: 3px; stroke-dash: solid;")
         Dim lineStroke As String = args.getValue("line.stroke", env, [default]:="stroke: black; stroke-width: 2px; stroke-dash: solid;")
-        Dim padding As String = args.getValue("padding", env, "padding:100px 100px 150px 150px;")
+        Dim padding As String = args.getValue("padding", env, "padding:100px 100px 125px 150px;")
         Dim axisLabel As String = args.getValue("axis.cex", env, "font-style: normal; font-size: 24; font-family: Bookman Old Style;")
         Dim axisTickCex As String = args.getValue("tick.cex", env, "font-style: normal; font-size: 16; font-family: Bookman Old Style;")
         Dim legendLabel As String = args.getValue("legend.cex", env, "font-style: normal; font-size: 12; font-family: Bookman Old Style;")
         Dim size As String = args.getValue("size", env, "1600,1000")
         Dim xlab As String = args.getValue("xlab", env, "Time (s)")
         Dim ylab As String = args.getValue("ylab", env, "Intensity")
+        Dim reorderOverlaps As Boolean = args.getValue("reorder.overlaps", env, [default]:=False)
         Dim overlaps As New List(Of NamedCollection(Of ChromatogramTick))
         Dim data As NamedCollection(Of ChromatogramTick)
 
@@ -114,11 +122,15 @@ Module Visual
             overlaps.Add(data)
         Next
 
-        Return overlaps _
-            .OrderByDescending(Function(c)
-                                   Return Aggregate tick As ChromatogramTick In c Into Sum(tick.Intensity)
-                               End Function) _
-            .ToArray _
+        If reorderOverlaps Then
+            overlaps = overlaps _
+                .OrderByDescending(Function(c)
+                                       Return Aggregate tick As ChromatogramTick In c Into Sum(tick.Intensity)
+                                   End Function) _
+                .AsList
+        End If
+
+        Return overlaps.ToArray _
             .TICplot(
                 fillAlpha:=alpha,
                 colorsSchema:=colorSet,
@@ -135,7 +147,8 @@ Module Visual
                 legendFontCSS:=legendLabel,
                 xlabel:=xlab,
                 ylabel:=ylab,
-                axisTickFont:=axisTickCex
+                axisTickFont:=axisTickCex,
+                showLegends:=showLegends
             )
     End Function
 
@@ -203,6 +216,74 @@ Module Visual
         End If
 
         Return RawScatterPlot.Plot(points.populates(Of ms1_scan)(env))
+    End Function
+
+    ''' <summary>
+    ''' plot raw XIC matrix based on a given sequence of ms1 scans data
+    ''' </summary>
+    ''' <param name="ms1_scans">all ms1 scan point data for create XIC overlaps</param>
+    ''' <param name="mzwidth">mz tolerance for create XIC data</param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("raw_snapshot3D")>
+    Public Function Snapshot3D(<RRawVectorArgument>
+                               ms1_scans As Object,
+                               Optional mzwidth As Object = "da:0.3",
+                               Optional noise_cutoff As Double = 0.5,
+                               Optional env As Environment = Nothing) As Object
+
+        Dim points As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ms1_scans, env)
+        Dim mzErr = Math.getTolerance(mzwidth, env)
+
+        If points.isError Then
+            Return points.getError
+        ElseIf mzErr Like GetType(Message) Then
+            Return mzErr.TryCast(Of Message)
+        End If
+
+        Dim XIC As New ChromatogramOverlap
+        Dim scan As ms1_scan()
+        Dim chr As Chromatogram
+        Dim rawPoints As ms1_scan() = points _
+            .populates(Of ms1_scan)(env) _
+            .ToArray
+        Dim cutoff As Double = rawPoints _
+            .Select(Function(a) a.intensity) _
+            .GKQuantile _
+            .Query(noise_cutoff)
+
+        For Each mz As NamedCollection(Of ms1_scan) In rawPoints _
+            .GroupBy(Function(p) p.mz, mzErr.TryCast(Of Tolerance)) _
+            .OrderBy(Function(mzi)
+                         Return Val(mzi.name)
+                     End Function)
+
+            scan = mz _
+                .Where(Function(p) p.intensity >= cutoff) _
+                .OrderBy(Function(p) p.scan_time) _
+                .ToArray
+            chr = New Chromatogram With {
+                .scan_time = scan.Select(Function(x) x.scan_time).ToArray,
+                .BPC = scan.Select(Function(x) x.intensity).ToArray,
+                .TIC = scan.Select(Function(x) x.intensity).ToArray
+            }
+
+            If chr.length > 3 Then
+                XIC.TIC(Val(mz.name).ToString("F4")) = chr
+            End If
+        Next
+
+        Dim args As New list With {
+            .slots = New Dictionary(Of String, Object) From {
+                {"show.labels", False},
+                {"show.legends", False},
+                {"parallel", True},
+                {"colors", "Spectral:c8"},
+                {"opacity", 60}
+            }
+        }
+
+        Return XIC.plotOverlaps(args, env)
     End Function
 
     ''' <summary>
