@@ -76,6 +76,10 @@ Namespace mzData.mzWebCache
             End Get
         End Property
 
+        ''' <summary>
+        ''' get index key of all ms1 scan
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property EnumerateIndex As IEnumerable(Of String)
             Get
                 Return index.Keys
@@ -85,12 +89,19 @@ Namespace mzData.mzWebCache
         Public ReadOnly Property filepath As String
 
         Sub New(file As String)
+            Call Me.New(
+                file:=file.Open(FileMode.OpenOrCreate, doClear:=False, [readOnly]:=True)
+            )
+
+            Me.filepath = file
+        End Sub
+
+        Sub New(file As Stream)
             Me.file = New BinaryDataReader(
-                input:=file.Open(FileMode.OpenOrCreate, doClear:=False, [readOnly]:=True),
+                input:=file,
                 encoding:=Encodings.ASCII
             )
             Me.file.ByteOrder = ByteOrder.LittleEndian
-            Me.filepath = file
 
             If Not Me.VerifyMagicSignature(Me.file) Then
                 Throw New InvalidProgramException("invalid magic header!")

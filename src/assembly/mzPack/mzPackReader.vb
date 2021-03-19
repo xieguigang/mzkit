@@ -8,9 +8,29 @@ Public Class mzPackReader : Inherits BinaryStreamReader
 
     ReadOnly otherScanners As New Dictionary(Of String, Long)
 
+    Public ReadOnly Property ChromatogramScanners As IEnumerable(Of String)
+        Get
+            Return otherScanners.Keys
+        End Get
+    End Property
+
     Public Sub New(file As String)
         MyBase.New(file)
     End Sub
+
+    Sub New(file As Stream)
+        MyBase.New(file)
+    End Sub
+
+    Public Function OpenScannerData(key As String) As Stream
+        Dim start As Long = otherScanners(key)
+        Dim size As Integer
+
+        file.Seek(start, SeekOrigin.Begin)
+        size = file.ReadInt32
+
+        Return New MemoryStream(file.ReadBytes(size))
+    End Function
 
     Protected Overrides Sub loadIndex()
         MyBase.loadIndex()

@@ -27,7 +27,25 @@ Public Class mzPack
     ''' <param name="file"></param>
     ''' <returns></returns>
     Public Shared Function ReadAll(file As Stream) As mzPack
+        Using mzpack As New mzPackReader(file)
+            Dim allMSscans As ScanMS1() = mzpack _
+                .EnumerateIndex _
+                .Select(AddressOf mzpack.ReadScan) _
+                .ToArray
+            Dim scanners As New Dictionary(Of String, ChromatogramOverlap)
 
+            For Each id As String In mzpack.ChromatogramScanners
+                Using buffer As Stream = mzpack.OpenScannerData(id)
+                    scanners(id) = buffer.ReadPackData
+                End Using
+            Next
+
+            Return New mzPack With {
+                .Thumbnail = mzpack.GetThumbnail,
+                .MS = allMSscans,
+                .Scanners = scanners
+            }
+        End Using
     End Function
 
     Public Function Write(file As Stream) As Boolean
