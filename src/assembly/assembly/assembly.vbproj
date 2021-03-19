@@ -514,6 +514,7 @@
     <Compile Include="MarkupData\imzML\XML\ScanData.vb" />
     <Compile Include="MarkupData\imzML\XML\XML.vb" />
     <Compile Include="MarkupData\CompressionMode.vb" />
+    <Compile Include="MarkupData\mzML\UVScan.vb" />
     <Compile Include="MarkupData\mzML\XML\Decoder\binaryDataArray.vb" />
     <Compile Include="MarkupData\mzML\XML\Decoder\binaryDataArrayList.vb" />
     <Compile Include="MarkupData\mzML\XML\index.vb" />
