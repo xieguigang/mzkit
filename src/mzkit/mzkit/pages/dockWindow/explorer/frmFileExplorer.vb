@@ -135,7 +135,7 @@ Public Class frmFileExplorer
     End Function
 
     Sub InitializeFileTree()
-        If treeView1.LoadRawFileCache(Globals.Settings.workspaceFile) = 0 Then
+        If treeView1.LoadRawFileCache(ContextMenuStrip1, ContextMenuStrip2, Globals.Settings.workspaceFile) = 0 Then
             MyApplication.host.showStatusMessage($"It seems that you don't have any raw file opended. You could open raw file through [File] -> [Open Raw File].", My.Resources.StatusAnnotations_Warning_32xLG_color)
         Else
             ' selectRawFile(Scan0)
@@ -165,7 +165,7 @@ Public Class frmFileExplorer
         Me.TabText = "File Explorer"
 
         Call InitializeFileTree()
-        Call ApplyVsTheme(ContextMenuStrip1, ToolStrip1)
+        Call ApplyVsTheme(ContextMenuStrip1, ToolStrip1, ContextMenuStrip2)
     End Sub
 
     Public Sub ImportsRaw(fileName As String)
@@ -270,8 +270,16 @@ Public Class frmFileExplorer
             Return
         End If
 
+        'If treeView1.SelectedNode Is treeView1.Nodes(0) Then
+        '    treeView1.ContextMenuStrip = ContextMenuStrip1
+        'ElseIf treeView1.SelectedNode Is treeView1.Nodes(1) Then
+        '    treeView1.ContextMenuStrip = ContextMenuStrip2
+        'End If
+
         If TypeOf treeView1.SelectedNode.Tag Is Raw Then
             Call showRawFile(DirectCast(treeView1.SelectedNode.Tag, Raw))
+
+            '  treeView1.ContextMenuStrip = ContextMenuStrip1
 
         ElseIf TypeOf treeView1.SelectedNode.Tag Is String Then
             ' 选择了一个脚本文件
@@ -279,6 +287,8 @@ Public Class frmFileExplorer
             Dim script = MyApplication.host.scriptFiles _
                 .Where(Function(a) a.scriptFile.GetFullPath = path) _
                 .FirstOrDefault
+
+            '  treeView1.ContextMenuStrip = ContextMenuStrip2
 
             If Not script Is Nothing Then
                 script.Show(MyApplication.host.dockPanel)
@@ -419,7 +429,7 @@ Public Class frmFileExplorer
         Return opt
     End Function
 
-    Private Sub RunAutomationToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RunAutomationToolStripMenuItem.Click
+    Private Sub RunAutomationToolStripMenuItem_Click(sender As Object, e As EventArgs)
         If treeView1.SelectedNode Is Nothing OrElse treeView1.SelectedNode.Tag Is Nothing OrElse Not TypeOf treeView1.SelectedNode.Tag Is String Then
             Return
         End If
@@ -442,5 +452,9 @@ Public Class frmFileExplorer
 
     Private Sub ImportsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImportsToolStripMenuItem.Click
         Call MyApplication.host.ImportsFiles()
+    End Sub
+
+    Private Sub treeView1_Click(sender As Object, e As EventArgs) Handles treeView1.Click
+
     End Sub
 End Class

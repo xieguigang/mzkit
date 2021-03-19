@@ -163,9 +163,23 @@ Module Globals
     ''' <param name="defaultWorkspace"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function LoadRawFileCache(explorer As TreeView, Optional defaultWorkspace As String = Nothing) As Integer
-        Dim scripts As New TreeNode("R# Automation") With {.ImageIndex = 1, .SelectedImageIndex = 1, .StateImageIndex = 1}
-        Dim rawFiles As New TreeNode("Raw Data Files") With {.ImageIndex = 0, .StateImageIndex = 0, .SelectedImageIndex = 0}
+    Public Function LoadRawFileCache(explorer As TreeView,
+                                     rawMenu As ContextMenuStrip,
+                                     scriptMenu As ContextMenuStrip,
+                                     Optional defaultWorkspace As String = Nothing) As Integer
+
+        Dim scripts As New TreeNode("R# Automation") With {
+            .ImageIndex = 1,
+            .SelectedImageIndex = 1,
+            .StateImageIndex = 1,
+            .ContextMenuStrip = rawMenu
+        }
+        Dim rawFiles As New TreeNode("Raw Data Files") With {
+            .ImageIndex = 0,
+            .StateImageIndex = 0,
+            .SelectedImageIndex = 0,
+            .ContextMenuStrip = scriptMenu
+        }
 
         explorer.Nodes.Add(rawFiles)
         explorer.Nodes.Add(scripts)
@@ -195,7 +209,8 @@ Module Globals
                 .Tag = raw,
                 .ImageIndex = 2,
                 .SelectedImageIndex = 2,
-                .StateImageIndex = 2
+                .StateImageIndex = 2,
+                .ContextMenuStrip = rawMenu
             }
 
             rawFiles.Nodes.Add(rawFileNode)
@@ -214,23 +229,25 @@ Module Globals
                     .Tag = script,
                     .ImageIndex = 3,
                     .StateImageIndex = 3,
-                    .SelectedImageIndex = 3
+                    .SelectedImageIndex = 3,
+                    .ContextMenuStrip = scriptMenu
                 }
 
                 scripts.Nodes.Add(fileNode)
             Next
         End If
 
-        Call loadRStudioScripts(explorer)
+        Call loadRStudioScripts(explorer, scriptMenu)
 
         Return i
     End Function
 
-    Private Sub loadRStudioScripts(explorer As TreeView)
+    Private Sub loadRStudioScripts(explorer As TreeView, scriptMenu As ContextMenuStrip)
         Dim scripts As New TreeNode("R# Studio") With {
             .ImageIndex = 1,
             .SelectedImageIndex = 1,
-            .StateImageIndex = 1
+            .StateImageIndex = 1,
+            .ContextMenuStrip = scriptMenu
         }
 
         Dim folder As String = $"{App.HOME}/Rstudio/R"
@@ -241,21 +258,22 @@ Module Globals
         End If
 
         Call explorer.Nodes.Add(scripts)
-        Call AddScript(scripts, dir:=folder)
+        Call AddScript(scripts, dir:=folder, scriptMenu:=scriptMenu)
     End Sub
 
-    Private Sub AddScript(folder As TreeNode, dir As String)
+    Private Sub AddScript(folder As TreeNode, dir As String, scriptMenu As ContextMenuStrip)
         For Each subfolder As String In dir.ListDirectory
             Dim fileNode As New TreeNode(subfolder.DirectoryName) With {
                 .Checked = False,
                 .Tag = Nothing,
                 .ImageIndex = 1,
                 .StateImageIndex = 1,
-                .SelectedImageIndex = 1
+                .SelectedImageIndex = 1,
+                .ContextMenuStrip = scriptMenu
             }
 
             folder.Nodes.Add(fileNode)
-            AddScript(fileNode, subfolder)
+            AddScript(fileNode, subfolder, scriptMenu)
         Next
 
         For Each script As String In dir.EnumerateFiles("*.R")
@@ -264,7 +282,8 @@ Module Globals
                 .Tag = script,
                 .ImageIndex = 3,
                 .StateImageIndex = 3,
-                .SelectedImageIndex = 3
+                .SelectedImageIndex = 3,
+                .ContextMenuStrip = scriptMenu
             }
 
             folder.Nodes.Add(fileNode)
