@@ -1,6 +1,7 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 
 Public Module Converter
@@ -53,5 +54,28 @@ Public Module Converter
         Else
             Throw New NotImplementedException(xml.ExtensionSuffix)
         End If
+    End Function
+
+    Public Iterator Function GetUVScans(mzpack As mzPack) As IEnumerable(Of UVScan)
+        If Not mzpack.Scanners.ContainsKey(ExtractUVData.UVScanType) Then
+            Return
+        End If
+
+        Dim time_scans As ChromatogramOverlap = mzpack.Scanners(ExtractUVData.UVScanType)
+        Dim PDA As DataReader.Chromatogram = mzpack.Scanners!PDA!PDA
+        Dim scan As DataReader.Chromatogram
+        Dim UV As UVScan
+
+        For Each timeId As SeqValue(Of String) In time_scans.overlaps.Keys.SeqIterator
+            scan = time_scans(timeId.value)
+            UV = New UVScan With {
+                .scan_time = PDA.scan_time(timeId),
+                .total_ion_current = PDA.TIC(timeId),
+                .wavelength = scan.scan_time,
+                .intensity = scan.TIC
+            }
+
+            Yield UV
+        Next
     End Function
 End Module
