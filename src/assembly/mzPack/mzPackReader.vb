@@ -1,6 +1,7 @@
 ﻿Imports System.Drawing
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports Microsoft.VisualBasic.Net.Http
 
 Public Class mzPackReader : Inherits BinaryStreamReader
 
@@ -10,6 +11,13 @@ Public Class mzPackReader : Inherits BinaryStreamReader
 
     Protected Overrides Sub loadIndex()
         MyBase.loadIndex()
+
+        ' load other scanner
+        loadScannerIndex()
+    End Sub
+
+    Private Sub loadScannerIndex()
+
     End Sub
 
     Public Function GetThumbnail() As Bitmap
@@ -21,8 +29,8 @@ Public Class mzPackReader : Inherits BinaryStreamReader
         file.Seek(offset, SeekOrigin.Begin)
         bytes = file.ReadBytes(file.Length - 8 - offset)
 
-        Using buffer As New MemoryStream(bytes)
-            Return Image.FromStream(buffer)
+        Using buffer As New MemoryStream(bytes), img As Stream = buffer.UnGzipStream
+            Return Image.FromStream(img)
         End Using
     End Function
 End Class
