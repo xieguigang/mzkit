@@ -47,6 +47,8 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Math.SignalProcessing
 
 Namespace mzData.mzWebCache
 
@@ -55,6 +57,14 @@ Namespace mzData.mzWebCache
         Public Sub New(Optional mzErr$ = "da:0.1")
             MyBase.New(mzErr)
         End Sub
+
+        Public Iterator Function GetUVScans(instrumentConfigurationId As String) As IEnumerable(Of GeneralSignal)
+            For Each scan In invalidScans
+                If Not scan.cvParams.KeyItem(UVScanType) Is Nothing Then
+                    Yield scan.CreateGeneralSignal(instrumentConfigurationId)
+                End If
+            Next
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Protected Overrides Function loadScans(rawfile As String) As IEnumerable(Of spectrum)

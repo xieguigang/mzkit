@@ -61,6 +61,7 @@ Namespace mzData.mzWebCache
         Protected ms1Err As Tolerance
 
         Protected ReadOnly reader As MsDataReader(Of Scan)
+        Protected ReadOnly invalidScans As New List(Of Scan)
 
         Sub New(mzErr As String)
             ms1Err = Tolerance.ParseScript(mzErr)
@@ -74,6 +75,7 @@ Namespace mzData.mzWebCache
             For Each scan As Scan In scans
                 If reader.IsEmpty(scan) Then
                     Call $"missing scan value of [{reader.GetScanId(scan)}]".Warning
+                    Call invalidScans.Add(scan)
                 Else
                     Yield scan
                 End If
