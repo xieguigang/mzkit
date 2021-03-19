@@ -47,6 +47,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
@@ -76,19 +77,21 @@ Public Class ScanVisual3D : Inherits Plot
     ReadOnly angle As Double = 60
     ReadOnly fillCurve As Boolean
     ReadOnly fillAlpha As Integer
+    ReadOnly drawParallelAxis As Boolean
 
 #Region "constructor"
-    Public Sub New(scans As IEnumerable(Of ms1_scan), tolerance As Tolerance, angle As Double, fillCurve As Boolean, fillAlpha As Integer, theme As Theme)
-        Call Me.New(GetScanCollection(scans, tolerance), angle, fillCurve, fillAlpha, theme)
+    Public Sub New(scans As IEnumerable(Of ms1_scan), tolerance As Tolerance, angle As Double, fillCurve As Boolean, fillAlpha As Integer, drawParallelAxis As Boolean, theme As Theme)
+        Call Me.New(GetScanCollection(scans, tolerance), angle, fillCurve, fillAlpha, drawParallelAxis, theme)
     End Sub
 
-    Public Sub New(scans As IEnumerable(Of NamedCollection(Of ChromatogramTick)), angle As Double, fillCurve As Boolean, fillAlpha As Integer, theme As Theme)
+    Public Sub New(scans As IEnumerable(Of NamedCollection(Of ChromatogramTick)), angle As Double, fillCurve As Boolean, fillAlpha As Integer, drawParallelAxis As Boolean, theme As Theme)
         MyBase.New(theme)
 
         Me.fillCurve = fillCurve
         Me.fillAlpha = fillAlpha
         Me.angle = angle
         Me.scans = scans.ToArray
+        Me.drawParallelAxis = drawParallelAxis
     End Sub
 #End Region
 
@@ -195,6 +198,10 @@ Public Class ScanVisual3D : Inherits Plot
                                     .Select(Function(tick) tick.Intensity) _
                                     .Max
                                 Into Max(into)
+        Dim rtAll As (min#, max#) = scans _
+            .Select(Function(chr) chr.Select(Function(t) t.Time)) _
+            .IteratesALL _
+            .Range
 
         For i As Integer = 0 To scans.Length - 1
             Dim labels As Label() = Nothing
@@ -227,14 +234,16 @@ Public Class ScanVisual3D : Inherits Plot
                 End If
             End If
 
-            Dim t0 As New PointF(parallelCanvas.Padding.Left, canvas.Height - parallelCanvas.Padding.Bottom)
-            Dim t1 As New PointF(canvas.Width - parallelCanvas.Padding.Right, canvas.Height - parallelCanvas.Padding.Bottom)
+            If drawParallelAxis Then
+                Dim t0 As New PointF(parallelCanvas.Padding.Left, canvas.Height - parallelCanvas.Padding.Bottom)
+                Dim t1 As New PointF(canvas.Width - parallelCanvas.Padding.Right, canvas.Height - parallelCanvas.Padding.Bottom)
 
-            Call g.DrawLine(parallelXAxisPen, t0, t1)
+                Call g.DrawLine(parallelXAxisPen, t0, t1)
+            End If
 
             Call New TICplot(
                 ionData:={scans(i)},
-                timeRange:=Nothing,
+                timeRange:={rtAll.min, rtAll.max},
                 intensityMax:=maxinto,
                 isXIC:=False,
                 fillCurve:=fillCurve,

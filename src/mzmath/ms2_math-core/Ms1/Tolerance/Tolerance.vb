@@ -133,6 +133,7 @@ Namespace Ms1
             Return ToScript(Me)
         End Function
 
+        <DebuggerStepThrough>
         Public Shared Function DeltaMass(da#) As DAmethod
             Return New DAmethod(da)
         End Function

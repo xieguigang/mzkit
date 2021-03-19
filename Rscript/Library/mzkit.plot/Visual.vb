@@ -98,10 +98,11 @@ Module Visual
         Dim gridFill As String = args.getValue("grid.fill", env, [default]:="white")
         Dim fill As Boolean = args.getValue("fill", env, [default]:=True)
         Dim showLabels As Boolean = args.getValue("show.labels", env, [default]:=True)
+        Dim showLegends As Boolean = args.getValue("show.legends", env, [default]:=True)
         Dim parallel As Boolean = args.getValue("parallel", env, [default]:=False)
         Dim axisStroke As String = args.getValue("axis.stroke", env, [default]:="stroke: black; stroke-width: 3px; stroke-dash: solid;")
         Dim lineStroke As String = args.getValue("line.stroke", env, [default]:="stroke: black; stroke-width: 2px; stroke-dash: solid;")
-        Dim padding As String = args.getValue("padding", env, "padding:100px 100px 150px 150px;")
+        Dim padding As String = args.getValue("padding", env, "padding:100px 100px 150px 250px;")
         Dim axisLabel As String = args.getValue("axis.cex", env, "font-style: normal; font-size: 24; font-family: Bookman Old Style;")
         Dim axisTickCex As String = args.getValue("tick.cex", env, "font-style: normal; font-size: 16; font-family: Bookman Old Style;")
         Dim legendLabel As String = args.getValue("legend.cex", env, "font-style: normal; font-size: 12; font-family: Bookman Old Style;")
@@ -145,7 +146,8 @@ Module Visual
                 legendFontCSS:=legendLabel,
                 xlabel:=xlab,
                 ylabel:=ylab,
-                axisTickFont:=axisTickCex
+                axisTickFont:=axisTickCex,
+                showLegends:=showLegends
             )
     End Function
 
@@ -241,7 +243,13 @@ Module Visual
         Dim scan As ms1_scan()
         Dim chr As Chromatogram
 
-        For Each mz In points.populates(Of ms1_scan)(env).GroupBy(Function(p) p.mz, mzErr.TryCast(Of Tolerance))
+        For Each mz As NamedCollection(Of ms1_scan) In points _
+            .populates(Of ms1_scan)(env) _
+            .GroupBy(Function(p) p.mz, mzErr.TryCast(Of Tolerance)) _
+            .OrderBy(Function(mzi)
+                         Return Val(mzi.name)
+                     End Function)
+
             scan = mz.OrderBy(Function(p) p.scan_time).ToArray
             chr = New Chromatogram With {
                 .scan_time = scan.Select(Function(x) x.scan_time).ToArray,
@@ -250,12 +258,17 @@ Module Visual
             }
 
             If chr.length > 3 Then
-                XIC.TIC(mz.name) = chr
+                XIC.TIC(Val(mz.name).ToString("F4")) = chr
             End If
         Next
 
         Dim args As New list With {
-            .slots = New Dictionary(Of String, Object)
+            .slots = New Dictionary(Of String, Object) From {
+                {"show.labels", False},
+                {"show.legends", False},
+                {"parallel", True},
+                {"colors", "skyblue"}
+            }
         }
 
         Return XIC.plotOverlaps(args, env)

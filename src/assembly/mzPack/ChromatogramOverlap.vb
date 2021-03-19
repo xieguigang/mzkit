@@ -84,7 +84,7 @@ Public Class ChromatogramOverlap : Implements RNames, RNameIndex
     End Property
 
     Public Overrides Function ToString() As String
-        Return overlaps.Keys.GetJson
+        Return overlaps.Keys.ToArray.GetJson
     End Function
 
     Public Iterator Function EnumerateSignals() As IEnumerable(Of NamedValue(Of Chromatogram))

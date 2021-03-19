@@ -77,13 +77,13 @@ Namespace Chromatogram
         ''' </remarks>
         <Extension>
         Public Iterator Function PopulateROI(chromatogram As IVector(Of ChromatogramTick), peakwidth As DoubleRange,
-                                             Optional angleThreshold# = 5,
+                                             Optional angleThreshold# = 3,
                                              Optional baselineQuantile# = 0.65,
                                              Optional snThreshold As Double = 3) As IEnumerable(Of ROI)
             ' 先计算出基线和累加线
             Dim baseline# = chromatogram.Baseline(baselineQuantile)
             Dim time As Vector = chromatogram!time
-            Dim peaks As SignalPeak() = New ElevationAlgorithm(3, baselineQuantile) _
+            Dim peaks As SignalPeak() = New ElevationAlgorithm(angleThreshold, baselineQuantile) _
                 .FindAllSignalPeaks(chromatogram.As(Of ITimeSignal)) _
                 .Triming(peakwidth) _
                 .ToArray
