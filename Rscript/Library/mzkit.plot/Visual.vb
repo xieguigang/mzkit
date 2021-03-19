@@ -261,7 +261,8 @@ Module Visual
             .slots = New Dictionary(Of String, Object) From {
                 {"show.labels", False},
                 {"show.legends", False},
-                {"parallel", True}
+                {"parallel", True},
+                {"colors", "black"}
             }
         }
 
