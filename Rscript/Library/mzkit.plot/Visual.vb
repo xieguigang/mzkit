@@ -245,7 +245,7 @@ Module Visual
             }
 
             If chr.length > 3 Then
-                XIC.TIC(mz.name) = chr
+                XIC.TIC(Val(mz.name).ToString("F4")) = chr
             End If
         Next
 
