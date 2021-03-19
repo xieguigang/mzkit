@@ -238,7 +238,13 @@ Module Visual
         Dim scan As ms1_scan()
         Dim chr As Chromatogram
 
-        For Each mz In points.populates(Of ms1_scan)(env).GroupBy(Function(p) p.mz, mzErr.TryCast(Of Tolerance))
+        For Each mz As NamedCollection(Of ms1_scan) In points _
+            .populates(Of ms1_scan)(env) _
+            .GroupBy(Function(p) p.mz, mzErr.TryCast(Of Tolerance)) _
+            .OrderBy(Function(mzi)
+                         Return Val(mzi.name)
+                     End Function)
+
             scan = mz.OrderBy(Function(p) p.scan_time).ToArray
             chr = New Chromatogram With {
                 .scan_time = scan.Select(Function(x) x.scan_time).ToArray,
@@ -254,7 +260,8 @@ Module Visual
         Dim args As New list With {
             .slots = New Dictionary(Of String, Object) From {
                 {"show.labels", False},
-                {"show.legends", False}
+                {"show.legends", False},
+                {"parallel", True}
             }
         }
 
