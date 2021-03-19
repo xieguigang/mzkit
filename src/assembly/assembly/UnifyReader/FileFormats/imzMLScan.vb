@@ -86,5 +86,21 @@ Namespace DataReader
         Public Overrides Function GetPolarity(scan As ScanReader) As String
             Return "+"
         End Function
+
+        Public Overrides Function GetCharge(scan As ScanReader) As Integer
+            Throw New NotImplementedException()
+        End Function
+
+        Public Overrides Function GetActivationMethod(scan As ScanReader) As ActivationMethods
+            Throw New NotImplementedException()
+        End Function
+
+        Public Overrides Function GetCollisionEnergy(scan As ScanReader) As Double
+            Throw New NotImplementedException()
+        End Function
+
+        Public Overrides Function GetCentroided(scan As ScanReader) As Boolean
+            Throw New NotImplementedException()
+        End Function
     End Class
 End Namespace

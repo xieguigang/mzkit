@@ -118,5 +118,21 @@ Namespace DataReader
                 Return "-"
             End If
         End Function
+
+        Public Overrides Function GetCharge(scan As spectrum) As Integer
+            Throw New NotImplementedException()
+        End Function
+
+        Public Overrides Function GetActivationMethod(scan As spectrum) As ActivationMethods
+            Throw New NotImplementedException()
+        End Function
+
+        Public Overrides Function GetCollisionEnergy(scan As spectrum) As Double
+            Throw New NotImplementedException()
+        End Function
+
+        Public Overrides Function GetCentroided(scan As spectrum) As Boolean
+            Throw New NotImplementedException()
+        End Function
     End Class
 End Namespace

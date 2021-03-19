@@ -112,7 +112,11 @@ Namespace mzData.mzWebCache
                         .intensity = reader.GetBPC(scan),
                         .mz = msms.Select(Function(a) a.mz).ToArray,
                         .into = msms.Select(Function(a) a.intensity).ToArray,
-                        .polarity = PrecursorType.ParseIonMode(reader.GetPolarity(scan), True)
+                        .polarity = PrecursorType.ParseIonMode(reader.GetPolarity(scan), True),
+                        .activationMethod = reader.GetActivationMethod(scan),
+                        .centroided = reader.GetCentroided(scan),
+                        .charge = reader.GetCharge(scan),
+                        .collisionEnergy = reader.GetCollisionEnergy(scan)
                     }.DoCall(AddressOf products.Add)
                 End If
             Next
