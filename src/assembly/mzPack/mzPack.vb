@@ -2,6 +2,7 @@
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
@@ -35,6 +36,26 @@ Public Class mzPack
                                     End Function)
                     End Function) _
             .IteratesALL
+    End Function
+
+    Public Iterator Function GetMs2Peaks() As IEnumerable(Of PeakMs2)
+        For Each ms1 As ScanMS1 In MS
+            For Each ms2 As ScanMS2 In ms1.products
+                Yield New PeakMs2 With {
+                    .activation = ms2.activationMethod.ToString,
+                    .collisionEnergy = ms2.collisionEnergy,
+                    .file = "n/a",
+                    .intensity = ms2.intensity,
+                    .lib_guid = ms2.ToString,
+                    .meta = New Dictionary(Of String, String),
+                    .mz = ms2.parentMz,
+                    .precursor_type = "",
+                    .rt = ms2.rt,
+                    .scan = ms2.scan_id,
+                    .mzInto = ms2.GetMs.ToArray
+                }
+            Next
+        Next
     End Function
 
     ''' <summary>
