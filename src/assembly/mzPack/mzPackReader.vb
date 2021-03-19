@@ -6,7 +6,9 @@ Imports Microsoft.VisualBasic.Net.Http
 
 Public Class mzPackReader : Inherits BinaryStreamReader
 
-    ReadOnly otherScanners As New Dictionary(Of String, Long)
+    Dim otherScanners As New Dictionary(Of String, Long)
+    Dim hasThumbnail As Boolean
+    Dim otherIndex As BufferRegion
 
     Public ReadOnly Property ChromatogramScanners As IEnumerable(Of String)
         Get
@@ -35,8 +37,18 @@ Public Class mzPackReader : Inherits BinaryStreamReader
     Protected Overrides Sub loadIndex()
         MyBase.loadIndex()
 
-        ' load other scanner
-        Call loadScannerIndex()
+        If MSscannerIndex.nextBlock >= file.Length Then
+            hasThumbnail = False
+        Else
+            ' load other scanner
+            Call loadScannerIndex()
+
+            If otherIndex.nextBlock >= file.Length Then
+                hasThumbnail = False
+            Else
+                hasThumbnail = True
+            End If
+        End If
     End Sub
 
     Private Sub loadScannerIndex()
@@ -53,6 +65,11 @@ Public Class mzPackReader : Inherits BinaryStreamReader
                 scanId = file.ReadString(BinaryStringFormat.ZeroTerminated)
                 otherScanners(scanId) = scanPos
             Next
+
+            otherIndex = New BufferRegion With {
+                .position = MSscannerIndex.nextBlock,
+                .size = file.Position - .position
+            }
         End Using
     End Sub
 

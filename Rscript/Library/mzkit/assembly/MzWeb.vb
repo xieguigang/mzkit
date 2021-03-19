@@ -159,4 +159,11 @@ Module MzWeb
     Public Function LoadMzPack(xml As String) As mzPack
 
     End Function
+
+    <ExportAPI("open.mzpack")>
+    Public Function Open(file As String) As mzPack
+        Using stream As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+            Return mzPack.ReadAll(file:=stream)
+        End Using
+    End Function
 End Module
