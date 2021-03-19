@@ -158,6 +158,7 @@ Public Class TICplot : Inherits Plot
                 .Value = chromatogram(which.Max(chromatogram.Shadows!Intensity))
             }
 
+            Dim bottom% = canvas.Bottom - 6
             Dim viz = g
             Dim polygon As New List(Of PointF)
             Dim draw = Sub(t1 As ChromatogramTick, t2 As ChromatogramTick)
@@ -167,6 +168,7 @@ Public Class TICplot : Inherits Plot
                            Call viz.DrawLine(curvePen, A, B)
 
                            If polygon = 0 Then
+                               polygon.Add(New PointF(A.X, bottom))
                                polygon.Add(A)
                            End If
 
@@ -188,16 +190,22 @@ Public Class TICplot : Inherits Plot
                     Dim i2 As New ChromatogramTick With {.Time = signal.Last.Time - dt, .Intensity = 0}
 
                     Call draw(signal.First, i1)
-                    Call draw(i1, i2)
+
+                    polygon.Add(New PointF(polygon.Last.X, bottom))
+
+                    If fillCurve Then
+                        fillColor = New SolidBrush(Color.FromArgb(fillAlpha, curvePen.Color))
+                        g.FillPolygon(fillColor, polygon)
+                    End If
+
+                    polygon.Clear()
+
                     Call draw(i2, signal.Last)
                 Else
                     Call draw(signal.First, signal.Last)
                 End If
             Next
 
-            Dim bottom% = canvas.Bottom - 6
-
-            polygon.Insert(0, New PointF(polygon(0).X, bottom))
             polygon.Add(New PointF(polygon.Last.X, bottom))
 
             If fillCurve Then
