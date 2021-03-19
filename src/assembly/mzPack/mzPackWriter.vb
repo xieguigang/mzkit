@@ -29,8 +29,10 @@ Public Class mzPackWriter : Inherits BinaryStreamWriter
     End Sub
 
     Public Sub SetThumbnail(img As Image)
-        thumbnail = $"{worktemp}/thumbnail.png"
-        img.SaveAs(thumbnail)
+        If Not img Is Nothing Then
+            thumbnail = $"{worktemp}/thumbnail.png"
+            img.SaveAs(thumbnail)
+        End If
     End Sub
 
     Public Sub AddOtherScanner(key As String, data As ChromatogramOverlap)
@@ -83,15 +85,17 @@ Public Class mzPackWriter : Inherits BinaryStreamWriter
     Private Sub writeThumbnail()
         Dim start As Long = file.Position
 
-        Using img As Stream = thumbnail.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-            Call img _
-                .GZipStream _
-                .ToArray _
-                .DoCall(AddressOf file.Write)
-        End Using
+        If thumbnail.FileExists Then
+            Using img As Stream = thumbnail.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                Call img _
+                    .GZipStream _
+                    .ToArray _
+                    .DoCall(AddressOf file.Write)
+            End Using
 
-        Call file.Write(start)
-        Call file.Flush()
+            Call file.Write(start)
+            Call file.Flush()
+        End If
     End Sub
 
     Protected Overrides Sub writeIndex()
