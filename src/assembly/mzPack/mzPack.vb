@@ -1,6 +1,7 @@
 ﻿Imports System.Drawing
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
@@ -20,6 +21,21 @@ Public Class mzPack
     ''' </summary>
     ''' <returns></returns>
     Public Property Scanners As Dictionary(Of String, ChromatogramOverlap)
+
+    Public Function GetAllScanMs1() As IEnumerable(Of ms1_scan)
+        Return MS _
+            .Select(Function(scan)
+                        Return scan.mz _
+                            .Select(Function(mzi, i)
+                                        Return New ms1_scan With {
+                                            .mz = mzi,
+                                            .intensity = scan.into(i),
+                                            .scan_time = scan.rt
+                                        }
+                                    End Function)
+                    End Function) _
+            .IteratesALL
+    End Function
 
     ''' <summary>
     ''' 一次性加载所有原始数据
