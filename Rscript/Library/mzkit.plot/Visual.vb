@@ -107,7 +107,7 @@ Module Visual
         Dim axisLabel As String = args.getValue("axis.cex", env, "font-style: normal; font-size: 24; font-family: Bookman Old Style;")
         Dim axisTickCex As String = args.getValue("tick.cex", env, "font-style: normal; font-size: 16; font-family: Bookman Old Style;")
         Dim legendLabel As String = args.getValue("legend.cex", env, "font-style: normal; font-size: 12; font-family: Bookman Old Style;")
-        Dim size As String = args.getValue("size", env, "1600,1000")
+        Dim size As String = InteropArgumentHelper.getSize(args.getByName("size"), "1600,1000")
         Dim xlab As String = args.getValue("xlab", env, "Time (s)")
         Dim ylab As String = args.getValue("ylab", env, "Intensity")
         Dim reorderOverlaps As Boolean = args.getValue("reorder.overlaps", env, [default]:=False)
@@ -230,6 +230,8 @@ Module Visual
                                ms1_scans As Object,
                                Optional mzwidth As Object = "da:0.3",
                                Optional noise_cutoff As Double = 0.5,
+                               <RRawVectorArgument>
+                               Optional size As Object = "1600,1200",
                                Optional env As Environment = Nothing) As Object
 
         Dim points As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ms1_scans, env)
@@ -279,7 +281,8 @@ Module Visual
                 {"show.legends", False},
                 {"parallel", True},
                 {"colors", "Spectral:c8"},
-                {"opacity", 60}
+                {"opacity", 60},
+                {"size", size}
             }
         }
 
