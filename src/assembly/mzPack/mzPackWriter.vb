@@ -62,8 +62,10 @@ Public Class mzPackWriter : Inherits BinaryStreamWriter
             Call file.Flush()
         Next
 
+        Dim scannerIndexOffset As Long = file.Position
+
         Using file.TemporarySeek(indexOffset, SeekOrigin.Begin)
-            Call file.Write(file.Position)
+            Call file.Write(scannerIndexOffset)
             Call file.Flush()
         End Using
     End Sub

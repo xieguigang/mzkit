@@ -6,7 +6,7 @@ Imports Microsoft.VisualBasic.Net.Http
 
 Public Class mzPackReader : Inherits BinaryStreamReader
 
-    Dim otherScanners As New Dictionary(Of String, Long)
+    Dim otherScanners As Dictionary(Of String, Long)
     Dim hasThumbnail As Boolean
     Dim otherIndex As BufferRegion
 
@@ -18,10 +18,14 @@ Public Class mzPackReader : Inherits BinaryStreamReader
 
     Public Sub New(file As String)
         MyBase.New(file)
+
+        otherScanners = New Dictionary(Of String, Long)
     End Sub
 
     Sub New(file As Stream)
         MyBase.New(file)
+
+        otherScanners = New Dictionary(Of String, Long)
     End Sub
 
     Public Function OpenScannerData(key As String) As Stream
