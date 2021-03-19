@@ -65,6 +65,12 @@ Namespace DataReader
         ''' <returns></returns>
         Public Property BPC As Double()
 
+        Public ReadOnly Property length As Integer
+            Get
+                Return scan_time.Length
+            End Get
+        End Property
+
         Public Overrides Function ToString() As String
             Return $"Chromatogram between scan_time [{CInt(scan_time.Min)},{CInt(scan_time.Max)}]"
         End Function
