@@ -19,7 +19,7 @@ Public Module Converter
         ElseIf xml.ExtensionSuffix("mzML") Then
             Dim UVdetecor As String = ExtractUVData.GetPhotodiodeArrayDetectorInstrumentConfigurationId(xml)
             Dim scanLoader As New mzMLScans
-            Dim MS As ScanMS1() = scanLoader.Load(xml)
+            Dim MS As ScanMS1() = scanLoader.Load(xml).ToArray
             Dim UV As New ChromatogramOverlap
             Dim PDA As New List(Of ChromatogramTick)
 
