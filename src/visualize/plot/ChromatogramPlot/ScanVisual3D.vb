@@ -121,7 +121,7 @@ Public Class ScanVisual3D : Inherits Plot
         ' cos(a) = dx / dc
         ' dx = cos(a) * dc
         Dim dc As Double = evalDc(canvas)
-        Dim dx As Double = stdNum.Cos(d:=angle.ToRadians) * dc
+        Dim dx As Double = stdNum.Sin(angle.ToRadians) * dc
 
         Return dx / (scans.Length + 1)
     End Function
@@ -155,7 +155,7 @@ Public Class ScanVisual3D : Inherits Plot
         ' sin(a) = dy / dc
         ' dy = sin(a) * dc
         Dim dc As Double = evalDc(canvas)
-        Dim dy As Double = stdNum.Sin(a:=angle.ToRadians) * dc
+        Dim dy As Double = stdNum.Cos(angle.ToRadians) * dc
 
         Return dy / (scans.Length + 1)
     End Function
