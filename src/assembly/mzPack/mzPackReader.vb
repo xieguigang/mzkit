@@ -17,15 +17,11 @@ Public Class mzPackReader : Inherits BinaryStreamReader
     End Property
 
     Public Sub New(file As String)
-        MyBase.New(file)
-
-        otherScanners = New Dictionary(Of String, Long)
+        Call MyBase.New(file)
     End Sub
 
     Sub New(file As Stream)
-        MyBase.New(file)
-
-        otherScanners = New Dictionary(Of String, Long)
+        Call MyBase.New(file)
     End Sub
 
     Public Function OpenScannerData(key As String) As Stream
@@ -59,9 +55,15 @@ Public Class mzPackReader : Inherits BinaryStreamReader
         Dim nsize As Integer
         Dim scanPos As Long
         Dim scanId As String
+        Dim indexOffset As Long
+
+        otherScanners = New Dictionary(Of String, Long)
 
         Using file.TemporarySeek
             file.Seek(MSscannerIndex.nextBlock, SeekOrigin.Begin)
+            file.Seek(file.ReadInt64, SeekOrigin.Begin)
+
+            indexOffset = file.Position
             nsize = file.ReadInt32
 
             For i As Integer = 0 To nsize - 1
@@ -71,7 +73,7 @@ Public Class mzPackReader : Inherits BinaryStreamReader
             Next
 
             otherIndex = New BufferRegion With {
-                .position = MSscannerIndex.nextBlock,
+                .position = indexOffset,
                 .size = file.Position - .position
             }
         End Using
