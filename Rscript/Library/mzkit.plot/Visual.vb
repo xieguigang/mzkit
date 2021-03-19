@@ -277,7 +277,8 @@ Module Visual
                 {"show.labels", False},
                 {"show.legends", False},
                 {"parallel", True},
-                {"colors", "skyblue"}
+                {"colors", "YlGnBu:c8"},
+                {"opacity", 60}
             }
         }
 
