@@ -61,6 +61,7 @@ Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
@@ -242,15 +243,24 @@ Module Visual
         Dim XIC As New ChromatogramOverlap
         Dim scan As ms1_scan()
         Dim chr As Chromatogram
-
-        For Each mz As NamedCollection(Of ms1_scan) In points _
+        Dim rawPoints As ms1_scan() = points _
             .populates(Of ms1_scan)(env) _
+            .ToArray
+        Dim cutoff As Double = rawPoints _
+            .Select(Function(a) a.intensity) _
+            .GKQuantile _
+            .Query(0.65)
+
+        For Each mz As NamedCollection(Of ms1_scan) In rawPoints _
             .GroupBy(Function(p) p.mz, mzErr.TryCast(Of Tolerance)) _
             .OrderBy(Function(mzi)
                          Return Val(mzi.name)
                      End Function)
 
-            scan = mz.OrderBy(Function(p) p.scan_time).ToArray
+            scan = mz _
+                .Where(Function(p) p.intensity >= cutoff) _
+                .OrderBy(Function(p) p.scan_time) _
+                .ToArray
             chr = New Chromatogram With {
                 .scan_time = scan.Select(Function(x) x.scan_time).ToArray,
                 .BPC = scan.Select(Function(x) x.intensity).ToArray,
