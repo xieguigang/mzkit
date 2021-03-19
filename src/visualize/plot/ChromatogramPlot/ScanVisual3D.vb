@@ -74,7 +74,7 @@ Public Class ScanVisual3D : Inherits Plot
 
     ReadOnly scans As NamedCollection(Of ChromatogramTick)()
     ReadOnly height As Double = 0.45
-    ReadOnly angle As Double = 60
+    ReadOnly angle As Double = 70
     ReadOnly fillCurve As Boolean
     ReadOnly fillAlpha As Integer
     ReadOnly drawParallelAxis As Boolean
