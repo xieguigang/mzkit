@@ -1,6 +1,7 @@
 ﻿Imports System.Drawing
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
 ''' mzPack文件格式模型
@@ -27,5 +28,21 @@ Public Class mzPack
     ''' <returns></returns>
     Public Shared Function ReadAll(file As Stream) As mzPack
 
+    End Function
+
+    Public Function Write(file As Stream) As Boolean
+        Using mzpack As New mzPackWriter(file)
+            For Each scan As ScanMS1 In MS
+                Call mzpack.Write(scan)
+            Next
+
+            For Each scanner In Scanners.SafeQuery
+                Call mzpack.AddOtherScanner(scanner.Key, scanner.Value)
+            Next
+
+            Call mzpack.SetThumbnail(Thumbnail)
+        End Using
+
+        Return True
     End Function
 End Class
