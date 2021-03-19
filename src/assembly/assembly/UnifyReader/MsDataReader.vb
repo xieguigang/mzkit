@@ -67,6 +67,10 @@ Namespace DataReader
         Public MustOverride Function GetTIC(scan As Scan) As Double
         Public MustOverride Function GetParentMz(scan As Scan) As Double
         Public MustOverride Function GetPolarity(scan As Scan) As String
+        Public MustOverride Function GetCharge(scan As Scan) As Integer
+        Public MustOverride Function GetActivationMethod(scan As Scan) As ActivationMethods
+        Public MustOverride Function GetCollisionEnergy(scan As Scan) As Double
+        Public MustOverride Function GetCentroided(scan As Scan) As Boolean
 
         ''' <summary>
         ''' 
@@ -129,6 +133,22 @@ Namespace DataReader
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function GetPolarity(scan As Object) As String Implements IDataReader.GetPolarity
             Return GetPolarity(DirectCast(scan, Scan))
+        End Function
+
+        Private Function GetCharge(scan As Object) As Integer Implements IDataReader.GetCharge
+            Return GetCharge(DirectCast(scan, Scan))
+        End Function
+
+        Private Function GetActivationMethod(scan As Object) As ActivationMethods Implements IDataReader.GetActivationMethod
+            Return GetActivationMethod(DirectCast(scan, Scan))
+        End Function
+
+        Private Function GetCollisionEnergy(scan As Object) As Double Implements IDataReader.GetCollisionEnergy
+            Return GetCollisionEnergy(DirectCast(scan, Scan))
+        End Function
+
+        Private Function GetCentroided(scan As Object) As Boolean Implements IDataReader.GetCentroided
+            Return GetCentroided(DirectCast(scan, Scan))
         End Function
 #End Region
 

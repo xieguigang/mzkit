@@ -60,6 +60,10 @@ Namespace DataReader
         Function GetTIC(scan As Object) As Double
         Function GetParentMz(scan As Object) As Double
         Function GetPolarity(scan As Object) As String
+        Function GetCharge(scan As Object) As Integer
+        Function GetActivationMethod(scan As Object) As ActivationMethods
+        Function GetCollisionEnergy(scan As Object) As Double
+        Function GetCentroided(scan As Object) As Boolean
 
     End Interface
 End Namespace
