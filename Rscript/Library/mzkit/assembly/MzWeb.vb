@@ -51,6 +51,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
@@ -150,22 +151,32 @@ Module MzWeb
         End Using
     End Sub
 
+    <ExportAPI("write.mzPack")>
+    Public Function writeMzpack(mzpack As mzPack, file As Object, Optional env As Environment = Nothing) As Object
+        Dim filestream As [Variant](Of Stream, Message) = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
+
+        If filestream Like GetType(Message) Then
+            Return filestream.TryCast(Of Message)
+        End If
+
+        Return mzpack.Write(filestream.TryCast(Of Stream))
+    End Function
+
     ''' <summary>
     ''' 
     ''' </summary>
-    ''' <param name="xml">the mzXML/mzML raw data file</param>
+    ''' <param name="file">the mzXML/mzML/mzPack raw data file</param>
     ''' <returns></returns>
     ''' 
-    <ExportAPI("load.mzPack")>
-    Public Function LoadMzPack(xml As String) As mzPack
-
-    End Function
-
     <ExportAPI("open.mzpack")>
     Public Function Open(file As String) As mzPack
-        Using stream As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-            Return mzPack.ReadAll(file:=stream)
-        End Using
+        If file.ExtensionSuffix("mzXML", "mzML") Then
+            Return Converter.LoadRawFileAuto(xml:=file)
+        Else
+            Using stream As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                Return mzPack.ReadAll(file:=stream)
+            End Using
+        End If
     End Function
 
     <ExportAPI("ms1_scans")>
