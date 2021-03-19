@@ -102,7 +102,7 @@ Module Visual
         Dim parallel As Boolean = args.getValue("parallel", env, [default]:=False)
         Dim axisStroke As String = args.getValue("axis.stroke", env, [default]:="stroke: black; stroke-width: 3px; stroke-dash: solid;")
         Dim lineStroke As String = args.getValue("line.stroke", env, [default]:="stroke: black; stroke-width: 2px; stroke-dash: solid;")
-        Dim padding As String = args.getValue("padding", env, "padding:100px 100px 150px 150px;")
+        Dim padding As String = args.getValue("padding", env, "padding:100px 100px 150px 250px;")
         Dim axisLabel As String = args.getValue("axis.cex", env, "font-style: normal; font-size: 24; font-family: Bookman Old Style;")
         Dim axisTickCex As String = args.getValue("tick.cex", env, "font-style: normal; font-size: 16; font-family: Bookman Old Style;")
         Dim legendLabel As String = args.getValue("legend.cex", env, "font-style: normal; font-size: 12; font-family: Bookman Old Style;")
@@ -262,7 +262,7 @@ Module Visual
                 {"show.labels", False},
                 {"show.legends", False},
                 {"parallel", True},
-                {"colors", "black"}
+                {"colors", "skyblue"}
             }
         }
 
