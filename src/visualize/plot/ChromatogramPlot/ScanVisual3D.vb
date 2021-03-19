@@ -47,6 +47,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
@@ -195,6 +196,10 @@ Public Class ScanVisual3D : Inherits Plot
                                     .Select(Function(tick) tick.Intensity) _
                                     .Max
                                 Into Max(into)
+        Dim rtAll As (min#, max#) = scans _
+            .Select(Function(chr) chr.Select(Function(t) t.Time)) _
+            .IteratesALL _
+            .Range
 
         For i As Integer = 0 To scans.Length - 1
             Dim labels As Label() = Nothing
@@ -234,7 +239,7 @@ Public Class ScanVisual3D : Inherits Plot
 
             Call New TICplot(
                 ionData:={scans(i)},
-                timeRange:=Nothing,
+                timeRange:={rtAll.min, rtAll.max},
                 intensityMax:=maxinto,
                 isXIC:=False,
                 fillCurve:=fillCurve,
