@@ -45,11 +45,13 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.DataReader
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -58,6 +60,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
@@ -86,6 +89,8 @@ Module Visual
     ''' <param name="args"></param>
     ''' <param name="env"></param>
     ''' <returns></returns>
+    ''' 
+    <Extension>
     Private Function plotOverlaps(x As ChromatogramOverlap, args As list, env As Environment) As Object
         Dim isBPC As Boolean = args.getValue("bpc", env, [default]:=False)
         Dim alpha As Integer = args.getValue("opacity", env, [default]:=100)
@@ -203,6 +208,43 @@ Module Visual
         End If
 
         Return RawScatterPlot.Plot(points.populates(Of ms1_scan)(env))
+    End Function
+
+    <ExportAPI("raw_snapshot3D")>
+    Public Function Snapshot3D(<RRawVectorArgument>
+                               ms1_scans As Object,
+                               Optional mzwidth As Object = "da:0.3",
+                               Optional env As Environment = Nothing) As Object
+
+        Dim points As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ms1_scans, env)
+        Dim mzErr = Math.getTolerance(mzwidth, env)
+
+        If points.isError Then
+            Return points.getError
+        ElseIf mzErr Like GetType(Message) Then
+            Return mzErr.TryCast(Of Message)
+        End If
+
+        Dim XIC As New ChromatogramOverlap
+        Dim scan As ms1_scan()
+        Dim chr As Chromatogram
+
+        For Each mz In points.populates(Of ms1_scan)(env).GroupBy(Function(p) p.mz, mzErr.TryCast(Of Tolerance))
+            scan = mz.OrderBy(Function(p) p.scan_time).ToArray
+            chr = New Chromatogram With {
+                .scan_time = scan.Select(Function(x) x.scan_time).ToArray,
+                .BPC = scan.Select(Function(x) x.intensity).ToArray,
+                .TIC = scan.Select(Function(x) x.intensity).ToArray
+            }
+
+            XIC.TIC(mz.name) = chr
+        Next
+
+        Dim args As New list With {
+            .slots = New Dictionary(Of String, Object)
+        }
+
+        Return XIC.plotOverlaps(args, env)
     End Function
 
     ''' <summary>
