@@ -248,7 +248,7 @@ Namespace Spectra
             Else
                 Dim subject As IVector(Of ms2) = match.Shadows
                 ' 返回响应值最大的
-                Return subject(Which.Max(subject!intensity))
+                Return subject(which.Max(subject!intensity))
             End If
         End Function
 

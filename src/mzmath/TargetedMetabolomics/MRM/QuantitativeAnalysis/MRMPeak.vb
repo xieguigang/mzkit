@@ -98,7 +98,7 @@ Namespace MRM
             ' 取消掉
             ' removes all of the ticks that intensity value less than baseline.
             ' chromatogram = chromatogram(chromatogram!Intensity >= chromatogram.Base(baselineQuantile))
-            maxIndex = Which.Max(chromatogram!Intensity)
+            maxIndex = which.Max(chromatogram!Intensity)
 
             With chromatogram.ToArray
 

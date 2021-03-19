@@ -71,8 +71,8 @@ Namespace Formula
         ''' <returns></returns>
         Private Function reorderCandidateElements(ByRef enableHCRatioCheck As Boolean) As ElementSearchCandiate()
             Dim list As ElementSearchCandiate() = opts.candidateElements.ToArray
-            Dim C As Integer = Which(list.Select(Function(e) e.Element = "C")).DefaultFirst(-1)
-            Dim H As Integer = Which(list.Select(Function(e) e.Element = "H")).DefaultFirst(-1)
+            Dim C As Integer = which(list.Select(Function(e) e.Element = "C")).DefaultFirst(-1)
+            Dim H As Integer = which(list.Select(Function(e) e.Element = "H")).DefaultFirst(-1)
             Dim reorders As New List(Of ElementSearchCandiate)
 
             If C > -1 Then
