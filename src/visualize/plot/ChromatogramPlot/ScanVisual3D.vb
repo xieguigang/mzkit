@@ -235,10 +235,12 @@ Public Class ScanVisual3D : Inherits Plot
             End If
 
             If drawParallelAxis Then
-                Dim t0 As New PointF(parallelCanvas.Padding.Left, canvas.Height - parallelCanvas.Padding.Bottom)
-                Dim t1 As New PointF(canvas.Width - parallelCanvas.Padding.Right, canvas.Height - parallelCanvas.Padding.Bottom)
+                Dim x0 = parallelCanvas.Padding.Left
+                Dim y0 = canvas.Height - parallelCanvas.Padding.Bottom
+                Dim x1 = canvas.Width - parallelCanvas.Padding.Right
+                Dim y1 = canvas.Height - parallelCanvas.Padding.Bottom
 
-                Call g.DrawLine(parallelXAxisPen, t0, t1)
+                Call g.DrawLine(parallelXAxisPen, x0, y0, x1, y1)
             End If
 
             Call New TICplot(

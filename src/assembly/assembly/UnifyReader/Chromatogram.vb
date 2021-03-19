@@ -50,6 +50,9 @@ Imports Microsoft.VisualBasic.Math.SignalProcessing
 
 Namespace DataReader
 
+    ''' <summary>
+    ''' A data union model of TIC/BPC
+    ''' </summary>
     Public Class Chromatogram
 
         Public Property scan_time As Double()
