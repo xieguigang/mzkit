@@ -541,7 +541,9 @@ Public Class frmRawFeaturesList
     End Sub
 
     Private Sub MetaDNASearchToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MetaDNASearchToolStripMenuItem.Click
-
+        If Not CurrentRawFile Is Nothing Then
+            Call ConnectToBioDeep.RunMetaDNA(CurrentRawFile)
+        End If
     End Sub
 
     ''' <summary>
