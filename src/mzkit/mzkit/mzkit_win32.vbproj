@@ -690,6 +690,9 @@
     <EmbeddedResource Include="pages\dockWindow\documents\frmGCMS_CDFExplorer.resx">
       <DependentUpon>frmGCMS_CDFExplorer.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="pages\dockWindow\documents\frmTableViewer.resx">
+      <DependentUpon>frmTableViewer.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\documents\frmTargetedQuantification.resx">
       <DependentUpon>frmTargetedQuantification.vb</DependentUpon>
     </EmbeddedResource>
