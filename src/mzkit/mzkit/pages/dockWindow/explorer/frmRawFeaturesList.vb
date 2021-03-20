@@ -115,12 +115,17 @@ Public Class frmRawFeaturesList
         Call ApplyVsTheme(ContextMenuStrip1, ToolStrip1)
     End Sub
 
+    Dim rtmin, rtmax As Double
+
     Public Sub LoadRaw(raw As Raw, Optional rtmin As Double = Double.MinValue, Optional rtmax As Double = Double.MaxValue)
         Dim hasUVscans As Boolean = False
 
         If (Not CurrentRawFile Is Nothing) AndAlso (Not raw Is CurrentRawFile) Then
             CurrentRawFile.UnloadMzpack()
         End If
+
+        Me.rtmin = rtmin
+        Me.rtmax = rtmax
 
         _CurrentRawFile = raw
         treeView1.loadRawFile(raw, hasUVscans, rtmin, rtmax)
@@ -535,17 +540,22 @@ Public Class frmRawFeaturesList
     Private Sub XICViewToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles XICViewToolStripMenuItem.Click
         Dim allMs2 = CurrentRawFile _
             .GetMs2Scans _
+            .Where(Function(t) t.rt >= rtmin AndAlso t.rt <= rtmax) _
             .GroupBy(Function(t) t.parentMz, Tolerance.DeltaMass(0.1)) _
             .OrderBy(Function(t) Val(t.name)) _
             .ToArray
 
         treeView1.Nodes.Clear()
 
-        For Each mz1 In allMs2
+        For Each mz1 As NamedCollection(Of ScanMS2) In allMs2
             Dim mzNode As TreeNode = treeView1.Nodes.Add(Val(mz1.name).ToString("F4"))
 
-            For Each ms2 In mz1
-                Call mzNode.Nodes.Add(New TreeNode(ms2.scan_id) With {.Tag = ms2})
+            For Each ms2 As ScanMS2 In mz1
+                Call mzNode.Nodes.Add(New TreeNode(ms2.scan_id) With {
+                    .Tag = ms2,
+                    .ImageIndex = 1,
+                    .SelectedImageIndex = 1
+                })
             Next
         Next
     End Sub
