@@ -328,6 +328,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="pages\dockWindow\DemoItem.vb" />
+    <Compile Include="pages\dockWindow\documents\frmUntargettedViewer.Designer.vb">
+      <DependentUpon>frmUntargettedViewer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\dockWindow\documents\frmUntargettedViewer.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="pages\dockWindow\documents\frmHtmlViewer.Designer.vb">
       <DependentUpon>frmHtmlViewer.vb</DependentUpon>
     </Compile>
