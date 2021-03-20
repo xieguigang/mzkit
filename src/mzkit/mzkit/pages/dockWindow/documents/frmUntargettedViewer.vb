@@ -28,10 +28,13 @@ Public Class frmUntargettedViewer
             .ToArray _
             .Centroid(Tolerance.DeltaMass(0.1), LowAbundanceTrimming.intoCutff) _
             .ToArray
-        Dim msLib As New LibraryMatrix With {.centroid = True, .ms2 = MS1, .name = "MS1"}
-        Dim plot As Image = msLib.MirrorPlot(titles:={"MS1", $"Rt: {CInt(min)} ~ {CInt(max)} sec"}).AsGDIImage
 
-        PictureBox1.BackgroundImage = plot
+        If MS1.Length > 0 Then
+            Dim msLib As New LibraryMatrix With {.centroid = True, .ms2 = MS1, .name = "MS1"}
+            Dim plot As Image = msLib.MirrorPlot(titles:={"MS1", $"Rt: {CInt(min)} ~ {CInt(max)} sec"}).AsGDIImage
+
+            PictureBox1.BackgroundImage = plot
+        End If
     End Sub
 
     Private Sub showTIC() Handles TICToolStripMenuItem.Click
