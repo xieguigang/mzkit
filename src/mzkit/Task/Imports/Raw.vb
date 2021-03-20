@@ -81,6 +81,14 @@ Public Class Raw
     Public Property numOfScan2 As Integer
 
     Dim loaded As mzPack
+    Dim ms1 As Dictionary(Of String, ScanMS1)
+    Dim ms2 As Dictionary(Of String, ScanMS2)
+
+    Public ReadOnly Property isLoaded As Boolean
+        Get
+            Return Not loaded Is Nothing
+        End Get
+    End Property
 
     Public ReadOnly Property cacheFileExists As Boolean
         Get
@@ -91,6 +99,14 @@ Public Class Raw
     Public Function LoadMzpack() As Raw
         Using file As Stream = cache.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
             loaded = mzPack.ReadAll(file)
+
+            ms1 = loaded.MS.ToDictionary(Function(scan) scan.scan_id)
+            ms2 = loaded.MS _
+                .Select(Function(m1) m1.products) _
+                .IteratesALL _
+                .ToDictionary(Function(m2)
+                                  Return m2.scan_id
+                              End Function)
         End Using
 
         Return Me
@@ -104,11 +120,20 @@ Public Class Raw
         loaded.Thumbnail = Nothing
         loaded = Nothing
 
+        ms2.Clear()
+        ms2 = Nothing
+        ms1.Clear()
+        ms1 = Nothing
+
         Return Me
     End Function
 
     Public Function FindMs2Scan(id As String) As ScanMS2
-        Return GetMs2Scans.Where(Function(a) a.scan_id = id).FirstOrDefault
+        Return ms2.TryGetValue(id)
+    End Function
+
+    Public Function FindMs1Scan(id As String) As ScanMS1
+        Return ms1.TryGetValue(id)
     End Function
 
     Public Function GetCacheFileSize() As Long
@@ -120,9 +145,7 @@ Public Class Raw
     End Function
 
     Public Function GetMs2Scans() As IEnumerable(Of ScanMS2)
-        Return loaded.MS _
-            .Select(Function(m1) m1.products) _
-            .IteratesALL
+        Return ms2.Values
     End Function
 
 End Class

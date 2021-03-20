@@ -44,6 +44,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -89,12 +90,15 @@ Public Module MoleculeNetworking
 
     <Extension>
     Public Function GetSpectrum(raw As Raw, scanId As String, cutoff As LowAbundanceTrimming, Optional ByRef properties As SpectrumProperty = Nothing) As LibraryMatrix
-        Dim data As CDFData
-        Dim attrs As attribute()
-        Dim cacheFile As String
+        Dim attrs As ScanMS2
+
+        If Not raw.isLoaded Then
+            Call raw.LoadMzpack()
+        End If
 
         If scanId.StartsWith("[MS1]") Then
-            cacheFile = raw.ms1_cache
+            Dim ms1 = raw.GetMs1Scans.Where(Function(m1) m1.scan_id = scanId).FirstOrDefault
+
         Else
             cacheFile = raw.ms2_cache
         End If
@@ -145,33 +149,33 @@ Public Module MoleculeNetworking
                                  dotcutoff As Double) As NamedCollection(Of AlignmentOutput)
 
         Dim alignments As New List(Of AlignmentOutput)
-        Dim data As CDFData
         Dim ref As ms2()
 
-        Using cache As New netCDFReader(file.ms2_cache)
-            For Each scan As Ms1ScanEntry In file.scans
-                For Each subject As ScanEntry In scan.products.SafeQuery
-                    Dim scanId = subject.id
+        If Not file.isLoaded Then
+            Call file.LoadMzpack()
+        End If
 
-                    data = cache.getDataVariable(cache.getDataVariableEntry(scanId))
-                    ref = data.numerics.AsMs2.ToArray
+        For Each scan As ScanMS1 In file.GetMs1Scans
+            For Each subject As ScanMS2 In scan.products.SafeQuery
+                Dim scanId = subject.scan_id
 
-                    Dim scores = GlobalAlignment.TwoDirectionSSM(spectrum.ms2, ref, tolerance)
+                ref = subject.GetMs.ToArray
 
-                    If stdNum.Min(scores.forward, scores.reverse) >= dotcutoff Then
-                        alignments += New AlignmentOutput With {
+                Dim scores = GlobalAlignment.TwoDirectionSSM(spectrum.ms2, ref, tolerance)
+
+                If stdNum.Min(scores.forward, scores.reverse) >= dotcutoff Then
+                    alignments += New AlignmentOutput With {
                             .alignments = GlobalAlignment _
                                 .CreateAlignment(spectrum.ms2, ref, tolerance) _
                                 .ToArray,
                             .forward = scores.forward,
                             .reverse = scores.reverse,
                             .query = New Meta With {.id = spectrum.name, .mz = Double.NaN, .scan_time = Double.NaN},
-                            .reference = New Meta With {.id = scanId, .mz = subject.mz, .scan_time = subject.rt}
+                            .reference = New Meta With {.id = scanId, .mz = subject.parentMz, .scan_time = subject.rt}
                         }
-                    End If
-                Next
+                End If
             Next
-        End Using
+        Next
 
         Return New NamedCollection(Of AlignmentOutput)(file.source.FileName, alignments, file.source)
     End Function
