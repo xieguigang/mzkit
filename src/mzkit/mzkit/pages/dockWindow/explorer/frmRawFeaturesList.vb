@@ -120,6 +120,11 @@ Public Class frmRawFeaturesList
     Public Sub LoadRaw(raw As Raw, Optional rtmin As Double = Double.MinValue, Optional rtmax As Double = Double.MaxValue)
         Dim hasUVscans As Boolean = False
 
+        ' skip of reload identical files
+        If raw Is CurrentRawFile AndAlso rtmin = Me.rtmin AndAlso rtmax = Me.rtmax Then
+            Return
+        End If
+
         If (Not CurrentRawFile Is Nothing) AndAlso (Not raw Is CurrentRawFile) Then
             CurrentRawFile.UnloadMzpack()
         End If
