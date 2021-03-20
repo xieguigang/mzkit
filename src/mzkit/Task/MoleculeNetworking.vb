@@ -98,7 +98,7 @@ Public Module MoleculeNetworking
             Call raw.LoadMzpack()
         End If
 
-        If scanId.StartsWith("[MS1]") Then
+        If scanId.Contains("[MS1]") Then
             Dim ms1 = raw.FindMs1Scan(scanId)
 
             msLevel = 1
