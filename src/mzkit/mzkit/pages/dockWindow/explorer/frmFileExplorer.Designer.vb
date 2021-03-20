@@ -6,7 +6,7 @@ Partial Class frmFileExplorer
     ' Inherits Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -23,15 +23,18 @@ Partial Class frmFileExplorer
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmFileExplorer))
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
-        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.ctxMenuFiles = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ChromatogramOverlapToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.BPCOverlapToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TICOverlapToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ViewSnapshotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.RawScatterToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.XICPeaksToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ImportsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
         Me.DeleteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -41,17 +44,17 @@ Partial Class frmFileExplorer
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
         Me.ToolStripSpringTextBox1 = New mzkit.ToolStripSpringTextBox()
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
-        Me.ContextMenuStrip2 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.ctxMenuScript = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.AddNewScriptToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RunAutomationToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripSeparator()
         Me.DeleteToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ViewSnapshotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.RawScatterToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.XICPeaksToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ContextMenuStrip1.SuspendLayout()
+        Me.ctxMenuRawFile = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.OpenViewerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ctxMenuFiles.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
-        Me.ContextMenuStrip2.SuspendLayout()
+        Me.ctxMenuScript.SuspendLayout()
+        Me.ctxMenuRawFile.SuspendLayout()
         Me.SuspendLayout()
         '
         'ImageList1
@@ -60,11 +63,11 @@ Partial Class frmFileExplorer
         Me.ImageList1.TransparentColor = System.Drawing.Color.Transparent
         Me.ImageList1.Images.SetKeyName(0, "edit-find.png")
         '
-        'ContextMenuStrip1
+        'ctxMenuFiles
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ChromatogramOverlapToolStripMenuItem, Me.ViewSnapshotToolStripMenuItem, Me.ImportsToolStripMenuItem, Me.ToolStripMenuItem1, Me.DeleteToolStripMenuItem})
-        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(201, 120)
+        Me.ctxMenuFiles.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ChromatogramOverlapToolStripMenuItem, Me.ViewSnapshotToolStripMenuItem, Me.ImportsToolStripMenuItem, Me.ToolStripMenuItem1, Me.DeleteToolStripMenuItem})
+        Me.ctxMenuFiles.Name = "ContextMenuStrip1"
+        Me.ctxMenuFiles.Size = New System.Drawing.Size(201, 98)
         '
         'ChromatogramOverlapToolStripMenuItem
         '
@@ -85,6 +88,26 @@ Partial Class frmFileExplorer
         Me.TICOverlapToolStripMenuItem.Name = "TICOverlapToolStripMenuItem"
         Me.TICOverlapToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.TICOverlapToolStripMenuItem.Text = "TIC Overlap"
+        '
+        'ViewSnapshotToolStripMenuItem
+        '
+        Me.ViewSnapshotToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RawScatterToolStripMenuItem, Me.XICPeaksToolStripMenuItem})
+        Me.ViewSnapshotToolStripMenuItem.Image = CType(resources.GetObject("ViewSnapshotToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.ViewSnapshotToolStripMenuItem.Name = "ViewSnapshotToolStripMenuItem"
+        Me.ViewSnapshotToolStripMenuItem.Size = New System.Drawing.Size(200, 22)
+        Me.ViewSnapshotToolStripMenuItem.Text = "View Snapshot"
+        '
+        'RawScatterToolStripMenuItem
+        '
+        Me.RawScatterToolStripMenuItem.Name = "RawScatterToolStripMenuItem"
+        Me.RawScatterToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.RawScatterToolStripMenuItem.Text = "Raw Scatter"
+        '
+        'XICPeaksToolStripMenuItem
+        '
+        Me.XICPeaksToolStripMenuItem.Name = "XICPeaksToolStripMenuItem"
+        Me.XICPeaksToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.XICPeaksToolStripMenuItem.Text = "XIC Peaks"
         '
         'ImportsToolStripMenuItem
         '
@@ -157,11 +180,11 @@ Partial Class frmFileExplorer
         Me.ToolStripButton1.Size = New System.Drawing.Size(23, 22)
         Me.ToolStripButton1.Text = "ToolStripButton1"
         '
-        'ContextMenuStrip2
+        'ctxMenuScript
         '
-        Me.ContextMenuStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AddNewScriptToolStripMenuItem, Me.RunAutomationToolStripMenuItem1, Me.ToolStripMenuItem2, Me.DeleteToolStripMenuItem1})
-        Me.ContextMenuStrip2.Name = "ContextMenuStrip2"
-        Me.ContextMenuStrip2.Size = New System.Drawing.Size(163, 76)
+        Me.ctxMenuScript.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AddNewScriptToolStripMenuItem, Me.RunAutomationToolStripMenuItem1, Me.ToolStripMenuItem2, Me.DeleteToolStripMenuItem1})
+        Me.ctxMenuScript.Name = "ContextMenuStrip2"
+        Me.ctxMenuScript.Size = New System.Drawing.Size(163, 76)
         '
         'AddNewScriptToolStripMenuItem
         '
@@ -188,25 +211,18 @@ Partial Class frmFileExplorer
         Me.DeleteToolStripMenuItem1.Size = New System.Drawing.Size(162, 22)
         Me.DeleteToolStripMenuItem1.Text = "Delete"
         '
-        'ViewSnapshotToolStripMenuItem
+        'ctxMenuRawFile
         '
-        Me.ViewSnapshotToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RawScatterToolStripMenuItem, Me.XICPeaksToolStripMenuItem})
-        Me.ViewSnapshotToolStripMenuItem.Image = CType(resources.GetObject("ViewSnapshotToolStripMenuItem.Image"), System.Drawing.Image)
-        Me.ViewSnapshotToolStripMenuItem.Name = "ViewSnapshotToolStripMenuItem"
-        Me.ViewSnapshotToolStripMenuItem.Size = New System.Drawing.Size(200, 22)
-        Me.ViewSnapshotToolStripMenuItem.Text = "View Snapshot"
+        Me.ctxMenuRawFile.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OpenViewerToolStripMenuItem})
+        Me.ctxMenuRawFile.Name = "ctxMenuRawFile"
+        Me.ctxMenuRawFile.Size = New System.Drawing.Size(181, 48)
         '
-        'RawScatterToolStripMenuItem
+        'OpenViewerToolStripMenuItem
         '
-        Me.RawScatterToolStripMenuItem.Name = "RawScatterToolStripMenuItem"
-        Me.RawScatterToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.RawScatterToolStripMenuItem.Text = "Raw Scatter"
-        '
-        'XICPeaksToolStripMenuItem
-        '
-        Me.XICPeaksToolStripMenuItem.Name = "XICPeaksToolStripMenuItem"
-        Me.XICPeaksToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.XICPeaksToolStripMenuItem.Text = "XIC Peaks"
+        Me.OpenViewerToolStripMenuItem.Image = CType(resources.GetObject("OpenViewerToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.OpenViewerToolStripMenuItem.Name = "OpenViewerToolStripMenuItem"
+        Me.OpenViewerToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.OpenViewerToolStripMenuItem.Text = "Open Viewer"
         '
         'frmFileExplorer
         '
@@ -217,16 +233,17 @@ Partial Class frmFileExplorer
         Me.Controls.Add(Me.ToolStrip1)
         Me.DoubleBuffered = True
         Me.Name = "frmFileExplorer"
-        Me.ContextMenuStrip1.ResumeLayout(False)
+        Me.ctxMenuFiles.ResumeLayout(False)
         Me.ToolStrip1.ResumeLayout(False)
         Me.ToolStrip1.PerformLayout()
-        Me.ContextMenuStrip2.ResumeLayout(False)
+        Me.ctxMenuScript.ResumeLayout(False)
+        Me.ctxMenuRawFile.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
     Friend WithEvents ImageList1 As ImageList
-    Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
+    Friend WithEvents ctxMenuFiles As ContextMenuStrip
     Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
     Friend WithEvents DeleteToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ChromatogramOverlapToolStripMenuItem As ToolStripMenuItem
@@ -239,7 +256,7 @@ Partial Class frmFileExplorer
     Friend WithEvents ToolStripLabel1 As ToolStripLabel
     Friend WithEvents ToolStripButton1 As ToolStripButton
     Friend WithEvents ToolStripSpringTextBox1 As ToolStripSpringTextBox
-    Friend WithEvents ContextMenuStrip2 As ContextMenuStrip
+    Friend WithEvents ctxMenuScript As ContextMenuStrip
     Friend WithEvents RunAutomationToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents DeleteToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents AddNewScriptToolStripMenuItem As ToolStripMenuItem
@@ -247,4 +264,6 @@ Partial Class frmFileExplorer
     Friend WithEvents ViewSnapshotToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents RawScatterToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents XICPeaksToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ctxMenuRawFile As ContextMenuStrip
+    Friend WithEvents OpenViewerToolStripMenuItem As ToolStripMenuItem
 End Class

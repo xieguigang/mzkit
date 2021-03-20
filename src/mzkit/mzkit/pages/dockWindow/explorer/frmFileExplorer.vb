@@ -135,7 +135,7 @@ Public Class frmFileExplorer
     End Function
 
     Sub InitializeFileTree()
-        If treeView1.LoadRawFileCache(ContextMenuStrip1, ContextMenuStrip2, Globals.Settings.workspaceFile) = 0 Then
+        If treeView1.LoadRawFileCache(ctxMenuFiles, ctxMenuRawFile, ctxMenuScript, Globals.Settings.workspaceFile) = 0 Then
             MyApplication.host.showStatusMessage($"It seems that you don't have any raw file opended. You could open raw file through [File] -> [Open Raw File].", My.Resources.StatusAnnotations_Warning_32xLG_color)
         Else
             ' selectRawFile(Scan0)
@@ -151,7 +151,7 @@ Public Class frmFileExplorer
         treeView1.HotTracking = True
         treeView1.BringToFront()
         treeView1.CheckBoxes = True
-        treeView1.ContextMenuStrip = ContextMenuStrip1
+        treeView1.ContextMenuStrip = ctxMenuFiles
         treeView1.ShowLines = True
         treeView1.ShowRootLines = True
         treeView1.BorderStyle = BorderStyle.FixedSingle
@@ -165,7 +165,7 @@ Public Class frmFileExplorer
         Me.TabText = "File Explorer"
 
         Call InitializeFileTree()
-        Call ApplyVsTheme(ContextMenuStrip1, ToolStrip1, ContextMenuStrip2)
+        Call ApplyVsTheme(ctxMenuFiles, ToolStrip1, ctxMenuScript, ctxMenuRawFile)
     End Sub
 
     Public Sub ImportsRaw(fileName As String)

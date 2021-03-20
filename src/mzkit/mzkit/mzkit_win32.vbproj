@@ -687,6 +687,9 @@
     <EmbeddedResource Include="pages\dockWindow\documents\frmTargetedQuantification.resx">
       <DependentUpon>frmTargetedQuantification.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="pages\dockWindow\documents\frmUntargettedViewer.resx">
+      <DependentUpon>frmUntargettedViewer.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\explorer\frmFileExplorer.resx">
       <DependentUpon>frmFileExplorer.vb</DependentUpon>
     </EmbeddedResource>

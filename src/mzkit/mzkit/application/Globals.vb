@@ -167,6 +167,7 @@ Module Globals
     <Extension>
     Public Function LoadRawFileCache(explorer As TreeView,
                                      rawMenu As ContextMenuStrip,
+                                     targetRawMenu As ContextMenuStrip,
                                      scriptMenu As ContextMenuStrip,
                                      Optional defaultWorkspace As String = Nothing) As Integer
 
@@ -212,7 +213,7 @@ Module Globals
                 .ImageIndex = 2,
                 .SelectedImageIndex = 2,
                 .StateImageIndex = 2,
-                .ContextMenuStrip = rawMenu,
+                .ContextMenuStrip = targetRawMenu,
                 .ToolTipText = raw.source.GetFullPath
             }
 
