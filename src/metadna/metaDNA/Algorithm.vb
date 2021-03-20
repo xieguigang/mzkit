@@ -159,6 +159,11 @@ Public Class Algorithm
         Return Me
     End Function
 
+    ''' <summary>
+    ''' 必须要先执行<see cref="SetSearchRange"/>
+    ''' </summary>
+    ''' <param name="library"></param>
+    ''' <returns></returns>
     Public Function SetKeggLibrary(library As IEnumerable(Of Compound)) As Algorithm
         kegg = KEGGHandler.CreateIndex(library, precursorTypes, ms1ppm)
         Return Me
