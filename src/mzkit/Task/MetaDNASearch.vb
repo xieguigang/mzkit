@@ -27,9 +27,9 @@ Public Module MetaDNASearch
         End If
 
         Dim infer = metaDNA _
-            .SetKeggLibrary(KEGGRepo.RequestKEGGcompounds(println)) _
-            .SetNetwork(KEGGRepo.RequestKEGGReactions(println)) _
             .SetSearchRange(range) _
+            .SetNetwork(KEGGRepo.RequestKEGGReactions(println)) _
+            .SetKeggLibrary(KEGGRepo.RequestKEGGcompounds(println)) _
             .SetSamples(mzpack.GetMs2Peaks, autoROIid:=True) _
             .SetReportHandler(println) _
             .DIASearch() _
