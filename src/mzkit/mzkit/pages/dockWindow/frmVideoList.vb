@@ -9,6 +9,10 @@ Public Class frmVideoList
 
     Private Sub frmVideoList_Load(sender As Object, e As EventArgs) Handles Me.Load
         BackgroundWorker.RunWorkerAsync()
+
+        CopyFullPathToolStripMenuItem.Enabled = False
+        OpenContainingFolderToolStripMenuItem.Enabled = False
+        SaveDocumentToolStripMenuItem.Enabled = False
     End Sub
 
     Const source As String = "http://education.biodeep.cn/api/getMzkit"
