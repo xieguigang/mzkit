@@ -1,5 +1,4 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
-Imports BioNovoGene.BioDeep.MetaDNA
+﻿Imports BioNovoGene.BioDeep.MetaDNA
 Imports Microsoft.VisualBasic.My
 Imports mzkit.DockSample
 Imports mzkit.My
