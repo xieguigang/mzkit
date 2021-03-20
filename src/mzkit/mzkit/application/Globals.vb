@@ -206,7 +206,7 @@ Module Globals
         For Each raw As Raw In files.GetRawDataFiles
             Call sharedProgressUpdater($"[Raw File Viewer] Loading {raw.source.FileName}...")
 
-            Dim rawFileNode As New TreeNode($"{raw.source.FileName} [{raw.numOfScans} Scans]") With {
+            Dim rawFileNode As New TreeNode($"{raw.source.FileName} [{raw.GetMs1Scans.Count} Scans]") With {
                 .Checked = True,
                 .Tag = raw,
                 .ImageIndex = 2,

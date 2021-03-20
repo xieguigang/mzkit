@@ -69,9 +69,9 @@ Namespace My
             table.columns(NameOf(Raw.source)) = raws.Select(Function(a) a.source).ToArray
             table.columns(NameOf(Raw.rtmin)) = raws.Select(Function(a) a.rtmin).ToArray
             table.columns(NameOf(Raw.rtmax)) = raws.Select(Function(a) a.rtmax).ToArray
-            table.columns(NameOf(Raw.numOfScans)) = raws.Select(Function(a) a.numOfScans).ToArray
-            table.columns("[MS1] cache") = raws.Select(Function(a) a.ms1_cache).ToArray
-            table.columns("[MS/MS] cache") = raws.Select(Function(a) a.ms2_cache).ToArray
+            table.columns("numOfScans") = raws.Select(Function(a) a.GetMs1Scans.Count).ToArray
+            table.columns("mzPack") = raws.Select(Function(a) a.cache).ToArray
+            table.columns("cache_size") = raws.Select(Function(a) StringFormats.Lanudry(a.GetCacheFileSize)).ToArray
             table.columns("file_size") = raws _
                 .Select(Function(a)
                             Return StringFormats.Lanudry(a.source.FileLength)
@@ -86,7 +86,7 @@ Namespace My
         <ExportAPI("TIC")>
         Public Shared Function TIC(file As Raw) As dataframe
             Dim table As New dataframe With {.columns = New Dictionary(Of String, Array)}
-            Dim ms1 = file.scans.OrderBy(Function(a) a.rt).ToArray
+            Dim ms1 = file.GetMs1Scans.OrderBy(Function(a) a.rt).ToArray
 
             table.columns("time") = ms1.Select(Function(a) a.rt).ToArray
             table.columns("intensity") = ms1.Select(Function(a) a.TIC).ToArray
@@ -97,7 +97,7 @@ Namespace My
         <ExportAPI("BPC")>
         Public Shared Function BPC(file As Raw) As dataframe
             Dim table As New dataframe With {.columns = New Dictionary(Of String, Array)}
-            Dim ms1 = file.scans.OrderBy(Function(a) a.rt).ToArray
+            Dim ms1 = file.GetMs1Scans.OrderBy(Function(a) a.rt).ToArray
 
             table.columns("time") = ms1.Select(Function(a) a.rt).ToArray
             table.columns("intensity") = ms1.Select(Function(a) a.BPC).ToArray
