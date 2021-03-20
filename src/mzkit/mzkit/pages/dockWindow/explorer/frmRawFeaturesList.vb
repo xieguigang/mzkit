@@ -297,11 +297,15 @@ Public Class frmRawFeaturesList
     End Sub
 
     Private Sub ShowTICToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowTICToolStripMenuItem.Click
-        Call MyApplication.host.mzkitTool.TIC({CurrentRawFile}, isBPC:=False)
+        If Not CurrentRawFile Is Nothing Then
+            Call MyApplication.host.mzkitTool.TIC({CurrentRawFile}, isBPC:=False)
+        End If
     End Sub
 
     Private Sub ShowBPCToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowBPCToolStripMenuItem.Click
-        Call MyApplication.host.mzkitTool.TIC({CurrentRawFile}, isBPC:=True)
+        If Not CurrentRawFile Is Nothing Then
+            Call MyApplication.host.mzkitTool.TIC({CurrentRawFile}, isBPC:=True)
+        End If
     End Sub
 
     Friend Sub ShowXICToolStripMenuItem_Click() Handles ShowXICToolStripMenuItem.Click
