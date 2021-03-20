@@ -62,6 +62,9 @@ Public Class RtRangeSelector
     Public Property SelectedColor As Color = Color.Green
     Public Property FillColor As Color = Color.Blue
 
+    Public Property rtmin As Double
+    Public Property rtmax As Double
+
     Dim start As Integer
     Dim endPox As Integer
     Dim lastX As Integer
@@ -99,13 +102,13 @@ Public Class RtRangeSelector
         Dim length As Double = Width
 
         With {start, endPox}
-            Dim min As Double = .Min / length
-            Dim max As Double = .Max / length
+            rtmin = .Min / length
+            rtmax = .Max / length
 
-            min = TIC(Scan0).Time + min * RtRange
-            max = TIC(Scan0).Time + max * RtRange
+            rtmin = TIC(Scan0).Time + rtmin * RtRange
+            rtmax = TIC(Scan0).Time + rtmax * RtRange
 
-            RaiseEvent RangeSelect(min, max)
+            RaiseEvent RangeSelect(rtmin, rtmax)
 
             start = .Min
             endPox = .Max

@@ -1,4 +1,5 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
@@ -62,5 +63,16 @@ Public Class frmUntargettedViewer
 
     Private Sub frmUntargettedViewer_Load(sender As Object, e As EventArgs) Handles Me.Load
         Call ApplyVsTheme(ContextMenuStrip1)
+    End Sub
+
+    Private Sub FilterMs2ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FilterMs2ToolStripMenuItem.Click
+        Dim MS2 As ScanMS2() = raw _
+            .GetMs2Scans _
+            .Where(Function(m)
+                       Return m.rt >= RtRangeSelector1.rtmin AndAlso m.rt <= RtRangeSelector1.rtmax
+                   End Function) _
+            .ToArray
+
+
     End Sub
 End Class

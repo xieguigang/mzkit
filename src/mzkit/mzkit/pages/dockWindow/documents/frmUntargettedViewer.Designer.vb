@@ -24,24 +24,46 @@ Partial Class frmUntargettedViewer
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Me.RtRangeSelector1 = New mzkit.RtRangeSelector()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.TICToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.BPCToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.FilterMs2ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ContextMenuStrip1.SuspendLayout()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'RtRangeSelector1
         '
         Me.RtRangeSelector1.ContextMenuStrip = Me.ContextMenuStrip1
         Me.RtRangeSelector1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.RtRangeSelector1.FillColor = System.Drawing.Color.Blue
+        Me.RtRangeSelector1.FillColor = System.Drawing.Color.DodgerBlue
         Me.RtRangeSelector1.Location = New System.Drawing.Point(0, 318)
         Me.RtRangeSelector1.Name = "RtRangeSelector1"
-        Me.RtRangeSelector1.SelectedColor = System.Drawing.Color.Green
+        Me.RtRangeSelector1.SelectedColor = System.Drawing.Color.Black
         Me.RtRangeSelector1.Size = New System.Drawing.Size(800, 132)
         Me.RtRangeSelector1.TabIndex = 0
+        '
+        'ContextMenuStrip1
+        '
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TICToolStripMenuItem, Me.BPCToolStripMenuItem, Me.ToolStripMenuItem1, Me.FilterMs2ToolStripMenuItem})
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 98)
+        '
+        'TICToolStripMenuItem
+        '
+        Me.TICToolStripMenuItem.Checked = True
+        Me.TICToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.TICToolStripMenuItem.Name = "TICToolStripMenuItem"
+        Me.TICToolStripMenuItem.Size = New System.Drawing.Size(96, 22)
+        Me.TICToolStripMenuItem.Text = "TIC"
+        '
+        'BPCToolStripMenuItem
+        '
+        Me.BPCToolStripMenuItem.Name = "BPCToolStripMenuItem"
+        Me.BPCToolStripMenuItem.Size = New System.Drawing.Size(96, 22)
+        Me.BPCToolStripMenuItem.Text = "BPC"
         '
         'PictureBox1
         '
@@ -53,25 +75,16 @@ Partial Class frmUntargettedViewer
         Me.PictureBox1.TabIndex = 1
         Me.PictureBox1.TabStop = False
         '
-        'ContextMenuStrip1
+        'ToolStripMenuItem1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TICToolStripMenuItem, Me.BPCToolStripMenuItem})
-        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 70)
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(177, 6)
         '
-        'TICToolStripMenuItem
+        'FilterMs2ToolStripMenuItem
         '
-        Me.TICToolStripMenuItem.Checked = True
-        Me.TICToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.TICToolStripMenuItem.Name = "TICToolStripMenuItem"
-        Me.TICToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.TICToolStripMenuItem.Text = "TIC"
-        '
-        'BPCToolStripMenuItem
-        '
-        Me.BPCToolStripMenuItem.Name = "BPCToolStripMenuItem"
-        Me.BPCToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.BPCToolStripMenuItem.Text = "BPC"
+        Me.FilterMs2ToolStripMenuItem.Name = "FilterMs2ToolStripMenuItem"
+        Me.FilterMs2ToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.FilterMs2ToolStripMenuItem.Text = "Filter Ms2"
         '
         'frmUntargettedViewer
         '
@@ -82,8 +95,8 @@ Partial Class frmUntargettedViewer
         Me.Controls.Add(Me.RtRangeSelector1)
         Me.DoubleBuffered = True
         Me.Name = "frmUntargettedViewer"
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ContextMenuStrip1.ResumeLayout(False)
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -93,4 +106,6 @@ Partial Class frmUntargettedViewer
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents TICToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents BPCToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
+    Friend WithEvents FilterMs2ToolStripMenuItem As ToolStripMenuItem
 End Class
