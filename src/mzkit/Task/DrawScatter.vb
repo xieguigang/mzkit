@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.Imaging
@@ -18,5 +19,17 @@ Public Module DrawScatter
             .ToArray
 
         Return RawScatterPlot.Plot(samples:=ms1, rawfile:=raw.source.FileName).AsGDIImage
+    End Function
+
+    <Extension>
+    Public Function DrawScatter(raw As mzPack) As Image
+        Dim ms1 As ms1_scan() = raw.MS _
+            .Select(Function(m1)
+                        Return m1.mz.Select(Function(mzi, i) New ms1_scan With {.mz = mzi, .intensity = m1.into(i), .scan_time = m1.rt})
+                    End Function) _
+            .IteratesALL _
+            .ToArray
+
+        Return RawScatterPlot.Plot(samples:=ms1).AsGDIImage
     End Function
 End Module
