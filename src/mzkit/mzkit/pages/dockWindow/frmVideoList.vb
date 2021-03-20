@@ -1,5 +1,7 @@
 ﻿Imports System.ComponentModel
+Imports Microsoft.VisualBasic.My
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Task
 
 Public Class frmVideoList
 
@@ -15,7 +17,13 @@ Public Class frmVideoList
         Dim data As MessageInfo = source.GET.LoadJSON(Of MessageInfo)
 
         For Each video In data.info.list
+            Dim card As New VideoCards With {.url = video.short_link}
 
+            card.PictureBox1.BackgroundImage = Image.FromStream(SingletonHolder(Of BioDeepSession).Instance.RequestStream(video.pic))
+            card.LinkLabel1.Text = video.title
+            card.Label2.Text = video.desc
+
+            FlowLayoutPanel1.Controls.Add(card)
         Next
     End Sub
 
