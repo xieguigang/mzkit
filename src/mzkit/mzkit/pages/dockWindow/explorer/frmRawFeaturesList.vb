@@ -541,7 +541,9 @@ Public Class frmRawFeaturesList
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Private Sub XICViewToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles XICViewToolStripMenuItem.Click
-        If XICViewToolStripMenuItem.Checked Then
+        If CurrentRawFile Is Nothing Then
+            Return
+        ElseIf XICViewToolStripMenuItem.Checked Then
             ' switch back to MS scan groups
             XICViewToolStripMenuItem.Checked = False
 
