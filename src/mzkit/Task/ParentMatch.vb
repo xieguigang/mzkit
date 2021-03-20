@@ -1,4 +1,6 @@
-﻿Public Class ParentMatch : Inherits ScanEntry
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
+
+Public Class ParentMatch : Inherits ScanMS2
 
     Public Property precursor_type As String
     Public Property ppm As Double
