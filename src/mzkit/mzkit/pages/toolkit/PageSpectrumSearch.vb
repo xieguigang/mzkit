@@ -109,7 +109,14 @@ Public Class PageSpectrumSearch
             Return
         End If
 
-        Dim ion As MGF.Ions = MGF.MgfReader.StreamParser(textLines).FirstOrDefault
+        Dim ion As MGF.Ions
+
+        Try
+            ion = MGF.MgfReader.StreamParser(textLines).FirstOrDefault
+        Catch ex As Exception
+            Call MyApplication.host.showStatusMessage("invalid mgf text format!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            Return
+        End Try
 
         If ion Is Nothing OrElse ion.Peaks.IsNullOrEmpty Then
             Call MyApplication.host.showStatusMessage("invalid mgf text format!", My.Resources.StatusAnnotations_Warning_32xLG_color)
