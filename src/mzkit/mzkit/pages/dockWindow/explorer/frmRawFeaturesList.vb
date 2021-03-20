@@ -530,7 +530,9 @@ Public Class frmRawFeaturesList
     End Sub
 
     Private Sub OpenViewerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenViewerToolStripMenuItem.Click
-        Call VisualStudio.ShowDocument(Of frmUntargettedViewer)().loadRaw(CurrentRawFile)
+        If Not CurrentRawFile Is Nothing Then
+            Call VisualStudio.ShowDocument(Of frmUntargettedViewer)().loadRaw(CurrentRawFile)
+        End If
     End Sub
 
     ''' <summary>
