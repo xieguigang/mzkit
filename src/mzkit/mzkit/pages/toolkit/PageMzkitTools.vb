@@ -704,8 +704,8 @@ Public Class PageMzkitTools
                         }
                     End Function) _
             .ToArray
-        Dim mzmin = Aggregate ion In selectedIons Into Min(ion.mz)
-        Dim mzmax = Aggregate ion In selectedIons Into Max(ion.mz)
+        Dim mzmin = Aggregate ion In selectedIons Into Min(ion.parentMz)
+        Dim mzmax = Aggregate ion In selectedIons Into Max(ion.parentMz)
 
         name = $"XIC [m/z={ms2.mz.ToString("F4")}] [mzmin={mzmin.ToString("F4")}, mzmax={mzmax.ToString("F4")}]"
 
