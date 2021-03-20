@@ -62,7 +62,7 @@ Public Class ImportsRawData
         Dim cacheKey As String = file.GetFullPath.MD5
 
         source = file
-        cache = App.AppSystemTemp & $"/mzkit_win32/.cache/{cacheKey.Substring(0, 2)}/" & cacheKey & ".mzPack"
+        cache = App.AppSystemTemp & $"/.cache/{cacheKey.Substring(0, 2)}/" & cacheKey & ".mzPack"
         showProgress = progress
         success = finished
         raw = New Raw With {
