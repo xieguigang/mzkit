@@ -129,6 +129,7 @@ Public Class frmRawFeaturesList
 
         _CurrentRawFile = raw
         treeView1.loadRawFile(raw, hasUVscans, rtmin, rtmax)
+        checked.Clear()
 
         If Not hasUVscans Then
             MyApplication.host.UVScansList.DockState = DockState.Hidden
@@ -546,6 +547,7 @@ Public Class frmRawFeaturesList
             .ToArray
 
         treeView1.Nodes.Clear()
+        checked.Clear()
 
         For Each mz1 As NamedCollection(Of ScanMS2) In allMs2
             Dim mzNode As TreeNode = treeView1.Nodes.Add(Val(mz1.name).ToString("F4"))
