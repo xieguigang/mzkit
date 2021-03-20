@@ -35,6 +35,8 @@ Public Module MetaDNASearch
             .DIASearch() _
             .ToArray
 
-        output = metaDNA.ExportTable(infer, unique:=True)
+        output = metaDNA _
+            .ExportTable(infer, unique:=True) _
+            .ToArray
     End Sub
 End Module
