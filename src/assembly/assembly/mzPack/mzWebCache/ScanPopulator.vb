@@ -82,7 +82,7 @@ Namespace mzData.mzWebCache
             Next
         End Function
 
-        Public Iterator Function Load(scans As IEnumerable(Of Scan)) As IEnumerable(Of ScanMS1)
+        Public Iterator Function Load(scans As IEnumerable(Of Scan), Optional progress As Action(Of String) = Nothing) As IEnumerable(Of ScanMS1)
             Dim i As i32 = 1
 
             For Each scan As Scan In PopulateValidScans(scans)
@@ -121,6 +121,10 @@ Namespace mzData.mzWebCache
                         .collisionEnergy = reader.GetCollisionEnergy(scan)
                     }.DoCall(AddressOf products.Add)
                 End If
+
+                If Not progress Is Nothing Then
+                    Call progress(scan_id)
+                End If
             Next
 
             If Not ms1 Is Nothing Then
@@ -132,8 +136,8 @@ Namespace mzData.mzWebCache
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Load(rawfile As String) As IEnumerable(Of ScanMS1)
-            Return Load(loadScans(rawfile))
+        Public Function Load(rawfile As String, Optional progress As Action(Of String) = Nothing) As IEnumerable(Of ScanMS1)
+            Return Load(loadScans(rawfile), progress)
         End Function
 
     End Class

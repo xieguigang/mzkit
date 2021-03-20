@@ -1,6 +1,7 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 
@@ -11,29 +12,36 @@ Public Module Converter
     ''' </summary>
     ''' <param name="xml">the file path of the raw mzXML/mzML data file.</param>
     ''' <returns></returns>
-    Public Function LoadRawFileAuto(xml As String) As mzPack
+    Public Function LoadRawFileAuto(xml As String, Optional progress As Action(Of String) = Nothing) As mzPack
         If xml.ExtensionSuffix("mzXML") Then
             Return New mzPack With {
-                .MS = New mzXMLScans().Load(xml).ToArray
+                .MS = New mzXMLScans().Load(xml, progress).ToArray
             }
         ElseIf xml.ExtensionSuffix("mzML") Then
             Dim UVdetecor As String = ExtractUVData.GetPhotodiodeArrayDetectorInstrumentConfigurationId(xml)
             Dim scanLoader As New mzMLScans
-            Dim MS As ScanMS1() = scanLoader.Load(xml).ToArray
+            Dim MS As ScanMS1() = scanLoader.Load(xml, progress).ToArray
             Dim UV As New ChromatogramOverlap
             Dim PDA As New List(Of ChromatogramTick)
 
             For Each time_scan As GeneralSignal In scanLoader.GetUVScans(UVdetecor)
-                Dim scanId As String = time_scan.meta!scan
                 Dim scan_time As Double = time_scan.meta!scan_time
                 Dim TIC As Double = time_scan.meta!total_ion_current
+                Dim scanId As String = $"[{time_scan.meta!scan}] {ExtractUVData.UVScanType} {TIC.ToString("G3")}@{scan_time.ToString("F3")}s"
 
-                PDA.Add(New ChromatogramTick With {.Time = scan_time, .Intensity = TIC})
+                PDA += New ChromatogramTick With {
+                    .Time = scan_time,
+                    .Intensity = TIC
+                }
                 UV(scanId) = New DataReader.Chromatogram With {
                     .TIC = time_scan.Strength,
                     .scan_time = time_scan.Measures,
                     .BPC = .TIC
                 }
+
+                If Not progress Is Nothing Then
+                    Call progress(scanId)
+                End If
             Next
 
             Dim PDAPlot As New ChromatogramOverlap
