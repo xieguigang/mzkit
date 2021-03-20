@@ -119,6 +119,12 @@ Public Class frmRawFeaturesList
     Public Sub LoadRaw(raw As Raw, Optional rtmin As Double = Double.MinValue, Optional rtmax As Double = Double.MaxValue)
         Dim hasUVscans As Boolean = False
 
+        If raw Is CurrentRawFile Then
+            Return
+        ElseIf (Not CurrentRawFile Is Nothing) Then
+            CurrentRawFile.UnloadMzpack()
+        End If
+
         _CurrentRawFile = raw
         treeView1.loadRawFile(raw, hasUVscans, rtmin, rtmax)
 

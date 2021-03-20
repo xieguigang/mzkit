@@ -136,7 +136,7 @@ Public Class frmMain
 
     Public Sub OpenFile()
         Using file As New OpenFileDialog With {
-            .Filter = "Raw Data|*.mzXML;*.mzML|Image mzML(*.imzML)|*.imzML|GC-MS Targeted(*.cdf)|*.cdf;*.netcdf|GC-MS / LC-MS/MS Targeted(*.mzML)|*.mzML|R# Script(*.R)|*.R"
+            .Filter = "Untargetted Raw Data(*.mzXML;*.mzML;*.mzPack)|*.mzXML;*.mzML;*.mzPack|Image mzML(*.imzML)|*.imzML|GC-MS Targeted(*.cdf)|*.cdf;*.netcdf|GC-MS / LC-MS/MS Targeted(*.mzML)|*.mzML|R# Script(*.R)|*.R"
         }
             If file.ShowDialog = DialogResult.OK Then
                 Call OpenFile(file.FileName, showDocument:=True)
@@ -156,6 +156,18 @@ Public Class frmMain
             Call ShowGCMSSIM(fileName, isBackground:=False, showExplorer:=showDocument)
         ElseIf fileName.ExtensionSuffix("cdf", "netcdf") Then
             Call ShowGCMSSIM(fileName, isBackground:=False, showExplorer:=showDocument)
+        ElseIf fileName.ExtensionSuffix("mzpack") Then
+            Dim raw As New Raw With {
+                .cache = fileName,
+                .numOfScan1 = 0,
+                .numOfScan2 = 0,
+                .rtmax = 0,
+                .rtmin = 0,
+                .source = fileName
+            }
+
+            Call MyApplication.host.rawFeaturesList.LoadRaw(raw)
+            Call VisualStudio.Dock(MyApplication.host.rawFeaturesList, DockState.DockLeft)
         Else
             Call fileExplorer.ImportsRaw(fileName)
         End If
