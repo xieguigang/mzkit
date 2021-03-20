@@ -121,15 +121,16 @@ Public Class Raw
     Public Function UnloadMzpack() As Raw
         Erase loaded.MS
 
+        If Not loaded.Thumbnail Is Nothing Then
+            loaded.Thumbnail.Dispose()
+            loaded.Thumbnail = Nothing
+        End If
+
         loaded.Scanners.Clear()
-        loaded.Thumbnail.Dispose()
-        loaded.Thumbnail = Nothing
         loaded = Nothing
 
         ms2.Clear()
-        ms2 = Nothing
         ms1.Clear()
-        ms1 = Nothing
 
         Return Me
     End Function
@@ -151,7 +152,13 @@ Public Class Raw
     End Function
 
     Public Function GetMs1Scans() As IEnumerable(Of ScanMS1)
-        Return loaded.MS
+        If loaded Is Nothing Then
+            Using file As Stream = cache.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                Return mzPack.ReadAll(file).MS
+            End Using
+        Else
+            Return loaded.MS
+        End If
     End Function
 
     Public Function GetMs2Scans() As IEnumerable(Of ScanMS2)

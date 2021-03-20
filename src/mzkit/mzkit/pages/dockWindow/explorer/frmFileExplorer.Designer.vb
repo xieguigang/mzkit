@@ -32,9 +32,6 @@ Partial Class frmFileExplorer
         Me.ChromatogramOverlapToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.BPCOverlapToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TICOverlapToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ViewSnapshotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.RawScatterToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.XICPeaksToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ImportsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
         Me.DeleteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -50,6 +47,10 @@ Partial Class frmFileExplorer
         Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripSeparator()
         Me.DeleteToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ctxMenuRawFile = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.ViewSnapshotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.RawScatterToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.XICPeaksToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripSeparator()
         Me.OpenViewerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ctxMenuFiles.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
@@ -65,9 +66,9 @@ Partial Class frmFileExplorer
         '
         'ctxMenuFiles
         '
-        Me.ctxMenuFiles.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ChromatogramOverlapToolStripMenuItem, Me.ViewSnapshotToolStripMenuItem, Me.ImportsToolStripMenuItem, Me.ToolStripMenuItem1, Me.DeleteToolStripMenuItem})
+        Me.ctxMenuFiles.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ChromatogramOverlapToolStripMenuItem, Me.ImportsToolStripMenuItem, Me.ToolStripMenuItem1, Me.DeleteToolStripMenuItem})
         Me.ctxMenuFiles.Name = "ContextMenuStrip1"
-        Me.ctxMenuFiles.Size = New System.Drawing.Size(201, 98)
+        Me.ctxMenuFiles.Size = New System.Drawing.Size(201, 76)
         '
         'ChromatogramOverlapToolStripMenuItem
         '
@@ -88,26 +89,6 @@ Partial Class frmFileExplorer
         Me.TICOverlapToolStripMenuItem.Name = "TICOverlapToolStripMenuItem"
         Me.TICOverlapToolStripMenuItem.Size = New System.Drawing.Size(140, 22)
         Me.TICOverlapToolStripMenuItem.Text = "TIC Overlap"
-        '
-        'ViewSnapshotToolStripMenuItem
-        '
-        Me.ViewSnapshotToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RawScatterToolStripMenuItem, Me.XICPeaksToolStripMenuItem})
-        Me.ViewSnapshotToolStripMenuItem.Image = CType(resources.GetObject("ViewSnapshotToolStripMenuItem.Image"), System.Drawing.Image)
-        Me.ViewSnapshotToolStripMenuItem.Name = "ViewSnapshotToolStripMenuItem"
-        Me.ViewSnapshotToolStripMenuItem.Size = New System.Drawing.Size(200, 22)
-        Me.ViewSnapshotToolStripMenuItem.Text = "View Snapshot"
-        '
-        'RawScatterToolStripMenuItem
-        '
-        Me.RawScatterToolStripMenuItem.Name = "RawScatterToolStripMenuItem"
-        Me.RawScatterToolStripMenuItem.Size = New System.Drawing.Size(135, 22)
-        Me.RawScatterToolStripMenuItem.Text = "Raw Scatter"
-        '
-        'XICPeaksToolStripMenuItem
-        '
-        Me.XICPeaksToolStripMenuItem.Name = "XICPeaksToolStripMenuItem"
-        Me.XICPeaksToolStripMenuItem.Size = New System.Drawing.Size(135, 22)
-        Me.XICPeaksToolStripMenuItem.Text = "XIC Peaks"
         '
         'ImportsToolStripMenuItem
         '
@@ -213,15 +194,40 @@ Partial Class frmFileExplorer
         '
         'ctxMenuRawFile
         '
-        Me.ctxMenuRawFile.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OpenViewerToolStripMenuItem})
+        Me.ctxMenuRawFile.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ViewSnapshotToolStripMenuItem, Me.ToolStripMenuItem3, Me.OpenViewerToolStripMenuItem})
         Me.ctxMenuRawFile.Name = "ctxMenuRawFile"
-        Me.ctxMenuRawFile.Size = New System.Drawing.Size(181, 48)
+        Me.ctxMenuRawFile.Size = New System.Drawing.Size(152, 54)
+        '
+        'ViewSnapshotToolStripMenuItem
+        '
+        Me.ViewSnapshotToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RawScatterToolStripMenuItem, Me.XICPeaksToolStripMenuItem})
+        Me.ViewSnapshotToolStripMenuItem.Image = CType(resources.GetObject("ViewSnapshotToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.ViewSnapshotToolStripMenuItem.Name = "ViewSnapshotToolStripMenuItem"
+        Me.ViewSnapshotToolStripMenuItem.Size = New System.Drawing.Size(151, 22)
+        Me.ViewSnapshotToolStripMenuItem.Text = "View Snapshot"
+        '
+        'RawScatterToolStripMenuItem
+        '
+        Me.RawScatterToolStripMenuItem.Name = "RawScatterToolStripMenuItem"
+        Me.RawScatterToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.RawScatterToolStripMenuItem.Text = "Raw Scatter"
+        '
+        'XICPeaksToolStripMenuItem
+        '
+        Me.XICPeaksToolStripMenuItem.Name = "XICPeaksToolStripMenuItem"
+        Me.XICPeaksToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.XICPeaksToolStripMenuItem.Text = "XIC Peaks"
+        '
+        'ToolStripMenuItem3
+        '
+        Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
+        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(148, 6)
         '
         'OpenViewerToolStripMenuItem
         '
         Me.OpenViewerToolStripMenuItem.Image = CType(resources.GetObject("OpenViewerToolStripMenuItem.Image"), System.Drawing.Image)
         Me.OpenViewerToolStripMenuItem.Name = "OpenViewerToolStripMenuItem"
-        Me.OpenViewerToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.OpenViewerToolStripMenuItem.Size = New System.Drawing.Size(151, 22)
         Me.OpenViewerToolStripMenuItem.Text = "Open Viewer"
         '
         'frmFileExplorer
@@ -261,9 +267,10 @@ Partial Class frmFileExplorer
     Friend WithEvents DeleteToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents AddNewScriptToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem2 As ToolStripSeparator
+    Friend WithEvents ctxMenuRawFile As ContextMenuStrip
+    Friend WithEvents OpenViewerToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ViewSnapshotToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents RawScatterToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents XICPeaksToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ctxMenuRawFile As ContextMenuStrip
-    Friend WithEvents OpenViewerToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem3 As ToolStripSeparator
 End Class
