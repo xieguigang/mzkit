@@ -1,8 +1,19 @@
 ﻿Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
 
-Public Class frmTableViewer : Implements ISaveHandle
+Public Class frmTableViewer : Implements ISaveHandle, IFileReference
+
+    Public Property FilePath As String Implements IFileReference.FilePath
+
+    Public ReadOnly Property MimeType As ContentType() Implements IFileReference.MimeType
+        Get
+            Return {
+                New ContentType With {.Details = "Excel Data Table", .FileExt = ".xls", .MIMEType = "application/xls", .Name = "Excel Data Table"}
+            }
+        End Get
+    End Property
 
     Protected Overrides Sub SaveDocument()
         Call DataGridView1.SaveDataGrid("Save Table View")
