@@ -1,4 +1,5 @@
-﻿Imports WeifenLuo.WinFormsUI.Docking
+﻿Imports mzkit.Kesoft.Windows.Forms.Win7StyleTreeView
+Imports WeifenLuo.WinFormsUI.Docking
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmSettings
@@ -32,7 +33,7 @@ Partial Class frmSettings
         Dim TreeNode6 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Molecular Networking")
         Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.TreeView1 = New System.Windows.Forms.TreeView()
+        Me.TreeView1 = New Win7StyleTreeView
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.SuspendLayout()
