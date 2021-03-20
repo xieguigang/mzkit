@@ -16,6 +16,7 @@ Public Class frmUntargettedViewer
         Me.raw = raw
         Me.raw.LoadMzpack()
         Me.TabText = raw.source.FileName
+        Me.RtRangeSelector1.BackColor = Color.White
 
         Call showTIC()
     End Sub
@@ -49,6 +50,7 @@ Public Class frmUntargettedViewer
             .ToArray
 
         Call RtRangeSelector1.SetTIC(TIC)
+        Call RtRangeSelector1.RefreshRtRangeSelector()
     End Sub
 
     Private Sub BPCToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BPCToolStripMenuItem.Click
