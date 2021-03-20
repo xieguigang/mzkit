@@ -22,6 +22,8 @@ Public Class frmTableViewer : Implements ISaveHandle, IFileReference
     Private Sub frmTableViewer_Load(sender As Object, e As EventArgs) Handles Me.Load
         CopyFullPathToolStripMenuItem.Enabled = False
         OpenContainingFolderToolStripMenuItem.Enabled = False
+
+        TabText = "Table View"
     End Sub
 
     Public Function Save(path As String, encoding As Encoding) As Boolean Implements ISaveHandle.Save

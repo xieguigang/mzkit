@@ -50,6 +50,7 @@ Public Class ConnectToBioDeep
                     Call table.Invoke(Sub()
                                           table.DockState = DockState.Document
                                           table.Show(MyApplication.host.dockPanel)
+                                          table.TabText = $"[MetaDNA] {raw.source.FileName}"
                                       End Sub)
 
                     Call println("output result table")
