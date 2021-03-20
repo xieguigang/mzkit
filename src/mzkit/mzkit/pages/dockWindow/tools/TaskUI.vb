@@ -28,6 +28,9 @@ Public Class TaskUI
         taskContent = content
     End Sub
 
+    ''' <summary>
+    ''' 切换为执行中的状态
+    ''' </summary>
     Public Sub Running()
         window.Invoke(Sub()
                           status.Text = "Running..."

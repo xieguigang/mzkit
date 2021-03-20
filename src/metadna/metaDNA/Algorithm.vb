@@ -78,6 +78,7 @@ Public Class Algorithm
     Dim kegg As KEGGHandler
     Dim network As KEGGNetwork
     Dim maxIterations As Integer = 1000
+    Dim report As Action(Of String)
 
     Public ReadOnly Property ms1Err As Tolerance
         Get
@@ -99,7 +100,13 @@ Public Class Algorithm
         Me.mzwidth = mzwidth
         Me.allowMs1 = allowMs1
         Me.maxIterations = maxIterations
+        Me.report = AddressOf Console.WriteLine
     End Sub
+
+    Public Function SetReportHandler(report As Action(Of String)) As Algorithm
+        Me.report = report
+        Return Me
+    End Function
 
     Public Function SetSearchRange(ParamArray precursorTypes As String()) As Algorithm
         Me.precursorTypes = precursorTypes _
@@ -353,6 +360,8 @@ Public Class Algorithm
     End Function
 
     Private Iterator Function GetCandidateSeeds() As IEnumerable(Of AnnotatedSeed)
+        Call report("Create candidate seeds by query KEGG library...")
+
         For Each unknown As PeakMs2 In unknowns.EnumerateAllUnknownFeatures
             Dim seedRef As New LibraryMatrix With {
                 .ms2 = unknown.mzInto,

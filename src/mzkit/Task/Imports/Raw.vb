@@ -82,7 +82,8 @@ Public Class Raw
     ''' <returns></returns>
     Public Property numOfScan2 As Integer
 
-    Dim loaded As mzPack
+    Friend loaded As mzPack
+
     Dim ms1 As Dictionary(Of String, ScanMS1)
     Dim ms2 As Dictionary(Of String, ScanMS2)
 

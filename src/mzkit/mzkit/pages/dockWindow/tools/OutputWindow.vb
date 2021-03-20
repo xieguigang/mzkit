@@ -58,10 +58,18 @@ Namespace DockSample
             Me.ToolStripComboBox1.SelectedIndex = 0
         End Sub
 
+        ''' <summary>
+        ''' append line
+        ''' </summary>
+        ''' <param name="msg"></param>
         Public Sub AppendMessage(msg As String)
             Invoke(Sub() textBox1.AppendText(msg & vbCrLf))
         End Sub
 
+        ''' <summary>
+        ''' append line
+        ''' </summary>
+        ''' <param name="msg"></param>
         Public Sub AppendRoutput(msg As String)
             Invoke(Sub() textBox2.AppendText(msg & vbCrLf))
         End Sub
