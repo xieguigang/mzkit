@@ -59,17 +59,16 @@ Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports mzkit.My
 Imports RibbonLib.Interop
@@ -526,5 +525,28 @@ Public Class frmRawFeaturesList
 
     Private Sub OpenViewerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenViewerToolStripMenuItem.Click
         Call VisualStudio.ShowDocument(Of frmUntargettedViewer)().loadRaw(CurrentRawFile)
+    End Sub
+
+    ''' <summary>
+    ''' 切换为XIC视图
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub XICViewToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles XICViewToolStripMenuItem.Click
+        Dim allMs2 = CurrentRawFile _
+            .GetMs2Scans _
+            .GroupBy(Function(t) t.parentMz, Tolerance.DeltaMass(0.1)) _
+            .OrderBy(Function(t) Val(t.name)) _
+            .ToArray
+
+        treeView1.Nodes.Clear()
+
+        For Each mz1 In allMs2
+            Dim mzNode As TreeNode = treeView1.Nodes.Add(Val(mz1.name).ToString("F4"))
+
+            For Each ms2 In mz1
+                Call mzNode.Nodes.Add(New TreeNode(ms2.scan_id) With {.Tag = ms2})
+            Next
+        Next
     End Sub
 End Class
