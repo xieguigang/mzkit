@@ -143,7 +143,7 @@ Public Class frmDemo
                 End If
 
                 MyApplication.fileExplorer.treeView1.SelectedNode = findRaw
-                MyApplication.fileExplorer.showRawFile(DirectCast(findRaw.Tag, Raw))
+                MyApplication.fileExplorer.showRawFile(DirectCast(findRaw.Tag, Raw), False)
                 MyApplication.host.ShowMzkitToolkit()
 
             Case 2
