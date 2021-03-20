@@ -44,6 +44,8 @@ Public Class ConnectToBioDeep
 
                     Call task.Running()
                     Call MetaDNASearch.RunDIA(raw, println, result)
+
+
                 End Sub)
         End If
     End Sub

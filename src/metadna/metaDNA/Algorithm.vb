@@ -339,10 +339,10 @@ Public Class Algorithm
             start = App.NanoTime
 
             Call perfermanceCounter.Add((CInt(i), tickTime, result.Length, seeds.Count, n))
-            Call Console.WriteLine($"[iteration {++i}, {tickTime.FormatTime}] infers {result.Length}, find {seeds.Count} seeds, {n} current candidates ...")
+            Call report($"[iteration {++i}, {tickTime.FormatTime}] infers {result.Length}, find {seeds.Count} seeds, {n} current candidates ...")
 
             If i > maxIterations Then
-                Call Console.WriteLine($"Max iteration number {maxIterations} has been reached, exit metaDNA infer loop!")
+                Call report($"Max iteration number {maxIterations} has been reached, exit metaDNA infer loop!")
                 Exit Do
             End If
         Loop While result.Length > 0
