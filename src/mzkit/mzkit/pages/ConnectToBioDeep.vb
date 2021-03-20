@@ -3,6 +3,7 @@ Imports Microsoft.VisualBasic.My
 Imports mzkit.DockSample
 Imports mzkit.My
 Imports Task
+Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class ConnectToBioDeep
 
@@ -34,6 +35,9 @@ Public Class ConnectToBioDeep
                     Call task.ProgressMessage(message)
                     Call log.AppendMessage(message)
                 End Sub
+            Dim table = VisualStudio.ShowDocument(Of frmTableViewer)
+
+            table.DockState = DockState.Hidden
 
             Call taskList.Show(MyApplication.host.dockPanel)
             ' Call Alert.ShowSucess($"Imports raw data files in background,{vbCrLf}you can open [Task List] panel for view task progress.")
@@ -43,12 +47,12 @@ Public Class ConnectToBioDeep
 
                     Call task.Running()
                     Call MetaDNASearch.RunDIA(raw, println, result)
-
-                    Dim table = VisualStudio.ShowDocument(Of frmTableViewer)
-                    Dim grid = table.DataGridView1
+                    Call table.Invoke(Sub() table.DockState = DockState.Document)
 
                     Call table.Invoke(
                         Sub()
+                            Dim grid = table.DataGridView1
+
                             grid.Columns.Add(NameOf(MetaDNAResult.ROI_id), NameOf(MetaDNAResult.ROI_id))
                             grid.Columns.Add(NameOf(MetaDNAResult.query_id), NameOf(MetaDNAResult.query_id))
                             grid.Columns.Add(NameOf(MetaDNAResult.mz), NameOf(MetaDNAResult.mz))
