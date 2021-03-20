@@ -519,4 +519,8 @@ Public Class frmRawFeaturesList
 
         MyApplication.host.fileExplorer.UpdateMainTitle(CurrentRawFile.source)
     End Sub
+
+    Private Sub OpenViewerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenViewerToolStripMenuItem.Click
+        Call VisualStudio.ShowDocument(Of frmUntargettedViewer)().loadRaw(CurrentRawFile)
+    End Sub
 End Class
