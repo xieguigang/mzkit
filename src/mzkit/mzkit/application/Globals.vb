@@ -68,7 +68,7 @@ Module Globals
     ''' <summary>
     ''' 这个是未进行任何工作区保存所保存的一个默认的临时文件的位置
     ''' </summary>
-    Dim defaultWorkspace As String = App.LocalData & "/cacheList.dat"
+    Dim defaultWorkspace As String = App.LocalData & "/.defaultWorkspace"
     Dim currentWorkspace As ViewerProject
 
     Public ReadOnly Property Settings As Settings
@@ -206,13 +206,14 @@ Module Globals
         For Each raw As Raw In files.GetRawDataFiles
             Call sharedProgressUpdater($"[Raw File Viewer] Loading {raw.source.FileName}...")
 
-            Dim rawFileNode As New TreeNode($"{raw.source.FileName} [{raw.GetMs1Scans.Count} Scans]") With {
+            Dim rawFileNode As New TreeNode(raw.source.FileName) With {
                 .Checked = True,
                 .Tag = raw,
                 .ImageIndex = 2,
                 .SelectedImageIndex = 2,
                 .StateImageIndex = 2,
-                .ContextMenuStrip = rawMenu
+                .ContextMenuStrip = rawMenu,
+                .ToolTipText = raw.source.GetFullPath
             }
 
             rawFiles.Nodes.Add(rawFileNode)
@@ -232,7 +233,8 @@ Module Globals
                     .ImageIndex = 3,
                     .StateImageIndex = 3,
                     .SelectedImageIndex = 3,
-                    .ContextMenuStrip = scriptMenu
+                    .ContextMenuStrip = scriptMenu,
+                    .ToolTipText = script.GetFullPath
                 }
 
                 scripts.Nodes.Add(fileNode)
