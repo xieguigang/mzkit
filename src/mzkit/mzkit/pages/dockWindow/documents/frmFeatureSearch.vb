@@ -1,48 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::f55451396e72e4874ab81c2c810db5b2, pages\dockWindow\documents\frmFeatureSearch.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class frmFeatureSearch
-    ' 
-    '     Sub: (+2 Overloads) AddFileMatch, frmFeatureSearch_Load, ViewToolStripMenuItem_Click
-    ' 
-    ' /********************************************************************************/
+' Class frmFeatureSearch
+' 
+'     Sub: (+2 Overloads) AddFileMatch, frmFeatureSearch_Load, ViewToolStripMenuItem_Click
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Windows.Forms.ListViewItem
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.Language
 Imports mzkit.My
@@ -63,16 +64,16 @@ Public Class frmFeatureSearch
         Dim i As i32 = 1
 
         For Each member As ParentMatch In matches
-            Dim ion As New TreeListViewItem(member.id) With {.ImageIndex = 1, .ToolTipText = member.id}
+            Dim ion As New TreeListViewItem(member.scan_id) With {.ImageIndex = 1, .ToolTipText = member.scan_id}
 
             ion.SubItems.Add(New ListViewSubItem With {.Text = $"#{++i}"})
-            ion.SubItems.Add(New ListViewSubItem With {.Text = member.mz})
+            ion.SubItems.Add(New ListViewSubItem With {.Text = member.parentMz})
             ion.SubItems.Add(New ListViewSubItem With {.Text = member.rt})
             ion.SubItems.Add(New ListViewSubItem With {.Text = member.ppm})
             ion.SubItems.Add(New ListViewSubItem With {.Text = member.polarity})
             ion.SubItems.Add(New ListViewSubItem With {.Text = member.charge})
-            ion.SubItems.Add(New ListViewSubItem With {.Text = member.BPC})
-            ion.SubItems.Add(New ListViewSubItem With {.Text = member.TIC})
+            ion.SubItems.Add(New ListViewSubItem With {.Text = member.into.Max})
+            ion.SubItems.Add(New ListViewSubItem With {.Text = member.into.Sum})
 
             ion.SubItems.Add(New ListViewSubItem With {.Text = member.precursor_type})
             ion.SubItems.Add(New ListViewSubItem With {.Text = member.adducts})
@@ -86,21 +87,21 @@ Public Class frmFeatureSearch
         TreeListView1.Items.Add(row)
     End Sub
 
-    Public Sub AddFileMatch(file As String, targetMz As Double, matches As ScanEntry())
+    Public Sub AddFileMatch(file As String, targetMz As Double, matches As ScanMS2())
         Dim row As New TreeListViewItem With {.Text = file.FileName, .ImageIndex = 0, .ToolTipText = file}
         Dim i As i32 = 1
 
-        For Each member As ScanEntry In matches
-            Dim ion As New TreeListViewItem(member.id) With {.ImageIndex = 1, .ToolTipText = member.id}
+        For Each member As ScanMS2 In matches
+            Dim ion As New TreeListViewItem(member.scan_id) With {.ImageIndex = 1, .ToolTipText = member.scan_id}
 
             ion.SubItems.Add(New ListViewSubItem With {.Text = $"#{++i}"})
-            ion.SubItems.Add(New ListViewSubItem With {.Text = member.mz})
+            ion.SubItems.Add(New ListViewSubItem With {.Text = member.parentMz})
             ion.SubItems.Add(New ListViewSubItem With {.Text = member.rt})
-            ion.SubItems.Add(New ListViewSubItem With {.Text = PPMmethod.PPM(member.mz, targetMz).ToString("F2")})
+            ion.SubItems.Add(New ListViewSubItem With {.Text = PPMmethod.PPM(member.parentMz, targetMz).ToString("F2")})
             ion.SubItems.Add(New ListViewSubItem With {.Text = member.polarity})
             ion.SubItems.Add(New ListViewSubItem With {.Text = member.charge})
-            ion.SubItems.Add(New ListViewSubItem With {.Text = member.BPC})
-            ion.SubItems.Add(New ListViewSubItem With {.Text = member.TIC})
+            ion.SubItems.Add(New ListViewSubItem With {.Text = member.into.Max})
+            ion.SubItems.Add(New ListViewSubItem With {.Text = member.into.Sum})
 
             row.Items.Add(ion)
         Next

@@ -51,6 +51,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.csv
@@ -308,16 +309,20 @@ Module Globals
     Public Sub loadRawFile(rawFileNode As TreeView, raw As Raw, ByRef hasUVscans As Boolean)
         rawFileNode.Nodes.Clear()
 
-        For Each scan As Ms1ScanEntry In raw.scans
-            Dim scanNode As New TreeNode(scan.id) With {
+        If Not raw.isLoaded Then
+            Call raw.LoadMzpack()
+        End If
+
+        For Each scan As ScanMS1 In raw.GetMs1Scans
+            Dim scanNode As New TreeNode(scan.scan_id) With {
                 .Tag = scan,
                 .ImageIndex = 0
             }
 
             rawFileNode.Nodes.Add(scanNode)
 
-            For Each ms2 As ScanEntry In scan.products.SafeQuery
-                Dim productNode As New TreeNode(ms2.id) With {
+            For Each ms2 As ScanMS2 In scan.products.SafeQuery
+                Dim productNode As New TreeNode(ms2.scan_id) With {
                     .Tag = ms2,
                     .ImageIndex = 1,
                     .SelectedImageIndex = 1
@@ -327,14 +332,16 @@ Module Globals
             Next
         Next
 
-        If Not raw.UVscans.IsNullOrEmpty Then
+        Dim UVscans = raw.GetUVscans
+
+        If Not UVscans.IsNullOrEmpty Then
             MyApplication.host.UVScansList.DockState = DockState.DockLeftAutoHide
             MyApplication.host.UVScansList.Win7StyleTreeView1.Nodes.Clear()
             MyApplication.host.UVScansList.Clear()
 
             hasUVscans = True
 
-            For Each scan As DataBinBox(Of UVScan) In CutBins.FixedWidthBins(raw.UVscans, 99, Function(x) x.scan_time)
+            For Each scan As DataBinBox(Of UVScan) In CutBins.FixedWidthBins(UVscans, 99, Function(x) x.scan_time)
                 Dim scan_time = scan.Sample
                 Dim spanNode As New TreeNode With {
                     .Text = $"scan_time: {CInt(scan_time.min)} ~ {CInt(scan_time.max)} sec"
@@ -388,7 +395,7 @@ Module Globals
     Public Function GetXICMaxYAxis(raw As Raw) As Double
         Dim XIC As Double() = raw _
             .GetMs2Scans _
-            .Select(Function(a) a.XIC) _
+            .Select(Function(a) a.intensity) _
             .ToArray
 
         If XIC.Length = 0 Then

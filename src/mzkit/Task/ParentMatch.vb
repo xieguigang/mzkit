@@ -6,5 +6,8 @@ Public Class ParentMatch : Inherits ScanMS2
     Public Property ppm As Double
     Public Property adducts As Double
     Public Property M As Integer
+    Public Property BPC As Double
+    Public Property TIC As Double
+    Public Property XIC As Double
 
 End Class

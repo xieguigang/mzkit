@@ -52,6 +52,7 @@
 
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.Linq
 
@@ -126,6 +127,10 @@ Public Class Raw
         ms1 = Nothing
 
         Return Me
+    End Function
+
+    Public Function GetUVscans() As UVScan()
+        Return loaded.GetUVScans.ToArray
     End Function
 
     Public Function FindMs2Scan(id As String) As ScanMS2

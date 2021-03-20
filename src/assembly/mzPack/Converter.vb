@@ -1,4 +1,5 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
+﻿Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.Language
@@ -64,6 +65,7 @@ Public Module Converter
         End If
     End Function
 
+    <Extension>
     Public Iterator Function GetUVScans(mzpack As mzPack) As IEnumerable(Of UVScan)
         If Not mzpack.Scanners.ContainsKey(ExtractUVData.UVScanType) Then
             Return

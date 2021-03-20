@@ -60,6 +60,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -128,13 +129,13 @@ Public Class frmRawFeaturesList
 
     Public Iterator Function GetXICCollection(ppm As Double) As IEnumerable(Of NamedCollection(Of ChromatogramTick))
         Dim scans = GetSelectedNodes _
-            .Where(Function(t) TypeOf t.Tag Is ScanEntry) _
-            .Select(Function(a) DirectCast(a.Tag, ScanEntry)) _
-            .GroupBy(Function(a) a.mz, Tolerance.DeltaMass(0.3)) _
+            .Where(Function(t) TypeOf t.Tag Is ScanMS2) _
+            .Select(Function(a) DirectCast(a.Tag, ScanMS2)) _
+            .GroupBy(Function(a) a.parentMz, Tolerance.DeltaMass(0.3)) _
             .ToArray
         Dim raw As Raw = CurrentRawFile
 
-        For Each scanId In scans.Select(Function(a) a.First.id)
+        For Each scanId In scans.Select(Function(a) a.First.scan_id)
             Yield MyApplication.mzkitRawViewer.getXICMatrix(raw, scanId, ppm, relativeInto:=False)
         Next
     End Function
@@ -170,7 +171,7 @@ Public Class frmRawFeaturesList
             Return
         End If
 
-        If TypeOf e.Node.Tag Is ScanEntry Then
+        If TypeOf e.Node.Tag Is ScanMS2 Then
             If e.Node.Checked Then
                 checked.Add(e.Node)
             Else
@@ -188,13 +189,13 @@ Public Class frmRawFeaturesList
                 node.Checked = checked
 
                 If checked Then
-                    If TypeOf node.Tag Is ScanEntry Then
+                    If TypeOf node.Tag Is ScanMS2 Then
                         Me.checked.Add(node)
                     ElseIf TypeOf node.Tag Is UVScan Then
 
                     End If
                 Else
-                    If TypeOf node.Tag Is ScanEntry Then
+                    If TypeOf node.Tag Is ScanMS2 Then
                         Me.checked.Remove(node)
                     ElseIf TypeOf node.Tag Is UVScan Then
 
@@ -275,7 +276,7 @@ Public Class frmRawFeaturesList
             Return
         End If
 
-        If TypeOf currentNode.Tag Is ScanEntry Then
+        If TypeOf currentNode.Tag Is ScanMS2 Then
             currentNode.Parent.Collapse()
         Else
             currentNode.Collapse()
@@ -371,9 +372,9 @@ Public Class frmRawFeaturesList
         Dim node = treeView1.SelectedNode
 
         If Not node Is Nothing AndAlso CurrentRawFile.cacheFileExists Then
-            Dim mz = CurrentRawFile.GetMs2Scans.Where(Function(scan) scan.id = node.Text).FirstOrDefault
+            Dim mz = CurrentRawFile.FindMs2Scan(node.Text)
 
-            If Not mz Is Nothing AndAlso mz.mz > 0 Then
+            If Not mz Is Nothing AndAlso mz.parentMz > 0 Then
                 Dim charge As Double = mz.charge
                 Dim ionMode As Integer = mz.polarity
 
@@ -381,7 +382,7 @@ Public Class frmRawFeaturesList
                     charge = 1
                 End If
 
-                MyApplication.host.mzkitSearch.doMzSearch(mz.mz, charge, ionMode)
+                MyApplication.host.mzkitSearch.doMzSearch(mz.parentMz, charge, ionMode)
                 MyApplication.host.ShowPage(MyApplication.host.mzkitSearch)
             End If
         End If
@@ -479,11 +480,11 @@ Public Class frmRawFeaturesList
     Private Sub IonSearchToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles IonSearchToolStripMenuItem.Click
         Dim currentScan = treeView1.SelectedNode?.Tag
 
-        If currentScan Is Nothing OrElse Not TypeOf currentScan Is ScanEntry Then
+        If currentScan Is Nothing OrElse Not TypeOf currentScan Is ScanMS2 Then
             Return
         End If
 
-        Call FeatureSearchHandler.SearchByMz(DirectCast(currentScan, ScanEntry).mz, {CurrentRawFile})
+        Call FeatureSearchHandler.SearchByMz(DirectCast(currentScan, ScanMS2).parentMz, {CurrentRawFile})
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
@@ -493,20 +494,16 @@ Public Class frmRawFeaturesList
     Private Sub SpectrumSearchToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SpectrumSearchToolStripMenuItem.Click
         Dim currentScan = treeView1.SelectedNode?.Tag
 
-        If currentScan Is Nothing OrElse Not TypeOf currentScan Is ScanEntry Then
+        If currentScan Is Nothing OrElse Not TypeOf currentScan Is ScanMS2 Then
             Return
         End If
 
-        Dim ms2 As ScanEntry = currentScan
+        Dim ms2 As ScanMS2 = currentScan
+        Dim searchPage As New frmSpectrumSearch
 
-        Using cache As New netCDFReader(CurrentRawFile.ms2_cache)
-            Dim products As ms2() = cache.getDataVariable(ms2.id).numerics.AsMs2.ToArray
-            Dim searchPage As New frmSpectrumSearch
-
-            searchPage.Show(MyApplication.host.dockPanel)
-            searchPage.page.loadMs2(products)
-            searchPage.page.runSearch()
-        End Using
+        searchPage.Show(MyApplication.host.dockPanel)
+        searchPage.page.loadMs2(ms2.GetMs)
+        searchPage.page.runSearch()
     End Sub
 
     Private Sub ShowPropertiesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowPropertiesToolStripMenuItem.Click
