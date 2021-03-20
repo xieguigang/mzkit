@@ -69,10 +69,24 @@ Public Class frmUntargettedViewer
 
     Private Sub frmUntargettedViewer_Load(sender As Object, e As EventArgs) Handles Me.Load
         Call ApplyVsTheme(ContextMenuStrip1)
+
+        Me.SaveDocumentToolStripMenuItem.Enabled = False
     End Sub
 
     Private Sub FilterMs2ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FilterMs2ToolStripMenuItem.Click
         Call MyApplication.host.rawFeaturesList.LoadRaw(raw, RtRangeSelector1.rtmin, RtRangeSelector1.rtmax)
         Call VisualStudio.Dock(MyApplication.host.rawFeaturesList, DockState.DockLeft)
+    End Sub
+
+    Protected Overrides Sub CopyFullPath()
+        Call Clipboard.SetText(raw.source)
+    End Sub
+
+    Protected Overrides Sub OpenContainingFolder()
+        Call Process.Start(raw.source.ParentPath)
+    End Sub
+
+    Protected Overrides Sub SaveDocument()
+        MyBase.SaveDocument()
     End Sub
 End Class
