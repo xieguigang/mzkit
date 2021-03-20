@@ -47,7 +47,12 @@ Public Class ConnectToBioDeep
 
                     Call task.Running()
                     Call MetaDNASearch.RunDIA(raw, println, result)
-                    Call table.Invoke(Sub() table.DockState = DockState.Document)
+                    Call table.Invoke(Sub()
+                                          table.DockState = DockState.Document
+                                          table.Show(MyApplication.host.dockPanel)
+                                      End Sub)
+
+                    Call println("output result table")
 
                     Call table.Invoke(
                         Sub()
@@ -84,6 +89,10 @@ Public Class ConnectToBioDeep
                                 Call grid.Rows.Add(line.ROI_id, line.query_id, line.mz, line.rt, line.intensity, line.KEGGId, line.exactMass, line.formula, line.name, line.precursorType, line.mzCalc, line.ppm, line.inferLevel, line.forward, line.reverse, line.jaccard, line.parentTrace, line.inferSize, line.score1, line.score2, line.pvalue, line.seed, line.partnerKEGGId, line.KEGG_reaction, line.reaction, line.fileName)
                             Next
                         End Sub)
+
+                    Call println("MetaDNA search job done!")
+
+                    Call MessageBox.Show($"MetaDNA search done!" & vbCrLf & $"Found {result.Length} DIA annotation hits.", "MetaDNA Search", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 End Sub)
         End If
     End Sub
