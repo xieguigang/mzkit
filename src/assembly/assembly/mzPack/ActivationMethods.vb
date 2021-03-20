@@ -3,6 +3,7 @@
 ''' the most common ion activation techniques employed in tandem mass spectrometry
 ''' </summary>
 Public Enum ActivationMethods As Byte
+    NA
 
     ''' <summary>
     ''' In collision-induced dissociation (CID), activation of the selected ions 

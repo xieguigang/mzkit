@@ -43,6 +43,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
@@ -91,32 +92,42 @@ Public Module MoleculeNetworking
     <Extension>
     Public Function GetSpectrum(raw As Raw, scanId As String, cutoff As LowAbundanceTrimming, Optional ByRef properties As SpectrumProperty = Nothing) As LibraryMatrix
         Dim attrs As ScanMS2
+        Dim msLevel As Integer
 
         If Not raw.isLoaded Then
             Call raw.LoadMzpack()
         End If
 
         If scanId.StartsWith("[MS1]") Then
-            Dim ms1 = raw.GetMs1Scans.Where(Function(m1) m1.scan_id = scanId).FirstOrDefault
+            Dim ms1 = raw.FindMs1Scan(scanId)
 
+            msLevel = 1
+            attrs = New ScanMS2 With {
+                .scan_id = ms1.scan_id,
+                .activationMethod = ActivationMethods.NA,
+                .centroided = False,
+                .charge = 0,
+                .collisionEnergy = 0,
+                .intensity = ms1.TIC,
+                .rt = ms1.rt,
+                .polarity = 0,
+                .parentMz = 0,
+                .mz = ms1.mz,
+                .into = ms1.into
+            }
         Else
-            cacheFile = raw.ms2_cache
+            attrs = raw.FindMs2Scan(scanId)
+            msLevel = 2
         End If
 
-        Using cache As New netCDFReader(cacheFile)
-            data = cache.getDataVariable(cache.getDataVariableEntry(scanId))
-            attrs = cache.getDataVariableEntry(scanId).attributes
-        End Using
-
-        Dim rawData As ms2() = data.numerics.AsMs2.ToArray
         Dim scanData As New LibraryMatrix With {
             .name = scanId,
             .centroid = False,
-            .ms2 = rawData.Centroid(Tolerance.DeltaMass(0.1), cutoff).ToArray
+            .ms2 = attrs.GetMs.ToArray.Centroid(Tolerance.DeltaMass(0.1), cutoff).ToArray
         }
         Dim pa As New PeakAnnotation
 
-        properties = New SpectrumProperty(scanId, raw.source.FileName, attrs)
+        properties = New SpectrumProperty(scanId, raw.source.FileName, msLevel, attrs)
 
         If properties.precursorMz > 0 Then
             scanData.ms2 = pa.RunAnnotation(properties.precursorMz, scanData.ms2).products

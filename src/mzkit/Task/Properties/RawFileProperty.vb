@@ -34,7 +34,7 @@ Public Class RawFileProperty
         cacheSize = StringFormats.Lanudry(raw.GetCacheFileSize)
         rtmin = raw.rtmin
         rtmax = raw.rtmax
-        ms_scans = raw.scans.TryCount
+        ms_scans = raw.GetMs1Scans.Count
         msms_scans = raw.GetMs2Scans.Count
     End Sub
 
