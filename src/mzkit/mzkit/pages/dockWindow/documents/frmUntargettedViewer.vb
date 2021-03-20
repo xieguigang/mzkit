@@ -1,4 +1,9 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
+Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Linq
 Imports Task
 
 Public Class frmUntargettedViewer
@@ -14,7 +19,17 @@ Public Class frmUntargettedViewer
     End Sub
 
     Private Sub RtRangeSelector1_RangeSelect(min As Double, max As Double) Handles RtRangeSelector1.RangeSelect
+        Dim MS1 = raw.GetMs1Scans _
+            .Where(Function(m1) m1.rt >= min AndAlso m1.rt <= max) _
+            .Select(Function(t) t.GetMs) _
+            .IteratesALL _
+            .ToArray _
+            .Centroid(Tolerance.DeltaMass(0.1), LowAbundanceTrimming.intoCutff) _
+            .ToArray
+        Dim msLib As New LibraryMatrix With {.centroid = True, .ms2 = MS1, .name = "MS1"}
+        Dim plot As Image = msLib.MirrorPlot(titles:={"MS1", $"Rt: {CInt(min)} ~ {CInt(max)} sec"}).AsGDIImage
 
+        PictureBox1.BackgroundImage = plot
     End Sub
 
     Private Sub showTIC() Handles TICToolStripMenuItem.Click

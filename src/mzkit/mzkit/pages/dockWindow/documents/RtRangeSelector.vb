@@ -52,6 +52,11 @@ Imports Microsoft.VisualBasic.Language
 
 Public Class RtRangeSelector
 
+    ''' <summary>
+    ''' 返回实际的保留时间的秒数范围
+    ''' </summary>
+    ''' <param name="min"></param>
+    ''' <param name="max"></param>
     Public Event RangeSelect(min As Double, max As Double)
 
     Public Property SelectedColor As Color = Color.Green
