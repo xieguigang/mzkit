@@ -646,12 +646,9 @@ Public Class PageMzkitTools
     Friend Iterator Function getSelectedIonSpectrums(progress As Action(Of String)) As IEnumerable(Of PeakMs2)
         Dim raw = MyApplication.featureExplorer.CurrentRawFile
 
-        For Each ionNode As TreeNode In MyApplication.featureExplorer.GetSelectedNodes.Where(Function(a) TypeOf a.Tag Is ScanEntry)
+        For Each ionNode As TreeNode In MyApplication.featureExplorer.GetSelectedNodes.Where(Function(a) TypeOf a.Tag Is ScanMS2)
             Dim scanId As String = ionNode.Text
-            Dim entry = Cache.getDataVariableEntry(scanId)
-            Dim mztemp = Cache.getDataVariable(entry).numerics.AsMs2.ToArray
-            Dim attrs = Cache.getDataVariableEntry(scanId).attributes
-            Dim info As New SpectrumProperty(scanId, raw.source.FileName, attrs)
+            Dim info As ScanMS2 = ionNode.Tag
             Dim guid As String = $"{raw.source.FileName}#{scanId}"
 
             If Not progress Is Nothing Then
@@ -659,15 +656,15 @@ Public Class PageMzkitTools
             End If
 
             Yield New PeakMs2 With {
-                .mz = info.precursorMz,
+                .mz = info.parentMz,
                 .scan = 0,
                 .activation = info.activationMethod,
                 .collisionEnergy = info.collisionEnergy,
                 .file = raw.source.FileName,
                 .lib_guid = guid,
-                .mzInto = mztemp,
+                .mzInto = info.GetMs.ToArray,
                 .precursor_type = "n/a",
-                .rt = info.retentionTime
+                .rt = info.rt
             }
         Next
     End Function
