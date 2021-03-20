@@ -127,6 +127,7 @@ Public Class frmRawFeaturesList
         Me.rtmin = rtmin
         Me.rtmax = rtmax
 
+        XICViewToolStripMenuItem.Checked = False
         _CurrentRawFile = raw
         treeView1.loadRawFile(raw, hasUVscans, rtmin, rtmax)
         checked.Clear()
