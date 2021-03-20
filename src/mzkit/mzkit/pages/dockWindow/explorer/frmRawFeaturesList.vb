@@ -119,9 +119,7 @@ Public Class frmRawFeaturesList
     Public Sub LoadRaw(raw As Raw, Optional rtmin As Double = Double.MinValue, Optional rtmax As Double = Double.MaxValue)
         Dim hasUVscans As Boolean = False
 
-        If raw Is CurrentRawFile Then
-            Return
-        ElseIf (Not CurrentRawFile Is Nothing) Then
+        If (Not CurrentRawFile Is Nothing) AndAlso (Not raw Is CurrentRawFile) Then
             CurrentRawFile.UnloadMzpack()
         End If
 
