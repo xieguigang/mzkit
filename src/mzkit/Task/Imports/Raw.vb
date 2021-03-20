@@ -50,8 +50,8 @@
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math.SignalProcessing
 
 Public Class Raw
 
