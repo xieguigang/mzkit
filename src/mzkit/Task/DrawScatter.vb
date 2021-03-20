@@ -9,6 +9,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Quantile
 
 Public Module DrawScatter
 
@@ -21,12 +22,14 @@ Public Module DrawScatter
                     End Function) _
             .IteratesALL _
             .ToArray
+        Dim maxinto As Double = ms1.Select(Function(x) x.intensity).GKQuantile.Query(0.8)
         Dim XIC = ms1 _
             .GroupBy(Function(m) m.mz, Tolerance.DeltaMass(0.1)) _
             .Select(Function(mz)
                         Return New NamedCollection(Of ChromatogramTick) With {
                             .name = mz.name,
                             .value = mz _
+                                .Where(Function(t) t.intensity >= maxinto) _
                                 .OrderBy(Function(t) t.scan_time) _
                                 .Select(Function(t)
                                             Return New ChromatogramTick With {.Time = t.scan_time, .Intensity = t.intensity}
@@ -34,6 +37,7 @@ Public Module DrawScatter
                                 .ToArray
                         }
                     End Function) _
+            .Where(Function(c) c.Length > 3) _
             .ToArray
 
         Return XIC.TICplot(parallel:=True, showLabels:=False, showLegends:=False).AsGDIImage

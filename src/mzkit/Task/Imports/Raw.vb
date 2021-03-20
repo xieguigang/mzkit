@@ -50,6 +50,7 @@
 
 #End Region
 
+Imports System.Drawing
 Imports System.IO
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
@@ -96,6 +97,10 @@ Public Class Raw
             Return cache.FileExists
         End Get
     End Property
+
+    Public Function GetSnapshot() As Image
+        Return loaded.Thumbnail
+    End Function
 
     Public Function LoadMzpack() As Raw
         Using file As Stream = cache.Open(FileMode.Open, doClear:=False, [readOnly]:=True)

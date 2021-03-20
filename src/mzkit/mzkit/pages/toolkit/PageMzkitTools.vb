@@ -107,29 +107,31 @@ Public Class PageMzkitTools
         MyApplication.host.ShowPage(Me)
     End Sub
 
-    Public Sub showScatter(raw As Raw, XIC As Boolean)
+    Public Sub showScatter(raw As Raw, XIC As Boolean, directSnapshot As Boolean)
         If Not raw.cacheFileExists Then
             MessageBox.Show("Sorry, can not view file data, the cache file is missing...", "Cache Missing", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
+        ElseIf directSnapshot Then
+            PictureBox1.BackgroundImage = raw.GetSnapshot
+        Else
+            Dim spinner As New frmProgressSpinner
+            Dim task As New Thread(
+                Sub()
+                    Dim image As Image
+
+                    If XIC Then
+                        image = raw.Draw3DPeaks
+                    Else
+                        image = raw.DrawScatter
+                    End If
+
+                    Me.Invoke(Sub() PictureBox1.BackgroundImage = image)
+                    spinner.Invoke(Sub() Call spinner.Close())
+                End Sub)
+
+            Call task.Start()
+            Call spinner.ShowDialog()
         End If
-
-        Dim spinner As New frmProgressSpinner
-        Dim task As New Thread(
-            Sub()
-                Dim image As Image
-
-                If XIC Then
-                    image = raw.Draw3DPeaks
-                Else
-                    image = raw.DrawScatter
-                End If
-
-                Me.Invoke(Sub() PictureBox1.BackgroundImage = image)
-                spinner.Invoke(Sub() Call spinner.Close())
-            End Sub)
-
-        Call task.Start()
-        Call spinner.ShowDialog()
 
         MyApplication.host.ShowPage(Me)
         MyApplication.host.Invoke(Sub() RibbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.NotAvailable)

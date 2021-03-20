@@ -87,7 +87,7 @@ Public Class frmFileExplorer
         Dim raw As TreeNode = treeView1.Nodes.Item(0)
 
         treeView1.SelectedNode = raw.Nodes.Item(index)
-        showRawFile(treeView1.SelectedNode.Tag, XIC:=False)
+        showRawFile(treeView1.SelectedNode.Tag, XIC:=False, directSnapshot:=True)
     End Sub
 
     Public Function GetTotalCacheSize() As String
@@ -241,13 +241,13 @@ Public Class frmFileExplorer
 
     Dim lockFileDelete As Boolean = False
 
-    Public Sub showRawFile(raw As Raw, XIC As Boolean)
+    Public Sub showRawFile(raw As Raw, XIC As Boolean, directSnapshot As Boolean)
         If lockFileDelete Then
             Return
         End If
 
         Call MyApplication.host.rawFeaturesList.LoadRaw(raw)
-        Call MyApplication.host.mzkitTool.showScatter(raw, XIC)
+        Call MyApplication.host.mzkitTool.showScatter(raw, XIC, directSnapshot)
 
         Call VisualStudio.ShowProperties(New RawFileProperty(raw))
         Call UpdateMainTitle(raw.source)
@@ -259,7 +259,7 @@ Public Class frmFileExplorer
         End If
 
         If TypeOf treeView1.SelectedNode.Tag Is Raw Then
-            Call showRawFile(DirectCast(treeView1.SelectedNode.Tag, Raw), XIC:=False)
+            Call showRawFile(DirectCast(treeView1.SelectedNode.Tag, Raw), XIC:=False, directSnapshot:=False)
         End If
     End Sub
 
@@ -269,7 +269,7 @@ Public Class frmFileExplorer
         End If
 
         If TypeOf treeView1.SelectedNode.Tag Is Raw Then
-            Call showRawFile(DirectCast(treeView1.SelectedNode.Tag, Raw), XIC:=True)
+            Call showRawFile(DirectCast(treeView1.SelectedNode.Tag, Raw), XIC:=True, directSnapshot:=False)
         End If
     End Sub
 
@@ -297,7 +297,7 @@ Public Class frmFileExplorer
         'End If
 
         If TypeOf treeView1.SelectedNode.Tag Is Raw Then
-            Call showRawFile(DirectCast(treeView1.SelectedNode.Tag, Raw), XIC:=False)
+            Call showRawFile(DirectCast(treeView1.SelectedNode.Tag, Raw), XIC:=False, directSnapshot:=True)
 
             '  treeView1.ContextMenuStrip = ContextMenuStrip1
 

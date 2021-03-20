@@ -220,7 +220,7 @@ Public Class PageSpectrumSearch
             Dim raw As Raw = Globals.workspace.FindRawFile(filePath)
 
             If Not raw Is Nothing Then
-                Call MyApplication.mzkitRawViewer.showScatter(raw, False)
+                Call MyApplication.mzkitRawViewer.showScatter(raw, False, directSnapshot:=True)
             End If
         Else
             ' 选择的是一个scan数据节点
