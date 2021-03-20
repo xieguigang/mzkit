@@ -9,13 +9,15 @@ Public Class frmUntargettedViewer
         Me.raw = raw
         Me.raw.LoadMzpack()
         Me.TabText = raw.source.FileName
+
+        Call showTIC()
     End Sub
 
     Private Sub RtRangeSelector1_RangeSelect(min As Double, max As Double) Handles RtRangeSelector1.RangeSelect
 
     End Sub
 
-    Private Sub TICToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TICToolStripMenuItem.Click
+    Private Sub showTIC() Handles TICToolStripMenuItem.Click
         TICToolStripMenuItem.Checked = True
         BPCToolStripMenuItem.Checked = False
 

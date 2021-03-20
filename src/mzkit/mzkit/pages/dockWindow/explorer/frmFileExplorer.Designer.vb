@@ -80,13 +80,13 @@ Partial Class frmFileExplorer
         'BPCOverlapToolStripMenuItem
         '
         Me.BPCOverlapToolStripMenuItem.Name = "BPCOverlapToolStripMenuItem"
-        Me.BPCOverlapToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.BPCOverlapToolStripMenuItem.Size = New System.Drawing.Size(140, 22)
         Me.BPCOverlapToolStripMenuItem.Text = "BPC Overlap"
         '
         'TICOverlapToolStripMenuItem
         '
         Me.TICOverlapToolStripMenuItem.Name = "TICOverlapToolStripMenuItem"
-        Me.TICOverlapToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.TICOverlapToolStripMenuItem.Size = New System.Drawing.Size(140, 22)
         Me.TICOverlapToolStripMenuItem.Text = "TIC Overlap"
         '
         'ViewSnapshotToolStripMenuItem
@@ -100,13 +100,13 @@ Partial Class frmFileExplorer
         'RawScatterToolStripMenuItem
         '
         Me.RawScatterToolStripMenuItem.Name = "RawScatterToolStripMenuItem"
-        Me.RawScatterToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.RawScatterToolStripMenuItem.Size = New System.Drawing.Size(135, 22)
         Me.RawScatterToolStripMenuItem.Text = "Raw Scatter"
         '
         'XICPeaksToolStripMenuItem
         '
         Me.XICPeaksToolStripMenuItem.Name = "XICPeaksToolStripMenuItem"
-        Me.XICPeaksToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.XICPeaksToolStripMenuItem.Size = New System.Drawing.Size(135, 22)
         Me.XICPeaksToolStripMenuItem.Text = "XIC Peaks"
         '
         'ImportsToolStripMenuItem

@@ -477,4 +477,17 @@ Public Class frmFileExplorer
     Private Sub treeView1_Click(sender As Object, e As EventArgs) Handles treeView1.Click
 
     End Sub
+
+    Private Sub OpenViewerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenViewerToolStripMenuItem.Click
+        Dim node = treeView1.SelectedNode
+
+        If node Is Nothing OrElse TypeOf node.Tag IsNot Raw Then
+            Return
+        End If
+
+        Dim raw As Raw = DirectCast(node.Tag, Raw).LoadMzpack
+        Dim viewer = VisualStudio.ShowDocument(Of frmUntargettedViewer)()
+
+        viewer.loadRaw(raw)
+    End Sub
 End Class
