@@ -87,7 +87,7 @@ Public Class frmFileExplorer
         Dim raw As TreeNode = treeView1.Nodes.Item(0)
 
         treeView1.SelectedNode = raw.Nodes.Item(index)
-        showRawFile(treeView1.SelectedNode.Tag)
+        showRawFile(treeView1.SelectedNode.Tag, XIC:=False)
     End Sub
 
     Public Function GetTotalCacheSize() As String
@@ -241,16 +241,36 @@ Public Class frmFileExplorer
 
     Dim lockFileDelete As Boolean = False
 
-    Public Sub showRawFile(raw As Raw)
+    Public Sub showRawFile(raw As Raw, XIC As Boolean)
         If lockFileDelete Then
             Return
         End If
 
         Call MyApplication.host.rawFeaturesList.LoadRaw(raw)
-        Call MyApplication.host.mzkitTool.showScatter(raw)
+        Call MyApplication.host.mzkitTool.showScatter(raw, XIC)
 
         Call VisualStudio.ShowProperties(New RawFileProperty(raw))
         Call UpdateMainTitle(raw.source)
+    End Sub
+
+    Private Sub RawScatterToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RawScatterToolStripMenuItem.Click
+        If treeView1.SelectedNode Is Nothing Then
+            Return
+        End If
+
+        If TypeOf treeView1.SelectedNode.Tag Is Raw Then
+            Call showRawFile(DirectCast(treeView1.SelectedNode.Tag, Raw), XIC:=False)
+        End If
+    End Sub
+
+    Private Sub XICPeaksToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles XICPeaksToolStripMenuItem.Click
+        If treeView1.SelectedNode Is Nothing Then
+            Return
+        End If
+
+        If TypeOf treeView1.SelectedNode.Tag Is Raw Then
+            Call showRawFile(DirectCast(treeView1.SelectedNode.Tag, Raw), XIC:=True)
+        End If
     End Sub
 
     Public Sub UpdateMainTitle(source As String)
@@ -277,7 +297,7 @@ Public Class frmFileExplorer
         'End If
 
         If TypeOf treeView1.SelectedNode.Tag Is Raw Then
-            Call showRawFile(DirectCast(treeView1.SelectedNode.Tag, Raw))
+            Call showRawFile(DirectCast(treeView1.SelectedNode.Tag, Raw), XIC:=False)
 
             '  treeView1.ContextMenuStrip = ContextMenuStrip1
 
@@ -429,7 +449,7 @@ Public Class frmFileExplorer
         Return opt
     End Function
 
-    Private Sub RunAutomationToolStripMenuItem_Click(sender As Object, e As EventArgs)
+    Private Sub RunAutomationToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RunAutomationToolStripMenuItem1.Click
         If treeView1.SelectedNode Is Nothing OrElse treeView1.SelectedNode.Tag Is Nothing OrElse Not TypeOf treeView1.SelectedNode.Tag Is String Then
             Return
         End If

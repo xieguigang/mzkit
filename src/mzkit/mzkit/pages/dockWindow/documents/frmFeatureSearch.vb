@@ -130,7 +130,7 @@ Public Class frmFeatureSearch
             Dim raw As Raw = Globals.workspace.FindRawFile(filePath)
 
             If Not raw Is Nothing Then
-                Call MyApplication.mzkitRawViewer.showScatter(raw)
+                Call MyApplication.mzkitRawViewer.showScatter(raw, XIC:=False)
             End If
         Else
             ' 选择的是一个scan数据节点
