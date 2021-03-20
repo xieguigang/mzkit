@@ -175,13 +175,13 @@ Module Globals
             .ImageIndex = 1,
             .SelectedImageIndex = 1,
             .StateImageIndex = 1,
-            .ContextMenuStrip = rawMenu
+            .ContextMenuStrip = scriptMenu
         }
         Dim rawFiles As New TreeNode("Raw Data Files") With {
             .ImageIndex = 0,
             .StateImageIndex = 0,
             .SelectedImageIndex = 0,
-            .ContextMenuStrip = scriptMenu
+            .ContextMenuStrip = rawMenu
         }
 
         explorer.Nodes.Add(rawFiles)
