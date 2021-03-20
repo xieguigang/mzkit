@@ -540,6 +540,10 @@ Public Class frmRawFeaturesList
         End If
     End Sub
 
+    Private Sub MetaDNASearchToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MetaDNASearchToolStripMenuItem.Click
+
+    End Sub
+
     ''' <summary>
     ''' 切换为XIC视图
     ''' </summary>
