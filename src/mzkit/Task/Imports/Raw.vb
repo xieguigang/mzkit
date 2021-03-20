@@ -134,8 +134,8 @@ Public Class Raw
         Return Me
     End Function
 
-    Public Function GetUVscans() As UVScan()
-        Return loaded.GetUVScans.ToArray
+    Public Function GetUVscans() As IEnumerable(Of UVScan)
+        Return loaded.GetUVScans
     End Function
 
     Public Function FindMs2Scan(id As String) As ScanMS2

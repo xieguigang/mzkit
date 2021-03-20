@@ -309,14 +309,14 @@ Module Globals
     ''' <param name="rawFileNode"></param>
     ''' <param name="raw"></param>
     <Extension>
-    Public Sub loadRawFile(rawFileNode As TreeView, raw As Raw, ByRef hasUVscans As Boolean)
+    Public Sub loadRawFile(rawFileNode As TreeView, raw As Raw, ByRef hasUVscans As Boolean, rtmin As Double, rtmax As Double)
         rawFileNode.Nodes.Clear()
 
         If Not raw.isLoaded Then
             Call raw.LoadMzpack()
         End If
 
-        For Each scan As ScanMS1 In raw.GetMs1Scans
+        For Each scan As ScanMS1 In raw.GetMs1Scans.Where(Function(t) t.rt >= rtmin AndAlso t.rt <= rtmax)
             Dim scanNode As New TreeNode(scan.scan_id) With {
                 .Tag = scan,
                 .ImageIndex = 0
@@ -335,7 +335,12 @@ Module Globals
             Next
         Next
 
-        Dim UVscans = raw.GetUVscans
+        Dim UVscans As UVScan() = raw _
+            .GetUVscans _
+            .Where(Function(t)
+                       Return t.scan_time >= rtmin AndAlso t.scan_time <= rtmax
+                   End Function) _
+            .ToArray
 
         If Not UVscans.IsNullOrEmpty Then
             MyApplication.host.UVScansList.DockState = DockState.DockLeftAutoHide

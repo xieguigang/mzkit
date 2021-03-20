@@ -116,11 +116,11 @@ Public Class frmRawFeaturesList
         Call ApplyVsTheme(ContextMenuStrip1, ToolStrip1)
     End Sub
 
-    Public Sub LoadRaw(raw As Raw)
+    Public Sub LoadRaw(raw As Raw, Optional rtmin As Double = Double.MinValue, Optional rtmax As Double = Double.MaxValue)
         Dim hasUVscans As Boolean = False
 
         _CurrentRawFile = raw
-        treeView1.loadRawFile(raw, hasUVscans)
+        treeView1.loadRawFile(raw, hasUVscans, rtmin, rtmax)
 
         If Not hasUVscans Then
             MyApplication.host.UVScansList.DockState = DockState.Hidden

@@ -1,11 +1,12 @@
-﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
-Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+﻿Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Linq
+Imports mzkit.My
 Imports Task
+Imports WeifenLuo.WinFormsUI.Docking
 
 Public Class frmUntargettedViewer
 
@@ -66,13 +67,7 @@ Public Class frmUntargettedViewer
     End Sub
 
     Private Sub FilterMs2ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FilterMs2ToolStripMenuItem.Click
-        Dim MS2 As ScanMS2() = raw _
-            .GetMs2Scans _
-            .Where(Function(m)
-                       Return m.rt >= RtRangeSelector1.rtmin AndAlso m.rt <= RtRangeSelector1.rtmax
-                   End Function) _
-            .ToArray
-
-
+        Call MyApplication.host.rawFeaturesList.LoadRaw(raw, RtRangeSelector1.rtmin, RtRangeSelector1.rtmax)
+        Call VisualStudio.Dock(MyApplication.host.rawFeaturesList, DockState.DockLeft)
     End Sub
 End Class
