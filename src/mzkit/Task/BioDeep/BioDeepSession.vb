@@ -1,7 +1,9 @@
 ﻿Imports System.IO
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Microsoft.VisualBasic.My
+Imports Microsoft.VisualBasic.Net.Http
 
 ''' <summary>
 ''' 登录状态信息使用<see cref="SingletonHolder(Of BioDeepSession)"/>进行保存
@@ -54,6 +56,7 @@ Public Class BioDeepSession
 
     Public Function RequestStream(api As String, Optional headers As Dictionary(Of String, String) = Nothing) As Stream
         Dim sessionHeader As Dictionary(Of String, String) = headerProvider()
+        Dim buffer As New MemoryStream
 
         If Not headers.IsNullOrEmpty Then
             For Each item In headers
@@ -61,7 +64,22 @@ Public Class BioDeepSession
             Next
         End If
 
-        Return api.GetRequestRaw(headers:=headers)
+        Using webResponse As Stream = api.GetRequestRaw(headers:=sessionHeader)
+            Dim chunk As Byte() = New Byte(4096 - 1) {}
+            Dim nread As i32 = 0
+
+            Do While True
+                If (nread = webResponse.Read(chunk, Scan0, chunk.Length)) <= 0 Then
+                    Exit Do
+                Else
+                    buffer.Write(chunk, Scan0, nread)
+                End If
+            Loop
+
+            Call buffer.Seek(Scan0, SeekOrigin.Begin)
+        End Using
+
+        Return buffer '.UnGzipStream
     End Function
 
 End Class
