@@ -157,8 +157,6 @@
     <Compile Include="GCMSQuantifyIon.vb" />
     <Compile Include="Studio\WorkStudio.vb" />
     <Compile Include="Studio\Notification.vb" />
-    <Compile Include="Imports\ImportsMgf.vb" />
-    <Compile Include="Imports\ImportsTask.vb" />
     <Compile Include="ParentMatch.vb" />
     <Compile Include="Properties\AlignmentProperty.vb" />
     <Compile Include="Properties\MRMROIProperty.vb" />
@@ -272,6 +270,10 @@
     <ProjectReference Include="..\..\assembly\assembly\assembly.vbproj">
       <Project>{95f7d65e-9db1-4605-9fd3-25433277af88}</Project>
       <Name>assembly</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\assembly\mzPack\mzPack.vbproj">
+      <Project>{a1cb72f1-e918-4146-82a4-f409f31700b6}</Project>
+      <Name>mzPack</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\metadb\Chemoinformatics\Chemoinformatics.vbproj">
       <Project>{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}</Project>

@@ -50,85 +50,75 @@
 
 #End Region
 
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
+Imports System.IO
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.Linq
 
 Public Class Raw
 
-    Public Property source As String
-    Public Property ms1_cache As String
-    Public Property ms2_cache As String
-
     ''' <summary>
-    ''' 为了提升性能所缓存下来的原始数据散点图
+    ''' 原始数据文件位置
     ''' </summary>
     ''' <returns></returns>
-    Public Property scatter As String
-
+    Public Property source As String
+    ''' <summary>
+    ''' 二进制缓存文件位置
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property cache As String
     Public Property rtmin As Double
     Public Property rtmax As Double
+    ''' <summary>
+    ''' MS1扫描的数量
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property numOfScan1 As Integer
+    ''' <summary>
+    ''' MS2扫描的数量
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property numOfScan2 As Integer
 
-    Public ReadOnly Property numOfScans As Integer
-        Get
-            If scans.IsNullOrEmpty Then
-                Return 0
-            Else
-                Return scans.Length
-            End If
-        End Get
-    End Property
-
-    Public Property scans As Ms1ScanEntry()
-    Public Property UVscans As UVScan()
+    Dim loaded As mzPack
 
     Public ReadOnly Property cacheFileExists As Boolean
         Get
-            Return ms1_cache.FileExists AndAlso ms2_cache.FileExists
+            Return cache.FileExists
         End Get
     End Property
 
-    Public Function FindMs2Scan(id As String) As ScanEntry
-        Return GetMs2Scans.Where(Function(a) a.id = id).FirstOrDefault
+    Public Function LoadMzpack() As Raw
+        Using file As Stream = cache.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+            loaded = mzPack.ReadAll(file)
+        End Using
+
+        Return Me
+    End Function
+
+    Public Function UnloadMzpack() As Raw
+        Erase loaded.MS
+
+        loaded.Scanners.Clear()
+        loaded.Thumbnail.Dispose()
+        loaded.Thumbnail = Nothing
+        loaded = Nothing
+
+        Return Me
+    End Function
+
+    Public Function FindMs2Scan(id As String) As ScanMS2
+        Return GetMs2Scans.Where(Function(a) a.scan_id = id).FirstOrDefault
     End Function
 
     Public Function GetCacheFileSize() As Long
-        Return ms1_cache.FileLength + ms2_cache.FileLength + scatter.FileLength
+        Return cache.FileLength
     End Function
 
-    Public Function GetMs2Scans() As IEnumerable(Of ScanEntry)
-        Return scans.Select(Function(a) a.products).IteratesALL
+    Public Function GetMs2Scans() As IEnumerable(Of ScanMS2)
+        Return loaded.MS _
+            .Select(Function(m1) m1.products) _
+            .IteratesALL
     End Function
 
-End Class
-
-Public MustInherit Class MsScanEntry
-
-    Public Property id As String
-    Public Property rt As Double
-    Public Property TIC As Double
-    Public Property BPC As Double
-
-End Class
-
-''' <summary>
-''' ms1 scan entry data
-''' </summary>
-Public Class Ms1ScanEntry : Inherits MsScanEntry
-
-    Public Property products As ScanEntry()
-End Class
-
-''' <summary>
-''' ms2 scan entry data
-''' </summary>
-Public Class ScanEntry : Inherits MsScanEntry
-
-    Public Property mz As Double
-    Public Property polarity As Integer
-    Public Property charge As Double
-    Public Property XIC As Double
-
-    Public Overrides Function ToString() As String
-        Return id
-    End Function
 End Class

@@ -61,7 +61,6 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.Text
-Imports mzML = BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 
 Public Class ImportsRawData
 

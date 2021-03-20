@@ -51,6 +51,7 @@
 Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -66,7 +67,6 @@ Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports mzkit.My
@@ -176,7 +176,7 @@ Public Class PageMzkitTools
             Dim prop As SpectrumProperty = Nothing
             Dim scanData As LibraryMatrix = raw.GetSpectrum(scanId, Globals.Settings.viewer.GetMethod, prop)
 
-            ShowMatrix(scanData.ms2, scanId)
+            showMatrix(scanData.ms2, scanId)
 
             Dim title1$
             Dim title2$
@@ -302,7 +302,7 @@ Public Class PageMzkitTools
 
         MyApplication.host.ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
 
-        Call ShowMatrix(result.alignments, alignName)
+        Call showMatrix(result.alignments, alignName)
         Call MyApplication.RegisterPlot(
             Sub(args)
                 PictureBox1.BackgroundImage = MassSpectra.AlignMirrorPlot(
@@ -367,7 +367,7 @@ Public Class PageMzkitTools
             Return
         End If
 
-        ShowMatrix(TICList(Scan0).value, TICList(Scan0).name)
+        showMatrix(TICList(Scan0).value, TICList(Scan0).name)
         MyApplication.RegisterPlot(
             Sub(args)
                 If d3 Then
@@ -692,7 +692,7 @@ Public Class PageMzkitTools
     End Function
 
     Friend Function getXICMatrix(raw As Raw, scanId As String, ppm As Double, relativeInto As Boolean) As NamedCollection(Of ChromatogramTick)
-        Dim ms2 As ScanEntry = raw.FindMs2Scan(scanId)
+        Dim ms2 As ScanMS2 = raw.FindMs2Scan(scanId)
         Dim name As String = raw.source.FileName
 
         If ms2 Is Nothing OrElse ms2.mz = 0.0 Then

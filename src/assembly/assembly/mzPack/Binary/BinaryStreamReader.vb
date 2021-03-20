@@ -88,6 +88,10 @@ Namespace mzData.mzWebCache
 
         Public ReadOnly Property filepath As String
 
+        ''' <summary>
+        ''' 以只读的形式打开文件
+        ''' </summary>
+        ''' <param name="file"></param>
         Sub New(file As String)
             Call Me.New(
                 file:=file.Open(FileMode.OpenOrCreate, doClear:=False, [readOnly]:=True)
