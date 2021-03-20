@@ -428,6 +428,12 @@
     <Compile Include="pages\dockWindow\documents\RtRangeSelector.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="pages\dockWindow\frmVideoList.Designer.vb">
+      <DependentUpon>frmVideoList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\dockWindow\frmVideoList.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="pages\dockWindow\frmDemo.Designer.vb">
       <DependentUpon>frmDemo.vb</DependentUpon>
     </Compile>
@@ -725,6 +731,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\frmSettings.resx">
       <DependentUpon>frmSettings.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pages\dockWindow\frmVideoList.resx">
+      <DependentUpon>frmVideoList.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\tools\OutputWindow.resx">
       <DependentUpon>OutputWindow.vb</DependentUpon>
