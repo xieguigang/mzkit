@@ -94,9 +94,7 @@ Public Class PageMzkitTools
         If options = DialogResult.OK Then
             Dim newRaw = MyApplication.fileExplorer.getRawCache(raw.source)
 
-            raw.ms1_cache = newRaw.ms1_cache
-            raw.ms2_cache = newRaw.ms2_cache
-            raw.scatter = newRaw.scatter
+            raw.cache = newRaw.cache
 
             MyApplication.host.showStatusMessage("Ready!")
             MyApplication.host.ToolStripStatusLabel2.Text = MyApplication.host.fileExplorer.treeView1.Nodes(Scan0).GetTotalCacheSize
@@ -118,16 +116,7 @@ Public Class PageMzkitTools
         Dim spinner As New frmProgressSpinner
         Dim task As New Thread(
             Sub()
-                Dim image As Image
-
-                If raw.scatter.FileLength < 0 Then
-                    raw.scatter = App.AppSystemTemp & "/" & raw.source.GetFullPath.MD5 & ".scatter"
-                    raw.scatter = raw.scatter.GetFullPath
-                    image = raw.DrawScatter
-                    image.SaveAs(raw.scatter)
-                Else
-                    image = raw.scatter.LoadImage
-                End If
+                Dim image As Image = raw.DrawScatter
 
                 Me.Invoke(Sub() PictureBox1.BackgroundImage = image)
                 spinner.Invoke(Sub() Call spinner.Close())
@@ -331,7 +320,7 @@ Public Class PageMzkitTools
     Private Function rawTIC(raw As Raw, isBPC As Boolean) As NamedCollection(Of ChromatogramTick)
         Dim TIC As New NamedCollection(Of ChromatogramTick) With {
             .name = $"{If(isBPC, "BPC", "TIC")} [{raw.source.FileName}]",
-            .value = raw.scans _
+            .value = raw.GetMs1Scans _
                 .Select(Function(m)
                             Return New ChromatogramTick With {.Time = m.rt, .Intensity = If(isBPC, m.BPC, m.TIC)}
                         End Function) _
@@ -657,34 +646,30 @@ Public Class PageMzkitTools
     Friend Iterator Function getSelectedIonSpectrums(progress As Action(Of String)) As IEnumerable(Of PeakMs2)
         Dim raw = MyApplication.featureExplorer.CurrentRawFile
 
-        Using cache As New netCDFReader(raw.ms2_cache)
+        For Each ionNode As TreeNode In MyApplication.featureExplorer.GetSelectedNodes.Where(Function(a) TypeOf a.Tag Is ScanEntry)
+            Dim scanId As String = ionNode.Text
+            Dim entry = Cache.getDataVariableEntry(scanId)
+            Dim mztemp = Cache.getDataVariable(entry).numerics.AsMs2.ToArray
+            Dim attrs = Cache.getDataVariableEntry(scanId).attributes
+            Dim info As New SpectrumProperty(scanId, raw.source.FileName, attrs)
+            Dim guid As String = $"{raw.source.FileName}#{scanId}"
 
-            For Each ionNode As TreeNode In MyApplication.featureExplorer.GetSelectedNodes.Where(Function(a) TypeOf a.Tag Is ScanEntry)
-                Dim scanId As String = ionNode.Text
-                Dim entry = cache.getDataVariableEntry(scanId)
-                Dim mztemp = cache.getDataVariable(entry).numerics.AsMs2.ToArray
-                Dim attrs = cache.getDataVariableEntry(scanId).attributes
-                Dim info As New SpectrumProperty(scanId, raw.source.FileName, attrs)
-                Dim guid As String = $"{raw.source.FileName}#{scanId}"
+            If Not progress Is Nothing Then
+                Call progress(guid)
+            End If
 
-                If Not progress Is Nothing Then
-                    Call progress(guid)
-                End If
-
-                Yield New PeakMs2 With {
-                    .mz = info.precursorMz,
-                    .scan = 0,
-                    .activation = info.activationMethod,
-                    .collisionEnergy = info.collisionEnergy,
-                    .file = raw.source.FileName,
-                    .lib_guid = guid,
-                    .mzInto = mztemp,
-                    .precursor_type = "n/a",
-                    .rt = info.retentionTime
-                }
-            Next
-
-        End Using
+            Yield New PeakMs2 With {
+                .mz = info.precursorMz,
+                .scan = 0,
+                .activation = info.activationMethod,
+                .collisionEnergy = info.collisionEnergy,
+                .file = raw.source.FileName,
+                .lib_guid = guid,
+                .mzInto = mztemp,
+                .precursor_type = "n/a",
+                .rt = info.retentionTime
+            }
+        Next
     End Function
 
     Private Function relativeInto() As Boolean
@@ -695,7 +680,7 @@ Public Class PageMzkitTools
         Dim ms2 As ScanMS2 = raw.FindMs2Scan(scanId)
         Dim name As String = raw.source.FileName
 
-        If ms2 Is Nothing OrElse ms2.mz = 0.0 Then
+        If ms2 Is Nothing OrElse ms2.parentMz = 0.0 Then
             MyApplication.host.showStatusMessage("XIC plot is not avaliable for MS1 parent!", My.Resources.StatusAnnotations_Warning_32xLG_color)
             Return Nothing
         Else
@@ -704,13 +689,13 @@ Public Class PageMzkitTools
 
         Dim selectedIons = raw _
             .GetMs2Scans _
-            .Where(Function(a) PPMmethod.PPM(a.mz, ms2.mz) <= ppm) _
+            .Where(Function(a) PPMmethod.PPM(a.parentMz, ms2.parentMz) <= ppm) _
             .ToArray
         Dim XIC As ChromatogramTick() = selectedIons _
             .Select(Function(a)
                         Return New ChromatogramTick With {
                             .Time = a.rt,
-                            .Intensity = a.XIC
+                            .Intensity = a.intensity
                         }
                     End Function) _
             .ToArray
@@ -731,7 +716,7 @@ Public Class PageMzkitTools
         Dim plotTIC As New NamedCollection(Of ChromatogramTick) With {
             .name = name,
             .value = XIC,
-            .description = ms2.mz & " " & raw.source.FileName
+            .description = ms2.parentMz & " " & raw.source.FileName
         }
 
         Return plotTIC

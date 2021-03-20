@@ -115,6 +115,10 @@ Public Class Raw
         Return cache.FileLength
     End Function
 
+    Public Function GetMs1Scans() As IEnumerable(Of ScanMS1)
+        Return loaded.MS
+    End Function
+
     Public Function GetMs2Scans() As IEnumerable(Of ScanMS2)
         Return loaded.MS _
             .Select(Function(m1) m1.products) _
