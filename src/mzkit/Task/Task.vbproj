@@ -155,6 +155,7 @@
     <Compile Include="BioDeep\MessageParser.vb" />
     <Compile Include="IonLibrary.vb" />
     <Compile Include="GCMSQuantifyIon.vb" />
+    <Compile Include="MetaDNASearch.vb" />
     <Compile Include="Studio\WorkStudio.vb" />
     <Compile Include="Studio\Notification.vb" />
     <Compile Include="ParentMatch.vb" />
