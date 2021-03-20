@@ -707,7 +707,7 @@ Public Class PageMzkitTools
         Dim mzmin = Aggregate ion In selectedIons Into Min(ion.parentMz)
         Dim mzmax = Aggregate ion In selectedIons Into Max(ion.parentMz)
 
-        name = $"XIC [m/z={ms2.mz.ToString("F4")}] [mzmin={mzmin.ToString("F4")}, mzmax={mzmax.ToString("F4")}]"
+        name = $"XIC [m/z={ms2.parentMz.ToString("F4")}] [mzmin={mzmin.ToString("F4")}, mzmax={mzmax.ToString("F4")}]"
 
         If Not relativeInto Then
             XIC = {

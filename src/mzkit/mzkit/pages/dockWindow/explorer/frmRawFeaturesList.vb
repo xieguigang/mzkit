@@ -539,26 +539,37 @@ Public Class frmRawFeaturesList
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Private Sub XICViewToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles XICViewToolStripMenuItem.Click
-        Dim allMs2 = CurrentRawFile _
-            .GetMs2Scans _
-            .Where(Function(t) t.rt >= rtmin AndAlso t.rt <= rtmax) _
-            .GroupBy(Function(t) t.parentMz, Tolerance.DeltaMass(0.1)) _
-            .OrderBy(Function(t) Val(t.name)) _
-            .ToArray
+        If XICViewToolStripMenuItem.Checked Then
+            ' switch back to MS scan groups
+            XICViewToolStripMenuItem.Checked = False
 
-        treeView1.Nodes.Clear()
-        checked.Clear()
+            treeView1.Nodes.Clear()
+            treeView1.loadRawFile(CurrentRawFile, False, rtmin, rtmax)
+            checked.Clear()
+        Else
+            XICViewToolStripMenuItem.Checked = True
 
-        For Each mz1 As NamedCollection(Of ScanMS2) In allMs2
-            Dim mzNode As TreeNode = treeView1.Nodes.Add(Val(mz1.name).ToString("F4"))
+            Dim allMs2 = CurrentRawFile _
+                .GetMs2Scans _
+                .Where(Function(t) t.rt >= rtmin AndAlso t.rt <= rtmax) _
+                .GroupBy(Function(t) t.parentMz, Tolerance.DeltaMass(0.1)) _
+                .OrderBy(Function(t) Val(t.name)) _
+                .ToArray
 
-            For Each ms2 As ScanMS2 In mz1
-                Call mzNode.Nodes.Add(New TreeNode(ms2.scan_id) With {
-                    .Tag = ms2,
-                    .ImageIndex = 1,
-                    .SelectedImageIndex = 1
-                })
+            treeView1.Nodes.Clear()
+            checked.Clear()
+
+            For Each mz1 As NamedCollection(Of ScanMS2) In allMs2
+                Dim mzNode As TreeNode = treeView1.Nodes.Add(Val(mz1.name).ToString("F4") & $", {mz1.Length} MS/MS scans")
+
+                For Each ms2 As ScanMS2 In mz1
+                    Call mzNode.Nodes.Add(New TreeNode(ms2.scan_id) With {
+                        .Tag = ms2,
+                        .ImageIndex = 1,
+                        .SelectedImageIndex = 1
+                    })
+                Next
             Next
-        Next
+        End If
     End Sub
 End Class
