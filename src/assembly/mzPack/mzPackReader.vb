@@ -12,7 +12,11 @@ Public Class mzPackReader : Inherits BinaryStreamReader
 
     Public ReadOnly Property ChromatogramScanners As IEnumerable(Of String)
         Get
-            Return otherScanners.Keys
+            If otherScanners.IsNullOrEmpty Then
+                Return {}
+            Else
+                Return otherScanners.Keys
+            End If
         End Get
     End Property
 
