@@ -66,6 +66,7 @@ Partial Class frmRawFeaturesList
         Me.ToolStripSpringTextBox1 = New mzkit.ToolStripSpringTextBox()
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
         Me.treeView1 = New mzkit.Kesoft.Windows.Forms.Win7StyleTreeView.Win7StyleTreeView(Me.components)
+        Me.ExportMzPackToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
         Me.SuspendLayout()
@@ -81,7 +82,7 @@ Partial Class frmRawFeaturesList
         '
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ChromatogramPlotToolStripMenuItem, Me.ShowXICToolStripMenuItem, Me.ShowPropertiesToolStripMenuItem, Me.OpenViewerToolStripMenuItem, Me.ToolStripMenuItem1, Me.DIAAnnotationToolStripMenuItem, Me.SpectrumSearchToolStripMenuItem, Me.IonSearchToolStripMenuItem, Me.SearchFormulaToolStripMenuItem, Me.ToolStripMenuItem2, Me.FileToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 214)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 236)
         '
         'ChromatogramPlotToolStripMenuItem
         '
@@ -219,7 +220,7 @@ Partial Class frmRawFeaturesList
         '
         'FileToolStripMenuItem
         '
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ExportIonsToolStripMenuItem, Me.CollapseToolStripMenuItem, Me.ToolStripMenuItem3, Me.SelectAllToolStripMenuItem, Me.ClearToolStripMenuItem, Me.ToolStripMenuItem4, Me.DeleteFileToolStripMenuItem})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ExportIonsToolStripMenuItem, Me.CollapseToolStripMenuItem, Me.ToolStripMenuItem3, Me.SelectAllToolStripMenuItem, Me.ClearToolStripMenuItem, Me.ToolStripMenuItem4, Me.ExportMzPackToolStripMenuItem, Me.DeleteFileToolStripMenuItem})
         Me.FileToolStripMenuItem.Image = CType(resources.GetObject("FileToolStripMenuItem.Image"), System.Drawing.Image)
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
@@ -230,7 +231,7 @@ Partial Class frmRawFeaturesList
         Me.ExportIonsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.XICToolStripMenuItem, Me.IonScansToolStripMenuItem, Me.IonTableToolStripMenuItem})
         Me.ExportIonsToolStripMenuItem.Image = CType(resources.GetObject("ExportIonsToolStripMenuItem.Image"), System.Drawing.Image)
         Me.ExportIonsToolStripMenuItem.Name = "ExportIonsToolStripMenuItem"
-        Me.ExportIonsToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
+        Me.ExportIonsToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ExportIonsToolStripMenuItem.Text = "Export Ions"
         '
         'XICToolStripMenuItem
@@ -254,38 +255,38 @@ Partial Class frmRawFeaturesList
         'CollapseToolStripMenuItem
         '
         Me.CollapseToolStripMenuItem.Name = "CollapseToolStripMenuItem"
-        Me.CollapseToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
+        Me.CollapseToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.CollapseToolStripMenuItem.Text = "Collapse"
         '
         'ToolStripMenuItem3
         '
         Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
-        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(130, 6)
+        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(177, 6)
         '
         'SelectAllToolStripMenuItem
         '
         Me.SelectAllToolStripMenuItem.Image = Global.mzkit.My.Resources.Resources.preferences_system_notifications
         Me.SelectAllToolStripMenuItem.Name = "SelectAllToolStripMenuItem"
-        Me.SelectAllToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
+        Me.SelectAllToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.SelectAllToolStripMenuItem.Text = "Select All"
         '
         'ClearToolStripMenuItem
         '
         Me.ClearToolStripMenuItem.Image = CType(resources.GetObject("ClearToolStripMenuItem.Image"), System.Drawing.Image)
         Me.ClearToolStripMenuItem.Name = "ClearToolStripMenuItem"
-        Me.ClearToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
+        Me.ClearToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ClearToolStripMenuItem.Text = "Clear"
         '
         'ToolStripMenuItem4
         '
         Me.ToolStripMenuItem4.Name = "ToolStripMenuItem4"
-        Me.ToolStripMenuItem4.Size = New System.Drawing.Size(130, 6)
+        Me.ToolStripMenuItem4.Size = New System.Drawing.Size(177, 6)
         '
         'DeleteFileToolStripMenuItem
         '
         Me.DeleteFileToolStripMenuItem.Image = CType(resources.GetObject("DeleteFileToolStripMenuItem.Image"), System.Drawing.Image)
         Me.DeleteFileToolStripMenuItem.Name = "DeleteFileToolStripMenuItem"
-        Me.DeleteFileToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
+        Me.DeleteFileToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.DeleteFileToolStripMenuItem.Text = "Delete File!"
         '
         'ToolStrip1
@@ -333,6 +334,12 @@ Partial Class frmRawFeaturesList
         Me.treeView1.ShowLines = False
         Me.treeView1.Size = New System.Drawing.Size(445, 425)
         Me.treeView1.TabIndex = 2
+        '
+        'ExportMzPackToolStripMenuItem
+        '
+        Me.ExportMzPackToolStripMenuItem.Name = "ExportMzPackToolStripMenuItem"
+        Me.ExportMzPackToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ExportMzPackToolStripMenuItem.Text = "Export mzPack"
         '
         'frmRawFeaturesList
         '
@@ -389,4 +396,5 @@ Partial Class frmRawFeaturesList
     Friend WithEvents DIAAnnotationToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents MolecularNetworkingToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents MetaDNASearchToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ExportMzPackToolStripMenuItem As ToolStripMenuItem
 End Class

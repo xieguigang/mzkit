@@ -551,6 +551,21 @@ Public Class frmRawFeaturesList
         End If
     End Sub
 
+    Private Sub ExportMzPackToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportMzPackToolStripMenuItem.Click
+        If CurrentRawFile Is Nothing Then
+            Return
+        End If
+
+        Using file As New SaveFileDialog With {
+            .Title = "Export mzPack file!",
+            .Filter = "BioNovoGene mzPack(*.mzPack)|*.mzPack"
+        }
+            If file.ShowDialog = DialogResult.OK Then
+                CurrentRawFile.SaveAs(file.FileName)
+            End If
+        End Using
+    End Sub
+
     ''' <summary>
     ''' 切换为XIC视图
     ''' </summary>

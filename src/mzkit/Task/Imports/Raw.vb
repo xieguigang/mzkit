@@ -166,4 +166,8 @@ Public Class Raw
         Return ms2.Values
     End Function
 
+    Public Sub SaveAs(file As String)
+        Call cache.FileCopy(file)
+    End Sub
+
 End Class
