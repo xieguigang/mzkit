@@ -468,7 +468,7 @@ Public Class frmFileExplorer
             raws.Add(node.Tag)
         Next
 
-        Call FeatureSearchHandler.SearchByMz(ToolStripSpringTextBox1.Text, raws)
+        Call FeatureSearchHandler.SearchByMz(ToolStripSpringTextBox1.Text, raws, False)
     End Sub
 
     Private Sub ImportsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImportsToolStripMenuItem.Click

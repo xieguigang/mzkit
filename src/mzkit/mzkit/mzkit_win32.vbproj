@@ -1021,6 +1021,7 @@
     <None Include="Resources\Flask_no_bubbles.png" />
     <None Include="Resources\Home_Logo.png" />
     <None Include="Resources\Home_Logo_Link.png" />
+    <None Include="Res\Search.ico" />
     <Content Include="RibbonMarkup.h" />
     <Content Include="RibbonMarkup.xml" />
     <None Include="Resources\header-foreground-image.png" />

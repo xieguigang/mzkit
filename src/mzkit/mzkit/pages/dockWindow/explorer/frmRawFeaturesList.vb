@@ -522,11 +522,15 @@ Public Class frmRawFeaturesList
             Return
         End If
 
-        Call FeatureSearchHandler.SearchByMz(DirectCast(currentScan, ScanMS2).parentMz, {CurrentRawFile})
+        Call FeatureSearchHandler.SearchByMz(DirectCast(currentScan, ScanMS2).parentMz, {CurrentRawFile}, True)
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
-        Call FeatureSearchHandler.SearchByMz(Strings.Trim(ToolStripSpringTextBox1.Text), {CurrentRawFile})
+        If CurrentRawFile Is Nothing Then
+            Call MyApplication.host.showStatusMessage("please load a raw data file at first!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+        Else
+            Call FeatureSearchHandler.SearchByMz(Strings.Trim(ToolStripSpringTextBox1.Text), {CurrentRawFile}, True)
+        End If
     End Sub
 
     Private Sub SpectrumSearchToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SpectrumSearchToolStripMenuItem.Click

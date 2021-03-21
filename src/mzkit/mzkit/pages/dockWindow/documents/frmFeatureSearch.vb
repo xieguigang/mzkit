@@ -97,6 +97,7 @@ Public Class frmFeatureSearch
             ion.SubItems.Add(New ListViewSubItem With {.Text = $"#{++i}"})
             ion.SubItems.Add(New ListViewSubItem With {.Text = member.parentMz})
             ion.SubItems.Add(New ListViewSubItem With {.Text = member.rt})
+            ' ion.SubItems.Add(New ListViewSubItem With {.Text = "n/a"})
             ion.SubItems.Add(New ListViewSubItem With {.Text = PPMmethod.PPM(member.parentMz, targetMz).ToString("F2")})
             ion.SubItems.Add(New ListViewSubItem With {.Text = member.polarity})
             ion.SubItems.Add(New ListViewSubItem With {.Text = member.charge})
@@ -110,6 +111,8 @@ Public Class frmFeatureSearch
 
         TreeListView1.Items.Add(row)
     End Sub
+
+    Friend directRaw As Raw
 
     Private Sub ViewToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ViewToolStripMenuItem.Click
         Dim cluster As TreeListViewItem
@@ -127,7 +130,13 @@ Public Class frmFeatureSearch
         If cluster.ChildrenCount > 0 OrElse cluster.Parent Is Nothing Then
             ' 选择的是一个文件节点
             Dim filePath As String = cluster.ToolTipText
-            Dim raw As Raw = Globals.workspace.FindRawFile(filePath)
+            Dim raw As Raw
+
+            If Not directRaw Is Nothing Then
+                raw = directRaw
+            Else
+                raw = Globals.workspace.FindRawFile(filePath)
+            End If
 
             If Not raw Is Nothing Then
                 Call MyApplication.mzkitRawViewer.showScatter(raw, XIC:=False, directSnapshot:=True)
@@ -140,7 +149,13 @@ Public Class frmFeatureSearch
             MyApplication.host.ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
 
             ' scan节点
-            Dim raw As Task.Raw = Globals.workspace.FindRawFile(parentFile)
+            Dim raw As Task.Raw
+
+            If directRaw Is Nothing Then
+                raw = Globals.workspace.FindRawFile(parentFile)
+            Else
+                raw = directRaw
+            End If
 
             Call MyApplication.host.mzkitTool.showSpectrum(scan_id, raw)
             Call MyApplication.host.mzkitTool.ShowPage()
@@ -150,5 +165,10 @@ Public Class frmFeatureSearch
     Private Sub frmFeatureSearch_Load(sender As Object, e As EventArgs) Handles Me.Load
         Text = "Feature Search Result"
         TabText = Text
+        Icon = My.Resources.Search
+
+        OpenContainingFolderToolStripMenuItem.Enabled = False
+        CopyFullPathToolStripMenuItem.Enabled = False
+        SaveDocumentToolStripMenuItem.Enabled = False
     End Sub
 End Class

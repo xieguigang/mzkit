@@ -54,29 +54,32 @@ Imports Task
 
 Module FeatureSearchHandler
 
-    Public Sub SearchByMz(text As String, raw As IEnumerable(Of Raw))
+    Public Sub SearchByMz(text As String, raw As IEnumerable(Of Raw), directRaw As Boolean)
         If text.StringEmpty Then
             Return
         ElseIf text.IsNumeric Then
             Call searchInFileByMz(mz:=Val(text), raw:=raw)
         Else
-            Call runFormulaMatch(text, raw)
+            Call runFormulaMatch(text, raw, directRaw)
 
             MyApplication.host.ribbonItems.TabGroupExactMassSearchTools.ContextAvailable = ContextAvailability.Active
         End If
     End Sub
 
-    Private Sub runFormulaMatch(formula As String, files As IEnumerable(Of Raw))
+    Private Sub runFormulaMatch(formula As String, files As IEnumerable(Of Raw), directRaw As Boolean)
         Dim ppm As Double = MyApplication.host.GetPPMError()
-        Dim display As New frmFeatureSearch
+        Dim display As frmFeatureSearch = VisualStudio.ShowDocument(Of frmFeatureSearch)
 
-        display.Show(MyApplication.host.dockPanel)
+        If directRaw Then
+            display.directRaw = files.First
+            display.AddFileMatch(display.directRaw.source, MatchByFormula(formula, display.directRaw).ToArray)
+        Else
+            For Each file As Raw In files
+                Dim result = MatchByFormula(formula, file).ToArray
 
-        For Each file As Raw In files
-            Dim result = MatchByFormula(formula, file).ToArray
-
-            display.AddFileMatch(file.source, result)
-        Next
+                display.AddFileMatch(file.source, result)
+            Next
+        End If
     End Sub
 
     Public Iterator Function MatchByFormula(formula As String, raw As Raw) As IEnumerable(Of ParentMatch)
@@ -113,7 +116,8 @@ Module FeatureSearchHandler
                         .ppm = PPMmethod.PPM(scan.parentMz, Val(mode.mz)).ToString("F2"),
                         .polarity = scan.polarity,
                         .XIC = scan.intensity,
-                        .into = scan.into
+                        .into = scan.into,
+                        .parentMz = scan.parentMz
                     }
                 End If
             Next

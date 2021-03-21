@@ -138,7 +138,7 @@ Public Class PageMzCalculator
         Dim row = grid.Rows(e.RowIndex)
         Dim mz As Double = Val(row.Cells(4).Value)
 
-        Call FeatureSearchHandler.SearchByMz(mz, MyApplication.fileExplorer.GetRawFiles())
+        Call FeatureSearchHandler.SearchByMz(mz, MyApplication.fileExplorer.GetRawFiles(), False)
     End Sub
 
     Private Sub DataGridView2_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView2.CellClick
