@@ -317,7 +317,7 @@ Public Class frmRawFeaturesList
         End If
     End Sub
 
-    Private Sub TextBox2_Click(sender As Object, e As EventArgs)
+    Private Sub TextBox2_Click(sender As Object, e As EventArgs) Handles ToolStripSpringTextBox1.Click
         MyApplication.host.showStatusMessage("Input a number for m/z search, or input formula text for precursor ion match!")
     End Sub
 

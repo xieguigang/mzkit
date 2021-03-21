@@ -112,7 +112,8 @@ Module FeatureSearchHandler
                         .precursor_type = mode.precursor_type,
                         .ppm = PPMmethod.PPM(scan.parentMz, Val(mode.mz)).ToString("F2"),
                         .polarity = scan.polarity,
-                        .XIC = scan.intensity
+                        .XIC = scan.intensity,
+                        .into = scan.into
                     }
                 End If
             Next

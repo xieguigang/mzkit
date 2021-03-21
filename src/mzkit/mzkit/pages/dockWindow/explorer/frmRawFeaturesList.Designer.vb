@@ -66,8 +66,8 @@ Partial Class frmRawFeaturesList
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
         Me.ToolStripSpringTextBox1 = New mzkit.ToolStripSpringTextBox()
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
-        Me.treeView1 = New mzkit.Kesoft.Windows.Forms.Win7StyleTreeView.Win7StyleTreeView(Me.components)
         Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
+        Me.treeView1 = New mzkit.Kesoft.Windows.Forms.Win7StyleTreeView.Win7StyleTreeView(Me.components)
         Me.ContextMenuStrip1.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
         Me.SuspendLayout()
@@ -326,6 +326,15 @@ Partial Class frmRawFeaturesList
         Me.ToolStripButton1.Size = New System.Drawing.Size(23, 22)
         Me.ToolStripButton1.Text = "ToolStripButton1"
         '
+        'ToolStripButton2
+        '
+        Me.ToolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton2.Image = CType(resources.GetObject("ToolStripButton2.Image"), System.Drawing.Image)
+        Me.ToolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton2.Name = "ToolStripButton2"
+        Me.ToolStripButton2.Size = New System.Drawing.Size(23, 22)
+        Me.ToolStripButton2.Text = "Reload"
+        '
         'treeView1
         '
         Me.treeView1.ContextMenuStrip = Me.ContextMenuStrip1
@@ -341,15 +350,6 @@ Partial Class frmRawFeaturesList
         Me.treeView1.ShowLines = False
         Me.treeView1.Size = New System.Drawing.Size(445, 425)
         Me.treeView1.TabIndex = 2
-        '
-        'ToolStripButton2
-        '
-        Me.ToolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton2.Image = CType(resources.GetObject("ToolStripButton2.Image"), System.Drawing.Image)
-        Me.ToolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolStripButton2.Name = "ToolStripButton2"
-        Me.ToolStripButton2.Size = New System.Drawing.Size(23, 22)
-        Me.ToolStripButton2.Text = "ToolStripButton2"
         '
         'frmRawFeaturesList
         '
