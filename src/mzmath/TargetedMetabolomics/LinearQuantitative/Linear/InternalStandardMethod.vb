@@ -67,18 +67,15 @@ Namespace LinearQuantitative.Linear
         ReadOnly baselineQuantile As Double = 0.65
         ReadOnly maxDeletions As Integer = 1
         ReadOnly integrator As PeakAreaMethods
-        ReadOnly fixLowerContent As Boolean = False
 
         Sub New(contents As ContentTable, integrator As PeakAreaMethods,
                 Optional baselineQuantile As Double = 0.65,
-                Optional maxDeletions As Integer = 1,
-                Optional fixLowerContent As Boolean = False)
+                Optional maxDeletions As Integer = 1)
 
             Me.maxDeletions = maxDeletions
             Me.contents = contents
             Me.baselineQuantile = baselineQuantile
             Me.integrator = integrator
-            Me.fixLowerContent = fixLowerContent
         End Sub
 
         ''' <summary>
@@ -191,7 +188,6 @@ Namespace LinearQuantitative.Linear
             Dim vec As New List(Of Double)
             Dim deconv As (area#, baseline#, maxPeakHeight#)
             Dim target As TargetPeakPoint
-            Dim maxPeak As SignalPeak
             Dim dataPeak As ChromatogramTick()
 
             For Each sampleLevel As String In linearSamples
@@ -200,18 +196,6 @@ Namespace LinearQuantitative.Linear
                 Else
                     target = getByLevels(sampleLevel)
                     dataPeak = target.Peak.ticks
-
-                    If fixLowerContent Then
-                        maxPeak = New ElevationAlgorithm(3, baselineQuantile) _
-                            .FindAllSignalPeaks(dataPeak.As(Of ITimeSignal)) _
-                            .OrderByDescending(Function(p) p.signalMax) _
-                            .FirstOrDefault
-
-                        If Not maxPeak.isEmpty Then
-                            dataPeak = maxPeak.region.As(Of ChromatogramTick).ToArray
-                        End If
-                    End If
-
                     deconv = dataPeak _
                         .Shadows _
                         .TPAIntegrator(

@@ -227,14 +227,14 @@ Module GCMSLinear
     <ExportAPI("linear_algorithm")>
     Public Function algorithm(contents As ContentTable,
                               Optional maxDeletions As Integer = 1,
-                              Optional baselineQuantile As Double = 0) As InternalStandardMethod
+                              Optional baselineQuantile As Double = 0,
+                              Optional integrator As PeakAreaMethods = PeakAreaMethods.NetPeakSum) As InternalStandardMethod
 
         Return New InternalStandardMethod(
             contents:=contents,
-            integrator:=PeakAreaMethods.SumAll,
-            baselineQuantile:=0,
-            maxDeletions:=maxDeletions,
-            fixLowerContent:=True
+            integrator:=integrator,
+            baselineQuantile:=baselineQuantile,
+            maxDeletions:=maxDeletions
         )
     End Function
 

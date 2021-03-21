@@ -55,7 +55,7 @@ const quantify = sampleData
 	
 	linears :> quantify(
 		ions             = sim :> peakRaw(read.raw(file)), 
-		integrator       = "SumAll", 
+		integrator       = "NetPeakSum", 
 		fileName         = file, 
 		baselineQuantile = 0
 	);

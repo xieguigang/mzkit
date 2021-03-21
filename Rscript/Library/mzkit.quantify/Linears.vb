@@ -214,7 +214,7 @@ Module Linears
     <ExportAPI("quantify")>
     Public Function SampleQuantify(models As StandardCurve(),
                                    ions As TargetPeakPoint(),
-                                   Optional integrator As PeakAreaMethods = PeakAreaMethods.SumAll,
+                                   Optional integrator As PeakAreaMethods = PeakAreaMethods.NetPeakSum,
                                    Optional names As Rlist = Nothing,
                                    Optional baselineQuantile As Double = 0.6,
                                    Optional fileName As String = "NA",

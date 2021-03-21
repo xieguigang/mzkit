@@ -315,12 +315,13 @@ Public Module TPAExtensions
             ' GCMS quantification by ion max intensity
             Return (vector(Scan0).Intensity, 0, vector(Scan0).Intensity)
         Else
-            baseline = vector.Baseline(quantile:=baselineQuantile)
+            ' baseline = vector.Baseline(quantile:=baselineQuantile)
+            baseline = (vector.First.Intensity + vector.Last.Intensity) / 2
         End If
 
         Select Case peakAreaMethod
             Case PeakAreaMethods.NetPeakSum
-                area = vector.PeakArea(peak, baseline:=baselineQuantile)
+                area = vector.PeakArea
             Case PeakAreaMethods.SumAll
                 area = vector.SumAll
             Case PeakAreaMethods.MaxPeakHeight
