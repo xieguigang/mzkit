@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e72ff99b98372b58c5d0386a674ec242, ms2_math-core\Ms1\Peaktable.vb"
+﻿#Region "Microsoft.VisualBasic::e72ff99b98372b58c5d0386a674ec242, src\mzmath\ms2_math-core\Ms1\Peaktable.vb"
 
     ' Author:
     ' 

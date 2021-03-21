@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6f5983e2981e0470534b39ccb843bf52, ms2_math-core\Spectra\SpectrumTree\Comparison.vb"
+﻿#Region "Microsoft.VisualBasic::6f5983e2981e0470534b39ccb843bf52, src\mzmath\ms2_math-core\Spectra\SpectrumTree\Comparison.vb"
 
     ' Author:
     ' 

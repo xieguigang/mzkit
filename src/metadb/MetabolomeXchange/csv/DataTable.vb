@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e17b1e5539a5a27ca0b47169b7e3bd6, MetabolomeXchange\csv\DataTable.vb"
+﻿#Region "Microsoft.VisualBasic::4e17b1e5539a5a27ca0b47169b7e3bd6, src\metadb\MetabolomeXchange\csv\DataTable.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cbb45fcf396a046d99829275606ef15b, pages\CollDatagridview.vb"
+﻿#Region "Microsoft.VisualBasic::cbb45fcf396a046d99829275606ef15b, src\mzkit\mzkit\pages\CollDatagridview.vb"
 
     ' Author:
     ' 

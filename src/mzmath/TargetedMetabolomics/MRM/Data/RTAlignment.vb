@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f77e8a93e3c203d9fc59fa5ece5b328, TargetedMetabolomics\MRM\Data\RTAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::0f77e8a93e3c203d9fc59fa5ece5b328, src\mzmath\TargetedMetabolomics\MRM\Data\RTAlignment.vb"
 
     ' Author:
     ' 

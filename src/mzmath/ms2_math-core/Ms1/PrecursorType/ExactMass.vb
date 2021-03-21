@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::03fe4e726675dc0eb9c8683e9e5d6ed3, ms2_math-core\Ms1\PrecursorType\ExactMass.vb"
+﻿#Region "Microsoft.VisualBasic::03fe4e726675dc0eb9c8683e9e5d6ed3, src\mzmath\ms2_math-core\Ms1\PrecursorType\ExactMass.vb"
 
     ' Author:
     ' 

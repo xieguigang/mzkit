@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee95bc340c70ce7d39da13e5154ddd5d, pages\dockWindow\documents\frmRScriptEdit.vb"
+﻿#Region "Microsoft.VisualBasic::80c413e07d7b7c29a6d989fe97b9ece8, src\mzkit\mzkit\pages\dockWindow\documents\frmRScriptEdit.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,8 @@
     ' 
     '     Function: (+2 Overloads) Save
     ' 
-    '     Sub: Editor1_EditCode, Editor1_OnFocus, frmRScriptEdit_Closing, frmRScriptEdit_Load, LoadScript
+    '     Sub: CopyFullPath, Editor1_EditCode, Editor1_OnFocus, frmRScriptEdit_Closing, frmRScriptEdit_Load
+    '          LoadScript, OpenContainingFolder, SaveDocument
     ' 
     ' /********************************************************************************/
 

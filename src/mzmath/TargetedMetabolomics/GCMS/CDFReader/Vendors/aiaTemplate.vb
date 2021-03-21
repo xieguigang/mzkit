@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2798c4722f09748f4ec401712b7b8c76, TargetedMetabolomics\GCMS\CDFReader\Vendors\aiaTemplate.vb"
+﻿#Region "Microsoft.VisualBasic::2798c4722f09748f4ec401712b7b8c76, src\mzmath\TargetedMetabolomics\GCMS\CDFReader\Vendors\aiaTemplate.vb"
 
     ' Author:
     ' 

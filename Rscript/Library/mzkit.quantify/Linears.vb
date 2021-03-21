@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2087e06b73c38d8b848a0dc18e97aa3f, Library\mzkit.quantify\Linears.vb"
+﻿#Region "Microsoft.VisualBasic::2087e06b73c38d8b848a0dc18e97aa3f, Rscript\Library\mzkit.quantify\Linears.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2e3927560c9810873163e57bfbc5f5d, ms2_math-core\Ms1\ms1Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::b2e3927560c9810873163e57bfbc5f5d, src\mzmath\ms2_math-core\Ms1\ms1Abstract.vb"
 
     ' Author:
     ' 

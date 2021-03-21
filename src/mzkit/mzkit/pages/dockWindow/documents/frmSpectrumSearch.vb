@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ed73b4dfe9edbc57f38f1e7f7751554, pages\dockWindow\documents\frmSpectrumSearch.vb"
+﻿#Region "Microsoft.VisualBasic::9ed73b4dfe9edbc57f38f1e7f7751554, src\mzkit\mzkit\pages\dockWindow\documents\frmSpectrumSearch.vb"
 
     ' Author:
     ' 

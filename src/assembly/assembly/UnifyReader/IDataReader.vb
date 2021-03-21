@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6439e049f15fcd4b329967f42a04c9f5, assembly\UnifyReader\IDataReader.vb"
+﻿#Region "Microsoft.VisualBasic::a371b18438f3e760a0e450dac7f44c5c, src\assembly\assembly\UnifyReader\IDataReader.vb"
 
     ' Author:
     ' 
@@ -36,8 +36,9 @@
 
     '     Interface IDataReader
     ' 
-    '         Function: GetBPC, GetMsLevel, GetMsMs, GetParentMz, GetPolarity
-    '                   GetScanId, GetScanTime, GetTIC, IsEmpty
+    '         Function: GetActivationMethod, GetBPC, GetCentroided, GetCharge, GetCollisionEnergy
+    '                   GetMsLevel, GetMsMs, GetParentMz, GetPolarity, GetScanId
+    '                   GetScanTime, GetTIC, IsEmpty
     ' 
     ' 
     ' /********************************************************************************/

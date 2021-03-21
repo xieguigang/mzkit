@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::444e586ffebcf55a91e9b16eea2768c7, assembly\UnifyReader\FileFormats\mzXMLScan.vb"
+﻿#Region "Microsoft.VisualBasic::95d09ad1c792fa0ef845105ca540ac3d, src\assembly\assembly\UnifyReader\FileFormats\mzXMLScan.vb"
 
     ' Author:
     ' 
@@ -36,8 +36,9 @@
 
     '     Class mzXMLScan
     ' 
-    '         Function: GetBPC, GetMsLevel, GetMsMs, GetParentMz, GetPolarity
-    '                   GetScanId, GetScanTime, GetTIC, IsEmpty
+    '         Function: GetActivationMethod, GetBPC, GetCentroided, GetCharge, GetCollisionEnergy
+    '                   GetMsLevel, GetMsMs, GetParentMz, GetPolarity, GetScanId
+    '                   GetScanTime, GetTIC, IsEmpty
     ' 
     ' 
     ' /********************************************************************************/

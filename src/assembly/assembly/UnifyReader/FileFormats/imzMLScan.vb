@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ac20d6ff32f85e79b12c90dfa1b44d8, assembly\UnifyReader\FileFormats\imzMLScan.vb"
+﻿#Region "Microsoft.VisualBasic::30aa7ed5bd34d667c073152c0555e9e1, src\assembly\assembly\UnifyReader\FileFormats\imzMLScan.vb"
 
     ' Author:
     ' 
@@ -36,8 +36,9 @@
 
     '     Class imzMLScan
     ' 
-    '         Function: GetBPC, GetMsLevel, GetMsMs, GetParentMz, GetPolarity
-    '                   GetScanId, GetScanTime, GetTIC, IsEmpty
+    '         Function: GetActivationMethod, GetBPC, GetCentroided, GetCharge, GetCollisionEnergy
+    '                   GetMsLevel, GetMsMs, GetParentMz, GetPolarity, GetScanId
+    '                   GetScanTime, GetTIC, IsEmpty
     ' 
     ' 
     ' /********************************************************************************/

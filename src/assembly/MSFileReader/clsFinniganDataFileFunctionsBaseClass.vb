@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7dace1036a690d29609fa0f896a2a125, MSFileReader\clsFinniganDataFileFunctionsBaseClass.vb"
+﻿#Region "Microsoft.VisualBasic::7dace1036a690d29609fa0f896a2a125, src\assembly\MSFileReader\clsFinniganDataFileFunctionsBaseClass.vb"
 
     ' Author:
     ' 

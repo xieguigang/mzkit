@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f59d4f98fd5dfc4f86e3d9b9b4dc8749, TargetedMetabolomics\LinearQuantitative\LinearPack\LinearPack.vb"
+﻿#Region "Microsoft.VisualBasic::6fadc357702b7336a0281fabce1397e8, src\mzmath\TargetedMetabolomics\LinearQuantitative\LinearPack\LinearPack.vb"
 
     ' Author:
     ' 
@@ -36,8 +36,8 @@
 
     '     Class LinearPack
     ' 
-    '         Properties: [IS], linears, peakSamples, reference, time
-    '                     title
+    '         Properties: [IS], linears, peakSamples, reference, targetted
+    '                     time, title
     ' 
     '         Function: GetLevelKeys, GetLinear, OpenFile, ToString, Write
     ' 

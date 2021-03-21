@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::afa150fb8eda119a2d7bd01fb24fad0a, TargetedMetabolomics\Contents\UnitExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::b2518be0e1b05678566e818070fed877, src\mzmath\TargetedMetabolomics\Contents\UnitExtensions.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
 
     '     Module UnitExtensions
     ' 
-    '         Function: ContentVector, ParseContent, ppm2ppb
+    '         Function: ContentVector, IsContentPattern, ParseContent, ppm2ppb
     ' 
     ' 
     ' /********************************************************************************/

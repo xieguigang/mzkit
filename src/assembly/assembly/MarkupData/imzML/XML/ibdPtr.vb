@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ff88c58385476cb00fe4429b93956687, assembly\MarkupData\imzML\XML\ibdPtr.vb"
+﻿#Region "Microsoft.VisualBasic::ff88c58385476cb00fe4429b93956687, src\assembly\assembly\MarkupData\imzML\XML\ibdPtr.vb"
 
     ' Author:
     ' 

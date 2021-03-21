@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0658cfd0adb506f6c1f15a3fd082c586, Chemoinformatics\Formula\DNPOrWileyType.vb"
+﻿#Region "Microsoft.VisualBasic::0658cfd0adb506f6c1f15a3fd082c586, src\metadb\Chemoinformatics\Formula\DNPOrWileyType.vb"
 
     ' Author:
     ' 

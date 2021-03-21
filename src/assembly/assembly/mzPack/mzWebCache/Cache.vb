@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4ae4ce6601a48b656a0e661568c2cf93, assembly\mzPack\mzWebCache\Cache.vb"
+﻿#Region "Microsoft.VisualBasic::faba8430c9585a626cf67d1b28930e5f, src\assembly\assembly\mzPack\mzWebCache\Cache.vb"
 
     ' Author:
     ' 

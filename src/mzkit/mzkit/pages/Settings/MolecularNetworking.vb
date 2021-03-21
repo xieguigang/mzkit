@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e7ebe75cd4705fbea33ef63de4706be, pages\Settings\MolecularNetworking.vb"
+﻿#Region "Microsoft.VisualBasic::4e7ebe75cd4705fbea33ef63de4706be, src\mzkit\mzkit\pages\Settings\MolecularNetworking.vb"
 
     ' Author:
     ' 

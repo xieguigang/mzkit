@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bd9a8d0fb7231aee6a6bf95f7af637c7, application\settings\Settings.vb"
+﻿#Region "Microsoft.VisualBasic::ce062dbd4fc89469cc4c3e3979410de7, src\mzkit\mzkit\application\settings\Settings.vb"
 
     ' Author:
     ' 

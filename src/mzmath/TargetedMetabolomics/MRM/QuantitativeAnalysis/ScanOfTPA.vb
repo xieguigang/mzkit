@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9a28d6e276f60366fbae2a801c85f1e, TargetedMetabolomics\MRM\QuantitativeAnalysis\ScanOfTPA.vb"
+﻿#Region "Microsoft.VisualBasic::f9a28d6e276f60366fbae2a801c85f1e, src\mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\ScanOfTPA.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4b289c7769d28c4804caadd18504206d, TargetedMetabolomics\RawFile.vb"
+﻿#Region "Microsoft.VisualBasic::4b289c7769d28c4804caadd18504206d, src\mzmath\TargetedMetabolomics\RawFile.vb"
 
     ' Author:
     ' 

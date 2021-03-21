@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a0b7efde7b00a0ffa7eb35475e957c4, Chemoinformatics\SDF\Struct\Point3D.vb"
+﻿#Region "Microsoft.VisualBasic::4a0b7efde7b00a0ffa7eb35475e957c4, src\metadb\Chemoinformatics\SDF\Struct\Point3D.vb"
 
     ' Author:
     ' 

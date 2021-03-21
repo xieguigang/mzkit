@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::03f6f6b8bc38a3f61b99a956e7efb39e, assembly\mzPack\Stream\Scan.vb"
+﻿#Region "Microsoft.VisualBasic::874ee961fdcc04c595b881ebeb1de365, src\assembly\assembly\mzPack\Stream\ScanMS2.vb"
 
     ' Author:
     ' 
@@ -36,11 +36,8 @@
 
     '     Class ScanMS2
     ' 
-    '         Properties: intensity, parentMz, polarity, rt
-    ' 
-    '     Class ScanMS1
-    ' 
-    '         Properties: BPC, products, TIC
+    '         Properties: activationMethod, centroided, charge, collisionEnergy, intensity
+    '                     parentMz, polarity, rt
     ' 
     ' 
     ' /********************************************************************************/

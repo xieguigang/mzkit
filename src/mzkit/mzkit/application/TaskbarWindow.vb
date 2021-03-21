@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b57ee66ef18c16a3805f4dfeb7452801, application\TaskbarWindow.vb"
+﻿#Region "Microsoft.VisualBasic::5931363180fd5eb2d034e45e5f00beac, src\mzkit\mzkit\application\TaskbarWindow.vb"
 
     ' Author:
     ' 
@@ -141,4 +141,3 @@ Module TaskBarWindow
         End If
     End Sub
 End Module
-

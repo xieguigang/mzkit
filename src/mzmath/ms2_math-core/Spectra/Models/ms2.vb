@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d9b5be017e1d29919dea0d1a11571d7, ms2_math-core\Spectra\Models\ms2.vb"
+﻿#Region "Microsoft.VisualBasic::3ab35b01ef94bc66dced6319f3f75b07, src\mzmath\ms2_math-core\Spectra\Models\ms2.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
 
     '     Class ms2
     ' 
-    '         Properties: Annotation, intensity, mz, quantity
+    '         Properties: Annotation, intensity, mz
     ' 
     '         Function: AbsoluteIntensity, RelativeIntensity, ToString
     '         Operators: -

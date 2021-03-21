@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::08773540053cd775c56efed86cdbf09f, forms\frmLogin.vb"
+﻿#Region "Microsoft.VisualBasic::08773540053cd775c56efed86cdbf09f, src\mzkit\mzkit\forms\frmLogin.vb"
 
     ' Author:
     ' 

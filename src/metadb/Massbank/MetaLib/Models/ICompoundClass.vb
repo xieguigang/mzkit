@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5be677e82e504cdff8024ea81b7c364d, Massbank\MetaLib\Models\ICompoundClass.vb"
+﻿#Region "Microsoft.VisualBasic::5be677e82e504cdff8024ea81b7c364d, src\metadb\Massbank\MetaLib\Models\ICompoundClass.vb"
 
     ' Author:
     ' 

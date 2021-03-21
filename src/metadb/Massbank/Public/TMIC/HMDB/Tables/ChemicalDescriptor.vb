@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d3f198c51bb00587f8a1e23b43d4db17, Massbank\Public\TMIC\HMDB\Tables\ChemicalDescriptor.vb"
+﻿#Region "Microsoft.VisualBasic::d3f198c51bb00587f8a1e23b43d4db17, src\metadb\Massbank\Public\TMIC\HMDB\Tables\ChemicalDescriptor.vb"
 
     ' Author:
     ' 

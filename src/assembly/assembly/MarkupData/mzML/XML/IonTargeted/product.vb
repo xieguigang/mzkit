@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5848ae459081a512ae49e6e1a9671599, assembly\MarkupData\mzML\XML\IonTargeted\product.vb"
+﻿#Region "Microsoft.VisualBasic::5848ae459081a512ae49e6e1a9671599, src\assembly\assembly\MarkupData\mzML\XML\IonTargeted\product.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f66aa211a87313b2da1397c81f412ef7, FormulaSearch.Extensions\Scores\MoleculeIonStable.vb"
+﻿#Region "Microsoft.VisualBasic::f66aa211a87313b2da1397c81f412ef7, src\metadb\FormulaSearch.Extensions\Scores\MoleculeIonStable.vb"
 
     ' Author:
     ' 

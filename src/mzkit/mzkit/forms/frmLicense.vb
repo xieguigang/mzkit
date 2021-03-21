@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a7265c8eb4a3f526a08a06891948f29, forms\frmLicense.vb"
+﻿#Region "Microsoft.VisualBasic::1a7265c8eb4a3f526a08a06891948f29, src\mzkit\mzkit\forms\frmLicense.vb"
 
     ' Author:
     ' 

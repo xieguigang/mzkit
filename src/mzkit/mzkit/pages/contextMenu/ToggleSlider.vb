@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::524821fccfaf988f5410d3baa22f5edf, pages\contextMenu\ToggleSlider.vb"
+﻿#Region "Microsoft.VisualBasic::524821fccfaf988f5410d3baa22f5edf, src\mzkit\mzkit\pages\contextMenu\ToggleSlider.vb"
 
     ' Author:
     ' 

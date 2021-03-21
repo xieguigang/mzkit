@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d49cad2e539962b55737046ef9aef82, pages\toolkit\PageMzCalculator.vb"
+﻿#Region "Microsoft.VisualBasic::6d49cad2e539962b55737046ef9aef82, src\mzkit\mzkit\pages\toolkit\PageMzCalculator.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d51390fa8d2b9fc759ce52fcd9c19ef, Massbank\Public\lipidMAPS\SDF.vb"
+﻿#Region "Microsoft.VisualBasic::6d51390fa8d2b9fc759ce52fcd9c19ef, src\metadb\Massbank\Public\lipidMAPS\SDF.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d26362532e2cff0686182b43c19151a5, TargetedMetabolomics\MRM\QuantitativeAnalysis\StandardCurveWorker.vb"
+﻿#Region "Microsoft.VisualBasic::d26362532e2cff0686182b43c19151a5, src\mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\StandardCurveWorker.vb"
 
     ' Author:
     ' 

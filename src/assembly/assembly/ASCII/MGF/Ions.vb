@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4df76eb1bc14040705fb1dea904ce68b, assembly\ASCII\MGF\Ions.vb"
+﻿#Region "Microsoft.VisualBasic::4df76eb1bc14040705fb1dea904ce68b, src\assembly\assembly\ASCII\MGF\Ions.vb"
 
     ' Author:
     ' 

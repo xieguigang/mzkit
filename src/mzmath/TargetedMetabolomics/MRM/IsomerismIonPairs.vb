@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::64333acffeacdcfb35d10b90a1fdd718, TargetedMetabolomics\MRM\IsomerismIonPairs.vb"
+﻿#Region "Microsoft.VisualBasic::64333acffeacdcfb35d10b90a1fdd718, src\mzmath\TargetedMetabolomics\MRM\IsomerismIonPairs.vb"
 
     ' Author:
     ' 

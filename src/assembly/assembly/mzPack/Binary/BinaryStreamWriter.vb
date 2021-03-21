@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0ce9b45d5a21783aca2efbff5cba4a0c, assembly\mzPack\Binary\BinaryStreamWriter.vb"
+﻿#Region "Microsoft.VisualBasic::92325367fed627da200914861ad7c132, src\assembly\assembly\mzPack\Binary\BinaryStreamWriter.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
 
     '     Class BinaryStreamWriter
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     '         Sub: (+2 Overloads) Dispose, (+2 Overloads) Write, (+2 Overloads) WriteBuffer, writeIndex
     ' 
     ' 

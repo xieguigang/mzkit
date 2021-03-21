@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68bf95ebc790eed59438e12c8239f4c9, pages\dockWindow\frmStartPage.vb"
+﻿#Region "Microsoft.VisualBasic::68bf95ebc790eed59438e12c8239f4c9, src\mzkit\mzkit\pages\dockWindow\frmStartPage.vb"
 
     ' Author:
     ' 

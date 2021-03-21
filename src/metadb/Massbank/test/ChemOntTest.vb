@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::106d810d04584fbdbcbf2e40e720100b, Massbank\test\ChemOntTest.vb"
+﻿#Region "Microsoft.VisualBasic::106d810d04584fbdbcbf2e40e720100b, src\metadb\Massbank\test\ChemOntTest.vb"
 
     ' Author:
     ' 

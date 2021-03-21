@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86757e157c6e7f02bfb16fe3302a7df0, ms2_math-core\Spectra\Alignment\ScoreAggregates.vb"
+﻿#Region "Microsoft.VisualBasic::86757e157c6e7f02bfb16fe3302a7df0, src\mzmath\ms2_math-core\Spectra\Alignment\ScoreAggregates.vb"
 
     ' Author:
     ' 

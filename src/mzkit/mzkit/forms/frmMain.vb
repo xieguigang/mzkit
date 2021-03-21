@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::97d8cccacfd4921e274f5cde22119e86, forms\frmMain.vb"
+﻿#Region "Microsoft.VisualBasic::4e2082ece7a24b1de9541cd4687de065, src\mzkit\mzkit\forms\frmMain.vb"
 
     ' Author:
     ' 
@@ -50,7 +50,7 @@
     '          showHelp, showLoggingWindow, ShowMRMIons, showMsImaging, ShowMzkitToolkit
     '          ShowPage, ShowProperties, ShowPropertyWindow, showRTerm, ShowSearchList
     '          ShowSettings, showStartPage, showStatusMessage, Timer1_Tick, ToolStripStatusLabel2_Click
-    '          UpdateCacheSize
+    '          ToolStripStatusLabel4_Click, UpdateCacheSize
     ' 
     ' /********************************************************************************/
 

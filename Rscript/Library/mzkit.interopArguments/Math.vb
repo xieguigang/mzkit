@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a526910bcda7d65fb8f04f9447d6a91, Library\mzkit.interopArguments\Math.vb"
+﻿#Region "Microsoft.VisualBasic::9a526910bcda7d65fb8f04f9447d6a91, Rscript\Library\mzkit.interopArguments\Math.vb"
 
     ' Author:
     ' 

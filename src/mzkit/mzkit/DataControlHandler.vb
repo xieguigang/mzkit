@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::06058c409fa9b4f42034ec6f63ad743f, DataControlHandler.vb"
+﻿#Region "Microsoft.VisualBasic::daea915e5a5794fcc63a3bc892ee8f0f, src\mzkit\mzkit\DataControlHandler.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
 
     ' Module DataControlHandler
     ' 
-    '     Sub: PasteTextData, SaveDataGrid
+    '     Sub: PasteTextData, SaveDataGrid, WriteTableToFile
     ' 
     ' /********************************************************************************/
 

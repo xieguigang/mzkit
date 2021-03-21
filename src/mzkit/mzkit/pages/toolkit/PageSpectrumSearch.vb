@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::937d6d03405d1f81e5ec8a1254d63166, pages\toolkit\PageSpectrumSearch.vb"
+﻿#Region "Microsoft.VisualBasic::3b7fbd2b762b940cd989b28a22da1a3c, src\mzkit\mzkit\pages\toolkit\PageSpectrumSearch.vb"
 
     ' Author:
     ' 
@@ -239,4 +239,3 @@ Public Class PageSpectrumSearch
         host.ShowPage(host.mzkitTool)
     End Sub
 End Class
-

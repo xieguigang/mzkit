@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f40f475639a01a14f401c5997ac9c12, metaDNA\KEGGHandler.vb"
+﻿#Region "Microsoft.VisualBasic::1b09fe7ea80c0b573a00f65c5c8b2dac, src\metadna\metaDNA\KEGGHandler.vb"
 
     ' Author:
     ' 
@@ -35,6 +35,8 @@
     ' Summaries:
 
     ' Class KEGGHandler
+    ' 
+    '     Properties: Calculators
     ' 
     '     Constructor: (+1 Overloads) Sub New
     '     Function: CreateIndex, GetCompound, QueryByMz

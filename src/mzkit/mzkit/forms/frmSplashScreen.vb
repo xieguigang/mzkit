@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c88023e258a6002dc42f00d83649aac, forms\frmSplashScreen.vb"
+﻿#Region "Microsoft.VisualBasic::8c56745e943cc1479572fd1b491fc3fb, src\mzkit\mzkit\forms\frmSplashScreen.vb"
 
     ' Author:
     ' 

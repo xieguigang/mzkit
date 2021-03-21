@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd81c25e42785843f9b23938e9083f9f, mz_deco\PeakFeature.vb"
+﻿#Region "Microsoft.VisualBasic::438dc6bbbe1f42975f2e3c8713966373, src\mzmath\mz_deco\Models\PeakFeature.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,13 @@
 
     ' Summaries:
 
-    ' Class PeakROI
-    ' 
-    '     Properties: mz, rawfile
-    ' 
     ' Class PeakFeature
     ' 
-    '     Properties: baseline, integration, maxInto, mz, noise
-    '                 nticks, rt, rtmax, rtmin, snRatio
-    '                 xcms_id
+    '     Properties: area, baseline, integration, maxInto, mz
+    '                 noise, nticks, rt, rtmax, rtmin
+    '                 snRatio, xcms_id
     ' 
-    ' Class MzGroup
-    ' 
-    '     Properties: mz, XIC
+    '     Function: ToString
     ' 
     ' /********************************************************************************/
 

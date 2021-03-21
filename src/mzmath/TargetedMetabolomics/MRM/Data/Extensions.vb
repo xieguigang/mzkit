@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::730470a44ea1b59f9b95f7e4cd774931, TargetedMetabolomics\MRM\Data\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::730470a44ea1b59f9b95f7e4cd774931, src\mzmath\TargetedMetabolomics\MRM\Data\Extensions.vb"
 
     ' Author:
     ' 
