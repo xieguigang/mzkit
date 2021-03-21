@@ -14,7 +14,7 @@ Module Module1
                 .IteratesALL _
                 .ToArray
 
-            Dim peaktable = scans.GetMzGroups.DecoMzGroups
+            Dim peaktable As PeakFeature() = scans.GetMzGroups.DecoMzGroups({3, 30}).ToArray
 
             Pause()
         End Using

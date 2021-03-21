@@ -152,11 +152,11 @@ Public Module Deconvolution
     ''' <param name="quantile#"></param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function DecoMzGroups(mzgroups As IEnumerable(Of MzGroup), Optional quantile# = 0.65) As IEnumerable(Of PeakFeature)
+    Public Iterator Function DecoMzGroups(mzgroups As IEnumerable(Of MzGroup), peakwidth As DoubleRange, Optional quantile# = 0.65) As IEnumerable(Of PeakFeature)
         Dim mzfeatures As IGrouping(Of String, PeakFeature)() = mzgroups _
             .AsParallel _
             .Select(Function(mz)
-                        Return mz.GetPeakGroups(quantile)
+                        Return mz.GetPeakGroups(peakwidth, quantile)
                     End Function) _
             .IteratesALL _
             .GroupBy(Function(m)
@@ -164,13 +164,16 @@ Public Module Deconvolution
                      End Function) _
             .ToArray
         Dim guid As New Dictionary(Of String, Counter)
+        Dim uid As String
 
         For Each mzidgroup In mzfeatures
-            Dim mId = mzidgroup.Key
-            Dim rtIdgroup = mzidgroup.GroupBy(Function(m) stdNum.Round(m.rt).ToString).ToArray
+            Dim mId As String = mzidgroup.Key
+            Dim rtIdgroup = mzidgroup _
+                .GroupBy(Function(m) stdNum.Round(m.rt).ToString) _
+                .ToArray
 
             For Each rtgroup In rtIdgroup
-                Dim uid = $"M{mId}T{rtgroup.Key}"
+                uid = $"M{mId}T{rtgroup.Key}"
                 guid(uid) = 0
 
                 For Each feature In rtgroup

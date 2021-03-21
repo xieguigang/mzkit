@@ -92,6 +92,12 @@ Public Class PeakFeature
     ''' </remarks>
     Public Property integration As Double
     ''' <summary>
+    ''' 计算得到的峰面积
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property area As Double
+
+    ''' <summary>
     ''' 噪声的面积积分百分比
     ''' </summary>
     ''' <returns></returns>
@@ -108,5 +114,9 @@ Public Class PeakFeature
             Return stdNum.Log(integration / noise)
         End Get
     End Property
+
+    Public Overrides Function ToString() As String
+        Return $"[{xcms_id}] {mz.ToString("F4")}@[{rtmin.ToString("F1")}, {rtmax.ToString("F1")}] = {area.ToString("G3")}"
+    End Function
 
 End Class
