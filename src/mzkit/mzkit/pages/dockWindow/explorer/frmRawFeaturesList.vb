@@ -125,7 +125,11 @@ Public Class frmRawFeaturesList
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Private Sub ToolStripButton2_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
-        Call loadInternal(CurrentRawFile, Double.MinValue, Double.MaxValue)
+        If CurrentRawFile Is Nothing Then
+            Call MyApplication.host.showStatusMessage("No raw data file was loaded!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+        Else
+            Call loadInternal(CurrentRawFile, Double.MinValue, Double.MaxValue)
+        End If
     End Sub
 
     Private Sub loadInternal(raw As Raw, rtmin As Double, rtmax As Double)
