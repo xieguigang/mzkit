@@ -143,7 +143,7 @@ Namespace GCMS
         End Function
 
         Public Overrides Function ToString() As String
-            Return $"[{fileName}] {title Or "NA".AsDefault}"
+            Return $"[{fileName}] {title Or "NA".AsDefault}, scan_time [{times.Min.ToString("F1")} ~ {times.Max.ToString("F1")}s]"
         End Function
     End Class
 End Namespace

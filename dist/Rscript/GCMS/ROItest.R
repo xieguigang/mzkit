@@ -5,3 +5,5 @@ const ROI = "E:\biodeep\SCFA\cal\mzML\20ppb.mzML"
 :> ROIlist
 :> str
 ;
+
+pause();

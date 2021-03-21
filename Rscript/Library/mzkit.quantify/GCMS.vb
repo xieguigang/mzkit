@@ -225,7 +225,10 @@ Module GCMSLinear
     ''' <param name="maxDeletions"></param>
     ''' <returns></returns>
     <ExportAPI("linear_algorithm")>
-    Public Function algorithm(contents As ContentTable, Optional maxDeletions As Integer = 1) As InternalStandardMethod
+    Public Function algorithm(contents As ContentTable,
+                              Optional maxDeletions As Integer = 1,
+                              Optional baselineQuantile As Double = 0) As InternalStandardMethod
+
         Return New InternalStandardMethod(
             contents:=contents,
             integrator:=PeakAreaMethods.SumAll,
@@ -275,6 +278,7 @@ Module GCMSLinear
                 peakwidth:=range.TryCast(Of DoubleRange),
                 baselineQuantile:=baseline,
                 snThreshold:=sn
-            )
+            ) _
+            .ToArray
     End Function
 End Module

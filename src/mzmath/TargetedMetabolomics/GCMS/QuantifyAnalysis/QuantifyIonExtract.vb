@@ -116,7 +116,10 @@ Namespace GCMS.QuantifyAnalysis
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetAllFeatures(sample As Raw) As IEnumerable(Of ROI)
-            Return GetTICPeaks(sample.GetTIC, sn:=5, baselineQuantile:=baselineQuantile)
+            ' 20210321 信噪比的计算还有点问题
+            ' 信噪比过高会丢失很多数据
+            ' 在这里设置为默认的较低的1值
+            Return GetTICPeaks(sample.GetTIC, sn:=0, baselineQuantile:=baselineQuantile)
         End Function
 
         Public Overrides Iterator Function GetSamplePeaks(sample As Raw) As IEnumerable(Of TargetPeakPoint)
