@@ -55,13 +55,6 @@
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports stdNum = System.Math
 
-Public Class PeakROI : Inherits ROI
-
-    Public Property mz As Double
-    Public Property rawfile As String
-
-End Class
-
 Public Class PeakFeature
     Implements IRetentionTime
     Implements IROI
@@ -115,12 +108,5 @@ Public Class PeakFeature
             Return stdNum.Log(integration / noise)
         End Get
     End Property
-
-End Class
-
-Public Class MzGroup
-
-    Public Property mz As Double
-    Public Property XIC As ChromatogramTick()
 
 End Class
