@@ -119,13 +119,17 @@ Public Class frmRawFeaturesList
 
     Dim rtmin, rtmax As Double
 
-    Public Sub LoadRaw(raw As Raw, Optional rtmin As Double = Double.MinValue, Optional rtmax As Double = Double.MaxValue)
-        Dim hasUVscans As Boolean = False
+    ''' <summary>
+    ''' reload
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub ToolStripButton2_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
+        Call loadInternal(CurrentRawFile, Double.MinValue, Double.MaxValue)
+    End Sub
 
-        ' skip of reload identical files
-        If raw Is CurrentRawFile AndAlso rtmin = Me.rtmin AndAlso rtmax = Me.rtmax Then
-            Return
-        End If
+    Private Sub loadInternal(raw As Raw, rtmin As Double, rtmax As Double)
+        Dim hasUVscans As Boolean = False
 
         If (Not CurrentRawFile Is Nothing) AndAlso (Not raw Is CurrentRawFile) Then
             CurrentRawFile.UnloadMzpack()
@@ -141,6 +145,15 @@ Public Class frmRawFeaturesList
 
         If Not hasUVscans Then
             MyApplication.host.UVScansList.DockState = DockState.Hidden
+        End If
+    End Sub
+
+    Public Sub LoadRaw(raw As Raw, Optional rtmin As Double = Double.MinValue, Optional rtmax As Double = Double.MaxValue)
+        ' skip of reload identical files
+        If raw Is CurrentRawFile AndAlso rtmin = Me.rtmin AndAlso rtmax = Me.rtmax Then
+            Return
+        Else
+            loadInternal(raw, rtmin, rtmax)
         End If
     End Sub
 
