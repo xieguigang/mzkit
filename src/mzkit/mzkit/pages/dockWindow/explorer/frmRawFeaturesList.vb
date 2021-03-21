@@ -640,6 +640,29 @@ Public Class frmRawFeaturesList
         End If
     End Sub
 
+    Private Sub ToolStripButton3_Click(sender As Object, e As EventArgs) Handles ToolStripButton3.Click
+        Dim mz As Double = Val(Strings.Trim(ToolStripSpringTextBox1.Text))
+        Dim ppm As Double
+
+        If mz = 0.0 Then
+            Call MyApplication.host.showStatusMessage($"M/z value expression '{ToolStripSpringTextBox1.Text}' is not a valid number expression, please input a valid m/z value...", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            Return
+        ElseIf CurrentRawFile Is Nothing Then
+            Call MyApplication.host.showStatusMessage("Please load a raw data file at first!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            Return
+        End If
+
+        Dim Ms2 = CurrentRawFile.LoadMzpack.GetMs2Scans.Where(Function(m) PPMmethod.PPM(m.parentMz, mz) <= ppm).OrderBy(Function(m) m.rt).ToArray
+
+        Call treeView1.Nodes.Clear()
+
+        Dim mzNode As TreeNode = treeView1.Nodes.Add($"M/z {mz.ToString("F4")}, {Ms2.Length} hits")
+
+        For Each item In Ms2
+            Call mzNode.Nodes.Add(New TreeNode(item.ToString) With {.Tag = item, .ImageIndex = 2, .SelectedImageIndex = 2})
+        Next
+    End Sub
+
     Private Sub treeView1_DragEnter(sender As Object, e As DragEventArgs) Handles treeView1.DragEnter
         If e.Data.GetDataPresent(DataFormats.FileDrop) Then
             e.Effect = DragDropEffects.Copy

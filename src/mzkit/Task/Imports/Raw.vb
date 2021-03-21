@@ -102,6 +102,10 @@ Public Class Raw
     End Function
 
     Public Function LoadMzpack() As Raw
+        If isLoaded Then
+            Return Me
+        End If
+
         Using file As Stream = cache.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
             loaded = mzPack.ReadAll(file)
 
