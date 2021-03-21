@@ -665,7 +665,7 @@ Public Class frmMain
             Globals.Settings.viewer = New RawFileViewerSettings
         End If
 
-        _spinner.MaxValue = 30D
+        _spinner.MaxValue = Decimal.MaxValue
         _spinner.MinValue = 0
         _spinner.Increment = 0.5D
         _spinner.DecimalPlaces = 1
