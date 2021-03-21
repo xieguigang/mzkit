@@ -1,5 +1,6 @@
 ﻿Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports Microsoft.VisualBasic.Linq
 
 Module Module1
@@ -14,7 +15,7 @@ Module Module1
                 .IteratesALL _
                 .ToArray
 
-            Dim peaktable As PeakFeature() = scans.GetMzGroups.DecoMzGroups({3, 30}).ToArray
+            Dim peaktable As PeakFeature() = scans.GetMzGroups(Tolerance.DeltaMass(0.05)).DecoMzGroups({3, 30}).ToArray
 
             Pause()
         End Using

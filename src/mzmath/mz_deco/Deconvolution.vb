@@ -89,7 +89,8 @@ Public Module Deconvolution
                 .rt = ROI.rt,
                 .rtmax = ROI.time.Max,
                 .rtmin = ROI.time.Min,
-                .nticks = ROI.ticks.Length
+                .nticks = ROI.ticks.Length,
+                .area = ROI.ticks.Select(Function(t) t.Intensity).Sum
             }
         Next
     End Function
