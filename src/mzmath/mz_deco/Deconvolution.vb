@@ -106,7 +106,7 @@ Public Module Deconvolution
     End Function
 
     ''' <summary>
-    ''' Separation of mass signals.
+    ''' 1. Separation of mass signals.
     ''' (进行原始数据的mz分组操作，然后进行rt的升序排序)
     ''' </summary>
     ''' <param name="scans"></param>
@@ -145,6 +145,12 @@ Public Module Deconvolution
         Next
     End Function
 
+    ''' <summary>
+    ''' 2. 对得到的XIC进行峰查找
+    ''' </summary>
+    ''' <param name="mzgroups"></param>
+    ''' <param name="quantile#"></param>
+    ''' <returns></returns>
     <Extension>
     Public Iterator Function DecoMzGroups(mzgroups As IEnumerable(Of MzGroup), Optional quantile# = 0.65) As IEnumerable(Of PeakFeature)
         Dim mzfeatures As IGrouping(Of String, PeakFeature)() = mzgroups _

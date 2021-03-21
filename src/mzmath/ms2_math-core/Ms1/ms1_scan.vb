@@ -75,6 +75,9 @@ Public Class ms1_scan : Implements IMs1, IMs1Scan
     ''' <param name="data"></param>
     ''' <param name="tolerance">默认是误差在0.3个道尔顿以内</param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' 类似于centroid
+    ''' </remarks>
     Public Shared Function GroupByMz(data As IEnumerable(Of ms1_scan), Optional tolerance As Tolerance = Nothing) As ms1_scan()
         Dim mzGroups As NamedCollection(Of ms1_scan)() = data _
             .GroupBy(Function(scan) scan.mz, tolerance Or tolerance.DefaultTolerance) _
