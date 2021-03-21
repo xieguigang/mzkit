@@ -95,6 +95,8 @@ Namespace DockSample
         Private Sub OutputWindow_Load(sender As Object, e As EventArgs) Handles Me.Load
             Call ApplyVsTheme(ToolStrip1)
             Call comboBox_SelectedIndexChanged()
+
+            Me.Icon = My.Resources.logging
         End Sub
 
         Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click

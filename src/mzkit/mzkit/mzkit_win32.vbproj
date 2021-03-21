@@ -496,10 +496,10 @@
     <Compile Include="pages\dockWindow\documents\frmRScriptEdit.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="pages\dockWindow\R\frmRsharp.Designer.vb">
+    <Compile Include="pages\dockWindow\documents\frmRsharp.Designer.vb">
       <DependentUpon>frmRsharp.vb</DependentUpon>
     </Compile>
-    <Compile Include="pages\dockWindow\R\frmRsharp.vb">
+    <Compile Include="pages\dockWindow\documents\frmRsharp.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="pages\dockWindow\frmSettings.Designer.vb">
@@ -741,7 +741,7 @@
     <EmbeddedResource Include="pages\dockWindow\tools\PropertyWindow.resx">
       <DependentUpon>PropertyWindow.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="pages\dockWindow\R\frmRsharp.resx">
+    <EmbeddedResource Include="pages\dockWindow\documents\frmRsharp.resx">
       <DependentUpon>frmRsharp.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\frmStartPage.resx">
@@ -1022,6 +1022,7 @@
     <None Include="Resources\Home_Logo.png" />
     <None Include="Resources\Home_Logo_Link.png" />
     <None Include="Res\Search.ico" />
+    <None Include="Resources\logging.ico" />
     <Content Include="RibbonMarkup.h" />
     <Content Include="RibbonMarkup.xml" />
     <None Include="Resources\header-foreground-image.png" />

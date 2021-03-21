@@ -76,6 +76,10 @@ Public Class frmRsharp
         console.BackgroundColor = ConsoleColor.White
 
         MyApplication.RegisterConsole(console)
+
+        CopyFullPathToolStripMenuItem.Enabled = False
+        OpenContainingFolderToolStripMenuItem.Enabled = False
+        SaveDocumentToolStripMenuItem.Enabled = False
     End Sub
 
     Public Sub ShowPage()
