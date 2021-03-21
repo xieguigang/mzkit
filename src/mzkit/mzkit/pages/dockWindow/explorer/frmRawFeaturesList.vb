@@ -110,6 +110,7 @@ Public Class frmRawFeaturesList
         treeView1.ShowLines = True
         treeView1.ShowRootLines = True
         treeView1.Dock = DockStyle.Fill
+        treeView1.AllowDrop = True
 
         Me.TabText = "Features Explorer"
 
@@ -606,6 +607,21 @@ Public Class frmRawFeaturesList
                     })
                 Next
             Next
+        End If
+    End Sub
+
+    Private Sub treeView1_DragDrop(sender As Object, e As DragEventArgs) Handles treeView1.DragDrop
+        Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
+        Dim firstFile As String = files.ElementAtOrDefault(Scan0)
+
+        If Not firstFile Is Nothing Then
+            Call MyApplication.host.OpenFile(firstFile, showDocument:=True)
+        End If
+    End Sub
+
+    Private Sub treeView1_DragEnter(sender As Object, e As DragEventArgs) Handles treeView1.DragEnter
+        If e.Data.GetDataPresent(DataFormats.FileDrop) Then
+            e.Effect = DragDropEffects.Copy
         End If
     End Sub
 End Class
