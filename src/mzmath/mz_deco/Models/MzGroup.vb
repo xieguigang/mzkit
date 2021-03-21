@@ -1,4 +1,6 @@
 ﻿
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
+
 Public Class MzGroup
 
     Public Property mz As Double
