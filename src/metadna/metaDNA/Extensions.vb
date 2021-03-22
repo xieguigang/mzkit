@@ -1,6 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.BioDeep.MetaDNA.Infer
 
 <HideModuleName> Public Module Extensions
 
@@ -33,5 +34,17 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
                 {ion.lib_guid, ms2}
             }
         }
+    End Function
+
+    <Extension>
+    Public Function ExportInferRaw(raw As IEnumerable(Of CandidateInfer), result As IEnumerable(Of MetaDNAResult)) As MetaDNARawSet
+        Return New MetaDNARawSet With {
+            .Inference = raw.GetRaw(result).ToArray
+        }
+    End Function
+
+    <Extension>
+    Private Iterator Function GetRaw(raw As IEnumerable(Of CandidateInfer), result As IEnumerable(Of MetaDNAResult)) As IEnumerable(Of CandidateInfer)
+
     End Function
 End Module

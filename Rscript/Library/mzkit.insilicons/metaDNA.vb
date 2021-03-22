@@ -310,8 +310,33 @@ Module metaDNAInfer
 
 #Region "result output"
 
-    Public Function ResultAlignments() As Object
+    ''' <summary>
+    ''' get result alignments raw data for data plots.
+    ''' </summary>
+    ''' <param name="DIAinfer"></param>
+    ''' <param name="table"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("result.alignment")>
+    <RApiReturn(GetType(MetaDNARawSet))>
+    Public Function ResultAlignments(<RRawVectorArgument> DIAinfer As Object,
+                                     <RRawVectorArgument> table As Object,
+                                     Optional env As Environment = Nothing) As Object
 
+        Dim raw As pipeline = pipeline.TryCreatePipeline(Of CandidateInfer)(DIAinfer, env)
+        Dim filter As pipeline = pipeline.TryCreatePipeline(Of MetaDNAResult)(table, env)
+
+        If raw.isError Then
+            Return raw.getError
+        ElseIf filter.isError Then
+            Return filter.getError
+        End If
+
+        Dim rawFilter As MetaDNAResult() = filter.populates(Of MetaDNAResult)(env).ToArray
+
+        Return raw _
+            .populates(Of CandidateInfer)(env) _
+            .ExportInferRaw(rawFilter)
     End Function
 
     <ExportAPI("as.table")>

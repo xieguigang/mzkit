@@ -4,6 +4,9 @@ Imports BioNovoGene.BioDeep.MetaDNA.Infer
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
+''' <summary>
+''' a collection of peak alignment raw matrix data in XML data format
+''' </summary>
 Public Class MetaDNARawSet : Inherits ListOf(Of CandidateInfer)
     Implements XmlDataModel.IXmlType
 
