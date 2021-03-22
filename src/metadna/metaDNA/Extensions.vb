@@ -45,6 +45,7 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.BioDeep.MetaDNA.Infer
 
 <HideModuleName> Public Module Extensions
 
@@ -77,6 +78,33 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
                 {ion.lib_guid, ms2}
             }
         }
+    End Function
+
+    <Extension>
+    Public Function ExportInferRaw(raw As IEnumerable(Of CandidateInfer), result As IEnumerable(Of MetaDNAResult)) As MetaDNARawSet
+        Return New MetaDNARawSet With {
+            .Inference = raw.GetRaw(result).ToArray
+        }
+    End Function
+
+    <Extension>
+    Private Iterator Function GetRaw(raw As IEnumerable(Of CandidateInfer), result As IEnumerable(Of MetaDNAResult)) As IEnumerable(Of Candidate)
+        Dim resultIndex As New Dictionary(Of String, Candidate)
+
+        ' create unique index of the plot result raw data
+        For Each infer As CandidateInfer In raw
+            For Each candidate As Candidate In infer.infers
+                resultIndex($"{infer.kegg_id}|{candidate.precursorType}|{candidate.ROI}|{candidate.infer.rawFile}|{candidate.infer.reference.id}") = candidate
+            Next
+        Next
+
+        ' populate raw in result table row orders
+        For Each row As MetaDNAResult In result
+            Dim keyId As String = $"{row.KEGGId}|{row.precursorType}|{row.ROI_id}|{row.fileName}|{row.seed}"
+            Dim align As Candidate = resultIndex(keyId)
+
+            Yield align
+        Next
     End Function
 End Module
 
