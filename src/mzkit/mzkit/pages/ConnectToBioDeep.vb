@@ -152,9 +152,11 @@ Public Class ConnectToBioDeep
                                                               Dim uidRef As String = $"{obj!ROI_id}|{obj!KEGGId}|{obj!precursorType}|{obj!seed}|{obj!fileName}"
                                                               Dim align As Candidate = inferIndex(uidRef)
                                                               Dim qvsref = align.infer.GetAlignmentMirror
-                                                              Dim plot As Image = MassSpectra.AlignMirrorPlot(qvsref.query, qvsref.ref, title:=obj!name).AsGDIImage
 
-
+                                                              Call MyApplication.host.Invoke(
+                                                                  Sub()
+                                                                      Call MyApplication.host.mzkitTool.showAlignment(qvsref.query, qvsref.ref, align.infer)
+                                                                  End Sub)
                                                           End Sub
                                       End Sub)
 
