@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ef1a8c397e3dab7ca35701822415a01, FooDB\FooDB\StoredProcedure.vb"
+﻿#Region "Microsoft.VisualBasic::2ef1a8c397e3dab7ca35701822415a01, src\metadb\FooDB\FooDB\StoredProcedure.vb"
 
     ' Author:
     ' 

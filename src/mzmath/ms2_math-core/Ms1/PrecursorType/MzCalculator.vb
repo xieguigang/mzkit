@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66b31f9029ca8a37d0e6fbf05bb26968, ms2_math-core\Ms1\PrecursorType\MzCalculator.vb"
+﻿#Region "Microsoft.VisualBasic::66b31f9029ca8a37d0e6fbf05bb26968, src\mzmath\ms2_math-core\Ms1\PrecursorType\MzCalculator.vb"
 
     ' Author:
     ' 

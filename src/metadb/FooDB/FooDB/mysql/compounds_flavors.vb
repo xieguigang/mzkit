@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::860cae01bcf9a1ad2777b75fa746e9ae, FooDB\FooDB\mysql\compounds_flavors.vb"
+﻿#Region "Microsoft.VisualBasic::860cae01bcf9a1ad2777b75fa746e9ae, src\metadb\FooDB\FooDB\mysql\compounds_flavors.vb"
 
     ' Author:
     ' 

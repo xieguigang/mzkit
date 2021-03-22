@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e1430e065b2a9af61d0ebe88312a7fa7, assembly\MarkupData\mzML\XML\IonTargeted\precursor.vb"
+﻿#Region "Microsoft.VisualBasic::b8f80580cb8ccfedfac4c6a08549dd1c, src\assembly\assembly\MarkupData\mzML\XML\IonTargeted\precursor.vb"
 
     ' Author:
     ' 
@@ -45,7 +45,6 @@
 
 #End Region
 
-Imports System.Xml.Serialization
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.ControlVocabulary
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 

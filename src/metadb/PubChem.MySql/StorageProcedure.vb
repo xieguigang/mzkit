@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::54d97d4a65d5ebbbac81e33c6481c412, PubChem.MySql\StorageProcedure.vb"
+﻿#Region "Microsoft.VisualBasic::54d97d4a65d5ebbbac81e33c6481c412, src\metadb\PubChem.MySql\StorageProcedure.vb"
 
     ' Author:
     ' 

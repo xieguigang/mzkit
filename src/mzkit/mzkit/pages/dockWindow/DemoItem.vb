@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea2bc1ecb90af69263ab2bc857aa7661, pages\dockWindow\DemoItem.vb"
+﻿#Region "Microsoft.VisualBasic::778e9cf76ead2765c7e398b950f0f13e, src\mzkit\mzkit\pages\dockWindow\DemoItem.vb"
 
     ' Author:
     ' 
@@ -50,4 +50,3 @@ Public Class DemoItem
     Public Property Information As String
 
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::22c399ac04cccfef5e46b5c2d8bf75c3, Massbank\Public\TMIC\HMDB\Assembly\metabolite.vb"
+﻿#Region "Microsoft.VisualBasic::22c399ac04cccfef5e46b5c2d8bf75c3, src\metadb\Massbank\Public\TMIC\HMDB\Assembly\metabolite.vb"
 
     ' Author:
     ' 

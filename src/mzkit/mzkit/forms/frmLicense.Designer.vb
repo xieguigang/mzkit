@@ -46,12 +46,12 @@ Partial Class frmLicense
         Me.TextBox1.BackColor = System.Drawing.Color.WhiteSmoke
         Me.TextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.TextBox1.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox1.Location = New System.Drawing.Point(31, 122)
+        Me.TextBox1.Location = New System.Drawing.Point(31, 132)
         Me.TextBox1.Multiline = True
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.ReadOnly = True
         Me.TextBox1.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal
-        Me.TextBox1.Size = New System.Drawing.Size(556, 206)
+        Me.TextBox1.Size = New System.Drawing.Size(556, 223)
         Me.TextBox1.TabIndex = 0
         '
         'Label1
@@ -59,9 +59,9 @@ Partial Class frmLicense
         Me.Label1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("微软雅黑", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Microsoft YaHei", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.Silver
-        Me.Label1.Location = New System.Drawing.Point(7, 330)
+        Me.Label1.Location = New System.Drawing.Point(7, 358)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(603, 19)
         Me.Label1.TabIndex = 1
@@ -72,9 +72,9 @@ Partial Class frmLicense
         '
         Me.Button1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button1.Location = New System.Drawing.Point(512, 355)
+        Me.Button1.Location = New System.Drawing.Point(512, 385)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 21)
+        Me.Button1.Size = New System.Drawing.Size(75, 23)
         Me.Button1.TabIndex = 2
         Me.Button1.Text = "Close"
         Me.Button1.UseVisualStyleBackColor = True
@@ -88,16 +88,16 @@ Partial Class frmLicense
         Me.Panel1.Controls.Add(Me.TextBox1)
         Me.Panel1.Controls.Add(Me.Button1)
         Me.Panel1.Controls.Add(Me.Label1)
-        Me.Panel1.Location = New System.Drawing.Point(0, 126)
+        Me.Panel1.Location = New System.Drawing.Point(0, 137)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(617, 384)
+        Me.Panel1.Size = New System.Drawing.Size(617, 416)
         Me.Panel1.TabIndex = 3
         '
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Font = New System.Drawing.Font("微软雅黑", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label6.Location = New System.Drawing.Point(12, 358)
+        Me.Label6.Font = New System.Drawing.Font("Microsoft YaHei", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label6.Location = New System.Drawing.Point(12, 388)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(68, 17)
         Me.Label6.TabIndex = 5
@@ -106,8 +106,8 @@ Partial Class frmLicense
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("微软雅黑", 24.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(24, 67)
+        Me.Label5.Font = New System.Drawing.Font("Microsoft YaHei", 24.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Location = New System.Drawing.Point(24, 73)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(144, 41)
         Me.Label5.TabIndex = 4
@@ -117,9 +117,9 @@ Partial Class frmLicense
         '
         Me.Label4.AutoSize = True
         Me.Label4.BackColor = System.Drawing.Color.Transparent
-        Me.Label4.Font = New System.Drawing.Font("微软雅黑", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label4.Font = New System.Drawing.Font("Microsoft YaHei", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.Label4.ForeColor = System.Drawing.Color.Black
-        Me.Label4.Location = New System.Drawing.Point(375, 27)
+        Me.Label4.Location = New System.Drawing.Point(375, 29)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(212, 85)
         Me.Label4.TabIndex = 3
@@ -130,9 +130,9 @@ Partial Class frmLicense
         '
         Me.PictureBox1.BackgroundImage = CType(resources.GetObject("PictureBox1.BackgroundImage"), System.Drawing.Image)
         Me.PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox1.Location = New System.Drawing.Point(465, 3)
+        Me.PictureBox1.Location = New System.Drawing.Point(475, 3)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(120, 120)
+        Me.PictureBox1.Size = New System.Drawing.Size(120, 130)
         Me.PictureBox1.TabIndex = 4
         Me.PictureBox1.TabStop = False
         '
@@ -151,9 +151,9 @@ Partial Class frmLicense
         '
         Me.Label3.AutoSize = True
         Me.Label3.BackColor = System.Drawing.Color.Transparent
-        Me.Label3.Font = New System.Drawing.Font("微软雅黑", 7.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label3.Font = New System.Drawing.Font("Microsoft YaHei", 7.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.Label3.ForeColor = System.Drawing.Color.Teal
-        Me.Label3.Location = New System.Drawing.Point(139, 64)
+        Me.Label3.Location = New System.Drawing.Point(139, 69)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(341, 16)
         Me.Label3.TabIndex = 6
@@ -163,18 +163,18 @@ Partial Class frmLicense
         '
         Me.PictureBox2.BackgroundImage = Global.mzkit.My.Resources.Resources.logo_2x
         Me.PictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox2.Location = New System.Drawing.Point(11, 11)
+        Me.PictureBox2.Location = New System.Drawing.Point(11, 12)
         Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(129, 39)
+        Me.PictureBox2.Size = New System.Drawing.Size(129, 42)
         Me.PictureBox2.TabIndex = 7
         Me.PictureBox2.TabStop = False
         '
         'frmLicense
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(616, 509)
+        Me.ClientSize = New System.Drawing.Size(616, 551)
         Me.Controls.Add(Me.PictureBox2)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)

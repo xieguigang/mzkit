@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ae478b65fb16c91d99813addb2d4545, Library\mzkit\Massbank.vb"
+﻿#Region "Microsoft.VisualBasic::6ae478b65fb16c91d99813addb2d4545, Rscript\Library\mzkit\Massbank.vb"
 
     ' Author:
     ' 

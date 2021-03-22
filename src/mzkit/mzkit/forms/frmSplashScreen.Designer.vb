@@ -38,9 +38,9 @@ Partial Class frmSplashScreen
         '
         Me.PictureBox2.BackgroundImage = Global.mzkit.My.Resources.Resources.Home_Logo_Link
         Me.PictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox2.Location = New System.Drawing.Point(12, 12)
+        Me.PictureBox2.Location = New System.Drawing.Point(21, 12)
         Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(475, 156)
+        Me.PictureBox2.Size = New System.Drawing.Size(500, 186)
         Me.PictureBox2.TabIndex = 4
         Me.PictureBox2.TabStop = False
         '
@@ -52,18 +52,18 @@ Partial Class frmSplashScreen
         Me.Panel1.Controls.Add(Me.Label3)
         Me.Panel1.Controls.Add(Me.Information)
         Me.Panel1.Controls.Add(Me.PictureBox1)
-        Me.Panel1.Location = New System.Drawing.Point(0, 178)
+        Me.Panel1.Location = New System.Drawing.Point(0, 193)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(604, 168)
+        Me.Panel1.Size = New System.Drawing.Size(604, 182)
         Me.Panel1.TabIndex = 1
         '
         'Label4
         '
         Me.Label4.AutoSize = True
         Me.Label4.BackColor = System.Drawing.Color.Transparent
-        Me.Label4.Font = New System.Drawing.Font("微软雅黑", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Font = New System.Drawing.Font("Microsoft YaHei", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.ForeColor = System.Drawing.Color.Black
-        Me.Label4.Location = New System.Drawing.Point(474, 149)
+        Me.Label4.Location = New System.Drawing.Point(474, 161)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(38, 16)
         Me.Label4.TabIndex = 5
@@ -73,9 +73,9 @@ Partial Class frmSplashScreen
         '
         Me.Label3.AutoSize = True
         Me.Label3.BackColor = System.Drawing.Color.Transparent
-        Me.Label3.Font = New System.Drawing.Font("微软雅黑", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Label3.Font = New System.Drawing.Font("Microsoft YaHei", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.Label3.ForeColor = System.Drawing.Color.White
-        Me.Label3.Location = New System.Drawing.Point(363, 8)
+        Me.Label3.Location = New System.Drawing.Point(363, 9)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(212, 85)
         Me.Label3.TabIndex = 2
@@ -86,9 +86,9 @@ Partial Class frmSplashScreen
         '
         Me.Information.AutoSize = True
         Me.Information.BackColor = System.Drawing.Color.Transparent
-        Me.Information.Font = New System.Drawing.Font("微软雅黑", 7.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Information.Font = New System.Drawing.Font("Microsoft YaHei", 7.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.Information.ForeColor = System.Drawing.Color.White
-        Me.Information.Location = New System.Drawing.Point(2, 148)
+        Me.Information.Location = New System.Drawing.Point(2, 160)
         Me.Information.Name = "Information"
         Me.Information.Size = New System.Drawing.Size(341, 16)
         Me.Information.TabIndex = 1
@@ -98,19 +98,19 @@ Partial Class frmSplashScreen
         '
         Me.PictureBox1.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox1.BackgroundImage = Global.mzkit.My.Resources.Resources.header_foreground_image
-        Me.PictureBox1.Location = New System.Drawing.Point(0, 96)
+        Me.PictureBox1.Location = New System.Drawing.Point(0, 104)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(616, 52)
+        Me.PictureBox1.Size = New System.Drawing.Size(616, 56)
         Me.PictureBox1.TabIndex = 0
         Me.PictureBox1.TabStop = False
         '
         'frmSplashScreen
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.ClientSize = New System.Drawing.Size(604, 342)
+        Me.ClientSize = New System.Drawing.Size(604, 371)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.PictureBox2)
         Me.DoubleBuffered = True

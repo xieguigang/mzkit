@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a23d0f7e7f7a95ba31bbd72a174a206, FooDB\FooDB\Food.vb"
+﻿#Region "Microsoft.VisualBasic::7a23d0f7e7f7a95ba31bbd72a174a206, src\metadb\FooDB\FooDB\Food.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::36e9f68ee83c97fab0ae8f8585266839, Win32API.vb"
+﻿#Region "Microsoft.VisualBasic::8242d39c0fefceccb7b15ecf0b53df2a, src\mzkit\mzkit\Win32API.vb"
 
     ' Author:
     ' 
@@ -201,4 +201,3 @@ Namespace SmileWei.EmbeddedApp
 
     End Class
 End Namespace
-

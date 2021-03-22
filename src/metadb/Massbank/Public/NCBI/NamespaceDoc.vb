@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b4c9d58a5f1ed23d95f473a8e7315b62, Massbank\Public\NCBI\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::b4c9d58a5f1ed23d95f473a8e7315b62, src\metadb\Massbank\Public\NCBI\NamespaceDoc.vb"
 
     ' Author:
     ' 

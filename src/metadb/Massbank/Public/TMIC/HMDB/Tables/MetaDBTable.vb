@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::44d5d50e895021028ea5aec4fe4a16eb, Massbank\Public\TMIC\HMDB\Tables\MetaDBTable.vb"
+﻿#Region "Microsoft.VisualBasic::44d5d50e895021028ea5aec4fe4a16eb, src\metadb\Massbank\Public\TMIC\HMDB\Tables\MetaDBTable.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90a2d8f9f6a9081328e49775b94f6643, ms2_math-core\Ms1\PrecursorType\Provider.vb"
+﻿#Region "Microsoft.VisualBasic::90a2d8f9f6a9081328e49775b94f6643, src\mzmath\ms2_math-core\Ms1\PrecursorType\Provider.vb"
 
     ' Author:
     ' 
@@ -146,6 +146,11 @@ Namespace Ms1.PrecursorType
         ReadOnly pos As Dictionary(Of String, MzCalculator) = PositiveFormula.GetFormulas
         ReadOnly neg As Dictionary(Of String, MzCalculator) = NegativeFormula.GetFormulas
 
+        ''' <summary>
+        ''' 解析出阳离子模式的加合物形式
+        ''' </summary>
+        ''' <param name="mode">例如[M]+，[M+H]+等</param>
+        ''' <returns></returns>
         Public ReadOnly Property Positive(mode As String) As MzCalculator
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -159,6 +164,11 @@ Namespace Ms1.PrecursorType
             End Get
         End Property
 
+        ''' <summary>
+        ''' 解析出阴离子模式的加合物形式
+        ''' </summary>
+        ''' <param name="mode">例如[M]-，[M-H]-等</param>
+        ''' <returns></returns>
         Public ReadOnly Property Negative(mode As String) As MzCalculator
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -171,6 +181,21 @@ Namespace Ms1.PrecursorType
                 Return mz
             End Get
         End Property
+
+        Public Function Calculators(ParamArray precursor_types As String()) As MzCalculator()
+            Return (Iterator Function() As IEnumerable(Of MzCalculator)
+                        For Each type As String In precursor_types
+                            If type.Last = "+"c Then
+                                Yield Positive(type)
+                            ElseIf type.Last = "-"c Then
+                                Yield Negative(type)
+                            Else
+                                ' do nothing?
+                                Throw New InvalidExpressionException($"unknown charge mode '{type}'!")
+                            End If
+                        Next
+                    End Function)().ToArray
+        End Function
 
         ''' <summary>
         ''' 这个函数返回1或者-1,用来分别对应于阳离子和阴离子

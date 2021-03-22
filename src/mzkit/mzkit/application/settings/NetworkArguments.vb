@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ddcb236c4ac0a89c5ca5d06e6873f6f, application\settings\NetworkArguments.vb"
+﻿#Region "Microsoft.VisualBasic::6ddcb236c4ac0a89c5ca5d06e6873f6f, src\mzkit\mzkit\application\settings\NetworkArguments.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6491dda10e787310394351984a1a2a82, forms\ISplashScreenUpdater.vb"
+﻿#Region "Microsoft.VisualBasic::4ad2cde8b8a4fdc5854acceafa7c12e1, src\mzkit\mzkit\forms\ISplashScreenUpdater.vb"
 
     ' Author:
     ' 
@@ -47,4 +47,3 @@ Public Interface ISplashScreenUpdater
     Property UpdateInformation As Action(Of String)
 
 End Interface
-

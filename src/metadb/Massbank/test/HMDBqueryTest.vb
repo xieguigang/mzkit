@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::761eebaff03386d6180691a1d1d177ad, Massbank\test\HMDBqueryTest.vb"
+﻿#Region "Microsoft.VisualBasic::761eebaff03386d6180691a1d1d177ad, src\metadb\Massbank\test\HMDBqueryTest.vb"
 
     ' Author:
     ' 

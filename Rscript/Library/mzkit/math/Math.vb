@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f40948f073e80b1916af6dadca93ef61, Library\mzkit\math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::498f56fc43df91d81af63f45a8ade42d, Rscript\Library\mzkit\math\Math.vb"
 
     ' Author:
     ' 
@@ -61,6 +61,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
@@ -164,18 +165,23 @@ Module MzMath
                             ms1 As Object,
                             Optional tolerance As Object = "ppm:20",
                             Optional baseline# = 0.65,
+                            <RRawVectorArgument>
+                            Optional peakwidth As Object = "3,20",
                             Optional env As Environment = Nothing) As Object
 
         Dim ms1_scans As IEnumerable(Of IMs1Scan) = ms1Scans(ms1)
         Dim errors As [Variant](Of Tolerance, Message) = Math.getTolerance(tolerance, env)
+        Dim rtRange = ApiArgumentHelpers.GetDoubleRange(peakwidth, env, [default]:="3,20")
 
         If errors Like GetType(Message) Then
             Return errors.TryCast(Of Message)
+        ElseIf rtRange Like GetType(Message) Then
+            Return rtRange.TryCast(Of Message)
         End If
 
         Return ms1_scans _
             .GetMzGroups(errors) _
-            .DecoMzGroups(quantile:=baseline) _
+            .DecoMzGroups(rtRange, quantile:=baseline) _
             .ToArray
     End Function
 

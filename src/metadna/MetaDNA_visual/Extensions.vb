@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3246bd62e44abcdfdcd4bd1f3b5e4c7a, MetaDNA_visual\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::3246bd62e44abcdfdcd4bd1f3b5e4c7a, src\metadna\MetaDNA_visual\Extensions.vb"
 
     ' Author:
     ' 

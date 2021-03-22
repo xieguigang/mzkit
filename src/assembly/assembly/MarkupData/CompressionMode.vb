@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c89c9753b1f731bcab06d2de4d6e08ec, assembly\MarkupData\CompressionMode.vb"
+﻿#Region "Microsoft.VisualBasic::c89c9753b1f731bcab06d2de4d6e08ec, src\assembly\assembly\MarkupData\CompressionMode.vb"
 
     ' Author:
     ' 

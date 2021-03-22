@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66b2d4e42c1ffd9fdfca09accf794245, Library\mzkit\PubChem.vb"
+﻿#Region "Microsoft.VisualBasic::66b2d4e42c1ffd9fdfca09accf794245, Rscript\Library\mzkit\PubChem.vb"
 
     ' Author:
     ' 

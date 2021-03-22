@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a3afcfd89ef16db664c1ba2ad41de550, assembly\UnifyReader\FileFormats\mzMLScan.vb"
+﻿#Region "Microsoft.VisualBasic::f77c9177b354a640c8c8d59647464bf5, src\assembly\assembly\UnifyReader\FileFormats\mzMLScan.vb"
 
     ' Author:
     ' 
@@ -36,8 +36,9 @@
 
     '     Class mzMLScan
     ' 
-    '         Function: GetBPC, GetMsLevel, GetMsMs, GetParentMz, GetPolarity
-    '                   GetScanId, GetScanTime, GetTIC, IsEmpty
+    '         Function: GetActivationMethod, GetBPC, GetCentroided, GetCharge, GetCollisionEnergy
+    '                   GetMsLevel, GetMsMs, GetParentMz, GetPolarity, GetScanId
+    '                   GetScanTime, GetTIC, IsEmpty
     ' 
     ' 
     ' /********************************************************************************/
@@ -47,6 +48,7 @@
 Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML.ControlVocabulary
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 
@@ -117,6 +119,37 @@ Namespace DataReader
             Else
                 Return "-"
             End If
+        End Function
+
+        Public Overrides Function GetCharge(scan As spectrum) As Integer
+            Dim charge As cvParam = scan _
+                .precursorList _
+                .precursor(Scan0) _
+                .selectedIonList _
+                .selectedIon(Scan0) _
+                .cvParams _
+                .KeyItem("charge state")
+
+            If charge Is Nothing Then
+                Return 0
+            Else
+                Return charge.value
+            End If
+        End Function
+
+        Public Overrides Function GetActivationMethod(scan As spectrum) As ActivationMethods
+            Dim active = scan.precursorList.precursor(Scan0).GetActivationMethod
+            Dim method As ActivationMethods = [Enum].Parse(GetType(ActivationMethods), active)
+
+            Return method
+        End Function
+
+        Public Overrides Function GetCollisionEnergy(scan As spectrum) As Double
+            Return scan.precursorList.precursor(Scan0).GetCollisionEnergy
+        End Function
+
+        Public Overrides Function GetCentroided(scan As spectrum) As Boolean
+            Return Not scan.profile
         End Function
     End Class
 End Namespace

@@ -8,6 +8,6 @@ bitmap(file = `${dirname(file)}/${basename(file)}.raw3D.png`) {
 	file 
 	:> open.mzpack
 	:> ms1_scans
-	:> raw_snapshot3D
+	:> raw_snapshot3D(size = [2400, 1200], noise_cutoff = 0.85)
 	;
 }

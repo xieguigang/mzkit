@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16e0db95654e53a34e93c513cc71fe5a, TargetedMetabolomics\MRM\QuantitativeAnalysis\MRMArguments.vb"
+﻿#Region "Microsoft.VisualBasic::16e0db95654e53a34e93c513cc71fe5a, src\mzmath\TargetedMetabolomics\MRM\QuantitativeAnalysis\MRMArguments.vb"
 
     ' Author:
     ' 

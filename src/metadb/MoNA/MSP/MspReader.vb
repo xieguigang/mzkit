@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a3173cbde69932ed1e7e9dc29d8d7e44, MoNA\MSP\MspReader.vb"
+﻿#Region "Microsoft.VisualBasic::a3173cbde69932ed1e7e9dc29d8d7e44, src\metadb\MoNA\MSP\MspReader.vb"
 
     ' Author:
     ' 

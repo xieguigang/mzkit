@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d04133506ca8980be7e02324aaa5bfd4, Chemoinformatics\InChI\InChI.vb"
+﻿#Region "Microsoft.VisualBasic::d04133506ca8980be7e02324aaa5bfd4, src\metadb\Chemoinformatics\InChI\InChI.vb"
 
     ' Author:
     ' 

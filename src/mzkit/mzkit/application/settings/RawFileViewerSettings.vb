@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da9e80d94f126a0dc9c9b718773fd178, application\settings\RawFileViewerSettings.vb"
+﻿#Region "Microsoft.VisualBasic::da9e80d94f126a0dc9c9b718773fd178, src\mzkit\mzkit\application\settings\RawFileViewerSettings.vb"
 
     ' Author:
     ' 

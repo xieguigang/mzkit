@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::586ba7f88630f1881d8859b9ef2db536, pages\dockWindow\explorer\frmRawFeaturesList.vb"
+﻿#Region "Microsoft.VisualBasic::3a0fb15248b52e8867667d8ad057fa4a, src\mzkit\mzkit\pages\dockWindow\explorer\frmRawFeaturesList.vb"
 
     ' Author:
     ' 
@@ -43,11 +43,12 @@
     '     Function: GetSelectedNodes, GetXICCollection
     ' 
     '     Sub: Button1_Click, Clear, ClearSelectionsToolStripMenuItem_Click, CollapseToolStripMenuItem_Click, CustomToolStripMenuItem_Click
-    '          DefaultToolStripMenuItem_Click, DeleteFileToolStripMenuItem_Click, exportMgf, frmFileExplorer_Activated, frmFileExplorer_Closing
-    '          frmFileExplorer_Load, GeneralFlavoneToolStripMenuItem_Click, IonScansToolStripMenuItem_Click, IonSearchToolStripMenuItem_Click, LoadRaw
-    '          MolecularNetworkingToolStripMenuItem_Click, NatureProductToolStripMenuItem_Click, SearchFormulaToolStripMenuItem_Click, SelectAllToolStripMenuItem_Click, ShowBPCToolStripMenuItem_Click
-    '          ShowPropertiesToolStripMenuItem_Click, ShowTICToolStripMenuItem_Click, ShowXICToolStripMenuItem_Click, SmallMoleculeToolStripMenuItem_Click, SpectrumSearchToolStripMenuItem_Click
-    '          TextBox2_Click, TreeView1_AfterCheck, treeView1_AfterSelect, XICToolStripMenuItem_Click
+    '          DefaultToolStripMenuItem_Click, DeleteFileToolStripMenuItem_Click, exportMgf, ExportMzPackToolStripMenuItem_Click, frmFileExplorer_Activated
+    '          frmFileExplorer_Closing, frmFileExplorer_Load, GeneralFlavoneToolStripMenuItem_Click, IonScansToolStripMenuItem_Click, IonSearchToolStripMenuItem_Click
+    '          IonTableToolStripMenuItem_Click, LoadRaw, MetaDNASearchToolStripMenuItem_Click, MolecularNetworkingToolStripMenuItem_Click, NatureProductToolStripMenuItem_Click
+    '          OpenViewerToolStripMenuItem_Click, SearchFormulaToolStripMenuItem_Click, SelectAllToolStripMenuItem_Click, ShowBPCToolStripMenuItem_Click, ShowPropertiesToolStripMenuItem_Click
+    '          ShowTICToolStripMenuItem_Click, ShowXICToolStripMenuItem_Click, SmallMoleculeToolStripMenuItem_Click, SpectrumSearchToolStripMenuItem_Click, TextBox2_Click
+    '          TreeView1_AfterCheck, treeView1_AfterSelect, XICToolStripMenuItem_Click, XICViewToolStripMenuItem_Click
     ' 
     ' /********************************************************************************/
 
@@ -58,16 +59,17 @@ Imports System.IO
 Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
-Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports mzkit.My
 Imports RibbonLib.Interop
@@ -108,32 +110,66 @@ Public Class frmRawFeaturesList
         treeView1.ShowLines = True
         treeView1.ShowRootLines = True
         treeView1.Dock = DockStyle.Fill
+        treeView1.AllowDrop = True
 
         Me.TabText = "Features Explorer"
 
         Call ApplyVsTheme(ContextMenuStrip1, ToolStrip1)
     End Sub
 
-    Public Sub LoadRaw(raw As Raw)
+    Dim rtmin, rtmax As Double
+
+    ''' <summary>
+    ''' reload
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub ToolStripButton2_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
+        If CurrentRawFile Is Nothing Then
+            Call MyApplication.host.showStatusMessage("No raw data file was loaded!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+        Else
+            Call loadInternal(CurrentRawFile, Double.MinValue, Double.MaxValue)
+        End If
+    End Sub
+
+    Private Sub loadInternal(raw As Raw, rtmin As Double, rtmax As Double)
         Dim hasUVscans As Boolean = False
 
+        If (Not CurrentRawFile Is Nothing) AndAlso (Not raw Is CurrentRawFile) Then
+            CurrentRawFile.UnloadMzpack()
+        End If
+
+        Me.rtmin = rtmin
+        Me.rtmax = rtmax
+
+        XICViewToolStripMenuItem.Checked = False
         _CurrentRawFile = raw
-        treeView1.loadRawFile(raw, hasUVscans)
+        treeView1.loadRawFile(raw, hasUVscans, rtmin, rtmax)
+        checked.Clear()
 
         If Not hasUVscans Then
             MyApplication.host.UVScansList.DockState = DockState.Hidden
         End If
     End Sub
 
+    Public Sub LoadRaw(raw As Raw, Optional rtmin As Double = Double.MinValue, Optional rtmax As Double = Double.MaxValue)
+        ' skip of reload identical files
+        If raw Is CurrentRawFile AndAlso rtmin = Me.rtmin AndAlso rtmax = Me.rtmax Then
+            Return
+        Else
+            loadInternal(raw, rtmin, rtmax)
+        End If
+    End Sub
+
     Public Iterator Function GetXICCollection(ppm As Double) As IEnumerable(Of NamedCollection(Of ChromatogramTick))
         Dim scans = GetSelectedNodes _
-            .Where(Function(t) TypeOf t.Tag Is ScanEntry) _
-            .Select(Function(a) DirectCast(a.Tag, ScanEntry)) _
-            .GroupBy(Function(a) a.mz, Tolerance.DeltaMass(0.3)) _
+            .Where(Function(t) TypeOf t.Tag Is ScanMS2) _
+            .Select(Function(a) DirectCast(a.Tag, ScanMS2)) _
+            .GroupBy(Function(a) a.parentMz, Tolerance.DeltaMass(0.3)) _
             .ToArray
         Dim raw As Raw = CurrentRawFile
 
-        For Each scanId In scans.Select(Function(a) a.First.id)
+        For Each scanId In scans.Select(Function(a) a.First.scan_id)
             Yield MyApplication.mzkitRawViewer.getXICMatrix(raw, scanId, ppm, relativeInto:=False)
         Next
     End Function
@@ -169,7 +205,7 @@ Public Class frmRawFeaturesList
             Return
         End If
 
-        If TypeOf e.Node.Tag Is ScanEntry Then
+        If TypeOf e.Node.Tag Is ScanMS2 Then
             If e.Node.Checked Then
                 checked.Add(e.Node)
             Else
@@ -187,13 +223,13 @@ Public Class frmRawFeaturesList
                 node.Checked = checked
 
                 If checked Then
-                    If TypeOf node.Tag Is ScanEntry Then
+                    If TypeOf node.Tag Is ScanMS2 Then
                         Me.checked.Add(node)
                     ElseIf TypeOf node.Tag Is UVScan Then
 
                     End If
                 Else
-                    If TypeOf node.Tag Is ScanEntry Then
+                    If TypeOf node.Tag Is ScanMS2 Then
                         Me.checked.Remove(node)
                     ElseIf TypeOf node.Tag Is UVScan Then
 
@@ -274,23 +310,27 @@ Public Class frmRawFeaturesList
             Return
         End If
 
-        If TypeOf currentNode.Tag Is ScanEntry Then
+        If TypeOf currentNode.Tag Is ScanMS2 Then
             currentNode.Parent.Collapse()
         Else
             currentNode.Collapse()
         End If
     End Sub
 
-    Private Sub TextBox2_Click(sender As Object, e As EventArgs)
+    Private Sub TextBox2_Click(sender As Object, e As EventArgs) Handles ToolStripSpringTextBox1.Click
         MyApplication.host.showStatusMessage("Input a number for m/z search, or input formula text for precursor ion match!")
     End Sub
 
     Private Sub ShowTICToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowTICToolStripMenuItem.Click
-        Call MyApplication.host.mzkitTool.TIC({CurrentRawFile}, isBPC:=False)
+        If Not CurrentRawFile Is Nothing Then
+            Call MyApplication.host.mzkitTool.TIC({CurrentRawFile}, isBPC:=False)
+        End If
     End Sub
 
     Private Sub ShowBPCToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowBPCToolStripMenuItem.Click
-        Call MyApplication.host.mzkitTool.TIC({CurrentRawFile}, isBPC:=True)
+        If Not CurrentRawFile Is Nothing Then
+            Call MyApplication.host.mzkitTool.TIC({CurrentRawFile}, isBPC:=True)
+        End If
     End Sub
 
     Friend Sub ShowXICToolStripMenuItem_Click() Handles ShowXICToolStripMenuItem.Click
@@ -370,9 +410,9 @@ Public Class frmRawFeaturesList
         Dim node = treeView1.SelectedNode
 
         If Not node Is Nothing AndAlso CurrentRawFile.cacheFileExists Then
-            Dim mz = CurrentRawFile.GetMs2Scans.Where(Function(scan) scan.id = node.Text).FirstOrDefault
+            Dim mz = CurrentRawFile.FindMs2Scan(node.Text)
 
-            If Not mz Is Nothing AndAlso mz.mz > 0 Then
+            If Not mz Is Nothing AndAlso mz.parentMz > 0 Then
                 Dim charge As Double = mz.charge
                 Dim ionMode As Integer = mz.polarity
 
@@ -380,7 +420,7 @@ Public Class frmRawFeaturesList
                     charge = 1
                 End If
 
-                MyApplication.host.mzkitSearch.doMzSearch(mz.mz, charge, ionMode)
+                MyApplication.host.mzkitSearch.doMzSearch(mz.parentMz, charge, ionMode)
                 MyApplication.host.ShowPage(MyApplication.host.mzkitSearch)
             End If
         End If
@@ -478,34 +518,34 @@ Public Class frmRawFeaturesList
     Private Sub IonSearchToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles IonSearchToolStripMenuItem.Click
         Dim currentScan = treeView1.SelectedNode?.Tag
 
-        If currentScan Is Nothing OrElse Not TypeOf currentScan Is ScanEntry Then
+        If currentScan Is Nothing OrElse Not TypeOf currentScan Is ScanMS2 Then
             Return
         End If
 
-        Call FeatureSearchHandler.SearchByMz(DirectCast(currentScan, ScanEntry).mz, {CurrentRawFile})
+        Call FeatureSearchHandler.SearchByMz(DirectCast(currentScan, ScanMS2).parentMz, {CurrentRawFile}, True)
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
-        Call FeatureSearchHandler.SearchByMz(Strings.Trim(ToolStripSpringTextBox1.Text), {CurrentRawFile})
+        If CurrentRawFile Is Nothing Then
+            Call MyApplication.host.showStatusMessage("please load a raw data file at first!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+        Else
+            Call FeatureSearchHandler.SearchByMz(Strings.Trim(ToolStripSpringTextBox1.Text), {CurrentRawFile}, True)
+        End If
     End Sub
 
     Private Sub SpectrumSearchToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SpectrumSearchToolStripMenuItem.Click
         Dim currentScan = treeView1.SelectedNode?.Tag
 
-        If currentScan Is Nothing OrElse Not TypeOf currentScan Is ScanEntry Then
+        If currentScan Is Nothing OrElse Not TypeOf currentScan Is ScanMS2 Then
             Return
         End If
 
-        Dim ms2 As ScanEntry = currentScan
+        Dim ms2 As ScanMS2 = currentScan
+        Dim searchPage As New frmSpectrumSearch
 
-        Using cache As New netCDFReader(CurrentRawFile.ms2_cache)
-            Dim products As ms2() = cache.getDataVariable(ms2.id).numerics.AsMs2.ToArray
-            Dim searchPage As New frmSpectrumSearch
-
-            searchPage.Show(MyApplication.host.dockPanel)
-            searchPage.page.loadMs2(products)
-            searchPage.page.runSearch()
-        End Using
+        searchPage.Show(MyApplication.host.dockPanel)
+        searchPage.page.loadMs2(ms2.GetMs)
+        searchPage.page.runSearch()
     End Sub
 
     Private Sub ShowPropertiesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowPropertiesToolStripMenuItem.Click
@@ -520,5 +560,112 @@ Public Class frmRawFeaturesList
         Call MyApplication.host.mzkitTool.ShowPage()
 
         MyApplication.host.fileExplorer.UpdateMainTitle(CurrentRawFile.source)
+    End Sub
+
+    Private Sub OpenViewerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenViewerToolStripMenuItem.Click
+        If Not CurrentRawFile Is Nothing Then
+            Call VisualStudio.ShowDocument(Of frmUntargettedViewer)().loadRaw(CurrentRawFile)
+        End If
+    End Sub
+
+    Private Sub MetaDNASearchToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MetaDNASearchToolStripMenuItem.Click
+        If Not CurrentRawFile Is Nothing Then
+            Call ConnectToBioDeep.RunMetaDNA(CurrentRawFile)
+        End If
+    End Sub
+
+    Private Sub ExportMzPackToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExportMzPackToolStripMenuItem.Click
+        If CurrentRawFile Is Nothing Then
+            Return
+        End If
+
+        Using file As New SaveFileDialog With {
+            .Title = "Export mzPack file!",
+            .Filter = "BioNovoGene mzPack(*.mzPack)|*.mzPack"
+        }
+            If file.ShowDialog = DialogResult.OK Then
+                CurrentRawFile.SaveAs(file.FileName)
+            End If
+        End Using
+    End Sub
+
+    ''' <summary>
+    ''' 切换为XIC视图
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub XICViewToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles XICViewToolStripMenuItem.Click
+        If CurrentRawFile Is Nothing Then
+            Return
+        ElseIf XICViewToolStripMenuItem.Checked Then
+            ' switch back to MS scan groups
+            XICViewToolStripMenuItem.Checked = False
+
+            treeView1.Nodes.Clear()
+            treeView1.loadRawFile(CurrentRawFile, False, rtmin, rtmax)
+            checked.Clear()
+        Else
+            XICViewToolStripMenuItem.Checked = True
+
+            Dim allMs2 = CurrentRawFile _
+                .GetMs2Scans _
+                .Where(Function(t) t.rt >= rtmin AndAlso t.rt <= rtmax) _
+                .GroupBy(Function(t) t.parentMz, Tolerance.DeltaMass(0.1)) _
+                .OrderBy(Function(t) Val(t.name)) _
+                .ToArray
+
+            treeView1.Nodes.Clear()
+            checked.Clear()
+
+            For Each mz1 As NamedCollection(Of ScanMS2) In allMs2
+                Dim mzNode As TreeNode = treeView1.Nodes.Add(Val(mz1.name).ToString("F4") & $", {mz1.Length} MS/MS scans")
+
+                For Each ms2 As ScanMS2 In mz1
+                    Call mzNode.Nodes.Add(New TreeNode(ms2.scan_id) With {
+                        .Tag = ms2,
+                        .ImageIndex = 1,
+                        .SelectedImageIndex = 1
+                    })
+                Next
+            Next
+        End If
+    End Sub
+
+    Private Sub treeView1_DragDrop(sender As Object, e As DragEventArgs) Handles treeView1.DragDrop
+        Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
+        Dim firstFile As String = files.ElementAtOrDefault(Scan0)
+
+        If Not firstFile Is Nothing Then
+            Call MyApplication.host.OpenFile(firstFile, showDocument:=True)
+        End If
+    End Sub
+
+    Private Sub ToolStripButton3_Click(sender As Object, e As EventArgs) Handles ToolStripButton3.Click
+        Dim mz As Double = Val(Strings.Trim(ToolStripSpringTextBox1.Text))
+        Dim ppm As Double = MyApplication.host.GetPPMError
+
+        If mz = 0.0 Then
+            Call MyApplication.host.showStatusMessage($"M/z value expression '{ToolStripSpringTextBox1.Text}' is not a valid number expression, please input a valid m/z value...", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            Return
+        ElseIf CurrentRawFile Is Nothing Then
+            Call MyApplication.host.showStatusMessage("Please load a raw data file at first!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            Return
+        End If
+
+        Dim Ms2 = CurrentRawFile.LoadMzpack.GetMs2Scans.Where(Function(m) PPMmethod.PPM(m.parentMz, mz) <= ppm).OrderBy(Function(m) m.rt).ToArray
+
+        Call treeView1.Nodes.Clear()
+
+        Dim mzNode As TreeNode = treeView1.Nodes.Add($"M/z {mz.ToString("F4")}, {Ms2.Length} hits")
+
+        For Each item In Ms2
+            Call mzNode.Nodes.Add(New TreeNode(item.ToString) With {.Tag = item, .ImageIndex = 1, .SelectedImageIndex = 1})
+        Next
+    End Sub
+
+    Private Sub treeView1_DragEnter(sender As Object, e As DragEventArgs) Handles treeView1.DragEnter
+        If e.Data.GetDataPresent(DataFormats.FileDrop) Then
+            e.Effect = DragDropEffects.Copy
+        End If
     End Sub
 End Class

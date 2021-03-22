@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a0f63670eeee318538220224e358a968, ms2_math-core\Spectra\Models\Trimming\QuantileIntensityCutoff.vb"
+﻿#Region "Microsoft.VisualBasic::a0f63670eeee318538220224e358a968, src\mzmath\ms2_math-core\Spectra\Models\Trimming\QuantileIntensityCutoff.vb"
 
     ' Author:
     ' 

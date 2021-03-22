@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68bc59312061b1645f116e9cdfcfda77, metaDNA\Models\AnnotatedSeed.vb"
+﻿#Region "Microsoft.VisualBasic::5648683cf739ff453f1781f53dcfd504, src\metadna\metaDNA\Models\AnnotatedSeed.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,8 @@
 
     ' Class AnnotatedSeed
     ' 
-    '     Properties: id, kegg_id, parent, products
+    '     Properties: id, inferSize, kegg_id, parent, parentTrace
+    '                 products
     ' 
     '     Function: ToString
     ' 

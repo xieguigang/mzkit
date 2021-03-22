@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5baf810b15feabd8179e73edfac19227, pages\dockWindow\base\ToolWindow.vb"
+﻿#Region "Microsoft.VisualBasic::5baf810b15feabd8179e73edfac19227, src\mzkit\mzkit\pages\dockWindow\base\ToolWindow.vb"
 
     ' Author:
     ' 

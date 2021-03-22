@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2333338c74a7979da45908cefbe14c4d, mz\Pipeline\mzplot.vb"
+﻿#Region "Microsoft.VisualBasic::2333338c74a7979da45908cefbe14c4d, src\assembly\mz\Pipeline\mzplot.vb"
 
     ' Author:
     ' 

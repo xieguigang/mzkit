@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b3330a171e03bd8484fcaabed769463, TargetedMetabolomics\LinearQuantitative\Linear\QuantificationWorker.vb"
+﻿#Region "Microsoft.VisualBasic::1b3330a171e03bd8484fcaabed769463, src\mzmath\TargetedMetabolomics\LinearQuantitative\Linear\QuantificationWorker.vb"
 
     ' Author:
     ' 

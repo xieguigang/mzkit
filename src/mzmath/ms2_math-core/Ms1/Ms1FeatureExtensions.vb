@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::586680601360c50685620c6c990c82c9, ms2_math-core\Ms1\Ms1FeatureExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::586680601360c50685620c6c990c82c9, src\mzmath\ms2_math-core\Ms1\Ms1FeatureExtensions.vb"
 
     ' Author:
     ' 

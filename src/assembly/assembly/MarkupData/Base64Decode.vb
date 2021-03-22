@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b59f27d18f2657b019d42051d7bd89e, assembly\MarkupData\Base64Decode.vb"
+﻿#Region "Microsoft.VisualBasic::2b59f27d18f2657b019d42051d7bd89e, src\assembly\assembly\MarkupData\Base64Decode.vb"
 
     ' Author:
     ' 

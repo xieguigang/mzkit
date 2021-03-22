@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29a1974cc7044c43711834c591e0ae34, pages\pageStart\PageStart.vb"
+﻿#Region "Microsoft.VisualBasic::08f1279ae0ed5d27e37f2d5cae0a3829, src\mzkit\mzkit\pages\pageStart\PageStart.vb"
 
     ' Author:
     ' 
@@ -68,7 +68,7 @@ Public Class PageStart
             Dim firstFile = MyApplication.fileExplorer.treeView1.Nodes(0).Nodes(0)
 
             MyApplication.fileExplorer.treeView1.SelectedNode = firstFile
-            MyApplication.fileExplorer.showRawFile(DirectCast(firstFile.Tag, Raw))
+            MyApplication.fileExplorer.showRawFile(DirectCast(firstFile.Tag, Raw), False, directSnapshot:=True)
         End If
 
         MyApplication.host.ShowMzkitToolkit()

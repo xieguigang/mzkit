@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::15de0852ef95ce38a7a5d49149c8ea13, SpectrumTree\Writer.vb"
+﻿#Region "Microsoft.VisualBasic::15de0852ef95ce38a7a5d49149c8ea13, src\assembly\SpectrumTree\Writer.vb"
 
     ' Author:
     ' 

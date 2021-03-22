@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7081567856e62c2c50ff09b68c47da5c, assembly\MarkupData\mzML\RawScanParser.vb"
+﻿#Region "Microsoft.VisualBasic::7a249eb4788ef16b6403ce970e7ee91a, src\assembly\assembly\MarkupData\mzML\RawScanParser.vb"
 
     ' Author:
     ' 

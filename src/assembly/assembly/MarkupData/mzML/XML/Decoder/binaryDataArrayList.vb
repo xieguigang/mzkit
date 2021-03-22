@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::952f643e581acb6bce5956d0b9d9392e, assembly\MarkupData\mzML\XML\Decoder\binaryDataArrayList.vb"
+﻿#Region "Microsoft.VisualBasic::952f643e581acb6bce5956d0b9d9392e, src\assembly\assembly\MarkupData\mzML\XML\Decoder\binaryDataArrayList.vb"
 
     ' Author:
     ' 

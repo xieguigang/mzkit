@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a8dead4d309d0f9984217ad8a00834d, TargetedMetabolomics\GCMS\QuantifyAnalysis\ScanIonExtract.vb"
+﻿#Region "Microsoft.VisualBasic::5a8dead4d309d0f9984217ad8a00834d, src\mzmath\TargetedMetabolomics\GCMS\QuantifyAnalysis\ScanIonExtract.vb"
 
     ' Author:
     ' 
@@ -66,7 +66,11 @@ Namespace GCMS.QuantifyAnalysis
         Protected Overrides Function GetPeak(ion_id As String, rt As DoubleRange, sample As Raw) As TargetPeakPoint
             Dim sampleName As String = sample.fileName.BaseName
             Dim spectra As ms1_scan() = sample.GetMsScan(rt)
-            ' Dim maxMz As Double = Me.ions.Where(Function(i) i.id = ion_id).First.ms.OrderByDescending(Function(mz) mz.intensity).First.mz
+            ' Dim maxMz As Double = Me.ions _
+            '    .Where(Function(i) i.id = ion_id) _
+            '    .First.ms _
+            '    .OrderByDescending(Function(mz) mz.intensity) _
+            '    .First.mz
             Dim maxMz As Double = spectra.OrderByDescending(Function(mz) mz.intensity).First.mz
             Dim tick As ChromatogramTick() = spectra _
                 .Where(Function(scan) stdNum.Abs(scan.mz - maxMz) <= 0.3) _

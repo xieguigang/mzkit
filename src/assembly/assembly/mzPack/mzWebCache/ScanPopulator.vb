@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d05f4c11750f44f05c840dcf247fc66, assembly\mzPack\mzWebCache\ScanPopulator.vb"
+﻿#Region "Microsoft.VisualBasic::81fe7b357dea0b2fddb4ab4e8431b616, src\assembly\assembly\mzPack\mzWebCache\ScanPopulator.vb"
 
     ' Author:
     ' 
@@ -61,6 +61,7 @@ Namespace mzData.mzWebCache
         Protected ms1Err As Tolerance
 
         Protected ReadOnly reader As MsDataReader(Of Scan)
+        Protected ReadOnly invalidScans As New List(Of Scan)
 
         Sub New(mzErr As String)
             ms1Err = Tolerance.ParseScript(mzErr)
@@ -74,13 +75,14 @@ Namespace mzData.mzWebCache
             For Each scan As Scan In scans
                 If reader.IsEmpty(scan) Then
                     Call $"missing scan value of [{reader.GetScanId(scan)}]".Warning
+                    Call invalidScans.Add(scan)
                 Else
                     Yield scan
                 End If
             Next
         End Function
 
-        Public Iterator Function Load(scans As IEnumerable(Of Scan)) As IEnumerable(Of ScanMS1)
+        Public Iterator Function Load(scans As IEnumerable(Of Scan), Optional progress As Action(Of String) = Nothing) As IEnumerable(Of ScanMS1)
             Dim i As i32 = 1
 
             For Each scan As Scan In PopulateValidScans(scans)
@@ -112,8 +114,16 @@ Namespace mzData.mzWebCache
                         .intensity = reader.GetBPC(scan),
                         .mz = msms.Select(Function(a) a.mz).ToArray,
                         .into = msms.Select(Function(a) a.intensity).ToArray,
-                        .polarity = PrecursorType.ParseIonMode(reader.GetPolarity(scan), True)
+                        .polarity = PrecursorType.ParseIonMode(reader.GetPolarity(scan), True),
+                        .activationMethod = reader.GetActivationMethod(scan),
+                        .centroided = reader.GetCentroided(scan),
+                        .charge = reader.GetCharge(scan),
+                        .collisionEnergy = reader.GetCollisionEnergy(scan)
                     }.DoCall(AddressOf products.Add)
+                End If
+
+                If Not progress Is Nothing Then
+                    Call progress(scan_id)
                 End If
             Next
 
@@ -126,8 +136,8 @@ Namespace mzData.mzWebCache
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Load(rawfile As String) As IEnumerable(Of ScanMS1)
-            Return Load(loadScans(rawfile))
+        Public Function Load(rawfile As String, Optional progress As Action(Of String) = Nothing) As IEnumerable(Of ScanMS1)
+            Return Load(loadScans(rawfile), progress)
         End Function
 
     End Class

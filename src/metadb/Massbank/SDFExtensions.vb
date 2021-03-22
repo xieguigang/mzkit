@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ce3497e9391cbda8bb8736745a8f477, Massbank\SDFExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::6ce3497e9391cbda8bb8736745a8f477, src\metadb\Massbank\SDFExtensions.vb"
 
     ' Author:
     ' 

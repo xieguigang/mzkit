@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c71caf5674aada4d43316b39148e3aa4, TargetedMetabolomics\LinearQuantitative\PeakArea.vb"
+﻿#Region "Microsoft.VisualBasic::c71caf5674aada4d43316b39148e3aa4, src\mzmath\TargetedMetabolomics\LinearQuantitative\PeakArea.vb"
 
     ' Author:
     ' 
@@ -68,15 +68,28 @@ Namespace LinearQuantitative
         ''' </summary>
         ''' <param name="chromatogram"></param>
         ''' <param name="peak">The time range of the peak</param>
-        ''' <param name="baseline">The quantile threshold of the baseline</param>
         ''' <returns></returns>
         ''' <remarks>
         ''' 简单的净峰法计算出峰面积
         ''' </remarks>
         <Extension>
-        Public Function PeakArea(chromatogram As IVector(Of ChromatogramTick), peak As DoubleRange, Optional baseline# = 0.65) As Double
-            Dim S = chromatogram.PickArea(range:=peak) ' TPA
-            Dim B = chromatogram.Baseline(quantile:=baseline)
+        Public Function PeakArea(chromatogram As IVector(Of ChromatogramTick), peak As DoubleRange) As Double
+            Dim S = chromatogram.PickArea(range:=peak)
+            Dim TPA As Double = S.PeakArea
+
+            Return TPA
+        End Function
+
+        ''' <summary>
+        ''' ``B + A = S``
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 简单的净峰法计算出峰面积
+        ''' </remarks>
+        <Extension>
+        Public Function PeakArea(S As IVector(Of ChromatogramTick)) As Double
+            Dim B = (S.First.Intensity + S.Last.Intensity) / 2 ' chromatogram.Baseline(quantile:=Baseline)
 
             ' 2018-4-10 不需要减去基线？？？
             ' B = 0

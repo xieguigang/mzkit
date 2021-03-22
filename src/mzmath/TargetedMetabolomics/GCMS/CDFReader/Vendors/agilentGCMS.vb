@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::acee842c33621bee5fbb57492d0bc87c, TargetedMetabolomics\GCMS\CDFReader\Vendors\agilentGCMS.vb"
+﻿#Region "Microsoft.VisualBasic::acee842c33621bee5fbb57492d0bc87c, src\mzmath\TargetedMetabolomics\GCMS\CDFReader\Vendors\agilentGCMS.vb"
 
     ' Author:
     ' 

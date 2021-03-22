@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df7c5092d21ff5ec3c3988e53ece6f6d, TargetedMetabolomics\GCMS\Raw.vb"
+﻿#Region "Microsoft.VisualBasic::df7c5092d21ff5ec3c3988e53ece6f6d, src\mzmath\TargetedMetabolomics\GCMS\Raw.vb"
 
     ' Author:
     ' 
@@ -143,7 +143,7 @@ Namespace GCMS
         End Function
 
         Public Overrides Function ToString() As String
-            Return $"[{fileName}] {title Or "NA".AsDefault}"
+            Return $"[{fileName}] {title Or "NA".AsDefault}, scan_time [{times.Min.ToString("F1")} ~ {times.Max.ToString("F1")}s]"
         End Function
     End Class
 End Namespace

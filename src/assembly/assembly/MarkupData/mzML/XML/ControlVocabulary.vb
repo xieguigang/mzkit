@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d79e26582dfdff4a71b2eb91f9ede62c, assembly\MarkupData\mzML\XML\ControlVocabulary.vb"
+﻿#Region "Microsoft.VisualBasic::d79e26582dfdff4a71b2eb91f9ede62c, src\assembly\assembly\MarkupData\mzML\XML\ControlVocabulary.vb"
 
     ' Author:
     ' 

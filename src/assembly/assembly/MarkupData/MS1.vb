@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d87a7286a1e52018f320745026acbdc, assembly\MarkupData\MS1.vb"
+﻿#Region "Microsoft.VisualBasic::0d87a7286a1e52018f320745026acbdc, src\assembly\assembly\MarkupData\MS1.vb"
 
     ' Author:
     ' 

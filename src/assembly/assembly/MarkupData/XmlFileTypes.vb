@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3b4df2d6ebd02c97403753f3211f294, assembly\MarkupData\XmlFileTypes.vb"
+﻿#Region "Microsoft.VisualBasic::b3b4df2d6ebd02c97403753f3211f294, src\assembly\assembly\MarkupData\XmlFileTypes.vb"
 
     ' Author:
     ' 

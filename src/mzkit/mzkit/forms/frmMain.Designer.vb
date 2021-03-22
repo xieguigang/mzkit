@@ -58,7 +58,7 @@ Partial Class frmMain
         'ToolStripStatusLabel1
         '
         Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
-        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(134, 18)
+        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(119, 18)
         Me.ToolStripStatusLabel1.Text = "ToolStripStatusLabel1"
         '
         'ToolStripDropDownButton1
@@ -68,49 +68,49 @@ Partial Class frmMain
         Me.ToolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ToolStripDropDownButton1.Name = "ToolStripDropDownButton1"
         Me.ToolStripDropDownButton1.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ToolStripDropDownButton1.Size = New System.Drawing.Size(166, 21)
+        Me.ToolStripDropDownButton1.Size = New System.Drawing.Size(149, 21)
         Me.ToolStripDropDownButton1.Text = "Use m/z Data Toolkits"
         '
         'MoleculeNetworkingToolStripMenuItem
         '
         Me.MoleculeNetworkingToolStripMenuItem.Image = CType(resources.GetObject("MoleculeNetworkingToolStripMenuItem.Image"), System.Drawing.Image)
         Me.MoleculeNetworkingToolStripMenuItem.Name = "MoleculeNetworkingToolStripMenuItem"
-        Me.MoleculeNetworkingToolStripMenuItem.Size = New System.Drawing.Size(201, 22)
+        Me.MoleculeNetworkingToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
         Me.MoleculeNetworkingToolStripMenuItem.Text = "Molecule Networking"
         '
         'FormulaSearchToolToolStripMenuItem
         '
         Me.FormulaSearchToolToolStripMenuItem.Image = CType(resources.GetObject("FormulaSearchToolToolStripMenuItem.Image"), System.Drawing.Image)
         Me.FormulaSearchToolToolStripMenuItem.Name = "FormulaSearchToolToolStripMenuItem"
-        Me.FormulaSearchToolToolStripMenuItem.Size = New System.Drawing.Size(201, 22)
+        Me.FormulaSearchToolToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
         Me.FormulaSearchToolToolStripMenuItem.Text = "Formula Search Tool"
         '
         'MzCalculatorToolStripMenuItem
         '
         Me.MzCalculatorToolStripMenuItem.Image = CType(resources.GetObject("MzCalculatorToolStripMenuItem.Image"), System.Drawing.Image)
         Me.MzCalculatorToolStripMenuItem.Name = "MzCalculatorToolStripMenuItem"
-        Me.MzCalculatorToolStripMenuItem.Size = New System.Drawing.Size(201, 22)
+        Me.MzCalculatorToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
         Me.MzCalculatorToolStripMenuItem.Text = "M/z Calculator"
         '
         'RawFileViewerToolStripMenuItem
         '
         Me.RawFileViewerToolStripMenuItem.Image = CType(resources.GetObject("RawFileViewerToolStripMenuItem.Image"), System.Drawing.Image)
         Me.RawFileViewerToolStripMenuItem.Name = "RawFileViewerToolStripMenuItem"
-        Me.RawFileViewerToolStripMenuItem.Size = New System.Drawing.Size(201, 22)
+        Me.RawFileViewerToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
         Me.RawFileViewerToolStripMenuItem.Text = "Raw File Viewer"
         '
         'ToolStripStatusLabel2
         '
         Me.ToolStripStatusLabel2.Image = CType(resources.GetObject("ToolStripStatusLabel2.Image"), System.Drawing.Image)
         Me.ToolStripStatusLabel2.Name = "ToolStripStatusLabel2"
-        Me.ToolStripStatusLabel2.Size = New System.Drawing.Size(150, 18)
+        Me.ToolStripStatusLabel2.Size = New System.Drawing.Size(135, 18)
         Me.ToolStripStatusLabel2.Text = "ToolStripStatusLabel2"
         '
         'ToolStripStatusLabel3
         '
         Me.ToolStripStatusLabel3.Image = CType(resources.GetObject("ToolStripStatusLabel3.Image"), System.Drawing.Image)
         Me.ToolStripStatusLabel3.Name = "ToolStripStatusLabel3"
-        Me.ToolStripStatusLabel3.Size = New System.Drawing.Size(150, 18)
+        Me.ToolStripStatusLabel3.Size = New System.Drawing.Size(135, 18)
         Me.ToolStripStatusLabel3.Text = "ToolStripStatusLabel3"
         '
         'ToolStripProgressBar1
@@ -124,7 +124,7 @@ Partial Class frmMain
         Me.ToolStripStatusLabel4.Image = CType(resources.GetObject("ToolStripStatusLabel4.Image"), System.Drawing.Image)
         Me.ToolStripStatusLabel4.IsLink = True
         Me.ToolStripStatusLabel4.Name = "ToolStripStatusLabel4"
-        Me.ToolStripStatusLabel4.Size = New System.Drawing.Size(43, 18)
+        Me.ToolStripStatusLabel4.Size = New System.Drawing.Size(40, 18)
         Me.ToolStripStatusLabel4.Text = "0/0"
         '
         'Ribbon1
@@ -153,6 +153,7 @@ Partial Class frmMain
         'frmMain
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
+        Me.BackColor = System.Drawing.SystemColors.Control
         Me.ClientSize = New System.Drawing.Size(1084, 524)
         Me.Controls.Add(Me.PanelBase)
         Me.Controls.Add(Me.StatusStrip)

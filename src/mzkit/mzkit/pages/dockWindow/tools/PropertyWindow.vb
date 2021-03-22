@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7913866723877e3351a41f5cb3eb34bd, pages\dockWindow\tools\PropertyWindow.vb"
+﻿#Region "Microsoft.VisualBasic::15f6592f8656f399a45e5914eb36aea4, src\mzkit\mzkit\pages\dockWindow\tools\PropertyWindow.vb"
 
     ' Author:
     ' 
@@ -48,6 +48,7 @@
 #End Region
 
 Imports System.ComponentModel
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Task
 
 Namespace DockSample
@@ -57,7 +58,7 @@ Namespace DockSample
         Public Sub New()
             InitializeComponent()
             ' comboBox.SelectedIndex = 0
-            propertyGrid.SelectedObject = New SpectrumProperty("n/a", "n/a", {})
+            propertyGrid.SelectedObject = New SpectrumProperty("n/a", "n/a", 0, New ScanMS2)
 
             DoubleBuffered = True
         End Sub

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c39717706b3aec913df754e1be462abf, assembly\ASCII\MSL\FileReader.vb"
+﻿#Region "Microsoft.VisualBasic::cbaebe4454edafdc771c6bf40690e081, src\assembly\assembly\ASCII\MSL\FileReader.vb"
 
     ' Author:
     ' 

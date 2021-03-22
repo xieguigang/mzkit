@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6be537031ea316a6b840f04cea5c25e5, ProteoWizard.d\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::6be537031ea316a6b840f04cea5c25e5, src\assembly\ProteoWizard.d\test\Module1.vb"
 
     ' Author:
     ' 

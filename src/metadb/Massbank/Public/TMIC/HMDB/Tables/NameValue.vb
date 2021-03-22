@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d964571334d960cf98e598afc1e7deac, Massbank\Public\TMIC\HMDB\Tables\NameValue.vb"
+﻿#Region "Microsoft.VisualBasic::d964571334d960cf98e598afc1e7deac, src\metadb\Massbank\Public\TMIC\HMDB\Tables\NameValue.vb"
 
     ' Author:
     ' 

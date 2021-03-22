@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84506793acd51253b256ae90ca198fed, pages\dockWindow\explorer\frmUVScans.vb"
+﻿#Region "Microsoft.VisualBasic::7e02aa4d78d2dc289ccf34677b6d00a1, src\mzkit\mzkit\pages\dockWindow\explorer\frmUVScans.vb"
 
     ' Author:
     ' 
@@ -45,6 +45,7 @@
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.UV
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language

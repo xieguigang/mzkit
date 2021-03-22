@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::019504d06b6b6deec1a9ea76ef0d8622, ProteoWizard.d\test\batchConvertor.vb"
+﻿#Region "Microsoft.VisualBasic::019504d06b6b6deec1a9ea76ef0d8622, src\assembly\ProteoWizard.d\test\batchConvertor.vb"
 
     ' Author:
     ' 

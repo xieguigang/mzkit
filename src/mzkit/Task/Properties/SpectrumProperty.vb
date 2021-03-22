@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::60f118502d3c8ca9d104d780a78df845, src\mzkit\Task\SpectrumProperty.vb"
+﻿#Region "Microsoft.VisualBasic::9e5885f6472a268442804fe24c9582c9, src\mzkit\Task\Properties\SpectrumProperty.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,8 @@
     ' Class SpectrumProperty
     ' 
     '     Properties: activationMethod, centroided, collisionEnergy, msLevel, polarity
-    '                 precursorCharge, precursorMz, retentionTime, rtmin, scanId
+    '                 precursorCharge, precursorMz, rawfile, retentionTime, rtmin
+    '                 scanId
     ' 
     '     Constructor: (+1 Overloads) Sub New
     '     Function: ToString
@@ -47,6 +48,7 @@
 #End Region
 
 Imports System.ComponentModel
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports stdNum = System.Math
@@ -77,16 +79,16 @@ Public Class SpectrumProperty
     Public Property rawfile As String
     Public Property scanId As String
 
-    Sub New(scanId As String, rawfile As String, attrs As attribute())
-        With attrs.ToDictionary(Function(a) a.name, Function(a) a.value)
-            msLevel = .TryGetValue(NameOf(msLevel))
-            collisionEnergy = .TryGetValue(NameOf(collisionEnergy))
-            centroided = .TryGetValue(NameOf(centroided))
-            precursorMz = Val(.TryGetValue(NameOf(precursorMz))).ToString("F4")
-            retentionTime = Val(.TryGetValue(NameOf(retentionTime))).ToString("F2")
-            precursorCharge = Val(.TryGetValue("precursorCharge"))
-            polarity = .TryGetValue("polarity", [default]:="n/a")
-            activationMethod = .TryGetValue("activationMethod", [default]:="n/a")
+    Sub New(scanId As String, rawfile As String, msLevel As Integer, attrs As ScanMS2)
+        With attrs
+            msLevel = msLevel
+            collisionEnergy = .collisionEnergy
+            centroided = .centroided
+            precursorMz = .parentMz.ToString("F4")
+            retentionTime = .rt.ToString("F2")
+            precursorCharge = .charge
+            polarity = .polarity
+            activationMethod = .activationMethod.Description
             rtmin = stdNum.Round(retentionTime / 60, 2)
         End With
 

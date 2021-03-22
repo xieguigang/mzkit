@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d44449575ea357a6fa8958bb9437aaa, ms2_math-core\Spectra\Models\Trimming\LowAbundanceTrimming.vb"
+﻿#Region "Microsoft.VisualBasic::1d44449575ea357a6fa8958bb9437aaa, src\mzmath\ms2_math-core\Spectra\Models\Trimming\LowAbundanceTrimming.vb"
 
     ' Author:
     ' 

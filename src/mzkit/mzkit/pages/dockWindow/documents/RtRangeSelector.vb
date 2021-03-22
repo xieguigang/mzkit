@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e5fc453d342bf11fcb9e9a77e4b4b1b, pages\dockWindow\documents\RtRangeSelector.vb"
+﻿#Region "Microsoft.VisualBasic::c4dc12cd49c004c78473f17a8ec04c3a, src\mzkit\mzkit\pages\dockWindow\documents\RtRangeSelector.vb"
 
     ' Author:
     ' 
@@ -36,15 +36,16 @@
 
     ' Class RtRangeSelector
     ' 
-    '     Properties: FillColor, SelectedColor
+    '     Properties: FillColor, rtmax, rtmin, SelectedColor
     ' 
-    '     Sub: DrawTIC, RefreshSelector, RtRangeSelector_Load, RtRangeSelector_MouseDown, RtRangeSelector_MouseMove
-    '          RtRangeSelector_MouseUp, RtRangeSelector_Resize, SetRange, SetTIC, Timer1_Tick
+    '     Sub: DrawTIC, RefreshRtRangeSelector, RefreshSelector, RtRangeSelector_Load, RtRangeSelector_MouseDown
+    '          RtRangeSelector_MouseMove, RtRangeSelector_MouseUp, SetRange, SetTIC, Timer1_Tick
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.ComponentModel
 Imports System.Drawing.Drawing2D
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports Microsoft.VisualBasic.Imaging
@@ -52,10 +53,18 @@ Imports Microsoft.VisualBasic.Language
 
 Public Class RtRangeSelector
 
+    ''' <summary>
+    ''' 返回实际的保留时间的秒数范围
+    ''' </summary>
+    ''' <param name="min"></param>
+    ''' <param name="max"></param>
     Public Event RangeSelect(min As Double, max As Double)
 
     Public Property SelectedColor As Color = Color.Green
     Public Property FillColor As Color = Color.Blue
+
+    Public Property rtmin As Double
+    Public Property rtmax As Double
 
     Dim start As Integer
     Dim endPox As Integer
@@ -70,10 +79,8 @@ Public Class RtRangeSelector
         TIC = data
         RtRange = data.Last.Time - data.First.Time
 
-        Using g = Me.CreateGraphics
-            Call g.FillRectangle(New SolidBrush(BackColor), New RectangleF(0, 0, Width, Height))
-            Call DrawTIC(g)
-        End Using
+        Call Me.Invalidate()
+        Call RefreshRtRangeSelector()
     End Sub
 
     Private Sub RtRangeSelector_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
@@ -94,13 +101,13 @@ Public Class RtRangeSelector
         Dim length As Double = Width
 
         With {start, endPox}
-            Dim min As Double = .Min / length
-            Dim max As Double = .Max / length
+            rtmin = .Min / length
+            rtmax = .Max / length
 
-            min = TIC(Scan0).Time + min * RtRange
-            max = TIC(Scan0).Time + max * RtRange
+            rtmin = TIC(Scan0).Time + rtmin * RtRange
+            rtmax = TIC(Scan0).Time + rtmax * RtRange
 
-            RaiseEvent RangeSelect(min, max)
+            RaiseEvent RangeSelect(rtmin, rtmax)
 
             start = .Min
             endPox = .Max
@@ -172,11 +179,10 @@ Public Class RtRangeSelector
         End If
     End Sub
 
-    Private Sub RtRangeSelector_Resize(sender As Object, e As EventArgs) Handles Me.Resize
+    Public Sub RefreshRtRangeSelector() Handles Me.Resize
         Using g = Me.CreateGraphics
             Call g.FillRectangle(New SolidBrush(BackColor), New RectangleF(0, 0, Width, Height))
             Call DrawTIC(g)
         End Using
     End Sub
 End Class
-

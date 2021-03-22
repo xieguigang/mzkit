@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb977560f0f23984cf17d7ed817de938, ms2_math-core\Spectra\Models\Trimming\RelativeIntensityCutoff.vb"
+﻿#Region "Microsoft.VisualBasic::219eed1e6b53b999226e63645c03808f, src\mzmath\ms2_math-core\Spectra\Models\Trimming\RelativeIntensityCutoff.vb"
 
     ' Author:
     ' 

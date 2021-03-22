@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::98a18dd78e95e5c9a6b047836bd225f9, ms2_math-core\Spectra\MzGrouping.vb"
+﻿#Region "Microsoft.VisualBasic::98a18dd78e95e5c9a6b047836bd225f9, src\mzmath\ms2_math-core\Spectra\MzGrouping.vb"
 
     ' Author:
     ' 

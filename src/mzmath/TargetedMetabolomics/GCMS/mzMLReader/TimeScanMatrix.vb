@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::baf821cd73bf8a39b2116cbce1d583ea, TargetedMetabolomics\GCMS\mzMLReader\TimeScanMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::baf821cd73bf8a39b2116cbce1d583ea, src\mzmath\TargetedMetabolomics\GCMS\mzMLReader\TimeScanMatrix.vb"
 
     ' Author:
     ' 

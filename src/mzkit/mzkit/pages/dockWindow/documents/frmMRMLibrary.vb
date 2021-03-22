@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a7c3509d29c760badfe5f92cd1c00d0a, pages\dockWindow\documents\frmMRMLibrary.vb"
+﻿#Region "Microsoft.VisualBasic::e423a621184b1f15eb2d25423e2785f6, src\mzkit\mzkit\pages\dockWindow\documents\frmMRMLibrary.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,8 @@
     ' 
     '     Function: (+2 Overloads) Save
     ' 
-    '     Sub: DeleteToolStripMenuItem_Click, frmMRMLibrary_Load, TabPage1_KeyDown
+    '     Sub: CopyFullPath, DeleteToolStripMenuItem_Click, frmMRMLibrary_Load, OpenContainingFolder, SaveDocument
+    '          TabPage1_KeyDown
     ' 
     ' /********************************************************************************/
 

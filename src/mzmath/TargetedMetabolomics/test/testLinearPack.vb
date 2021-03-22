@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a339a049410b15b33ccd89eb572ef7f, TargetedMetabolomics\test\testLinearPack.vb"
+﻿#Region "Microsoft.VisualBasic::1a339a049410b15b33ccd89eb572ef7f, src\mzmath\TargetedMetabolomics\test\testLinearPack.vb"
 
     ' Author:
     ' 

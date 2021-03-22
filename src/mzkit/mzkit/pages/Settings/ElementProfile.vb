@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::127a4f2c2926e163c3abaa8cae7bbf85, pages\Settings\ElementProfile.vb"
+﻿#Region "Microsoft.VisualBasic::127a4f2c2926e163c3abaa8cae7bbf85, src\mzkit\mzkit\pages\Settings\ElementProfile.vb"
 
     ' Author:
     ' 

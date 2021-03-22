@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::759e662ed1ef32dbec18532c156c4e83, PubChem.MySql\mysql\structure.vb"
+﻿#Region "Microsoft.VisualBasic::759e662ed1ef32dbec18532c156c4e83, src\metadb\PubChem.MySql\mysql\structure.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9007fe1596949edad562a9f230ffbfb6, ms2_simulator\FragmentSamples.vb"
+﻿#Region "Microsoft.VisualBasic::9007fe1596949edad562a9f230ffbfb6, src\mzmath\ms2_simulator\FragmentSamples.vb"
 
     ' Author:
     ' 

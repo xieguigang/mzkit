@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e2f804200a6586a26243dc9826b05339, TargetedMetabolomics\LinearQuantitative\Linear\Points\ReferencePoint.vb"
+﻿#Region "Microsoft.VisualBasic::e2f804200a6586a26243dc9826b05339, src\mzmath\TargetedMetabolomics\LinearQuantitative\Linear\Points\ReferencePoint.vb"
 
     ' Author:
     ' 

@@ -462,5 +462,12 @@
 #define cmdExplorers_TooltipDescription_RESID 60024
 #define cmdExplorers_SmallImages_192__RESID 60025
 #define cmdExplorers_LargeImages_192__RESID 60026
-#define InternalCmd2_LabelTitle_RESID 60027
-#define InternalCmd4_LabelTitle_RESID 60028
+#define cmdTutorials 115 
+#define cmdTutorials_LabelTitle_RESID 60027
+#define cmdTutorials_LabelDescription_RESID 60028
+#define cmdTutorials_TooltipTitle_RESID 60029
+#define cmdTutorials_TooltipDescription_RESID 60030
+#define cmdTutorials_SmallImages_192__RESID 60031
+#define cmdTutorials_LargeImages_192__RESID 60032
+#define InternalCmd2_LabelTitle_RESID 60033
+#define InternalCmd4_LabelTitle_RESID 60034

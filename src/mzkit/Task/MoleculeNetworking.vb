@@ -1,49 +1,51 @@
-﻿#Region "Microsoft.VisualBasic::a087eb67e3748d6c8b2a6fd688da619c, src\mzkit\Task\MoleculeNetworking.vb"
+﻿#Region "Microsoft.VisualBasic::e0286d265a7ff34ae32a4ac20b9d0def, src\mzkit\Task\MoleculeNetworking.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Module MoleculeNetworking
-' 
-'     Function: CreateMatrix, GetSpectrum
-' 
-' /********************************************************************************/
+    ' Module MoleculeNetworking
+    ' 
+    '     Function: alignSearch, CreateMatrix, GetSpectrum, RunMetaDNA, SearchFiles
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -89,30 +91,43 @@ Public Module MoleculeNetworking
 
     <Extension>
     Public Function GetSpectrum(raw As Raw, scanId As String, cutoff As LowAbundanceTrimming, Optional ByRef properties As SpectrumProperty = Nothing) As LibraryMatrix
-        Dim data As CDFData
-        Dim attrs As attribute()
-        Dim cacheFile As String
+        Dim attrs As ScanMS2
+        Dim msLevel As Integer
 
-        If scanId.StartsWith("[MS1]") Then
-            cacheFile = raw.ms1_cache
-        Else
-            cacheFile = raw.ms2_cache
+        If Not raw.isLoaded Then
+            Call raw.LoadMzpack()
         End If
 
-        Using cache As New netCDFReader(cacheFile)
-            data = cache.getDataVariable(cache.getDataVariableEntry(scanId))
-            attrs = cache.getDataVariableEntry(scanId).attributes
-        End Using
+        If scanId.Contains("[MS1]") Then
+            Dim ms1 = raw.FindMs1Scan(scanId)
 
-        Dim rawData As ms2() = data.numerics.AsMs2.ToArray
+            msLevel = 1
+            attrs = New ScanMS2 With {
+                .scan_id = ms1.scan_id,
+                .activationMethod = ActivationMethods.NA,
+                .centroided = False,
+                .charge = 0,
+                .collisionEnergy = 0,
+                .intensity = ms1.TIC,
+                .rt = ms1.rt,
+                .polarity = 0,
+                .parentMz = 0,
+                .mz = ms1.mz,
+                .into = ms1.into
+            }
+        Else
+            attrs = raw.FindMs2Scan(scanId)
+            msLevel = 2
+        End If
+
         Dim scanData As New LibraryMatrix With {
             .name = scanId,
             .centroid = False,
-            .ms2 = rawData.Centroid(Tolerance.DeltaMass(0.1), cutoff).ToArray
+            .ms2 = attrs.GetMs.ToArray.Centroid(Tolerance.DeltaMass(0.1), cutoff).ToArray
         }
         Dim pa As New PeakAnnotation
 
-        properties = New SpectrumProperty(scanId, raw.source.FileName, attrs)
+        properties = New SpectrumProperty(scanId, raw.source.FileName, msLevel, attrs)
 
         If properties.precursorMz > 0 Then
             scanData.ms2 = pa.RunAnnotation(properties.precursorMz, scanData.ms2).products
@@ -145,33 +160,33 @@ Public Module MoleculeNetworking
                                  dotcutoff As Double) As NamedCollection(Of AlignmentOutput)
 
         Dim alignments As New List(Of AlignmentOutput)
-        Dim data As CDFData
         Dim ref As ms2()
 
-        Using cache As New netCDFReader(file.ms2_cache)
-            For Each scan As Ms1ScanEntry In file.scans
-                For Each subject As ScanEntry In scan.products.SafeQuery
-                    Dim scanId = subject.id
+        If Not file.isLoaded Then
+            Call file.LoadMzpack()
+        End If
 
-                    data = cache.getDataVariable(cache.getDataVariableEntry(scanId))
-                    ref = data.numerics.AsMs2.ToArray
+        For Each scan As ScanMS1 In file.GetMs1Scans
+            For Each subject As ScanMS2 In scan.products.SafeQuery
+                Dim scanId = subject.scan_id
 
-                    Dim scores = GlobalAlignment.TwoDirectionSSM(spectrum.ms2, ref, tolerance)
+                ref = subject.GetMs.ToArray
 
-                    If stdNum.Min(scores.forward, scores.reverse) >= dotcutoff Then
-                        alignments += New AlignmentOutput With {
+                Dim scores = GlobalAlignment.TwoDirectionSSM(spectrum.ms2, ref, tolerance)
+
+                If stdNum.Min(scores.forward, scores.reverse) >= dotcutoff Then
+                    alignments += New AlignmentOutput With {
                             .alignments = GlobalAlignment _
                                 .CreateAlignment(spectrum.ms2, ref, tolerance) _
                                 .ToArray,
                             .forward = scores.forward,
                             .reverse = scores.reverse,
                             .query = New Meta With {.id = spectrum.name, .mz = Double.NaN, .scan_time = Double.NaN},
-                            .reference = New Meta With {.id = scanId, .mz = subject.mz, .scan_time = subject.rt}
+                            .reference = New Meta With {.id = scanId, .mz = subject.parentMz, .scan_time = subject.rt}
                         }
-                    End If
-                Next
+                End If
             Next
-        End Using
+        Next
 
         Return New NamedCollection(Of AlignmentOutput)(file.source.FileName, alignments, file.source)
     End Function

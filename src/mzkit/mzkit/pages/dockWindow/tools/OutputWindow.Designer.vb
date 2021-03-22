@@ -42,6 +42,7 @@
             Me.textBox1.Multiline = True
             Me.textBox1.Name = "textBox1"
             Me.textBox1.ReadOnly = True
+            Me.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
             Me.textBox1.Size = New System.Drawing.Size(277, 158)
             Me.textBox1.TabIndex = 0
             '
@@ -51,6 +52,7 @@
             Me.textBox2.Multiline = True
             Me.textBox2.Name = "textBox2"
             Me.textBox2.ReadOnly = True
+            Me.textBox2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
             Me.textBox2.Size = New System.Drawing.Size(242, 115)
             Me.textBox2.TabIndex = 1
             '

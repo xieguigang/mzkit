@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c7f79742dcd8cfae46af5ccd5ba5c8d, assembly\test\read_mzXML.vb"
+﻿#Region "Microsoft.VisualBasic::5c7f79742dcd8cfae46af5ccd5ba5c8d, src\assembly\assembly\test\read_mzXML.vb"
 
     ' Author:
     ' 

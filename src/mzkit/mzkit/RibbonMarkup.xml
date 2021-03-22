@@ -1191,6 +1191,14 @@
         <Image MinDPI="192">Res/folder-documents.bmp</Image>
       </Command.LargeImages>
     </Command>
+    <Command Name="cmdTutorials" Id="115" LabelTitle="Tutorials" LabelDescription="Mzkit Tutorials Videos" TooltipTitle="Mzkit Tutorials Videos" TooltipDescription="Mzkit Tutorials Videos">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/application-x-rpm.bmp</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Res/application-x-rpm.bmp</Image>
+      </Command.LargeImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -1417,9 +1425,10 @@
               <Scale Group="cmdGroupAboutActions" Size="Medium" />
             </ScalingPolicy>
           </Tab.ScalingPolicy>
-          <Group CommandName="cmdGroupAboutActions" SizeDefinition="TwoButtons">
-            <Button CommandName="cmdButtonAbout" />
+          <Group CommandName="cmdGroupAboutActions" SizeDefinition="ThreeButtons">
+            <Button CommandName="cmdTutorials" />
             <Button CommandName="cmdButtonBioDeep" />
+            <Button CommandName="cmdButtonAbout" />
           </Group>
           <Group CommandName="cmdTabDemo" SizeDefinition="OneButton">
             <Button CommandName="cmdButtonMsDemo" />
