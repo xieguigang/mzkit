@@ -89,7 +89,15 @@ Imports BioNovoGene.BioDeep.MetaDNA.Infer
 
     <Extension>
     Private Iterator Function GetRaw(raw As IEnumerable(Of CandidateInfer), result As IEnumerable(Of MetaDNAResult)) As IEnumerable(Of CandidateInfer)
+        Dim resultIndex As New Dictionary(Of String, MetaDNAResult)
 
+        For Each row As MetaDNAResult In result
+
+        Next
+
+        For Each infer As CandidateInfer In raw
+
+        Next
     End Function
 End Module
 
