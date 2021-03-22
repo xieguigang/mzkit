@@ -100,7 +100,10 @@ Imports BioNovoGene.BioDeep.MetaDNA.Infer
 
         ' populate raw in result table row orders
         For Each row As MetaDNAResult In result
+            Dim keyId As String = $"{row.KEGGId}|{row.precursorType}|{row.ROI_id}|{row.fileName}|{row.seed}"
+            Dim align As Candidate = resultIndex(keyId)
 
+            Yield align
         Next
     End Function
 End Module
