@@ -88,7 +88,9 @@ Public Class ConnectToBioDeep
 
             table.DockState = DockState.Hidden
 
-            Call taskList.Show(MyApplication.host.dockPanel)
+            taskList.Show(MyApplication.host.dockPanel)
+            VisualStudio.Dock(taskList, DockState.DockBottom)
+
             ' Call Alert.ShowSucess($"Imports raw data files in background,{vbCrLf}you can open [Task List] panel for view task progress.")
             Call MyApplication.TaskQueue.AddToQueue(
                 Sub()
@@ -151,12 +153,17 @@ Public Class ConnectToBioDeep
                                           table.ViewRow = Sub(obj)
                                                               Dim uidRef As String = $"{obj!ROI_id}|{obj!KEGGId}|{obj!precursorType}|{obj!seed}|{obj!fileName}"
                                                               Dim align As Candidate = inferIndex(uidRef)
-                                                              Dim qvsref = align.infer.GetAlignmentMirror
 
-                                                              Call MyApplication.host.Invoke(
-                                                                  Sub()
-                                                                      Call MyApplication.host.mzkitTool.showAlignment(qvsref.query, qvsref.ref, align.infer)
-                                                                  End Sub)
+                                                              If align.infer.level <> InferLevel.Ms1 Then
+                                                                  Dim qvsref = align.infer.GetAlignmentMirror
+
+                                                                  Call MyApplication.host.Invoke(
+                                                                      Sub()
+                                                                          Call MyApplication.host.mzkitTool.showAlignment(qvsref.query, qvsref.ref, align.infer)
+                                                                      End Sub)
+                                                              Else
+                                                                  Call MyApplication.host.showStatusMessage($"MS1 level metaDNA infer did'nt have MS/MS alignment data...")
+                                                              End If
                                                           End Sub
                                       End Sub)
 
