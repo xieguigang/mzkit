@@ -50,6 +50,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -171,5 +172,10 @@ Module MzWeb
     <ExportAPI("ms1_scans")>
     Public Function Ms1ScanPoints(mzpack As mzPack) As ms1_scan()
         Return mzpack.GetAllScanMs1.ToArray
+    End Function
+
+    <ExportAPI("ms2_peaks")>
+    Public Function Ms2ScanPeaks(mzpack As mzPack) As PeakMs2()
+        Return mzpack.GetMs2Peaks.ToArray
     End Function
 End Module
