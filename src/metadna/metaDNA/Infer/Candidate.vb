@@ -53,21 +53,21 @@ Namespace Infer
 
     Public Class Candidate
 
-        <XmlAttribute> Public Property precursorType As String
-        <XmlAttribute> Public Property ppm As Double
-        <XmlAttribute> Public Property score As Double
-        <XmlAttribute> Public Property pvalue As Double
+        ''' <summary>
+        ''' ms1 ROI id
+        ''' </summary>
+        ''' <returns></returns>
+        <XmlAttribute> Public Property ROI As String
+        <XmlElement> Public Property precursorType As String
+        <XmlElement> Public Property ppm As Double
+        <XmlElement> Public Property score As Double
+        <XmlElement> Public Property pvalue As Double
 
         ''' <summary>
         ''' <see cref="AlignmentOutput"/>
         ''' </summary>
         ''' <returns></returns>
         Public Property infer As InferLink
-        ''' <summary>
-        ''' ms1 ROI id
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property ROI As String
 
         Public Overrides Function ToString() As String
             Return pvalue

@@ -51,7 +51,7 @@ Public Structure KEGGQuery
     <XmlAttribute> Public Property mz As Double
     <XmlAttribute> Public Property ppm As Double
     <XmlAttribute> Public Property precursorType As String
-    <XmlAttribute> Public Property kegg_id As String
+    <XmlText> Public Property kegg_id As String
 
     Public Overrides Function ToString() As String
         Return $"{kegg_id} {precursorType}, m/z {mz.ToString("F4")}"

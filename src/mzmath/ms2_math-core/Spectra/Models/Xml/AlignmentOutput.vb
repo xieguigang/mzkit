@@ -60,7 +60,7 @@ Namespace Spectra.Xml
         Public Property query As Meta
         Public Property reference As Meta
 
-        <XmlElement>
+        <XmlArray("alignments")>
         Public Property alignments As SSM2MatrixFragment()
 
         Public Function GetAlignmentMirror() As (query As LibraryMatrix, ref As LibraryMatrix)
