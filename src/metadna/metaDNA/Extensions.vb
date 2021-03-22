@@ -93,7 +93,9 @@ Imports BioNovoGene.BioDeep.MetaDNA.Infer
 
         ' create unique index of the plot result raw data
         For Each infer As CandidateInfer In raw
-
+            For Each candidate As Candidate In infer.infers
+                resultIndex($"{infer.kegg_id}|{candidate.precursorType}|{candidate.ROI}|{candidate.infer.rawFile}|{candidate.infer.reference.id}") = candidate
+            Next
         Next
 
         ' populate raw in result table row orders
