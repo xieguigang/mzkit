@@ -63,9 +63,15 @@ metadna
 :> write.csv(file = `${output}/metaDNA_all.csv`)
 ;
 
-metadna
-:> as.table(infer, unique = TRUE)
+const unique_result = metadna :> as.table(infer, unique = TRUE);
+
+unique_result
 :> write.csv(file = `${output}/metaDNA.csv`)
+;
+
+metadna::result.alignment(infer, unique_result)
+:> xml
+:> writeLines(con = `${output}/metaDNA_infer.XML`)
 ;
 
 require(igraph);
