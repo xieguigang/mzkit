@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70a411ee8774a42400005b547f0a2cf8, Chemoinformatics\SDF\Struct\Enums.vb"
+﻿#Region "Microsoft.VisualBasic::70a411ee8774a42400005b547f0a2cf8, src\metadb\Chemoinformatics\SDF\Struct\Enums.vb"
 
     ' Author:
     ' 

@@ -1,46 +1,49 @@
-﻿#Region "Microsoft.VisualBasic::29667a5f31fdbb5aba7da9b3168fda85, metaDNA\Algorithm.vb"
+﻿#Region "Microsoft.VisualBasic::adb18cbed684874ef6939dc97689853e, src\metadna\metaDNA\Algorithm.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Class Algorithm
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Function: alignKeggCompound, (+2 Overloads) DIASearch, GetBestQuery, GetCandidateSeeds, RunInfer
-'               RunIteration, SetKeggLibrary, SetNetwork, SetSamples, SetSearchRange
-' 
-' /********************************************************************************/
+    ' Class Algorithm
+    ' 
+    '     Properties: ms1Err
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: (+2 Overloads) alignKeggCompound, (+2 Overloads) DIASearch, ExportTable, GetBestQuery, GetCandidateSeeds
+    '               GetPerfermanceCounter, GetUnknownSet, RunInfer, RunIteration, SetKeggLibrary
+    '               SetNetwork, SetReportHandler, (+2 Overloads) SetSamples, SetSearchRange
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -78,6 +81,7 @@ Public Class Algorithm
     Dim kegg As KEGGHandler
     Dim network As KEGGNetwork
     Dim maxIterations As Integer = 1000
+    Dim report As Action(Of String)
 
     Public ReadOnly Property ms1Err As Tolerance
         Get
@@ -99,7 +103,13 @@ Public Class Algorithm
         Me.mzwidth = mzwidth
         Me.allowMs1 = allowMs1
         Me.maxIterations = maxIterations
+        Me.report = AddressOf Console.WriteLine
     End Sub
+
+    Public Function SetReportHandler(report As Action(Of String)) As Algorithm
+        Me.report = report
+        Return Me
+    End Function
 
     Public Function SetSearchRange(ParamArray precursorTypes As String()) As Algorithm
         Me.precursorTypes = precursorTypes _
@@ -152,6 +162,11 @@ Public Class Algorithm
         Return Me
     End Function
 
+    ''' <summary>
+    ''' 必须要先执行<see cref="SetSearchRange"/>
+    ''' </summary>
+    ''' <param name="library"></param>
+    ''' <returns></returns>
     Public Function SetKeggLibrary(library As IEnumerable(Of Compound)) As Algorithm
         kegg = KEGGHandler.CreateIndex(library, precursorTypes, ms1ppm)
         Return Me
@@ -332,10 +347,10 @@ Public Class Algorithm
             start = App.NanoTime
 
             Call perfermanceCounter.Add((CInt(i), tickTime, result.Length, seeds.Count, n))
-            Call Console.WriteLine($"[iteration {++i}, {tickTime.FormatTime}] infers {result.Length}, find {seeds.Count} seeds, {n} current candidates ...")
+            Call report($"[iteration {++i}, {tickTime.FormatTime}] infers {result.Length}, find {seeds.Count} seeds, {n} current candidates ...")
 
             If i > maxIterations Then
-                Call Console.WriteLine($"Max iteration number {maxIterations} has been reached, exit metaDNA infer loop!")
+                Call report($"Max iteration number {maxIterations} has been reached, exit metaDNA infer loop!")
                 Exit Do
             End If
         Loop While result.Length > 0
@@ -353,6 +368,8 @@ Public Class Algorithm
     End Function
 
     Private Iterator Function GetCandidateSeeds() As IEnumerable(Of AnnotatedSeed)
+        Call report("Create candidate seeds by query KEGG library...")
+
         For Each unknown As PeakMs2 In unknowns.EnumerateAllUnknownFeatures
             Dim seedRef As New LibraryMatrix With {
                 .ms2 = unknown.mzInto,

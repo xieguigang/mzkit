@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::97d8cccacfd4921e274f5cde22119e86, forms\frmMain.vb"
+﻿#Region "Microsoft.VisualBasic::4e2082ece7a24b1de9541cd4687de065, src\mzkit\mzkit\forms\frmMain.vb"
 
     ' Author:
     ' 
@@ -50,7 +50,7 @@
     '          showHelp, showLoggingWindow, ShowMRMIons, showMsImaging, ShowMzkitToolkit
     '          ShowPage, ShowProperties, ShowPropertyWindow, showRTerm, ShowSearchList
     '          ShowSettings, showStartPage, showStatusMessage, Timer1_Tick, ToolStripStatusLabel2_Click
-    '          UpdateCacheSize
+    '          ToolStripStatusLabel4_Click, UpdateCacheSize
     ' 
     ' /********************************************************************************/
 
@@ -136,7 +136,7 @@ Public Class frmMain
 
     Public Sub OpenFile()
         Using file As New OpenFileDialog With {
-            .Filter = "Raw Data|*.mzXML;*.mzML|Image mzML(*.imzML)|*.imzML|GC-MS Targeted(*.cdf)|*.cdf;*.netcdf|GC-MS / LC-MS/MS Targeted(*.mzML)|*.mzML|R# Script(*.R)|*.R"
+            .Filter = "Untargetted Raw Data(*.mzXML;*.mzML;*.mzPack)|*.mzXML;*.mzML;*.mzPack|Image mzML(*.imzML)|*.imzML|GC-MS Targeted(*.cdf)|*.cdf;*.netcdf|GC-MS / LC-MS/MS Targeted(*.mzML)|*.mzML|R# Script(*.R)|*.R"
         }
             If file.ShowDialog = DialogResult.OK Then
                 Call OpenFile(file.FileName, showDocument:=True)
@@ -156,6 +156,18 @@ Public Class frmMain
             Call ShowGCMSSIM(fileName, isBackground:=False, showExplorer:=showDocument)
         ElseIf fileName.ExtensionSuffix("cdf", "netcdf") Then
             Call ShowGCMSSIM(fileName, isBackground:=False, showExplorer:=showDocument)
+        ElseIf fileName.ExtensionSuffix("mzpack") Then
+            Dim raw As New Raw With {
+                .cache = fileName,
+                .numOfScan1 = 0,
+                .numOfScan2 = 0,
+                .rtmax = 0,
+                .rtmin = 0,
+                .source = fileName
+            }
+
+            Call MyApplication.host.rawFeaturesList.LoadRaw(raw)
+            Call VisualStudio.Dock(MyApplication.host.rawFeaturesList, DockState.DockLeft)
         Else
             Call fileExplorer.ImportsRaw(fileName)
         End If
@@ -277,6 +289,8 @@ Public Class frmMain
 
         AddHandler ribbonItems.ButtonInstallMzkitPackage.ExecuteEvent, AddressOf MyApplication.InstallPackageRelease
         AddHandler ribbonItems.ShowGCMSExplorer.ExecuteEvent, Sub() Call VisualStudio.Dock(GCMSPeaks, DockState.DockLeft)
+
+        AddHandler ribbonItems.Tutorials.ExecuteEvent, Sub() Call VisualStudio.ShowSingleDocument(Of frmVideoList)()
 
         _uiCollectionChangedEvent = New UICollectionChangedEvent()
 
@@ -651,7 +665,7 @@ Public Class frmMain
             Globals.Settings.viewer = New RawFileViewerSettings
         End If
 
-        _spinner.MaxValue = 30D
+        _spinner.MaxValue = Decimal.MaxValue
         _spinner.MinValue = 0
         _spinner.Increment = 0.5D
         _spinner.DecimalPlaces = 1

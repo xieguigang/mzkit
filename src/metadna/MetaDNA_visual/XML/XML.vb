@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7d0e9dba3a980ce8ee6bd3ce974ff6e, MetaDNA_visual\XML\XML.vb"
+﻿#Region "Microsoft.VisualBasic::e7d0e9dba3a980ce8ee6bd3ce974ff6e, src\metadna\MetaDNA_visual\XML\XML.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::665402b3937de86e09180b571049cda4, Chemoinformatics\Formula\FormulaSearch.vb"
+﻿#Region "Microsoft.VisualBasic::3996bac73ef25a74260e3050a4bf24e5, src\metadb\Chemoinformatics\Formula\FormulaSearch.vb"
 
     ' Author:
     ' 

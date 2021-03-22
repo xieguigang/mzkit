@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b5f0aba52a5a2110af929e7a022cebe1, SpectrumTree\BlockNode.vb"
+﻿#Region "Microsoft.VisualBasic::b5f0aba52a5a2110af929e7a022cebe1, src\assembly\SpectrumTree\BlockNode.vb"
 
     ' Author:
     ' 

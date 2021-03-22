@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1c1061e1743cddda6134c3c0fefdd98, FormulaSearch.Extensions\AtomGroups\Amines.vb"
+﻿#Region "Microsoft.VisualBasic::b1c1061e1743cddda6134c3c0fefdd98, src\metadb\FormulaSearch.Extensions\AtomGroups\Amines.vb"
 
     ' Author:
     ' 

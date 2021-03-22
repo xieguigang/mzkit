@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b625f5a728b2194dafe54d26921fd97e, mz\Program.vb"
+﻿#Region "Microsoft.VisualBasic::76052d0b1d3c080b939ab80d1586e43a, src\assembly\mz\Program.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' Module Program
     ' 
     '     Function: Calculator, CentroidPeaksData, DumpAsMgf, DumpMs2Batch, GetPeaktable
-    '               Main, MzWaves, printMatrix
+    '               Main, MzPack, MzWaves, printMatrix
     ' 
     ' /********************************************************************************/
 

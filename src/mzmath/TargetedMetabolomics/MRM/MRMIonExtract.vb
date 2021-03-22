@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::49764638572636ad023db14e395a4914, TargetedMetabolomics\MRM\MRMIonExtract.vb"
+﻿#Region "Microsoft.VisualBasic::49764638572636ad023db14e395a4914, src\mzmath\TargetedMetabolomics\MRM\MRMIonExtract.vb"
 
     ' Author:
     ' 

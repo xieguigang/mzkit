@@ -1,46 +1,46 @@
-﻿#Region "Microsoft.VisualBasic::c09f1bcfbaedb9c207e2f8017cd3ffde, Library\mzkit.quantify\GCMS.vb"
+﻿#Region "Microsoft.VisualBasic::c09f1bcfbaedb9c207e2f8017cd3ffde, Rscript\Library\mzkit.quantify\GCMS.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module GCMSLinear
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: algorithm, ContentTable, createScanIonExtract, createSIMIonExtract, extractSampleRaw
-    '               FileNames2Contents, InternalStandardMethod, quantifyIons, readRaw
-    ' 
-    ' /********************************************************************************/
+' Module GCMSLinear
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: algorithm, ContentTable, createScanIonExtract, createSIMIonExtract, extractSampleRaw
+'               FileNames2Contents, InternalStandardMethod, quantifyIons, readRaw
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -53,7 +53,9 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Math.GCMS.QuantifyAnalysis
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.LinearQuantitative.Linear
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp
 Imports SMRUCC.Rsharp.Runtime
@@ -223,13 +225,16 @@ Module GCMSLinear
     ''' <param name="maxDeletions"></param>
     ''' <returns></returns>
     <ExportAPI("linear_algorithm")>
-    Public Function algorithm(contents As ContentTable, Optional maxDeletions As Integer = 1) As InternalStandardMethod
+    Public Function algorithm(contents As ContentTable,
+                              Optional maxDeletions As Integer = 1,
+                              Optional baselineQuantile As Double = 0,
+                              Optional integrator As PeakAreaMethods = PeakAreaMethods.NetPeakSum) As InternalStandardMethod
+
         Return New InternalStandardMethod(
             contents:=contents,
-            integrator:=PeakAreaMethods.SumAll,
-            baselineQuantile:=0,
-            maxDeletions:=maxDeletions,
-            fixLowerContent:=True
+            integrator:=integrator,
+            baselineQuantile:=baselineQuantile,
+            maxDeletions:=maxDeletions
         )
     End Function
 
@@ -248,6 +253,32 @@ Module GCMSLinear
         Return points _
             .populates(Of TargetPeakPoint)(env) _
             .DoCall(AddressOf method.ToLinears) _
+            .ToArray
+    End Function
+
+    <ExportAPI("ROIlist")>
+    <RApiReturn(GetType(ROI))>
+    Public Function GetRawROIlist(raw As Raw,
+                                  <RRawVectorArgument>
+                                  Optional peakwidth As Object = "3,20",
+                                  Optional baseline# = 0.65,
+                                  Optional sn# = 3,
+                                  Optional env As Environment = Nothing) As Object
+
+        Dim range = ApiArgumentHelpers.GetDoubleRange(peakwidth, env, "3,20")
+
+        If range Like GetType(Message) Then
+            Return range.TryCast(Of Message)
+        End If
+
+        Return raw _
+            .GetTIC _
+            .Shadows _
+            .PopulateROI(
+                peakwidth:=range.TryCast(Of DoubleRange),
+                baselineQuantile:=baseline,
+                snThreshold:=sn
+            ) _
             .ToArray
     End Function
 End Module

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::246e699df6a807c0f2e70f482aecd07e, Chemoinformatics\Formula\FormulaScanner.vb"
+﻿#Region "Microsoft.VisualBasic::246e699df6a807c0f2e70f482aecd07e, src\metadb\Chemoinformatics\Formula\FormulaScanner.vb"
 
     ' Author:
     ' 

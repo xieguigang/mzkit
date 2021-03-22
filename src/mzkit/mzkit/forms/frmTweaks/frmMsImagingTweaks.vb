@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b574d4c61bfa8dcd7a0a453dc7d96896, forms\frmTweaks\frmMsImagingTweaks.vb"
+﻿#Region "Microsoft.VisualBasic::b574d4c61bfa8dcd7a0a453dc7d96896, src\mzkit\mzkit\forms\frmTweaks\frmMsImagingTweaks.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::89afa5571800be291157f72b6b751c0e, pages\dockWindow\explorer\ToolStripSpringTextBox.vb"
+﻿#Region "Microsoft.VisualBasic::89afa5571800be291157f72b6b751c0e, src\mzkit\mzkit\pages\dockWindow\explorer\ToolStripSpringTextBox.vb"
 
     ' Author:
     ' 

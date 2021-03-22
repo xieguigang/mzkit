@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::480d26635b44b3204b062240c3584339, mz_deco\Deconvolution.vb"
+﻿#Region "Microsoft.VisualBasic::e5c95c21ab5293e474f94f7c915eed4b, src\mzmath\mz_deco\Deconvolution.vb"
 
     ' Author:
     ' 
@@ -89,7 +89,8 @@ Public Module Deconvolution
                 .rt = ROI.rt,
                 .rtmax = ROI.time.Max,
                 .rtmin = ROI.time.Min,
-                .nticks = ROI.ticks.Length
+                .nticks = ROI.ticks.Length,
+                .area = ROI.ticks.Select(Function(t) t.Intensity).Sum
             }
         Next
     End Function
@@ -106,7 +107,7 @@ Public Module Deconvolution
     End Function
 
     ''' <summary>
-    ''' Separation of mass signals.
+    ''' 1. Separation of mass signals.
     ''' (进行原始数据的mz分组操作，然后进行rt的升序排序)
     ''' </summary>
     ''' <param name="scans"></param>
@@ -145,12 +146,18 @@ Public Module Deconvolution
         Next
     End Function
 
+    ''' <summary>
+    ''' 2. 对得到的XIC进行峰查找
+    ''' </summary>
+    ''' <param name="mzgroups"></param>
+    ''' <param name="quantile#"></param>
+    ''' <returns></returns>
     <Extension>
-    Public Iterator Function DecoMzGroups(mzgroups As IEnumerable(Of MzGroup), Optional quantile# = 0.65) As IEnumerable(Of PeakFeature)
+    Public Iterator Function DecoMzGroups(mzgroups As IEnumerable(Of MzGroup), peakwidth As DoubleRange, Optional quantile# = 0.65) As IEnumerable(Of PeakFeature)
         Dim mzfeatures As IGrouping(Of String, PeakFeature)() = mzgroups _
             .AsParallel _
             .Select(Function(mz)
-                        Return mz.GetPeakGroups(quantile)
+                        Return mz.GetPeakGroups(peakwidth, quantile)
                     End Function) _
             .IteratesALL _
             .GroupBy(Function(m)
@@ -158,13 +165,16 @@ Public Module Deconvolution
                      End Function) _
             .ToArray
         Dim guid As New Dictionary(Of String, Counter)
+        Dim uid As String
 
         For Each mzidgroup In mzfeatures
-            Dim mId = mzidgroup.Key
-            Dim rtIdgroup = mzidgroup.GroupBy(Function(m) stdNum.Round(m.rt).ToString).ToArray
+            Dim mId As String = mzidgroup.Key
+            Dim rtIdgroup = mzidgroup _
+                .GroupBy(Function(m) stdNum.Round(m.rt).ToString) _
+                .ToArray
 
             For Each rtgroup In rtIdgroup
-                Dim uid = $"M{mId}T{rtgroup.Key}"
+                uid = $"M{mId}T{rtgroup.Key}"
                 guid(uid) = 0
 
                 For Each feature In rtgroup

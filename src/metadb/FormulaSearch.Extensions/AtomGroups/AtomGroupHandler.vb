@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a41fc7555e46d9c23125b3321d23d41, FormulaSearch.Extensions\AtomGroups\AtomGroupHandler.vb"
+﻿#Region "Microsoft.VisualBasic::1a41fc7555e46d9c23125b3321d23d41, src\metadb\FormulaSearch.Extensions\AtomGroups\AtomGroupHandler.vb"
 
     ' Author:
     ' 

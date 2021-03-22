@@ -1,56 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::5c94f8408139aea58a6c95bbdb689492, pages\toolkit\PageMzkitTools.vb"
+﻿#Region "Microsoft.VisualBasic::868d55f64d5345d67bacd8f8058a1f5c, src\mzkit\mzkit\pages\toolkit\PageMzkitTools.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Class PageMzkitTools
-' 
-'     Function: getSelectedIonSpectrums, getXICMatrix, missingCacheFile, rawTIC, relativeInto
-' 
-'     Sub: ClearToolStripMenuItem_Click, CustomTabControl1_TabClosing, DataGridView1_CellContentClick, ExportExactMassSearchTable, MolecularNetworkingTool
-'          PageMzkitTools_Load, PictureBox1_DoubleClick, PictureBox1_MouseClick, PlotMatrx, Ribbon_Load
-'          SaveImageToolStripMenuItem_Click, SaveMatrixToolStripMenuItem_Click, showAlignment, (+3 Overloads) showMatrix, (+2 Overloads) ShowMatrix
-'          ShowMRMTIC, ShowPage, ShowPlotTweaks, showScatter, showSpectrum
-'          ShowTabPage, showUVscans, ShowXIC, (+3 Overloads) TIC
-' 
-' /********************************************************************************/
+    ' Class PageMzkitTools
+    ' 
+    '     Function: getSelectedIonSpectrums, getXICMatrix, missingCacheFile, rawTIC, relativeInto
+    ' 
+    '     Sub: ClearToolStripMenuItem_Click, CustomTabControl1_TabClosing, DataGridView1_CellContentClick, ExportExactMassSearchTable, MolecularNetworkingTool
+    '          PageMzkitTools_Load, PictureBox1_DoubleClick, PictureBox1_MouseClick, PlotMatrx, Ribbon_Load
+    '          SaveImageToolStripMenuItem_Click, SaveMatrixToolStripMenuItem_Click, (+2 Overloads) showAlignment, (+3 Overloads) showMatrix, (+2 Overloads) ShowMatrix
+    '          ShowMRMTIC, ShowPage, ShowPlotTweaks, showScatter, showSpectrum
+    '          ShowTabPage, showUVscans, ShowXIC, (+3 Overloads) TIC
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
 Imports System.Threading
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzXML
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Chromatogram
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
@@ -66,7 +67,6 @@ Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports mzkit.My
@@ -94,9 +94,7 @@ Public Class PageMzkitTools
         If options = DialogResult.OK Then
             Dim newRaw = MyApplication.fileExplorer.getRawCache(raw.source)
 
-            raw.ms1_cache = newRaw.ms1_cache
-            raw.ms2_cache = newRaw.ms2_cache
-            raw.scatter = newRaw.scatter
+            raw.cache = newRaw.cache
 
             MyApplication.host.showStatusMessage("Ready!")
             MyApplication.host.ToolStripStatusLabel2.Text = MyApplication.host.fileExplorer.treeView1.Nodes(Scan0).GetTotalCacheSize
@@ -109,32 +107,31 @@ Public Class PageMzkitTools
         MyApplication.host.ShowPage(Me)
     End Sub
 
-    Public Sub showScatter(raw As Raw)
+    Public Sub showScatter(raw As Raw, XIC As Boolean, directSnapshot As Boolean)
         If Not raw.cacheFileExists Then
             MessageBox.Show("Sorry, can not view file data, the cache file is missing...", "Cache Missing", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
+        ElseIf directSnapshot Then
+            PictureBox1.BackgroundImage = raw.GetSnapshot
+        Else
+            Dim spinner As New frmProgressSpinner
+            Dim task As New Thread(
+                Sub()
+                    Dim image As Image
+
+                    If XIC Then
+                        image = raw.Draw3DPeaks
+                    Else
+                        image = raw.DrawScatter
+                    End If
+
+                    Me.Invoke(Sub() PictureBox1.BackgroundImage = image)
+                    spinner.Invoke(Sub() Call spinner.Close())
+                End Sub)
+
+            Call task.Start()
+            Call spinner.ShowDialog()
         End If
-
-        Dim spinner As New frmProgressSpinner
-        Dim task As New Thread(
-            Sub()
-                Dim image As Image
-
-                If raw.scatter.FileLength < 0 Then
-                    raw.scatter = App.AppSystemTemp & "/" & raw.source.GetFullPath.MD5 & ".scatter"
-                    raw.scatter = raw.scatter.GetFullPath
-                    image = raw.DrawScatter
-                    image.SaveAs(raw.scatter)
-                Else
-                    image = raw.scatter.LoadImage
-                End If
-
-                Me.Invoke(Sub() PictureBox1.BackgroundImage = image)
-                spinner.Invoke(Sub() Call spinner.Close())
-            End Sub)
-
-        Call task.Start()
-        Call spinner.ShowDialog()
 
         MyApplication.host.ShowPage(Me)
         MyApplication.host.Invoke(Sub() RibbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.NotAvailable)
@@ -176,7 +173,7 @@ Public Class PageMzkitTools
             Dim prop As SpectrumProperty = Nothing
             Dim scanData As LibraryMatrix = raw.GetSpectrum(scanId, Globals.Settings.viewer.GetMethod, prop)
 
-            ShowMatrix(scanData.ms2, scanId)
+            showMatrix(scanData.ms2, scanId)
 
             Dim title1$
             Dim title2$
@@ -302,7 +299,7 @@ Public Class PageMzkitTools
 
         MyApplication.host.ribbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
 
-        Call ShowMatrix(result.alignments, alignName)
+        Call showMatrix(result.alignments, alignName)
         Call MyApplication.RegisterPlot(
             Sub(args)
                 PictureBox1.BackgroundImage = MassSpectra.AlignMirrorPlot(
@@ -331,7 +328,7 @@ Public Class PageMzkitTools
     Private Function rawTIC(raw As Raw, isBPC As Boolean) As NamedCollection(Of ChromatogramTick)
         Dim TIC As New NamedCollection(Of ChromatogramTick) With {
             .name = $"{If(isBPC, "BPC", "TIC")} [{raw.source.FileName}]",
-            .value = raw.scans _
+            .value = raw.GetMs1Scans _
                 .Select(Function(m)
                             Return New ChromatogramTick With {.Time = m.rt, .Intensity = If(isBPC, m.BPC, m.TIC)}
                         End Function) _
@@ -367,11 +364,11 @@ Public Class PageMzkitTools
             Return
         End If
 
-        ShowMatrix(TICList(Scan0).value, TICList(Scan0).name)
+        showMatrix(TICList(Scan0).value, TICList(Scan0).name)
         MyApplication.RegisterPlot(
             Sub(args)
                 If d3 Then
-                    PictureBox1.BackgroundImage = New ScanVisual3D(scans:=TICList, angle:=60, fillCurve:=True, fillAlpha:=120, theme:=New Theme With {
+                    PictureBox1.BackgroundImage = New ScanVisual3D(scans:=TICList, angle:=60, fillCurve:=True, fillAlpha:=120, drawParallelAxis:=True, theme:=New Theme With {
                         .colorSet = Globals.GetColors,
                         .gridFill = args.gridFill.ToHtmlColor,
                         .padding = args.GetPadding.ToString,
@@ -657,34 +654,27 @@ Public Class PageMzkitTools
     Friend Iterator Function getSelectedIonSpectrums(progress As Action(Of String)) As IEnumerable(Of PeakMs2)
         Dim raw = MyApplication.featureExplorer.CurrentRawFile
 
-        Using cache As New netCDFReader(raw.ms2_cache)
+        For Each ionNode As TreeNode In MyApplication.featureExplorer.GetSelectedNodes.Where(Function(a) TypeOf a.Tag Is ScanMS2)
+            Dim scanId As String = ionNode.Text
+            Dim info As ScanMS2 = ionNode.Tag
+            Dim guid As String = $"{raw.source.FileName}#{scanId}"
 
-            For Each ionNode As TreeNode In MyApplication.featureExplorer.GetSelectedNodes.Where(Function(a) TypeOf a.Tag Is ScanEntry)
-                Dim scanId As String = ionNode.Text
-                Dim entry = cache.getDataVariableEntry(scanId)
-                Dim mztemp = cache.getDataVariable(entry).numerics.AsMs2.ToArray
-                Dim attrs = cache.getDataVariableEntry(scanId).attributes
-                Dim info As New SpectrumProperty(scanId, raw.source.FileName, attrs)
-                Dim guid As String = $"{raw.source.FileName}#{scanId}"
+            If Not progress Is Nothing Then
+                Call progress(guid)
+            End If
 
-                If Not progress Is Nothing Then
-                    Call progress(guid)
-                End If
-
-                Yield New PeakMs2 With {
-                    .mz = info.precursorMz,
-                    .scan = 0,
-                    .activation = info.activationMethod,
-                    .collisionEnergy = info.collisionEnergy,
-                    .file = raw.source.FileName,
-                    .lib_guid = guid,
-                    .mzInto = mztemp,
-                    .precursor_type = "n/a",
-                    .rt = info.retentionTime
-                }
-            Next
-
-        End Using
+            Yield New PeakMs2 With {
+                .mz = info.parentMz,
+                .scan = 0,
+                .activation = info.activationMethod,
+                .collisionEnergy = info.collisionEnergy,
+                .file = raw.source.FileName,
+                .lib_guid = guid,
+                .mzInto = info.GetMs.ToArray,
+                .precursor_type = "n/a",
+                .rt = info.rt
+            }
+        Next
     End Function
 
     Private Function relativeInto() As Boolean
@@ -692,10 +682,10 @@ Public Class PageMzkitTools
     End Function
 
     Friend Function getXICMatrix(raw As Raw, scanId As String, ppm As Double, relativeInto As Boolean) As NamedCollection(Of ChromatogramTick)
-        Dim ms2 As ScanEntry = raw.FindMs2Scan(scanId)
+        Dim ms2 As ScanMS2 = raw.FindMs2Scan(scanId)
         Dim name As String = raw.source.FileName
 
-        If ms2 Is Nothing OrElse ms2.mz = 0.0 Then
+        If ms2 Is Nothing OrElse ms2.parentMz = 0.0 Then
             MyApplication.host.showStatusMessage("XIC plot is not avaliable for MS1 parent!", My.Resources.StatusAnnotations_Warning_32xLG_color)
             Return Nothing
         Else
@@ -704,20 +694,20 @@ Public Class PageMzkitTools
 
         Dim selectedIons = raw _
             .GetMs2Scans _
-            .Where(Function(a) PPMmethod.PPM(a.mz, ms2.mz) <= ppm) _
+            .Where(Function(a) PPMmethod.PPM(a.parentMz, ms2.parentMz) <= ppm) _
             .ToArray
         Dim XIC As ChromatogramTick() = selectedIons _
             .Select(Function(a)
                         Return New ChromatogramTick With {
                             .Time = a.rt,
-                            .Intensity = a.XIC
+                            .Intensity = a.intensity
                         }
                     End Function) _
             .ToArray
-        Dim mzmin = Aggregate ion In selectedIons Into Min(ion.mz)
-        Dim mzmax = Aggregate ion In selectedIons Into Max(ion.mz)
+        Dim mzmin = Aggregate ion In selectedIons Into Min(ion.parentMz)
+        Dim mzmax = Aggregate ion In selectedIons Into Max(ion.parentMz)
 
-        name = $"XIC [m/z={ms2.mz.ToString("F4")}] [mzmin={mzmin.ToString("F4")}, mzmax={mzmax.ToString("F4")}]"
+        name = $"XIC [m/z={ms2.parentMz.ToString("F4")}] [mzmin={mzmin.ToString("F4")}, mzmax={mzmax.ToString("F4")}]"
 
         If Not relativeInto Then
             XIC = {
@@ -731,7 +721,7 @@ Public Class PageMzkitTools
         Dim plotTIC As New NamedCollection(Of ChromatogramTick) With {
             .name = name,
             .value = XIC,
-            .description = ms2.mz & " " & raw.source.FileName
+            .description = ms2.parentMz & " " & raw.source.FileName
         }
 
         Return plotTIC

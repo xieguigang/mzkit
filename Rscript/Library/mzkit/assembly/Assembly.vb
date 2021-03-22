@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9aa72430c721aead63ba309c1c349bc2, Library\mzkit\assembly\Assembly.vb"
+﻿#Region "Microsoft.VisualBasic::dcbd6e02d3a3efb7dc7db3ffed52795d, Rscript\Library\mzkit\assembly\Assembly.vb"
 
     ' Author:
     ' 
@@ -37,9 +37,8 @@
     ' Module Assembly
     ' 
     '     Function: GetFileType, getMs1Scans, ionMode, IonPeaks, mzMLMs1
-    '               mzMLScanLoader, mzXML2Mgf, mzXMLMs1, mzXMLScanLoader, openXmlSeeks
-    '               PeakMs2FileIndex, rawScans, ReadMgfIons, ReadMslIons, summaryIons
-    '               writeMgfIons
+    '               mzXML2Mgf, mzXMLMs1, openXmlSeeks, PeakMs2FileIndex, printPeak
+    '               rawScans, ReadMgfIons, ReadMslIons, summaryIons, writeMgfIons
     ' 
     '     Sub: Main
     ' 
@@ -48,7 +47,6 @@
 #End Region
 
 Imports System.IO
-Imports System.Runtime.CompilerServices
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MGF
 Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.ASCII.MSL

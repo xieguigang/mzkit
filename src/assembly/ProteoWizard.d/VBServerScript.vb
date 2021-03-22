@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::62a1599b6c3546f58fd0ed4e07806df9, ProteoWizard.d\VBServerScript.vb"
+﻿#Region "Microsoft.VisualBasic::62a1599b6c3546f58fd0ed4e07806df9, src\assembly\ProteoWizard.d\VBServerScript.vb"
 
     ' Author:
     ' 

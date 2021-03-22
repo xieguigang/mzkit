@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::06058c409fa9b4f42034ec6f63ad743f, DataControlHandler.vb"
+﻿#Region "Microsoft.VisualBasic::daea915e5a5794fcc63a3bc892ee8f0f, src\mzkit\mzkit\DataControlHandler.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
 
     ' Module DataControlHandler
     ' 
-    '     Sub: PasteTextData, SaveDataGrid
+    '     Sub: PasteTextData, SaveDataGrid, WriteTableToFile
     ' 
     ' /********************************************************************************/
 
@@ -46,6 +46,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
+Imports any = Microsoft.VisualBasic.Scripting
 
 Module DataControlHandler
 
@@ -60,28 +61,32 @@ Module DataControlHandler
     Public Sub SaveDataGrid(table As DataGridView, title$)
         Using file As New SaveFileDialog With {.Filter = "Excel Table(*.xls)|*.xls"}
             If file.ShowDialog = DialogResult.OK Then
-                Using writeTsv As StreamWriter = file.FileName.OpenWriter
-                    Dim row As New List(Of String)
-
-                    For i As Integer = 0 To table.Columns.Count - 1
-                        row.Add(table.Columns(i).HeaderText)
-                    Next
-
-                    writeTsv.WriteLine(row.PopAll.JoinBy(vbTab))
-
-                    For j As Integer = 0 To table.Rows.Count - 1
-                        Dim rowObj = table.Rows(j)
-
-                        For i As Integer = 0 To rowObj.Cells.Count - 1
-                            row.Add(Scripting.ToString(rowObj.Cells(i).Value))
-                        Next
-
-                        writeTsv.WriteLine(row.PopAll.Select(Function(s) $"""{s}""").JoinBy(vbTab))
-                    Next
-                End Using
-
-                MessageBox.Show(title.Replace("%s", file.FileName), "Export Table", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Call table.WriteTableToFile(file.FileName)
+                Call MessageBox.Show(title.Replace("%s", file.FileName), "Export Table", MessageBoxButtons.OK, MessageBoxIcon.Information)
             End If
+        End Using
+    End Sub
+
+    <Extension>
+    Public Sub WriteTableToFile(table As DataGridView, fileName As String)
+        Using writeTsv As StreamWriter = fileName.OpenWriter
+            Dim row As New List(Of String)
+
+            For i As Integer = 0 To table.Columns.Count - 1
+                row.Add(table.Columns(i).HeaderText)
+            Next
+
+            writeTsv.WriteLine(row.PopAll.JoinBy(vbTab))
+
+            For j As Integer = 0 To table.Rows.Count - 1
+                Dim rowObj = table.Rows(j)
+
+                For i As Integer = 0 To rowObj.Cells.Count - 1
+                    row.Add(any.ToString(rowObj.Cells(i).Value))
+                Next
+
+                writeTsv.WriteLine(row.PopAll.Select(Function(s) $"""{s}""").JoinBy(vbTab))
+            Next
         End Using
     End Sub
 

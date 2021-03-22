@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de3609c37377fc15d90f0aee40d00748, ms2_math-core\Spectra\Models\Fragments.vb"
+﻿#Region "Microsoft.VisualBasic::de3609c37377fc15d90f0aee40d00748, src\mzmath\ms2_math-core\Spectra\Models\Fragments.vb"
 
     ' Author:
     ' 

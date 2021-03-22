@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::279e8bb7ea6dbd8aa4b3dd32a7640643, src\mzkit\Task\NewsFeed.vb"
+﻿#Region "Microsoft.VisualBasic::f8f9fc9e39f63f67392edf6b4c775971, src\mzkit\Task\NewsFeed.vb"
 
     ' Author:
     ' 
@@ -85,4 +85,3 @@ Public Class NewsFeed
     End Function
 
 End Class
-

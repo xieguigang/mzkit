@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::08246ef670739ace777efa32a604e3ac, Massbank\Public\Massbank\RecordIO.vb"
+﻿#Region "Microsoft.VisualBasic::08246ef670739ace777efa32a604e3ac, src\metadb\Massbank\Public\Massbank\RecordIO.vb"
 
     ' Author:
     ' 

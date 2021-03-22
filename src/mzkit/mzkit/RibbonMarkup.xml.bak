@@ -1191,6 +1191,14 @@
         <Image MinDPI="192">Res/folder-documents.bmp</Image>
       </Command.LargeImages>
     </Command>
+    <Command Name="cmdTutorials" Id="115" LabelTitle="Tutorials" LabelDescription="Mzkit Tutorials Videos" TooltipTitle="Mzkit Tutorials Videos" TooltipDescription="Mzkit Tutorials Videos">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/application-x-rpm.bmp</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Res/application-x-rpm.bmp</Image>
+      </Command.LargeImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -1281,7 +1289,7 @@
             <Group CommandName="cmdGroupShowDockWindows" SizeDefinition="ThreeButtons">
               <SplitButtonGallery CommandName="cmdExplorers" Type="Commands" TextPosition="Overlap">
                 <SplitButtonGallery.MenuLayout>
-                  <FlowMenuLayout />
+                  <VerticalMenuLayout />
                 </SplitButtonGallery.MenuLayout>
                 <Button CommandName="cmdButtonShowExplorer" />
                 <Button CommandName="cmdShowGCMSExplorer" />
@@ -1417,7 +1425,8 @@
               <Scale Group="cmdGroupAboutActions" Size="Medium" />
             </ScalingPolicy>
           </Tab.ScalingPolicy>
-          <Group CommandName="cmdGroupAboutActions" SizeDefinition="TwoButtons">
+          <Group CommandName="cmdGroupAboutActions" SizeDefinition="ThreeButtons">
+            <Button CommandName="cmdTutorials" />
             <Button CommandName="cmdButtonAbout" />
             <Button CommandName="cmdButtonBioDeep" />
           </Group>

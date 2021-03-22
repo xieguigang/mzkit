@@ -2,7 +2,7 @@
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmFeatureSearch
-    Inherits DockContent
+    Inherits DocumentWindow
 
     'Form 重写 Dispose，以清理组件列表。
     <System.Diagnostics.DebuggerNonUserCode()>
@@ -104,13 +104,13 @@ Partial Class frmFeatureSearch
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ViewToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
         Me.ContextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 48)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(100, 26)
         '
         'ViewToolStripMenuItem
         '
         Me.ViewToolStripMenuItem.Image = Global.mzkit.My.Resources.Resources.preferences_system_notifications
         Me.ViewToolStripMenuItem.Name = "ViewToolStripMenuItem"
-        Me.ViewToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ViewToolStripMenuItem.Size = New System.Drawing.Size(99, 22)
         Me.ViewToolStripMenuItem.Text = "View"
         '
         'ImageList1

@@ -1,52 +1,53 @@
-﻿#Region "Microsoft.VisualBasic::92284a613965512ece2b9ea9b31f9f00, pages\dockWindow\explorer\frmFileExplorer.vb"
+﻿#Region "Microsoft.VisualBasic::0dfabc76be04a6868d54717ab8b21c5d, src\mzkit\mzkit\pages\dockWindow\explorer\frmFileExplorer.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Class frmFileExplorer
-' 
-'     Constructor: (+1 Overloads) Sub New
-' 
-'     Function: CurrentRawFile, deleteFileNode, (+2 Overloads) findRawFileNode, getRawCache, GetRawFiles
-'               GetSelectedRaws, GetTotalCacheSize
-' 
-'     Sub: addFileNode, AddScript, BPCOverlapToolStripMenuItem_Click, Button1_Click, DeleteToolStripMenuItem_Click
-'          frmFileExplorer_Activated, frmFileExplorer_Closing, frmFileExplorer_Load, ImportsRaw, ImportsToolStripMenuItem_Click
-'          InitializeFileTree, RunAutomationToolStripMenuItem_Click, SaveFileCache, selectRawFile, showRawFile
-'          TICOverlapToolStripMenuItem_Click, treeView1_AfterCheck, treeView1_AfterSelect, treeView1_GotFocus
-' 
-' /********************************************************************************/
+    ' Class frmFileExplorer
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: CurrentRawFile, deleteFileNode, (+2 Overloads) findRawFileNode, getRawCache, GetRawFiles
+    '               GetSelectedRaws, GetTotalCacheSize
+    ' 
+    '     Sub: addFileNode, AddScript, BPCOverlapToolStripMenuItem_Click, Button1_Click, DeleteToolStripMenuItem_Click
+    '          frmFileExplorer_Activated, frmFileExplorer_Closing, frmFileExplorer_Load, ImportsRaw, ImportsToolStripMenuItem_Click
+    '          InitializeFileTree, OpenViewerToolStripMenuItem_Click, RawScatterToolStripMenuItem_Click, RunAutomationToolStripMenuItem_Click, SaveFileCache
+    '          selectRawFile, showRawFile, TICOverlapToolStripMenuItem_Click, treeView1_AfterCheck, treeView1_AfterSelect
+    '          treeView1_Click, treeView1_GotFocus, UpdateMainTitle, XICPeaksToolStripMenuItem_Click
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -87,7 +88,7 @@ Public Class frmFileExplorer
         Dim raw As TreeNode = treeView1.Nodes.Item(0)
 
         treeView1.SelectedNode = raw.Nodes.Item(index)
-        showRawFile(treeView1.SelectedNode.Tag)
+        showRawFile(treeView1.SelectedNode.Tag, XIC:=False, directSnapshot:=True)
     End Sub
 
     Public Function GetTotalCacheSize() As String
@@ -135,7 +136,7 @@ Public Class frmFileExplorer
     End Function
 
     Sub InitializeFileTree()
-        If treeView1.LoadRawFileCache(Globals.Settings.workspaceFile) = 0 Then
+        If treeView1.LoadRawFileCache(ctxMenuFiles, ctxMenuRawFile, ctxMenuScript, Globals.Settings.workspaceFile) = 0 Then
             MyApplication.host.showStatusMessage($"It seems that you don't have any raw file opended. You could open raw file through [File] -> [Open Raw File].", My.Resources.StatusAnnotations_Warning_32xLG_color)
         Else
             ' selectRawFile(Scan0)
@@ -151,7 +152,7 @@ Public Class frmFileExplorer
         treeView1.HotTracking = True
         treeView1.BringToFront()
         treeView1.CheckBoxes = True
-        treeView1.ContextMenuStrip = ContextMenuStrip1
+        treeView1.ContextMenuStrip = ctxMenuFiles
         treeView1.ShowLines = True
         treeView1.ShowRootLines = True
         treeView1.BorderStyle = BorderStyle.FixedSingle
@@ -165,7 +166,7 @@ Public Class frmFileExplorer
         Me.TabText = "File Explorer"
 
         Call InitializeFileTree()
-        Call ApplyVsTheme(ContextMenuStrip1, ToolStrip1)
+        Call ApplyVsTheme(ctxMenuFiles, ToolStrip1, ctxMenuScript, ctxMenuRawFile)
     End Sub
 
     Public Sub ImportsRaw(fileName As String)
@@ -241,16 +242,36 @@ Public Class frmFileExplorer
 
     Dim lockFileDelete As Boolean = False
 
-    Public Sub showRawFile(raw As Raw)
+    Public Sub showRawFile(raw As Raw, XIC As Boolean, directSnapshot As Boolean)
         If lockFileDelete Then
             Return
         End If
 
         Call MyApplication.host.rawFeaturesList.LoadRaw(raw)
-        Call MyApplication.host.mzkitTool.showScatter(raw)
+        Call MyApplication.host.mzkitTool.showScatter(raw, XIC, directSnapshot)
 
         Call VisualStudio.ShowProperties(New RawFileProperty(raw))
         Call UpdateMainTitle(raw.source)
+    End Sub
+
+    Private Sub RawScatterToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RawScatterToolStripMenuItem.Click
+        If treeView1.SelectedNode Is Nothing Then
+            Return
+        End If
+
+        If TypeOf treeView1.SelectedNode.Tag Is Raw Then
+            Call showRawFile(DirectCast(treeView1.SelectedNode.Tag, Raw), XIC:=False, directSnapshot:=False)
+        End If
+    End Sub
+
+    Private Sub XICPeaksToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles XICPeaksToolStripMenuItem.Click
+        If treeView1.SelectedNode Is Nothing Then
+            Return
+        End If
+
+        If TypeOf treeView1.SelectedNode.Tag Is Raw Then
+            Call showRawFile(DirectCast(treeView1.SelectedNode.Tag, Raw), XIC:=True, directSnapshot:=False)
+        End If
     End Sub
 
     Public Sub UpdateMainTitle(source As String)
@@ -270,8 +291,16 @@ Public Class frmFileExplorer
             Return
         End If
 
+        'If treeView1.SelectedNode Is treeView1.Nodes(0) Then
+        '    treeView1.ContextMenuStrip = ContextMenuStrip1
+        'ElseIf treeView1.SelectedNode Is treeView1.Nodes(1) Then
+        '    treeView1.ContextMenuStrip = ContextMenuStrip2
+        'End If
+
         If TypeOf treeView1.SelectedNode.Tag Is Raw Then
-            Call showRawFile(DirectCast(treeView1.SelectedNode.Tag, Raw))
+            Call showRawFile(DirectCast(treeView1.SelectedNode.Tag, Raw), XIC:=False, directSnapshot:=True)
+
+            '  treeView1.ContextMenuStrip = ContextMenuStrip1
 
         ElseIf TypeOf treeView1.SelectedNode.Tag Is String Then
             ' 选择了一个脚本文件
@@ -279,6 +308,8 @@ Public Class frmFileExplorer
             Dim script = MyApplication.host.scriptFiles _
                 .Where(Function(a) a.scriptFile.GetFullPath = path) _
                 .FirstOrDefault
+
+            '  treeView1.ContextMenuStrip = ContextMenuStrip2
 
             If Not script Is Nothing Then
                 script.Show(MyApplication.host.dockPanel)
@@ -419,7 +450,7 @@ Public Class frmFileExplorer
         Return opt
     End Function
 
-    Private Sub RunAutomationToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RunAutomationToolStripMenuItem.Click
+    Private Sub RunAutomationToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RunAutomationToolStripMenuItem1.Click
         If treeView1.SelectedNode Is Nothing OrElse treeView1.SelectedNode.Tag Is Nothing OrElse Not TypeOf treeView1.SelectedNode.Tag Is String Then
             Return
         End If
@@ -437,10 +468,27 @@ Public Class frmFileExplorer
             raws.Add(node.Tag)
         Next
 
-        Call FeatureSearchHandler.SearchByMz(ToolStripSpringTextBox1.Text, raws)
+        Call FeatureSearchHandler.SearchByMz(ToolStripSpringTextBox1.Text, raws, False)
     End Sub
 
     Private Sub ImportsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImportsToolStripMenuItem.Click
         Call MyApplication.host.ImportsFiles()
+    End Sub
+
+    Private Sub treeView1_Click(sender As Object, e As EventArgs) Handles treeView1.Click
+
+    End Sub
+
+    Private Sub OpenViewerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenViewerToolStripMenuItem.Click
+        Dim node = treeView1.SelectedNode
+
+        If node Is Nothing OrElse TypeOf node.Tag IsNot Raw Then
+            Return
+        End If
+
+        Dim raw As Raw = DirectCast(node.Tag, Raw).LoadMzpack
+        Dim viewer = VisualStudio.ShowDocument(Of frmUntargettedViewer)()
+
+        viewer.loadRaw(raw)
     End Sub
 End Class

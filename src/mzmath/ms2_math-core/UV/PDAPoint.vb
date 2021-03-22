@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::775fd7ce5d7ce32331eb1730421898eb, ms2_math-core\UV\PDAPoint.vb"
+﻿#Region "Microsoft.VisualBasic::775fd7ce5d7ce32331eb1730421898eb, src\mzmath\ms2_math-core\UV\PDAPoint.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2cf903fd8753621a16453fa43907ff7, application\Globals.vb"
+﻿#Region "Microsoft.VisualBasic::88038cff66906003c11cb589b52e054d, src\mzkit\mzkit\application\Globals.vb"
 
     ' Author:
     ' 
@@ -43,13 +43,15 @@
     '     Function: CheckFormOpened, CurrentRawFile, FindRaws, GetColors, GetTotalCacheSize
     '               GetXICMaxYAxis, LoadIonLibrary, LoadRawFileCache
     ' 
-    '     Sub: AddRecentFileHistory, loadRawFile, SaveRawFileCache
+    '     Sub: AddRecentFileHistory, AddScript, loadRawFile, loadRStudioScripts, SaveRawFileCache
     ' 
     ' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.MarkupData.mzML
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.MRM.Models
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.csv
@@ -66,7 +68,7 @@ Module Globals
     ''' <summary>
     ''' 这个是未进行任何工作区保存所保存的一个默认的临时文件的位置
     ''' </summary>
-    Dim defaultWorkspace As String = App.LocalData & "/cacheList.dat"
+    Dim defaultWorkspace As String = App.LocalData & "/.defaultWorkspace"
     Dim currentWorkspace As ViewerProject
 
     Public ReadOnly Property Settings As Settings
@@ -163,9 +165,24 @@ Module Globals
     ''' <param name="defaultWorkspace"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function LoadRawFileCache(explorer As TreeView, Optional defaultWorkspace As String = Nothing) As Integer
-        Dim scripts As New TreeNode("R# Automation") With {.ImageIndex = 1, .SelectedImageIndex = 1, .StateImageIndex = 1}
-        Dim rawFiles As New TreeNode("Raw Data Files") With {.ImageIndex = 0, .StateImageIndex = 0, .SelectedImageIndex = 0}
+    Public Function LoadRawFileCache(explorer As TreeView,
+                                     rawMenu As ContextMenuStrip,
+                                     targetRawMenu As ContextMenuStrip,
+                                     scriptMenu As ContextMenuStrip,
+                                     Optional defaultWorkspace As String = Nothing) As Integer
+
+        Dim scripts As New TreeNode("R# Automation") With {
+            .ImageIndex = 1,
+            .SelectedImageIndex = 1,
+            .StateImageIndex = 1,
+            .ContextMenuStrip = scriptMenu
+        }
+        Dim rawFiles As New TreeNode("Raw Data Files") With {
+            .ImageIndex = 0,
+            .StateImageIndex = 0,
+            .SelectedImageIndex = 0,
+            .ContextMenuStrip = rawMenu
+        }
 
         explorer.Nodes.Add(rawFiles)
         explorer.Nodes.Add(scripts)
@@ -190,12 +207,14 @@ Module Globals
         For Each raw As Raw In files.GetRawDataFiles
             Call sharedProgressUpdater($"[Raw File Viewer] Loading {raw.source.FileName}...")
 
-            Dim rawFileNode As New TreeNode($"{raw.source.FileName} [{raw.numOfScans} Scans]") With {
+            Dim rawFileNode As New TreeNode(raw.source.FileName) With {
                 .Checked = True,
                 .Tag = raw,
                 .ImageIndex = 2,
                 .SelectedImageIndex = 2,
-                .StateImageIndex = 2
+                .StateImageIndex = 2,
+                .ContextMenuStrip = targetRawMenu,
+                .ToolTipText = raw.source.GetFullPath
             }
 
             rawFiles.Nodes.Add(rawFileNode)
@@ -214,23 +233,26 @@ Module Globals
                     .Tag = script,
                     .ImageIndex = 3,
                     .StateImageIndex = 3,
-                    .SelectedImageIndex = 3
+                    .SelectedImageIndex = 3,
+                    .ContextMenuStrip = scriptMenu,
+                    .ToolTipText = script.GetFullPath
                 }
 
                 scripts.Nodes.Add(fileNode)
             Next
         End If
 
-        Call loadRStudioScripts(explorer)
+        Call loadRStudioScripts(explorer, scriptMenu)
 
         Return i
     End Function
 
-    Private Sub loadRStudioScripts(explorer As TreeView)
+    Private Sub loadRStudioScripts(explorer As TreeView, scriptMenu As ContextMenuStrip)
         Dim scripts As New TreeNode("R# Studio") With {
             .ImageIndex = 1,
             .SelectedImageIndex = 1,
-            .StateImageIndex = 1
+            .StateImageIndex = 1,
+            .ContextMenuStrip = scriptMenu
         }
 
         Dim folder As String = $"{App.HOME}/Rstudio/R"
@@ -241,21 +263,22 @@ Module Globals
         End If
 
         Call explorer.Nodes.Add(scripts)
-        Call AddScript(scripts, dir:=folder)
+        Call AddScript(scripts, dir:=folder, scriptMenu:=scriptMenu)
     End Sub
 
-    Private Sub AddScript(folder As TreeNode, dir As String)
+    Private Sub AddScript(folder As TreeNode, dir As String, scriptMenu As ContextMenuStrip)
         For Each subfolder As String In dir.ListDirectory
             Dim fileNode As New TreeNode(subfolder.DirectoryName) With {
                 .Checked = False,
                 .Tag = Nothing,
                 .ImageIndex = 1,
                 .StateImageIndex = 1,
-                .SelectedImageIndex = 1
+                .SelectedImageIndex = 1,
+                .ContextMenuStrip = scriptMenu
             }
 
             folder.Nodes.Add(fileNode)
-            AddScript(fileNode, subfolder)
+            AddScript(fileNode, subfolder, scriptMenu)
         Next
 
         For Each script As String In dir.EnumerateFiles("*.R")
@@ -264,7 +287,8 @@ Module Globals
                 .Tag = script,
                 .ImageIndex = 3,
                 .StateImageIndex = 3,
-                .SelectedImageIndex = 3
+                .SelectedImageIndex = 3,
+                .ContextMenuStrip = scriptMenu
             }
 
             folder.Nodes.Add(fileNode)
@@ -285,19 +309,23 @@ Module Globals
     ''' <param name="rawFileNode"></param>
     ''' <param name="raw"></param>
     <Extension>
-    Public Sub loadRawFile(rawFileNode As TreeView, raw As Raw, ByRef hasUVscans As Boolean)
+    Public Sub loadRawFile(rawFileNode As TreeView, raw As Raw, ByRef hasUVscans As Boolean, rtmin As Double, rtmax As Double)
         rawFileNode.Nodes.Clear()
 
-        For Each scan As Ms1ScanEntry In raw.scans
-            Dim scanNode As New TreeNode(scan.id) With {
+        If Not raw.isLoaded Then
+            Call raw.LoadMzpack()
+        End If
+
+        For Each scan As ScanMS1 In raw.GetMs1Scans.Where(Function(t) t.rt >= rtmin AndAlso t.rt <= rtmax)
+            Dim scanNode As New TreeNode(scan.scan_id) With {
                 .Tag = scan,
                 .ImageIndex = 0
             }
 
             rawFileNode.Nodes.Add(scanNode)
 
-            For Each ms2 As ScanEntry In scan.products.SafeQuery
-                Dim productNode As New TreeNode(ms2.id) With {
+            For Each ms2 As ScanMS2 In scan.products.SafeQuery
+                Dim productNode As New TreeNode(ms2.scan_id) With {
                     .Tag = ms2,
                     .ImageIndex = 1,
                     .SelectedImageIndex = 1
@@ -307,14 +335,24 @@ Module Globals
             Next
         Next
 
-        If Not raw.UVscans.IsNullOrEmpty Then
+        Dim UVscans As UVScan() = raw _
+            .GetUVscans _
+            .Where(Function(t)
+                       Return t.scan_time >= rtmin AndAlso t.scan_time <= rtmax
+                   End Function) _
+            .ToArray
+
+        If Not UVscans.IsNullOrEmpty Then
             MyApplication.host.UVScansList.DockState = DockState.DockLeftAutoHide
             MyApplication.host.UVScansList.Win7StyleTreeView1.Nodes.Clear()
             MyApplication.host.UVScansList.Clear()
 
             hasUVscans = True
 
-            For Each scan As DataBinBox(Of UVScan) In CutBins.FixedWidthBins(raw.UVscans, 99, Function(x) x.scan_time)
+            For Each scan As DataBinBox(Of UVScan) In CutBins _
+                .FixedWidthBins(UVscans, 99, Function(x) x.scan_time) _
+                .Where(Function(b) b.Count > 0)
+
                 Dim scan_time = scan.Sample
                 Dim spanNode As New TreeNode With {
                     .Text = $"scan_time: {CInt(scan_time.min)} ~ {CInt(scan_time.max)} sec"
@@ -368,7 +406,7 @@ Module Globals
     Public Function GetXICMaxYAxis(raw As Raw) As Double
         Dim XIC As Double() = raw _
             .GetMs2Scans _
-            .Select(Function(a) a.XIC) _
+            .Select(Function(a) a.intensity) _
             .ToArray
 
         If XIC.Length = 0 Then

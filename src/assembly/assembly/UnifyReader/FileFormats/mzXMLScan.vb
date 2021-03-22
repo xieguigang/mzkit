@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::444e586ffebcf55a91e9b16eea2768c7, assembly\UnifyReader\FileFormats\mzXMLScan.vb"
+﻿#Region "Microsoft.VisualBasic::95d09ad1c792fa0ef845105ca540ac3d, src\assembly\assembly\UnifyReader\FileFormats\mzXMLScan.vb"
 
     ' Author:
     ' 
@@ -36,8 +36,9 @@
 
     '     Class mzXMLScan
     ' 
-    '         Function: GetBPC, GetMsLevel, GetMsMs, GetParentMz, GetPolarity
-    '                   GetScanId, GetScanTime, GetTIC, IsEmpty
+    '         Function: GetActivationMethod, GetBPC, GetCentroided, GetCharge, GetCollisionEnergy
+    '                   GetMsLevel, GetMsMs, GetParentMz, GetPolarity, GetScanId
+    '                   GetScanTime, GetTIC, IsEmpty
     ' 
     ' 
     ' /********************************************************************************/
@@ -96,6 +97,22 @@ Namespace DataReader
 
         Public Overrides Function GetPolarity(scan As scan) As String
             Return scan.polarity
+        End Function
+
+        Public Overrides Function GetCharge(scan As scan) As Integer
+            Return scan.precursorMz.precursorCharge
+        End Function
+
+        Public Overrides Function GetActivationMethod(scan As scan) As ActivationMethods
+            Return scan.precursorMz.activationMethod
+        End Function
+
+        Public Overrides Function GetCollisionEnergy(scan As scan) As Double
+            Return scan.collisionEnergy
+        End Function
+
+        Public Overrides Function GetCentroided(scan As scan) As Boolean
+            Return scan.centroided
         End Function
     End Class
 End Namespace

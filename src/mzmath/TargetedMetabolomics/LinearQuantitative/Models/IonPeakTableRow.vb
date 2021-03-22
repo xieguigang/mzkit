@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a8448f2818e308a7b29f9bea0fa894ae, TargetedMetabolomics\LinearQuantitative\Models\IonPeakTableRow.vb"
+﻿#Region "Microsoft.VisualBasic::a8448f2818e308a7b29f9bea0fa894ae, src\mzmath\TargetedMetabolomics\LinearQuantitative\Models\IonPeakTableRow.vb"
 
     ' Author:
     ' 

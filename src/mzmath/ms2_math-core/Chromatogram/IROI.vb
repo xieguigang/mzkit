@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fdc4bdb527db89a260793b3192a65836, ms2_math-core\Chromatogram\IROI.vb"
+﻿#Region "Microsoft.VisualBasic::fdc4bdb527db89a260793b3192a65836, src\mzmath\ms2_math-core\Chromatogram\IROI.vb"
 
     ' Author:
     ' 

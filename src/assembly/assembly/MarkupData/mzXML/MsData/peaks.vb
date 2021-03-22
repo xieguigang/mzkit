@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::03661671e65e891e5faa00823974e020, assembly\MarkupData\mzXML\MsData\peaks.vb"
+﻿#Region "Microsoft.VisualBasic::03661671e65e891e5faa00823974e020, src\assembly\assembly\MarkupData\mzXML\MsData\peaks.vb"
 
     ' Author:
     ' 

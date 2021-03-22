@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5aa64b043cba589103c91f57d251e750, application\VisualStudio.vb"
+﻿#Region "Microsoft.VisualBasic::1ced956ce35fb78dc3b3ed188226e37d, src\mzkit\mzkit\application\VisualStudio.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     ' 
     '     Function: ShowDocument
     ' 
-    '     Sub: Dock, ShowProperties, ShowSingleDocument
+    '     Sub: Dock, ShowProperties, ShowPropertyWindow, ShowSingleDocument
     ' 
     ' /********************************************************************************/
 
@@ -110,4 +110,3 @@ Public Class VisualStudio
         Return newDoc
     End Function
 End Class
-

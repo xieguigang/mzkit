@@ -514,6 +514,7 @@
     <Compile Include="MarkupData\imzML\XML\ScanData.vb" />
     <Compile Include="MarkupData\imzML\XML\XML.vb" />
     <Compile Include="MarkupData\CompressionMode.vb" />
+    <Compile Include="MarkupData\mzML\UVScan.vb" />
     <Compile Include="MarkupData\mzML\XML\Decoder\binaryDataArray.vb" />
     <Compile Include="MarkupData\mzML\XML\Decoder\binaryDataArrayList.vb" />
     <Compile Include="MarkupData\mzML\XML\index.vb" />
@@ -539,6 +540,7 @@
     <Compile Include="mzPack\Binary\BinaryStreamReader.vb" />
     <Compile Include="mzPack\Binary\NamespaceDoc.vb" />
     <Compile Include="mzPack\ActivationMethods.vb" />
+    <Compile Include="mzPack\Stream\ScanMS1.vb" />
     <Compile Include="mzPack\Stream\MSScan.vb" />
     <Compile Include="UnifyReader\Chromatogram.vb" />
     <Compile Include="UnifyReader\FileFormats\imzMLScan.vb" />
@@ -551,7 +553,7 @@
     <Compile Include="mzPack\mzWebCache\mzMLScans.vb" />
     <Compile Include="mzPack\mzWebCache\mzXMLScans.vb" />
     <Compile Include="mzPack\mzWebCache\ScanPopulator.vb" />
-    <Compile Include="mzPack\Stream\Scan.vb" />
+    <Compile Include="mzPack\Stream\ScanMS2.vb" />
     <Compile Include="NamespaceDoc.vb" />
     <Compile Include="SpectrumTree.vb" />
     <Compile Include="MarkupData\IBase64Container.vb" />

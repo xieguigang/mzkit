@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e74125b1cc07e83526890dadb565402a, Massbank\Public\NCBI\PubChem\Web\MetaInfoReader.vb"
+﻿#Region "Microsoft.VisualBasic::e74125b1cc07e83526890dadb565402a, src\metadb\Massbank\Public\NCBI\PubChem\Web\MetaInfoReader.vb"
 
     ' Author:
     ' 

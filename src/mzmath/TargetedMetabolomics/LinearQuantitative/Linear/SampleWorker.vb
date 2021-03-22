@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1ff8c03b69ed2dbe163d58a9c8616e9a, TargetedMetabolomics\LinearQuantitative\Linear\SampleWorker.vb"
+﻿#Region "Microsoft.VisualBasic::1ff8c03b69ed2dbe163d58a9c8616e9a, src\mzmath\TargetedMetabolomics\LinearQuantitative\Linear\SampleWorker.vb"
 
     ' Author:
     ' 
@@ -115,7 +115,12 @@ Namespace LinearQuantitative.Linear
 
             If result.Length = 0 Then
                 Call $"[NO_DATA] {fileName.ToFileURL} found nothing!".Warning
-                Return Nothing
+
+                Return New QuantifyScan With {
+                    .ionPeaks = {},
+                    .quantify = New DataSet With {.ID = fileName.BaseName, .Properties = New Dictionary(Of String, Double)},
+                    .rawX = New DataSet With {.ID = fileName.BaseName, .Properties = New Dictionary(Of String, Double)}
+                }
             End If
 
             ' 这个是浓度结果数据

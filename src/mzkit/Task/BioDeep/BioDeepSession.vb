@@ -1,6 +1,56 @@
-﻿Imports Microsoft.VisualBasic.Linq
+﻿#Region "Microsoft.VisualBasic::b7f300d3c787b104707fb6239fca9325, src\mzkit\Task\BioDeep\BioDeepSession.vb"
+
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class BioDeepSession
+    ' 
+    '     Properties: cookieName, ssid
+    ' 
+    '     Function: CheckSession, GetSessionInfo, headerProvider, Request, RequestStream
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.IO
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Microsoft.VisualBasic.My
+Imports Microsoft.VisualBasic.Net.Http
 
 ''' <summary>
 ''' 登录状态信息使用<see cref="SingletonHolder(Of BioDeepSession)"/>进行保存
@@ -51,5 +101,34 @@ Public Class BioDeepSession
             .DoCall(AddressOf MessageParser.ParseMessage)
     End Function
 
+    Public Function RequestStream(api As String, Optional headers As Dictionary(Of String, String) = Nothing) As Stream
+        Dim sessionHeader As Dictionary(Of String, String) = headerProvider()
+        Dim buffer As New MemoryStream
+
+        If Not headers.IsNullOrEmpty Then
+            For Each item In headers
+                sessionHeader(item.Key) = item.Value
+            Next
+        End If
+
+        Using webResponse As Stream = api.GetRequestRaw(headers:=sessionHeader)
+            Dim chunk As Byte() = New Byte(4096 - 1) {}
+            Dim nread As i32 = 0
+
+            Do While True
+                If (nread = webResponse.Read(chunk, Scan0, chunk.Length)) <= 0 Then
+                    Exit Do
+                Else
+                    buffer.Write(chunk, Scan0, nread)
+                End If
+            Loop
+
+            Call buffer.Seek(Scan0, SeekOrigin.Begin)
+        End Using
+
+        Return buffer '.UnGzipStream
+    End Function
+
 End Class
+
 

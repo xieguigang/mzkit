@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a75b04655d223534a0831b07f6bd5238, pubchem\CLI\DatabaseCLI.vb"
+﻿#Region "Microsoft.VisualBasic::a75b04655d223534a0831b07f6bd5238, src\metadb\pubchem\CLI\DatabaseCLI.vb"
 
     ' Author:
     ' 

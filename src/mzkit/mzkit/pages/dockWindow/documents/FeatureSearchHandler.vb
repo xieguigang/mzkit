@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d7e45c6bc7e1dc8057ef5febe54f46cb, pages\dockWindow\documents\FeatureSearchHandler.vb"
+﻿#Region "Microsoft.VisualBasic::cf3716c44fe196d437269e692b1f9d92, src\mzkit\mzkit\pages\dockWindow\documents\FeatureSearchHandler.vb"
 
     ' Author:
     ' 
@@ -44,6 +44,7 @@
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1
 Imports BioNovoGene.Analytical.MassSpectrometry.Math.Ms1.PrecursorType
 Imports Microsoft.VisualBasic.Linq
@@ -53,29 +54,32 @@ Imports Task
 
 Module FeatureSearchHandler
 
-    Public Sub SearchByMz(text As String, raw As IEnumerable(Of Raw))
+    Public Sub SearchByMz(text As String, raw As IEnumerable(Of Raw), directRaw As Boolean)
         If text.StringEmpty Then
             Return
         ElseIf text.IsNumeric Then
             Call searchInFileByMz(mz:=Val(text), raw:=raw)
         Else
-            Call runFormulaMatch(text, raw)
+            Call runFormulaMatch(text, raw, directRaw)
 
             MyApplication.host.ribbonItems.TabGroupExactMassSearchTools.ContextAvailable = ContextAvailability.Active
         End If
     End Sub
 
-    Private Sub runFormulaMatch(formula As String, files As IEnumerable(Of Raw))
+    Private Sub runFormulaMatch(formula As String, files As IEnumerable(Of Raw), directRaw As Boolean)
         Dim ppm As Double = MyApplication.host.GetPPMError()
-        Dim display As New frmFeatureSearch
+        Dim display As frmFeatureSearch = VisualStudio.ShowDocument(Of frmFeatureSearch)
 
-        display.Show(MyApplication.host.dockPanel)
+        If directRaw Then
+            display.directRaw = files.First
+            display.AddFileMatch(display.directRaw.source, MatchByFormula(formula, display.directRaw).ToArray)
+        Else
+            For Each file As Raw In files
+                Dim result = MatchByFormula(formula, file).ToArray
 
-        For Each file As Raw In files
-            Dim result = MatchByFormula(formula, file).ToArray
-
-            display.AddFileMatch(file.source, result)
-        Next
+                display.AddFileMatch(file.source, result)
+            Next
+        End If
     End Sub
 
     Public Iterator Function MatchByFormula(formula As String, raw As Raw) As IEnumerable(Of ParentMatch)
@@ -90,7 +94,7 @@ Module FeatureSearchHandler
         Dim neg = MzCalculator.EvaluateAll(exact_mass, "-", False).ToArray
         Dim info As PrecursorInfo()
 
-        For Each scan As ScanEntry In raw.GetMs2Scans
+        For Each scan As ScanMS2 In raw.GetMs2Scans
             If scan.polarity > 0 Then
                 info = pos
             Else
@@ -98,20 +102,22 @@ Module FeatureSearchHandler
             End If
 
             For Each mode As PrecursorInfo In info
-                If PPMmethod.PPM(scan.mz, Val(mode.mz)) <= ppm Then
+                If PPMmethod.PPM(scan.parentMz, Val(mode.mz)) <= ppm Then
                     Yield New ParentMatch With {
-                        .id = scan.id,
+                        .scan_id = scan.scan_id,
                         .mz = scan.mz,
                         .rt = CInt(scan.rt),
-                        .BPC = scan.BPC,
-                        .TIC = scan.TIC,
+                        .BPC = scan.into.Max,
+                        .TIC = scan.into.Sum,
                         .M = mode.M,
                         .adducts = mode.adduct,
                         .charge = mode.charge,
                         .precursor_type = mode.precursor_type,
-                        .ppm = PPMmethod.PPM(scan.mz, Val(mode.mz)).ToString("F2"),
+                        .ppm = PPMmethod.PPM(scan.parentMz, Val(mode.mz)).ToString("F2"),
                         .polarity = scan.polarity,
-                        .XIC = 0
+                        .XIC = scan.intensity,
+                        .into = scan.into,
+                        .parentMz = scan.parentMz
                     }
                 End If
             Next
@@ -125,11 +131,10 @@ Module FeatureSearchHandler
 
         display.Show(MyApplication.host.dockPanel)
 
-        For Each file In raw
-            Dim result = file.GetMs2Scans.Where(Function(a) tolerance(a.mz, mz)).ToArray
+        For Each file As Raw In raw
+            Dim result = file.LoadMzpack.GetMs2Scans.Where(Function(a) tolerance(a.parentMz, mz)).ToArray
 
             display.AddFileMatch(file.source, mz, result)
         Next
     End Sub
 End Module
-

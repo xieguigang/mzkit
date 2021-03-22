@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::71d7733989d9a2ae00d0a960b8a56af5, assembly\MarkupData\mzML\XML\IonTargeted\IMRMSelector.vb"
+﻿#Region "Microsoft.VisualBasic::71d7733989d9a2ae00d0a960b8a56af5, src\assembly\assembly\MarkupData\mzML\XML\IonTargeted\IMRMSelector.vb"
 
     ' Author:
     ' 

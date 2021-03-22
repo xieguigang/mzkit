@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::92797346728a393a22b03e204bce5ec7, forms\frmTweaks\frmTweaks.vb"
+﻿#Region "Microsoft.VisualBasic::92797346728a393a22b03e204bce5ec7, src\mzkit\mzkit\forms\frmTweaks\frmTweaks.vb"
 
     ' Author:
     ' 

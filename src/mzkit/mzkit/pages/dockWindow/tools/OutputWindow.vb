@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::22f004fc2ae99fa10d3254ce6a91f6d7, pages\dockWindow\tools\OutputWindow.vb"
+﻿#Region "Microsoft.VisualBasic::4608e4700e591828168c04e0e361fa1b, src\mzkit\mzkit\pages\dockWindow\tools\OutputWindow.vb"
 
     ' Author:
     ' 
@@ -58,12 +58,26 @@ Namespace DockSample
             Me.ToolStripComboBox1.SelectedIndex = 0
         End Sub
 
+        ''' <summary>
+        ''' append line
+        ''' </summary>
+        ''' <param name="msg"></param>
         Public Sub AppendMessage(msg As String)
-            Invoke(Sub() textBox1.AppendText(msg & vbCrLf))
+            Invoke(Sub()
+                       textBox1.AppendText(msg & vbCrLf)
+                       textBox1.SelectionStart = textBox1.TextLength
+                   End Sub)
         End Sub
 
+        ''' <summary>
+        ''' append line
+        ''' </summary>
+        ''' <param name="msg"></param>
         Public Sub AppendRoutput(msg As String)
-            Invoke(Sub() textBox2.AppendText(msg & vbCrLf))
+            Invoke(Sub()
+                       textBox2.AppendText(msg & vbCrLf)
+                       textBox2.SelectionStart = textBox2.TextLength
+                   End Sub)
         End Sub
 
         Private Sub comboBox_SelectedIndexChanged() Handles ToolStripComboBox1.SelectedIndexChanged
@@ -81,6 +95,8 @@ Namespace DockSample
         Private Sub OutputWindow_Load(sender As Object, e As EventArgs) Handles Me.Load
             Call ApplyVsTheme(ToolStrip1)
             Call comboBox_SelectedIndexChanged()
+
+            Me.Icon = My.Resources.logging
         End Sub
 
         Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click

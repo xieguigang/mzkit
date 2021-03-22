@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::74725751c6a3556174043f6e928ae77a, metaDNA\Models\MassIndexKey.vb"
+﻿#Region "Microsoft.VisualBasic::74725751c6a3556174043f6e928ae77a, src\metadna\metaDNA\Models\MassIndexKey.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5aa0608dfe70885875dabdb4b4e2d15, ProteoWizard.Interop\ProteoWizardCLI.vb"
+﻿#Region "Microsoft.VisualBasic::f5aa0608dfe70885875dabdb4b4e2d15, src\assembly\ProteoWizard.Interop\ProteoWizardCLI.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::133460564e7859efafc19743891b6154, SpectrumTree\Reader.vb"
+﻿#Region "Microsoft.VisualBasic::133460564e7859efafc19743891b6154, src\assembly\SpectrumTree\Reader.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc1d422dc7c14a5847a528ed92db8602, ms2_math-core\UV\UVScanPoint.vb"
+﻿#Region "Microsoft.VisualBasic::bc1d422dc7c14a5847a528ed92db8602, src\mzmath\ms2_math-core\UV\UVScanPoint.vb"
 
     ' Author:
     ' 

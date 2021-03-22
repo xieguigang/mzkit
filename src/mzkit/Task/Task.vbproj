@@ -151,14 +151,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BioDeep\BioDeepSession.vb" />
+    <Compile Include="BioDeep\KEGGRepo.vb" />
     <Compile Include="BioDeep\SessionInfo.vb" />
     <Compile Include="BioDeep\MessageParser.vb" />
     <Compile Include="IonLibrary.vb" />
     <Compile Include="GCMSQuantifyIon.vb" />
+    <Compile Include="MetaDNASearch.vb" />
     <Compile Include="Studio\WorkStudio.vb" />
     <Compile Include="Studio\Notification.vb" />
-    <Compile Include="Imports\ImportsMgf.vb" />
-    <Compile Include="Imports\ImportsTask.vb" />
     <Compile Include="ParentMatch.vb" />
     <Compile Include="Properties\AlignmentProperty.vb" />
     <Compile Include="Properties\MRMROIProperty.vb" />
@@ -213,9 +213,21 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\core\Bio.Annotation\Bio.Annotation.vbproj">
+      <Project>{e5ad6940-d449-471d-9539-65b4e457e6e3}</Project>
+      <Name>Bio.Annotation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\GCModeller\core\Bio.Assembly\Bio.Assembly.vbproj">
+      <Project>{c699d311-9923-4c19-bf70-5048d0e2cf5d}</Project>
+      <Name>Bio.Assembly</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\R-sharp\R#\R.vbproj">
       <Project>{0c2eb77c-39f2-460d-a3f8-ce905f867637}</Project>
       <Name>R</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\repository\Bio.Repository\Bio.Repository.vbproj">
+      <Project>{216acc2d-c7a5-4c27-9dc9-bdfa4dbb6a37}</Project>
+      <Name>Bio.Repository</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\BinaryData.vbproj">
       <Project>{487d7c92-d05a-4908-bf81-e6baba0bf592}</Project>
@@ -224,6 +236,10 @@
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\DataStorage\DataStorage.vbproj">
       <Project>{3c79ae03-a766-4b61-bdc4-824d78481b53}</Project>
       <Name>DataStorage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\msgpack\MessagePack.vbproj">
+      <Project>{C473D2D3-65B3-0220-32A8-1E0687D9AE6B}</Project>
+      <Name>MessagePack</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj">
       <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
@@ -272,6 +288,10 @@
     <ProjectReference Include="..\..\assembly\assembly\assembly.vbproj">
       <Project>{95f7d65e-9db1-4605-9fd3-25433277af88}</Project>
       <Name>assembly</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\assembly\mzPack\mzPack.vbproj">
+      <Project>{a1cb72f1-e918-4146-82a4-f409f31700b6}</Project>
+      <Name>mzPack</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\metadb\Chemoinformatics\Chemoinformatics.vbproj">
       <Project>{C3FAF972-2D6D-4FCB-8E1F-A66FE130D485}</Project>

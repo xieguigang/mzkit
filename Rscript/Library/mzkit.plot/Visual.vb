@@ -1,47 +1,47 @@
-﻿#Region "Microsoft.VisualBasic::31e4946c91456505885032ecbb6de299, Library\mzkit.plot\Visual.vb"
+﻿#Region "Microsoft.VisualBasic::759d5c67c402b88ed6f4f5248a2cbe1d, Rscript\Library\mzkit.plot\Visual.vb"
 
-' Author:
-' 
-'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-' 
-' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-' 
-' 
-' MIT License
-' 
-' 
-' Permission is hereby granted, free of charge, to any person obtaining a copy
-' of this software and associated documentation files (the "Software"), to deal
-' in the Software without restriction, including without limitation the rights
-' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-' copies of the Software, and to permit persons to whom the Software is
-' furnished to do so, subject to the following conditions:
-' 
-' The above copyright notice and this permission notice shall be included in all
-' copies or substantial portions of the Software.
-' 
-' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-' SOFTWARE.
+    ' Author:
+    ' 
+    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+    ' 
+    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+    ' 
+    ' 
+    ' MIT License
+    ' 
+    ' 
+    ' Permission is hereby granted, free of charge, to any person obtaining a copy
+    ' of this software and associated documentation files (the "Software"), to deal
+    ' in the Software without restriction, including without limitation the rights
+    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    ' copies of the Software, and to permit persons to whom the Software is
+    ' furnished to do so, subject to the following conditions:
+    ' 
+    ' The above copyright notice and this permission notice shall be included in all
+    ' copies or substantial portions of the Software.
+    ' 
+    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    ' SOFTWARE.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Module Visual
-' 
-'     Function: addOverlaps, getSpectrum, plotChromatogram, plotChromatogram2, plotMS
-'               PlotRawScatter, plotSignal, plotSignal2, PlotUVSignals, SpectrumPlot
-' 
-'     Sub: Main
-' 
-' /********************************************************************************/
+    ' Module Visual
+    ' 
+    '     Function: getSpectrum, plotChromatogram, plotMS, plotOverlaps, PlotRawScatter
+    '               plotSignal, plotSignal2, PlotUVSignals, Snapshot3D, SpectrumPlot
+    ' 
+    '     Sub: Main
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -103,11 +103,11 @@ Module Visual
         Dim parallel As Boolean = args.getValue("parallel", env, [default]:=False)
         Dim axisStroke As String = args.getValue("axis.stroke", env, [default]:="stroke: black; stroke-width: 3px; stroke-dash: solid;")
         Dim lineStroke As String = args.getValue("line.stroke", env, [default]:="stroke: black; stroke-width: 2px; stroke-dash: solid;")
-        Dim padding As String = args.getValue("padding", env, "padding:100px 100px 150px 250px;")
+        Dim padding As String = args.getValue("padding", env, "padding:100px 100px 125px 150px;")
         Dim axisLabel As String = args.getValue("axis.cex", env, "font-style: normal; font-size: 24; font-family: Bookman Old Style;")
         Dim axisTickCex As String = args.getValue("tick.cex", env, "font-style: normal; font-size: 16; font-family: Bookman Old Style;")
         Dim legendLabel As String = args.getValue("legend.cex", env, "font-style: normal; font-size: 12; font-family: Bookman Old Style;")
-        Dim size As String = args.getValue("size", env, "1600,1000")
+        Dim size As String = InteropArgumentHelper.getSize(args.getByName("size"), "1600,1000")
         Dim xlab As String = args.getValue("xlab", env, "Time (s)")
         Dim ylab As String = args.getValue("ylab", env, "Intensity")
         Dim reorderOverlaps As Boolean = args.getValue("reorder.overlaps", env, [default]:=False)
@@ -230,6 +230,8 @@ Module Visual
                                ms1_scans As Object,
                                Optional mzwidth As Object = "da:0.3",
                                Optional noise_cutoff As Double = 0.5,
+                               <RRawVectorArgument>
+                               Optional size As Object = "1600,1200",
                                Optional env As Environment = Nothing) As Object
 
         Dim points As pipeline = pipeline.TryCreatePipeline(Of ms1_scan)(ms1_scans, env)
@@ -278,8 +280,9 @@ Module Visual
                 {"show.labels", False},
                 {"show.legends", False},
                 {"parallel", True},
-                {"colors", "reverse(YlGnBu:c8)"},
-                {"opacity", 60}
+                {"colors", "Spectral:c8"},
+                {"opacity", 60},
+                {"size", size}
             }
         }
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::937d6d03405d1f81e5ec8a1254d63166, pages\toolkit\PageSpectrumSearch.vb"
+﻿#Region "Microsoft.VisualBasic::3b7fbd2b762b940cd989b28a22da1a3c, src\mzkit\mzkit\pages\toolkit\PageSpectrumSearch.vb"
 
     ' Author:
     ' 
@@ -109,7 +109,14 @@ Public Class PageSpectrumSearch
             Return
         End If
 
-        Dim ion As MGF.Ions = MGF.MgfReader.StreamParser(textLines).FirstOrDefault
+        Dim ion As MGF.Ions
+
+        Try
+            ion = MGF.MgfReader.StreamParser(textLines).FirstOrDefault
+        Catch ex As Exception
+            Call MyApplication.host.showStatusMessage("invalid mgf text format!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+            Return
+        End Try
 
         If ion Is Nothing OrElse ion.Peaks.IsNullOrEmpty Then
             Call MyApplication.host.showStatusMessage("invalid mgf text format!", My.Resources.StatusAnnotations_Warning_32xLG_color)
@@ -220,7 +227,7 @@ Public Class PageSpectrumSearch
             Dim raw As Raw = Globals.workspace.FindRawFile(filePath)
 
             If Not raw Is Nothing Then
-                Call MyApplication.mzkitRawViewer.showScatter(raw)
+                Call MyApplication.mzkitRawViewer.showScatter(raw, False, directSnapshot:=True)
             End If
         Else
             ' 选择的是一个scan数据节点
@@ -232,4 +239,3 @@ Public Class PageSpectrumSearch
         host.ShowPage(host.mzkitTool)
     End Sub
 End Class
-

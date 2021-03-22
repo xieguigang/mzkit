@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3c32dbfe8988244cf8f1d28e5e571b3, pages\Settings\buttons\NativeToolStripRenderer.vb"
+﻿#Region "Microsoft.VisualBasic::b3c32dbfe8988244cf8f1d28e5e571b3, src\mzkit\mzkit\pages\Settings\buttons\NativeToolStripRenderer.vb"
 
     ' Author:
     ' 

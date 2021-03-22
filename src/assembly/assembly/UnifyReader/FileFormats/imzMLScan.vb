@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ac20d6ff32f85e79b12c90dfa1b44d8, assembly\UnifyReader\FileFormats\imzMLScan.vb"
+﻿#Region "Microsoft.VisualBasic::30aa7ed5bd34d667c073152c0555e9e1, src\assembly\assembly\UnifyReader\FileFormats\imzMLScan.vb"
 
     ' Author:
     ' 
@@ -36,8 +36,9 @@
 
     '     Class imzMLScan
     ' 
-    '         Function: GetBPC, GetMsLevel, GetMsMs, GetParentMz, GetPolarity
-    '                   GetScanId, GetScanTime, GetTIC, IsEmpty
+    '         Function: GetActivationMethod, GetBPC, GetCentroided, GetCharge, GetCollisionEnergy
+    '                   GetMsLevel, GetMsMs, GetParentMz, GetPolarity, GetScanId
+    '                   GetScanTime, GetTIC, IsEmpty
     ' 
     ' 
     ' /********************************************************************************/
@@ -85,6 +86,22 @@ Namespace DataReader
 
         Public Overrides Function GetPolarity(scan As ScanReader) As String
             Return "+"
+        End Function
+
+        Public Overrides Function GetCharge(scan As ScanReader) As Integer
+            Throw New NotImplementedException()
+        End Function
+
+        Public Overrides Function GetActivationMethod(scan As ScanReader) As ActivationMethods
+            Throw New NotImplementedException()
+        End Function
+
+        Public Overrides Function GetCollisionEnergy(scan As ScanReader) As Double
+            Throw New NotImplementedException()
+        End Function
+
+        Public Overrides Function GetCentroided(scan As ScanReader) As Boolean
+            Throw New NotImplementedException()
         End Function
     End Class
 End Namespace

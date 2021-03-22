@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d64351e9d78462ec95c674f962377d0, TargetedMetabolomics\GCMS\ReaderExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::86da0ce5b5c86809723e565b4303e6d6, src\mzmath\TargetedMetabolomics\GCMS\ReaderExtensions.vb"
 
     ' Author:
     ' 

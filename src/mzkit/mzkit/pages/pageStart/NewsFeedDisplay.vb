@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f2bb34185590721aca4ef094cf9e6ec, pages\pageStart\NewsFeedDisplay.vb"
+﻿#Region "Microsoft.VisualBasic::7f2bb34185590721aca4ef094cf9e6ec, src\mzkit\mzkit\pages\pageStart\NewsFeedDisplay.vb"
 
     ' Author:
     ' 

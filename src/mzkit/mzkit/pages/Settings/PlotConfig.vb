@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f2584aa395acef70535ac13ab88c23e, pages\Settings\PlotConfig.vb"
+﻿#Region "Microsoft.VisualBasic::4f2584aa395acef70535ac13ab88c23e, src\mzkit\mzkit\pages\Settings\PlotConfig.vb"
 
     ' Author:
     ' 

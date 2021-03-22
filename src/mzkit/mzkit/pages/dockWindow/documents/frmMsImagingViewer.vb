@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad0fef42a41c35e3ec6d77906a9659b4, pages\dockWindow\documents\frmMsImagingViewer.vb"
+﻿#Region "Microsoft.VisualBasic::ad0fef42a41c35e3ec6d77906a9659b4, src\mzkit\mzkit\pages\dockWindow\documents\frmMsImagingViewer.vb"
 
     ' Author:
     ' 

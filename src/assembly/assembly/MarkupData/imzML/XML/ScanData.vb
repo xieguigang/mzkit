@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2556582621377b15e3f915760693f17, assembly\MarkupData\imzML\XML\ScanData.vb"
+﻿#Region "Microsoft.VisualBasic::d2556582621377b15e3f915760693f17, src\assembly\assembly\MarkupData\imzML\XML\ScanData.vb"
 
     ' Author:
     ' 

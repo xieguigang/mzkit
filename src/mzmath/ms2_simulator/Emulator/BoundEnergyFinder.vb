@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9b6e2a241bacb304a0213e381513cc68, ms2_simulator\Emulator\BoundEnergyFinder.vb"
+﻿#Region "Microsoft.VisualBasic::9b6e2a241bacb304a0213e381513cc68, src\mzmath\ms2_simulator\Emulator\BoundEnergyFinder.vb"
 
     ' Author:
     ' 

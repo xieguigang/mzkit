@@ -336,8 +336,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Deconvolution.vb" />
+    <Compile Include="Models\MzGroup.vb" />
+    <Compile Include="Models\PeakROI.vb" />
     <Compile Include="PeakAlignment.vb" />
-    <Compile Include="PeakFeature.vb" />
+    <Compile Include="Models\PeakFeature.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

@@ -328,6 +328,18 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="pages\dockWindow\DemoItem.vb" />
+    <Compile Include="pages\dockWindow\documents\frmTableViewer.Designer.vb">
+      <DependentUpon>frmTableViewer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\dockWindow\documents\frmTableViewer.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="pages\dockWindow\documents\frmUntargettedViewer.Designer.vb">
+      <DependentUpon>frmUntargettedViewer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\dockWindow\documents\frmUntargettedViewer.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="pages\dockWindow\documents\frmHtmlViewer.Designer.vb">
       <DependentUpon>frmHtmlViewer.vb</DependentUpon>
     </Compile>
@@ -416,6 +428,12 @@
     <Compile Include="pages\dockWindow\documents\RtRangeSelector.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="pages\dockWindow\frmVideoList.Designer.vb">
+      <DependentUpon>frmVideoList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pages\dockWindow\frmVideoList.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="pages\dockWindow\frmDemo.Designer.vb">
       <DependentUpon>frmDemo.vb</DependentUpon>
     </Compile>
@@ -478,10 +496,10 @@
     <Compile Include="pages\dockWindow\documents\frmRScriptEdit.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="pages\dockWindow\R\frmRsharp.Designer.vb">
+    <Compile Include="pages\dockWindow\documents\frmRsharp.Designer.vb">
       <DependentUpon>frmRsharp.vb</DependentUpon>
     </Compile>
-    <Compile Include="pages\dockWindow\R\frmRsharp.vb">
+    <Compile Include="pages\dockWindow\documents\frmRsharp.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="pages\dockWindow\frmSettings.Designer.vb">
@@ -678,8 +696,14 @@
     <EmbeddedResource Include="pages\dockWindow\documents\frmGCMS_CDFExplorer.resx">
       <DependentUpon>frmGCMS_CDFExplorer.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="pages\dockWindow\documents\frmTableViewer.resx">
+      <DependentUpon>frmTableViewer.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\documents\frmTargetedQuantification.resx">
       <DependentUpon>frmTargetedQuantification.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pages\dockWindow\documents\frmUntargettedViewer.resx">
+      <DependentUpon>frmUntargettedViewer.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\explorer\frmFileExplorer.resx">
       <DependentUpon>frmFileExplorer.vb</DependentUpon>
@@ -708,13 +732,16 @@
     <EmbeddedResource Include="pages\dockWindow\frmSettings.resx">
       <DependentUpon>frmSettings.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="pages\dockWindow\frmVideoList.resx">
+      <DependentUpon>frmVideoList.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\tools\OutputWindow.resx">
       <DependentUpon>OutputWindow.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\tools\PropertyWindow.resx">
       <DependentUpon>PropertyWindow.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="pages\dockWindow\R\frmRsharp.resx">
+    <EmbeddedResource Include="pages\dockWindow\documents\frmRsharp.resx">
       <DependentUpon>frmRsharp.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="pages\dockWindow\frmStartPage.resx">
@@ -994,6 +1021,8 @@
     <None Include="Resources\Flask_no_bubbles.png" />
     <None Include="Resources\Home_Logo.png" />
     <None Include="Resources\Home_Logo_Link.png" />
+    <None Include="Res\Search.ico" />
+    <None Include="Resources\logging.ico" />
     <Content Include="RibbonMarkup.h" />
     <Content Include="RibbonMarkup.xml" />
     <None Include="Resources\header-foreground-image.png" />
