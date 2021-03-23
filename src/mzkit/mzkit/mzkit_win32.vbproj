@@ -328,6 +328,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="pages\dockWindow\DemoItem.vb" />
+    <Compile Include="pages\dockWindow\documents\QuantifyParameters.vb" />
     <Compile Include="pages\dockWindow\documents\frmTableViewer.Designer.vb">
       <DependentUpon>frmTableViewer.vb</DependentUpon>
     </Compile>
