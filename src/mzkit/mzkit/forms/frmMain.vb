@@ -292,6 +292,8 @@ Public Class frmMain
 
         AddHandler ribbonItems.Tutorials.ExecuteEvent, Sub() Call VisualStudio.ShowSingleDocument(Of frmVideoList)()
 
+        AddHandler ribbonItems.AdjustParameters.ExecuteEvent, Sub() Call VisualStudio.Dock(parametersTool, DockState.DockRight)
+
         _uiCollectionChangedEvent = New UICollectionChangedEvent()
 
         MyApplication.RegisterHost(Me)

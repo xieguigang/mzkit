@@ -1199,6 +1199,15 @@
         <Image MinDPI="192">Res/application-x-rpm.bmp</Image>
       </Command.LargeImages>
     </Command>
+    <Command Name="cmdAdjustParameters" Id="116" LabelTitle="Adjust Parameters" LabelDescription="Adjust Parameters" TooltipTitle="Adjust Parameters" TooltipDescription="Adjust Parameters">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/insert-object.bmp</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="144">Res/insert-object.bmp</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdTagGroupParameterTool" Id="117" LabelTitle="Tools" LabelDescription="Tools" TooltipTitle="Tools" TooltipDescription="Tools" />
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -1370,6 +1379,9 @@
               <Button CommandName="cmdMRMLibrary" />
               <Button CommandName="cmdQuantifyIons" />
             </Group>
+            <Group CommandName="cmdTagGroupParameterTool" SizeDefinition="OneButton">
+              <Button CommandName="cmdAdjustParameters" />
+            </Group>
           </Tab>
         </TabGroup>
       </Ribbon.ContextualTabs>
@@ -1427,8 +1439,8 @@
           </Tab.ScalingPolicy>
           <Group CommandName="cmdGroupAboutActions" SizeDefinition="ThreeButtons">
             <Button CommandName="cmdTutorials" />
-            <Button CommandName="cmdButtonAbout" />
             <Button CommandName="cmdButtonBioDeep" />
+            <Button CommandName="cmdButtonAbout" />
           </Group>
           <Group CommandName="cmdTabDemo" SizeDefinition="OneButton">
             <Button CommandName="cmdButtonMsDemo" />

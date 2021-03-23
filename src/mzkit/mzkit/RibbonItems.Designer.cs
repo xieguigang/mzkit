@@ -98,6 +98,8 @@ using RibbonLib.Interop;
             public const uint cmdTabGroupTargetedLibrary = 107;
             public const uint cmdMRMLibrary = 108;
             public const uint cmdQuantifyIons = 109;
+            public const uint cmdTagGroupParameterTool = 117;
+            public const uint cmdAdjustParameters = 116;
             public const uint cmdTabMain = 1011;
             public const uint cmdGroupFileActions = 1045;
             public const uint cmdTabGroupWindowTools = 1023;
@@ -212,6 +214,8 @@ using RibbonLib.Interop;
         public RibbonGroup TabGroupTargetedLibrary { get; private set; }
         public RibbonButton MRMLibrary { get; private set; }
         public RibbonButton QuantifyIons { get; private set; }
+        public RibbonGroup TagGroupParameterTool { get; private set; }
+        public RibbonButton AdjustParameters { get; private set; }
         public RibbonTab TabMain { get; private set; }
         public RibbonGroup GroupFileActions { get; private set; }
         public RibbonGroup TabGroupWindowTools { get; private set; }
@@ -324,6 +328,8 @@ using RibbonLib.Interop;
             TabGroupTargetedLibrary = new RibbonGroup(ribbon, Cmd.cmdTabGroupTargetedLibrary);
             MRMLibrary = new RibbonButton(ribbon, Cmd.cmdMRMLibrary);
             QuantifyIons = new RibbonButton(ribbon, Cmd.cmdQuantifyIons);
+            TagGroupParameterTool = new RibbonGroup(ribbon, Cmd.cmdTagGroupParameterTool);
+            AdjustParameters = new RibbonButton(ribbon, Cmd.cmdAdjustParameters);
             TabMain = new RibbonTab(ribbon, Cmd.cmdTabMain);
             GroupFileActions = new RibbonGroup(ribbon, Cmd.cmdGroupFileActions);
             TabGroupWindowTools = new RibbonGroup(ribbon, Cmd.cmdTabGroupWindowTools);
