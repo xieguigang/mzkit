@@ -1,4 +1,7 @@
-﻿Public Class AdjustParameters
+﻿Imports System.ComponentModel
+Imports WeifenLuo.WinFormsUI.Docking
+
+Public Class AdjustParameters
 
     Dim applyNewParameters As Action(Of Object)
 
@@ -10,5 +13,10 @@
 
     Private Sub propertyGrid_PropertyValueChanged(s As Object, e As PropertyValueChangedEventArgs) Handles propertyGrid.PropertyValueChanged
         Call applyNewParameters(propertyGrid.SelectedObject)
+    End Sub
+
+    Private Sub AdjustParameters_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        e.Cancel = True
+        Me.DockState = DockState.Hidden
     End Sub
 End Class
