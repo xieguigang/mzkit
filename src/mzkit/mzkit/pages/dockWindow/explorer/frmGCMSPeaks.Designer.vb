@@ -5,7 +5,7 @@ Partial Class frmGCMSPeaks
     Inherits ToolWindow
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -22,18 +22,18 @@ Partial Class frmGCMSPeaks
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmGCMSPeaks))
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
         Me.Win7StyleTreeView1 = New mzkit.Kesoft.Windows.Forms.Win7StyleTreeView.Win7StyleTreeView(Me.components)
-        Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ImportsFilesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ShowPropertiesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ShowPropertiesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.ToolStrip1.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
@@ -69,37 +69,37 @@ Partial Class frmGCMSPeaks
         Me.Win7StyleTreeView1.Size = New System.Drawing.Size(363, 508)
         Me.Win7StyleTreeView1.TabIndex = 1
         '
+        'ContextMenuStrip1
+        '
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ImportsFilesToolStripMenuItem, Me.ToolStripMenuItem1, Me.ShowPropertiesToolStripMenuItem})
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(172, 54)
+        '
+        'ImportsFilesToolStripMenuItem
+        '
+        Me.ImportsFilesToolStripMenuItem.Image = CType(resources.GetObject("ImportsFilesToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.ImportsFilesToolStripMenuItem.Name = "ImportsFilesToolStripMenuItem"
+        Me.ImportsFilesToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
+        Me.ImportsFilesToolStripMenuItem.Text = "Imports Files"
+        '
+        'ToolStripMenuItem1
+        '
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(168, 6)
+        '
+        'ShowPropertiesToolStripMenuItem
+        '
+        Me.ShowPropertiesToolStripMenuItem.Image = CType(resources.GetObject("ShowPropertiesToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.ShowPropertiesToolStripMenuItem.Name = "ShowPropertiesToolStripMenuItem"
+        Me.ShowPropertiesToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
+        Me.ShowPropertiesToolStripMenuItem.Text = "Show Properties"
+        '
         'ImageList1
         '
         Me.ImageList1.ImageStream = CType(resources.GetObject("ImageList1.ImageStream"), System.Windows.Forms.ImageListStreamer)
         Me.ImageList1.TransparentColor = System.Drawing.Color.Transparent
         Me.ImageList1.Images.SetKeyName(0, "folder-pictures.png")
         Me.ImageList1.Images.SetKeyName(1, "application-x-object.png")
-        '
-        'ContextMenuStrip1
-        '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ImportsFilesToolStripMenuItem, Me.ToolStripMenuItem1, Me.ShowPropertiesToolStripMenuItem})
-        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 76)
-        '
-        'ImportsFilesToolStripMenuItem
-        '
-        Me.ImportsFilesToolStripMenuItem.Image = CType(resources.GetObject("ImportsFilesToolStripMenuItem.Image"), System.Drawing.Image)
-        Me.ImportsFilesToolStripMenuItem.Name = "ImportsFilesToolStripMenuItem"
-        Me.ImportsFilesToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.ImportsFilesToolStripMenuItem.Text = "Imports Files"
-        '
-        'ShowPropertiesToolStripMenuItem
-        '
-        Me.ShowPropertiesToolStripMenuItem.Image = CType(resources.GetObject("ShowPropertiesToolStripMenuItem.Image"), System.Drawing.Image)
-        Me.ShowPropertiesToolStripMenuItem.Name = "ShowPropertiesToolStripMenuItem"
-        Me.ShowPropertiesToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.ShowPropertiesToolStripMenuItem.Text = "Show Properties"
-        '
-        'ToolStripMenuItem1
-        '
-        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(177, 6)
         '
         'frmGCMSPeaks
         '

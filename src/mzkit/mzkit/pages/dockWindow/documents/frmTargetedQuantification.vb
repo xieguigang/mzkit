@@ -81,6 +81,7 @@ Imports RibbonLib.Controls.Events
 Imports RibbonLib.Interop
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports Task
+Imports WeifenLuo.WinFormsUI.Docking
 Imports any = Microsoft.VisualBasic.Scripting
 Imports Rlist = SMRUCC.Rsharp.Runtime.Internal.Object.list
 Imports stdNum = System.Math
@@ -100,6 +101,8 @@ Public Class frmTargetedQuantification
 
         Call reloadProfileNames()
         Call ApplyVsTheme(ToolStrip1, ToolStrip2, ContextMenuStrip1, ContextMenuStrip2, ContextMenuStrip3)
+
+        Call VisualStudio.Dock(MyApplication.host.parametersTool, DockState.DockRight)
     End Sub
 
     Private Sub reloadProfileNames()

@@ -841,6 +841,7 @@ Public Class frmMain
     Friend msDemo As New frmDemo
     Friend MRMIons As New frmSRMIonsExplorer
     Friend GCMSPeaks As New frmGCMSPeaks
+    Friend parametersTool As New AdjustParameters
 
     Public Sub ShowPropertyWindow()
         VisualStudio.Dock(propertyWin, DockState.DockRight)
@@ -907,6 +908,9 @@ Public Class frmMain
 
         msImageParameters.Show(dockPanel)
         msImageParameters.DockState = DockState.Hidden
+
+        parametersTool.Show(dockPanel)
+        parametersTool.DockState = DockState.Hidden
 
         msDemo.Show(dockPanel)
         msDemo.DockState = DockState.Hidden
