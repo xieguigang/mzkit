@@ -84,7 +84,13 @@ Public Module DrawScatter
             .Where(Function(c) c.Length > 3) _
             .ToArray
 
-        Return XIC.TICplot(parallel:=True, showLabels:=False, showLegends:=False).AsGDIImage
+        Return XIC.TICplot(
+            parallel:=True,
+            showLabels:=False,
+            showLegends:=False,
+            colorsSchema:="Spectral:c8",
+            fillAlpha:=60
+        ).AsGDIImage
     End Function
 
     <Extension>

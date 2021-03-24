@@ -125,14 +125,19 @@ Public Class ScanVisual3D : Inherits Plot
         ' cos(a) = dx / dc
         ' dx = cos(a) * dc
         Dim dc As Double = evalDc(canvas)
-        Dim dx As Double = stdNum.Sin(angle.ToRadians) * dc
+        Dim dx As Double = stdNum.Cos(angle.ToRadians) * dc
 
         Return dx / (scans.Length + 1)
     End Function
 
+    ''' <summary>
+    ''' 计算出直角三角形的斜边长度
+    ''' </summary>
+    ''' <param name="canvas"></param>
+    ''' <returns></returns>
     Private Function evalDc(canvas As GraphicsRegion) As Double
         Dim rect As Rectangle = canvas.PlotRegion
-        Dim height As Double = Me.height * rect.Height
+        Dim height As Double = 0 ' Me.height * rect.Height
         Dim y1 As Double = rect.Bottom - height
         Dim y2 As Double = rect.Top
         Dim dh As Double = y1 - y2
@@ -159,14 +164,14 @@ Public Class ScanVisual3D : Inherits Plot
         ' sin(a) = dy / dc
         ' dy = sin(a) * dc
         Dim dc As Double = evalDc(canvas)
-        Dim dy As Double = stdNum.Cos(angle.ToRadians) * dc
+        Dim dy As Double = stdNum.Sin(angle.ToRadians) * dc
 
         Return dy / (scans.Length + 1)
     End Function
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         Dim dx As Double = evalDx(canvas)
-        Dim dy As Double = evalDy(canvas)
+        Dim dy As Double = canvas.PlotRegion.Height * Me.height / (scans.Length + 1)  ' evalDy(canvas)
         Dim theme As Theme = Me.theme.Clone
         Dim colors As String() = Designer _
             .GetColors(theme.colorSet, scans.Length) _
