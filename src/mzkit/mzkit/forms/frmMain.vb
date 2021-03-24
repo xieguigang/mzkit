@@ -198,13 +198,13 @@ Public Class frmMain
         ' 此调用是设计器所必需的。
         InitializeComponent()
 
+        Call MyApplication.RegisterHost(Me)
+
         ' 在 InitializeComponent() 调用之后添加任何初始化。
         ribbonItems = New RibbonItems(Ribbon1)
         ribbonItems.AddHandlers
 
         _uiCollectionChangedEvent = New UICollectionChangedEvent()
-
-        MyApplication.RegisterHost(Me)
     End Sub
 
     Private Sub showMsImaging(imzML As String)
