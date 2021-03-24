@@ -88,8 +88,10 @@ Public Module DrawScatter
             parallel:=True,
             showLabels:=False,
             showLegends:=False,
-            colorsSchema:="Spectral:c8",
-            fillAlpha:=60
+            colorsSchema:="YlGnBu:c8",
+            fillAlpha:=60,
+            margin:="padding:100px 100px 125px 150px;",
+            gridFill:="white"
         ).AsGDIImage
     End Function
 
