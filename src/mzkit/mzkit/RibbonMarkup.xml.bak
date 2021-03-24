@@ -88,7 +88,7 @@
         <Image Id="124">Res/libreoffice-math.png</Image>
       </Command.LargeImages>
     </Command>
-    <Command Name="cmdButtonDropC" Id="1010">
+    <Command Name="cmdButtonFormulaSearch" Id="1010">
       <Command.LabelTitle>
         <String Id="125">Formula Search Tool</String>
       </Command.LabelTitle>
@@ -1208,6 +1208,14 @@
       </Command.LargeImages>
     </Command>
     <Command Name="cmdTagGroupParameterTool" Id="117" LabelTitle="Tools" LabelDescription="Tools" TooltipTitle="Tools" TooltipDescription="Tools" />
+    <Command Name="cmdShowMRMExplorer" Id="118" LabelTitle="MRM Ion Explorer" LabelDescription="Show MRM Ion Explorer" TooltipTitle="Show MRM Ion Explorer" TooltipDescription="Show MRM Ion Explorer">
+      <Command.SmallImages>
+        <Image MinDPI="192">Res/folder-documents.bmp</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Res/folder-documents.bmp</Image>
+      </Command.LargeImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <ContextPopup>
@@ -1250,7 +1258,7 @@
               <MenuGroup Class="MajorItems">
                 <Button CommandName="cmdButtonDropA" />
                 <Button CommandName="cmdButtonDropB" />
-                <Button CommandName="cmdButtonDropC" />
+                <Button CommandName="cmdButtonFormulaSearch" />
                 <Button CommandName="cmdButtonDropD" />
               </MenuGroup>
             </DropDownButton>
@@ -1302,6 +1310,7 @@
                 </SplitButtonGallery.MenuLayout>
                 <Button CommandName="cmdButtonShowExplorer" />
                 <Button CommandName="cmdShowGCMSExplorer" />
+                <Button CommandName="cmdShowMRMExplorer" />
               </SplitButtonGallery>
               <Button CommandName="cmdButtonShowSearchList" />
               <Button CommandName="cmdButtonShowProperties" />

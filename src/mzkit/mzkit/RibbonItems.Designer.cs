@@ -13,7 +13,8 @@ using RibbonLib;
 using RibbonLib.Controls;
 using RibbonLib.Interop;
 
-
+namespace RibbonLib.Controls
+{
     partial class RibbonItems
     {
         private static class Cmd
@@ -25,7 +26,7 @@ using RibbonLib.Interop;
             public const uint cmdButtonToolkits = 1007;
             public const uint cmdButtonDropA = 1008;
             public const uint cmdButtonDropB = 1009;
-            public const uint cmdButtonDropC = 1010;
+            public const uint cmdButtonFormulaSearch = 1010;
             public const uint cmdButtonDropD = 5010;
             public const uint cmdButtonRsharp = 1107;
             public const uint cmdButtonSettings = 1051;
@@ -50,6 +51,7 @@ using RibbonLib.Interop;
             public const uint cmdExplorers = 114;
             public const uint cmdButtonShowExplorer = 1121;
             public const uint cmdShowGCMSExplorer = 113;
+            public const uint cmdShowMRMExplorer = 118;
             public const uint cmdButtonShowSearchList = 1122;
             public const uint cmdButtonShowProperties = 1123;
             public const uint cmdTabLayout = 1035;
@@ -141,7 +143,7 @@ using RibbonLib.Interop;
         public RibbonDropDownButton ButtonToolkits { get; private set; }
         public RibbonButton ButtonDropA { get; private set; }
         public RibbonButton ButtonDropB { get; private set; }
-        public RibbonButton ButtonDropC { get; private set; }
+        public RibbonButton ButtonFormulaSearch { get; private set; }
         public RibbonButton ButtonDropD { get; private set; }
         public RibbonButton ButtonRsharp { get; private set; }
         public RibbonButton ButtonSettings { get; private set; }
@@ -166,6 +168,7 @@ using RibbonLib.Interop;
         public RibbonSplitButtonGallery Explorers { get; private set; }
         public RibbonButton ButtonShowExplorer { get; private set; }
         public RibbonButton ShowGCMSExplorer { get; private set; }
+        public RibbonButton ShowMRMExplorer { get; private set; }
         public RibbonButton ButtonShowSearchList { get; private set; }
         public RibbonButton ButtonShowProperties { get; private set; }
         public RibbonTab TabLayout { get; private set; }
@@ -255,7 +258,7 @@ using RibbonLib.Interop;
             ButtonToolkits = new RibbonDropDownButton(ribbon, Cmd.cmdButtonToolkits);
             ButtonDropA = new RibbonButton(ribbon, Cmd.cmdButtonDropA);
             ButtonDropB = new RibbonButton(ribbon, Cmd.cmdButtonDropB);
-            ButtonDropC = new RibbonButton(ribbon, Cmd.cmdButtonDropC);
+            ButtonFormulaSearch = new RibbonButton(ribbon, Cmd.cmdButtonFormulaSearch);
             ButtonDropD = new RibbonButton(ribbon, Cmd.cmdButtonDropD);
             ButtonRsharp = new RibbonButton(ribbon, Cmd.cmdButtonRsharp);
             ButtonSettings = new RibbonButton(ribbon, Cmd.cmdButtonSettings);
@@ -280,6 +283,7 @@ using RibbonLib.Interop;
             Explorers = new RibbonSplitButtonGallery(ribbon, Cmd.cmdExplorers);
             ButtonShowExplorer = new RibbonButton(ribbon, Cmd.cmdButtonShowExplorer);
             ShowGCMSExplorer = new RibbonButton(ribbon, Cmd.cmdShowGCMSExplorer);
+            ShowMRMExplorer = new RibbonButton(ribbon, Cmd.cmdShowMRMExplorer);
             ButtonShowSearchList = new RibbonButton(ribbon, Cmd.cmdButtonShowSearchList);
             ButtonShowProperties = new RibbonButton(ribbon, Cmd.cmdButtonShowProperties);
             TabLayout = new RibbonTab(ribbon, Cmd.cmdTabLayout);
@@ -359,3 +363,4 @@ using RibbonLib.Interop;
         }
 
     }
+}
