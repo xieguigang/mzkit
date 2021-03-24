@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::4e2082ece7a24b1de9541cd4687de065, src\mzkit\mzkit\forms\frmMain.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class frmMain
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: GetPPMError
-    ' 
-    '     Sub: _recentItems_ExecuteEvent, _uiCollectionChangedEvent_ChangedEvent, About_Click, CreateNewScript, EnableVSRenderer
-    '          ExitToolsStripMenuItem_Click, FormulaSearchToolToolStripMenuItem_Click, frmMain_Closed, frmMain_Closing, frmMain_KeyUp
-    '          frmMain_Load, frmMain_Resize, frmMain_ResizeBegin, frmMain_ResizeEnd, ImportsFiles
-    '          InitializeFormulaProfile, initializeVSPanel, InitRecentItems, InitSpinner, MoleculeNetworkingToolStripMenuItem_Click
-    '          MzCalculatorToolStripMenuItem_Click, NavBack_Click, (+2 Overloads) OpenFile, openRscript, RawFileViewerToolStripMenuItem_Click
-    '          resetLayout, RunCurrentScript, saveCurrentDocument, saveCurrentFile, saveCurrentScript
-    '          SaveScript, SaveSettings, SetSchema, ShowExplorer, ShowGCMSSIM
-    '          showHelp, showLoggingWindow, ShowMRMIons, showMsImaging, ShowMzkitToolkit
-    '          ShowPage, ShowProperties, ShowPropertyWindow, showRTerm, ShowSearchList
-    '          ShowSettings, showStartPage, showStatusMessage, Timer1_Tick, ToolStripStatusLabel2_Click
-    '          ToolStripStatusLabel4_Click, UpdateCacheSize
-    ' 
-    ' /********************************************************************************/
+' Class frmMain
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: GetPPMError
+' 
+'     Sub: _recentItems_ExecuteEvent, _uiCollectionChangedEvent_ChangedEvent, About_Click, CreateNewScript, EnableVSRenderer
+'          ExitToolsStripMenuItem_Click, FormulaSearchToolToolStripMenuItem_Click, frmMain_Closed, frmMain_Closing, frmMain_KeyUp
+'          frmMain_Load, frmMain_Resize, frmMain_ResizeBegin, frmMain_ResizeEnd, ImportsFiles
+'          InitializeFormulaProfile, initializeVSPanel, InitRecentItems, InitSpinner, MoleculeNetworkingToolStripMenuItem_Click
+'          MzCalculatorToolStripMenuItem_Click, NavBack_Click, (+2 Overloads) OpenFile, openRscript, RawFileViewerToolStripMenuItem_Click
+'          resetLayout, RunCurrentScript, saveCurrentDocument, saveCurrentFile, saveCurrentScript
+'          SaveScript, SaveSettings, SetSchema, ShowExplorer, ShowGCMSSIM
+'          showHelp, showLoggingWindow, ShowMRMIons, showMsImaging, ShowMzkitToolkit
+'          ShowPage, ShowProperties, ShowPropertyWindow, showRTerm, ShowSearchList
+'          ShowSettings, showStartPage, showStatusMessage, Timer1_Tick, ToolStripStatusLabel2_Click
+'          ToolStripStatusLabel4_Click, UpdateCacheSize
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -217,105 +217,28 @@ Public Class frmMain
 
         ' 在 InitializeComponent() 调用之后添加任何初始化。
         ribbonItems = New RibbonItems(Ribbon1)
-
-        AddHandler ribbonItems.ButtonExit.ExecuteEvent, AddressOf ExitToolsStripMenuItem_Click
-        AddHandler ribbonItems.ButtonOpenRaw.ExecuteEvent, AddressOf OpenFile
-        AddHandler ribbonItems.ButtonImportsRawFiles.ExecuteEvent, AddressOf ImportsFiles
-        AddHandler ribbonItems.ButtonAbout.ExecuteEvent, AddressOf About_Click
-        AddHandler ribbonItems.ButtonPageNavBack.ExecuteEvent, AddressOf NavBack_Click
-        AddHandler ribbonItems.ButtonNew.ExecuteEvent, AddressOf CreateNewScript
-
-        AddHandler ribbonItems.TweaksImage.ExecuteEvent, AddressOf mzkitTool.ShowPlotTweaks
-        AddHandler ribbonItems.ShowProperty.ExecuteEvent, AddressOf ShowProperties
-
-        AddHandler ribbonItems.ButtonMzCalculator.ExecuteEvent, Sub(sender, e) Call ShowPage(mzkitCalculator)
-        AddHandler ribbonItems.ButtonSettings.ExecuteEvent, AddressOf ShowSettings
-        AddHandler ribbonItems.ButtonMzSearch.ExecuteEvent, Sub(sender, e) Call ShowPage(mzkitSearch)
-        AddHandler ribbonItems.ButtonRsharp.ExecuteEvent, AddressOf showRTerm
-
-        AddHandler ribbonItems.ButtonDropA.ExecuteEvent, Sub(sender, e) ShowPage(mzkitTool)
-        AddHandler ribbonItems.ButtonDropB.ExecuteEvent, Sub(sender, e) ShowPage(mzkitCalculator)
-        AddHandler ribbonItems.ButtonDropC.ExecuteEvent, Sub(sender, e) ShowPage(mzkitSearch)
-        AddHandler ribbonItems.ButtonDropD.ExecuteEvent, Sub(sender, e) ShowPage(mzkitMNtools)
-        AddHandler ribbonItems.ButtonShowSpectrumSearchPage.ExecuteEvent, Sub(sender, e) Call New frmSpectrumSearch().Show(dockPanel)
-
-        AddHandler ribbonItems.ButtonCalculatorExport.ExecuteEvent, Sub(sender, e) Call mzkitCalculator.ExportToolStripMenuItem_Click()
-        AddHandler ribbonItems.ButtonExactMassSearchExport.ExecuteEvent, Sub(sender, e) Call mzkitTool.ExportExactMassSearchTable()
-        AddHandler ribbonItems.ButtonSave.ExecuteEvent, Sub(sender, e) Call saveCurrentFile()
-        AddHandler ribbonItems.ButtonNetworkExport.ExecuteEvent, Sub(sender, e) Call mzkitMNtools.saveNetwork()
-        AddHandler ribbonItems.ButtonFormulaSearchExport.ExecuteEvent, Sub(sender, e) Call mzkitSearch.SaveSearchResultTable()
-
-        AddHandler ribbonItems.ButtonBioDeep.ExecuteEvent, Sub(sender, e) Call Process.Start("http://www.biodeep.cn/")
-        AddHandler ribbonItems.ButtonLicense.ExecuteEvent, Sub(sender, e) Call New frmLicense().ShowDialog()
-
-        AddHandler ribbonItems.ButtonExportImage.ExecuteEvent, Sub(sender, e) Call mzkitTool.SaveImageToolStripMenuItem_Click()
-        AddHandler ribbonItems.ButtonExportMatrix.ExecuteEvent, Sub(sender, e) Call mzkitTool.SaveMatrixToolStripMenuItem_Click()
-
-        AddHandler ribbonItems.ButtonLayout1.ExecuteEvent, Sub(sender, e) Call mzkitTool.SaveImageToolStripMenuItem_Click()
-        AddHandler ribbonItems.ButtonLayout2.ExecuteEvent, Sub(sender, e) Call mzkitTool.SaveMatrixToolStripMenuItem_Click()
-
-        AddHandler ribbonItems.ButtonShowStartPage.ExecuteEvent, AddressOf showStartPage
-        AddHandler ribbonItems.ButtonShowLogWindow.ExecuteEvent, AddressOf showLoggingWindow
-
-        AddHandler ribbonItems.ButtonShowExplorer.ExecuteEvent, AddressOf ShowExplorer
-        AddHandler ribbonItems.ButtonShowSearchList.ExecuteEvent, AddressOf ShowSearchList
-        AddHandler ribbonItems.ButtonShowProperties.ExecuteEvent, AddressOf ShowProperties
-
-        AddHandler ribbonItems.ButtonShowPlotViewer.ExecuteEvent, Sub(sender, e) Call mzkitTool.ShowTabPage(mzkitTool.TabPage5)
-        AddHandler ribbonItems.ButtonShowMatrixViewer.ExecuteEvent, Sub(sender, e) Call mzkitTool.ShowTabPage(mzkitTool.TabPage6)
-        AddHandler ribbonItems.ButtonNetworkRender.ExecuteEvent, Sub(sender, e) Call mzkitMNtools.RenderNetwork()
-        AddHandler ribbonItems.ButtonRefreshNetwork.ExecuteEvent, Sub(sender, e) Call mzkitMNtools.RefreshNetwork()
-
-        AddHandler ribbonItems.ButtonRunScript.ExecuteEvent, AddressOf RunCurrentScript
-        AddHandler ribbonItems.ButtonSaveScript.ExecuteEvent, AddressOf saveCurrentScript
-
-        AddHandler ribbonItems.HelpButton.ExecuteEvent, AddressOf showHelp
-
-        AddHandler ribbonItems.ButtonTIC.ExecuteEvent, Sub(sender, e) Call mzkitTool.TIC(isBPC:=False)
-        AddHandler ribbonItems.ButtonBPC.ExecuteEvent, Sub(sender, e) Call mzkitTool.TIC(isBPC:=True)
-        AddHandler ribbonItems.ButtonXIC.ExecuteEvent, AddressOf rawFeaturesList.ShowXICToolStripMenuItem_Click
-
-        AddHandler ribbonItems.ButtonResetLayout.ExecuteEvent, AddressOf resetLayout
-
-        AddHandler ribbonItems.RecentItems.ExecuteEvent, AddressOf _recentItems_ExecuteEvent
-        ' AddHandler ribbonItems.ButtonMsImaging.ExecuteEvent, AddressOf showMsImaging
-        AddHandler ribbonItems.ButtonMsDemo.ExecuteEvent, Sub() msDemo.ShowPage()
-        AddHandler ribbonItems.Targeted.ExecuteEvent, Sub() Call ConnectToBioDeep.OpenAdvancedFunction(AddressOf VisualStudio.ShowSingleDocument(Of frmTargetedQuantification))
-
-        AddHandler ribbonItems.MRMLibrary.ExecuteEvent, Sub() Call VisualStudio.ShowSingleDocument(Of frmMRMLibrary)(Nothing)
-        AddHandler ribbonItems.QuantifyIons.ExecuteEvent, Sub() Call VisualStudio.ShowSingleDocument(Of frmQuantifyIons)(Nothing)
-
-        AddHandler ribbonItems.LogInBioDeep.ExecuteEvent, Sub() Call New frmLogin().ShowDialog()
-
-        AddHandler ribbonItems.ButtonInstallMzkitPackage.ExecuteEvent, AddressOf MyApplication.InstallPackageRelease
-        AddHandler ribbonItems.ShowGCMSExplorer.ExecuteEvent, Sub() Call VisualStudio.Dock(GCMSPeaks, DockState.DockLeft)
-
-        AddHandler ribbonItems.Tutorials.ExecuteEvent, Sub() Call VisualStudio.ShowSingleDocument(Of frmVideoList)()
-
-        AddHandler ribbonItems.AdjustParameters.ExecuteEvent, Sub() Call VisualStudio.Dock(parametersTool, DockState.DockRight)
+        ribbonItems.AddHandlers
 
         _uiCollectionChangedEvent = New UICollectionChangedEvent()
 
         MyApplication.RegisterHost(Me)
     End Sub
 
-    Dim viewer As New frmMsImagingViewer
-
     Private Sub showMsImaging(imzML As String)
         Dim progress As New frmProgressSpinner
 
-        Call viewer.Show(dockPanel)
+        Call WindowModules.viewer.Show(dockPanel)
         Call msImageParameters.Show(dockPanel)
         Call New Thread(
             Sub()
                 Dim canvas As New Drawer(imzML)
 
-                Call viewer.Invoke(Sub() viewer.LoadRender(canvas, imzML))
-                Call viewer.Invoke(Sub() viewer.DockState = DockState.Document)
+                Call WindowModules.viewer.Invoke(Sub() WindowModules.viewer.LoadRender(canvas, imzML))
+                Call WindowModules.viewer.Invoke(Sub() WindowModules.viewer.DockState = DockState.Document)
 
                 Call progress.Invoke(Sub() progress.Close())
 
-                Invoke(Sub() Text = $"BioNovoGene Mzkit [{viewer.Text} {imzML.FileName}]")
+                Invoke(Sub() Text = $"BioNovoGene Mzkit [{WindowModules.viewer.Text} {imzML.FileName}]")
             End Sub).Start()
 
         msImageParameters.DockState = DockState.DockLeft

@@ -273,6 +273,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="application\ApplicationEvents.vb" />
+    <Compile Include="application\RibbonEvents.vb" />
+    <Compile Include="application\WindowModules.vb" />
     <Compile Include="application\TaskbarWindow.vb" />
     <Compile Include="application\settings\RawFileViewerSettings.vb" />
     <Compile Include="application\VisualStudio.vb" />
