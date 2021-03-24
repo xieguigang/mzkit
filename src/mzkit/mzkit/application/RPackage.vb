@@ -113,7 +113,7 @@ Namespace My
         <ExportAPI("list.raw")>
         Public Shared Function ListFiles() As Raw()
             Dim list As New List(Of Raw)
-            Dim fileNodes As TreeNode = fileExplorer.treeView1.Nodes(0)
+            Dim fileNodes As TreeNode = WindowModules.fileExplorer.treeView1.Nodes(0)
 
             For Each raw As TreeNode In fileNodes.Nodes
                 list.Add(raw.Tag)
