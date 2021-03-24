@@ -196,7 +196,7 @@ Export the XIC data to a specific file is also keeps simple, just mouse right cl
 
 <div style="page-break-after:always;"></div>
 
-###  1.8. <a name='Ms-Imaging'></a>Ms-Imaging
+###  1.8. <a name='Ms-Imaging' id="Ms-Imaging">Ms-Imaging</a>
 
 mzkit software is also supports the ``imzML`` file format for run ms-imaging rendering, here is how to view the imzML raw data file in mzkit application:
 
