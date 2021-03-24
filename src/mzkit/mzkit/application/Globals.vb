@@ -343,9 +343,9 @@ Module Globals
             .ToArray
 
         If Not UVscans.IsNullOrEmpty Then
-            MyApplication.host.UVScansList.DockState = DockState.DockLeftAutoHide
-            MyApplication.host.UVScansList.Win7StyleTreeView1.Nodes.Clear()
-            MyApplication.host.UVScansList.Clear()
+            WindowModules.UVScansList.DockState = DockState.DockLeftAutoHide
+            WindowModules.UVScansList.Win7StyleTreeView1.Nodes.Clear()
+            WindowModules.UVScansList.Clear()
 
             hasUVscans = True
 
@@ -367,7 +367,7 @@ Module Globals
                     }.DoCall(AddressOf spanNode.Nodes.Add)
                 Next
 
-                Call MyApplication.host.UVScansList.Win7StyleTreeView1.Nodes.Add(spanNode)
+                Call WindowModules.UVScansList.Win7StyleTreeView1.Nodes.Add(spanNode)
             Next
         Else
             hasUVscans = False

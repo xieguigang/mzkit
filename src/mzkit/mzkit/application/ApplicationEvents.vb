@@ -100,33 +100,6 @@ Namespace My
         End Property
 #End Region
 
-#Region "dock windows"
-        Public Shared ReadOnly Property PlotParameters As frmTweaks
-            Get
-                Return _host.plotParams
-            End Get
-        End Property
-
-        Public Shared ReadOnly Property fileExplorer As frmFileExplorer
-            Get
-                Return _host.fileExplorer
-            End Get
-        End Property
-
-        Public Shared ReadOnly Property featureExplorer As frmRawFeaturesList
-            Get
-                Return _host.rawFeaturesList
-            End Get
-        End Property
-
-        Public Shared ReadOnly Property RtermPage As frmRsharp
-            Get
-                Return _host.RtermPage
-            End Get
-        End Property
-
-#End Region
-
         Public Shared Sub RegisterPlot(plot As Action(Of PlotProperty),
                                        Optional width% = 2048,
                                        Optional height% = 1600,
@@ -141,7 +114,7 @@ Namespace My
 
             Dim margin As Padding = padding
 
-            With PlotParameters.params
+            With WindowModules.plotParams.params
                 .width = width
                 .height = height
                 .background = bg.TranslateColor
@@ -159,8 +132,8 @@ Namespace My
                 .padding_bottom = margin.Bottom
             End With
 
-            PlotParameters.draw = plot
-            PlotParameters.draw()(PlotParameters.params)
+            WindowModules.plotParams.draw = plot
+            WindowModules.plotParams.draw()(WindowModules.plotParams.params)
         End Sub
 
         Public Shared Sub RegisterOutput(log As OutputWindow)
@@ -317,9 +290,9 @@ Type 'q()' to quit R.
 
             Try
                 Call host.SaveSettings()
-                Call fileExplorer.SaveFileCache(Sub()
-                                                    ' do nothing
-                                                End Sub)
+                Call WindowModules.fileExplorer.SaveFileCache(Sub()
+                                                                  ' do nothing
+                                                              End Sub)
             Catch ex As Exception
 
             End Try

@@ -148,7 +148,7 @@ Public Class frmRawFeaturesList
         checked.Clear()
 
         If Not hasUVscans Then
-            MyApplication.host.UVScansList.DockState = DockState.Hidden
+            WindowModules.UVScansList.DockState = DockState.Hidden
         End If
     End Sub
 
@@ -261,7 +261,9 @@ Public Class frmRawFeaturesList
     End Sub
 
     Private Sub DeleteFileToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeleteFileToolStripMenuItem.Click
-        If MyApplication.fileExplorer.deleteFileNode(MyApplication.fileExplorer.findRawFileNode(CurrentRawFile), confirmDialog:=True) = DialogResult.Yes Then
+        Dim fileExplorer = WindowModules.fileExplorer
+
+        If fileExplorer.deleteFileNode(fileExplorer.findRawFileNode(CurrentRawFile), confirmDialog:=True) = DialogResult.Yes Then
             _CurrentRawFile = Nothing
             treeView1.Nodes.Clear()
             checked.Clear()
@@ -300,7 +302,7 @@ Public Class frmRawFeaturesList
         End If
 
         Call MyApplication.host.mzkitTool.ShowPage()
-        Call MyApplication.host.fileExplorer.UpdateMainTitle(CurrentRawFile.source)
+        Call WindowModules.fileExplorer.UpdateMainTitle(CurrentRawFile.source)
     End Sub
 
     Private Sub CollapseToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CollapseToolStripMenuItem.Click
@@ -559,7 +561,7 @@ Public Class frmRawFeaturesList
         Call MyApplication.host.ShowPropertyWindow()
         Call MyApplication.host.mzkitTool.ShowPage()
 
-        MyApplication.host.fileExplorer.UpdateMainTitle(CurrentRawFile.source)
+        WindowModules.fileExplorer.UpdateMainTitle(CurrentRawFile.source)
     End Sub
 
     Private Sub OpenViewerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenViewerToolStripMenuItem.Click

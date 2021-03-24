@@ -102,8 +102,8 @@ Public Class frmTargetedQuantification
         Call reloadProfileNames()
         Call ApplyVsTheme(ToolStrip1, ToolStrip2, ContextMenuStrip1, ContextMenuStrip2, ContextMenuStrip3)
 
-        Call VisualStudio.Dock(MyApplication.host.parametersTool, DockState.DockRight)
-        Call MyApplication.host.parametersTool.SetParameterObject(New QuantifyParameters, AddressOf applyNewParameters)
+        Call VisualStudio.Dock(WindowModules.parametersTool, DockState.DockRight)
+        Call WindowModules.parametersTool.SetParameterObject(New QuantifyParameters, AddressOf applyNewParameters)
     End Sub
 
     Private Sub applyNewParameters(args As QuantifyParameters)

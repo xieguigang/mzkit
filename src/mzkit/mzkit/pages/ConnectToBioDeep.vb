@@ -76,9 +76,9 @@ Public Class ConnectToBioDeep
 
         If SingletonHolder(Of BioDeepSession).Instance.CheckSession Then
             ' work in background
-            Dim taskList As TaskListWindow = MyApplication.host.taskWin
+            Dim taskList As TaskListWindow = WindowModules.taskWin
             Dim task As TaskUI = taskList.Add("MetaDNA Search", raw.source.GetFullPath)
-            Dim log As OutputWindow = MyApplication.host.output
+            Dim log As OutputWindow = WindowModules.output
             Dim println As Action(Of String) =
                 Sub(message)
                     Call task.ProgressMessage(message)

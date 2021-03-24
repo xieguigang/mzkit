@@ -73,11 +73,11 @@ Public Class VisualStudio
     End Sub
 
     Public Shared Sub ShowPropertyWindow()
-        Call Dock(MyApplication.host.propertyWin, DockState.DockRight)
+        Call Dock(WindowModules.propertyWin, DockState.DockRight)
     End Sub
 
     Public Shared Sub ShowProperties(item As Object)
-        Dim propertyWin = MyApplication.host.propertyWin
+        Dim propertyWin = WindowModules.propertyWin
 
         propertyWin.propertyGrid.SelectedObject = item
         propertyWin.propertyGrid.Refresh()
