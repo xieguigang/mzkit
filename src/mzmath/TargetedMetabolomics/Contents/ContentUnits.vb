@@ -48,6 +48,9 @@
 
 Namespace Content
 
+    ''' <summary>
+    ''' content unit of ``ppt``, ``ppb`` and ``ppm``.
+    ''' </summary>
     Public Enum ContentUnits As Integer
         ppm = ppb * 1000
         ppb = ppt * 1000

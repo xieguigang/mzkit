@@ -50,9 +50,17 @@ Imports r = System.Text.RegularExpressions.Regex
 
 Namespace Content
 
+    ''' <summary>
+    ''' a helper module of content unit <see cref="ContentUnits"/>
+    ''' </summary>
     <HideModuleName>
     Public Module UnitExtensions
 
+        ''' <summary>
+        ''' convert content value in ppm unit into ppb unit
+        ''' </summary>
+        ''' <param name="ppm"></param>
+        ''' <returns></returns>
         Public Function ppm2ppb(ppm As Double) As Double
             Return ppm.Unit(ContentUnits.ppm).ScaleTo(ContentUnits.ppb).Value
         End Function
