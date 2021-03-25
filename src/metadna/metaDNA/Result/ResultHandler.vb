@@ -53,6 +53,13 @@ Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 
 Module ResultHandler
 
+    ''' <summary>
+    ''' export all infer result
+    ''' </summary>
+    ''' <param name="candidates"></param>
+    ''' <param name="kegg"></param>
+    ''' <param name="keggNetwork"></param>
+    ''' <returns></returns>
     <Extension>
     Public Iterator Function ExportTable(candidates As IEnumerable(Of CandidateInfer),
                                          kegg As KEGGHandler,
@@ -91,7 +98,8 @@ Module ResultHandler
                     .inferSize = type.infer.inferSize,
                     .fileName = type.infer.rawFile,
                     .mzCalc = precursorTypes(.precursorType).CalcMZ(.exactMass),
-                    .ROI_id = type.ROI
+                    .ROI_id = type.ROI,
+                    .mirror = type.infer.mirror
                 }
             Next
         Next
