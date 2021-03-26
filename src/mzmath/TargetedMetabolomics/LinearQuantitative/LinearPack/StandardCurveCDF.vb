@@ -100,14 +100,12 @@ Namespace LinearQuantitative.Data
                 .size = linear.blankControls.SafeQuery.Count
             }
 
-            cdf.AddVariable("blanks", linear.blankControls.SafeQuery.ToArray, blankSize)
+            cdf.AddVariable("blanks", CType(linear.blankControls.SafeQuery.ToArray, doubles), blankSize)
 
-            Dim levelNames As New CDFData With {
-                .chars = linear.points _
-                    .Select(Function(p) p.level) _
-                    .Distinct _
-                    .GetJson
-            }
+            Dim levelNames As chars = linear.points _
+                .Select(Function(p) p.level) _
+                .Distinct _
+                .GetJson
             Dim levelNameSize As New Dimension With {.name = "levelNames", .size = levelNames.Length}
 
             cdf.AddVariable("levelNames", levelNames, levelNameSize)
@@ -115,7 +113,7 @@ Namespace LinearQuantitative.Data
             Dim width As New Dimension With {.name = "width", .size = 5 + 3}
 
             For Each p As ReferencePoint In linear.points
-                cdf.AddVariable(p.level, New Double() {p.AIS, p.Ati, p.cIS, p.Cti, p.Px, p.yfit, p.error, p.variant}, width, {
+                cdf.AddVariable(p.level, CType(New Double() {p.AIS, p.Ati, p.cIS, p.Cti, p.Px, p.yfit, p.error, p.variant}, doubles), width, {
                     New attribute With {.name = "valid", .type = CDFDataTypes.BOOLEAN, .value = p.valid},
                     New attribute With {.name = "ID", .type = CDFDataTypes.CHAR, .value = p.ID},
                     New attribute With {.name = "name", .type = CDFDataTypes.CHAR, .value = p.Name}
@@ -142,10 +140,10 @@ Namespace LinearQuantitative.Data
                 New attribute With {.name = "dim2", .type = CDFDataTypes.INT, .value = matrix(Scan0).Length}
             }
 
-            cdf.AddVariable("polynomial", formula.Factors, size, attrs)
-            cdf.AddVariable("DY", fit.Residuals, sizeofDY)
-            cdf.AddVariable("SEC", fit.CoefficientsStandardError, sizeofSEC)
-            cdf.AddVariable("COVAR", vars, sizeofVar, matrixDim)
+            cdf.AddVariable("polynomial", CType(formula.Factors, doubles), size, attrs)
+            cdf.AddVariable("DY", CType(fit.Residuals, doubles), sizeofDY)
+            cdf.AddVector("SEC", fit.CoefficientsStandardError, sizeofSEC)
+            cdf.AddVector("COVAR", vars, sizeofVar, matrixDim)
         End Sub
 
         <Extension>
@@ -164,7 +162,7 @@ Namespace LinearQuantitative.Data
                 New attribute With {.name = "SSR", .type = CDFDataTypes.DOUBLE, .value = fit.SSR}
             }
 
-            cdf.AddVariable("polynomial", formula.Factors, size, attrs)
+            cdf.AddVector("polynomial", formula.Factors, size, attrs)
         End Sub
     End Module
 End Namespace

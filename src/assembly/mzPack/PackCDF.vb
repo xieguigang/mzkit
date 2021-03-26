@@ -87,20 +87,18 @@ Public Module PackCDF
     <Extension>
     Public Sub SavePackData(overlaps As ChromatogramOverlap, file As Stream)
         Dim scan_time As Double() = overlaps.UnionTimeSeq
-        Dim line As New CDFData With {.numerics = scan_time}
+        Dim line As doubles = scan_time
         Dim length As New Dimension With {.name = "scan_length", .size = scan_time.Length}
         Dim dataLen As New Dimension With {.name = "data_length", .size = scan_time.Length * 2}
 
         Using cdf As New CDFWriter(file)
-            Dim allNames As New CDFData With {
-                .chars = overlaps.overlaps _
-                    .Keys _
-                    .ToArray _
-                    .GetJson
-            }
+            Dim allNames As chars = overlaps.overlaps _
+                .Keys _
+                .ToArray _
+                .GetJson
             Dim strSize As New Dimension With {
                 .name = "name_data",
-                .size = allNames.chars.Length
+                .size = allNames.Length
             }
             Dim formatAttr As New attribute With {
                 .name = "format",
@@ -118,12 +116,10 @@ Public Module PackCDF
                 Dim TIC As GeneralSignal = chr.Value.GetSignal(isbpc:=False)
                 Dim BPC As GeneralSignal = chr.Value.GetSignal(isbpc:=True)
 
-                line = New CDFData With {
-                    .numerics = Resampler _
-                        .CreateSampler(TIC)(scan_time) _
-                        .JoinIterates(Resampler.CreateSampler(BPC)(scan_time)) _
-                        .ToArray
-                }
+                line = Resampler _
+                    .CreateSampler(TIC)(scan_time) _
+                    .JoinIterates(Resampler.CreateSampler(BPC)(scan_time)) _
+                    .ToArray
 
                 cdf.AddVariable(chr.Name, line, dataLen.name)
             Next
@@ -138,18 +134,16 @@ Public Module PackCDF
     <Extension>
     Public Function ReadPackData(file As Stream) As ChromatogramOverlap
         Using cdf As New netCDFReader(file)
-            Dim nameStr As String = cdf.getDataVariable("signalNames").chars
+            Dim nameStr As String = DirectCast(cdf.getDataVariable("signalNames"), chars)
             Dim names As String() = nameStr.LoadJSON(Of String())
-            Dim scan_time As Double() = cdf.getDataVariable("scan_time").numerics
+            Dim scan_time As Double() = CType(cdf.getDataVariable("scan_time"), doubles)
             Dim overlaps As New ChromatogramOverlap With {
                 .overlaps = New Dictionary(Of String, Chromatogram)
             }
             Dim joinData As Double()()
 
             For Each name As String In names
-                joinData = cdf _
-                    .getDataVariable(name).numerics _
-                    .Split(scan_time.Length)
+                joinData = DirectCast(cdf.getDataVariable(name), doubles).Split(scan_time.Length)
                 overlaps(name) = New Chromatogram With {
                     .scan_time = scan_time,
                     .TIC = joinData(Scan0),

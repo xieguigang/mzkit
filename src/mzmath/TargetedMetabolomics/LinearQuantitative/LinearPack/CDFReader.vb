@@ -88,7 +88,7 @@ Namespace LinearQuantitative.Data
 
         <Extension>
         Private Function parseIS(cdf As netCDFReader) As [IS]()
-            Dim ISbstr As String = cdf.getDataVariable("IS").chars
+            Dim ISbstr As String = DirectCast(cdf.getDataVariable("IS"), chars)
             Dim list As BElement() = DirectCast(BencodeDecoder.Decode(ISbstr)(Scan0), BList).ToArray
 
             Return list _
@@ -105,7 +105,7 @@ Namespace LinearQuantitative.Data
 
         <Extension>
         Private Iterator Function parseLinears(cdf As netCDFReader) As IEnumerable(Of StandardCurve)
-            Dim ionNames As String() = cdf.getDataVariable("linears").chars.LoadJSON(Of String())
+            Dim ionNames As String() = DirectCast(cdf.getDataVariable("linears"), chars).LoadJSON(Of String())
 
             For Each ionName As String In ionNames
                 Using ms As MemoryStream = DirectCast(cdf.getDataVariable(ionName).genericValue, Byte()).DoCall(Function(bytes) New MemoryStream(bytes))
@@ -122,15 +122,15 @@ Namespace LinearQuantitative.Data
                 Dim IS_name As String = cdf!IS_name
                 Dim cIS As Double = cdf!cIS
                 Dim isWeighted As Boolean = cdf!is_weighted
-                Dim blanks As Double() = cdf.getDataVariable("blanks").numerics
+                Dim blanks As Double() = DirectCast(cdf.getDataVariable("blanks"), doubles)
                 Dim points As New List(Of ReferencePoint)
-                Dim levelNames As String() = cdf.getDataVariable("levelNames").chars.LoadJSON(Of String())
+                Dim levelNames As String() = DirectCast(cdf.getDataVariable("levelNames"), chars).LoadJSON(Of String())
                 Dim p As Double()
                 Dim var As variable
 
                 For Each lvKey As String In levelNames
                     var = cdf.getDataVariableEntry(lvKey)
-                    p = cdf.getDataVariable(var).numerics
+                    p = DirectCast(cdf.getDataVariable(var), doubles)
                     points += New ReferencePoint With {
                         .level = lvKey,
                         .ID = var.FindAttribute("ID").value,
@@ -167,7 +167,7 @@ Namespace LinearQuantitative.Data
                 .SSE = polynomial.FindAttribute("SSE").getObjectValue,
                 .SSR = polynomial.FindAttribute("SSR").getObjectValue,
                 .Polynomial = New Polynomial With {
-                    .Factors = cdf.getDataVariable(polynomial).numerics
+                    .Factors = DirectCast(cdf.getDataVariable(polynomial), doubles)
                 }
             }
         End Function
@@ -175,19 +175,19 @@ Namespace LinearQuantitative.Data
         <Extension>
         Private Function parseWeightedFit(cdf As netCDFReader) As IFitted
             Dim polynomial As variable = cdf.getDataVariableEntry("polynomial")
-            Dim rows As Double() = cdf.getDataVariable("COVAR").numerics
+            Dim rows As Double() = DirectCast(cdf.getDataVariable("COVAR"), doubles)
             Dim dim1 As Integer = cdf.getDataVariableEntry("COVAR").FindAttribute("dim1").getObjectValue
             Dim dim2 As Integer = cdf.getDataVariableEntry("COVAR").FindAttribute("dim2").getObjectValue
             Dim matrix As Double(,) = rows.Split(dim2).ToMatrix
 
             Return New WeightedFit With {
-                .CoefficientsStandardError = cdf.getDataVariable("SEC").numerics,
-                .Residuals = cdf.getDataVariable("DY").numerics,
+                .CoefficientsStandardError = DirectCast(cdf.getDataVariable("SEC"), doubles),
+                .Residuals = DirectCast(cdf.getDataVariable("DY"), doubles),
                 .CorrelationCoefficient = polynomial.FindAttribute("R2").getObjectValue,
                 .FisherF = polynomial.FindAttribute("fisher").getObjectValue,
                 .StandardDeviation = polynomial.FindAttribute("SDV").getObjectValue,
                 .Polynomial = New Polynomial With {
-                    .Factors = cdf.getDataVariable(polynomial).numerics
+                    .Factors = DirectCast(cdf.getDataVariable(polynomial), doubles)
                 },
                 .VarianceMatrix = matrix
             }
@@ -195,11 +195,11 @@ Namespace LinearQuantitative.Data
 
         <Extension>
         Private Iterator Function parsePeaks(cdf As netCDFReader) As IEnumerable(Of TargetPeakPoint)
-            Dim peakNames As String() = cdf.getDataVariable("peaks").chars.LoadJSON(Of String())
+            Dim peakNames As String() = DirectCast(cdf.getDataVariable("peaks"), chars).LoadJSON(Of String())
 
             For Each name As String In peakNames
                 Dim var As variable = cdf.getDataVariableEntry(name)
-                Dim data = cdf.getDataVariable(var).numerics
+                Dim data As doubles = cdf.getDataVariable(var)
                 Dim time As Double() = data.Take(data.Length \ 2).ToArray
                 Dim into As Double() = data.Skip(time.Length).ToArray
                 Dim tickSeq As ChromatogramTick() = time _
@@ -243,7 +243,7 @@ Namespace LinearQuantitative.Data
 
         <Extension>
         Private Function parseReference(cdf As netCDFReader) As Dictionary(Of String, SampleContentLevels)
-            Dim allSampleNames As String() = cdf.getDataVariable("sampleNames").chars.LoadJSON(Of String())
+            Dim allSampleNames As String() = DirectCast(cdf.getDataVariable("sampleNames"), chars).LoadJSON(Of String())
             Dim levelIons As variable() = cdf.variables _
                 .Where(Function(xi) xi.name.StartsWith("levels\")) _
                 .ToArray
@@ -252,7 +252,7 @@ Namespace LinearQuantitative.Data
             For Each ion As variable In levelIons
                 Dim ionName As String = ion.name.Replace("levels\", "")
                 Dim levels As New Dictionary(Of String, Double)
-                Dim vals As Double() = cdf.getDataVariable(ion).numerics
+                Dim vals As Double() = DirectCast(cdf.getDataVariable(ion), doubles)
                 Dim directMap As Boolean = ion _
                     .FindAttribute("directMap") _
                     .getObjectValue
