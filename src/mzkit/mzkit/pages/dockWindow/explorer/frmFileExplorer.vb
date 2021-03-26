@@ -174,7 +174,7 @@ Public Class frmFileExplorer
             Call addFileNode(getRawCache(fileName))
         Else
             ' work in background
-            Dim taskList As TaskListWindow = MyApplication.host.taskWin
+            Dim taskList As TaskListWindow = WindowModules.taskWin
             Dim task As TaskUI = taskList.Add("Imports Raw Data", fileName)
 
             Call taskList.Show(MyApplication.host.dockPanel)
@@ -247,7 +247,7 @@ Public Class frmFileExplorer
             Return
         End If
 
-        Call MyApplication.host.rawFeaturesList.LoadRaw(raw)
+        Call WindowModules.rawFeaturesList.LoadRaw(raw)
         Call MyApplication.host.mzkitTool.showScatter(raw, XIC, directSnapshot)
 
         Call VisualStudio.ShowProperties(New RawFileProperty(raw))
@@ -305,7 +305,7 @@ Public Class frmFileExplorer
         ElseIf TypeOf treeView1.SelectedNode.Tag Is String Then
             ' 选择了一个脚本文件
             Dim path As String = DirectCast(treeView1.SelectedNode.Tag, String).GetFullPath
-            Dim script = MyApplication.host.scriptFiles _
+            Dim script = RibbonEvents.scriptFiles _
                 .Where(Function(a) a.scriptFile.GetFullPath = path) _
                 .FirstOrDefault
 
@@ -457,8 +457,8 @@ Public Class frmFileExplorer
 
         Dim scriptFile As String = DirectCast(treeView1.SelectedNode.Tag, String)
 
-        Call MyApplication.RtermPage.ShowPage()
-        Call MyApplication.ExecuteRScript(scriptFile, isFile:=True, AddressOf MyApplication.host.output.AppendRoutput)
+        Call WindowModules.RtermPage.ShowPage()
+        Call MyApplication.ExecuteRScript(scriptFile, isFile:=True, AddressOf WindowModules.output.AppendRoutput)
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click

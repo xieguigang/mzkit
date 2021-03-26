@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::29aa48dde174395051e17da0ffe14f80, src\mzkit\mzkit\pages\dockWindow\documents\frmTableViewer.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class frmTableViewer
-    ' 
-    '     Properties: FilePath, MimeType
-    ' 
-    '     Function: (+2 Overloads) Save
-    ' 
-    '     Sub: frmTableViewer_Load, SaveDocument
-    ' 
-    ' /********************************************************************************/
+' Class frmTableViewer
+' 
+'     Properties: FilePath, MimeType
+' 
+'     Function: (+2 Overloads) Save
+' 
+'     Sub: frmTableViewer_Load, SaveDocument
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -50,10 +50,12 @@ Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
+Imports mzkit.My
 
 Public Class frmTableViewer : Implements ISaveHandle, IFileReference
 
     Public Property FilePath As String Implements IFileReference.FilePath
+    Public Property ViewRow As Action(Of Dictionary(Of String, Object))
 
     Public ReadOnly Property MimeType As ContentType() Implements IFileReference.MimeType
         Get
@@ -72,6 +74,8 @@ Public Class frmTableViewer : Implements ISaveHandle, IFileReference
         OpenContainingFolderToolStripMenuItem.Enabled = False
 
         TabText = "Table View"
+
+        ApplyVsTheme(ContextMenuStrip1)
     End Sub
 
     Public Function Save(path As String, encoding As Encoding) As Boolean Implements ISaveHandle.Save
@@ -82,4 +86,19 @@ Public Class frmTableViewer : Implements ISaveHandle, IFileReference
     Public Function Save(path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
         Return Save(path, encoding.CodePage)
     End Function
+
+    Private Sub ViewToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ViewToolStripMenuItem.Click
+        If DataGridView1.SelectedRows.Count <= 0 Then
+            Call MyApplication.host.showStatusMessage("Please select a row data for view content!", My.Resources.StatusAnnotations_Warning_32xLG_color)
+        ElseIf Not ViewRow Is Nothing Then
+            Dim obj As New Dictionary(Of String, Object)
+            Dim row As DataGridViewRow = DataGridView1.SelectedRows(0)
+
+            For i As Integer = 0 To DataGridView1.Columns.Count - 1
+                obj(DataGridView1.Columns(i).HeaderText) = row.Cells(i).Value
+            Next
+
+            Call _ViewRow(obj)
+        End If
+    End Sub
 End Class

@@ -153,6 +153,10 @@ Public Class UnknownSet
             If Not product.meta.ContainsKey("ROI") Then
                 Throw New InvalidProgramException($"Missing 'ROI' meta data in ion '{product.lib_guid}'!")
             End If
+            If index.ContainsKey(product.lib_guid) Then
+                Call $"Skip of duplicated unknown sample data: '{product.lib_guid}'".Warning
+                Continue For
+            End If
 
             Call index.Add(product.lib_guid, product)
             Call tree.Add(product.mz, product, valueReplace:=False)

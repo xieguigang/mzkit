@@ -1,49 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::12b4d01185c057629969d359bb0f1dd2, src\mzkit\mzkit\pages\ConnectToBioDeep.vb"
 
-    ' Author:
-    ' 
-    '       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
-    ' 
-    ' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
-    ' 
-    ' 
-    ' MIT License
-    ' 
-    ' 
-    ' Permission is hereby granted, free of charge, to any person obtaining a copy
-    ' of this software and associated documentation files (the "Software"), to deal
-    ' in the Software without restriction, including without limitation the rights
-    ' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    ' copies of the Software, and to permit persons to whom the Software is
-    ' furnished to do so, subject to the following conditions:
-    ' 
-    ' The above copyright notice and this permission notice shall be included in all
-    ' copies or substantial portions of the Software.
-    ' 
-    ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    ' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    ' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    ' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    ' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    ' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    ' SOFTWARE.
+' Author:
+' 
+'       xieguigang (gg.xie@bionovogene.com, BioNovoGene Co., LTD.)
+' 
+' Copyright (c) 2018 gg.xie@bionovogene.com, BioNovoGene Co., LTD.
+' 
+' 
+' MIT License
+' 
+' 
+' Permission is hereby granted, free of charge, to any person obtaining a copy
+' of this software and associated documentation files (the "Software"), to deal
+' in the Software without restriction, including without limitation the rights
+' to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+' copies of the Software, and to permit persons to whom the Software is
+' furnished to do so, subject to the following conditions:
+' 
+' The above copyright notice and this permission notice shall be included in all
+' copies or substantial portions of the Software.
+' 
+' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+' IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+' FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+' AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+' LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+' OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+' SOFTWARE.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class ConnectToBioDeep
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: OpenAdvancedFunction, RunMetaDNA
-    ' 
-    ' /********************************************************************************/
+' Class ConnectToBioDeep
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Sub: OpenAdvancedFunction, RunMetaDNA
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports BioNovoGene.Analytical.MassSpectrometry.Math.Spectra
+Imports BioNovoGene.Analytical.MassSpectrometry.Visualization
 Imports BioNovoGene.BioDeep.MetaDNA
+Imports BioNovoGene.BioDeep.MetaDNA.Infer
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.My
 Imports mzkit.DockSample
 Imports mzkit.My
@@ -72,9 +76,9 @@ Public Class ConnectToBioDeep
 
         If SingletonHolder(Of BioDeepSession).Instance.CheckSession Then
             ' work in background
-            Dim taskList As TaskListWindow = MyApplication.host.taskWin
+            Dim taskList As TaskListWindow = WindowModules.taskWin
             Dim task As TaskUI = taskList.Add("MetaDNA Search", raw.source.GetFullPath)
-            Dim log As OutputWindow = MyApplication.host.output
+            Dim log As OutputWindow = WindowModules.output
             Dim println As Action(Of String) =
                 Sub(message)
                     Call task.ProgressMessage(message)
@@ -84,14 +88,17 @@ Public Class ConnectToBioDeep
 
             table.DockState = DockState.Hidden
 
-            Call taskList.Show(MyApplication.host.dockPanel)
+            taskList.Show(MyApplication.host.dockPanel)
+            VisualStudio.Dock(taskList, DockState.DockBottom)
+
             ' Call Alert.ShowSucess($"Imports raw data files in background,{vbCrLf}you can open [Task List] panel for view task progress.")
             Call MyApplication.TaskQueue.AddToQueue(
                 Sub()
                     Dim result As MetaDNAResult() = Nothing
+                    Dim infer As CandidateInfer() = Nothing
 
                     Call task.Running()
-                    Call MetaDNASearch.RunDIA(raw, println, result)
+                    Call MetaDNASearch.RunDIA(raw, println, result, infer)
                     Call table.Invoke(Sub()
                                           table.DockState = DockState.Document
                                           table.Show(MyApplication.host.dockPanel)
@@ -133,8 +140,32 @@ Public Class ConnectToBioDeep
 
                             For Each line As MetaDNAResult In result
                                 Call grid.Rows.Add(line.ROI_id, line.query_id, line.mz, line.rt, line.intensity, line.KEGGId, line.exactMass, line.formula, line.name, line.precursorType, line.mzCalc, line.ppm, line.inferLevel, line.forward, line.reverse, line.jaccard, line.parentTrace, line.inferSize, line.score1, line.score2, line.pvalue, line.seed, line.partnerKEGGId, line.KEGG_reaction, line.reaction, line.fileName)
+                                Call Application.DoEvents()
                             Next
                         End Sub)
+
+                    Call table.Invoke(Sub()
+                                          Dim inferIndex As Dictionary(Of String, Candidate) = infer _
+                                              .ExportInferRaw(result) _
+                                              .Inference _
+                                              .ToDictionary(Function(a) $"{a.ROI}|{a.infer.kegg.kegg_id}|{a.precursorType}|{a.infer.reference.id}|{a.infer.rawFile}")
+
+                                          table.ViewRow = Sub(obj)
+                                                              Dim uidRef As String = $"{obj!ROI_id}|{obj!KEGGId}|{obj!precursorType}|{obj!seed}|{obj!fileName}"
+                                                              Dim align As Candidate = inferIndex(uidRef)
+
+                                                              If align.infer.level <> InferLevel.Ms1 Then
+                                                                  Dim qvsref = align.infer.GetAlignmentMirror
+
+                                                                  Call MyApplication.host.Invoke(
+                                                                      Sub()
+                                                                          Call MyApplication.host.mzkitTool.showAlignment(qvsref.query, qvsref.ref, align.infer)
+                                                                      End Sub)
+                                                              Else
+                                                                  Call MyApplication.host.showStatusMessage($"MS1 level metaDNA infer did'nt have MS/MS alignment data...")
+                                                              End If
+                                                          End Sub
+                                      End Sub)
 
                     Call println("MetaDNA search job done!")
 

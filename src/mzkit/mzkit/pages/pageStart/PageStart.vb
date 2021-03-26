@@ -53,22 +53,24 @@ Public Class PageStart
     Dim WithEvents BackgroundWorker As New BackgroundWorker
 
     Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
-        MyApplication.host.fileExplorer.DockState = DockState.DockLeft
-        MyApplication.host.rawFeaturesList.DockState = DockState.DockLeft
+        Dim fileExplorer = WindowModules.fileExplorer
 
-        If MyApplication.fileExplorer.treeView1.SelectedNode Is Nothing Then
-            If MyApplication.fileExplorer.treeView1.Nodes(0).Nodes.Count = 0 Then
+        WindowModules.fileExplorer.DockState = DockState.DockLeft
+        WindowModules.rawFeaturesList.DockState = DockState.DockLeft
+
+        If fileExplorer.treeView1.SelectedNode Is Nothing Then
+            If fileExplorer.treeView1.Nodes(0).Nodes.Count = 0 Then
                 ' imports raw
-                Call MyApplication.host.OpenFile()
+                Call WindowModules.OpenFile()
             End If
-            If MyApplication.fileExplorer.treeView1.Nodes(0).Nodes.Count = 0 Then
+            If fileExplorer.treeView1.Nodes(0).Nodes.Count = 0 Then
                 ' user cancel imports raw data files
                 Return
             End If
-            Dim firstFile = MyApplication.fileExplorer.treeView1.Nodes(0).Nodes(0)
+            Dim firstFile = fileExplorer.treeView1.Nodes(0).Nodes(0)
 
-            MyApplication.fileExplorer.treeView1.SelectedNode = firstFile
-            MyApplication.fileExplorer.showRawFile(DirectCast(firstFile.Tag, Raw), False, directSnapshot:=True)
+            fileExplorer.treeView1.SelectedNode = firstFile
+            fileExplorer.showRawFile(DirectCast(firstFile.Tag, Raw), False, directSnapshot:=True)
         End If
 
         MyApplication.host.ShowMzkitToolkit()
@@ -110,6 +112,6 @@ Public Class PageStart
 
     Private Sub LinkLabel3_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel3.LinkClicked
         ' 打开R终端页面
-        MyApplication.host.CreateNewScript(Nothing, Nothing)
+        RibbonEvents.CreateNewScript(Nothing, Nothing)
     End Sub
 End Class

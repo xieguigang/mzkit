@@ -119,8 +119,8 @@ Public Class frmUntargettedViewer
     End Sub
 
     Private Sub FilterMs2ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FilterMs2ToolStripMenuItem.Click
-        Call MyApplication.host.rawFeaturesList.LoadRaw(raw, RtRangeSelector1.rtmin, RtRangeSelector1.rtmax)
-        Call VisualStudio.Dock(MyApplication.host.rawFeaturesList, DockState.DockLeft)
+        Call WindowModules.rawFeaturesList.LoadRaw(raw, RtRangeSelector1.rtmin, RtRangeSelector1.rtmax)
+        Call VisualStudio.Dock(WindowModules.rawFeaturesList, DockState.DockLeft)
     End Sub
 
     Protected Overrides Sub CopyFullPath()

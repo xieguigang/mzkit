@@ -52,7 +52,7 @@ Namespace Infer
 
     Public Class InferLink : Inherits AlignmentOutput
 
-        <XmlAttribute> Public Property level As InferLevel
+        <XmlElement> Public Property level As InferLevel
 
         ''' <summary>
         ''' 当前的Feature被推断为的目标KEGG代谢物编号
@@ -64,18 +64,18 @@ Namespace Infer
         ''' 起始值为100
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property parentTrace As Double
+        <XmlElement> Public Property parentTrace As Double
         ''' <summary>
         ''' 推断链的长度
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property inferSize As Integer
+        <XmlElement> Public Property inferSize As Integer
 
         ''' <summary>
         ''' the source file of where <see cref="query"/> comes from.
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property rawFile As String
+        <XmlElement> Public Property rawFile As String
 
         Public Overrides Function ToString() As String
             Return $"[{level.Description}] {kegg} {MyBase.ToString}"

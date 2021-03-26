@@ -80,21 +80,21 @@ Public Class frmMsImagingViewer
 
     Private Sub frmMsImagingViewer_Load(sender As Object, e As EventArgs) Handles Me.Load
         TabText = Text
-        MyApplication.host.msImageParameters.DockState = DockState.DockLeft
+        WindowModules.msImageParameters.DockState = DockState.DockLeft
         PictureBox1.BackgroundImageLayout = ImageLayout.Zoom
     End Sub
 
     Public Sub LoadRender(render As Drawer, filePath As String)
-        Dim checks As Win7StyleTreeView = MyApplication.host.msImageParameters.Win7StyleTreeView1
+        Dim checks As Win7StyleTreeView = WindowModules.msImageParameters.Win7StyleTreeView1
 
-        Me.checks = MyApplication.host.msImageParameters.RenderingToolStripMenuItem
+        Me.checks = WindowModules.msImageParameters.RenderingToolStripMenuItem
         Me.render = render
         Me.params = New MsImageProperty(render)
-        Me.tweaks = MyApplication.host.msImageParameters.PropertyGrid1
+        Me.tweaks = WindowModules.msImageParameters.PropertyGrid1
         Me.FilePath = filePath
 
-        MyApplication.host.msImageParameters.PropertyGrid1.SelectedObject = params
-        MyApplication.host.msImageParameters.Win7StyleTreeView1.Nodes.Clear()
+        WindowModules.msImageParameters.PropertyGrid1.SelectedObject = params
+        WindowModules.msImageParameters.Win7StyleTreeView1.Nodes.Clear()
 
         Dim allIons As Double() = render.LoadMzArray(20)
         Dim mzGroups = CutBins.FixedWidthBins(allIons, 24, Function(x) x).ToArray
@@ -114,7 +114,7 @@ Public Class frmMsImagingViewer
     End Sub
 
     Private Sub checks_Click(sender As Object, e As EventArgs) Handles checks.Click
-        Dim mz As Double() = MyApplication.host.msImageParameters _
+        Dim mz As Double() = WindowModules.msImageParameters _
             .GetSelectedIons _
             .Distinct _
             .ToArray
@@ -197,7 +197,7 @@ Public Class frmMsImagingViewer
 
         If MessageBox.Show("Going to close current MS-imaging viewer?", FilePath.FileName, MessageBoxButtons.OKCancel, MessageBoxIcon.Question) = DialogResult.Cancel Then
         Else
-            MyApplication.host.msImageParameters.DockState = DockState.Hidden
+            WindowModules.msImageParameters.DockState = DockState.Hidden
             Me.DockState = DockState.Hidden
         End If
     End Sub

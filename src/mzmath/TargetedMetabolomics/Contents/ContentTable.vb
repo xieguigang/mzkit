@@ -76,16 +76,31 @@ Namespace Content
             Me.IS = [IS]
         End Sub
 
+        ''' <summary>
+        ''' check if the target <paramref name="ion"/> is exists or not?
+        ''' </summary>
+        ''' <param name="ion"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function hasDefined(ion As String) As Boolean
             Return standards.ContainsKey(ion)
         End Function
 
+        ''' <summary>
+        ''' check if the target <paramref name="is"/> is exists or not?
+        ''' </summary>
+        ''' <param name="[is]"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function hasISDefined([is] As String) As Boolean
             Return Me.IS.ContainsKey([is])
         End Function
 
+        ''' <summary>
+        ''' get IS definition model.
+        ''' </summary>
+        ''' <param name="ion"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetIS(ion As String) As [IS]
             If [IS] Is Nothing Then
@@ -95,11 +110,23 @@ Namespace Content
             End If
         End Function
 
+        ''' <summary>
+        ''' get target ion data model object
+        ''' </summary>
+        ''' <param name="ion"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetStandards(ion As String) As Standards
             Return standards(ion)
         End Function
 
+        ''' <summary>
+        ''' 这个函数主要是用于删除wiff文件转换为mzML文件之后留存的文件名前缀
+        ''' </summary>
+        ''' <param name="files">
+        ''' a list of *.mzML file path that convert from wiff raw data file
+        ''' </param>
+        ''' <returns></returns>
         Public Shared Function StripMaxCommonNames(files As String()) As NamedValue(Of String)()
             Dim names As String() = files.Select(AddressOf BaseName).ToArray
             Dim minName As String = names.MinLengthString

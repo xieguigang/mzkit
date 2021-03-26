@@ -142,9 +142,9 @@ Namespace Infer
                 t3 = 1
             End If
 
-            Dim scoreVal As Double = stdnum.Min(infer.forward, infer.reverse) + t1 + infer.jaccard + t2 + t3
+            Dim scoreVal As Double = stdnum.Min(infer.forward, infer.reverse) + t1 + infer.mirror + t2 + t3
 
-            vec = {infer.forward, infer.reverse, t1, infer.jaccard, t2, t3}
+            vec = {infer.forward, infer.reverse, t1, infer.mirror, t2, t3}
             pvalue = vec.Average
             vec = {pvalue, pvalue, pvalue + 0.05}
             pvalue = vec.DoCall(AddressOf t.Test).Pvalue

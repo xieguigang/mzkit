@@ -56,6 +56,9 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 
+''' <summary>
+''' Visual MS imaging data(*.imzML)
+''' </summary>
 <Package("MsImaging")>
 Module MsImaging
 
@@ -73,8 +76,8 @@ Module MsImaging
     ''' <summary>
     ''' load the raw pixels data from imzML file 
     ''' </summary>
-    ''' <param name="mz"></param>
-    ''' <param name="tolerance"></param>
+    ''' <param name="mz">a collection of ion m/z value for rendering on one image</param>
+    ''' <param name="tolerance">m/z tolerance error for get layer data</param>
     ''' <param name="skip_zero"></param>
     ''' <returns></returns>
     <ExportAPI("pixels")>

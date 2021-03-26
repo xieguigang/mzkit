@@ -122,6 +122,7 @@ Public Class frmDemo
         End If
 
         Dim i As Integer = ListView1.SelectedIndices.Item(0)
+        Dim fileExplorer = WindowModules.fileExplorer
 
         Select Case i
             Case 0
@@ -130,7 +131,7 @@ Public Class frmDemo
 
             Case 1
 
-                Dim findRaw = MyApplication.fileExplorer.findRawFileNode("003_Ex2_Orbitrap_CID.mzXML")
+                Dim findRaw = fileExplorer.findRawFileNode("003_Ex2_Orbitrap_CID.mzXML")
                 Dim demoPath As String = $"{App.HOME}/demo/003_Ex2_Orbitrap_CID.mzXML"
 
                 If findRaw Is Nothing Then
@@ -138,12 +139,12 @@ Public Class frmDemo
                         MyApplication.host.showStatusMessage("the demo data file is missing!", My.Resources.StatusAnnotations_Warning_32xLG_color)
                         Return
                     End If
-                    MyApplication.fileExplorer.addFileNode(MyApplication.fileExplorer.getRawCache(demoPath))
-                    findRaw = MyApplication.fileExplorer.findRawFileNode("003_Ex2_Orbitrap_CID.mzXML")
+                    fileExplorer.addFileNode(fileExplorer.getRawCache(demoPath))
+                    findRaw = fileExplorer.findRawFileNode("003_Ex2_Orbitrap_CID.mzXML")
                 End If
 
-                MyApplication.fileExplorer.treeView1.SelectedNode = findRaw
-                MyApplication.fileExplorer.showRawFile(DirectCast(findRaw.Tag, Raw), False, directSnapshot:=True)
+                fileExplorer.treeView1.SelectedNode = findRaw
+                fileExplorer.showRawFile(DirectCast(findRaw.Tag, Raw), False, directSnapshot:=True)
                 MyApplication.host.ShowMzkitToolkit()
 
             Case 2

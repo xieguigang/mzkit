@@ -182,7 +182,7 @@ Public Class frmGCMSPeaks
                         Call MyApplication.host.ShowGCMSSIM(path, isBackground:=False, showExplorer:=False)
                     Else
                         ' work in background
-                        Dim taskList As TaskListWindow = MyApplication.host.taskWin
+                        Dim taskList As TaskListWindow = WindowModules.taskWin
                         Dim task As TaskUI = taskList.Add("Imports Raw Data", path)
 
                         Call taskList.Show(MyApplication.host.dockPanel)

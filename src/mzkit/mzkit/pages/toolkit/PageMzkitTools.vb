@@ -90,14 +90,15 @@ Public Class PageMzkitTools
 
     Private Function missingCacheFile(raw As Raw) As DialogResult
         Dim options As DialogResult = MessageBox.Show($"The specific raw data cache is missing, run imports again?{vbCrLf}{raw.source.GetFullPath}", $"[{raw.source.FileName}] Cache Not Found!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning)
+        Dim fileExplorer = WindowModules.fileExplorer
 
         If options = DialogResult.OK Then
-            Dim newRaw = MyApplication.fileExplorer.getRawCache(raw.source)
+            Dim newRaw As Raw = fileExplorer.getRawCache(raw.source)
 
             raw.cache = newRaw.cache
 
             MyApplication.host.showStatusMessage("Ready!")
-            MyApplication.host.ToolStripStatusLabel2.Text = MyApplication.host.fileExplorer.treeView1.Nodes(Scan0).GetTotalCacheSize
+            MyApplication.host.ToolStripStatusLabel2.Text = fileExplorer.treeView1.Nodes(Scan0).GetTotalCacheSize
         End If
 
         Return options
@@ -407,7 +408,7 @@ Public Class PageMzkitTools
     End Sub
 
     Public Sub TIC(isBPC As Boolean)
-        Dim rawList As Raw() = MyApplication.fileExplorer.GetSelectedRaws.ToArray
+        Dim rawList As Raw() = WindowModules.fileExplorer.GetSelectedRaws.ToArray
 
         If rawList.Length = 0 Then
             MyApplication.host.showStatusMessage("No file data selected for TIC plot...")
@@ -652,9 +653,9 @@ Public Class PageMzkitTools
     End Sub
 
     Friend Iterator Function getSelectedIonSpectrums(progress As Action(Of String)) As IEnumerable(Of PeakMs2)
-        Dim raw = MyApplication.featureExplorer.CurrentRawFile
+        Dim raw = WindowModules.rawFeaturesList.CurrentRawFile
 
-        For Each ionNode As TreeNode In MyApplication.featureExplorer.GetSelectedNodes.Where(Function(a) TypeOf a.Tag Is ScanMS2)
+        For Each ionNode As TreeNode In WindowModules.rawFeaturesList.GetSelectedNodes.Where(Function(a) TypeOf a.Tag Is ScanMS2)
             Dim scanId As String = ionNode.Text
             Dim info As ScanMS2 = ionNode.Tag
             Dim guid As String = $"{raw.source.FileName}#{scanId}"
@@ -778,7 +779,7 @@ Public Class PageMzkitTools
             CustomTabControl1.Controls.Add(tabpage)
         End If
 
-        MyApplication.host.panelMain.Show(MyApplication.host.dockPanel)
+        WindowModules.panelMain.Show(MyApplication.host.dockPanel)
 
         CustomTabControl1.SelectedTab = tabpage
         tabpage.Visible = True
@@ -786,6 +787,6 @@ Public Class PageMzkitTools
 
     Public Sub ShowPlotTweaks()
         RibbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.Active
-        VisualStudio.Dock(MyApplication.host.plotParams, DockState.DockRight)
+        VisualStudio.Dock(WindowModules.plotParams, DockState.DockRight)
     End Sub
 End Class

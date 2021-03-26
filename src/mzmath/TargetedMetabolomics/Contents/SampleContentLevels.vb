@@ -49,11 +49,19 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Content
 
+    ''' <summary>
+    ''' a helper model for get concentration gradient value of given level
+    ''' </summary>
     Public Class SampleContentLevels
 
         Friend ReadOnly levels As IReadOnlyDictionary(Of String, Double)
         Friend ReadOnly directMap As Boolean
 
+        ''' <summary>
+        ''' get concentration gradient value of given level
+        ''' </summary>
+        ''' <param name="sampleLevel"></param>
+        ''' <returns></returns>
         Default Public ReadOnly Property Content(sampleLevel As String) As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -61,6 +69,14 @@ Namespace Content
             End Get
         End Property
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="levels"></param>
+        ''' <param name="directMap">
+        ''' if this parameter is set to TRUE, then it means do not parse the level name into integer number level
+        ''' use the original name as the level key.
+        ''' </param>
         Sub New(levels As Dictionary(Of String, Double), Optional directMap As Boolean = False)
             Me.directMap = directMap
             Me.levels = levels _
@@ -71,6 +87,11 @@ Namespace Content
                               End Function)
         End Sub
 
+        ''' <summary>
+        ''' parse the original level key name into a integer number
+        ''' </summary>
+        ''' <param name="sampleLevel"></param>
+        ''' <returns></returns>
         Private Function levelKey(sampleLevel As String) As String
             Return "L" & sampleLevel.Match("\d+").ParseInteger
         End Function

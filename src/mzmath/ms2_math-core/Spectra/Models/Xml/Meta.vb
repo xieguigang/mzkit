@@ -51,7 +51,7 @@ Namespace Spectra.Xml
 
     Public Class Meta : Inherits ms1_scan
 
-        <XmlAttribute>
+        <XmlText>
         Public Property id As String
 
         Public Overrides Function ToString() As String
