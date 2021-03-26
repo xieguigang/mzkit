@@ -53,12 +53,12 @@ Namespace GCMS.Vendors
     Public Module agilentGCMS
 
         Public Function Read(cdf As netCDFReader) As Raw
-            Dim time As CDFData = cdf.getDataVariable("scan_acquisition_time")
-            Dim tic = cdf.getDataVariable("total_intensity")
-            Dim pointCount = cdf.getDataVariable("point_count")
-            Dim massValues = cdf.getDataVariable("mass_values").tiny_num
-            Dim intensityValues = cdf.getDataVariable("intensity_values").tiny_num
-            Dim scan_times = cdf.getDataVariable("time_values").tiny_num
+            Dim time As doubles = cdf.getDataVariable("scan_acquisition_time")
+            Dim tic As doubles = cdf.getDataVariable("total_intensity")
+            Dim pointCount As integers = cdf.getDataVariable("point_count")
+            Dim massValues As floats = cdf.getDataVariable("mass_values")
+            Dim intensityValues As floats = cdf.getDataVariable("intensity_values")
+            Dim scan_times As floats = cdf.getDataVariable("time_values")
             Dim attrs As New Dictionary(Of String, String)
 
             For Each attr As attribute In cdf.globalAttributes
@@ -70,7 +70,7 @@ Namespace GCMS.Vendors
             Dim size%
 
             For i As Integer = 0 To ms.Length - 1
-                size = pointCount.integers(i)
+                size = pointCount(i)
                 ms(i) = New ms1_scan(size - 1) {}
 
                 For j As Integer = 0 To size - 1
@@ -83,8 +83,8 @@ Namespace GCMS.Vendors
             Next
 
             Return New Raw With {
-                .times = time.numerics,
-                .tic = tic.numerics,
+                .times = time.Array,
+                .tic = tic.Array,
                 .ms = ms,
                 .title = any.ToString(cdf.getAttribute("experiment_title")),
                 .attributes = attrs,

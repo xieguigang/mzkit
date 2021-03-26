@@ -84,7 +84,7 @@ Namespace LinearQuantitative.Data
 
         <Extension>
         Private Sub writeIS(pack As LinearPack, file As netCDF.CDFWriter)
-            Dim bstr As CDFData = pack.IS.ToBEncodeString
+            Dim bstr As chars = pack.IS.ToBEncodeString
             Dim strLen As New Dimension With {.name = "bstrLen", .size = bstr.Length}
 
             file.AddVariable("IS", bstr, strLen)
@@ -107,7 +107,7 @@ Namespace LinearQuantitative.Data
                                      size As Dimension,
                                      file As netCDF.CDFWriter)
 
-            Dim data As CDFData = allSampleNames.Select(Function(lv) levels(lv)).ToArray
+            Dim data As doubles = allSampleNames.Select(Function(lv) levels(lv)).ToArray
             Dim attrs As attribute() = {
                 New attribute With {.name = "directMap", .type = CDFDataTypes.BOOLEAN, .value = levels.directMap}
             }
@@ -121,7 +121,7 @@ Namespace LinearQuantitative.Data
                 .Select(Function(p) p.SampleName) _
                 .Distinct _
                 .ToArray
-            Dim data As New CDFData With {.chars = allSampleNames.GetJson}
+            Dim data As chars = allSampleNames.GetJson
             Dim size As New Dimension With {.name = "sizeofSamples", .size = data.Length}
             Dim attrs As attribute() = {
                 New attribute With {.name = "size", .type = CDFDataTypes.INT, .value = allSampleNames.Length}
@@ -143,7 +143,7 @@ Namespace LinearQuantitative.Data
         Private Sub writePeak(peak As TargetPeakPoint, file As netCDF.CDFWriter)
             Dim time As Double() = peak.Peak.ticks.Select(Function(t) t.Time).ToArray
             Dim into As Double() = peak.Peak.ticks.Select(Function(t) t.Intensity).ToArray
-            Dim data As New CDFData With {.numerics = time.JoinIterates(into).ToArray}
+            Dim data As doubles = time.JoinIterates(into).ToArray
             Dim size As New Dimension With {.name = $"sizeof_{peak.SampleName}\{peak.Name}", .size = data.Length}
             Dim attrs As attribute() = {
                 New attribute With {.name = "name", .type = CDFDataTypes.CHAR, .value = peak.Name},
@@ -168,7 +168,7 @@ Namespace LinearQuantitative.Data
 
         <Extension>
         Private Sub writePeakNames(pack As LinearPack, file As netCDF.CDFWriter)
-            Dim data As New CDFData With {.chars = pack.peakSamples.Select(Function(p) $"{p.SampleName}\{p.Name}").GetJson}
+            Dim data As chars = pack.peakSamples.Select(Function(p) $"{p.SampleName}\{p.Name}").GetJson
             Dim size As New Dimension With {.name = "sizeofPeaks", .size = pack.peakSamples.Length}
             Dim attrs As attribute() = {
                 New attribute With {.name = "peaks", .type = CDFDataTypes.INT, .value = pack.linears.Length}
@@ -179,7 +179,7 @@ Namespace LinearQuantitative.Data
 
         <Extension>
         Private Sub peakLinearNames(pack As LinearPack, file As netCDF.CDFWriter)
-            Dim data As New CDFData With {.chars = pack.linears.Select(Function(l) l.name).GetJson}
+            Dim data As chars = pack.linears.Select(Function(l) l.name).GetJson
             Dim size As New Dimension With {.name = "sizeofLinears", .size = data.Length}
             Dim attrs As attribute() = {
                 New attribute With {.name = "linears", .type = CDFDataTypes.INT, .value = pack.linears.Length}
@@ -204,8 +204,8 @@ Namespace LinearQuantitative.Data
             }
 
             Using buffer As MemoryStream = StandardCurveCDF.WriteCDF(linear)
-                Dim bytes As CDFData = buffer.ToArray
-                Dim chunkSize As New Dimension With {.name = $"chunkof_{linear.name}", .size = bytes.byteStream.Length}
+                Dim bytes As bytes = buffer.ToArray
+                Dim chunkSize As New Dimension With {.name = $"chunkof_{linear.name}", .size = bytes.Length}
 
                 file.AddVariable(linear.name, bytes, chunkSize, attrs)
             End Using
