@@ -89,10 +89,10 @@ Imports stdNum = System.Math
 Public Class frmTargetedQuantification
 
     Private Sub frmTargetedQuantification_Load(sender As Object, e As EventArgs) Handles Me.Load
-        MyApplication.ribbon.TargetedContex.ContextAvailable = ContextAvailability.Active
+        WindowModules.ribbon.TargetedContex.ContextAvailable = ContextAvailability.Active
 
-        AddHandler MyApplication.ribbon.ImportsLinear.ExecuteEvent, AddressOf loadLinearRaw
-        AddHandler MyApplication.ribbon.SaveLinears.ExecuteEvent, AddressOf saveLinearsTable
+        AddHandler WindowModules.ribbon.ImportsLinear.ExecuteEvent, AddressOf loadLinearRaw
+        AddHandler WindowModules.ribbon.SaveLinears.ExecuteEvent, AddressOf saveLinearsTable
 
         TabText = "Targeted Quantification"
 
@@ -119,8 +119,8 @@ Public Class frmTargetedQuantification
     End Sub
 
     Private Sub frmTargetedQuantification_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-        RemoveHandler MyApplication.ribbon.ImportsLinear.ExecuteEvent, AddressOf loadLinearRaw
-        RemoveHandler MyApplication.ribbon.SaveLinears.ExecuteEvent, AddressOf saveLinearsTable
+        RemoveHandler WindowModules.ribbon.ImportsLinear.ExecuteEvent, AddressOf loadLinearRaw
+        RemoveHandler WindowModules.ribbon.SaveLinears.ExecuteEvent, AddressOf saveLinearsTable
     End Sub
 
     Sub loadLinearRaw(sender As Object, e As ExecuteEventArgs)
@@ -1106,6 +1106,6 @@ Public Class frmTargetedQuantification
     End Sub
 
     Private Sub frmTargetedQuantification_Closed(sender As Object, e As EventArgs) Handles Me.Closed
-        MyApplication.ribbon.TargetedContex.ContextAvailable = ContextAvailability.NotAvailable
+        WindowModules.ribbon.TargetedContex.ContextAvailable = ContextAvailability.NotAvailable
     End Sub
 End Class

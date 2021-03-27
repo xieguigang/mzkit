@@ -25,7 +25,7 @@ Friend MustInherit Class WindowModules
     Friend Shared ReadOnly GCMSPeaks As New frmGCMSPeaks
     Friend Shared ReadOnly parametersTool As New AdjustParameters
 
-    Public ReadOnly Property ribbon As RibbonItems
+    Public Shared ReadOnly Property ribbon As RibbonItems
         Get
             Return MyApplication.host.ribbonItems
         End Get
