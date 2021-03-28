@@ -65,13 +65,20 @@ Public Module GC2Dimensional
     <Extension>
     Private Iterator Function CreateMSScans(scan_time As Double(), totalIons As Double(), mz As Double()(), into As Double()()) As IEnumerable(Of ScanMS1)
         For i As Integer = 0 To scan_time.Length - 1
+            Dim mzi As Double() = mz(i)
+            Dim inti As Double() = into(i)
+            Dim BPC As Double = inti.Max
+            ' 20210328
+            ' fix bugs fix mzkit_win32: required [MS1] prefix for indicate MS1
+            Dim scan_id As String = $"[MS1] {i + 1}.scan_time={stdNum.Round(scan_time(i))}, m/z={mzi(which.Max(inti))}({BPC.ToString("G3")})"
+
             Yield New ScanMS1 With {
                 .TIC = totalIons(i),
-                .BPC = .TIC,
+                .BPC = BPC,
                 .rt = scan_time(i),
-                .mz = mz(i),
-                .into = into(i),
-                .scan_id = $"[MS1] {i + 1}. scan_time={stdNum.Round(.rt)}, maxmz={ .mz(which.Max(.into))}"
+                .mz = mzi,
+                .into = inti,
+                .scan_id = scan_id
             }
         Next
     End Function
