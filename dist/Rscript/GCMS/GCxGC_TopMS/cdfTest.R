@@ -17,7 +17,11 @@ using cdf as open.netCDF("P:\MTBLS212\CZ1_5m.cdf") {
 	print(var(cdf, "a_d_coaddition_factor") :> getValue);
 	
 	print("scan_acquisition_time");
-	print(var(cdf, "scan_acquisition_time") :> getValue);
+		
+	const scan_time = var(cdf, "scan_acquisition_time") :> getValue;
+	
+	print(scan_time);
+	# scan_time :> writeLines(con = "D:/testaaaa.csv");
 	
 	print("scan_duration");
 	print(var(cdf, "scan_duration") :> getValue);
@@ -32,7 +36,12 @@ using cdf as open.netCDF("P:\MTBLS212\CZ1_5m.cdf") {
 	print(var(cdf, "actual_scan_number") :> getValue);
 	
 	print("total_intensity");
-	print(var(cdf, "total_intensity") :> getValue);
+		
+	const into = var(cdf, "total_intensity") :> getValue;
+	
+	print(into);
+	
+	data.frame(scan_time, into) :> write.csv(file = "D:\testaaaa.csv", row_names = FALSE);
 	
 	print("mass_range_min");
 	print(var(cdf, "mass_range_min") :> getValue);
