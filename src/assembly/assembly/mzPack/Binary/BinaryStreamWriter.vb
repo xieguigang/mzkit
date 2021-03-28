@@ -103,10 +103,17 @@ Namespace mzData.mzWebCache
             Call file.Flush()
 
             Dim size As Integer = file.Position - start
+            Dim products As ScanMS2()
 
-            Call file.Write(scan.products.Length)
+            If scan.products Is Nothing Then
+                products = {}
+            Else
+                products = scan.products
+            End If
 
-            For Each product As ScanMS2 In scan.products
+            Call file.Write(products.Length)
+
+            For Each product As ScanMS2 In products
                 Call Write(product)
             Next
 
