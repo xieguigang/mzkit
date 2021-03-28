@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{6F5F8407-DEB8-4B75-BF41-5284772D37DD}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Comprehensive</RootNamespace>
-    <AssemblyName>Comprehensive</AssemblyName>
+    <RootNamespace>BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive</RootNamespace>
+    <AssemblyName>BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -19,7 +19,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>Comprehensive.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -28,7 +28,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>Comprehensive.xml</DocumentationFile>
+    <DocumentationFile>BioNovoGene.Analytical.MassSpectrometry.Assembly.Comprehensive.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -69,6 +69,7 @@
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
