@@ -16,7 +16,7 @@ Public Module GC2Dimensional
         Dim scan_time As doubles = agilentGC.getDataVariable("scan_acquisition_time")
         Dim totalIons As doubles = agilentGC.getDataVariable("total_intensity")
         Dim mz As shorts = agilentGC.getDataVariable("mass_values")
-        Dim into As shorts = agilentGC.getDataVariable("intensity_values")
+        Dim into As integers = agilentGC.getDataVariable("intensity_values")
 
         Return New mzPack With {
             .MS = blockSize.CreateMSScans(scan_time, totalIons, mz, into).ToArray
@@ -24,7 +24,7 @@ Public Module GC2Dimensional
     End Function
 
     <Extension>
-    Private Iterator Function CreateMSScans(blockSize As Integer, scan_time As Double(), totalIons As Double(), mz As Short(), into As Short()) As IEnumerable(Of ScanMS1)
+    Private Iterator Function CreateMSScans(blockSize As Integer, scan_time As Double(), totalIons As Double(), mz As Short(), into As Integer()) As IEnumerable(Of ScanMS1)
         Dim mzMatrix As Double()() = mz.Select(Function(i) CDbl(i)).Split(blockSize).ToArray
         Dim intoMatrix As Double()() = into.Select(Function(i) CDbl(i)).Split(blockSize).ToArray
 
