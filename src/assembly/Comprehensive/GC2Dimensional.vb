@@ -3,7 +3,8 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
-Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' GCxGC assembly data
@@ -68,9 +69,9 @@ Public Module GC2Dimensional
                 .TIC = totalIons(i),
                 .BPC = .TIC,
                 .rt = scan_time(i),
-                .scan_id = i + 1,
                 .mz = mz(i),
-                .into = into(i)
+                .into = into(i),
+                .scan_id = $"[MS1] {i + 1}. scan_time={stdNum.Round(.rt)}, maxmz={ .mz(which.Max(.into))}"
             }
         Next
     End Function
