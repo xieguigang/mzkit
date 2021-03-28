@@ -1,6 +1,6 @@
 require(netCDF.utils);
 
-using cdf as open.netCDF("P:\MTBLS212\CZ1_5m.cdf") {
+using cdf as open.netCDF("P:\MTBLS447\WT_ Regenerated Shoot 1-1.cdf") {
 	print("all of the global attributes in cdf data file:");
 	print(globalAttributes(cdf));
 	

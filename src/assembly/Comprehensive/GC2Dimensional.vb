@@ -3,6 +3,7 @@ Imports BioNovoGene.Analytical.MassSpectrometry.Assembly.mzData.mzWebCache
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
+Imports Microsoft.VisualBasic.Language
 
 ''' <summary>
 ''' GCxGC assembly data
@@ -11,12 +12,11 @@ Public Module GC2Dimensional
 
     <Extension>
     Public Function ToMzPack(agilentGC As netCDFReader) As mzPack
-        Dim scan_numbers As Dimension = agilentGC.dimensions.KeyItem("scan_number")
-        Dim blockSize As Integer = agilentGC.recordDimension.length / scan_numbers.size
         Dim scan_time As doubles = agilentGC.getDataVariable("scan_acquisition_time")
         Dim totalIons As doubles = agilentGC.getDataVariable("total_intensity")
-        Dim mz As Double()() = agilentGC.readMzMatrix(blockSize)
-        Dim into As Double()() = agilentGC.readIntoMatrix(blockSize)
+        Dim point_count As integers = agilentGC.getDataVariable("point_count")
+        Dim mz As Double()() = agilentGC.readMzMatrix(point_count).ToArray
+        Dim into As Double()() = agilentGC.readIntoMatrix(point_count).ToArray
 
         Return New mzPack With {
             .MS = scan_time.Array.CreateMSScans(totalIons, mz, into).ToArray
@@ -24,29 +24,41 @@ Public Module GC2Dimensional
     End Function
 
     <Extension>
-    Private Function readMzMatrix(agilentGC As netCDFReader, blockSize As Integer) As Double()()
+    Private Iterator Function readMzMatrix(agilentGC As netCDFReader, point_count As integers) As IEnumerable(Of Double())
+        Dim offset As Integer = Scan0
         Dim mz As shorts
-        Dim matrix As Double()()
 
         Call Console.WriteLine("read m/z matrix...")
 
         mz = agilentGC.getDataVariable("mass_values")
-        matrix = mz.Select(Function(i) CDbl(i)).Split(blockSize)
 
-        Return matrix
+        For Each width As Integer In point_count
+            Yield mz _
+                .Copy(offset, width) _
+                .Select(Function(i) CDbl(i)) _
+                .ToArray
+
+            offset += width
+        Next
     End Function
 
     <Extension>
-    Private Function readIntoMatrix(agilentGC As netCDFReader, blockSize As Integer) As Double()()
+    Private Iterator Function readIntoMatrix(agilentGC As netCDFReader, point_count As integers) As IEnumerable(Of Double())
         Dim into As integers
-        Dim matrix As Double()()
+        Dim offset As Integer = Scan0
 
         Call Console.WriteLine("read intensity matrix...")
 
         into = agilentGC.getDataVariable("intensity_values")
-        matrix = into.Select(Function(i) CDbl(i)).Split(blockSize)
 
-        Return matrix
+        For Each width As Integer In point_count
+            Yield into _
+                .Copy(offset, width) _
+                .Select(Function(i) CDbl(i)) _
+                .ToArray
+
+            offset += width
+        Next
     End Function
 
     <Extension>
