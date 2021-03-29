@@ -1,6 +1,17 @@
 imports "mzweb" from "mzkit";
 
-"E:\D065.mzML"
-:> open.mzpack
-:> write.mzPack(file = "D:\D065.mzPack")
-;
+const rawdir as string = ?"--rawdir" || stop("no raw data location was specific!");
+
+for(file in list.files(rawdir, pattern = "*.mz*ML")) {
+	print(file);
+	
+	const packFile = `${dirname(file)}/${basename(file)}.mzPack`;
+	
+	if (!file.exists(packFile)) {
+		# run process of current single file
+		file
+		:> open.mzpack
+		:> write.mzPack(file = packFile)
+		;
+	}
+} 
