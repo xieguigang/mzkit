@@ -79,10 +79,23 @@ Module MzMath
     Sub New()
         Call REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of PrecursorInfo())(AddressOf printMzTable)
         Call REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of LibraryMatrix)(AddressOf printLib)
+        Call REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of MzCalculator)(AddressOf printCalculator)
 
         Call REnv.Internal.Object.Converts.addHandler(GetType(PeakFeature()), AddressOf peaktable)
         Call REnv.Internal.Object.Converts.addHandler(GetType(MzGroup), AddressOf XICTable)
     End Sub
+
+    Private Function printCalculator(type As MzCalculator) As String
+        Dim summary As New StringBuilder
+
+        Call summary.AppendLine(type.ToString)
+        Call summary.AppendLine($"adducts: {type.adducts}")
+        Call summary.AppendLine($"M: {type.M}")
+        Call summary.AppendLine($"charge: {type.charge}")
+        Call summary.AppendLine($"ion_mode: {type.mode}")
+
+        Return summary.ToString
+    End Function
 
     Private Function printLib([lib] As LibraryMatrix) As String
         Dim sb As New StringBuilder
@@ -517,5 +530,19 @@ Module MzMath
         Return points.populates(Of ms1_scan)(env) _
             .SequenceOrder(mzwindow.TryCast(Of Tolerance), rtwidth) _
             .ToArray
+    End Function
+
+    ''' <summary>
+    ''' create precursor type calculator
+    ''' </summary>
+    ''' <param name="types"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("precursor_types")>
+    Public Function precursorTypes(<RRawVectorArgument> types As Object, Optional env As Environment = Nothing) As Object
+        Return env.EvaluateFramework(Of String, MzCalculator)(
+            types, Function(type)
+                       Return Ms1.PrecursorType.ParseMzCalculator(type, type.Last)
+                   End Function)
     End Function
 End Module
