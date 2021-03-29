@@ -148,7 +148,13 @@ Module MzMath
     ''' evaluate all m/z for all known precursor type.
     ''' </summary>
     ''' <param name="mass">the target exact mass value</param>
-    ''' <param name="mode"></param>
+    ''' <param name="mode">
+    ''' this parameter could be two type of data:
+    ''' 
+    ''' 1. character of value ``+`` or ``-``, means evaluate all m/z for all known precursor types in given ion mode
+    ''' 2. character of value in precursor type format means calculate mz for the target precursor type
+    ''' 3. mzcalculator type means calculate mz for the traget precursor type
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("mz")>
     <RApiReturn(GetType(PrecursorInfo), GetType(Double))>
@@ -156,7 +162,15 @@ Module MzMath
         If TypeOf mode Is MzCalculator Then
             Return DirectCast(mode, MzCalculator).CalcMZ(mass)
         Else
-            Return MzCalculator.EvaluateAll(mass, any.ToString(mode, "+")).ToArray
+            Dim strVal As String = any.ToString(mode, "+")
+
+            If strVal = "+" OrElse strVal = "-" Then
+                Return MzCalculator.EvaluateAll(mass, strVal).ToArray
+            Else
+                Return Ms1.PrecursorType _
+                    .ParseMzCalculator(strVal, strVal.Last) _
+                    .CalcMZ(mass)
+            End If
         End If
     End Function
 
