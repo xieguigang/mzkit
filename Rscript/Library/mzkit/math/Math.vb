@@ -147,12 +147,17 @@ Module MzMath
     ''' <summary>
     ''' evaluate all m/z for all known precursor type.
     ''' </summary>
-    ''' <param name="mass"></param>
+    ''' <param name="mass">the target exact mass value</param>
     ''' <param name="mode"></param>
     ''' <returns></returns>
     <ExportAPI("mz")>
-    Public Function mz(mass As Double, Optional mode As Object = "+") As PrecursorInfo()
-        Return MzCalculator.EvaluateAll(mass, any.ToString(mode, "+")).ToArray
+    <RApiReturn(GetType(PrecursorInfo), GetType(Double))>
+    Public Function mz(mass As Double, Optional mode As Object = "+") As Object
+        If TypeOf mode Is MzCalculator Then
+            Return DirectCast(mode, MzCalculator).CalcMZ(mass)
+        Else
+            Return MzCalculator.EvaluateAll(mass, any.ToString(mode, "+")).ToArray
+        End If
     End Function
 
     ''' <summary>
