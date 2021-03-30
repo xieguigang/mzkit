@@ -134,6 +134,8 @@ Public Class PageMzkitTools
             Call spinner.ShowDialog()
         End If
 
+        Me.matrixName = $"{raw.source.FileName}_{If(XIC, "XICPeaks", "rawscatter_2D")}"
+
         MyApplication.host.ShowPage(Me)
         MyApplication.host.Invoke(Sub() RibbonItems.TabGroupTableTools.ContextAvailable = ContextAvailability.NotAvailable)
     End Sub
