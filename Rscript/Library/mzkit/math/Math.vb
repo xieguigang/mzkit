@@ -79,10 +79,23 @@ Module MzMath
     Sub New()
         Call REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of PrecursorInfo())(AddressOf printMzTable)
         Call REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of LibraryMatrix)(AddressOf printLib)
+        Call REnv.Internal.ConsolePrinter.AttachConsoleFormatter(Of MzCalculator)(AddressOf printCalculator)
 
         Call REnv.Internal.Object.Converts.addHandler(GetType(PeakFeature()), AddressOf peaktable)
         Call REnv.Internal.Object.Converts.addHandler(GetType(MzGroup), AddressOf XICTable)
     End Sub
+
+    Private Function printCalculator(type As MzCalculator) As String
+        Dim summary As New StringBuilder
+
+        Call summary.AppendLine(type.ToString)
+        Call summary.AppendLine($"adducts: {type.adducts}")
+        Call summary.AppendLine($"M: {type.M}")
+        Call summary.AppendLine($"charge: {type.charge}")
+        Call summary.AppendLine($"ion_mode: {type.mode}")
+
+        Return summary.ToString
+    End Function
 
     Private Function printLib([lib] As LibraryMatrix) As String
         Dim sb As New StringBuilder
@@ -134,12 +147,31 @@ Module MzMath
     ''' <summary>
     ''' evaluate all m/z for all known precursor type.
     ''' </summary>
-    ''' <param name="mass"></param>
-    ''' <param name="mode"></param>
+    ''' <param name="mass">the target exact mass value</param>
+    ''' <param name="mode">
+    ''' this parameter could be two type of data:
+    ''' 
+    ''' 1. character of value ``+`` or ``-``, means evaluate all m/z for all known precursor types in given ion mode
+    ''' 2. character of value in precursor type format means calculate mz for the target precursor type
+    ''' 3. mzcalculator type means calculate mz for the traget precursor type
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("mz")>
-    Public Function mz(mass As Double, Optional mode As Object = "+") As PrecursorInfo()
-        Return MzCalculator.EvaluateAll(mass, any.ToString(mode, "+")).ToArray
+    <RApiReturn(GetType(PrecursorInfo), GetType(Double))>
+    Public Function mz(mass As Double, Optional mode As Object = "+") As Object
+        If TypeOf mode Is MzCalculator Then
+            Return DirectCast(mode, MzCalculator).CalcMZ(mass)
+        Else
+            Dim strVal As String = any.ToString(mode, "+")
+
+            If strVal = "+" OrElse strVal = "-" Then
+                Return MzCalculator.EvaluateAll(mass, strVal).ToArray
+            Else
+                Return Ms1.PrecursorType _
+                    .ParseMzCalculator(strVal, strVal.Last) _
+                    .CalcMZ(mass)
+            End If
+        End If
     End Function
 
     ''' <summary>
@@ -517,5 +549,19 @@ Module MzMath
         Return points.populates(Of ms1_scan)(env) _
             .SequenceOrder(mzwindow.TryCast(Of Tolerance), rtwidth) _
             .ToArray
+    End Function
+
+    ''' <summary>
+    ''' create precursor type calculator
+    ''' </summary>
+    ''' <param name="types"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("precursor_types")>
+    Public Function precursorTypes(<RRawVectorArgument> types As Object, Optional env As Environment = Nothing) As Object
+        Return env.EvaluateFramework(Of String, MzCalculator)(
+            types, Function(type)
+                       Return Ms1.PrecursorType.ParseMzCalculator(type, type.Last)
+                   End Function)
     End Function
 End Module

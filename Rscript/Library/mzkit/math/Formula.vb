@@ -70,7 +70,7 @@ Imports REnv = SMRUCC.Rsharp.Runtime.Internal.ConsolePrinter
 ''' The chemical formulae toolkit
 ''' </summary>
 <Package("formula", Category:=APICategories.UtilityTools)>
-Module Formula
+Module FormulaTools
 
     Sub New()
         Call REnv.AttachConsoleFormatter(Of FormulaComposition)(AddressOf FormulaCompositionString)
@@ -129,7 +129,7 @@ Module Formula
         Return env.EvaluateFramework(Of String, Double)(
             x:=formula,
             eval:=Function(str)
-                      Dim composition As FormulaComposition = FormulaScanner.ScanFormula(str)
+                      Dim composition As Formula = FormulaScanner.ScanFormula(str)
                       Dim mass = Aggregate atom In composition.CountsByElement
                                  Let eval As Double = ExactMass.Eval(atom.Key) * atom.Value
                                  Into Sum(eval)
