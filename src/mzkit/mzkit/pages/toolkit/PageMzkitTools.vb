@@ -374,7 +374,7 @@ Public Class PageMzkitTools
             Sub(args)
                 If d3 Then
                     PictureBox1.BackgroundImage = New ScanVisual3D(scans:=TICList, angle:=60, fillCurve:=True, fillAlpha:=120, drawParallelAxis:=True, theme:=New Theme With {
-                        .colorSet = Globals.GetColors,
+                        .colorSet = args.GetColorSetName,
                         .gridFill = args.gridFill.ToHtmlColor,
                         .padding = args.GetPadding.ToString,
                         .drawLegend = args.show_legend,
@@ -390,7 +390,7 @@ Public Class PageMzkitTools
                 Else
                     PictureBox1.BackgroundImage = ChromatogramPlot.TICplot(
                         ionData:=TICList.ToArray,
-                        colorsSchema:=Globals.GetColors,
+                        colorsSchema:=args.GetColorSetName,
                         fillCurve:=Globals.Settings.viewer.fill,
                         size:=$"{args.width},{args.height}",
                         margin:=args.GetPadding.ToString,
