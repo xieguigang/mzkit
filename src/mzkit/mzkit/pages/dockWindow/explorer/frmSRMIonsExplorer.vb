@@ -165,4 +165,24 @@ Public Class frmSRMIonsExplorer
     Private Sub ShowTICOverlap3DToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ShowTICOverlap3DToolStripMenuItem1.Click
         Call MyApplication.host.mzkitTool.TIC(GetIonTICOverlaps.ToArray, d3:=True)
     End Sub
+
+    Private Sub ClearIonSelectionsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ClearIonSelectionsToolStripMenuItem.Click
+        Dim file = Win7StyleTreeView1.SelectedNode
+
+        If Not file Is Nothing Then
+            For i As Integer = 0 To file.Nodes.Count - 1
+                file.Nodes(i).Checked = False
+            Next
+        End If
+    End Sub
+
+    Private Sub SelectAllIonsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SelectAllIonsToolStripMenuItem.Click
+        Dim file = Win7StyleTreeView1.SelectedNode
+
+        If Not file Is Nothing Then
+            For i As Integer = 0 To file.Nodes.Count - 1
+                file.Nodes(i).Checked = True
+            Next
+        End If
+    End Sub
 End Class
