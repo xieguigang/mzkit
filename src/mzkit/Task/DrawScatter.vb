@@ -58,7 +58,7 @@ Imports Microsoft.VisualBasic.Math.Quantile
 Public Module DrawScatter
 
     <Extension>
-    Public Function Draw3DPeaks(raw As Raw) As Image
+    Public Function Draw3DPeaks(raw As Raw, colorSet As String) As Image
         Dim ms1 As ms1_scan() = raw _
             .GetMs1Scans _
             .Select(Function(m1)
@@ -88,7 +88,7 @@ Public Module DrawScatter
             parallel:=True,
             showLabels:=False,
             showLegends:=False,
-            colorsSchema:="YlGnBu:c8",
+            colorsSchema:=colorSet,
             fillAlpha:=60,
             margin:="padding:100px 100px 125px 150px;",
             gridFill:="white"
@@ -96,7 +96,7 @@ Public Module DrawScatter
     End Function
 
     <Extension>
-    Public Function DrawScatter(raw As Raw) As Image
+    Public Function DrawScatter(raw As Raw, colorSet As String) As Image
         Dim ms1 As ms1_scan() = raw _
             .GetMs1Scans _
             .Select(Function(m1)
@@ -105,7 +105,7 @@ Public Module DrawScatter
             .IteratesALL _
             .ToArray
 
-        Return RawScatterPlot.Plot(samples:=ms1, rawfile:=raw.source.FileName).AsGDIImage
+        Return RawScatterPlot.Plot(samples:=ms1, rawfile:=raw.source.FileName, sampleColors:=colorSet).AsGDIImage
     End Function
 
     <Extension>

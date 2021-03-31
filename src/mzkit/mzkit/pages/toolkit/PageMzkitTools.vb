@@ -116,23 +116,34 @@ Public Class PageMzkitTools
         ElseIf directSnapshot Then
             PictureBox1.BackgroundImage = raw.GetSnapshot
         Else
-            Dim spinner As New frmProgressSpinner
-            Dim task As New Thread(
-                Sub()
-                    Dim image As Image
+            Dim colorSet As String
 
-                    If XIC Then
-                        image = raw.Draw3DPeaks
-                    Else
-                        image = raw.DrawScatter
-                    End If
+            If XIC Then
+                colorSet = "YlGnBu:c8"
+            Else
+                colorSet = "darkblue,blue,skyblue,green,orange,red,darkred"
+            End If
 
-                    Me.Invoke(Sub() PictureBox1.BackgroundImage = image)
-                    spinner.Invoke(Sub() Call spinner.Close())
-                End Sub)
+            Call MyApplication.RegisterPlot(
+                Sub(args)
+                    Dim spinner As New frmProgressSpinner
+                    Dim task As New Thread(
+                        Sub()
+                            Dim image As Image
 
-            Call task.Start()
-            Call spinner.ShowDialog()
+                            If XIC Then
+                                image = raw.Draw3DPeaks(colorSet:=args.GetColorSetName)
+                            Else
+                                image = raw.DrawScatter(colorSet:=args.GetColorSetName)
+                            End If
+
+                            Me.Invoke(Sub() PictureBox1.BackgroundImage = image)
+                            spinner.Invoke(Sub() Call spinner.Close())
+                        End Sub)
+
+                    Call task.Start()
+                    Call spinner.ShowDialog()
+                End Sub, colorSet:=colorSet)
         End If
 
         Me.matrixName = $"{raw.source.FileName}_{If(XIC, "XICPeaks", "rawscatter_2D")}"
