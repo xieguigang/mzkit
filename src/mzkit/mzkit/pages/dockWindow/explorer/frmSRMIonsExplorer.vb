@@ -55,6 +55,27 @@ Imports Task
 
 Public Class frmSRMIonsExplorer
 
+    Private Sub ImportsFilesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImportsFilesToolStripMenuItem.Click
+        Using openfile As New OpenFileDialog With {.Filter = "LC-MSMS(*.mzML)|*.mzML", .Multiselect = True}
+            If openfile.ShowDialog = DialogResult.OK Then
+                Dim notMRM As New List(Of String)
+
+                For Each file As String In openfile.FileNames
+                    If RawScanParser.IsMRMData(file) Then
+                        Call LoadMRM(file)
+                    Else
+                        Call MyApplication.LogText($"{file} is not a MRM raw data file!")
+                        Call notMRM.Add(file.FileName)
+                    End If
+                Next
+
+                If notMRM.Count > 0 Then
+                    MessageBox.Show($"These files are not MRM data files, load of the files was ignored:" & vbCrLf & notMRM.JoinBy(vbCrLf), "mzkit", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End If
+            End If
+        End Using
+    End Sub
+
     Public Sub LoadMRM(file As String)
         Dim list = file.LoadChromatogramList.ToArray
         Dim TIC As chromatogram = list.Where(Function(i) i.id.TextEquals("TIC")).First
@@ -90,7 +111,7 @@ Public Class frmSRMIonsExplorer
     Private Sub frmSRMIonsExplorer_Load(sender As Object, e As EventArgs) Handles Me.Load
         TabText = "MRM Ions"
 
-        Call ApplyVsTheme(ContextMenuStrip1, ToolStrip1, ContextMenuStrip2)
+        Call ApplyVsTheme(ContextMenuStrip1, ToolStrip1, ContextMenuStrip2, ContextMenuStrip3)
     End Sub
 
     Private Sub Win7StyleTreeView1_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles Win7StyleTreeView1.AfterSelect
@@ -144,7 +165,7 @@ Public Class frmSRMIonsExplorer
         Call MyApplication.host.mzkitTool.TIC(GetFileTICOverlaps.ToArray, d3:=True)
     End Sub
 
-    Private Sub ClearFilesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ClearFilesToolStripMenuItem.Click
+    Private Sub ClearFilesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ClearFilesToolStripMenuItem.Click, ClearFilesToolStripMenuItem1.Click
         Call Win7StyleTreeView1.Nodes.Clear()
     End Sub
 
